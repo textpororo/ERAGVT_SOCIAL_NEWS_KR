@@ -1,0 +1,130 @@
+﻿
+
+
+;休憩
+;--------------------------------------------------
+@KOJO_1_REST_16
+
+	;●襲撃発生との兼ね合い
+	;「日中は街、夜間は自室」が休憩中ヒロインの基本的な定位置
+	;昼…「息抜きがてらに街に出ていた」	→時間的に無理が無い描写を意識する必要あり
+	;夜…「自室で休んでいた」		→夜中までにシーケンスが終わればＯＫ
+
+;Ｂ開発=シャワーで絶頂とか
+
+	;촉수 구속구
+	IF CFLAG:42 == 400
+		IF RAND:2 == 0	
+			PRINTFORML 今日も%CALLNAME%の身を%ITEMNAME:(CFLAG:42)%が苛む。
+			IF RAND:4 == 0
+				PRINTFORML 「く、ふぅ……」
+				PRINTFORML 昼も夜もなく、%CALLNAME%の穴という穴は蹂躙され、堪えることのできない吐息が漏れる。
+				PRINTFORML 「っ……んう、うぅぅんっ」
+				PRINTFORMW せめて声だけはと必死に堪えながら、%CALLNAME%は肩を震わせて絶頂に達した。
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「くひゃぅぁぁあっ！？」
+				PRINTFORML 突如勢いよく性感帯を抉られ、たまらず大きな声が漏れた。
+				PRINTFORML 普段はクールな%CALLNAME%の珍しい声色は周囲の注目を集めてしまい、
+				PRINTFORML 「な、なん、でも……な、いぃ……っ」
+				PRINTFORMW 必死に誤魔化しつつも、周囲に見守られながら達してしまった。
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「ふぅ、ひぐ、ぅぅうっ…」
+				PRINTFORML %ITEMNAME:(CFLAG:42)%の責めは容赦ない。
+				PRINTFORML 一人だろうと人前であろうと、%CALLNAME%が気を抜けば性感を抉り、身も心も休まる時がない。
+				PRINTFORML 「また、きちゃ……うぁ、――っ！」
+				PRINTFORMW 休息を得るはずのベッドの中で、また一度%CALLNAME%は望まぬ絶頂に導かれた。
+			ELSE
+				PRINTFORML (なんで、%SELF_CALL()%、こんな……）
+				PRINTFORML 明るく仲間たちが語り合う傍で、静かに%CALLNAME%は絶頂をこらえていた。
+				PRINTFORML 普段はクールに振る舞っていることも幸いして、%CALLNAME%が黙っていても誰も不審に思わない。
+				PRINTFORML けれど、
+				PRINTFORML （そんな、また、%SELF_CALL()%、みんなの、まえ、で……っ！）
+				PRINTFORMW 声こそ洩らさなかったが、絶頂を迎えた%CALLNAME%の肩は、そうとはっきり分かるほどに震えていた。
+			ENDIF
+		ELSE
+			PRINTFORML  %ITEMNAME:(CFLAG:42)%を装着させられた%CALLNAME%を待っていたものは
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML  耐え難い陵辱の日々だった。촉수は起きていようが眠っていようがお構いなしに
+					PRINTFORML  %CALLNAME%の穴という穴を貪り、타락の淵へと%CALLNAME%を追い込んでいく……
+					PRINTFORML (んっ、く……、また、中で暴れ……～～ッッ！！)
+				CASE 1
+					PRINTFORML  耐え難い屈辱の日々だった。촉수は%CALLNAME%の尿道や尻穴に入り込み、
+					PRINTFORML  もぞもぞと蠕動しながら排泄物を食らい、肥え太っていく……
+					PRINTFORML (な、どうしよう……化け物の苗床にされるだなんて……)
+				CASE 2
+					PRINTFORML  耐え難い恥辱の日々だった。촉수は仲間の見えないところでいやらしく蠢き、
+					PRINTFORML  %CALLNAME%の敏感な部分を弄り回し、快楽で飼い慣らしていく……
+					PRINTFORML (忌々しい下等生物……ん、くっ……また……っ！)
+				CASEELSE
+					IF ISMALE()
+						;#region
+						PRINTFORML  耐え難い辱めの日々だった。촉수は仲間の前では醜く肥大した乳首に擬態し
+						;#endregion
+					ELSE 
+						PRINTFORML  耐え難い辱めの日々だった。촉수は仲間の前では醜く肥大した乳首と陰核に擬態し
+					ENDIF
+					PRINTFORML  開発され尽くした様にしか見えない身体を心配する仲間の優しさがなお辛かった。
+					PRINTFORML (こんなのに기생されているなんて……言えるわけがない……)
+			ENDSELECT
+		ENDIF
+
+
+	;昼限定メッセージ
+	ELSEIF TIME == 0 && RAND:2
+		;촉수 구속구 %ITEMNAME:400%
+		IF CFLAG:42 == 400
+			LOCAL=12 ;施設専用分岐がそれぞれ1/nで発生
+			IF (FLAG:53 & 뷰티살롱) && !RAND:(LOCAL)
+
+			ELSEIF (FLAG:53 & 게임코너) && !RAND:(LOCAL)
+
+			ELSEIF (FLAG:53 & 안마의자) && !RAND:(LOCAL)
+
+			;汎用休憩
+			ELSE
+
+			ENDIF
+		;★임신タイプ分岐
+		ELSE
+			LOCAL=12 ;施設専用分岐がそれぞれ1/nで発生
+			IF (FLAG:53 & 뷰티살롱) && !RAND:(LOCAL)
+				;治安悪いと촉수の体液塗りこまれて強制발정とか
+			ELSEIF (FLAG:53 & 게임코너) && !RAND:(LOCAL)
+
+			ELSEIF (FLAG:53 & 안마의자) && !RAND:(LOCAL)
+
+			;汎用休憩
+			ELSE
+
+			ENDIF
+		ENDIF
+	;夜限定メッセージ
+	ELSEIF TIME == 1 && RAND:2
+		LOCAL=12 ;専用分岐がそれぞれ1/nで発生
+		IF (FLAG:53 & 질좋은침대) && !RAND:(LOCAL)
+		ELSEIF (FLAG:53 & 최고급침대) && !RAND:(LOCAL)
+		ELSEIF (FLAG:53 & 관엽식물) && !RAND:(LOCAL)
+		ELSE
+		ENDIF
+		;촉수의포로ならオナニーしちゃうとか
+
+	;昼夜不問のメッセージ
+	ELSE
+		LOCAL=12 ;専用分岐がそれぞれ1/nで発生
+		IF (FLAG:53 & 목욕설비) && !RAND:(LOCAL)
+			;敏感だとシャワーで感じてしまうとか
+		ELSEIF (FLAG:53 & 대욕탕) && !RAND:(LOCAL)
+
+		ELSEIF (FLAG:53 & 미용온천) && !RAND:(LOCAL)
+
+		ELSE
+
+		ENDIF
+	ENDIF
+
+
+	;街を歩いていると촉수の臭いを嗅がされる
+	;被害に遭う
+	;アイドル流出を脅迫される
+

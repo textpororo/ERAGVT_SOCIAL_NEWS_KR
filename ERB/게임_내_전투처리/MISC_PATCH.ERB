@@ -1,0 +1,83 @@
+﻿;------------------------------------------------------------------------------------------------
+;TK-ドローン
+@TK_DRONE
+LOCAL:0 = RAND:26
+;ダメージ計算前にEX:攻を一旦切る
+LOCAL:2 = 0
+IF GETBIT(TCVARn:3, 0)
+	LOCAL:2 = 1
+	CLEARBIT TCVARn:3, 0
+ENDIF
+
+CALL DAMAGE, "ATTACK_RANGE_LONG"
+
+;EX:攻の状態を復帰
+SIF LOCAL:2 == 1
+	SETBIT TCVARn:3, 0
+	
+LOCAL:1 = RESULT * LOCAL:0 / 100
+PRINTL TK-드론の火力支援！
+PRINTW 
+IF FLAG:73 > 0
+	PRINTL 一般人に火器を使用するわけにはいかない！
+	LOCAL:1 = 0
+ELSEIF LOCAL:0 < 5
+	PRINTL TK-드론は機銃を掃射した！
+	LOCAL:1 += 50
+ELSEIF LOCAL:0 < 20
+	PRINTL TK-드론は対촉수レーザービームを掃射した！	
+	LOCAL:1 += 100
+ELSE
+	PRINTL TK-드론はミサイルを発射した！
+	LOCAL:1 += 250
+ENDIF
+FLAG:13 -= LOCAL:1
+FONTBOLD
+SIF LOCAL:1 > 0
+	PRINTFORML {LOCAL:1}のダメージを与えた！
+FONTREGULAR
+PRINTW
+
+;------------------------------------------------------------------------------------------------
+;우주 씰
+@HP_AUTOREGAIN
+LOCAL:0 = 2 + RAND:7
+LOCAL:1 = MAXBASE:체력 * LOCAL:0 / 100
+SIF BASE:체력 + LOCAL:1 >= MAXBASE:체력
+	LOCAL:1 = MAXBASE:체력 - BASE:체력
+BASE:체력 += LOCAL:1
+IF LOCAL:1 > 0
+	PRINTFORML 우주 씰から流れ込む力が%PRINT_CALLNAME(TARGET)%の体を癒す…
+	PRINTFORML %BASENAME:0%が{LOCAL:1}回復した
+ENDIF
+
+;------------------------------------------------------------------------------------------------
+;심부름꾼
+@SERVANT
+LOCAL:0 = RAND:25
+IF ENEMY_TYPE_CHECK_F("CITIZEN") == 1
+	PRINTFORML %PRINT_CALLNAME(TARGET)%の심부름꾼は敵の気を引くように動いた…
+ELSE
+	PRINTFORML %PRINT_CALLNAME(TARGET)%の심부름꾼は촉수を撹乱している…
+ENDIF
+PRINTL 
+IF LOCAL:0 < 5
+	PRINTW しかし、あまりうまくいかなかったようだ…
+ELSEIF LOCAL:0 > 4 && LOCAL:0 < 10 && FLAG:73 > 0
+	PRINTW 少しだけ敵の気を逸らせたようだ
+ELSEIF LOCAL:0 > 4 && LOCAL:0 < 10
+	PRINTW 少しだけ촉수の気を逸らせたようだ
+ELSEIF LOCAL:0 > 9 && LOCAL:0 < 15
+	PRINTW 撹乱に成功したようだ！
+ELSEIF LOCAL:0 > 14 && LOCAL:0 < 20 && FLAG:73 > 0
+	PRINTW 敵は심부름꾼を警戒している！
+ELSEIF LOCAL:0 > 14 && LOCAL:0 < 20
+	PRINTW 촉수は심부름꾼を警戒している！
+ELSEIF FLAG:73 > 0
+	PRINTW 심부름꾼に翻弄され、敵は混乱しているようだ！
+ELSE
+	PRINTW 심부름꾼に翻弄され、촉수は混乱しているようだ！
+ENDIF
+TFLAG:3 += LOCAL:0
+SIF FLAG:17 + TFLAG:3 < FLAG:16
+	TFLAG:3 += 25

@@ -1,0 +1,665 @@
+﻿
+;髪を振り乱す
+;髪を掻きむしる(狂気的な快楽)・絶頂禁止
+
+
+;絶頂するタイミング
+;戦闘中　性공격被弾時
+;戦闘中　非被弾時(胸が擦れた、拘束具や촉수服の責め、強制自慰)
+;戦闘直後　絶頂禁止の解放時(CVABの順に部位ごと)
+;非戦闘中　イベントによる自慰やセックス、レイプなど
+;自慰구상側などで現在絶頂している理由(シチュエーション)を記録しておく？
+
+
+;絶頂強度はいつの間にか10段階も出来ているが구상分岐は２種類
+;ARG =NOWEX:C절정
+;IF ARG == 1
+;	RES_STR = 
+;ELSEIF ARG == 2
+;	RES_STR = 強	←ここ以上かつ単独部位で強絶頂구상
+;ELSEIF ARG == 3
+;	RES_STR = 超
+;ELSEIF ARG == 4
+;	RES_STR = 超強
+;ELSEIF ARG == 5
+;	RES_STR = 最強
+;ELSEIF ARG == 6
+;	RES_STR = 凄
+;ELSEIF ARG == 7
+;	RES_STR = 極
+;ELSEIF ARG == 8
+;	RES_STR = 獄
+;ELSEIF ARG == 9
+;	RES_STR = 狂
+;ELSEIF ARG == 10
+;	RES_STR = 最狂
+
+	;견딘다選択中なら絶頂しにくくなる
+	;가만히있는다選択中なら絶頂しやすくなる
+
+;●絶頂キャンセル
+;絶頂抑制(我慢)　★地の文は数段階分岐
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_INHIBITION_16
+	;どの程度余裕をもって耐えたか取得できないので성내성の割合とかで分岐かな？
+PRINTDATAL
+	DATAFORM 「っ……！ く……っ、うぐっ、ぅあぁ……っ！！」
+	DATAFORM 「くひ……っう、ぁ…ぐ……うゔぅ……っ！！」
+	DATAFORM 「っう……く、ふ……う…ぎ……うくあぁ……っ！！」
+ENDDATA
+PRINTFORML  %CALLNAME%は歯を食いしばり、どうにか絶頂を抑え込んだ！
+PRINTDATAL
+	DATAFORM 「こ、この程度で%SELF_CALL()%は屈しない。%SELF_CALL()%たちを甘く見るな…っ！！」
+	DATAFORM 「こんなことで……ひぅっ……%SELF_CALL()%は負け……負けない…っ！」
+	DATAFORM 「ひふぅ……く、ふあっ……はひ……はぁ、はぁ、あ、ふっ……ま、まだまだ……！」
+ENDDATA
+
+
+;絶頂禁止　薬液でイけない
+;※絶頂禁止の解除は戦闘中規定ターン経過or戦闘終了後(公開絶頂イベント)
+;　★「戦闘中絶頂禁止解除直後の絶頂」は個別処理されない(通常の絶頂扱いとなる)
+;　　ここでフラグ立てておいてもいいかも
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_PROHIBITION_16
+PRINTDATAL
+	DATAFORM 「んっ、うぅぅっ！ イ゛かされたり、なんか、い、ひ、ぁぎ………へ…？」
+	DATAFORM 「くあぅぅぅぅうんっ！？ こ、腰、勝手に、いやだ、嫌ぁああ………へ…？」
+ENDDATA
+PRINTFORML  %CALLNAME%は高まる性感を急に抑え込まれて当惑している！
+PRINTDATAL
+	DATAFORM （な……%SELF_CALL()%の身体…何が起きてるんだ…！？）
+	DATAFORM （もうちょっとで……なんで……身体が変になってる……！？）
+ENDDATA
+
+;絶頂懇願　絶頂禁止からの惨めにイかせてと懇願
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_ENTREATY_16
+PRINTDATAL
+	DATAFORM 「は、ぁっ、きひぃっ……イ…イギだい…こんなの、無理ぃっ…イガぜでぐだざいっ、もう我慢でき゛な゛い゛ぃ゛っ！！」
+	DATAFORM 「お願い！ お願いだからぁっ！ もう何でもするからぁ゛、だから%SELF_CALL()%をイカせてぇぇぇえぇ！！！！」
+ENDDATA
+IF ISMALE()
+	;#region
+	PRINTFORML  %CALLNAME%は남자としての誇りを捨てて絶頂を懇願している…
+	;#endregion
+ELSE 
+	PRINTFORML  %CALLNAME%は女性としての誇りを捨てて絶頂を懇願している…
+ENDIF
+
+
+;●絶頂した
+;C絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_C_16
+IF ABL:C감각>=3
+	PRINTDATAL
+	DATAFORM 「イ゛ぎぃぃいっ！ イ゛っひゃ、ら゛、ら゛めぇ゛ぇ゛えっ！」
+	DATAFORM 「んぎぃぃッ！ ぃ゛、嫌だ、もうイきたくなっ、ん゛ぎぃぃぃッ！」
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「ひ、ぁ、ひあぁああんっ！？」
+	DATAFORM 「…だ…め……ぁ、い、イッ、くぅっ！」
+	DATAFORM 「だめ、きちゃ……あぁああっ！？」
+	DATAFORM 「くりゅ、きちゃ…ぅあ、ぁあぁあっ！？」
+	ENDDATA
+ENDIF
+	PRINTFORML  つま先をピンと張り、%PRINT_TRANSCALLNAME(TARGET)%は目を剥いて金切り声を上げ
+	IF ISMALE()
+		;#region
+		PRINTFORML  腰を震わせながら사정すると、ぐったりと脱力した……
+		;#endregion
+	ELSE 
+		PRINTFORML  ぐったりと脱力した……
+	ENDIF
+
+;C強絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_C_HI_16
+IF ABL:C감각>=3
+PRINTDATAL
+DATAFORM 「ぐひぃぃッ！ ィ゛グっ、イ゛ぐぅぅぅぅっ、ん゛ぉ゛お゛ぉッ！」
+DATAFORM 　い゛ひぃぃッ！ ぃ゛ひっ、ぎっ、ん゛いぃぃぃぃッ！」
+ENDDATA
+ELSE
+PRINTDATAL
+DATAFORM 「ンんぅぅううぅああ――っっ！！」
+DATAFORM 「ふあっ！くぅ、はぅうっ！！」
+DATAFORM 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+DATAFORM 「……ぁああぁあああ！？？」
+ENDDATA
+ENDIF
+PRINTFORML  半ば白目を剥き、口の端から泡を吹き、%PRINT_TRANSCALLNAME(TARGET)%は
+IF ISMALE()
+	;#region
+	PRINTFORML  大量の精液を噴き上げながら腰を突き出すように仰け反り、崩れ落ちた……
+	;#endregion
+ELSE 
+	PRINTFORML  腰を突き出すように仰け反り、崩れ落ちた……
+ENDIF
+
+;V絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_V_16
+PRINTDATAL
+DATAFORM 「んっ、ぎぃぃッ！ イ゛ったりなんか、あ゛、ぁへぁあ゛ああっ！」
+DATAFORM 「あ゛ぇぁあああ？！ あへぁあああっ！」
+ENDDATA
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の意志とは関係なく、浅ましい牝肉が蜜を吐き溢す。
+PRINTFORML  突っ張らせていた손발から力が抜けてへたり込み、ひゅうひゅうと息を漏らしている……
+
+
+;V強絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_V_HI_16
+;음호取得後
+IF TALENT:음호
+	PRINTDATAL
+	DATAFORM 「おっ、おごぉぉぉっ？！ イ゛ッ、いっ、い゛うぅぅうッ！」
+	DATAFORM 「ひはぁっ、ひっ、いっ、イ゛……いひぃいーッ！」
+	DATAFORM 「い゛ぎゅぅうううっ！ イ゛ぎ、ぢぬぅううう！」
+	ENDDATA
+	PRINTFORML  白目を剥きかけ、口の端に泡を浮かべて%PRINT_TRANSCALLNAME(TARGET)%は濁った蜜を垂れ溢す。
+	PRINTFORML  貪欲な膣肉に蕩けきった%PRINT_TRANSCALLNAME(TARGET)%は손발を放り出して痙攣している……
+;それ以外
+ELSE
+	PRINTDATAL
+	DATAFORM 「はひぃ、ひぐっ、ぃ゛ぃ……イ゛ったり、ひなっ、我慢んおぉぉおおーッ！？」
+	DATAFORM 「やだぁぁ！ こんなっ、んんんッ！ イ゛ッ、いっ、い゛うぅぅうッ！」
+	ENDDATA
+	PRINTFORML  涙と涎を垂らし、何度も首を横に振りつつも、%PRINT_TRANSCALLNAME(TARGET)%は盛大に潮を吹いて達してしまった……
+ENDIF
+
+
+;A絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_A_16
+;음고取得後
+IF TALENT:음고
+	PRINTDATAL
+	DATAFORM 「ぶひっ、ぶぎぃぃぃっ！ イ゛グっ、おぢりぃぃッ、ぶひぃいぃぃッ！」
+	DATAFORM 「お゛ぢり゛っ、お゛ぢり゛ぎたぁぁッ！ ぶひっ、ぶひぃいぃぃッ！」
+	DATAFORM 「ぶひっ、ぶひぃぃッ！ おひりっ、お゛ぢり゛ぃっ、ぶぎぃいぃぃッ！！」
+	ENDDATA
+	PRINTFORML  排泄器官からもたらされる快感に降伏してしまった%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML  獣のような悲鳴を上げ、端正な顔を狂悦に醜く歪めるのだった……
+ELSE
+	PRINTDATAL
+	DATAFORM 「や、やだぁぁ！ こんなっ、尻なんかでイ゛ッ、ぶひぃぃぃッ！」
+	DATAFORM 「おっっほおぉぉぉぉぉおッ！ おひりっ、おひりぃいいっ？！」
+	ENDDATA
+	PRINTFORML  既に%PRINT_TRANSCALLNAME(TARGET)%の排泄器官は、肉欲を貪る器官に成り果てていた。
+	PRINTFORML  背徳と절망が気持ちよすぎて、涙が止まらなかった……
+ENDIF
+
+
+;A強絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_A_HI_16
+;음고取得後
+IF TALENT:음고
+	PRINTDATAL
+	DATAFORM 「ぶひっ、ぶひぃいぃぃッ！ ぶごっ、ぶひぃいぃぃッ！」
+	DATAFORM 「おほぉぉおっ！ おひりっ、おひりっ、いぎぃッ！ ぶぎいぃぃいッ！」
+	DATAFORM 「はひっ！ はへぇっ！おひっ、おひっ、ぶひぃいイィィィっ！」
+	ENDDATA
+	PRINTFORML  自ら尻穴を広げ、排泄器官の狂悦に目を剥いて泣き叫ぶ。
+	PRINTFORML  絶頂に溺れる%PRINT_TRANSCALLNAME(TARGET)%は、自分がどんな嬌声を上げているかすらわからなかった……
+;それ以外
+ELSE
+	PRINTDATAL
+	DATAFORM 「ぶひっ、ぶぎぃっ、おひりっ、おッ、おほぉぉぉぉッ！」
+	DATAFORM 「ひっ、いぃいっ！ おしりが、あがががっ、あ゛ぐうぅぅううッ！」
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の不浄の穴はもはや性器も同然だった。
+	PRINTFORML  四肢を激しく突っ張らせて絶頂する度に、浅ましい声が喉を裂いて迸る。
+ENDIF
+
+
+;B絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_B_16
+;음유取得後
+IF TALENT:음유
+	PRINTDATAL
+	DATAFORM 「ん゛も゛ぉぉおぉっ、む゛ね゛、む゛ねぇへぇぇーッ、も゛おぉぉぉぉッ！！」
+	DATAFORM 「む゛ね゛っ、む゛ね゛でイ゛グぅっ！ ぉ゛おぉ゛おぉぉぉッ！」
+	DATAFORM 「も゛っ、ぅ゛も゛おぉぉッ！ お゛おぉ゛おぉッ！」
+	ENDDATA
+	IF ISMALE()
+		;#region
+		PRINTFORML  平坦な胸を突き出し、%PRINT_TRANSCALLNAME(TARGET)%は浅ましい絶頂に歓喜の涙を零している。
+		;#endregion
+	ELSE 
+		PRINTFORML  가슴を突き出し、%PRINT_TRANSCALLNAME(TARGET)%は浅ましい絶頂に歓喜の涙を零している。
+	ENDIF
+	IF ISMALE()
+		;#region
+		PRINTFORML  もはや%PRINT_TRANSCALLNAME(TARGET)%は남자でありながら牝牛になりきっていた……
+		;#endregion
+	ELSE 
+		PRINTFORML  もはや%PRINT_TRANSCALLNAME(TARGET)%は牝牛になりきっていた……
+	ENDIF
+ELSE
+	PRINTDATAL
+	DATAFORM 「む゛ね゛っ、む゛ね゛で……ッ、ぉ゛おぉ゛おぉぉぉッ！」
+	DATAFORM 「ぉお゛ぉ゛ぉ゛おぉぉッ！ お゛おぉ゛おぉッ！」
+	DATAFORM 「も゛おぉぉおっ、胸、おむね、えへぇぇええーッ！」
+	ENDDATA
+	IF ISMALE()
+		;#region
+		PRINTFORML  平坦な胸を庇うこともできず、%PRINT_TRANSCALLNAME(TARGET)%はひどい声を上げて達してしまった。
+		;#endregion
+	ELSE 
+		PRINTFORML  가슴を庇うこともできず、%PRINT_TRANSCALLNAME(TARGET)%はひどい声を上げて達してしまった。
+	ENDIF
+	IF ISMALE()
+		;#region
+		PRINTFORML  남자であるにも関わらず自分の嬌声が牝牛に近づいていることすら気づかないまま……
+		;#endregion
+	ELSE 
+		PRINTFORML  自分の嬌声が牝牛に近づいていることすら気づかないまま……
+	ENDIF
+ENDIF
+
+
+;B強絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_ECSTASY_B_HI_16
+;음유取得後
+IF TALENT:음유
+	PRINTDATAL
+	DATAFORM 「ん゛も゛ぉぉおぉっ、む゛ね゛、む゛ねぇへぇぇーッ、も゛おぉぉぉぉッ！！」
+	DATAFORM 「お゛おぉぉッ！ む゛ね゛、む゛ね壊゛れ゛だぁぁッ！ も゛っ、お゛おぉ゛おぉッ！」
+	DATAFORM 「お゛も゛ぉ゛おぉ゛おぉおッ！ も゛おぉぉぉぉッ、ん゛お゛おぉぉッ！！」
+	DATAFORM 「む゛ね゛っ、む゛ね゛でイ゛グぅっ！ ぉ゛おぉ゛おぉぉぉッ！」
+	ENDDATA
+	IF ISMALE()
+		;#region
+		PRINTFORML  肉欲を貪る器官に成り下がった乳首を突き出し、%PRINT_TRANSCALLNAME(TARGET)%は啼き叫ぶ。
+		;#endregion
+	ELSE 
+		PRINTFORML  肉欲を貪る器官に成り下がった膨らみを突き出し、%PRINT_TRANSCALLNAME(TARGET)%は啼き叫ぶ。
+	ENDIF
+	IF ISMALE()
+		;#region
+		PRINTFORML  입の端に泡を浮かべて絶頂に溺れる姿は남자でも人でもなく、もはや牝牛以下だった……
+		;#endregion
+	ELSE 
+		PRINTFORML  입の端に泡を浮かべて絶頂に溺れる姿は、もはや牝牛以下だった……
+	ENDIF
+ELSE
+	PRINTDATAL
+	DATAFORM 「む゛ね゛っ、む゛ね゛で……ッ、ぉ゛おぉ゛おぉぉぉッ！」
+	DATAFORM 「ぉお゛ぉ゛ぉ゛おぉぉッ！ お゛おぉ゛おぉッ！」
+	DATAFORM 「お゛おぉ゛おほぉぉおおーッ！ お゛おぉぉぉぉッ！！」
+	ENDDATA
+	IF ISMALE()
+		;#region
+		PRINTFORML  平坦な胸を突き出し、%PRINT_TRANSCALLNAME(TARGET)%は絶叫を上げる。
+		;#endregion
+	ELSE 
+		PRINTFORML  가슴を突き出し、%PRINT_TRANSCALLNAME(TARGET)%は絶叫を上げる。
+	ENDIF
+	IF ISMALE()
+		;#region
+		IF ISMALE()
+			;#region
+			PRINTFORML  乳首からの快感が、%PRINT_TRANSCALLNAME(TARGET)%をヒトの남자から牝牛へと変えていく……
+			;#endregion
+		ELSE 
+			PRINTFORML  乳首が、乳房からの快感が、%PRINT_TRANSCALLNAME(TARGET)%をヒトの남자から牝牛へと変えていく……
+		ENDIF
+		;#endregion
+	ELSE 
+		IF ISMALE()
+			;#region
+			PRINTFORML  乳首からの快感が、%PRINT_TRANSCALLNAME(TARGET)%を牝牛へと変えていく……
+			;#endregion
+		ELSE 
+			PRINTFORML  乳首が、乳房からの快感が、%PRINT_TRANSCALLNAME(TARGET)%を牝牛へと変えていく……
+		ENDIF
+	ENDIF
+ENDIF
+
+
+;多重絶頂に関する구상
+
+;四重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CVAB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、て、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、て、ダメ、待って、やだ、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「ひぐっ、ぃ゛ひっ、っ゛……ぶひっ、ぶぎぃいイィィィーーっ！！」
+DATAFORM 「ぉっ、お゛お゛ぅっ、んほぉおぉぉっ！ お゛おぉ゛おほぉぉーーッ！！」
+DATAFORM 「あっ、あ゛っ、あ゛……ぁぇええっ！ あ゛ぅ゛あぁぁああーーッ！！」
+ENDDATA
+PRINTFORML  손발を突っ張り、正気のかけらもない嬌声を張り上げる%PRINT_TRANSCALLNAME(TARGET)%。
+PRINTFORML  涙を、涎を、鼻水を、汗を、体液を垂れ流し、のたうち回るその姿は今までの彼女の人生でもっとも美しかった。
+SIF TALENT:후타나리 > 0
+	PRINTFORML  過剰な快楽に異常勃起の収まらない후타나리ペニスは黄濁した精液塊をひりだし続け、
+SIF TALENT:모유체질
+	PRINTFORML  醜いほどに肥大したままの乳首は壊れた蛇口のように乳白色の野太い濁流を吐き散らし、
+PRINTFORML  獣じみた絶叫を伴奏に無様すぎる舞を終えた牝豚は、泡を吹きながら崩れ落ちて痙攣している……
+PRINTFORML 「ぐげぇ゛……げぼ、が、あが、げ…は……がぼ、おぼぼぉぉ……」
+PRINTFORML  完全に白目を剥き、半開きの唇から言葉の代わりに吐瀉物が溢れ出し、下腹部から黄金色の水流が迸る。
+PRINTFORML  もはや%PRINT_TRANSCALLNAME(TARGET)%にそれを止める力は残っていなかった……
+
+
+;CVA三重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CVA_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「壊れ、壊゛れ゛る゛ッ！ こんなイき方、おかひくなって壊れ……ぃ゛ひっ、ぶひぃぃぃッ！！」
+DATAFORM 「ら゛ッ、ら゛め゛ッ！ こんなイき方、覚えちゃったら、%SELF_CALL()%、は、%SELF_CALL(3)%、あ゛ぁぁッ！！」
+DATAFORM 「りょ、両方は、ダメ、%SELF_CALL()%壊れ、ちゃ…そ、そこは、っぎぁ゛ァ゛ぁ゛ぁ゛あ゛ッ？！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+
+
+;CVB三重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CVB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「壊れ、壊゛れ゛る゛ッ！ こんなイき方、おかひくなって壊れ……ぃ゛ひっ、ぶひぃぃぃッ！！」
+DATAFORM 「ら゛ッ、ら゛め゛ッ！ こんなイき方、覚えちゃったら、%SELF_CALL()%、は、%SELF_CALL(3)%、あ゛ぁぁッ！！」
+DATAFORM 「りょ、両方は、ダメ、%SELF_CALL()%壊れ、ちゃ…そ、そこは、っぎぁァぁぁあッ？！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+
+
+;CAB三重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CAB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「壊れ、壊゛れ゛る゛ッ！ こんなイき方、おかしくなって……も゛っ、お゛おぉ゛おぉーッ！！」
+DATAFORM 「ら゛ッ、ら゛め゛ッ！ こんなイき方、おかしくなって……ぃ゛ひっ、ぶひぃぃぃッ！！」
+DATAFORM 「い゛ぎゅぅうううっ！ ま゛だイ゛ぐぅぅぅっ……っん゛お゛おぉぉーッ！！」
+ENDDATA
+IF ISMALE()
+	PRINTFORML  손발を突っ張り、正気のかけらもない嬌声を張り上げる%PRINT_TRANSCALLNAME(TARGET)%。
+	PRINTFORML  涙を、涎を、鼻水を、汗を、体液を垂れ流し、のたうち回るその姿は今までの人生でもっとも美しかった。
+	PRINTFORML  尻穴と乳首の快感に翻弄されながら、身体は強いオスに嬲られる悦びに浸ってしまっていた。
+	PRINTFORML  そのせいで委縮し牝化したペニスも클리토리스のように弄ばれ、惨めな사정を迎えている。
+	PRINTFORML  もはや남자でもヒトでもなく、オスに犯されるための存在と化した牝豚がそこに居た。
+	PRINTL 
+	PRINTFORML  過剰な快楽に勃起の収まらないペニクリは、その小ささに似合わず大量に黄濁した精液塊をひりだし続け、
+	PRINTFORML  獣じみた絶叫を伴奏に無様すぎる舞を終えた牝豚は、泡を吹きながら崩れ落ちて痙攣している……
+	PRINTFORML 「ぐげぇ゛……げぼ、が、あが、げ…は……がぼ、おぼぼぉぉ……」
+	PRINTFORML  完全に白目を剥き、半開きの唇から言葉の代わりに吐瀉物が溢れ出し、牝豚ペニスから黄金色の水流が迸る。
+	PRINTFORML  もはや%PRINT_TRANSCALLNAME(TARGET)%にそれを止める力は残っていなかった……
+ENDIF
+
+
+;VAB三重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_VAB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「ら゛ッ、ら゛め゛ッ！ こんなイき方、おかしくなって……お゛っ、も゛おぉ゛おぉーッ！！」
+DATAFORM 「壊れ、壊゛れ゛る゛ッ！ こんなイき方、絶対おかしく……ぃ゛ひっ、ぶひぃぃぃッ！！」
+DATAFORM 「りょ、両方は、ダメ、%SELF_CALL()%が、壊れ゛ちゃ……胸ぇっ！？ お゛おぉ゛おほぉぉおおーッ！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+
+
+;CV二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CV_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「ひぁ…両方は、ダメ、%SELF_CALL()%、壊れ゛ちゃ……だ、だめ……あ、ぁ、ぅぁあっ！？」
+DATAFORM 「んぅぅぅぅうッ！ こ、腰がッ？！ 砕け、て、これ、あぁあっぅッ！」
+ENDDATA
+
+
+;CA二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CA_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「おほぉぉぉぉッ！ おひりッ！ おひり、ぁがっ、あっ、あぅあああッ！」
+DATAFORM 「んぅぅぅぅうッ！ こ、腰がッ？！ 砕け、て、らめ、あぁあっぅッ！」
+ENDDATA
+
+
+;CB二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_CB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「んぅぅぅぅぅッ！ ひ、ひふぅぅ……う゛も゛ぉ゛おぉ゛おぉおッ！」
+DATAFORM 「んぅぅぅぅうッ！ こ、腰がッ？！ 砕け、て、あぁ、あぁあっぅッ！」
+ENDDATA
+
+
+;VA二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_VA_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「おほぉぉぉぉッ！ おひりッ！ おひり、ぁがっ、あっ、あぅあああッ！」
+DATAFORM 「ひぁ…両方は、ダメ、%SELF_CALL()%、壊れ゛ちゃ……だ、ダメ、だから、そんなの、絶対ダメあぁぁあっ！」
+ENDDATA
+
+
+;VB二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_VB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「う゛も゛ぉ゛おぉ゛おぉおッ！ ぅ、くふぅぅ……ぁ、あは、ぅぁぁ……！」
+DATAFORM 「ひぁ…こんなの、耐えられない、%SELF_CALL()%、壊れ゛ちゃ…だ、だめ、%SELF_CALL(7)%…%SELF_CALL_SUBSTRING(0, 2)%…あ、ぅぁあっ！」
+ENDDATA
+
+
+;AB二重絶頂
+;--------------------------------------------------
+@KOJO_1_SEX_MULTIECSTASY_AB_16
+PRINTFORML 「……ッ!?ぅあああああ！！？」
+PRINTDATAL
+DATAFORM 「イクっ！、イッて、あああアぁああ！！」
+DATAFORM 「あっダメ！イクっ、あああアぁああ！！」
+DATAFORM 「イ、ヤぁあああアぁああ！！」
+ENDDATA
+PRINTDATAL
+DATAFORM 「　！！？　止まらな、ァあ、とま、ぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+DATAFORM 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+ENDDATA
+PRINTDATAL
+DATAFORM 「ぅ、くふぅぅ……ぁ、あは、ぅぉお……！ ぅ゛も゛ぉ゛おぉ゛おぉおッ！」
+DATAFORM 「う゛も゛ぉ゛おぉ゛おぉおッ！ ぉ、おひりぃぃ……ひぁ、あは、あぁ……ッ！」
+ENDDATA
+
+
+
+
+
+;●모유
+;キャラが모유
+;--------------------------------------------------
+@KOJO_1_SEX_CHARA_HUNNYU_16
+SETCOLOR 0xAEB4DE
+PRINTDATAL
+DATAFORM 「搾ってっ、もっと、も゛っどぉ゛……ッ、ぉ゛おぉ゛おぉぉぉッ！」
+DATAFORM 「ぉお゛ぉ゛ぉ゛ぉッ！ みるく、出る、出……ぉ゛おぉ゛おぉぉッ！」
+DATAFORM 「お゛おぉ゛おほぉぉおおーッ！ 搾って…搾゛っでぇ…っ、ぅも゛おぉぉぉぉッ！！」
+ENDDATA
+PRINTFORML  大きく張った胸を突き出し、굴복の絶叫を挙げる%PRINT_TRANSCALLNAME(TARGET)%は
+IF TALENT:촉수의포로
+	PRINTFORML  もはやただの牝牛へと堕ち、歓喜の涙を零しながら母乳を噴き上げてしまう……
+ELSE
+	PRINTFORML  焦げるほどの快楽で頭の中を焼かれ、牝牛さながらに母乳を垂れ流してしまう……
+ENDIF
+RESETCOLOR
+
+;キャラが大量모유
+;--------------------------------------------------
+@KOJO_1_SEX_CHARA_HUNNYU_HI_16
+SETCOLOR 0xAEB4DE
+PRINTDATAL
+DATAFORM 「ぉ゛おぉ゛おぉぉぉッ！ 出るっ、すごいの出るぅぅッ！ お゛おぉ゛おほぉぉおおーッ！」
+DATAFORM 「ぉ゛おっ、う゛も゛ぉ゛おぉぉッ！ 壊゛れたッ、%SELF_CALL()%の胸壊れたぁっ、お゛おぉ゛おほぉぉおおーッ！」
+DATAFORM 「お゛おぉ゛おほぉぉおおーッ！ 搾って…搾゛っでぇ…っ、ぅも゛おぉぉぉぉッ！！」
+ENDDATA
+PRINTFORML  大きく張った胸から大量の母乳を吹き出し、目を剥いて絶叫する……
+IF TALENT:촉수의포로
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は自分が牝牛以下の家畜に堕ちたことを自ら認めてしまっていた……
+ELSE
+	PRINTFORML  입の端に泡を吹きながら快楽に溺れ、自分が牝牛に過ぎないのだと自ら魂に刻み込んでいく……
+ENDIF
+RESETCOLOR
+
+
+;●사정
+;--------------------------------------------------
+;キャラが사정
+;--------------------------------------------------
+@KOJO_1_SEX_CHARA_SYASEI_16
+SETCOLOR 0xAEB4DE
+IF CFLAG:263 == 0
+	;初めて
+	PRINTFORML 「なっ、あ、あそこがっ？！ こ、この感覚、まさか、ぉ、ぉひ、ぉおほぉ゛ぉ゛ぉぉっ！！」
+	PRINTFORML  %CALLNAME%はペニスから生臭い汚濁を吐き出しながら、腰をかくかくと突き出している……
+	PRINTFORML  精通という牡の快楽に理性を砕かれ、%CALLNAME%は白目を剥いて悶絶した……
+	CFLAG:263 = 1
+ELSE
+	PRINTDATAL
+	DATAFORM 「ぉおぉぉっ？！ 出るっ、でるでるでりゅぅぅぅっ！！ んおぉっ、ぉおほぉ゛ぉ゛ぉぉっ！！」
+	DATAFORM 「ぐひぃぃぃっ、イ゛ぐっ！！ %SELF_CALL_SINGLE()%、%SELF_CALL()%のおちんぽ、また弾けるぅっ！！」
+	DATAFORM 「ぉお゛ぉ゛っ、イ゛ぐっ、ちんぽイ゛グぅっ！！ ひぐっ、ぉへぇぇぇぇっ！！」
+	ENDDATA
+	IF TALENT:촉수의포로
+		PRINTFORML  %CALLNAME%は浅ましく腰を振りたて、間欠泉のように精液を撒き散らしている……
+	ELSE
+		PRINTFORML  %CALLNAME%は無様に腰を突き出し、굴복の証をペニスの先端から吐き出した……
+	ENDIF
+ENDIF
+RESETCOLOR
+;キャラが대량사정
+;--------------------------------------------------
+@KOJO_1_SEX_CHARA_SYASEI_HI_16
+SETCOLOR 0xAEB4DE
+IF CFLAG:264 == 0
+	;初めて
+	PRINTFORML 「ぉおぉ゛ぉ゛っ？！ 出るっ、何か出る゛でり゛ゅ゛ぅぅぅっ！！ ん゛ぉお゛おぉ゛ッ！ お゛ぉ゛おほぉ゛おぉ゛？！」
+	PRINTFORML  あらん限りに絶叫し、腰を突き出した%CALLNAME%のペニスから、汚らしい粘液音を立て、
+	PRINTFORML  凄まじい勢いで精液が噴き上がった。初めての사정に矜持も理性も何もかも一緒に吐き出してしまった%CALLNAME%は
+	PRINTFORML  白目を剥いてだらしなく顔を歪め、虚空に腰を振りながら사정し続けている……
+	CFLAG:264 = 1
+ELSE
+	PRINTDATAL
+	DATAFORM 「ひぐぅぅッ！ イ゛ぐぅぅ！！ %SELF_CALL_SINGLE()%、%SELF_CALL()%のちんぽ、弾けるぅ゛！ 壊れ゛ぅぅぅッ！！」
+	DATAFORM 「ぶぎぃぃぃッ！ 사정ぇ゛へぇぇえっ！ 出る゛でりゅいっぱひでひゃぁ゛がぁあぁぁああ！」
+	DATAFORM 「ん゛おぉぉおお゛！ しゃせー、せーえき、ひっ、ひっぎ、くひぃぃいッ！！」」
+	ENDDATA
+	IF TALENT:촉수의포로
+		PRINTFORML  白目を剥いて悶絶する%CALLNAME%は浅ましく腰を振り、陰茎から壊れた蛇口のように精液を撒き散らしている……
+	ELSE
+		PRINTFORML  白目を剥いて悶絶する%CALLNAME%は無様に腰を突き出し、ペニスの先端から大量の굴복の証を吐き出した……
+	ENDIF
+ENDIF
+RESETCOLOR
+
+

@@ -1,0 +1,568 @@
+﻿
+
+;●鍛錬
+
+;分岐凡例
+@KOJO_1_TRAINING_HASHIRI_16_dummytraining
+;IF TALENT:후타나리 > 0 || CHECK_PREGNANT_F(TARGET) > 0
+;◆임신等特殊な条件の分岐
+IF CHECK_BODY("異常임신") > 0
+
+
+ELSEIF CHECK_BODY("触装")
+	;◆촉수服＋身体陥落クリティカルヒット時の鍛錬
+	IF ABL:B감각 >=3
+		IF 진지함_フラグ_シチュ==""
+			;実行時
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			진지함_フラグ_シチュ=
+			RETURN
+		ENDIF
+	;◆通常の촉수服鍛錬
+	ELSE
+		;◆촉수服通常
+		IF 진지함_フラグ_シチュ==""
+			;実行時
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			진지함_フラグ_シチュ=
+			RETURN
+		ENDIF
+	ENDIF
+;◆精神陥落時の鍛錬
+ELSEIF ABL:노출벽+MARK:치욕각인 >= 5
+;◆身体陥落時の鍛錬
+ELSEIF ABL:B감각 >=3
+
+;◆はじめて
+ELSEIF GETBIT(CFLAG:271,1)==0
+	;SETBIT(CFLAG:271,1)
+
+;◆通常トレーニング
+ELSE
+
+ENDIF
+
+
+
+;■身体鍛錬：走りこみ
+;--------------------------------------------------
+@KOJO_1_TRAINING_HASHIRI_16
+CFLAG:270 = 1
+
+;call ss,"いいい?r(どう？/テスト/どうよ)あああ"
+
+;call list
+;call li,"１"
+;call li,"２"
+;call li,"３"
+;call li,"４"
+;call end
+
+
+IF TALENT:후타나리 > 0 || CHECK_PREGNANT_F(TARGET) > 0
+	;◆후타나리/임신
+	IF 진지함_フラグ_シチュ==""
+		PRINTFORML 「く、ひっ、ひゅう、はっ、あぁ……ま、まだ終わらないのか……」
+		PRINTFORML  衣服の代わりに無数の端子を素肌に貼り付け、ルームランナーの上で%CALLNAME%が息を切らせている。
+		PRINT  汗にまみれたふとももに汗以外の雫を伝わせ、
+		SIF TALENT:후타나리
+			PRINTFORML ケーブルの巻き付いたペニスを腹に張り付くほど反り返らせて
+		PRINTFORML  %CALLNAME%は機械に囲まれ、のたのたと足を進めている。
+		IF CHECK_BODY("正常임신")
+			PRINTFORML  新たな命の宿るお腹を両手でそっと抱え、庇うようにしながらよろよろと歩いてゆく……
+		ELSEIF CHECK_BODY("임신")
+			PRINTFORML  両手で突き出たボテ腹を抱え、がに股で無様に走るその姿は既に牝豚以下だった……
+		ENDIF
+	ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+		MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+		IF RESULT < 3
+			PRINTFORML 「っ……動…くなぁ…ぁあ！」
+		ELSEIF RESULT < 5
+			PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+		ELSE
+			PRINTFORML 「……ッ!?ぅあああああ！！？」
+			PRINTFORML 「あっ、だ、だめ、イクっ、っあああアぁああ！！」
+			PRINTFORML 「　！！？　う、うそだ、止まら、な、ダメ、また、またぁぁああああ！！？」
+		ENDIF
+
+		;★모유체질分岐ほしい…ほしくない？
+
+		IF CHECK_BODY("正常임신")
+			PRINTFORML せめてお腹の命は守ろうと庇うように腹を押さえた%CALLNAME%だったが、
+			PRINTFORML 直後に全身を貫いた快感の衝撃で無様な喘ぎ声をあげ、お腹を叩き付ける姿勢でルームランナーに崩れ落ちてしまった。
+			PRINTFORML ……今の%CALLNAME%には街を守るどころか、お腹の生命一つ庇うのも難しいようだ。
+		ELSEIF CHECK_BODY("異形임신")
+			PRINTFORML みっともない姿は見せまいと願う祈りもむなしく、
+			PRINTFORML %ITEMNAME:(CFLAG:42)%に犯される%CALLNAME%は惨めな雌の顔を記録されてしまった。
+			PRINTFORML 孕まされてなお촉수に抗う少女への罰なのだろうか……
+		ELSEIF CHECK_BODY("임신")
+			PRINTFORML 身体に深く기생した%ITEMNAME:(CFLAG:42)%が、%CALLNAME%の上でほんの僅か蠢く。
+			PRINTFORML それだけで軽く果ててしまう%CALLNAME%は、苗床という言葉に相応しい痴態を晒していた……
+		;ただの후타나리
+		ELSE
+			PRINTFORML %ITEMNAME:(CFLAG:42)%から与えられる快感に、%CALLNAME%の腰は砕けてしまった。
+		ENDIF
+		진지함_フラグ_シチュ=
+		RETURN
+	ENDIF
+ELSEIF CHECK_BODY("触装")
+	;◆촉수服＆身体陥落クリティカルヒット
+	IF ABL:B감각>4
+		IF 진지함_フラグ_シチュ==""
+			PRINTDATAL
+			DATAFORM 「ハァ……ハァ…この、化け物、がぁ、うぅ……」
+			DATAFORM 「くぅ……はぁっ」
+			DATAFORM 「く……ふぅっ……」
+			DATAFORM 「はぁっ…はぁっ、ぁ、く、うぅ……」
+			DATAFORM 「ひ、くっ……っ、はぁっ」
+			ENDDATA
+			PRINTDATAL
+			DATAFORM (%SELF_CALL()%の\@ISMALE() ? 乳首 # 가슴 \@……こんな化け物に弄られて……)
+			DATAFORM (%SELF_CALL()%の\@ISMALE() ? 乳首 # 가슴 \@、촉수なんかに好き放題されてるのに……こんなの最悪だ…)
+			DATAFORM (乳首……擦られてる…)
+			DATAFORM (最低だ…こいつ乳首ばっかり…)
+			DATAFORM (%SELF_CALL()%の\@ISMALE() ? 乳首 # 가슴 \@は……おもちゃなんかじゃない……っ)
+			ENDDATA
+			PRINTDATAL
+			DATAFORM 足が地面を蹴るたびに、蠢動する%ITEMNAME:(CFLAG:42)%が%CALLNAME%の開発された\@ISMALE() ? 乳首 # 가슴 \@に快楽を与えてくる。
+			DATAFORM 走る振動に合わせるように、%ITEMNAME:(CFLAG:42)%が%CALLNAME%の敏感な乳首を苛む。
+			ENDDATA
+			IF RAND:2
+				PRINTDATA
+				DATAFORM \@ISMALE() ? もはや남자というよりも、 # \@%randt("女","雌","少女","女性")%の弱点を%randt("執拗に","的確に","容赦なく","絶え間なく","いやらしく","執拗に")%%randt("刺激されて","愛撫されて","弄られて","責められて")%
+				ENDDATA
+				PRINTDATA
+				DATAFORM 思わず喘ぎ声を漏らしながらも、
+				DATAFORM 身悶えしながらも、
+				DATAFORM 感じてしまいながらも、
+				DATAFORM %randt("悔しさ","人外の快感","望まぬ快感")%に%randt("呼吸を乱されながら","肩を震わせながら","頬を染めながら")%も、
+				ENDDATA
+			ELSE
+				PRINTDATA
+				DATAFORM 발정しつつある
+				DATAFORM 強制的に高められてゆく
+				DATAFORM 快楽に染められつつある
+				DATAFORM 快楽に屈しつつある
+				ENDDATA
+				PRINTDATA
+				DATAFORM 自分の身体に
+				DATAFORM 身体に
+				DATAFORM 雌の本能に
+				DATAFORM 敏感な\@ISMALE() ? 乳首 # 가슴 \@に
+				DATAFORM \@ISMALE() ? 平坦な胸肌 # 両の乳房 \@に
+				ENDDATA
+				PRINTDATA
+				DATAFORM 愕然としながら、
+				DATAFORM 翻弄されつつも、
+				DATAFORM 身悶えしながら、
+				DATAFORM 理性を溶かされかけながらも、
+				ENDDATA
+			ENDIF
+			PRINTDATAL
+			DATAFORM %CALLNAME%は必死に声を抑えて鍛錬を続けようとした。
+			DATAFORM %CALLNAME%は必死に歯を食いしばって快感を抑え込もうとした。
+			DATAFORM %CALLNAME%は必死に快楽を無視して走り込みを続けようとした。
+			DATAFORM %CALLNAME%は必死に目の前の鍛錬へ集中しようとした。
+			ENDDATA
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			IF ABL:B감각 <= 6
+				PRINTDATA
+				DATAFORM %randt("儚く","可憐に","健気に","気丈に")%我慢を続ける獲物%randt("に苛立ったのか","を堕とそうとしてか","を嘲笑うかのように","を面白がるかのように")%、
+				DATAFORM %CALLNAME%の抵抗%randt("に反応したのか","に呼応するように","を受けて")%、
+				ENDDATA
+				PRINTDATAL
+				DATAFORM 蠢く%ITEMNAME:(CFLAG:42)%の動きが急激に激しくなった。
+				DATAFORM 蠢く%ITEMNAME:(CFLAG:42)%が今までよりも激しく動き出した。
+				ENDDATA
+
+				PRINTDATA
+				DATAFORM 「う、嘘だろ、こんな時に、やめ、
+				DATAFORM 「ぐ、この、いい加減に、しなさ、
+				DATAFORM 「く、ぅ、こいつ、%SELF_CALL()%を、馬鹿にするのも、いい加減、に、
+				DATAFORM 「こ、こいつ、い、いつまで、%SELF_CALL()%を弄る気…
+				DATAFORM 「こ、こいつ、い、いつまで、%SELF_CALL()%を弄ったら、まんぞ、く、
+				ENDDATA
+				PRINTDATAL
+				DATAFORM …ぁ、ぁあああ、イッ、くぅ……！！」
+				DATAFORM ぅ、ぁ、これ、だめ、あ、ああぁぁぁ……っ！」
+				DATAFORM …う、あ、これ、も、もう、無理、むりぃぃぃ……！」
+				DATAFORM あっ、んっ、こんなの、もう、耐えられ、あぁああぁぁ……！」
+				DATAFORM …ん、く、くぅうぅぅ……！」
+				DATAFORM や、あ、うそ、こんな場所で、ぁ、ひぁあぁぁ……！」
+				ENDDATA
+
+				LOCALS=%randt("抵抗するな","堕ちろ","大人しく犯されろ")%
+				PRINTDATAL
+				DATAFORM %LOCALS%と言わんばかりの一撃を叩き込まれ、
+				DATAFORM %LOCALS%と言わんばかりの一撃に性感帯を嬲られ、
+				DATAFORM 快感に染まった身体が責めに堪えられるはずもなく、
+				ENDDATA
+
+				PRINTFORML %CALLNAME%は
+
+				PRINTDATAL
+				DATAFORM 脚をもつれさせてうずくまってしまった。
+				DATAFORM %randt("あっさりと","あっけなく","可愛らしい声を上げながら")%%randt("イかされてしまった","絶頂してしまった")%……
+				DATAFORM 足を止めてへたり込んでしまった……
+				DATAFORM もはやトレーニングどころではなさそうだ……
+				ENDDATA
+			ELSEIF ABL:B감각 < 8
+				PRINTDATA
+				DATAFORM %randt("儚く","可憐に","健気に","気丈に","無様に","惨めに")%抵抗を続ける獲物%randt("に苛立ったのか","を堕とそうとしてか","を嘲笑うかのように","を面白がるかのように","に追い打ちをかけるように")%、
+				DATAFORM %CALLNAME%の발정%randt("に反応したのか","に呼応するように","を受けて")%、
+				ENDDATA
+				PRINTDATAL
+				DATAFORM 蠢く%ITEMNAME:(CFLAG:42)%の動きが急激に激しくなってゆく。
+				DATAFORM 蠢く%ITEMNAME:(CFLAG:42)%が今までよりも激しく弱点を責め始める。
+				ENDDATA
+
+				PRINTDATA
+				DATAFORM 「く…駄…目、だ……これ、ぐっ、あぅぅ……
+				DATAFORM 「う、嘘だろ、こんな時に、やめ、
+				DATAFORM 「ぐ、この、いい加減に、しなさ、
+				DATAFORM 「く、ぅ、こいつ、%SELF_CALL()%を、馬鹿にするのも、いい加減、に、
+				DATAFORM 「こ、こいつ、い、いつまで、%SELF_CALL()%を弄る気…
+				DATAFORM 「こ、こいつ、い、いつまで、%SELF_CALL()%を弄ったら、まんぞ、く、
+				ENDDATA
+				PRINTDATAL
+				DATAFORM ぅ、ぁ、く、くふぅぅぅんっ！？」
+				DATAFORM ぅ、ぁ、く、くひぃぃぃんっ！？」
+				DATAFORM …あ、ひ、ひきゃぁんっ！？」
+				DATAFORM あっ、ひ、う、うぅぅうぅんっ！？」
+				DATAFORM …う、うぅぅうぅんっ！？」
+				DATAFORM …や、あぁぁぁあぁっ！？」
+				ENDDATA
+
+				LOCALS=%randt("とどめだ","抵抗など無意味だ","雌は순종적に堕ちろ","雌が快楽に勝てるものか")%
+				PRINTDATAL
+				DATAFORM %LOCALS%と言わんばかりの強烈な一撃を叩き込まれ、
+				DATAFORM %LOCALS%と言わんばかりのひときわ強い快感に局部を突き穿たれ、
+				DATAFORM ただでさえ敏感に開発された身体が快感に堪えられるはずもなく、
+				ENDDATA
+
+				IF RAND:2
+					PRINTFORML 走りこみの最中にイッてしまった%CALLNAME%は
+					PRINTDATAL
+					DATAFORM 絶頂しながら脚をもつれさせ倒れ込んでしまった。
+					DATAFORM 足を止めてへたり込んでしまった。
+					ENDDATA
+				ELSE
+					PRINTDATAL
+					DATAFORM %randt("あっさりと","あっけなく","可愛らしい声を上げながら")%%randt("イかされてしまった","絶頂してしまった")%。
+					ENDDATA
+				ENDIF
+			ELSE
+				PRINTFORML 「……ッ!?ぅあああああ！！？」
+				PRINTFORML 「あっ、だ、だめ、イクっ、っあああアぁああ！！」
+				PRINTFORML 「　！！？　う、うそだ、止まら、な、ダメ、また、またぁぁああああ！！？」
+				PRINTFORML %CALLNAME%は何度もイかされながら鍛錬を続けた…
+				PRINTFORML しかし、絶頂の余韻に震える脚では、歩くこともままならず、近くの壁に身を預けて立っているのがやっとのようだ…
+				PRINTFORMW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には腸愛液の水溜りが出来上がっていた……
+			ENDIF
+			진지함_フラグ_シチュ=
+			RETURN
+		ENDIF
+	;◆촉수服通常責め
+	ELSE
+		IF 진지함_フラグ_シチュ==""
+			PRINTDATAL
+			DATAFORM 「くっ、蠢くの、やめろ、よぉ…！」
+			DATAFORM 「っ、はっ、はぁっ、はぁーっ…」
+			DATAFORM 「っ、この、気持ち悪い、化け物っ…」
+			DATAFORM 「く……ぅっ……」
+			DATAFORM 「こ、こいつ、%SELF_CALL()%の胸を、く、ぅっ……」
+			DATAFORM 「こ、こいつまた、蠢いて、るっ……」
+			ENDDATA
+			PRINTDATAL
+			DATAFORM 蠢動する%ITEMNAME:(CFLAG:42)%が%CALLNAME%の\@ISMALE() ? 乳首 # 가슴 \@に刺激を与えてくる。
+			DATAFORM 走る振動に合わせるように、%ITEMNAME:(CFLAG:42)%が%CALLNAME%の乳首を苛む。
+			ENDDATA
+
+			PRINTDATA
+			DATAFORM 獲物の弱点を%randt("執拗に","絶え間なく","いやらしく")%%randt("刺激され","愛撫され","弄られ","責められ")%
+			ENDDATA
+			PRINTDATA
+			DATAFORM る感覚に苛まれつつも、
+			DATAFORM る不快感に眉を顰めつつ、
+			DATAFORM て%randt("呼吸を乱されながら","肩を震わせながら","頬を染めながら")%も、
+			ENDDATA
+
+			PRINTDATAL
+			DATAFORM %CALLNAME%は声を抑えて鍛錬を続けようとした。
+			DATAFORM %CALLNAME%は歯を食いしばって快感を抑え込もうとした。
+			DATAFORM %CALLNAME%は快楽を無視して走り込みを続けようとした。
+			DATAFORM %CALLNAME%は目の前の鍛錬へ集中しようとした。
+			ENDDATA
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			;感覚の最大値で決める
+			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			IF RESULT < 3
+				PRINTFORML 「っ…いい加減に…動…くなぁ…ぁあっ！？」
+				PRINTFORML %CALLNAME%は与えられる刺激に脚をもつれさせた。
+			ELSEIF RESULT < 5
+				PRINTFORML 「…駄…目、だ……ぁぁあああ、イッ、くぅ……！！」
+				PRINTFORML %CALLNAME%は走りこみの最中にイッてしまった…
+			ELSEIF RESULT < 10 || RAND:3
+				PRINTFORML 「……ッ!?ぅあああああ！！？」
+				PRINTFORML 「あっ、だ、だめ、イクっ、っあああアぁああ！！」
+				PRINTFORML 「　！！？　う、うそだ、止まら、な、ダメ、また、またぁぁああああ！！？」
+				PRINTFORML %CALLNAME%は何度もイかされながら鍛錬を続けた…
+				PRINTFORML しかし、絶頂の余韻に震える脚では、歩くこともままならず、近くの壁に身を預けて立っているのがやっとのようだ…
+				IF ISMALE()
+					;#region
+					PRINTFORMW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には腸愛液の水溜りが出来上がっていた……
+					;#endregion
+				ELSE 
+					PRINTFORMW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には愛液の水溜りが出来上がっていた……
+				ENDIF
+			ELSE
+				PRINTFORML 「……ッ!?ぁお゛お゛お゛お゛お゛！！？」
+				PRINTFORML 「お゛っ、おひっ、ら、らめ、しょれ、イ、イグっ、う、ぎっ、あ、」
+				PRINTFORML 「あ、ぁぁあ、あっひぃぃいぃぃぃっ！？」
+				PRINTFORML 「　！！？　う、うそ、止まら、な、お゛お゛っ、ダメ、また、またぁぁああああ！！？」
+				PRINTFORML 「ひいいぃ、い、あ゛、ぉ゛、ぉ゛お゛っおごお゛オ゛ォ゛ォ゛っ……」
+				PRINTFORML ……もはや鍛錬ではなく凌辱だった。
+				PRINTFORML 絶頂に震える脚は身体を支える役目も忘れてしまい、%CALLNAME%嬌声と共に無様に倒れ込む。
+				PRINTFORML %ITEMNAME:(CFLAG:42)%の玩具と化した%CALLNAME%は、それでも容赦なくイかされ続け……
+				IF ISMALE()
+					;#region
+					PRINTFORML 입から涎を垂れ流し、白目を剥いて精を噴く%CALLNAME%。
+					;#endregion
+				ELSE 
+					PRINTFORML 입から涎を垂れ流し、白目を剥いて潮を噴く%CALLNAME%。
+				ENDIF
+				PRINTFORML 予定していた鍛錬の時間はとうに終わっていたが、
+				PRINTFORMW がに股で痙攣する%CALLNAME%に意識が残っているはずもなかった……
+			ENDIF
+			진지함_フラグ_シチュ=
+			RETURN
+		ENDIF
+	ENDIF
+;◆精神陥落：노출벽
+ELSEIF ABL:노출벽 >= 3 && RAND:3==0
+	PRINTFORML  人の気配すらない裏路地に足音だけが響いている。
+	PRINTFORML  全身に珠のような汗を浮かべ、表情を引き攣らせた%CALLNAME%が
+	PRINTFORML  周囲の気配を伺いながら息を切らせて駆けてゆく。
+	IF ISMALE()
+		;#region
+		PRINTFORML  身に着けているものはソックスと靴だけ、少年の肢体を隠すものは何一つ無い。
+		;#endregion
+	ELSE 
+		PRINTFORML  身に着けているものはソックスと靴だけ、少女の肢体を隠すものは何一つ無い。
+	ENDIF
+	;★アイドルがこんな事をしていると知られでもしたら……
+	PRINTFORML  もしもこんな姿を誰かに見られでもしたら……
+	PRINTDATAL
+		DATAFORM %CALLNAME%は熱に冒されたように頬を染め、興奮に身を晒しながら更に足を早めた。
+		DATAFORM 공포と期待に崩折れそうな足を奮い立たせ、%CALLNAME%は更に足を早めた。
+	ENDDATA
+	;★ランダムに露出盗撮フラグ？
+;◆身体陥落
+ELSEIF ABL:B감각 >=3
+	LOCAL=ABL:B감각
+	;◆Ｂ開発済み①
+	IF LOCAL < 5
+		PRINTDATAL
+		DATAFORM 「ハァ……ハァ…こ、の、うぅ……」
+		DATAFORM 「くぅ……はぁっ」
+		DATAFORM 「く……ふぅっ……」
+		DATAFORM 「はぁっ…はぁっ、ぁ、く、うぅ……」
+		DATAFORM 「ひ、くっ……っ、はぁっ」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM (%SELF_CALL()%の\@ISMALE() ? 乳首 # 가슴 \@……本当にどうなって……)
+		DATAFORM (こんな時に、\@ISMALE() ? 乳首 # 가슴 \@、感じるなんて……)
+		DATAFORM (乳首が……擦れて…)
+		DATAFORM (集中、しなきゃいけないのに……)
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 走る最中にも、%CALLNAME%の開発された\@ISMALE() ? 乳首 # 가슴 \@は微かな刺激にも敏感に反応している。
+		DATAFORM 走る振動に乳首が服に擦れ、%CALLNAME%は悩ましげな吐息を漏らした。
+		DATAFORM 走る振動で敏感な弱点が服に擦れ、%CALLNAME%は思わず悩ましげな吐息を漏らしてしまった。
+		ENDDATA
+	;◆Ｂ開発済み②
+	ELSEIF LOCAL < 8
+		PRINTDATAL
+		DATAFORM 「く、ハァ、ハァ…\@ISMALE() ? ち、乳首 # む、胸 \@、擦れて、ううぅ……」
+		DATAFORM 「くぅ…ぁっ…はぁっ、何なんだよ、\@ISMALE() ? 乳首 # 가슴 \@、こんなに、ふぅ、ふぅぅっ……」
+		DATAFORM 「く……うぅっ…こんなの、おかしい、絶対、ぜった…ひぁんっ……」
+		DATAFORM 「はぁっ…はぁっ、どうして、こんな、\@ISMALE() ? 乳首 # 가슴 \@、が、ぁく、ふうぅぅ……」
+		DATAFORM 「ひっ、くんっ…っはぁ、これっ、乳首っ、どう、なって、ひゃうぅんっ……」
+		ENDDATA
+		PRINTDATA
+		DATAFORM %CALLNAME%は走り込みを行うことにした。
+		DATAFORM 走り込みの鍛錬に励もうとする%CALLNAME%。
+		DATAFORM 走りなれたはずのコースをランニングする%CALLNAME%。
+		ENDDATA
+		PRINTDATA
+		DATAFORM しかし開発された\@ISMALE() ? 乳首 # 가슴 \@は微かな刺激に反応し、
+		DATAFORM しかし開発された乳首が服に擦れる刺激だけで、
+		DATAFORM しかし開発された\@ISMALE() ? 乳首 # 가슴 \@が服に擦れる快感で、
+		ENDDATA
+		PRINTDATAL
+		DATAFORM %CALLNAME%は思ったように走ることができない……
+		DATAFORM %CALLNAME%はあられもなく발정してしまう……
+		DATAFORM %CALLNAME%は思わず足を止めてしまう……
+		DATAFORM %CALLNAME%は全身を愛撫されたかのような嬌声を漏らしてしまう……
+		ENDDATA
+	;◆Ｂ開発済み③
+	ELSEIF LOCAL < 10
+		PRINTDATAL
+		DATAFORM 「と、トレーニング、なんだからぁ……
+		DATAFORM 「た、鍛錬、鍛錬の、最中だからっ、しゅ、集中、しな、きゃ……
+		DATAFORM 「こ、こんな刺激、なんかでっ、か、感じて、なんかっ、いない、から、だから……
+		DATAFORM 「%SELF_CALL()%は、こんなの、快感なんて、認めない、認めないんだ……
+		DATAFORM 「%SELF_CALL()%の、身体は、まだ、戦える、戦えるんだから、こんな、快感、なんて、くぅぅ……
+		ENDDATA
+		PRINTDATA
+		DATAFORM っ、ひあぁ！？
+		DATAFORM っきゃぅぅ！？
+		DATAFORM っひぃぃん！？
+		DATAFORM ひきゃぁんっ！？
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 　うあぁ、ぁ、ちが、違う、こんなの、こんなのおぉっ…」
+		DATAFORM 　ひ、ぅ…あ、あぁぁ、くうぅぅぅっ…」
+		DATAFORM 　ぁっ…はっ、\@ISMALE() ? ち、乳首 # む、胸 \@、こんなの、ふうぅ、うぅぅぅ……」
+		DATAFORM 　うぁ、はっ、\@ISMALE() ? ち、乳首 # む、胸 \@、擦れ。て、も、もう無理、むりらからぁぁ……」
+		DATAFORM 　う、ひっ、あん、こんな、\@ISMALE() ? 乳首 # 가슴 \@、や、ひぁぅ、やだっ、ぁ、も、もうやだぁぁぁ…」
+		DATAFORM 　ひっ、く、はぁ、こ、これっ、乳首っ、こんなの、むり、無理ぃぃぃ……」
+		ENDDATA
+		PRINTDATA
+		DATAFORM 服に擦れる微かな刺激を増幅し、
+		DATAFORM 服に擦れる僅かなはずの刺激で、
+		DATAFORM 正常な\@ISMALE() ? 少年 # 女性 \@の身体なら意にも介さないはずの僅かな刺激で、
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 性感帯として花開いた%CALLNAME%の両\@ISMALE() ? 乳首 # 가슴 \@は理性を奪い去ろうとする……
+		DATAFORM %CALLNAME%の両\@ISMALE() ? 乳首 # 가슴 \@が%CALLNAME%の雌の本性を暴き出しそうとしている……
+		DATAFORM %CALLNAME%の乳首は%CALLNAME%を絶頂へと導いてゆく……
+		DATAFORM %CALLNAME%の\@ISMALE() ? 乳首 # 가슴 \@は全身を愛撫される以上の快感を受け取ってしまう……
+		DATAFORM %CALLNAME%の\@ISMALE() ? 乳首 # 가슴 \@から送られる快感が\@ISMALE() ? 雄を받아들인다準備を尻穴 # 受精の準備を子宮 \@に命令してしまう……
+		ENDDATA
+		PRINTFORML  %CALLNAME%は기력を振り絞って再び走り始めたが、道には淫らな染みが点々と残されていた。
+	;◆Ｂ完全陥落
+	ELSE
+		PRINTDATAL
+		DATAFORM 「と、トレーニング、なんだからぁ……
+		DATAFORM 「しゅ、集中、するんだからっ、ぁ、あぁ……
+		DATAFORM 「か、快感、なんかでっ、%SELF_CALL()%は、%SELF_CALL()%、はっ、うぅぅぅぅ……
+		DATAFORM 「認めない、認めないからな、こんなのが、気持ちいいなんて、認めっ……
+		DATAFORM 「うぅ、%SELF_CALL()%は、トレーニング、してるん、だから、気持ちよく、なんかぁ……
+		ENDDATA
+		PRINTDATA
+		DATAFORM っひきゃあぁぁ！？
+		DATAFORM っきゃふぅぅぅ！？
+		DATAFORM っひぃぃいぃんっ！？
+		DATAFORM っきひぃぃんっ！？
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 　あ、あぁ、違う、こんなの、%SELF_CALL()%じゃ、こんなのおぉっ…」
+		DATAFORM 　ひ、ぅ…どうして%SELF_CALL()%、あ、ああぁ、ぁ、あぁあああぁぁ…💕」
+		DATAFORM 　気持ちいいのなんて、もうやだ、やだなのにぃぃぃ……」
+		DATAFORM 　こんなの、もう、\@ISMALE() ? 乳首 # 가슴 \@、%SELF_CALL()%、無理ぃぃぃ……」
+		DATAFORM 　も、もうやだ、誰か、誰か助けてよぉ………」
+		DATAFORM 　も、もう限界、こんなの、っひん、こんなの我慢できる、はず、ない……」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 涙と\@ISMALE() ? 我慢汁 # 愛液 \@を零しながら走る%CALLNAME%の姿は、客観的に言ってトレーニングではなかった。
+		DATAFORM \@ISMALE() ? 平坦な胸肌 # 乳房 \@を揉みしだきながら走る%CALLNAME%の様子は、鍛錬ではなく単なる公開自慰だった。
+		DATAFORM %CALLNAME%が行っているのは、トレーニングというよりも\@ISMALE() ? 乳首 # 가슴 \@を使った自慰だった。
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 鍛錬一つまともに出来ないほど\@ISMALE() ? 乳首 # 가슴 \@を開発されてしまった%CALLNAME%は、
+		DATAFORM 地面を蹴る衝撃が\@ISMALE() ? 乳首 # 乳房 \@に伝わるだけであられもなくイキそうになる%CALLNAME%は、
+		DATAFORM 日常生活にすら支障をきたすほど\@ISMALE() ? 乳首 # 乳房 \@を開発されてしまった%CALLNAME%は、
+		DATAFORM 快感を得る器官と化した両の\@ISMALE() ? 乳首 # 乳房 \@に翻弄される%CALLNAME%は、
+		DATAFORM 快感に振り回される一方の%CALLNAME%は、
+		DATAFORM 
+		ENDDATA
+		PRINTDATA
+		DATAFORM 小さな子供にも負ける速さで
+		DATAFORM 涙と涎で顔を汚しながら
+		DATAFORM 娼婦のように腰をカクつかせて
+		DATAFORM \@ISMALE() ? 尻穴 # 女性器 \@をひくつかせながら
+		DATAFORM 羞恥に情けなく泣きじゃくりながら
+		DATAFORM 正義の魔法\@ISMALE() ? 少年 # 少女 \@にあるまじき痴態を晒しながら
+		ENDDATA
+		PRINTDATAL
+		DATAFORM ふらふらと「走り込み」を続けようとする……
+		DATAFORM よろよろと走り続けようとする……
+		DATAFORM へこへこと足を動かしている……
+		ENDDATA
+
+		PRINTFORML ……程なくして%CALLNAME%はひときわ嬌声をあげ、快楽で腰砕けになってしまった。
+		PRINTDATAL
+		DATAFORM かつての理知的な\@ISMALE() ? 少年 # 少女 \@の面影はもう残っていないようだ……
+		DATAFORM 今の%CALLNAME%は、正義の味方よりも娼婦や肉便器に近いようだ……
+		DATAFORM たとえ촉수が滅びても、もはや平穏な日常は取り戻せそうにない……
+		DATAFORM %CALLNAME%は遠からず敗北し、セックスだけが喜びの苗床便器に堕ちてゆくのだろうか……
+		DATAFORM \@ISMALE() ? 腸 # \@愛液で水溜りを作る%CALLNAME%の\@ISMALE() ? 애널 # 질 \@は、촉수の苗床にされる準備が十分に整っているようだ……
+		DATAFORM かつての진지함な\@ISMALE() ? 少年 # 少女 \@の面影は%CALLNAME%に僅かほども見て取れない……
+		DATAFORM %CALLNAME%の嬌態を見て、かつての진지함な\@ISMALE() ? 少年 # 少女 \@を思い出せる인간が果たして何人いるだろうか……
+		DATAFORM かつては진지함な\@ISMALE() ? 少年 # 少女 \@だった%CALLNAME%だが、今の痴態はむしろ음란と呼ばれるに相応しかった……
+		ENDDATA
+	ENDIF
+
+
+;◆はじめて
+ELSEIF GETBIT(CFLAG:271,0)==0
+	PRINTDATAL
+	DATAFORM 「このルートを走ればいいな」
+	DATAFORM 「地図は…大丈夫だな、ちゃんと覚えたし」
+	DATAFORM 「水分も取ったし、체력配分も考えてある」
+	DATAFORM 「理論上は完璧なコース。……でも実際に走ってみないとな」
+	ENDDATA
+	PRINTFORML トレーニングウェアに着替えた%CALLNAME%は、準備運動の傍らこれから進む道を見つめる。
+	PRINTFORML 見慣れた道であっても、今後は特別な場所となる。
+	PRINTFORML 全ては촉수との戦いに備えた大事な訓練なのだから。
+	PRINTL
+	PRINTFORML 未だ得体の知れない化け物と戦う以上、魔法や科学技術に頼り切りではいけない。
+	PRINTFORML “鍛錬”の二文字を意識した%CALLNAME%はしばし思案を巡らせ、
+	PRINTFORML 「체력を付けねば始まらない」という現実的な問題に辿り着いていた。
+
+	PRINTDATAL
+	DATAFORM 「……見てろよ化け物、これがおまえ達の終わりの始まりだ」
+	DATAFORM 「……よし、行くか」
+	DATAFORM 「……%SELF_CALL()%が、化け物を滅ぼしてみせる。みんなを守ってみせる」
+	DATAFORM 「願わくば、これが大事な一歩になりますように」
+	DATAFORM 「街を守るために頑張るから、みんなも%SELF_CALL()%に力を貸してくれよ」
+	ENDDATA
+	PRINTFORML 決意を新たに、%CALLNAME%はゆっくりと最初の一歩を踏み出す。
+	PRINTFORMW 平和を取り戻すその日まで、%CALLNAME%の歩みは決して止まらないだろう。
+	PRINTL
+
+	IF ISMALE()
+		;#region
+		PRINTFORML 少年の決意は、打ち倒すべき化け物――촉수たちにとっても不都合なものではない。
+		;#endregion
+	ELSE 
+		PRINTFORML 少女の決意は、打ち倒すべき化け物――촉수たちにとっても不都合なものではない。
+	ENDIF
+	PRINTFORML なぜなら、母胎は丈夫であるほど望ましいのだから……
+;◆通常トレーニング
+ELSE
+	IF RAND:3
+		PRINTDATAL
+		DATAFORM 「まだ……まだ走らないと…」
+		DATAFORM 「まだ……まだ足りない…」
+		DATAFORM 「このくらい……いつもと比べれば……っ」
+		DATAFORM 「……%SELF_CALL()%が、頑張らなきゃ、うぅ…」
+		DATAFORM 「……%SELF_CALL()%じゃなきゃ、出来ないんだから…うぅ…」
+		ENDDATA
+		PRINTFORML  %CALLNAME%は自分の心に鞭打ちつつ、のろのろとまた走り始めた。
+	ELSE
+		PRINTDATAL
+		DATAFORM 「うぅ……きっつい……」
+		DATAFORM 「う…これは結構、くる、な……」
+		DATAFORM 「う…これはちょっと、きつい、な……」
+		DATAFORM 「ぜぇー、はぁー、ぜぇー、はぁー……ま、まだこれで半分なのか……」
+		DATAFORM 「ぜぇー、はぁー、ぜぇー、はぁー……う、嘘だろ、まだ半分なのか……」
+		ENDDATA
+		PRINTFORML  %CALLNAME%は残りのノルマに愕然としつつ、기력を振り絞って再び走り始めた。
+	ENDIF
+ENDIF
+
+SETBIT CFLAG:271,0
+
+

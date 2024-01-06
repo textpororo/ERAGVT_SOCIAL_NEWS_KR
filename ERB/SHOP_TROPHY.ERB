@@ -1,0 +1,542 @@
+﻿;-----------------------------------------------------------------------------------------------
+
+;実績解除
+;立てるフラグの番号と実績名は呼び出し側でセットで指定する
+
+@UNLOCK_ACHIEVEMENT(num,achiname)
+#DIM num,1
+#DIMS achiname,1
+
+;サンドボックスモードでは実績をアンロックしない(一人用ゲームなので積極的に意地悪はしないけど一応ね)
+SIF GAME_OPTION_CHECK_F(OPTION_실적엔드없음)
+	RETURN
+
+IF GLOBAL:num == 0
+	PRINTFORML 【実績：%achiname%】を達成しました！
+	PRINTW 
+	GLOBAL:num = 1
+	SAVEGLOBAL
+ENDIF
+
+
+;実績トロフィーを表示
+@SHOW_TROPHY
+#DIM PAGEMAX
+#DIM MODE,1
+;現在のページ
+LOCAL = 1
+
+$START
+CALL LB
+PRINTL ☆☆☆実績＆トロフィーの確認☆☆☆
+DRAWLINE
+
+;●(不)名誉の殿堂ページ
+IF MODE==0 
+	;最大値
+	PAGEMAX = 2
+	IF LOCAL == 1
+		PRINTFORML  プレイの記録
+		CALL SHORTLINE
+		PRINTFORM 　　総合ランク最高記録　　　　　　　　　
+		IF GLOBAL:110 == 1
+			PRINTL Ｅランク
+		ELSEIF GLOBAL:110 == 2
+			PRINTL Ｄランク
+		ELSEIF GLOBAL:110 == 3
+			PRINTL Ｃランク
+		ELSEIF GLOBAL:110 == 4
+			PRINTL Ｂランク
+		ELSEIF GLOBAL:110 == 5
+			PRINTL Ａランク
+		ELSEIF GLOBAL:110 == 6
+			PRINTL Ｓランク
+		ELSE
+			PRINTL なし
+		ENDIF
+		PRINTFORML 　　周回数累計　　　　　　　　　　　　　 {FLAG:854} 回
+		SIF GLOBAL:114 > 0
+			PRINTFORML 　　ENDLESS撃破記録 　　　　　　　　　　 {GLOBAL:114} 体　
+		PRINTL 
+		PRINTFORML 　　現在の共通設定
+		PRINTFORM 　　　主題　　　　　　　　　　　　　　　
+		IF FLAG:5 == 1
+			PRINTFORML 『%SAVESTR:10%』
+		ELSE
+			PRINTFORML 『なし』
+		ENDIF
+		PRINTFORM 　　　冠名　　　　　　　　　　　　　　　
+		IF FLAG:6 == 1
+			PRINTFORML 『%SAVESTR:11%』
+		ELSE
+			PRINTFORML 『なし』
+		ENDIF
+		PRINTFORM 　　　かけ声　　　　　　　　　　　　　　
+		IF FLAG:7 == 1
+			PRINTFORML 『%SAVESTR:12%』
+		ELSE
+			PRINTFORML 『なし』
+		ENDIF
+		PRINTL  
+		CALL SHORTLINE
+		PRINTFORML  ＨＡＬＬ　ＯＦ　ＦＡＭＥ　〜　歴代記録保持者　〜
+		CALL SHORTLINE
+		;PRINTL ※一日の終了時に記録が更新されます
+		PRINTL 
+		PRINT 　　체력　　　
+		IF GLOBALS:0 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:0%
+		ENDIF
+		PRINTL 
+		PRINT 　　기력　　　
+		IF GLOBALS:1 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:1%
+		ENDIF
+		PRINTL 
+		PRINT 　　성내성　　
+		IF GLOBALS:2 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:2%
+		ENDIF
+		PRINTL 
+		PRINT 　　공격　　　
+		IF GLOBALS:10 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:10%
+		ENDIF
+		PRINTL 
+		PRINT 　　방어　　　
+		IF GLOBALS:11 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:11%
+		ENDIF
+		PRINTL 
+		PRINT 　　민첩　　　
+		IF GLOBALS:12 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:12%
+		ENDIF
+		PRINTL 
+		PRINT 　　지성　　　
+		IF GLOBALS:13 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:13%
+		ENDIF
+		PRINTL 
+		PRINT 　　魅了　　　
+		IF GLOBALS:14 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:14%
+		ENDIF
+		PRINTL 
+	ELSEIF LOCAL == 2
+
+		PRINTL  
+		SETCOLORBYNAME HOTPINK
+		CALL SHORTLINE
+		PRINTFORML  ＨＯＬＥ　ＯＦ　ＳＨＡＭＥ　〜　歴代恥辱保持者　〜
+		CALL SHORTLINE
+		PRINTL 
+		PRINT 　　膣穴　　　
+		IF GLOBALS:20 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:20%
+		ENDIF
+		PRINTL 
+		PRINT 　　尻穴　　　
+		IF GLOBALS:21 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:21%
+		ENDIF
+		PRINTL 
+		PRINT 　　自慰　　　
+		IF GLOBALS:22 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:22%
+		ENDIF
+		PRINTL 
+		PRINT 　　フェラ　　
+		IF GLOBALS:23 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:23%
+		ENDIF
+		PRINTL 
+		PRINT 　　精液　　　
+		IF GLOBALS:24 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:24%
+		ENDIF
+		PRINTL 
+		PRINT 　　絶頂　　　
+		IF GLOBALS:25 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:25%
+		ENDIF
+		PRINTL 
+		PRINT 　　出産　　　
+		IF GLOBALS:26 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:26%
+		ENDIF
+		PRINTL 
+		PRINT 　　交配　　　
+		IF GLOBALS:27 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:27%
+		ENDIF
+		PRINTL 
+		PRINT 　　사정　　　
+		IF GLOBALS:28 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:28%
+		ENDIF
+		PRINTL 
+		PRINT 　　모유　　　
+		IF GLOBALS:29 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:29%
+		ENDIF
+		PRINTL 
+		PRINT 　　放尿　　　
+		IF GLOBALS:30 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:30%
+		ENDIF
+		PRINTL 
+		PRINT 　　기생　　　
+		IF GLOBALS:31 == ""
+			PRINTFORML なし
+		ELSE
+			PRINTFORML %GLOBALS:31%
+		ENDIF
+
+		RESETCOLOR
+	ENDIF
+
+;●実績ページ
+ELSE
+	;最大ページ数
+	PAGEMAX = 4
+	;・実績名全角１４文字、説明全角１８文字以内
+	;・あまりややこしくない条件はヒントを具体的に
+	;・ややこしい条件はヒントを抽象的に(秘密の実績)
+	IF LOCAL == 1
+		;表示上の実績番号は01から始める
+		CALL PRINT_ACHIEVEMENT(1,"init")
+
+		CALL PRINT_ACHIEVEMENT(211,"覇者の証","セーブ＆ロードなんて邪道だよ！",50,"１周目でセーブロードなしにクリア","","※１周目限定")
+		CALL PRINT_ACHIEVEMENT(212,"へっぽこ大魔王","むしろ褒めてあげたい",50,"１周目で総合Ｅランク","※キャラメイク素質：死亡が解禁","")
+		CALL PRINT_ACHIEVEMENT(213,"eraGVTマスター","１周目で最高スコアを目指すのだ！",50,"１周目で総合Ｓランク","※周回要素：레벨引き継ぎが解禁","")
+		CALL PRINT_ACHIEVEMENT(270,"とびっきりの最強対最強","オラわくわくしてきたぞ！！",20,"裏ボスを撃破した","","")
+		CALL PRINT_ACHIEVEMENT(266,"パーフェクション","思わずドヤ顔したくなる戦果",20,"ノーダメージでボスを撃破した","","")
+		CALL PRINT_ACHIEVEMENT(220,"腕力自慢","能力を特化させてみよう",10,"공격実数値500突破","","")
+		CALL PRINT_ACHIEVEMENT(221,"脳筋こそ至高","能力を特化させてみよう",10,"공격実数値1000突破","","")
+		CALL PRINT_ACHIEVEMENT(222,"メイン盾きた！","能力を特化させてみよう",10,"방어実数値500突破","","")
+		CALL PRINT_ACHIEVEMENT(223,"移動城塞","能力を特化させてみよう",10,"방어実数値1000突破","","")
+		CALL PRINT_ACHIEVEMENT(224,"韋駄天","能力を特化させてみよう",10,"민첩実数値500突破","","")
+		CALL PRINT_ACHIEVEMENT(225,"俊足瞬撃、並ぶものなし","能力を特化させてみよう",10,"민첩実数値1000突破","","")
+		CALL PRINT_ACHIEVEMENT(226,"データにはなかったぞ！？","能力を特化させてみよう",10,"지성実数値500突破","","")
+		CALL PRINT_ACHIEVEMENT(227,"静かなる賢者","能力を特化させてみよう",10,"지성実数値1000突破","","")
+		CALL PRINT_ACHIEVEMENT(228,"不死身のソルジャー","能力を特化させてみよう",20,"체력実数値10000突破","","")
+		CALL PRINT_ACHIEVEMENT(229,"ライオンハート","能力を特化させてみよう",20,"기력実数値10000突破","","")
+		CALL PRINT_ACHIEVEMENT(230,"絶倫魔法少女","能力を特化させてみよう",20,"성내성実数値1000突破","","")
+		CALL PRINT_ACHIEVEMENT(231,"グランドマスター","戦技레벨を特化させてみよう",20,"근거리戦技Lv9達成","","")
+		CALL PRINT_ACHIEVEMENT(232,"主砲オーケストラ","戦技레벨を特化させてみよう",20,"중거리戦技Lv9達成","","")
+		CALL PRINT_ACHIEVEMENT(233,"スナイパードライツェン","戦技레벨を特化させてみよう",20,"원거리戦技Lv9達成","","")
+	ELSEIF LOCAL == 2
+		CALL PRINT_ACHIEVEMENT(20,"init")
+		CALL PRINT_ACHIEVEMENT(240,"性の目覚め","촉수相手に感じちゃうなんて…",5,"感覚Lv合計5突破","","")
+		CALL PRINT_ACHIEVEMENT(241,"触れられただけで・・・","こんなはずじゃないのに…",10,"感覚Lv合計10突破","","")
+		CALL PRINT_ACHIEVEMENT(242,"艶やかなる饗宴","認めたくなんかないのに…",15,"感覚Lv合計15突破","","")
+		CALL PRINT_ACHIEVEMENT(243,"淫界の住人","もう戻れない…",20,"感覚Lv合計20突破","","")
+		CALL PRINT_ACHIEVEMENT(244,"双なる具現","びゅっびゅっしましょうねぇ〜♪",20,"사정중독Lv5以上","※キャラメイク素質：후타나리が解禁","")
+		CALL PRINT_ACHIEVEMENT(245,"キャトルガール","わたしのおっぱい搾らないで…",20,"모유중독Lv5以上","※キャラメイク素質：모유체질が解禁","")
+		CALL PRINT_ACHIEVEMENT(246,"末期オナニー中毒","ダメなのに止められないの…",20,"자위중독Lv5以上","","")
+		CALL PRINT_ACHIEVEMENT(247,"ザーメンにガチ恋中","欲しくてたまらないんです…",20,"정액중독Lv5以上","","")
+		CALL PRINT_ACHIEVEMENT(250,"初めての出産","こんにちは、あかちゃん",10,"출산경험1","","")
+		CALL PRINT_ACHIEVEMENT(251,"駆け出しママン","ごちそう、いっぱい",10,"출산경험10突破","","")
+		CALL PRINT_ACHIEVEMENT(252,"暗黒ベビーブーム","も゛ぅ…う゛みだくないぃ…",10,"출산경험50突破","","")
+		CALL PRINT_ACHIEVEMENT(253,"촉수を産む機械","…………ごぽっ………",20,"출산경험100突破","※キャラメイク素質：묘상화が解禁","")
+		CALL PRINT_ACHIEVEMENT(254,"幸せ家族計画","それもひとつの愛のカタチ",10,"근친교배경험20突破","","")
+		CALL PRINT_ACHIEVEMENT(255,"기생ジョーカー","これぞダークヒーロー",10,"기생경험50突破","※キャラメイク素質：기생が解禁","")
+
+		CALL PRINT_ACHIEVEMENT(275,"女性の宿命","ヒロインであっても逃れられない…",5,"촉수に敗北して幽閉された","","")
+		CALL PRINT_ACHIEVEMENT(258,"捕らわれのお姫様","繰り返される悲劇…",10,"유폐경험5突破","※キャラメイク素質：幽閉が解禁","")
+		CALL PRINT_ACHIEVEMENT(264,"처녀애널愛好家","あえて奪わない、奪わせない",10,"처녀のままA경험10突破","","")
+		CALL PRINT_ACHIEVEMENT(262,"淫鬱ハネムーン","皆で촉수のお嫁さん",20,"【촉수의포로】の人数が3人以上","※キャラメイク素質：悪堕ちが解禁","")
+		;＠中国版(番号は重複していたので修正)
+		CALL PRINT_ACHIEVEMENT(279,"淫魔少女組","私たち、これ以上は堕ちません♪",50,"【完堕ち】の人数が3人以上","","")
+		CALL PRINT_ACHIEVEMENT(280,"無肢者牧場","この世で一番怖いものは死ではない…",50,"【사지결손】の人数が3人以上","","")
+
+	ELSEIF LOCAL == 3
+		CALL PRINT_ACHIEVEMENT(40,"init")
+		;ゲーム進捗系
+		CALL PRINT_ACHIEVEMENT(269,"バトルレイヤー","おしゃれしたい、女の子だもの",10,"衣装を10種類以上購入","","")
+		CALL PRINT_ACHIEVEMENT(274,"ファッションリーダー","今日のコーデもカンペキ♪",10,"衣装を30種類以上購入","","")
+		CALL PRINT_ACHIEVEMENT(256,"マジ☆かるアイドル育成計画","キラッ☆",10,"매료경험100突破","","")
+		CALL PRINT_ACHIEVEMENT(257,"ＡＶ女優","これでアナタも有名人★",10,"ＡＶ売上2000$突破","","")
+
+		CALL PRINT_ACHIEVEMENT(263,"破壊神の一撃","一撃で昇天する威力",10,"一撃のダメージが5000を突破","","")
+		CALL PRINT_ACHIEVEMENT(268,"タクティカルオーダー","仲間の力を合わせよう",10,"戦闘支援効果200％突破","","※ソロモード不可")
+
+		CALL PRINT_ACHIEVEMENT(276,"絶体絶命ヒロイン","こ、こんな時に…！",5,"기력切れで変身が解けてしまった","","")
+		CALL PRINT_ACHIEVEMENT(277,"絶対絶頂ヒロイン","こっ♥ こんな時にっ♥♥",5,"絶頂の快感で変身が解けてしまった","","")
+
+		CALL PRINT_ACHIEVEMENT(271,"いま助けるわ！","きっと今も仲間の助けを信じてる…",10,"囚われたヒロインを救出した","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(272,"正気に戻りなさい！","正気に戻すならこれ！",10,"悪堕ちヒロインを撃破した","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(273,"わたくしは何を…？","あの子は操られていただけなの…！",10,"ヒロインの洗脳を解いた","","※ソロモード不可")
+		
+
+	ELSEIF LOCAL == 4
+		CALL PRINT_ACHIEVEMENT(60,"init")
+		;特殊条件
+		CALL PRINT_ACHIEVEMENT(267,"奇跡の逆転勝利","ピンチからのエッチな逆転劇",10,"搾精ダメージでボスを撃破した","","")
+		CALL PRINT_ACHIEVEMENT(259,"もったいないお化け","余らせるともったいない",10,"修練Ｐ1000残してクリア","","")
+		CALL PRINT_ACHIEVEMENT(260,"촉수なんかに負けない！","あえて感度ビンビンな娘で！",10,"ソロモードを全部位敏感でクリア","","※ソロモード限定")
+		CALL PRINT_ACHIEVEMENT(261,"불굴の闘志","ぐぬぬ…負けるもんか！",10,"ソロモードを유폐경험1以上でクリア","","※ソロモード限定")
+		CALL PRINT_ACHIEVEMENT(265,"NEXT GENERATION","そして次の世代へ…",10,"娘が３人以上いる状態でクリア","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(278,"所詮はハメ穴に過ぎない","私たち戦うヒロインだったはずなのに…",10,"ヒロインが全員クズ市民に監禁されてしまった","※キャラメイク素質：監禁が解禁","※ソロモード不可")
+
+	ENDIF
+ENDIF
+
+DRAWLINE
+	PRINT [100]前のページへ　　　　　
+PRINTPLAINFORM PAGE < {LOCAL}/{PAGEMAX} >　　　　
+	PRINT [200]次のページへ
+PRINTL 
+SIF MODE==0
+	PRINTL 	　　　　　　　　　[1000]実績を表示
+SIF MODE==1
+	PRINTL 	　　　　　　　　　[1000]トロフィーを表示
+
+PRINT [999]戻る　
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	LOCAL=LOCAL==1 ? PAGEMAX # LOCAL-1
+	GOTO START
+ELSEIF RESULT == 200
+	LOCAL=LOCAL==PAGEMAX ? 1 # LOCAL+1
+	GOTO START
+ELSEIF RESULT == 1000
+	MODE = 1-MODE
+	LOCAL=1
+	GOTO START
+ELSEIF RESULT == 999
+	RETURN
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+@PRINT_ACHIEVEMENT(num,achievename,hint,bonus,desc,otherA,otherB)
+#DIM num,1=0
+#DIMS achievename,1=""
+;実績解除後のテキスト
+#DIMS desc,1=""
+;ボーナスポイント
+#DIM bonus,1=0
+;解除前のヒントテキスト
+#DIMS hint,1=""
+;解除後テキスト(アンロック要素の通知)
+#DIMS otherA,1=""
+;解除前の補足テキスト(特定モード限定の場合にその旨を通知)
+#DIMS otherB,1=""
+
+;表示上の実績番号(内部のフラグとは無関係、ページ先頭で"init"を呼んで指定する)
+#DIM numhead,1
+#DIMS numtext
+
+
+IF achievename=="init"
+	PRINTL 実績名　　　　　　　　　　　　内容　　　　　　　　　　　　　　　　周回ボーナス
+	CALL SHORTLINE
+	numhead=num
+	return
+ENDIF
+
+numtext'=(numhead<=9 ? "0" # "")+TOSTR(numhead)
+numhead+=1
+
+IF GLOBAL:num
+	PRINTFORML 　%numtext% %achievename,28,LEFT%%desc,36,LEFT%+{bonus}
+ELSE
+	SETCOLOR 105,105,105
+	PRINTFORML 　%numtext% ？？？　　　　　　　　　　　%hint,36,LEFT%？
+	RESETCOLOR
+ENDIF
+IF GLOBAL:num
+	PRINTFORML 　　　　　　　　　　　　　　　　%otherA,36,RIGHT%
+ELSE
+	PRINTFORML 　　　　　　　　　　　　　　　　%otherB,36,RIGHT%
+ENDIF
+
+
+;ターン終了時に一括チェックするタイプの実績
+;ここに書かれていない複雑な条件の実績はコード各所に散らばっている
+@GET_STATE_TROPHY,ARG
+IF MAXBASE:ARG:공격 >= 500
+	CALL UNLOCK_ACHIEVEMENT(220,"腕力自慢")
+ENDIF
+IF MAXBASE:ARG:공격 >= 1000
+	CALL UNLOCK_ACHIEVEMENT(221,"脳筋こそ至高")
+ENDIF
+IF MAXBASE:ARG:방어 >= 500
+	CALL UNLOCK_ACHIEVEMENT(222,"メイン盾きた！")
+ENDIF
+IF MAXBASE:ARG:방어 >= 1000
+	CALL UNLOCK_ACHIEVEMENT(223,"移動城塞")
+ENDIF
+IF MAXBASE:ARG:민첩 >= 500
+	CALL UNLOCK_ACHIEVEMENT(224,"韋駄天")
+ENDIF
+IF MAXBASE:ARG:민첩 >= 1000
+	CALL UNLOCK_ACHIEVEMENT(225,"俊足瞬撃、並ぶ者なし")
+ENDIF
+IF MAXBASE:ARG:지성 >= 500
+	CALL UNLOCK_ACHIEVEMENT(226,"データには無かったぞ！？")
+ENDIF
+IF MAXBASE:ARG:지성 >= 1000
+	CALL UNLOCK_ACHIEVEMENT(227,"静かなる賢者")
+ENDIF
+IF MAXBASE:ARG:체력 >= 10000
+	CALL UNLOCK_ACHIEVEMENT(228,"不死身のソルジャー")
+ENDIF
+IF MAXBASE:ARG:기력 >= 10000
+	CALL UNLOCK_ACHIEVEMENT(229,"ライオンハート")
+ENDIF
+IF MAXBASE:ARG:성내성 >= 1000
+	CALL UNLOCK_ACHIEVEMENT(230,"絶倫魔法少女")
+ENDIF
+IF ABL:ARG:근거리 >= 9
+	CALL UNLOCK_ACHIEVEMENT(231,"グランドマスター")
+ENDIF
+IF ABL:ARG:중거리 >= 9
+	CALL UNLOCK_ACHIEVEMENT(232,"主砲オーケストラ")
+ENDIF
+IF ABL:ARG:원거리 >= 9
+	CALL UNLOCK_ACHIEVEMENT(233,"スナイパードライツェン")
+ENDIF
+
+;ABL関連実績の一括チェック
+@GET_STATE_ABLUP,ARG
+LOCAL = ABL:ARG:C감각 + ABL:ARG:V감각 + ABL:ARG:A감각 + ABL:ARG:B감각
+IF LOCAL >= 5
+	CALL UNLOCK_ACHIEVEMENT(240,"性の目覚め")
+ENDIF
+IF LOCAL >= 10
+	CALL UNLOCK_ACHIEVEMENT(241,"触れられただけで・・・")
+ENDIF
+IF LOCAL >= 15
+	CALL UNLOCK_ACHIEVEMENT(242,"艶やかなる饗宴")
+ENDIF
+IF LOCAL >= 20
+	CALL UNLOCK_ACHIEVEMENT(243,"淫界の住人")
+ENDIF
+IF ABL:ARG:사정중독 >= 5
+	CALL UNLOCK_ACHIEVEMENT(244,"双なる具現")
+ENDIF
+IF ABL:ARG:모유중독 >= 5
+	CALL UNLOCK_ACHIEVEMENT(245,"キャトルガール")
+ENDIF
+IF ABL:ARG:자위중독 >= 5
+	CALL UNLOCK_ACHIEVEMENT(246,"末期オナニー中毒")
+ENDIF
+IF ABL:ARG:정액중독 >= 5
+	CALL UNLOCK_ACHIEVEMENT(247,"ザーメンにガチ恋中")
+ENDIF
+IF GLOBAL:262 == 0
+	LOCAL:1 = 0
+	FOR LOCAL,0,CHARANUM
+		SIF LOCAL == MASTER
+			CONTINUE
+		SIF TALENT:LOCAL:촉수의포로 > 0
+			LOCAL:1 ++
+	NEXT
+	IF LOCAL:1 >= 3
+		CALL UNLOCK_ACHIEVEMENT(262,"淫鬱ハネムーン")
+	ENDIF
+ENDIF
+
+;＠中国版
+IF GLOBAL:279 == 0
+	LOCAL:1 = 0
+	FOR LOCAL,1,CHARANUM
+		SIF TALENT:LOCAL:完堕ち > 0
+			LOCAL:1 ++
+	NEXT
+	IF LOCAL:1 >= 3
+		CALL UNLOCK_ACHIEVEMENT(279,"淫魔少女組")
+	ENDIF
+ENDIF
+IF GLOBAL:280 == 0
+	LOCAL:1 = 0
+	FOR LOCAL,1,CHARANUM
+		SIF TALENT:LOCAL:사지결손 > 0
+			LOCAL:1 ++
+	NEXT
+	IF LOCAL:1 >= 3
+		CALL UNLOCK_ACHIEVEMENT(280,"無肢者牧場")
+	ENDIF
+ENDIF
+
+
+;EXP関連の実績一括チェック
+@GET_STATE_EXPUP,ARG
+IF EXP:ARG:출산경험 >= 1
+	CALL UNLOCK_ACHIEVEMENT(250,"初めての出産")
+ENDIF
+IF EXP:ARG:출산경험 >= 10
+	CALL UNLOCK_ACHIEVEMENT(251,"駆け出しママン")
+ENDIF
+IF EXP:ARG:출산경험 >= 50
+	CALL UNLOCK_ACHIEVEMENT(252,"暗黒ベビーブーム")
+ENDIF
+IF EXP:ARG:출산경험 >= 100
+	CALL UNLOCK_ACHIEVEMENT(253,"촉수を産む機械")
+ENDIF
+IF EXP:ARG:근친교배경험 >= 20
+	CALL UNLOCK_ACHIEVEMENT(254,"幸せ家族計画")
+ENDIF
+IF EXP:ARG:기생경험 >= 50
+	CALL UNLOCK_ACHIEVEMENT(255,"기생ジョーカー")
+ENDIF
+IF EXP:ARG:매료경험 >= 100
+	CALL UNLOCK_ACHIEVEMENT(256,"マジ☆かるアイドル育成計画")
+ENDIF
+IF EXP:ARG:유폐경험 >= 5
+	CALL UNLOCK_ACHIEVEMENT(258,"捕らわれのお姫様")
+ENDIF
+IF TALENT:ARG:처녀 > 0 && EXP:ARG:A경험 >= 10
+	CALL UNLOCK_ACHIEVEMENT(264,"처녀애널愛好家")
+ENDIF
+
+
+
+
+
+
+
+

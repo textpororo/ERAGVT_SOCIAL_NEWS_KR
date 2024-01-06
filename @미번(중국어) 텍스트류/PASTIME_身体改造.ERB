@@ -1,0 +1,1165 @@
+﻿;---------------------------------------------------------------------
+;悪堕角色在繁华街区的出现
+;对角色进行肉体改造（20230102设置了乳环和阴环）
+;20230214尝试从era魔王迁移纹身功能
+
+@PASTIME_AKUOTI_BODYMOD, ARG
+#DIM CCOUNT
+VARSET LOCAL
+;時間帯ごとのイベント発生倍率
+IF TIME == 0
+	LOCAL = 40
+ELSE
+	LOCAL = 20
+ENDIF
+;随机抽選用に候補をクリア
+CALL CLEARRANDCHOOSE
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	;描写が女キャラ向けなので、男性は除外する
+	;偽娘を男性扱いしないように追記、対応ついでに男女平等のときは男性も可に
+	SIF CFLAG:CCOUNT:0 == 3 && (ISGIRLY(CCOUNT) || FILTER_CHECK_F(5) == 0) && MIN(RAND:(SQRT(FLAG:852) / 2 + 20), 100) < LOCAL
+		CALL ADDRANDCHOOSE,CCOUNT
+NEXT
+;候補がないなら抜ける
+SIF CHOICECOUNT_F() == 0
+	RETURN
+;ここまで抜けたらイベント開始
+DRAWLINE
+FLAG:111 = RANDCHOOSE_F()
+CALL PASTIME_AKUOTI_BODYMODING
+
+@PASTIME_AKUOTI_BODYMODING
+PRINTL 
+PRINTW 悦虐的逢魔
+PRINTL 
+PRINTL 
+PRINTFORML 在繁華街区的小巷子裏
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%発現了一間怪異的商店
+;未进行身体改造时的구상
+IF TALENT:陰蒂穿環 < 1 && TALENT:乳頭穿環 < 1 
+;初次进入的구상
+	PRINTFORMW 抱着好奇推門進去発現坐在櫃檯後面的是%PRINT_TRANSCALLNAME(FLAG:111)%！
+	PRINTL 
+	PRINTFORML 面対擺出戒備態勢的%PRINT_TRANSCALLNAME(TARGET)%、%PRINT_TRANSCALLNAME(FLAG:111)%問道你真的想在街区中開戦嗎？
+	PRINTFORML 戦闘的話還是要找没有人的地方、%PRINT_TRANSCALLNAME(TARGET)%只能勉強接受了暫時不開戦的協議……
+	PRINTFORML 而在%PRINT_TRANSCALLNAME(TARGET)%正想転身離開時————
+	PRINTW
+	PRINT 「
+	PRINTDATA
+		DATAFORM 呼呼呼、
+		DATAFORM 可愛的小%PRINT_TRANSCALLNAME(TARGET)%啊、
+		DATAFORM 嘿嘿、
+		DATAFORM %SELF_CALL(FLAG:111)%想問%PRINT_TRANSCALLNAME(TARGET)%呢、
+		DATAFORM 既然来到這裏了啊、
+	ENDDATA
+	PRINTDATA
+		DATAFORM 有没有覚得生活不夠刺激呢
+		DATAFORM 不能満足欲求、会寂寞嗎
+		DATAFORM 追求着更強大的力量嗎
+		DATAFORM 為了更強大的力量、願意付出什麼様的代価
+		DATAFORM 想要追上%PRINT_TRANSCALLNAME(FLAG:111)%的脚歩嗎
+	ENDDATA
+	PRINTW ？」
+	PRINTFORML 面対着沉吟不語的%PRINT_TRANSCALLNAME(TARGET)%、%PRINT_TRANSCALLNAME(FLAG:111)%露出悪魔般的笑容説道
+	PRINTFORML 「%SELF_CALL(FLAG:111)%可以帮忙、在身体上増加一些小東西、
+	PRINTFORML 「就可以加強作戦的能力哦、
+	PRINTFORMW 「対於没有촉수大人力量加持的%PRINT_TRANSCALLNAME(TARGET)%来説，是很合適的呢。
+	PRINTFORML 「也就只有一………………点点小小的副作用而已哦。
+	PRINTFORMW 「怎样、要不要试试看呢？」
+	PRINTL 
+	PRINTFORML 無数次的戦闘中遍体鱗傷、覚得自己不夠強大的%PRINT_TRANSCALLNAME(TARGET)%、
+	PRINTFORML 在%PRINT_TRANSCALLNAME(FLAG:111)%的勧説中動揺着……
+	PRINTFORMW 
+	DRAWLINE
+	PRINTFORML 要接受%PRINT_TRANSCALLNAME(FLAG:111)%的建議対身体進行改造嗎？
+	PRINTFORML [0] 決定了……想要！
+	PRINTFORML [1] 還是不要了
+	PRINTL 
+	$INPUT_LOOP_MOD1
+	INPUT
+	IF RESULT == 1
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%不能決断而離開了那裏
+	PRINTFORMW 没有注意到背後的%PRINT_TRANSCALLNAME(FLAG:111)%露出着嘲諷的笑容、像是在説「你還会回来的」……
+	RETURN 0
+	ELSEIF RESULT == 0
+	PRINTFORML 面対着似乎做出了決断的%PRINT_TRANSCALLNAME(TARGET)%、
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%露出着満意的笑容、
+	PRINTFORMW 不像是悪堕的魔法少女、而像是真正的店主一様進行着介紹……
+	CALL PASTIME_AKUOTI_INTRO
+	ELSE
+	PRINTW 再仔細想想、好好做決定吧
+	GOTO INPUT_LOOP_MOD1
+	ENDIF
+ELSE
+	PRINTFORML 与上次的位置不同，但%PRINT_TRANSCALLNAME(TARGET)%从招牌看出、
+	PRINTFORML 這就是那悪堕者所開設的、悪魔一般的商店……
+	PRINTFORML 浑身发抖地推門進去発現坐在櫃檯後面的是%PRINT_TRANSCALLNAME(FLAG:111)%！
+	PRINTFORML 「今天也需要进行介绍吗？」被这样问了
+	PRINTFORMW 随后带着奇怪的笑容欣赏着轻轻颤抖着的%PRINT_TRANSCALLNAME(TARGET)%的表情……
+	PRINTL
+	PRINTFORML 需要再由%PRINT_TRANSCALLNAME(FLAG:111)%做一次相关的说明吗？
+	PRINTFORML [1] 听一听吧
+	PRINTFORML [0] 不需要了、直接进行吧……
+	PRINTFORML [99] 不听了直接离开
+	$INPUT_LOOP_MOD2
+	INPUT
+	IF RESULT == 99
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%転身離開了那裏
+	PRINTFORMW 没有注意到背後的%PRINT_TRANSCALLNAME(FLAG:111)%露出着嘲諷的笑容、像是在説「你還会回来的」……
+	RETURN 0
+	ELSEIF RESULT == 0
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%露出着邪魅的笑容、
+	PRINTFORML 把%PRINT_TRANSCALLNAME(TARGET)%带入了后室……
+	IF TALENT:陰蒂穿環 < 1 && TALENT:乳頭穿環 < 1 
+	PRINTFORML 与陰暗的前庁不同、後室被設置為明亮的診室的様子
+	PRINTFORML 舒適的沙発和優雅的香氛譲%PRINT_TRANSCALLNAME(TARGET)%似乎放下了一些戒備
+	ENDIF
+	CALL PASTIME_AKUOTI_PIERCING
+	ELSEIF RESULT == 1
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%露出着満意的笑容、
+	PRINTFORML 不像是悪堕的魔法少女、而像是真正的店主一様進行着介紹……
+	CALL PASTIME_AKUOTI_INTRO
+	ELSE
+	PRINTW 再仔細想想、好好做決定吧
+	GOTO INPUT_LOOP_MOD2
+	ENDIF
+;ELSE
+;	PRINTFORML 与上次的位置不同，但%PRINT_TRANSCALLNAME(TARGET)%从招牌看出、
+;	PRINTFORML 這就是那悪堕者所開設的、悪魔一般的商店……
+;	PRINTL 门紧紧地关着无法推开
+;	PRINTFORML 尝试之后%PRINT_TRANSCALLNAME(TARGET)%转身离开了……
+;	RETURN 0
+ENDIF
+
+
+@PASTIME_AKUOTI_INTRO
+DRAWLINE 
+PRINTFORML 要聴取什麼項目的介紹？
+PRINTFORML [0] 乳頭改造
+PRINTFORML [1] 陰部改造
+PRINTFORML [2] 好了、开始吧
+PRINTFORML [99] 直接离开
+$INPUT_LOOP_AKUOTI_INTRO
+DRAWLINE
+INPUT 
+IF RESULT == 99
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%転身離開了那裏
+	PRINTFORMW 没有注意到背後的%PRINT_TRANSCALLNAME(FLAG:111)%露出着嘲諷的笑容、像是在説「你還会回来的」……
+RETURN 0
+ELSEIF RESULT == 0
+	PRINTFORML 「乳頭改造呢、就是在乳頭上穿環哦
+	PRINTFORML 只要"呲"一下把針穿過去、就可以把増強力量的結晶装在身体上了哦
+	PRINTFORMW 雖然会譲這部分敏感度稍微増加一点点呢……」
+	PRINTFORMW 光是聴着説明、%PRINT_TRANSCALLNAME(TARGET)%就感到自己的%SLANG_N(TARGET)%伝来繃緊感……
+	PRINTL 
+	PRINTFORML 乳頭環会大幅度増加공격力和쾌B的上升
+	PRINTFORMW 随着等級的増進、増加倍率将変得更高
+	CALL PASTIME_AKUOTI_INTRO
+ELSEIF RESULT == 1
+	PRINTFORML 「陰蒂改造呢、就是在陰蒂上穿環哦
+	PRINTFORML 「只要"呲"一下把針穿過去、就可以把増強力量的結晶装在身体上了哦
+	PRINTFORMW 「雖然会譲這部分敏感度稍微増加一点点呢……」
+	PRINTFORMW 光是聴着説明、%PRINT_TRANSCALLNAME(TARGET)%就感到自己的%SLANG_C(TARGET)%伝来繃緊感……
+	PRINTL 
+	PRINTFORML 「而且呢，之后我们还可以切掉周围的包皮、再把环穿在你的大阴唇上、
+	PRINTFORML 「这样效果会更好哦~」
+	PRINTFORML 想象着被穿环、甚至被施加更残忍改造的自己的身体会怎样、
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%的%SLANG_V(TARGET)%深处已经快要被蜜液充满了……
+	PRINTL 
+	PRINTFORML 陰蒂環会大幅度増加공격力和쾌B的上升
+	PRINTFORML 在到達一定程度之後還会増加쾌V的上升
+	PRINTFORMW 随着等級的増進、増加倍率将変得更高
+	CALL PASTIME_AKUOTI_INTRO
+ELSEIF RESULT == 2
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%露出着邪魅的笑容、
+	PRINTFORMW 把%PRINT_TRANSCALLNAME(TARGET)%带入了后室……
+	IF TALENT:陰蒂穿環 < 1 && TALENT:乳頭穿環 < 1 
+	PRINTFORML 与陰暗的前庁不同、後室被設置為明亮的診室的様子
+	PRINTFORML 舒適的沙発和優雅的香氛譲%PRINT_TRANSCALLNAME(TARGET)%似乎放下了一些戒備
+	ENDIF
+	CALL PASTIME_AKUOTI_PIERCING
+ELSE
+PRINTW 再仔細想想、好好做決定吧
+GOTO INPUT_LOOP_AKUOTI_INTRO
+ENDIF
+
+;刺青
+;-------------------------------------------------
+@TATOO_SET_OFF
+#DIMS TATOO_NAME,20
+#DIM COST
+#DIM TATOO_COUNT
+#DIM TATOO_SELECT
+
+;TATOO_SELECT = 選ばれた刺青
+
+;刺青を入れる場所リスト。CSTRの場所に対応
+TATOO_NAME:10 = 左脸颊
+TATOO_NAME:11 = 右脸颊
+TATOO_NAME:12 = 乳房
+TATOO_NAME:13 = 腹部
+TATOO_NAME:14 = 后腰
+TATOO_NAME:15 = 屁股
+TATOO_NAME:16 = 大腿
+
+COST = 10000
+;金がなければ終了
+IF MONEY < COST
+	PRINTW 钱不够
+	RETURN 0
+ENDIF
+
+
+PRINTFORML %SAVESTR:TARGET%身上的刺青
+PRINTL  
+$INPUT_LOOP
+
+FOR TATOO_COUNT,10, 20
+	SIF TATOO_NAME:TATOO_COUNT != ""
+		PRINTFORML  [{TATOO_COUNT}] %TATOO_NAME:TATOO_COUNT%	 - 『%CSTR:TARGET:TATOO_COUNT%』
+NEXT
+
+PRINTL  [999] - 返回
+
+INPUT
+IF RESULT == 999
+	RETURN 0
+ELSEIF TATOO_NAME:RESULT != ""
+	PRINTFORML 现在要对%TATOO_NAME:RESULT%部进行处理。
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+TATOO_SELECT = RESULT
+
+PRINTFORML 请自由输入想雕刻的刺青，留空代表将要被消去。
+PRINTFORM 现在雕刻的刺青是：
+
+IF CSTR:TARGET:TATOO_SELECT != ""
+	PRINTFORML 『%CSTR:TARGET:TATOO_SELECT%』。
+ELSE
+	PRINTFORML 没有
+ENDIF
+
+INPUTS
+
+IF RESULTS != ""
+	PRINTFORMW 在%TATOO_NAME:TATOO_SELECT%雕刻『%RESULTS%』刺青吗？
+ELSE
+	PRINTFORMW 洗掉%TATOO_NAME:TATOO_SELECT%的刺青吗？
+ENDIF
+
+PRINTL  [0] - 好的
+PRINTL  [1] - 不要
+
+INPUT
+
+IF RESULT == 1
+	RETURN 0
+ELSEIF RESULT == 0 
+	IF RESULTS != ""
+		PRINTFORMW 《%TATOO_NAME:TATOO_SELECT%上雕刻了『%RESULTS%』的刺青》
+	ELSE
+		PRINTFORMW 《%TATOO_NAME:TATOO_SELECT%的刺青消去了》
+	ENDIF
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+CSTR:TARGET:TATOO_SELECT = %RESULTS%
+
+
+MONEY -= COST
+RETURN 1
+
+
+
+@PASTIME_AKUOTI_PIERCING
+PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%想要進行什麼様的改造呢？」
+PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%眨着妖异的双眼問道
+PRINTFORML 
+IF TALENT:TARGET:乳頭穿環 != 4 || TALENT:TARGET:陰蒂穿環 != 4
+	PRINTFORML [0] 乳頭改造
+	PRINTFORML [1] 陰部改造
+	PRINTFORML [99] 直接离开
+	$INPUT_LOOP_AKUOTI_PIERCING
+	INPUT
+	IF RESULT == 0
+		IF TALENT:TARGET:乳頭穿環 < 1
+			CALL PASTIME_AKUOTI_PIERCING_NIPPLE_FIRST
+		ELSEIF TALENT:TARGET:乳頭穿環 == 4 && TALENT:TARGET:陰蒂穿環 < 4
+			PRINTFORML 現在的情況下、不可以再改造了哦
+			GOTO INPUT_LOOP_AKUOTI_PIERCING
+		ELSE 
+			CALL PASTIME_AKUOTI_PIERCING_NIPPLE
+		ENDIF
+	ELSEIF RESULT == 1
+		IF TALENT:TARGET:陰蒂穿環 < 1
+			CALL PASTIME_AKUOTI_PIERCING_CLIT_FIRST
+		ELSEIF TALENT:TARGET:陰蒂穿環 == 4 && TALENT:TARGET:乳頭穿環 < 4
+			PRINTFORML 現在的情況下、不可以再改造了哦
+			GOTO INPUT_LOOP_AKUOTI_PIERCING
+		ELSE
+			CALL PASTIME_AKUOTI_PIERCING_CLIT
+		ENDIF
+	ELSEIF RESULT == 99 && TALENT:TARGET:乳頭穿環 < 1 || TALENT:TARGET:陰蒂穿環 < 1
+	PRINTFORML 「以為可以這麼容易離開嗎？」
+	PRINTFORML 面対有些退縮的%PRINT_TRANSCALLNAME(TARGET)%、%PRINT_TRANSCALLNAME(FLAG:111)%詭異地笑了起来
+	PRINTFORML 就在%PRINT_TRANSCALLNAME(TARGET)%剛試図站起来要走的刹那
+	SELECTCASE RAND(3)
+		CASE 0 
+			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%快速取出某種噴霧併発射。
+			PRINTFORML 没能反応過来直接把霧気吸進去的%PRINT_TRANSCALLNAME(TARGET)%……
+			PRINTFORML 従喉嚨裏発出的、不是抗議的言辞，而是帯有濃重鼻音的嬌豔喘息声。
+			PRINTFORM 噴出的似乎是来自촉수的春薬，
+		CASE 1 
+			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%突然挙起電棒捅了過来。
+			PRINTFORML 没能馬上做出反応就被打中的%PRINT_TRANSCALLNAME(TARGET)%……
+			PRINTFORML 従喉嚨裏喊出的、不是抗議的言辞，而是豔麗的惨叫声。
+			PRINTFORM 高圧電流漫過肉体，
+		CASE 2 
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%突然受到%PRINT_TRANSCALLNAME(FLAG:111)%対小腹的膝撞……
+			PRINTFORML 従喉嚨裏湧出的、不是抗議的言辞，而是惨嚎和嘔吐物。
+			PRINTFORM 僅僅一撃就幾乎暈厥，
+	ENDSELECT
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%軟軟地委倒在地、
+	PRINTFORML 但%PRINT_TRANSCALLNAME(FLAG:111)%並没有召喚出촉수、而是連繋了什麼人……
+	PRINTFORML 「不会譲你分走촉수大人対%SELF_CALL(FLAG:111)%的愛的、来給你安排更好的去処吧……」
+	PRINTFORMW 随後%PRINT_TRANSCALLNAME(FLAG:111)%離開了……
+	PRINTL 
+	PRINTFORML 不知道多久之后、黑道组织的男人们到达了这里……
+	PRINTFORML 可憐的\@ISMALE() ? 少年 # 少女 \@、本応守護市民的英雄，被男人們作為性奴隸帯走了……
+	PRINTFORML 新的「戦利品」随後被運抵廃棄大楼的地下倉庫，
+	PRINTFORMW 在那裡面，男人們開始将可憐的犠牲者像是作為展示物一般地進行「設置」。
+	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%的
+	PRINTDATAL
+		DATAFORM 双手被鎖在頸項両側，
+		DATAFORM 双手被手銬束縛在身前，
+		DATAFORM 双臂用麻縄作成了後手高吊縛，
+		DATAFORM 双臂被皮質単手套束縛在身後，連手指都動弾不得，
+		DATAFORM 双臂被棉縄反剪在身後，
+		DATAFORM 上臂和前臂被折起貼緊，用黑膠布緊緊纏繞著，
+	ENDDATA
+	PRINTFORM 一双美腿被
+	PRINTDATA
+		DATAFORM 折起跪在地上拷緊、
+		DATAFORM 打開成下流的M字開腳，腳腕鎖在鐵桿的兩端無法併攏、
+		DATAFORM 強迫大大地向兩邊叉開，分別固定在地鎖上而暴露出下體、
+		DATAFORM 套上馬蹄形的超高跟過膝皮靴，腳踝和膝蓋都無法彎曲、
+		DATAFORM 用繩索完全綁緊不能動彈、
+	ENDDATA
+	PRINTW 
+	PRINTFORM 嬌嫩的乳頭被
+	PRINTDATA
+		DATAFORM 鱷魚夾狠狠咬출혈絲並掛上了砝碼，沉沉地下墜、
+		DATAFORM 一條短短的細棉繩繫住根部充血立起，艷麗地互相靠近，
+		DATAFORM 貼上了低周波電極，在電流惡毒的刺激下變得棗核般腫大，
+	ENDDATA
+	PRINTW 
+	PRINTFORM 頎長的脖頸
+	PRINTDATAL
+		DATAFORM 被寬大的金属項圈可靠地固定住並且上了鎖。項圈上的鐵鏈被掛在沉重的鉄質門型刑架的頂端，
+		DATAFORM 被戴上了掛著鈴鐺的紅色硬皮項圈，像一隻母狗般，項圈上的皮繩被掛在天花板上垂下的鉤子上，
+		DATAFORM 被套上了似乎是曾經用作絞刑的粗大麻繩，繩結上粗糙的毛刺在脖子上勒出紅痕，另一端繞過天花板上的滑輪在絞盤上微微收緊，
+		DATAFORM 被裝上了用於螺旋絞刑的電動項圈，隨著某種規律反復收緊放鬆，制御著%PRINT_TRANSCALLNAME(TARGET)%的呼吸，
+		DATAFORM 被套在頭上的防毒面具遮住了，口鼻部的軟管連接到裝有液體媚藥的負壓呼吸瓶上，支配著%PRINT_TRANSCALLNAME(TARGET)%的呼吸、
+	ENDDATA
+	PRINTL 
+	PRINTFORML 甜蜜的欠氧感衝撃著%PRINT_TRANSCALLNAME(TARGET)%的意志。
+	PRINTFORMW 不堪撻伐的股間早已泥濘一片，
+	PRINTDATAL
+		DATAFORM 含有大量媚藥的浣腸液被打進後庭，用巨大的充氣肛塞堵住，
+		DATAFORM 一串寶塔形的拉珠塞入菊門，
+		DATAFORM 後庭專用的振動棒持續刺激著%PRINT_TRANSCALLNAME(TARGET)%的肛肉，
+		DATAFORM 球頂的金屬鉤子插進直腸，鉤身嵌在兩片臀肉中間顯得特別淫蕩，
+	ENDDATA
+	IF ISFEMALE() 
+		PRINTDATAW
+			DATAFORM 數十個隨機震動的小跳蛋被粗暴地塞進了蜜裂的最深處。
+			DATAFORM 帶有電極的雙頭假陽具插入陰道，同時抵在陰蒂上，不停地引起%PRINT_TRANSCALLNAME(TARGET)%的呻吟。
+			DATAFORM 發情的蜜壺寂寞地張開著，卻被貞操帶擋住無法插入任何東西，帶來受虐的高揚感。
+		ENDDATA
+		ELSEIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
+		PRINTDATAW
+			DATAFORM 陰莖的根部被細繩扎緊，龜頭漲成亮紫色卻不能發洩。
+			DATAFORM 被套上了帶有震動飛機杯的男性貞操帶，在無情的刺激下不停地사정。
+		ENDDATA
+	ENDIF
+	PRINTFORML
+	PRINTFORML  被徹底拘束的%PRINT_TRANSCALLNAME(TARGET)%残存的迷糊意識中、聴見地下倉庫的門関上的沉悶響声。
+	PRINTL 
+	SETCOLOR 0xFFFF00
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%被黑道組織綁架了。。。
+	RESETCOLOR
+	CFLAG:TARGET:0 = 4
+	;救出までの必要ポイント
+	CFLAG:TARGET:71 = 60
+	BEGIN TURNEND
+	ELSEIF RESULT == 99 
+		PRINTFORML 「咦？有事吗？……真可惜呢……不过你肯定会回来的哦~」
+		PRINTFORML 露出怪異笑容的%PRINT_TRANSCALLNAME(FLAG:111)%目送着%PRINT_TRANSCALLNAME(TARGET)%離開……
+		RETURN 0
+	ELSE
+		PRINTW 再仔細想想、好好做決定吧
+		GOTO INPUT_LOOP_AKUOTI_PIERCING
+	ENDIF
+ELSE
+	PRINTFORML [0] 完全改造
+	PRINTFORML [99] 直接离开
+	$INPUT_LOOP_AKUOTI_PIERCING_FINAL
+	INPUT
+	IF RESULT == 0
+		CALL PASTIME_AKUOTI_PIERCING_FINAL
+	ELSEIF RESULT == 99 
+		PRINTFORML 「咦？有事吗？……真可惜呢……不过你肯定会回来的哦~」
+		PRINTFORML 露出怪异笑容的%PRINT_TRANSCALLNAME(FLAG:111)%目送着%PRINT_TRANSCALLNAME(TARGET)%……
+		RETURN 0
+	ELSE
+		PRINTW 再仔細想想、好好做決定吧
+		GOTO INPUT_LOOP_AKUOTI_PIERCING_FINAL
+	ENDIF
+ENDIF
+
+@PASTIME_AKUOTI_PIERCING_NIPPLE_FIRST
+PRINTFORML 「来、不用太緊張。会很温柔的哦」
+PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%譲%PRINT_TRANSCALLNAME(TARGET)%坐在了診療椅上
+PRINTFORML 軽柔地脱下衣服露出了%SLANG_B(TARGET)%
+PRINTFORMW 用手指掻動着%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_N(TARGET)%
+PRINTL 
+PRINTDATAL
+	DATAFORM 「呀啊……」
+	DATAFORM 「咿呀！」
+	DATAFORM 「好敏感……」
+	DATAFORM 「一定要……這様嗎？」
+ENDDATA
+PRINTL 
+PRINTFORML 充分勃起之後、就用塗抹軟膏的棉棒在乳頭上擦拭
+IF TALENT:TARGET:陰蒂穿環 < 1
+	PRINTFORMW 「%PRINT_TRANSCALLNAME(FLAG:111)%、為什麼会這些？」
+ELSE
+	PRINTFORMW 「有点……緊張啊……」
+ENDIF
+PRINTL 
+PRINTFORML 没有思考的時間、%PRINT_TRANSCALLNAME(FLAG:111)%用尖端成C型的鉗子夾住了%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_N(TARGET)%。
+PRINTFORMW 然後熟練地用另一隻手挙起鋼針対準了被圧扁的%SLANG_N(TARGET)%中心
+PRINTFORML 連看也不看、而是用妖异的双眼盯着%PRINT_TRANSCALLNAME(TARGET)%的臉、
+PRINTFORMW 手指緩緩用力、将鋼針慢慢地貫穿乳頭
+PRINTFORM 「进去了、进去了、进去了啊啊啊啊！！
+PRINTDATA
+	DATAFORM 嗚咿
+	DATAFORM 嗚゛咿咕
+	DATAFORM 嗚゛咿呀゛啊
+	DATAFORM 嘎゛啊゛啊゛啊゛呀
+	DATAFORM 嘎咿~
+	DATAFORM 嘎唏~
+	DATAFORM 唏咕
+	DATAFORM 唏嘰
+	DATAFORM 唏咕呀
+ENDDATA
+PRINTDATAL
+	DATAFORM 啊啊啊啊啊啊啊啊哇！？」
+	DATAFORM 嘰唏咿咿咿咿！？」
+	DATAFORM 唏咿咿咿咿呀！？」
+	DATAFORM 唏啊啊啊啊啊！？」
+	DATAFORM 嘰呀呼嗚嗚嗚嗚嗚！？」
+	DATAFORM 咿噫噫噫噫噫噫！？」
+ENDDATA
+PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%身体僵硬、双目翻白、流着口水全身発抖……
+PRINTL 
+PRINTFORM 彷彿完全没有聴見嬌声的%PRINT_TRANSCALLNAME(FLAG:111)%、穏定的手将鋼針抜出、擦去些微的血迹、将
+PRINTDATA
+	DATAFORM 馬蹄形
+	DATAFORM 唖鈴形
+	DATAFORM 槓鈴形
+	DATAFORM 環形
+ENDDATA
+PRINTFORML 的乳環推進乳頭上的開孔中。
+PRINTDATAL
+	DATAFORM 「啊゛啊吖吖啊！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+	DATAFORM 「嗚゛呢゛啊、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+	DATAFORM 「啊゛呃、呃゛啊゛啊吖吖啊！ 啊゛啊嗄゛啊嗄啊！」
+	DATAFORM 「啊゛啊吖吖啊！ 哦゛喔哦゛喔哦哦哦啊！」
+ENDDATA
+PRINTL 用镊子将乳环安装到位、
+PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%悪作劇地用指尖撥了撥乳環、欣賞着%PRINT_TRANSCALLNAME(TARGET)%雌獣般的嬌声。
+CALL MESSAGE_SEX_ECSTASY_B
+PRINTL 
+IF TALENT:TARGET:모유체질 > 0
+PRINTFORML 高潮時奶水従緊繃的%SLANG_N(TARGET)%中噴出、
+PRINTFORML 同時従前端和乳環的縫隙間噴出奶水、甚至飛射到了另一辺的乳房上、
+PRINTL 罕見的모유奇観中、連滲出的血跡也被沖刷乾浄。
+EXP:TARGET:모유경험 += 2
+ELSE
+PRINTFORML 魔法少女強大的恢復力之下、血液很快不再滲出。
+ENDIF
+PRINTFORML 然後，該輪到另外一辺了……
+PRINTL · · ·
+PRINTL  · · ·
+PRINTW   · · ·
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
+PRINTFORML 不知達到了多少次的高潮……
+IF TALENT:TARGET:모유체질 > 0
+PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
+EXP:TARGET:모유경험 += RAND(3,10)
+ENDIF
+PRINTL 
+PRINTL 「唏嗯……嗯咕、呼啊啊……」
+PRINTFORML 不是被촉수侵犯而是自願進行的肉体改造、
+PRINTFORML 身体再也不能回到原来的様子。
+PRINTFORML 這様的事実衝撃著%PRINT_TRANSCALLNAME(TARGET)%的心霊
+PRINTFORMW 感觉着胸前异样感觉的%PRINT_TRANSCALLNAME(TARGET)%呆呆地坐着……
+PRINTL 
+PRINTFORML 没有察覚%PRINT_TRANSCALLNAME(FLAG:111)%已経離開了、更没有注意到
+PRINTFORMW 離去前対方那妖异的双眼之中的狡黠……
+TALENT:TARGET:乳頭穿環 = 1
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:166%Lv.1
+EXP:TARGET:절정경험 += RAND(15,40)
+EXP:TARGET:고통쾌락경험 += RAND(3,15)
+
+@PASTIME_AKUOTI_PIERCING_NIPPLE
+PRINTFORML 「状態很好呢」
+PRINTFORML 譲%PRINT_TRANSCALLNAME(TARGET)%坐到診療椅上、脱下衣服、
+PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%用手指軽軽撫摸着%SLANG_N(TARGET)%。
+PRINTL 
+PRINTFORML 「好了，譲我們開始吧」
+PRINTFORML 故意忽略了%PRINT_TRANSCALLNAME(TARGET)%的陣陣嬌喘\@ TALENT:TARGET:모유체질 > 0 ? 和%SLANG_N(TARGET)%上沁出的乳汁 # \@
+PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%做着進一歩改造的準備工作……
+PRINTL 
+IF TALENT:TARGET:乳頭穿環 == 1 ;进展至2级
+	PRINTFORML 「咕……呀啊啊~」
+	PRINTFORML 「要想在這裏获取更强的能量、就要挂更大的能量源
+	PRINTFORML 「所以、要用更粗的針尖拡孔」
+	PRINTFORML 軽柔地取下原来乳環的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+	PRINTFORMW 「那麼這一次、就用這個吧！」
+	PRINTL 
+	PRINTFORML 在%PRINT_TRANSCALLNAME(TARGET)%面前展示了一対装有能量宝石的小鈴鐺。
+	PRINTFORML 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有発出任何抗拒的声音、任由%PRINT_TRANSCALLNAME(FLAG:111)%将掛着小鈴鐺
+	PRINTFORML 柱体更粗的乳環安装到自己的乳頭上。
+	PRINTFORMW 「唏嗯……嗯咕、呼啊啊……」
+	PRINTL 
+	PRINTFORML 冰冷的金属擠開肉孔、刺激着敏銳的神経末梢、
+	PRINTFORML 一波一波的細砕快感襲来、%PRINT_TRANSCALLNAME(TARGET)%的理性被敏感点伝来的火焔灼焼着。
+	PRINTFORML 小鈴鐺随着%PRINT_TRANSCALLNAME(FLAG:111)%的動作沙沙地晃動着、吸引着%PRINT_TRANSCALLNAME(TARGET)%的眼神。
+	PRINTFORML 没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTW 然後————
+	PRINTL 
+	PRINTL 「~叮鈴~叮鈴~叮鈴~」
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「嘎唏~咿~
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+	ENDDATA
+	PRINTFORML 
+	PRINTFORMW 鈴鐺従%PRINT_TRANSCALLNAME(FLAG:111)%鬆開的指尖滑落、将%PRINT_TRANSCALLNAME(TARGET)%的乳頭拉得向下墜去！
+	CALL MESSAGE_SEX_ECSTASY_B
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 轻轻触摸着胸前的装饰品、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(25,40)
+	TALENT:TARGET:乳頭穿環 = 2
+	PRINTW 
+ELSEIF TALENT:TARGET:乳頭穿環 == 2 ;进展至3级
+	PRINTFORML 「咿呀……呼啊啊~唏嗯……嗯」
+	PRINTFORML 「光靠一組孔没有辦法安装更強的宝石呢、
+	PRINTFORMW 軽柔地取下原来乳環的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+		PRINTL 
+	PRINTFORML 「所以現在、要準備第二組的孔位咯！」
+	PRINTFORML 「嗯……呀……咿……」
+	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対고통的期待……
+		PRINTL 
+	PRINTFORML 持続被乳環責備着的乳頭毎時毎刻都勃起着、消毒棉棒点上去時、変得更硬了
+	PRINTFORML 「呀啊……咿……轻……」
+	PRINTFORMW 尖端成C型的鉗子従上下方向強硬地夾住了乳頭、幾乎譲%PRINT_TRANSCALLNAME(TARGET)%当场泄出来、
+		PRINTL 
+	PRINTFORML 「丢……要丢了……呀啊……唏呀…又……」
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%盯着%PRINT_TRANSCALLNAME(TARGET)%的臉、
+	PRINTFORMW 手指緩緩用力、将鋼針慢慢地縦向刺入乳頭————
+		PRINTL 
+	PRINTDATAL
+		DATAFORM 「嘎呜゛！ 呜咕啊啊啊啊啊゛啊、唏咿咿咿咿啊゛嘎啊啊！」
+		DATAFORM 「咿゛呀？！ 啊呀呀゛！ 痛゛呀唏呀呀呀呀呀啊啊啊啊啊啊！」
+	ENDDATA
+	PRINTL
+	PRINTFORML 再度发出惨叫的%PRINT_TRANSCALLNAME(TARGET)%全身颤抖、却一动也不敢动
+	PRINTFORML 注意到这点的%PRINT_TRANSCALLNAME(FLAG:111)%眯起妖异的双眼露出邪魅的微笑
+	PRINTFORMW 放慢了进针的速度、一边刺入、一边还用手指捻转着针腹……
+	PRINTL
+	PRINTDATAL
+		DATAFORM 「嗯哦嗬哦哦哦哦哦！ 哦゛哦哦哦咕！ 嗯゛哦哦哦哦哦哦咕！」
+		DATAFORM 「哇、咿哈啊、咿唔唔唔、呀啊、咕嗚嗚嗚嗚嗚嗚嗯啊！？」
+		DATAFORM 「咕呜呜呜呜啊！ 咿唔咕、咿啊、咿唔唔唔呜！」
+	ENDDATA
+		PRINTL 
+	PRINTDATAL
+		DATAFORM (刺进去的时候…………眼前一片空白、什么也不知道了……啊)
+		DATAFORM (被扎到的……奶頭………又痛、又感覚好舒服……啊)
+	ENDDATA
+		PRINTL 
+	IF TALENT:TARGET:모유체질 > 0
+	PRINTFORML 从乳头前端、乳环孔和针腹的边缘都喷出了乳汁、像一朵花一样四面散射、
+	PRINTFORMW 冲去了泌出的血迹、也让进针的阻力小了不少……
+	EXP:TARGET:모유경험 += RAND(3,10)
+	ENDIF
+		PRINTL 
+	CALL MESSAGE_SEX_ECSTASY_B_HI
+		PRINTL 
+	EXP:TARGET:절정경험 += RAND(35,60)
+	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	PRINTFORML 直到穿刺完成、%PRINT_TRANSCALLNAME(TARGET)%已経無法説出完整的句子、
+	PRINTFORMW 双目微閉、仰靠在診査椅上発出微弱但香豔的吐息……
+	PRINTL 
+	PRINTFORML 「這個呢、叫做"乳頭罩"哦~~呼呼~」
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%手上的、已経不是一般意義上的「釘」或是「环」
+	PRINTFORMW 厚重的金属圈、中间有十字交叉的两根贯穿柱
+		PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%取下貫穿柱、以軽柔的動作将金属圏套在乳頭上、然後将貫穿柱擰進開孔中
+	PRINTFORML 「进来了゛要、咕唏……要丢了、呜゛呜゛咕啊！」
+		PRINTL 
+	PRINTFORML 冰冷的金属擠開肉孔、再度刺激着敏銳的神経末梢、
+	PRINTFORML 随着贯穿柱安装到位、乳头像是被「拘束」一般圈禁在金属圈之内
+		PRINTL 
+	PRINTFORML 無休無止的尖銳快感衝撃著%PRINT_TRANSCALLNAME(TARGET)%的理性、敏感点伝来的火焔熊熊燃焼。
+	PRINTFORMW 暂时没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTW 然後————
+	PRINTL 
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「唏咿咿咿咿
+		DATAFORM 「嘎唏~咿~
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 不要唔嗚嗚啊嗯啊！？」
+		DATAFORM 嗚゛呢゛啊、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+		DATAFORM 那゛裏゛要壊゛掉゛了゛嗚゛啊！ 哦゛喔哦゛喔哦哦哦呀？！」
+	ENDDATA
+	PRINTL 
+	PRINTFORML 乳頭罩従%PRINT_TRANSCALLNAME(FLAG:111)%的指尖下墜
+	PRINTFORML 従未有過的重量感将敏感的乳頭用力拉向地面、
+	PRINTL
+	PRINTFORMW 極度的官能刺激超過了痛苦的極限、激烈的乳頭高潮席捲了全身……
+		PRINTL 
+	CALL MESSAGE_SEX_ECSTASY_B_HI
+		PRINTL 
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 轻轻触摸着胸前的装饰品、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(35,60)
+	EXP:TARGET:고통쾌락경험 += RAND(10,20)
+	TALENT:TARGET:乳頭穿環 = 3
+	PRINTW 
+ELSEIF TALENT:TARGET:乳頭穿環 == 3 ;进展至4级
+	PRINTFORML 「哈啊……哈啊……呀……呀啊啊~」
+	PRINTFORML 「已経很不錯了呢……準備好更進一歩了嗎？
+	PRINTFORMW 迅捷地取下乳頭罩的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+	PRINTL 
+	PRINTFORML 「那麼這一次、就用這個吧！」
+	PRINTFORML 「呃……啊啊……這様的話……呼咕……！」
+	PRINTFORML 在%PRINT_TRANSCALLNAME(TARGET)%面前的、是一個更加粗厚巨大的乳頭罩、
+	PRINTFORML 還帯有愛心形的宝石吊墜、完全放開鏈子的話、大概能垂到肚臍附近。
+	PRINTFORML 原先的乳頭罩没有那麼寛厚，還能夠在乳頭上揺晃、
+	PRINTFORML 這次的厚度，在装上之後，辺縁一定会頂住乳肉、推擠着乳頭向前拉長、
+	PRINTFORML 原先只是穿了孔、持続地処於興奮的勃起而已、取掉乳環之後、還是会回到原来的大小
+	PRINTFORML 要是装上這個、乳頭一定会被拉成小指、紅棗、甚至偽嬢的小陰茎那様、
+	PRINTFORML 成為無法恢復原状的悽惨状態吧……
+	PRINTFORMW 光是想象着這些、%PRINT_TRANSCALLNAME(TARGET)%就感到身体緊繃得難以呼吸了。
+	PRINTL 
+	PRINTFORML 「唏嗯……嗯、咕呼嗚……」
+	PRINTFORML 軽柔地捏住了乳頭後方的乳肉，%PRINT_TRANSCALLNAME(FLAG:111)%将%PRINT_TRANSCALLNAME(TARGET)%乳頭向前擠出
+	SIF TALENT:TARGET:모유체질 > 0
+		PRINTFORML 只是這様，乳頭就已経開始射出奶汁了。
+	PRINTFORML 没有受到任何阻礙，更粗的貫穿柱就這様擠開了乳環孔、両根粗棍交錯、
+	PRINTFORML 把乳頭従原本的小乳蒂拉成了肥勃的円柱体、簡直就是熟透的紅棗一般、
+	PRINTL 
+	PRINTFORML 「唏嗯……呀啊……嗯啊……嗯咕、呼啊啊……」
+	PRINTFORML 冰冷的金属擠開肉孔、刺激着敏銳的神経末梢、
+	PRINTFORML 身体被自己主动破坏、在被更强性快感折磨的同时又会得到更强的力量、%PRINT_TRANSCALLNAME(TARGET)%的理性快要被欲火熔化。
+	PRINTFORML 没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTW 然後————
+	PRINTL 
+	PRINTL 「哗啦————」
+	PRINTFORML 爱心吊坠従%PRINT_TRANSCALLNAME(FLAG:111)%鬆開的指尖滑落、
+	PRINTFORMW 细细的银链随着吊坠哗啦啦地落下、突然猛烈地一停，在空中蹦跳起来！
+	PRINTL 
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「嘎唏~咿~
+		DATAFORM 「啊゛啊吖
+		DATAFORM 「啊゛啊吖吖啊！ 哞
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 啊！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+		DATAFORM ~吖吖啊！ 啊゛啊嗄゛啊嗄啊！」
+		DATAFORM ~吖吖啊！ 哦゛喔哦゛喔哦哦哦啊！」
+	ENDDATA
+	PRINTL 
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%在一瞬间抵达了多重绝顶
+	SELECTCASE RAND(7)
+	CASE 6
+		CALL MESSAGE_SEX_MULTIECSTASY_CVAB
+	CASE 5
+		CALL MESSAGE_SEX_MULTIECSTASY_CVB
+	CASE 4
+		CALL MESSAGE_SEX_MULTIECSTASY_CAB
+	CASE 3
+		CALL MESSAGE_SEX_MULTIECSTASY_CB
+	CASE 2
+		CALL MESSAGE_SEX_MULTIECSTASY_VAB
+	CASE 1
+		CALL MESSAGE_SEX_MULTIECSTASY_VB
+	CASEELSE
+	CALL MESSAGE_SEX_MULTIECSTASY_AB
+	ENDSELECT
+	PRINTL 
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 感受着胸前持续不断的官能刺激、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(30,40)
+	TALENT:TARGET:乳頭穿環 = 4
+	SIF TALENT:TARGET:모유체질 > 0
+			EXP:TARGET:모유경험 += RAND(5,10)
+	PRINTW 	
+ENDIF 
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%的%TALENTNAME:166%等級提高了
+
+@PASTIME_AKUOTI_PIERCING_CLIT_FIRST
+PRINTFORML 「来、不用太緊張。会很温柔的哦」
+PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%譲%PRINT_TRANSCALLNAME(TARGET)%脱掉衣服、
+PRINTFORML 分開双腿、坐在了婦科用的診療椅上、
+SIF CFLAG:42 == 400
+	PRINTFORML 不知%PRINT_TRANSCALLNAME(FLAG:111)%做了什麼、%ITEMNAME:400%自動地退開了。
+PRINTFORMW 跪下的%PRINT_TRANSCALLNAME(FLAG:111)%将臉湊近、用舌頭挑逗着%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_C(TARGET)%
+PRINTL 
+PRINTDATAL
+	DATAFORM 「呀啊……」
+	DATAFORM 「咿呀！」
+	DATAFORM 「好敏感……」
+	DATAFORM 「一定要……這様嗎？」
+ENDDATA
+PRINTL 
+PRINTFORML 充分勃起之後、就用塗抹軟膏的棉棒在陰蒂尖端擦拭起来
+IF TALENT:TARGET:乳頭穿環 < 1
+	PRINTFORMW 「%PRINT_TRANSCALLNAME(FLAG:111)%、為什麼会這些？」
+ELSE
+	PRINTFORMW 「啊啊……還是会……緊張啊……」
+ENDIF
+PRINTL 
+PRINTFORML 没有思考的時間、%PRINT_TRANSCALLNAME(FLAG:111)%用尖端成C型的鉗子夾住了%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_C(TARGET)%。
+PRINTFORMW 然後熟練地用另一隻手挙起鋼針対準了被圧扁的%SLANG_C(TARGET)%中心
+PRINTFORML 用妖异的双眼盯着%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_C(TARGET)%、
+PRINTFORMW 手指緩緩用力、将鋼針慢慢地貫穿過去……
+PRINTL 
+PRINTFORM 「痛、好痛、好痛啊啊啊啊啊！！
+PRINTDATA
+	DATAFORM 嗚咿
+	DATAFORM 嗚゛咿咕
+	DATAFORM 嗚゛咿呀゛啊
+	DATAFORM 嘎゛啊゛啊゛啊゛呀
+	DATAFORM 嘎咿~
+	DATAFORM 嘎唏~
+	DATAFORM 唏咕
+	DATAFORM 唏嘰
+	DATAFORM 唏咕呀
+ENDDATA
+PRINTDATAL
+	DATAFORM 啊啊啊啊啊啊啊啊哇！？」
+	DATAFORM 嘰唏咿咿咿咿！？」
+	DATAFORM 唏咿咿咿咿呀！？」
+	DATAFORM 唏啊啊啊啊啊！？」
+	DATAFORM 嘰呀呼嗚嗚嗚嗚嗚！？」
+	DATAFORM 咿噫噫噫噫噫噫！？」
+ENDDATA
+PRINTL 
+PRINTFORML 過激的性刺激形成痛苦的浪潮、%PRINT_TRANSCALLNAME(TARGET)%感到%SLANG_C(TARGET)%要被撕開一般、
+PRINTFORMW 彷彿下体被割裂的錐心疼痛之中、身体僵硬、双目翻白、流着口水全身発抖……
+PRINTL 
+PRINTFORM 彷彿完全没有聴見絶惨嬌声的%PRINT_TRANSCALLNAME(FLAG:111)%、穏定的手将鋼針抜出、擦去些微的血迹、将
+PRINTDATA
+	DATAFORM 馬蹄形
+	DATAFORM 唖鈴形
+	DATAFORM 槓鈴形
+	DATAFORM 環形
+ENDDATA
+PRINTFORML 的陰蒂環推進陰蒂上的開孔中。
+PRINTL 
+PRINTDATAL
+	DATAFORM 「啊゛啊吖吖啊！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+	DATAFORM 「嗚゛呢゛啊、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+	DATAFORM 「啊゛呃、呃゛啊゛啊吖吖啊！ 啊゛啊嗄゛啊嗄啊！」
+	DATAFORM 「啊゛啊吖吖啊！ 哦゛喔哦゛喔哦哦哦啊！」
+ENDDATA
+PRINTL 
+PRINT 用鑷子将陰蒂環安装到位、
+PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%悪作劇地用指尖撥了撥、欣賞着%PRINT_TRANSCALLNAME(TARGET)%雌獣般的嬌声。
+CALL MESSAGE_SEX_ECSTASY_C
+PRINTL 
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
+PRINTFORML 不知達到了多少次的高潮……
+IF TALENT:TARGET:모유체질 > 0
+PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
+EXP:TARGET:모유경험 += RAND(3,10)
+ENDIF
+PRINTL 
+PRINTL 「唏嗯……嗯咕、呼啊啊……」
+PRINTFORML 不是被촉수侵犯而是自願進行的肉体改造、
+PRINTFORML 身体再也不能回到原来的様子。
+PRINTFORML 這様的事実衝撃著%PRINT_TRANSCALLNAME(TARGET)%的心霊
+PRINTFORML 被下体一跳一跳的疼痛和快感吸引着注意力的%PRINT_TRANSCALLNAME(TARGET)%
+PRINTFORML 没有察覚%PRINT_TRANSCALLNAME(FLAG:111)%已経離開了、更没有注意到
+PRINTFORMW 離去前対方那妖异的双眼之中的狡黠……
+TALENT:TARGET:陰蒂穿環 = 1
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:165%Lv.1
+EXP:TARGET:절정경험 += RAND(15,40)
+EXP:TARGET:고통쾌락경험 += RAND(3,15)
+
+@PASTIME_AKUOTI_PIERCING_CLIT
+PRINTFORML 「状態很好呢」
+PRINTFORML 譲%PRINT_TRANSCALLNAME(TARGET)%脱下衣服、坐到妇科診療椅上、
+PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%用手指軽軽撫摸着%SLANG_C(TARGET)%。
+PRINTFORML 「好了，譲我們開始吧」
+PRINTFORML 故意忽略了%PRINT_TRANSCALLNAME(TARGET)%的陣陣嬌喘、
+PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%做着進一歩改造的準備工作……
+PRINTL 
+IF TALENT:TARGET:陰蒂穿環 == 1 ;进展至2级
+	PRINTFORML 「咕……呀啊啊~」
+	PRINTFORML 「要想在這裏获取更强的能量、就要挂更大的能量源
+	PRINTFORML 「所以、要用更粗的針尖拡孔」
+	PRINTFORML 軽柔地取下原来陰蒂環的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+	PRINTFORMW 「那麼這一次、就用這個吧！」
+	PRINTL 
+	PRINTFORML 在%PRINT_TRANSCALLNAME(TARGET)%面前展示了一枚装有能量宝石的小鈴鐺。
+	PRINTFORML 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有発出任何抗拒的声音、任由%PRINT_TRANSCALLNAME(FLAG:111)%将掛着小鈴鐺
+	PRINTFORML 柱体更粗的陰蒂環安装到自己的私処。
+	PRINTL 
+	PRINTFORML 「唏嗯……嗯咕、呼啊啊……」
+	PRINTFORML 冰冷的金属擠開肉孔、刺激着敏銳的神経末梢、
+	PRINTFORMW 一波一波的尖銳快感襲来、%PRINT_TRANSCALLNAME(TARGET)%的理性被敏感点伝来的火焔灼焼着。
+	PRINTFORML 小鈴鐺随着%PRINT_TRANSCALLNAME(FLAG:111)%的動作沙沙地晃動着、%PRINT_TRANSCALLNAME(TARGET)%抬頭向天望着虚空。
+	PRINTFORML 没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTW 然後————
+	PRINTL 
+	PRINTL 「~叮鈴~叮鈴~叮鈴~」
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「嘎唏~咿~
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+	ENDDATA
+	PRINTL 
+	PRINTFORML 鈴鐺被%PRINT_TRANSCALLNAME(FLAG:111)%用指尖一挑、
+	PRINTFORMW 然後将%PRINT_TRANSCALLNAME(TARGET)%的陰蒂扯住向下墜去！
+	PRINTL 
+	CALL MESSAGE_SEX_ECSTASY_C
+	PRINTL 
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 感受着下体刺痒的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(25,40)
+	TALENT:TARGET:陰蒂穿環 = 2
+	PRINTW 
+ELSEIF TALENT:TARGET:陰蒂穿環 == 2 ;进展至3级
+	PRINTFORML 「咿呀……呼啊啊~唏嗯……嗯」
+	PRINTFORML 「光靠一組孔没有辦法安装更強的宝石呢、
+	PRINTFORMW 軽柔地取下陰蒂環的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+	PRINTL 
+	PRINTFORML 「所以現在、要準備第二組的孔位咯！」
+	PRINTFORML 「嗯……呀……咿……」
+	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対고통的期待……
+	PRINTL 
+	PRINTFORML 持続被責備着的陰蒂毎時毎刻都勃起着、消毒棉棒点上去時、変得更硬了
+	PRINTL 
+	PRINTFORML 「呀啊……咿……轻……」
+	PRINTL 
+	PRINTFORML 尖端成C型的鉗子従上下方向強硬地夾住了陰核、幾乎譲%PRINT_TRANSCALLNAME(TARGET)%当场尿出来、
+	PRINTL 
+	PRINTFORML 「丢……要丢了……呀啊……唏呀…又……」
+	PRINTL 
+	PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%手指緩緩用力、将鋼針慢慢地縦向刺入————
+	PRINTL 
+	PRINTDATAL
+		DATAFORM 「嘎呜゛！ 呜咕啊啊啊啊啊゛啊、唏咿咿咿咿啊゛嘎啊啊！」
+		DATAFORM 「咿゛呀？！ 啊呀呀゛！ 痛゛呀唏呀呀呀呀呀啊啊啊啊啊啊！」
+	ENDDATA
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%全身顫抖、両条大腿繃緊至幾近痙攣、但是一動也不敢動
+	PRINTFORML 注意到这点的%PRINT_TRANSCALLNAME(FLAG:111)%眯起妖异的双眼露出邪魅的微笑
+	PRINTFORMW 放慢了进针的速度、一边刺入、一边还用手指捻转着针腹……
+	PRINTL 
+	PRINTDATAL
+		DATAFORM 「嗯哦嗬哦哦哦哦哦！ 哦゛哦哦哦咕！ 嗯゛哦哦哦哦哦哦咕！」
+		DATAFORM 「哇、咿哈啊、咿唔唔唔、呀啊、咕嗚嗚嗚嗚嗚嗚嗯啊！？」
+		DATAFORM 「咕呜呜呜呜啊！ 咿唔咕、咿啊、咿唔唔唔呜！」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM (刺进去的时候…………眼前一片空白、什么也不知道了……啊)
+		DATAFORM (被扎到的……小豆豆………又痛、又感覚好舒服……啊)
+	ENDDATA
+	PRINTL 
+	CALL MESSAGE_SEX_ECSTASY_C_HI
+	EXP:TARGET:절정경험 += RAND(35,60)
+	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	PRINTFORML 直到穿刺完成、%PRINT_TRANSCALLNAME(TARGET)%已経無法説出完整的句子、
+	PRINTFORMW 双目微閉、仰靠在婦科診査椅上発出微弱但香豔的吐息……
+	PRINTL 
+	PRINTFORML 「這個呢、叫做"陰蒂罩"哦~~呼呼~」
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%手上的、已経不是一般意義上的「釘」或是「环」
+	PRINTFORML 厚重的金属圈、中间有十字交叉的两根贯穿柱
+	PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%取下貫穿柱、以軽柔的動作将金属圏套在勃起的陰蒂上、然後将貫穿柱擰進開孔中
+	PRINTL 
+	PRINTFORML 「进来了゛要、咕唏……要丢了、呜゛呜゛咕啊！」
+	PRINTL 
+	PRINTFORML 冰冷的金属拡張着肉孔、毫不停歇地刺激着敏銳的神経末梢、
+	PRINTFORML 随着貫穿柱安装到位、可憐的陰蒂像是被「拘束」一般圏禁在金属圏之内
+	PRINTFORML 無休無止的尖銳快感衝撃著%PRINT_TRANSCALLNAME(TARGET)%的理性、敏感点伝来的火焔熊熊燃焼。
+	PRINTFORML 暂时没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTW 然後————
+	PRINTL 
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「唏咿咿咿咿
+		DATAFORM 「嘎唏~咿~
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 不要唔嗚嗚啊嗯啊！？」
+		DATAFORM 嗚゛呢゛啊、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+		DATAFORM 那゛裏゛要壊゛掉゛了゛嗚゛啊！ 哦゛喔哦゛喔哦哦哦呀？！」
+	ENDDATA
+	PRINTL 
+	PRINTFORML 陰蒂罩従%PRINT_TRANSCALLNAME(FLAG:111)%的指尖下墜
+	PRINTFORML 従未有過的重量感将敏感的尖端用力拉向地面、
+	PRINTFORMW 極度的官能刺激超過了痛苦的極限、激烈的高潮席捲了全身……
+	PRINTL 
+	CALL MESSAGE_SEX_ECSTASY_C_HI
+	PRINTL 
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 感受着下体高涨的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(35,60)
+	EXP:TARGET:고통쾌락경험 += RAND(10,20)
+	TALENT:TARGET:陰蒂穿環 = 3
+	PRINTW 
+ELSEIF TALENT:TARGET:陰蒂穿環 == 3 ;进展至4级
+	PRINTFORML 「哈啊……哈啊……呀……呀啊啊~」
+	PRINTFORML 「已経很不錯了呢……準備好更進一歩了嗎？
+	PRINTFORMW 迅捷地取下陰蒂罩的%PRINT_TRANSCALLNAME(FLAG:111)%一辺説、一辺準備着器材
+	PRINTL 
+	PRINTFORML 「那麼這一次、就全都穿上洞吧！」
+	PRINTFORML 「呃……啊啊……這様的話……呼咕……！」
+	PRINTFORML 在%PRINT_TRANSCALLNAME(TARGET)%面前的、是一個更加粗厚巨大的阴蒂罩、
+	PRINTFORMW 周围带有四根细细的银链，不知道是拿来做什么的
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%用迷茫的目光盯着那様一個可怕的東西
+	PRINTFORML 這次的厚度，一定会推擠着阴蒂向前拉長、
+	PRINTFORML 原先只是穿了孔、持続地処於興奮的勃起而已、取掉之後、応該還是会回到原来的大小
+	PRINTFORML 要是装上這個、陰核一定会被拉成小指、紅棗、甚至偽嬢的小陰茎那様、
+	PRINTFORML 成為無法恢復原状的悽惨状態吧……
+	PRINTL
+	PRINTFORML 光是想象着這些、%PRINT_TRANSCALLNAME(TARGET)%就感到身体緊繃得難以呼吸了。
+	PRINTFORMW 但這一次可不只是這様而已……
+	PRINTL 
+	PRINTFORML 「那麼接下来，是要在這辺也穿上環哦……」
+	PRINTFORML （这边……也……是……什么……意思……呢？）
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%晕乎乎的头脑无法思考、而%PRINT_TRANSCALLNAME(FLAG:111)%手上轻巧地动作不停。
+	PRINTFORML 用手指翻開了%PRINT_TRANSCALLNAME(TARGET)%一辺的%SLANG_LabiaMajora(TARGET)%、
+	PRINTFORMW 然後熟練地用鋼針一下子贯穿————
+	PRINT 「
+	;拟声词前半
+	PRINTDATA
+		DATAFORM 嗚咿
+		DATAFORM 嗚゛咿咕
+		DATAFORM 嗚゛咿呀゛啊
+		DATAFORM 嘎゛啊゛啊゛啊゛呀
+		DATAFORM 嘎咿~
+		DATAFORM 嘎唏~
+		DATAFORM 唏咕
+		DATAFORM 唏嘰
+		DATAFORM 唏咕呀
+	ENDDATA
+		;拟声词后半
+	PRINTDATAL
+		DATAFORM 啊啊啊啊啊啊啊啊哇！？」
+		DATAFORM 嘰唏咿咿咿咿！？」
+		DATAFORM 唏咿咿咿咿呀！？」
+		DATAFORM 唏啊啊啊啊啊！？」
+		DATAFORM 嘰呀呼嗚嗚嗚嗚嗚！？」
+		DATAFORM 咿噫噫噫噫噫噫！？」
+	ENDDATA
+	PRINTL 
+	PRINTFORML 即使已经经历过许多次，敏感部位的激烈疼痛仍然使得%PRINT_TRANSCALLNAME(TARGET)%惨叫起来
+	PRINTFORML 从下体溅出大量的%SLANG_Juice(TARGET,"愛液")%。
+	PRINTFORML 无视着娇艳凄惨的呻吟、%PRINT_TRANSCALLNAME(FLAG:111)%为%PRINT_TRANSCALLNAME(TARGET)%穿上了四個陰唇環。
+	PRINTFORMW 然后…………
+	PRINTL 
+	PRINTFORML 「唏嗯……嗯、咕呼嗚……」
+	PRINTFORML 被套上了阴蒂罩。
+	PRINTFORML 没有受到任何阻礙，更粗的貫穿柱就這様擠開了陰蒂上的交叉孔、両根粗棍交錯、
+	PRINTFORMW 把陰蒂拉成了肥勃的円柱体、簡直就是熟透的紅棗一般、
+	PRINTL 
+	PRINTFORML 「唏嗯……呀啊……嗯啊……嗯咕、呼啊啊……」
+	PRINTFORML 冰冷的金属擠開肉孔、刺激着敏銳的神経末梢、
+	PRINTFORML 身体被自己主動破壊、在被更強性快感折磨的同時又会得到更強的力量、%PRINT_TRANSCALLNAME(TARGET)%的理性快要被慾火熔化。
+	PRINTFORML 没有到達高潮，但身体一直徘徊在高潮的辺縁……
+	PRINTFORML 装设好阴蒂罩之后、%PRINT_TRANSCALLNAME(FLAG:111)%把延伸出来的銀鏈，掛在了陰唇環上
+	PRINTW 然後————
+	PRINTL 
+	PRINTL 「哗啦————」
+	PRINTFORML 银链被%PRINT_TRANSCALLNAME(FLAG:111)%轻轻向上一挑、
+	PRINTFORML 像是提線木偶一般、%PRINT_TRANSCALLNAME(TARGET)%的臀部突然猛烈地一挺，然後在空中蹦跳起来！
+	PRINTL 
+	PRINTDATA
+		DATAFORM 「咿哇
+		DATAFORM 「噗嘰咿~
+		DATAFORM 「嗚嘰~
+		DATAFORM 「嘎唏~咿~
+		DATAFORM 「啊゛啊吖
+		DATAFORM 「啊゛啊吖吖啊！ 哞
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 、哦哦哦哦哦哦哦啊！」
+		DATAFORM 、啊啊嗚、嗯哦哦哦哦啊！？」
+		DATAFORM 、吖゛嗄嗄啊啊！？」
+		DATAFORM ！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 啊！ 哞゛啊、啊゛啊嗄゛啊嗄啊！」
+		DATAFORM 、不゛要゛啊゛……哦゛喔哦゛喔哦哦哦啊！」
+		DATAFORM ~吖吖啊！ 啊゛啊嗄゛啊嗄啊！」
+		DATAFORM ~吖吖啊！ 哦゛喔哦゛喔哦哦哦啊！」
+	ENDDATA
+	PRINTL 
+	PRINTFORML 已経什麼都不明白，也什麼都不在意，脳内只有無尽的過激快感。
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%在一瞬间抵达了多重绝顶
+	SELECTCASE RAND(4)
+	CASE 3
+		CALL MESSAGE_SEX_MULTIECSTASY_CVAB
+	CASE 2
+		CALL MESSAGE_SEX_MULTIECSTASY_CVA
+	CASE 1
+		CALL MESSAGE_SEX_MULTIECSTASY_CVB
+	CASEELSE
+		CALL MESSAGE_SEX_MULTIECSTASY_CV
+	ENDSELECT
+	PRINTFORML 不知多久之後、
+	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
+	PRINTFORMW 感受着下体燥热和鼓胀的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
+	EXP:TARGET:절정경험 += RAND(30,40)
+	EXP:TARGET:방뇨경험 += RAND(1,5)
+	EXP:TARGET:고통쾌락경험 += RAND(15,30)
+	TALENT:TARGET:陰蒂穿環 = 4
+	SIF TALENT:TARGET:모유체질 > 0
+			EXP:TARGET:모유경험 += RAND(5,10)
+	PRINTW 	
+ENDIF 
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%的%TALENTNAME:165%等級提高了
+
+@PASTIME_AKUOTI_PIERCING_FINAL
+PRINT 「
+PRINTDATA
+	DATAFORM 真是没想到、
+	DATAFORM 不得了的慾望啊、
+	DATAFORM 真漂亮、
+	DATAFORM 闪闪发光的、
+ENDDATA
+PRINTDATA
+	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%走到了这一步呢。
+	DATAFORM 就这么喜欢吗、%PRINT_TRANSCALLNAME(TARGET)%酱？
+	DATAFORM 不断在追求着更强大的力量呢……
+	DATAFORM 是想要怎样的力量呢？
+ENDDATA
+PRINTL 」
+PRINTL 
+PRINTFORML 가슴部和下身都被做了无法回头的肉体改造
+PRINTFORML 连自己也不明白，为什么会一直到这片街区来寻找恶堕者的商店
+PRINTFORMW 是想要更强大的力量来与촉수们战斗、还是……
+PRINTL 
+PRINTFORML 总之、
+PRINTFORML 还不满足的%PRINT_TRANSCALLNAME(TARGET)%、提出了想要更加激烈的改造要求
+PRINTFORMW 早有準備的恶堕者、自然不会让这样的事情落空……
+PRINTL 
+PRINTFORML 脱下了全身衣物，赤身裸体的%PRINT_TRANSCALLNAME(TARGET)%躺在了妇科检查椅上
+PRINTFORML 「嘶————啊！゛啊゛啊吖吖啊！」
+PRINTFORML 在肚脐的上方一点、%PRINT_TRANSCALLNAME(FLAG:111)%将钢针穿过了皮肤
+PRINTFORML 并不是性器的地方，却引起了意料之外的官能高涨。
+PRINTL 
+PRINTFORML 「这里……要做什么……呀——呃！゛啊゛啊~啊！」
+PRINTL 
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%看着%PRINT_TRANSCALLNAME(FLAG:111)%将一顆帯有托架的
+PRINTFORM %STR:(21000 + RAND:280)%
+PRINTFORML 色宝石鑲嵌在了自己的肚臍上、
+PRINTL 
+PRINTFORML 「很快就会好的、呼呼~」
+PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%那妖异的双眼閃爍着妖異的光芒、
+PRINTFORMW 在%PRINT_TRANSCALLNAME(TARGET)%沉重的喘息中、将乳頭罩、陰蒂罩、陰唇環全都用鎖鏈連接到了宝石的托架上。
+PRINTL 
+PRINTFORMW 「啊、啊………………」
+PRINTFORMW 「啊！！！！！！！！啊啊啊！啊啊啊啊啊啊啊！！！！」
+PRINTL 
+PRINTFORML 尖锐的凄鸣突然响起、当%PRINT_TRANSCALLNAME(FLAG:111)%连接上最后的锁链之后、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%突然急剧地扭动起来、连同身上的所有装置都在叮当作响。
+PRINTFORML 宝石之中流出的能量，顺着锁链流向了各个敏感点、
+PRINTFORML 带来比电流还要尖锐强烈的凄绝快感————
+PRINTL 
+CALL MESSAGE_SEX_MULTIECSTASY_CB
+PRINTL 
+PRINTFORMW 「呼呼呼~这样就可以了哦……」
+PRINTL 
+CALL MESSAGE_SEX_MULTIECSTASY_CAB
+PRINTL 
+PRINTFORMW 「最后一块拼图完成了呢、它可以将%PRINT_TRANSCALLNAME(TARGET)%的感度提高到一般人不可能达到的水平呢」
+PRINTL 
+CALL MESSAGE_SEX_MULTIECSTASY_CVB
+PRINTL 
+PRINTFORMW 「普通的人类早就已经疯掉然后死掉了吧、但是%PRINT_TRANSCALLNAME(TARGET)%没问题的呢」
+PRINTL 
+CALL MESSAGE_SEX_MULTIECSTASY_CVAB
+PRINTL 
+PRINTFORMW 「啊呀呀……这么厉害、就连%PRINT_TRANSCALLNAME(FLAG:111)%现在也想要了呢……」
+PRINTL 
+PRINTFORML 欣赏着%PRINT_TRANSCALLNAME(TARGET)%在高潮中溺毙的痴态、%PRINT_TRANSCALLNAME(FLAG:111)%露出了得意的笑容……
+PRINTW 迈着轻快的步伐离开了现场……
+PRINTL 
+PRINTFORML 「啊……啊啊……这样……刺激的话……会……哦哦啊……」
+PRINTFORML 几个小时以后，筋疲力尽的%PRINT_TRANSCALLNAME(TARGET)%才勉强起身离开
+PRINTFORMW 宝石时刻都在输出着能量、链子每走一步都发出沙沙的声音、牵动着高涨的自虐官能感……
+	TALENT:TARGET:陰蒂穿環 = 5
+	TALENT:TARGET:乳頭穿環 = 5
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:166%Lv.5
+PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:165%Lv.5
+	EXP:TARGET:절정경험 += RAND(30,40)
+	EXP:TARGET:방뇨경험 += RAND(5,10)
+	EXP:TARGET:고통쾌락경험 += RAND(15,30)
+	SIF TALENT:TARGET:모유체질 > 0
+		EXP:TARGET:모유경험 += RAND(5,10)
+
+

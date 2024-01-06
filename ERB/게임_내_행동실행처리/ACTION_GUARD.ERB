@@ -1,0 +1,16 @@
+﻿
+;拠点防衛
+@GUARD
+CFLAG:101 = -1
+PRINTL 
+PRINTFORML %CALLNAME%はパトロールを行っている……
+
+;エンカウント判定
+CALL ENCOUNT
+SIF FLAG:999 == 1
+	PRINTFORMW エンカウント番号 == {RESULT}
+;ボス&&悪堕ちキャラが決まってない場合にザコ戦開始判定
+SIF !RESULT && !FLAG:110
+	CALL MOB_TENTACLE_ENCOUNT
+
+RETURN RESULT

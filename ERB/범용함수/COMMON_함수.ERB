@@ -1,0 +1,1610 @@
+﻿;よく使う関数群
+
+;--------------------------------------------------
+;ショートライン
+@SHORTLINE, ARG = 0
+PRINT ――――――――――――――――――――――――――――
+SIF ARG == 0
+	PRINTL 
+RETURN RESULT
+
+;--------------------------------------------------
+;LINEBLACKOUT
+;改行による画面切り替えの演出を行う
+@LB
+#DIM LCOUNT
+FOR LCOUNT, 0, 50
+	PRINTL 
+NEXT
+;受け取ったRESULTをそのまま返す
+RETURN RESULT
+
+;--------------------------------------------------
+;カラー付きバー@COLOR_BAR
+;ARG:1	現在値
+;ARG:2	最大値
+;ARG:3  ゲージの長さ
+;ARG:4  色・R		0xFFFFFF方式で色を指定することができないので注意。
+;ARG:5  色・G
+;ARG:6  色・B
+;ARG:7  背景色の色相差（ARGS:1 と ARGS:2の色の差）数値が大きいほど背景の色が薄くなる
+;ARG:8  グラデーション変化・R 加算値
+;ARG:9  グラデーション変化・G 加算値
+;ARG:10 グラデーション変化・B 加算値
+;ARG:11 グラデーション変化の頻度　数値が大きいほど変化が緩やかになる
+;ARGS:1 ゲージに使用する文字
+;ARGS:2 ゲージの背景文字
+@COLOR_BAR(ARG:1,ARG:2,ARG:3=20,ARG:4=160,ARG:5=160,ARG:6=160,ARG:7=-80,ARG:8,ARG:9,ARG:10,ARG:11=1,ARGS:1=UNICODE(0x2582),ARGS:2=UNICODE(0x2581))
+VARSET LOCAL
+VARSET LOCALS
+LOCAL:1 = ARG:1 * ARG:3 / ARG:2
+LOCAL:2 = ARG:3 - LOCAL:1
+LOCAL:4 = ARG:4 + ARG:7
+LOCAL:5 = ARG:5 + ARG:7
+LOCAL:6 = ARG:6 + ARG:7
+SIF LOCAL:4 < 0
+	LOCAL:4 = 0
+SIF LOCAL:4 > 255
+	LOCAL:4 = 255
+SIF LOCAL:5 < 0
+	LOCAL:5 = 0
+SIF LOCAL:5 > 255
+	LOCAL:5 = 255
+SIF LOCAL:6 < 0
+	LOCAL:6 = 0
+SIF LOCAL:6 > 255
+	LOCAL:6 = 255
+FOR LOCAL,0,ARG:3
+	IF LOCAL:1 > LOCAL
+		IF LOCAL:100 < ARG:11
+			SETCOLOR ARG:4,ARG:5,ARG:6
+			LOCAL:100 += 1
+		ELSE
+			ARG:4 += ARG:8
+			ARG:5 += ARG:9
+			ARG:6 += ARG:10
+			SIF ARG:4 < 0
+				ARG:4 = 0
+			SIF ARG:4 > 255
+				ARG:4 = 255
+			SIF ARG:5 < 0
+				ARG:5 = 0
+			SIF ARG:5 > 255
+				ARG:5 = 255
+			SIF ARG:6 < 0
+				ARG:6 = 0
+			SIF ARG:6 > 255
+				ARG:6 = 255
+			SETCOLOR ARG:4,ARG:5,ARG:6
+			LOCAL:100 = 0
+		ENDIF
+		PRINTFORM %ARGS:1%
+	ELSE
+		IF !LOCAL:101
+			SETCOLOR LOCAL:4,LOCAL:5,LOCAL:6
+			LOCAL:101 = 1
+		ENDIF
+		PRINTFORM %ARGS:2%
+	ENDIF
+NEXT
+RESETCOLOR
+VARSET LOCAL
+RETURN 1
+
+
+;--------------------------------------------------
+;カラー表示する文章 キャラの체력バーなど
+@COLORSENTENCE_BAR, ARGS, ARG:0, ARG:1, ARG:2, ARG:3
+SIF ARGS != "사정" && ARGS != "모유"
+	CALL COLORSENTENCE_BARCOLOR, ARG:1, ARG:2
+
+PRINTFORM %ARGS,ARG:0,LEFT%　  
+;CALL PRINT_COLORBAR(ARG:1,ARG:2,ARG:3, UNICODE(0x2584), UNICODE(0x2584))
+;BAR ARG:1,ARG:2,ARG:3
+IF ARGS == "체력"
+	ARG:4 = 215
+	ARG:5 = 105
+	ARG:6 = 30
+ELSEIF ARGS == "기력"
+	ARG:4 = 60
+	ARG:5 = 75
+	ARG:6 = 215
+ELSEIF ARGS == "성내성"
+	ARG:4 = 255
+	ARG:5 = 90
+	ARG:6 = 120
+ELSEIF ARGS == "사정"
+	ARG:4 = 215
+	ARG:5 = 180
+	ARG:6 = 105
+ELSEIF ARGS == "모유"
+	ARG:4 = 255
+	ARG:5 = 220
+	ARG:6 = 205
+ENDIF
+PRINTFORM %UNICODE(0x208D)%
+CALL COLOR_BAR(ARG:1,ARG:2,ARG:3,ARG:4,ARG:5,ARG:6,-160,10,18,6,2,UNICODE(0x25AE),UNICODE(0x25AE))
+SIF ARGS != "사정" && ARGS != "모유"
+	CALL COLORSENTENCE_BARCOLOR, ARG:1, ARG:2
+PRINTFORM %UNICODE(0x208E)%
+PRINTFORM （{ARG:1, 5}/{ARG:2, 5}）
+RESETCOLOR
+
+
+;--------------------------------------------------
+;カラー表示する文章 キャラの체력バーなど（SHOP画面の非操作キャラ用）
+@COLORSENTENCE_MINIBAR, ARGS, ARG:0, ARG:1, ARG:2, ARGS:1, ARG:3
+CALL COLORSENTENCE_BARCOLOR, ARG:0, ARG:1
+
+PRINTFORM %ARGS%
+;CALL PRINT_COLORBAR(ARG:0,ARG:1,ARG:2, UNICODE(0x2584), UNICODE(0x2584))
+;BAR ARG:0,ARG:1,ARG:2
+IF ARGS == "체력"
+	ARG:4 = 245
+	ARG:5 = 135
+	ARG:6 = 60
+ELSEIF ARGS == "기력"
+	ARG:4 = 90
+	ARG:5 = 105
+	ARG:6 = 245
+ELSEIF ARGS == "성내성"
+	ARG:4 = 255
+	ARG:5 = 120
+	ARG:6 = 150
+ENDIF
+PRINTFORM %UNICODE(0x208D)%
+CALL COLOR_BAR(ARG:0,ARG:1,ARG:2,ARG:4,ARG:5,ARG:6,-160,10,18,6,1,UNICODE(0x2582),UNICODE(0x2581))
+CALL COLORSENTENCE_BARCOLOR, ARG:1, ARG:2
+PRINTFORM %UNICODE(0x208E)%
+PRINTFORM ({ARG:0}/{ARG:1})%ARGS:1, ARG:3%
+RESETCOLOR
+
+;--------------------------------------------------
+;カラー表示する文章 敵の체력バーなど
+@COLORSENTENCE_ENEMYBAR, ARGS, ARG:0, ARG:1, ARG:2
+
+SIF ARGS == "敵체력"
+	CALL COLORSENTENCE_BARCOLOR, ARG:1, ARG:2
+IF FLAG:73 > 0 && ARGS == "敵체력"
+	RESETCOLOR
+	PRINTFORM 人数
+ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && ARGS == "敵체력"
+	PRINTFORM %STR:2500%체력
+ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARGS == "敵체력"
+	PRINTFORM 敵체력
+ENDIF
+
+;CALL PRINT_COLORBAR(ARG:0,ARG:1,ARG:2, UNICODE(0x2584), UNICODE(0x2584))
+;BAR ARG:0,ARG:1,ARG:2
+IF ARGS == "敵체력"
+	ARG:4 = 215
+	ARG:5 = 105
+	ARG:6 = 30
+ELSEIF ARGS == "敵사정"
+	ARG:4 = 215
+	ARG:5 = 180
+	ARG:6 = 105
+ELSEIF ARGS == "敵絶頂"
+	ARG:4 = 250
+	ARG:5 = 120
+	ARG:6 = 250
+ENDIF
+PRINTFORM %UNICODE(0x208D)%
+CALL COLOR_BAR(ARG:0,ARG:1,ARG:2,ARG:4,ARG:5,ARG:6,-160,10,18,6,2,UNICODE(0x25AE),UNICODE(0x25AE))
+SIF ARGS == "촉수체력"
+	CALL COLORSENTENCE_BARCOLOR, ARG:1, ARG:2
+PRINTFORM %UNICODE(0x208E)%
+;解析度が足りていない場合は数値が表示されない
+IF FLAG:999 == 1 || FLAG:20 >= 50 || ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	PRINTFORM （{ARG:0, 5}/
+ELSE
+	PRINTFORM （？？？/
+ENDIF
+IF FLAG:999 == 1 || FLAG:20 >= 25 || ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	PRINTFORM {ARG:1, 5}）
+ELSE
+	PRINTFORM ？？？）
+ENDIF
+RESETCOLOR
+
+;--------------------------------------------------
+;カラー表示する文章 色の判定
+@COLORSENTENCE_BARCOLOR, ARG:0 ,ARG:1
+IF ARG:0 == 0
+	SETCOLOR 255, 0, 0
+ELSE
+	LOCAL = PERCENT_CAL_F(ARG:0, ARG:1)
+	IF LOCAL < 25
+		SETCOLOR 255, 123, 0
+	ELSEIF LOCAL < 50
+		SETCOLOR 255, 255, 0
+	ENDIF
+ENDIF
+
+;--------------------------------------------------
+;数値列の文字数を返す式中関数
+@INTLEN, ARG
+#FUNCTION
+LOCALS = %TOSTR(ARG)%
+LOCAL = STRLENSU(LOCALS)
+RETURNF LOCAL
+
+;--------------------------------------------------
+;パーセント計算 百分率を返す
+@PERCENT_CAL, ARG:0, ARG:1
+SIF ARG:0 == 0 || ARG:1 == 0
+	RETURN 0
+LOCAL = ARG:0*100 / ARG:1
+RETURN LOCAL
+
+;--------------------------------------------------
+;パーセント計算の式中関数バージョン
+@PERCENT_CAL_F, ARG:0, ARG:1
+#FUNCTION
+SIF ARG:0 == 0 || ARG:1 == 0
+	RETURNF 0 
+LOCAL = ARG:0*100 / ARG:1
+RETURNF LOCAL
+
+;--------------------------------------------------
+;文字列を初期化する式中関数
+;「LOCALS =」と同じ役割
+@STRCLEAR
+#FUNCTIONS
+RETURNF LOCALS
+
+;--------------------------------------------------
+;無事なキャラの総数を返す式中関数
+;控えメンバー含めて計算
+;※「無事」とは人類社会の庇護下で自己決定権のもと生存している状態を示す
+;　具体的には操作可能or入院中のキャラ数
+@CHARANUM_SAFE
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 0 && CFLAG:(LOCAL:1):0 != 10 && CFLAG:(LOCAL:1):0 != 11
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;無事かつパーティー編成可能なキャラの総数
+@CHARANUM_PLAYABLE
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 0
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;自発的に行動可能なキャラ数(SAFEから四肢喪失と번식자루を除外)
+@CHARANUM_ACTRESS
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 0 || TALENT:(LOCAL:1):사지결손 || TALENT:(LOCAL:1):번식자루
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+
+;無事ではないキャラの総数( CHARANUM-CHARANUM_SAFE() )を返す式中関数
+@CHARANUM_LOST
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 1 && CFLAG:(LOCAL:1):0 != 2 && CFLAG:(LOCAL:1):0 != 3 && CFLAG:(LOCAL:1):0 != 4 && CFLAG:(LOCAL:1):0 != 9
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;現在幽閉中or洗脳悪堕ち中のキャラ数を返す式中関数(取り込まれ死亡キャラを除外して数える)
+@CHARANUM_PRISON
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 1 && CFLAG:(LOCAL:1):0 != 2 && CFLAG:(LOCAL:1):0 != 3
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;現在洗脳悪堕ち中のキャラ数を返す式中関数
+@CHARANUM_DARKEN
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 2 && CFLAG:(LOCAL:1):0 != 3
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;クズ市民に監禁・性노예化されているキャラ数を返す
+@CHARANUM_ENSLAVED
+#FUNCTION
+LOCAL = 0
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 == 4
+		LOCAL++
+NEXT
+RETURNF LOCAL
+
+;今なお人類の希望であるヒロインの総数を返す
+;(「無事」または「幽閉中/監禁中だが悪堕ちやロストには至っていない」キャラ数を返す)
+@CHARANUM_HOPE
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 == 2 || CFLAG:(LOCAL:1):0 == 3 || CFLAG:(LOCAL:1):0 == 9
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;女性扱いされるキャラの数
+@CHARANUM_GIRLY()
+#FUNCTION
+LOCAL = 0
+FOR LOCAL:1, 1, CHARANUM
+	SIF ISGIRLY(LOCAL:1)
+		LOCAL++
+NEXT
+RETURNF LOCAL
+;男性扱いされるキャラの数
+@CHARANUM_MANLY()
+#FUNCTION
+LOCAL = 0
+FOR LOCAL:1, 1, CHARANUM
+	SIF ISMANLY(LOCAL:1)
+		LOCAL++
+NEXT
+RETURNF LOCAL
+
+
+
+;--------------------------------------------------
+;生存中かつ管理状態(PT編成中)が当てはまるキャラの総数を返す式中関数
+;ARGは引き継ぎフラグ用
+@CHARANUM_SAFE_PARTYCHECK, ARG
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 == 1 || CFLAG:(LOCAL:1):0 == 2 || CFLAG:(LOCAL:1):0 == 3 || CFLAG:(LOCAL:1):0 == 4 || CFLAG:(LOCAL:1):0 == 9 || CFLAG:(LOCAL:1):999 == 0
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+;--------------------------------------------------
+;조작 중(파티 편성에 참가하고 있거나, 건강한 상태인) 캐릭터의 총수를 반환하는 식중 함수
+@CHARANUM_ACTIVE
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):0 != 0 || CFLAG:(LOCAL:1):999 == 0
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;--------------------------------------------------
+;安否を問わず、ゲーム内に配置されている(控えに回っていない)キャラの総数を返す式中関数
+@CHARANUM_PARTYCHECK, ARG
+#FUNCTION
+LOCAL = CHARANUM-1
+FOR LOCAL:1, 1, CHARANUM
+	SIF CFLAG:(LOCAL:1):999 == 0
+		LOCAL -= 1
+NEXT
+RETURNF LOCAL
+
+;--------------------------------------------------
+;変身中なら変身後名を返す式中関数
+@PRINT_TRANSNAME, ARG
+#FUNCTIONS
+IF CFLAG:ARG:3 == 1 && CFLAG:ARG:1 != 0
+	LOCALS = %CSTR:ARG:0%
+ELSE
+	LOCALS = %NAME:ARG%
+ENDIF
+RETURNF LOCALS
+
+;--------------------------------------------------
+;変身中なら変身後呼び名を返す式中関数
+@PRINT_TRANSCALLNAME, ARG
+#FUNCTIONS
+;あなた구상選択時
+IF CFLAG:ARG:6 == 3
+	LOCALS = あなた
+ELSEIF CFLAG:ARG:3 == 1 && CFLAG:ARG:1 != 0
+	LOCALS = %CSTR:ARG:1%
+ELSE
+	LOCALS = %CALLNAME:ARG%
+ENDIF
+RETURNF LOCALS
+
+;※変身状態に関わらず変身後名を取得したければ%CSTR:1%を直接使う
+
+;--------------------------------------------------
+;あなた구상に対応した呼び名を返す式中関数
+@PRINT_CALLNAME, ARG, ARG:1 = 0
+#FUNCTIONS
+;地の文用
+IF ARG:1 == 0
+	;あなた구상選択時
+	IF CFLAG:ARG:6 == 3
+		LOCALS = あなた
+	ELSE
+		LOCALS = %CALLNAME:ARG%
+	ENDIF
+;システム表示用
+ELSE
+	LOCALS = %CALLNAME:ARG%
+	;あなた구상選択時
+	SIF CFLAG:ARG:6 == 3
+		LOCALS += "(あなた)"
+ENDIF
+RETURNF LOCALS
+
+
+;--------------------------------------------------
+;キャラのリスト表示
+;ARG=1ならCFLAG:0=0のキャラ（仲間状態で生きているキャラ）からしか選択できない、ARG=2なら全キャラ表示する、ARG=3なら一時離脱しているキャラのみ表示する
+;ARG:1は表示オプション
+;ARG:1=1	生存状態
+;ARG:1=2	修練Ｐ
+;ARG:2=1	キャンセル不可
+@CHARA_LIST, ARG, ARG:1, ARG:2 = 0
+#DIM LCOUNT
+PRINTL 誰を選びますか？
+FOR LCOUNT, 0, CHARANUM
+	SIF LCOUNT == MASTER
+		CONTINUE
+	SIF ARG != 2 && ARG != 3 && CFLAG:LCOUNT:999 == 0
+		CONTINUE
+	SIF ARG == 3 && CFLAG:LCOUNT:0 != 1 && CFLAG:LCOUNT:0 != 2 && CFLAG:LCOUNT:0 != 3 && CFLAG:LCOUNT:0 != 4
+		CONTINUE
+
+	IF (ARG == 0 && CFLAG:LCOUNT:0 != 9) || CFLAG:LCOUNT:0 == 0 || ARG == 2 || ARG == 3
+		PRINTFORM [{LCOUNT}] %NAME:LCOUNT,28,LEFT%
+		IF ARG:1 == 1
+			SIF CFLAG:LCOUNT:0 == 1
+				PRINT （幽閉中）
+			SIF CFLAG:LCOUNT:0 == 2
+				PRINT （洗脳）
+			SIF CFLAG:LCOUNT:0 == 3
+				PRINT （悪堕ち）
+			SIF CFLAG:LCOUNT:0 == 4
+				PRINT （誘拐監禁中）
+			;未実装
+			;SIF CFLAG:LCOUNT:0 == 5
+			;	PRINT （引きこもり中）
+			SIF CFLAG:LCOUNT:0 == 9
+				PRINT （取り込まれ）
+			SIF CFLAG:LCOUNT:0 == 10
+				PRINT （出産に備えて入院中）
+			SIF CFLAG:LCOUNT:0 == 11
+				PRINT （育児中）
+		ENDIF
+		SIF ARG:1 == 2
+			PRINTFORM （修練Ｐ：{JUEL:LCOUNT:수련P}）
+		PRINTL 
+	ENDIF
+NEXT
+SIF ARG:2 == 0
+	PRINTFORML [999]キャラ選択をやめる
+$INPUT_LOOP_CHARA_LIST
+INPUT
+IF RESULT == 999 && ARG:2 == 0
+	RETURN 999
+ELSEIF RESULT < 1 || RESULT >= CHARANUM || ((ARG == 0 && CFLAG:RESULT:0 == 9) || (ARG == 1 && CFLAG:RESULT:0 != 0)) || (ARG != 2 && ARG != 3 && CFLAG:RESULT:999 == 0) || (ARG == 3 && CFLAG:RESULT:0 != 1 && CFLAG:RESULT:0 != 2 && CFLAG:RESULT:0 != 3 && CFLAG:RESULT:0 != 4)
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_CHARA_LIST
+ELSE
+	RETURN RESULT
+ENDIF
+PRINTL 
+
+;--------------------------------------------------
+;キャラ名の変更
+@NAME_CHANGE ,ARG
+PRINTL 
+PRINTL どんな名前にしますか？
+$INPUT_LOOP_NAME_CHANGE
+INPUTS
+IF RESULTS == ""
+	GOTO INPUT_LOOP_NAME_CHANGE
+ELSE
+	CALLNAME:ARG = %RESULTS%
+	PRINTFORML 「%RESULTS%」に変更しました
+ENDIF
+
+;--------------------------------------------------
+;戦闘の경험치算出
+@GET_EXP_BATTLE
+;잡몹적戦
+IF (SAVESTR:13 == "MOB") || FLAG:73 > 0
+	CALL TENTACLE_LEVEL
+	LOCAL = 8 * (RESULT + 2)/ABL:레벨 + RAND(15)
+
+	SIF LOCAL < 1
+		LOCAL = 1
+
+	;###공중 촬영 드론による上昇
+	SIF CFLAG:43 == 505
+		TIMES LOCAL, 1.10
+
+	CALL GET_EXP,min(LOCAL,75)
+;ボス戦
+ELSEIF (SAVESTR:13 == "BOSS")
+	CALL TENTACLE_LEVEL
+	LOCAL = 50 * (RESULT + 2)/ABL:레벨 + RAND(15) + 25
+
+	SIF LOCAL < 10
+		LOCAL = 10
+
+	;###공중 촬영 드론による上昇
+	SIF CFLAG:43 == 505
+		TIMES LOCAL, 1.10
+
+	CALL GET_EXP,min(LOCAL,150)
+;いずれでもない時
+ELSE
+	PRINTW ERROR NO EXP DATA
+ENDIF
+
+;--------------------------------------------------
+;경험치の取得
+@GET_EXP, ARG
+;내성적
+SIF TALENT:내성적 > 0
+	TIMES ARG, 1.10
+;제멋대로굼
+SIF TALENT:제멋대로굼 > 0
+	TIMES ARG, 1.10
+JUEL:경험치 += ARG
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は경험치を{ARG}％得た
+;레벨アップするか確認
+CALL CHECK_LEVELUP
+
+;--------------------------------------------------
+;수련P取得
+@GET_SYUREN, ARG
+JUEL:수련P += ARG
+PRINTFORML %PALAMNAME:20%を{ARG}P手に入れた
+
+;--------------------------------------------------
+;資金取得
+@GET_MONEY, ARG
+MONEY += ARG
+PRINTFORML {ARG}＄を手に入れた
+
+;--------------------------------------------------
+;촉수の欠片取得
+@GET_KAKERA, ARG
+FLAG:200 += ARG
+PRINTFORML 촉수の欠片を{ARG}個を手に入れた
+
+;--------------------------------------------------
+;처녀喪失 
+;！！！！この関数は現在戦闘中限定で呼ばれている　要統合
+@LOSTVIRGIN, ARG:0 = 0
+SIF TALENT:처녀 == -1
+	RETURN
+TALENT:처녀 = -1
+SIF ARG:0 != 0
+	ARG:0 = 1
+CFLAG:206 = 2 + ARG:0
+;지문: 戦闘中처녀喪失
+CALL MESSAGE_SEX_LOSTVIRGIN
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락) == 0
+	CALL SHINKYOU_CHANGE, "TOUSAKU"
+
+;聖처녀状態(or처녀を失わないオプションON)の判定を返す式中関数 처녀喪失しない状態なら1
+;ARGキャラ番号、省略時TARGET
+@CHECK_HOLYVIRGIN_F,ARG=-1
+#FUNCTION
+SIF ARG==-1
+	ARG=TARGET
+
+IF TALENT:ARG:처녀 >=2 || (CONFIG_CHECK_OTHER_F(5) == 1 && TALENT:ARG:처녀 > 0)
+	RETURNF 1
+ELSE
+	RETURNF 0
+ENDIF
+
+;--------------------------------------------------
+;BASE値算出
+;ARGS=計算モード, ARG:0=対象, ARG:1=元値
+@BASEUP, ARGS, ARG:0, ARG:1 
+
+CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", ARG:0
+IF RESULT != 0
+	SELECTCASE ARGS
+		CASE "ALL"
+			;성내성、공격、방어、민첩の元値は1/10
+			LOCAL:0= ARG:1 / 10
+
+			;BASE値の計算 対象,元値,性格
+			;체력計算
+			;上昇値にランダム性を付与
+			LOCAL:2 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_TAIRYOKU, ARG:0, LOCAL:2, RESULT
+			;기력計算
+			LOCAL:3 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_KIRYOKU, ARG:0, LOCAL:3, RESULT
+			;성내성計算
+			LOCAL:4 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_SEITAISEI, ARG:0, LOCAL:4, RESULT
+			;공격計算
+			LOCAL:5 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_KOUGEKI, ARG:0, LOCAL:5, RESULT
+			;방어計算
+			LOCAL:6 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_BOUGYO, ARG:0, LOCAL:6, RESULT
+			;민첩計算
+			LOCAL:7 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_BINSYOU, ARG:0, LOCAL:7, RESULT
+			;지성計算
+			LOCAL:8 = BASEUP_CAL_RANDAM(ARG:1)
+			CALL BASEUP_CAL_CHISEI, ARG:0, LOCAL:8, RESULT
+
+		CASE "TAIRYOKU"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;체력計算
+			CALL BASEUP_CAL_TAIRYOKU, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:0%の基礎値が{RESULT}上がった
+
+		CASE "KIRYOKU"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;기력計算
+			CALL BASEUP_CAL_KIRYOKU, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:1%の基礎値が{RESULT}上がった
+			
+		CASE "SEITAISEI"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;성내성計算
+			CALL BASEUP_CAL_SEITAISEI, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:2%の基礎値が{RESULT}上がった
+			
+		CASE "KOUGEKI"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;공격計算
+			CALL BASEUP_CAL_KOUGEKI, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:10%の基礎値が{RESULT}上がった
+			
+		CASE "BOUGYO"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;방어計算
+			CALL BASEUP_CAL_BOUGYO, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:11%の基礎値が{RESULT}上がった
+			
+		CASE "BINSYOU"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;민첩計算
+			CALL BASEUP_CAL_BINSYOU, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:12%の基礎値が{RESULT}上がった
+		CASE "CHISEI"
+			ARG:1 = BASEUP_CAL_RANDAM(ARG:1)
+			;지성計算
+			CALL BASEUP_CAL_CHISEI, ARG:0, ARG:1, RESULT
+			SIF RESULT > 0
+				PRINTFORML %BASENAME:13%の基礎値が{RESULT}上がった
+			
+	ENDSELECT
+	
+	;스테이터스 재계산
+	CALL LEVELSTATUS, ARG:0
+	;部位結界の設定
+	CALL BASEUP_CAL_SHIELD, ARG:0
+ENDIF
+
+;--------------------------------------------------
+;BASE値へのランダム性付与に関する式中関数
+@BASEUP_CAL_RANDAM, ARG
+#FUNCTION
+LOCAL = RAND:100 + FLAG:50 * 5
+SIF LOCAL < FLAG:50 * 10
+	LOCAL = FLAG:50 * 10
+IF LOCAL < 20
+	LOCAL:1 = 70
+ELSEIF LOCAL < 30
+	LOCAL:1 = 75
+ELSEIF LOCAL < 40
+	LOCAL:1 = 80
+ELSEIF LOCAL < 50
+	LOCAL:1 = 85
+ELSEIF LOCAL < 60
+	LOCAL:1 = 90
+ELSEIF LOCAL < 70
+	LOCAL:1 = 95
+ELSEIF LOCAL < 80
+	LOCAL:1 = 100
+ELSEIF LOCAL < 95
+	LOCAL:1 = 105
+ELSE
+	LOCAL:1 = 110
+ENDIF
+SIF TALENT:회복빠름 > 0
+	LOCAL:1 -= 5
+SIF TALENT:회복느림 > 0
+	LOCAL:1 += 5
+ARG = ARG * LOCAL:1 / 100
+RETURNF ARG
+
+;--------------------------------------------------
+;BASE値計算詳細:체력
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_TAIRYOKU, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):기초체력 += SEIKAKU_HOSEI_F(ARG:2, 0, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 0, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:기력
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_KIRYOKU, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):기초기력 += SEIKAKU_HOSEI_F(ARG:2, 1, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 1, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:성내성
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_SEITAISEI, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):기초성내성 += SEIKAKU_HOSEI_F(ARG:2, 2, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 2, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:공격
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_KOUGEKI, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):공격 += SEIKAKU_HOSEI_F(ARG:2, 10, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 10, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:방어
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_BOUGYO, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):방어 += SEIKAKU_HOSEI_F(ARG:2, 11, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 11, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:민첩
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_BINSYOU, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):민첩 += SEIKAKU_HOSEI_F(ARG:2, 12, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 12, ARG:1)
+
+;--------------------------------------------------
+;BASE値計算詳細:지성
+;ARG:0=対象,ARG:1=元値,ARG:2=性格
+@BASEUP_CAL_CHISEI, ARG:0, ARG:1, ARG:2
+BASE:(ARG:0):지성 += SEIKAKU_HOSEI_F(ARG:2, 13, ARG:1)
+RETURN SEIKAKU_HOSEI_F(ARG:2, 13, ARG:1)
+
+;---------------------------------------------------------
+;BASE値計算詳細部位結界
+@BASEUP_CAL_SHIELD, ARG
+#DIM LCOUNT
+#DIM UP_VAR
+FOR LCOUNT, 0, 감각수
+	IF TALENT:ARG:(LCOUNT + 190) > 0
+		UP_VAR = MAX(CAL_SHIELD_F(ARG) - MAXBASE:ARG:(LCOUNT + 30),0)
+		MAXBASE:ARG:(LCOUNT + 30) = CAL_SHIELD_F(ARG)
+		SIF BASE:ARG:(LCOUNT + 30) > 0 || DAY == 0
+			BASE:ARG:(LCOUNT + 30) = LIMIT(BASE:ARG:(LCOUNT + 30) + UP_VAR, 0, MAXBASE:ARG:(LCOUNT + 30))
+	ENDIF
+NEXT
+
+
+
+;結界耐久最大値の計算式
+@CAL_SHIELD_F(ARG)
+#FUNCTION
+LOCAL = SQRT(MAXBASE:ARG:기력 * MAXBASE:ARG:성내성 * MAXBASE:ARG:방어 * MAXBASE:ARG:방어 / 160) / 2 + 1500 + MIN(ABL:ARG:레벨 * 1000, 50000)
+RETURNF LOCAL
+
+;모든 캐릭터의 部位結界をチェック
+@CHECK_SHIELD_ALL
+#DIM LCOUNT
+#DIM CCOUNT
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	FOR LCOUNT, 0, 감각수
+		SIF TALENT:CCOUNT:(LCOUNT + 190) == 0
+			MAXBASE:CCOUNT:(LCOUNT + 30) = 0
+		BASE:CCOUNT:(LCOUNT + 30) = LIMIT(BASE:CCOUNT:(LCOUNT + 30), 0,MAXBASE:CCOUNT:(LCOUNT + 30))
+	NEXT
+NEXT
+
+;--------------------------------------------------
+;戦技LVの上昇
+;ARG:0=対象, ARG:1=近OR中OR遠
+@SENGIUP, ARG:0, ARG:1
+
+IF ARG:1 == 0
+	LOCAL:0 = 30
+	LOCAL:1 = 5
+ELSEIF ARG:1 == 1
+	LOCAL:0 = 31
+	LOCAL:1 = 6
+ELSEIF ARG:1 == 2
+	LOCAL:0 = 32
+	LOCAL:1 = 7
+ELSEIF ARG:1 == 3
+	LOCAL:0 = 33
+	LOCAL:1 = 8
+ENDIF
+
+;레벨アップに必要な経験数の確認
+IF ABL:ARG:(LOCAL:0) == 0
+	LOCAL:2 = 25
+ELSEIF ABL:ARG:(LOCAL:0) == 1
+	LOCAL:2 = 60
+ELSEIF ABL:ARG:(LOCAL:0) == 2
+	LOCAL:2 = 105
+ELSEIF ABL:ARG:(LOCAL:0) == 3
+	LOCAL:2 = 160
+ELSEIF ABL:ARG:(LOCAL:0) == 4
+	LOCAL:2 = 225
+ELSEIF ABL:ARG:(LOCAL:0) == 5
+	LOCAL:2 = 300
+ELSEIF ABL:ARG:(LOCAL:0) == 6
+	LOCAL:2 = 470
+ELSEIF ABL:ARG:(LOCAL:0) == 7
+	LOCAL:2 = 660
+ELSEIF ABL:ARG:(LOCAL:0) == 8
+	LOCAL:2 = 870
+ENDIF
+
+;素質による経験数への補正
+;得意な距離があると他の距離はやや不利になる、苦手な距離があると他の距離はやや有利になる
+SIF TALENT:ARG:근거리특기 == 1 && ARG:1 == 0 || TALENT:ARG:중거리특기 == 1 && ARG:1 == 1 || TALENT:ARG:원거리특기 == 1 && ARG:1 == 2
+	TIMES LOCAL:2, 0.9
+SIF TALENT:ARG:근거리서툼 == 1 && ARG:1 == 0 || TALENT:ARG:중거리서툼 == 1 && ARG:1 == 1 || TALENT:ARG:원거리서툼 == 1 && ARG:1 == 2
+	TIMES LOCAL:2, 1.1
+SIF TALENT:ARG:근거리특기 == 1 && ARG:1 != 0
+	TIMES LOCAL:2, 1.05
+SIF TALENT:ARG:중거리특기 == 1 && ARG:1 != 1
+	TIMES LOCAL:2, 1.05
+SIF TALENT:ARG:원거리특기 == 1 && ARG:1 != 2
+	TIMES LOCAL:2, 1.05
+SIF TALENT:ARG:근거리서툼 == 1 && ARG:1 != 0
+	TIMES LOCAL:2, 0.95
+SIF TALENT:ARG:중거리서툼 == 1 && ARG:1 != 1
+	TIMES LOCAL:2, 0.95
+SIF TALENT:ARG:원거리서툼 == 1 && ARG:1 != 2
+	TIMES LOCAL:2, 0.95
+
+;레벨アップ可能かどうか
+IF EXP:ARG:(LOCAL:1) >= LOCAL:2 && ABL:ARG:(LOCAL:0) < 9
+	ABL:ARG:(LOCAL:0) += 1
+	PRINTFORML %PRINT_TRANSCALLNAME(ARG)%の%ABLNAME:(LOCAL:0)%Lvが上がった
+
+	;기초전투Lv5で변신능력が身につく
+	IF TALENT:ARG:변신능력 == -1 && ABL:ARG:(LOCAL:0) >= 5 && LOCAL:0 == 33
+		PRINTL 
+		PRINTFORML %PRINT_TRANSCALLNAME(ARG)%は戦闘の基礎を完全にマスターした！
+		IF TALENT:ARG:변신능력획득 > 0
+			PRINTW
+			RESULT = 1
+		ELSEIF TALENT:ARG:변신능력획득 < 0
+			PRINTW
+			RESULT = 0
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(ARG)%に변신능력を設定しますか？
+			PRINTL  [0] 아니오
+			PRINTL  [1] 네
+			$INPUT_LOOP_0
+			INPUT
+		ENDIF
+		IF RESULT == 0
+			TALENT:ARG:변신능력 = 0
+			TALENT:ARG:변신시TS = 0
+			PRINTL 
+			PRINTFORML %PRINT_TRANSCALLNAME(ARG)%に변신능력を設定しませんでした
+		ELSEIF RESULT == 1
+			TALENT:ARG:변신능력 = 1
+
+			;プロフィール設定済のキャラでなければ詳細なサイズは生成しないようにしておく
+			IF CFLAG:34
+				CALL GENERATE_CHAR_SIZE, ARG:0, 1
+				MAXBASE:ARG:신장 = RESULT:2
+				MAXBASE:ARG:체중 = RESULT:3
+				MAXBASE:ARG:가슴둘레 = RESULT:4
+				MAXBASE:ARG:허리둘레 = RESULT:5
+				MAXBASE:ARG:골반둘레 = RESULT:6
+			ENDIF
+
+			PRINTL 
+			PRINTFORML %PRINT_TRANSCALLNAME(ARG)%に변신능력を設定しました
+			PRINTFORML 変身後名を設定しますか？
+			PRINTL  [0] 아니오
+			PRINTL  [1] 네
+			$INPUT_LOOP_1
+			INPUT
+			IF RESULT == 0
+				PRINTL 
+			ELSEIF RESULT == 1
+				PRINTL 
+				CALL FIRSTSETTING_CHARA_TRANSAFTERNAME, ARG
+				IF CSTR:ARG:0 != ""
+					CFLAG:ARG:3 = 1
+					CALL FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, ARG
+				ENDIF
+			ELSE
+				GOTO INPUT_LOOP_1
+			ENDIF
+		ELSE
+			GOTO INPUT_LOOP_0
+		ENDIF
+	ENDIF
+
+	PRINTL 
+	;実績
+	CALL GET_STATE_TROPHY,ARG
+ENDIF
+
+;--------------------------------------------------
+;フィートによる스테이터스ボーナス
+@FEAT_BONUS_F, ARG, ARG:1
+#FUNCTION
+#DIM FEAT_BONUS,7
+VARSET FEAT_BONUS
+;0　체력
+;1　魔力
+;2　聖耐性
+;3　공격
+;4　방어
+;5　민첩
+;6　지성
+IF TALENT:ARG:고속회피 > 0
+	FEAT_BONUS:3 -= 5
+ENDIF
+IF TALENT:ARG:신기소유자 > 0
+	FEAT_BONUS:2 -= 10
+	FEAT_BONUS:3 += 5
+	FEAT_BONUS:4 += 5
+	FEAT_BONUS:5 += 5
+ENDIF
+IF TALENT:ARG:투쟁본능 > 0
+	FEAT_BONUS:2 -= 5
+	FEAT_BONUS:3 += 10
+ENDIF
+IF TALENT:ARG:넘치는생명력 > 0
+	FEAT_BONUS:6 -= 15
+ENDIF
+IF TALENT:ARG:정령교신 > 0
+	FEAT_BONUS:3 -= 5
+	FEAT_BONUS:4 -= 5
+	FEAT_BONUS:5 -= 5
+	FEAT_BONUS:6 += 10
+ENDIF
+IF TALENT:ARG:야수의후손 > 0
+	FEAT_BONUS:6 -= 10
+ENDIF
+IF TALENT:ARG:밤악마의귀족 > 0
+	FEAT_BONUS:0 += 100
+	FEAT_BONUS:1 += 100
+	FEAT_BONUS:2 += 10
+	FEAT_BONUS:3 += 10
+	FEAT_BONUS:4 += 10
+	FEAT_BONUS:5 += 10
+	FEAT_BONUS:6 += 10
+ENDIF
+IF TALENT:ARG:숨겨진힘 > 0
+	FEAT_BONUS:3 -= 5
+	FEAT_BONUS:4 -= 5
+	FEAT_BONUS:5 -= 5
+	FEAT_BONUS:6 -= 5
+ENDIF
+IF TALENT:ARG:행운아 > 0
+	FEAT_BONUS:3 -= 5
+	FEAT_BONUS:4 -= 5
+	FEAT_BONUS:5 -= 5
+	FEAT_BONUS:6 -= 5
+ENDIF
+IF TALENT:ARG:근력강화 > 0
+	FEAT_BONUS:3 += 5
+ENDIF
+IF TALENT:ARG:날개 > 0
+	FEAT_BONUS:4 += 5
+ENDIF
+IF TALENT:ARG:소형체구 > 0
+	FEAT_BONUS:5 += 5
+ENDIF
+IF TALENT:ARG:지혜의극치 > 0
+	FEAT_BONUS:0 -= 50
+	FEAT_BONUS:1 -= 50
+	FEAT_BONUS:2 -= 5
+	FEAT_BONUS:6 += 10
+ENDIF
+IF TALENT:ARG:사냥꾼의직감 > 0
+	FEAT_BONUS:6 -= 5
+ENDIF
+IF TALENT:ARG:심안 > 0
+	FEAT_BONUS:4 -= 5
+	FEAT_BONUS:5 -= 5
+ENDIF
+RETURNF FEAT_BONUS:(ARG:1)
+
+;--------------------------------------------------
+;스테이터스を레벨で倍数する
+@LEVELSTATUS, ARG = 0
+SIF ARG == 0
+	ARG = TARGET
+MAXBASE:ARG:체력 = LEVELSTATUS_UP(BASE:ARG:기초체력+FEAT_BONUS_F(ARG,0),ABL:ARG:레벨,400+(BASE:ARG:기초체력-1000)/5,99999)
+MAXBASE:ARG:기력 = LEVELSTATUS_UP(BASE:ARG:기초기력+FEAT_BONUS_F(ARG,1),ABL:ARG:레벨,400+(BASE:ARG:기초기력-1000)/5,99999)
+MAXBASE:ARG:성내성 = LEVELSTATUS_UP(BASE:ARG:기초성내성+FEAT_BONUS_F(ARG,2),ABL:ARG:레벨/3+1,10+(BASE:ARG:기초성내성-100)/2,9999)
+MAXBASE:ARG:공격 = LEVELSTATUS_UP(BASE:ARG:공격+FEAT_BONUS_F(ARG,3),ABL:ARG:레벨,50,9999)
+MAXBASE:ARG:방어 = LEVELSTATUS_UP(BASE:ARG:방어+FEAT_BONUS_F(ARG,4),ABL:ARG:레벨,50,9999)
+MAXBASE:ARG:민첩 = LEVELSTATUS_UP(BASE:ARG:민첩+FEAT_BONUS_F(ARG,5),ABL:ARG:레벨,50,9999)
+MAXBASE:ARG:지성 = LEVELSTATUS_UP(BASE:ARG:지성+FEAT_BONUS_F(ARG,6),ABL:ARG:레벨,50,9999)
+CALL BASEUP_CAL_SHIELD, ARG
+
+;--------------------------------------------------
+;스테이터스の레벨倍率計算
+;BASEの値×레벨で스테이터스を算出する　　　　
+;式 ((√(220 * Lv) + 95) * BASE + 5.2 * Lv + 95) / 100
+@LEVELSTATUS_UP, ARG:0, ARG:1, ARG:2,ARG:3 = 0
+#FUNCTION
+LOCAL:0 = SQRT(220 * ARG:1)
+
+LOCAL:1 = 52 * ARG:1
+TIMES LOCAL:1, 0.1
+
+LOCAL:2 = (LOCAL:1 + 95) * ARG:2
+LOCAL:2 += (LOCAL:0 + 95) * ARG:0
+LOCAL:2 /= 100
+
+SIF LOCAL:2 > ARG:3 && ARG:3
+	LOCAL:2 = ARG:3
+SIF LOCAL:2 < 1
+	LOCAL:2 = 1
+
+RETURNF LOCAL:2
+
+;--------------------------------------------------
+;레벨アップのチェックを行う
+@CHECK_LEVELUP
+LOCAL = 0
+WHILE JUEL:경험치 > 100 && ABL:레벨 < 998
+	JUEL:경험치 -= 100
+	LOCAL += 1
+WEND
+IF LOCAL > 0
+	ABL:레벨 += LOCAL
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は레벨が{LOCAL}上がった
+	CALL LEVELSTATUS,TARGET
+	;実績
+	CALL GET_STATE_TROPHY,TARGET
+ENDIF
+SIF ABL:레벨 >= 999
+	JUEL:경험치 = 0
+
+
+;--------------------------------------------------
+;消費체력から行動可能かどうかを返す、可能なら１、不可能なら０
+;ARG	行動の種類
+;対象	行動者が誰か
+;RESULT	行動可能なら0、bitで行動不可能な理由が返される
+@CHECK_ACTION(ARG, 対象)
+#DIM 対象
+#DIM CONST bit체력 = 0
+#DIM CONST bit夜魔 = 1
+#DIM CONST bit戦士 = 2
+#DIM CONST bit支援無効 = 3
+#DIM CONST bit임신 = 4
+#DIM CONST bit欠損 = 5
+#DIM CONST bit廃人 = 6;번식자루
+LOCAL = 0
+;체력500以下は行動不可
+SIF GROUPMATCH(ARG, 예정_출격, 예정_단련, 예정_활동, 예정_방위, 예정_지원, 예정_정보) && BASE:対象:체력 <= 강제휴식체력
+	SETBIT LOCAL, bit체력
+;밤악마의귀족は昼間一部活動不可
+SIF GROUPMATCH(ARG, 예정_출격, 예정_활동, 예정_방위, 예정_정보, 예정_자유) && (TALENT:対象:밤악마의귀족 && TIME == 0)
+	SETBIT LOCAL, bit夜魔
+
+;사지결손時は休息と支援以外不可
+SIF GROUPMATCH(ARG, 예정_출격, 예정_활동, 예정_방위, 예정_정보, 예정_단련) && (TALENT:対象:사지결손 > 0 || TALENT:対象:번식자루 > 0)
+	SETBIT LOCAL, bit欠損
+;壊れていたら休息以外不可
+SIF !GROUPMATCH(ARG, 예정_휴식) && (TALENT:対象:번식자루 > 0)
+	SETBIT LOCAL, bit廃人
+
+;타고난전사は一部活動不可
+SIF GROUPMATCH(ARG, 예정_활동, 예정_지원) && TALENT:対象:타고난전사
+	SETBIT LOCAL, bit戦士
+;鍛錬の체력減少量が現在체력以上だったら不可
+IF ARG == 예정_단련
+	CALL TRAINING_DOWNTAIRYOKU(対象)
+	LOCAL:1 = RESULT
+	SIF BASE:対象:체력 < LOCAL:1
+		SETBIT LOCAL, bit체력
+ENDIF
+;支援無効だったら不可
+SIF ARG == 예정_지원 && GETBATTLESITUATION("支援無効")
+	SETBIT LOCAL, bit支援無効
+;임신（発覚済み）中は一部活動不可
+SIF GROUPMATCH(ARG, 예정_출격, 예정_방위) && GROUPMATCH(TALENT:対象:임신, 1, 3, 5)
+	SETBIT LOCAL, bit임신
+RETURN LOCAL
+
+;ARG	TARGET
+;ARG:1	CHECK_ACTIONが返したNG理由bit
+;ARGS	取ろうとしていた行動文字列
+@PRINT_NGACTION_F(ARG,ARG:1,ARGS)
+#FUNCTIONS
+IF GETBIT(ARG:1, 6)
+	RESULTS = %CALLNAME:ARG%は廃人化しているため、休憩以外何もできません
+ELSEIF GETBIT(ARG:1, 5)
+	RESULTS = %CALLNAME:ARG%は사지결손しているため%ARGS%できません
+ELSEIF GETBIT(ARG:1, 4)
+	RESULTS = %CALLNAME:ARG%は임신中なため、休憩します
+ELSEIF GETBIT(ARG:1, 1)
+	RESULTS = %CALLNAME:ARG%は%ARGS%でき\@GETBIT(RESULT, 0) ? ず、체력も残り少ない # ない\@ため、休憩します
+ELSE
+	RESULTS = %CALLNAME:ARG%は체력が残り少ないため、休憩します
+ENDIF
+RETURNF RESULTS
+
+
+
+;--------------------------------------------------
+;BASEの消費値に対する基礎値補正
+;ARG = 参照するキャラ
+;ARG:1 = 消費量
+;ARG:2 = 체력か기력か
+@SYOUHI_KEIGEN,ARG,ARG:1,ARG:2
+#FUNCTION
+LOCAL = ARG:1
+ARG:2 += 50
+IF ARG:2 == 50 || ARG:2 == 51
+	LOCAL:1 = 1000
+ELSE
+	LOCAL:1 = 100
+ENDIF
+IF BASE:ARG:(ARG:2) > LOCAL:1
+	LOCAL:2 = (BASE:ARG:(ARG:2) - LOCAL:1)
+	LOCAL = MAX(LOCAL - (LOCAL * LOCAL:2 / 2500),LOCAL / 2)
+ENDIF
+RETURNF LOCAL
+
+
+
+;--------------------------------------------------
+;CSV参照系の式中関数版
+@CSVBASE_F,ARG,ARG:1
+#FUNCTION
+CSVBASE ARG,ARG:1
+RETURNF RESULT
+
+@CSVCSTR_F,ARG,ARG:1
+#FUNCTIONS
+CSVCSTR ARG,ARG:1
+RETURNF RESULTS
+
+@CSVABL_F,ARG,ARG:1
+#FUNCTION
+CSVABL ARG,ARG:1
+RETURNF RESULT
+
+@CSVTALENT_F,ARG,ARG:1
+#FUNCTION
+CSVTALENT ARG,ARG:1
+RETURNF RESULT
+
+@CSVMARK_F,ARG,ARG:1
+#FUNCTION
+CSVMARK ARG,ARG:1
+RETURNF RESULT
+
+@CSVEXP_F,ARG,ARG:1
+#FUNCTION
+CSVEXP ARG,ARG:1
+RETURNF RESULT
+
+@CSVJUEL_F,ARG,ARG:1
+#FUNCTION
+CSVJUEL ARG,ARG:1
+RETURNF RESULT
+
+@CSVEQUIP_F,ARG,ARG:1
+#FUNCTION
+CSVEQUIP ARG,ARG:1
+RETURNF RESULT
+
+@CSVCFLAG_F,ARG,ARG:1
+#FUNCTION
+CSVCFLAG ARG,ARG:1
+RETURNF RESULT
+
+
+
+;--------------------------------------------------
+;PALAMLVを返す式中関数
+@PALAMLV_F, ARG
+#FUNCTION
+
+IF PALAM:LOCAL < 100
+	LOCAL = 0 
+ELSEIF PALAM:LOCAL < 300
+	LOCAL = 1 
+ELSEIF PALAM:LOCAL < 600
+	LOCAL = 2 
+ELSEIF PALAM:LOCAL < 1500
+	LOCAL = 3 
+ELSEIF PALAM:LOCAL < 3000
+	LOCAL = 4 
+ELSEIF PALAM:LOCAL < 6000
+	LOCAL = 5 
+ELSEIF PALAM:LOCAL < 10000
+	LOCAL = 6 
+ELSEIF PALAM:LOCAL < 30000
+	LOCAL = 7 
+ELSEIF PALAM:LOCAL < 60000
+	LOCAL = 8 
+ELSEIF PALAM:LOCAL < 150000
+	LOCAL = 9 
+ELSEIF PALAM:LOCAL < 300000
+	LOCAL = 10 
+ELSE
+	LOCAL = 11
+ENDIF
+
+RETURNF LOCAL
+
+
+
+
+;--------------------------------------------------
+;探索度の上昇
+@RESEARCH_PROGRESS, ARG
+SIF FLAG:47 < FLAG:46 && FLAG:47 + ARG >= FLAG:46
+	PRINTW 보스 촉수の居場所を特定した！
+FLAG:47 += ARG
+RETURN
+
+
+
+
+;--------------------------------------------------
+;固有番号検索
+@CHARAID_F, ARG
+#FUNCTION
+FOR LOCAL, 0, CHARANUM
+	SIF LOCAL == MASTER
+		CONTINUE
+	SIF CFLAG:LOCAL:240 == ARG
+		RETURNF LOCAL
+NEXT
+RETURNF 0
+
+
+
+;-------------------------------------------------
+;素質値取得
+;ARG   対象キャラ
+;ARG:1 変身状態 0=通常 1=変身時
+;ARGS  素質名
+@CHARATALENT_F, ARG, ARG:1, ARGS
+#FUNCTION
+VARSET LOCALS
+;変身時
+IF CFLAG:ARG:1 > 0
+	IF ARG:1 > 0
+		IF ARGS == "왜소함" || ARGS == "장신"
+			IF TALENT:ARG:왜소함 > 0
+				LOCALS = 왜소함
+			ELSEIF TALENT:ARG:장신 > 0
+				LOCALS = 장신
+			ENDIF
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+			IF TALENT:ARG:빈유 == 2
+				LOCALS = 絶壁
+			ELSEIF TALENT:ARG:빈유 == 1
+				LOCALS = 빈유
+			ELSEIF TALENT:ARG:거유 == 5
+				LOCALS = 奇乳
+			ELSEIF TALENT:ARG:거유 == 4
+				LOCALS = 魔乳
+			ELSEIF TALENT:ARG:거유 == 3
+				LOCALS = 超乳
+			ELSEIF TALENT:ARG:거유 == 2
+				LOCALS = 爆乳
+			ELSEIF TALENT:ARG:거유 == 1
+				LOCALS = 거유
+			ENDIF
+		ELSEIF ARGS == "남자"
+			SIF ISMALE(ARG)
+				LOCALS = 남자
+		ELSEIF ARGS == "보추"
+			SIF TALENT:ARG:보추 > 0
+				LOCALS = 보추
+		ELSEIF ARGS == "후타나리"
+			SIF TALENT:ARG:후타나리 > 0
+				LOCALS = 후타나리
+		ELSEIF ARGS == "安産型" || ARGS == "むちむち" || ARGS == "イカ腹" || ARGS == "スレンダー" || ARGS == "巨尻" || ARGS == "爆尻"
+			IF TALENT:ARG:변신시외관 == 1
+				LOCALS = 安産型
+			ELSEIF TALENT:ARG:변신시외관 == 2
+				LOCALS = むちむち
+			ELSEIF TALENT:ARG:변신시외관 == 3
+				LOCALS = イカ腹
+			ELSEIF TALENT:ARG:변신시외관 == 4
+				LOCALS = スレンダー
+			ELSEIF TALENT:ARG:변신시외관 == 5
+				LOCALS = 巨尻
+			ELSEIF TALENT:ARG:변신시외관 == 6
+				LOCALS = 爆尻
+			ENDIF
+		ENDIF
+	ELSE
+		IF ARGS == "왜소함" || ARGS == "장신"
+			LOCAL = TALENT:ARG:장신 - TALENT:ARG:왜소함 - TALENT:ARG:변신시체격변동
+			IF LOCAL < 0
+				LOCALS = 왜소함
+			ELSEIF LOCAL > 0
+				LOCALS = 장신
+			ELSEIF TALENT:ARG:변신시체격변동 == 0
+				IF TALENT:ARG:왜소함 > 0
+					LOCALS = 왜소함
+				ELSEIF TALENT:ARG:장신 > 0
+					LOCALS = 장신
+				ENDIF
+			ENDIF
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+			LOCAL = TALENT:ARG:거유 - TALENT:ARG:빈유 - TALENT:ARG:변신시가슴사이즈변동
+			IF LOCAL < -1
+				LOCALS = 絶壁
+			ELSEIF LOCAL < 0
+				LOCALS = 빈유
+			ELSEIF LOCAL > 4
+				LOCALS = 奇乳
+			ELSEIF LOCAL > 3
+				LOCALS = 魔乳
+			ELSEIF LOCAL > 2
+				LOCALS = 超乳
+			ELSEIF LOCAL > 1
+				LOCALS = 爆乳
+			ELSEIF LOCAL > 0
+				LOCALS = 거유
+			ELSEIF TALENT:ARG:변신시가슴사이즈변동 == 0
+				IF TALENT:ARG:빈유 == 2
+					LOCALS = 絶壁
+				ELSEIF TALENT:ARG:빈유 == 1
+					LOCALS = 빈유
+				ELSEIF TALENT:ARG:거유 == 5
+					LOCALS = 奇乳
+				ELSEIF TALENT:ARG:거유 == 4
+					LOCALS = 魔乳
+				ELSEIF TALENT:ARG:거유 == 3
+					LOCALS = 超乳
+				ELSEIF TALENT:ARG:거유 == 2
+					LOCALS = 爆乳
+				ELSEIF TALENT:ARG:거유 == 1
+					LOCALS = 거유
+				ENDIF
+			ENDIF
+		ELSEIF ARGS == "남자"
+			IF ISFEMALE(ARG)
+				SIF TALENT:ARG:변신시TS > 0
+					LOCALS = 남자
+			ELSEIF TALENT:ARG:변신시TS == 0
+					LOCALS = 남자
+			ENDIF
+		ELSEIF ARGS == "보추"
+			SIF TALENT:ARG:변신시보추 > 0
+				LOCALS = 보추
+		ELSEIF ARGS == "후타나리"
+			SIF TALENT:ARG:변신시후타나리 > 0
+				LOCALS = 후타나리
+		ELSEIF ARGS == "安産型" || ARGS == "むちむち" || ARGS == "イカ腹" || ARGS == "スレンダー" || ARGS == "巨尻" || ARGS == "爆尻"
+			IF TALENT:ARG:외관 == 1
+				LOCALS = 安産型
+			ELSEIF TALENT:ARG:외관 == 2
+				LOCALS = むちむち
+			ELSEIF TALENT:ARG:외관 == 3
+				LOCALS = イカ腹
+			ELSEIF TALENT:ARG:외관 == 4
+				LOCALS = スレンダー
+			ELSEIF TALENT:ARG:외관 == 5
+				LOCALS = 巨尻
+			ELSEIF TALENT:ARG:외관 == 6
+				LOCALS = 爆尻
+			ENDIF
+		ENDIF
+	ENDIF
+;通常時
+ELSE
+	IF ARG:1 > 0
+		IF ARGS == "왜소함" || ARGS == "장신"
+			LOCAL = TALENT:ARG:장신 - TALENT:ARG:왜소함 + TALENT:ARG:변신시체격변동
+			IF LOCAL < 0
+				LOCALS = 왜소함
+			ELSEIF LOCAL > 0
+				LOCALS = 장신
+			ENDIF
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+			LOCAL = TALENT:ARG:거유 - TALENT:ARG:빈유 + TALENT:ARG:변신시가슴사이즈변동
+			IF ISMALE(ARG)
+				SIF TALENT:ARG:변신시TS == 0
+					LOCAL = 0
+			ELSEIF TALENT:ARG:변신시TS > 0
+					LOCAL = 0
+			ENDIF
+			IF LOCAL < -1
+				LOCALS = 絶壁
+			ELSEIF LOCAL < 0
+				LOCALS = 빈유
+			ELSEIF LOCAL > 4
+				LOCALS = 奇乳
+			ELSEIF LOCAL > 3
+				LOCALS = 魔乳
+			ELSEIF LOCAL > 2
+				LOCALS = 超乳
+			ELSEIF LOCAL > 1
+				LOCALS = 爆乳
+			ELSEIF LOCAL > 0
+				LOCALS = 거유
+			ENDIF
+		ELSEIF ARGS == "남자"
+			IF ISMALE(ARG)
+				SIF TALENT:ARG:변신시TS == 0
+					LOCALS = 남자
+			ELSEIF TALENT:ARG:변신시TS > 0
+					LOCALS = 남자
+			ENDIF
+		ELSEIF ARGS == "보추"
+			SIF TALENT:ARG:변신시보추 > 0
+				LOCALS = 보추
+		ELSEIF ARGS == "후타나리"
+			SIF TALENT:ARG:변신시후타나리 > 0
+				LOCALS = 후타나리
+		ELSEIF ARGS == "安産型" || ARGS == "むちむち" || ARGS == "イカ腹" || ARGS == "スレンダー" || ARGS == "巨尻" || ARGS == "爆尻"
+			IF TALENT:ARG:변신시외관 == 1
+				LOCALS = 安産型
+			ELSEIF TALENT:ARG:변신시외관 == 2
+				LOCALS = むちむち
+			ELSEIF TALENT:ARG:변신시외관 == 3
+				LOCALS = イカ腹
+			ELSEIF TALENT:ARG:변신시외관 == 4
+				LOCALS = スレンダー
+			ELSEIF TALENT:ARG:변신시외관 == 5
+				LOCALS = 巨尻
+			ELSEIF TALENT:ARG:변신시외관 == 6
+				LOCALS = 爆尻
+			ENDIF
+		ENDIF
+	ELSE
+		IF ARGS == "왜소함" || ARGS == "장신"
+			IF TALENT:ARG:왜소함 > 0
+				LOCALS = 왜소함
+			ELSEIF TALENT:ARG:장신 > 0
+				LOCALS = 장신
+			ENDIF
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+			IF TALENT:ARG:빈유 == 2
+				LOCALS = 絶壁
+			ELSEIF TALENT:ARG:빈유 == 1
+				LOCALS = 빈유
+			ELSEIF TALENT:ARG:거유 == 5
+				LOCALS = 奇乳
+			ELSEIF TALENT:ARG:거유 == 4
+				LOCALS = 魔乳
+			ELSEIF TALENT:ARG:거유 == 3
+				LOCALS = 超乳
+			ELSEIF TALENT:ARG:거유 == 2
+				LOCALS = 爆乳
+			ELSEIF TALENT:ARG:거유 == 1
+				LOCALS = 거유
+			ENDIF
+		ELSEIF ARGS == "남자"
+			SIF ISMALE(ARG)
+				LOCALS = 남자
+		ELSEIF ARGS == "보추"
+			SIF TALENT:ARG:보추 > 0
+				LOCALS = 보추
+		ELSEIF ARGS == "후타나리"
+			SIF TALENT:ARG:후타나리 > 0
+				LOCALS = 후타나리
+		ELSEIF ARGS == "安産型" || ARGS == "むちむち" || ARGS == "イカ腹" || ARGS == "スレンダー" || ARGS == "巨尻" || ARGS == "爆尻"
+			IF TALENT:ARG:외관 == 1
+				LOCALS = 安産型
+			ELSEIF TALENT:ARG:외관 == 2
+				LOCALS = むちむち
+			ELSEIF TALENT:ARG:외관 == 3
+				LOCALS = イカ腹
+			ELSEIF TALENT:ARG:외관 == 4
+				LOCALS = スレンダー
+			ELSEIF TALENT:ARG:외관 == 5
+				LOCALS = 巨尻
+			ELSEIF TALENT:ARG:외관 == 6
+				LOCALS = 爆尻
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+IF (LOCALS == ARGS) > 0
+	RETURNF 1
+ELSE
+	RETURNF 0
+ENDIF
+
+
+;-------------------------------------------------
+;素質差判定
+;変身前と変身後の素質に差が無ければ0を返す
+@TALENT_CHANGE_F, ARG
+#FUNCTION
+SIF TALENT:ARG:변신시체격변동 != 0
+	RETURNF 1
+SIF TALENT:ARG:변신시가슴사이즈변동 != 0
+	RETURNF 1
+SIF TALENT:ARG:변신시TS != 0
+	RETURNF 1
+SIF TALENT:ARG:외관 != TALENT:ARG:변신시외관
+	RETURNF 1
+RETURNF 0
+
+
+
+
+
+;-------------------------------------------------
+;時間経過表現の簡略化
+;ARG が1または省略なら長め、2なら短め 컨피그でクリック数削減
+@DOT_AFTER, ARG = 1
+IF ARG == 1
+	IF CONFIG_CHECK_SCREEN_F(3) == 0
+		PRINTW ・・
+		PRINTW ・・・・
+	ELSE
+		PRINTL ・・
+		PRINTL ・・・・
+	ENDIF
+	PRINTW ・・・・・・
+ELSEIF ARG == 2
+	IF CONFIG_CHECK_SCREEN_F(3) == 0
+		PRINTW ・
+		PRINTW ・・
+	ELSE
+		PRINTL ・
+		PRINTL ・・
+	ENDIF
+	PRINTW ・・・
+ENDIF
+;受け取ったRESULTをそのまま返す
+RETURN RESULT
+
+
+;0=未出現　1=K出現　2～=천사の樹:第(N-1)形態
+@GET_LASTBOSS_PHASE_F()
+#FUNCTION
+;ラスボス(K)
+SIF FLAG:101 == 1
+	RETURNF 1
+;裏ボス第ｎ形態
+SIF FLAG:101 == 2
+	RETURNF 1+FLAG:21
+RETURNF 0
+
+;現在戦闘中のエネミー種別が一致するかチェック
+@ENEMY_TYPE_CHECK_F(ARGS)
+#FUNCTION
+;보스 촉수
+IF ARGS=="BOSS"
+	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 0) ? 1 # 0
+;ラスボス/裏ボス
+ELSEIF ARGS=="LASTBOSS"
+	;Kは１ 裏ボスは２＋形態変化回数(GET_LASTBOSS_PHASE_F()扱い)
+	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 1) ? (FLAG:101 == 1 ? 1 # 1+FLAG:21) # 0
+ELSEIF ARGS=="MOB"
+	RETURNF (FLAG:110 == 0 && FLAG:73 == 0 && FLAG:10 == 2) ? 1 # 0
+ELSEIF ARGS=="CITIZEN"
+	RETURNF (FLAG:110 == 0 && FLAG:73 > 0) ? 1 # 0
+ELSEIF ARGS=="AKUOTI"
+	RETURNF (FLAG:110 > 0) ? 1 # 0
+ENDIF
+RETURNF -1

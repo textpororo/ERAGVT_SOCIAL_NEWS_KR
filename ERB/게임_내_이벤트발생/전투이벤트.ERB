@@ -1,0 +1,1483 @@
+﻿;戦闘中または戦闘後に追加発生するイベント
+
+
+;--------------------------------------------------
+;戦闘中の応援に関する処理
+;--------------------------------------------------
+;戦闘開始時の処理
+@PERFORM_CHEERS_FIRST_HANTEI
+VARSET LOCAL
+;救出イベント戦では発生しない
+SIF GETBATTLESITUATION("市民なし") == 1
+	RETURN
+
+;クズ市民戦では発生しない(踏まないはずだけど念のため)
+SIF ENEMY_TYPE_CHECK_F("CITIZEN") == 1
+	RETURN
+
+;発生確率そのものは방위력が低いほどアップ、昼は確率アップ、昼の襲来イベントでは確実に発生
+LOCAL = 25 + MAX((5000 - FLAG:852) / 100, 0) + (TIME == 0) * 10 + GETBATTLESITUATION("市民確定") * 100
+;FEAT効果による観衆遭遇率アップ
+SIF TALENT:말려드는체질 > 0
+	LOCAL += 15
+SIF TALENT:남다른미모 > 0
+	LOCAL += 15
+SIF TALENT:놀림받는체질 > 0
+	LOCAL += 15
+SIF FLAG:999 == 1
+	PRINTFORML 応援発生確率：{LOCAL} ％
+
+
+
+SIF RAND:100 > LOCAL
+	RETURN
+
+;観戦人数の設定
+FLAG:70 = MIN(FLAG:852 / 3000, 5)
+FLAG:70 += MIN(EXP:매료경험 / 100, 5)
+;FEAT効果による観衆増加
+SIF TALENT:말려드는체질 > 0
+	FLAG:70 += 1
+SIF TALENT:남다른미모 > 0
+	FLAG:70 += 1
+SIF TIME == 0
+	FLAG:70 += RAND:3
+SIF GETBATTLESITUATION("市民確定") == 1
+	FLAG:70 += 5
+;夜は人数が少なくなる
+SIF TIME == 1 && FLAG:70
+	FLAG:70 = MAX(FLAG:70 / 2, 1)
+
+;ライブ直後は大勢の観客が取り残される
+FLAG:70+=MIN(980+RAND:40,CFLAG:400/10)
+
+;隠しボス戦中なら中断
+SIF ENEMY_TYPE_CHECK_F("LASTBOSS") > 0
+	RETURN
+;観戦人数が０人なら中断
+SIF FLAG:70 == 0
+	RETURN
+
+
+
+
+;通常の応援が出る確率・低いほどクズ市民率は高くなる
+LOCAL = SQRT(FLAG:852 + 625)
+;動画流出数とストーカー人数が多いほどクズ市民率は高くなる
+LOCAL = LOCAL - (CFLAG:284 / 4 + CFLAG:285) * 5 - MIN(EXP:피간경험 / 5, 20)
+;FEAT効果によるクズ市民率増加
+SIF TALENT:남다른미모 > 0
+	LOCAL -= 5
+SIF TALENT:놀림받는체질 > 0
+	LOCAL -= 10
+IF RAND:100 < LOCAL
+	FLAG:72 = 0
+ELSE
+	FLAG:72 = 1
+	;놀림받는체질はストーカーを追加
+	SIF TALENT:놀림받는체질 > 0
+		FLAG:70 += RAND:5
+ENDIF
+;雑魚戦闘中はクズ市民以外発生しない
+SIF ENEMY_TYPE_CHECK_F("MOB") == 1 && FLAG:72 == 0
+	RETURN
+CALL PERFORM_CHEERS_FIRST
+RETURN
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+;戦闘開始時の声援
+@PERFORM_CHEERS_FIRST
+VARSET LOCAL
+CALL SHORTLINE
+
+;変身時は光るし、非変身キャラのゴーグルというのも見た目の固定化が激しい
+;バレないのは魔法とかお約束ってことでいいんじゃないかなあ(@社会派)
+;正体バレ防止のフレーバーテキスト
+;IF FLAG:70 > 0 || FLAG:71 > 0 || FLAG:72 > 0
+;	;변신능력あり
+;	IF TALENT:변신능력 > 0
+;		PRINTFORML 謎の光が差し込み、逆光となって%PRINT_TRANSCALLNAME(TARGET)%の顔を影で隠している。
+;	ELSEIF TALENT:변신능력 < 1
+;		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はとっさに戦闘用ゴーグルを装着した。
+;	ENDIF
+;ENDIF
+
+
+;クズ市民
+IF FLAG:72 > 0
+	;観戦人数の一部が撮影者(クズ市民)になる
+	LOCAL:1 = FLAG:70
+	FLAG:71 = 1
+	FOR LOCAL, 0, LOCAL:1
+		;매료경험とストーカー人数に応じて撮影者が増える
+		IF RAND:100 < 20 + MIN((EXP:매료경험 - 40) / 15, 20) + MIN(CFLAG:285, 10) - MIN((FLAG:852 - 5000) / 100, 10)
+			FLAG:70 -= 1
+			FLAG:71 += 1
+		ENDIF
+	NEXT
+	;クズ市民出現時は通常市民を出さない(シチュ簡略化のため)
+	FLAG:70 = 0
+
+	PRINTL 
+	PRINT 振り返ると
+	SIF FLAG:45==0 && (FLAG:71) > 5
+		PRINTL 騒ぎを聞きつけた野次馬が集まり、
+
+	IF (FLAG:71>100)
+		PRINT 無数の
+	ELSEIF (FLAG:71>5)
+		PRINT 大勢の
+	ELSEIF (FLAG:71)
+		PRINT 数名の
+	ENDIF
+
+	PRINTL オタクっぽい服装をした男性がこちらにカメラを向けている！
+	SIF FLAG:71
+		PRINTL 中にはスマホで動画を撮り始める者までいる始末だ。
+	PRINTW 
+	PRINTFORML 危険を注意しても避難を始める気配がないため、
+	PRINTFORM 仕方なく%PRINT_TRANSCALLNAME(TARGET)%は敵に向き合い背後を庇って戦う態勢を取った
+	IF TALENT:감정결여
+		PRINTL ・・・
+	ELSEIF (TALENT:촉수의포로 || ABL:욕망 >= 3) && TALENT:초심 < 1
+		PRINTL 。
+		PRINTFORML もしかしたら自分の痴態を見られてしまうかもしれない興奮を感じながら
+		PRINTFORML 「予定外の観客」の参加に%PRINT_TRANSCALLNAME(TARGET)%は心の中で笑みをこぼした・・・
+		PRINTW 
+		;心境が高揚になる
+		TCVARn:1 = 6
+	ELSEIF GETBATTLESITUATION("正体バレ不可")
+		PRINTL 。
+		PRINTFORML 決して見せてはいけない姿を撮影されてしまうかもしれない危機を感じながら
+		PRINTFORML 命知らずの観客に%PRINT_TRANSCALLNAME(TARGET)%は心の中で悲鳴を上げた・・・
+		PRINTW 
+		;心境が高揚になる
+		TCVARn:1 = 6
+	ELSE
+		PRINTL 。
+		PRINTFORML 正義の味方なんだから一般市民を守るのは当然だろうと言わんばかりの態度に
+		PRINTFORML いったいどちらの味方なのかと怒りが込み上げてくる・・・
+		PRINTW 
+		;心境が怒りになる
+		TCVARn:1 = 2
+	ENDIF
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は 
+	CALL SHINKYOU_CHECK, "PRINT", 0
+	PRINTL 状態 になった
+	PRINTW 
+	;声援を受ける
+ELSEIF RAND:100 > 50 || GETBATTLESITUATION("市民確定") == 1
+	PRINTL 
+
+	PRINTL 不意に、後ろの方から声がした・・・！
+	PRINT 見れば
+	IF (FLAG:70 + FLAG:71) >= 5
+		PRINT 多くの人々が
+	ELSEIF (FLAG:70 + FLAG:71) > 1
+		PRINT 数名の一般人が
+	ELSE
+		PRINT ひとりの一般市民が
+	ENDIF
+	PRINT 自分
+	SIF (FLAG:70 + FLAG:71) > 1
+		PRINT たち
+	PRINTL の身の安全も顧みずに
+	IF GETBATTLESITUATION("正体バレ不可")
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%から촉수の注意を逸らそうと声を張り上げている！
+		PRINTW 
+		LOCALS = %PRINT_TRANSCALLNAME(TARGET)%%ISMALE(TARGET) ? "君" # "ちゃん"%
+
+		CALL CLEARRANDCHOOSE
+		FOR LOCAL, 0, 10
+			CALL ADDRANDCHOOSE,(LOCAL + 1)
+		NEXT
+		FOR LOCAL, 0, MIN(FLAG:70 + FLAG:71 , 5)
+			SIF CHOICECOUNT_F() == 0
+				BREAK
+			RESULT = RANDCHOOSE_F()
+			IF RESULT == 10
+				PRINTFORM 「離してくれ、俺たちなんかより%LOCALS%の安全が・・・！」
+			ELSEIF RESULT == 9
+				PRINTFORM 「逃げてくれ、촉수は%LOCALS%を狙ってるんだ！」
+			ELSEIF RESULT == 8
+				PRINTFORM 「%LOCALS%、早く逃げて！！」
+			ELSEIF RESULT == 7
+				PRINTFORM 「촉수の狙いはあなただ、早く避難を！」
+			ELSEIF RESULT == 6
+				PRINTFORM 「バケモノ、こっちに来やがれ！　%LOCALS%には手出しさせないぞ！！」
+			ELSEIF RESULT == 5
+				PRINTFORM 「頼む逃げてくれ、君は俺たちの希望なんだ！」
+			ELSEIF RESULT == 4
+				PRINTFORM 「おいバケモノ、あの子を狙うなんて下劣だぞ！！」
+			ELSEIF RESULT == 3
+				PRINTFORM 「%LOCALS%、危ない！！」
+			ELSEIF RESULT == 2
+				PRINTFORM 「%LOCALS%、いま助けに・・・うわっ！！」
+			ELSEIF RESULT == 1
+				PRINTFORM 「%LOCALS%、悪い奴に負けないで！」
+			ENDIF
+			CALL CLEARSPECIFICCHOOSE(RESULT)
+			PRINTL 
+		NEXT
+	ELSE
+		IF SAVESTR:10 != ""
+			LOCALS = %SAVESTR:10%
+		ELSEIF ISMANLY() && TALENT:변신시TS == 0 && TALENT:변신시보추 <= 0
+			LOCALS = 魔装少年
+		ELSE
+			LOCALS = 魔法少女
+		ENDIF
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を応援しようと声を張り上げている！
+		PRINTW 
+		CALL CLEARRANDCHOOSE
+		FOR LOCAL, 0, 10
+			CALL ADDRANDCHOOSE,(LOCAL + 1)
+		NEXT
+		FOR LOCAL, 0, MIN(FLAG:70 + FLAG:71 , 5)
+			SIF CHOICECOUNT_F() == 0
+				BREAK
+			RESULT = RANDCHOOSE_F()
+			IF RESULT == 10
+				PRINTFORM 「%LOCALS%だ・・・%LOCALS%が来てくれた！！」
+			ELSEIF RESULT == 9
+				PRINTFORM 「そんなやつ、ぶっとばしちゃえ！」
+			ELSEIF RESULT == 8
+				IF ISMANLY()
+					PRINTFORM 「頑張って、お兄さん！！」
+				ELSE
+					PRINTFORM 「頑張って、お姉ちゃん！！」
+				ENDIF
+			ELSEIF RESULT == 7
+				PRINTFORM 「あなたならきっと勝てるわ！」
+			ELSEIF RESULT == 6
+				PRINTFORM 「みんなを、みんなをたすけて！」
+			ELSEIF RESULT == 5
+				PRINTFORM 「頼む、君だけが頼りだ！」
+			ELSEIF RESULT == 4
+				PRINTFORM 「あの子の・・・あの子の仇を取ってくれ！！」
+			ELSEIF RESULT == 3
+				PRINTFORM 「応援してるぞ！　%LOCALS%！！」
+			ELSEIF RESULT == 2
+				PRINTFORM 「%LOCALS%、負けないで！！」
+			ELSEIF RESULT == 1
+				PRINTFORM 「悪い奴をやっつけて！」
+			ENDIF
+			CALL CLEARSPECIFICCHOOSE(RESULT)
+			PRINTL 
+		NEXT
+
+	ENDIF
+	PRINTW 
+	PRINTFORML 心の奥が暖かくなるのを感じながら、%PRINT_TRANSCALLNAME(TARGET)%は市民からの声援で奮起した！
+	PRINTFORML 気合を入れなおした%PRINT_TRANSCALLNAME(TARGET)%は避難を呼びかけながら、
+	PRINTFORML 敵の注意を引き付けるべく前に進み出た・・・
+	PRINTL 
+	;心境が高揚になる
+	TCVARn:1 = 6
+	;ゲージ増加
+	TCVARn:4 += 100
+	;체력の回復
+	BASE:체력 = MIN(BASE:체력 + MAXBASE:체력 * 12 / 100, MAXBASE:체력)
+	;기력の回復
+	BASE:기력 = MIN(BASE:기력 + MAXBASE:기력 * 24 / 100, MAXBASE:기력)
+	PRINTFORML 체력、기력が回復し、ＥＸゲージが増加した！
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は 
+	CALL SHINKYOU_CHECK, "PRINT", 0
+	PRINTL 状態 になった
+	PRINTW 
+	;通常
+ELSE
+	PRINTL 
+	PRINTFORML どうやら何人か逃げ遅れて戦闘に巻き込まれてしまった者が居るようだ。
+	PRINTFORML 彼らが無事に避難できるように、時間を稼ぐ必要がある。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は敵の注意を引き付けるべく前に進み出た・・・
+	PRINTL 
+	;心境が冷静になる
+	TCVARn:1 = 4
+	;ゲージ増加
+	TCVARn:4 += 200
+	PRINTFORML ＥＸゲージが大きく増加した！
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は 
+	CALL SHINKYOU_CHECK, "PRINT", 0
+	PRINTL 状態 になった
+	PRINTW 
+ENDIF
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+@PERFORM_CHEERS_HATE
+;罵倒を受ける（声援を受ける改変）
+;사악한 마장を装備している=悪堕ち経験有り
+;観戦人数が０人なら中断
+SIF FLAG:70 + FLAG:71 == 0
+	RETURN
+
+IF CFLAG:41 == 401
+	PRINTL 
+	IF SAVESTR:10 != ""
+		LOCALS = %SAVESTR:10%
+	ELSEIF ISMALE() && TALENT:변신시TS == 0 && TALENT:보추 <= 0 && TALENT:변신시보추 <= 0
+		; #region 
+		LOCALS = 魔装少年
+		; #endregion
+	ELSE
+		LOCALS = 魔法少女
+	ENDIF
+	PRINTL 不意に、後ろの方から声がした・・・！
+	PRINT 見れば
+	IF (FLAG:70 + FLAG:71) >= 5
+		PRINT 多くの人々が
+	ELSEIF (FLAG:70 + FLAG:71) > 1
+		PRINT 数名の一般人が
+	ELSE
+		PRINT ひとりの一般市民が
+	ENDIF
+	PRINT 自分
+	SIF (FLAG:70 + FLAG:71) > 1
+		PRINT たち
+	PRINTL の身の安全も顧みずに
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%に怨嗟の声を張り上げている！
+	PRINTW 
+	CALL CLEARRANDCHOOSE
+	FOR LOCAL, 0, 10
+		CALL ADDRANDCHOOSE,(LOCAL + 1)
+	NEXT
+	FOR LOCAL, 0, MIN(FLAG:70 + FLAG:71 , 5)
+		SIF CHOICECOUNT_F() == 0
+			BREAK
+		RESULT = RANDCHOOSE_F()
+		IF RESULT == 10
+			PRINTFORM 「%LOCALS%だ・・・裏切り者の%LOCALS%だ！！」
+		ELSEIF RESULT == 9
+			PRINTFORM 「お前なんか、やられちゃえ！」
+		ELSEIF RESULT == 8
+			PRINTFORM 「何しに来たんだ！！」
+		ELSEIF RESULT == 7
+			PRINTFORM 「あなたなんて負けて犯されればいいのよ！」
+		ELSEIF RESULT == 6
+			PRINTFORM 「みんなをよくも騙したな！」
+		ELSEIF RESULT == 5
+			PRINTFORM 「お前に助けてなんて頼んでない！」
+		ELSEIF RESULT == 4
+			PRINTFORM 「あの子が・・・お前のせいであの子が！！」
+		ELSEIF RESULT == 3
+			PRINTFORM 「応援してるぞ！　촉수さま！！」
+		ELSEIF RESULT == 2
+			PRINTFORM 「%LOCALS%、負けてしまえ！！」
+		ELSEIF RESULT == 1
+			PRINTFORM 「正義の味方のフリかよ！」
+		ENDIF
+		CALL CLEARSPECIFICCHOOSE(RESULT)
+		PRINTL 
+	NEXT
+	PRINTW 
+	PRINTFORML 心の奥が重くなるのを感じながら、%PRINT_TRANSCALLNAME(TARGET)%は市民からの罵声に耐えた・・・
+	PRINTFORML 己の犯した罪はそれほどのことなのだと受け止め
+	PRINTFORML 気合を入れなおした%PRINT_TRANSCALLNAME(TARGET)%は避難を呼びかけながら、
+	PRINTFORML 敵の注意を引き付けるべく前に進み出た・・・
+	PRINTL 
+	;心境が消沈になる
+	TCVARn:1 = 7
+	;増加効果なし
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は 
+	CALL SHINKYOU_CHECK, "PRINT", 0
+	PRINTL 状態 になった
+	PRINTW
+ENDIF
+
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+;촉수が공격をミスした際の処理
+@PERFORM_CHEERS_TENTACLE_MISS_HANTEI
+VARSET LOCAL
+
+;観戦人数が０人なら中断
+SIF FLAG:70 + FLAG:71 == 0
+	RETURN
+;敵の行動結果を読ませるためのウェイトを入れる
+PRINTW 
+;촉수服の状態
+IF CFLAG:1 == 0 && CFLAG:40 == 199 || CFLAG:1 > 0 && CFLAG:41 == 199
+	IF TCVARn:41 != 0
+		LOCAL:1 = 1
+	ELSEIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
+		LOCAL:1 = 2
+	ELSE
+		LOCAL:1 = 3
+	ENDIF
+ENDIF
+IF FLAG:72
+	IF ISMANLY()
+		;#region
+		PRINTFORML なんとか공격を回避した%PRINT_TRANSCALLNAME(TARGET)%に向かって
+		PRINTFORML 観戦者たちから野次が飛んでくる・・・
+		;#endregion
+	ELSEIF CLOTH_OUTER_PER > 50
+		PRINTFORML 敵の공격を回避するために%PRINT_TRANSCALLNAME(TARGET)%が見せる大胆なアングルを狙って
+		PRINTFORML 野次馬のシャッター音が連続で響く。
+		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			PRINTFORML 鬱陶しく思いながらも、ローアングルから激写されることに微かな興奮を覚えてしまう・・・
+		ELSE
+			PRINTFORML ローアングルを攻めるカメラ小僧が胸や股ばかり撮って非常に鬱陶しい・・・
+		ENDIF
+	ELSEIF CLOTH_INNER_PER > 50
+		SIF STAIN:0 & 4 || STAIN:1 & 4 || STAIN:2 & 4
+			PRINT 精液で汚され、
+		IF CLOTH_OUTER_PER
+			PRINT 着衣の乱れた
+		ELSE
+			PRINT 下着姿のまま戦う
+		ENDIF
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を撮影するべく野次馬のシャッター音が連続で響く。
+		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			IF ISMALE()
+				; #region 
+				PRINTFORML もう股間の膨らみまではっきりと撮られてしまっている・・・
+				; #endregion
+			ELSE
+				PRINTFORML もう股間の食い込みまではっきりと撮られてしまっている・・・
+			ENDIF
+		ELSE
+			PRINTFORML 写真を撮らないよう呼び掛けてもカメラ小僧が退く様子はない・・・
+		ENDIF
+	ELSE
+		;촉수 슈트（촉수服）の場合
+		IF LOCAL:1 == 1
+			PRINTL 暴走した촉수服に犯され、激しい責めに
+			PRINT 震える身体
+		ELSEIF LOCAL:1 == 2
+			IF ISMALE()
+				;#region
+				PRINTFORML  蠢く촉수服がぴたりと張り付き、乳首と股間をさらけ出し
+				;#endregion
+			ELSE 
+				PRINTFORML  蠢く촉수服がぴたりと張り付き、乳房と股間をさらけ出し
+			ENDIF
+			PRINT 淫らな姿
+			;変身中かつ사악한 마장の場合
+		ELSEIF CFLAG:41 == 401 && CFLAG:1 > 0
+			PRINTL 薄布の前垂れだけが股間を隠し、肌も露わに
+			PRINT 扇情的な姿
+			;変身中かつ소프트 바디슈트の場合
+		ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+			PRINTL 薄いゴム状のスーツがぴたりと張り付き、カラダの凹凸をさらけ出して
+			PRINT 裸も同然
+		ELSE
+			SIF CLOTH_INNER_PER
+				PRINT ほとんど
+			PRINT 全裸
+		ENDIF
+		PRINTFORML で戦う%PRINT_TRANSCALLNAME(TARGET)%を撮影するべく野次馬のシャッター音が連続で響く。
+		IF LOCAL:1 == 1
+			LOCALS = 蠢く촉수服に陵辱される姿
+		ELSEIF LOCAL:1 == 2 && ISFEMALE()
+			LOCALS = 露出した乳房と股間
+		ELSEIF LOCAL:1 == 2
+			LOCALS = 露出した乳首と股間
+		ELSEIF CFLAG:41 == 401 && CFLAG:1 > 0
+			LOCALS = 前垂れから見え隠れする股間
+		ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+			LOCALS = 裸同然の姿
+		ELSE
+			LOCALS = 裸体
+		ENDIF
+		IF (TALENT:음란 || ABL:노출벽 >= 3 && TALENT:주관시점 > 0) && TALENT:초심 < 1
+			PRINTFORML %LOCALS%を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えてしまう。
+		ELSEIF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			PRINTFORML %LOCALS%を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えている。
+		ELSEIF TALENT:주관시점 > 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は見せるつもりもない相手に%LOCALS%を激写され、羞恥心と屈辱で顔が真っ赤になってしまう。
+		ELSE
+			PRINTFORML 見せるつもりのない相手に%LOCALS%を激写され、%PRINT_TRANSCALLNAME(TARGET)%は羞恥心で顔が真っ赤だ。
+		ENDIF
+		IF LOCAL:1 == 3
+		ELSEIF STAIN:3 & 4
+			PRINTFORML 股間から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		ELSEIF STAIN:4 & 4
+			PRINTFORML 尻穴から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		ELSE
+			PRINT 開脚した際に
+			IF CFLAG:41 == 401 && CFLAG:1 > 0
+				PRINT 覗く
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				PRINT 薄いゴム越しの
+			ELSE
+				PRINT 露出した
+			ENDIF
+			IF ISMALE()
+				;#region
+				PRINTFORML 秘茎をはっきりとフィルムに収められてしまった・・・
+				;#endregion
+			ELSE 
+				PRINTFORML 秘部をはっきりとフィルムに収められてしまった・・・
+			ENDIF
+		ENDIF
+	ENDIF
+ELSEIF RAND:100 < 35
+	;悪堕ち経験有り
+	IF CFLAG:41 == 401
+		IF RAND:3 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は襲われそうになっていた一般人を寸でのところで助け出したが
+			PRINTFORML 一般人は悲鳴を上げながら飛び退いた・・・
+			IF RAND:100 < 20 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 -= LOCAL
+				PRINTFORML 인기도が{LOCAL}下降した！
+			ENDIF
+		ELSEIF RAND:2 == 0
+			PRINT 避難中の一般人
+			SIF FLAG:70 + FLAG:71 > 1
+				PRINT たち
+			PRINTFORML が%PRINT_TRANSCALLNAME(TARGET)%の背後から石を투척つけてくる・・・
+			IF RAND:100 < 5 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 -= LOCAL
+				PRINTFORML 인기도が{LOCAL}下降した！
+			ENDIF
+		ELSE
+			PRINTFORML 咄嗟に%PRINT_TRANSCALLNAME(TARGET)%が身を躱すと、敵の공격が鼻先を掠めていった。
+			PRINTFORML 観衆の落胆の声が聞こえる・・・
+			LOCAL = RAND:(FLAG:70 + FLAG:71)
+			IF RAND:100 < 10 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 -= LOCAL
+				PRINTFORML 인기도が{LOCAL}下降した！
+			ENDIF
+		ENDIF
+	ELSE ;通常
+		IF RAND:3 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は襲われそうになっていた一般人を寸でのところで助け出した・・・
+			IF RAND:100 < 20 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 += LOCAL
+				PRINTFORML 인기도が{LOCAL}上昇した！
+			ENDIF
+		ELSEIF RAND:2 == 0
+			PRINT 避難中の一般人
+			SIF FLAG:70 + FLAG:71 > 1
+				PRINT たち
+			PRINTFORML が%PRINT_TRANSCALLNAME(TARGET)%の攻防を固唾を飲んで見守っている・・・
+			IF RAND:100 < 5 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 += LOCAL
+				PRINTFORML 인기도が{LOCAL}上昇した！
+			ENDIF
+		ELSE
+			PRINTFORML 観衆の「危ない！」という声に反応して咄嗟に%PRINT_TRANSCALLNAME(TARGET)%が身を躱すと、
+			PRINTFORML 敵の공격が鼻先を掠めていった・・・
+			LOCAL = RAND:(FLAG:70 + FLAG:71)
+			IF RAND:100 < 10 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 += LOCAL
+				PRINTFORML 인기도が{LOCAL}上昇した！
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+;촉수が공격を命中させた際の処理
+@PERFORM_CHEERS_TENTACLE_HIT_HANTEI
+VARSET LOCAL
+;観戦人数が０人なら中断
+SIF FLAG:70 + FLAG:71 == 0
+	RETURN
+;敵の行動結果を読ませるためのウェイトを入れる
+PRINTW 
+;촉수服の状態
+IF CFLAG:1 == 0 && CFLAG:40 == 199 || CFLAG:1 > 0 && CFLAG:41 == 199
+	IF TCVARn:41 != 0
+		LOCAL:1 = 1
+	ELSEIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
+		LOCAL:1 = 2
+	ELSE
+		LOCAL:1 = 3
+	ENDIF
+ENDIF
+IF FLAG:72
+	IF ISMANLY()
+		; #region 
+		PRINTFORML 공격を受けた%PRINT_TRANSCALLNAME(TARGET)%を心配するどころか
+		PRINTFORML 観戦者たちから野次が飛んでくる・・・
+		; #endregion
+	ELSEIF CLOTH_OUTER_PER > 50
+		PRINTFORML 공격を受けて衣装が破ける%PRINT_TRANSCALLNAME(TARGET)%を助けようともせず
+		PRINTFORML 観衆は好き勝手な野次を飛ばしている。
+		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			PRINTFORML やられシーンをカメラ小僧に激写されて微かに股間が疼いてしまう・・・
+		ELSE
+			PRINTFORML 敵の공격を捌くので精いっぱいの%PRINT_TRANSCALLNAME(TARGET)%は文句を言うこともできない・・・
+		ENDIF
+	ELSEIF CLOTH_INNER_PER > 50
+		SIF STAIN:0 & 4 || STAIN:1 & 4 || STAIN:2 & 4
+			PRINT 精液で汚され、
+		IF CLOTH_OUTER_PER
+			PRINT 着衣の乱れた
+		ELSE
+			PRINT 下着姿のまま戦う
+		ENDIF
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を撮影するべく
+		PRINTFORML 野次馬のシャッター音が連続で響く。
+		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			IF ISMALE()
+				;#region
+				PRINTFORML もう膨らみまではっきりと撮られてしまっている・・・
+				;#endregion
+			ELSE 
+				PRINTFORML もう食い込みまではっきりと撮られてしまっている・・・
+			ENDIF
+		ELSE
+			PRINTFORML 写真を撮らないよう呼び掛けてもカメラ小僧が退く様子はない・・・
+		ENDIF
+	ELSE
+		;촉수 슈트（촉수服）の場合
+		IF LOCAL:1 == 1
+			PRINTL 暴走した촉수服に犯され、激しい責めに
+			PRINT 震える身体
+		ELSEIF LOCAL:1 == 2
+			IF ISMALE()
+				;#region
+				PRINTFORML 蠢く촉수服がぴたりと張り付き、乳首と股間をさらけ出し
+				;#endregion
+			ELSE 
+				PRINTFORML 蠢く촉수服がぴたりと張り付き、乳房と股間をさらけ出し
+			ENDIF
+			PRINT 淫らな姿
+			;変身中かつ사악한 마장の場合
+		ELSEIF CFLAG:41 == 401 && CFLAG:1 > 0
+			PRINTL 薄布の前垂れだけが股間を隠し、肌も露わに
+			PRINT 扇情的な姿
+			;変身中かつ소프트 바디슈트の場合
+		ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+			PRINTL 薄いゴム状のスーツがぴたりと張り付き、カラダの凹凸をさらけ出して
+			PRINT 裸も同然
+		ELSE
+			SIF CLOTH_INNER_PER
+				PRINT ほとんど
+			PRINT 全裸
+		ENDIF
+		PRINTFORML で戦う%PRINT_TRANSCALLNAME(TARGET)%を撮影するべく野次馬のシャッター音が連続で響く。
+		IF LOCAL:1 == 1
+			LOCALS = 蠢く촉수服に陵辱される姿
+		ELSEIF LOCAL:1 == 2 && ISFEMALE()
+			LOCALS = 露出した乳房と股間
+		ELSEIF LOCAL:1 == 2
+			LOCALS = 露出した乳首と股間
+		ELSEIF CFLAG:41 == 401 && CFLAG:1 > 0
+			LOCALS = 前垂れから見え隠れする股間
+		ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+			LOCALS = 裸同然の姿
+		ELSE
+			LOCALS = 裸体
+		ENDIF
+		IF (TALENT:음란 || ABL:노출벽 >= 3 && TALENT:주관시점 > 0) && TALENT:초심 < 1
+			PRINTFORML %LOCALS%を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えてしまう。
+		ELSEIF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
+			PRINTFORML %LOCALS%を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えている。
+		ELSEIF TALENT:주관시점 > 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は見せるつもりもない相手に%LOCALS%を激写され、羞恥心と屈辱で顔が真っ赤になってしまう。
+		ELSE
+			PRINTFORML 見せるつもりのない相手に%LOCALS%を激写され、%PRINT_TRANSCALLNAME(TARGET)%は羞恥心で顔が真っ赤だ。
+		ENDIF
+		IF LOCAL:1 == 3
+		ELSEIF STAIN:3 & 4
+			PRINTFORML 股間から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		ELSEIF STAIN:4 & 4
+			PRINTFORML 尻穴から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		ELSE
+			PRINT 開脚した際に
+			IF CFLAG:41 == 401 && CFLAG:1 > 0
+				PRINT 覗く
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				PRINT 薄いゴム越しの
+			ELSE
+				PRINT 露出した
+			ENDIF
+			IF ISMALE()
+				;#region
+				PRINTFORML 秘茎をはっきりとフィルムに収められてしまった・・・
+				;#endregion
+			ELSE 
+				PRINTFORML 秘部をはっきりとフィルムに収められてしまった・・・
+			ENDIF
+		ENDIF
+	ENDIF
+ELSEIF RAND:100 < 35
+	IF CFLAG:41 == 401
+		IF RAND:3 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は逃げ遅れた一般人を庇って避けきれなかったようだ・・・
+			PRINTFORML 一般人から歓声が上がった。
+			LOCAL = RAND:(FLAG:70 + FLAG:71)
+			IF RAND:100 < 20 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 -= LOCAL
+				PRINTFORML 인기도が{LOCAL}下降した！
+			ENDIF
+		ELSEIF RAND:2 == 0
+			PRINT 避難中の一般人
+			SIF FLAG:70 + FLAG:71 > 1
+				PRINT たち
+			PRINTFORML が%PRINT_TRANSCALLNAME(TARGET)%に罵声を浴びせている・・・
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が공격を避けきれずに食らう様を目の当たりにして
+			PRINTFORML 観衆から歓声が上がった・・・
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は逃げ遅れた一般人を庇って避けきれなかったようだ・・・
+			LOCAL = RAND:(FLAG:70 + FLAG:71)
+			IF RAND:100 < 20 && LOCAL > 0
+				PRINTL 
+				LOCAL = 1
+				FLAG:853 += LOCAL
+				PRINTFORML 인기도が{LOCAL}上昇した！
+			ENDIF
+		ELSEIF RAND:2 == 0
+			PRINT 避難中の一般人
+			SIF FLAG:70 + FLAG:71 > 1
+				PRINT たち
+			PRINTFORML が%PRINT_TRANSCALLNAME(TARGET)%の攻防を固唾を飲んで見守っている・・・
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が공격を避けきれずに食らう様を目の当たりにして
+			PRINTFORML 観衆から悲鳴が上がった・・・
+		ENDIF
+	ENDIF
+ENDIF
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+;촉수が性行為を行った際の処理
+@PERFORM_CHEERS_TENTACLE_SEX_HANTEI
+VARSET LOCAL
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN
+;観戦人数が０人なら中断
+SIF FLAG:70 + FLAG:71 == 0
+	RETURN
+
+;動画撮影されているとネットに配信されてしまう
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	CFLAG:284 += FLAG:71
+	SETBIT TFLAG:21,0
+ENDIF
+;촉수服の状態
+IF CFLAG:1 == 0 && CFLAG:40 == 199 || CFLAG:1 > 0 && CFLAG:41 == 199
+	IF TCVARn:41 != 0
+		LOCAL:1 = 1
+	ELSEIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
+		LOCAL:1 = 2
+	ELSE
+		LOCAL:1 = 3
+	ENDIF
+ENDIF
+IF FLAG:72
+	IF (FLAG:70 + FLAG:71) >= 5
+		PRINTFORML 凌辱される%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%は観衆に取り囲まれて強姦ショーの様相を呈している。
+	ELSE
+		PRINT 観衆の男
+		SIF (FLAG:70 + FLAG:71) > 1
+			PRINT たち
+		PRINTFORML は凌辱される%PRINT_TRANSCALLNAME(TARGET)%に興奮し、むしろ敵の応援をする勢いだ。
+	ENDIF
+	PRINTL 
+	IF CLOTH_OUTER_PER > 50 || LOCAL:1 == 3
+		SIF STAIN:1 & 4 || STAIN:2 & 4
+			PRINT 精液まみれで
+		SIF STAIN:0 & 4
+			PRINTL 입から白濁液を垂らし、
+		IF (SELECTCOM == 8 || SELECTCOM == 9) && !(TCVARn:12 & 기절)
+			PRINT 暴れてもどうにもならずに
+		ELSEIF !(TCVARn:12 & 기절)
+			PRINT ろくな抵抗もできずに
+		ENDIF
+		PRINTFORML 煽情的なポーズで固定された%PRINT_TRANSCALLNAME(TARGET)%。
+		PRINTFORML その様子に観衆は鼻息荒く見入っている・・・
+	ELSEIF CLOTH_INNER_PER > 50
+		SIF STAIN:0 & 4 || STAIN:1 & 4 || STAIN:2 & 4
+			PRINT 精液で汚され
+		SIF STAIN:0 & 4
+			PRINTL 입からは白濁液を垂らし、
+		IF CLOTH_OUTER_PER
+			PRINT 嬲りものにされて着衣がボロボロになった
+		ELSE
+			PRINT 下着姿を晒しながら凌辱される
+		ENDIF
+		IF (TALENT:촉수의포로 || ABL:욕망 >= 3) && TALENT:초심 < 1
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が痴態を見せつけるようにポーズを取ると、
+			PRINT 男
+			SIF (FLAG:70 + FLAG:71) > 1
+				PRINT たち
+			PRINTFORM は歓喜の声を上げながら興奮した様子で
+		ELSEIF !(TCVARn:12 & 기절)
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が助けを求めるが、
+			PRINT 男
+			SIF (FLAG:70 + FLAG:71) > 1
+				PRINT たち
+			PRINTFORML には%PRINT_TRANSCALLNAME(TARGET)%の味方をしようというつもりは毛頭無いらしく、
+			PRINTFORM ニヤニヤしながら
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の体が촉수に動かされ卑猥な姿勢を取らせられると、
+			PRINT 男
+			SIF (FLAG:70 + FLAG:71) > 1
+				PRINT たち
+			PRINTFORM は歓喜の声を上げながら興奮した様子で
+		ENDIF
+		IF (FLAG:70 + FLAG:71) > 1
+			PRINTFORML 卑猥な言葉を투척かけてくる・・・
+		ELSEIF FLAG:71
+			PRINTFORML 卑猥な言葉でこちらを煽りながら撮影を続けている・・・
+		ELSE
+			PRINTFORML 卑猥な言葉を連呼しながら舐めるように視姦してくる・・・
+		ENDIF
+	ELSE
+		IF STAIN:1 & 4 || STAIN:2 & 4
+			PRINT 精液まみれ
+			IF LOCAL:1 == 1
+				PRINT の蠢く촉수服に陵辱されつつ、
+			ELSEIF LOCAL:1 == 2 || (CFLAG:41 == 401 && CFLAG:1 > 0)
+				PRINT の扇情的な衣装で、
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				PRINT の全裸同然の姿で、
+			ELSE
+				PRINT で
+				SIF CLOTH_INNER_PER
+					PRINT ほとんど
+				PRINT 全裸にされ、
+			ENDIF
+		ELSE
+			IF LOCAL:1 == 1
+				PRINT の蠢く촉수服に陵辱されつつ、
+			ELSEIF LOCAL:1 == 2 || (CFLAG:41 == 401 && CFLAG:1 > 0)
+				PRINT 扇情的な衣装で
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				PRINT 全裸同然の姿で
+			ELSE
+				SIF CLOTH_INNER_PER
+					PRINT ほとんど
+				PRINT 全裸にされ、
+			ENDIF
+		ENDIF
+		SIF STAIN:1 & 4 || STAIN:2 & 4 || CLOTH_INNER_PER
+			PRINTL 
+		SIF STAIN:0 & 4
+			PRINT 입から白濁液を垂らしながら
+		IF STAIN:3 & 4
+			PRINT 股間から中出しされた精液を溢れさせる
+		ELSEIF STAIN:4 & 4
+			PRINT 尻穴から中出しされた精液を溢れさせる
+		ELSE
+			PRINT 大きく開脚させられた
+		ENDIF
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%。
+		PRINT 男
+		SIF (FLAG:70 + FLAG:71) > 1
+			PRINT たち
+		IF FLAG:71
+			PRINTFORML は蹂躙される%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%のあられもない姿に興奮しながら、
+			IF (TCVARn:12 & 기절)
+				PRINTFORM ぐったりとした体が嬲られる卑猥な光景を
+			ELSEIF TFLAG:20 == 3 || TFLAG:20 == 5 || TFLAG:20 == 1001 || TFLAG:20 == 1002
+				IF (INSERT & 질) || (INSERT & 애널)
+					PRINTFORM 明らかに挿入を受け入れている結合部にズームしながら
+				ELSEIF TALENT:촉수의포로 || ABL:욕망 >= 3
+					PRINTFORM 快楽に蕩けていく%PRINT_TRANSCALLNAME(TARGET)%の痴態を
+				ELSEIF TFLAG:2 == 100
+					PRINTFORM 挿入されまいと必死に抵抗する%PRINT_TRANSCALLNAME(TARGET)%の様子を
+				ELSE
+					PRINTFORM 屈辱に歪んだ%PRINT_TRANSCALLNAME(TARGET)%の表情を
+				ENDIF
+			ELSEIF TFLAG:20 == 11 || TFLAG:20 == 12 || TFLAG:20 == 1005
+				IF (TALENT:촉수의포로 || ABL:욕망 >= 3 || TFLAG:2 == 4) && TALENT:초심 < 1
+					PRINTFORM 頬を染めて봉사한다%PRINT_TRANSCALLNAME(TARGET)%を
+				ELSE
+					PRINTFORM 無理やり奉仕させられる%PRINT_TRANSCALLNAME(TARGET)%を
+				ENDIF
+			ELSEIF TFLAG:20 == 8 || TFLAG:20 == 9 || TFLAG:20 == 13 || TFLAG:20 == 1004
+				IF ABL:마조끼 >= 3 && TALENT:초심 < 1
+					PRINTFORM 被虐的な興奮に喘ぐ%PRINT_TRANSCALLNAME(TARGET)%を
+				ELSE
+					PRINTFORM 고통にのたうつ%PRINT_TRANSCALLNAME(TARGET)%の様子を
+				ENDIF
+			ELSE
+				IF (TALENT:촉수의포로 || ABL:욕망 >= 3) && TALENT:초심 < 1
+					PRINTFORM 快楽に蕩けていく%PRINT_TRANSCALLNAME(TARGET)%の痴態を
+				ELSEIF ABL:순종 >= 3
+					PRINTFORM 力なく項垂れた%PRINT_TRANSCALLNAME(TARGET)%の절망の表情を
+				ELSE
+					PRINTFORM 必死の抵抗を続ける%PRINT_TRANSCALLNAME(TARGET)%の様子を
+				ENDIF
+			ENDIF
+			PRINTFORML 撮影している・・・
+		ELSE
+			PRINTFORML は血走った眼をしながら下半身を露出し、
+			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%を罵りながらオナニーしている・・・
+		ENDIF
+	ENDIF
+	PRINTW 
+ELSEIF RAND:100 < 75
+	IF ITEM:401 == 1
+		IF RAND:4 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を犯そうと近付いた一般人が
+			PRINTFORML 촉수に突き飛ばされて尻餅をついた・・・
+		ELSEIF RAND:3 == 0
+			PRINTFORML 為すすべなく凌辱される%PRINT_TRANSCALLNAME(TARGET)%に周囲が興奮状態に陥っている・・・
+		ELSEIF RAND:2 == 0
+			PRINTFORML 周囲は凌辱される%PRINT_TRANSCALLNAME(TARGET)%に興奮し
+			PRINTFORML 目を背けることができずにいる・・・
+		ELSE
+			PRINTFORML 目の前で繰り広げられる痴態を見せつけられて
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を매도한다声が強くなっていく・・・
+		ENDIF
+	ELSE
+		IF RAND:4 == 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を助けようと近付いた一般人が
+			PRINTFORML 촉수に突き飛ばされて尻餅をついた・・・
+		ELSEIF RAND:3 == 0
+			PRINTFORML 為すすべなく凌辱される%PRINT_TRANSCALLNAME(TARGET)%に周囲が恐慌状態に陥っている・・・
+		ELSEIF RAND:2 == 0
+			PRINTFORML 周囲は凌辱される%PRINT_TRANSCALLNAME(TARGET)%に蒼白になりながらも
+			PRINTFORML 目を背けることができずにいる・・・
+		ELSE
+			PRINTFORML 目の前で繰り広げられる痴態を見せつけられて
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を応援する声が弱々しくなっていく・・・
+		ENDIF
+	ENDIF
+	PRINTW 
+ENDIF
+
+;----------------------------------------------------------------------------------------------------------------------------
+;戦闘終了後のレイプ
+@AFTER_TRAIN_RAPE,ARG
+#DIM CCOUNT
+#DIM NAKADASHI
+
+VARSET LOCAL
+NAKADASHI = 0
+
+;生存状態でなければ襲われない
+SIF CFLAG:0 != 0
+	RETURN 0
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+
+;襲われる確率
+LOCAL = MIN((5000 - FLAG:852) / 100, 50) + MIN(CFLAG:285 * 2, 50) + (TALENT:놀림받는체질 > 0) * 10
+;クズ市民フラグが立っていない場合は発生しにくい
+SIF FLAG:72 == 0
+	LOCAL = LOCAL / 2
+
+SIF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 >= LOCAL
+	RETURN 0
+
+;待ち構えていた男たちに襲われる
+DRAWLINE
+PRINTL ――
+PRINTL ――――
+PRINTW ――――――
+PRINTL 
+;消耗率を見る
+LOCAL:1 = PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + BASE:성내성 * 10)
+PRINTL 
+;消耗率が低い、または勝利した場合はやや襲われにくい。ただし夜は襲われやすい
+IF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 < LOCAL:1 * 3 / 4 + (TFLAG:98 == 1) * 6 - (TIME == 1) * 12 - (TALENT:놀림받는체질 > 0) * 12
+	IF LOCAL < 25 || RAND:2 == 0
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は誰かに尾けられているような気がしたが、
+		PRINTFORML どうやら気のせいだったようだ・・・
+		PRINTW 
+		RETURN 0
+	ELSE
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は誰かに尾けられているような気がしたが、
+		PRINTFORML うまく撒くことができたようだ・・・
+		PRINTW 
+		RETURN 0
+	ENDIF
+ELSEIF TFLAG:98 == 0
+	IF LOCAL:1 < 25
+		PRINTFORML ギリギリのところで戦闘から逃げ伸びた%PRINT_TRANSCALLNAME(TARGET)%。
+	ELSEIF LOCAL:1 < 50
+		PRINTFORML 不利を悟って何とか撤退した%PRINT_TRANSCALLNAME(TARGET)%。
+	ELSE
+		PRINTFORML 戦闘から離脱することに成功した%PRINT_TRANSCALLNAME(TARGET)%。
+	ENDIF
+ELSE
+	IF LOCAL:1 < 25
+		PRINTFORML ギリギリのところで戦闘に勝利した%PRINT_TRANSCALLNAME(TARGET)%。
+	ELSEIF LOCAL:1 < 50
+		PRINTFORML 何とか戦闘に勝利することができた%PRINT_TRANSCALLNAME(TARGET)%。
+	ELSE
+		PRINTFORML 大して고전することもなく勝利した%PRINT_TRANSCALLNAME(TARGET)%。
+	ENDIF
+ENDIF
+PRINTL 緊張の糸が切れて油断したところを狙われたのか、突然現れた男たちに囲まれて
+PRINTL 人通りのない路地裏に連れ込まれてしまった！
+PRINTW 
+;初回ならヒロインらしく振舞う
+IF CFLAG:286 == 0
+	PRINTFORML 男たちは苦しそうに、「助けてくれ」「助けてくれ」と言いながらズボンを下ろし、
+	PRINTFORML 勃起したペニスを露出させた。
+	PRINTFORML 男たちが촉수の淫気に中てられた可能性に思い当たった%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML 사정させれば正気に戻るはずだと覚悟を決めた・・・
+	;悪堕ち経験有りなら罪悪感で抵抗できない
+ELSEIF RAND:3 == 0 && ITEM:401 == 1
+	PRINTFORM 男たちは苦々しげに、「お前のせいで
+	IF RAND:8 == 0
+		PRINT 妻
+	ELSEIF RAND:7 == 0
+		PRINT 母さん
+	ELSEIF RAND:6 == 0
+		PRINT 娘
+	ELSEIF RAND:5 == 0
+		PRINT 彼女
+	ELSEIF RAND:4 == 0
+		PRINT 幼馴染
+	ELSEIF RAND:3 == 0
+		PRINT 姉
+	ELSEIF RAND:2 == 0
+		PRINT 妹
+	ELSE
+		PRINT あの子
+	ENDIF
+	PRINTFORML が……」と言いながらズボンを下ろし、
+	PRINTFORML 勃起したペニスを露出させた。
+	PRINTFORML 自分のせいで男たちが大切な女性を失ったことを察した%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML 罪悪感と自己弁護の感情の波に飲まれ思うように抵抗できなかった・・・
+ELSE
+	PRINTFORML 覆面で顔を隠した男たちに取り押さえられ、目の前に勃起したペニスが突き付けられる。
+	IF TALENT:음란 && TALENT:초심 < 1
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は誘惑するように、上目遣いで男に奉仕し始めた・・・
+	ELSEIF ABL:욕망 >= 3 && TALENT:초심 < 1
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は心の中で言い訳をしながら、男のペニスに奉仕し始めた・・・
+	ELSEIF LOCAL:1 < 25
+		PRINTFORML 満身創痍の%PRINT_TRANSCALLNAME(TARGET)%には抵抗する力が残っておらず、
+		PRINTFORML 碌に鍛錬もしていないであろう男たちを振り払うことができない・・・
+	ELSEIF ABL:순종 >= 3
+		PRINTFORML %STR:2500%との戦いで身体と心に服従を教え込まれている%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 碌に鍛錬もしていないであろう男たちを振り払うことができない・・・
+	ELSEIF CFLAG:286 == 0 && TALENT:청순파 > 0
+		PRINTFORML 男たちは苦しそうに、「助けてくれ」「助けてくれ」と言いながらズボンを下ろし、
+		PRINTFORML 勃起したペニスを露出させた。
+		PRINTFORML しかし男の性器を触った事もない%PRINT_TRANSCALLNAME(TARGET)%は躊躇って
+		PRINTFORML 誰かと相談しようとスマートフォンを出した途端、男たちにスマホを奪われてきょとんしてしまった…
+	ELSE
+		PRINTFORML 逆らったら正体をバラすぞと脅され、%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 簡単に振り払える相手に抵抗するのを躊躇してしまった・・・
+	ENDIF
+ENDIF
+PRINTW 
+
+;男が女物の下着を付けている
+IF ISMALE() && (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:42 != 397)
+	; #region 
+	PRINTFORM 男が%PRINT_TRANSCALLNAME(TARGET)%の服を乱暴に剥ぐと
+	;インナー設定なし　ノーパン　または前張り
+	IF CFLAG:42 == 0 || CFLAG:42 == 398
+		PRINTFORM 隠すもののないお尻
+		;カスタムなし下着3種　注釈ルクテンタショーツ399は촉수 구속구400へ自動的に変わる
+	ELSEIF CFLAG:42 == 307 || CFLAG:42 == 311 || CFLAG:42 == 400
+		SIF CFLAG:42 == 400
+			PRINT 普通のパンツに擬態した
+		PRINTFORM %ITEMNAME:(CFLAG:42)%
+	ELSE
+		CALL SHITAGI_COLOR
+		PRINT の
+		CALL KAIZOU_PANT
+	ENDIF
+	PRINTL が露わになった。
+	IF TALENT:보추 > 0
+		PRINTFORML 男たちの興奮とも怒号ともつかない歓声が沸き起こる。
+		PRINTFORML オンナみたいな顔とカラダで騙しやがって、と理不尽な罵声を浴びせられながら、
+		PRINTFORML 硬い靴の裏でぐりぐりと%PRINT_TRANSCALLNAME(TARGET)%のペニスが踏みつけられる。
+		PRINTFORML 苦悶に顔を歪める頭上で、見た目通りのメスにしてやるよ、と男の下卑た笑い声が響いた。
+	ELSE
+		PRINTFORML 男たちの興奮とも冷笑ともつかない歓声が沸き起こる。
+		PRINTFORML メスになりたいなら手伝ってやるよ、と男の下卑た笑い声が響いた。
+	ENDIF
+	; #endregion
+ENDIF
+;初めてのクズ市民レイプは必ずこっち
+IF CFLAG:286 == 0 || RAND:2 == 0
+	PRINTFORML 両手でそれぞれペニスを握り、口にもペニスを咥える%PRINT_TRANSCALLNAME(TARGET)%。
+	PRINTFORML 手コキとフェラチオで限界に達した男たちが사정に至るが、正気に戻る様子はない。
+	PRINTFORML するといきなり男たちに押し倒されて、손발を抑えつけられてしまう。
+	PRINTW 
+	IF TALENT:음란
+		PRINTFORML 驚きの声を上げる%PRINT_TRANSCALLNAME(TARGET)%の唇を奪い、
+	ELSE
+		PRINTFORML 制止しようとする%PRINT_TRANSCALLNAME(TARGET)%の説得も空しく、
+	ENDIF
+	PRINTFORM 男が
+	IF ISMALE()
+		; #region 
+		IF EXP:A경험 < 1 && CFLAG:36 <= 30
+			PRINTL 指すら入った事ない애널をハンドクリームを使って
+			PRINTL 何度もほぐしてからペニスを後穴にあてがい、ゆっくり埋めていく。
+			PRINTL 肛門の裂け傷による痛みと共に、性器として認識されてなかったアヌスが男に貫かれた
+			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の悲鳴をＢＧＭにし、男はそのまま
+		ELSEIF EXP:A경험 < 5 || CFLAG:36 <= 40
+			PRINT ペニスで明らかに남자慣れしていない애널に捻り込んで、
+		ELSE
+			PRINT ペニスで애널をほぐして挿入し、
+		ENDIF
+		PRINTL ピストンし始めた。
+		; #endregion
+	ELSEIF CHECK_HOLYVIRGIN_F()==1
+		IF TALENT:빈유 < 1 && RAND:2 == 0
+			PRINTL 胸でペニスを挟ませ、パイズリさせ始めた。
+			LOCAL = 1
+		ELSE
+			IF EXP:A경험 < 1 && CFLAG:36 <= 30
+				PRINTL 指すら入った事ない애널をハンドクリームを使って
+				PRINTL 何度もほぐしてからペニスを後穴にあてがい、ゆっくり埋めていく。
+				PRINTL 肛門の裂け傷による痛みと共に、性器として認識されてなかったアヌスが男に貫かれた
+				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の悲鳴をＢＧＭにし、男はそのまま
+			ELSEIF EXP:A경험 < 5 || CFLAG:36 <= 40
+				PRINT ペニスで明らかに남자慣れしていない애널に捻り込んで、
+			ELSE
+				PRINT ペニスで애널をほぐして挿入し、
+			ENDIF
+			PRINTL ピストンし始めた。
+		ENDIF
+	ELSEIF TALENT:처녀 > 0
+		PRINTL ペニスを何度か擦り付けると、ゆっくりと腰を埋めていく。
+		PRINT 破瓜の痛みと共にまだ男を知らないヴァギナが貫かれ
+		IF TALENT:음란 || ABL:욕망 >= 3
+			PRINTL ていく。
+		ELSE
+			PRINT 、
+		ENDIF
+	ELSE
+		PRINTL ペニスをヴァギナに深々と挿入して、ゆっくり腰を使い始めた。
+	ENDIF
+	SIF TALENT:음란 == 0 && ABL:욕망 < 3
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の悲鳴が路地に響き渡る・・・
+	;二度目以降
+ELSE
+	PRINTFORML すると男はそのまま%PRINT_TRANSCALLNAME(TARGET)%を押し倒し、
+	IF ITEM:401 == 1 ;悪堕ち経験有り
+		PRINTFORML 何度も謝罪の言葉を口にする%PRINT_TRANSCALLNAME(TARGET)%を平手打ちで黙らせ、
+	ENDIF
+	IF ISMALE()
+		; #region 
+		IF EXP:A경험 < 5 || CFLAG:36 <= 40
+			PRINTL ペニスでまだ犯され慣れてない애널に捻り込んで、
+			PRINTFORML 悲鳴を上げる%PRINT_TRANSCALLNAME(TARGET)%の声をＢＧＭに乱暴にピストンし始めた。
+		ELSE
+			PRINTL 애널に挿入して乱暴にピストンし始めた。
+		ENDIF
+		; #endregion
+	ELSEIF CHECK_HOLYVIRGIN_F()==1
+		IF TALENT:빈유 < 1 && RAND:2 == 0
+			PRINTL 胸でペニスを挟ませ、激しくピストンし始めた。
+			LOCAL = 1
+		ELSE
+			PRINTL 悲鳴を上げる口をふさぐようにペニスをねじ込み、ピストンし始めた。
+		ENDIF
+	ELSEIF TALENT:처녀 > 0
+		PRINTL まだ男を知らないヴァギナを貫いた。
+	ELSE
+		PRINTL ヴァギナに挿入して乱暴にピストンし始めた。
+	ENDIF
+ENDIF
+
+IF ISMALE() && (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:42 != 397)
+	; #region 
+	PRINTL オンナモノの下着なんか着けてこうやって犯されるのが夢だったんだろ？と男が嘲笑う。
+	; #endregion
+ENDIF
+PRINTW 
+IF TALENT:보추 > 0
+	; #region 
+	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
+		PRINTFORML 乱暴に애널を割り広げられる痛みに耐えながらも、
+		IF TALENT:주관시점 > 0
+			PRINTFORML 誰とも知らない男性に尻穴を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%の体は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまう。
+		ELSE
+			PRINTFORML 誰とも知らない男性に尻穴を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまった。
+		ENDIF
+	ELSEIF ABL:A감각 < 2
+		PRINTFORML 乱暴に애널を割り広げられる痛みに抵抗する기력を完全に奪われ、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできずに
+		PRINTFORML 誰とも知らない男に腸管の純潔を押し開かれていく。
+	ELSE
+		PRINTFORML 乱暴に애널を割り広げられているのに痛みは薄く、快感に声が抑えきれない。
+		PRINTFORML そんな自分自身にショックを受けて抵抗する기력は完全に奪われ、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできずに
+		PRINTFORML 誰とも知らない男に潤んだ腸管を押し開かれていく。
+	ENDIF
+	PRINTW 
+	PRINTFORML 身勝手なピストンで男が限界に登り詰めて直腸内に精液を放出すると、
+	; #endregion
+ELSEIF ISMALE()
+	; #region 
+	PRINTFORML 男が限界に登り詰めて直腸内に精液を放出すると、
+	; #endregion
+ELSEIF CHECK_HOLYVIRGIN_F()==1
+	IF LOCAL == 1
+		PRINTL 男が限界に登り詰めて胸に精液をぶっかけると、
+		LOCAL = 0
+	ELSE
+		PRINTL 男が口にねじ込んだまま喉に精液を放出すると、
+	ENDIF
+ELSEIF TALENT:처녀 > 0
+	FONTBOLD
+	PRINTL 처녀喪失
+	FONTREGULAR
+	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
+		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
+		IF TALENT:주관시점 > 0
+			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%の体は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまう。
+		ELSE
+			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまった。
+		ENDIF
+	ELSE
+		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに抵抗する기력を完全に奪われ、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできずに
+		PRINTFORML 誰とも知らない男に膣肉の純潔を押し開かれていく。
+	ENDIF
+	PRINTW 
+	PRINTFORML 身勝手なピストンで男が限界に登り詰めて질내사정を決めると、
+	NAKADASHI = 1
+ELSE
+	PRINTFORML 男が限界に登り詰めて当然のように질내사정を決めると、
+	NAKADASHI = 1
+ENDIF
+
+SIF ABL:사정중독 > 1 && (ISPENIS())
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の体も同時に絶頂を迎え、精子を虚空に無駄打ちし、
+IF CFLAG:286 > 2 || RAND:3 == 0
+	PRINTFORML 順番待ちをしていた仲間と場所を代わってすぐに凌辱が再開される。
+	IF (TALENT:음란 || ABL:욕망 >= 3) && TALENT:초심 < 1
+		PRINTFORML 既に男たちの相手をすることにも慣れてきた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 手際よく精液を搾り取っていく。
+	ELSEIF CFLAG:286 > 9
+		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%は
+		IF TALENT:주관시점 > 0
+			PRINTFORML 虚ろな表情で、嵐が過ぎ去るのを待つように奉仕に専念する。
+		ELSE
+			PRINTFORML 虚ろな表情で、嵐が過ぎ去るのを待つように奉仕に専念している。
+		ENDIF
+	ELSE
+		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%は
+		IF TALENT:주관시점 > 0
+			PRINTFORML 歯を食いしばり、諦めたように奉仕に専念する。
+		ELSE
+			PRINTFORML 歯を食いしばり、諦めたように奉仕に専念している。
+		ENDIF
+	ENDIF
+ELSEIF CFLAG:286 > 0 && RAND:2 == 0
+	PRINTFORML 順番待ちをしていた仲間と場所を代わってすぐに凌辱が再開される。
+	PRINTFORML 全員に順番が回ると２週目、３週目が始まって休むことも許されず、
+	IF TALENT:주관시점 > 0
+		PRINTFORML 体を穢され続ける痛みと屈辱に、%PRINT_TRANSCALLNAME(TARGET)%の頬を熱い液体が伝っていく。
+	ELSE
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目の端に涙を滲ませながら凌辱に耐えている。
+	ENDIF
+ELSE
+	IF (TALENT:음란 || ABL:욕망 >= 3 && TALENT:주관시점 > 0) && TALENT:초심 < 1
+		PRINT いつの間にか快楽に流されつつある
+	ELSEIF (TALENT:음란 || ABL:욕망 >= 3) && TALENT:초심 < 1
+		PRINT すっかり快楽に染められて反応の鈍くなった
+	ELSEIF TALENT:주관시점 > 0
+		PRINT 湧き上がる悪寒に体を震わせている
+	ELSE
+		PRINT なおも諦めずに止めるよう説得を続ける
+	ENDIF
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を嘲笑うように
+	PRINTFORML 最初からレイプ目的で芝居をしていたことを暴露した。
+	IF TALENT:음란 == 0 && ABL:욕망 < 3 && TALENT:주관시점 > 0
+		PRINTFORML 沸き立つ怒りと屈辱に任せて目の前の男を殴りつけようとするものの、
+		PRINTFORML 過酷な戦闘と長時間の凌辱で疲弊しきった体は、満足に動かすことすらできない・・・
+	ELSEIF TALENT:음란 == 0 && ABL:욕망 < 3
+		PRINTFORML 절망に染め上げられた%PRINT_TRANSCALLNAME(TARGET)%の瞳が光を失っていく・・・
+	ENDIF
+ENDIF
+PRINTW 
+
+PRINTFORML 男たちの욕망をどれくらい受け止めたか分からなくなったころ、
+PRINTFORML ようやく満足した彼らは%PRINT_TRANSCALLNAME(TARGET)%を地面に放り捨てた。
+IF CFLAG:286 > 0 || RAND:2 == 0
+	PRINTFORML 「次も頼むわ」という言葉と共に、男たちは下卑た笑いだけ残して去っていった。
+ELSE
+	PRINTFORML 男たちのうち一人がハンディカメラでレイプの一部始終を録画しており、
+	PRINTFORML 誰かに言えばネットに動画を公開するとひと通り脅して立ち去って行った。
+ENDIF
+PRINTW 
+PRINTFORML 全身を白く染められた%PRINT_TRANSCALLNAME(TARGET)%は焦点も定まらず、
+IF (TALENT:음란 ||  ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
+	PRINTFORML 快楽の余韻に脳髄を蕩けさせている・・・
+ELSE
+	PRINTFORML 守るべき人々に犯されたショックと疲労で動くことができなかった・・・
+ENDIF
+PRINTW 
+
+;レイプの計算
+CALL CALC_GANGBANG("戦闘後",4,NAKADASHI)
+
+RETURN 1
+
+
+;----------------------------------------------------------------------------------------------------------------------------
+;戦闘終了時の処理
+@DOUGA_RYUSUTU,ARG
+VARSET LOCAL
+
+;撮影された動画をネットに放流される
+IF (TFLAG:21 & 1) && ARG == 0
+	CALL SHORTLINE
+	PRINTL 
+	PRINTFORML どうやら撮影された動画がネットに放流されたようだ。
+	PRINTL 
+	PRINTFORM そこには%PRINT_TRANSCALLNAME(TARGET)%が
+	IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
+		PRINT 촉수
+	ELSE
+		PRINT 悪の手先
+	ENDIF
+	PRINTL に捕まり、
+
+	IF (TFLAG:21 & 2)
+		PRINT 全身を愛撫されて快楽に
+		IF TFLAG:21 == 3
+			PRINT 喘いでいる
+		ELSE
+			PRINT 喘ぎながら
+		ENDIF
+	ENDIF
+	IF (TFLAG:21 & 4)
+		PRINT 입で奉仕させられ
+		IF (TFLAG:21 & 64) || ((TFLAG:21 & 2) == 0 && (TFLAG:21 & 8))
+			PRINT た上に
+		ELSEIF TFLAG:21 == 13
+			PRINTL 、
+		ENDIF
+	ENDIF
+	SIF (TFLAG:21 & 64)
+		PRINT 精液をぶっかけられ
+	IF TFLAG:21 == 65 || TFLAG:21 == 113
+		PRINT ている
+	ELSEIF (TFLAG:21 & 2) && (TFLAG:21 & 4) && (TFLAG:21 & 64) && (TFLAG:21 & 128)
+		PRINTL 、
+	ENDIF
+
+	IF (TFLAG:21 & 4) || (TFLAG:21 & 64)
+		SIF (TFLAG:21 & 8) == 0 && (TFLAG:21 & 16) == 0 && (TFLAG:21 & 32) == 0 && (TFLAG:21 & 128) == 0 && (TFLAG:21 & 256) == 0
+			PRINT ている
+	ENDIF
+
+	IF (TFLAG:21 & 2) || (TFLAG:21 & 4) || (TFLAG:21 & 64)
+		IF (TFLAG:21 & 8) || (TFLAG:21 & 256)
+			PRINTL 、
+			SIF ((TFLAG:21 & 128) || (TFLAG:21 & 256)) && (TFLAG:21 & 8) == 0
+				PRINT それだけでなく
+		ENDIF
+	ENDIF
+
+	IF (TFLAG:21 & 8)
+		IF (TFLAG:21 & 128)
+			PRINT ボロボロに犯され
+		ELSE
+			PRINT 挿入
+			SIF (TFLAG:21 & 2) || (TFLAG:21 & 4) || (TFLAG:21 & 64)
+				PRINT まで
+			PRINT され
+		ENDIF
+		SIF (TFLAG:21 & 16) || (TFLAG:21 & 32)
+			PRINT て
+		IF (TFLAG:21 & 16) && (TFLAG:21 & 32)
+			PRINT 前後の穴に子種を注ぎ込まれ
+		ELSEIF (TFLAG:21 & 16)
+			PRINT 질내사정を受け止め
+		ELSEIF (TFLAG:21 & 32)
+			PRINT 애널에 사정を受け止め
+		ENDIF
+		IF (TFLAG:21 & 256)
+			PRINTL 、
+		ELSE
+			PRINT ている
+		ENDIF
+	ENDIF
+
+	IF (TFLAG:21 & 256)
+		PRINT 絶頂
+		IF (TFLAG:21 & 128) && (TFLAG:21 & 8) == 0
+			PRINT させられた挙句に
+		ELSE
+			SIF ((TFLAG:21 & 2) || (TFLAG:21 & 4) || (TFLAG:21 & 64)) && (TFLAG:21 & 8) == 0
+				PRINT まで
+			PRINT させられている
+		ENDIF
+	ENDIF
+
+	IF (TFLAG:21 & 128) && (TFLAG:21 & 8) == 0
+		PRINT 玩具のように嬲られて
+		SIF (TFLAG:21 & 2) || (TFLAG:21 & 256)
+			PRINTL 、
+		PRINT 拷問でボロボロになっていく
+	ENDIF
+
+	IF TFLAG:21 == 1
+		PRINT あわや犯されそうになっている際どい
+	ENDIF
+
+	PRINTL 映像が映し出されていた。
+	PRINTL 
+
+	SIF (TFLAG:21 & 8)
+		PRINTL 股間にモザイクも掛けられておらず、結合部が丸見えになっている。
+	IF RAND:4 == 0
+		PRINTL 幸運なことに顔はしっかりと映っていないが、
+		PRINTL どんなところから身元を特定されてしまうか分かったものではない。
+	ELSEIF RAND:3 == 0
+		PRINTL 不幸中の幸いと言うべきか、顔にはモザイクが掛かっていたが、
+		PRINTL 見る人が見れば容易に身元を特定されてしまうだろう。
+		SIF EXP:매료경험 >= 150
+			CFLAG:285 += 1
+	ELSEIF RAND:2 == 0
+		PRINTL 顔の映りは不鮮明だが、見る人が見れば容易に身元を特定されてしまうだろう。
+		CFLAG:285 += 1
+		SIF EXP:매료경험 >= 150
+			CFLAG:285 += 1
+	ELSE
+		PRINTL 顔がはっきり映されてしまっており、ネット上で身元を特定されるのも時間の問題だろう。
+		CFLAG:285 += 2
+		SIF EXP:매료경험 >= 150
+			CFLAG:285 += 1
+	ENDIF
+	PRINTFORML 動画が削除されるまでの間、再生数は伸び続けた・・・
+	PRINTW 
+ELSEIF ARG == 1
+	CALL SHORTLINE
+	PRINTL 
+	PRINTFORML 男たちは襲われたことを他言しなければ動画を公開しないと言っていたが、
+	IF TALENT:주관시점 > 0
+		PRINTFORML 初めから約束を守る気など無かったのか、あの後すぐにレイプの一部始終を捉えた動画をネット上にアップロードしたようだ。
+	ELSE
+		PRINTFORML 初めから約束を守る気など無かったのか、すぐにレイプ動画をネット上にアップロードした。
+	ENDIF
+	PRINTFORML 後になって%PRINT_TRANSCALLNAME(TARGET)%が気付いた時には既に遅く、
+	PRINTFORML 動画が多数の인간の目に触れてしまった後だった・・・
+	PRINTW 
+	CFLAG:284 += 4 + RAND:5
+ENDIF
+
+
+
+
+

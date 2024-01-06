@@ -1,0 +1,381 @@
+﻿
+
+;●戦闘終了関連
+
+;◆勝利구상の流れ
+;①ヒロイン勝利セリフ
+;②(→悪堕ちキャラ：敗北セリフ)
+;　　(→ヒロイン：駆け寄って救出セリフ)
+;　　　(→救出された元悪堕ち/洗脳キャラ：返事)
+;③(→ヒロイン：どこかで洗脳キャラが解放されることに関してコメント)
+;　　(→どこかの場所で正気に戻った仲間：コメント)
+;④ヒロイン：촉수の死骸から吐き出された幽閉キャラを見てコメント
+;　→吐き出された仲間：返事
+;⑤ラスボス出現イベントへ
+
+;◆敗北구상の流れ
+;・敵が非기생悪堕ちヒロイン＝敗北レイプイベント
+;	①レイプする悪堕ちキャラのコメント
+;	②→これからレイプされるヒロインのコメント
+;・敵がそれ以外＝幽閉
+;	①ヒロイン敗北セリフ
+;	②(→敵キャラ勝利セリフ(取り込まれてゆくヒロインを見ながら)
+
+;◆時間切れ引き分け時の流れ
+;　(救出失敗メッセージ→敵の撤退メッセージ)
+;　時間切れセリフ
+;　(→敵ヒロインの時間切れセリフ)
+;　(→촉수 구속구イベント、強制装着されてしまった全裸ヒロインのセリフ)
+
+;◆撤退구상の流れ
+;
+
+
+
+
+
+;ザコ촉수と戦闘　自動勝利時
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_MOB_16
+IF RAND:2
+	PRINTDATAL
+	DATAFORM 「雑魚に用は無いわ」
+	DATAFORM 「あんた達じゃ相手にもならない」
+	DATAFORM 「暇潰しにもならないわ」
+	DATAFORM 「…こんなの時間の浪費だわ」
+	DATAFORM 「こんなの論外、生身でも十分よ」
+	DATAFORM 「……%SELF_CALL()%も舐められたものね」
+	ENDDATA
+
+	IF TALENT:촉수의포로
+		PRINTDATAL
+		DATAFORM 言葉とは裏腹に%CALLNAME%の体は火照り始めている。
+		DATAFORM そうつぶやく%CALLNAME%の太ももは透明な汁に濡れていた。
+		DATAFORM %CALLNAME%は何かをこらえるように赤い顔でつぶやいた。
+		ENDDATA
+	ELSE
+		PRINTFORML %CALLNAME%は苦々しげに吐き捨てた。
+	ENDIF
+;촉수의포로取得後
+ELSEIF TALENT:촉수의포로
+	PRINTDATAL
+	DATAFORM 「こんなの相手じゃ…この疼き、どう鎮めろっていうの……」
+	DATAFORM 「はぁ、はぁ……少しは歯応えがあると思ったのに……」
+	DATAFORM 「なに……もう終わりなの…？」
+	ENDDATA
+	PRINTFORML おぞましい体液を体中に塗りたくり、%CALLNAME%は蕩けた声を上げた。
+	PRINTFORML  動かなくなった촉수をそのままに、拭った体液の臭いを美味しそうに嗅ぎ取る。
+	PRINTFORML  その表情はどこか遠い何かを見ているようだった……
+ELSE
+	PRINT 「はぁ、ふう、ふぅ……
+	PRINTDATAL
+	DATAFORM 雑魚が粘ったものね」
+	DATAFORM まるで話にもならないわ」
+	DATAFORM ふ、ふん、他愛もないわね」
+	ENDDATA
+	PRINTFORML  %CALLNAME%は絡みつく촉수の残骸を引き剥がし、鼻を鳴らした。
+	PRINTFORML  おぞましい体液で透けた服は肢体にぴっちり張り付いている……
+ENDIF
+
+
+;보스 촉수に勝利した直後
+;救出メッセージはこの後で呼ばれるのでとりあえず倒した決め台詞でも
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_WIN_16
+
+LOCAL = 1
+;特定部位絶頂が10回以上
+IF EX:C절정 > 9 || EX:V절정 > 9 || EX:A절정 > 9 || EX:B절정 > 9
+	PRINTFORML 「ぅあ、ぁ……%SELF_CALL_SINGLE()%、%SELF_CALL(7)%…くぅぅん……勝っ、た……の…？」
+	WHILE LOCAL
+	RESULT = RAND:4
+	IF RESULT == 0 && EX:B절정 > 9
+		PRINTFORML 数えきれないほど胸でイかされた%CALLNAME%は、蕩けきった顔をしながら呟いた。
+		LOCAL = 0
+	ELSEIF RESULT == 1 && EX:C절정 > 9
+		PRINTFORML  数えきれないほどイかされ、敏感になった%CALLNAME%の陰核は
+		PRINTFORML 今再び、意思なき微風にすらイかされようとしている……
+		LOCAL = 0
+	ELSEIF RESULT == 2 && EX:A절정 > 9
+		PRINTFORML  数えきれないほどイかされ、%CALLNAME%の菊門はぽっかりと口をあけている……
+		LOCAL = 0
+	ELSEIF RESULT == 3 && EX:V절정 > 9
+		PRINTFORML 数えきれないほどイかされた%CALLNAME%の蜜壷は、ドロドロに蕩けている……
+		LOCAL = 0
+	ENDIF
+	WEND
+;絶頂回数10回以上
+ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 9
+	PRINTFORML 「……………あっ、ンンんんん！！」
+	PRINTFORML 数えきれないほどイかされた%CALLNAME%は、地面に倒れ伏せ、ビクビクと痙攣している。
+ELSEIF PALAM:치정 > 100000
+	IF ABL:노출벽 > 3
+		PRINTFORML 「あはぁ……」
+		PRINTFORML 全てを曝け出した%CALLNAME%は満足そうに太ももを擦り合わせている……
+	ELSE
+		PRINTFORML 「あ、ああ、ぁ…………」
+		PRINTFORML 全てを曝け出してしまった%CALLNAME%は蒼白になって절망している……
+	ENDIF
+;特定部位絶頂が3回以上
+ELSEIF EX:C절정 > 2 || EX:V절정 > 2 || EX:A절정 > 2 || EX:B절정 > 2
+	PRINTFORML 「あン…勝て、アッ、たの…？あっ、ンンん！！」
+	WHILE LOCAL
+	RESULT = RAND:4
+	IF RESULT == 0 && EX:C절정 > 2
+		PRINTFORML  何度もイかされ、%CALLNAME%は歩くことも出来なさそうだ……
+		LOCAL = 0
+	ELSEIF RESULT == 1 && EX:V절정 > 2
+		PRINTFORML  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
+		LOCAL = 0
+	ELSEIF RESULT == 2 && EX:A절정 > 2
+		PRINTFORML  何度もイかされ、%CALLNAME%の菊門は ヒクヒクと痙攣している……
+		LOCAL = 0
+	ELSEIF RESULT == 3 && EX:B절정 > 2
+		PRINTFORML  何度も胸でイかされた%CALLNAME%は、蕩けきった顔をしながら呟いた
+		LOCAL = 0
+	ENDIF
+	WEND
+;恥ずかしいこと
+ELSEIF PALAM:치정 > 10000 && RAND:3==0
+	IF ABL:노출벽 > 3
+		PRINTFORML 「ふふ……」
+		PRINTFORML 野外で裸を披露した%CALLNAME%は満足そうに太ももを擦り合わせている……
+	ELSE
+		PRINTFORML 「あ、ああ、ぁ…………」
+		PRINTFORML 公衆に裸を見られた%CALLNAME%は真っ赤な顔を両手で覆い、急いで逃げ帰った……
+	ENDIF
+ELSEIF PALAM:욕정 > 10000 && RAND:3==0
+	PRINTFORML 「……ん、ぁん、んん……%SELF_CALL()%の勝ち…ね……」
+	PRINTFORML %CALLNAME%は官能の炎に焼かれながら、勝利を宣言した。
+ELSEIF PALAM:공포 > 10000 && RAND:3==0
+	PRINTFORML 「……%SELF_CALL_SINGLE()%、%SELF_CALL()%、勝て、たの……？」
+	PRINTFORML %STR:2500%に与えられた공포から歯をカチカチ震わせている%CALLNAME%は
+	PRINTFORML まだ倒したことが信じられず、動かない%STR:2500%に怯えている……
+ELSE
+	PRINTFORML 「はあ、はぁ……%SELF_CALL()%の力、思い知った！？」
+	PRINTFORML  崩れていく촉수を前に、%CALLNAME%は肩を大きく上下させていた。
+	PRINTFORML  断末魔の痙攣と共に、無数の촉수がでたらめに体液を吐き散らす。
+	PRINTFORML  辺りを覆っていた異臭も次第に薄れてゆくようだ。
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML  %CALLNAME%はもう一度油断なく武器を構え、危機が去ったことを確かめてから力を抜いた。
+		CASE 1
+			PRINTFORML  %CALLNAME%は周囲の気配を改めて伺い、安全を確認すると力を抜いた。
+		CASE 2
+			PRINTFORML  %CALLNAME%は촉수の動きが止まったことを確認し、それからようやく力を抜いた。
+		CASE 3
+			PRINTFORML  ……息を切らしながら勝ち誇る%CALLNAME%は、気付いていない。
+			PRINTFORML  おぞましい異臭が薄れたわけではなく、自分の身体が慣れていっているだけだと……
+			PRINTFORML  そして慣れれば慣れるほど、촉수の繁殖に適した身体となってゆく事実にも……
+	ENDSELECT
+	PRINTDATAL
+	DATAFORM 「こ、これでしばらくはっ……」
+	DATAFORM 「こ、これで当分はっ……」
+	DATAFORM 「こ、これでまた一歩っ……」
+	DATAFORM 「さ、さあ、次はどんな奴かしら……っ！」
+	ENDDATA
+ENDIF
+
+
+
+;悪堕ちキャラに直接勝利した直後
+;救出メッセージはこの後で呼ばれるのでとりあえず倒した決め台詞でも
+@KOJO_0_BATTLE_END_WIN_ENEMY_16
+
+
+
+
+;●勝利後の救出
+;보스 촉수に捕らわれていたキャラの救出
+;ボスの屍から吐き出された仲間を見てコメント
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_16
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「生きてる？ %SELF_CALL()%が分かる？ ……仇は絶対、%SELF_CALL()%が取ってあげるから……」
+		PRINTFORML 倒れた仲間を助け起こしながら、%CALLNAME%は拳を握った。
+	CASEELSE
+		PRINTFORML 「なんて姿……でも、生きてまた会えて良かった……」
+		PRINTFORML 倒れた仲間を助け起こしながら、%CALLNAME%は安堵の溜め息をついた……
+ENDSELECT
+;悪堕ちキャラに捕らわれていたキャラの救出
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_AKUOTI_16
+
+
+;洗脳されていたヒロインの洗脳主を倒し、間接的に救出した(その場にいるとは限らないかも)
+;既に遭遇していたなら「これで正気に戻るはず……！」みたいな？
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_SENNOU_16
+
+
+
+;倒れた悪堕ちヒロインに駆け寄って助ける
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_ENEMY_16
+
+
+
+;●ラスボス出現
+;救出系メッセージの後で呼ばれる
+;Ｋ촉수出現
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_LASTBOSSAPPEAR_16
+IF MARK:굴복각인 >= 3|| MARK:공포각인 >= 3
+	PRINTFORML 「な、何なの……まだいたの！？ しつこいわね！」
+	PRINTFORML これまで%CALLNAME%は身も心も穢し、粉に変えながら戦ってきた。
+	PRINTFORML そうして倒してきた敵よりなお強力な敵がまだいたことを知って、心が根元から崩壊しそうになる。
+	PRINTFORML （……それでも……%SELF_CALL(7)%は）
+	IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+		PRINTFORML 「あの…あんな大きな촉수と……」
+		PRINTFORMW 肉欲に突き動かされて、%CALLNAME%は次なる戦いを受け入れた。
+	ELSE
+		PRINTFORML 「戦わ、なきゃ……」
+		PRINTFORMW 공포を無理やりに呑み込んで、%CALLNAME%は次なる戦いを受け入れた。
+	ENDIF
+ELSE
+	PRINTFORML 「嘘…まだ……まだいたの？」
+	PRINTFORML 目の前に転がる骸を放り、%CALLNAME%は彼方に現れた強大な敵を見やる。
+	PRINTFORML これまでの敵よりはるかに手強い存在がいると知って、しかし心は微塵も揺るがなかった。
+	PRINTFORML 「……問題、無いわ。いいわよ、何匹でも来なさいよ」
+	PRINTFORMW 小さく声をこぼして、次なる戦いに備えて%CALLNAME%はその場を後にした……
+	IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+		PRINTFORMW 期待にこぼれた愛液の跡を残して。
+	ELSE
+	ENDIF
+ENDIF
+
+;裏ボス出現　★未実装(地の文のみ)
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_LASTBOSSAPPEAR_2_16
+
+
+
+
+
+
+
+
+;●時間切れ引き分け
+;IF TCVARn:0 == 0	;捕獲されていたら離してもらえる	叩き付けられたりしてもいいんじゃないかな
+;IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1 && FLAG:11 == 2	;裏ボスは地響きと共に姿を消す
+;IF FLAG:45 != 0		;襲撃中だった場合は助かる
+;★仲間を救出中だった場合は再び飲み込まれて失敗してしまう
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_TIMEUP_16
+IF GETBATTLESITUATION("奇襲") == 1		;襲撃中だった場合は助かる
+	PRINTDATAL
+	DATAFORM 「た、助かったのかしら……？」
+	DATAFORM 「に、逃げてく……」
+	ENDDATA
+	;★消耗で分岐すべき
+	PRINTDATAL
+	DATAFORM （もし、あのまま戦い続けていたら…）
+	DATAFORM （助かった…見逃された……？）
+	ENDDATA
+
+ELSE
+	PRINTDATAL
+	DATAFORM 「はぁ、はぁ……引き際を、分かってるなんて、はぁっ、%촉수市民("化け物","変態")%にしては、上等な……」
+	DATAFORM 「はあっ、はっ、今日は、このくらいで、見逃してあげる、わ……」
+	ENDDATA
+ENDIF
+
+
+;
+;촉수 구속구を着せられた　時間切れ時に裸にされていた場合、撤退間際に低確率(通常20%、襲撃時8%)で貰うおみやげ
+;体液の塊、驚いてしまい直撃　肌を舐める感触に顔を歪める　胸や秘部に集中　感触に思わず喘ぎ声　醜い色に変色→촉수化→拘束具に
+;という描写を一通り終えた後に구상が入る
+;--------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_SETTENTACLECLOTH_16
+PRINTFORML 「ひ、ひぃぃぃい？！ 何よ、何なのこれはッ？！」
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の肢体を這いずりまわり、胸と秘部に凝縮された촉수の体液は
+PRINTFORMW  %PRINT_TRANSCALLNAME(TARGET)%の体の一部であったかのように根を張り、彼女の身体を醜く彩っていく。
+PRINTFORML 「なんてこと……これじゃまるで……」
+PRINTFORML  가슴に張り付く촉수は乳暈と乳首を覆い、ぷっくりと膨れて色素の沈着した、
+PRINTFORML  彼女本来の乳房からは不釣り合いなほど肥大した乳暈と乳首の形に擬態した。
+PRINTFORML  秘部に吸い付く촉수は包皮の隙間から음핵を覆い、親指大に膨れ上がって
+PRINTFORML  常に突き出した음핵の形に擬態した。
+PRINTFORMW  촉수は包み込んだ乳首と陰核を小刻みに刺激しはじめ、%PRINT_TRANSCALLNAME(TARGET)%は息を飲む。
+PRINTFORML 「ふざけないで、こんなもの…すぐっ………お゛ッほぉおぉぉおおおッ？！」
+PRINTFORML  떼어낸다べく秘部に伸ばした手が触れた瞬間、촉수は中に囲い込んだ陰核を一気に絞り上げた。
+PRINTFORML  思いもよらぬ強烈な刺激に膝を突き、目を白黒させて痙攣する%PRINT_TRANSCALLNAME(TARGET)%。
+PRINTFORML 陰核を盾にされては떼어낸다ことなど出来そうにもなかった。
+PRINTFORML 「……これから私は、こんな情けない姿を晒して……ああもう……っ！」
+PRINTFORML  解除する方法が見つかるまでは、醜く変容した身体で生活しなければならない……
+PRINTFORML これからのことを考えると、%PRINT_TRANSCALLNAME(TARGET)%は気が気ではなかった……
+
+
+
+
+
+
+;●敗北
+;大量の촉수に絡まれて叫び声も上げられずに取り込まれてしまう
+	;キャラの幽閉
+	;보스 촉수	…自分で幽閉する
+	;洗脳キャラ	…洗脳した主が幽閉する
+	;悪堕ちキャラ	…기생持ちなら自分で幽閉する、기생持ちでなければ犯し尽くして解放する
+;★最後に食らった공격で分岐すべき、少なくとも丸飲み
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_LOSS_16
+
+
+SELECTCASE 진지함_フラグ_最終被弾
+CASE "丸呑み精液責め"
+	진지함_フラグ_シチュ進行度=0
+	PRINTFORML 「お゛……っほお゛……」
+
+
+CASEELSE
+	IF TALENT:촉수의포로
+		PRINTFORML 「あぁ……また…%SELF_CALL(7)%……❤」
+		PRINTFORMW 自らを飲み込もうとする촉수に、%CALLNAME%は小さく微笑んだ。
+	ELSE
+		PRINTDATAL
+		DATAFORM 「ひッ、やめ……嫌よ、イヤあぁぁ……」
+		DATAFORM 「そんな、ありえない……%SELF_CALL()%、負け……ぁ、あぁ、来……」
+		ENDDATA
+
+		PRINTDATAL
+		DATAFORM 「だッ、誰か……たすけ……ぁ、ぁあ……」
+		DATAFORM 「だれか、たす…け……」
+		ENDDATA
+		PRINTFORMW %CALLNAME%の力ない声は、誰にも届くことなく촉수に飲み込まれた。
+	ENDIF
+ENDSELECT
+
+
+
+;悪堕ちキャラ(기생持ちでない)に敗北して犯される
+;具体的な描写はないので全てこちらでやる
+;--------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_RAPED_ENEMY_16
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「ふん……それで……私を組み敷いてどうするつもりよ……？」
+	PRINTFORML  押し倒された%PRINT_TRANSCALLNAME(TARGET)%は、ぞくぞくと背筋を走る욕망に口の端を吊り上げ、濁りきった目をした%PRINT_TRANSCALLNAME(FLAG:111)%の顔を見上げる。
+	PRINTFORML 「キス？ 貝合わせ？ それとも、男の人のでも生やして私を貫く気？」
+	PRINTFORML  虚勢を張りつつも喉を鳴らす%PRINT_TRANSCALLNAME(TARGET)%の上で、%PRINT_TRANSCALLNAME(FLAG:111)%は突然身体を折り、苦悶の声を上げ始めた……
+	PRINTFORML 「なにそれ…？ ど、どうしたのよ？」
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%が見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
+	PRINTFORML  突き出した腹のおへそから大量の粘液が噴き出すと、臍孔をこじ開けて体内に기생していた無数の촉수が一斉に飛び出し、%PRINT_TRANSCALLNAME(TARGET)%の肢体を絡めとっていく。
+	PRINTFORML 「な……？！ お、がぼ、ぉ゛っごぉ！」
+	PRINTFORML  声を上げる間もなく、白目を剥いて痙攣する%PRINT_TRANSCALLNAME(FLAG:111)%の口から鼻から、体内の촉수が溢れて%PRINT_TRANSCALLNAME(TARGET)%の上半身を押し包み、口を、鼻を、耳を、粘液をぶちまけながら蹂躙していく。
+	PRINTFORML  汗にまみれた%PRINT_TRANSCALLNAME(FLAG:111)%の尻から這いずり出た、尻穴が伸びきるほどの野太い촉수が牝穴に精液をぶちまけ、二匹の牝は狂喜に意識を焼き尽くされて動かなくなった……	
+ELSE
+	PRINTFORML 「や、やめなさい！ 何しているかわかってるの！？」
+	PRINTFORML  組み敷かれた%PRINT_TRANSCALLNAME(TARGET)%には、もはや%PRINT_TRANSCALLNAME(FLAG:111)%を押しのける力すら残っていない……
+	PRINTFORML  唇を奪われ、胸を揉みしだかれ、牝穴を掻き回され、%PRINT_TRANSCALLNAME(TARGET)%は甘ったるい悲鳴を上げ続ける。
+	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%が%PRINT_TRANSCALLNAME(TARGET)%の足を取り、秘唇を重ねた瞬間、%PRINT_TRANSCALLNAME(FLAG:111)%の嬌声が絶叫に変わった！
+	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%は泡を吹きながら白目を剥き、汗にまみれた肢体を滅茶苦茶に暴れさせ始める……
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%が呆然と見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
+	PRINTFORML 「な、何のつもりよ……ひっ」
+	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%のおへそをこじ開け、体内に기생していた촉수が%PRINT_TRANSCALLNAME(TARGET)%を絡めとった。
+	PRINTFORML  舌を突き出し、苦悶の声を上げる口からも体内の촉수が溢れ出し、%PRINT_TRANSCALLNAME(TARGET)%の口に、鼻に這いずりこむ。
+	PRINTFORML  拡張されきった%PRINT_TRANSCALLNAME(FLAG:111)%の尻穴からのたくり出て行く大量の촉수が%PRINT_TRANSCALLNAME(TARGET)%の下半身を押し包んでいく。
+	PRINTFORML 「な、あ゛がっ゛……か、は、や゛めっ、や゛めぇ゛……！」
+	PRINTFORML  捕らえられた獲物の肉をぬらつく촉수が締め上げ、二人の少女の身体は一つになっていく……
+ENDIF
+
+

@@ -1,0 +1,136 @@
+﻿;**********************************************************
+;冠名の設定
+@FIRSTSETTING_CROWNNAME
+PRINTL 冠名を統一しますか？
+PRINTL （変身後名の頭につく単語＝個別設定における上の句です。
+PRINTL 『セーラー○○』『キュア××』のように
+PRINTL   変身後名を揃えたい場合に一括設定可能です）
+;	悪堕ち時の名前変更にも影響します
+DRAWLINE
+PRINTL [0]冠名なし
+PRINTL [1]プリセットから選択
+PRINTL [2]自分で設定
+PRINTL [99]もどる
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	FLAG:6 = 0
+	PRINTL 冠名を設定しませんでした
+ELSEIF RESULT == 1
+	FLAG:6 = 1
+	$INPUT_LOOP_CHILD_1_0
+	CALL FIRSTSETTING_RANDOMNAMING, 0, 0
+	SIF RESULT:1 == 1
+		GOTO INPUT_LOOP_CHILD_1_0
+	LOCAL = RESULT
+	$INPUT_LOOP_CHILD_1_1
+	IF RESULT == 99
+		PRINTFORML 冠名を設定しません。よろしいですか？
+	ELSE
+		PRINTFORML 冠名を 『%RESULTS%』 とします。よろしいですか？
+	ENDIF
+	PRINTL [0] 아니오
+	PRINTL [1] 네
+	SIF SAVESTR:11 != ""
+		PRINTFORML [2]変更しない（%SAVESTR:11%）
+	$INPUT_LOOP_CHILD_1_2
+	INPUT
+	IF RESULT < 0 || RESULT > 2
+		GOTO INPUT_LOOP_CHILD_1_2
+	ELSEIF RESULT == 0
+		FLAG:6 = 0
+		GOTO INPUT_LOOP_CHILD_1_0
+	ELSEIF RESULT == 1
+		SAVESTR:11 = %RESULTS%
+		IF RESULTS == ""
+			FLAG:6 = 0
+			PRINTL 冠名を設定しませんでした
+			RESULTS = 
+		ELSE
+			PRINTFORML 冠名を 『%SAVESTR:11%』 に設定しました
+		ENDIF
+	ELSEIF RESULT == 2
+	ENDIF
+ELSEIF RESULT == 2
+	FLAG:6 = 1
+	PRINTL 冠名を入力してください
+	SIF SAVESTR:11 != ""
+		PRINTFORML [999]変更しない（%SAVESTR:11%）
+	$INPUT_LOOP_CHILD_2
+	INPUTS
+	IF RESULTS == ""
+		GOTO INPUT_LOOP_CHILD_2
+	ELSEIF RESULTS == "999"
+	ELSE
+		SAVESTR:11 = %RESULTS%
+		PRINTFORML 冠名を 『%SAVESTR:11%』 に設定しました
+	ENDIF
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+PRINTL 
+
+
+@FIRSTSETTING_transnamegenre
+
+PRINTL 変身名に初期ジャンルを指定しますか？
+PRINTL （「セーラー〇〇」「キュアXX」の〇〇/XX部分、
+PRINTL   変身後の名前後半＝個別設定における下の句です。
+PRINTL   デフォルト生成に統一感を持たせたい場合に指定可能です）
+DRAWLINE
+PRINTL [0]設定なし
+PRINTL [1]ジャンルを指定
+PRINTL [99]もどる
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	FLAG:820 = 0
+	PRINTL デフォルトジャンルを設定しませんでした
+ELSEIF RESULT == 1
+	$INPUT_LOOP_CHILD_1_0
+
+	PRINTL ジャンルを選択してください
+
+	PRINTL [ 0] 매지컬적인 단어
+	PRINTL [ 1] 천체의 이름
+	PRINTL [ 2] 색깔 이름
+	PRINTL [ 3] 과일, 채소 등 식물의 이름
+	PRINTL [ 4] 잡다한 영어 단어
+	PRINTL [ 5] 보석의 이름
+	PRINTL [ 6] 사람을 나타내는 단어
+	PRINTL [ 7] 무기의 이름
+	PRINTL [ 8] ランダム
+	PRINTL [99] キャンセル
+	INPUT
+	$INPUT_LOOP_CHILD_1_1
+	IF RESULT == 99
+		RETURN
+	ELSEIF INRANGE(RESULT,0,8)
+		LOCAL=RESULT
+		LOCALS=%transnamegenre:RESULT%
+		PRINTFORML デフォルトジャンルを 『%LOCALS%』 とします。よろしいですか？
+	ELSE
+		GOTO INPUT_LOOP_CHILD_1_0
+	ENDIF
+	PRINTL [0] 아니오
+	PRINTL [1] 네
+	SIF SAVESTR:11 != ""
+		PRINTFORML [2]変更しない%LOCALS!="" ? "（"+LOCALS+"）" # "（設定なし）" %
+	$INPUT_LOOP_CHILD_1_2
+	INPUT
+	IF RESULT < 0 || RESULT > 2
+		GOTO INPUT_LOOP_CHILD_1_2
+	ELSEIF RESULT == 0
+		GOTO INPUT_LOOP_CHILD_1_0
+	ELSEIF RESULT == 1
+		IF LOCALS == ""
+			FLAG:820 = 0
+			PRINTL デフォルトジャンルを指定しませんでした
+		ELSE
+			FLAG:820 = LOCAL+1
+			PRINTFORML デフォルトジャンルを 『%LOCALS%』 に設定しました
+		ENDIF
+	ENDIF
+ENDIF

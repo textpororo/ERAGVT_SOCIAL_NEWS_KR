@@ -1,0 +1,236 @@
+﻿;女子の人気投票
+;学校のみ
+;防衛が低い＝治安悪い＝ゲス確率増
+@PASTIME_TOHYO, ARG
+#DIMS 順位
+
+PRINTFORML 「人気投票」
+;남자は非対応
+IF ISMALE()
+	RETURN 0
+ENDIF
+PRINTW
+IF RAND:2 == 0
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は空き教室の黒板に書かれた落書きを見つけた。
+	PRINTFORM 黒板には『
+ELSE 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はゴミ箱のかたわらに丸められた紙が落ちているのを見つけ、何気なくその紙屑を広げて見た。
+	PRINTFORM 紙には『
+ENDIF
+
+;治安低ければ発生しやすい下品めなネタ　1000なら90％　10000なら0％であってる？
+IF RAND:100 > FLAG:852 / 100
+	SELECTCASE RAND:16
+;C感覚
+		CASE 0
+		PRINT クリいじってそうな
+			IF ABL:C감각 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:C감각 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;V
+		CASE 1
+		PRINT 締まりが良さそうな
+			IF ABL:V감각 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:V감각 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;A
+		CASE 2
+		PRINT 애널弱そうな
+			IF ABL:A감각 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:A감각 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;B
+		CASE 3
+		PRINT 乳首だけでイキそうな
+			IF ABL:B감각 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:B감각 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;순종
+		CASE 4
+		PRINT 強引に誘えばヤラセてくれそうな
+			IF ABL:순종 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:순종 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;欲
+		CASE 5
+		PRINT 性欲強そうな
+			IF ABL:욕망 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:욕망 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;기교
+		CASE 6
+		PRINT 腰使いがヤバそうな
+			IF ABL:기교 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:기교 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;奉仕
+		CASE 7
+		PRINT フェラが好きそうな
+			IF ABL:봉사정신 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:봉사정신 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;露出
+		CASE 8
+		PRINT パンツ見せてくれそうな
+			IF ABL:노출벽 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:노출벽 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;マゾ
+		CASE 9
+		PRINT マゾっぽい
+			IF ABL:마조끼 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:마조끼 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+
+;촉수
+		CASE 10
+		PRINT 촉수姦にハマってそうな
+			IF ABL:촉수중독 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:촉수중독 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;自慰
+		CASE 11
+		PRINT 毎日オナってそうな
+			IF ABL:자위중독 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:자위중독 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;精液
+		CASE 12
+		PRINT ザーメン飲みそうな
+			IF ABL:정액중독 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:정액중독 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;모유
+
+		CASE 13
+			PRINT 母乳出やすそうな
+			IF ABL:모유중독 > 4
+				順位 = ダントツ１位だった
+			ELSEIF ABL:모유중독 > 2
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;피간경험
+		CASE 14
+			PRINT ヤリマンっぽい
+			IF EXP:10 > 100
+				順位 = ダントツ１位だった
+			ELSEIF EXP:10 > 50
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;交際
+		CASE 15
+			PRINT 寝取りたい
+			IF TALENT:교제상대 > 2
+				順位 = ダントツ１位だった
+			ELSEIF TALENT:교제상대 > 1
+				順位 = トップ５に入っていた
+			ELSE
+				順位 = １０位以内にランクインしていた	
+			ENDIF
+;AV出演PRINT ズリネタにしたことがある（未
+;円光PRINT 一発ヤリたい（未
+		CASEELSE
+			PRINT ムッツリスケベな	
+				順位 = ダントツ１位だった
+		ENDSELECT
+;治安が高い時　健全なもの
+ELSE
+;おっぱい
+	IF RAND:3 == 0
+		IF TALENT:왜소함 > 0
+			PRINT ロリ거유
+		ELSEIF TALENT:장신 > 0
+			PRINT 거유イケメン
+		ELSE
+			PRINT おっぱい大きい
+		ENDIF
+		IF TALENT:거유 > 3
+			順位 = トップ３だった
+		ELSEIF TALENT:거유 > 0
+			順位 = トップ５に入っていた
+		ELSEIF TALENT:빈유 > 0
+			順位 = ランク外だった
+		ELSE
+			順位 = １０位以内にランクインしていた	
+		ENDIF
+;매료경험
+	ELSEIF RAND:2 == 0
+		PRINT 彼女にしたい
+		IF EXP:매료경험 > 50
+			順位 = ダントツ１位だった
+		ELSEIF EXP:매료경험 > 25
+			順位 = トップ５に入っていた
+		ELSE
+			順位 = １０位以内にランクインしていた	
+		ENDIF
+	ELSE
+		PRINT 強そうな
+		IF EXP:전투경험 > 30
+			順位 = ダントツ１位だった
+		ELSEIF EXP:전투경험 > 15
+			順位 = トップ５に入っていた
+		ELSE
+			順位 = １０位以内にランクインしていた	
+		ENDIF
+	ENDIF
+ENDIF
+
+PRINTFORML 女子ランキング』と書かれている。
+PRINTFORML 呆れつつも自分の名前を探した%PRINT_TRANSCALLNAME(TARGET)%は…%順位%。
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は嫌悪感に顔をしかめつつも、男たちからどんな目で見られているのかを知り赤面している。

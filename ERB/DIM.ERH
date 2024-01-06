@@ -1,0 +1,333 @@
+﻿
+;전투 개시 시에 수동으로 리셋하는 TCVAR 대체 변수
+#DIM CHARADATA TCVARn, 300
+
+;랜덤 처리용
+#DIM CONST RANDCHOOSE_MAX = 1000000
+#DIM RANDCHOOSE_NUM,RANDCHOOSE_MAX
+
+;전투 중의 PALAM 수치 주고받기용
+#DIM COMMON_PALAM,100
+;COMMON_PRISON의 수치 주고받기용
+#DIM COMMON_EXP,100
+;모든 영역 참조용
+#DIM GFLAG,1000
+
+;상수 정의
+#DIM CONST CHARACSV최대수 = 9999
+#DIM CONST 파티인원최대치 = 6
+#DIM CONST 등록최대인원 = 30
+#DIM CONST 강제휴식체력 = 500
+;TALENT 관련
+;#DIM CONST SEIKAKU_START = 10
+;#DIM CONST SEIKAKU_NUM = 19
+#DIM CONST RACE_START = 201
+#DIM CONST RACE_NUM = 12
+#DIM CONST FEAT_START = 1000
+#DIM CONST SPECIFIC_FEAT_START = 1100
+#DIM CONST SPECIFIC_FEAT_NUM = 13
+#DIM CONST GENERIC_FEAT_START = 1200
+#DIM CONST GENERIC_FEAT_NUM = 19
+
+
+;FLAG:0　⇒　GAME_OPTION_CHECK_F()　에서 참조
+#DIM CONST MODE_GAMEOVER = 0
+#DIM CONST MODE_NORMAL   = 1
+#DIM CONST MODE_SOLO     = 2
+#DIM CONST MODE_HARDCORE = 3
+#DIM CONST MODE_SURVIVAL = 4
+#DIM CONST MODE_FREEPLAY = 5
+#DIM CONST MODE_SANDBOX  = 6
+#DIM CONST MODE_INSTANT  = 7
+#DIM CONST 모드카운트 = 8;모드 수
+{
+    #DIMS CONST 모드네임 =
+    "GAMEOVER",
+    "NORMAL",
+    "SOLO",
+    "HARDCORE",
+    "SURVIVAL",
+    "FREEPLAY",
+    "SANDBOX",
+    "INSTANT"
+}
+#DIM CONST OPTION_easy = 0
+#DIM CONST OPTION_normal = 1
+#DIM CONST OPTION_hardcore = 2
+#DIM CONST OPTION_solo = 3
+#DIM CONST OPTION_endless = 4
+#DIM CONST OPTION_인계없음 = 5
+#DIM CONST OPTION_제한시간없음 = 6
+#DIM CONST OPTION_실적엔드없음 = 7
+#DIM CONST OPTION_게임오버없음 = 8
+#DIM CONST OPTION_가입은퇴있음 = 9
+#DIM CONST OPTION_스탯저하있음 = 10
+#DIM CONST 옵션카운트 = 11;총수
+;디폴트 모드용
+;오른쪽 끝이 OPTION_0
+        ;GAMEOVER
+        ;NORMAL
+        ;SOLO
+        ;HARDCORE
+        ;SURVIVAL
+        ;FREEPLAY
+        ;SANDBOX
+        ;INSTANT
+{
+    #DIM CONST 모드옵션 = 
+        0b00000000000,
+        0b00000000010,
+        0b00000001010,
+        0b00000000100,
+        0b00000010010,
+        0b00001110010,
+        0b00111110010,
+        0b11000000010
+}
+
+
+;CFLAG:0
+#DIM CONST 상태_구출직후 = -1
+#DIM CONST 상태_건강 = 0 ;無事 무사, 혹시나 헷갈릴까 건강으로 썼다
+#DIM CONST 상태_유폐 = 1
+#DIM CONST 상태_세뇌 = 2
+#DIM CONST 상태_흑화 = 3 ;悪堕ち 악낙락
+#DIM CONST 상태_악질감금 = 4
+#DIM CONST 상태_사망 = 9
+#DIM CONST 상태_출산직전 = 10
+#DIM CONST 상태_육아중 = 11
+#DIM CONST 상태_인계플래그 = 999
+;CFLAG:8
+#DIM CONST 일인칭_최대 = 20
+;CFLAG:100
+#DIM CONST 예정_없음 = 0
+#DIM CONST 예정_출격 = 101
+#DIM CONST 예정_단련 = 102
+#DIM CONST 예정_휴식 = 103
+#DIM CONST 예정_활동 = 104
+#DIM CONST 예정_방위 = 105
+#DIM CONST 예정_지원 = 106
+#DIM CONST 예정_정보 = 107
+#DIM CONST 예정_자유 = 108
+
+#DIM CONST 클리토리스 = 1
+#DIM CONST Ｃ = 1
+#DIM CONST 질 = 2
+#DIM CONST Ｖ = 2
+#DIM CONST 애널 = 4
+#DIM CONST Ａ = 4
+#DIM CONST 가슴 = 8
+#DIM CONST Ｂ = 8
+#DIM CONST 입 = 16
+#DIM CONST 손 = 32
+#DIM CONST 균열 = 64 ;ワレメ 질입구?
+#DIM CONST 오발 = 128 ;暴発
+
+#DIM CONST 체력 = 0
+#DIM CONST 기력 = 1
+
+#DIM CONST 쾌C = 0
+#DIM CONST 쾌V = 1
+#DIM CONST 쾌A = 2
+#DIM CONST 쾌B = 3
+#DIM CONST 윤활 = 10
+#DIM CONST 공순 = 11
+#DIM CONST 습득 = 12
+#DIM CONST 욕정 = 13
+#DIM CONST 굴복 = 14
+#DIM CONST 치정 = 15
+#DIM CONST 고통 = 16
+#DIM CONST 공포 = 17
+#DIM CONST 수련P = 20
+#DIM CONST 경험치 = 50
+
+#DIM CONST PALAM수 = 12
+#DIM CONST PALAM시점 = 10
+#DIM CONST PALAM종점 = 18
+;TCVARn:12
+#DIM CONST 기절 = 1
+#DIM CONST 배란 = 2
+#DIM CONST 발정 = 4
+#DIM CONST 마비 = 8
+#DIM CONST 끈적끈적 = 16
+#DIM CONST 쓰러짐 = 32
+#DIM CONST 황홀 = 64
+#DIM CONST 강구속 = 128
+
+#DIM MAX_PALAM, 18
+#DIM CLOTH_NO_INNER
+#DIM CLOTH_OUTER_PER
+#DIM CLOTH_OUTER_DEF
+#DIM CLOTH_INNER_PER
+#DIM CLOTH_INNER_DEF
+
+;의상 구매 화면의 정수 정의
+#DIM CONST WIDTH_CLOTH = STRLENS("흉부:가슴을 강조한 디자인") + 1
+#DIM CONST WIDTH_MONEY = 6
+
+;의상 삽입 저항력의 기본값
+#DIM CONST DEFAULT_OUTER_DEF = 75
+#DIM CONST DEFAULT_INNER_DEF = 50
+
+;결계 관련
+#DIM CONST 감각수 = 4
+#DIM SAVEDATA SHIELD,감각수
+
+;촉수 크기 관련
+;아마 0 = 사이즈, 1 = 갯수를 가미한 사이즈??
+#DIM TENTACLE_SIZE, 2, 감각수
+#DIM TENTACLE_NUM, 2, 감각수
+
+;추가 고문 장소 판정용
+#DIM EX_COM
+#DIM SH_COM
+#DIM INSERT
+
+;송사리(잡몹) 전투 시스템
+#DIM CONST MOB_CATEGORY = 10
+#DIM SAVEDATA MOB_FLAG,MOB_CATEGORY,100
+#DIM GLOBAL SAVEDATA MOB_GLOBAL,MOB_CATEGORY,100
+
+;휴식(Relaxation) 시설용
+#DIM CONST 관엽식물 = 1
+#DIM CONST 질좋은침대 = 2
+#DIM CONST 최고급침대 = 4
+#DIM CONST 안마의자 = 8
+#DIM CONST 목욕설비 = 16
+#DIM CONST 게임코너 = 32
+#DIM CONST 대욕탕 = 64
+#DIM CONST 미용온천 = 128
+#DIM CONST 뷰티살롱 = 256
+#DIM CONST 마음이편안해지는풍경화 = 512
+#DIM CONST 세련된오브제 = 1024
+#DIM CONST 호화로운분수 = 2048
+
+;방어 자세 판정용
+#DIM CONST 자세：아무것도안한다 = -1
+#DIM CONST 자세：통상 = 0
+#DIM CONST 자세：방어 = 1
+#DIM CONST 자세：가만히있는다 = 2
+#DIM CONST 자세：견딘다 = 3
+#DIM CONST 자세：받아들인다 = 4
+#DIM CONST 자세：봉사한다 = 5
+#DIM CONST 자세：노려본다 = 6
+#DIM CONST 자세：매도한다 = 7
+#DIM CONST 자세：반항한다 = 8
+#DIM CONST 자세：설득해본다 = 9
+#DIM CONST 자세：쥐어짠다 = 10
+#DIM CONST 자세：Ｖ방어 = 100
+#DIM CONST 자세：날뛴다방어 = 200
+#DIM CONST 자세：날뛴다실패 = 201
+#DIM CONST 자세：날뛴다치명타 = 202
+;#DIM CONST 자세：반격 = 300
+;#DIM CONST 자세：강화반격 = 301
+
+;성 커맨드 분류용
+#DIM CONST 통상 = 0
+#DIM CONST 펠라 = 1
+#DIM CONST 삽입 = 2
+
+;지문 분기 판정용
+#DIM CONST 타락 = 1
+#DIM CONST 쾌락굴복 = 2 ;쾌락에넋이나감?(快楽蕩け)
+#DIM CONST 성저항 = 4
+#DIM CONST 절망 = 8
+#DIM CONST 고전 = 16
+
+;RELATION용
+#DIM CONST 생이별한 = 1
+#DIM CONST 친한 = 2
+#DIM CONST 소원한 = 3
+#DIM CONST 사랑하는 = 4
+#DIM CONST 증오하는 = 5
+#DIM CONST 의리의 = 6
+
+#DIM CONST 부모자식 = 20
+#DIM CONST 형제자매 = 21
+#DIM CONST 조부모손주 = 22
+#DIM CONST 아저씨아줌마 = 23
+#DIM CONST 조카조카딸 = 24
+#DIM CONST 사촌 = 25
+
+#DIM CONST 친구 = 30
+#DIM CONST 짝사랑 = 31
+#DIM CONST 연인 = 32
+#DIM CONST 약혼자 = 33
+#DIM CONST 배우자 = 34
+
+#DIM CONST 주인 = 40
+#DIM CONST 종자 = 41
+#DIM CONST 노예 = 42
+
+#DIM CONST 혈통불명 = 0
+#DIM CONST Ｃ촉수 = 1
+#DIM CONST Ｖ촉수 = 2
+#DIM CONST Ａ촉수 = 3
+#DIM CONST Ｂ촉수 = 4
+#DIM CONST Ｓ촉수 = 5
+#DIM CONST Ｐ촉수 = 6
+#DIM CONST Ｈ촉수 = 7
+#DIM CONST Ｋ촉수 = 8
+
+#DIM CONST 쌩판남 = -1 ;誰とも知れない相手 누군지도 모르는 상대
+#DIM CONST 근친상간 = -2
+#DIM CONST 사랑하는사람 = -3
+#DIM CONST 원치않은상대 = -4
+
+;범용 표변(豹変) 구상용
+#DIM CONST K4평소 = 0
+#DIM CONST K4회적 = 1 ;会敵, "적과 마주치는 것, 정찰이나 진군의 행동 중에 적과 조우하는 것을 의미하는 말." 이라고 한다
+#DIM CONST K4내습 = 2 ;襲来
+#DIM CONST K4전투 = 3
+#DIM CONST K4전투_변신 = 23
+#DIM CONST K4단련 = 4
+#DIM CONST K4휴식 = 5
+#DIM CONST K4특별활동 = 6
+#DIM CONST K4특별활동_변신 = 26
+#DIM CONST K4정보수집 = 7
+#DIM CONST K4정보수집_변신 = 27
+#DIM CONST K4자유행동 = 8
+#DIM CONST K4자유행동_변신 = 28
+#DIM CONST K4유폐 = 40
+#DIM CONST K4유폐_변신 = 41
+#DIM CONST K4세뇌 = 50
+#DIM CONST K4흑화 = 51
+
+
+;전투 턴 상한 격납(매번 대입하고 있다)
+#DIM 턴상한,1
+
+{
+#DIMS CONST transnamegenre=
+"매지컬적인 단어","천체의 이름","색깔 이름","과일, 채소 등 식물의 이름","잡다한 영어 단어","보석의 이름","사람을 나타내는 단어","무기의 이름","랜덤",
+}
+
+{
+#DIMS CONST namelang=
+"일본어",
+"영어",
+"프랑스어",
+"독일어",
+"이탈리아어",
+"러시아어",
+"중국어",
+"일본어(중성적)",
+"일본어(히라가나ONLY)",
+}
+
+{
+#DIMS CONST racegenre=
+"인간",
+"이능력자",
+"마법사",
+"인조인간",
+"천사",
+"마족",
+"오니",
+"요정",
+"짐승족",
+"뱀파이어",
+"폴리니안",
+}
+
+

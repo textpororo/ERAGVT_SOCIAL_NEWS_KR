@@ -1,0 +1,45 @@
+﻿;원거리공격
+@COM3
+VARSET LOCAL
+
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+;空中공격플래그를進める
+CALL ATTACK_AIR_FLAG
+;異なる距離からの場合、끈적끈적中だと失敗することがある
+IF (TCVARn:12 & 끈적끈적) && RAND:100 < 10 && TCVARn:0 != 3 && GETBIT(TCVARn:216, 1) == 0
+	CALL PRINT_DISTANCE
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は脚を滑らせてしまった！
+	PRINTFORML 移動を伴う行動が失敗した！
+	PRINTW 
+	RETURN 1
+ENDIF
+
+;同一距離連続実行
+IF TCVARn:0 == 3 && TFLAG:30
+	TFLAG:30 += 1
+ELSE
+	TFLAG:30 = 1
+ENDIF
+;距離を遠にする
+TCVARn:0 = 3
+
+;通常공격共通処理
+CALL COM_ATTACK_COMMON
+
+;원거리전투경험
+IF TALENT:변신능력 != -1
+	EXP:원거리전투경험 += RAND:5 + 1
+	CALL SENGIUP, TARGET, 2
+ELSE
+	EXP:기초전투경험 += RAND:5 + 1
+	CALL SENGIUP, TARGET, 3
+ENDIF
+
+;행동포인트を+2
+EX:행동포인트 += 2
+
+RETURN 1

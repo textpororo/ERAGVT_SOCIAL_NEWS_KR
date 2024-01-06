@@ -1,0 +1,77 @@
+﻿;반항한다
+@COM46
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;油断度の上昇
+TFLAG:3 += 5
+
+;방어フラグ：반항한다
+TCVARn:2 = 자세：반항한다
+
+;기력が30%回復　ただし罵倒よりも疲労の影響が出にくい
+;회복빠름なら+3%
+;회복느림なら-3%
+;最大値と衣装と방어力による補正から回復量を計算
+CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
+LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
+;FEATによる回復量ボーナス
+SIF TALENT:넘치는생명력 > 0
+	TIMES LOCAL:1, 1.25
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:1, 0.33
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:1, 0.27
+ELSE
+	TIMES LOCAL:1, 0.30
+ENDIF
+SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
+	LOCAL:1 = MAXBASE:기력 - BASE:기력
+;기력が尽きている場合、기력が回復しない
+SIF BASE:기력 == 0
+	LOCAL:1 = 0
+;疲労により回復量が減少
+REPEAT CFLAG:99
+	SIF LOCAL:1 <= 1
+		BREAK
+	;FEAT効果による回復量維持
+	IF TALENT:스태미나 > 0
+		TIMES LOCAL:1, 0.995
+	ELSE
+		TIMES LOCAL:1, 0.99
+	ENDIF
+REND
+BASE:기력 += LOCAL:1
+;疲労が少し蓄積
+TFLAG:99 += 1
+
+;지문: 반항한다
+CALL MESSAGE_BATTLE_CHARA_RESISTANCE
+;지문: 洗脳/悪堕ちキャラが操作キャラの반항한다を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_RESISTANCE
+
+;행동포인트を+1
+EX:행동포인트 += 1
+
+IF BASE:기력
+	PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+ELSE
+	PRINTFORML %BASENAME:1%は既に尽きてしまっている……
+ENDIF
+
+;心境が冷静になりやすいが、快楽に屈するか절망していると諦観してしまう
+IF RAND:100 < (TCVARn:11 * 20) || TCVARn:1 == 0
+	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망)
+		CALL SHINKYOU_CHANGE, "TEIKAN"
+	ELSE
+		CALL SHINKYOU_CHANGE, "REISEI"
+	ENDIF
+ELSE
+	TCVARn:11 ++
+ENDIF
+PRINTL 
+RETURN 1
+

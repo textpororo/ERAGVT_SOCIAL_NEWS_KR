@@ -1,0 +1,424 @@
+﻿;--------------------------------------------------
+;キャラの種族に関する処理
+;--------------------------------------------------
+;種族のチェック
+@SYUZOKU_CHECK, ARGS, ARG
+FOR LOCAL, 201, 250
+	IF TALENT:ARG:LOCAL > 0
+		SELECTCASE ARGS
+			CASE "STRING"
+				RESULTS = %TALENTNAME:LOCAL%
+				RETURN LOCAL
+			CASE "PRINT"
+				PRINTFORM %TALENTNAME:LOCAL%
+				RETURN LOCAL
+			CASE "GET_SYUZOKU_VALUE"
+				RETURN LOCAL
+		ENDSELECT
+	ENDIF
+NEXT
+SELECTCASE ARGS
+	CASE "STRING"
+		RESULTS = ランダム
+		RETURN 0
+	CASE "PRINT"
+		PRINTFORM ランダム
+		RETURN 0
+	CASE "GET_SYUZOKU_VALUE"
+		RETURN 0
+ENDSELECT
+
+;ARG番の種族の説明を表示する
+@SYUZOKU_INFO, ARG
+IF ARG == 201
+	;인간
+	PRINTL 突出した長所も欠点もない最も一般的な種族
+	PRINTL フィートは性能よりもロールプレイ重視のものが揃っている
+	PRINTL 特に拘りが無ければこの種族を選択すると良いだろう
+ELSEIF ARG == 202
+	;이능력자
+	PRINTL 特殊な能力を操る인간種族
+	PRINTL 공격的なフィートが多くシリアスな雰囲気のキャラを作るのに向いている
+	PRINTL 戦闘力に特化しやすいぶん後方支援は苦手とする
+ELSEIF ARG == 203
+	;마법사
+	PRINTL 魔法を身に付けた인간種族
+	PRINTL 取得するフィートによって様々な特徴を楽しめるエンタテイナー
+	PRINTL 自由度が高い反面、持久力に難があるのが珠に傷
+ELSEIF ARG == 204
+	;인조인간
+	PRINTL 機械の身体を持った人に似た存在
+	PRINTL 純ロボだけでなくサイボーグやアンドロイドなども含む
+	PRINTL 人工子宮を付けた場合産まれる子供は인간になる
+ELSEIF ARG == 205
+	;천사
+	PRINTL 邪を滅する気高き천사
+	PRINTL 背には純白の翼、頭上には聖なる輪を浮かべているが普段は인간の姿をしている
+	PRINTL [날개]と[공중부유]を同時取得できるため空中性能に優れている
+ELSEIF ARG == 206
+	;마족
+	PRINTL 戦いを好む闇の眷属たち
+	PRINTL 一般的に"悪魔"と呼ばれるような외관をしており普段は인간に化けている
+	PRINTL 공격に特化しやすいが、その分だけ小回りが利かなくなる
+ELSEIF ARG == 207
+	;오니
+	PRINTL 古来より存在する額に角を持つ種族
+	PRINTL 体格の大きい者も小さい者も居るが、외관に関わらず優れた身体能力を持つ
+	PRINTL 疲労に強く、長期戦でも息切れしにくいタフさが自慢
+ELSEIF ARG == 208
+	;요정
+	PRINTL フェアリーやエルフなどのファンタジー種族
+	PRINTL [소형체구]がフェアリー、[지혜의극치]がエルフを象徴している
+	PRINTL 高い지성を持たせやすいので戦闘だけでなく後方支援でも活躍できる
+ELSEIF ARG == 209
+	;짐승족
+	PRINTL 哺乳動物の耳と尾を持つ亜人種族
+	PRINTL 인간よりも遥かに鋭い感覚器官を持ちクリティカルを出しやすい
+	PRINTL また、[에어마스터]を中心とした空中戦も得意とする
+ELSEIF ARG == 210
+	;뱀파이어
+	PRINTL 強大な上位の마족である吸血오니
+	PRINTL 他の種族と違い必ず固有フィートである[밤악마의귀족]を取得しなければならない
+	PRINTL 高い能力を持つが昼間は戦闘に参加できないので扱いには要注意である
+ELSEIF ARG == 211
+	;폴리니안
+	PRINTL 인간と인조인간の中間のようなシリコン生命種族
+	PRINTL 인조인간と違って普通に임신が可能で産まれる子供も폴리니안になる
+	PRINTL 取得できるフィートは인조인간と同じである
+ENDIF
+RETURN 0
+
+;種族がARGのときARG:1のフィートが取得可能かを返す
+@FEAT_ABLE_F, ARG, ARG:1
+#FUNCTION
+IF TALENTNAME:ARG == "인간"
+	SIF TALENTNAME:(ARG:1) == "평범"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "말려드는체질"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "숨겨진힘"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "행운아"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "축복"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불굴"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "이능력자"
+	SIF TALENTNAME:(ARG:1) == "공세구축"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "숨겨진힘"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "타고난전사"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "핫스타트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "사냥꾼의직감"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "심안"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "마법사"
+	SIF TALENTNAME:(ARG:1) == "마력저장"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "행운아"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "공중부유"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "풀버스트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불로장수"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "지혜의극치"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "인조인간"
+	SIF TALENTNAME:(ARG:1) == "고속회피"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "근력강화"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "공중부유"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "핫스타트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "풀버스트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "스태미나"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "천사"
+	SIF TALENTNAME:(ARG:1) == "신기소유자"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "날개"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "공중부유"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "축복"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "지혜의극치"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "배덕의낙인"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "마족"
+	SIF TALENTNAME:(ARG:1) == "투쟁본능"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "날개"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "타고난전사"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불굴"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "사냥꾼의직감"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "배덕의낙인"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "오니"
+	SIF TALENTNAME:(ARG:1) == "넘치는생명력"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "타고난전사"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "근력강화"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불굴"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "스태미나"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불로장수"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "요정"
+	SIF TALENTNAME:(ARG:1) == "정령교신"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "소형체구"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "불로장수"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "지혜의극치"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "심안"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "남다른미모"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "짐승족"
+	SIF TALENTNAME:(ARG:1) == "야수의후손"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "소형체구"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "스태미나"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "사냥꾼의직감"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "심안"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "에어마스터"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "뱀파이어"
+	SIF TALENTNAME:(ARG:1) == "밤악마의귀족"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "근력강화"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "날개"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "남다른미모"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "배덕의낙인"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "에어마스터"
+		RETURNF 1
+ELSEIF TALENTNAME:ARG == "폴리니안"
+	SIF TALENTNAME:(ARG:1) == "고속회피"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "근력강화"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "공중부유"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "핫스타트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "풀버스트"
+		RETURNF 1
+	SIF TALENTNAME:(ARG:1) == "스태미나"
+		RETURNF 1
+
+ENDIF
+RETURNF 0
+
+
+;ARG番のフィート解説を表示
+@FEAT_INFO, ARG
+IF ARG < 200
+	PRINT ★
+ELSE
+	PRINT ☆
+ENDIF
+PRINTFORML %TALENTNAME:ARG%
+CALL SHORTLINE
+IF TALENTNAME:ARG == "평범"
+	PRINTL   あなたは目立つところがなく평범だ。少なくとも、以前まではそのはずだった。
+	PRINTL 
+	PRINTL     利点：拘束された際に敵を油断させやすい。
+	PRINTL     代償：매료경험が上昇しにくい。
+ELSEIF TALENTNAME:ARG == "말려드는체질"
+	PRINTL   あなたは何故かトラブルに巻き込まれやすい。
+	PRINTL   それはあなたが他人の不幸を放って置けない"お人好し"だからかもしれない。
+	PRINTL 
+	PRINTL     利点：出撃時に보스 촉수が出現しやすくなる。
+	PRINTL     代償：襲撃イベントのターゲットにされやすい。観衆に遭遇しやすい。
+ELSEIF TALENTNAME:ARG == "공세구축"
+	PRINTL   あなたは공격に向いた能力を持っているか、
+	PRINTL   本来は戦闘向きでない能力を공격に転用することに長けている。
+	PRINTL 
+	PRINTL     利点：공격の直撃率が6%上昇する。
+	PRINTL     代償：拘束された際に敵を油断させにくい。
+ELSEIF TALENTNAME:ARG == "마력저장"
+	PRINTL   あなたは非常時に備えて日頃から魔力を蓄えている。
+	PRINTL   
+	PRINTL     利点：EXゲージが２つ溜まった状態で戦闘を開始する。
+	PRINTL     代償：休憩時の回復量が少し低下する。
+ELSEIF TALENTNAME:ARG == "고속회피"
+	PRINTL   あなたは通常ではあり得ない反射速度で物事に対処することができる。
+	PRINTL   目の前に迫った危機もあなたにとっては止まっているに等しい。
+	PRINTL 
+	PRINTL     利点：戦闘中に一度だけ、被弾を無効化して공격を絶対回避することができる。
+	PRINTL     代償：공격ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "신기소유자"
+	PRINTL   あなたは天より授けられた神器を所有している。
+	PRINTL   神器は持ち主を護り、身体能力を強化する機能を持つ。
+	PRINTL 
+	PRINTL     利点：공격、방어、민첩ボーナスが+5される。理性強度が+1される。
+	PRINTL     代償：성내성ボーナスが-10され、洗脳、悪堕ち状態になりやすくなる。
+ELSEIF TALENTNAME:ARG == "투쟁본능"
+	PRINTL   あなたには闘争を好む마족の性質が色濃く受け継がれている。
+	PRINTL   あなたは無意識に戦いを望んでしまう。
+	PRINTL 
+	PRINTL     利点：공격ボーナスが+10され、황홀状態にならなくなる。戦意強度が+1される。
+	PRINTL     代償：성내성ボーナスが-5され、洗脳、悪堕ち状態になりやすくなる。
+ELSEIF TALENTNAME:ARG == "넘치는생명력"
+	PRINTL   あなたは常に活力に溢れており頑強である。多少のダメージなどものともしない。
+	PRINTL 
+	PRINTL     利点：戦闘中と休憩時の回復量が増加する。
+	PRINTL     代償：지성ボーナスが-15される。
+ELSEIF TALENTNAME:ARG == "정령교신"
+	PRINTL   あなたは自然界に存在する目に見えない精霊の声を聞くことができる。
+	PRINTL   大地と風の恵みがあなたの味方をするだろう。
+	PRINTL 
+	PRINTL     利点：지성ボーナスが+10される。戦意強度が-1される。
+	PRINTL     代償：공격、방어、민첩ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "야수의후손"
+	PRINTL   あなたは獣の性質をその身に色濃く受け継いでおり、身体の一部にその特徴が強く顕れている。
+	PRINTL 
+	PRINTL     利点：クリティカル率が+6%される。인기도が上昇しやすい。理性強度が-1される。
+	PRINTL     代償：지성ボーナスが-10される。임신しやすい。
+ELSEIF TALENTNAME:ARG == "밤악마의귀족"
+	PRINTL   あなたは마족の中でも特に高貴な、夜を支配する뱀파이어の一員である。
+	PRINTL   伝承通りの強大な力と、日光を苦手とする弱点を持っている。
+	PRINTL 
+	PRINTL     利点：全能力ボーナスが+10される。また、昼間の休憩時の回復量が上昇する。
+	PRINTL     代償：昼間に鍛錬、休憩、戦闘支援以外の行動を選択できない。
+ELSEIF TALENTNAME:ARG == "숨겨진힘"
+	PRINTL   あなたは普段から人より劣って見られがちである。
+	PRINTL   しかし、それは真の実力を発揮できていないだけなのだ。
+	PRINTL 
+	PRINTL     利点：체력、기력が25%以下のとき、直撃率とクリティカル率が12%上昇する。
+	PRINTL     代償：공격、방어、민첩、지성ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "행운아"
+	PRINTL   あなたはとても幸運に恵まれている。
+	PRINTL   もっとも、運が良すぎるせいで実力をあまり評価して貰えないのだが。
+	PRINTL 
+	PRINTL     利点：特別活動、情報収集で良い結果になりやすい。
+	PRINTL     代償：공격、방어、민첩、지성ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "타고난전사"
+	PRINTL   あなたは過酷な生い立ちのためか信念のためか、戦う以外の生きる道を知らない。
+	PRINTL 
+	PRINTL     利点：敵にクリティカルヒットされず、타격공격では기절しない。理性強度と戦意強度が+1される。
+	PRINTL     代償：特別活動と戦闘支援に参加できなくなる。
+ELSEIF TALENTNAME:ARG == "근력강화"
+	PRINTL   あなたの腕力はとても強い。力尽くであれば、大抵の物事には負けない自信がある。
+	PRINTL 
+	PRINTL     利点：공격ボーナスが+5され、「풀어낸다」の成功率が上昇する。
+	PRINTL     代償：「풀어낸다」を実行すると疲労が蓄積する。
+ELSEIF TALENTNAME:ARG == "날개"
+	PRINTL   あなたは背中に翼を持っており、その生まれ持った能力を扱うことに長けている。
+	PRINTL 
+	PRINTL     利点：방어ボーナスが+5される。공중대시ゲージが１つ増加する。
+	PRINTL     代償：着地時に疲労が増加する。
+ELSEIF TALENTNAME:ARG == "공중부유"
+	PRINTL   あなたは魔法か科学か念力か、何らかの方法で宙に浮いたまま移動ができる。
+	PRINTL 
+	PRINTL     利点：공중대시使用時に疲労が蓄積しない。
+	PRINTL     代償：移動系コマンドの疲労蓄積が1増加する。
+ELSEIF TALENTNAME:ARG == "소형체구"
+	PRINTL   あなたは種族的に小さな体格をしている。非力な分、身軽で隙のない動きができる。
+	PRINTL 
+	PRINTL     利点：민첩ボーナスが+5される。공중대시使用後の着地ペナルティを無視できる。
+	PRINTL     代償：「풀어낸다」の成功率が低下する。
+ELSEIF TALENTNAME:ARG == "핫스타트"
+	PRINTL   あなたは自分自身の能力を熟知しており、最初から全力を出して戦うことができる。
+	PRINTL 
+	PRINTL     利点：EXゲージに関わらず常にバースト공격が使用可能になる。
+	PRINTL     代償：バースト공격使用時の疲労蓄積が1増加する。
+ELSEIF TALENTNAME:ARG == "풀버스트"	;★SP풀버스트と紛らわしい気がする
+	PRINTL   あなたは能力を一時的に限界にまで高めることで強烈な一撃を放つことができる。
+	PRINTL 
+	PRINTL     利点：バースト공격で与えるダメージが上昇する。
+	PRINTL     代償：バースト공격使用時の疲労蓄積が1増加する。
+ELSEIF TALENTNAME:ARG == "축복"
+	PRINTL   あなたは目に見えない何らかの力に守護されている。
+	PRINTL   その恩恵で、子宝にも恵まれるであろう。
+	PRINTL 
+	PRINTL     利点：あらゆる状態異常になりにくい。理性強度が+1される。
+	PRINTL     代償：粘液공격、波動공격で受けるダメージが少し増加する。임신しやすい。
+ELSEIF TALENTNAME:ARG == "불굴"
+	PRINTL   あなたは何があろうと決して諦めない。
+	PRINTL   最大の敵は自分自身の弱さであることを、あなたは知っているからだ。
+	PRINTL 
+	PRINTL     利点：체력、기력を消耗しても行動成功率が低下しにくい。戦意強度が+1される。
+	PRINTL     代償：EXゲージが上昇しにくい。
+ELSEIF TALENTNAME:ARG == "스태미나"
+	PRINTL   あなたは優れた持久力を持っている。多少の疲労ではへこたれない。
+	PRINTL 
+	PRINTL     利点：疲労が蓄積しても回復行動の回復量が低下しにくい。
+	PRINTL     代償：EXゲージが上昇しにくい。
+ELSEIF TALENTNAME:ARG == "불로장수"
+	PRINTL   あなたは定命の存在でありながら老いることがない特異体質である。
+	PRINTL   (寿命を持たない種族はこのフィートを取得できない)
+	PRINTL 
+	PRINTL     利点：休憩しなくても疲労が少しずつ回復する。
+	PRINTL     代償：休憩時の回復量が低下する。임신しにくい。
+ELSEIF TALENTNAME:ARG == "지혜의극치"
+	PRINTL   あなたは豊富な知識と、その知識を生かす頭脳を持ち合わせている。
+	PRINTL 
+	PRINTL     利点：지성ボーナスが+10される。
+	PRINTL     代償：체력、기력、성내성ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "사냥꾼의직감"
+	PRINTL   あなたは獲物の居場所を探り当てるセンスに優れている。
+	PRINTL   そして、戦場での勘はどのような지성にも勝る場合があることをよく知っている。
+	PRINTL 
+	PRINTL     利点：先制率が上昇し、잡몹적撃破時に探索度が多めに上昇する。
+	PRINTL     代償：지성ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "심안"
+	PRINTL   あなたは優れた観察眼または非常に鋭い感覚を持っている。
+	PRINTL   その能力を生かして、あなたは敵の隙を突いて弱点を的確に공격することができる。
+	PRINTL 
+	PRINTL     利点：直撃率とクリティカル率が3%上昇する。
+	PRINTL     代償：방어、민첩ボーナスが-5される。
+ELSEIF TALENTNAME:ARG == "남다른미모"
+	PRINTL   あなたはとても神秘的な、または妖艶な魅力を備えている。
+	PRINTL   あなたがその気になれば、他人を魅了するなど容易いことだろう。
+	PRINTL 
+	PRINTL     利点：인기도と매료경험が上昇しやすい。
+	PRINTL     代償：襲撃イベントのターゲットにされやすい。観衆に遭遇しやすい。
+ELSEIF TALENTNAME:ARG == "배덕의낙인"
+	PRINTL   あなたは事実であるかどうかに関わらず、その身に"背徳者"の汚名を着せられている。
+	PRINTL   その汚名に屈するかどうかはあなた次第だろう。
+	PRINTL 
+	PRINTL     利点：搾精공격で与えるダメージが上昇する。
+	PRINTL     代償：戦闘や幽閉時に獲得する珠の量が増加する。
+ELSEIF TALENTNAME:ARG == "에어마스터"
+	PRINTL   あなたは素早い身のこなしにより空中での機動力に長けている。
+	PRINTL   空中であなたを捉えることは至難の業だろう。
+	PRINTL 
+	PRINTL     利点：공중대시中の回避率が25%上昇する。
+	PRINTL     代償：공중대시使用時の疲労蓄積が1増加する。
+ENDIF
+
+
+
+
+
+

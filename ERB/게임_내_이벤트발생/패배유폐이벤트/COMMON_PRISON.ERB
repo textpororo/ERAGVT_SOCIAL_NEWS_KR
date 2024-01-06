@@ -1,0 +1,716 @@
+﻿;**********************************************************
+;幽閉中パラメータ変動共通処理
+;ARG:0 쾌C
+;ARG:1 쾌V
+;ARG:2 쾌A
+;ARG:3 쾌B
+;ARG:4 윤활 윤활は未使用
+;ARG:5 공순
+;ARG:6 습득
+;ARG:7 욕정
+;ARG:8 굴복
+;ARG:9 치정
+;ARG:10 고통
+;ARG:11 공포
+
+;ARG:12 結界が反応するかどうか 0=反応する 1=反応しない
+
+@COMMON_PRISON, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6, ARG:7, ARG:8, ARG:9, ARG:10, ARG:11, ARG:12 = 0
+#DIM LCOUNT
+#DIM CAL_VAR, 2
+
+;半日ずっとですしとりあえず9～10倍に
+FOR LCOUNT, 0, 12
+	ARG:LCOUNT = ARG:LCOUNT * 9 + RAND:(ARG:LCOUNT + 1)
+NEXT
+
+
+;経験数の受け渡し用変数を初期化
+VARSET COMMON_EXP
+
+;素質に関する補正
+;----------------------------------------------------------
+;快C
+IF TALENT:C민감 > 0
+	TIMES ARG:0, 2.00
+ELSEIF TALENT:C둔감 > 0
+	TIMES ARG:0, 0.50
+ENDIF
+SIF TALENT:음핵 > 0
+	TIMES ARG:0, 1.50
+
+;快V
+IF TALENT:V민감 > 0
+	TIMES ARG:1, 2.00
+ELSEIF TALENT:V둔감 > 0
+	TIMES ARG:1, 0.50
+ENDIF
+SIF TALENT:음호 > 0
+	TIMES ARG:1, 1.50
+
+;快A
+IF TALENT:A민감 > 0
+	TIMES ARG:2, 2.00
+ELSEIF TALENT:A둔감 > 0
+	TIMES ARG:2, 0.50
+ENDIF
+SIF TALENT:음고 > 0
+	TIMES ARG:2, 1.50
+
+;快B
+IF TALENT:B민감 > 0
+	TIMES ARG:3, 2.00
+ELSEIF TALENT:B둔감 > 0
+	TIMES ARG:3, 0.50
+ENDIF
+IF TALENT:빈유 == 2
+	TIMES ARG:3, 0.75
+ELSEIF TALENT:빈유 == 1
+	TIMES ARG:3, 0.80
+ELSEIF TALENT:거유 == 5
+	TIMES ARG:1, 1.40
+ELSEIF TALENT:거유 == 4
+	TIMES ARG:1, 1.35
+ELSEIF TALENT:거유 == 3
+	TIMES ARG:1, 1.30
+ELSEIF TALENT:거유 == 2
+	TIMES ARG:1, 1.25
+ELSEIF TALENT:거유 == 1
+	TIMES ARG:1, 1.20
+ENDIF
+SIF TALENT:음유 > 0
+	TIMES ARG:3, 1.50
+
+;공순
+SIF TALENT:촉수의포로 > 0
+	TIMES ARG:5, 2.00
+
+;습득
+
+;욕정
+SIF TALENT:촉수의포로 > 0
+	TIMES ARG:7, 2.00
+SIF TALENT:음란 > 0
+	TIMES ARG:7, 2.00
+
+;굴복
+SIF TALENT:촉수의포로 > 0
+	TIMES ARG:8, 2.00
+
+;치정
+SIF TALENT:백보지 > 0
+	TIMES ARG:9, 1.50
+SIF TALENT:음란 > 0
+	TIMES ARG:9, 2.00
+
+;고통
+
+;공포
+
+
+;性格に関する補正
+;----------------------------------------------------------
+LOCAL = SEIKAKU_CHECK_F(TARGET)
+ARG:7 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 13, ARG:7)
+ARG:8 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 14, ARG:8)
+ARG:9 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 15, ARG:9)
+ARG:10 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 16, ARG:10)
+ARG:11 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 17, ARG:11)
+
+;촉수に関する補正
+;----------------------------------------------------------
+IF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3 || CFLAG:0 == 9
+	CALL TENTACLE_ACCESS_PRISON, TARGET, "PALAM_HOSEI"
+	;快C
+	ARG:0 = ARG:0 * RESULT:0 / 100
+	;快V
+	ARG:1 = ARG:1 * RESULT:1 / 100
+	;快A
+	ARG:2 = ARG:2 * RESULT:2 / 100
+	;快B
+	ARG:3 = ARG:3 * RESULT:3 / 100
+	;윤활
+	ARG:4 = ARG:4 * RESULT:4 / 100
+	;공순
+	ARG:5 = ARG:5 * RESULT:5 / 100
+	;습득
+	ARG:6 = ARG:6 * RESULT:6 / 100
+	;욕정
+	ARG:7 = ARG:7 * RESULT:7 / 100
+	;굴복
+	ARG:8 = ARG:8 * RESULT:8 / 100
+	;치정
+	ARG:9 = ARG:9 * RESULT:9 / 100
+	;고통
+	ARG:10 = ARG:10 * RESULT:10 / 100
+	;공포
+	ARG:11 = ARG:11 * RESULT:11 / 100
+ENDIF
+
+;촉수중독に関する補正
+;----------------------------------------------------------
+LOCAL = 0
+FOR LOCAL, 0, 11
+	IF ABL:촉수중독 == 1
+		TIMES ARG:LOCAL, 1.20
+	ELSEIF ABL:촉수중독 == 2
+		TIMES ARG:LOCAL, 1.50
+	ELSEIF ABL:촉수중독 == 3
+		TIMES ARG:LOCAL, 2.00
+	ELSEIF ABL:촉수중독 == 4
+		TIMES ARG:LOCAL, 2.50
+	ELSEIF ABL:촉수중독 == 5
+		TIMES ARG:LOCAL, 4.00
+	ENDIF
+NEXT
+
+;感覚LV6以上補正
+;----------------------------------------------------------
+FOR LCOUNT, 0, 감각수
+	CALL PALAM_OVERFEEL, TARGET, LCOUNT
+	ARG:LCOUNT = ARG:LCOUNT * RESULT / 100
+NEXT
+
+;結界チェック
+;----------------------------------------------------------
+FOR LCOUNT, 0, 감각수
+	IF BASE:(LCOUNT + 30) > 0 && ARG:12 == 0
+		;デバッグ表示
+		STRLENFORM {MAXBASE:(LCOUNT + 30)}
+		SETCOLOR 96, 96, 96
+		SIF FLAG:999 == 1
+			PRINTFORML /* debug */ %BASENAME:(LCOUNT + 30)%：{BASE:(LCOUNT + 30), RESULT} - {ARG:LCOUNT * 150 + (ARG:LCOUNT > 0) * 2000, RESULT} = {BASE:(LCOUNT + 30) - ARG:LCOUNT * 150 + (ARG:LCOUNT > 0) * 2000, RESULT}
+		RESETCOLOR
+		BASE:(LCOUNT + 30) -= ARG:LCOUNT * 150 + (ARG:LCOUNT > 0) * 2000
+		SIF ARG:LCOUNT > 0
+			CALL MESSAGE_SHIELD_STATE, LCOUNT
+		ARG:LCOUNT = 0
+	ENDIF
+NEXT
+
+;取得予定の珠から絶頂回数の逆算
+;----------------------------------------------------------
+LOCAL:100 = 0
+LOCAL:101 = 0
+LOCAL:102 = 0
+LOCAL:103 = 0
+
+SIF ARG:0 > 1000
+	LOCAL:100 = SQRT(ARG:0) / 10
+SIF ARG:1 > 1000
+	LOCAL:101 = SQRT(ARG:1) / 10
+SIF ARG:2 > 1000
+	LOCAL:102 = SQRT(ARG:2) / 10
+SIF ARG:3 > 1000
+	LOCAL:103 = SQRT(ARG:3) / 10
+
+;치정のボーナス計算
+;戦闘時と同じように快C,快V,快A,快Bの上昇値,絶頂の状態で計算した値を上乗せ
+LOCAL = ARG:0 + (ARG:1 * 2) + (ARG:2 * 2) + ARG:3
+LOCAL:1 = 0
+IF LOCAL == 0
+	LOCAL:1 = 0
+ELSEIF LOCAL < 1000
+	LOCAL:1 = 200
+ELSEIF LOCAL < 3000
+	LOCAL:1= 500
+ELSEIF LOCAL < 5000
+	LOCAL:1 = 1000
+ELSEIF LOCAL < 10000
+	LOCAL:1 = 2000
+ELSEIF LOCAL < 30000
+	LOCAL:1 = 5000
+ELSEIF LOCAL < 50000
+	LOCAL:1 = 10000
+ELSE
+	LOCAL:1 = 20000
+ENDIF
+LOCAL = LOCAL:100 + LOCAL:101 + LOCAL:102 + LOCAL:103
+IF LOCAL < 10
+	TIMES LOCAL:1, 1.00
+ELSEIF LOCAL < 25
+	TIMES LOCAL:1, 2.00
+ELSEIF LOCAL < 50
+	TIMES LOCAL:1, 3.00
+ELSE
+	TIMES LOCAL:1, 4.00
+ENDIF
+ARG:9 += LOCAL:1
+
+;욕정のボーナス計算
+;快C,快V,快A,快B,치정の上昇値,고통の上昇値(마조끼あり),絶頂の状態で計算する
+LOCAL = 0
+LOCAL:1 = 0
+LOCAL:2 = 0
+LOCAL:3 = 0
+LOCAL = ARG:0 + (ARG:1 * 2) + (ARG:2 * 2) + ARG:3
+IF LOCAL == 0
+	LOCAL:1 = 0
+ELSEIF LOCAL < 1000
+	LOCAL:1 = 100
+ELSEIF LOCAL < 3000
+	LOCAL:1 = 200
+ELSEIF LOCAL < 5000
+	LOCAL:1 = 500
+ELSEIF LOCAL < 10000
+	LOCAL:1 = 1000
+ELSEIF LOCAL < 20000
+	LOCAL:1 = 2000
+ELSEIF LOCAL < 35000
+	LOCAL:1 = 5000
+ELSE
+	LOCAL:1 = 10000
+ENDIF
+
+LOCAL = LOCAL:100 + LOCAL:101 + LOCAL:102 + LOCAL:103
+IF LOCAL < 10
+	TIMES LOCAL:1, 1.00
+ELSEIF LOCAL < 25
+	TIMES LOCAL:1, 2.00
+ELSEIF LOCAL < 50
+	TIMES LOCAL:1, 3.00
+ELSE
+	TIMES LOCAL:1, 4.00
+ENDIF
+
+;치정
+IF ARG:9 == 0
+	LOCAL:2 = 0
+ELSEIF ARG:9 < 1000
+	LOCAL:2 = 500
+ELSEIF ARG:9 < 3000
+	LOCAL:2 = 1000
+ELSEIF ARG:9 < 5000
+	LOCAL:2 = 2000
+ELSE
+	LOCAL:2 = 5000
+ENDIF
+IF ABL:노출벽 < 2
+	TIMES LOCAL:2, 0.00
+ELSEIF ABL:노출벽 == 2
+	TIMES LOCAL:2, 0.75
+ELSEIF ABL:노출벽 == 3
+	TIMES LOCAL:2, 1.00
+ELSEIF ABL:노출벽 == 4
+	TIMES LOCAL:2, 1.25
+ELSEIF ABL:노출벽 ==5
+	TIMES LOCAL:2, 1.50
+ENDIF
+
+;고통
+IF ARG:10 == 0
+	LOCAL:3 = 0
+ELSEIF ARG:10 < 1000
+	LOCAL:3 = 100
+ELSEIF ARG:10 < 3000
+	LOCAL:3 = 200
+ELSEIF ARG:10 < 5000
+	LOCAL:3 = 500
+ELSE
+	LOCAL:3 = 1000
+ENDIF
+IF ABL:마조끼 > 3
+ELSEIF ABL:마조끼 == 3
+	TIMES LOCAL:3, 0.50
+ELSEIF ABL:마조끼 == 4
+	TIMES LOCAL:3, 1.00
+ELSEIF ABL:마조끼 == 5
+	TIMES LOCAL:3, 1.50
+ENDIF
+ARG:7 = ARG:7 + LOCAL:1 + LOCAL:2 + LOCAL:3
+
+
+;사정の処理と사정によるボーナス
+;사정중독によってC絶頂回数から사정回数を計算
+LOCAL:110 = 0
+IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && (ISPENIS())
+	IF ABL:사정중독 == 0
+		LOCAL:110 = LOCAL:100 / 6
+	ELSEIF ABL:사정중독 == 1
+		LOCAL:110 = LOCAL:100 / 5
+	ELSEIF ABL:사정중독 == 2
+		LOCAL:110 = LOCAL:100 / 4
+	ELSEIF ABL:사정중독 == 3
+		LOCAL:110 = LOCAL:100 / 3
+	ELSEIF ABL:사정중독 == 4
+		LOCAL:110 = LOCAL:100 / 2
+	ELSEIF ABL:사정중독 == 5
+		LOCAL:110 = LOCAL:100
+	ENDIF
+ENDIF
+;욕정にボーナス
+LOCAL:7 += 200 * LOCAL:110
+;굴복にボーナス
+LOCAL:8 += 200 * LOCAL:110
+;치정にボーナス
+LOCAL:9 += 200 * LOCAL:110
+
+;모유の処理と모유によるボーナス
+;모유중독によってB絶頂回数から모유回数を計算
+LOCAL:113 = 0
+IF LOCAL:103 > 0 && TALENT:모유체질 > 0
+	IF ABL:모유중독 == 0
+		LOCAL:113 = LOCAL:103 / 6
+	ELSEIF ABL:모유중독 == 1
+		LOCAL:113 = LOCAL:103 / 5
+	ELSEIF ABL:모유중독 == 2
+		LOCAL:113 = LOCAL:103 / 4
+	ELSEIF ABL:모유중독 == 3
+		LOCAL:113 = LOCAL:103 / 3
+	ELSEIF ABL:모유중독 == 4
+		LOCAL:113 = LOCAL:103 / 2
+	ELSEIF ABL:모유중독 == 5
+		LOCAL:113 = LOCAL:103
+	ENDIF
+ENDIF
+;공순にボーナス
+LOCAL:5 += 200 * LOCAL:113
+;욕정にボーナス
+LOCAL:7 += 200 * LOCAL:113
+;치정にボーナス
+LOCAL:9 += 200 * LOCAL:113
+
+;幽閉中でなければ刻印の処理をスキップ
+SIF CFLAG:0 != 1
+	GOTO SKIP
+
+;刻印の取得 幽閉中は取得する予定の珠の量で刻印を付ける
+;----------------------------------------------------------
+;쾌락각인
+LOCAL = 0
+SIF ARG:7 >= (600 + MARK:쾌락각인방지 * 60)
+	LOCAL = 1
+SIF ARG:7 >= (1800 + MARK:쾌락각인방지 * 180) && MARK:쾌락각인 == 1
+	LOCAL = 2
+SIF ARG:7 >= (6000 + MARK:쾌락각인방지 * 600) && MARK:쾌락각인 == 2
+	LOCAL = 3
+SIF ARG:7 >= (18000 + MARK:쾌락각인방지 * 1800) && MARK:쾌락각인 == 3
+	LOCAL = 4
+SIF ARG:7 >= (60000 + MARK:쾌락각인방지 * 6000) && MARK:쾌락각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:쾌락각인
+	MARK:쾌락각인 = LOCAL
+	IF LOCAL == 1
+		;지문: 쾌락각인１
+		CALL MESSAGE_SEX_MARK_KAIRAKU_1
+		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인１が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_1
+	ELSEIF LOCAL == 2
+		;지문: 쾌락각인２
+		CALL MESSAGE_SEX_MARK_KAIRAKU_2
+		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인２が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_2
+	ELSEIF LOCAL == 3
+		;지문: 쾌락각인３
+		CALL MESSAGE_SEX_MARK_KAIRAKU_3
+		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인３が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_3
+	ELSEIF LOCAL == 4
+		;지문: 쾌락각인４
+		CALL MESSAGE_SEX_MARK_KAIRAKU_4
+		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인４が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_4
+	ELSEIF LOCAL == 5
+		;지문: 쾌락각인５
+		CALL MESSAGE_SEX_MARK_KAIRAKU_5
+		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인５が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_5
+	ENDIF
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%MARKNAME:0%{LOCAL}を取得した
+	PRINTL 
+ENDIF
+
+;고통각인
+LOCAL = 0
+SIF ARG:10 >= (500 + MARK:고통각인방지 * 50)
+	LOCAL = 1
+SIF ARG:10 >= (1500 + MARK:고통각인방지 * 150) && CFLAG:31 >= 6 && MARK:고통각인 == 1
+	LOCAL = 2
+SIF ARG:10 >= (5000 + MARK:고통각인방지 * 500) && CFLAG:31 >= 12 && MARK:고통각인 == 2
+	LOCAL = 3
+SIF ARG:10 >= (15000 + MARK:고통각인방지 * 1500) && CFLAG:31 >= 18 && MARK:고통각인 == 3
+	LOCAL = 4
+SIF ARG:10 >= (50000 + MARK:고통각인방지 * 5000) && CFLAG:31 >= 24 && MARK:고통각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:고통각인
+	MARK:고통각인 = LOCAL
+	IF LOCAL == 1
+		;지문: 고통각인１
+		CALL MESSAGE_SEX_MARK_KUTUU_1
+		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인１が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_1
+	ELSEIF LOCAL == 2
+		;지문: 고통각인２
+		CALL MESSAGE_SEX_MARK_KUTUU_2
+		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인２が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_2
+	ELSEIF LOCAL == 3
+		;지문: 고통각인３
+		CALL MESSAGE_SEX_MARK_KUTUU_3
+		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인３が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_3
+	ELSEIF LOCAL == 4
+		;지문: 고통각인４
+		CALL MESSAGE_SEX_MARK_KUTUU_4
+		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인４が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_4
+	ELSEIF LOCAL == 5
+		;지문: 고통각인５
+		CALL MESSAGE_SEX_MARK_KUTUU_5
+		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인５が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_5
+	ENDIF
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%MARKNAME:1%{LOCAL}を取得した
+	PRINTL 
+ENDIF
+
+;굴복각인
+LOCAL = 0
+SIF ARG:8 >= (400 + MARK:굴복각인방지 * 40)
+	LOCAL = 1
+SIF ARG:8 >= (1200 + MARK:굴복각인방지 * 120) && CFLAG:31 >= 6 && MARK:굴복각인 == 1
+	LOCAL = 2
+SIF ARG:8 >= (4000 + MARK:굴복각인방지 * 400) && CFLAG:31 >= 12 && MARK:굴복각인 == 2
+	LOCAL = 3
+SIF ARG:8 >= (12000 + MARK:굴복각인방지 * 1200) && CFLAG:31 >= 18 && MARK:굴복각인 == 3
+	LOCAL = 4
+SIF ARG:8 >= (40000 + MARK:굴복각인방지 * 4000) && CFLAG:31 >= 24 && MARK:굴복각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:굴복각인
+	MARK:굴복각인 = LOCAL
+	IF LOCAL == 1
+		;지문: 굴복각인１
+		CALL MESSAGE_SEX_MARK_KUPPUKU_1
+		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인１が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_1
+	ELSEIF LOCAL == 2
+		;지문: 굴복각인２
+		CALL MESSAGE_SEX_MARK_KUPPUKU_2
+		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인２が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_2
+	ELSEIF LOCAL == 3
+		;지문: 굴복각인３
+		CALL MESSAGE_SEX_MARK_KUPPUKU_3
+		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인３が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_3
+	ELSEIF LOCAL == 4
+		;지문: 굴복각인４
+		CALL MESSAGE_SEX_MARK_KUPPUKU_4
+		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인４が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_4
+	ELSEIF LOCAL == 5
+		;지문: 굴복각인５
+		CALL MESSAGE_SEX_MARK_KUPPUKU_5
+		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인５が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_5
+	ENDIF
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%MARKNAME:2%{LOCAL}を取得した
+	PRINTL 
+ENDIF
+
+;공포각인
+LOCAL = 0
+SIF ARG:11 >= (400 + MARK:공포각인방지 * 40)
+	LOCAL = 1
+SIF ARG:11 >= (1200 + MARK:공포각인방지 * 120) && CFLAG:31 >= 6 && MARK:공포각인 == 1
+	LOCAL = 2
+SIF ARG:11 >= (4000 + MARK:공포각인방지 * 400) && CFLAG:31 >= 12 && MARK:공포각인 == 2
+	LOCAL = 3
+SIF ARG:11 >= (12000 + MARK:공포각인방지 * 1200) && CFLAG:31 >= 18 && MARK:공포각인 == 3
+	LOCAL = 4
+SIF ARG:11 >= (40000 + MARK:공포각인방지 * 4000) && CFLAG:31 >= 24 && MARK:공포각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:공포각인
+	MARK:공포각인 = LOCAL
+	IF LOCAL == 1
+		;지문: 공포각인１
+		CALL MESSAGE_SEX_MARK_KYOUHU_1
+		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인１が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_1
+	ELSEIF LOCAL == 2
+		;지문: 공포각인２
+		CALL MESSAGE_SEX_MARK_KYOUHU_2
+		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인２が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_2
+	ELSEIF LOCAL == 3
+		;지문: 공포각인３
+		CALL MESSAGE_SEX_MARK_KYOUHU_3
+		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인３が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_3
+	ELSEIF LOCAL == 4
+		;지문: 공포각인４
+		CALL MESSAGE_SEX_MARK_KYOUHU_4
+		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인４が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_4
+	ELSEIF LOCAL == 5
+		;지문: 공포각인５
+		CALL MESSAGE_SEX_MARK_KYOUHU_5
+		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인５が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_5
+	ENDIF
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%MARKNAME:3%{LOCAL}を取得した
+	PRINTL 
+ENDIF
+
+;치욕각인
+LOCAL = 0
+SIF ARG:9 >= (400 + MARK:치욕각인방지 * 40)
+	LOCAL = 1
+SIF ARG:9 >= (1200 + MARK:치욕각인방지 * 120) && CFLAG:31 >= 6 && MARK:치욕각인 == 1
+	LOCAL = 2
+SIF ARG:9 >= (4000 + MARK:치욕각인방지 * 400) && CFLAG:31 >= 12 && MARK:치욕각인 == 2
+	LOCAL = 3
+SIF ARG:9 >= (12000 + MARK:치욕각인방지 * 1200) && CFLAG:31 >= 18 && MARK:치욕각인 == 3
+	LOCAL = 4
+SIF ARG:9 >= (40000 + MARK:치욕각인방지 * 4000) && CFLAG:31 >= 24 && MARK:치욕각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:치욕각인
+	MARK:치욕각인 = LOCAL
+	IF LOCAL == 1
+		;지문: 치욕각인１
+		CALL MESSAGE_SEX_MARK_TIJYOKU_1
+		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인１が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_1
+	ELSEIF LOCAL == 2
+		;지문: 치욕각인２
+		CALL MESSAGE_SEX_MARK_TIJYOKU_2
+		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인２が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_2
+	ELSEIF LOCAL == 3
+		;지문: 치욕각인３
+		CALL MESSAGE_SEX_MARK_TIJYOKU_3
+		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인３が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_3
+	ELSEIF LOCAL == 4
+		;지문: 치욕각인４
+		CALL MESSAGE_SEX_MARK_TIJYOKU_4
+		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인４が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_4
+	ELSEIF LOCAL == 5
+		;지문: 치욕각인５
+		CALL MESSAGE_SEX_MARK_TIJYOKU_5
+		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인５が付くのを見た
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_5
+	ENDIF
+	PRINTFORML %MARKNAME:4%{LOCAL}を取得した
+	PRINTL 
+ENDIF
+
+$SKIP
+
+;絶頂回数、사정回数、모유回数の増加
+;----------------------------------------------------------
+IF LOCAL:100 + LOCAL:101 + LOCAL:102 + LOCAL:103 > 0
+	COMMON_EXP:22 = LOCAL:100 + LOCAL:101 + LOCAL:102 + LOCAL:103
+ELSE
+	COMMON_EXP:22 = 0
+ENDIF
+IF LOCAL:110 > 0
+	COMMON_EXP:53 = LOCAL:110
+ELSE
+	COMMON_EXP:53 = 0
+ENDIF
+IF LOCAL:113 > 0
+	COMMON_EXP:54 = LOCAL:113
+ELSE
+	COMMON_EXP:54 = 0
+ENDIF
+
+
+;珠の集計
+;----------------------------------------------------------
+;FEAT効果による珠の入手量増加
+IF TALENT:배덕의낙인 > 0
+	FOR LOCAL, 0, 12
+		ARG:LOCAL *= 135 / 100
+	NEXT
+ENDIF
+JUEL:쾌C += ARG:0
+JUEL:쾌V += ARG:1
+JUEL:쾌A += ARG:2
+JUEL:쾌B += ARG:3
+;JUEL:윤활 += ARG:4
+JUEL:공순 += ARG:5
+JUEL:습득 += ARG:6
+JUEL:욕정 += ARG:7
+JUEL:굴복 += ARG:8
+JUEL:치정 += ARG:9
+JUEL:고통 += ARG:10
+JUEL:공포 += ARG:11
+
+;**********************************************************
+;経験数を結界に応じて変更
+@COMMON_PRISON_EXP_SH, ARG:0, ARG:1, ARG:2, ARG:3
+;半日ずっとですしとりあえず9～10倍に
+FOR COUNT, 0, 2
+	ARG:COUNT = ARG:COUNT * 9 + RAND:(ARG:COUNT + 1)
+	SIF ARG:COUNT > 20
+		ARG:COUNT = 20 + (ARG:COUNT - 20) / 4
+NEXT
+
+IF SHIELD:1 > 0 && SHIELD:2 <= 0
+	IF ARG:1 > 0
+		ARG:1 += ARG:0
+		ARG:3 += ARG:2
+	ENDIF
+	ARG:0 = 0
+	ARG:2 = 0
+ELSEIF SHIELD:1 <= 0 && SHIELD:2 > 0
+	IF ARG:0 > 0
+		ARG:0 += ARG:1
+		ARG:2 += ARG:3
+	ENDIF
+	ARG:1 = 0
+	ARG:3 = 0
+ELSEIF SHIELD:1 > 0 && SHIELD:2 > 0
+	ARG:0 = 0
+	ARG:1 = 0
+	ARG:2 = 0
+	ARG:3 = 0
+ENDIF
+
+RETURN ARG:0, ARG:1, ARG:2, ARG:3
+
+;**********************************************************
+;経験数の表示
+@COMMON_PRISON_EXP, ARG:0, ARG:1
+LOCAL = ARG:0 - 100
+ARG:1 += COMMON_EXP:LOCAL
+SIF ARG:1 < 1
+	RETURN
+SIF EXPNAME:LOCAL == ""
+	RETURN
+
+EXP:LOCAL += ARG:1
+
+PRINTFORML %EXPNAME:LOCAL%：＋{ARG:1}
+;実績
+CALL GET_STATE_EXPUP,TARGET
+
+
+

@@ -1,0 +1,63 @@
+﻿;노려본다
+@COM44
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;油断度の上昇
+TFLAG:3 += 25
+
+;방어フラグ：노려본다にする
+TCVARn:2 = 자세：노려본다
+
+;ゲージが増加
+IF CFLAG:99 < 5
+	TCVARn:6 += 20 + RAND:16
+ELSEIF CFLAG:99 < 15
+	TCVARn:6 += 15 + RAND:11
+ELSE
+	TCVARn:6 += 10 + RAND:6
+ENDIF
+
+;기력が5%回復　疲労の影響がない
+;회복빠름なら+1%
+;회복느림なら-1%
+;最大値と衣装と방어力による補正から回復量を計算
+CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
+LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
+;FEATによる回復量ボーナス
+SIF TALENT:넘치는생명력 > 0
+	TIMES LOCAL:1, 1.25
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:1, 0.06
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:1, 0.04
+ELSE
+	TIMES LOCAL:1, 0.05
+ENDIF
+SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
+	LOCAL:1 = MAXBASE:기력 - BASE:기력
+;기력が尽きている場合、기력が回復しない
+SIF BASE:기력 == 0
+	LOCAL:1 = 0
+BASE:기력 += LOCAL:1
+
+;지문: 노려본다
+CALL MESSAGE_BATTLE_CHARA_NIRAMI
+;지문: 洗脳/悪堕ちキャラが操作キャラの노려본다を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_NIRAMI
+
+;행동포인트を+1
+EX:행동포인트 += 1
+
+IF BASE:기력
+	PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+ELSE
+	PRINTFORML %BASENAME:1%は既に尽きてしまっている……
+ENDIF
+PRINTFORML ＥＸゲージが少し溜まった！
+PRINTL 
+
+RETURN 1

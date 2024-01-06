@@ -1,0 +1,109 @@
+﻿;**********************************************************
+;幽閉コマンド
+;PRISON_COM301
+;촉수の기생
+;**********************************************************
+@PRISON_COM301
+#DIM CCOUNT
+VARSET LOCAL
+TFLAG:10 = 301
+
+;取得する珠
+;LOCAL:0 쾌C
+;LOCAL:1 쾌V
+;LOCAL:2 쾌A
+;LOCAL:3 쾌B
+;LOCAL:4 윤활 윤활は未使用
+;LOCAL:5 공순
+;LOCAL:6 습득
+;LOCAL:7 욕정
+;LOCAL:8 굴복
+;LOCAL:9 치정
+;LOCAL:10 고통
+;LOCAL:11 공포
+
+;経験数の上量値記録用
+;LOCAL:120 V経験
+;LOCAL:121 A経験
+;LOCAL:123 정액경험
+;LOCAL:124 펠라경험
+;LOCAL:130 노출쾌락경험,
+;LOCAL:131 봉사쾌락경험,
+;LOCAL:132 고통쾌락경험,
+;LOCAL:140 자위경험,
+;LOCAL:150 이상경험
+;LOCAL:151 V확장경험
+;LOCAL:152 A확장경험
+;LOCAL:153 사정경험
+;LOCAL:154 모유경험
+;LOCAL:155 방뇨경험
+;LOCAL:156 기생경험
+;LOCAL:157 출산경험
+
+;汚染度
+CFLAG:30 += 40 + RAND:15
+
+;기생を付ける
+TALENT:기생 = 1
+
+;기생경험
+LOCAL:156 = 1
+
+;굴복
+LOCAL:8 = 800
+
+;촉수의포로があれば공순、なければ공포
+IF TALENT:촉수의포로 == 0
+	LOCAL:11 = 1000
+ELSE
+	LOCAL:5 = 1000
+ENDIF
+
+;지문: 悪堕ちキャラが幽閉中の操作キャラに촉수の기생をした
+SIF CFLAG:20 == 2
+	CALL MESSAGE_OTHER_PRISON_COM_301
+;지문: 촉수の기생
+CALL MESSAGE_PRISON_COM_301
+
+;습득基本値
+LOCAL:6 += 0
+
+;욕정基本値
+LOCAL:7 += 0
+
+;굴복基本値
+LOCAL:8 += 500
+
+;치정基本値
+LOCAL:9 += 0
+
+;고통基本値
+LOCAL:10 += 500
+
+;공포基本値
+LOCAL:11 += 500
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+CALL COMMON_PRISON_EXP_SH, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152
+LOCAL:120 = RESULT:0
+LOCAL:121 = RESULT:1
+LOCAL:151 = RESULT:2
+LOCAL:152 = RESULT:3
+
+;拡張度による拡張経験
+CALL PRISON_GAPING, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152, LOCAL:152, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
+LOCAL:151 += RESULT:0
+LOCAL:152 += RESULT:1
+
+;表示と増加の処理
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1

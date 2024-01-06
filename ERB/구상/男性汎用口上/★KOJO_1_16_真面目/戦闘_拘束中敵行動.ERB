@@ -1,0 +1,2314 @@
+﻿
+;敵コマンドに責められての反応
+
+
+
+
+
+;COM14：衣装を破く
+;破き方は溶かす・裂く・破るなどランダム
+;--------------------------------------------------
+@KOJO_1_SEX_COM14_16
+;これから犯されることが分かって
+;驚く、恥じらう、抵抗する、怯える、悪態をつくなど。
+
+;羞恥心を煽るようにゆっくり布が引き裂かれていく or 容赦なくビリビリと布が破れる音が響き渡る
+IF FLAG:900 == 1
+	;前張り
+	IF CLOTH_OUTER_PER < CLOTH_OUTER_DEF && CFLAG:42 == 398
+		;秘部の성기 가리개が今にも剥がされてしまいそう
+
+	;衣装
+	ELSEIF CLOTH_OUTER_PER >= CLOTH_OUTER_DEF || CLOTH_NO_INNER || TCVARn:25 <= 0
+
+	;衣装スルー下着剥ぎ
+	ELSEIF CLOTH_OUTER_PER > 0 && CLOTH_INNER_PER > 0
+
+	;下着剥ぎ
+	ELSE
+
+	ENDIF
+
+;異臭のする液体で衣装を溶かされる
+ELSE
+	;衣装
+	IF CLOTH_OUTER_PER >= CLOTH_OUTER_DEF || CLOTH_NO_INNER || TCVARn:25 <= 0
+
+	;衣装スルー下着剥ぎ
+	ELSEIF CLOTH_OUTER_PER > 0 && CLOTH_INNER_PER > 0
+
+	;下着剥ぎ
+	ELSE
+
+	ENDIF
+
+ENDIF
+
+
+
+
+;COM0：C攻め弱　클리토리스を撫でる
+;--------------------------------------------------
+@KOJO_1_SEX_COM0_16
+IF CFLAG:250 == 0
+	;初めて
+	PRINTFORML 「……なにを……っくぅぅんっ！？」
+	PRINTFORML 「…なるほど、そういう…つもり…かっ！」
+	CFLAG:250 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｃ")
+
+	;★堕ち
+	;★쾌락굴복
+	IF LOCAL > 5 || EX:C절정 > 9
+		PRINTDATA
+			DATAFORM 「くぅぅぅん！？ 
+			DATAFORM 「ひぁぁぁっ！？ 
+			DATAFORM 「あひぁっ！？ 
+			DATAFORM 「ひぅぅッ？！ 
+		ENDDATA
+		PRINTDATA
+			DATAFORM ひは、ぅぁ……
+			DATAFORM ひ、やっ、やめ……
+			DATAFORM そ、そこっ、だめ……
+			DATAFORM そこっ、やめ……
+			DATAFORM や、やだっ……
+			DATAFORM や、やだっ……
+		ENDDATA
+		PRINTDATAL
+			DATAFORM ンんぅぅううぅああ――っっ！！」
+			DATAFORM んふぅぅううぅああ――っっ！！」
+			DATAFORM んひああああぁぁあ――っっ！！」
+			DATAFORM ふあっ、くぅ、はぅうぅぅぅうっ！！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に昇り詰めていく――
+	;★성저항・고전
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		PRINTDATA
+			DATAFORM 「くぅぅぅん！ ひはぅ……
+			DATAFORM 「ひゃあぁっ！？ やっ、やめ……
+			DATAFORM 「ひぁっ！？ そっ、そこだめ……
+			DATAFORM 「ひぅッ？！ そこっ、やめ……
+		ENDDATA
+		PRINTDATAL
+			DATAFORM くひぃんっ！」
+			DATAFORM ぃひぃっ！」
+			DATAFORM くひぃっ！」
+			DATAFORM くひぃっ！」
+		ENDDATA
+	;★고전
+	ELSEIF LOCAL > 1
+		IF LOCAL==0
+			PRINTDATA
+				DATAFORM 「ひぅっ、
+				DATAFORM 「ひっ、
+				DATAFORM 「ひぅぅッ、 
+				DATAFORM 「ひぃあっ、 
+			ENDDATA
+			IF ENEMY_TYPE_CHECK_F("AKUOTI")
+				PRINTDATA
+					DATAFORM う、裏切り者なんか、にっ！」
+					DATAFORM こ、この裏切り者、いい加減に、%AEGI("快")%？！」
+				ENDDATA
+			ELSE
+				PRINTDATA
+					DATAFORM こ、この下等生物っ！」
+					DATAFORM か、下等生物がっ！」
+					DATAFORM か、下等生物の、くせにっ！」
+				ENDDATA
+			ENDIF
+		ELSE
+			PRINTDATA
+				DATAFORM 「ひぅっ、
+				DATAFORM 「ひっ！？ 
+				DATAFORM 「ひぅぅッ！ 
+				DATAFORM 「ひぃあっ！？ 
+			ENDDATA
+			PRINTDATAL
+				DATAFORM や、やめろっ…！」
+				DATAFORM や、やめああっ…！」
+			ENDDATA
+		ENDIF
+	ELSEIF LOCAL >= 0
+		;★感度で喘ぎが混じる
+		IF LOCAL>=1
+			IF RAND:1==0
+				PRINTDATA
+					DATAFORM 「……効かな、%AEGI()%、…効かないなっ
+					DATAFORM 「%AEGI()%……、無駄だ
+					DATAFORM 「%AEGI()%……、甘いなっ
+					DATAFORM 「%AEGI()%……、最低だなっ
+				ENDDATA
+				PRINTDATAL
+					DATAFORM 、%SELF_CALL_SINGLE()%、%SELF_CALL()%は、そんな、責めに、屈し、ないっ！」
+					DATAFORM 、そ、そんなので、%AEGI("快")%、感じさせてる、つもり、だなんてな…っ」
+					DATAFORM 、そ、そんなので、%SELF_CALL()%が、%AEGI("快")%、感じると、でも、っ…」
+					DATAFORM 、そ、そんなので、%SELF_CALL_SINGLE(1)%、%SELF_CALL()%は、感じ、%AEGI("快")%、感じないっ」
+				ENDDATA
+			ELSE
+				PRINTDATA
+					DATAFORM 「%AEGI()%……、…き、効かないなっ
+					DATAFORM 「%AEGI()%……、む、無駄だ
+					DATAFORM 「%AEGI()%……、あ、甘いなっ
+					DATAFORM 「%AEGI()%……、さ、最低だなっ
+				ENDDATA
+				PRINTDATAL
+					DATAFORM 、%SELF_CALL()%は、そんな、責めに、屈し、ないっ！」
+					DATAFORM 、そんなので、%AEGI("快")%、感じさせてる、つもり、だなんてな…っ」
+					DATAFORM 、そんなので、%SELF_CALL()%が、%AEGI("快")%、感じると、でも、っ…」
+					DATAFORM 、そんなので、%SELF_CALL_SINGLE(1)%、%SELF_CALL()%は、感じ、%AEGI()%、感じないっ」
+					DATAFORM 」
+					DATAFORM 」
+				ENDDATA
+			ENDIF
+		ELSE
+			PRINTDATA
+				DATAFORM 「効かない、なっ
+				DATAFORM 「……っ、む、無駄だ
+				DATAFORM 「……っ、あ、甘いなっ
+				DATAFORM 「……最低だ、なっ
+			ENDDATA
+			PRINTDATAL
+				DATAFORM 、%SELF_CALL()%はそんな責めに屈しないっ！」
+				DATAFORM 、そんなので、感じさせる、つもり、だなんてな…っ」
+				DATAFORM 、そんなので、感じると、でも…っ…」
+				DATAFORM 、そんなので、%SELF_CALL()%は、感じないっ」
+				DATAFORM 」
+				DATAFORM 」
+			ENDDATA
+		ENDIF
+	;鈍感
+	ELSE
+		IF ENEMY_TYPE_CHECK_F("AKUOTI")
+			PRINTDATAL
+				DATAFORM 「…………で？」
+				DATAFORM 「……ふーん、それでおしまいか？」
+				DATAFORM 「…………効かないな」
+				DATAFORM 「…………効くわけないだろ」
+				DATAFORM 「……っ、裏切ったあげくに…最っ低だなっ！」
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM 「…………で？」
+				DATAFORM 「……ふーん、それでおしまいか？」
+				DATAFORM 「…………効かないな」
+				DATAFORM 「…………効くわけないだろ」
+				DATAFORM 「……っ、…所詮は下等生物だなっ」
+			ENDDATA
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
+
+
+
+;COM1：C攻め強　클리토리스に吸い付く　衣装は常に最低限破れている
+;--------------------------------------------------
+@KOJO_1_SEX_COM1_16
+IF CFLAG:251 == 0
+	;初めて
+	PRINTFORML 「……っ、そんなもので何を……い、ひあぁぁんっ！？」
+	PRINTFORML 「…やめ…ろ…くうぅっ……」
+	CFLAG:251 = 1
+ELSE
+
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｃ")
+
+	;敏感または部位陥落持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+		PRINTDATAL
+			DATAFORM 「ぉひっ？！ ぉほぉおおッ！！ おぉおおぉおッ！」
+			DATAFORM 「んおぉおぉっ！ そこっ、そこやめ、ぇひぃぃぃいぃぃっ！」
+			DATAFORM 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+			DATAFORM 「ぉほぉぉおおおッ？！ んおお、おぉおおおぉおお！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	;開発完了
+	ELSEIF LOCAL >= 5 || EX:C절정 > 1
+		PRINTDATAL
+			DATAFORM 「ひぎゃぁぁあぁぁあっ！」
+			DATAFORM 「ん゛ん゛、ん゛ん゛ん゛ん゛ん゛んっ！」
+			DATAFORM 「吸う、なぁ…ぁああああああっ！？」
+			DATAFORM 「ひぁぁんっっ？！ なっ、何だよ、何、いひぃぃっ！」
+			DATAFORM 「やぇ、えぁっ、あっ、っぎ、っひぃぃ？！」
+		ENDDATA
+	;敏感状態
+	ELSEIF LOCAL >= 3 || EX:C절정 > 0
+		PRINTDATAL
+			DATAFORM 「ひぎゃぁぁっ！」
+			DATAFORM 「ん゛ん゛んっ！」
+			DATAFORM 「吸う、なぁ…ぁああああああ！？」
+			DATAFORM 「ひんっっ？！ なっ、何だよ、何、いひぃっ！」
+			DATAFORM 「やぇ、えっ、あっ、っぎぃ！」
+		ENDDATA
+	;開発中
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+			DATAFORM 「ふわぁぁ！？」
+			DATAFORM 「ひぅ！？」
+			DATAFORM 「ううぅんっ！？」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+			DATAFORM 「…やめろ…吸わないで…吸う…なぁ…っ」
+			DATAFORM 「…吸わないで…吸う…なぁ…っ」
+			DATAFORM 「…そんなの…無駄だ…効かな…ぁっ…」
+			DATAFORM 「…そんなので…感じるわけ……ぁあっ…」
+		ENDDATA
+	;鈍感
+	ELSE
+		IF ENEMY_TYPE_CHECK_F("AKUOTI")
+			PRINTDATAL
+				DATAFORM 「…………で？」
+				DATAFORM 「……ふーん、それでおしまいか？」
+				DATAFORM 「………無駄だ、効かないな」
+				DATAFORM 「…………で？それで堕としたつもりか？」
+				DATAFORM 「……っ、裏切ったあげくに…最っ低だなっ！」
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM 「…………で？」
+				DATAFORM 「……ふーん、それでおしまいか？」
+				DATAFORM 「………無駄だ、効かないな」
+				DATAFORM 「…………で？それで堕としたつもりか？」
+				DATAFORM 「………所詮は下等生物だな」
+			ENDDATA
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
+;SPCOM0：C攻めSP　클리토리스に噛み付く　衣装は少なくともほとんど破れている
+;媚薬を注入されて、感度を高められたまま放置されたタイミングで表示されます。
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM0_16
+;初めて
+IF CFLAG:252 == 0
+	PRINTDATA
+		DATAFORM 「そ、そんなの近付けて何を……
+		DATAFORM 「…うっ…何だよそれ……
+		DATAFORM 「……な…何のつもりだよ……
+	ENDDATA
+	;惜しい
+	PRINTDATAL
+		DATAFORM っ！ まさか噛み千切る気か！？
+		DATAFORM っ！ まさか突き刺す気か！？
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 嫌だっ、そんなの絶対ダメだ、今すぐやめ…痛ぅっ！？
+	ENDDATA
+	PRINTDATA
+		DATAFORM ……違うっ、じゃあ何が狙い――
+		DATAFORM ……こ、こいついま何を――
+		DATAFORM ……こ、こいつ一体、何考えて――
+		DATAFORM ……こ、こいついま%SELF_CALL()%に何を――
+	ENDDATA
+	PRINTDATA
+		DATAFORM あ、うああああアアっ！！？」
+	ENDDATA
+	CFLAG:252 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｃ")
+
+	;敏感または部位陥落持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+		PRINTFORML 「噛んじゃダメっ！ 弱いから、そこホントに弱いからぁあああ！！
+		PRINTDATA
+			DATAFORM ぅぎぃっ
+			DATAFORM う゛ぎっ
+			DATAFORM う゛ぎぁ゛っ
+			DATAFORM ぎゃ゛ぁ゛ぁ゛ぁ゛っ
+			DATAFORM ぎゃひぃっ
+			DATAFORM ぎゃひっ
+			DATAFORM ひぐっ
+			DATAFORM ひぎっ
+			DATAFORM ひぎゃっ
+		ENDDATA
+		PRINTDATAL
+			DATAFORM ！ ぉほぉぉおぉぉッ！？」
+			DATAFORM 、んぉおぉぉぉッ！？」
+			DATAFORM 、ぃひぃぃぃぃぃッ！？」
+			DATAFORM ！ っぎ、ぃいいぃぃッ！」
+			DATAFORM 、お゛ぎぃいいぃぃッ？！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	;開発完了
+	ELSEIF LOCAL >= 5 || EX:C절정 > 1
+		PRINTDATAL
+			DATAFORM 「だ、ダメだっ！ そんなもので噛むなんて、今すぐやめ――
+			DATAFORM 「だ、ダメだ、触るなっ！ そこは\@ISMALE() ? 남자 # 女 \@の大切な――
+			DATAFORM 「や、やめろっ、そこはおまえなんかが触れていい場所じゃ――
+		ENDDATA
+		PRINTDATAL
+			DATAFORM ぁあああああああっ！？
+			DATAFORM きひぃぃいいぃっ！？」
+			DATAFORM ひぃぃいいイ！？」
+			DATAFORM ひあぁぁあああっ！？」
+			DATAFORM きゃふぅううううっ！？」
+			DATAFORM イぃいいいいい！？」
+		ENDDATA
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目を剥き、涎を垂らして震えている……
+	;敏感状態
+	ELSEIF LOCAL >= 3 || EX:C절정 > 0
+		PRINTDATAL
+			DATAFORM 「だ、ダメだっ！ そんなもので噛むなんて、今すぐやめ――
+			DATAFORM 「だ、ダメだ、噛むなっ！ そこは\@ISMALE() ? 남자 # 女 \@の大切な――
+			DATAFORM 「や、やめろっ、そこはおまえなんかが触れていい場所じゃ――
+		ENDDATA
+		PRINTDATAL
+			DATAFORM くひぃぃいいぃっ！？」
+			DATAFORM ひぃぃいいぃんっ！？」
+			DATAFORM きゃふぅうんっ！？」
+		ENDDATA
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目を剥き、涎を垂らして震えている……
+	;開発中
+	ELSEIF LOCAL > 1
+		PRINTDATA
+			DATAFORM 「ち、近付けるなっ！ 嫌だっ、今すぐやめ、
+			DATAFORM 「く、来るなっ！ そんなの見たくも…
+			DATAFORM 「お、おまえみたいな下種の責め…
+			DATAFORM 「は、離れろっ！ そこは大事な…
+		ENDDATA
+		PRINTDATAL
+			DATAFORM んぁああっ！？」
+			DATAFORM ひゃううんっ！？」
+			DATAFORM くひぃんっ！？」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATA
+			DATAFORM 「……痛っ！ 
+			DATAFORM 「きゃっ！ 
+		ENDDATA
+		PRINTDATA
+			DATAFORM %AEGI()%、噛まれたくらいで――
+			DATAFORM %AEGI()%、な、何だよ、その程度――
+			DATAFORM %AEGI()%、そ、そんなの効くわけ――
+		ENDDATA
+		PRINTDATAL
+			DATAFORM ぁああっ！？」
+			DATAFORM ひうぅっ！？」
+			DATAFORM くひんっ！？」
+			DATAFORM %AEGI("！？")%」
+		ENDDATA
+	;鈍感な場合
+	ELSE
+		PRINTDATAL
+			DATAFORM 「……噛み切る気か？」
+			DATAFORM 「……痛っ！ やめろ、そこは大事な……！」
+		ENDDATA
+	ENDIF
+ENDIF
+
+;★★この辺から開始★★
+
+
+;SPCOM8：C촉수専用SP　尿道責め　衣装は少なくともほとんど破れている
+;イモムシ型のＣ촉수に尿道を責められ、お漏らしさせられます。
+;公開排尿なので、羞恥心を煽られる
+;起きていれば一気に表尿、赤面、ヴァギナから残った尿を吸い取られている状態で구상
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM8_16
+
+
+
+;COM2：V攻め弱　膣口を愛撫（처녀は奪いません）
+;今にも犯されそうな状態で弄ばれます。
+;股間への擦り付けorランダムでＣ(舐めorイボ촉수跨り)＋悪堕ちは舌愛撫
+;★ＡＢＣを責められる分岐がある？擦り付け前提で後日確認
+;### FLAG:900 ###
+;1　クンニされる（吸う、舐める）
+;2　突起촉수に跨らされる
+;3　男性器촉수を擦りつけられる
+;--------------------------------------------------
+@KOJO_1_SEX_COM2_16
+;完全陥落後　もう戻れない
+IF (MESSAGE_BRANCH_F(TARGET) & 타락) & TALENT:음호
+	PRINTDATAL
+		DATAFORM 「うぅぅ……じ、焦らしてるつもりなのか……？」
+		DATAFORM 「あぁっ！？ な、何なんだよ……入り口ばかり……」
+		DATAFORM 「っくぅう……はやく、はやくぅ……」
+		DATAFORM 「うぅぅ……これ、ああぁぁ、はやくぅぅぅ……」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は촉수に媚びるように腰をくねらせている。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は目を細め、無意識に身体をくねらせてしまう。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は촉수を迎え入れるように腰をくねらせている。
+	ENDDATA
+ELSEIF CFLAG:253 == 0
+	;初めて
+	;처녀の時は공포するよね
+	IF TALENT:처녀 > 0
+		PRINTDATAL
+			DATAFORM 「…っ！ や、やめろっ、頼むからやめてっ！」
+			DATAFORM 「は、離せよ！ このっ、離せってば！！」
+		ENDDATA
+	ELSE
+		PRINTFORML 「……何のつもりだよ……っ！？」
+		PRINTFORML 「……下種野郎め」
+	ENDIF
+	CFLAG:253 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｖ")
+
+	;敏感または部位陥落持ちだけが来れる境地
+	IF LOCAL > 5 || EX:V절정 > 9
+		PRINTFORML 「そこに、触、る、なぁあああ！！」
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		PRINTDATAL
+			DATAFORM 「ふ、わ、うぁっ…！」
+			DATAFORM 「さわ、る、な、さわら、ない、で……んあ！！」
+			DATAFORM 「はひっ、はっ、ぅ……！」
+			DATAFORM 「こ、こいつ、そんなところを…うぅんっ…！」
+			DATAFORM 「やめ、やめろ…やめろって、ば…っ！」
+		ENDDATA
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はびくっ、と腰を跳ねさせたが
+		PRINTFORML 即座に손발を絡めとる촉수に押さえ込まれてしまった。
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「っん……そんなところ…を…」
+		DATAFORM 「……この…調子に…乗るな…っ！」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+			DATAFORM 「…………くうっ！？」
+			DATAFORM 「……無駄だから…感じない、からなっ…」
+		ENDDATA
+	;鈍感な場合
+	ELSE
+		PRINTDATAL
+			DATAFORM 「%AEGI()%、ああ、焦らしてるつもりなのか」
+			DATAFORM 「…%AEGI()%…無駄だ」
+		ENDDATA
+	ENDIF
+
+ENDIF
+
+
+;COM3：V攻め強　挿入　衣装は常に最低限破れている
+;膣に挿入され、犯されます。
+;TCVARn:2 == 자세：Ｖ방어のときはＶに挿入されません。
+;V감각が0のときは고통が強く、V감각が4以上なら強烈な快感を感じます。
+;--------------------------------------------------
+@KOJO_1_SEX_COM3_16
+
+	;★チキチキ蜂催眠姦でも呼ばれる
+
+IF TCVARn:2 == 자세：Ｖ방어
+
+ELSE
+	IF CHECK_PENIS()
+		;大きく勃起したペニス
+		;何度も擦りつけられ　根元まで挿入され　濃厚なキス　深いストロークで責められ
+		;妖しげに瞳が輝くと意志に反して膣壁が収縮を繰り返しペニスに絡みついてしまう
+	ELSEIF TENTACLE_NAME()=="Ｃ촉수"
+		;胴体の中ほどにある部分から細かい毛の生えた異形のペニス
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+			;巨大な芋虫に抱きつかれ求愛され
+			;嫌悪感を感じるどころか両目にハートマークを浮かべ
+			;無意識に脚を開いて받아들인다体勢に
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+			;既に快楽の虜になっている
+			;巨大な芋虫の체중を跳ね除けることもできず
+			;あっさりと種付け交尾の体勢で固定されて
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+			PRINTFORML ろくに抵抗もできずに覆い被さられた%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML 巨大な芋虫そのものの외관のＣ촉수の체중を跳ね除けることもできずに
+			PRINTFORML あっさりと種付け交尾の体勢で固定されて
+		ELSE
+			;巨大な芋虫に抱きつかれ求愛される生理的嫌悪感
+			;神経を공포で染め上げられ
+			;半狂乱になって押し退けようとするものの체중差のある촉수はビクともしない
+		ENDIF
+		;完全に身動きを封じた촉수は深くへと分け入り　腰を使ってピストンし始め
+	ELSEIF TENTACLE_NAME()=="Ａ촉수"
+		;取り付き、下半身をまるごと取り込んでしまう
+		;ひんやりとした感触がぴったりとヴァギナに吸い付く
+		;外部からは大きく押し広げられた大陰唇が丸見えに
+
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+			;これから種付けするつもりだと理解したヒロイン
+			;両目にハートマークを浮かべながら無意識に脚を開いて挿入を받아들인다体勢に
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+			;快楽に理性を溶かされつつある
+			;ろくに抵抗もできずＡ촉수に取り込まれていく
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+			;犯される身の危険を感じながらも
+			;ろくに抵抗もできずＡ촉수に取り込まれていく
+		ELSE
+			;身の危険を感じ　촉수を押しのけようとするが、
+			;流動する半液体状のＡ촉수を引き離すことができない
+		ENDIF
+		;完全に身動きを封じたＡ촉수　ヴァギナの手前で全体を大きく膨らませ
+		;勢いを付けて自身をワレメに叩き込んだ
+	ELSE
+		;★촉수の形状はランダム
+		;先端が無数の繊毛に枝分かれしたイソギンチャク촉수
+		;突き上げられる快感　繊毛촉수が一斉に蠢いて膣壁に絡み付いて撫でまわし責め立ててくる
+
+		;無数の突起が付いた촉수
+		;突起の一つひとつが膣壁をゴリゴリと抉り、強烈な快感
+
+		;無数のヒダが付いた촉수
+		;ヒダの一つ一つが질내を隅々まで擦り上げる
+
+		;複数の촉수が膣に殺到
+		;それぞれが独立した動きで질내を刺激しながら、予測不能なテンポで快楽を連打する
+
+		;男性器の形をした촉수で膣をほぐし 蛇行しながら潜り込むようにして貫く
+		;回転と捻りを加えながらもカリで内側を抉る　인간業ではありえない動き　テンポよく突き上げていく
+	ENDIF
+
+
+	;구상後は↓で分岐
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;膣肉が淫靡な音を立てて촉수を受け入れ
+		;待ちに待った挿入の幸福感に満たされ
+		IF EX:V절정 < 1
+			;膣壁を抉る快感に황홀として
+		ELSE
+			;まだイキ足りないと言わんばかりに自ら腰を振り、快楽を貪って
+		ENDIF
+	ELSEIF ABL:V감각 < 1
+		;まだ性交に不慣れな膣壁を蹂躙され　まったく身動きできない
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:V감각 >= 4
+		;愛液滴る膣　淫靡な音を立てて촉수を受け入れ
+		;女としての悦びがヒロインの理性と使命感を塗りつぶしていく
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;戦意を喪失しつつある　ろくに抵抗もできず
+		;哀れな雌穴として為すすべもなく凌辱を받아들인다しかない
+	ELSE
+		IF ENEMY_TYPE_CHECK_F("AKUOTI")
+			;凌辱から逃れようとするが
+		ELSE
+			;촉수を掴んで引き抜こうとするが、
+		ENDIF
+		;ひと突きされるたびに快楽が抵抗する意志を鈍らせていく
+	ENDIF
+
+ENDIF
+
+;完全陥落後　もう戻れない
+IF (MESSAGE_BRANCH_F(TARGET) & 타락) & TALENT:음호
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「きた、ぎだぁぁぁっ！ これが欲しかったのおぉぉっ！」
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は질내を埋め尽くす感覚に顔を醜く歪めて悦んでいる。
+		CASE 1
+			PRINTFORML 「んおぉおぉっ！ ぎっ、ひいいぃいぃっ！」
+			PRINTFORML 待ちかねた感触に、%PRINT_TRANSCALLNAME(TARGET)%は喉を晒して絶叫を上げた。
+		CASEELSE
+			PRINTFORML 「もっとっ、もっとちょうだい！ もっとお、ぉぉ、ぁぉぉおっ！」
+			PRINTFORML 感極まったように泣き叫び、%PRINT_TRANSCALLNAME(TARGET)%は촉수の蹂躙を受け入れている。
+	ENDSELECT
+;처녀
+ELSEIF TALENT:처녀 > 0
+	PRINTFORML 「ひ、ひいぃぃい！ やめっ、嫌だ！ %SELF_CALL()%の負け！ 負けだから！ それだけは許して！」
+	PRINTFORML 「やだ、嫌、やめ、あ゛っぎ……い゛ぎぃぃいッ！！？」
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｖ")
+	
+	;敏感または部位陥落持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:V절정 > 9
+		SELECTCASE RAND:4
+			CASE 0
+				PRINTFORML 「はひゅぅ、ひぅぅ、っくぁ、ぁ゛ぇ゛ぇっ！」
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は涙と涎と鼻水でぐちゃぐちゃの顔を必死に振っている。
+			CASE 1
+				PRINTFORML 「はへっ、あっ、あがっ、あぅっ！」
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の目は涙に濡れ、唇からは意味を成さない鳴き声が漏れていた。
+			CASE 2
+				PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+				PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+			CASEELSE
+				PRINTFORML 「んく、ぅう、っく、うぐっ！」
+				PRINTFORML 顔を歪め、%PRINT_TRANSCALLNAME(TARGET)%は唇を噛む。
+		ENDSELECT
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		PRINTDATAL
+		DATAFORM 「あっ、はぁっ！くるっ、またくる、や、ぁああっ！？」
+		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
+		ENDDATA
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「っん、あっ、ああっ…」
+		DATAFORM 「…ぅ、く、くぅ…」
+		ENDDATA
+	;初期
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「……っうぅん！？」
+		DATAFORM 「……無、駄、効かな、ぁあっ！？」
+		ENDDATA
+	;鈍感持ち限定
+	ELSE
+		PRINTDATAL
+		DATAFORM 「……所詮、下等なケダモノだな」
+		DATAFORM 「……う、くっ、調子に、乗る、なっ！」
+		ENDDATA
+	ENDIF
+
+ENDIF
+
+IF FLAG:15 >= FLAG:14
+	;●사정される場合
+ENDIF
+
+
+;COM15：種付けピストン（Ｖ系統）
+;派生行動として呼ばれる　突かれながら구상
+;Ｖ攻め強などで촉수が사정しなかった場合は次のターンにこのコマンドに派生します。
+;体勢を固定されてじゅぽじゅぽ犯されている状態です。
+;--------------------------------------------------
+@KOJO_1_SEX_COM15_16
+	IF (TCVARn:12 & 기절)
+		;オナホ扱い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) && BASE:성내성 == 0
+		;メスの表情、理性なし
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;歓喜の表情、無意識에 사정を促す腰使い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;余裕ない、突かれるたびに喜びの声　雌穴に過ぎないと思い知らされる
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;快楽に抗おうとする、突かれるたびに上ずった声が漏れ出てしまう
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;戦意喪失間近、屈辱に表情を歪めながら翻弄
+	ELSEIF TFLAG:20 != 15
+		;状況を打開しようと考えを巡らせる→子宮を突かれる快楽に思考飛ぶ
+	ELSE
+		;悔しい　衝撃に耐えながら脱出チャンスを伺う
+	ENDIF
+
+	IF FLAG:15 >= FLAG:14 * 2
+		;사정の限界が近いのか動きが速度を増して
+	ELSE
+		;ノックが子宮を抉じ開けようとしている
+		;意志とは無関係にヴァギナがきゅんと締まり絡みついていく
+		;パンパンと肉が肉を打つ湿った淫靡な音
+		;まるで질내の感触を楽しむように時折速度を落とし、抉りこむように奥深くまで
+	ENDIF
+
+
+;COM16：種付けフィニッシュ（Ｖ系統）
+;派生行動として呼ばれる　子宮が精液ボテ→引き抜かれて溢れ
+;からの구상
+;種付けピストンでフィニッシュされる場合の구상です。
+;連続でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
+;--------------------------------------------------
+@KOJO_1_SEX_COM16_16
+IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
+	CALL TENTACLE_ACCESS, "GETNAME"
+	LOCALS:0 = %RESULTS%
+ELSEIF ISTENTACLER(FLAG:111) == 0 && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+	LOCALS:0 = ペニス
+ENDIF
+
+;秒読みをするかのようにピストンが加速
+;ついには最高潮に達する
+;一番奥まで無理やり押し込み、
+;止めと言わんばかりに無防備な子宮へと白濁した욕망を
+
+IF LOCALS == "ペニス"
+	;ぴったり子宮口に　精液ボテ
+ELSE
+	;ポンプのように膨らんだ촉수の先から욕망が放たれ
+	;精液の奔流がカタマリとなって子宮に叩きつけられる
+	;あまりの사정量と勢いに下腹部がボコッボコッと膨み
+
+	IF (TCVARn:12 & 기절)
+		;うわごとのように苦しげな声を洩らす
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;圧倒的な満足感、壊れたような笑顔を浮かべ陶酔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;既に快楽に屈している　恥も外聞もなく無様なアヘ顔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;理性を消し飛ばされそうに、快楽に悶える
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;半ばパニック、고통に泣き叫ぶ
+	ELSE
+		;強烈すぎる感覚に굴복
+	ENDIF
+ENDIF
+
+;大量に注ぎ込まれた精液　妊婦のように膨らんだ腹部
+;呻きながら、潰れたカエルのように地面に転がりぴくぴくと痙攣
+;一拍遅れて膣口から白濁液が噴き出し周囲を白く染め上げていく
+
+;濃厚な精液の糸を引きながらヴァギナから引き抜かれ、
+;膣口が何度か痙攣したかと思うと数秒遅れて白濁液が溢れ出す
+
+;사정はそれだけで終わらず、白目を剥き、びゅるっびゅるっと結合部から精液が噴き出る状態になるまで続く
+
+;ようやく種付けが終わり、ピクピクと痙攣する膣
+;引き抜かれると、栓を失った白濁液が一気に溢れ出し水たまりのように広がって
+
+
+;からの구상。フィニッシュされてしまった無様な様子を描写
+
+
+
+;COM17：애널ピストン（Ａ系統）
+;--------------------------------------------------
+@KOJO_1_SEX_COM17_16
+;Ａ攻め強などで촉수が사정しなかった場合は次のターンにこのコマンドに派生します。
+;体勢を固定されてじゅぽじゅぽ犯されている状態です。
+
+	IF (TCVARn:12 & 기절)
+		;オナホ扱い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) && BASE:성내성 == 0
+		;衝撃に揺さぶられ　理性保てず　快楽を貪るのに夢中
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;歓喜の表情、搾り上げるかのような腰使い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;余裕ない、突かれるたびに悦びの声　雌穴に過ぎないと思い知らされる
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;快楽に抗おうとする、突かれるたびに上ずった声が漏れ出てしまう
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;戦意喪失間近、交尾の屈辱に表情を歪めながら翻弄
+	ELSEIF TFLAG:20 != 15
+		;状況を打開しようと考えを巡らせる→애널を突かれる快楽に思考飛ぶ
+	ELSE
+		;好き放題にレイプされて悔しい　衝撃に耐えながら脱出チャンスを伺う
+	ENDIF
+
+	IF FLAG:15 >= FLAG:14 * 2
+		;사정の限界が近いのか動きが速度を増して
+	ELSE
+		;直腸内を突き上げられ腹部がボコボコと膨らむ
+		;意志とは無関係に菊門がきゅんと締まり締め上げていく
+		;パンパンと肉が肉を打つ湿った淫靡な音
+		;まるで直腸内の感触を楽しむように時折速度を落とし、抉りこむように奥深くまで
+	ENDIF
+
+;COM18：애널フィニッシュ（Ａ系統）
+;--------------------------------------------------
+@KOJO_1_SEX_COM18_16
+;애널ピストンでフィニッシュされる場合の구상です。
+;口から精液逆流、白目、痙攣、精液ボテ
+
+IF ISTENTACLER(FLAG:111) == 0 && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+	LOCALS:0 = ペニス
+ELSE
+	LOCALS:0 = 촉수
+ENDIF
+
+
+IF LOCALS == "ペニス"
+	;애널に深々と叩きつけられたペニス　精液ボテ
+ELSE
+	;ポンプのように膨らんだ촉수の先から욕망が放たれ
+	;精液の奔流がカタマリとなって애널に叩きつけられる
+	;あまりの사정量と勢いに下腹部がボコッボコッと膨み
+
+	IF (TCVARn:12 & 기절)
+		;うわごとのように苦しげな声を洩らす
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;圧倒的な満足感、壊れたような笑顔を浮かべ陶酔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;既に快楽に屈している　恥も外聞もなく無様なアヘ顔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;理性を消し飛ばされそうに、快楽に悶える
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;半ばパニック、고통に泣き叫ぶ
+	ELSE
+		;強烈すぎる感覚に굴복
+	ENDIF
+ENDIF
+
+
+;촉수なら貫通されているかも(確認手段無し)
+IF LOCALS:0 == "촉수"
+	;사정しながら体内を逆走　やがて"貫通"して口から先端が姿を現し
+	;白濁液が噴き出し
+	;인간噴水と化したヒロイン
+	;全身を汚されながら、白目を剥いて痙攣
+ELSE
+	;大量に注ぎ込まれた精液で腹部は妊婦のように膨らみ
+	;逆流した精液が口から噴き出し　嘔吐を繰り返したヒロイン
+	;潰れたカエルのように地面に転がり、애널からも濁った白濁を垂れ流し
+	;ぴくぴくと痙攣
+
+	;사정はそれだけで終わらず、ヒロインが白目を剥き、びゅるっびゅるっと結合部から精液が噴き出るまで続いた
+
+	;ようやく種付けが終わり、ピクピクと痙攣するヒロインの애널
+	;引き抜かれると、栓を失った白濁液が一気に溢れ出し周囲に広がっていく
+ENDIF
+
+;からの구상。フィニッシュされてしまった無様な様子を描写
+
+
+
+;COM19：両穴ピストン（ＶＡ系統）
+;--------------------------------------------------
+@KOJO_1_SEX_COM19_16
+;種付けフィニッシュ、애널ピストンなどからこのコマンドに派生する場合があります。
+;体勢を固定されてじゅぽじゅぽ犯されている状態です。
+
+IF ISTENTACLER(FLAG:111) == 0 && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+	LOCALS:0 = ペニス
+ELSE
+	LOCALS:0 = 촉수
+ENDIF
+
+
+IF TFLAG:20 == 15 || TFLAG:20 == 3 || TFLAG:20 == 1001 || TFLAG:20 == 1011 || TFLAG:20 == 1014
+	;애널にも촉수が挿入
+ELSEIF TFLAG:20 == 17 || TFLAG:20 == 5 || TFLAG:20 == 1002
+	;前の穴にも촉수が挿入
+ELSE
+	;組み敷いたまま激しくピストン
+ENDIF
+	IF (TCVARn:12 & 기절)
+		;オナホ扱い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) && BASE:성내성 == 0
+		;衝撃に揺さぶられ　理性溶かしつくされ　快楽を貪るのに夢中
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;歓喜の表情、搾り上げるかのような腰使い
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;余裕ない、突かれるたびに悦びの声　雌穴に過ぎないと思い知らされる
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;快楽に抗おうとする、交互に抉られるたびに上ずった声が漏れ出てしまう
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;戦意喪失間近、交尾の屈辱に表情を歪めながら翻弄
+	ELSEIF TFLAG:20 != 15 && TFLAG:20 != 17 && TFLAG:20 != 19
+		;状況を打開しようと考えを巡らせる→前後を突かれる快楽に思考飛ぶ
+	ELSE
+		;好き放題にレイプされて悔しい　衝撃に耐えながら脱出チャンスを伺う
+	ENDIF
+
+	IF FLAG:15 >= FLAG:14 * 2
+		;사정の限界が近いのか動きが速度を増して
+	ELSE
+		;突き上げられ腹部がボコボコと膨らむ
+		;両穴を交互に抉る抽送のテンポに合わせて足先が空中でがくがくと揺れている
+		;パンパンと肉が肉を打つ湿った淫靡な音
+		;まるで穴の感触を楽しむように時折速度を落とし、抉りこむように奥深くまで
+	ENDIF
+
+
+;COM20：両穴フィニッシュ（ＶＡ系統）
+;--------------------------------------------------
+@KOJO_1_SEX_COM20_16
+;両穴ピストンでフィニッシュされる場合の구상です。
+;Ｖ系統と派生は同じ
+
+IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
+	CALL TENTACLE_ACCESS, "GETNAME"
+	LOCALS:0 = %RESULTS%
+ELSEIF ISTENTACLER(FLAG:111) == 0 && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+	LOCALS:0 = ペニス
+ENDIF
+
+;秒読みをするかのようにピストンが加速
+;ついには最高潮に達する
+;一番奥まで無理やり押し込み、
+;止めと言わんばかりに無防備な子宮へと白濁した욕망を
+
+IF LOCALS == "ペニス"
+	;ぴったり子宮口に　精液ボテ
+ELSE
+	;ポンプのように膨らんだ촉수の先から욕망が放たれ
+	;精液の奔流がカタマリとなって子宮に叩きつけられる
+	;あまりの사정量と勢いに下腹部がボコッボコッと膨み
+
+	IF (TCVARn:12 & 기절)
+		;うわごとのように苦しげな声を洩らす
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;圧倒的な満足感、壊れたような笑顔を浮かべ陶酔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;既に快楽に屈している　恥も外聞もなく無様なアヘ顔
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		;理性を消し飛ばされそうに、快楽に悶える
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;半ばパニック、고통に泣き叫ぶ
+	ELSE
+		;強烈すぎる感覚に굴복
+	ENDIF
+ENDIF
+
+;大量に注ぎ込まれた精液　妊婦のように膨らんだ腹部
+;呻きながら、潰れたカエルのように地面に転がりぴくぴくと痙攣
+;一拍遅れて膣口から白濁液が噴き出し周囲を白く染め上げていく
+
+;濃厚な精液の糸を引きながらヴァギナから引き抜かれ、
+;膣口が何度か痙攣したかと思うと数秒遅れて白濁液が溢れ出す
+
+;사정はそれだけで終わらず、白目を剥き、びゅるっびゅるっと結合部から精液が噴き出る状態になるまで続く
+
+;ようやく種付けが終わり、ピクピクと痙攣する膣
+;引き抜かれると、栓を失った白濁液が一気に溢れ出し水たまりのように広がって
+
+
+;からの구상。フィニッシュされてしまった無様な様子を描写
+
+
+
+
+;SPCOM1：V攻めSP　奥を突く　衣装は少なくともほとんど破れている
+;激しいピストンで子宮口を責められている場面です。
+;「少女に似合わぬ獣のような喘ぎ声を上げ続けている・・・」に続く形になるため、
+;快楽に翻弄されているような文にするのが良いでしょう。
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM1_16
+;음호取得後
+IF TALENT:음호
+	PRINTDATAL
+	DATAFORM 「ぉごぉぉぉっ？！ きた、ぎだぁぁぁっ！ もっと、も゛っどぉ゛お゛ぉぉッ！」
+	DATAFORM 「んおぉおぉっ！ 子宮、%SELF_CALL()%の、奥まで来゛でる゛ぅ゛うぅぅっ！」
+	DATAFORM 「おぉぉ、ぁぉぉおっ！ 死ぬ゛ッ、ごん゛な゛ざれ゛だら゛死゛ぬ゛ぅ゛ぅぅ！」
+	ENDDATA
+ELSEIF CFLAG:253 <= 2
+	;初めて
+	PRINTFORML 「……なに…を？」
+	PRINTFORML 「や、やだ、やめろ、やめぇええエええっ！！？」
+	CFLAG:253 = 3
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｖ")
+	
+	;敏感または部位陥落持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:V절정 > 9
+		PRINTFORML 「奥、ダメ！　弱いから、そこホントに弱いからぁあああ！！
+		PRINTDATAL
+		DATAFORM 　ゆ゛る゛ぢで、ゆ゛る゛し゛あ゛ぁ゛ぁ゛あ゛！
+		DATAFORM 　んおおおおおぉお！ おぐぅぅっ！ おごぉっ、おほぉおおッ！」
+		ENDDATA
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML  野太い촉수が無防備な子宮口を突き上げ、
+				PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は半ば白目を剥いて絶叫をあげた。
+			CASEELSE
+				PRINTFORML  唇の端に泡を吹きながら、蹂躙されるだけの肉が哀願の声を上げる。
+				PRINTFORML  溢れ出る牝の汁を貪り、촉수は更にその動きを激しくしていく……
+		ENDSELECT
+		PRINTFORML そして%CALLNAME%は瞬く間に上り詰めてしまう――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		PRINTDATAL
+		DATAFORM 「あっ、はぁっ！くるっ、くる、やぁああ！！」
+		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は突かれるがままに身体を跳ねさせる――
+	ELSE
+		PRINTDATAL
+		DATAFORM 「っん、あっ、あっ」
+		DATAFORM 「…ぅ、く、くぅ…」
+		ENDDATA
+		PRINTFORML 最奥を突かれた%CALLNAME%は촉수のリズムに合わせて口から空気の塊を吐き出す――
+	ENDIF
+ENDIF
+
+;SPCOM9：V촉수専用SP　V拡張責め（腹ボコ系　衣装は少なくともほとんど破れている
+;通常なら入らない極太ペニスによる拡張責め、V拡張経験によって地の文変化
+;방어無効　★以下をランダム
+;	인간オナホ　全身巻き付かれて動けず貫通
+;	손발持ち上げ空中固定からバック
+;	腰巻き付きＭ字開脚から引っ張って騎乗位　押しのけようとするが支えきれず貫通
+;	地面に引き倒し、地面に顔面押し付け後ろ手でバック
+;	押し倒し腕押さえつけ正常位	足で挟んで止めようとするが足扱き
+;기절ならボコォで戻る、
+;IF EXP:V확장경험 < 3		;先端だけで限界、ボコォで膣破壊
+;ELSEIF EXP:V확장경험 < 8	;限界を超えるがまだ収まり切らない、子宮を突かれて痛みで絶叫
+;ELSE				;立派な인간オナホ　人形のように揺さぶられる
+;から구상
+;사정なら精液ボテ＆噴射
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM9_16
+
+
+
+;COM4：A攻め弱　애널を撫で回す
+;軽いちょっかいを出されている段階なので、それほど危機感は感じていない場面です。
+;--------------------------------------------------
+@KOJO_1_SEX_COM4_16
+	IF CHECK_PENIS()
+		;全身を抱きよせて指先で尻穴をほぐし
+
+		;ヒロインの首筋に舌を這わせながら、穴を広げて指を沈ませていく
+	ELSE
+		;ペニスのような形状の촉수　애널に擦りつけられ
+		;先端が浅く挿入されていく
+
+		;回転する드릴のような촉수を애널に突き入れて
+
+	ENDIF
+
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;愛欲に身を震わせる
+	ELSEIF ABL:A감각 < 3
+		;고통の声を漏らす
+	ELSE
+		;恥辱に顔を紅潮させる
+	ENDIF
+
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || PALAM:윤활 >= 2000
+		;股間はじっとりと快楽に濡れている
+	ELSE
+		;じっと凌辱が終わるのを待つしかない
+	ENDIF
+
+	;※Ｂと同時なら思わずのけぞって胸を突き出してしまう
+
+
+
+
+;음고取得後
+IF TALENT:음고
+	PRINTDATAL
+	DATAFORM 「ひぃぃっ？！ や、やめろっ、そこは……くひぃっ！」
+	DATAFORM 「おほぉぉっ？！ そこ、やめ、てえぇっ！？」
+	ENDDATA
+ELSEIF CFLAG:256 == 0
+	;初めて
+	PRINTFORML 「……うっ、こいつどこを触って……っ！」
+	CFLAG:256 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ａ")
+	
+	;敏感または部位陥落持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+		PRINTFORML 「そ、こ、触、る、なぁあああ！！」
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		PRINTDATAL
+		DATAFORM 「ど、どどど、何処をまさぐってるんだよッ！？」
+		DATAFORM 「ひはっ？！ なッ、何だよ！？」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「感じて、なんか……！！」
+		DATAFORM 「くっ――ぅ、ぅううっ……！！」
+		ENDDATA
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「…この…下種野郎めっ！」
+		DATAFORM 「……んっ、うぅ、やめっ、ろ…！」
+		ENDDATA
+	;初期
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「……気持ち悪い真似を…」
+		DATAFORM 「……こいつ…妙な真似を…！」
+		ENDDATA
+	;鈍感持ち限定
+	ELSE
+		PRINTDATAL
+		DATAFORM 「…………最悪」
+		DATAFORM (……絶対殺す)
+		ENDDATA
+	ENDIF
+ENDIF
+
+
+
+;COM5：A攻め強　애널に挿入　衣装は常に最低限破れている
+;A攻め弱とは一転して激しく犯されます。
+;--------------------------------------------------
+@KOJO_1_SEX_COM5_16
+;음고取得後
+IF TALENT:음고
+	PRINTDATAL
+	DATAFORM 「ぉひっ、ぉごぉぉーッ！ ぶひっ、ぶひぃぃ、ぶひぃぃぃーーッ！」
+	DATAFORM 「ぉっ、おぉぉーッ？！ おひり、ぃひぃいいっ、ぶぎぃぃぃ！」
+	DATAFORM 「んおぉおお？！ おひりっ、やめ゛ぇ゛ぇぇっ！ ぶひっ、ぶひぃぃぃっ！」
+	ENDDATA
+	PRINTFORML  不浄の穴をこじ開けられる感覚に%PRINT_TRANSCALLNAME(TARGET)%は絶叫しながら、
+	PRINTFORML  たっぷりと仕込まれたとおりに牝豚へとなり果てていく……
+ELSEIF CFLAG:257 == 0
+	;初めて
+	PRINTFORML ――ズンッ
+	PRINTFORML 「……な、に…を？」
+	PRINTFORML 突然の衝撃に%CALLNAME%は何が起こったか理解できない
+	PRINTFORML 「……え、お尻、えっ!?」
+	PRINTFORML しかし%CALLNAME%の애널を貫いた%STR:2500%は獲物の様子など、どうでも良いとばかりに動き始めた
+	IF ISMALE()
+		;#region
+		PRINTFORML 「……な、そこは、やだ、やめろ、イヤァアア！！」
+		;#endregion
+	ELSE 
+		PRINTFORML 「……な、そこ違、やだ、やめろ、イヤァアア！！」
+	ENDIF
+	PRINTFORML %CALLNAME%の처녀애널は、%STR:2500%によってじっくりと開発されていく――
+	CFLAG:257 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ａ")
+	
+	;敏感または部位陥落持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+		PRINTDATAL
+		DATAFORM んおぉおお？！ おひりっ、おひりはぁぁッ！」
+		DATAFORM 「ぉひっ、ぉごぉぉーッ！ おひりっ、やめてぇーッ！」
+		DATAFORM 「ぉっ、おぉぉーッ？！ おひり、裂ける、裂け、ぇひぃぃーッ！」
+		ENDDATA
+		PRINTFORML  不浄の穴にねじ込まれた熱くのたくる異物に、
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の体は人形のようにでたらめに跳ねあがった――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		PRINTDATAL
+		DATAFORM 「あっ、はぁっ！くるっ、くる、やぁああ！！」
+		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
+		DATAFORM 「そっ、そこはっ、ヤメッ――ふぁああああああ！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「っぐ、あっ、あっ」
+		DATAFORM 「…ぅ、く、くぅ…」
+		ENDDATA
+	;初期
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「……っう！？」
+		DATAFORM 「……嫌だ、こんな、ぁあっ！？」
+		ENDDATA
+	;鈍感持ち限定
+	ELSE
+		PRINTDATAL
+		DATAFORM 「……この、ケダモノ、がっ！」
+		DATAFORM 「……くっ、そんな、汚いところにっ！」
+		ENDDATA
+	ENDIF
+ENDIF
+
+
+
+;SPCOM2：A攻めSP　激しく애널を犯す　衣装は少なくともほとんど破れている
+;かなりハードなプレイで、애널から入った촉수が口から出て"貫通"します。
+;地の文でもアヘ顔だったり白目を剥いて泡を吹いているので、相応の描写が必要です。
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM2_16
+;음고取得後
+IF TALENT:음고
+	PRINTDATA
+	DATAFORM 「ぶぎぃぃ！ ぶひっ、ぶひぃ゛！ 
+	DATAFORM 「お゛ね゛がい゛だか゛ら゛ッ！ 許ぢで、ゆる゛ぉ゛ほぉっ！
+	ENDDATA
+	
+	PRINTDATAL
+	DATAFORM おひりはっ、おぢりぃ、ぶひぃぃぃっ！」
+	DATAFORM おぢりっ、おぢりほじほじ、も゛っど゛ぉぉっ！」
+	DATAFORM も゛ッ、漏れ゛で、ぢゃ゛、ぶぎぃぃぃーッ！」
+	DATAFORM くち、まで、来て゛お゛ぉ゛、おぶっ、ぉげ、ぇっ！？」
+	ENDDATA
+ELSEIF CFLAG:257 < 2
+	;初めて
+	PRINTFORML ――ズンッ
+	PRINTFORML 「ひぎっ！！」
+	PRINTFORML 灼熱の鉄棒で刺されたような痛みに%CALLNAME%の頭が真っ白になる
+	PRINTFORML 「ぐ、ぐるじっ!?」
+	PRINTFORML しかし%CALLNAME%の애널を貫いた%STR:2500%は、より獲物を味わおうと激しく擦りあげる―
+	PRINTFORML 「ひぎ、やめ、やめ、いぎいいいいい！！？」
+	SIF CFLAG:257 == 0
+		PRINTFORML %CALLNAME%の처녀애널は、%STR:2500%によって無惨に蹂躙されていく――
+	CFLAG:257 = 2
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ａ")
+	
+	;敏感または部位陥落持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+		PRINTDATAL
+		DATAFORM 「ふおおおおおおお！？」
+		DATAFORM 「く、狂う、頭、狂っちゃう、おひり、狂っちゃあああふううう！！」
+		ENDDATA
+
+		PRINTDATA
+		DATAFORM 「ぉごぉぉおっ！ 
+		DATAFORM 「お゛ね゛がい゛だか゛ら゛ッ！ 許ぢで、ゆる゛ぉ゛ほぉっ！
+		ENDDATA
+		PRINTDATAL
+		DATAFORM おひりはっ、おひり、いひぃいいっ！」
+		DATAFORM おぢりっ、おぢりほじほじやめ゛ぇ゛へぇぇっ！」
+		DATAFORM も゛ッ、漏れ゛で、ぢゃ゛う゛うぅーっ！」
+		DATAFORM おひりはむりっ、むりいひぃいいっ！」
+		DATAFORM くち、まで、来て゛お゛ぇ゛ぇ……！」
+		ENDDATA
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML  不浄の穴を蹂躙するぬめり、歪な肉の촉수は激しくのたくり
+			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は涙と涎と鼻水で顔をぐちゃぐちゃにして泣き叫ぶ。
+		CASEELSE
+			PRINTFORML  おぞましい体液にまみれた촉수が%PRINT_TRANSCALLNAME(TARGET)%の尻穴を深々と穿ち
+			PRINTFORML  スタイルの良いお腹に醜い畝がぼごぼごと浮き上がっていく……
+		ENDSELECT
+
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		PRINTDATAL
+		DATAFORM 「ひぎ、ひぎっ！ぐるっ、ぐるぅ！やぁああ！！」
+		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
+		DATAFORM 「ふおおおおおおお！？」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「とっ、飛ぶっ、飛んじゃうううう！！」
+		DATAFORM 「…ぅ、イくっ、イくぅっ…」
+		ENDDATA
+	;初期
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「……っうぁあっ！？」
+		DATAFORM 「……嫌だ、やめ、やめろっ、あぁっ！」
+		ENDDATA
+	;鈍感持ち限定
+	ELSE
+		PRINTDATAL
+		DATAFORM 「……っンんんっ！」
+		DATAFORM 「……嫌だ、嘘、だろ、ぁぐぅっ…」
+		ENDDATA
+	ENDIF
+ENDIF
+
+
+;SPCOM10：A촉수専用SP　A拡張攻め（腹ボコ　衣装は少なくともほとんど破れている
+;不定形촉수による疑似浣腸による拡張　拡張経験によって地の文変化
+;IF EXP:A확장경험 < 3		;고통、手錠촉수で抵抗不可
+;ELSEIF EXP:A확장경험 < 8	;限界突破、ピストン突き上げ
+;ELSE				;腸まで丸見え、ピストン侵入でボテ腹
+;から구상
+;사정時はボテ腹直腸ににポンプ사정で精液叩き付け
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM10_16
+
+
+
+;COM6：B攻め弱　胸を揉みしだく
+;胸を撫でられたり、乳首を引っ張られたりします。
+;오니畜度の低い愛撫です。
+;--------------------------------------------------
+@KOJO_1_SEX_COM6_16
+;### FLAG:900 ###
+;1　撫でられる
+;2　乳首を引っ張られる
+
+;음유取得後
+IF TALENT:음유
+	PRINTDATAL
+	DATAFORM 「も゛おぉぉッ！ もっと、もっとぉ……っ、ぅ゛あ゛ぁ゛あぁぁッ！」
+	DATAFORM 「ぅ゛お゛ぉ゛おぉぉ……っ、お゛おぉぉ……っ！」
+	DATAFORM 「ぅ゛も゛おぉぉッ！ %SELF_CALL()%の乳\@ISMALE() ? 首 # \@、もっと\@ISMALE() ? 引っ張 # 搾 \@っ…う゛お゛ぉ゛おぉッ！」
+	DATAFORM 「んぉっ、もっと強く\@ISMALE() ? 乳首 # 搾 \@っ……ぁあ゛ぁ゛あぁッ！」
+	ENDDATA
+	PRINT  飼い慣らされた牝牛は
+	;모유체질
+	IF TALENT:모유체질
+		PRINTFORML 촉수に搾られるがまま身を委ねている……
+	ELSE
+		IF ISMALE()
+			;#region
+			PRINTFORML 自ら差し出すように乳首を촉수に嬲らせている……
+			;#endregion
+		ELSE 
+			PRINTFORML 自ら差し出すように胸を촉수に嬲らせている……
+		ENDIF
+	ENDIF
+ELSEIF CFLAG:259 == 0
+	;初めて
+	PRINTFORML 「……なにを？」
+	PRINTFORML 「……ん？」
+	PRINTFORML 「どこを、さわって……」
+	CFLAG:259 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｂ")
+
+	IF LOCAL > 5 || EX:B절정 > 9
+		PRINTDATAL
+		DATAFORM 「ンんぅぅううぅああ――っっ！！」
+		DATAFORM 「ふあっ！くぅ、はぅうっ！！」
+		ENDDATA
+		PRINTFORML %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:B절정 > 0
+		;거유
+		IF TALENT:거유
+			PRINTDATAL
+			DATAFORM 「胸をぉ、弄る、なあぁ、はぐぅっ！」
+			DATAFORM 「よくも好き勝手に弄んで……ぉほぉっ？！」
+			DATAFORM 「%SELF_CALL()%の胸を玩具なんかに……はくっ！」
+			DATAFORM 「%SELF_CALL()%の胸は玩具なんかじゃ……はくぅっ！？」
+			DATAFORM 「人の胸を玩具みたいに……うくぅんっ！？」
+			DATAFORM 「この、よくもこんなふざけた真似……くうぅんっ！？」
+			DATAFORM 「こいつ、よくもこんな真似を……はうぅっ！」
+			ENDDATA
+			PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%の豊かな
+		ELSE
+			PRINTDATAL
+			DATAFORM 「放せと言って……ぉほぉっ？！」
+			DATAFORM 「こ、このっ！ やめろ、ぁくっ！」
+			DATAFORM 「ああもう、この……下等せいぶ……はくっ！？」
+			DATAFORM 「やめっ、\@ISMALE() ? そこ、乳首 # 가슴の先 \@は、はうぅっ！？」
+			ENDDATA
+			PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%の
+		ENDIF
+		PRINT \@ISMALE() ? 乳頭 # 가슴 \@は
+		;모유체질
+		IF TALENT:모유체질
+			PRINTFORML 촉수に搾られる度に先端から母乳を迸らせている……
+		ELSE
+			PRINTFORML 촉수の玩具にされてしまっている……
+		ENDIF
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「くっ、ふぅ……っん……」
+		DATAFORM 「……調子に…乗る、なっ…」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「…………くっ!?」
+		DATAFORM 「……無駄だ、おまえの責めなんか、効かない」
+		ENDDATA
+	;鈍感な場合
+	ELSE
+		PRINTDATAL
+		DATAFORM 「……この、鬱陶しい……！」
+		DATAFORM 「……諦め、ろっ」
+		ENDDATA
+	ENDIF
+ENDIF
+
+
+
+;COM7：B攻め強　乳首に吸い付く　衣装は常に最低限破れている
+;ややハードですが고통成分がないプレイです。모유체질のアピールポイントです。
+;--------------------------------------------------
+@KOJO_1_SEX_COM7_16
+;### FLAG:900 ###
+;1　揉まれる
+;2　吸われる
+;3　揉みながら吸われる
+
+;음유取得後
+IF TALENT:음유
+	PRINTDATAL
+	DATAFORM 「ぉ゛お゛おぉぉッ！ \@ISMALE() ? ち゛く゛ひ゛っ、ち゛く゛ひ゛ぃ # む゛ね゛っ、む゛ね゛ぇ゛ \@……ぉ゛おぉ゛おぉぉぉッ！」
+	DATAFORM 「\@ISMALE() ? ち゛く゛ひ゛ # む゛ね゛ \@っ壊゛れ゛る゛ぅ゛っ！ ぉ゛おぉ゛おぉぉぉッ？！」
+	DATAFORM 「ぉ゛お゛おぉぉッ！ \@ISMALE() ? ち゛く゛ひ゛ぃ゛っ、ち゛く゛ひ゛ # む゛ね゛ぇ゛っ、む゛ね゛ \@がぁっ、お゛おぉ゛おぉッ！」
+	DATAFORM 「お゛おぉぉッ！ も゛っどぢでぇ゛……っ、ぉ゛おぉ゛おぉぉッ！」
+	ENDDATA
+	;모유체질
+	IF TALENT:모유체질
+		PRINTFORML  牝牛は촉수の糧にされながら浅ましく快楽を貪っている……
+	ELSE
+		SIF ISMALE()
+			PRINTFORM  自分が남자であることも忘れた
+		PRINTFORML  牝牛は歓喜の涙を流しながらいなないている……
+	ENDIF
+ELSE
+
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｂ")
+
+	;敏感または部位陥落持ちだけが来れる境地
+	IF LOCAL > 5 || EX:B절정 > 9
+		PRINTDATAL
+		DATAFORM 「お゛おぉぉッ！ も゛っ、お゛おぉ゛おぉッ！」
+		DATAFORM 「\@ISMALE() ? ち゛く゛ひ゛っ、ち゛く゛ひ゛ぃ # む゛ね゛っ、む゛ね゛ぇ゛ \@……ぉ゛おぉ゛おぉぉぉッ！」
+		DATAFORM 「お゛っ、ぅ゛お゛おぉぉッ！ お゛おぉ゛おぉッ！」
+		DATAFORM 「お゛おぉぉッ！ ぉ゛おぉ゛おぉぉぉッ！」
+		ENDDATA
+		;모유체질
+		IF TALENT:모유체질
+			PRINTFORML  搾乳の快楽に牝牛はいななき、母乳と共に理性を垂れ流している。
+		ELSE
+			SIF ISMALE()
+				PRINTFORM  自分が남자であることも忘れるほどの絶感に
+			PRINTFORML  髪を振り乱し、絡めとられた牝牛がいなないた。
+		ENDIF
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:B절정 > 0
+		PRINTDATAL
+		DATAFORM 「ひ、やっ、いやあああぁぁっ！！？
+		DATAFORM 「吸う、なぁ…ぁああああああ！？
+		DATAFORM 「ダメ、弱いから、そこホントに弱いからぁあああ！！
+		ENDDATA
+		PRINTDATAL
+		DATAFORM もう許して、もうやめ、お゛、ぉ゛おおおぉ！？」
+		DATAFORM 頼むから、許して、もう、やめ、お゛、お゛おぉぉッ！？」
+		DATAFORM い、嫌だ、もうやだっ、お゛っ、お゛おぉ゛おぉッ！」
+		DATAFORM ま、また、イかされ、ちゃ、ぉ゛おぉ゛おぉぉぉッ！」
+		ENDDATA
+		IF TALENT:모유체질
+			PRINTFORML  執拗な搾乳に身も心も牝牛へと堕っていく……
+		ELSE
+			SIF ISMALE()
+				PRINTFORM  남자だという自意識さえ快楽に薄れ、
+			PRINTFORML  嬌声は次第に牝牛へと近づいていく……
+		ENDIF
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「くっ、離し、ふわぁぁんっ！？」
+		DATAFORM 「くっ、いい加減に、やめ、ひぅうんっ！？」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「……吸うな…吸うなよぉ…っ」
+		DATAFORM 「……無駄だ…無駄…だから…！」
+		ENDDATA
+	;鈍感
+	ELSE
+		PRINTDATAL
+		DATAFORM 「…………で？」
+		DATAFORM 「……無駄だ」
+		ENDDATA
+	ENDIF
+
+ENDIF
+
+
+;SPCOM3：B攻めSP　乳首に噛み付く　上着は最低限破れている
+;胸の感度を高められてニプルファックで責められます。
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM3_16
+
+;음유取得後
+IF TALENT:음유
+	PRINTDATAL
+	DATAFORM 「ぅ゛も゛おぉぉッ！ 
+	DATAFORM 「お゛おぉぉッ！ 
+	DATAFORM 「お゛おぉ゛おぉッ！ 
+	DATAFORM 「ぉ゛おぉ゛おぉぉぉッ！ 
+	ENDDATA
+
+	PRINTDATAL
+	DATAFORM \@ISMALE() ? ち゛く゛ひ゛っ、ち゛く゛ひ゛ぃ # む゛ね゛っ、む゛ね゛ぇ゛ \@……ぉ゛おぉ゛おぉぉぉッ！」
+	DATAFORM \@ISMALE() ? ち゛く゛ひ゛っ、 # む゛ね゛っ、 \@壊゛れ゛る゛ぅ゛っ！ ぉ゛おぉ゛おぉぉぉッ？！」
+	DATAFORM \@ISMALE() ? ち゛く゛ひ゛ぃ゛っ、ち゛く゛ひ゛ # む゛ね゛ぇ゛っ、む゛ね゛ \@がぁっ、ぅ゛お゛おぉぉッ！」
+	DATAFORM も゛っどぢでぇ゛……っ、ぉ゛おぉ゛おぉぉッ！」
+	ENDDATA
+	;모유체질
+	IF TALENT:모유체질
+		PRINTFORML  牝牛になり果てた%PRINT_TRANSCALLNAME(TARGET)%は母乳を垂れ流して絶叫している。
+	ELSE
+		SIF ISMALE()
+			PRINTFORML  自分が남자であることも忘れて、
+		PRINTFORML  痛みと快楽で%PRINT_TRANSCALLNAME(TARGET)%は순종な牝牛へと躾けられていく……
+	ENDIF
+ELSE
+	;敏感、鈍感で多少変化
+	LOCAL = CHECK_KANRAKU("Ｂ")
+
+	;敏感または部位陥落持ちだけが来れる境地
+	IF LOCAL > 5 || EX:B절정 > 9
+		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
+		PRINTDATA
+		DATAFORM 「ひはッ
+		DATAFORM 「ぴぎぃっ
+		DATAFORM 「ぅぎっ
+		DATAFORM 「ぎゃひぃっ
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 、ぉおぉぉおぉぉッ！」
+		DATAFORM 、ぉぉっ、んおぉぉぉッ！？」
+		DATAFORM 、ぉ゛おおおぉ！？」
+		DATAFORM ！ も゛っ、お゛おぉ゛おぉッ！」
+		ENDDATA
+		SIF ISMALE()
+			PRINTFORM  自分が남자であることも忘れるほど、
+		PRINTFORML  敏感な乳首に牙を立てられ、哀れな牝牛は悶え叫んでいる――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:B절정 > 0
+		PRINTDATAL
+		DATAFORM 「ひぃぃいいイ！？」
+		DATAFORM 「イぃいいいいい！？」
+		ENDDATA
+		;모유체질
+		IF TALENT:모유체질
+			PRINTFORML  珍妙な悲鳴を上げた%PRINT_TRANSCALLNAME(TARGET)%の胸の先端から母乳が迸った。
+		ELSE
+			PRINTFORML  가슴の頂きを蹂躙された%PRINT_TRANSCALLNAME(TARGET)%は珍妙な悲鳴を上げている。
+		ENDIF
+	ELSEIF LOCAL > 1
+		PRINTDATAL
+		DATAFORM 「うぐ、ぉ、んぉおあっ！？」
+		DATAFORM 「や、ひゃめ、ひゃううぅうんっ！？」
+		ENDDATA
+	;開発前
+	ELSEIF LOCAL >= 0
+		PRINTDATAL
+		DATAFORM 「…っあ、くひぃぃいいんっ！？」
+		DATAFORM 「……痛っ！ やめ、っぐぅ、痛い痛い痛いっ！！」
+		ENDDATA
+	;鈍感な場合
+	ELSE
+		PRINTDATAL
+		DATAFORM 「……噛み切る気か？」
+		DATAFORM 「……最悪よりも最悪だ」
+		ENDDATA
+	ENDIF
+ENDIF
+
+;SPCOM11：B촉수専用SP　甘えん坊授乳プレイ　衣装は少なくともほとんど破れている
+;巨大な赤ん坊型のボスに圧し掛かられ、乳房を吸われながら正常位で犯されます。
+;촉수의포로or욕망3以上なら受け入れ・前記条件未取得かつ순종3以上無抵抗・前記条件未取得抵抗
+;四肢拘束マウントから吸い揉み
+;타락で満足、쾌락굴복でもう精一杯、절망で怯み　通常は激しく抵抗(처녀はさらに強く)
+;興奮でペニスが伸びＶにあてがい挿入
+;타락で求愛受け入れ、蕩け以上でだいしゅきホールド、他は開脚レイプ
+;모유or기절で甘い吐息or他は無条件でアクメ顔(抵抗以下は意識と裏腹に)
+;から구상
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM11_16
+
+
+
+;COM8：スパンキング
+;割とハードに暴行されるので、痛い！というよりは叫び声が出ると思います。
+;마조끼Lv2以上なら喜びます。
+;--------------------------------------------------
+@KOJO_1_SEX_COM8_16
+;### FLAG:900 ###
+;1　身体を鞭打たれて멍든자국ができる
+;2　胸を鞭打たれて切り傷ができる
+;3　腹部に타격を入れられる
+;4　尻を鞭打たれて腫れあがる
+;5　蹲ったところを何度も蹴られる（悪堕ちキャラ）
+IF ABL:마조끼 >= 3
+	PRINTDATAL
+	DATAFORM 「ぎゃぅ゛！ うぐぁ゛っ、あ゛がぁッ！」
+	DATAFORM 「い゛ッ？！ ぎひぃ゛！ や゛め゛ッ！」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (叩かれる度に……頭……真っ白に……っ)
+	DATAFORM (叩かれたところ……熱くて、おかしく……っ)
+	ENDDATA
+	PRINTDATAW
+	DATAFORM 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
+	DATAFORM 身体を叩かれながら、%CALLNAME%は\@ISMALE() ? ペニスと # 上下の \@口から涎を垂らしていた。
+	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は打たれる度、どこか황홀とした表情を浮かべている……
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「うぐっ、あ゛がっ、ぐぅっ……」
+	DATAFORM 「い゛っ、くひぃっ、う゛う゛っッ！」
+	ENDDATA
+	PRINTDATAW
+	DATAFORM 歯を食いしばりながら、%CALLNAME%は고통に耐えている。
+	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は打たれる度、涙を、よだれを、鼻水まで飛ばして泣き叫んでいる……
+	ENDDATA	
+ENDIF
+
+
+;COM9：針
+;これもハード。殴られるより痛いはず。마조끼がLv3以上で욕정します。
+;--------------------------------------------------
+@KOJO_1_SEX_COM9_16
+;### FLAG:900 ###
+;1　敏感な部分に針を突き立てられる
+;2　乳首に針を突き立てられる
+
+IF ABL:마조끼 >= 3
+	PRINTDATAL
+	DATAFORM 「ぎゃひぃぃいいッ？！」
+	DATAFORM 「い゛っ！！ …な゛っ…何だよ？！ やめ、や゛め゛ぎひゃ゛あ゛ぁ゛っ！？」
+	ENDDATA
+	PRINTDATAW
+	DATAFORM 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
+	DATAFORM 針の突き刺さる感触に、%CALLNAME%は\@ISMALE() ? ペニスと # 上下の \@口から涎を垂らしていた。
+	ENDDATA
+ELSE
+	PRINTFORML 「やだ、こんな……ひいぃん！」
+	PRINTFORMW 歯を食いしばりながら、%CALLNAME%は고통に耐えている。
+ENDIF
+
+
+;SPCOM4：電流
+;このゲーム内で最も고통が入るコマンドなので、たとえマゾでも絶叫しか聞かれないでしょう。
+;기절なら引き戻し、声も出せない고통
+;타락or마조끼Lv4以上で욕정
+;通常悲痛な叫び
+;繰り返された後で구상
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM4_16
+PRINTDATAL
+DATAFORM 「ぉごっ、ぎぃぃぃいいぃッッ！！！」
+DATAFORM 「ぶぎぎぎぎひぃぃいッッ！！！」
+DATAFORM 「ぶ、ぎ、ぴぎぃぃいッッ！！！」
+DATAFORM 「ぶごぉぉおごぉーーッッッ！！！」
+ENDDATA
+PRINTFORML (やだ……こんなの……やだあぁぁ……)
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%は声にならない悲鳴を上げ、
+		;マゾッ気Lv3
+		IF ABL:마조끼 >= 3
+			IF ISMALE()
+				;#region
+				PRINTFORML 惨めなマゾペニスから透明な潮を噴き上げた……
+				;#endregion
+			ELSE 
+				PRINTFORML 哀れなマゾ牝穴から透明な潮を噴き上げた……
+			ENDIF
+		ELSE
+			PRINTFORML 黄金色の液体を垂れ流した……
+		ENDIF
+	CASEELSE
+		IF ABL:마조끼 >= 3
+			PRINTFORML  白目を剥き、泡を吹く%PRINT_TRANSCALLNAME(TARGET)%の손발が狂ったように痙攣している。
+			PRINTDATAW
+			DATAFORM %CALLNAME%は泣き叫びながらも、その顔は喜悦に歪んでいた――
+			DATAFORM 身体を走る電流の痛みに、%CALLNAME%は\@ISMALE() ? ペニスと # 上下の \@口から涎を垂らしていた――
+			ENDDATA
+		ELSE
+			PRINTFORMW %CALLNAME%は耐えている難い고통に泣き叫んでいる。
+		ENDIF
+ENDSELECT
+
+
+;SPCOM12：S촉수専用SP ヘソ快楽攻め　衣装は少なくともほとんど破れている
+;컨피그でグロ表現がオフの場合、ヘソ挿入は無し
+;컨피그オンオフにかかわらず、快感で限界기절確定
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM12_16
+	;大の字拘束からヘソ押し当て
+	;期待or공포
+	;耳に촉수入れて強弱放電、脳の感覚野を調整して快楽に
+	;から구상
+
+	;ヘソめり込み、絶命しかねない痛みが快楽に変換
+	;	기절は快楽以外の感覚마비で目覚めない
+	;	腕の拘束はわざと解除、抵抗する場合は공포の表情で掴みかかる
+	;	内臓越しに子宮巻き付かれて神経焼ききれ絶叫기절
+
+	;필터時は軽く押されただけで기절
+
+
+
+;SPCOM13：P촉수専用SP　丸飲み精液責め　上着は最低限破れている
+;受けると幽閉確定の即死공격です。
+;ウツボカツラ型のＰ촉수に丸飲みされ、精液風呂で倒れるまで사정されます。
+;--------------------------------------------------
+;★未実装　大変だ、丸呑みにしようとしている！
+@KOJO_1_SEX_SPCOM13_PRE_16
+;★未実装、回避
+@KOJO_1_SEX_SPCOM13_MISS_16
+;기절状態でも呼ばれる(冒頭で目を覚ます演出が入り、途中で기절するため)
+@KOJO_1_SEX_SPCOM13_16
+	IF (TCVARn:12 & 기절)
+		;衝撃で意識を回復したが無数の촉수で浸かったまま拘束・固定されてしまう
+		PRINTDATAL
+		DATAFORM 「…ぅあ……%SELF_CALL()%…ここ……は……」
+		DATAFORM 「ぅ……何だ…この……臭い…………」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「捕まって、기절して…だとしたら、その後は……」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「……え…まさか%SELF_CALL()%…っ゛う！？」
+		ENDDATA
+		PRINTFORML 周囲の촉수から放たれる白濁のシャワーが、%PRINT_TRANSCALLNAME(TARGET)%の思考を中断させる。
+	ELSE
+		;脚ジタバタさせつつ頭から丸呑み、異臭のする白濁液に放りこまれ
+		;から구상
+		;消化されるかと思いパニック→安心したのもつかの間、液体に浸かった状態で拘束
+		PRINTDATAL
+		DATAFORM 「っはぁ、はぁ……」
+		DATAFORM 「……臭い……最悪……」
+		DATAFORM 「……鼻が曲がりそうな臭い……最っ低だ……」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「……まずは拘束をどうにかして、逃げ出さないと…っ゛う！？」
+		ENDDATA
+		PRINTFORML 周囲の촉수から放たれる白濁のシャワーが、%PRINT_TRANSCALLNAME(TARGET)%の思考を中断させる。
+	ENDIF
+
+@KOJO_1_SEX_SPCOM13_FINISHER_0_16
+진지함_フラグ_最終被弾=丸呑み精液責め
+	;타락で期待　他で無駄な必死にあがき始める
+	IF TALENT:촉수의포로 > 0
+		PRINTFORML 「あっ…❤」
+		PRINTFORML （逃げ場のない空間、촉수のプール…これから%SELF_CALL()%、何されちゃうんだ…❤）
+		PRINTFORML （両穴？　フェラ？　それとも想像も付かないような――）
+	ELSE
+		PRINTFORML 「なっ…」
+		PRINTDATAL
+		DATAFORM (嘘、これ、急いで抜け出さないと大変な事に……)
+		ENDDATA
+	ENDIF
+@KOJO_1_SEX_SPCOM13_FINISHER_1_16
+	;続けて大量の사정※　プールの水位が上昇してゆく
+	PRINTDATAL
+	DATAFORM 「くっ……」
+	DATAFORM 「ぐっ……」
+	DATAFORM 「い、嫌っ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (このままじゃ、マズ…っ！？　こ、こいつ喉にっ…！)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_2_16
+	;上の穴＋両穴
+	PRINTDATA
+	DATAFORM 「むぐっ…
+	DATAFORM 「んぅっ…
+	DATAFORM 「んんぅ…
+	ENDDATA
+	PRINTDATAL
+	DATAFORM う゛ぶっ……」
+	DATAFORM え゛ぶっ……」
+	DATAFORM お゛ぶっ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (い、息、できなっ……)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_3_16
+	PRINTDATA
+	DATAFORM 「お゛ごぉっ、
+	ENDDATA
+	PRINTDATAL
+	DATAFORM げえぇえ゛う゛……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (こんなの、溺れっ……)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_4_16
+	PRINTDATAL
+	DATAFORM (何とかして、逃げ――)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_5_16
+	PRINTDATAL
+	DATAFORM (なん――と――か――)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_6_16
+	PRINTDATAL
+	DATAFORM (――――――――)
+	ENDDATA
+	;・・・・(無数の사정)
+@KOJO_1_SEX_SPCOM13_FINISHER_7_16
+	PRINTDATAL
+	DATAFORM (――)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_8_16
+	PRINTDATAL
+	DATAFORM (―――――)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_9_16
+	PRINTDATAL
+	DATAFORM (――――――――)
+	ENDDATA
+@KOJO_1_SEX_SPCOM13_FINISHER_10_16
+	PRINTDATAL
+	DATAFORM (――――――――ゴポッ)
+	ENDDATA
+
+
+
+;SPCOM14：H촉수専用SP　催眠姦　被姦中・解除後の描写である点に注意　衣装は少なくともほとんど破れている
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM14_16
+	;眼球が光り、見てしまい、目から光が消え　人形化or自ら開帳　無反応のまま何本も挿入
+
+	;사정判定
+	;IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
+	;犯されたまま正気に戻される
+	;타락なら困惑しつつ快楽受け入れ(え…)、他は羞恥と悔しさで顔真っ赤(なっ…)
+	;から구상
+
+
+;SPCOM15：K촉수専用SP サブミッションファック　衣装は少なくともほとんど破れている
+;基本激痛で泣きわめいているような状態
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM15_16
+	;叩き付け→仰向けで持ち上げ→腕締め上げ・肩関節への負荷でのけぞり悶絶
+	;限界を超えた強制開脚で髪を振り乱して泣き叫ぶ
+	;から구상
+	;その後横一文字まで開かれてヴァギナ貫通
+
+
+
+
+;SPCOM6：強制自慰
+;--------------------------------------------------
+;@KOJO_1_SEX_SPCOM6_16
+;	※コモン_自慰.ERBに移動
+
+
+
+
+
+;SPCOM7：羞恥プレイ
+;それぞれのキャラで反応が違うと思うので、性格ごとに描写を変化させるのが良さそうです。
+;★悪堕ちは촉수けしかけの可能性
+;逃げるorカメラ構えた野次馬に突き出して強制開脚
+;IF(CLOTH_CHECK(TARGET) & 1) == 0
+;	開帳なら撮影、남자후타나리처녀
+;	노출벽2以上で感じる、1以下で涙目
+;市民がいなければ凌辱ダイジェスト
+;	こんな世界じゃ「抜いた！」カウンタが付いてるサイトをヒロインがよく知っているのも仕方ないよね
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM7_16
+;### FLAG:900 ###
+;1　雑魚촉수をけしかけられる（悪堕ちキャラ）
+;2　強制開脚させられる
+;3　動画配信サイトに個人情報を晒される
+
+;치욕각인Lv3
+IF MARK:치욕각인 >= 3
+	IF TALENT:음핵
+		IF TALENT:후타나리 > 0
+			PRINTFORML 「こんな醜いのを%SELF_CALL()%に植え付けて……후타나리が牝ちんぽに逆らえるわけがないじゃないか……」
+		ELSEIF ISMALE()
+			PRINTFORML 「あぅぅ……촉수のせいで、%SELF_CALL()%の、ちんぽ、縮んで……牝ちんぽにぃ……なっちゃって……」
+		ELSE
+			PRINTFORML 「あぅぅ……あ、浅ましく勃起した%SELF_CALL()%のお豆、す、磨り潰してほしいの……」
+		ENDIF
+	ELSEIF TALENT:음호
+		PRINTFORML 「ぅぅ……そうだよ、%SELF_CALL()%の身体は、%SELF_CALL()%は……촉수に種付けされて悦ぶ、苗床…なんだ……」
+	ELSEIF TALENT:음고
+		PRINTFORML 「%SELF_CALL_SINGLE()%、%SELF_CALL()%は……尻穴で気持ちよくなっちゃう、畜生以下の牝豚なんだ……」
+	ELSEIF TALENT:음유
+		IF ISMALE()
+			;#region
+			PRINTFORML 「牝牛……%SELF_CALL()%はもう……乳首を弄られて、おちんぽミルクを垂れ流すだけの牝家畜…だから……」
+			;#endregion
+		ELSE 
+			PRINTFORML 「牝牛……%SELF_CALL()%はもう……胸を搾られて、ミルクを垂れ流すだけの牝家畜…だから……」
+		ENDIF
+	ELSE
+		PRINTDATAL
+		DATAFORM 「%SELF_CALL()%は……\@ISMALE() ? 남자なんてやめました…… # \@最低の牝豚です……誰か、見て、見てぇ……」
+		DATAFORM 「誰か……\@ISMALE() ? 남자のフリなんてやめた、 # \@%SELF_CALL()%の無様な牝豚振り……見て、見てほしいです……」
+		ENDDATA
+		PRINTFORML  幻惑に理性を塗りつぶされた%PRINT_TRANSCALLNAME(TARGET)%は自ら身体を弄び始めてしまう。
+	ENDIF
+ELSEIF MARK:치욕각인 == 2
+	PRINTDATAL
+	DATAFORM 「そんな、いやだ……」
+	DATAFORM 「こんなの、見せるな……」
+	DATAFORM 「%SELF_CALL(7)%、こんな……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM %CALLNAME%が顔を赤くして目をそらしても、淫らな鳴き声と水音が耳に届いた。
+	DATAFORM 視線をそらすことも許されず、%CALLNAME%は自らの痴態を鑑賞させられた。
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「ち、違う……！ こんなの%SELF_CALL()%じゃない……！」
+	DATAFORM 「や、やめぇぇぇ！ 見るな、みんな見るなよぉっ！」
+	DATAFORM 「ぅうう……こっ、こんな、身体……見られ……」
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は幻惑に狼狽え、羞恥に顔を染めながら反論している。
+ENDIF
+
+
+
+;COM13:絶頂禁止
+;耳の奥に液体注入(その作用でイけない！は絶頂側処理なので別ファイルに記述)
+;この時点では困惑
+@KOJO_1_SEX_COM13_16
+
+;愛撫しながら？
+
+;絶頂禁止を解除した(絶頂解放の)場合
+IF TCVARn:40
+	;耳の中に液体を注入
+	;身体の奥底から何かが湧き上がってくる
+
+;絶頂禁止した場合
+ELSE
+	;隙を見て耳に細い촉수　得体の知れない液体を放つ
+	;鼓膜のさらに奥まで液体が浸透していく
+ENDIF
+
+
+
+
+
+
+
+
+
+
+
+;COM10：手淫させられる
+;調教が進んでいたり「봉사한다」を選んでいる場合は순종적に手淫します。
+;また、悪堕ちキャラやＨ촉수が相手の場合は催眠手淫させられます。
+;一通り描写されてから구상
+;--------------------------------------------------
+@KOJO_1_SEX_COM10_16
+
+;敵が非기생후타나리ヒロイン
+IF CHECK_PENIS()
+	;瞳を見てしまった　身体がビクリと震え
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
+		;催眠に理性のタガを外され욕망に突き動かされ自ら膝立ちになり手コキを始めて
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;自ら膝立ちになり嬉しそうにペニスに手コキを始める
+	ELSE
+		;自ら膝立ちになり唇を噛みながら手コキを始める
+	ENDIF	
+;Ｈ촉수が相手
+ELSEIF TENTACLE_NAME() == "Ｈ촉수"
+	;瞳を見てしまった　身体がビクリと震え　自ら膝立ちになり
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
+		;手近な촉수に手コキを始める
+		;愛しい相手を扱うかのように指先で촉수を包み　そっと亀頭に舌を
+		;丁寧に촉수チンポに快楽奉仕を
+	ELSE
+		;自ら膝立ちになり唇を噛みながら手コキを始める
+		;唇を噛みながら手近な촉수に手コキを始める
+		;意識を保ったまま身体を操られる屈辱に耐えながら、
+		;顔を背けることもできずに奉仕を強制される
+	ENDIF	
+;催眠ではない場合
+ELSE
+	;掴んだ촉수が動かされるor手のひらに擦りつけられる
+
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
+		;指に適度な力を込め、より刺激が強くなるよう奉仕
+		;柔らかな手の感触　촉수の先端からは止めどなく先走り汁が
+	ELSE
+		;その様子はさながら手淫をしているようにしか見えない事に、
+		IF TALENT:주관시점 > 0
+			;気付いてしまう
+		ELSE
+			;気付いていない
+		ENDIF
+		;촉수を握りつぶそうと指先に力を込めるが、
+		;逆効果と言わんばかりに先走り汁が噴き出し顔や胸を汚していく
+
+	ENDIF
+	;無数の촉수に全身愛撫される
+	;IF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+	;ENDIF
+ENDIF
+
+
+
+
+IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+	PRINTDATAL
+	DATAFORM 「あは、もっと近くに来てよ……」
+	DATAFORM 「ふふ、手で扱けばいいのか？」
+	DATAFORM 「ああもう、%SELF_CALL()%が可愛がってやるよ……❤」
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「放せ、汚らわしい……っ！」
+	DATAFORM 「な、何だよ、何をさせる気だよ……」
+	DATAFORM 「こんな、ことを……」
+	DATAFORM 「ううぅ、気持ち悪い！」
+	ENDDATA
+	
+	PRINTDATAL
+	DATAFORM (こいつ……今に見てろよ……！)
+	DATAFORM (き、気持ち悪い……くっ……)
+	ENDDATA
+	PRINTFORMW %CALLNAME%は手に押し付けられた촉수を忌々しげに見つめている。
+ENDIF
+
+
+
+;COM11：フェラさせられる
+;基本的に無理やり口を犯されます。
+;★悪堕ちは髪掴み　타락で喜び봉사한다で積極、절망で抵抗できない、それ以外촉수を掴んで抵抗／抵抗を髪掴みで防がれる
+;--------------------------------------------------
+@KOJO_1_SEX_COM11_16
+
+;唇をこじ開け口内を蹂躙 or 입に無理やり突っ込み、激しく前後に動く
+
+;敵が非기생후타나리ヒロイン
+IF CHECK_PENIS()
+	;乱暴に髪を掴みあげられ、
+
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;強制的に口で奉仕させられる　興奮で胸が高鳴るのを自覚
+	ELSEIF TCVARn:2 == 자세：봉사한다
+		;口内を犯されながらも相手を満足させようと舌を使って奉仕
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;もはや抵抗する気概を失いつつある　涙目になりながらも強制奉仕を続けるしかない
+	ELSE
+		;抵抗しようとすると髪を掴みあげられ、涙目になりながらも強制奉仕を続けるしかない
+	ENDIF
+;敵が촉수
+ELSE
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;強制的に口で奉仕させられる　興奮で胸が高鳴るのを自覚
+	ELSEIF TCVARn:2 == 자세：봉사한다
+		;勃起した異形の肉촉수　口内を犯されながらも相手を満足させようと舌を使って奉仕
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;もはや抵抗する気概を失いつつある　촉수を掴むこともできず、涙目になりながらも強制奉仕を続けるしかない
+	ELSE
+		;掴もうとするが촉수の動きを止められず、涙目になりながらも強制奉仕を続けるしかない
+	ENDIF
+ENDIF
+
+;구상直後에 사정判定が続くので繋がるようにするとベター
+IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
+	IF LOCALS:0 == "Ａ촉수"
+		;せりあがってくるのが見える
+	ENDIF
+
+	;사정が近いことを察し　
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;期待を瞳に浮かべる
+	ELSEIF TCVARn:2 == 자세：봉사한다
+		;動作を加速させる
+	ELSE
+		;小刻みに加速していく動き에 사정の気配を察して抵抗する
+	ENDIF
+ENDIF
+
+
+
+IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+	PRINTDATAL
+	DATAFORM 「じゅるるっ、じゅぶ、ぉごっ、んぶぅっ……」
+	DATAFORM 「ぢゅぶっ、うぶっ、ぶひっ、んぢゅぶ……」
+	DATAFORM 「ぢゅぅっ、ちゅぅ……じゅるっ、ずじゅる……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (お、おぉおお……美味し、美味しい……)
+	DATAFORM (くっさいので鼻の中まで塗りつぶされてる……)
+	DATAFORM (あぁぁあ……頭の中までおかしくなる……)
+	DATAFORM (%SELF_CALL()%の口の中……喉まで犯されてる……)
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は頬を窄め、ぢゅぼぢゅぼと音を立てて%촉수市民("촉수","ペニス")%を頬張っている。
+ELSE
+	PRINTDATAL
+	DATAFORM 「ぐぶっ！？ ぉ゛げぇ゛っ、ごぷっ……」
+	DATAFORM 「ぐぼっ？！ ぅ゛ぐぇ゛、げぶっ……」
+	ENDDATA
+	
+	PRINTDATAL
+	DATAFORM (き、気持ち悪い…こいつ……絶対許さない……！)
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は口腔を性具のように扱われている。
+	PRINTFORML  心では抵抗しつつも、生臭い異臭と吐き気を催す味は理性を腐らせていく……
+ENDIF
+
+
+;COM12：イラマチオさせられる
+;フェラをさらにハードにしたバージョン。
+;地の文では息ができなくて기절しかけるので、구상のほうも息も絶え絶えという感じが良いでしょう。
+@KOJO_1_SEX_COM12_16
+;確定で無様エロ
+
+
+;非기생후타나리ヒロインが敵
+IF CHECK_PENIS()
+	;髪を掴んで首を上に向かされ
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;
+	ELSE
+		;抵抗するヒロイン
+	ENDIF
+	;口内に最大まで勃起した男根を乱暴に突き入れ
+
+
+;촉수が敵
+ELSE
+	;全身を縛りつけて軽々と持ち上げられ　身動きを封じられる
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;
+	ELSE
+		;抵抗するヒロイン
+	ENDIF
+	;口内に太い촉수を乱暴に突き入れ
+ENDIF
+
+IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	;口淫と呼ぶにはあまりに暴力的な行為
+	;むしろ喉を使われることに喜びを見出すかのように　咳込みながらも進んで奉仕
+ELSE
+	;宙釣りで身動きもできず、口淫と呼ぶにはあまりに暴力的
+
+	IF ABL:마조끼 >= 2
+		;どこか황홀とした表情で喉を犯されながら
+	ELSE
+		;涙を浮かべながら乱暴に喉を犯されることしかできず
+	ENDIF
+	;呼吸することもままならず　声にならない悲鳴を上げ続ける
+ENDIF
+
+;激しさを増していくストロークに意識が遠くなりかけ、
+;思わず白目を剥いてしまう…から구상
+
+
+
+;구상直後에 사정判定が続くので繋がるようにするとベター
+IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
+	IF LOCALS:0 == "Ａ촉수"
+		;せりあがってくるのが見える
+	ENDIF
+
+	;사정が近いことを察し　
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;期待を瞳に浮かべる
+	ELSEIF TCVARn:2 == 자세：봉사한다
+		;動作を加速させる
+	ELSE
+		;小刻みに加速していく動き에 사정の気配を察して抵抗する
+	ENDIF
+
+	;精液ボテ＆勢いよく精液逆流　절망以上でアヘ顔、そうでなくともびくびくと全身を窒息痙攣
+ENDIF
+
+
+
+IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+	PRINTDATAL
+	DATAFORM 「じゅるるるっ、じゅぶっ、ぉごぉっ、んぶぅっ……」
+	DATAFORM 「ぢゅぶっ、じゅぞっ、ぶひっ、んぢゅぶぅぅ……」
+	DATAFORM 「ぢゅぅっ、ちゅぅ…じゅるっ、ずじゅる、じゅぞぉぉっ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (お、おぉおお……美味し、美味しい、これ、もっと……)
+	DATAFORM (くっさいの、鼻の中まで、塗りつぶされて、っ❤)
+	DATAFORM (あぁぁあ、あ……この臭い、頭の中、おかしく…❤)
+	DATAFORM (%SELF_CALL(7)%、口の中、喉まで犯されて、あぁ、あっ❤)
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は無様に頬を窄め、ぢゅぼぢゅぼと音を立てて喉奥で%촉수市民("촉수","ペニス")%を頬張っている。
+ELSE
+	PRINTDATAL
+	DATAFORM 「んぶぅっ！？ ぉ゛げぇ゛っ、ごぷぅっ……」
+	DATAFORM 「ぐぼっ？！ お゛ぇっ、ぅ゛ぐぇ゛、げぶっ……」
+	ENDDATA
+	
+	PRINTDATAL
+	DATAFORM (い、息が、助け、て、こんなの死んじゃうから……！)
+	DATAFORM (こ、殺される、%SELF_CALL_SUBSTRING(0, SELF_CALL_LENGTH() - 2)%、%SELF_CALL(SELF_CALL_LENGTH() - 1)%、%촉수市民("촉수","おちんちん")%で、窒息、する……！)
+	DATAFORM (む、無理、こんなの無理……！)
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は喉奥を性具同然に扱われている。
+	PRINTFORML  心を折るほどの勢い、そして生臭い異臭と吐き気を催す味が%PRINT_TRANSCALLNAME(TARGET)%の理性を腐らせていく……
+ENDIF
+
+
+
+;SPCOM5：パイズリさせられる
+;ごく普通のパイズリ…というわけではなく、無理やり奉仕させられる感が強いです。
+;촉수의포로や「봉사한다」を選択している場合は普通のパイズリをしている感じになります。
+;地の文は巻き付きから派生、타락or奉仕で積極的にパイズリ手扱きフェラ
+;普段は手も巻き付かれ口にも突っ込まれて強制フェラ
+;--------------------------------------------------
+@KOJO_1_SEX_SPCOM5_16
+
+IF CHECK_PENIS()
+	;マウントを取って谷間or胸をペニスで犯し始める
+	;有り得ないくらいの量の先走り汁が윤활液となり
+	;胸をヌルヌルに汚していく
+ELSE
+	;２つの掌状촉수で両胸を覆うと表面から粘液を分泌させながら撫で回し
+	;粘液の効果で滑りと感度を増した谷間に別の촉수が現れ
+	;掌촉수に押さえつけられた乳房の間で上下に動き出す
+ENDIF
+
+IF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
+	;積極的に奉仕
+	IF TALENT:거유 > 0
+	;	PRINT 豊満な胸を駆使して
+	ELSEIF TALENT:빈유
+	;	PRINT あまりない胸を両手で寄せて
+	ELSE
+	;	PRINT 形の良いおっぱいで
+	ENDIF
+	;口や舌、指でシゴきながら　時折強く吸い上げて快楽を与えていく
+ELSE
+	;振り解こうとするが
+	IF CHECK_PENIS()
+		;頭を掴まれて無理やり口の中まで犯され、
+		;奉仕を強いられる
+	ELSE
+		;両手には別の촉수が取付き、
+		;口にも촉수がねじ込まれ、촉수への奉仕を強いられる
+	ENDIF
+ENDIF
+
+;からの구상
+
+;구상後は사정判定に続く
+IF FLAG:15 >= FLAG:14 && LOCALS:1 == "Ａ촉수"
+	;せり上がってくる様子が見える
+ENDIF
+IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;期待を瞳に浮かべる
+	ELSEIF TCVARn:2 == 자세：봉사한다
+		;動作を加速させる
+	ELSE
+		;小刻みに加速していく動き에 사정の気配を察して抵抗する
+		;無情にもひときわ深くまで突き入れられ　精が放たれる
+	ENDIF
+
+	IF !CHECK_PENIS()
+		;周囲の촉수からも精液が発射され、
+		;胸にも굴복の臭いを刷り込んでいく
+	ENDIF
+ENDIF
+
+
+IF TALENT:촉수의포로|| ABL:촉수중독 > 3
+	;ひんぬー
+	IF TALENT:빈유
+		PRINTFORML 「ん……小さくてごめん…でも、精一杯頑張るから……❤」
+		PRINTFORMW %CALLNAME%は薄い胸を健気に%촉수市民("촉수","ペニス")%に擦りつけている。
+	;きょぬー
+	ELSEIF TALENT:거유
+		PRINTFORML 「ピクピク、してる……❤」
+		PRINTFORML 「気持ち、いいかな……？」
+		PRINTFORMW %CALLNAME%はその大きな胸の谷間に%촉수市民("촉수","ペニス")%を埋もれさせ、乳圧でこすり上げている。
+	;なみちち
+	ELSE
+		PRINTFORML 「ん、ちゅ……❤」
+		PRINTFORML 「気持ち、いいかな……？」
+		PRINTFORMW %CALLNAME%は%촉수市民("촉수","ペニス")%を胸の谷間に挟み込み、口付けしながら奉仕している。
+	ENDIF
+	PRINTDATAL
+	DATAFORM 「ぁう……%SELF_CALL()%の胸、どろどろに……」
+	DATAFORM 「ふふ、%SELF_CALL()%の胸で気持ち良くしてやるよ……」
+	DATAFORM 「もっと擦り付けて……%SELF_CALL()%のここでして欲しいんだよな？」
+	ENDDATA
+ELSE
+
+	;ひんぬー
+	IF TALENT:빈유
+		PRINTDATAL
+		DATAFORM 「く……どういう、つもりだ？」
+		DATAFORM 「……嫌味か？」
+		ENDDATA
+		PRINTDATAW
+		DATAFORM （……あとで、絶対に切り落とす）
+		DATAFORM %CALLNAME%は薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+		ENDDATA
+	;きょぬー
+	ELSEIF TALENT:거유
+		;B敏感
+		IF TALENT:B민감
+			PRINTFORML 「胸ぇ゛っ！ し、絞るなぁ゛！ 挟むのやめろ゛ぉっ！」
+		ELSE
+			PRINTDATAL
+			DATAFORM 「%SELF_CALL()%の身体を玩具にするだなんてな……！」
+			DATAFORM 「ぐっ…この恥辱、決して忘れないからな！」
+			DATAFORM 「ああこの変態野郎、汚らわしい！」
+			DATAFORM 「どこに、入って……」
+			DATAFORM 「やめっ、この、気色の悪い……！」
+			ENDDATA
+		ENDIF
+		PRINTFORMW %CALLNAME%は胸の谷間に埋もれた%촉수市民("촉수","ペニス")%に、この上ない嫌悪感を抱いている。
+	;なみちち
+	ELSE
+		PRINTFORML 「くっ、こんな事、無理やり……」
+		PRINTFORMW 가슴の谷間を通って口に近よる%촉수市民("촉수","ペニス")%から、%CALLNAME%は顔を背けた。
+	ENDIF
+
+ENDIF
+

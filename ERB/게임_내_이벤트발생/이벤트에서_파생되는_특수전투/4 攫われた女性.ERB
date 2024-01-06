@@ -1,0 +1,111 @@
+﻿;---------------------------------------------------------------------
+;攫われた女性たちの救出イベント(未実装)
+
+@EVENT_BATTLE_SITUATION_4
+PRINTFORML つい先ほど起きた襲撃事件後に逃走した大型촉수生物が、もう間もなく近くを通過するらしい。
+PRINTFORML 女性数名が連れ去られたとのことで、救出の依頼が来ている。
+PRINTFORML 付近の部隊が急行しているものの、このままでは逃亡速度に間に合わないようだ。
+SETCOLORBYNAME HOTPINK
+PRINTFORML 今すぐ仕留めに向かわない限り、女性たちの行方を追うのは절망的となるだろう……
+RESETCOLOR
+PRINTL 
+PRINTFORML 危険を承知で助けに行くべきだろうか？
+
+@EVENT_BATTLE_RESCUE_4
+PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわけにはいかない。
+PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
+
+@EVENT_BATTLE_ABANDON_4
+PRINTFORML 不確定要素も多く、万全でもない状態で촉수生物と戦うのは危険すぎる。
+PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
+;ニュース記事に(失敗時使い回し)
+if !FLAG:60
+	FLAG:60=100000+FLAG:45
+endif
+
+
+@EVENT_BATTLE_EXEC_4
+PRINTFORML 現場に辿り着いた%PRINT_CALLNAME(TARGET)%の前に촉수生物が現れた。
+PRINTFORML ズルズルと気味の悪い粘液を引きながら、捕らえた女性たちを何処かへと連れ去ろうとしていたようだ。
+PRINTFORML 漂う臭気に思わず身震いした%PRINT_CALLNAME(TARGET)%の気配を察知したのか、
+IF ISGIRLY()
+	PRINTFORML 新たな獲物を見つけたと言わんばかりに何本もの太い촉수が蠢き始める。
+ELSE
+	PRINTFORML 邪魔をするなと言わんばかりに촉수を向けて威嚇を始める。
+ENDIF
+PRINTL
+PRINTFORML 一度姿を消した촉수の行方を追うのは%PRINT_CALLNAME(TARGET)%であっても難しいだろう。
+PRINTFORML 何としてもこの場で決着を付けなければ……
+PRINTW 
+
+PRINTFORML （追撃イベントは規定ターン以内に촉수生物を撃破する必要があります！）
+PRINTW 
+DRAWLINE
+턴상한=40
+CALL ADDBATTLESITUATION("撤退不可,追撃戦,市民なし,レイプなし")
+
+
+
+
+
+@EVENT_BATTLE_SUCCESS_4
+PRINTFORML %PRINT_CALLNAME(TARGET)%の活躍により、攫われた女性たちを助け出すことができた。
+PRINTFORML 衣服は溶かされ粘液に塗れているが、幸い意識を失っているだけで命に別状はなさそうだ。
+PRINTFORML 安藤を覚える一方で、か弱い女性を狙う촉수の卑劣さに憤りも隠せない%PRINT_CALLNAME(TARGET)%。
+;PRINTFORML 同じ女性として安堵を覚える%PRINT_CALLNAME(TARGET)%。
+
+PRINTW 
+SIF TCREPORT:TCR内装耐久零 && ISGIRLY()
+	PRINTFORML %PRINT_CALLNAME(TARGET)%まで被害女性の一人に間違われるハプニングこそあったものの、
+PRINTFORML 遅れて駆け付けた救急隊は被害女性を手早く救急車で搬送し、周囲の市民を避難誘導してゆく。
+PRINTFORML 必要な「治療」は媚毒粘液の拭き取りから淫気の除去、질내の応急処置まで多岐に渡る事だろう。
+PRINTFORML %PRINT_CALLNAME(TARGET)%が手助けを試みようにも、素人ではかえって邪魔になりそうだ。
+PRINTFORML その場は専門チームの仕事に任せ、%PRINT_CALLNAME(TARGET)%は後を託して去る事にした……
+PRINTW 
+PRINTFORML 　인기도が3上昇した！
+PRINTFORML 　報酬として政府から$5000入手した！
+FLAG:853 += 3
+MONEY += 5000
+;ニュース記事に
+Sif !FLAG:60
+	FLAG:60=110000+FLAG:45
+
+@EVENT_BATTLE_MISSION_CHECKER_4
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;勝った場合のみ達成
+	IF TFLAG:98 != 1
+		RETURN 0
+	ELSE
+		RETURN 1
+	ENDIF
+
+@EVENT_BATTLE_FAILURE_4
+;幽閉されてはいないがミッションには失敗した
+IF TFLAG:98 != 2
+	PRINTFORML %PRINT_CALLNAME(TARGET)%が촉수を仕留めきれなかった事で作戦は失敗し、
+	PRINTFORML 攫われた被害者の行方も分からなくなってしまった。
+;負けた
+ELSE
+	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+ENDIF
+PRINTFORML 衣服の切れ端や僅かな装飾品だけを遺留品として、女性たちは姿を消してしまったのだ。
+PRINTFORML ……行方こそ知れずとも、彼女たちを待ち受ける運命は分かり切っている。
+PRINTFORML 
+PRINTFORML 陽の届かぬ薄暗い肉の洞窟で、今日も新たな苗床たちが悲痛な嬌声を上げていた……
+PRINTW 
+PRINTFORML 　追撃ミッションに失敗しました……
+;ニュース記事に
+Sif !FLAG:60
+	FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+@EVENT_BATTLE_FLASHNEWS_4(ARG)
+;ミッション成功
+IF ARG==1
+	RESULTS'="촉수生物に攫われかけた女性らを魔法少女が華麗に救出、市民ら感謝の声"
+;ミッション失敗
+ELSEIF ARG==0
+	RESULTS'="大型촉수生物が市街地を襲来、複数の女性が行方不明に"
+;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+ELSEIF ARG==-1
+	RESULTS'="大型촉수生物が市街地を襲来、女性ら多数行方不明。中には魔法少女の姿も？"
+ENDIF

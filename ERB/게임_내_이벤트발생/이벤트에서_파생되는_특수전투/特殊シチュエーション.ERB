@@ -1,0 +1,116 @@
+﻿
+;特殊戦闘シチュエーション
+;	イベント内でADDBATTLESITUATION("文字列")でセットして
+;	GETBATTLESITUATION("文字列")で検索(find)するだけのやっつけ仕様
+;
+;★…システム未実装　＠…実装済みだが利用例まだナシ
+;・特殊シチュエーションの指定
+;	奇襲		(襲来イベント、TS変身準備に時間が掛かる)
+;	撤退不可
+;	支援無効
+;	身バレ不可	(市民がいる間は変身・공격できない)
+;	＠変身不可
+;	＠공격不可	(戦闘中공격できず、ひたすら回避するしかない)
+;	強制발정	(媚薬ガス等)
+;	強制마비	(電撃촉수やスタンガン等)
+;	＠強制全裸	(最初から全裸)
+;	＠強制拘束	(最初から拘束されている)
+;	＠強制挿入	(最初から강구속されている)
+;	★奉仕戦	(奉仕コマンド解禁＆性奉仕のみ可能、人質取られてる等)
+;	★変身時に촉수服化してしまう
+;	★だんだん服が溶けていく
+;	★襲われ女性
+;	★囚われ女性
+;	★特殊衣装	通常装備ではなくイベントに合わせた衣装が選択される？
+;・戦闘環境の指定
+;	先制無し	この戦闘ではヒロインの先制공격が発生しない
+;	市民確定	「市民」が絶対に発生する(※「先制無し」を内包)
+;	市民なし	「市民」が絶対に発生しない
+;	常時撮影	「クズ市民」無しでも凌辱動画が記録される
+;
+;	レイプ確定	戦闘後レイプが絶対に発生する
+;	レイプなし	戦闘後レイプが絶対に発生しない
+;	EX不可		EXゲージが破壊されている　SP풀버스트使用時に呼ばれている
+;・UI補助　フレーバー
+;	耐久戦		(引き分け時メッセージが逃げられた⇒耐えきったに変わる）
+;	追撃戦		(残り時間UIのデザインが変わる　勝利がミッション達成に必須のイベントで使う)
+;	＠配信		常時撮影が[常時配信]にUI表記変わる
+;	★脱出戦		「時間切れ」	は【敗北＆幽閉】　複数回逃走成功でも勝利？
+;	★絶頂で勝利
+;	★絶頂で敗北
+@INITBATTLESITUATION(ARGS)
+	特殊戦闘シチュエーション'=""
+@ADDBATTLESITUATION(ARGS)
+	特殊戦闘シチュエーション'=ARGS+","
+@GETBATTLESITUATION(ARGS)
+#FUNCTION
+	STRFIND 特殊戦闘シチュエーション,ARGS,0
+	RETURNF RESULT>=0 ? 1 # 0
+
+
+;イベント内で一時的に衣装を変更する関数(イベント内で呼び出す)
+;	アウター/アウター変身/インナー/その他装備　のアイテム番号
+;	0で装備無し、-1なら変更しない
+@EVENT_BATTLE_SET_COSTUME(num,ARG,ARG:1,ARG:2,ARG:3)
+#dim num,1
+;컨피그で変更を無効化していたら何もせず帰る
+SIF CONFIG_CHECK_OTHER_F(8)==1
+	RETURN
+
+;本来の衣装のバックアップ
+IF 	CFLAG:num:544 == 0
+	CFLAG:num:544=1	
+	CFLAG:num:540=CFLAG:num:40
+	CFLAG:num:541=CFLAG:num:41
+	CFLAG:num:542=CFLAG:num:42
+	CFLAG:num:543=CFLAG:num:43
+ENDIF
+;衣装切り替え
+SIF ARG>=0
+	CFLAG:num:40=ARG
+SIF ARG:1>=0
+	CFLAG:num:41=ARG:1
+SIF ARG:2>=0
+	CFLAG:num:42=ARG:2
+SIF ARG:3>=0
+	CFLAG:num:43=ARG:3
+;衣装の耐久度を設定しておく
+CALL CLOTH_BATTLE_SETHP
+;衣装の情報を更新しておく
+CALL REFRESH_CLOTH_DATA
+
+
+;状態異常の直接付与(イベント戦闘用)
+;ここではテキストは出さない？
+; 　1,기절
+; 　2,배란
+; 　4,발정
+; 　8,마비
+;　16,끈적끈적
+;　32,쓰러짐
+;　64,황홀
+; 128,강구속
+; 256,絶頂禁止
+;@EVENT_BATTLE_STATE_CHANGE(num)
+;#dim num,1
+;	TCVARn:12 |= 기절
+
+
+
+;イベントで一時変更していた衣装を元に戻す補助関数(戦闘終了処理などで自動で呼んでいる)
+@EVENT_BATTLE_RESET_COSTUME(num)
+#dim num,1
+SIF CFLAG:num:544 == 0
+	RETURN
+CFLAG:num:40=CFLAG:num:540
+CFLAG:num:41=CFLAG:num:541
+CFLAG:num:42=CFLAG:num:542
+CFLAG:num:43=CFLAG:num:543
+;元の装備に戻った
+CFLAG:num:544=0
+;衣装の耐久度を設定
+CALL CLOTH_BATTLE_SETHP
+;衣装の情報を更新
+CALL REFRESH_CLOTH_DATA
+
+

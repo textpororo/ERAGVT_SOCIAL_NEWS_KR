@@ -1,0 +1,1977 @@
+﻿
+
+
+
+
+;**********************************************
+
+
+@SHOW_SHOP
+#DIM CCOUNT
+#DIM 일괄일시TARGET = 0,0
+
+
+
+
+printl
+printl
+printl
+printl
+printl
+printl
+printl
+
+;캐릭터 총 인원수가 3인 이상일 때, CHARANUM_ACTIVE가 기존의 TARGET을 덮어쓰는 현상이 발생하여 임시로 막았습니다.
+;TARGET=MIN(TARGET,CHARANUM_ACTIVE())
+
+SIF CHARANUM_ACTIVE()==1
+	FLAG:9 = 0
+
+;일괄일시TARGET:0 랜덤으로 뽑힌 건강한 TARGET
+;일괄일시TARGET:1 본래의 TARGET
+IF FLAG:9 && CHARANUM_ACTIVE() > 0
+	$HITOKUCHI_LOOP
+	일괄일시TARGET:0 = RAND:(CHARANUM -1) + 1
+	SIF CFLAG:(일괄일시TARGET:0):0 != 상태_건강 || CFLAG:(일괄일시TARGET:0):999 == 0
+		GOTO HITOKUCHI_LOOP
+	일괄일시TARGET:1 = TARGET
+ENDIF
+
+;인기도 상한과 하한을 설정
+FLAG:853 = LIMIT(FLAG:853, -100, 100)
+DRAWLINE
+;플래시 뉴스 갱신
+CALL FLASHNEWS
+FLAG:60 = 0
+
+;도중 로드용
+FLAG:799 = 0
+
+;살아 남은 보스의 수를 본다
+CALL TENTACLE_SURVIVE, "NUM"
+LOCAL = RESULT
+
+IF TIME == 0
+	LOCALS = 낮
+	IF FLAG:999 == 1
+		SETBGCOLOR 0,0,40
+	ELSE
+		SETBGCOLOR 10,10,0
+	ENDIF
+ELSEIF TIME == 1
+	LOCALS = 밤
+	IF FLAG:999 == 1
+		SETBGCOLOR 0,0,40
+	ELSE
+		SETBGCOLOR 0,0,5
+	ENDIF
+ENDIF
+
+
+
+
+;**********************************************************
+;여기서부터 SHOP 화면 표시 부분
+
+DRAWLINE
+PRINTFORM INTERMISSION {DAY}일 쨰　　
+FONTBOLD
+SELECTCASE DAY % 7
+CASE 0
+	PRINT (日)
+CASE 1
+	PRINT (月)
+CASE 2
+	PRINT (火)
+CASE 3
+	PRINT (水)
+CASE 4
+	PRINT (木)
+CASE 5
+	PRINT (金)
+CASE 6
+	PRINT (土)
+ENDSELECT
+FONTREGULAR
+IF TIME == 0
+	SETCOLOR 230,100,0
+ELSE
+	SETCOLOR 0,30,230
+ENDIF
+PRINTFORM  %LOCALS%
+RESETCOLOR
+;일수 제한 해제 효과 (주회 인계 or FREEPLAY 모드)
+IF CHECK_GAMEOVER_F() == 1
+	PRINTL 
+ELSEIF GAME_OPTION_CHECK_F(OPTION_제한시간없음)
+	PRINTFORML （완전 섬멸까지 ∞일）
+ELSEIF ENEMY_TYPE_CHECK_F("BOSS") == 1
+	IF GAME_OPTION_CHECK_F(OPTION_endless)
+		PRINTFORML （{FLAG:3 - LOCAL + 1}번째 적 섬멸까지 {(FLAG:3 - LOCAL + 1) * FLAG:2 - DAY + DAY:1}일 / 완전 섬멸까지 ∞일）
+	ELSE
+		PRINTFORML （{FLAG:3 - LOCAL + 1}번째 적 섬멸까지 {(FLAG:3 - LOCAL + 1) * FLAG:2 - DAY + DAY:1}일 / 완전 섬멸까지 {FLAG:1 - DAY + DAY:1}일）
+	ENDIF
+;최종 보스 출현 후
+ELSEIF GET_LASTBOSS_PHASE_F() >= 1
+	IF GAME_OPTION_CHECK_F(OPTION_endless)
+		PRINTFORML （완전 섬멸까지 ∞일）
+	ELSE
+		PRINTFORML （완전 섬멸까지 {FLAG:1 - DAY + DAY:1}일）
+	ENDIF
+ENDIF
+
+
+
+;자금
+PRINTFORM 자금：{MONEY}＄　
+;방위력
+IF FLAG:852 == 0
+	SETCOLOR 120,0,0
+ELSEIF FLAG:852 < 1250
+	SETCOLOR 250,0,0
+ELSEIF FLAG:852 < 2500
+	SETCOLOR 250,250,100
+ELSEIF FLAG:852 < 10000
+	SETCOLOR 0,250,60
+ELSEIF FLAG:852 < 20000
+	SETCOLOR 0,200,255
+ELSE
+	SETCOLOR 200,0,255
+ENDIF
+PRINTFORM 방위력：{FLAG:852}　　
+;인기도
+IF FLAG:853 <= -75
+	SETCOLOR 180,0,0
+ELSEIF FLAG:853 <= -50
+	SETCOLOR 250,50,50
+ELSEIF FLAG:853 < 0
+	SETCOLOR 250,200,200
+ELSEIF FLAG:853 < 50
+	SETCOLOR 200,250,200
+ELSEIF FLAG:853 < 75
+	SETCOLOR 100,250,150
+ELSE
+	SETCOLOR 100,250,200
+ENDIF
+PRINTFORM 인기도：{FLAG:853}
+PRINTL 
+
+;탐색 상황에 따라 대응 커맨드에 색상 변경
+IF FLAG:47 >= FLAG:46
+	SETCOLOR 255,125,125
+ELSE
+	SETCOLOR 255,180,0
+ENDIF
+DRAWLINE
+PRINTFORML 【탐색 상황】
+PRINTFORM 　
+;정보가 부족할 시
+IF FLAG:47 < FLAG:46
+	PRINTFORM 탐색도 {PERCENT_CAL_F(FLAG:47, FLAG:46)}％ ({FLAG:47}/{FLAG:46})
+;정보 수집이 끝났을 시
+ELSE
+	IF FLAG:100 == 0
+		PRINTFORM 　　최종 보스 촉수와 교전 중!
+	ELSE
+		PRINTFORM 　　보스 촉수의 흔적 확인!
+	ENDIF
+	IF FLAG:47 >= FLAG:46
+		IF TIME == 0
+			LOCAL:1 = 40
+		ELSEIF TIME == 1
+			LOCAL:1 = 50
+		ENDIF
+		IF GET_LASTBOSS_PHASE_F() >= 1
+			LOCAL:1 += 50
+		ELSE
+			LOCAL:1 += FLAG:3 * 3
+		ENDIF
+		LOCAL:1 = LOCAL:1 * FLAG:47 / FLAG:46
+		FOR LOCAL,0, CHARANUM
+			SIF CONFIG_CHECK_BALANCE_F(1) > 0 && FLAG:18 > 0 && (CFLAG:LOCAL:100 == 예정_출격 || CFLAG:LOCAL:100 == 예정_방위)
+				LOCAL:1 += 4
+		NEXT
+		SIF LOCAL:1 > 95
+			LOCAL:1 = 95
+		PRINTFORM (포착률 {LOCAL:1}％)　
+		SETCOLOR 255,255,225
+		;IF CONFIG_CHECK_BALANCE_F(1) > 0 && FLAG:18 > 0
+		;	PRINT 追跡対象：
+		;	FLAG:11 = FLAG:18
+		;	SAVESTR:13 = BOSS
+		;	CALL TENTACLE_ACCESS, "GETNAME"
+		;	PRINTFORM %RESULTS%
+		;ENDIF
+	ENDIF
+
+ENDIF
+CALL SHOP_PRINT_SITUATION()
+RESETCOLOR
+
+
+;캐릭터의 스테이터스
+SIF FLAG:9
+	TARGET = 일괄일시TARGET:0
+
+CALL SHOW_STATUS_BASE_SHOP
+
+SIF FLAG:9
+	TARGET = 일괄일시TARGET:1
+
+;일괄 설정용
+IF FLAG:9 == 1
+	LOCAL:1 = 1
+	FONTBOLD
+	SETCOLOR 255, 150, 0
+ELSE
+	SETCOLOR 120, 60, 0
+ENDIF
+IF CHARANUM_SAFE() >= 2 && FLAG:63 == 0
+	PRINTFORM [90] 일괄 설정
+ELSE
+	PRINT 　　　　　　
+ENDIF
+RESETCOLOR
+FONTREGULAR
+
+PRINTPLAIN                          
+
+IF (CHARANUM > 2 && CHARANUM_SAFE()>0) || FLAG:63
+	IF FLAG:63 && TARGET != 0
+		IF CFLAG:TARGET:999 == 0 && CHARANUM_ACTIVE() < 파티인원최대치
+			IF CFLAG:TARGET:0 == 상태_출산직전
+				PRINT 편성 불가(특별 병동에 입원 중)
+			ELSEIF CFLAG:TARGET:0 == 상태_육아중
+				PRINT 편성 불가(특별 병동에서 육아 중)
+			ELSE
+				PRINT [100] 파티에 추가한다
+			ENDIF
+		ELSEIF CFLAG:TARGET:999
+			PRINT [100] 파티에서 제외한다
+		ENDIF
+	ELSE
+			PRINT 　　　　　　　　　　　
+	ENDIF
+
+	IF FLAG:63
+		FONTBOLD
+		SETCOLOR 250,180,50
+		PRINT [50] 파티 편성을 완료한다　　
+	ELSE
+		PRINT [50] 파티 편성　　 
+	ENDIF
+	SIF FLAG:63 == 0
+		PRINTPLAIN  
+	FONTREGULAR
+	RESETCOLOR
+ELSE
+	PRINTPLAIN                
+ENDIF
+IF FLAG:63 != 0 || CHARANUM_PLAYABLE()==CHARANUM_SAFE_PARTYCHECK()
+	;;편성 중에는 항상 전체 표시이므로 버튼을 꺼내지 않는다.　평소에는 액티브 캐릭터 전원 편성 중이라면 꺼내지 않는다.
+ELSEIF CHARANUM_SAFE_PARTYCHECK(0) && FLAG:61
+	PRINT     [60] ▲조작 캐릭터만
+ELSEIF CHARANUM_SAFE_PARTYCHECK(0)
+	PRINT         [60] ▼모두 표시
+ENDIF
+
+
+
+;;각 캐릭터의 행동 예정 표시
+;IF FLAG:63 == 0
+;	CALL SHOP_ACTION_PLANDISP(0)
+;ELSE
+;	PRINTL
+;	PRINTL
+;ENDIF
+
+
+;SIF FLAG:63 == 0
+	PRINTL 
+DRAWLINE
+
+
+;인포메이션
+CALL SHOP_INFOMATION
+
+
+
+;지문: SHOP 화면에서의 한 마디 메시지 호출용
+SIF FLAG:9
+	TARGET = 일괄일시TARGET:0
+IF CFLAG:TARGET:0 == 상태_건강 && FLAG:63 == 0 && TARGET != MASTER
+	LOCAL:2=LINECOUNT
+	CALL MESSAGE_HITOKUTI_SHOP
+	REPEAT 3-(LINECOUNT-LOCAL:2)
+		PRINTL
+	REND
+ELSE
+	PRINTL
+	PRINTL
+	PRINTL
+ENDIF
+SIF FLAG:9
+	TARGET = 일괄일시TARGET:1
+
+IF FLAG:63 == 0
+	PRINTL [100] 행동 개시
+	PRINTL 
+ELSE
+	IF TARGET != 0
+		PRINT 선택 중인 캐릭터：
+		SETCOLOR 250,180,50
+		PRINTPLAINFORM [{TARGET}] %CALLNAME:TARGET%
+		RESETCOLOR
+		PRINTL 　⇒　
+		PRINTL （위치를 바꿀 대상 캐릭터를 선택해 주십시오.）
+		PRINTL （선택 중인 캐릭터를 다시 선택하면 선택을 해제합니다.）
+		PRINTL 
+	ELSE
+		PRINTFORML 선택 중인 캐릭터：없음
+		PRINTL （배치를 변경할 캐릭터를 선택하십시오.）
+		PRINTL 
+		PRINTL 
+		PRINTL 
+		PRINTL 
+	ENDIF
+	IF TARGET != 0
+		IF CFLAG:TARGET:999 == 0 && CHARANUM_ACTIVE() < 파티인원최대치
+			PRINTL 
+			IF CFLAG:TARGET:0 == 상태_출산직전
+				PRINTL 해당 캐릭터는 특별병동에 입원 중이기 때문에, 파티에 추가할 수 없습니다.
+			ELSEIF CFLAG:TARGET:0 == 상태_육아중
+				PRINTL 해당 캐릭터는 특별병동에서 육아 중이기 때문에, 파티에 추가할 수 없습니다.
+				PRINTL
+				;PRINTL [100] 선택 중인 캐릭터를 파티에 추가한다
+			ENDIF
+		ELSEIF CFLAG:TARGET:999
+			PRINTL 
+			PRINTL
+			;PRINTL [100] 선택 중인 캐릭터를 파티에서 제외한다
+		ENDIF
+	ENDIF
+ENDIF
+IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
+	SETCOLOR 255, 170, 170
+	PRINTFORM [101] 출격한다　　　 
+	SETCOLOR 255, 255, 170
+	PRINTFORM [102] 단련한다　　　 
+	SETCOLOR 170, 170, 255
+	PRINTFORM [103] 휴식한다　　　 
+	SETCOLOR 170, 255, 255
+	PRINTFORM [104] 특별 활동　　　 
+	PRINTL 
+	IF !GAME_OPTION_CHECK_F(OPTION_solo)
+		SETCOLOR 255, 170, 255
+		PRINTFORM [105] 거점 방위　　　 
+	ELSE
+		SETCOLOR 105,105,105
+		PRINTPLAIN [105] 거점 방위　　　 
+	ENDIF
+	IF CHARANUM >= 3
+		SETCOLOR 170, 255, 170
+		PRINTFORM [106] 전투 지원　　　 
+	ELSE
+		SETCOLOR 105,105,105
+		PRINTPLAIN [106] 전투 지원　　　 
+	ENDIF
+	SETCOLOR 255, 200, 50
+	PRINTFORM [107] 정보 수집　　　 
+	SETCOLOR 50, 200, 255
+	PRINTFORM [108] 자유 행동
+	PRINTL 
+ENDIF
+RESETCOLOR
+PRINTL 
+PRINT [110] 스테이터스 표시 
+IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
+	PRINT [111] 캐릭터 강화   
+	PRINT [112] 의상 설정　　 
+	PRINTL [113] 메디컬 룸
+;	PRINTL [114] 커스터마이즈 
+	PRINT [120] 의상 구입　　 
+ENDIF
+SIF FLAG:63 == 0
+	PRINT [130] 상황 확인　　 
+
+IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
+	PRINT [150] 시설 확장　　 
+	;안 될 경우
+	IF CFLAG:TARGET:0 != 상태_건강 || TARGET == MASTER || FLAG:9 != 0
+		SETCOLOR 70,70,70
+		PRINT [160] 스케쥴 설정
+		RESETCOLOR
+	ELSE
+		PRINT [160] 스케쥴 설정
+	ENDIF
+ENDIF
+PRINTL 
+
+;INSTANT 모드라면 은퇴&신인 가입을 가능하게
+IF FLAG:63 == 0 && GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
+	PRINT                   　[169] 은퇴자 명부
+	PRINT 	    [170] 은퇴시킨다　　
+	PRINTL [180] 신인을 가입시킨다   
+ENDIF
+
+
+PRINT [200] 세이브　　　　
+PRINT [300] 로드          
+PRINT [700] 컨피그　　　　
+PRINT [800] 트로피 확인　 
+
+;출격 가능 체크
+@SORTIE_CHECK
+#DIM CCOUNT
+LOCAL = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	SIF (CFLAG:CCOUNT:100 == 예정_출격 && BASE:CCOUNT:체력 > 강제휴식체력) || (CFLAG:CCOUNT:100 == 예정_방위 && BASE:CCOUNT:체력 > 강제휴식체력)
+		LOCAL += 1
+NEXT
+RETURN LOCAL
+
+@USERSHOP
+#DIM CCOUNT
+IF RESULT == 100 && (TARGET != 0 && FLAG:63 && CFLAG:TARGET:0 == 상태_건강)
+	IF CFLAG:TARGET:999 == 0 && CHARANUM_ACTIVE() < 파티인원최대치
+		CFLAG:TARGET:999 = 1
+	ELSEIF CFLAG:TARGET:999
+		CFLAG:TARGET:999 = 0
+		CFLAG:TARGET:100 = 예정_휴식
+		;SIF CHARANUM_SAFE_PARTYCHECK(0)
+		;	FLAG:61 = 1
+	ENDIF
+	TARGET = 0
+ELSEIF RESULT == 100 && FLAG:63 == 0
+	CALL SORTIE_CHECK
+	IF FLAG:40 == 0 && CHECK_GAMEOVER_F() == 0
+		DRAWLINE
+		PRINTL 
+		PRINTL 각 캐릭터의 행동 예정은 다음과 같습니다.
+		PRINTL 
+		CALL SHOP_ACTION_PLANDISP(1)
+		PRINTL 
+		PRINTL 이 설정으로 행동을 개시하시겠습니까?
+		PRINTL ※ 행동 예정을 설정하지 않은 캐릭터는 자동으로 휴식합니다.
+		CALL SORTIE_CHECK
+		IF RESULT == 0 && !GAME_OPTION_CHECK_F(OPTION_solo)
+			PRINTL ※ 현재 출격, 방위를 행할 캐릭터가 없어 방위력이 저하합니다.
+		ENDIF
+		DRAWLINE
+		PRINTL [0] 아니오
+		PRINTL [1] 네
+		PRINTL [9] 네 (다음부터 확인하지 않는다)
+		$INPUT_LOOP
+		INPUT
+		IF RESULT == 9
+			FLAG:40 = 1
+			CALL SORTIE_CHECK
+			;주의를 한 번에 끝낸 경우
+			IF RESULT == 0 && !GAME_OPTION_CHECK_F(OPTION_solo)
+				FLAG:40 = 2
+			ENDIF
+			CALL SHOP_ACTION
+			ELSEIF RESULT < 0 || RESULT > 9
+		ELSEIF RESULT == 0
+		ELSEIF RESULT == 1
+			CALL SHOP_ACTION
+		ENDIF
+	;출격 혹은 방위할 수 있는 캐릭터가 없다
+	ELSEIF FLAG:40 == 1 && RESULT == 0 && !GAME_OPTION_CHECK_F(OPTION_solo) && CHECK_GAMEOVER_F() == 0
+		DRAWLINE
+		PRINTL 
+		PRINTL 출격・방위를 행할 예정인 캐릭터가 한 명도 없습니다.
+		PRINTL 
+		CALL SHOP_ACTION_PLANDISP(1)
+		PRINTL 
+		PRINTL 이대로 행동을 개시하시겠습니까?
+		PRINTL ※ 현재 출격, 방위를 행할 캐릭터가 없어 방위력이 저하합니다.
+		DRAWLINE
+		PRINTL [0] 아니오
+		PRINTL [1] 네
+		PRINTL [9] 네 (다음부터 확인하지 않는다)
+		$INPUT_LOOP_1
+		INPUT
+		IF RESULT == 9
+			FLAG:40 = 2
+			CALL SHOP_ACTION
+		ELSEIF RESULT < 0 || RESULT > 9
+		ELSEIF RESULT == 0
+		ELSEIF RESULT == 1
+			CALL SHOP_ACTION
+		ENDIF
+	ELSE
+		CALL SHOP_ACTION
+	ENDIF
+ELSEIF RESULT == 예정_출격 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		PRINTL 
+		;임신中は出撃できない
+		IF CHECK_PREGNANT_F(TARGET)
+			PRINTL 임신中は出撃できません
+			PRINTL
+		;FEAT効果によるコマンド制限
+		ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[밤악마의귀족]の効果で昼間は外出できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			CFLAG:100 = 예정_출격
+			PRINTFORML %CALLNAME%は出撃することにしました
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			;임신中は出撃できない
+			IF CHECK_PREGNANT_F(CCOUNT) > 0
+				PRINTFORML %CALLNAME:CCOUNT%は임신中のため出撃できません
+			;FEAT効果によるコマンド制限
+			ELSEIF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[밤악마의귀족]の効果で外出は出撃できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_출격
+				PRINTFORML %CALLNAME:CCOUNT%は出撃することにしました
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_단련 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		PRINTL 
+		CFLAG:100 = 예정_단련
+		PRINTFORML %CALLNAME%は鍛錬をすることにしました
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			CFLAG:CCOUNT:100 = 예정_단련
+			PRINTFORML %CALLNAME:CCOUNT%は鍛錬をすることにしました
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_휴식 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		PRINTL 
+		CFLAG:100 = 예정_휴식
+		PRINTFORML %CALLNAME%は休憩することにしました
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			CFLAG:CCOUNT:100 = 예정_휴식
+			PRINTFORML %CALLNAME:CCOUNT%は休憩することにしました
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_활동 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		;FEAT効果によるコマンド制限
+		IF TALENT:밤악마의귀족 > 0 && TIME == 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[밤악마의귀족]の効果で昼間は外出できません！
+			RESETCOLOR
+			PRINTL 
+		ELSEIF TALENT:타고난전사 > 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[타고난전사]の効果で特別活動に参加できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			PRINTL 
+			CFLAG:100 = 예정_활동
+			PRINTFORML %CALLNAME%は자금を稼ぐことにしました
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			;FEAT効果によるコマンド制限
+			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[밤악마의귀족]の効果で昼間は外出できません！
+				RESETCOLOR
+			ELSEIF TALENT:CCOUNT:타고난전사 > 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[타고난전사]の効果で特別活動に参加できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_활동
+				PRINTFORML %CALLNAME:CCOUNT%は자금を稼ぐことにしました
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_방위 && (!GAME_OPTION_CHECK_F(OPTION_solo) && CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		PRINTL 
+		;임신中は出撃できない
+		IF CHECK_PREGNANT_F(TARGET) > 0
+			PRINTL 임신中は防衛に参加できません
+			PRINTL
+		;FEAT効果によるコマンド制限
+		ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[밤악마의귀족]の効果で昼間は外出できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			PRINTFORML %CALLNAME%は拠点を防衛することにしました
+			CFLAG:100 = 예정_방위
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			;임신中は出撃できない
+			IF CHECK_PREGNANT_F(CCOUNT) > 0
+				PRINTFORML %CALLNAME:CCOUNT%は임신中のため防衛に参加できません
+			;FEAT効果によるコマンド制限
+			ELSEIF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[밤악마의귀족]の効果で昼間は外出できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_방위
+				PRINTFORML %CALLNAME:CCOUNT%は拠点を防衛することにしました
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_지원 && (CHARANUM >= 3 && CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		IF TALENT:타고난전사 > 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[타고난전사]の効果で戦闘支援に参加できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			PRINTL 
+			CFLAG:100 = 예정_지원
+			PRINTFORML %CALLNAME%は後方で戦闘支援に徹します
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			IF TALENT:CCOUNT:타고난전사 > 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[타고난전사]の効果で戦闘支援に参加できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_지원
+				PRINTFORML %CALLNAME:CCOUNT%は後方で戦闘支援に徹します
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_정보 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		;FEAT効果によるコマンド制限
+		IF TALENT:밤악마의귀족 > 0 && TIME == 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[밤악마의귀족]の効果で昼間は外出できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			PRINTL 
+			CFLAG:100 = 예정_정보
+			PRINTFORML %CALLNAME%は後方で情報収集に徹します
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			;FEAT効果によるコマンド制限
+			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[밤악마의귀족]の効果で昼間は外出できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_정보
+				PRINTFORML %CALLNAME:CCOUNT%は後方で情報収集に徹します
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 예정_자유 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER && (CFLAG:0 == 상태_건강 || FLAG:9) && FLAG:63 == 0)
+	IF FLAG:9 == 0
+		;FEAT効果によるコマンド制限
+		IF TALENT:밤악마의귀족 > 0 && TIME == 0
+			SETCOLOR 255,128,0
+			PRINTFORML %CALLNAME%は[밤악마의귀족]の効果で昼間は外出できません！
+			RESETCOLOR
+			PRINTL 
+		ELSE
+			PRINTL 
+			CFLAG:100 = 예정_자유
+			PRINTFORML %CALLNAME%は自由に行動することにしました
+		ENDIF
+	ELSE
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CFLAG:CCOUNT:999 == 0
+				CONTINUE
+			SIF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_악질감금, 상태_사망)
+				CONTINUE
+			PRINTL 
+			;FEAT効果によるコマンド制限
+			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
+				SETCOLOR 255,128,0
+				PRINTFORML %CALLNAME:CCOUNT%は[밤악마의귀족]の効果で昼間は外出できません！
+				RESETCOLOR
+			ELSE
+				CFLAG:CCOUNT:100 = 예정_자유
+				PRINTFORML %CALLNAME:CCOUNT%は自由に行動することにしました
+			ENDIF
+		NEXT
+	ENDIF
+	PRINTW 
+ELSEIF RESULT == 110
+	IF CHARANUM >= 3
+		WHILE RESULT != 999
+			PRINTL 
+			PRINTL 【스테이터스 표시】
+			IF TARGET == 0
+				CALL CHARA_LIST, 2,1
+			ELSE
+				RESULT = TARGET
+			ENDIF
+
+			IF RESULT != 999
+				CALL SHOW_STATUS_CHARA_SELECT, RESULT
+			ENDIF
+		WEND
+	ELSE
+		PRINTL 
+		PRINTL 【스테이터스 표시】
+		TARGET = 1
+		CALL SHOW_STATUS_CHARA_SELECT, TARGET
+	ENDIF
+	SIF FLAG:63
+		TARGET = 0
+ELSEIF RESULT == 111 && (CHECK_GAMEOVER_F() == 0 && CHARANUM_ACTIVE() && FLAG:63 == 0)
+	IF CHARANUM >= 3
+		WHILE RESULT != 999
+			PRINTL 
+			PRINTL 【キャラの強化】
+			CALL CHARA_LIST, 1,2
+			SIF RESULT != 999
+				CALL CHARA_POWERUP, RESULT
+		WEND
+	ELSE
+		PRINTL 
+		PRINTL 【キャラの強化】
+		TARGET = 1
+		CALL CHARA_POWERUP, TARGET
+	ENDIF
+ELSEIF RESULT == 112 && (CHECK_GAMEOVER_F() == 0 && CHARANUM_ACTIVE() && FLAG:63 == 0)
+	CALL CLOTH_WEAR
+ELSEIF RESULT == 113 && (CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0 && FLAG:63 == 0)
+	CALL DRUG_PREPARATION
+ELSEIF RESULT == 114 && (CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0 && FLAG:63 == 0)
+	IF CHARANUM >= 3
+		WHILE RESULT != 999
+			PRINTL 
+			PRINTL 【武器カスタマイズ】
+			CALL CHARA_LIST, 1,0
+			SIF RESULT != 999
+				CALL WEAPON_CUSTOMIZE, RESULT
+		WEND
+	ELSE
+		PRINTL 
+		PRINTL 【武器カスタマイズ】
+		TARGET = 1
+		CALL WEAPON_CUSTOMIZE, TARGET
+	ENDIF
+ELSEIF RESULT == 120 && (CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0 && FLAG:63 == 0)
+	CALL SHOW_SHOP_CLOTH
+ELSEIF RESULT == 130 && FLAG:63 == 0
+	CALL SHOW_STATUS_SENMETU
+
+ELSEIF RESULT == 150 && (CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0)
+	CALL HOME_ENHANCING
+ELSEIF RESULT == 160 && FLAG:63 == 0
+	IF CFLAG:0 != 상태_건강 || TARGET == MASTER || FLAG:9
+		PRINTW スケジュールを設定するキャラクターが選択されていません
+	ELSE
+		CALL SCHEDULE
+	ENDIF
+
+;ここからINSTANTモード向けの引退&新人加入処理呼び出し
+ELSEIF RESULT == 169 && (GAME_OPTION_CHECK_F(OPTION_가입은퇴있음) && FLAG:63 == 0)
+	CALL CHAR_INTAI_LIST
+ELSEIF RESULT == 170 && (CHARANUM > 1 && GAME_OPTION_CHECK_F(OPTION_가입은퇴있음) && FLAG:63 == 0)
+	CALL CHARA_INTAI
+ELSEIF RESULT == 180 && (CHARANUM <= 등록최대인원 - 1 && GAME_OPTION_CHECK_F(OPTION_가입은퇴있음) && FLAG:63 == 0)
+	CALL TSUIKAYOUSEI_NORMAL
+;ここまでINSTANTモード向けの引退&新人加入処理呼び出し
+
+
+ELSEIF RESULT == 200
+	SAVEGAME
+ELSEIF RESULT == 300
+	LOADGAME
+
+;デバッグモード切替(隠しコマンド)
+ELSEIF RESULT == 400
+	;名前変更やキャラソート用に空けてる
+	;DEBUG
+	IF FLAG:999 == 0
+		PRINTL 
+		PRINTL 
+		PRINTL DEBUG ON
+		FLAG:999 = 1
+		SETBGCOLOR 0,0,40
+	ELSEIF FLAG:999 == 1
+		PRINTL 
+		PRINTL 
+		PRINTL DEBUG OFF
+		FLAG:999 = 0
+		RESETBGCOLOR
+	ENDIF
+ELSEIF RESULT == 700
+	CALL CONFIG
+ELSEIF RESULT == 800
+	CALL SHOW_TROPHY
+ELSEIF RESULT == 90 && (CHARANUM_SAFE() >= 2 && FLAG:63 == 0)
+	SIF TARGET == MASTER
+		TARGET = RAND:(CHARANUM-1) + 1
+	IF FLAG:9 == 0
+		PRINTL 一括設定モードに変更しました
+		FLAG:9 = 1
+	ENDIF
+ELSEIF RESULT == 50 && (CHARANUM_PLAYABLE() > 0 || FLAG:63)
+	IF FLAG:63
+		PRINTL 編成モードを解除します
+		FLAG:63 = 0
+		FLAG:9 = 1
+		SIF TARGET == MASTER
+			TARGET = RAND:(CHARANUM-1) + 1
+		;FLAG:61 = 0
+	ELSE
+		CALL SET_PARTYMEMBER
+		PRINTL 編成モードに移行します
+		FLAG:63 = 1
+		;SIF CHARANUM_SAFE_PARTYCHECK(0)
+		;	FLAG:61 = 1
+		FLAG:9 = 0
+
+		;FOR CCOUNT, 0, CHARANUM
+			;CFLAG:CCOUNT:100 = 103
+		;NEXT
+		CALL SET_PARTYMEMBER
+		TARGET = 0
+	ENDIF
+ELSEIF RESULT == 60 && CHARANUM_SAFE_PARTYCHECK(0)
+	IF FLAG:61
+		PRINTL キャラを全員表示します
+		FLAG:61 = 0
+	ELSE
+		PRINTL パーティのみ表示します
+		FLAG:61 = 1
+	ENDIF
+ELSEIF (RESULT >= 1 && RESULT <= CHARANUM -1) && (CFLAG:RESULT:999 != 0 && FLAG:63 == 0)
+	FLAG:9 = 0
+	IF CHARANUM > RESULT
+		IF CFLAG:RESULT:0 == 상태_건강
+			TARGET = RESULT
+			PRINTL 
+			PRINTFORML 操作キャラを%CALLNAME%に変更しました
+			PRINTL 
+		ENDIF
+	ENDIF
+ELSEIF (RESULT >= 1 && RESULT <= CHARANUM -1) && FLAG:63
+	IF GROUPMATCH(CFLAG:RESULT:0, 상태_유폐, 상태_세뇌, 상태_흑화, 상태_사망)
+	ELSEIF TARGET == 0
+		TARGET = RESULT
+	ELSEIF TARGET == RESULT
+		TARGET = 0
+	ELSEIF CFLAG:TARGET:0 == 상태_출산직전
+		PRINTFORML %CALLNAME:TARGET%は特別病棟に入院中のため、入れ替えられません。
+		;PRINTW 
+		TARGET = 0
+	ELSEIF CFLAG:TARGET:0 == 상태_육아중
+		PRINTFORML %CALLNAME:TARGET%は育児中のため、入れ替えられません。
+		;PRINTW 
+		TARGET = 0
+	ELSEIF CFLAG:RESULT:0 == 상태_출산직전
+		PRINTFORML %CALLNAME:RESULT%は特別病棟に入院中のため、入れ替えられません。
+		;PRINTW 
+		TARGET = 0
+	ELSEIF CFLAG:RESULT:0 == 상태_육아중
+		PRINTFORML %CALLNAME:RESULT%は育児中のため、入れ替えられません。
+		;PRINTW 
+		TARGET = 0
+	ELSE
+		;キャラを入れ替える
+		;SETCOLOR 250,180,50
+		;PRINTFORM 　[{TARGET}]%CALLNAME:TARGET%
+		;RESETCOLOR
+		;PRINT と
+		;SETCOLOR 250,180,50
+		;PRINTFORM [{RESULT}]%CALLNAME:RESULT%
+		;RESETCOLOR
+		;PRINTL の配置を入れ替えた！
+		;PRINTW 
+		;RELATION
+		FOR LOCAL, 0, CHARANUM
+			SIF LOCAL == MASTER
+				CONTINUE
+			SWAP RELATION:LOCAL:TARGET, RELATION:LOCAL:RESULT
+		NEXT
+		SWAP CFLAG:TARGET:999, CFLAG:RESULT:999
+		SWAPCHARA TARGET,RESULT
+		SIF CFLAG:TARGET:999 == 0
+			CFLAG:TARGET:100 = 예정_휴식
+		SIF CFLAG:RESULT:999 == 0
+			CFLAG:RESULT:100 = 예정_휴식
+		TARGET = 0
+	ENDIF
+ELSE
+ENDIF
+
+
+
+@SHOP_PRINT_SITUATION()
+#DIM CCOUNT
+LOCAL = 0
+LOCAL:1 = 1
+;촉수の殲滅状況
+PRINTL 
+LOCAL = FLAG:11
+IF GET_LASTBOSS_PHASE_F() == 0
+	PRINTFORM 　　　
+	SAVESTR:13 = BOSS
+	REPEAT FLAG:3
+		CALL TENTACLE_SURVIVE_CHECK, LOCAL:1
+		IF RESULT == 0
+			SETCOLOR 96,96,96
+			SIF !GETBIT(FLAG:0,4)
+				PRINT [―――]
+		ELSE
+			FLAG:11 = RESULT
+			;索敵アリの場合
+			IF CONFIG_CHECK_BALANCE_F(1) > 0
+				;ターゲット
+				IF FLAG:18 == FLAG:11
+					;探索状況に応じて対応コマンドへ色変え
+					IF FLAG:47 >= FLAG:46
+						SETCOLOR 255,125,125
+					ELSE
+						SETCOLOR 255,180,0
+					ENDIF
+					PRINT [[[
+					CALL TENTACLE_ACCESS, "NAME"
+					PRINT ]]]
+				;ターゲット以外
+				ELSE
+					IF FLAG:47 >= FLAG:46
+						SETCOLOR 185,85,85
+					ELSE
+						SETCOLOR 65,65,155
+					ENDIF
+					PRINT [
+					CALL TENTACLE_ACCESS, "NAME"
+					PRINT ]
+				ENDIF
+			;索敵ナシの場合
+			ELSE
+				FLAG:11 = RESULT
+				;探索状況に応じて対応コマンドへ色変え
+				IF FLAG:47 >= FLAG:46
+					SETCOLOR 255,125,125
+				ELSE
+					SETCOLOR 255,180,0
+				ENDIF
+				PRINT [
+				CALL TENTACLE_ACCESS, "NAME"
+				PRINT ]
+			ENDIF
+		ENDIF
+		LOCAL:1 *=2
+	REND
+ELSEIF GET_LASTBOSS_PHASE_F() >= 1
+	PRINTFORM 　　　
+	REPEAT FLAG:4
+		CALL TENTACLE_SURVIVE_CHECK, LOCAL:1
+		IF RESULT == 0
+			SETCOLOR 96,96,96
+			PRINT [―――]
+		ELSE
+			FLAG:11 = RESULT
+			;索敵アリの場合
+			IF CONFIG_CHECK_BALANCE_F(1) > 0
+				;ターゲット
+				IF FLAG:18 == FLAG:11
+					;探索状況に応じて対応コマンドへ色変え
+					IF FLAG:47 >= FLAG:46
+						SETCOLOR 255,125,125
+					ELSE
+						SETCOLOR 255,180,0
+					ENDIF
+					PRINT [[[
+					CALL TENTACLE_ACCESS, "NAME"
+					PRINT ]]]
+				;ターゲット以外
+				ELSE
+					IF FLAG:47 >= FLAG:46
+						SETCOLOR 185,85,85
+					ELSE
+						SETCOLOR 65,65,155
+					ENDIF
+					PRINT [
+					CALL TENTACLE_ACCESS, "NAME"
+					PRINT ]
+				ENDIF
+			;索敵ナシの場合
+			ELSE
+				FLAG:11 = RESULT
+				;探索状況に応じて対応コマンドへ色変え
+				IF FLAG:47 >= FLAG:46
+					SETCOLOR 255,125,125
+				ELSE
+					SETCOLOR 255,180,0
+				ENDIF
+				PRINT [
+				CALL TENTACLE_ACCESS, "NAME"
+				PRINT ]
+			ENDIF
+		ENDIF
+		LOCAL:1 *=2
+	REND
+ENDIF
+FLAG:11 = LOCAL
+
+;洗脳/悪堕ち中のキャラの確認
+LOCAL = 0
+IF CHARANUM_DARKEN()>=4
+	PRINTL
+	PRINT 　　 
+ENDIF
+FOR CCOUNT, 1, CHARANUM
+	IF CFLAG:CCOUNT:0 == 상태_세뇌	
+		SETCOLOR 255,125,185
+		PRINTFORM  [操:%CALLNAME:CCOUNT%]
+		LOCAL++
+	ELSEIF CFLAG:CCOUNT:0 == 상태_흑화
+		SETCOLOR 255,125,255
+		PRINTFORM  [堕:%CALLNAME:CCOUNT%]
+		LOCAL++
+	ENDIF
+NEXT
+PRINTL 
+LOCAL = 0
+FOR CCOUNT, 1, CHARANUM
+	IF CFLAG:CCOUNT:0 == 상태_유폐 || CFLAG:CCOUNT:0 == 상태_악질감금
+		IF LOCAL == 0
+			PRINTFORM 　　 
+		ENDIF
+		SETCOLOR 155,65,125
+		PRINTFORM 【❤%CALLNAME:CCOUNT%失踪中】
+		LOCAL++
+	ENDIF
+NEXT
+SIF LOCAL > 0
+	PRINTL
+
+
+;--------------------------------------------------
+;状況の表示
+@SHOW_STATUS_SENMETU
+#DIM CCOUNT
+
+LOCAL = 0
+LOCAL:1 = 1
+;촉수の殲滅状況
+PRINTL 
+LOCAL = FLAG:11
+IF ENEMY_TYPE_CHECK_F("BOSS") == 1
+	PRINTFORML 現在活動中の%STR:2502%
+	SAVESTR:13 = BOSS
+	DRAWLINE
+	REPEAT FLAG:3
+		CALL TENTACLE_SURVIVE_CHECK, LOCAL:1
+		IF RESULT > 0
+			FLAG:11 = RESULT
+			PRINT [
+			CALL TENTACLE_ACCESS, "NAME"
+			PRINT ]
+		ENDIF
+		LOCAL:1 *=2
+	REND
+ELSEIF GET_LASTBOSS_PHASE_F() >= 1
+	PRINTFORML 現在活動中の%STR:2503%
+	DRAWLINE
+	REPEAT FLAG:4
+		CALL TENTACLE_SURVIVE_CHECK, LOCAL:1
+		IF RESULT > 0
+			FLAG:11 = RESULT
+			PRINT [
+			CALL TENTACLE_ACCESS, "NAME"
+			PRINT ]
+		ENDIF
+		LOCAL:1 *=2
+	REND
+ENDIF
+FLAG:11 = LOCAL
+PRINTL 
+DRAWLINE
+PRINTW 
+
+;入院/育児中のキャラの確認
+LOCAL = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	SIF CFLAG:CCOUNT:0 == 상태_출산직전 || CFLAG:CCOUNT:0 == 상태_육아중
+		LOCAL ++
+NEXT
+IF LOCAL
+	PRINTFORML 入院/育児中のキャラ
+	DRAWLINE
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+
+		IF CFLAG:CCOUNT:0 == 상태_출산직전
+			PRINTFORM  %CALLNAME:CCOUNT%：特別病棟に入院　
+		ELSEIF CFLAG:CCOUNT:0 == 상태_육아중
+			PRINTFORM  %CALLNAME:CCOUNT%：育児中　
+		ENDIF
+		;임신状態
+		SIF (CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:0 == 상태_출산직전) || (CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:0 == 상태_육아중)
+			PRINT [임신中]
+		SIF CFLAG:CCOUNT:0 == 상태_출산직전 || CFLAG:CCOUNT:0 == 상태_육아중
+			PRINTL 
+	NEXT
+	DRAWLINE
+	PRINTW 
+ENDIF
+
+;幽閉中のキャラの確認
+PRINTFORML 幽閉中のキャラ
+DRAWLINE
+LOCAL = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	
+	IF CFLAG:CCOUNT:0 == 상태_유폐
+		;幽閉日数の計算
+		LOCAL:1 = 0
+		SIF CFLAG:CCOUNT:31 > 0
+			LOCAL:1 = CFLAG:CCOUNT:31 / 2
+		
+		PRINTFORM  %CALLNAME:CCOUNT%：
+		IF (CFLAG:CCOUNT:20 == 2)
+			FOR LOCAL:2, 0, CHARANUM
+				RESULT = 0
+				SIF CFLAG:CCOUNT:21 == CFLAG:(LOCAL:2):240
+					RESULT = LOCAL:2
+				SIF RESULT
+					BREAK
+			NEXT
+			PRINTFORM %PRINT_TRANSCALLNAME(RESULT)%
+		ELSE
+			CALL TENTACLE_ACCESS_PRISON, CCOUNT, "NAME"
+		ENDIF
+		PRINTFORM によって幽閉中 {CFLAG:CCOUNT:31 / 2}일目　
+		;임신状態
+		SIF CHECK_PREGNANT_F(CCOUNT) > 0
+			PRINT [임신中]　
+		SIF CFLAG:CCOUNT:220 && CONFIG_CHECK_OTHER_F(0) == 0
+			PRINTFORM 育児中の子촉수：{CFLAG:CCOUNT:220}
+		PRINTL 
+		LOCAL += 1
+	ENDIF
+NEXT
+SIF LOCAL == 0
+	PRINTL なし
+DRAWLINE
+PRINTW 
+
+;監禁
+PRINTFORML 拉致監禁中のキャラ
+DRAWLINE
+LOCAL = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	
+	IF CFLAG:CCOUNT:0 == 상태_악질감금
+		;監禁日数の計算
+		LOCAL:1 = 0
+		SIF CFLAG:CCOUNT:70 > 0
+			LOCAL:1 = CFLAG:CCOUNT:70 / 2
+		PRINTFORM %PRINT_TRANSCALLNAME(RESULT)%：廃ビルに拉致監禁中 {CFLAG:CCOUNT:70 / 2}일目　
+		;임신状態
+		SIF CHECK_PREGNANT_F(CCOUNT) > 0
+			PRINT [임신中]　
+		SIF TALENT:CCOUNT:사지결손 > 0
+			PRINT [生オナホ]
+		PRINTL 
+		LOCAL += 1
+	ENDIF
+NEXT
+SIF LOCAL == 0
+	PRINTL なし
+DRAWLINE
+PRINTW 
+
+;洗脳/悪堕ち中のキャラの確認
+PRINTFORML 洗脳/悪堕ち中のキャラ
+DRAWLINE
+LOCAL = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	
+	IF CFLAG:CCOUNT:0 == 상태_세뇌
+		PRINTFORM  %CALLNAME:CCOUNT%：洗脳（
+		IF CFLAG:CCOUNT:20 < 2
+			CALL TENTACLE_ACCESS_PRISON, CCOUNT, "NAME"
+		ELSEIF CFLAG:CCOUNT:20 == 2
+			PRINTFORM %PRINT_TRANSCALLNAME(CFLAG:CCOUNT:21)%
+		ENDIF
+		PRINT ）　
+	ELSEIF CFLAG:CCOUNT:0 == 상태_흑화
+		PRINTFORM  %CALLNAME:CCOUNT%：悪堕ち　
+	ENDIF
+	;임신状態
+	SIF (CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:0 == 상태_세뇌) || (CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:0 == 상태_흑화)
+		PRINT [임신中]
+	IF CFLAG:CCOUNT:0 == 상태_세뇌 || CFLAG:CCOUNT:0 == 상태_흑화
+		PRINTL 
+		LOCAL += 1
+	ENDIF
+NEXT
+SIF LOCAL == 0
+	PRINTL なし
+DRAWLINE
+PRINTW 
+
+;取り込まれたキャラ
+IF !GAME_OPTION_CHECK_F(OPTION_solo)
+	PRINTFORML 取り込まれたキャラ
+	DRAWLINE
+	LOCAL = 0
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+
+		SIF CFLAG:CCOUNT:0 == 상태_사망
+			PRINTFORM  %CALLNAME:CCOUNT%：
+		;묘상화状態
+		IF TALENT:CCOUNT:번식자루 && CFLAG:CCOUNT:0 == 상태_사망
+			PRINT 묘상화
+		ELSEIF CFLAG:CCOUNT:0 == 상태_사망
+			PRINT 取り込まれ
+		ENDIF
+		IF CFLAG:CCOUNT:0 == 상태_사망
+			PRINTL 
+			LOCAL += 1
+		ENDIF
+	NEXT
+	SIF LOCAL == 0
+		PRINTL なし
+	DRAWLINE
+	PRINTW 
+ENDIF
+
+;子촉수の数
+LOCAL = FLAG:44
+FOR CCOUNT,0,CHARANUM
+	LOCAL -= CFLAG:CCOUNT:220
+NEXT
+IF LOCAL
+	PRINTFORML 活動中の子촉수 총 마릿수
+	DRAWLINE
+	PRINTFORML  {LOCAL}匹
+	DRAWLINE
+	PRINTW 
+ENDIF
+
+;--------------------------------------------------
+;施設拡張
+@HOME_ENHANCING
+$INPUT_LOOP
+PRINTL 
+DRAWLINE
+PRINTL 施設を拡張します
+PRINTFORML 자금：{MONEY}＄
+CALL SHORTLINE
+IF FLAG:53 != 0
+	PRINTFORML 購入済みのリラクゼーション設備
+	CALL SHORTLINE
+	SIF (FLAG:53 & 관엽식물)
+		PRINTFORML 　관엽식물　　　　　　常に疲労度を微量回復
+	SIF (FLAG:53 & 마음이편안해지는풍경화)
+		PRINTFORML 　마음이편안해지는풍경화　　　常に疲労度を微量回復
+	SIF (FLAG:53 & 세련된오브제)
+		PRINTFORML 　세련된오브제　常に疲労度を微量回復
+	SIF (FLAG:53 & 호화로운분수)
+		PRINTFORML 　호화로운분수　　常に疲労度を微量回復
+	SIF (FLAG:53 & 질좋은침대) && (FLAG:53 & 최고급침대) == 0
+		PRINTFORML 　上質なベッド　　　　夜間休憩の疲労回復量がアップ
+	SIF (FLAG:53 & 최고급침대)
+		PRINTFORML 　최고급침대　　　　夜間休憩の疲労回復量が大アップ
+	SIF (FLAG:53 & 안마의자)
+		PRINTFORML 　안마의자　　常に疲労度を小回復
+	SIF (FLAG:53 & 목욕설비)
+		PRINTFORML 　목욕설비　　　　鍛錬後に疲労度を小回復
+	SIF (FLAG:53 & 게임코너)
+		PRINTFORML 　게임코너　　　昼間休憩の疲労回復量がアップ
+	SIF (FLAG:53 & 대욕탕) && (FLAG:53 & 미용온천) == 0
+		PRINTFORML 　대욕탕　　　　　　　休憩時の疲労回復量がアップ
+	SIF (FLAG:53 & 미용온천)
+		PRINTFORML 　미용온천　　　　　　休憩時の疲労回復量が大アップ
+	SIF (FLAG:53 & 뷰티살롱)
+		PRINTFORML 　뷰티살롱　　休憩時の疲労回復量が超アップ
+ELSE
+	PRINTL 何をしますか？
+ENDIF
+CALL SHORTLINE
+PRINTFORML [0]鍛錬設備の레벨アップ：現在の設備레벨：Lv.\@FLAG:50 > 4 ? MAX # {FLAG:50}\@
+PRINTFORML [1]休憩設備の레벨アップ：現在の設備레벨：Lv.\@FLAG:51 > 4 ? MAX # {FLAG:51}\@
+PRINTFORML [2]防衛設備の레벨アップ：現在の設備레벨：Lv.\@FLAG:52 > 4 ? MAX # {FLAG:52}\@
+PRINTFORML [3]リラクゼーション設備の追加
+PRINTFORML [4]촉수研究の레벨アップ：現在の研究레벨：Lv.\@FLAG:54 > 4 ? MAX # {FLAG:54}\@
+PRINTL [999]戻る
+$INPUT_LOOP_1
+INPUT
+IF RESULT == 999
+ELSEIF RESULT == 0
+	IF FLAG:50 >= 5
+		PRINTW これ以上設備레벨は上げられません
+		CLEARLINE 2
+		GOTO INPUT_LOOP_1
+	ELSE
+		PRINTL 
+		PRINTFORML 設備の레벨アップには{5000 * FLAG:50 + 5000}＄必要です
+		PRINTL 設備の레벨アップを行いますか？
+		
+		PRINTL [0] 네
+		PRINTL [1] 아니오
+		$INPUT_LOOP_SELECT
+		INPUT
+		IF RESULT == 0
+			IF MONEY < 5000 * FLAG:50 + 5000
+				PRINTW 所持자금が足りません
+			ELSE
+				MONEY -= 5000 * FLAG:50 + 5000
+				FLAG:50 += 1
+				PRINTW 設備레벨が上がりました！
+			ENDIF
+		ELSEIF RESULT == 1
+		ELSE
+			PRINTW 正しい値を入力してください
+			CLEARLINE 2
+			GOTO INPUT_LOOP_SELECT
+		ENDIF
+	ENDIF
+	PRINTL 
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 1
+	IF FLAG:51 >= 5
+		PRINTW これ以上設備레벨は上げられません
+		CLEARLINE 2
+		GOTO INPUT_LOOP_1
+	ELSE
+		PRINTL 
+		PRINTFORML 設備の레벨アップには{1000 * FLAG:51 + 1000}＄必要です
+		PRINTL 設備の레벨アップを行いますか？
+		
+		PRINTL [0] 네
+		PRINTL [1] 아니오
+		$INPUT_LOOP_SELECT_1
+		INPUT
+		IF RESULT == 0
+			IF MONEY < 1000 * FLAG:51 + 1000
+				PRINTW 所持자금が足りません
+			ELSE
+				MONEY -= 1000 * FLAG:51 + 1000
+				FLAG:51 += 1
+				PRINTW 設備레벨が上がりました！
+			ENDIF
+		ELSEIF RESULT == 1
+		ELSE
+			PRINTW 正しい値を入力してください
+			CLEARLINE 2
+			GOTO INPUT_LOOP_SELECT_1
+		ENDIF
+	ENDIF
+	PRINTL 
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 2
+	IF FLAG:52 >= 5
+		PRINTW これ以上設備레벨は上げられません
+		CLEARLINE 2
+		GOTO INPUT_LOOP_1
+	ELSE
+		PRINTL 
+		PRINTFORML 設備の레벨アップには{10000 * FLAG:52 + 10000}＄必要です
+		PRINTL 設備の레벨アップを行いますか？
+		
+		PRINTL [0] 네
+		PRINTL [1] 아니오
+		$INPUT_LOOP_SELECT_2
+		INPUT
+		IF RESULT == 0
+			IF MONEY < 10000 * FLAG:52 + 10000
+				PRINTL 所持자금が足りません
+			ELSE
+				MONEY -= 10000 * FLAG:52 + 10000
+				FLAG:52 += 1
+				PRINTW 設備레벨が上がりました！
+			ENDIF
+		ELSEIF RESULT == 1
+		ELSE
+			PRINTW 正しい値を入力してください
+			CLEARLINE 2
+			GOTO INPUT_LOOP_SELECT_2
+		ENDIF
+	ENDIF
+	PRINTL 
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 3
+	$INPUT_LOOP_SELECT_4
+	IF FLAG:53 == 4095
+		PRINTW もう追加できるものがありません
+		GOTO INPUT_LOOP
+	ENDIF
+
+	PRINTL 
+	DRAWLINE
+	PRINTL リラクゼーション設備を追加します
+	PRINTFORML 자금：{MONEY}＄
+	;PRINTFORML 　＊　カタログ　＊
+	CALL SHORTLINE
+	SIF (FLAG:53 & 관엽식물) == 0
+		PRINTFORML [0]관엽식물　　　　　　   500＄　常に疲労度を微量回復
+	SIF (FLAG:53 & 마음이편안해지는풍경화) == 0 && (FLAG:53 & 관엽식물)
+		PRINTFORML [0]마음이편안해지는풍경화　　　  4500＄　常に疲労度を微量回復
+	SIF (FLAG:53 & 세련된오브제) == 0 && (FLAG:53 & 마음이편안해지는풍경화)
+		PRINTFORML [0]세련된오브제　  8500＄　常に疲労度を微量回復
+	SIF (FLAG:53 & 호화로운분수) == 0 && (FLAG:53 & 세련된오브제)
+		PRINTFORML [0]호화로운분수　　100000＄　常に疲労度を微量回復
+	SIF (FLAG:53 & 질좋은침대) == 0
+		PRINTFORML [1]上質なベッド　　　　 12000＄　夜間休憩の疲労回復量がアップ
+	SIF (FLAG:53 & 최고급침대) == 0 && (FLAG:53 & 질좋은침대)
+		PRINTFORML [1]최고급침대　　　　 95000＄　夜間休憩の疲労回復量が大アップ
+	SIF (FLAG:53 & 안마의자) == 0
+		PRINTFORML [2]안마의자　　 25800＄　常に疲労度を小回復
+	SIF (FLAG:53 & 목욕설비) == 0
+		PRINTFORML [3]목욕설비　　　　 50000＄　鍛錬後に疲労度を小回復
+	SIF (FLAG:53 & 게임코너) == 0
+		PRINTFORML [4]게임코너　　　100000＄　昼間休憩の疲労回復量がアップ
+	SIF (FLAG:53 & 대욕탕) == 0
+		PRINTFORML [5]대욕탕　　　　　　　200000＄　休憩時の疲労回復量がアップ
+	SIF (FLAG:53 & 미용온천) == 0 && (FLAG:53 & 대욕탕)
+		PRINTFORML [5]미용온천　　　　　　500000＄　休憩時の疲労回復量が大アップ
+	SIF (FLAG:53 & 뷰티살롱) == 0
+		PRINTFORML [6]뷰티살롱　 1500000＄　休憩時の疲労回復量が超アップ
+	PRINTFORML [99]戻る
+	$INPUT_LOOP_SELECT_3
+	INPUT
+	IF RESULT == 0 && (FLAG:53 & 관엽식물) == 0
+		IF MONEY >= 500
+			MONEY -= 500
+			FLAG:53 |= 관엽식물
+			PRINTFORML 관엽식물を設置した！
+			PRINTFORMW （休憩していない時でも疲労度が僅かに回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 0 && (FLAG:53 & 마음이편안해지는풍경화) == 0 && (FLAG:53 & 관엽식물)
+		IF MONEY >= 4500
+			MONEY -= 4500
+			FLAG:53 |= 마음이편안해지는풍경화
+			PRINTFORML 마음이편안해지는풍경화を設置した！
+			PRINTFORMW （休憩していない時でも疲労度が僅かに回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 0 && (FLAG:53 & 세련된오브제) == 0 && (FLAG:53 & 마음이편안해지는풍경화)
+		IF MONEY >= 8500
+			MONEY -= 8500
+			FLAG:53 |= 세련된오브제
+			PRINTFORML 세련된오브제を設置した！
+			PRINTFORMW （休憩していない時でも疲労度が僅かに回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 0 && (FLAG:53 & 호화로운분수) == 0 && (FLAG:53 & 세련된오브제)
+		IF MONEY >= 100000
+			MONEY -= 100000
+			FLAG:53 |= 호화로운분수
+			PRINTFORML 호화로운분수を設置した！
+			PRINTFORMW （休憩していない時でも疲労度が僅かに回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 1 && (FLAG:53 & 질좋은침대) == 0
+		IF MONEY >= 12000
+			MONEY -= 12000
+			FLAG:53 |= 질좋은침대
+			PRINTFORML 上質なベッドを置いた！
+			PRINTFORMW （夜間の疲労度回復量がアップします）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 1 && (FLAG:53 & 최고급침대) == 0 && (FLAG:53 & 질좋은침대)
+		IF MONEY >= 95000
+			MONEY -= 95000
+			FLAG:53 |= 최고급침대
+			PRINTFORML 최고급침대を置いた！
+			PRINTFORMW （夜間の疲労度回復量が大きくアップします）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 2 && (FLAG:53 & 안마의자) == 0
+		IF MONEY >= 25800
+			MONEY -= 25800
+			FLAG:53 |= 안마의자
+			PRINTFORML 안마의자を設置した！
+			PRINTFORMW （休憩していない時でも疲労度が少し回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 3 && (FLAG:53 & 목욕설비) == 0
+		IF MONEY >= 50000
+			MONEY -= 50000
+			FLAG:53 |= 목욕설비
+			PRINTFORML 入浴設備にシャワーを追加した！
+			PRINTFORMW （鍛錬後に疲労度が少し回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 4 && (FLAG:53 & 게임코너) == 0
+		IF MONEY >= 100000
+			MONEY -= 100000
+			FLAG:53 |= 게임코너
+			PRINTFORML 게임코너を開設した！
+			PRINTFORMW （昼間の疲労度回復量が大きくアップします）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 5 && (FLAG:53 & 대욕탕) == 0
+		IF MONEY >= 200000
+			MONEY -= 200000
+			FLAG:53 |= 대욕탕
+			PRINTFORML 入浴設備を広々とした대욕탕に改修した！
+			PRINTFORMW （疲労度回復量がアップします）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 5 && (FLAG:53 & 미용온천) == 0 && (FLAG:53 & 대욕탕)
+		IF MONEY >= 500000
+			MONEY -= 500000
+			FLAG:53 |= 미용온천
+			PRINTFORML 美肌効果のある温泉を引いた！
+			PRINTFORMW （疲労度回復量がかなり回復します）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 6 && (FLAG:53 & 뷰티살롱) == 0
+		IF MONEY >= 1500000
+			MONEY -= 1500000
+			FLAG:53 |= 뷰티살롱
+			PRINTFORML メンバー専用の뷰티살롱を開設した！
+			PRINTFORMW （疲労度回復量がものすごくアップします）
+			GOTO INPUT_LOOP_SELECT_4
+		ENDIF
+	ELSEIF RESULT == 99
+		GOTO INPUT_LOOP
+	ELSE
+		PRINTW 正しい値を入力してください
+		CLEARLINE 2
+		GOTO INPUT_LOOP_SELECT_3
+	ENDIF
+	PRINTL 
+	;GOTO INPUT_LOOP
+	;GOTO INPUT_LOOP_SELECT_4
+	PRINTW 所持자금が足りません
+	CLEARLINE 3
+	GOTO INPUT_LOOP_SELECT_3
+ELSEIF RESULT == 4
+	IF FLAG:54 >= 5
+		PRINTW これ以上研究레벨は上げられません
+		CLEARLINE 2
+		GOTO INPUT_LOOP_1
+	ELSE
+		PRINTL 
+		PRINTFORML 研究の레벨アップで촉수 슈트のカスタマイズが追加されます
+		PRINTFORML 研究の레벨アップには촉수の欠片が{5 * FLAG:54 + 5}個必要です
+		PRINTFORML 研究の레벨アップを行いますか？　　(촉수の欠片所持数:{FLAG:200})
+		
+		PRINTL [0] 네
+		PRINTL [1] 아니오
+		$INPUT_LOOP_SELECT_5
+		INPUT
+		IF RESULT == 0
+			IF FLAG:200 < 5 * FLAG:54 + 5
+				PRINTW 촉수の欠片が足りません
+			ELSE
+				FLAG:200 -= 5 * FLAG:54 + 5
+				FLAG:54 += 1
+				PRINTW 研究레벨が上がりました！
+			ENDIF
+		ELSEIF RESULT == 1
+		ELSE
+			PRINTW 正しい値を入力してください
+			CLEARLINE 2
+			GOTO INPUT_LOOP_SELECT_5
+		ENDIF
+	ENDIF
+	PRINTL 
+	GOTO INPUT_LOOP
+ELSE
+	PRINTW 正しい値を入力してください
+	CLEARLINE 2
+	GOTO INPUT_LOOP_1
+ENDIF
+
+;--------------------------------------------------
+;キャラ名を変更するキャラを選ぶ
+@NAME_CHANGE_SELECT
+CALL CHARA_LIST
+IF RESULT == 999
+ELSE
+	CALL NAME_CHANGE, RESULT
+ENDIF
+PRINTL 
+
+@AFTER_RESCUED,ARG
+#DIM LCOUNT
+LCOUNT = TARGET
+TARGET = ARG
+
+;イベント衣装のまま幽閉されていたら解除する
+CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
+
+
+PRINTL 
+PRINTFORML %CALLNAME%は治療を受けています・・・
+CALL TRANSFORM, 0
+;行動予定をリセット
+CFLAG:ARG:100 = 예정_휴식
+;淫紋の進行度が低下
+;完堕ちすると低下しない
+CALL TATTOO_ACCESS, "PROGRESS_VAR"
+SIF TALENT:完堕ち != 1
+	RESULT = RESULT * 7 / 10
+IF RESULT == 0
+	FLAG:32 = 0
+ELSE
+	CALL SAVE_TATTOO, RESULT
+ENDIF
+
+;悪堕ち中であれば容姿復帰処理
+SIF GETBIT(CFLAG:ARG:80, 2) == 1
+	CALL RECOVER_CORRUPTION, ARG
+
+IF CHECK_PREGNANT_F(ARG) > 0
+	PRINTFORML 임신していたため、大事を取って特別病棟に移りました・・・
+	PRINTL 
+	CFLAG:ARG:0 = 상태_출산직전
+	CALL SET_PARTYMEMBER
+ELSEIF TALENT:ARG:번식자루 == 1
+	PRINTFORML 完全に意識不明で、いつ回復するかも分かりません・・・
+	PRINTFORML 
+	PRINTL 
+	CFLAG:ARG:0 = 0
+	CALL RECOVER_TO_PARTY, ARG
+ELSEIF TALENT:ARG:사지결손 == 1
+	PRINTFORML 全く動くことができず、今後の生活がどうなるかわかりません。・・・
+	PRINTFORML もしかしたら촉수を使った研究の成果で復元できるかも？
+	PRINTL 
+	CFLAG:ARG:0 = 0
+	CALL RECOVER_TO_PARTY, ARG
+ELSEIF TALENT:ARG:完堕ち > 0
+	PRINTFORML 妙な事を言ったり、奇妙な名前を名乗ったりしています
+	PRINTFORML 目の前にいるのは本当に同一人物なのでしょうか…
+	PRINTL 
+	CFLAG:ARG:0 = 0
+	CALL RECOVER_TO_PARTY, ARG
+ELSE
+	PRINTFORML 幸い命に別条はないようです・・・
+	PRINTL 
+	CFLAG:ARG:0 = 상태_건강
+	CALL RECOVER_TO_PARTY, ARG
+ENDIF
+TARGET = LCOUNT
+
+;淫紋の進行/回復
+@INMON_RECOVERY,ARG
+#DIM LCOUNT
+#DIM CCOUNT
+LOCAL:2 = TARGET
+TARGET = ARG
+;救出後も進行する場合
+IF CONFIG_CHECK_MANIAC_F(9) == 1
+	IF CFLAG:32 > 0 && CFLAG:0 == 상태_건강 && TALENT:촉수의포로 == 1
+		;汚染度が上昇する
+		RESULT:1 = 2 + RAND:(LIMIT(SQRT(100 - CFLAG:32 / 10000000000000000),1,8)) + RAND:(MIN(ABL:욕망 + 1,5)) + RAND:(MIN(ABL:촉수중독 + 1,5))
+		RESULT:1 = RESULT:1 * 3 / 4
+		CALL TATTOO_ACCESS, "PROGRESS_VAR"
+		CALL SAVE_TATTOO, LIMIT(RESULT + RESULT:1,0,100)
+		PRINTFORML %CALLNAME%の淫紋が{RESULT:1}％進行した・・・（{CFLAG:32 / 10000000000000000}％）
+		PRINTW 
+
+		;淫紋の進行が汚染度(どれだけ陥落に近付いているか示す内部値)と連動している場合、既定値で陥落悪堕ちする
+		;★これ悪堕ちオプション確認してないけどいいのかな？
+		;
+		CALL TATTOO_ACCESS, "PROGRESS_VAR"
+		IF RESULT >= 100 && CONFIG_CHECK_MANIAC_F(10) == 1
+			;生き残っているボスからランダムに支配者を選択
+			CALL CLEARRANDCHOOSE
+			IF ENEMY_TYPE_CHECK_F("BOSS") == 1
+				CALL GET_BOSS_ERB_NUM
+			ELSE
+				CALL GET_LASTBOSS_ERB_NUM
+			ENDIF
+			FOR LCOUNT, 0, RESULT
+				;裏ボスは対象から除外
+				SIF LCOUNT == 1 && GET_LASTBOSS_PHASE_F() >= 2
+					CONTINUE
+				CALL TENTACLE_BITVALUE, LCOUNT + 1
+				CALL TENTACLE_SURVIVE_CHECK, RESULT
+				SIF RESULT > 0
+					CALL ADDRANDCHOOSE, RESULT
+			NEXT
+			CFLAG:20 = FLAG:10
+			CFLAG:21 = RANDCHOOSE_F()
+
+			;戦闘能力のあるキャラなら必ず悪堕ち
+			IF TALENT:변신능력 >= 0
+				CFLAG:0 = 상태_흑화
+				;変身可能キャラならアウターが変更される
+				SIF TALENT:변신능력 == 1
+					CFLAG:41 = 401
+				;＠中国版　完堕ち装備
+				IF TALENT:完堕ち == 1
+					;변신능력アリなら淫縛の鎖
+					IF TALENT:변신능력 == 1
+						CFLAG:41 = 402
+					;변신능력ナシなら촉수の花嫁／noinner
+					ELSE
+						CFLAG:40 = 196
+						CFLAG:42 = 0
+					ENDIF
+				ENDIF
+				;함락경험を加算
+				EXP:함락경험 += 1
+
+				;지문: 悪堕ちになった
+				CALL MESSAGE_SHOP_AKUOTI
+				;容姿を変更する
+				CALL CORRUPT_CHANGE_LOOKS_MAIN, TARGET
+				;ソロモードでキャラ全員が洗脳/悪堕ちになるとゲームオーバー
+				IF GAME_OPTION_CHECK_F(OPTION_solo)
+					LOCAL:1 = 0
+					FOR LOCAL,0,CHARANUM
+						SIF CFLAG:LOCAL:0 == 상태_세뇌 || CFLAG:LOCAL:0 == 상태_흑화
+							LOCAL:1 ++
+					NEXT
+					IF (CHARANUM - LOCAL:1) < 2
+						CALL ENDING_4
+						DRAWLINE
+						RETURN
+					ENDIF
+				ENDIF
+				
+				PRINTFORML %STR:2500%の尖兵となった%CALLNAME%に邪悪な力が流れ込む・・・
+				PRINTL 
+				;悪堕ち時に大量の경험치が手に入る
+				CALL TENTACLE_LEVEL
+				IF CFLAG:0 == 상태_세뇌
+					LOCAL = 20 * (5 + ABL:레벨) + RAND:25
+				ELSEIF CFLAG:0 == 상태_흑화
+					LOCAL = 40 * (5 + ABL:레벨) + RAND:50
+				ENDIF
+				SIF LOCAL < 50
+					LOCAL = 50
+				CALL GET_EXP,min(LOCAL,750)
+				;遭遇率アップ効果をリセット
+				CFLAG:23 = 0
+			;戦闘能力がない場合
+			;ＴＳできない남자＆男女平等オフなら即座に死亡
+			ELSEIF ISHOLE(TARGET) == 0 && TALENT:변신시TS < 1 && CONFIG_CHECK_PRISON_F(0) == 0
+				CFLAG:0 = 상태_사망
+
+				;지문: 自分から幽閉される
+				CALL MESSAGE_SHOP_PRISON
+				PRINTW 
+				;地の文:即死
+				PRINTFORML ……しかし남자である%PRINT_TRANSCALLNAME(TARGET)%はそのままトドメを刺され、
+				PRINTFORML %STR:2500%に取り込まれていってしまったようだ・・・
+				PRINTW 
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はロストしました
+				PRINTW 
+
+				;初めての幽閉なら이상경험を付ける
+				SIF EXP:유폐경험 == 0
+					EXP:이상경험 += 1
+
+					EXP:유폐경험 += 1
+				;遭遇率アップ効果をリセット
+				CFLAG:23 = 0
+			;女性または女体化可能なら幽閉
+			ELSE
+				CFLAG:0 = 상태_유폐
+
+				;지문: 自分から幽閉される
+				CALL MESSAGE_SHOP_PRISON
+
+				;初めての幽閉なら이상경험を付ける
+				SIF EXP:유폐경험 == 0
+				EXP:이상경험 += 1
+				;유폐경험を加算
+				EXP:유폐경험 += 1
+				;遭遇率アップ効果をリセット
+				CFLAG:23 = 0
+			ENDIF
+			PRINTW 
+		ENDIF
+		DRAWLINE
+	ENDIF
+;淫紋の回復
+ELSE
+	TARGET = ARG
+	IF CFLAG:32 > 0
+		CALL TATTOO_ACCESS, "PROGRESS_VAR"
+		RESULT = RESULT * 9 / 10
+		IF RESULT == 0
+			CFLAG:32 = 0
+		ELSE
+			CALL SAVE_TATTOO, RESULT
+		ENDIF
+	ENDIF
+ENDIF
+TARGET = LOCAL:2
+
+@SET_PARTYMEMBER
+#DIM CCOUNT
+
+
+
+;パーティキャラ自動管理
+SIF CHARANUM < 3 && CHARANUM_SAFE_PARTYCHECK(0) == 0
+	FLAG:63 = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+
+	IF GAME_OPTION_CHECK_F(OPTION_solo)	|| CHECK_GAMEOVER_F() == 1
+		;ソロモードなら임신中でも戦う。ボテ腹魔法少女ｃ！　ゲームオーバーモードではわざわざ表示しない
+	ELSEIF CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:100 == 예정_출격 && CFLAG:CCOUNT:0 < 1
+		PRINTFORML %CALLNAME:CCOUNT%は임신しているため出撃できなくなりました
+		PRINTW 
+		CFLAG:CCOUNT:100 = 예정_휴식
+	ELSEIF CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:100 == 예정_방위
+		PRINTFORML %CALLNAME:CCOUNT%は임신しているため防衛できなくなりました
+		PRINTW 
+		CFLAG:CCOUNT:100 = 예정_휴식
+	ENDIF
+	;離脱したキャラを最後尾に移動
+	IF (CFLAG:CCOUNT:0 != 상태_건강) && CCOUNT < CHARANUM -1 && CFLAG:CCOUNT:999
+		CFLAG:CCOUNT:999 = 0
+		CALL SHIFTBACK_CHARA,CCOUNT
+	ELSEIF CFLAG:CCOUNT:0 != 상태_건강 && CFLAG:CCOUNT:999
+		CFLAG:CCOUNT:999 = 0
+	ENDIF
+NEXT
+
+
+@SHIFTBACK_CHARA,ARG
+;ARG番目のキャラをリストの最後尾に移動する
+VARSET LOCAL
+FOR LOCAL, ARG, CHARANUM -1
+	SIF LOCAL == MASTER
+		CONTINUE
+	;RELATION
+	FOR LOCAL:1, 0, CHARANUM
+		SIF LOCAL:1 == MASTER
+			CONTINUE
+		SWAP RELATION:(LOCAL:1):LOCAL, RELATION:(LOCAL:1):(LOCAL + 1)
+	NEXT
+	SWAPCHARA LOCAL,LOCAL + 1
+NEXT
+
+
+@SHIFTFOWARD_CHARA,ARG
+;ARG番目のキャラをパーティの最前部に移動する
+VARSET LOCAL
+FOR LOCAL, 0, CHARANUM
+	SIF CFLAG:LOCAL:999
+		LOCAL:1 = LOCAL
+NEXT
+FOR LOCAL, ARG, LOCAL:1, -1
+	SIF LOCAL == MASTER
+		CONTINUE
+	;RELATION
+	FOR LOCAL:1, 0, CHARANUM
+		SIF LOCAL:1 == MASTER
+			CONTINUE
+		SWAP RELATION:(LOCAL:1):LOCAL, RELATION:(LOCAL:1):(LOCAL - 1)
+	NEXT
+	SWAPCHARA LOCAL,LOCAL - 1
+NEXT
+
+
+
+@RECOVER_TO_PARTY,ARG
+;ARG番目のキャラをパーティに復帰させる
+CFLAG:ARG:0 = 상태_건강
+;パーティ人数が最大未満なら自動でパーティに加える
+IF CHARANUM_ACTIVE() < 파티인원최대치 && CFLAG:ARG:999 == 0
+	CFLAG:ARG:999 = 1
+	PRINTL 
+		IF TALENT:ARG:번식자루 == 1
+		PRINTFORML %CALLNAME:ARG% は生命監視機能の付いた自室に戻されました
+		PRINTFORML 慣れ親しんだ環境が理性を取り戻す助けになると良いのですが...
+	ELSEIF TALENT:ARG:사지결손 == 1
+		PRINTFORML %CALLNAME:ARG%がパーティメンバーに加わりました
+		PRINTFORML ただし、今の%CALLNAME:ARG%に提供できるのは後方支援だけです...
+	ELSE
+		PRINTFORML %CALLNAME:ARG%がパーティメンバーに加わりました
+	ENDIF
+
+	PRINTW 
+ELSE
+	PRINTL 
+	PRINTFORML %CALLNAME:ARG%が控えメンバーに加わりました
+	PRINTW 
+ENDIF
+

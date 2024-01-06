@@ -1,0 +1,188 @@
+﻿;V拡張攻め
+
+;性コマンド分類
+@SEX_TYPE_COM1009
+RETURN 삽입
+
+@SEX_SPCOM9
+;EX_COM	追加責め実行部位（ビット）
+;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
+;追加責め
+EX_COM = 2
+SH_COM = 0
+
+;사정部位フラグ:膣を立てる
+TFLAG:4 = TFLAG:4 | 질
+INSERT = INSERT | 질
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 100
+
+;사정値 800
+CALL TENTACLE_SYASEI_UP, 800
+
+;我慢：대량사정でなければ사정部位플래그를折る
+SIF FLAG:15 < FLAG:14 * 2
+	TFLAG:4 = 0
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1009
+
+
+;快V
+IF ABL:V감각 == 0
+	LOCAL:1 = 1000
+ELSEIF ABL:V감각 == 1
+	LOCAL:1 = 2000
+ELSEIF ABL:V감각 == 2
+	LOCAL:1 = 4000
+ELSEIF ABL:V감각 == 3
+	LOCAL:1 = 10000
+ELSEIF ABL:V감각 == 4
+	LOCAL:1 = 20000
+ELSEIF ABL:V감각 >= 5
+	LOCAL:1 = 40000
+ENDIF
+;拡張経験が少ない場合は快Vが入りにくい
+IF EXP:V확장경험 < 3
+	TIMES LOCAL:1, 0.10
+ELSEIF EXP:V확장경험 < 5
+	TIMES LOCAL:1, 0.50
+ELSEIF EXP:V확장경험 < 8
+	TIMES LOCAL:1, 0.80
+ELSE
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,1,-1)
+
+
+;지문: SPCOM9
+CALL MESSAGE_SEX_SPCOM9, EX_COM, SH_COM
+
+;처녀なら고통が大量に入る
+IF TALENT:처녀 > 0
+	LOCAL:10 = 20000
+	TALENT:처녀 = -1
+	CFLAG:206 = 3
+	TCVARn:1 = 1
+ELSE
+	LOCAL:10 = 0
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+;服へのダメージ
+CALL CLOTH_BATTLE_DAMAGE, 2
+
+;ベース
+EXP:V경험 += 5
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
+	EXP:근친교배경험 += 1
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
+	EXP:근친교배경험 += 1
+
+
+
+;굴복
+;拡張経験に応じて
+IF EXP:V확장경험 < 3
+	LOCAL:8 = 2000
+ELSEIF EXP:V확장경험 < 5
+	LOCAL:8 = 4000
+ELSEIF EXP:V확장경험 < 8
+	LOCAL:8 = 8000
+ELSE
+	LOCAL:8 = 20000
+ENDIF
+
+;치정
+;拡張経験が高いと치정が入る
+IF EXP:V확장경험 < 3
+	LOCAL:9 = 200
+ELSEIF EXP:V확장경험 < 5
+	LOCAL:9 = 400
+ELSEIF EXP:V확장경험 < 8
+	LOCAL:9 = 800
+ELSE
+	LOCAL:9 = 2000
+ENDIF
+
+;고통
+;拡張経験が低いと入る
+IF EXP:V확장경험 < 3
+	LOCAL:10 += 4000
+ELSEIF EXP:V확장경험 < 5
+	LOCAL:10 += 3200
+ELSEIF EXP:V확장경험 < 8
+	LOCAL:10 += 1600
+ELSE
+	LOCAL:10 += 400
+ENDIF
+
+;공포
+;拡張経験が低いと入る
+IF EXP:V확장경험 < 3
+	LOCAL:11 = 8000
+ELSEIF EXP:V확장경험 < 5
+	LOCAL:11 = 6400
+ELSEIF EXP:V확장경험 < 8
+	LOCAL:11 = 3200
+ELSE
+	LOCAL:11 = 800
+ENDIF
+
+;습득
+IF ABL:봉사정신 == 0
+	LOCAL:6 = 20
+ELSEIF ABL:봉사정신 == 1
+	LOCAL:6 = 50
+ELSEIF ABL:봉사정신 == 2
+	LOCAL:6 = 100
+ELSEIF ABL:봉사정신 == 3
+	LOCAL:6 = 200
+ELSEIF ABL:봉사정신 == 4
+	LOCAL:6 = 500
+ELSEIF ABL:봉사정신 >= 5
+	LOCAL:6 = 1000
+ENDIF
+
+;윤활が低いと고통が入る
+SIF PALAM:윤활 < 2000
+	LOCAL:10 += 2000
+
+;行動予約なし
+TFLAG:17 = -1
+;촉수の行動を記録
+TFLAG:20 = 1009
+
+;습득基本値
+LOCAL:6 += 2000
+
+;욕정基本値
+LOCAL:7 += 500
+
+;굴복基本値
+LOCAL:8 += 4000
+
+;치정基本値
+LOCAL:9 += 0
+
+;고통基本値
+LOCAL:10 += 1500
+
+;공포基本値
+LOCAL:11 += 1500
+
+;체력消費基本値
+LOCAL:12 += 50
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+

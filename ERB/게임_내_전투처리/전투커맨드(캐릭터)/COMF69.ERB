@@ -1,0 +1,29 @@
+﻿;아무것도안한다
+@COM69
+
+;滞空状態なら着地
+SIF GETBIT(TCVARn:216, 1)
+	TCVARn:216 = 4
+	;FEAT効果による着地時の反動
+	SIF TALENT:날개 > 0
+		TFLAG:99 += 1
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;방어플래그를아무것도안한다に変更
+TCVARn:2 = 자세：아무것도안한다
+
+;기절している場合
+IF (TCVARn:12 & 기절)
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は意識を失っている…
+	PRINTW 
+ELSE
+	;지문: 아무것도안한다
+	CALL MESSAGE_BATTLE_CHARA_NOACTION
+	;지문: 洗脳/悪堕ちキャラが操作キャラの아무것도안한다を見た
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_NOACTION
+ENDIF
+
+RETURN 1

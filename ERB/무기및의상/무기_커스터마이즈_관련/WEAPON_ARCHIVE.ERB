@@ -1,0 +1,51 @@
+﻿;--------------------------------------------------
+;武器データの圧縮保存・解凍に関する処理群
+
+;圧縮文字列から武器データを解凍する
+;ARG	キャラクター番号
+;ARG:1	距離
+@DECODE_WEAPON_DATA, ARG, ARG:1
+#DIMS SeparatorMajor
+#DIMS SeparatorMinor
+#DIMS String
+SeparatorMajor = //
+SeparatorMinor = <>
+
+;圧縮データを取得
+String = %CSTR:ARG:(ARG:1 + 14)%
+SIF String == ""
+	RETURN -1
+
+;圧縮データを分解
+SPLIT String, SeparatorMajor, LOCALS
+
+;第０節は武器名
+CSTR:ARG:(ARG:1 + 4) = %LOCALS:0%
+
+;第１節は地の文カスタマイズ
+;現在は工事中につき中身なし
+
+;第２節は전투스타일
+IF LOCALS:2 == "連続" || LOCALS:2 == "1"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 1
+ELSEIF  LOCALS:2 == "装甲" || LOCALS:2 == "2"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 2
+ELSEIF  LOCALS:2 == "撹乱" || LOCALS:2 == "3"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 3
+ELSEIF  LOCALS:2 == "重撃" || LOCALS:2 == "4"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 4
+ELSEIF  LOCALS:2 == "広範" || LOCALS:2 == "5"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 5
+ELSEIF  LOCALS:2 == "全力" || LOCALS:2 == "6"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 6
+ELSEIF  LOCALS:2 == "知略" || LOCALS:2 == "7"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 7
+ELSEIF  LOCALS:2 == "設置" || LOCALS:2 == "8"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 8
+ELSEIF  LOCALS:2 == "使役" || LOCALS:2 == "9"
+	CDFLAG:ARG:(ARG:1):전투스타일 = 9
+ELSE
+	CDFLAG:ARG:(ARG:1):전투스타일 = 0
+ENDIF
+
+

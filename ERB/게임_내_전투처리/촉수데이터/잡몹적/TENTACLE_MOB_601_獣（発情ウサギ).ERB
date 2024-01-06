@@ -1,0 +1,377 @@
+﻿;==================================================
+;【基本】
+;--------------------------------------------------
+;잡몹적
+;↓촉수の存在確認用関数　何も処理しない
+@TENTACLE_MOB_601
+;--------------------------------------------------
+;名前
+@TENTACLE_MOB_601_GETNAME
+RESULTS = 발정ウサギ
+
+;--------------------------------------------------
+;解説
+@TENTACLE_MOB_601_DEFENITION
+PRINTFORML （촉수と同化して凶暴化したウサギ）
+PRINTFORML （元が愛玩動物なので強くはないが性欲だけは旺盛で）
+PRINTFORML （捕まえて挿れる事しか頭にない）
+
+
+;==================================================
+;【스테이터스】
+;--------------------------------------------------
+;HP
+@TENTACLE_MOB_601_HP
+LOCAL = 800
+CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
+RETURN RESULT
+
+;--------------------------------------------------
+;사정限界値
+@TENTACLE_MOB_601_SYASEI
+CALL TENTACLE_LEVEL
+LOCAL = 480 + RESULT * 5
+RETURN LOCAL
+
+;--------------------------------------------------
+;搾精ダメージ補正
+@TENTACLE_MOB_601_SAKUSEI
+LOCAL = 30
+RETURN LOCAL
+
+;--------------------------------------------------
+;油断度閾値
+@TENTACLE_MOB_601_YUDAN
+LOCAL = 300
+RETURN LOCAL
+
+;--------------------------------------------------
+;공격
+@TENTACLE_MOB_601_KOUGEKI
+LOCAL = 50
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;방어
+@TENTACLE_MOB_601_BOUGYO
+LOCAL = 50
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;민첩
+@TENTACLE_MOB_601_BINSYOU
+LOCAL = 80
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;지성
+@TENTACLE_MOB_601_CHISEI
+LOCAL = 10
+CALL TENTACLE_STATUS_HOSEI, LOCAL,10
+RETURN RESULT
+
+;--------------------------------------------------
+;근거리
+@TENTACLE_MOB_601_SHORT
+RESULT = 50
+RETURN RESULT
+
+;--------------------------------------------------
+;중거리
+@TENTACLE_MOB_601_MIDDLE
+RESULT = 50
+RETURN RESULT
+
+;--------------------------------------------------
+;원거리
+@TENTACLE_MOB_601_LONG
+RESULT = 50
+RETURN RESULT
+
+;--------------------------------------------------
+;拘束力
+@TENTACLE_MOB_601_HOLD
+RESULT = 10
+RETURN RESULT
+
+;--------------------------------------------------
+;PALAM補正 百分率で返す
+@TENTACLE_MOB_601_PALAM_HOSEI
+;快C
+LOCAL:0 = 50
+;快V
+LOCAL:1 = 100
+;快A
+LOCAL:2 = 50
+;快B
+LOCAL:3 = 50
+;윤활
+LOCAL:4 = 50
+;공순
+LOCAL:5 = 50
+;取得
+LOCAL:6 = 50
+;욕정
+LOCAL:7 = 50
+;굴복
+LOCAL:8 = 50
+;恥辱
+LOCAL:9 = 50
+;고통
+LOCAL:10 = 50
+;공포
+LOCAL:11 = 50
+
+RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;==================================================
+;【専用ルーチン（戦闘）】
+;--------------------------------------------------
+@TENTACLE_MOB_601_ATTACK_ROUTINE
+LOCAL = RAND:100
+IF LOCAL < 65 && ISFEMALE()
+	RETURN 2
+ELSE
+	RETURN 1
+ENDIF
+
+
+;==================================================
+;【専用ルーチン（性行為）】
+;--------------------------------------------------
+@TENTACLE_MOB_601_SEX_ROUTINE
+LOCAL = RAND:100
+
+;Ｖ挿入
+IF LOCAL < 50 || (TFLAG:20 == 2 && LOCAL < 90) && ISFEMALE() && CHECK_HOLYVIRGIN_F()==0
+	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		RETURN 14
+	ELSE
+		RETURN 3
+	ENDIF
+
+;素股
+ELSEIF LOCAL < 90 && ISFEMALE()
+	RETURN 2
+
+;キック
+ELSE
+	RETURN 8
+ENDIF
+RETURN 1
+
+;==================================================
+;【性コマンドレファレンス】
+;--------------------------------------------------
+;ARG=1　스마타애태우기成功時の行動指定
+;ARG=2　스마타애태우기失敗時の行動指定
+;ARG=3　フェラチオ誘発時の行動指定
+@TENTACLE_MOB_601_REACTION_REF, ARG = 0
+;挿入系コマンドがルーチンに無いので-1を返す
+IF ARG == 1
+	RETURN 3
+ELSEIF ARG == 2
+	RETURN 3
+ENDIF
+RETURN -1
+
+
+;==================================================
+;【コマンド使用時の描写】
+;--------------------------------------------------
+;素股
+
+;性コマンド分類
+@SEX_TYPE_MOB_601_COM2
+RETURN 통상
+
+@MESSAGE_MOB_601_COM2, ARG:0, ARG:1
+FONTBOLD
+PRINT 素股
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
+PRINTL 
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORML はそそり立つ肉棒を、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の恥丘に擦り付けた。
+PRINTL 
+IF (ARG & Ｖ) == 0
+	PRINTFORM しかし、肉棒は結界に阻まれて直接触れることができなかった
+ELSE
+	PRINTFORML 질圧に阻まれて上手く挿入できていないが、
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は構う事無く腰を激しく振っている。
+	PRINTFORML 
+	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%は
+	IF TALENT:촉수의포로
+		PRINTFORM 肉棒のマッサージに幸福そうな表情を浮かべている
+	ELSEIF ABL:욕망 >= 3
+		PRINTFORM 強い快楽にだらしなく表情を弛緩させている
+	ELSEIF (TCVARn:12 & 기절)
+		PRINTFORM 敏感なところに強く刺激され、意識がないまま悶絶している
+	ELSE
+		PRINTFORM 嫌悪感から
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML を両手で掴んで引き離そうとするが、
+		PRINTFORM 返って強く押し付けられて余計に悶絶している
+	ENDIF
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM1")
+PRINTL 
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+;--------------------------------------------------
+;Ｖ挿入
+
+;性コマンド分類
+@SEX_TYPE_MOB_601_COM3
+RETURN 삽입
+
+@MESSAGE_MOB_601_COM3, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｖ挿入
+FONTREGULAR
+
+IF (ARG & Ｖ) == 0
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%の膣穴を貫こうとしたが、
+	PRINTFORM 結界に阻まれて触れることができなかった
+
+ELSEIF TCVARn:2 == 자세：Ｖ방어
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は、開脚された%PRINT_TRANSCALLNAME(TARGET)%の膣穴を貫こうとしたが、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が両手を使って挿入を防いだため、
+	PRINTFORM うまく行かなかったようだ
+
+ELSEIF TALENT:처녀 > 0
+	LOCAL:10 = 10000
+	CALL LOSTVIRGIN
+	PRINTFORML 
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORM の太い肉棒で
+	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の처녀は貫かれてしまった。
+	PRINTFORML 痛みを訴える%PRINT_TRANSCALLNAME(TARGET)%に構う事無く
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は激しく腰を打ち付ける。
+ELSE
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は肉棒で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の膣穴を貫いた。
+	PRINTFORML 激しく腰を振るたびに、%PRINT_TRANSCALLNAME(TARGET)%の身体は犯される。
+ENDIF
+
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM3")
+PRINTL 
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｖ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+;--------------------------------------------------
+;キック
+;性コマンド分類
+@SEX_TYPE_MOB_601_COM8
+RETURN 통상
+
+@MESSAGE_MOB_601_COM8, ARG:0, ARG:1
+FONTBOLD
+PRINTL キック
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM8
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;嬲りものにされるところを見られた
+	SETBIT TFLAG:21,7
+ENDIF
+
+;==================================================
+;【衣装を破く】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_601_COM14
+RETURN 통상
+
+@MESSAGE_MOB_601_COM14, ARG:0, ARG:1
+FONTBOLD
+PRINTL 衣装を破く
+FONTREGULAR
+CALL TENTACLE_ACCESS, "NAME"
+IF RAND:2 == 0
+	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%衣装に爪を立て
+	PRINTFORML 力任せに引き裂いた。ビリビリと音を立てて衣装が引き裂かれていく・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+	;状態異常：끈적끈적
+	CALL STATE_CHANGE_BETOBETO, 15
+ELSE
+	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%の衣装を噛みちぎった。
+	PRINTFORML ビリビリと音を立てて%PRINT_TRANSCALLNAME(TARGET)%の衣装が引き裂かれていく・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+ENDIF
+
+
+;==================================================
+;【絡みつく】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_601_KARAMITUKU
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORM は助走を付けて、まっすぐ%PRINT_TRANSCALLNAME(TARGET)%に飛びついてきた！
+
+PRINT （
+IF TFLAG:11 & 1
+	PRINT 近
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 2
+	PRINT 中
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 4
+	PRINT 遠
+ELSE
+	PRINT 　
+ENDIF
+PRINTL ）
+
+
+;==================================================
+;【絡みつく成功】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_601_KARAMITUKU_SUCCESS
+PRINTFORML 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%は腰に抱き着かれて拘束されてしまった。
+
+
+;=====拘束された結果=====
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORML の肉棒は一層大きく、固く勃起しており
+PRINTFORML 見て取れるほどの先走りでテカテカしている。
+PRINTL 
+
+

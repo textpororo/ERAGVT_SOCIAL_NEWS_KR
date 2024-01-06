@@ -1,0 +1,367 @@
+﻿
+
+;********************************************************************************************************************
+;CLOTH196 촉수の花嫁
+;＠中国版　변신능력無しキャラ用の完堕ち装備
+;　完全に戯けた補正が掛かっているけど、[完堕ち]取得は実質的に周回要素なので通常プレイへの影響はまあ無い…か？
+;　とはいえ明らかに吹っ飛んでるので問題出そうなら後々調整する
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_196
+;----------------------------------------------------------
+PRINTL  霧のように薄く透明な花嫁衣裳、表面は촉수のような模様で覆われている……。
+PRINTL 【 補正 】공격5倍　촉수油断度上昇量2倍　粘液ダメージ増加（極大）　インナー兼用
+PRINTL 【変身時】공격8倍　민첩30％
+PRINTL 【耐久度】35
+@CLOTH_STATUS_196
+	SAVESTR:0'="HP35,KOUGEKI500@800,BINSYOU100@30,YUDAN200,LIQUID200,NOINNER1,"
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_196(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+
+SIF CUSTOM:0 == 0
+	PRINT [艶紺]
+SIF CUSTOM:0 == 1
+	PRINT [淫白]
+SIF CUSTOM:0 == 2
+	PRINT [媚黒]
+SIF CUSTOM:0 == 3
+	PRINT [魅紫]
+SIF CUSTOM:0 == 4
+	PRINT [妖紅]
+;本来は臙脂色が指定されている　現代日本では他より知名度が低いので詰める
+;SIF CUSTOM:0 == 5
+;	PRINT [胭脂]
+SIF CUSTOM:0 == 5
+	PRINT [蕩桃]
+
+SIF CUSTOM:1 == 1
+	PRINT [ボールギャグ]
+SIF CUSTOM:1 == 2
+	PRINT [鼻フック]
+SIF CUSTOM:1 == 3
+	PRINT [目隠し]
+SIF CUSTOM:1 == 4
+	PRINT [口枷]
+
+IF TALENT:ARG:유두피어싱 > 0
+	SIF CUSTOM:2 == 1
+		PRINT [乳首チェーン]
+	SIF CUSTOM:2 == 2
+		PRINT [リング乳首チェーン]
+	SIF CUSTOM:2 == 3
+		PRINT [乳房電極]
+	SIF CUSTOM:2 == 4
+		PRINT [金属乳枷]
+ELSE
+	SIF CUSTOM:2 == 1
+		PRINT [乳クリップ]
+	SIF CUSTOM:2 == 2
+		PRINT [ニップレス]
+	SIF CUSTOM:2 == 3
+		PRINT [ニプルバイブ]
+	SIF CUSTOM:2 == 4
+		PRINT [乳枷]
+ENDIF
+
+SIF CUSTOM:3 == 0
+	PRINT [透けロングスカート]
+SIF CUSTOM:3 == 1
+	PRINT [ミニスカート]
+SIF CUSTOM:3 == 2
+	PRINT [前開きマイクロミニスカート]
+SIF CUSTOM:3 == 3
+	PRINT [プリーツスカート（透明）]
+SIF CUSTOM:3 == 4
+	PRINT [淫猥な貞操帯]
+
+SIF CUSTOM:3 != 0 && (CUSTOM:4 == 1 || CUSTOM:4 == 2 || CUSTOM:4 == 3 )
+	PRINT [絶対領域]
+
+SIF CUSTOM:4 == 0
+	PRINT [素足]
+SIF CUSTOM:4 == 1
+	PRINT [レースストッキング][ハイヒール]
+SIF CUSTOM:4 == 2
+	PRINT [網サイハイ][ハイヒール]
+SIF CUSTOM:4 == 3
+	PRINT [ガーターストッキング]
+SIF CUSTOM:4 == 4
+	PRINT [パンスト]
+SIF CUSTOM:4 == 5
+	PRINT [足枷]
+
+SIF CUSTOM:1 == 4 && CUSTOM:3 == 4 && CUSTOM:4 == 5
+	PRINT [性奴拘束]
+
+PRINTL 
+SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 1
+	PRINTL 　変身時追加：[全頭マスク][애널プラグ]
+SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 2
+	PRINTL 　変身時追加：[首枷][手枷鎖][足枷鎖]
+SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 3
+	PRINTL 　変身時追加：[人工淫紋][束縛帯]
+
+@CLOTH_CUSTOMIZE_OPTION_196,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = (CFLAG:ARG:1 > 0) * 100 + 96
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{(CFLAG:ARG:1 == 0 ? 100 # 0)+ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"基調色","頭部","胸部","下半身","ソックス","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL 基調色を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"紺","白","黒","紫","紅","桃","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL 頭部の「装飾」を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"なし","ボールギャグ","鼻フック","目隠し","口枷@重1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	IF TALENT:ARG:유두피어싱 > 0
+		CLEARLINE 1
+		CALL SHORTLINE
+		PRINTL 가슴部の「装飾」を選択してください
+		CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"なし","チェーン@重2油3","リングチェーン@重3油2","電極@油3","金属乳枷@重6","@@")
+	ELSE
+		CLEARLINE 1
+		CALL SHORTLINE
+		PRINTL 가슴部の「装飾」を選択してください
+		CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"なし","乳クリップ@重1油2","ニップレス@油4","ニプルバイブ@重1油2","乳枷@重5","@@")
+	ENDIF
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL 下半身の着衣を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ロングスカート","ミニスカート@軽2晒3","マイクロミニスカート@軽1晒2","「プリーツスカート」@軽4晒5","貞操帯@重4護4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL ソックスを選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"素足","レースストッキング","網サイハイ","ガーターストッキング","パンスト@重2","足枷@油5晒4","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 50 && CFLAG:ARG:1 > 0
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL 追加装備を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CFLAG:ARG:(900 + ID),"追加装備なし","官能制御@（全頭マスク＋애널プラグ）","行為制御@（足枷鎖＋手枷鎖+首枷）","발정制御@（人工淫紋＋束縛帯）","@@")
+	CFLAG:ARG:(900 + ID) = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 91 && CFLAG:ARG:40 == CFLAG:ARG:41
+	CALL CLOTH_CUSTOMIZE_OPTION_COPY91(ARG,id,CUSTOM_NUM,CUSTOM)
+ELSEIF RESULT == 92 && CFLAG:ARG:40 == CFLAG:ARG:41
+	CALL CLOTH_CUSTOMIZE_OPTION_COPY92(ARG,ID)
+	RETURN -1
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;露出度合い
+LOCAL = 0
+SIF CUSTOM:2 == 1
+	LOCAL += 1
+SIF CUSTOM:2 == 2
+	LOCAL += 1
+SIF CUSTOM:2 == 3
+	LOCAL += 1
+SIF CUSTOM:2 == 4
+	LOCAL += 1
+SIF CUSTOM:3 == 1
+	LOCAL += 1
+SIF CUSTOM:3 == 2
+	LOCAL += 1
+SIF CUSTOM:3 == 3
+	LOCAL += 1
+SIF CUSTOM:4 == 4
+	LOCAL -= 1
+
+;補正効果
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+;下着保護アップ
+SIF CUSTOM:4 == 4
+	EQUIP:ARG:ID += 1 * POWER(10, 12)
+RETURN -1
+
+;********************************************************************************************************************
+;CLOTH197 오퍼레이터 베스트
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_197
+PRINTL  戦闘支援オペレーターの制服。
+PRINTL 【 補正 】지성1.3倍 非戦闘員専用
+PRINTL 【耐久度】90
+@CLOTH_STATUS_197
+	SAVESTR:0'="SLOT-1,HP90,CHISEI130,KOUGEKI50,"
+
+
+;********************************************************************************************************************
+;CLOTH198 목욕 타월
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_198
+PRINTL  入浴時に使われるごく普通のタオルを身体に巻いただけ。当然ながら방어力は皆無。
+PRINTL 【 補正 】촉수の油断度上昇2.5倍　露出度が高い（大）
+PRINTL 【耐久度】45
+@CLOTH_STATUS_198
+	SAVESTR:0'="SLOT-1,HP45,DEF70,YUDAN250,SHYNESS150,"
+
+
+;********************************************************************************************************************
+;CLOTH199 촉수服
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_199
+PRINTL  촉수生物の細胞を利用した生体鎧。着用者を大きくパワーアップさせるが…
+;PRINTL  なお、このアイテムは通常時と変身時で分けて装備することができない。
+PRINTL 【 補正 】全能力1.25倍、성내성を常に消費　インナー兼用
+PRINTL 【耐久度】─
+;성내성消費や暴走時処理はベタ書き
+@CLOTH_STATUS_199
+SAVESTR:0'="HP-1,KOUGEKI!,BOUGYO!,BINSYOU!,CHISEI125,NOINNER1,"
+;SAVESTR:0'="SLOT-1,HP-1,KOUGEKI!,BOUGYO!,BINSYOU!,CHISEI125,NOINNER1,"
+
+;----------------------------------------------------------
+;特殊分岐
+@CLOTH_HOSEI_KOUGEKI_199
+LOCAL = 125 + FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 2) * 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 3) == 1
+	LOCAL += 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 4) == 4
+	TIMES LOCAL, 1.3
+RETURN LOCAL
+
+@CLOTH_HOSEI_BOUGYO_199
+LOCAL = 125 + FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 2) * 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 3) == 2
+	LOCAL += 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 4) == 4
+	TIMES LOCAL, 1.3
+RETURN LOCAL
+
+@CLOTH_HOSEI_BINSYOU_199
+LOCAL = 125 + FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 2) * 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 3) == 3
+	LOCAL += 25
+SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 4) == 4
+	TIMES LOCAL, 1.3
+RETURN LOCAL
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_199(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 1
+	PRINT [ボディスーツ]
+SIF CUSTOM:0 == 2
+	PRINT [ワンピース]
+SIF CUSTOM:0 == 3
+	PRINT [レオタード]
+SIF CUSTOM:0 == 4
+	PRINT [메이드복]
+SIF CUSTOM:0 == 5
+	PRINT [무당복]
+
+PRINTFORM [強化Lv{CUSTOM:1}]
+
+SIF CUSTOM:2 == 1
+	PRINT [공격 강화]
+SIF CUSTOM:2 == 2
+	PRINT [방어 강화]
+SIF CUSTOM:2 == 3
+	PRINT [민첩 강화]
+
+SIF CUSTOM:3 == 1
+	PRINT [성내성消費軽減Lv1]
+SIF CUSTOM:3 == 2
+	PRINT [성내성消費軽減Lv2]
+SIF CUSTOM:3 == 3
+	PRINT [성내성消費半減]
+SIF CUSTOM:3 == 4
+	PRINT [常時暴走化]
+
+PRINTL 
+SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 1
+	PRINTL 　変身時追加：[豪華な装飾][軽装甲]
+
+@CLOTH_CUSTOMIZE_OPTION_199,ARG
+#DIM CUSTOM, 7
+#DIM CUSTOM_NUM = 7
+#DIM ID
+RESULT = 0
+ID = (CFLAG:ARG:1 > 0) * 100 + 99
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{(CFLAG:ARG:1 == 0 ? 100 # 0)+ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"形状"+(FLAG:54 == 0 ? "!!研究레벨が足りません" # ""),"能力強化"+(FLAG:54 == 0 ? "!!研究레벨が足りません" # ""),"個別能力強化"+(FLAG:54 == 0 ? "!!研究레벨が足りません" # ""),"성내성消費軽減"+(FLAG:54 == 0 ? "!!研究레벨が足りません" # ""),"@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL 形状を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"デフォルト","ボディスーツ","ワンピース","レオタード","메이드복","무당복","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL 能力強化Lvを選択してください
+	PRINTL Lvが高いほど공격、방어、민첩補正とデメリットが強化されます
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"Lv0(デフォルト)","Lv1@"+(FLAG:54 < 1 ? "!!研究레벨が足りません" # ""),"Lv2@"+(FLAG:54 < 2 ? "!!研究레벨が足りません" # ""),"Lv3@"+(FLAG:54 < 3 ? "!!研究레벨が足りません" # ""),"Lv4@"+(FLAG:54 < 4 ? "!!研究레벨が足りません" # ""),"Lv5@"+(FLAG:54 < 5 ? "!!研究레벨が足りません" # ""),"@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL 強化する項目を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"デフォルト","공격補正強化＆성내성消費微増@"+(FLAG:54 < 3 ? "!!研究레벨が足りません" # ""),"방어補正強化＆성내성消費微増@"+(FLAG:54 < 3 ? "!!研究레벨が足りません" # ""),"민첩補正強化＆성내성消費微増@"+(FLAG:54 < 3 ? "!!研究레벨が足りません" # ""),"@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL 項目を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"デフォルト","성내성消費軽減＆暴走強化Lv1@"+(FLAG:54 < 2 ? "!!研究레벨が足りません" # ""),"성내성消費軽減＆暴走強化Lv2@"+(FLAG:54 < 4 ? "!!研究레벨が足りません" # ""),"성내성消費半減＆低確率で暴走@"+(FLAG:54 < 3 ? "!!研究레벨が足りません" # ""),"常時暴走化＆能力補正強化@"+(FLAG:54 < 5 ? "!!研究레벨が足りません" # ""),"@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40 && CFLAG:ARG:1 > 0
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL 追加装備を選択してください
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CFLAG:ARG:(900 + ID),"追加装備なし","オーソドックス@（豪華な装飾＋軽装甲）","@@")
+	CFLAG:ARG:(900 + ID) = RESULT
+
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 91 && CFLAG:ARG:40 == CFLAG:ARG:41
+	CALL CLOTH_CUSTOMIZE_OPTION_COPY91(ARG,ID,CUSTOM_NUM,CUSTOM)
+ELSEIF RESULT == 92 && CFLAG:ARG:40 == CFLAG:ARG:41
+	CALL CLOTH_CUSTOMIZE_OPTION_COPY92(ARG,ID)
+	RETURN -1
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+
+
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+RETURN -1

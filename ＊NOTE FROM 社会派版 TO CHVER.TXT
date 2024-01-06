@@ -1,0 +1,69 @@
+﻿★Due to the accuracy of JP/CH machine translation, I'll personally use English for technical information.
+
+2023/10/22
+＊我们想了很多问候语，
+　但最终，你我都不是在大使馆里牵手的外交官，而是看着眼前的촉수和魔法少女的御宅族。
+　换句话说，我认为将“您们”简单地包含在“我们”中是最好的礼貌。
+　如果你有촉수和魔法少女的话，就不用复杂的问候了吧？
+＊很抱歉对文件结构进行了重大更改。 如果我早点意识到中文版的存在，我就可以避免这种混乱。
+＊虽然我依靠机器翻译，但我还是阅读了添加的文本和事件。
+　内容展现了对GVT的深刻理解……不不不，我这么说吧：大陆书呆子的想法太离谱了！（称赞）
+　至少我觉得吕后会喜欢并且笑出声来。好吧，如果她是现代御宅族，她可能会有更好的主意。
+	――――――――――――――――――――――――――――――――――――――――――――――――――――
+	＊いろいろ挨拶を考えましたが…
+	　結局のところ、私達とあなた達は大使館で手を繋ぐ外交官ではなく、眼前で촉수と魔法少女を眺めるオタクです。
+	　つまり、単に「あなた達」を「私達」に含めるのが一番の礼儀なのだと思います。
+	　촉수と魔法少女がいるなら、複雑な挨拶なんか不要ですよね？
+	＊最近ファイル構造を変更しまくっていてごめんね、中国版の存在にもう少し早く気付いていれば混乱を抑えられたんだけど。
+	＊機械翻訳頼りですが、追加されたテキストとイベントを読んでいます。
+	　内容はGVTへの深い理解を示し……いや違う、こう言おう、大陸のオタクの発想はすげえな！（賞賛）
+	　少なくとも呂后は気に入って大声で笑うと思います。
+
+●CH 0929 bug report
+	・Achievement No.277/278 has number-collision	:recommend to move new ones to No.279/280
+●About flag:0 incompatibility issue:
+	・I made some vaccine that can repair the issue.
+	　See バージョン間互換処理.ERB.
+●About Random-Name-Generator:
+	・wrong-refer of rabdom name space
+		[WRONG code sample]
+			;Asian(JP) Name Style
+			IF LOCAL:0 < 4000
+				LOCALS:2 = %LOCALS:0% %LOCALS:1%
+			;Europian Name Style
+			ELSE
+				LOCALS:2 = %LOCALS:1% %LOCALS:0%
+			ENDIF
+		[FIXED]
+			;JP or CH Name Style
+			IF LOCAL:0 < 【3500 || LOCAL:0 >= 16000 】
+
+		(maybe older version phantom; wrong numbers were written directly all over the place...)
+		→I rewrote the name generation system with the latest version.
+		  See DIM.ERH, FIRSTSETTING_CHARA.ERB, MAKE_DEFAULT.ERB and other files.
+		  Or we should have used DATAFORM-list style instead of using STR.csv, for some future...
+
+	・I noticed added Chinese names to csv, so merged them to JP version.
+		(CH:16000-17499; anotherJP:18000-)
+		However, in the JP version, the "first name" is a bit problematic.
+		＊可悲的是，日本御宅族心目中的“熟悉的中国名字”大多是男性名字。
+		　……或者更确切地说，是《三國志演義》中武将的名字。
+		　看来伟大的罗贯中更感兴趣的是汗流浃背的老人的毕生抱负，而不是魔法少女的二次元美。
+		＊所以我们可以创造无数个伪繁体中文男性名字，
+		　但我什至无法正确识别你的名单中是否有女性名字。
+		＊换句话说，日本御宅族文化并没有那么重视“现实”的中国女性名字。
+		　我们地区的许多“中国女孩”听起来可能像熊猫的名字一样奇怪，反之亦然。
+		　촉수无法穿透语言障碍 burrrrrrrrr！！！！！！（社会派）
+			――――――――――――――――――――――――――――――――――――――――――――――――――――
+			＊悲しいことに、日本のオタクの脳内にある「よくある中国人の名前」はほとんどが男性名です。
+			　…というか『三國志演義』の武将の名前。
+			　偉大な羅貫中は、二次元美少女な魔法少女よりも汗臭いおじさんたちの人生を賭けた野望に多くの関心を払っていたようだ。
+			＊したがって、私たちは無数の疑似伝統的な中国の男性の名前を作成することができます。
+			　しかし、あなたのリストに女性の名前が含まれているかどうかさえ正確に識別できません。
+			＊言い換えれば、日本のオタク文化は「現実的な」中国人女性の名前をそれほど重視してこなかったのです。
+			　私たちの地域で描かれる多くの「中国の女の子」はパンダの名前と同じくらい奇妙に聞こえるかもしれませんし、その逆も同様です。
+			　촉수は言葉の壁を越えられない、ブルルルルルル！ ！ ！ ！ ！ ！ (社会派)
+
+
+
+

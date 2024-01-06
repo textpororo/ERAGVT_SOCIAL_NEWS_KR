@@ -1,0 +1,1190 @@
+﻿;--------------------------------------------------
+;변신한다
+@COM_ABLE0
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;変身素質がないとだめ
+SIF TALENT:변신능력 != 1
+	RETURN 0
+;変身中はだめ
+SIF CFLAG:1 != 0
+	RETURN 0
+;임신発覚後はＴＳ男性化できない
+SIF CHARATALENT_F(TARGET,0,"남자") == 0 && CHARATALENT_F(TARGET,1,"남자") > 0 && CHECK_PREGNANT_F(TARGET) > 0
+	RETURN 0
+;기력が10%未満だとだめ
+SIF BASE:기력*100/MAXBASE:기력 < 10
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;変身不可戦闘中はダメ
+SIF GETBATTLESITUATION("変身不可")==1
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;自前で表示する場合は一覧に非表示(以下全コマンドについて共通)
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+
+
+;--------------------------------------------------
+;근거리공격
+@COM_ABLE1
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐なら근거리でなければだめ
+SIF (TCVARn:12 & 쓰러짐) && TCVARn:0 != 1
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;중거리공격
+@COM_ABLE2
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐中なら중거리でなければだめ
+SIF (TCVARn:12 & 쓰러짐) && TCVARn:0 != 2
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;원거리공격
+@COM_ABLE3
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐中なら원거리でなければだめ
+SIF (TCVARn:12 & 쓰러짐) && TCVARn:0 != 3
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;방어
+@COM_ABLE4
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;距離を取る
+@COM_ABLE5
+
+;連続使用できない
+SIF PREVCOM == 5
+	RETURN 0
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;疲労度が50以上だとだめ
+SIF CFLAG:99 >= 50
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐中はだめ
+SIF (TCVARn:12 & 쓰러짐)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;배후로돈다
+@COM_ABLE6
+
+;連続使用できない
+SIF PREVCOM == 6
+	RETURN 0
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;疲労度が50以上だとだめ
+SIF CFLAG:99 >= 50
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐中はだめ
+SIF (TCVARn:12 & 쓰러짐)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;관찰한다
+@COM_ABLE7
+
+;連続使用できない
+SIF PREVCOM == 7
+	RETURN 0
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;疲労度が50以上だとだめ
+SIF CFLAG:99 >= 50
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;쓰러짐中はだめ
+SIF (TCVARn:12 & 쓰러짐)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;풀어낸다
+@COM_ABLE8
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;강구속中だとだめ
+SIF (TCVARn:12 & 강구속)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;クズ市民戦は5ターン目から可能
+SIF  FLAG:73 > 0 && TFLAG:0 < 5
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;날뛴다
+@COM_ABLE9
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;강구속中だとだめ
+SIF (TCVARn:12 & 강구속)
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;변신능력があり、変身前はだめ
+SIF TALENT:변신능력 != 0 && CFLAG:1 == 0
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;견딘다
+@COM_ABLE10
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;すでに敗北しているならだめ
+SIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
+	RETURN 0
+;타락フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	RETURN 0
+;쾌락굴복フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+	RETURN 0
+;절망フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+	RETURN 0
+;가만히있는다の条件を満たしているなら、공포と고통のPALAM合計が8000以下でないとだめ
+SIF (MARK:고통각인 + MARK:공포각인) > 3 && (PALAM:고통 + PALAM:공포) > 7999
+	RETURN 0
+;받아들인다の条件を満たしているなら、욕정と굴복と치정のPALAM合計が30000以下でないとだめ
+SIF (MARK:쾌락각인 + MARK:굴복각인 + MARK:치욕각인 + ABL:욕망) > 5 && (PALAM:욕정 + PALAM:굴복 + PALAM:치정 / 5) > 29999
+	RETURN 0
+;봉사한다の条件を満たしているなら、공순のPALAM合計が4000以下でないとだめ
+SIF (ABL:순종 + ABL:봉사정신 + ABL:촉수중독) > 5 && PALAM:공순 > 3999
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;가만히있는다
+@COM_ABLE11
+
+
+SIF TCVARn:8 < 10
+	RETURN 0
+;기절中なら実行可能
+SIF (TCVARn:12 & 기절)
+	RETURN 1
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;すでに敗北しているなら実行可能
+SIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
+	RETURN 1
+
+;고전フラグが立っていたらＯＫ
+SIF (MESSAGE_BRANCH_F(TARGET) & 고전)
+	RETURN 1
+;くず市民戦はいつでも使える
+SIF FLAG:73 > 0
+	RETURN 1
+;공포각인と고통각인の合計が4以上でないとだめ
+SIF (MARK:고통각인 + MARK:공포각인) < 4
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;받아들인다
+@COM_ABLE12
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;성저항フラグが立っていたらＯＫ
+SIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+	RETURN 1
+;욕정、굴복、치정の合計が30000以上ならＯＫ
+SIF (PALAM:욕정 + PALAM:굴복 + PALAM:치정 / 5) >= 30000
+	RETURN 1
+;욕망Lvと쾌락각인と굴복각인と치욕각인の合計が6以上でないとだめ
+SIF (ABL:욕망 + MARK:쾌락각인 + MARK:굴복각인 + MARK:치욕각인) < 6
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;봉사한다
+@COM_ABLE13
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;타락フラグが立っていればＯＫ
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	RETURN 1
+;순종Lvと봉사정신Lvと촉수중독Lvの合計が6以上でないとだめ
+SIF ABL:순종 + ABL:봉사정신 + ABL:촉수중독 < 6 || PALAM:공순 < 4000
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;V삽입방어
+@COM_ABLE14
+
+;남자には必要ない
+SIF ISMALE()
+	RETURN 0
+;一部のコマンド直後は駄目
+SIF (TCVARn:12 & 강구속) && (TFLAG:20 == 3 || TFLAG:20 == 15 || TFLAG:20 == 19 || TFLAG:20 == 1001 || TFLAG:20 == 1011 || TFLAG:20 == 1014)
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;救出コマンド
+@COM_ABLE15
+
+;강구속中だとだめ
+SIF (TCVARn:12 & 강구속)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;,救出済みはダメ
+IF (TFLAG:19 != 1)
+	;촉수が油断してないとダメ,拘束中でないとダメ
+	IF (TCVARn:0 == 0) && (TFLAG:2 >= 1)
+		;今の촉수にとらわれているキャラがいる
+		CALL PRISON_CHARA
+		IF RESULT != -1
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+;--------------------------------------------------
+;エアストライク
+@COM_ABLE16
+
+SIF GETBIT(TCVARn:216, 0)
+	SETCOLOR 255, 255, 0
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;ゲージ切れならだめ
+SIF BASE:공중대시 == 0
+	RETURN 0
+;変身前はだめ
+SIF TALENT:변신능력 && CFLAG:1 == 0
+	RETURN 0
+;疲労度が50以上だとだめ
+SIF CFLAG:99 >= 50
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;バースト공격
+@COM_ABLE17
+
+SIF GETBIT(TCVARn:217, 0)
+	SETCOLOR 255, 255, 0
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;ゲージ200以上かSPモード中でないとだめ
+;FEAT効果があればバースト공격使用可能
+SIF TCVARn:4 < 200 && CFLAG:1 < 2 && TALENT:핫스타트 == 0
+	RETURN 0
+;変身前はだめ
+SIF TALENT:변신능력 && CFLAG:1 == 0
+	RETURN 0
+;疲労度が50以上だとだめ
+SIF CFLAG:99 >= 50
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;ひきはがす
+@COM_ABLE40
+
+;남자には必要ない
+SIF ISMALE()
+	RETURN 0
+;すでに敗北しているならだめ
+SIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
+	RETURN 0
+;강구속中でないとだめ
+SIF (TCVARn:12 & 강구속) == 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;노려본다
+@COM_ABLE44
+
+;감정결여とだめ
+SIF TALENT:감정결여 > 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;種付けフィニッシュ直後はだめ
+SIF TFLAG:20 == 16
+	RETURN 0
+;強制自慰直後はだめ
+SIF TFLAG:20 == 1006
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 44
+	RETURN 0
+;기력が尽きていたらだめ
+SIF BASE:기력 == 0
+	RETURN 0
+;타락フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	RETURN 0
+;절망フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;매도한다
+@COM_ABLE45
+
+;감정결여とだめ
+SIF TALENT:감정결여 > 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;フェラ直後はだめ
+SIF TFLAG:20 == 11
+	RETURN 0
+;イラマチオ直後はだめ
+SIF TFLAG:20 == 12
+	RETURN 0
+;種付けフィニッシュ直後はだめ
+SIF TFLAG:20 == 16
+	RETURN 0
+;強制自慰直後はだめ
+SIF TFLAG:20 == 1006
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 45
+	RETURN 0
+;기력が75%以下でないならだめ
+SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
+	RETURN 0
+;타락フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	RETURN 0
+;相手が悪堕ちキャラの場合、強気な性格でないとだめ
+;相手が悪堕ちキャラでない場合、弱気な性格だとだめ
+IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
+	SIF TALENT:오기 == 0 && TALENT:고풍적 == 0 && TALENT:사나움 == 0
+		RETURN 0
+ELSE
+	SIF TALENT:겁쟁이 || TALENT:부끄럼쟁이 || TALENT:비관적
+		RETURN 0
+ENDIF
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;반항한다
+@COM_ABLE46
+
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;フェラ直後はだめ
+SIF TFLAG:20 == 11
+	RETURN 0
+;イラマチオ直後はだめ
+SIF TFLAG:20 == 12
+	RETURN 0
+;種付けフィニッシュ直後はだめ
+SIF TFLAG:20 == 16
+	RETURN 0
+;強制自慰直後はだめ
+SIF TFLAG:20 == 1006
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 46
+	RETURN 0
+;기력が75%以下でないならだめ
+SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
+	RETURN 0
+;타락フラグが立っていたらだめ
+SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	RETURN 0
+;相手が悪堕ちキャラの場合、強気な性格だとだめ
+;相手が悪堕ちキャラでない場合、弱気な性格か감정결여でないとだめ
+IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
+	SIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
+		RETURN 0
+ELSE
+	SIF TALENT:겁쟁이 == 0 && TALENT:부끄럼쟁이 == 0 && TALENT:비관적 == 0 && TALENT:감정결여 == 0
+		RETURN 0
+ENDIF
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;설득해본다
+@COM_ABLE47
+
+;相手が촉수だとだめ
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
+	RETURN 0
+;공격した後だとだめ
+SIF PREVCOM == 1 || PREVCOM == 2 || PREVCOM == 3 || PREVCOM == 9
+	RETURN 0
+;フェラ直後はだめ
+SIF TFLAG:20 == 11
+	RETURN 0
+;イラマチオ直後はだめ
+SIF TFLAG:20 == 12
+	RETURN 0
+;種付けフィニッシュ直後はだめ
+SIF TFLAG:20 == 16
+	RETURN 0
+;強制自慰直後はだめ
+SIF TFLAG:20 == 1006
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 47
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;아무것도안한다
+@COM_ABLE69
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+
+;기절中は가만히있는다表示になるため「가만히있는다」が有効な場面では表示しない
+IF (TCVARn:12 & 기절)
+	TRYCALLFORM COM_ABLE{11}
+	IF RESULT==1
+		RETURN 0
+	ENDIF
+ENDIF
+
+RETURN 1
+
+;--------------------------------------------------
+;SPバースト
+@COM_ABLE70
+
+;拘束中以外はだめ
+SIF TCVARn:0 > 0
+	RETURN 0
+;ゲージ300以上
+SIF TCVARn:4 + TCVARn:6 < 300 && CFLAG:1 < 2
+	RETURN 0
+;変身前はだめ
+SIF TALENT:변신능력 && CFLAG:1 == 0
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;EXゲージ破壊されていたらダメ
+SIF GETBATTLESITUATION("EX不可")==1
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;EX:攻
+@COM_ABLE71
+
+IF GETBIT(TCVARn:3, 0) == 0
+	;ゲージ100以上かSPモード中
+	SIF TCVARn:4 + TCVARn:6 < 100 && CFLAG:1 < 2
+		RETURN 0
+	;変身前はだめ
+	SIF TALENT:변신능력 && CFLAG:1 == 0
+		RETURN 0
+ELSE
+	SETCOLOR 255, 255, 0
+ENDIF
+
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;EXゲージ破壊されていたらダメ
+SIF GETBATTLESITUATION("EX不可")==1
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;EX:防
+@COM_ABLE72
+
+IF GETBIT(TCVARn:3, 1) == 0
+	;ゲージ100以上かSPモード中
+	SIF TCVARn:4 + TCVARn:6 < 100 && CFLAG:1 < 2
+		RETURN 0
+	;変身前はだめ
+	SIF TALENT:변신능력 && CFLAG:1 == 0
+		RETURN 0
+ELSE
+	SETCOLOR 255, 255, 0
+ENDIF
+
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;EXゲージ破壊されていたらダメ
+SIF GETBATTLESITUATION("EX不可")==1
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;SP変身
+@COM_ABLE73
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+;ゲージ200以上必要
+SIF TCVARn:4 + TCVARn:6 < 200
+	RETURN 0
+;변신능력なしならだめ
+SIF TALENT:변신능력 < 1
+	RETURN 0
+;변신능력ありなら変身前はだめ
+SIF TALENT:변신능력 > 0 && CFLAG:1 == 0
+	RETURN 0
+;SP変身中はだめ
+SIF CFLAG:1 == 2
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;変身不可戦闘中はダメ
+SIF GETBATTLESITUATION("変身不可")==1
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;EXゲージ破壊されていたらダメ
+SIF GETBATTLESITUATION("EX不可")==1
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;SP풀버스트
+@COM_ABLE74
+
+;拘束中はだめ
+SIF TCVARn:0 == 0
+	RETURN 0
+
+;변신능력なしならゲージ500(最大)ないとだめ
+;★変身アリならゲージ不問となっているので、バーストは撃てないが풀버스트は撃てるという状況も発生する
+;　システム的に両者は性質が違うコマンドだけどやや不自然かも？
+SIF TALENT:변신능력 == 0 && TCVARn:4 < 500
+	RETURN 0
+;SP変身前はだめ
+SIF TALENT:변신능력 && CFLAG:1 < 2
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;공격不可戦闘中はダメ
+SIF GETBATTLESITUATION("공격不可")==1 || (GETBATTLESITUATION("身バレ不可") && FLAG:70+FLAG:71 > 0)
+	RETURN 0
+;EXゲージ破壊されていたらダメ
+SIF GETBATTLESITUATION("EX不可")==1
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+;--------------------------------------------------
+;항복한다
+@COM_ABLE99
+
+SIF FLAG:999 < 1 && CONFIG_CHECK_OTHER_F(1) == 0
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+RETURN 1
+
+
+;--------------------------------------------------
+;수음공격
+@COM_ABLE100
+
+;청순파は使用不可
+SIF TALENT:청순파 > 0
+	RETURN 0
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;性コマンド可否判定
+SIF CHARA_SEX_COMABLE_F(100) == 0
+	RETURN 0
+SETCOLOR 250,60,250
+RETURN 1
+
+;--------------------------------------------------
+;펠라공격
+@COM_ABLE101
+
+;청순파は使用不可
+SIF TALENT:청순파 > 0
+	RETURN 0
+;相手にペニスが無ければ使用不可
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)
+	RETURN 0
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 101
+	RETURN 0
+;강구속中でなければ、フェラ系コマンドの直後しか使用できない
+IF ENEMY_TYPE_CHECK_F("MOB") == 1 && (TCVARn:12 & 강구속) == 0
+	TRYCCALLFORM SEX_TYPE_MOB_{FLAG:11}_COM{TFLAG:20}
+	CATCH
+		RETURN 0
+	ENDCATCH
+ELSEIF (TCVARn:12 & 강구속) == 0
+	TRYCCALLFORM SEX_TYPE_COM{TFLAG:20}
+	CATCH
+		RETURN 0
+	ENDCATCH
+ENDIF
+SIF (RESULT & 펠라) == 0 && (TCVARn:12 & 강구속) == 0
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;性コマンド可否判定
+SIF CHARA_SEX_COMABLE_F(101) == 0
+	RETURN 0
+SETCOLOR 250,60,250
+RETURN 1
+
+;--------------------------------------------------
+;풋잡공격
+@COM_ABLE102
+
+;청순파は使用不可
+SIF TALENT:청순파 > 0
+	RETURN 0
+;相手にペニスが無ければ使用不可
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)
+	RETURN 0
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+;강구속中だとだめ
+SIF (TCVARn:12 & 강구속)
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기교Lv1以上必要
+SIF ABL:기교 < 1
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 102
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;性コマンド可否判定
+SIF CHARA_SEX_COMABLE_F(102) == 0
+	RETURN 0
+SETCOLOR 250,60,250
+RETURN 1
+
+;--------------------------------------------------
+;스마타애태우기
+@COM_ABLE103
+
+;청순파は使用不可
+SIF TALENT:청순파 > 0
+	RETURN 0
+;相手にペニスが無ければ使用不可
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)
+	RETURN 0
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+;강구속中だとだめ
+SIF (TCVARn:12 & 강구속)
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기교Lv2以上必要
+SIF ABL:기교 < 2
+	RETURN 0
+;連続使用できない
+SIF PREVCOM == 103
+	RETURN 0
+;失敗時のカウンター行動が設定されていない相手には使用できない
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	TRYCCALLFORM TENTACLE_MOB_{FLAG:11}_REACTION_REF, 2
+	CATCH
+		RETURN 0
+	ENDCATCH
+ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
+	TRYCCALLFORM TENTACLE_LASTBOSS_{FLAG:11}_REACTION_REF, 2
+	CATCH
+		RETURN 0
+	ENDCATCH
+ELSE
+	TRYCCALLFORM TENTACLE_BOSS_{FLAG:11}_REACTION_REF, 2
+	CATCH
+		RETURN 0
+	ENDCATCH
+ENDIF
+;カウンター行動が挿入系でない相手には使用できない
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	TRYCCALLFORM SEX_TYPE_MOB_{FLAG:11}_COM{RESULT}
+	CATCH
+		RETURN 0
+	ENDCATCH
+ELSE
+	TRYCCALLFORM SEX_TYPE_COM{RESULT}
+	CATCH
+		RETURN 0
+	ENDCATCH
+ENDIF
+SIF (RESULT & 삽입) == 0
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;性コマンド可否判定
+SIF CHARA_SEX_COMABLE_F(103) == 0
+	RETURN 0
+SETCOLOR 250,60,250
+RETURN 1
+
+;--------------------------------------------------
+;쥐어짠다
+@COM_ABLE104
+
+;청순파は使用不可
+SIF TALENT:청순파 > 0
+	RETURN 0
+;남자は使用不可
+SIF ISMALE()
+	RETURN 0
+;すでに敗北しているならだめ
+SIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
+	RETURN 0
+;강구속中でないとだめ
+SIF (TCVARn:12 & 강구속) == 0
+	RETURN 0
+;拘束中でないとだめ
+SIF TCVARn:0 >= 1
+	RETURN 0
+;기교Lv3以上必要
+SIF ABL:기교 < 3
+	RETURN 0
+;마비中はだめ
+SIF (TCVARn:12 & 마비)
+	RETURN 0
+;황홀中はだめ
+SIF (TCVARn:12 & 황홀)
+	RETURN 0
+;기절中はだめ
+SIF (TCVARn:12 & 기절)
+	RETURN 0
+SIF TCVARn:8 < 10
+	RETURN 0
+;性コマンド可否判定
+SIF CHARA_SEX_COMABLE_F(104) == 0
+	RETURN 0
+SETCOLOR 250,60,250
+RETURN 1
+
+
+
+;--------------------------------------------------
+;プレイヤーキャラの性コマンド使用可否判定共通処理
+;一応、ARG=コマンドの番号を参照可能にしておく
+@CHARA_SEX_COMABLE_F(ARG)
+#FUNCTION
+;촉수의포로や음란なら常に実行可能
+SIF TALENT:촉수의포로 > 0 || TALENT:음란 > 0
+	RETURNF 1
+
+;풋잡공격は実行難度2
+IF ARG == 102
+	LOCAL = -2
+;스마타애태우기は実行難度3
+ELSEIF ARG == 103
+	LOCAL = -3
+;それ以外は実行難度1
+ELSE
+	LOCAL = -1
+ENDIF
+
+;성저항
+SIF (MESSAGE_BRANCH_F(TARGET) & 성저항) > 0
+	LOCAL += 1
+;윤활+공순+욕정が3000以上
+SIF PALAM:윤활 + PALAM:공순 + PALAM:욕정 >= 3000
+	LOCAL += 1
+;時間経過
+LOCAL += SQRT(TFLAG:0 + 1)
+
+SIF LOCAL > 0
+	RETURNF 1
+;それ以外は使用不可
+RETURNF 0
+
+
+
+
+
+
+
+
+
+
+
+;移動先指定変身グループ(201～203)
+@COM_ABLE201
+;;先制공격中は選択する必要がない
+;⇒フレーバーとしては必要
+;SIF TFLAG:24 > 0
+;	RETURN 0
+;捕まってるときは選択不能
+SIF TCVARn:0 < 1
+	RETURN 0
+;공중대시との併用不能
+SIF GETBIT(TCVARn:216, 1)
+	RETURN 0
+;移動系コマンドが使用できない場合は選択不能
+TCVARn:8+=10
+	CALL COM_ABLE5
+	LOCAL = RESULT
+	CALL COM_ABLE6
+	LOCAL += RESULT
+	CALL COM_ABLE7
+	LOCAL += RESULT
+TCVARn:8-=10
+SIF LOCAL < 3
+	RETURN 0
+;通常の変身で判定
+CALL COM_ABLE0
+RETURN RESULT
+
+@COM_ABLE202
+;;先制공격中は選択する必要がない
+;⇒フレーバーとしては必要
+;SIF TFLAG:24 > 0
+;	RETURN 0
+;捕まってるときは選択不能
+SIF TCVARn:0 < 1
+	RETURN 0
+;공중대시との併用不能
+SIF GETBIT(TCVARn:216, 1)
+	RETURN 0
+;移動系コマンドが使用できない場合は選択不能
+TCVARn:8+=10
+	CALL COM_ABLE5
+	LOCAL = RESULT
+	CALL COM_ABLE6
+	LOCAL += RESULT
+	CALL COM_ABLE7
+	LOCAL += RESULT
+TCVARn:8-=10
+SIF LOCAL < 3
+	RETURN 0
+;通常の変身で判定
+CALL COM_ABLE0
+RETURN RESULT
+
+@COM_ABLE203
+;;先制공격中は選択する必要がない
+;⇒フレーバーとしては必要
+;SIF TFLAG:24 > 0
+;	RETURN 0
+;捕まってるときは選択不能
+SIF TCVARn:0 < 1
+	RETURN 0
+;공중대시との併用不能
+SIF GETBIT(TCVARn:216, 1)
+	RETURN 0
+;移動系コマンドが使用できない場合は選択不能
+TCVARn:8+=10
+	CALL COM_ABLE5
+	LOCAL = RESULT
+	CALL COM_ABLE6
+	LOCAL += RESULT
+	CALL COM_ABLE7
+	LOCAL += RESULT
+TCVARn:8-=10
+SIF LOCAL < 3
+	RETURN 0
+;通常の変身で判定
+CALL COM_ABLE0
+RETURN RESULT

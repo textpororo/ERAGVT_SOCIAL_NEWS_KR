@@ -1,0 +1,455 @@
+﻿;**********************************************************
+;キャラの幽閉処理
+@PRISON
+LOCAL = 0
+IF FLAG:999 == -998
+	FLAG:999 = 0
+	RESETBGCOLOR
+ENDIF
+;キャラが幽閉中かどうか
+FOR LOCAL:999, 0, CHARANUM
+	SIF LOCAL:999 == MASTER
+		CONTINUE
+	IF CFLAG:(LOCAL:999):0 == 1 || CHECK_GAMEOVER_F() == 1
+		SIF LOCAL == 0
+			DRAWLINE
+		;該当したキャラを一時的にTARGETにする
+		TARGET = LOCAL:999
+		IF LOCAL == 0
+			PRINTL 
+			PRINTL ・・・
+			PRINTL ・・・・・・
+			PRINTL ・・・・・・・・・
+			PRINTL 
+		ENDIF
+		LOCAL = 1
+		
+		;幽閉中のイベントへ
+		CALL PRISON_EVENT
+
+		LOCAL += 1
+	ENDIF
+	SIF FLAG:999 == -998
+		BREAK
+NEXT
+
+;**********************************************************
+;幽閉中の処理
+@PRISON_EVENT
+#DIM LCOUNT
+#DIM CCOUNT
+#DIM 今回陥落するフラグ=0
+FONTBOLD
+CALL TENTACLE_ACCESS_PRISON, TARGET, "NAME" 
+PRINTFORML 幽閉：%PRINT_CALLNAME(TARGET,1)%
+FONTREGULAR
+PRINTL 
+
+;幽閉に関する変数の初期化
+IF CFLAG:20 < 2
+	FLAG:110 = 0
+	FLAG:111 = 0
+ELSEIF CFLAG:20 == 2
+	FLAG:110 = 1
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+		SIF CFLAG:CCOUNT:240 == CFLAG:21
+			FLAG:111 = CCOUNT
+	NEXT
+ENDIF
+
+;幽閉されてから初の被姦かどうか
+;ＴＳオプション
+IF (CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") > 0) && CONFIG_CHECK_PRISON_F(0) > 0
+
+	;今回の出産数플래그를初期化
+	CFLAG:220 = 0
+
+	;地の文:初めての幽閉
+	CALL MESSAGE_PRISON_PRISENTENCE_FIRST
+
+	;幽閉時のＴＳ処理は@MESSAGE_PRISON_PRISENTENCE_FIRST内で処理
+	;地の文の表示と選択肢表示のタイミングの兼ね合いのため。
+
+ELSEIF CFLAG:31 == 0
+
+	;今回の出産数플래그를初期化
+	CFLAG:220 = 0
+
+	;幽閉自体が初めてかどうか
+	IF EXP:유폐경험 <= 1
+		;地の文:初めての幽閉
+		CALL MESSAGE_PRISON_PRISENTENCE_FIRST
+	ELSE
+		;地の分:二度目からの幽閉後の初被姦
+		CALL MESSAGE_PRISON_PRISENTENCE_START
+	ENDIF
+ELSE
+	;地の分:幽閉後の被姦開始文
+	CALL MESSAGE_PRISON_PRISENTENCE
+ENDIF
+
+;지문: 悪堕ちキャラが幽閉中の操作キャラに被姦開始した
+SIF CFLAG:20 == 2
+	CALL MESSAGE_OTHER_PRISON_PRISENTENCE
+
+;結界判定を更新
+FOR LOCAL,0,감각수
+	IF BASE:(LOCAL + 30) > 0
+		SHIELD:LOCAL = 1
+	ELSE
+		SHIELD:LOCAL = 0
+	ENDIF
+NEXT
+
+SIF ISHOLE() == 0
+	GOTO SKIP
+
+;幽閉コマンドの選択
+;子촉수を出産している場合
+IF CFLAG:220 > 0 && RAND:100 < 30
+	;子촉수に犯される
+	CALL PRISON_COMABLE, 7
+ELSE
+	;専用ルーチン（幽閉）による処理
+	CALL TENTACLE_ACCESS_PRISON, TARGET, "PRISON_ROUTINE"
+	LOCAL = RESULT
+
+	;汎用ルーチン（幽閉）による処理
+	IF LOCAL == 0
+		;汎用行動の種類　幽閉処理関連のフォルダ内のPRISON_COMX,ERBの数を記述
+		LOCAL:1 = RAND:100
+			IF LOCAL:1 < 12
+			;C中心攻め
+			CALL PRISON_COMABLE, 0
+		ELSEIF LOCAL:1 < 24
+			IF CHECK_HOLYVIRGIN_F()==1
+				;B中心攻め
+				CALL PRISON_COMABLE, 3
+			ELSE
+				;V中心攻め
+				CALL PRISON_COMABLE, 1
+			ENDIF
+		ELSEIF LOCAL:1 < 36
+			;A中心攻め
+			CALL PRISON_COMABLE, 2
+		ELSEIF LOCAL:1 < 48
+			;B中心攻め
+			CALL PRISON_COMABLE, 3
+		ELSEIF LOCAL:1 < 60
+			;Sな攻め
+			CALL PRISON_COMABLE, 4
+		ELSEIF LOCAL:1 < 72
+			;強制奉仕
+			CALL PRISON_COMABLE, 5
+		ELSEIF LOCAL:1 < 84
+			;羞恥な攻め
+			CALL PRISON_COMABLE, 6
+		ELSEIF LOCAL:1 < 89
+			;묘상화
+			CALL PRISON_COMABLE, 104
+		ELSEIF LOCAL:1 < 94
+			;注射
+			CALL PRISON_COMABLE, 300
+		ELSE
+			;기생
+			CALL PRISON_COMABLE, 301
+		ENDIF
+	ENDIF
+	PRINTL 
+ENDIF
+
+;피간경험を加算
+EXP:피간경험 += 1
+CFLAG:31 += 1
+;汚染度の自動上昇
+CFLAG:30 += 3 + RAND:4
+;FEAT効果による汚染度補正
+SIF TALENT:신기소유자 > 0
+	CFLAG:30 += 3
+SIF TALENT:투쟁본능 > 0
+	CFLAG:30 += 6
+
+;搾精強化機能
+IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+	CALL GET_SYUREN, RAND:5 + RAND:5 + 6
+	PRINTL 
+ENDIF
+
+;汚染度のチェック
+CALL CHECK_CONTAMINATION
+今回陥落するフラグ = 0
+LOCAL:1 = RESULT
+;汚染度が閾値を上回っていれば陥落플래그를 세운다
+;完堕ちなら無条件で陥落플래그를 세운다
+SIF CFLAG:0 == 1 && (CFLAG:30 > LOCAL:1 || TALENT:完堕ち == 1)
+	今回陥落するフラグ = 1
+IF FLAG:999 == 1
+	SETCOLOR 105,105,105
+	PRINTL 
+	PRINTFORML 　DEBUG　汚染値 = {CFLAG:30}/{LOCAL:1}
+	RESETCOLOR
+ENDIF
+
+;촉수의포로があると淫紋がつく
+;컨피그のチェック
+IF (TALENT:촉수의포로) && CONFIG_CHECK_MANIAC_F(6) == 1
+	;まだ淫紋がない
+	IF CFLAG:32 == 0
+		PRINTL 
+		;複数箇所チェック
+		IF CONFIG_CHECK_MANIAC_F(7) == 1 && (TALENT:음핵 + TALENT:음호 + TALENT:음고 + TALENT:음유) > 0
+			PRINTFORM 激しい責めを受け続ける%PRINT_CALLNAME(TARGET)%の
+			IF TALENT:음핵 > 0 || TALENT:음호 > 0 || TALENT:음고 > 0 || TALENT:음유 > 0
+				IF TALENT:음고 == 0 && TALENT:음유 == 0
+					PRINT 腹部
+				ELSEIF TALENT:음유 == 0
+					PRINT 下半身
+				ELSE
+					PRINT 体中
+				ENDIF
+			ELSEIF TALENT:음핵 > 0
+				PRINT 下腹部
+			ELSEIF TALENT:음호 > 0
+				PRINT 腹部
+			ELSEIF TALENT:음고 > 0
+				PRINT 右臀部
+			ELSEIF TALENT:음유 > 0
+				PRINT 左乳房
+			ENDIF
+			PRINTL に、奇妙な紋様が浮かびつつある・・・
+		ELSEIF CONFIG_CHECK_MANIAC_F(7) == 1 && (TALENT:음핵 + TALENT:음호 + TALENT:음고 + TALENT:음유) == 0
+			;
+		ELSE
+			PRINTFORM 激しい責めを受け続ける%PRINT_CALLNAME(TARGET)%の
+			CALL TATTOO_POSITION
+			SIF RESULT == 0
+				PRINT 下腹部
+			SIF RESULT == 1
+				PRINT 下腹部
+			SIF RESULT == 2
+				PRINT 右臀部
+			SIF RESULT == 3
+				PRINT 左乳房
+			PRINTL に、奇妙な紋様が浮かびつつある・・・
+		ENDIF
+	;すでに淫紋がある場合の地の文
+	ELSEIF 今回陥落するフラグ == 0
+		LOCAL:2 = 0
+		;複数箇所フラグチェック
+		IF CONFIG_CHECK_MANIAC_F(7) == 1
+			LOCAL:2 = 0
+			CALL TATTOO_ACCESS, "POSITION_BIT"
+			;新規に淫紋が出る部位がないかをチェック
+			FOR LCOUNT, 0, 감각수
+				IF GETBIT(RESULT, LCOUNT) == 0 && TALENT:(LCOUNT + 153)
+					LOCAL:2 = LCOUNT + 1
+				ENDIF
+			NEXT
+		ENDIF
+		IF LOCAL:2 == 0
+			CALL TATTOO_ACCESS, "POSITION_STR"
+			PRINTL 
+			PRINTFORML %PRINT_CALLNAME(TARGET)%本人は気づいていないが、%RESULTS%にある紋様がその色を鮮やかに増してきているように見える・・・
+		ELSE
+			PRINTFORM %PRINT_CALLNAME(TARGET)%の
+			SIF LOCAL:2 == 1
+				PRINT 下腹部
+			SIF LOCAL:2 == 2
+				PRINT 腹部
+			SIF LOCAL:2 == 3
+				PRINT 右臀部
+			SIF LOCAL:2 == 4
+				PRINT 左乳房
+			PRINTL に、新たな紋様が浮き出したようだ・・・
+		ENDIF
+	ELSE
+	ENDIF
+	CALL PERCENT_CAL, CFLAG:30, LOCAL:1
+	CALL SAVE_TATTOO, RESULT
+	IF 今回陥落するフラグ == 0
+		CALL TATTOO_POSITION
+		CALL PRINT_TATTOO, RESULT
+	ENDIF
+	PRINTL 
+ENDIF
+
+;幽閉中に変身したキャラは通常に戻る
+;★変身が強制解除されないオプションを参照しているが、これ意図通りか？
+SIF CONFIG_CHECK_BALANCE_F(6) == 0
+	CALL TRANSFORM, 0
+
+$SKIP
+
+
+;サンドボックスモードでは最後の一人は絶対に陥落しない
+IF GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 1 && CHARANUM_HOPE()==1
+	今回陥落するフラグ=0
+ENDIF
+
+;5日以上の幽閉時、ソロモードとサンドボックスモードは脱出判定を行う
+;・ソロモードの場合、悪堕ち相当まで汚染されている(このターンのゲームオーバーが確定している)場合はスキップ
+;・産まれた直後から幽閉されている娘キャラは対象外
+IF CFLAG:31 > 10  && ((GAME_OPTION_CHECK_F(OPTION_solo) && 今回陥落するフラグ==0) || GAME_OPTION_CHECK_F(OPTION_게임오버없음)) && CFLAG:6 != -1 && RAND:4 == 0
+	PRINTL 　　　　　　
+	PRINTFORML そのとき、촉수の拘束が僅かに緩んだ！
+	IF TALENT:촉수의포로
+		PRINTFORML まだ辛うじて理性が残っていた%PRINT_CALLNAME(TARGET)%は使命を思い出し、
+		IF CFLAG:220
+			PRINT 我が子
+			SIF CFLAG:220 >= 2
+				PRINT たち
+			PRINTL に別れを告げて外部へと脱出した・・・
+		ELSE
+			PRINTL 刹那の逡巡を捨て去って外部へと脱出した・・・
+		ENDIF
+	ELSE
+		PRINTFORML 最後の力を温存していた%PRINT_CALLNAME(TARGET)%はこの機を逃さず、
+		PRINTFORML 決死の脱出劇を演じた末に、何とか外部へと逃れることができた・・・
+	ENDIF
+	PRINTW 
+	DRAWLINE
+	BASE:체력 = 0
+	BASE:기력 = 0
+	BASE:성내성 = 0
+	CFLAG:20 = 0
+	CFLAG:21 = 0
+	CFLAG:23 = 0
+	CFLAG:30 = 0
+	CFLAG:31 = 0
+	CFLAG:220 = 0
+	CALL AFTER_RESCUED,TARGET
+	PRINTW 
+	DRAWLINE
+	RETURN
+ENDIF	
+
+
+
+;末路１　洗脳/悪堕ち(前提：オプションON)
+;　・幽閉者が戦闘員で、[놀림받는체질]を持たない場合
+;　・「[非戦闘員][놀림받는체질]は洗脳/悪堕ちにならないオプション」がOFFの場合
+;　洗脳/悪堕ちする
+IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_CHECK_PRISON_F(3) == 0 || (TALENT:변신능력 >= 0 && TALENT:놀림받는체질 < 1))
+
+	PRINTL 
+	DRAWLINE
+	;촉수의포로があれば悪堕ちに、なければ洗脳に(ただし悪堕ち優先フラグON時は常に悪堕ち)
+	IF TALENT:촉수의포로 == 0 && CONFIG_CHECK_PRISON_F(9) == 0
+		CFLAG:0 = 2
+		;지문: 洗脳になった
+		CALL MESSAGE_PRISON_SENNOU
+		;지문: 悪堕ちキャラが幽閉中の操作キャラを洗脳した
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_PRISON_SENNOU
+
+	ELSEIF TALENT:촉수의포로 == 1 || CONFIG_CHECK_PRISON_F(9) == 1
+		CFLAG:0 = 3
+		;함락경험を加算しておく
+		EXP:함락경험 += 1
+		;変身可能キャラならアウターが変更される
+		SIF TALENT:변신능력 == 1
+			CFLAG:41 = 401
+		;＠中国版　完堕ち装備
+		IF TALENT:完堕ち == 1
+			;변신능력アリなら淫縛の鎖
+			IF TALENT:변신능력 == 1
+				CFLAG:41 = 402
+			;변신능력ナシなら촉수の花嫁／noinner
+			ELSE
+				CFLAG:40 = 196
+				CFLAG:42 = 0
+			ENDIF
+		ENDIF
+		;追加淫紋の判定・保存
+		CALL SAVE_TATTOO_ADDITIONAL
+		;지문: 悪堕ちになった
+		CALL MESSAGE_PRISON_AKUOTI
+		;容姿変更
+		CALL CORRUPT_CHANGE_LOOKS_MAIN, TARGET
+		;지문: 悪堕ちキャラが幽閉中の操作キャラを悪堕ち
+		SIF CFLAG:20 == 2
+			CALL MESSAGE_OTHER_PRISON_AKUOTI
+	ENDIF
+
+	;ソロモードでキャラ全員が洗脳/悪堕ちになるとゲームオーバー
+	IF GAME_OPTION_CHECK_F(OPTION_solo)
+		CALL ENDING_4
+		DRAWLINE
+		RETURN
+	ENDIF
+
+	PRINTFORML %STR:2500%の尖兵となった%PRINT_CALLNAME(TARGET)%に邪悪な力が流れ込む・・・
+	PRINTL 
+	;洗脳/悪堕ち時に大量の경험치が手に入る
+	CALL TENTACLE_LEVEL
+	IF CFLAG:0 == 2
+		LOCAL = 20 * (5 + ABL:레벨) + RAND:25
+	ELSEIF CFLAG:0 == 3
+		LOCAL = 40 * (5 + ABL:레벨) + RAND:50
+	ENDIF
+	SIF LOCAL < 50
+		LOCAL = 50
+	CALL GET_EXP,min(LOCAL,750)
+	;遭遇率アップ効果をリセット
+	CFLAG:23 = 0
+	PRINTW 
+
+
+;末路２　取り込まれロスト(未陥落のまま10日以上幽閉=幽閉中被姦20回以上)
+;　・「洗脳/悪堕ち」オプションがOFFの場合
+;　・「洗脳/悪堕ち」オプションがON、かつ以下のうちどちらかの素質を所持する
+;　　　　　　　　　[묘상화](「ただし묘상화キャラは産む機械として取り込む」オプションON時)
+;　　　　　　　　　[놀림받는체질](「놀림받는체질キャラは悪堕ちしない」オプションON時)
+;　촉수に取り込まれてロスト扱い(救出不能)になる
+;　ただしゲームオーバーの無いサンドボックスモードでは取り込まれロストも発生しない
+ELSEIF CFLAG:0 == 1 && CFLAG:31 > 19 && (CONFIG_CHECK_PRISON_F(1) == 0 || (CONFIG_CHECK_PRISON_F(2) == 1 && TALENT:묘상화 > 0) || TALENT:놀림받는체질 >= 1) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0
+	PRINTL 
+	DRAWLINE
+	CFLAG:0 = 9
+
+	;지문: 取り込まれ
+	CALL MESSAGE_PRISON_DEAD
+
+	;촉수に取り込まれた目印
+	TALENT:TARGET:묘상화 = 1
+	;リョナありなら번식자루にされる
+	IF CONFIG_CHECK_MANIAC_F(14)
+		TALENT:TARGET:사지결손 = 1
+		TALENT:TARGET:번식자루 = 1
+	ENDIF
+
+	;지문: 悪堕ちキャラが幽閉中の操作キャラを取り込んだ
+	SIF CFLAG:20 == 2
+		CALL MESSAGE_OTHER_PRISON_DEAD
+	;ソロモードだとゲームオーバー
+	IF GAME_OPTION_CHECK_F(OPTION_solo)
+		CALL ENDING_5
+		DRAWLINE
+		RETURN
+	ENDIF
+	;遭遇率アップ効果をリセット
+	CFLAG:23 = 0
+ENDIF
+
+DRAWLINE
+PRINTW 
+
+
+@CHECK_CONTAMINATION
+;汚染度は一回のコマンドで平均10~20程度の増加量なので、300あればおよそ10日견딘다という計算になる。
+LOCAL = 0
+LOCAL:1 = 260 + MIN(SQRT(MAX(BASE:기초성내성 - 60, 0) * 10) * 4, 340)
+LOCAL:1 -= ABL:촉수중독 * 16 + ABL:순종 * 8 + ABL:욕망 * 8 + ABL:봉사정신 * 8 + ABL:노출벽 * 2 + ABL:마조끼 * 2 + ABL:정액중독 * 4 + ABL:모유중독 * 4 + ABL:사정중독 * 4
+SIF LOCAL:1 < 160
+	LOCAL:1 = 160
+;オプションで묘상화しても陥落しにくくなる（取り込まれやすくなる）
+SIF CONFIG_CHECK_PRISON_F(3) > 0
+	LOCAL:1 += TALENT:묘상화 * 80
+;洗脳/悪堕ちしやすいの効果
+SIF FLAG:904
+	LOCAL:1 = LOCAL:1 * 3 / 4
+RETURN LOCAL:1
+

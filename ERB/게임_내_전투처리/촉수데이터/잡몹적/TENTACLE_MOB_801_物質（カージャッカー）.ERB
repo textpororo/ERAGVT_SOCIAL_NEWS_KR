@@ -1,0 +1,949 @@
+﻿;==================================================
+;【基本】
+;--------------------------------------------------
+;잡몹적
+@TENTACLE_MOB_801
+;--------------------------------------------------
+;名前
+@TENTACLE_MOB_801_GETNAME
+RESULTS = カージャッカー 
+
+;--------------------------------------------------
+;解説
+@TENTACLE_MOB_801_DEFENITION
+PRINTFORML （気が付くと%PRINT_TRANSCALLNAME(TARGET)%の背後に、）
+PRINTFORML （運転手が存在していない丈夫そうなワゴン車が忍び寄っていた）
+PRINTFORML （ガラス張りの窓からは、その中が촉수で満たされているのが分かった）
+
+
+
+;==================================================
+;【스테이터스】
+;--------------------------------------------------
+;HP
+@TENTACLE_MOB_801_HP
+LOCAL = 1500
+CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
+RETURN RESULT
+
+;--------------------------------------------------
+;사정限界値
+@TENTACLE_MOB_801_SYASEI
+CALL TENTACLE_LEVEL
+LOCAL = 280 + RESULT * 5
+RETURN LOCAL
+
+;--------------------------------------------------
+;搾精ダメージ補正
+@TENTACLE_MOB_801_SAKUSEI
+LOCAL = 25
+RETURN LOCAL
+
+;--------------------------------------------------
+;油断度閾値
+@TENTACLE_MOB_801_YUDAN
+LOCAL = 500
+RETURN LOCAL
+
+;--------------------------------------------------
+;공격
+@TENTACLE_MOB_801_KOUGEKI
+LOCAL = 150
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;방어
+@TENTACLE_MOB_801_BOUGYO
+LOCAL = 150
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;민첩
+@TENTACLE_MOB_801_BINSYOU
+LOCAL = 100
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;지성
+@TENTACLE_MOB_801_CHISEI
+LOCAL = 50
+CALL TENTACLE_STATUS_HOSEI, LOCAL,10
+RETURN RESULT
+
+;--------------------------------------------------
+;근거리
+@TENTACLE_MOB_801_SHORT
+RESULT = 100
+RETURN RESULT
+
+;--------------------------------------------------
+;중거리
+@TENTACLE_MOB_801_MIDDLE
+RESULT = 100
+RETURN RESULT
+
+;--------------------------------------------------
+;원거리
+@TENTACLE_MOB_801_LONG
+RESULT = 100
+RETURN RESULT
+
+;--------------------------------------------------
+;拘束力
+@TENTACLE_MOB_801_HOLD
+RESULT = 250
+RETURN RESULT
+
+;--------------------------------------------------
+;PALAM補正 百分率で返す
+@TENTACLE_MOB_801_PALAM_HOSEI
+;快C
+LOCAL:0 = 100
+;快V
+LOCAL:1 = 100
+;快A
+LOCAL:2 = 100
+;快B
+LOCAL:3 = 100
+;윤활
+LOCAL:4 = 50
+;공순
+LOCAL:5 = 50
+;取得
+LOCAL:6 = 50
+;욕정
+LOCAL:7 = 40
+;굴복
+LOCAL:8 = 25
+;恥辱
+LOCAL:9 = 50
+;고통
+LOCAL:10 = 50
+;공포
+LOCAL:11 = 25
+
+RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+
+
+;==================================================
+;【専用ルーチン（戦闘）】
+;--------------------------------------------------
+@TENTACLE_MOB_801_ATTACK_ROUTINE, ARG:0, ARG:1
+LOCAL = RAND:100
+IF LOCAL < 60
+	RETURN 2
+ELSE
+	RETURN 0
+ENDIF
+
+
+
+;==================================================
+;【専用ルーチン（性行為）】
+;--------------------------------------------------
+@TENTACLE_MOB_801_SEX_ROUTINE, ARG:0, ARG:1
+
+IF ISHOLE() == 0
+	SELECTCASE RAND:7
+		CASE 0
+			RETURN 0	;一斉愛撫
+		CASE 1
+			RETURN 2	;一斉사정
+		CASE 3
+			RETURN 11	;口辱
+		CASE 4
+			RETURN 1	;C攻め
+		CASE 5
+			RETURN 9	;針
+		CASE 6
+		  RETURN 8	;スパンキング
+	ENDSELECT
+
+ELSEIF ISMALE()
+	SELECTCASE RAND:8
+		CASE 0
+			RETURN 0	;一斉愛撫
+		CASE 1
+			RETURN 2	;一斉사정
+		CASE 3
+			RETURN 11	;口辱
+		CASE 4
+			RETURN 1	;C攻め
+		CASE 5
+			RETURN 9	;針
+		CASE 6
+		  RETURN 8	;スパンキング
+		CASE 7
+			RETURN 5	;A攻め
+	ENDSELECT
+
+ELSE
+	LOCAL = RAND:110
+
+	;全身愛撫
+	IF LOCAL < 20
+		RETURN 0
+
+	;一斉사정
+	ELSEIF LOCAL < 40
+		RETURN 2
+
+	;口辱
+	ELSEIF LOCAL < 60
+		RETURN 11
+
+	;C攻め強
+	ELSEIF LOCAL < 70
+		RETURN 1
+
+	;種付け
+	ELSEIF LOCAL < 80 && CHECK_HOLYVIRGIN_F()==0
+		RETURN 3
+
+	;A攻め強
+	ELSEIF LOCAL < 90
+		RETURN 5
+
+	;針
+	ELSEIF LOCAL < 95
+		RETURN 9
+
+	;スパンキング
+	ELSE
+		RETURN 8
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;【性コマンドレファレンス】
+;--------------------------------------------------
+;ARG=1　스마타애태우기成功時の行動指定
+;ARG=2　스마타애태우기失敗時の行動指定
+;ARG=3　フェラチオ誘発時の行動指定
+@TENTACLE_MOB_801_REACTION_REF, ARG = 0
+IF ARG == 1
+	RETURN 3
+ELSEIF ARG == 2
+	RETURN 3
+ELSEIF ARG == 3
+	RETURN 11
+ENDIF
+RETURN -1
+
+
+;==================================================
+;【コマンド使用時の描写】
+;--------------------------------------------------
+;==================================================
+;【Ｃ攻め弱】→【全身愛撫】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM0
+RETURN 통상
+
+@MESSAGE_MOB_801_COM0, ARG:0, ARG:1
+FONTBOLD
+PRINT 全身愛撫
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
+PRINTL
+
+IF BASE:C결계내구력 > 0
+	PRINTFORML 촉수は結界によって阻まれた
+ELSE
+	PRINTFORML ワゴン車は無数の촉수を伸ばした
+	PRINTFORML 촉수は%PRINT_TRANSCALLNAME(TARGET)%に絡みつき、身体中をまさぐっている・・・
+ENDIF
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM0
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+@SEXCOM_OPTION_MOB_801_COM0
+;追加攻め部位指定
+RETURN 15
+
+
+
+;==================================================
+;【Ｃ攻め強】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM1
+RETURN 통상
+
+@MESSAGE_MOB_801_COM1, ARG:0, ARG:1
+FONTBOLD
+PRINT Ｃ攻め強
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
+PRINTL
+
+IF ISMALE()
+	IF BASE:C결계내구력 > 0
+		PRINTFORML 촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけ、男根に吸い付こうとしたが
+		PRINTFORML 結界に阻まれて触れることができない
+	ELSE
+		PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を仰向けにすると
+		PRINTFORML 男根が丸見えになるよう股を開かせた
+		PRINTFORML そこへ舌のように垂れ下がった촉수が近づき、粘液を垂らしながら愛撫をしはじめた
+		IF (TCVARn:12 & 기절)
+			PRINTFORML 狂ったような動きで男根をなぶり続けている촉수に
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は意識のないまま、仰け反り足を伸ばしている。
+		ELSE
+			PRINTFORML 亀頭を弄ばれる%PRINT_TRANSCALLNAME(TARGET)%は촉수が音を立てすするたびに
+			PRINTFORML 背をそらせながら乱れ続けている・・・
+			PRINTFORML 抵抗しようとすれば、その動きを楽しむかのようにカリ首と尿道を攻め立て
+			PRINTFORML 先走るカウパーやザーメンによって、湿った擦過音が鳴り響いていく。
+		ENDIF
+	ENDIF
+ELSE
+	IF BASE:C결계내구력 > 0
+		PRINTFORML 촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけ、클리토리스に吸い付こうとしたが
+		PRINTFORML 結界に阻まれて触れることができない
+	ELSE
+		PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を仰向けにすると
+		PRINTFORML 클리토리스が丸見えになるよう股を開かせた
+		PRINTFORML そこへ舌のように垂れ下がった촉수が近づき、粘液を垂らしながら愛撫をしはじめた
+		IF (TCVARn:12 & 기절)
+			PRINTFORML 狂ったような動きで陰核をなぶり続けている촉수に
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は意識のないまま、背をくねらせて悶えている
+		ELSE
+			PRINTFORML 淫花を弄ばれる%PRINT_TRANSCALLNAME(TARGET)%は촉수が音を立てるたびに
+			PRINTFORML 背をそらせながら乱れ続けている・・・
+			PRINTFORML 抵抗しようとすれば、その動きを楽しむかのように촉수は勢いを増し
+			PRINTFORML より一層愛液が混ざりあう音を響かせていく
+		ENDIF
+	ENDIF
+ENDIF
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM1
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ｖ攻め弱】→【一斉사정】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM2
+RETURN 통상
+
+@MESSAGE_MOB_801_COM2, ARG:0, ARG:1
+#DIM LCOUNT
+FONTBOLD
+PRINTL 一斉사정
+FONTREGULAR
+
+PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%に손발を開かせると
+IF ISMALE()
+	;#region
+	IF ISMALE()
+		;#region
+		PRINTFORML ペニス、尻の割れ目、胸肌、へそ、脇腹、両手両足と至る所を這いまわり
+		;#endregion
+	ELSE 
+		PRINTFORML 股の上、尻の割れ目、胸肌、へそ、脇腹、両手両足と至る所を這いまわり
+	ENDIF
+	;#endregion
+ELSE 
+	IF ISMALE()
+		;#region
+		PRINTFORML ペニス、尻の割れ目、胸の谷間、へそ、脇腹、両手両足と至る所を這いまわり
+		;#endregion
+	ELSE 
+		PRINTFORML 股の上、尻の割れ目、胸の谷間、へそ、脇腹、両手両足と至る所を這いまわり
+	ENDIF
+ENDIF
+PRINTFORML 次々に亀頭を膨らませ사정寸前であると主張し始めた。
+PRINTL
+PRINTL
+;사정ターゲット設定
+;ダイスロールでリピート回数
+LCOUNT=1
+REPEAT 2+RAND:6+RAND:6
+	SELECTCASE RAND:5
+		CASE 0
+			TFLAG:4 = TFLAG:4 | 손
+			PRINTFORML {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の手に絡み膨らんでいる。
+		CASE 1
+			TFLAG:4 = TFLAG:4 | 입
+			PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+			IF TALENT:촉수의포로
+				PRINTFORM 熱烈なキスを受けながら
+			ELSE
+				PRINTFORM 固く閉じた口に촉수を押し付け
+			ENDIF
+			PRINTFORML 膨らんでいる。
+		CASE 2
+			TFLAG:4 = TFLAG:4 | 가슴
+			PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+			IF TALENT:거유 > 0
+				PRINTFORM 大きな胸に巻き付いて強調しながら
+			ELSE
+				PRINTFORM 乳輪を撫で回しながら
+			ENDIF
+			PRINTFORML 膨らんでいる。
+		CASE 3
+			IF ISMALE()
+				PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+				IF CLOTH_OUTER_PER < 90 && CLOTH_INNER_PER < CLOTH_INNER_DEF
+					TFLAG:4 = TFLAG:4 | 애널
+					INSERT = INSERT | 애널
+					IF TALENT:음고
+						PRINTFORM だらしなく開閉して誘う
+					ELSE
+						PRINTFORM 抵抗するように窄まった
+					ENDIF
+					PRINTFORML 尻穴に先端を当てて膨らんでいる。
+				ELSE
+					PRINTFORML 臀部を撫で上げている。
+				ENDIF
+			ELSE
+				IF CLOTH_OUTER_PER < 90 && CLOTH_INNER_PER < CLOTH_INNER_DEF
+					PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+					IF RAND:4 == 0
+						TFLAG:4 = TFLAG:4 | 균열
+						IF TALENT:백보지
+							PRINTFORML 毛が生えていないワレメのヒダを広げながら
+						ELSE
+							PRINTFORML ワレメから覗く大陰唇を広げ
+						ENDIF
+						PRINTFORML 膨らんでいる。
+					ELSE
+						TFLAG:4 = TFLAG:4 | 질
+						INSERT = INSERT | 질
+						IF TALENT:음호
+							PRINTFORM 切なく求める음란マンコ
+						ELSE
+							PRINTFORM 질口
+						ENDIF
+						PRINTFORML に先端をピッタリと当てて膨らんでいる。
+					ENDIF
+				ELSE
+					TFLAG:4 = TFLAG:4 | 균열
+					PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+					IF CLOTH_NO_INNER > 0
+						PRINT 衣装の上から
+					ELSEIF CFLAG:42 == 305 || CFLAG:42 == 306
+						PRINT 수영복の上から
+					ELSE
+						PRINT 下着の上から
+					ENDIF
+					PRINTL ワレメを撫で上げている。
+				ENDIF
+			ENDIF
+		CASE 4
+			PRINTFORM {LCOUNT}つ目の촉수は、%PRINT_TRANSCALLNAME(TARGET)%の
+			IF CLOTH_OUTER_PER < 90 && CLOTH_INNER_PER < CLOTH_INNER_DEF
+				TFLAG:4 = TFLAG:4 | 애널
+				INSERT = INSERT | 애널
+				IF TALENT:음고
+					PRINTFORM だらしなく開閉して誘う
+				ELSE
+					PRINTFORM 抵抗するように窄まった
+				ENDIF
+				PRINTFORML 尻穴に先端を当てて膨らんでいる。
+			ELSE
+				PRINTFORML 臀部を撫で上げている。
+			ENDIF
+	ENDSELECT
+	LCOUNT+=1
+	;사정値 300で期待値が2100
+	CALL TENTACLE_SYASEI_UP, 300
+REND
+PRINTL
+PRINTL
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は全身余すところなく精液をぶちまけられ
+PRINTFORMW 真っ白にデコレートされていく・・・
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM2
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+@SEXCOM_OPTION_MOB_801_COM2
+;追加攻め部位指定
+RETURN 15
+
+
+;==================================================
+;【Ｖ攻め強】→【種付け】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM3
+RETURN 삽입
+
+@MESSAGE_MOB_801_COM3, ARG:0, ARG:1
+FONTBOLD
+PRINTL 種付け
+FONTREGULAR
+IF (ARG & Ｖ) == 0
+	PRINTFORML 촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけ覆い被さろうとしたが
+	PRINTFORML 結界に阻まれて触れることができない
+ELSEIF TCVARn:2 == 자세：Ｖ방어
+	PRINTFORML 촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけ覆い被さろうとしたが
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が咄嗟に身を捻って抵抗したため、
+	PRINTFORML うまく行かなかったようだ
+
+;前のコマンドがCOM3 ELSEIF TFLAG:20 == 3
+
+ELSE
+	IF TALENT:처녀 > 0
+		PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を仰向けに寝かせると
+		PRINTFORML 질に細い촉수が絡み合った生殖器を割れ目へ押し当てた、
+		PRINTFORML 少しづつ力がこもり、閉ざされた扉をこじ開けるかのように
+		PRINTFORML それは질내へと押し込められていく
+		IF (TCVARn:12 & 기절)
+			PRINTFORML 気を失っている%PRINT_TRANSCALLNAME(TARGET)%は知らない間に처녀を奪われてしまった
+			PRINTFORML 촉수達はそれぞれが膣口まで頭を引き抜き、再び下腹部まで潜り込んでいく
+			PRINTFORML 深く、長く、その行為を繰り返していく・・・
+		ELSEIF TALENT:촉수의포로
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は力強く貫かれ、처녀を奪われた事に興奮している
+			PRINTFORML 口から甘い悲鳴が零れ、욕망に心が塗り潰される
+			PRINTFORML 蕩けた顔に応えるように、촉수達は身体を動かし始めた・・・
+;;		ELSEIF (TCVARn:2 == 자세：가만히있는다)
+;;			PRINTFORML 
+;;			PRINTFORML 
+;;			PRINTFORML 
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は悲鳴を上げるも、口を押さえつけられ声を発せなかった
+			PRINTFORML 無理矢理に視界を下に向けられ、苗床として使われる自分の身体を見せつけられる
+			PRINTFORML 촉수は青ざめる顔を笑うように貞操を蹂躙していった・・・
+		ENDIF
+	PRINTW 
+	PRINTL 처녀喪失
+	SETBIT CFLAG:TARGET:206,2
+	TALENT:처녀 = -1
+	PRINTW 
+	ELSE
+	PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を仰向けに寝かせると
+	PRINTFORML 細い촉수が絡み合った生殖器を秘部へ突き入れた。
+	PRINTFORML 질내ではひとつひとつが個々に動き、いち早く子種を注ぎ込もうと蠢いている
+		IF (TCVARn:12 & 기절)
+			PRINTFORML
+		ELSEIF TALENT:촉수의포로
+			PRINTFORML
+		ELSEIF (TCVARn:2 == 자세：가만히있는다)
+			PRINTFORML
+		ELSE
+			PRINTFORML
+		ENDIF
+	ENDIF
+ENDIF
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM3
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;挿入されたところを見られた
+	SIF (ARG & Ｖ) || (ARG & Ａ)
+		SETBIT TFLAG:21,3
+ENDIF
+
+
+
+;==================================================
+;【Ａ攻め弱】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM4
+RETURN 통상
+
+@MESSAGE_MOB_801_COM4, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ａ攻め弱
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM4
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ａ攻め強】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM5
+RETURN 삽입
+
+@MESSAGE_MOB_801_COM5, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ａ攻め強
+FONTREGULAR
+
+IF BASE:A결계내구력 > 0
+	PRINTFORML 촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけ、尻穴へ侵入をしようとしたが
+	PRINTFORML 結界に阻まれて触れることができない
+ELSE
+	PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%をうつ伏せにすると
+	PRINTFORML 丸見えになった尻穴へと潜り込んだ
+
+	IF (TCVARn:12 & 기절)
+		PRINTFORML 意識を失っている%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 腸内を촉수が擦りつける事によって生まれる熱にうなされている
+	ELSEIF TALENT:촉수의포로
+		PRINTFORML 口からは甘い吐息を漏らした%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML だらしない顔で交わりを受け入れ続けている
+		PRINTFORML 촉수が往復し、奥底へと貫かれるたびにビクビクと震え
+		PRINTFORML 蕩けた目を宙に泳がせた
+	ELSEIF (TCVARn:2 == 자세：가만히있는다)
+		PRINTFORML 無防備な%PRINT_TRANSCALLNAME(TARGET)%の尻穴を촉수は往復し
+		PRINTFORML グボグボと音を立てながら犯し続けている
+	ELSE
+		PRINTFORML 声を上げる%PRINT_TRANSCALLNAME(TARGET)%を無視し
+		PRINTFORML 촉수は膨張しながら往復し続ける・・・
+		PRINTFORML 反り立った先端を何度も押し込み、強引に尻穴を犯していく
+	ENDIF
+
+ENDIF
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM5
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;挿入されたところを見られた
+	SIF (ARG & Ｖ) || (ARG & Ａ)
+		SETBIT TFLAG:21,3
+ENDIF
+
+
+
+;==================================================
+;【Ｂ攻め弱】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM6
+RETURN 통상
+
+@MESSAGE_MOB_801_COM6, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｂ攻め弱
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM6
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ｂ攻め強】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM7
+RETURN 통상
+
+@MESSAGE_MOB_801_COM7, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｂ攻め強
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM7
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【スパンキング】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM8
+RETURN 통상
+
+@MESSAGE_MOB_801_COM8, ARG:0, ARG:1
+FONTBOLD
+PRINTL スパンキング
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM8
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;嬲りものにされるところを見られた
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【針】→【注射】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM9
+RETURN 통상
+
+@MESSAGE_MOB_801_COM9, ARG:0, ARG:1
+FONTBOLD
+PRINTL 注射
+FONTREGULAR
+
+PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%の身体を引き上げると、
+PRINTFORML 下腹部の突起へと鋭い촉수を突き刺した！
+PRINTFORML 
+PRINTFORML 差し込まれた촉수が脈動し、精製した液体が流し込まれる。
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の心臓はバクバクと破裂しそうなほどに高鳴り始め、
+PRINTFORML 堪える事の出来ないほどに욕정が高まっていく・・・
+CALL STATE_CHANGE_HATUJOU, 100
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM9
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;嬲りものにされるところを見られた
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【手淫】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM10
+RETURN 통상
+
+@MESSAGE_MOB_801_COM10, ARG:0, ARG:1
+FONTBOLD
+PRINTL 手淫
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM10
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【フェラ】→【口辱】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM11
+RETURN 펠라
+
+@MESSAGE_MOB_801_COM11, ARG:0, ARG:1
+FONTBOLD
+PRINTL 口辱
+FONTREGULAR
+
+PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%の首を持ち上げさせると
+PRINTFORML 唾液のような液が滴っている촉수を口の中へと滑り込ませた
+
+IF (TCVARn:12 & 기절)
+	PRINTFORML 촉수は抵抗のない%PRINT_TRANSCALLNAME(TARGET)%の喉奥へと伸びると
+	PRINTFORML 往復を繰り返して喉奥を蹂躙し続けた
+ELSEIF TALENT:촉수의포로
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は強い臭いを放つ촉수の誘惑に耐えられなくなり
+	PRINTFORML 惚けた顔で奉仕をしつつ、車内に下腹部を擦りつけ始めた
+	PRINTFORML 辺りにはくちゅくちゅと水音が響いている・・・
+ELSEIF (TCVARn:2 == 자세：가만히있는다)
+	PRINTFORML 촉수は舌に絡みながら口内をもてあそび
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の口元から粘液があふれ出すまで暴れ続けた
+ELSE
+	PRINTFORML 촉수は粘液を飲み込ませるよう擦りつけながら、口内を往復した
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はそれが発する何とも言えない味と臭いに慄いている
+ENDIF
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM11
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;愛撫されたところを見られた
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+	;口を犯されたところを見られた
+	SETBIT TFLAG:21,2
+ENDIF
+
+
+
+;==================================================
+;【イラマチオ】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM12
+RETURN 펠라
+
+@MESSAGE_MOB_801_COM12, ARG:0, ARG:1
+FONTBOLD
+PRINTL イラマチオ
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM12
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;口を犯されたところを見られた
+	SETBIT TFLAG:21,2
+	;嬲りものにされるところを見られた
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【絶頂禁止】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM13
+RETURN 통상
+
+@MESSAGE_MOB_801_COM13, ARG:0, ARG:1
+FONTBOLD
+PRINTL 絶頂禁止
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM13
+PRINTL 
+
+;動画撮影フラグの処理
+IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	;嬲りものにされるところを見られた
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【衣装を破く】
+;--------------------------------------------------
+;性コマンド分類
+@SEX_TYPE_MOB_801_COM14
+RETURN 통상
+
+@MESSAGE_MOB_801_COM14, ARG:0, ARG:1
+FONTBOLD
+PRINTL 衣装を破く
+FONTREGULAR
+IF RAND:3 == 0
+	PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけると、
+	PRINTFORML 촉수の先端から濁った色の粘液を勢いよく吐き出した！
+	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%の全身に降りかかり、
+	PRINTFORML 衣装がみるみる溶かされていく・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+	;状態異常：끈적끈적
+	CALL STATE_CHANGE_BETOBETO, 15
+ELSE
+	PRINTFORML ワゴン車の中で촉수達は%PRINT_TRANSCALLNAME(TARGET)%を押さえつけると、
+	PRINTFORML 力づくで身に着けている衣服を引き剥がし始めた！
+	PRINTFORML 繊維や装備を裂く音が車内に響き渡る・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+ENDIF
+
+
+
+;==================================================
+;【絡みつく】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_801_KARAMITUKU
+
+IF TFLAG:12 == 3
+	PRINTFORM ワゴン車のドアが勢い良く開くと、中から無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%へ襲い掛かった！
+ELSEIF RAND:2 == 0
+	PRINTFORM ワゴン車のドアが勢い良く開くと、中から無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%へ襲い掛かった！
+ELSE
+	PRINTFORM ワゴン車のドアが勢い良く開くと、中から無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%へ襲い掛かった！
+ENDIF
+
+PRINT （
+IF TFLAG:11 & 1
+	PRINT 近
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 2
+	PRINT 中
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 4
+	PRINT 遠
+ELSE
+	PRINT 　
+ENDIF
+PRINTL ）
+
+
+
+;==================================================
+;【絡みつく成功】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_801_KARAMITUKU_SUCCESS
+PRINTFORML 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORML 口元を押さえつけられたのち、손발を巻き取られた！
+PRINTFORML 촉수はそのまま獲物を車内に取り込むと悠々とワゴン車を走らせ始めた・・・
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수だらけの車内へ取り込まれ青ざめている
+
+

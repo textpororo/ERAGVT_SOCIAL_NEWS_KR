@@ -1,0 +1,128 @@
+﻿
+;休憩
+;--------------------------------------------------
+@KOJO_0_REST_24
+;촉수 구속구
+IF CFLAG:42 == 400
+	PRINTFORML  %ITEMNAME:(CFLAG:42)%を装着させられた%CALLNAME%を待っていたものは
+	SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML  耐え難い陵辱の日々だった。촉수は起きていようが眠っていようがお構いなしに
+		PRINTFORML  %CALLNAME%の穴という穴を貪り、타락の淵へと%CALLNAME%を追い込んでいく……
+		PRINTFORML (んっ、く……、また、埒をあけ……～～ッッ！！)
+	CASE 1
+		PRINTFORML  耐え難い屈辱の日々だった。촉수は%CALLNAME%の尿道や尻穴に入り込み、
+		PRINTFORML  もぞもぞと蠕動しながら排泄物を食らい、肥え太っていく……
+		PRINTFORML (な、なんたること……物の怪の糧などにされようとは……)
+	CASE 2
+		PRINTFORML  耐え難い恥辱の日々だった。촉수は仲間の見えないところでいやらしく蠢き、
+		PRINTFORML  %CALLNAME%の敏感な部分を弄り回し、快楽で飼い慣らしていく……
+		PRINTFORML (忌々しい物の怪め……ん、くっ……また……っ！)
+	CASEELSE
+		PRINTFORML  耐え難い辱めの日々だった。촉수は仲間の前では醜く肥大した乳首と陰核に擬態し
+		PRINTFORML  開発され尽くした様にしか見えない身体を心配する仲間の優しさがなお辛かった。
+		PRINTFORML (物の怪に取り憑かれているなぞ……言えようものか……)
+	ENDSELECT
+ENDIF
+
+
+;研究所助手（임신）
+;--------------------------------------------------
+@KOJO_0_SEISAN_KENKYU_ninshin_24
+;임신すると出撃できないなら絶対こうなるよね
+PRINTL 
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「嫌じゃ……嫌ぁぁ……物の怪なぞ、産みとうない……」
+	CASE 1
+		PRINTFORML 「%SELF_CALL()%は聞いておらぬぞ！　放しゃれ、このような屈辱を… ぅっ、う゛ぶ、げぼお゛ぶぉ゛ぉぉ！？」
+	CASEELSE
+		PRINTFORML 「ぐぶ……ぅ゛ぐ、ぇ゛ぶ……っぐ……ぶぎいぃぃ……」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML  今や%CALLNAME%は貴重な資料の宝庫でしかなく、衣服はおろか布一枚まとうことすら許されず
+		PRINTFORML  醜いボテ腹を晒して分娩台に拘束され、あらゆるデータを提供させられ続けていた。
+		PRINTFORML  鼻に栄養剤のチューブを差し込まれ、尿道と尻穴には吸引器が取り付けられ、排泄まで管理されている。
+			SIF TALENT:후타나리 > 0
+				PRINTFORML  だがそんな辱めにあってなお%CALLNAME%の후타나리の肉棒は激しく反り返り、先走りを垂らしている。
+		PRINTFORML  今日もクスコで広げられた牝穴をレンズが覗き込み続けていた……
+	CASEELSE
+		PRINTFORML  입を覆う吸引マスクが音を立てて吐瀉物を吸い上げていく。
+			SIF TALENT:후타나리 > 0
+				PRINTFORML  苦悶の声を上げる%CALLNAME%の후타나리の肉棒は激しく反り返り、先走りを垂らしている。
+		PRINTFORML  촉수に孕まされ戦えなくなった%CALLNAME%は分娩台に拘束され、貴重なデータを提供させられ続けていた。
+		PRINTFORML  特別病棟の奥深く、隔離施設の獣じみた苦悶の声は誰にも届かない……
+ENDSELECT
+
+
+;研究所助手（搾乳）
+;--------------------------------------------------
+@KOJO_0_SEISAN_KENKYU_sakunyu_24
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「ぅ゛もぉ゛おぉぉぉッ！ 出るっ、おっぱい出るぅぅッ！ う゛もぉ゛おほぉぉおおーッ！」
+	CASE 1
+		PRINTFORML 「ぅ゛もっ、う゛も゛ぉ゛おぉぉッ！ 搾゛っでぇッ、%SELF_CALL()%の胸もっと強ぐぅっ、う゛もぉ゛おほぉぉおおーッ！」
+	CASEELSE
+		PRINTFORML 「う゛もぉ゛おほぉぉおおーッ！ もっど！もっとおっぱい搾゛っでぇっ、ぅも゛おぉぉぉぉッ！！」
+ENDSELECT
+PRINTFORM  搾乳機のスイッチを入れられると、%PRINT_TRANSCALLNAME(TARGET)%は
+;奇乳
+IF TALENT:거유 >= 5
+	PRINTFORM  牝牛としか形容されないほど大きく育った
+;魔乳
+ELSEIF TALENT:거유 >= 4
+	PRINTFORM  日常生活に支障をきたすほど大きな
+;超乳
+ELSEIF TALENT:거유 >= 3
+	PRINTFORM  アンバランスなほど大きな
+;爆乳
+ELSEIF TALENT:거유 >= 2
+	PRINTFORM  ずっしりと重く育った
+;거유
+ELSEIF TALENT:거유 >= 1
+	PRINTFORM  大きく張った
+;빈유
+ELSEIF TALENT:빈유 >= 1
+	PRINTFORM  乳暈だけがぷっくりと膨らんだ
+ELSE
+	PRINTFORM  桜色に染まった
+ENDIF
+
+PRINTFORML  가슴から大量の母乳をカップへと吐き出していく……
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「搾ってっ、もっと、も゛っどぉ゛……ッ、ぅ゛もぉ゛おぉぉぉッ！」
+	CASE 1
+		PRINTFORML 「ぉお゛ぉ゛ぉ゛ぉッ！ みるく、出る、出……ぅ゛もぉ゛おぉぉッ！」
+	CASEELSE
+		PRINTFORML 「う゛もぉ゛おほぉぉおおーッ！ 搾って…搾゛っでぇ…っ、ぅも゛おぉぉぉぉッ！！」
+ENDSELECT
+PRINTFORML  もはや研究への協力という言葉は建前に過ぎず、%PRINT_TRANSCALLNAME(TARGET)%が搾乳快楽に溺れるためにここへ来ていることは誰の目にも明白だった……
+
+
+;研究所助手（후타나리）
+;--------------------------------------------------
+@KOJO_0_SEISAN_KENKYU_hutanari_24
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「ぉおぉぉっ？！ 出るっ、でるでるでりゅぅぅぅっ！！ んおぉっ、ぉおほぉ゛ぉ゛ぉぉっ！！」
+	CASE 1
+		PRINTFORML 「ぐひぃぃぃっ、イ゛ぐっ！！ %SELF_CALL_SINGLE()%、%SELF_CALL()%の魔羅、また弾けるぅっ！！」
+	CASEELSE
+		PRINTFORML 「ぉお゛ぉ゛っ、イ゛ぐっ、후타나리牝魔羅イ゛グぅっ！！ ひぐっ、ぉへぇぇぇぇっ！！」
+ENDSELECT
+PRINTFORML  搾精機相手に無様に腰を振り、%PRINT_TRANSCALLNAME(TARGET)%は分娩台の上で背中を大きく仰け反らせて黄白濁した精液を吹き出してる。
+PRINTFORML  快楽を餌に機械に飼われる哀れなミルクサーバー……それがここでの%PRINT_TRANSCALLNAME(TARGET)%の身分だった……
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「ひぐぅぅッ！ イ゛ぐぅぅ！！ %SELF_CALL_SINGLE()%、%SELF_CALL()%の魔羅壊れ゛ぅぅぅッ！！」
+	CASE 1
+		PRINTFORML 「ぶぎぃぃぃッ！ 사정ぇ゛へぇぇえっ！ 出る゛でりゅいっぱひでひゃぁ゛がぁあぁぁああ！」
+	CASEELSE
+		PRINTFORML 「ん゛おぉぉおお゛！ しゃせー、しゃせーひて、ひっ、ひっぎ、ぶひぃぃいッ！！」」
+ENDSELECT
+
+
+

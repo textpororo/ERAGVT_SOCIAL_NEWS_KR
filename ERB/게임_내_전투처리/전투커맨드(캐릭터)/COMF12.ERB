@@ -1,0 +1,20 @@
+﻿;받아들인다
+@COM12
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;방어フラグ：받아들인다にする
+TCVARn:2 = 자세：받아들인다
+
+;油断度の上昇
+TFLAG:3 += 50
+
+;지문: 距離を取る
+CALL MESSAGE_BATTLE_CHARA_UKEIRERU
+;지문: 洗脳/悪堕ちキャラが操作キャラの받아들인다を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_UKEIRERU
+
+RETURN 1

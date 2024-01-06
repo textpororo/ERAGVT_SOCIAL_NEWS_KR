@@ -1,0 +1,47 @@
+﻿;悪堕ち・洗脳キャラを除いたキャラのリスト表示
+;ARG=1ならCFLAG:0=0のキャラ（仲間状態で生きているキャラ）からしか選択できない、ARG=2なら全キャラ表示する、ARG=3なら一時離脱しているキャラのみ表示する
+;ARG:1は表示オプション
+;ARG:1=1	生存状態
+;ARG:1=2	修練Ｐ
+;ARG:2=1	キャンセル不可
+@INTAI_CHARA_LIST
+#DIM LCOUNT
+PRINTL 誰を引退させますか？
+FOR LCOUNT, 0, CHARANUM
+	SIF LCOUNT == MASTER
+		CONTINUE
+	;洗脳か悪堕ちなら飛ばす
+	SIF CFLAG:LCOUNT:0 == 2 || CFLAG:LCOUNT:0 == 3
+		CONTINUE
+	PRINTFORM [{LCOUNT}] %CALLNAME:LCOUNT,24,LEFT%
+	SIF CFLAG:LCOUNT:0 == 1
+		PRINT （幽閉中）
+	SIF CFLAG:LCOUNT:0 == 2
+		PRINT （洗脳）
+	SIF CFLAG:LCOUNT:0 == 3
+		PRINT （悪堕ち）
+	SIF CFLAG:LCOUNT:0 == 4
+		PRINT （誘拐監禁中）
+	;メンタルブレイク、未実装
+	;SIF CFLAG:LCOUNT:0 == 5
+	;	PRINT （引きこもり中）
+	SIF CFLAG:LCOUNT:0 == 9
+		PRINT （取り込まれ）
+	SIF CFLAG:LCOUNT:0 == 10
+		PRINT （出産に備えて入院中）
+	SIF CFLAG:LCOUNT:0 == 11
+		PRINT （育児中）
+	PRINTL 
+NEXT
+PRINTFORML [999]引退キャラ選択をやめる
+$INPUT_LOOP_CHARA_LIST
+INPUT
+IF RESULT == 999
+	RETURN 999
+ELSEIF RESULT < 1 || RESULT >= CHARANUM || CFLAG:RESULT:0 == 2 || CFLAG:RESULT:0 == 3
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_CHARA_LIST
+ELSE
+	RETURN RESULT
+ENDIF
+PRINTL 

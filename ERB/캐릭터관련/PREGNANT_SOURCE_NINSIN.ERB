@@ -1,0 +1,910 @@
+﻿;CFLAG:221前回出産からの膣出回数
+;CFLAG:222임신日数*2
+;CFLAG:223촉수日霊
+;CFLAG:224育児日数
+;TALENT:임신 임신中
+
+
+;------------------------------
+;受精判定
+;------------------------------
+@NINSIN_HANTEI,ARG:0,ARG:1,ARG:2 = 0
+#DIM PAPA_ID
+;千分率
+#DIM PREG_PER
+
+SIF ISMALE()
+	RETURN 0
+SIF TALENT:미성숙 > 0
+	RETURN 0
+SIF TALENT:임신 > 0
+	RETURN 0
+;常時避妊モード
+SIF CONFIG_CHECK_OTHER_F(2) > 0
+	RETURN 0
+;避妊効果
+IF CHECK_HININ_F(TARGET, ARG:2) == 1
+	;戦闘中かつ避妊に成功した場合は사정量をプールする
+	SIF FLAG:700 > 0
+		TFLAG:6 += ARG:0
+	RETURN 0
+ELSE
+	;戦闘中かつ避妊に失敗した場合はプールした사정量を戻す
+	SIF FLAG:700 > 0
+		ARG:0 += TFLAG:6
+	TFLAG:6 = 0
+ENDIF
+;父親のＩＤを取得
+;幽閉中の場合は幽閉相手
+IF (CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3 || CFLAG:0 == 9) && ARG:2 == 0
+	PAPA_ID = CFLAG:21 + (CFLAG:20 == 1) * 100
+;戦闘中の場合
+ELSEIF FLAG:700 > 0 && ARG:2 == 0
+	;洗脳/悪堕ちキャラの場合、そのキャラのＩＤ
+	IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
+		PAPA_ID = CFLAG:(FLAG:111):240 * -1 - 100
+		;기생후타나리の場合
+		SIF (TALENT:(FLAG:111):후타나리 == 2 || TALENT:(FLAG:111):변신시후타나리 == 2) && RAND:4 != 0
+			PAPA_ID = 200
+	;その他の場合
+	ELSE
+		;戦闘中の촉수のＩＤ
+		PAPA_ID = FLAG:11
+		;최종 보스 촉수の場合
+		IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
+			PAPA_ID += 100
+		;잡몹적の場合
+		ELSEIF ENEMY_TYPE_CHECK_F("MOB") == 1
+			PAPA_ID += 200
+		ENDIF
+	ENDIF
+;それ以外の場合
+ELSE
+	PAPA_ID = ARG:2
+	;기생후타나리の場合
+	SIF (TALENT:(CHARAID_F(ARG:2 * -1 - 100)):후타나리 == 2 || TALENT:(CHARAID_F(ARG:2 * -1 - 100)):변신시후타나리 == 2) && RAND:4 != 0
+		PAPA_ID = 200
+ENDIF
+;中出し累積回数を加算
+CFLAG:221 += ARG:0
+;精液の種類ごとに累積数を加算
+;촉수の場合
+IF PAPA_ID > 0
+	CFLAG:232 += ARG:0
+	SQRT (ARG:1 * CFLAG:232 * (EXP:출산경험 + 1) / 2)
+	PREG_PER = RESULT
+;仲間キャラの場合
+ELSEIF PAPA_ID <= -100
+	FOR LOCAL, 0, CHARANUM
+		SIF LOCAL == MASTER
+			CONTINUE
+		;기생されてるなら촉수、そうでなければ인간扱い
+		IF CFLAG:LOCAL:240 == (PAPA_ID * -1 - 100) && TALENT:LOCAL:기생 > 0
+			CFLAG:232 += ARG:0
+			SQRT (ARG:1 * CFLAG:232 * (EXP:출산경험 + 1) / 2)
+			PREG_PER = RESULT
+		ELSEIF CFLAG:LOCAL:240 == (PAPA_ID * -1 - 100)
+			CFLAG:233 += ARG:0
+			SQRT (ARG:1 * CFLAG:233 * (EXP:출산경험 + 1) / 2)
+			PREG_PER = RESULT
+		ENDIF
+	NEXT
+;一般人の場合
+ELSEIF PAPA_ID <= -1
+	CFLAG:233 += ARG:0
+	SQRT (ARG:1 * CFLAG:233 * (EXP:출산경험 + 1) / 2)
+	PREG_PER = RESULT
+ENDIF
+;임신確率補正
+SIF FLAG:700 == 1
+	PREG_PER = PREG_PER * 2
+SIF TALENT:묘상화
+	PREG_PER = PREG_PER * 4
+;임신確率アップの効果
+SIF FLAG:909
+	PREG_PER = PREG_PER * 2
+;피임결계持ちが破られた場合、かつ相手が촉수の場合は임신確率アップ
+SIF TALENT:피임결계 > 0 && PAPA_ID > 0
+	PREG_PER = PREG_PER * 2
+;FEAT効果による임신確率補正
+SIF TALENT:야수의후손 > 0
+	PREG_PER = PREG_PER * 125 / 100
+SIF TALENT:축복 > 0
+	PREG_PER = PREG_PER * 150 / 100
+SIF TALENT:불로장수 > 0
+	PREG_PER = PREG_PER * 75 / 100
+SIF (TCVARn:12 & 발정)
+	PREG_PER = PREG_PER * 2
+;危険日判定(雑に1.5倍とする)
+SIF ESTRUS_TEXT_F(TARGET)!=""
+	PREG_PER = PREG_PER * 3/2
+SIF (TCVARn:12 & 배란)
+	PREG_PER = 1000
+
+;debug임신確率表示
+IF FLAG:999 == 1
+	PRINTL 
+	PRINTFORML 基本임신確率を入力してください。（負の数で変更なし）
+	INPUT
+	IF RESULT < 0
+	ELSE
+		PREG_PER = RESULT * 10
+	ENDIF
+	SETCOLOR 128,128,128
+	PRINTL 
+	PRINTFORML 　　임신確率 {(PREG_PER + 100 * (CFLAG:0 == 0)) / 10}％
+	PRINTL 
+	RESETCOLOR
+ENDIF
+;幽閉されてなければ10%増し
+IF RAND:1000 < (PREG_PER + 100 * (CFLAG:0 == 0)) && (TALENT:임신 == 0)
+	;굴복の珠の増加
+	CALL NINSIN_SUBMIT
+	;임신したら累積中出回数を0に
+	CFLAG:221 = 0
+	CFLAG:232 = 0
+	CFLAG:233 = 0
+	;ここで父親の記録を行う
+	CFLAG:230 = PAPA_ID
+	CALL NINSIN_FLAG
+	IF FLAG:700 == 1
+		CALL TENTACLE_ACCESS, "GETNAME"
+		IF RESULTS == "Ｈ촉수" && (TCVARn:12 & 배란)
+			PRINTFORML Ｈ촉수が広げた薄膜のモニターには%PRINT_TRANSCALLNAME(TARGET)%の胎内の様子が映し出されており、
+			PRINTFORML 成熟した卵子の周りには無数の촉수の精子が群がっている。
+			PRINTFORML そのうちの一匹が表皮を突き破って悲願を達成し、爆発的な細胞の増殖が始まった。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目の前で異種間受精の瞬間を見せつけられてしまった・・・
+			PRINTW 
+			TALENT:임신 = 1
+			PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は[임신]した
+			CALL NINSIN_TS_FIX
+		ENDIF
+	ENDIF
+	RETURN 1
+ENDIF
+RETURN 0
+;------------------------------
+;戦闘終了時の임신チェック
+;------------------------------
+@NINSIN_CHECK_AFTER
+;戦闘終了後に初めて地の文が流れる
+IF TALENT:임신 == 2 && ISFEMALE()
+	IF CONFIG_CHECK_OTHER_F(0) > 0
+		;촉수を임신する場合（通常50%、묘상화されている場合は75%）
+		IF RAND:100 < 50 + (TALENT:묘상화 > 0) * 25
+			TALENT:임신 = 1
+			CFLAG:227 = NUM_CHILD_TENTACLE(TARGET)
+			CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+		ELSE
+			TALENT:임신 = 3
+			CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+		ENDIF
+	ELSE
+		TALENT:임신 = 1
+		CFLAG:227 = NUM_CHILD_TENTACLE(TARGET)
+		CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+	ENDIF
+	PRINTL 
+	CALL MESSAGE_NINNSIN
+	CALL NINSIN_TS_FIX
+ENDIF
+
+;------------------------------
+;임신플래그를立てて地の文表示
+;------------------------------
+@NINSIN_FLAG
+#DIM CCOUNT
+;仲間が父親の場合
+IF CFLAG:230 <= -100
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+		;父親を判定
+		IF CFLAG:CCOUNT:240 == CFLAG:230 * -1 - 100
+			;父親も母親も기생されていない場合
+			IF TALENT:CCOUNT:기생 == 0 && TALENT:기생 == 0
+				TALENT:임신 = 4
+				CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+			ELSE
+				TALENT:임신 = 2
+			ENDIF
+		ENDIF
+	NEXT
+;普通の인간が父親の場合
+ELSEIF CFLAG:230 <= -1
+	;母親が기생されていない場合
+	IF TALENT:기생 == 0
+		TALENT:임신 = 4
+		CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+	ELSE
+		TALENT:임신 = 2
+	ENDIF
+;それ以外の場合は通常の임신플래그를 세운다
+ELSE
+	TALENT:임신 = 2
+ENDIF
+;幽閉中の場合、または戦闘中でない場合は即時に임신する
+IF CFLAG:21 > 0 || (FLAG:700 == 0 && TALENT:임신 == 2)
+	IF CONFIG_CHECK_OTHER_F(0) > 0
+		;촉수を임신する場合（通常50%、묘상화されている場合は75%）
+		IF ((RAND:100 < 50 + (TALENT:묘상화 > 0) * 25) || CFLAG:22 != 0) && CFLAG:0 == 1
+			TALENT:임신 = 1
+			CFLAG:227 = NUM_CHILD_TENTACLE(TARGET)
+			CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+		ELSE
+			TALENT:임신 = 3
+			CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+		ENDIF
+	ELSE
+		TALENT:임신 = 1
+		CFLAG:227 = NUM_CHILD_TENTACLE(TARGET)
+		CFLAG:228 = PREGNANT_RANDOM_SIZE(TARGET)
+	ENDIF
+	PRINTL 
+	CALL MESSAGE_NINNSIN
+	CALL NINSIN_TS_FIX
+ENDIF
+;ＴＳ変身時の正常임신の場合、남자に戻れなくなる
+IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && TALENT:임신 == 4
+	PRINTW 
+	PRINTFORML %PRINT_CALLNAME(TARGET,1)%の様子がおかしい…
+	PRINTFORML なぜか分からないが、身体の奥底に何か違和感を感じる…
+	PRINTL 
+	PRINTFORML %PRINT_CALLNAME(TARGET,1)%は[남자]に戻れなくなった
+	PRINTW 
+	;女体化処理
+	CALL TS_MtoF, TARGET
+ENDIF
+
+;------------------------------
+;ＴＳ魔法少女の場合、임신すると남자に戻れなくなるor一時的に남자に変身できなくなる
+;------------------------------
+@NINSIN_TS_FIX
+IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+	;地の文
+	CALL MESSAGE_NINNSIN_TS_FIX
+	;女体化処理
+	CALL TS_MtoF, TARGET
+ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 == 0
+	;地の文
+	CALL MESSAGE_NINNSIN_TS_FIX
+ENDIF
+
+;------------------------------
+;임신段階進行・出産判定
+;촉수に孕まされた場合と인간相手に임신した場合で管理が異なる
+;------------------------------
+@BIRTH_HANTEI
+#DIM CCOUNT
+LOCAL:0 = TARGET
+FOR CCOUNT,0,CHARANUM
+	TARGET = CCOUNT
+	SIF CFLAG:0 == 9
+		CONTINUE
+
+	;●촉수に孕まされている場合
+	IF TALENT:임신 == 1 || TALENT:임신 == 3
+		;幽閉中でなく出産直前なら　コマンド入力できない(ソロモードは構わず戦う)
+		IF CFLAG:0 == 0 && (CFLAG:222 > 9 || (TALENT:묘상화 > 0 && CFLAG:222 > 3))
+			CFLAG:0 = 10
+			CALL MESSAGE_MATANITY
+			CALL SET_PARTYMEMBER
+			DRAWLINE
+		ENDIF
+		;묘상화は３倍速で成長する
+		IF TALENT:묘상화 > 0
+			CFLAG:222 += 3
+		ELSE
+			CFLAG:222 += 1
+		ENDIF
+		;幽閉中はさらに成長が早まる
+		SIF CFLAG:0 == 1
+			CFLAG:222 += 2
+		;出産可能かどうか
+		IF CFLAG:222 > 10
+			;필터×でなく、모유체질でないなら모유체질にする
+			IF TALENT:모유체질 == 0 && CONFIG_CHECK_MANIAC_F(2) == 1
+				TALENT:모유체질 = 1
+				PRINTFORML %PRINT_CALLNAME(TARGET,1)%の胸が張ってきた…
+				PRINTL
+				PRINTFORML %PRINT_CALLNAME(TARGET,1)%は[%TALENTNAME:1%]になった…
+			ENDIF
+			;確率で出産　最短5日最長7日半。ただし幽閉中に묘상화されてると常に1/2の確率で即出産
+			IF CFLAG:222 >= 30
+				LOCAL:1 = 0
+			ELSE
+				LOCAL:1 = RAND:(30 - CFLAG:222)
+			ENDIF
+			IF (LOCAL:1 == 0 && CFLAG:222 >= 10) || CFLAG:222 >= 15 || (CFLAG:0 == 1 && TALENT:묘상화 > 0 && RAND:2 == 0)
+				;産む
+				IF TALENT:임신 == 3 && CONFIG_CHECK_OTHER_F(0) > 0
+					CALL BIRTH_DAUGHTER_TENTACLE_ORIGIN
+				ELSE
+					CALL BIRTH_TENTACLES
+				ENDIF
+			ENDIF
+		ENDIF
+	;●(ヒト相手に)正常임신の場合
+	;　しばらくは無自覚
+	ELSEIF TALENT:임신 == 4
+		;묘상화は３倍速で成長する
+		IF TALENT:묘상화 > 0
+			CFLAG:222 += 3
+		ELSE
+			CFLAG:222 += 1
+		ENDIF
+		IF CFLAG:222 >= 20
+			PRINTFORML %PRINT_CALLNAME(TARGET,1)%の腹部が明らかに膨らんできている…
+			PRINTFORML もう임신していることは誰の目にも明らかだ…
+			IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 == 0
+				PRINTW 
+				PRINTFORML %PRINT_CALLNAME(TARGET)%は임신している間は変身できなくなります
+			ENDIF
+			PRINTW 
+			TALENT:임신 = 5
+		ELSEIF CFLAG:222 == 12
+			PRINTFORML %PRINT_CALLNAME(TARGET,1)%の腹部が膨らんできたような気がする…
+			IF CFLAG:21>0
+				PRINTFORML 幽閉された身で検査を受けられるはずもなく、%PRINT_CALLNAME(TARGET,1)%はただ不安げに腹部を眺めている…
+			ELSE
+				PRINTFORML 今まで先延ばしにしてきたが、ちゃんと検査をしておいた方が良いだろう…
+			ENDIF
+			PRINTW 
+		ELSEIF CFLAG:222 == 9
+			PRINTFORML %PRINT_CALLNAME(TARGET,1)%の様子がおかしい…
+			PRINTFORML 時折強い吐き気を感じているようだ…
+			PRINTW 
+		ELSEIF CFLAG:222 == 6
+			PRINTFORML %PRINT_CALLNAME(TARGET,1)%の様子がおかしい…
+			IF RAND:2 == 0
+				PRINTFORML 前回から随分と生理が遅れているようだ…
+			ELSE
+				PRINTFORML 何やら軽い吐き気のようなものを感じているようだ…
+			ENDIF
+			IF CFLAG:21>0
+				PRINTFORML もしも無事な身であれば、医務室で然るべき検査を受けられたのだろうが…
+			ELSE
+				PRINTFORML 心当たりがあるなら、医務室で検査してみた方が良いかもしれない…
+			ENDIF
+			PRINTW 
+		ENDIF
+	;임신自覚済み
+	ELSEIF TALENT:임신 == 5
+		;幽閉中でなく出産直前なら　コマンド入力できない(ソロモードは構わず戦う)
+		IF CFLAG:0 == 0 && CFLAG:222 > 42
+			CFLAG:0 = 10
+			CALL MESSAGE_MATANITY
+			CALL SET_PARTYMEMBER
+			DRAWLINE
+		ENDIF
+		;묘상화は３倍速で成長する
+		IF TALENT:묘상화 > 0
+			CFLAG:222 += 3
+		ELSE
+			CFLAG:222 += 1
+		ENDIF
+		IF CFLAG:222 >= 16
+			;필터×でなく、모유체질でないなら모유체질にする
+			IF TALENT:모유체질 == 0 && CONFIG_CHECK_MANIAC_F(2) == 1
+				TALENT:모유체질 = 1
+				PRINTFORML %PRINT_CALLNAME(TARGET,1)%の胸が張ってきた…
+				PRINTL
+				PRINTFORML %PRINT_CALLNAME(TARGET,1)%は[%TALENTNAME:1%]になった…
+				PRINTW 
+			ENDIF
+		ENDIF
+		;出産可能化どうか
+		;確率で出産　最短26日最長28日半。
+		IF CFLAG:222 >= 83
+			LOCAL:1 = 0
+		ELSE
+			LOCAL:1 = RAND:(83 - CFLAG:222)
+		ENDIF
+		SIF (LOCAL:1 == 0 && CFLAG:222 >= 53) || CFLAG:222 >= 56
+			CALL BIRTH_DAUGHTER_HUMAN_ORIGIN
+	ELSE
+		CONTINUE
+	ENDIF
+
+NEXT
+TARGET =LOCAL:0
+
+;------------------------------
+;出産(孕まされた촉수or異形を産み落とす)
+;------------------------------
+;LOCAL:1 촉수の数
+@BIRTH_TENTACLES
+;出産するキャラは疲労度が蓄積する
+CFLAG:99 += 45 + PREGNANCY_BELLY_EXPAND(TARGET) / 20
+;生存時に再び行動可能に復帰する
+SIF CFLAG:0 == 10
+	CALL RECOVER_TO_PARTY,TARGET
+;幽閉中とそれ以外で地の文が違う
+LOCAL:1 = CFLAG:227
+IF CFLAG:21 != 0
+	;異形出産描写
+	IF CONFIG_CHECK_MANIAC_F(4) == 1
+		;育児機能オンなら合いの子率アップ
+		IF RAND:4 == 0 || (CONFIG_CHECK_OTHER_F(0) > 0 && RAND:4 != 0)
+			CALL MESSAGE_BIRTH_AINOKO_PRISON,LOCAL:1
+		ELSE
+			CALL MESSAGE_BIRTH_TENTACLES_PRISON,LOCAL:1
+		ENDIF
+	ELSE
+		CALL MESSAGE_BIRTH_TENTACLES_PRISON,LOCAL:1
+	ENDIF
+	CFLAG:223 = 1
+	;今回の出産数を加算
+	CFLAG:220 += LOCAL:1
+	FLAG:44 += LOCAL:1
+ELSE
+	CALL MESSAGE_BIRTH_TENTACLES,LOCAL:1
+	PRINTL
+	;組織にいる場合は촉수の欠片追加
+	FLAG:200 += LOCAL:1
+	PRINTFORML 촉수の欠片＋{LOCAL:1}
+ENDIF
+
+CALL ABL_UP_BIRTH,LOCAL:1
+CALL _ABLUP,1
+
+;임신日数中だし回数のリセット、素質[임신]の削除
+CFLAG:221 = 0
+CFLAG:222 = 0
+CFLAG:227 = 0
+CFLAG:228 = 0
+CFLAG:232 = 0
+CFLAG:233 = 0
+TALENT:임신 = 0
+
+;------------------------------
+;出産時に上がる能力の計算
+;------------------------------
+@ABL_UP_BIRTH,ARG
+#DIM LCOUNT
+VARSET LOCAL
+
+;체력, 기력の減少処理
+BASE:체력 = MAX(BASE:체력/2-500,1)
+BASE:기력 = MAX(BASE:체력/2-500,1)
+
+LOCAL = 100
+
+;《순종》をみる
+IF ABL:순종 == 0
+	TIMES LOCAL , 0.20
+ELSEIF ABL:순종 == 1
+	TIMES LOCAL , 0.50
+ELSEIF ABL:순종 == 2
+	TIMES LOCAL , 0.70
+ELSEIF ABL:순종 == 3
+	TIMES LOCAL , 1.00
+ELSEIF ABL:순종 == 4
+	TIMES LOCAL , 1.50
+ELSE
+	TIMES LOCAL , 2.00
+ENDIF
+
+;《촉수중독》をみる
+IF ABL:촉수중독 == 0
+	TIMES LOCAL , 1.00
+ELSEIF ABL:촉수중독 == 1
+	TIMES LOCAL , 1.10
+ELSEIF ABL:촉수중독 == 2
+	TIMES LOCAL , 1.30
+ELSEIF ABL:촉수중독 == 3
+	TIMES LOCAL , 1.50
+ELSEIF ABL:촉수중독 == 4
+	TIMES LOCAL , 2.00
+ELSE
+	TIMES LOCAL , 2.50
+ENDIF
+
+;《출산경험》をみる
+IF EXP:출산경험 < 1
+	TIMES LOCAL , 0.50
+ELSEIF EXP:출산경험 < 10
+	TIMES LOCAL , 0.70
+ELSEIF EXP:출산경험 < 30
+	TIMES LOCAL , 1.00
+ELSEIF EXP:출산경험 < 50
+	TIMES LOCAL , 2.00
+ELSE
+	TIMES LOCAL , 4.00
+ENDIF
+;수련P入手
+CALL GET_SYUREN,LOCAL/10
+;組織にいると威力3倍
+SIF CFLAG:0 == 10
+	TIMES LOCAL , 3.00
+;珠ゲット
+	LOCAL:1 += (ABL:V감각 + 1) * 10 * LOCAL * (1 + (TALENT:V민감 > 0) + (TALENT:음호 > 0)) / (1+(TALENT:V둔감 > 0))
+	LOCAL:3 += (ABL:모유중독 + 1) * (ABL:B감각 + 1) * 10 * LOCAL * (1 + (TALENT:B민감 > 0) + (TALENT:음유 > 0)) / (1 + (TALENT:B둔감 > 0))
+JUEL:쾌V = LOCAL:1
+JUEL:쾌B = LOCAL:3
+JUEL:공순 += (ABL:순종 + 1) * 100 * LOCAL
+JUEL:욕정 += (ABL:욕망 + 1) * 25 * LOCAL
+JUEL:굴복 += (ABL:순종 + 1) * 250 * LOCAL
+JUEL:치정 += (ABL:노출벽 + 1) * 25 * LOCAL
+SQRT (EXP:V확장경험+1)
+JUEL:고통 += (ABL:마조끼 + 1) * 300 * LOCAL / RESULT
+SQRT (EXP:출산경험+1)
+JUEL:공포 += 100 * LOCAL / RESULT
+;V経験
+LOCAL:120 = LOCAL / 10
+;절정경험
+LOCAL:122 = (LOCAL:1 + LOCAL:3) / 1000
+;고통経験
+LOCAL:132 = LOCAL / 50
+;모유경험
+SIF TALENT:모유체질 == 1
+	LOCAL:154 = LOCAL:3 / (6 - ABL:모유중독) / 1000
+;V拡張
+LOCAL:151 = 1
+
+;출산경험とV拡張経験追加
+;初めての出産なら이상경험が入り、체력, 기력が少し上昇する
+IF EXP:출산경험 == 0
+	LOCAL:150 += 1
+	CFLAG:204 = 1
+	MAXBASE:체력 += MAXBASE:체력/4
+	MAXBASE:기력 += MAXBASE:기력/4
+	BASE:기초체력 += BASE:기초체력/4
+	BASE:기초기력 += BASE:기초기력/4
+	PRINTFORML 出産の고통に耐えた%PRINT_CALLNAME(TARGET)%は체력と기력が増加しました
+	PRINTL 
+ENDIF
+;출산경험
+LOCAL:157 = ARG
+
+;経験数の増加
+FOR LCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, LCOUNT, LOCAL:LCOUNT
+NEXT
+
+;拡張度の上昇（３サイズを設定していない場合や極端な拡張を抑制している場合は発生しない）
+IF CFLAG:34 > 0 && CONFIG_CHECK_MANIAC_F(17) == 1
+	TENTACLE_SIZE:1:쾌V = PREGNANCY_BELLY_EXPAND(TARGET) / 2
+	CALL V_GAPING(GAPING_SIZE_TO_POINT("Ｖ"), TARGET)
+	IF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
+		PRINTFORML 　膣径：＋{RESULT / 10}.{RESULT % 10} cm	
+		PRINTL 
+	ENDIF
+ENDIF
+PRINTL 
+
+;------------------------
+;産む촉수の数
+;------------------------
+@NUM_CHILD_TENTACLE(ARG)
+#FUNCTION
+LOCAL = 0
+;출산경험により増える
+IF EXP:출산경험 < 1
+	LOCAL = 1 + RAND:4
+ELSEIF EXP:출산경험 < 10
+	LOCAL = 2 + RAND:5
+ELSEIF EXP:출산경험 < 30
+	LOCAL = 3 + RAND:6
+ELSEIF EXP:출산경험 < 50
+	LOCAL = 4 + RAND:7
+ELSE
+	LOCAL = 5 + RAND:8
+ENDIF
+;묘상화されていれば更に増える
+SIF TALENT:묘상화
+	LOCAL += 1 + RAND:2
+SIF CFLAG:0 == 9
+	LOCAL = MAX(LOCAL / 2, 1)
+
+
+RETURNF LOCAL
+
+;----------------------------
+;ターン終了時に子촉수が増殖
+;----------------------------
+@BIRTH_AUTO_RANDOM
+VARSET LOCAL
+;常時避妊モード
+SIF CONFIG_CHECK_OTHER_F(2) > 0
+	RETURN 0
+;방위력が低い(※10000/방위력 パーセントの確率で発生)と、どこかで子촉수が産み落とされる
+LOCAL = FLAG:852 / 100
+LOCAL:1 = 0
+SIF LOCAL <= 2
+	LOCAL = 2
+IF RAND:LOCAL == 0 && FLAG:852 < 10000
+	DRAWLINE
+	LOCAL:1 += 1
+	LOCAL:2 = 1
+	PRINTL 【避けられた悲劇】
+	;切り替わる直前に呼ばれるため、夕方を想定してよい
+	IF TIME==0
+		IF RAND:2==0
+			PRINTDATA
+			DATAFORM 　街のどこかで
+			DATAFORM 　公園の奥で
+			DATAFORM 　更衣室で着替えていた
+			DATAFORM 　体育倉庫で
+			DATAFORM 　下校中の
+			ENDDATA
+			PRINT 少女が襲われ、
+		ELSE
+			PRINTDATA
+			DATAFORM 　街のどこかで
+			DATAFORM 　公園の奥で
+			DATAFORM 　更衣室で着替えていた
+			DATAFORM 　帰宅中の
+			ENDDATA
+			PRINT 女性が襲われ、
+		ENDIF
+	ELSE
+		IF RAND:2==0
+			PRINTDATA
+			DATAFORM 　街のどこかで
+			DATAFORM 　夜の公園で
+			DATAFORM 　塾帰りの
+			DATAFORM 　両親の帰りを待つ
+			DATAFORM 　自室で就寝中の
+			ENDDATA
+			PRINT 少女が襲われ、
+		ELSE
+			PRINTDATA
+			DATAFORM 　街のどこかで
+			DATAFORM 　深夜の公園で
+			DATAFORM 　夫の帰りを待つ
+			DATAFORM 　自室で就寝中の
+			ENDDATA
+			PRINT 女性が襲われ、
+		ENDIF
+	ENDIF
+	PRINTDATAW
+	DATAFORM 何匹もの子촉수が産み落とされたようだ...
+	DATAFORM 子촉수を産まされながらアヘ顔を晒してしまったようだ...
+	DATAFORM 子宮を촉수の번식자루にされてしまったようだ...
+	DATAFORM 촉수の苗床にされてしまったようだ...
+	DATAFORM 衣服を残して行方不明になってしまったようだ...
+	ENDDATA	
+ENDIF
+;묘상화＋死亡したキャラが居るなら、ランダムで出産
+FOR LOCAL, 0, CHARANUM
+	SIF LOCAL == MASTER
+		CONTINUE
+	IF CFLAG:LOCAL:0 == 9 && TALENT:LOCAL:묘상화 && RAND:4 == 0
+		IF LOCAL:2 == 0
+			DRAWLINE
+			LOCAL:2 = 1
+		ENDIF
+		RESULT = NUM_CHILD_TENTACLE(LOCAL)
+		PRINTL 【苗床出産】
+		PRINTFORM 　촉수に取り込まれた%CALLNAME:LOCAL%は、
+		PRINTDATA
+		DATAFORM 出産アクメと共に
+		DATAFORM 媚薬羊水と共に
+		DATAFORM 白濁羊水を噴きながら
+		DATAFORM 無様な潮吹きと共に
+		DATAFORM 敗北모유をキメながら
+		ENDDATA
+		PRINTFORMW {RESULT}匹の子촉수を産み落としている...
+		LOCAL:1 += RESULT
+		SIF CONFIG_CHECK_MANIAC_F(2) == 1
+			TALENT:모유체질 = 1
+	ENDIF
+NEXT
+IF LOCAL:1 > 0
+	FLAG:44 += LOCAL:1
+ENDIF
+
+
+;----------------------------
+;임신時の굴복増加
+;----------------------------
+@NINSIN_SUBMIT
+VARSET LOCAL
+IF TALENT:촉수의포로
+	JUEL:공순 += 1000
+ELSEIF EXP:출산경험 >= 10
+	JUEL:굴복 += 100
+ELSEIF EXP:출산경험 >= 5
+	JUEL:굴복 += 400
+	JUEL:공포 += 50
+ELSEIF EXP:출산경험 >= 1
+	JUEL:굴복 += 1000
+	JUEL:공포 += 300
+ELSE
+	JUEL:굴복 += 2500
+	JUEL:공포 += 1500
+ENDIF
+
+
+
+;--------------------------------------------------
+;避妊効果の有無を判定する式中関数
+;ARG:1 = 相手のＩＤ
+@CHECK_HININ_F(ARG, ARG:1)
+#FUNCTION
+LOCAL = 0
+;戦闘中のみの効果
+IF FLAG:700 > 0
+	;変身中かつ소프트 바디슈트の場合
+	IF CFLAG:ARG:41 == 299 && CFLAG:1 > 0
+		LOCAL = 100
+	;避妊用ピルの効果
+	ELSEIF CFLAG:ARG:241 > 0 && ENEMY_TYPE_CHECK_F("AKUOTI") > 0
+		LOCAL = 80
+	ELSEIF CFLAG:ARG:241 > 0
+		LOCAL = 5
+	ENDIF
+	;피임결계
+	SIF TALENT:ARG:피임결계 > 0 && BASE:ARG:성내성 > 0
+		LOCAL = 100
+;戦闘中以外
+ELSE
+	;避妊用ピルの効果
+	IF CFLAG:ARG:241 > 0 && ARG:1 < 0
+		LOCAL = 80
+	ELSEIF CFLAG:ARG:241 > 0
+		LOCAL = 5
+	ENDIF
+	;피임결계
+	SIF TALENT:ARG:피임결계 > 0 && BASE:ARG:성내성 > 0 && ARG:1 > 0
+		LOCAL = 100
+ENDIF
+IF RAND:100 < LOCAL
+	LOCAL:1 = 1
+ELSE
+	LOCAL:1 = 0
+ENDIF
+RETURNF LOCAL:1
+
+
+;--------------------------------------------------
+;임신中かどうかを判定する式中関数
+@CHECK_PREGNANT_F(ARG)
+#FUNCTION
+IF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || (TALENT:ARG:임신 == 5 && CFLAG:ARG:222 >= 11)
+	LOCAL = 1
+ELSE
+	LOCAL = 0
+ENDIF
+RETURNF LOCAL
+
+
+
+;--------------------------------------------------
+;임신時の腹囲最大サイズをランダム決定
+@PREGNANT_RANDOM_SIZE(ARG)
+#FUNCTION
+LOCAL = 0
+SIF TALENT:ARG:임신 == 0
+	RETURNF 0
+;촉수幼体の場合
+IF TALENT:ARG:임신 == 1
+	FOR LOCAL:1, 0, CFLAG:ARG:227
+		LOCAL += 88
+	NEXT
+ELSE
+	LOCAL = 266
+ENDIF
+LOCAL = LOCAL * (80 + RAND:41) / 100
+RETURNF LOCAL
+
+;--------------------------------------------------
+;임신時のバストの変化
+@PREGNANCY_BOOB_EXPAND(ARG)
+#FUNCTION
+LOCAL = 0
+SIF TALENT:ARG:임신 == 0
+	RETURNF 0
+;촉수幼体の場合
+IF TALENT:ARG:임신 == 1
+	LOCAL = 20 * CFLAG:ARG:222 / 10
+;ヒトの胎児（異常）の場合
+ELSEIF TALENT:ARG:임신 == 3
+	LOCAL = 20 * CFLAG:ARG:222 / 10
+;ヒトの胎児（正常）の場合
+ELSEIF TALENT:ARG:임신 == 5
+	LOCAL = 20 * (CFLAG:ARG:222 - 6) / 40
+ENDIF
+RETURNF LOCAL
+
+;--------------------------------------------------
+;임신時の腹囲の変化
+@PREGNANCY_BELLY_EXPAND(ARG)
+#FUNCTION
+LOCAL = 0
+SIF TALENT:ARG:임신 == 0
+	RETURNF 0
+;촉수幼体の場合
+IF TALENT:ARG:임신 == 1
+	LOCAL = CFLAG:ARG:228 * (CFLAG:ARG:222) / 10
+;ヒトの胎児（異常）の場合
+ELSEIF TALENT:ARG:임신 == 3
+	LOCAL = CFLAG:ARG:228 * (CFLAG:ARG:222 + 5) / 15
+;ヒトの胎児（正常）の場合
+ELSEIF TALENT:ARG:임신 == 4 || TALENT:ARG:임신 == 5
+	IF CFLAG:ARG:222 < 14
+		LOCAL = CFLAG:ARG:228 * 15 / 100
+	ELSEIF CFLAG:ARG:222 < 22
+		LOCAL = CFLAG:ARG:228 * 30 / 100
+	ELSEIF CFLAG:ARG:222 < 42
+		LOCAL = CFLAG:ARG:228 * 80 / 100
+	ELSE
+		LOCAL = CFLAG:ARG:228
+	ENDIF
+	LOCAL = LOCAL * MAX(CFLAG:ARG:222 - 8,0) / 48
+ENDIF
+;FEATによる胎児サイズへの影響
+IF TALENT:ARG:소형체구 > 0
+	LOCAL = LOCAL * 85 / 100
+	SIF TALENT:ARG:요정 > 0
+		LOCAL = LOCAL * 70 / 100
+ENDIF
+RETURNF LOCAL
+
+
+;--------------------------------------------------
+;アフターピルで緊急避妊
+@AFTER_PILL, ARG, ARG:1, ARG:2
+#DIM LCOUNT
+SIF CONFIG_CHECK_OTHER_F(3) == 0
+	RETURN 0
+SIF ISMALE(ARG)
+	RETURN 0
+SIF TALENT:ARG:미성숙 > 0
+	RETURN 0
+SIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
+	RETURN 0
+SIF CFLAG:ARG:241 > 0
+	RETURN 0
+;常時避妊モード
+SIF CONFIG_CHECK_OTHER_F(2) > 0
+	RETURN 0
+PRINTL 
+CALL DOT_AFTER, 1
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(ARG,1)%は질내사정されたことを自覚している…
+IF ARG:1 < 25
+	PRINTFORM 時間が経ち過ぎて効果がないかもしれないが、
+ELSE
+	PRINTFORM このままでは임신してしまうかもしれないが、
+ENDIF
+PRINTFORML $500支払って緊急用アフターピルを飲んでおくべきだろうか？
+PRINTFORML [0]アフターピルは飲まない
+PRINTFORML [1]アフターピルを飲んで避妊する（所持金:${MONEY}）
+LCOUNT = LINECOUNT
+$INPUT_LOOP_0
+INPUT
+IF RESULT == 0
+	PRINTFORML %PRINT_CALLNAME(ARG)%はアフターピルを飲まないことにした…
+ELSEIF RESULT == 1
+	IF MONEY >= 500
+		MONEY -= 500
+		PRINTFORML %PRINT_CALLNAME(ARG)%はアフターピルを飲んだ…
+		PRINTFORML 身体の底に疲労が蓄積した……（＋１５）
+		CFLAG:ARG:99 += 15
+		IF RAND:100 < ARG:1
+			CFLAG:ARG:241 = 1
+			SIF CHECK_HININ_F(ARG, ARG:2) > 0 && CFLAG:ARG:222 == 0
+				TALENT:ARG:임신 = 0
+		ENDIF
+		IF FLAG:999 == 1
+			SETCOLOR 105,105,105
+			PRINTL 
+			PRINTFORML アフターピル成功率 {ARG:1}％
+			PRINTFORML 避妊 = {CFLAG:ARG:241}　/　임신 = {TALENT:ARG:임신}
+			PRINTL 
+			RESETCOLOR
+		ENDIF
+	ELSE
+		PRINTFORML なんと、所持金が足りない！
+	ENDIF
+ELSE
+	PRINTFORML 임신の可能性に慌ててしまう気持ちも分かるが、ここは冷静になるべきだろう…
+	PRINTW 
+	CLEARLINE LINECOUNT - LCOUNT
+	GOTO INPUT_LOOP_0
+ENDIF
+
+
+

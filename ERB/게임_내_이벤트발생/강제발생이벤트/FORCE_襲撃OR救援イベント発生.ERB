@@ -1,0 +1,108 @@
+﻿;---------------------------------------------------------------------
+;出撃していないキャラがいる場合、방위력が低いと強制戦闘が発生する
+;①救援イベント
+;特殊なシチュエーションで戦闘、イベント参加の可否をプレイヤーが選べる
+;②ボスの侵攻イベント
+;不利なシチュエーションで強制戦闘
+;
+;現在はランダム分岐
+@RAID_HANTEI
+#DIM CCOUNT
+
+;男女平等のオプションOff時の中断判定 キャラが全員남자の場合は中断
+LOCAL = 0
+FOR CCOUNT, 1, CHARANUM
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+	SIF ISHOLE(CCOUNT) == 1
+		LOCAL ++
+NEXT
+SIF LOCAL < 1
+	RETURN
+
+;裏ボスは襲ってこない
+SIF FLAG:21
+	RETURN
+;全員が出撃していればボスは襲ってこない
+SIF FLAG:41 >= CHARANUM -1
+	RETURN
+;ゲーム開始直後は絶対に襲ってこない
+SIF DAY < 3
+	RETURN
+
+;少なくとも一人はサボっている
+LOCAL = 0
+FOR CCOUNT, 1, CHARANUM
+	;アクティブなパーティーメンバー
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+	;無事かつ出撃でも防衛でもない
+	SIF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:100 !=101 && CFLAG:CCOUNT:100 !=105
+		LOCAL ++
+NEXT
+SIF LOCAL < 1
+	RETURN
+
+
+;방위력に応じた確率でイベント発生(1/5から1/255で変動)
+IF FLAG:852 < 1000
+	LOCAL:2 = RAND:6
+ELSEIF FLAG:852 < 1750
+	LOCAL:2 = RAND:12
+ELSEIF FLAG:852 < 2500
+	LOCAL:2 = RAND:24
+ELSEIF FLAG:852 < 3750
+	LOCAL:2 = RAND:36
+ELSEIF FLAG:852 < 5000
+	LOCAL:2 = RAND:48
+ELSEIF FLAG:852 < 7500
+	LOCAL:2 = RAND:60
+ELSEIF FLAG:852 < 10000
+	LOCAL:2 = RAND:72
+ELSEIF FLAG:852 < 12500
+	LOCAL:2 = RAND:84
+ELSEIF FLAG:852 < 15000
+	LOCAL:2 = RAND:96
+ELSEIF FLAG:852 < 17500
+	LOCAL:2 = RAND:112
+ELSEIF FLAG:852 < 20000
+	LOCAL:2 = RAND:128
+ELSE
+	LOCAL:2 = RAND:256
+ENDIF
+
+;特殊戦闘フラグの初期化
+CALL INITBATTLESITUATION()
+
+;デバッグ用(救出が確定発生)
+IF FLAG:999 == 1
+	PRINTFORML 発生する戦闘イベント番号を入力してください
+	PRINTFORML (1-3000救援　3001-6000襲撃)
+	INPUT
+	FLAG:45 = RESULT
+	IF FLAG:45<3001
+		JUMP RAID_RESCUE
+	ELSE
+		JUMP RAID_ATTACK
+	ENDIF
+ENDIF
+
+;救出戦(不利な条件で戦うイベント戦、見捨てる選択(イベントスキップ)も可能)
+;現在は５０％で分岐している
+IF LOCAL:2 == 0 && RAND:2 == 0 && TIME == 0
+	JUMP RAID_RESCUE
+
+;襲来(出撃しない日が続いたペナルティとしての強制戦闘(耐久戦)、防衛施設레벨が高いほど発生率は下がる)
+ELSEIF LOCAL:2 == 0 && RAND:(18 - FLAG:52 * 3) != 0
+	JUMP RAID_ATTACK
+;最低でも1%で発生する追加判定
+ELSEIF RAND:100 == 0
+	JUMP RAID_ATTACK
+ENDIF
+
+
+
+
+
+
+

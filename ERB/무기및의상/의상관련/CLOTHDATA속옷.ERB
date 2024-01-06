@@ -1,0 +1,2024 @@
+﻿;----------------------------------------------------------
+;衣装の補正メモ
+;공격補正		@CLOTH_HOSEI_KOUGEKI_***
+;방어補正		@CLOTH_HOSEI_BOUGYO_***
+;민첩補正		@CLOTH_HOSEI_BINSYOU_***
+;지성補正		@CLOTH_HOSEI_CHISEI_***
+;체력減少量		@CLOTH_HOSEI_TAIRYOKU_***
+;기력減少量		@CLOTH_HOSEI_KIRYOKU_***
+;性耐減少量		@CLOTH_HOSEI_SEITAISEI_***
+;油断上昇量		@CLOTH_HOSEI_YUDAN_***
+;
+;命中のみ上昇		@CLOTH_HOSEI_HIT_***
+;回避のみ上昇		@CLOTH_HOSEI_AVOID_***
+;クリティカル補正	@CLOTH_HOSEI_CRITICAL_***
+;粘液ダメージ軽減	@CLOTH_HOSEI_LIQUID_***
+;邪気ダメージ軽減	@CLOTH_HOSEI_WAVE_***
+;羞恥軽減		@CLOTH_HOSEI_SHYNESS_***
+;Ｂ自動増加耐性		@CLOTH_HOSEI_ANTIBUP_***
+;Ｃ自動増加耐性		@CLOTH_HOSEI_ANTICUP_***
+;回復効果強化		@CLOTH_HOSEI_HEALUP_***
+;EXゲージ増幅		@CLOTH_HOSEI_EXBOOST_***
+;空中性能強化		@CLOTH_HOSEI_AIRPLUS_***
+;
+;耐久力			@CLOTH_HP_***
+;下着保護力		@CLOTH_DEF_***
+;インナー兼用		@CLOTH_NO_INNER_***
+;改造スロット		@CLOTH_CUSTOMIZE_***
+
+;**********************************************************
+;CLOTH300 평범한 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_300
+PRINTL  キャラが最初から着ている下着。
+PRINTL 【 補正 】なし
+PRINTL 【耐久度】80
+@CLOTH_STATUS_300
+	SAVESTR:0'="SLOT-1,HP80,SEITAISEI95,"
+
+
+;**********************************************************
+;CLOTH400 촉수 구속구
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_400
+PRINTL  촉수でできたボンテージのようなアウター。
+PRINTL  内側の촉수が常に快感を与えてくる。
+PRINTL  外すためには촉수の欠片が一つ必要。
+PRINTL 【 補正 】なし
+PRINTL 【耐久度】−
+@CLOTH_STATUS_400
+	SAVESTR:0'="SLOT-1,HP-1,"
+
+
+;**********************************************************
+;CLOTH301 귀여운 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_301
+PRINTL  パステル系の明るい色使いが可愛らしい下着。
+PRINTL 【 補正 】촉수の油断度の上昇量1.1倍
+PRINTL 【耐久度】80
+@CLOTH_STATUS_301
+	SAVESTR:0'="HP80,YUDAN110,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_301(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：花柄レース]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：シフォン]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：チュール]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：刺繍]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：チェック]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 8
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 9
+	PRINT [デザイン：プリント]
+
+SIF CUSTOM:2 == 1
+	PRINT [フリル]
+
+PRINT [ブラジャー]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:3 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:3 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 4
+	PRINT [横ひも]
+SIF CUSTOM:3 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:3 == 6
+	PRINT [Ｔバック]
+SIF CUSTOM:3 == 7
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:4 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_301,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 301
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","フリルの有無","ショーツの有無","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+		CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","レース@油2","花柄レース@油2","シフォンレース@油2","チュールレース@油2","刺繍@油2","チェック@油1","ドット@油1","ボーダー@油1","プリント@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"無し","フリル付き@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","Ｔバック@軽2油3晒3","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"無し","バックレース付き@油1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 3
+	LOCAL -= 1
+SIF CUSTOM:3 == 4
+	LOCAL -= 1
+SIF CUSTOM:3 == 6
+	LOCAL -= 2
+SIF CUSTOM:3 == 7
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 5
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 1
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 8
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 9
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 14)
+SIF CUSTOM:4 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+
+;**********************************************************
+;CLOTH302 어른스러운 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_302
+PRINTL  シックな印象の大人びた下着。
+PRINTL 【 補正 】戦闘中の성내성の減少量0.9倍
+PRINTL 【耐久度】80
+@CLOTH_STATUS_302
+	SAVESTR:0'="HP80,SEITAISEI85,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_302(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：花柄レース]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：シフォン]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：チュール]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：刺繍]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：ゴシック]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 8
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 9
+	PRINT [デザイン：プリント]
+
+SIF CUSTOM:2 == 1
+	PRINT [フリル]
+
+PRINT [ブラジャー]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:3 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:3 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 4
+	PRINT [横ひも]
+SIF CUSTOM:3 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:3 == 6
+	PRINT [Ｔバック]
+SIF CUSTOM:3 == 7
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:4 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_302,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 302
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","フリルの有無","ショーツの有無","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","レース@油2","花柄レース@油2","シフォンレース@油2","チュールレース@油2","刺繍@油2","ゴシックレース@油2","ドット@油1","ボーダー@油1","プリント@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"無し","フリル付き@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","Ｔバック@軽2油3晒3","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"無し","バックレース付き@油1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 3
+	LOCAL -= 1
+SIF CUSTOM:3 == 4
+	LOCAL -= 1
+SIF CUSTOM:3 == 6
+	LOCAL -= 2
+SIF CUSTOM:3 == 7
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 5
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 1
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 8
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 9
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 14)
+SIF CUSTOM:4 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH303 줄무늬 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_303
+PRINTL  魅惑の魔力を秘めた一品。
+PRINTL 【 補正 】촉수の油断度の上昇量1.1倍
+PRINTL 【耐久度】100
+@CLOTH_STATUS_303
+	SAVESTR:0'="HP100,YUDAN110,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_303(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [サブカラー：グレー]
+SIF CUSTOM:1 == 1
+	PRINT [サブカラー：ブラック]
+SIF CUSTOM:1 == 2
+	PRINT [サブカラー：ピンク]
+SIF CUSTOM:1 == 3
+	PRINT [サブカラー：レッド]
+SIF CUSTOM:1 == 4
+	PRINT [サブカラー：ブルー]
+SIF CUSTOM:1 == 5
+	PRINT [サブカラー：グリーン]
+SIF CUSTOM:1 == 6
+	PRINT [サブカラー：イエロー]
+SIF CUSTOM:1 == 7
+	PRINT [サブカラー：オレンジ]
+SIF CUSTOM:1 == 8
+	PRINT [サブカラー：パープル]
+SIF CUSTOM:1 == 9
+	PRINT [サブカラー：ネイビー]
+
+SIF CUSTOM:2 == 1
+	PRINT [フリル]
+
+PRINT [ブラジャー]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:3 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:3 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 4
+	PRINT [横ひも]
+SIF CUSTOM:3 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:3 == 6
+	PRINT [Ｔバック]
+SIF CUSTOM:3 == 7
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:4 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_303,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 303
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"メインカラー","ボーダーカラー","フリルの有無","ショーツの有無","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL メインのカラーリングを選択してください
+	;サブカラーの同色は選択不可とする
+	DO
+		CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+		CUSTOM:0 = RESULT
+		IF RESULT != 0 && RESULT == CUSTOM:1
+			PRINTL ボーダーと同じカラーは選べません。
+		ELSE
+			BREAK
+		ENDIF
+	LOOP 1
+ELSEIF RESULT == 10
+	CLEARLINE 1
+	CALL SHORTLINE
+	PRINTL ボーダーのカラーリングを選択してください
+	DO
+		CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"グレー","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+		CUSTOM:1 = RESULT
+		IF RESULT != 0 && RESULT == CUSTOM:0
+			PRINTL ボーダーと同じカラーは選べません。
+		ELSE
+			BREAK
+		ENDIF
+	LOOP 1
+ELSEIF RESULT == 20
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"無し","フリル付き@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","Ｔバック@軽2油3晒3","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"無し","バックレース付き@油1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 3
+	LOCAL -= 1
+SIF CUSTOM:3 == 4
+	LOCAL -= 1
+SIF CUSTOM:3 == 6
+	LOCAL -= 2
+SIF CUSTOM:3 == 7
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 5
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 14)
+SIF CUSTOM:4 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH304 화려한 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_304
+PRINTL  スケスケ？紐パン？ご想像にお任せします。
+PRINTL 【 補正 】촉수の油断度の上昇量1.2倍
+PRINTL 【耐久度】60
+@CLOTH_STATUS_304
+	SAVESTR:0'="HP60,YUDAN120,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_304(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：花柄レース]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：シフォン]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：チュール]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：刺繍]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：アニマル]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 8
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 9
+	PRINT [デザイン：プリント]
+
+SIF CUSTOM:2 == 1
+	PRINT [サテン生地]
+SIF CUSTOM:2 == 2
+	PRINT [スケスケ]
+
+PRINT [ブラジャー]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:3 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:3 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 4
+	PRINT [横ひも]
+SIF CUSTOM:3 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:3 == 6
+	PRINT [Ｔバック]
+SIF CUSTOM:3 == 7
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:4 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_304,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 304
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","生地","ショーツの種類","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","レース@油2","花柄レース@油2","シフォンレース@油2","チュールレース@油2","刺繍@油2","アニマル柄@油1","ドット@油1","ボーダー@油1","プリント@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL 生地を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"通常","サテン生地@油1","スケスケ@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","Ｔバック@軽2油3晒3","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"無し","バックレース付き@油1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 3
+	LOCAL -= 1
+SIF CUSTOM:3 == 4
+	LOCAL -= 1
+SIF CUSTOM:3 == 6
+	LOCAL -= 2
+SIF CUSTOM:3 == 7
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 5
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 1
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 8
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 9
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:4 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH305 수영복
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_305
+PRINTL  パンツじゃないから。乙女の不思議。
+PRINTL 【 補正 】粘液ダメージ軽減（大）、露出軽減（小）
+PRINTL 【耐久度】70
+@CLOTH_STATUS_305
+	SAVESTR:0'="HP70,LIQUID70,SHYNESS80,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_305(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：プリント]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：グラデーション]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：チェック]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：花柄]
+
+SIF CUSTOM:2 == 1
+	PRINT [Ｔシャツ]
+SIF CUSTOM:2 == 2
+	PRINT [パーカー]
+SIF CUSTOM:2 == 3
+	PRINT [カーディガン]
+
+SIF CUSTOM:3 == 1
+	PRINT [フリル]
+
+PRINT [ビキニブラ]
+
+SIF CUSTOM:6 == 1
+	PRINT [スカート]
+
+SIF CUSTOM:4 == 0
+	PRINT [ビキニ]
+SIF CUSTOM:4 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:4 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:4 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:4 == 4
+	PRINT [キュロパン]
+SIF CUSTOM:4 == 5
+	PRINT [タンガ]
+SIF CUSTOM:4 == 6
+	PRINT [ソング]
+SIF CUSTOM:4 == 7
+	PRINT [Ｔバック]
+SIF CUSTOM:4 == 8
+	PRINT [マイクロ]
+SIF CUSTOM:4 == 9
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:5 == 1
+	PRINT [横ひも]
+SIF CUSTOM:5 == 2
+	PRINT [リング]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_305,ARG
+#DIM CUSTOM, 7
+#DIM CUSTOM_NUM = 7
+#DIM ID
+RESULT = 0
+ID = 305
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","上着","フリルの有無","수영복のサイズ","サイドのデザイン","スカート","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","ドット@油1","ボーダー@油1","プリント@油1","グラデーション@油1","レース@油1","チェック@油1","花柄@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL 上着を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"上着なし","Ｔシャツを着る@重1","パーカーを着る@重1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"無し","フリル付き@油1","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","キュロパン@重1油-2護2","タンガ@軽1油3晒2","ソング@軽1油3晒2","Ｔバック@軽3油3晒3","マイクロ@軽4油5晒4","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 50
+	PRINTL サイドのデザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:5,"通常","横ひも結び@油1","リング付き@油1","@@")
+	CUSTOM:5 = RESULT
+ELSEIF RESULT == 60
+	PRINTL スカートの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:6,"無し","スカートを履く@重1護1","@@")
+	CUSTOM:6 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:4 == 3
+	LOCAL -= 1
+SIF CUSTOM:4 == 5
+	LOCAL -= 1
+SIF CUSTOM:4 == 6
+	LOCAL -= 1
+SIF CUSTOM:4 == 7
+	LOCAL -= 3
+SIF CUSTOM:4 == 8
+	LOCAL -= 4
+SIF CUSTOM:4 == 9
+	LOCAL -= 1
+
+SIF CUSTOM:2 == 1
+	LOCAL += 1
+SIF CUSTOM:2 == 1
+	LOCAL += 2
+SIF CUSTOM:4 == 4
+	LOCAL += 1
+SIF CUSTOM:6 == 1
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:4 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:4 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:4 == 5
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:4 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:4 == 7
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:4 == 8
+	EQUIP:ARG:ID += 5 * POWER(10, 14)
+SIF CUSTOM:4 == 9
+	EQUIP:ARG:ID += 4 * POWER(10, 14)
+SIF CUSTOM:5 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:5 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:4 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:4 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:4 == 6
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:4 == 7
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:4 == 8
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+SIF CUSTOM:4 == 9
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:4 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+SIF CUSTOM:6 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH306 스쿨미즈
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_306
+PRINTL  撥水性に優れ、実用的。色んな意味で。
+PRINTL 【 補正 】粘液ダメージ軽減（小）、露出軽減（大）
+PRINTL 【耐久度】90
+@CLOTH_STATUS_306
+	SAVESTR:0'="HP90,LIQUID90,SHYNESS20,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_306(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：紺]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：白]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：黒]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：緑]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：赤]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：エンジ]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：ピンク]
+
+SIF CUSTOM:1 == 0
+	PRINT [스쿨미즈]
+SIF CUSTOM:1 == 1
+	PRINT [旧スク]
+SIF CUSTOM:1 == 2
+	PRINT [旧旧スク]
+SIF CUSTOM:1 == 3
+	PRINT [레깅스型스쿨미즈]
+SIF CUSTOM:1 == 4
+	PRINT [スカート型스쿨미즈]
+SIF CUSTOM:1 == 5
+	PRINT [競泳수영복]
+
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_306,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 306
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"紺","白","黒","緑","赤","エンジ","ピンク","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"通常","旧スク","旧旧スク","레깅스型스쿨미즈","スカート型스쿨미즈","競泳수영복","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH307 사라시&하이레그
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_307
+PRINTL  가슴の揺れを抑えてクーパー靭帯を保護する、全ての戦う女性の味方。
+PRINTL 【 補正 】쾌B自動増加防止、クリティカル補正 +2%
+PRINTL 【耐久度】80
+@CLOTH_STATUS_307
+	SAVESTR:0'="SLOT-1,HP80,ANTIBUP20,CRITICAL2,SEITAISEI95,"
+
+
+;**********************************************************
+;CLOTH308 레깅스
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_308
+PRINTL  活発なアナタの為の機能運動着。見られても恥ずかしくない！
+PRINTL 【 補正 】쾌C自動増加防止　露出軽減（中）
+PRINTL 【耐久度】120
+@CLOTH_STATUS_308
+	SAVESTR:0'="SLOT-1,HP120,ANTICUP10,SHYNESS60,SEITAISEI95,"
+
+
+;**********************************************************
+;CLOTH309 캣 란제리
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_309
+PRINTL  黒猫をイメージしたキュートでクールな下着。
+PRINTL 【 補正 】クリティカル補正 +4%
+PRINTL 【耐久度】80
+@CLOTH_STATUS_309
+	SAVESTR:0'="HP80,CRITICAL4,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_309(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_309,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 309
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ブラック","ホワイト","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH310 프릴 가터&뷔스티에
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_310
+PRINTL  大人っぽさと可愛らしさを兼ね備えた勝負下着。ちょっと背伸びしたい貴女に。
+PRINTL 【 補正 】촉수の油断度の上昇量1.1倍　戦闘中の성내성の減少量0.9倍
+PRINTL 【耐久度】70
+@CLOTH_STATUS_310
+	SAVESTR:0'="HP70,YUDAN110,SEITAISEI85,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_310(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：花柄レース]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：シフォン]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：チュール]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：刺繍]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：ゴシック]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 8
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 9
+	PRINT [デザイン：アニマル]
+
+SIF CUSTOM:2 == 1
+	PRINT [フリル]
+
+PRINT [ビスチェ]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [ハイレグ]
+SIF CUSTOM:3 == 2
+	PRINT [ローレグ]
+SIF CUSTOM:3 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 4
+	PRINT [横ひも]
+SIF CUSTOM:3 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:3 == 6
+	PRINT [Ｔバック]
+SIF CUSTOM:3 == 7
+	PRINT [オープンクロッチ]
+
+SIF CUSTOM:4 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_310,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+RESULT = 0
+ID = 310
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","フリルの有無","ショーツの種類","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","レース@油2","花柄レース@油2","シフォンレース@油2","チュールレース@油2","刺繍@油2","ゴシックレース@油2","ドット@油1","ボーダー@油1","アニマル@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"無し","フリル付き@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","ハイレグ","ローレグ","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","Ｔバック@軽2油3晒3","オープンクロッチ@軽1油4晒4","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"無し","バックレース付き@油1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 3
+	LOCAL -= 1
+SIF CUSTOM:3 == 4
+	LOCAL -= 1
+SIF CUSTOM:3 == 6
+	LOCAL -= 2
+SIF CUSTOM:3 == 7
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 5
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 >= 1 && CUSTOM:1 <= 6
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 >= 7 && CUSTOM:1 <= 9
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 14)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 14)
+SIF CUSTOM:4 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 3 * POWER(10, 11)
+SIF CUSTOM:3 == 7
+	EQUIP:ARG:ID += 4 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH311 貴婦人のコルセット
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_311
+PRINTL  가슴から腰まで覆うレディの下着。優雅で品のある高級ブランドの逸品。
+PRINTL 【 補正 】戦闘中の성내성の減少量0.9倍
+PRINTL 【耐久度】110
+@CLOTH_STATUS_311
+	SAVESTR:0'="SLOT-1,HP110,SEITAISEI85,"
+
+
+;**********************************************************
+;CLOTH312 주니어 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_312
+PRINTL  ジュニア向けの動きやすい下着。成長期を優しく見守ります。
+PRINTL 【 補正 】촉수の油断度の上昇量1.05倍
+PRINTL 【耐久度】90
+@CLOTH_STATUS_312
+	SAVESTR:0'="HP90,YUDAN105,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_312(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：いぬさん]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：ねこさん]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：くまさん]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：いちご]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：チェック]
+SIF CUSTOM:1 == 7
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 8
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 9
+	PRINT [デザイン：プリント]
+
+SIF CUSTOM:2 == 1
+	PRINT [フリル]
+
+SIF CUSTOM:3 == 0
+	PRINT [キャミソール]
+SIF CUSTOM:3 == 1
+	PRINT [タンクトップ]
+SIF CUSTOM:3 == 2
+	PRINT [Ｔシャツ]
+SIF CUSTOM:3 == 3
+	PRINT [ジュニアブラ]
+SIF CUSTOM:3 == 4
+	PRINT [スポーツブラ]
+SIF CUSTOM:3 == 5
+	PRINT [ハーフトップ]
+
+SIF CUSTOM:4 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:4 == 1
+	PRINT [スタンダード]
+SIF CUSTOM:4 == 2
+	PRINT [サニティー]
+SIF CUSTOM:4 == 3
+	PRINT [ローライズ]
+SIF CUSTOM:4 == 4
+	PRINT [横ひも]
+SIF CUSTOM:4 == 5
+	PRINT [ボーイレッグ]
+SIF CUSTOM:4 == 6
+	PRINT [女児ショーツ]
+SIF CUSTOM:4 == 7
+	PRINT [ドロワーズ]
+
+SIF CUSTOM:5 == 1
+	PRINT [バックレース]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_312,ARG
+#DIM CUSTOM, 6
+#DIM CUSTOM_NUM = 6
+#DIM ID
+RESULT = 0
+ID = 312
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","フリルの有無","トップスの種類","ショーツの種類","バックレースの有無","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","いぬさんパンツ@油1","ねこさんパンツ@油1","くまさんパンツ@油1","レース@油2","いちご@油2","チェック@油1","ドット@油1","ボーダー@油1","プリント@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL フリルの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"無し","フリル付き@油1","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL トップスを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"キャミソール","タンクトップ","Ｔシャツ","ジュニアブラ@油1","スポーツブラ@油1","ハーフトップ@油1","裸@軽3油2","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 40
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"ビキニ","スタンダード","サニティー@重1護1","ローライズ@軽1油1晒1","横ひも@軽1油2晒2","ボーイレッグ@重1油2護2","女児ショーツ@重1護1","ドロワーズ@重1護1","@@")
+	CUSTOM:4 = RESULT
+ELSEIF RESULT == 50
+	PRINTL バックレースの有無を選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:5,"無し","バックレース付き@油1","@@")
+	CUSTOM:5 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 6
+	LOCAL -= 3
+SIF CUSTOM:4 == 3
+	LOCAL -= 1
+SIF CUSTOM:4 == 4
+	LOCAL -= 2
+
+SIF CUSTOM:4 == 2
+	LOCAL += 1
+SIF CUSTOM:4 == 5
+	LOCAL += 1
+SIF CUSTOM:4 == 6
+	LOCAL += 1
+SIF CUSTOM:4 == 7
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:3 == 6
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+SIF CUSTOM:4 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 8
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 9
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 5
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:4 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:4 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:5 == 1
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:4 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+SIF CUSTOM:4 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:4 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 12)
+SIF CUSTOM:4 == 5
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+SIF CUSTOM:4 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 12)
+SIF CUSTOM:4 == 7
+	EQUIP:ARG:ID += 1 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH313 스포츠 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_313
+PRINTL  スポーツ向けに動きやすさを最優先した下着。
+PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の上昇量0.9倍　
+PRINTL 【耐久度】120
+@CLOTH_STATUS_313
+	SAVESTR:0'="HP120,YUDAN90,ANTICUP10,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_313(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:1 == 0
+	PRINT [デザイン：無地]
+SIF CUSTOM:1 == 1
+	PRINT [デザイン：ブランドロゴ]
+SIF CUSTOM:1 == 2
+	PRINT [デザイン：レース]
+SIF CUSTOM:1 == 3
+	PRINT [デザイン：チェック]
+SIF CUSTOM:1 == 4
+	PRINT [デザイン：ドット]
+SIF CUSTOM:1 == 5
+	PRINT [デザイン：ボーダー]
+SIF CUSTOM:1 == 6
+	PRINT [デザイン：プリント]
+
+SIF CUSTOM:2 == 0
+	PRINT [スポーツブラ]
+SIF CUSTOM:2 == 1
+	PRINT [ブラトップ]
+SIF CUSTOM:2 == 2
+	PRINT [ブラキャミ]
+SIF CUSTOM:2 == 3
+	PRINT [チューブトップ]
+SIF CUSTOM:2 == 4
+	PRINT [ハーフトップ]
+
+SIF CUSTOM:3 == 0
+	PRINT [ショーツ]
+SIF CUSTOM:3 == 1
+	PRINT [スタンダード]
+SIF CUSTOM:3 == 2
+	PRINT [ローライズ]
+SIF CUSTOM:3 == 3
+	PRINT [スポーティー]
+SIF CUSTOM:3 == 4
+	PRINT [ボーイレッグ]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_313,ARG
+#DIM CUSTOM, 4
+#DIM CUSTOM_NUM = 4
+#DIM ID
+RESULT = 0
+ID = 313
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","デザイン","トップスの種類","ショーツの種類","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 10
+	PRINTL デザインを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:1,"無地","ブランドロゴ@油2","レース@油2","チェック@油1","ドット@油1","ボーダー@油1","プリント@油1","@@")
+	CUSTOM:1 = RESULT
+ELSEIF RESULT == 20
+	PRINTL トップスを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"スポーツブラ","ブラトップ","ブラキャミ","チューブトップ","ハーフトップ","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ビキニ","スタンダード","ローライズ@軽1油1晒1","スポーツタイプ@重1油2護2","ボーイレッグ@重1油2護2","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+;補正効果
+LOCAL = 0
+SIF CUSTOM:3 == 2
+	LOCAL -= 1
+
+SIF CUSTOM:3 == 3
+	LOCAL += 1
+SIF CUSTOM:3 == 4
+	LOCAL += 1
+
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+
+;油断度ダウン
+SIF CUSTOM:2 == 1
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 13)
+
+;油断度アップ
+SIF CUSTOM:1 == 2
+	EQUIP:ARG:ID += 2 * POWER(10, 14)
+SIF CUSTOM:1 == 3
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 4
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 5
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:1 == 6
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+SIF CUSTOM:3 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 14)
+
+;挿入抵抗ダウン
+SIF CUSTOM:3 == 2
+	EQUIP:ARG:ID += 1 * POWER(10, 11)
+
+;挿入抵抗アップ
+SIF CUSTOM:3 == 3
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+SIF CUSTOM:3 == 4
+	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH314 남성 속옷
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_314
+PRINTL  男性用の下着。
+PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の上昇量0.25倍　
+PRINTL 【耐久度】120
+@CLOTH_STATUS_314
+	SAVESTR:0'="HP120,YUDAN25,ANTICUP10,SEITAISEI95,"
+
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_314(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+SIF CUSTOM:0 == 0
+	PRINT [カラー：ホワイト]
+SIF CUSTOM:0 == 1
+	PRINT [カラー：ブラック]
+SIF CUSTOM:0 == 2
+	PRINT [カラー：ピンク]
+SIF CUSTOM:0 == 3
+	PRINT [カラー：レッド]
+SIF CUSTOM:0 == 4
+	PRINT [カラー：ブルー]
+SIF CUSTOM:0 == 5
+	PRINT [カラー：グリーン]
+SIF CUSTOM:0 == 6
+	PRINT [カラー：イエロー]
+SIF CUSTOM:0 == 7
+	PRINT [カラー：オレンジ]
+SIF CUSTOM:0 == 8
+	PRINT [カラー：パープル]
+SIF CUSTOM:0 == 9
+	PRINT [カラー：ネイビー]
+
+SIF CUSTOM:2 == 0
+	PRINT [Ｔシャツ]
+SIF CUSTOM:2 == 1
+	PRINT [タンクトップ]
+
+SIF CUSTOM:3 == 0
+	PRINT [ブリーフ]
+SIF CUSTOM:3 == 1
+	PRINT [トランクス]
+SIF CUSTOM:3 == 2
+	PRINT [ボクサー]
+PRINTL 
+
+@CLOTH_CUSTOMIZE_OPTION_314,ARG
+#DIM CUSTOM, 4
+#DIM CUSTOM_NUM = 4
+#DIM ID
+RESULT = 0
+ID = 314
+REPEAT CUSTOM_NUM
+	CUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:ID, COUNT + 1)
+REND
+
+
+TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{ID}(CUSTOM,ID,ARG)
+DRAWLINE
+
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"カラーリング","","トップスの種類","ショーツの種類","@@")
+$INPUT_LOOP
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
+
+IF RESULT == 0
+	PRINTL カラーリングを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:0,"ホワイト","ブラック","ピンク","レッド","ブルー","グリーン","イエロー","オレンジ","パープル","ネイビー","@@")
+	CUSTOM:0 = RESULT
+ELSEIF RESULT == 20
+	PRINTL トップスを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"Ｔシャツ","タンクトップ","裸","@@")
+	CUSTOM:2 = RESULT
+ELSEIF RESULT == 30
+	PRINTL ショーツを選択してください
+	CALL INNER_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ブリーフ","トランクス","ボクサー","@@")
+	CUSTOM:3 = RESULT
+ELSEIF RESULT == 90
+	CALL CLOTH_CUSTOMIZE_OPTION_INITIALIZE(ARG,ID,CUSTOM)
+ELSEIF RESULT == 99
+	RETURN 99
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
+
+RETURN -1
+
+;**********************************************************
+;CLOTH397 훈도시
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_397
+PRINTL  究極の回避特化下着。ただし、その効果を発揮するには上に服を着てはいけない。
+PRINTL 【 補正 】アウターを装備していない場合のみ、回避1.55倍
+PRINTL 【耐久度】90	
+@CLOTH_STATUS_397
+	SAVESTR:0'="SLOT-1,HP90,AVOID!,"
+
+;----------------------------------------------------------
+;特殊分岐：「アウター無しなら回避上昇」
+@CLOTH_HOSEI_AVOID_397
+IF CFLAG:1 == 0 && CFLAG:40 == 0
+	LOCAL = 155
+ELSEIF CFLAG:1 > 0 && CFLAG:41 == 0
+	LOCAL = 155
+ELSE
+	LOCAL = 100
+ENDIF
+RETURN LOCAL
+
+
+;**********************************************************
+;CLOTH398 성기 가리개
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_398
+PRINTL  性器に貼り付け、露出を抑えるためのもの。剥がされるスリルを楽しんでみる？
+PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の上昇量1.5倍　Ｖ挿入完全抵抗
+PRINTL 【耐久度】40
+@CLOTH_STATUS_398
+	SAVESTR:0'="SLOT-1,HP40,ANTICUP10,YUDAN150,SEITAISEI95,"
+
+
+;**********************************************************
+;CLOTH399 루크탄테표・쇼츠
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_399
+PRINTL  コアなファンの多いブランドショーツ。独特の装着感が病み付きになるかも?
+PRINTL 【 補正 】なし
+PRINTL 【耐久度】80
+@CLOTH_STATUS_399
+	SAVESTR:0'="SLOT-1,HP80,"
+

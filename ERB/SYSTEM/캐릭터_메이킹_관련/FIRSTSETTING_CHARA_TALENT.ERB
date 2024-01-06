@@ -1,0 +1,119 @@
+﻿
+;変更をプロフィールに反映
+;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+@SET_PROFILE, ARG
+CALL GENERATE_CHAR_SIZE, ARG, 0
+BASE:ARG:신장 = RESULT:2
+BASE:ARG:체중 = RESULT:3
+BASE:ARG:가슴둘레 = RESULT:4
+BASE:ARG:허리둘레 = RESULT:5
+BASE:ARG:골반둘레 = RESULT:6
+BASE:ARG:가슴무게 = RESULT:7
+
+CALL GENERATE_CHAR_SIZE, ARG, 1
+MAXBASE:ARG:신장 = RESULT:2
+MAXBASE:ARG:체중 = RESULT:3
+MAXBASE:ARG:가슴둘레 = RESULT:4
+MAXBASE:ARG:허리둘레 = RESULT:5
+MAXBASE:ARG:골반둘레 = RESULT:6
+MAXBASE:ARG:가슴무게 = RESULT:7
+
+
+;;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+;;キャラの素質の設定
+;;ARG   = 対象キャラ
+;;ARG:1 = 1ならキャラメイク制限
+;@FIRSTSETTING_CHARA_TALENT, ARG, ARG:1 = 0
+;#DIM LCOUNT
+;
+;CALL LB
+;LCOUNT = LINECOUNT
+;$INPUT_LOOP
+;PRINTFORML {ARG}人目のキャラ 『%CALLNAME:ARG%』 の素質を設定してください
+;DRAWLINE
+;SETCOLOR 240, 255, 255
+;IF CHARATALENT_F(ARG,0,"남자") == 0
+;	LOCALS:0 = ♀
+;ELSE
+;	LOCALS:0 = ♂
+;ENDIF
+;IF CHARATALENT_F(ARG,1,"남자") == 0
+;	LOCALS:1 = ♀
+;ELSE
+;	LOCALS:1 = ♂
+;ENDIF
+;PRINTFORM 　　　　　　　　　　通常時(%LOCALS:0%)　　　　　　　
+;IF TALENT:ARG:변신능력 == 1
+;	SETCOLOR 255, 240, 255
+;	PRINTFORM 変身時(%LOCALS:1%)
+;ENDIF
+;RESETCOLOR
+;PRINTL 
+;PRINTL  一般素質
+;
+;
+;
+;
+;;特殊体質
+;
+;
+;
+;
+;
+;
+;RESETCOLOR
+;PRINTL 
+;
+;DRAWLINE
+;PRINTL [200]決定
+;SIF TALENT:ARG:고유캐릭터 != 0 || (ARG:1) > 0
+;	SETCOLOR 105,105,105
+;PRINTL [300]現在の身体素質を元にフレーバー素質を設定
+;PRINTL [999]全てランダムに設定
+;RESETCOLOR
+;
+;INPUT
+;SIF RESULT != 200
+;	CLEARLINE LINECOUNT - LCOUNT
+;
+;IF RESULT == 200
+;	;プロフィールに反映
+;	CALL SET_PROFILE, ARG
+;ELSEIF RESULT == 300 && TALENT:ARG:고유캐릭터 == 0 && (ARG:1) == 0
+;	REPEAT 1000
+;		IF COUNT >= 800 && COUNT <= 899
+;			TALENT:ARG:COUNT = 0
+;		ENDIF
+;	REND
+;	$LOOP_200
+;	CALL CHARA_MAKE_STATUS_TALENT_FLAVOR, ARG
+;	SIF TALENT:ARG:교제상대 + TALENT:ARG:학생 + TALENT:ARG:가족관계 + TALENT:ARG:악세서리 + TALENT:ARG:외관 == 0
+;		GOTO LOOP_200
+;	GOTO INPUT_LOOP
+;ELSEIF RESULT == 999 && TALENT:ARG:고유캐릭터 == 0 && (ARG:1) == 0
+;	REPEAT 1000
+;		;性格、結界、変身と種族、性別、精神素質は除外
+;		IF (COUNT >= 10 && COUNT <= 28) || (COUNT >= 190 && COUNT <= 193) || (COUNT >= 200 && COUNT <= 206) || (COUNT >= 400 && COUNT <= 402) || (COUNT >= 600 && COUNT <= 699)
+;		ELSE
+;			TALENT:ARG:COUNT = 0
+;		ENDIF
+;	REND
+;	$LOOP_999
+;	CALL CHARA_MAKE_STATUS_TALENT, ARG
+;	CALL CHARA_MAKE_STATUS_TALENT_FLAVOR, ARG
+;	LOCAL = 0
+;	REPEAT 1000
+;		IF (COUNT >= 10 && COUNT <= 28) || (COUNT >= 190 && COUNT <= 193) || (COUNT >= 200 && COUNT <= 206) || (COUNT >= 400 && COUNT <= 402) || (COUNT >= 600 && COUNT <= 699)
+;		ELSE
+;			LOCAL += TALENT:ARG:COUNT
+;		ENDIF
+;	REND
+;	SIF LOCAL == 0
+;		GOTO LOOP_999
+;	GOTO INPUT_LOOP
+;
+;ELSE
+;	GOTO INPUT_LOOP
+;ENDIF
+;PRINTL 
+;PRINTL 

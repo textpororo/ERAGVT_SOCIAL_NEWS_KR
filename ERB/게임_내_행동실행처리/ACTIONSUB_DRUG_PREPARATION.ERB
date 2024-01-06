@@ -1,0 +1,1040 @@
+﻿;**********************************************************
+;薬の調合
+;β1では촉수の欠片を用いて素質の消去をおこなう
+@DRUG_PREPARATION
+#DIM ROBO
+#DIM KEEP_TARGET
+#DIM RACE
+#DIM FEAT_SELECT, 300
+#DIM FEAT_NUM
+
+ROBO = 0
+$INPUT_LOOP_2
+FOR LOCAL, 0, CHARANUM
+	SIF TALENT:LOCAL:인조인간 > 0
+		ROBO ++
+NEXT
+CALL LB
+PRINTL ロボっ娘ナース：
+PRINTL 「ようこそメディカルルームへ」（ペコリ）
+PRINTL 「ここでは資金や촉수の欠片を消費して特定素質の消去などを行うことができます」
+IF RAND:4 == 0
+	PRINTL 「本日のご用件は何でしょうか？」
+ELSEIF RAND:3 == 0
+	PRINTL 「今回はどなたを治療致しましょうか？」
+ELSEIF RAND:2 == 0
+	PRINTL 「健康には気を付けてくださいね」
+ELSE
+	PRINTL 「何かお手伝いできることはございますか？」
+ENDIF
+PRINTL 
+PRINTFORML << 촉수の欠片の所持数：{FLAG:200}個 >>
+PRINTFORML << 避妊用ピル所持数  ：{FLAG:201}個 >>
+DRAWLINE
+PRINTFORML [0]   [촉수의포로]の消去 - 촉수の欠片5個消費
+PRINTFORML [1]   [후타나리]の消去 - 촉수の欠片2個消費
+PRINTFORML [2]   [모유체질]の消去 - 촉수の欠片2個消費
+PRINTFORML [3]   [기생]の消去　　 - 촉수の欠片2個消費
+PRINTFORML [4]   [묘상화]の消去　 - 촉수の欠片2個消費
+PRINTFORML [5]   [膨乳]の治療　 　- 촉수の欠片2個消費
+PRINTL 
+PRINTFORML [10]   임신検査薬                     - 50$
+PRINTFORML [11]   胎内精密検査                   - 250$
+PRINTFORML [12]   堕胎手術（入院中のキャラも可） - 7000$
+PRINTFORML [13]   避妊用ピルの購入               - 125$
+PRINTFORML [14]   避妊用ピルの処方
+SIF ROBO > 0
+	PRINTFORML [15]   인조인간のメンテナンス
+PRINTL 
+PRINTFORML [20]   淫紋の治療                     - 촉수の欠片10個消費
+PRINTFORML [21]   淫紋の進行を遅らせる           - 1250$
+PRINTL 
+PRINTFORML [30]   性徴促進薬                     - 촉수の欠片1個消費
+PRINTFORML [31]   성징정체薬                     - 촉수の欠片1個消費
+PRINTL 
+;キャラが多すぎる場合、またはソロモードの場合は加入不可
+SIF CHARANUM > 등록최대인원 - 1 || GAME_OPTION_CHECK_F(OPTION_solo)
+	SETCOLOR 128,128,128
+PRINTFORML [100]  인조인간の新規加入　　　　　 　- 50000$
+RESETCOLOR
+PRINTL 
+PRINTFORML [999] やめる
+$INPUT_LOOP
+INPUT
+IF RESULT == 999
+	RETURN 999
+ELSEIF RESULT == 0
+	IF FLAG:200 < 5
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 0
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 1
+	IF FLAG:200 < 2
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 1
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 2
+	IF FLAG:200 < 2
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 2
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 3
+	IF FLAG:200 < 2
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 3
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 4
+	IF FLAG:200 < 2
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 4
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 5
+	IF FLAG:200 < 2
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 5
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 10
+	IF MONEY < 50
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 10
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 11
+	IF MONEY < 500
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 11
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 12
+	IF MONEY < 7000
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 12
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 13
+	IF MONEY < 125
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		PRINTL 
+		PRINTFORML 　＊　避妊用ピルの購入　＊
+		PRINTFORML 避妊用ピルは１つで半日間だけ임신を防ぐ効果があります
+		PRINTFORML ただし、촉수の受精能力が強力すぎるため촉수に対しては効果がありません
+		PRINTFORML 　購入数を入力してください(1-{MONEY / 125}個)
+		PRINTFORML 　(0か負の数入力でキャンセル)
+		INPUT
+		IF RESULT > 0 && RESULT * 125 <= MONEY
+			LOCAL = RESULT
+			PRINTFORML 避妊用ピルを{LOCAL}個購入で${125 * LOCAL}になります。宜しいですか？
+			PRINTFORML [0] 네
+			PRINTFORML [1] 아니오
+			$INPUT_LOOP_0_13
+			INPUT
+			IF RESULT == 0
+				MONEY -= 125 * LOCAL
+				FLAG:201 += LOCAL
+			ELSEIF RESULT == 1
+			ELSE
+				GOTO INPUT_LOOP_0_13
+			ENDIF
+		ELSEIF RESULT < 1
+		ELSE
+			PRINTW 資金が足りません
+		ENDIF
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 14
+	FOR LOCAL, 0, CHARANUM
+		SIF LOCAL == MASTER
+			CONTINUE
+		SIF CFLAG:LOCAL:241 > 0
+			LOCAL:1 += CFLAG:LOCAL:241
+	NEXT
+	IF FLAG:201 + LOCAL:1 < 1
+		PRINTW 避妊用ピルを所持していません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 14
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 15 && ROBO > 0
+	CALL CHARA_LIST_DRUG, 15
+	GOTO INPUT_LOOP_2
+ELSEIF RESULT == 20
+	IF FLAG:200 < 10
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 20
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 21
+	IF MONEY < 1250
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 21
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 30
+	IF FLAG:200 < 1
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 30
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 31
+	IF FLAG:200 < 1
+		PRINTW 촉수の欠片が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL CHARA_LIST_DRUG, 31
+		GOTO INPUT_LOOP_2
+	ENDIF
+ELSEIF RESULT == 51
+	IF FLAG:54 < 5
+		PRINTL 촉수のバイオマスを利用して人体の機能を回復する技術を開発中です
+		PRINTW （より高い레벨の촉수研究が必要です！）
+		GOTO INPUT_LOOP_2
+	ELSE 
+		PRINTL 現在の研究레벨では、
+		PRINTL 촉수からのバイオマスは人体の機能を回復するために使用でき、
+		PRINTL 【사지결손】の場合は$25,000と촉수の残骸40消費が必要となります。
+		PRINTL そして촉수との【공생】状態となります
+		PRINTL 本当に手術をしてよろしいですか？
+		PRINTL [0] 네
+		PRINTL [1] 아니오
+		INPUT
+		$INPUT_LOOP_25000
+		IF RESULT == 0
+			IF MONEY < 25000
+				PRINTW 手術に必要な資金が不足しています。
+				GOTO INPUT_LOOP_2
+			ELSEIF FLAG:200 < 40
+				PRINTW 手術に必要な촉수の欠片が不足しています。
+				GOTO INPUT_LOOP_2
+			ELSE
+				CALL CHARA_LIST_DRUG, 51
+				GOTO INPUT_LOOP_2
+			ENDIF
+		;＠中国版より
+		;＠↓翻訳・移植終わるまでデッドコード化
+		ELSEIF 1==0 && RESULT == 1
+			;原文は提案者が不明
+			;別系統を仄めかしつつなんか怪しげな感じのNPCを生やしておく
+			;(ただし主役はあくまでヒロインであるため深く掘り下げはしない)
+			PRINTL 「おや、手術しないのですか？　それなら別の選択肢も提示できますよ」
+			PRINTL ロボっ娘ナースを脇に押し退け、白衣の少女研究者が現れた
+			PRINTL 
+			PRINTL 「……というのもですね。実は現在の肥大化する運営予算とリソース、到底持続可能な状態ではありません。
+			PRINTL 　たとえば【사지결손】した魔法少女のケア、あれには多額のリソースを浪費する必要があります。
+			PRINTW 　ご存知でしょう、正義感の強い彼女たちがどれほど苦しんでいるか……」
+			PRINTL 
+			PRINTL 「ねえ、あのような生き地獄を続けさせるくらいなら、いっそ「再利用」したらどうですか？
+			PRINTL 　あるいはスポンサーを増やすために「特別」なショーを企画できるかもしれませんが…どうです？」
+			PRINTL 
+			PRINTL [0]……
+			PRINTL [1]仲間を売るなんてとんでもない！
+			INPUT
+			$INPUT_LOOP_AMPUTEE
+			IF RESULT == 0
+				CALL AMPUTEE
+				GOTO INPUT_LOOP_2
+			ELSEIF RESULT == 1
+				GOTO INPUT_LOOP_2
+			ELSE
+				PRINTW 正しい値を入力してください
+				GOTO INPUT_LOOP_AMPUTEE
+			ENDIF
+		ELSE
+			PRINTW 正しい値を入力してください
+			GOTO INPUT_LOOP_25000
+		ENDIF
+	ENDIF
+
+ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK_F(OPTION_solo)
+	IF MONEY < 50000
+		PRINTW 資金が足りません
+		GOTO INPUT_LOOP_2
+	ELSE
+		CALL LB
+		PRINTFORML  所持金： {MONEY}$
+		CALL SHORTLINE
+		PRINTL 資金を50000$支払い인조인간を新規加入させます。
+		PRINTL キャンセルはできませんが、よろしいですか？
+		PRINTL [0]性別：♀で確定
+		PRINTL [1]性別：♂で確定
+		PRINTL 
+		PRINTL [99]キャンセル
+		$INPUT_LOOP_100_0
+		INPUT
+		IF RESULT == 0 || RESULT == 1
+			PRINTW 加入要請を行いました。
+			CALL LB
+			CALL DOT_AFTER, 1
+			PRINTL 
+			PRINTW 加入する新規キャラクターの設定を行います。
+			KEEP_TARGET = TARGET
+			MONEY -= 50000
+			ADDCHARA 0
+			TARGET = CHARANUM - 1
+			TALENT:감정결여 = 1
+			TALENT:미성숙 = 2
+			TALENT:구상설정 = 1
+			TALENT:초기경험설정불가 = 1
+			IF RESULT == 1
+				TALENT:남자 = 1
+				NAME:TARGET = 범용 캐릭터(♂)
+			ENDIF
+			TALENT:인조인간 = 1
+			CALL FIRSTSETTING_CHARA_MAIN, TARGET, 0, 1
+			
+			;フィートの設定開始
+			;---------------------------------------------------------------------
+			CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",TARGET
+			RACE = RESULT
+			;フィートの開始番号
+			LOCAL:2 = 1000
+			;種族の数
+			LOCAL:3 = 11
+			PRINTFORML 『%CALLNAME%』にフィートを設定しますか？
+			PRINTFORML [0] 네
+			PRINTFORML [1] 아니오
+			PRINTFORML [2]ランダムに設定する
+			$INPUT_LOOP_100_1
+			INPUT
+			IF RESULT == 0
+				;フィートの初期化
+				VARSET FEAT_SELECT
+				FOR LOCAL, 100, 300
+					SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
+						FEAT_SELECT:LOCAL = 0
+				NEXT
+				CALL LB
+				$MASTER_LOOP_100_2
+				;フィートの数をカウント
+				FEAT_NUM = 0
+				FOR LOCAL, 100, 300
+					SIF FEAT_SELECT:LOCAL > 0
+						FEAT_NUM ++
+				NEXT
+				PRINTFORML %TALENTNAME:(RACE)%
+				CALL SHORTLINE
+				CALL SYUZOKU_INFO, (RACE)
+				PRINTL 
+				PRINTL (取得可能フィート)          選択
+				FOR LOCAL, 100, 300
+					SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
+						CONTINUE
+					IF LOCAL < 200
+						PRINT 　★
+					ELSE
+						PRINT 　☆
+					ENDIF
+					PRINTFORM %TALENTNAME:(LOCAL + LOCAL:2),22,LEFT%  [{LOCAL}]  
+					IF LOCAL == 110 && FEAT_SELECT:LOCAL > 0
+						SETCOLOR 255,0,0
+						PRINT ◎
+						RESETCOLOR
+						PRINTPLAIN  固定取得
+					ELSEIF FEAT_SELECT:LOCAL > 0
+						SETCOLOR 255,128,0
+						PRINT ○
+						RESETCOLOR
+					ELSE
+						PRINT ×
+					ENDIF
+					PRINTL 
+				NEXT
+				PRINTL 
+				PRINTFORML 選択したフィート({FEAT_NUM}/3)
+				SIF FEAT_NUM > 3
+					SETCOLOR 128,128,128
+				PRINTL [0]決定
+				RESETCOLOR
+				$INPUT_LOOP_100_2
+				INPUT
+				IF RESULT == 0 && FEAT_NUM <= 3
+				ELSEIF RESULT >= 100 && RESULT <= 300 && FEAT_ABLE_F(RACE, RESULT + LOCAL:2) > 0
+					LOCAL = RESULT
+					CALL LB
+					CALL FEAT_INFO, (LOCAL + LOCAL:2)
+					PRINTL 
+					IF FEAT_SELECT:LOCAL > 0
+						FEAT_SELECT:LOCAL = 0
+					ELSE
+						FEAT_SELECT:LOCAL = 1
+					ENDIF
+					GOTO MASTER_LOOP_100_2
+				ELSE
+					GOTO INPUT_LOOP_100_2
+				ENDIF
+				;フィートの設定
+				FOR LOCAL, 100, 300 
+					IF FEAT_SELECT:LOCAL > 0
+						TALENT:(LOCAL + LOCAL:2) = 1
+					ELSE
+						TALENT:(LOCAL + LOCAL:2) = 0
+					ENDIF
+				NEXT
+				;プロフィールに反映
+				CALL SET_PROFILE, TARGET
+			ELSEIF RESULT == 1
+				PRINTFORML %PRINT_CALLNAME(TARGET)%にはフィートを設定しません
+				PRINTW 
+			ELSEIF RESULT == 2
+				;フィートのランダム設定
+				CALL SET_FEAT_DEFAULT, TARGET, RACE
+				;プロフィールに反映
+				CALL SET_PROFILE, TARGET
+				PRINTFORML ランダムにフィートを設定しました
+				PRINTW 
+			ELSE
+				GOTO INPUT_LOOP_100_1
+			ENDIF
+
+			CALL LB
+			CALL DOT_AFTER, 1
+			PRINTL 
+			PRINTFORML 『%CALLNAME%』を{TARGET}人目のメンバーとして迎え入れました。
+			PRINTFORML 『%CALLNAME%』は控えメンバーに加えられます。
+			;キャラメイク完了処理(個別)
+			CALL CHARA_MAKE_FINALIZE(TARGET)
+
+			PRINTW 
+			TARGET = KEEP_TARGET
+			GOTO INPUT_LOOP_2
+		ELSEIF RESULT == 99
+			GOTO INPUT_LOOP_2
+		ELSE
+			GOTO INPUT_LOOP_100_0
+		ENDIF
+	ENDIF
+ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+PRINTL
+PRINTL 
+
+;----------------------------------------------------------
+;素質を消去するキャラを選ぶ
+@CHARA_LIST_DRUG, ARG
+#DIM CCOUNT
+PRINTL 
+PRINTL 誰を選びますか？
+LOCAL = CHARANUM
+FOR CCOUNT, 0, LOCAL
+	SIF CCOUNT == MASTER
+		CONTINUE
+	
+	;촉수의포로
+	IF ARG == 0
+		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:촉수의포로 > 0
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;후타나리
+	ELSEIF ARG == 1
+		IF CFLAG:CCOUNT:0 == 0 && (TALENT:CCOUNT:후타나리 == 1 || TALENT:CCOUNT:후타나리 == 2 || (TALENT:CCOUNT:변신능력 > 0 && (TALENT:CCOUNT:변신시후타나리 == 1 || TALENT:CCOUNT:변신시후타나리 == 2)))
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			SIF TALENT:CCOUNT:후타나리 == 1
+				PRINTFORM 　　　後天후타나리
+			SIF TALENT:CCOUNT:후타나리 == 2
+				PRINTFORM 　　　기생후타나리
+			SIF TALENT:CCOUNT:변신시후타나리 == 1 && TALENT:CCOUNT:변신능력 > 0
+				PRINTFORM 　　　後天후타나리(変身時)
+			SIF TALENT:CCOUNT:변신시후타나리 == 2 && TALENT:CCOUNT:변신능력 > 0
+				PRINTFORM 　　　기생후타나리(変身時)
+			PRINTL 
+		ENDIF
+	;모유체질
+	ELSEIF ARG == 2
+		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:모유체질 > 0
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;기생
+	ELSEIF ARG == 3
+		;[공생]取得時は기생除去不可能とする
+		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:기생 > 0 && TALENT:CCOUNT:공생 <= 0
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;묘상화
+	ELSEIF ARG == 4
+		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:묘상화 > 0
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;膨乳化
+	ELSEIF ARG == 5
+		IF CFLAG:CCOUNT:0 == 0 && (CFLAG:CCOUNT:37 > 0 || CFLAG:CCOUNT:38 != 0)
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			IF CHARATALENT_F(CCOUNT,0,"빈유")
+				PRINT  　　　빈유
+			ELSEIF CHARATALENT_F(CCOUNT,0,"奇乳")
+				PRINT  　　　奇乳
+			ELSEIF CHARATALENT_F(CCOUNT,0,"魔乳")
+				PRINT  　　　魔乳
+			ELSEIF CHARATALENT_F(CCOUNT,0,"超乳")
+				PRINT  　　　超乳
+			ELSEIF CHARATALENT_F(CCOUNT,0,"爆乳")
+				PRINT  　　　爆乳
+			ELSEIF CHARATALENT_F(CCOUNT,0,"거유")
+				PRINT  　　　거유
+			ELSE
+				PRINT  　　　普乳
+			ENDIF
+			IF CHARATALENT_F(CCOUNT,1,"빈유")
+				PRINT  　　　빈유(変身時)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"奇乳")
+				PRINT  　　　奇乳(変身時)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"魔乳")
+				PRINT  　　　魔乳(変身時)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"超乳")
+				PRINT  　　　超乳(変身時)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"爆乳")
+				PRINT  　　　爆乳(変身時)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"거유")
+				PRINT  　　　거유(変身時)
+			ELSE
+				PRINT  　　　普乳(変身時)
+			ENDIF
+			PRINTL 
+		ENDIF
+	;임신検査薬
+	ELSEIF ARG == 10
+		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10 || CFLAG:CCOUNT:0 == 11) && (ISFEMALE(CCOUNT))
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;精密検査
+	ELSEIF ARG == 11
+		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10 || CFLAG:CCOUNT:0 == 11) && (ISFEMALE(CCOUNT))
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;堕胎
+	ELSEIF ARG == 12
+		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10) && (TALENT:CCOUNT:임신 == 1 || TALENT:CCOUNT:임신 == 3 || TALENT:CCOUNT:임신 == 5)
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;避妊用ピル
+	ELSEIF ARG == 14
+		IF (CFLAG:CCOUNT:0 == 0) && (ISFEMALE(CCOUNT)) && (TALENT:CCOUNT:임신 != 1 || TALENT:CCOUNT:임신 != 3 || TALENT:CCOUNT:임신 != 5)
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT,24,LEFT%　ピル処方数：({CFLAG:CCOUNT:241})
+			PRINTL 
+		ENDIF
+	;인조인간のメンテナンス
+	ELSEIF ARG == 15
+		IF (CFLAG:CCOUNT:0 == 0) && (ISFEMALE(CCOUNT)) && (TALENT:CCOUNT:인조인간 > 0)
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;淫紋
+	ELSEIF ARG == 20
+		IF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:32
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	ELSEIF ARG == 21
+		IF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:32
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;性徴促進薬
+	ELSEIF ARG == 30
+		IF CFLAG:CCOUNT:0 == 0 && (TALENT:CCOUNT:미성숙 == 1 || TALENT:CCOUNT:성징정체 > 0)
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;성징정체薬
+	ELSEIF ARG == 31
+		IF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:225 > 0 && CFLAG:CCOUNT:225 < 15 && TALENT:CCOUNT:성징정체 == 0
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+			PRINTL 
+		ENDIF
+	;四肢修復
+	ELSEIF ARG == 51
+		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:훼멸초계시 < 1
+		PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+		PRINTL 
+		ENDIF
+	ENDIF
+NEXT
+PRINTFORML [999]キャラ選択をやめる
+$INPUT_LOOP_CHARA_LIST
+INPUT
+IF RESULT == 999
+	RETURN 999
+ELSEIF RESULT < 1 || RESULT >= LOCAL
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_CHARA_LIST
+ELSE
+	IF ARG == 0
+		IF TALENT:RESULT:촉수의포로 == 0 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 5
+			TALENT:RESULT:촉수의포로 = 0
+			ABL:RESULT:촉수중독 = 0
+			JUEL:RESULT:욕정 = 0
+			JUEL:RESULT:굴복 = 0
+			PRINTFORML 記憶調整薬を投与し、
+			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:150%を消去しました
+			PRINTFORML %CALLNAME:RESULT%の촉수중독が初期化されました
+		ENDIF
+	ELSEIF ARG == 1
+		IF (TALENT:RESULT:후타나리 < 1 && TALENT:RESULT:변신시후타나리 < 1) || (TALENT:RESULT:후타나리 >= 3 && TALENT:RESULT:변신시후타나리 >= 3) || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 2
+			IF TALENT:RESULT:후타나리 == 2
+				PRINTFORML 抗촉수薬を投与し、기생部位を治療しました
+			ELSEIF TALENT:RESULT:후타나리 == 1
+				PRINTFORML ホルモンバランス調整剤を投与し、클리토리스を正常に戻しました
+			ENDIF
+			IF TALENT:RESULT:후타나리 == 1 || TALENT:RESULT:후타나리 == 2
+				PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:300%を消去しました
+				TALENT:RESULT:후타나리 = 0
+			ENDIF
+			IF TALENT:RESULT:변신시후타나리 == 1 || TALENT:RESULT:변신시후타나리 == 2
+				SIF TALENT:RESULT:변신능력 > 0
+					PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:404%を消去しました
+				TALENT:RESULT:변신시후타나리 = 0
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 2
+		IF TALENT:RESULT:모유체질 == 0 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 2
+			TALENT:RESULT:모유체질 = 0
+			PRINTFORML ホルモンバランス調整剤を投与し、母乳を出なくしました
+			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:1%を消去しました
+		ENDIF
+	ELSEIF ARG == 3
+		IF TALENT:RESULT:기생 == 0 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 2
+			TALENT:RESULT:기생 = 0
+			PRINTFORML 抗촉수薬を投与し、기생部位を除去しました
+			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:160%を消去しました
+		ENDIF
+	ELSEIF ARG == 4
+		IF TALENT:RESULT:묘상화 == 0 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 2
+			TALENT:RESULT:묘상화 = 0
+			PRINTFORML 抗촉수薬を投与し、子宮の異常を治療しました
+			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:161%を消去しました
+		ENDIF
+	ELSEIF ARG == 5
+		IF (CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 == 0) || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 2
+			PRINTFORML ホルモンバランス調整剤を投与し、胸の張りを治療しました
+			;通常時正常で変身時膨乳の場合は変身時のみ縮乳
+			IF CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 > 0
+				TALENT:RESULT:변신시가슴사이즈변동 -= 1
+				CFLAG:RESULT:38 -= 1
+				PRINTFORM 変身時の
+			ELSEIF CFLAG:RESULT:37 > 0
+				;変身時の方が大きかった場合は変身時胸サイズ維持
+				IF CFLAG:RESULT:38 < 0
+					TALENT:RESULT:변신시가슴사이즈변동 += 1
+					CFLAG:RESULT:38 += 1
+				ENDIF
+				;縮乳処理
+				IF TALENT:RESULT:거유 - TALENT:RESULT:빈유 > 0
+					TALENT:RESULT:거유 -= 1
+				ELSE
+					TALENT:RESULT:빈유 = MIN(TALENT:RESULT:빈유+1,2)
+				ENDIF
+			ENDIF
+			CFLAG:RESULT:37 = MAX(CFLAG:RESULT:37-1,0)
+			IF CFLAG:RESULT:37 > 0 || CFLAG:RESULT:38 != 0
+				PRINTFORML %CALLNAME:RESULT%の胸を小さくしました
+			ELSE
+				PRINTFORML %CALLNAME:RESULT%の胸を正常に戻しました
+			ENDIF
+			;プロフィールに反映
+			CALL SET_PROFILE, RESULT
+		ENDIF
+	ELSEIF ARG == 10
+		IF (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10 && CFLAG:RESULT:0 != 11) || (ISMALE(RESULT))
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			MONEY -= 50
+			CALL DOT_AFTER, 2
+			IF TALENT:RESULT:임신 == 0 || (TALENT:RESULT:임신 == 4 && CFLAG:RESULT:222 < 3)
+				PRINTFORML 임신検査薬の反応は陰性です。
+				PRINTFORML ※임신から日が浅いと検査薬が反応しないことがあります。
+			ELSE
+				PRINTFORML 임신検査薬の反応は陽性です。
+				IF TALENT:RESULT:임신 == 4
+					PRINTFORML %CALLNAME:RESULT%の임신が発覚しました！
+					TALENT:RESULT:임신 = 5
+				ENDIF
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 11
+		IF (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10 && CFLAG:RESULT:0 != 11) || (ISMALE(RESULT))
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			MONEY -= 250
+			CALL DOT_AFTER, 2
+			IF TALENT:RESULT:기생 > 0 && TALENT:RESULT:묘상화 > 0
+				PRINTFORML %CALLNAME:RESULT%さんの子宮は기생かつ묘상화されており、
+				PRINTFORML 例え인간相手による임신でも異常が発生する可能性があるようです。
+			ELSEIF TALENT:RESULT:기생 > 0
+				PRINTFORML %CALLNAME:RESULT%さんの子宮は촉수生物の細胞に기생されており、
+				PRINTFORML 例え인간相手による임신でも正常な子供が生まれない可能性があります。
+			ELSEIF TALENT:RESULT:묘상화 > 0
+				PRINTFORML %CALLNAME:RESULT%さんの子宮は촉수生物によって묘상화されており、
+				PRINTFORML 異常に出産が早まる可能性があるようです。
+			ELSEIF TALENT:RESULT:미성숙 == 2 && TALENT:RESULT:인조인간
+				PRINTFORML %CALLNAME:RESULT%さんには임신可能な子宮がありません。
+				PRINTFORML 解剖学的に임신・出産することはあり得ません。
+			ELSEIF TALENT:RESULT:미성숙 == 2
+				PRINTFORML %CALLNAME:RESULT%さんの子宮の機能には何らかの異常があるようです。
+				PRINTFORML おそらく임신・出産することは難しいでしょう。
+			ELSEIF TALENT:RESULT:미성숙 == 1
+				PRINTFORML %CALLNAME:RESULT%さんの子宮には特に異常は見当たりませんでした。
+				PRINTFORML しかし肉体が未成熟のため、まだ임신・出産はできないでしょう。
+			ELSE
+				PRINTFORML %CALLNAME:RESULT%さんの子宮には特に異常は見当たりませんでした。
+				PRINTFORML 正常に임신・出産することができるでしょう。
+			ENDIF
+			PRINTL 
+			IF TALENT:RESULT:임신 > 0
+				PRINT また、
+				IF TALENT:RESULT:임신 == 4
+					PRINTFORML 精密検査の結果、%CALLNAME:RESULT%さんの胎内に임신の兆候が見つかりました。
+					TALENT:RESULT:임신 = 5
+				ENDIF
+			ENDIF
+			IF TALENT:RESULT:임신 == 1
+				PRINTFORML %CALLNAME:RESULT%さんの胎内に宿っているのは촉수の幼体{CFLAG:RESULT:227}匹のようです。
+				IF TALENT:RESULT:묘상화 > 0
+					PRINTL 成長速度的に、すぐにでも産まれて来そうです。
+				ELSEIF CFLAG:RESULT:222 < 7
+					PRINTL 産まれてくるまで、まだ数日かかりそうです。
+				ELSEIF CFLAG:RESULT:0 == 10
+					PRINTL 現在は出産に備えて入院中です。
+				ELSE
+					PRINTL そろそろ入院の準備が必要かもしれません。
+				ENDIF
+			ELSEIF TALENT:RESULT:임신 == 3
+				PRINTFORML %CALLNAME:RESULT%さんの胎内に宿っているのはヒトの胎児のようです。
+				IF TALENT:RESULT:묘상화 > 0
+					PRINTL 成長速度が異常に早く、すぐにでも産まれて来そうです。
+				ELSEIF CFLAG:RESULT:222 < 7
+					PRINTL 信じられない速度で成長しており、あと数日で産まれそうです。
+				ELSEIF CFLAG:RESULT:0 == 10
+					PRINTL 現在は出産に備えて入院中です。
+				ELSE
+					PRINTL そろそろ入院の準備が必要かもしれません。
+				ENDIF
+			ELSEIF TALENT:RESULT:임신 == 5
+				PRINTFORM %CALLNAME:RESULT%さんの胎内に宿っているのは
+				IF CFLAG:RESULT:222 < 5
+					PRINTL ヒトの受精卵のようです。
+					PRINTL まだ着床した段階ですが、임신は成立しています。
+				ELSEIF CFLAG:RESULT:222 < 8
+					PRINTL ヒトの受精卵のようです。
+					PRINTL 胎嚢が確認できます。経過は順調のようです。
+				ELSEIF CFLAG:RESULT:222 < 11
+					PRINTL ヒトの胎芽のようです。
+					PRINTL しっかりと心拍を打っている様子が確認されています。
+				ELSEIF CFLAG:RESULT:222 < 12
+					PRINTL ヒトの胎児のようです。
+					PRINTL まだサイズは小さいですが、ヒトの形になってきています。
+				ELSEIF CFLAG:RESULT:222 < 22
+					PRINTL ヒトの胎児のようです。
+					PRINTL はっきりと赤ん坊の姿になっているのが分かります。
+				ELSEIF CFLAG:RESULT:222 < 36
+					PRINTL ヒトの胎児のようです。
+					PRINTL 赤ちゃんは元気です。すくすくと成長しているようです。
+				ELSEIF CFLAG:RESULT:222 < 50
+					PRINTL ヒトの胎児のようです。
+					PRINTL 経過は良好で母子ともに健康です。
+				ELSEIF CFLAG:RESULT:222 < 54
+					PRINTL ヒトの胎児のようです。
+					PRINTL 時折腹を蹴ったり、活発に動いている様子が見られます。
+				ELSE
+					PRINTL ヒトの胎児のようです。
+					PRINTL もう出産間近です。いつでも手術室に移動できるよう準備しておきましょう。
+				ENDIF
+				PRINTFORML (임신{CFLAG:RESULT:222 * 20 / 28}／40週目相当)
+			ELSE
+				PRINTFORML %CALLNAME:RESULT%さんの胎内に임신の兆候は見つかりませんでした。
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 12
+		IF (TALENT:RESULT:임신 != 1 && TALENT:RESULT:임신 != 3 && TALENT:RESULT:임신 != 5) || (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10)
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			MONEY -= 7000
+			TALENT:RESULT:임신 = 0
+			CFLAG:RESULT:221 = 0
+			CFLAG:RESULT:222 = 0
+			CFLAG:RESULT:226 = 0
+			CFLAG:RESULT:227 = 0
+			CFLAG:RESULT:228 = 0
+			CFLAG:RESULT:230 = 0
+			CFLAG:RESULT:232 = 0
+			CFLAG:RESULT:233 = 0
+			CALL DOT_AFTER, 2
+			PRINTFORML %CALLNAME:RESULT%の堕胎手術は無事に成功しました
+			IF CFLAG:RESULT:0 == 10
+				PRINTFORML %CALLNAME:RESULT%が戦線に復帰しました
+				CALL RECOVER_TO_PARTY,RESULT
+			ENDIF
+			;疲労が蓄積する
+			CFLAG:RESULT:99 += 25
+		ENDIF
+	ELSEIF ARG == 14
+		IF TALENT:RESULT:임신 == 1 || TALENT:RESULT:임신 == 3 || TALENT:RESULT:임신 == 5 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			LOCAL = RESULT
+			PRINTFORML 半日ごとに処方したピルを自動で1個消費します
+			PRINTFORML %CALLNAME:LOCAL%に処方する避妊用ピルの量を選択してください(0-{FLAG:201 + CFLAG:LOCAL:241})
+			PRINTFORML << 現在の処方数  ：残り{CFLAG:LOCAL:241}個 >>　　(負の数でキャンセル)
+			$INPUT_LOOP_1_14
+			INPUT
+			IF RESULT >= 0 && RESULT <= FLAG:201 + CFLAG:LOCAL:241
+				FLAG:201 += CFLAG:LOCAL:241
+				CFLAG:LOCAL:241 = RESULT
+				FLAG:201 -= RESULT
+				IF RESULT == 0
+					PRINTFORML %CALLNAME:LOCAL%によるピルの使用を中止させました
+				ELSE
+					PRINTFORML %CALLNAME:LOCAL%へのピルの処方数を{RESULT}個としました
+				ENDIF
+			ELSEIF RESULT < 0 || RESULT == CFLAG:LOCAL:241
+					PRINTFORML %CALLNAME:LOCAL%へのピルの処方数を変更せず{CFLAG:LOCAL:241}個のままとしました
+			ELSE
+				PRINTL 正しい値を入力してください
+				GOTO INPUT_LOOP_1_14
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 15
+		IF TALENT:RESULT:인조인간 == 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			LOCAL = RESULT
+			$INPUT_LOOP_0_15
+			CALL LB
+			PRINTL スケジュールの設定
+			CALL SHORTLINE
+			PRINTFORML %CALLNAME:LOCAL%に対して行う処置を選択してください
+			SIF CFLAG:LOCAL:99 < 1 || CFLAG:LOCAL:99 >= 20
+				SETCOLOR 128,128,128
+			PRINTFORML [0]パーツ交換　　　（疲労回復：小）　　　　$500
+			RESETCOLOR
+			SIF CFLAG:LOCAL:99 < 10 || CFLAG:LOCAL:99 >= 30
+				SETCOLOR 128,128,128
+			PRINTFORML [1]集中メンテナンス（疲労回復：大）　　 　 $1500
+			RESETCOLOR
+			SIF CFLAG:LOCAL:99 < 20
+				SETCOLOR 128,128,128
+			PRINTFORML [2]オーバーホール　（疲労完全回復）　　　  $5500
+			RESETCOLOR
+			IF TALENT:LOCAL:미성숙 == 0 && ISFEMALE(LOCAL)
+				PRINTFORML [3]人工子宮を取り外す
+			ELSEIF TALENT:LOCAL:미성숙 > 0 && ISFEMALE(LOCAL)
+				PRINTFORML [3]人工子宮を取り付ける
+			ENDIF
+			PRINTFORML [999]戻る
+			$INPUT_LOOP_1_15
+			INPUT
+			IF RESULT == 0 && CFLAG:LOCAL:99 > 0 && CFLAG:LOCAL:99 < 20
+				IF MONEY < 500
+					PRINTW 資金が足りません
+					GOTO INPUT_LOOP_1_15
+				ELSE
+					MONEY -= 500
+					CFLAG:LOCAL:99 -= 5
+					SIF CFLAG:LOCAL:99 < 0
+						CFLAG:LOCAL:99 = 0
+					CALL DOT_AFTER, 1
+					PRINTL 
+					PRINTFORML %CALLNAME:LOCAL%に対してパーツ交換を行いました
+					PRINTW 
+					GOTO INPUT_LOOP_0_15
+				ENDIF
+			ELSEIF RESULT == 1 && CFLAG:LOCAL:99 > 10 && CFLAG:LOCAL:99 < 30
+				IF MONEY < 1500
+					PRINTW 資金が足りません
+					GOTO INPUT_LOOP_1_15
+				ELSE
+					MONEY -= 1500
+					CFLAG:LOCAL:99 -= 20
+					SIF CFLAG:LOCAL:99 < 0
+						CFLAG:LOCAL:99 = 0
+					CALL DOT_AFTER, 1
+					PRINTL 
+					PRINTFORML %CALLNAME:LOCAL%に対して集中メンテナンスを行いました
+					PRINTW 
+					GOTO INPUT_LOOP_0_15
+				ENDIF
+			ELSEIF RESULT == 0 && CFLAG:LOCAL:99 > 20
+				IF MONEY < 5500
+					PRINTW 資金が足りません
+					GOTO INPUT_LOOP_1_15
+				ELSE
+					MONEY -= 5500
+					CFLAG:LOCAL:99 = 0
+					CALL DOT_AFTER, 1
+					PRINTL 
+					PRINTFORML %CALLNAME:LOCAL%に対してオーバーホールを行いました
+					PRINTW 
+					GOTO INPUT_LOOP_0_15
+				ENDIF
+			ELSEIF RESULT == 3 && ISFEMALE(LOCAL)
+				CALL DOT_AFTER, 1
+				PRINTL 
+				IF TALENT:LOCAL:미성숙 == 0
+					PRINTFORML %CALLNAME:LOCAL%の人工子宮を取り外しました
+					PRINTFORML %CALLNAME:LOCAL%は不妊になります
+					TALENT:LOCAL:미성숙 = 2
+				ELSE
+					PRINTFORML %CALLNAME:LOCAL%に人工子宮を取り付けました
+					PRINTFORML %CALLNAME:LOCAL%は임신可能になります
+					TALENT:LOCAL:미성숙 = 0
+				ENDIF
+				PRINTW 
+				GOTO INPUT_LOOP_0_15
+			ELSEIF RESULT == 999
+				PRINTL メディカルルームに戻ります
+			ELSE
+				GOTO INPUT_LOOP_1_15
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 20
+		IF CFLAG:RESULT:32 == 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 10
+			CFLAG:RESULT:30 = 0
+			CFLAG:RESULT:32 = 0
+			PRINTFORML %CALLNAME:RESULT%の身体から瘴気が抜けていく・・・
+			PRINTFORML %CALLNAME:RESULT%の淫紋を消去しました
+		ENDIF
+	ELSEIF ARG == 21
+		IF CFLAG:RESULT:32 == 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSEIF CFLAG:RESULT:32 < 500000000000000000
+			PRINTFORML 現在の状態では副作用が強くなり過ぎるため、瘴気中和剤を投与できません
+			PRINTFORML しばらくして症状が酷くなったらまたお越しください
+		ELSE
+			MONEY -= 1250
+			TIMES CFLAG:RESULT:30, 0.10
+			TIMES CFLAG:RESULT:32, 0.10
+			PRINTFORML %CALLNAME:RESULT%に瘴気中和剤を注射したが、完治はしなかった・・・
+			PRINTFORML %CALLNAME:RESULT%の淫紋の進行度が減少しました
+		ENDIF
+	ELSEIF ARG == 30
+		IF (TALENT:RESULT:미성숙 != 1 && TALENT:RESULT:성징정체 == 0) || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 1
+			IF ISMALE(RESULT)
+				PRINTFORML 性徴促進薬を投与しました
+			ELSE
+				PRINTFORML 性徴促進薬を投与しました
+			ENDIF
+			IF TALENT:RESULT:미성숙 == 1
+				PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:4%を消去しました
+				IF ISMALE(RESULT)
+					PRINTFORML %CALLNAME:RESULT%は사정できるようになりました
+				ELSE
+					PRINTFORML %CALLNAME:RESULT%は임신できるようになりました
+				ENDIF
+				TALENT:RESULT:미성숙 = -1
+			ENDIF
+			IF TALENT:RESULT:성징정체 > 0
+				PRINTFORML %CALLNAME:RESULT%の肉体的性徴が再び始まりました
+				TALENT:RESULT:성징정체 = 0
+			ENDIF
+		ENDIF
+	ELSEIF ARG == 31
+		IF CFLAG:RESULT:225 == 0 || CFLAG:RESULT:225 > 14 || TALENT:RESULT:성징정체 > 0 || CFLAG:RESULT:0 != 0
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			FLAG:200 -= 1
+			TALENT:RESULT:성징정체 = 1
+			PRINTFORML 성징정체薬を投与しました
+			PRINTFORML %CALLNAME:RESULT%の肉体的性徴が止まりました
+		ENDIF
+	;四肢修復
+	ELSEIF ARG == 51
+		IF CFLAG:RESULT:0 != 0 || TALENT:RESULT:사지결손 < 1
+			PRINTL 正しい値を入力してください
+			GOTO INPUT_LOOP_CHARA_LIST
+		ELSE
+			MONEY -= 25000
+			FLAG:200 -= 40
+			TALENT:RESULT:사지결손 = 0
+			TALENT:RESULT:공생 = 1
+			PRINTW . . .
+			PRINTW . . .
+			PRINTW . . .
+			PRINTFORML 촉수のバイオマスを利用して손발を形成し、
+			PRINTFORMW それらが%CALLNAME:RESULT%の身体に接続された。
+			PRINTFORML %CALLNAME:RESULT%の손발は完全に復元されました
+			PRINTFORMW 代償として、%CALLNAME:RESULT%は%TALENTNAME:163%を獲得しました
+		ENDIF
+
+	ENDIF
+	PRINTW 
+ENDIF
+
+

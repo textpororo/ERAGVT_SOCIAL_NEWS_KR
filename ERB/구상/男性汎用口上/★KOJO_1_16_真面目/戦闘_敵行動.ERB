@@ -1,0 +1,675 @@
+﻿
+
+
+
+;空中にいたかどうか(特に被弾時は対空されたかどうか)も分岐に含めるべきでは
+
+;救出中は민첩半減
+;마비で回避率半減
+;아무것도안한다を選んでいると絶対に被弾する
+;SIF TCVARn:2 == 자세：아무것도안한다
+
+;●촉수側の行動（공격など）
+;촉수が通常공격	二点공격！全方位공격！などに続く文
+;地の文側には特に無いので自由に行う
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_ATTACK_16
+PRINTDATAL
+DATAFORM ごつごつとした棍棒のような촉수が%PRINT_TRANSCALLNAME(TARGET)%を打ち据えてくる！
+DATAFORM 鎌首を擡げた촉수が%PRINT_TRANSCALLNAME(TARGET)%へ弾丸のような速さで突っ込んでくる！
+DATAFORM 絡み合い、丸太のように太くなった촉수が%PRINT_TRANSCALLNAME(TARGET)%へと振り下ろされる！
+DATAFORM 鞭のように撓る無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%の身体を打ち据えようと迫ってくる！
+DATAFORM %PRINT_TRANSCALLNAME(TARGET)%の肢体を押し包む様に、無数の촉수が迫る！
+ENDDATA
+IF MARK:고통각인 || MARK:공포각인
+	PRINTFORML 「…ッ!!」
+	PRINTFORML %CALLNAME%の体が怯えで一瞬すくんだ。
+ENDIF
+
+;촉수の공격がクリティカルヒット
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT_16
+
+;クリティカル時は周囲を気にする余裕ないのでシチュ派生はなし
+
+IF CFLAG:262 ^ 1
+	PRINTFORML 「……ぐぅっ！？」
+	PRINTFORML 「……大丈夫、まだ、問題、ないっ……！」
+	PRINTFORML 言いながら、%CALLNAME%は初めての被弾に戸惑いを隠せない……
+	SETBIT CFLAG:262,0
+;체력が0の時
+ELSEIF BASE:체력 == 0
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 「ぁ、がぁッ？！ ッ……ッッ！！ …ッ……ッッ！！！」
+			PRINTFORML  촉수に鳩尾を鋭く打ち抜かれ、%PRINT_TRANSCALLNAME(TARGET)%はその場にうずくまり、
+			PRINTFORML  吐瀉物をまき散らしながら声にならない悲鳴を上げて悶絶している……
+		CASE 1
+			PRINTFORML 「ぅ゛ぐ……？！ ぐぼっ、お゛ご……ぐげぇっ？！」
+			PRINTFORML  深々と撃ち込まれた촉수に、%PRINT_TRANSCALLNAME(TARGET)%は目を白黒させ
+			PRINTFORML  両手で口を抑え、頬を膨らませてくぐもった呻き声を上げている……
+		CASE 2
+			PRINTFORML 「ぶぎぃぃいッ！？」
+			PRINTFORML  盛大に弾き飛ばされ、%PRINT_TRANSCALLNAME(TARGET)%は無様に身体を打ち付けた！
+		CASE 3
+			PRINTFORML 「ぐもっ！おぇえええええええええ…」
+			PRINTFORML %CALLNAME%は吐瀉物を撒き散らした……
+		CASE 4
+			PRINTFORML 「………がっ…ぁ……」
+			PRINTFORML 既に限界を超えている所に追い打ちをかけられた%CALLNAME%は、意識を失いかけている……
+	ENDSELECT
+;瀕死の時
+ELSEIF BASE:체력<MAXBASE:체력/4
+	PRINTDATAL
+	DATAFORM 「くふぅッ！？」
+	DATAFORM 「や、やめ…かはぁっ！？」
+	DATAFORM 「……%SELF_CALL_SUBSTRING(0, SELF_CALL_LENGTH() - 2)%、%SELF_CALL_SINGLE(SELF_CALL_LENGTH() - 1)%、負け、る…？……絶対、絶対いやだっ……」
+	DATAFORM %CALLNAME%は震えながら立ち上がった…… 
+	DATAFORM %CALLNAME%は、朦朧としている……
+	ENDDATA
+;촉수拘束服の場合
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「んあ、はぁ、んんっ！」
+			PRINTFORML %ITEMNAME:400%の刺激に気を取られた一瞬、%STR:2500%の一撃に当たってしまった……
+		CASE 1
+			PRINTFORML 「んぎひあぁああ！？」
+			PRINTFORML 고통と快楽の二重奏に%CALLNAME%の意識が飛びかけた……
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「っかはぁ！？ ぐっ、うぅ…」
+			PRINTFORML 壁に叩き付けられた%CALLNAME%は動揺を隠せない……
+		CASE 1
+			PRINTFORML 「痛っ…この、ぐぅっ！？」
+			PRINTFORML 体勢を立て直そうとした%CALLNAME%の身体に強烈な痛みが走る……
+		CASE 2
+			PRINTFORML 「げほっ、……まだ…まだぁ！」
+			PRINTFORML 必死に自分を鼓舞する%CALLNAME%だが衝撃と고통が表情を歪ませる……
+		CASE 3
+			IF ENEMY_TYPE_CHECK_F("AKUOTI")
+				PRINTFORML 「…ぐうぅッ!?……う、裏切り者、なんか、にっ……！」
+			ELSE
+				PRINTFORML 「…ぐうぅッ!?……か、下等生物の、くせにっ……！」
+			ENDIF
+			PRINTFORML あくまで強がろうとする%CALLNAME%は動揺は隠せていない……
+	ENDSELECT
+ENDIF
+
+
+;촉수の공격が通常ヒット
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_ATTACK_HIT_16
+
+LOCALS=%KOJO_BATTLE_SET_SITUATION()%
+IF LOCALS=="撮影"
+	IF CLOTH_OUTER_PER > 50
+		;衣装が破けるところを撮られる
+		;精一杯で文句も言えない
+	ELSEIF CLOTH_INNER_PER > 50
+		;恥ずかしい恰好撮られまくる
+		;SIF STAIN:0 & 4 || STAIN:1 & 4 || STAIN:2 & 4
+		;	PRINT 精液で汚され、
+		;IF CLOTH_OUTER_PER
+		;	PRINT 着衣の乱れた
+		;ELSE
+		;	PRINT 下着姿のまま戦う
+		;ENDIF
+	ELSE
+		;SIF CLOTH_INNER_PER
+		;	PRINT ほとんど
+		;PRINTFORML 全裸で戦う%PRINT_TRANSCALLNAME(TARGET)%を撮影するべく野次馬のシャッター音が連続で響く。
+		;IF TALENT:음란 || ABL:노출벽 >= 3
+		;	PRINTFORML 裸体を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えている。
+		;ELSE
+		;	PRINTFORML 見せるつもりのない相手に裸体を激写され、%PRINT_TRANSCALLNAME(TARGET)%は羞恥心で顔が真っ赤だ。
+		;ENDIF
+		;IF STAIN:3 & 4 || STAIN:4 & 4
+		;	PRINTFORML 股間から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		;ELSE
+		;	PRINTFORML 開脚した際に露出した秘部をはっきりとフィルムに収められてしまった・・・
+		;ENDIF
+	ENDIF
+ELSEIF LOCALS=="市民"
+	;市民を庇うせいで集中できない
+ENDIF
+
+
+
+;체력1/5以下
+IF BASE:체력 < MAXBASE:체력 / 5
+	PRINTFORML 「ぁがぁっ？！ ぉ、げぇっ、げほっ……！」
+ELSE
+	IF BASE:체력 < MAXBASE:체력 / 2
+		PRINTDATAL
+		DATAFORM 「げぐっ！？」
+		DATAFORM 「ぶぎぃっ？！」
+		DATAFORM 「ひぐっ！？」
+		DATAFORM 「ぅ゛ごぉッ！？」
+		DATAFORM 「げほッ！？」
+		DATAFORM 「ぶぎゅッ？！」
+		DATAFORM 「ひぎゃっ！？」
+		ENDDATA
+	ELSE
+		PRINTDATAL
+		DATAFORM 「ぐぅっ！？」
+		DATAFORM 「ぐっ…か、はっ！」
+		DATAFORM 「っう！？」
+		DATAFORM 「くぅっ！？」
+		DATAFORM 「きゃっ！？」
+		DATAFORM 「くはっ？！」
+		DATAFORM 「やんっ！？」
+		ENDDATA
+	ENDIF
+ENDIF
+
+
+;촉수の공격を回避
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_ATTACK_FALSE_16
+
+LOCALS=%KOJO_BATTLE_SET_SITUATION()%
+IF LOCALS=="撮影"
+	IF CLOTH_OUTER_PER > 50
+		;ローアングルから撮られている
+	ELSEIF CLOTH_INNER_PER > 50
+		;恥ずかしい恰好撮られまくる
+		;SIF STAIN:0 & 4 || STAIN:1 & 4 || STAIN:2 & 4
+		;	PRINT 精液で汚され、
+		IF CLOTH_OUTER_PER
+		;	PRINT 着衣の乱れた
+		ELSE
+		;	PRINT 下着姿のまま戦う
+		ENDIF
+	ELSE
+		;SIF CLOTH_INNER_PER
+		;	PRINT ほとんど
+		;PRINTFORML 全裸で戦う%PRINT_TRANSCALLNAME(TARGET)%を撮影するべく野次馬のシャッター音が連続で響く。
+		IF TALENT:음란 || ABL:노출벽 >= 3
+		;	PRINTFORML 裸体を激写されることに%PRINT_TRANSCALLNAME(TARGET)%は言いようのない興奮を覚えている。
+		ELSE
+		;	PRINTFORML 見せるつもりのない相手に裸体を激写され、%PRINT_TRANSCALLNAME(TARGET)%は羞恥心で顔が真っ赤だ。
+		ENDIF
+		IF STAIN:3 & 4 || STAIN:4 & 4
+		;	PRINTFORML 股間から中出し精液が溢れ出ている様子をはっきりとフィルムに収められてしまった・・・
+		ELSE
+		;	PRINTFORML 開脚した際に露出した秘部をはっきりとフィルムに収められてしまった・・・
+		ENDIF
+	ENDIF
+ELSEIF LOCALS=="市民"
+
+ENDIF
+
+
+;체력が0の時
+IF BASE:체력 == 0
+	PRINTDATAL
+	DATAFORM 「…もう、これ以上、はっ……」
+	DATAFORM 「はぁ、はぁ……っ！ 今の、危なかった…っ」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM %CALLNAME%は、偶然%STR:2500%の공격に当たらなかった。
+	DATAFORM %CALLNAME%は、朦朧としながら%STR:2500%を避けた。
+	ENDDATA
+
+;체력1/4以下
+ELSEIF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「くぅ、ぅ……負けない、%SELF_CALL()%は負けられないんだから……！」
+	PRINTDATAL
+	DATAFORM %CALLNAME%は、眼前を通り過ぎる%STR:2500%に冷や汗を流した。
+	DATAFORM %CALLNAME%は、ふらつきながら辛うじて%STR:2500%を躱した。
+	ENDDATA
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「そんな공격が……ん、はぁっ、んんっ！」
+			PRINTFORML %STR:2500%を躱しても%ITEMNAME:400%に与えられる刺激に、%CALLNAME%の腰が落ちそうになる。
+		CASE 1
+			PRINTFORML 「そんなもの……っ？ひあぁ！？」
+			IF ISMALE()
+				;#region
+				PRINTFORML %STR:2500%を躱そうと脚を広げた隙に、%ITEMNAME:400%が%CALLNAME%を尻穴深くまで抉ってきた。
+				;#endregion
+			ELSE 
+				PRINTFORML %STR:2500%を躱そうと脚を広げた隙に、%ITEMNAME:400%が%CALLNAME%を질내深くまで抉ってきた。
+			ENDIF
+	ENDSELECT
+;체력1/2以下
+ELSEIF BASE:체력 < MAXBASE:체력 / 2
+	PRINTFORML 「はぁ、はぁ……これ以上、好きになんてさせてやるわけがない……！」
+ELSE
+	PRINTDATAL
+	DATAFORM 「……遅いっ！」
+	DATAFORM 「そんな공격、%SELF_CALL()%に通じるわけないだろ？」
+	DATAFORM 「この程度何でもないな」
+	DATAFORM 「ふん、そう簡単に当たるもんかよ」
+	DATAFORM 「今ので狙ったつもりだったのか？」
+	DATAFORM 「ん、今の%SELF_CALL()%を狙ったつもりだったのか？」
+	DATAFORM 「どこを見てるんだ？」
+	ENDDATA
+ENDIF
+
+
+
+;촉수が絡みつく
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_KARAMITUKU_16
+PRINTDATAL
+DATAFORM \@ISMALE() ? 남자でありながらその身にまとった、 # \@%PRINT_TRANSCALLNAME(TARGET)%も自覚していない牝のニオイに、大量の촉수が殺到する！
+DATAFORM びっしりと吸盤の生えたおぞましい촉수が%PRINT_TRANSCALLNAME(TARGET)%に襲いかかる！
+DATAFORM 無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%の身体へ洪水のように押し寄せてくる！
+DATAFORM 粘液を纏わせぬめり光る촉수が%PRINT_TRANSCALLNAME(TARGET)%を捕らえようと素早く伸びてくる！
+DATAFORM %PRINT_TRANSCALLNAME(TARGET)%の不意を突き、足下から촉수が絡みついてきた！
+ENDDATA
+
+;な、急に動きが変わっ……きゃあっ！？
+
+;촉수の絡みつくが成功　★地の文姿勢はランダム分岐につき不定
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_KARAMITUKU_SUCCESS_16
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「%SELF_CALL_SINGLE()%、%SELF_CALL()%をまた……あんな目に遭わせる気なのか……！？」
+	PRINTFORML  손발に絡みつく촉수に%PRINT_TRANSCALLNAME(TARGET)%の力が抜けていく……
+;체력が0
+ELSEIF BASE:체력+BASE:기력 == 0
+	PRINTFORML 「…………ぁ」
+	PRINTFORML 既に%CALLNAME%は抵抗する力はない……
+;五回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「も、もうイヤァアア！」
+	SIF MARK:굴복각인
+		PRINTFORML 「お願い…もう……もう、やめて下さい……」
+	PRINTFORML 既に何度もイかされた%CALLNAME%は、更なる凌辱に怯え震えている……
+;一回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+	PRINTFORML 「……くっ、ま、また……っ！！」
+	PRINTFORML 未だ絶頂の余韻が抜けきらない内に、%CALLNAME%は再び捕まってしまった……
+ELSE
+	PRINTDATAL
+	DATAFORM 「へ、変態野郎っ！ 放せ！」
+	DATAFORM 「ひぁあ！ ど、どこをまさぐってるんだよ？！」
+	DATAFORM 「やっ、やめ……放せ！」
+	DATAFORM 「ひっ……！」
+	DATAFORM 「ん、ん゛ーーーッ！」
+	ENDDATA
+	;内心期待してる時
+	IF  MARK:쾌락각인 >= 3
+		PRINTFORML %CALLNAME%は凌辱の予感に顔を赤らめて耐えようとしている……
+		PRINTFORML しかし、気のせいかナニカを期待するような表情をしているようにも見える……
+	ENDIF
+ENDIF
+
+
+;촉수の絡みつくを回避
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_KARAMITUKU_FALSE_16
+;촉수의포로取得後
+IF TALENT:촉수의포로 || MARK:쾌락각인 > 1
+	PRINTFORML 「いっ、いつも%SELF_CALL()%を好きに出来ると思わないことだな！」
+	PRINTFORML 見事%STR:2500%を回避した%CALLNAME%だが、その表情はどこか残念そうにも見える……
+;五回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「もう……はぁ……これ以上、は……耐えられ……ない……っ！」
+	PRINTFORML 既に何度もイかされている%CALLNAME%は、%STR:2500%を避けることすら難しくなっている……
+;一回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+	PRINTFORML 「……だめ、だ…また捕まったら、%SELF_CALL()%……っ！！」
+	PRINTFORML %CALLNAME%は未だに先ほどの絶頂の余韻が抜けきっていない……
+;촉수拘束服
+ELSEIF CFLAG:42 == 400
+	PRINTFORML 「そんなの当たらな……ああぁ！？」
+	PRINTFORML %STR:2500%を回避したが、%ITEMNAME:400%は変わらず%CALLNAME%を苛んでいる……
+ELSE
+	PRINTDATAL
+	DATAFORM 「%SELF_CALL()%も甘く見られたもんだな！」
+	DATAFORM 「見え見えだ！」
+	DATAFORM 「捕えられるものか！」
+	DATAFORM 「%SELF_CALL()%はそんなに安くないんでね」
+	DATAFORM 「動きが丸見えだ」
+	DATAFORM 「……そんなものに捕まると思ったか？」
+	DATAFORM 「あ、危なかった……」
+	ENDDATA
+ENDIF
+
+;敵が体液を吐く
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_TAIEKI_16
+;정액중독
+IF ABL:정액중독
+	PRINTFORML  (あ、あの液体は……)
+ELSE
+	PRINTDATAL
+		DATAFORM (何なんだ、何か膨らんで……っ！？)
+		DATAFORM 根元から瘤のようなものをせり上がらせた촉수の先端が、%PRINT_TRANSCALLNAME(TARGET)%へと狙いを定める！
+	ENDDATA
+ENDIF
+
+
+;촉수の体液を吐くがヒット
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_TAIEKI_HIT_16
+PRINTFORML %CALLNAME%は全身に白濁した粘液を被ってしまった……
+IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	PRINTDATAL
+		DATAFORM 「んくっ…じゅるるる、じゅるるううぅ……」
+		DATAFORM 「んくっ…ごきゅ、ごきゅううぅ……」
+		DATAFORM 「ぅ゛っぷ…んくっ…じゅる、る……」
+		DATAFORM 「ぅ゛ぷ…ごきゅっ…じゅる、るぅ……」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM (これ…だめ…%SELF_CALL(3)%…何もかんがえられなく………)
+		DATAFORM (この味……%SELF_CALL(3)%…もう……)
+		DATAFORM (臭い…美味しい……%SELF_CALL(3)%…あああぁ……)
+		DATAFORM (%SELF_CALL(3)%…끈적끈적……う、あぁ、ああぁぁ……)
+		DATAFORM (…お、美味しい…臭い……%SELF_CALL(3)%……おお、おおおおぉ……)
+		DATAFORM (……お、美味ひ……もっと……%SELF_CALL(4)%…あああぁあ…)
+		DATAFORM (%SELF_CALL(3)%、もう、%SELF_CALL(3,2)%……)
+	ENDDATA
+	PRINTFORML %CALLNAME%は直撃した白濁液を一心不乱に飲み込んでいる……
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+	PRINTDATAL
+		DATAFORM 「んくっ…じゅるるる、じゅるるううぅ……」
+		DATAFORM 「んくっ…ごきゅ、ごきゅううぅ……」
+		DATAFORM 「ぅ゛っぷ…んくっ…じゅる、る……」
+		DATAFORM 「ぅ゛ぷ…ごきゅっ…じゅる、るぅ……」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM (だめ…この臭い…頭がぼうっと……)
+		DATAFORM (この味……%SELF_CALL(4)%…頭がぼうっとして……)
+		DATAFORM (臭い……はず…なのに…%SELF_CALL(4)%……)
+		DATAFORM (口も、身体も……끈적끈적……)
+		DATAFORM (……どうして…どうして%SELF_CALL(4)%……美味しいなんて…)
+		DATAFORM (……お、美味しい……%SELF_CALL(4)%…どうなって…)
+		DATAFORM (%SELF_CALL()%、顔も、胸も、身体中汚されてるのに……)
+		DATAFORM (%SELF_CALL()%、全身どろどろにされてるのに、無理矢理飲まされたのに…)
+	ENDDATA
+	PRINTFORML %CALLNAME%は白濁液の腐臭に思考を塗り潰されている……
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+	PRINTDATAL
+		DATAFORM 「んくっ…じゅる、る……」
+		DATAFORM 「んくっ…ごきゅ、ごきゅぅぅ……」
+		DATAFORM 「ぅ゛ぷ…んくっ…じゅる、る……」
+		DATAFORM 「ぅ゛ぷ…ごきゅっ…じゅる、るぅ……」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM (何だよこれ……頭がぼうっと……)
+		DATAFORM (この味……頭がぼうっと……)
+		DATAFORM (この味……%SELF_CALL()%…どうしてこんな……)
+		DATAFORM (く、臭い……吐きそう…なのに…どうして%SELF_CALL()%……)
+		DATAFORM (どうして……臭いのに、不味いのに……なんで美味しくてたまらないんだ？！)
+		DATAFORM (…%SELF_CALL()%、顔も、胸も、身体中汚されてるのに……)
+		DATAFORM (%SELF_CALL()%、全身どろどろにされて、こんな……)
+	ENDDATA
+	PRINTFORML 直撃した白濁液を飲まされた%CALLNAME%の様子がおかしい……
+;고전未満
+ELSE
+	;インナーがどんどん溶けていく
+	IF CFLAG:25 < CFLAG:24
+		IF (RAND:4 || FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲")
+			PRINTDATAL
+				DATAFORM 「……！？……み、見るな！！」
+				DATAFORM 「……くっ！？この…下種野郎がぁ！！」
+				DATAFORM 「こっ、こいつらどこまで%SELF_CALL()%を穢せば…っ！」
+				DATAFORM 「……っ！？服が……この…下種野郎がぁ！！」
+			ENDDATA
+		ELSE
+			PRINTFORML 「んぷぅ？！……ごきゅ？！……っ！？んげぇぇぇ！」
+			PRINTFORML ちょうど顔に当たった体液を飲み込んでしまったようだ……
+		ENDIF
+	;溶けたあとは常に直撃
+	ELSE
+		SELECTCASE RAND:5
+			;むせかえるような臭さで意識が遠のく
+			CASE 0
+				PRINTDATAL
+					DATAFORM 「……うっ」
+					DATAFORM 「……うっ」
+					DATAFORM 「……うぁっ…」
+					DATAFORM 「……うぶっ…」
+				ENDDATA
+				PRINTFORML あまりの臭さに%CALLNAME%は一瞬気を失いかけた……
+			;臭さで気が逸れる
+			CASE 1
+				PRINTDATAL
+					DATAFORM 「……く、臭い」
+					DATAFORM 「…この臭い、うぶっ……」
+					DATAFORM 「…この臭い、おえぇっ…」
+					DATAFORM 「……うぶっ…」
+					DATAFORM 「……うえぇっ…」
+					DATAFORM 「……お、げえぇ…」
+				ENDDATA
+				PRINTFORML 白濁液の臭いに%CALLNAME%の集中が途切れかける……
+			;怒る余裕がある。そんなに元気ならまだまだ大丈夫だね！
+			CASE 2
+				PRINTDATA
+					DATAFORM 「ぅ゛ぷ……っく、
+					DATAFORM 「っお゛、お゛げぇぇ……っく、
+					DATAFORM 「っぶ、う゛げぇぇ……っく、
+					DATAFORM 「ぅ゛ぷ、げえ゛ぇぇ……っく、
+				ENDDATA
+				PRINTDATAL
+					DATAFORM こいつ……っ！」
+					DATAFORM 最低だ……っ！」
+					DATAFORM この下種野郎……っ！」
+					DATAFORM こいつよくも……っ！」
+				ENDDATA
+				PRINTFORML 白濁液を無理矢理飲み込まされ、%CALLNAME%の表情が屈辱に歪む……
+			;飲んじゃう
+			CASE 3
+				PRINTDATAL
+					DATAFORM 「む゛ぐっ？！ んぐ、んきゅ……」
+					DATAFORM 「ぅ゛ぷ……んくっ、ごきゅ……」
+				ENDDATA
+				PRINTFORML ちょうど顔に当たった体液を飲み込んでしまったようだ……
+			;飲んでえずく
+			CASE 4
+				PRINTDATAL
+					DATAFORM 「んぷぅ？！……ごきゅ？！……っ！？んげぇぇぇ！」
+					DATAFORM 「ぐむ゛っ？！ ぐっ、おげ、ぇ……っ」
+				ENDDATA
+				PRINTFORML %CALLNAME%は顔に当たった体液を飲み込んでしまった……
+		ENDSELECT
+	ENDIF
+ENDIF
+TCVARn:11 += 1
+;見られて嬉しい	
+IF ABL:노출벽 > 2 && RAND:4 == 0
+	PRINTFORML 「……ぁは♪」
+	PRINTFORML %CALLNAME%は何処となく嬉しそうだ……
+;촉수拘束服 && RAND:4 == 0
+ELSEIF CFLAG:42 == 400
+	PRINTFORML 「……ぁああぁあああ！？？」
+	PRINTFORML %STR:2500%の体液に反応し、%ITEMNAME:400%が急激に活発になった。
+ELSE
+	IF TCVARn:11 > 5
+		PRINTFORML もはや%CALLNAME%の身体に白く染まっていない所はない……
+	ELSEIF TCVARn:11 > 3
+		PRINTFORML もはや%CALLNAME%の身体は白く染まっていない所のほうが少ない……
+	ENDIF
+ENDIF
+
+;촉수の体液を吐くを回避
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_TAIEKI_FALSE_16
+IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	PRINTDATA
+		DATAFORM 「……ぁ、あああ」
+		DATAFORM 「っ、はーっ、あああぁ……
+		DATAFORM 「っ、ふーーっ、ふぅぅぅう……
+		DATAFORM 「…%AEGI()%、%SELF_CALL(3)%、あああぁ…
+		DATAFORM 「…%AEGI()%、%SELF_CALL(3)%、%AEGI()%、ひはぁぁ……
+	ENDDATA
+	PRINTDATAL
+		DATAFORM ❤」
+		DATAFORM ❤❤」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は촉수から滴る汚液にゴクリと喉を鳴らした……
+	DATAFORM %CALLNAME%は無意識のうちに喉をグビリと鳴らした……
+	DATAFORM %CALLNAME%は地面に落ちた体液をどこか物惜しそうに見ている……
+	DATAFORM おぞましい臭気が鼻を突き、%PRINT_TRANSCALLNAME(TARGET)%は思わず鼻腔を広げてしまった……
+	ENDDATA
+
+;촉수拘束服
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「……ん、はぁっ、んんっ！」
+			PRINTFORML 体液を躱した途端、%ITEMNAME:400%が強くした刺激に、%CALLNAME%の腰が落ちそうになる……
+		CASE 1
+			PRINTFORML 「……っ？ひあぁ！？」
+			IF ISMALE()
+				;#region
+				PRINTFORML %STR:2500%の体液を躱そうと脚を広げた隙に、%ITEMNAME:400%が%CALLNAME%の애널を奥深くまで抉ってきた……
+				;#endregion
+			ELSE 
+				PRINTFORML %STR:2500%の体液を躱そうと脚を広げた隙に、%ITEMNAME:400%が%CALLNAME%の膣を奥深くまで抉ってきた……
+			ENDIF
+	ENDSELECT
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+	PRINTDATAL
+		DATAFORM 「%AEGI("快")%……、あ、あんなの、汚い、汚いのに…っ…」
+		DATAFORM 「ぁ、あんなのっ、%SELF_CALL(3)%これ以上耐えられ…っ！」 
+		DATAFORM 「っう！？ あ、うぁっ…%SELF_CALL(3)%、避けたのに、%SELF_CALL(3,1)%…」
+		DATAFORM 「…%AEGI("！？")% ぇ、あ、避けた、のに、%SELF_CALL(3)%、ろうして…っ」
+		DATAFORM 「あ、あんなの、汚い、見たくもない、のにっ、%SELF_CALL(3)%、%SELF_CALL(3,1)%…」
+		DATAFORM 「この、臭い…は……ぁ…あぁ……❤」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は촉수から滴る汚液にゴクリと喉を鳴らしてしまった……
+	DATAFORM %CALLNAME%は無意識のうちに喉をグビリと鳴らしてしまった……
+	DATAFORM %CALLNAME%は地面に落ちた体液をどこか物惜しそうに見てしまう……
+	DATAFORM おぞましい臭気が鼻を突き、%PRINT_TRANSCALLNAME(TARGET)%は思わず鼻腔を広げてしまった……
+	DATAFORM %CALLNAME%は無自覚のうちに太ももを擦り合わせてしまう……
+	ENDDATA
+
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+	PRINTDATAL
+		DATAFORM 「……っ、ああ、お、おぞましい…っ…」
+		DATAFORM 「っ、こんなの、このまま吐かれ続けたら…っ！」 
+		DATAFORM 「っ！？ あ、危なっ…このままじゃ、%SELF_CALL()%…」
+		DATAFORM 「…%AEGI("快")%、避けたのに、身体が疼いて…っ」
+		DATAFORM 「あんな汚いもの、見たくもない…のにっ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM 촉수から滴る汚液が視界に入った瞬間、%PRINT_TRANSCALLNAME(TARGET)%は\@ISMALE() ? 尻穴 # 下腹部 \@がキュンと締まる感覚を覚えた……
+	DATAFORM 体液を避けたにも関わらず、%CALLNAME%は\@ISMALE() ? 애널 # 股間 \@の奥に淫らな熱を感じてしまった……
+	DATAFORM 地面にべっとり落ちた体液が一瞬魅力的に映ってしまい、%CALLNAME%は慌てて目を逸らした……
+	DATAFORM おぞましい臭気が鼻を突き、%PRINT_TRANSCALLNAME(TARGET)%の思考は淫らな靄に覆われてゆく……
+	ENDDATA
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 고전)
+	PRINTDATAL
+		DATAFORM 「……っ、ああ汚いな……」
+		DATAFORM 「っ、ああもう最低だっ！」 
+		DATAFORM 「っ！？ 何する気だっ、最低だなっ！」
+		DATAFORM 「あんな汚いものを…本っ当に最低だ…」
+		DATAFORM 「あんな汚いの、まともに受けてられないぞ…」
+		DATAFORM 「……ああもう、最っ低だ……！」
+		DATAFORM 「…汚いなっ！」 
+		DATAFORM 「ああもう、最低最悪だっ！」
+		DATAFORM 「ああもう、汚い！」
+		DATAFORM 「っ、なんて凄まじい臭いなんだ……」
+	ENDDATA
+	PRINTDATAL
+		DATAFORM 勢い良く迸る汚液に、%PRINT_TRANSCALLNAME(TARGET)%は忌々しげに吐き捨てた。
+		DATAFORM おぞましい臭気が鼻を突き、%PRINT_TRANSCALLNAME(TARGET)%は眉をひそめた。
+	ENDDATA
+ELSE
+	PRINTDATAL
+		DATAFORM 「そんなものが%SELF_CALL()%に当たると思ったのか？」
+		DATAFORM 「そんな汚いモノ、%SELF_CALL()%はいらないぞ」
+		DATAFORM 「そんなモノ、見たくもないな」
+		DATAFORM 「プレゼントのつもりか？ 最低の趣味だな」
+		DATAFORM 「\@ISMALE() ? 人 # 女 \@に対するプレゼントとしては最悪だな」
+		DATAFORM 「受け取り拒否させてもらうよ」
+		DATAFORM 「そんな汚物はお断りだ」
+		DATAFORM 「そんな汚いモノリクエストしてないぞ」
+		DATAFORM 「%SELF_CALL()%の身体はおまえのものじゃないんでね」
+	ENDDATA
+	PRINTDATA
+		DATAFORM 間一髪のところで汚液を避けながら、
+		DATAFORM 촉수の先端から迸る욕망の汚液を華麗に避けながら、
+		DATAFORM 雌\@ISMALE() ? へと堕と # を穢 \@さんと迸る汚液を素早く避けながら、
+		DATAFORM 鼻を突く異臭から意識を背けながら、
+	ENDDATA
+	PRINTDATAL
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は呆れたように吐き捨てた……
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は촉수の下劣さに呆れ果てている……
+	ENDDATA
+
+
+ENDIF
+
+
+
+;邪悪な波動
+@KOJO_1_BATTLE_TENTACLE_HADOU_16
+
+;邪悪な波動が成功
+@KOJO_1_BATTLE_TENTACLE_HADOU_HIT_16
+;IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"	;確定で身構え방어する
+
+
+;邪悪な波動を回避
+@KOJO_1_BATTLE_TENTACLE_HADOU_FALSE_16
+
+
+;敵キャラが押し倒す　にじり寄って来たのを見て
+@KOJO_1_BATTLE_TENTACLE_OSHITAOSU_16
+
+;敵キャラの押し倒すが成功　勢いよく押し倒された
+@KOJO_1_BATTLE_TENTACLE_OSHITAOSU_SUCCESS_16
+
+;敵キャラの押し倒すを回避　察知してなんとか距離をとった
+@KOJO_1_BATTLE_TENTACLE_OSHITAOSU_FALSE_16
+
+
+
+;촉수が거리를벌린다
+;--------------------------------------------------
+@KOJO_1_BATTLE_TENTACLE_TAKEAWAY_16
+;체력1/4以下
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「そ、そうだ……%SELF_CALL()%から離れてろ……ッ！」
+	PRINTFORML （今がチャンス……この隙に、どうにかしないと……！）
+ELSE
+	PRINTDATAL
+	DATAFORM 「くっ、煩わしいな……！」
+	DATAFORM 「ちょこまかと、ああもう煩わしいな！」
+	DATAFORM 「小賢しくうろちょろと、ああ面倒臭いな！」
+	ENDDATA
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は柳眉を逆立て、苛立たしげに吐き捨てた。
+ENDIF
+
+
+
+;レンジ外で공격空振り
+@KOJO_1_BATTLE_TENTACLE_ABSENCE_16
+SELECTCASE RESULT
+	;通常공격
+	CASE 1
+
+	;絡み付く
+	CASE 2
+
+	;体液はレンジ外でも反応する
+	CASE 3
+		CALL KOJO_1_BATTLE_TENTACLE_TAIEKI_FALSE_16
+
+	;押し倒す
+	CASE 5
+
+	;邪悪な波動
+	CASE 6
+
+ENDSELECT
+
+
+
+
+
+
+

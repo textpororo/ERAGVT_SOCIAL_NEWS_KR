@@ -1,0 +1,234 @@
+﻿;**********************************************************
+;幽閉コマンド
+;PRISON_COM7
+;子촉수に犯される
+;**********************************************************
+@PRISON_COM7
+#DIM CCOUNT
+VARSET LOCAL
+TFLAG:10 = 7
+
+;取得する珠
+;LOCAL:0 쾌C
+;LOCAL:1 쾌V
+;LOCAL:2 쾌A
+;LOCAL:3 쾌B
+;LOCAL:4 윤활 윤활は未使用
+;LOCAL:5 공순
+;LOCAL:6 습득
+;LOCAL:7 욕정
+;LOCAL:8 굴복
+;LOCAL:9 치정
+;LOCAL:10 고통
+;LOCAL:11 공포
+
+;経験数の上量値記録用
+;LOCAL:120 V経験
+;LOCAL:121 A経験
+;LOCAL:123 정액경험
+;LOCAL:124 펠라경험
+;LOCAL:130 노출쾌락경험,
+;LOCAL:131 봉사쾌락경험,
+;LOCAL:132 고통쾌락경험,
+;LOCAL:140 자위경험,
+;LOCAL:141 근친교배경험,
+;LOCAL:150 이상경험
+;LOCAL:151 V확장경험
+;LOCAL:152 A확장경험
+;LOCAL:153 사정경험
+;LOCAL:154 모유경험
+;LOCAL:155 방뇨경험
+;LOCAL:156 기생경험
+;LOCAL:157 출산경험
+
+;汚染度
+CFLAG:30 += 10 + RAND:11
+
+;快C
+IF ABL:C감각 == 0
+	LOCAL:0 = 1
+ELSEIF ABL:C감각 == 1
+	LOCAL:0 = 2
+ELSEIF ABL:C감각 == 2
+	LOCAL:0 = 20
+ELSEIF ABL:C감각 == 3
+	LOCAL:0 = 100
+ELSEIF ABL:C감각 == 4
+	LOCAL:0 = 200
+ELSEIF ABL:C감각 >= 5
+	LOCAL:0 = 400
+ENDIF
+
+;快V
+IF ABL:V감각 == 0
+	LOCAL:120 = 2
+	LOCAL:1 = 1
+ELSEIF ABL:V감각 == 1
+	LOCAL:120 = 5
+	LOCAL:1 = 5
+ELSEIF ABL:V감각 == 2
+	LOCAL:120 = 8
+	LOCAL:1 = 50
+ELSEIF ABL:V감각 == 3
+	LOCAL:120 = 11
+	LOCAL:1 = 250
+ELSEIF ABL:V감각 == 4
+	LOCAL:120 = 15
+	LOCAL:1 = 500
+ELSEIF ABL:V감각 >= 5
+	LOCAL:120 = 20
+	LOCAL:1 = 1000
+ENDIF
+;子촉수のの数だけ倍増
+LOCAL:120 *= (CFLAG:220 + 100) / 100
+LOCAL:1 *= SQRT(CFLAG:220) + 1
+
+;快A
+IF ABL:A감각 == 0
+	LOCAL:121 = 2
+	LOCAL:2 = 1
+ELSEIF ABL:A감각 == 1
+	LOCAL:121 = 5
+	LOCAL:2 = 5
+ELSEIF ABL:A감각 == 2
+	LOCAL:121 = 8
+	LOCAL:2 = 50
+ELSEIF ABL:A감각 == 3
+	LOCAL:121 = 11
+	LOCAL:2 = 250
+ELSEIF ABL:A감각 == 4
+	LOCAL:121 = 15
+	LOCAL:2 = 500
+ELSEIF ABL:A감각 >= 5
+	LOCAL:121 = 20
+	LOCAL:2 = 1000
+ENDIF
+
+;快B
+IF ABL:B감각 == 0
+	LOCAL:3 = 1
+ELSEIF ABL:B감각 == 1
+	LOCAL:3 = 2
+ELSEIF ABL:B감각 == 2
+	LOCAL:3 = 20
+ELSEIF ABL:B감각 == 3
+	LOCAL:3 = 100
+ELSEIF ABL:B감각 == 4
+	LOCAL:3 = 200
+ELSEIF ABL:B감각 >= 5
+	LOCAL:3 = 400
+ENDIF
+;子촉수のの数だけ倍増
+LOCAL:3 *= SQRT(CFLAG:220) + 1
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
+
+
+
+;공순
+IF ABL:순종 == 2
+	LOCAL:5 = 500
+ELSEIF ABL:순종 == 3
+	LOCAL:5 = 1000
+ELSEIF ABL:순종 == 4
+	LOCAL:5 = 2000
+ELSEIF ABL:순종 >= 5
+	LOCAL:5 = 5000
+ENDIF
+
+;습득
+IF ABL:봉사정신 == 0
+	LOCAL:6 = 10
+ELSEIF ABL:봉사정신 == 1
+	LOCAL:6 = 25
+ELSEIF ABL:봉사정신 == 2
+	LOCAL:6 = 50
+ELSEIF ABL:봉사정신 == 3
+	LOCAL:6 = 80
+ELSEIF ABL:봉사정신 == 4
+	LOCAL:6 = 125
+ELSEIF ABL:봉사정신 >= 5
+	LOCAL:6 = 180
+ENDIF
+
+;처녀では有り得ないが、一応처녀の処理
+IF TALENT:처녀 > 0 && SHIELD:1 <= 0
+	LOCAL:10 = 500
+	CALL LOSTVIRGIN, 1
+ENDIF
+
+;굴복　とりあえず一定で
+LOCAL:8 = 800
+
+;V感覚が低いと공포が入る
+IF ABL:V감각 == 0
+	LOCAL:11 = 800
+ELSEIF ABL:V감각 == 1
+	LOCAL:11 = 400
+ELSEIF ABL:V감각 == 2
+	LOCAL:11 = 200
+ELSEIF ABL:V감각 == 3
+	LOCAL:11 = 100
+ELSE
+ENDIF
+
+;습득基本値
+LOCAL:6 += 10
+
+;욕정基本値
+LOCAL:7 += 0
+
+;굴복基本値
+LOCAL:8 += 500
+
+;치정基本値
+LOCAL:9 += 500
+
+;고통基本値
+LOCAL:10 += 0
+
+;공포基本値
+LOCAL:11 += 500
+
+;정액경험
+LOCAL:123 = 15 * CFLAG:220
+;펠라경험
+LOCAL:124 = 2 * CFLAG:220
+;근친교배경험
+LOCAL:141 = CFLAG:220
+;이상경험
+SIF EXP:근친교배경험 == 0
+	LOCAL:150 = 1
+
+;지문: 子촉수に犯される
+CALL MESSAGE_PRISON_COM_7
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+CALL COMMON_PRISON_EXP_SH, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152
+LOCAL:120 = RESULT:0
+LOCAL:121 = RESULT:1
+LOCAL:151 = RESULT:2
+LOCAL:152 = RESULT:3
+
+;拡張度による拡張経験
+CALL PRISON_GAPING, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152, LOCAL:152, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
+LOCAL:151 += RESULT:0
+LOCAL:152 += RESULT:1
+
+;表示と増加の処理
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1
+;임신
+SIF SHIELD:1 <= 0
+	TRYCALL NINSIN_HANTEI,(15 * CFLAG:220),(MIN(EXP:TARGET:근친교배경험 * 5 + 20,120)),200
+

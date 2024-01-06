@@ -1,0 +1,100 @@
+﻿;**********************************************************
+;基本ルール
+;加筆修正は、自由に行ってください
+;ただし、前の方が書いた文章は勝手に消さないでください
+;書き込む順番は、クドくなり過ぎないように3要素と部位で表現します
+;【実況】汁に濡れている、기생されている、촉수 구속구などを装着など
+;【形状】大きさ、深さなど、
+;【動作】開閉している、うごめいているなど、動きを表現
+;【部位呼称】음란や발정や性格で下品な書き方に
+;
+;増やして欲しい隠語は、アウトプットしてリクエストなりしましょう
+;未登録の中に放り込むなり、掲示板にアップするなりすれば、
+;実装される可能性があります
+;
+;by 雑魚の人 2018/02/01
+;**********************************************************
+;eXample(例)の淫語
+@SLANG_XXXX(ARG)
+
+
+
+
+
+;**********************************************************
+;촉수 구속구を着ている場合
+;**********************************************************
+IF CFLAG:42 == 400
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+
+;**********************************************************
+;사정・母乳でスラングを切り替えるためテンプレ
+;**********************************************************
+
+STAIN:0;口 || STAIN:3:膣、ワレメ || STAIN:4:애널
+IF (STAIN:0 & 4) || (STAIN:3 & 4) || (STAIN:4 & 4)
+	SLANGWORD_XXXX += %SLANG_SEMEN(TARGET)%
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_XXXX = %SLANGWORD_XXXX%%SLANG_Semen(TARGET)%で溢れている
+		CASEELSE
+			SLANGWORD_XXXX = %SLANGWORD_XXXX%%SLANG_Semen(TARGET)%が滴り落ちている
+	ENDSELECT
+ENDIF
+
+;STAIN:1:ぶっかけ、手、身体 || STAIN:2:胸
+IF (STAIN:1 & 4) || (STAIN:2 & 4)
+	SLANGWORD_XXXX += %SLANG_SEMEN(TARGET)%
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_XXXX = %SLANGWORD_XXXX%%SLANG_Semen(TARGET)%が掛かっている
+		CASEELSE
+			SLANGWORD_XXXX = %SLANGWORD_XXXX%%SLANG_Semen(TARGET)%がたれている
+	ENDSELECT
+ENDIF
+
+
+
+
+;**********************************************************
+;윤활でスラングを切り替えるためテンプレ
+;**********************************************************
+;戦闘状況の場合
+;*************************
+IF (TCVAR:12 & 끈적끈적)
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+;*************************
+;스테이터스の場合
+;*************************
+IF PALAM:윤활 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:윤활 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:윤활 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:윤활 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+;*************************
+;素質の場合
+;*************************
+IF TALENT:젖기쉬움
+	SLANGWORD_XXXX+="젖기쉬움"
+ENDIF
+IF TALENT:젖기쉬움
+	SLANGWORD_XXXX+="젖기어려움"
+ENDIF
+
+

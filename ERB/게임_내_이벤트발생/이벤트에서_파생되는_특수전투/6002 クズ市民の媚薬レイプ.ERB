@@ -1,0 +1,66 @@
+﻿;---------------------------------------------------------------------
+;標準のクズ市民戦イベント(調整中、とりあえず形式を合わせる)
+
+@EVENT_BATTLE_EXEC_6002(補足)
+#dims 補足,1
+
+
+;PRINTL
+;SETCOLORBYNAME HOTPINK
+;PRINTFORML （観客の前では正体を明かせません！　避難誘導完了までアイドルとして囮になってください！）
+;RESETCOLOR
+;PRINTW 
+DRAWLINE
+
+;;強制발정
+;CALL STATE_CHANGE_HATUJOU(100)
+
+턴상한=15
+CALL ADDBATTLESITUATION("先制無し,支援無効,レイプなし,"+補足+",")
+
+
+@EVENT_BATTLE_TURNEND_6002
+
+
+@EVENT_BATTLE_MISSION_CHECKER_6002
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;負けていなければミッション達成
+	IF TFLAG:98 == 2
+		RETURN 0
+	ELSE
+		RETURN 1
+	ENDIF
+
+@EVENT_BATTLE_SUCCESS_6002
+	;PRINTW 
+	;PRINTFORML 　無事に被害を最小限に抑えました！
+	;;ニュース記事に
+	;Sif !FLAG:60
+	;	FLAG:60=110000+FLAG:45
+
+@EVENT_BATTLE_FAILURE_6002
+	;負けてはいないが特定ミッションの追加条件を満たせなかった
+	IF TFLAG:98 != 2
+	;	PRINTW 
+	;	PRINTFORML 　避難ミッションは成功しましたが、アイドルとしては嬲り尽くされてしまいました……
+	;負けた
+	ELSE
+	;	PRINTW 
+	;	PRINTFORML 　避難ミッションに失敗しました……
+	ENDIF
+
+	;;クズ市民戦は基本的にニュース記事にならない方が自然(被害者はおそらくヒロイン一人なので)
+	;Sif !FLAG:60
+	;	FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+@EVENT_BATTLE_FLASHNEWS_6002(ARG)
+;;ミッション成功
+;IF ARG==1
+;	RESULTS'="客を魅了、촉수を翻弄！　アイドル「"+PRINT_TRANSNAME(TARGET)+"」が囮となり避難の時間を稼ぐ"
+;ミッション失敗
+;ELSEIF ARG==0
+;	RESULTS'="巨大촉수がライブ会場を襲撃、アイドル「"+PRINT_TRANSNAME(TARGET)+"」が촉수凌辱の餌食に"
+;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+;ELSEIF ARG==-1
+;	RESULTS'="巨大촉수がライブ会場を襲撃、アイドル「"+PRINT_TRANSNAME(TARGET)+"」や女性客ら攫われ失踪"
+;ENDIF

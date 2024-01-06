@@ -1,0 +1,1161 @@
+﻿;--------------------------------------------------
+;キャラの性格に関する処理
+;--------------------------------------------------
+;性格のチェック
+@SEIKAKU_CHECK, ARGS, ARG
+LOCAL = 0
+LOCAL:1 = 0
+LOCAL:2 = 0
+LOCAL:3 = 0
+FOR LOCAL:2, 10, 50
+	SIF TALENTNAME:(LOCAL:2) != ""
+		LOCAL:1 += 1
+NEXT
+FOR LOCAL:3,0,LOCAL:1
+	LOCAL = LOCAL:3 + 10
+	IF TALENT:ARG:LOCAL == 1
+		SELECTCASE ARGS
+			CASE "STRING"
+				RESULTS = %TALENTNAME:LOCAL%
+				RETURN LOCAL
+			CASE "PRINT"
+				PRINTFORM %TALENTNAME:LOCAL%
+				RETURN LOCAL
+			CASE "GET_TALENT_VALUE"
+				RETURN LOCAL
+		ENDSELECT
+	ENDIF
+NEXT
+SELECTCASE ARGS
+	CASE "STRING"
+		RESULTS = ランダム
+	CASE "PRINT"
+		PRINTFORM ランダム
+		RETURN 0
+	CASE "GET_TALENT_VALUE"
+		RETURN 0
+ENDSELECT
+;--------------------------------------------------
+;性格のチェック、式中関数版
+;ARG = キャラ番号
+@SEIKAKU_CHECK_F(ARG)
+#FUNCTION
+LOCAL = 0
+LOCAL:1 = 0
+LOCAL:2 = 0
+LOCAL:3 = 0
+FOR LOCAL:2, 10, 50
+	SIF TALENTNAME:(LOCAL:2) != ""
+		LOCAL:1 += 1
+NEXT
+FOR LOCAL:3,0,LOCAL:1
+	LOCAL = LOCAL:3 + 10
+	SIF TALENT:ARG:LOCAL == 1
+			RETURNF LOCAL
+NEXT
+RETURNF 0
+
+;--------------------------------------------------
+;性格によるベースの補正
+;ARG:0 性格の番号（素質番号10〜）
+;ARG:1 どのベースか（0=체력,1=기력,2=성내성,10=공격,11=방어,12=민첩,13=지성）
+;ARG:2 補正前の元値
+@SEIKAKU_HOSEI_F(ARG:0, ARG:1, ARG:2)
+#FUNCTION
+;겁쟁이
+IF ARG:0 == 10
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 0.90
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 1.10
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.20
+	ENDIF
+
+;부끄럼쟁이
+ELSEIF ARG:0 == 11
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 0.90
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 1.20
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;오기
+ELSEIF ARG:0 == 12
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.20
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 0.80
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;활발함
+ELSEIF ARG:0 == 13
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 1.20
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.80
+	ENDIF
+
+;대범함
+ELSEIF ARG:0 == 14
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 1.20
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 0.80
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.20
+	ENDIF
+
+;게으름
+ELSEIF ARG:0 == 15
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 0.90
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 0.90
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 1.10
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.90
+	ENDIF
+
+;진지함
+ELSEIF ARG:0 == 16
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 1.20
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 0.80
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.10
+	ENDIF
+
+;낙천적
+ELSEIF ARG:0 == 17
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 1.20
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 0.90
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;비관적
+ELSEIF ARG:0 == 18
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 0.90
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.10
+	ENDIF
+
+;순종적
+ELSEIF ARG:0 == 19
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 1.10
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 1.10
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 1.10
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;츤데레
+ELSEIF ARG:0 == 20
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 1.10
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 0.90
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;얀데레
+ELSEIF ARG:0 == 21
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;과묵함
+ELSEIF ARG:0 == 22
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 1.10
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 1.10
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 0.90
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.10
+	ENDIF
+
+;수다쟁이
+ELSEIF ARG:0 == 23
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 1.10
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 1.10
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;고풍적
+ELSEIF ARG:0 == 24
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 0.80
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;민첩
+	ELSEIF ARG:1 == 12
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;경박함
+ELSEIF ARG:0 == 25
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 0.80
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 0.90
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 1.10
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 1.10
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+
+;고집쟁이
+ELSEIF ARG:0 == 26
+	;체력
+	IF ARG:1 == 0
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 1.10
+	;성내성
+	ELSEIF ARG:1 == 2
+		TIMES ARG:2, 1.20
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 0.90
+	;지성
+	ELSEIF ARG:1 == 13
+	ENDIF
+;사나움
+ELSEIF ARG:0 == 27
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 1.10
+	;기력
+	ELSEIF ARG:1 == 1
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+		TIMES ARG:2, 1.30
+	;방어
+	ELSEIF ARG:1 == 11
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 0.90
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.80
+	ENDIF
+
+;감정결여
+ELSEIF ARG:0 == 28
+	;체력
+	IF ARG:1 == 0
+		TIMES ARG:2, 0.95
+	;기력
+	ELSEIF ARG:1 == 1
+		TIMES ARG:2, 0.95
+	;성내성
+	ELSEIF ARG:1 == 2
+	;공격
+	ELSEIF ARG:1 == 10
+	;방어
+	ELSEIF ARG:1 == 11
+		TIMES ARG:2, 0.95
+	;민첩
+	ELSEIF ARG:1 == 12
+		TIMES ARG:2, 0.95
+	;지성
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.20
+	ENDIF
+ENDIF
+RETURNF ARG:2
+
+;--------------------------------------------------
+;性格によるパラメータの補正
+;ARG:0 性格の番号（素質番号10〜）
+;ARG:1 どのパラメータか（11=공순,13=욕정,14=굴복,15=치정,16=고통,17=공포）
+;ARG:2 補正前の元値
+@SEIKAKU_HOSEI_PALAM_F(ARG:0, ARG:1, ARG:2)
+#FUNCTION
+;겁쟁이
+IF ARG:0 == 10
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.20
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 1.20
+	ENDIF
+
+;부끄럼쟁이
+ELSEIF ARG:0 == 11
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 0.80
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 1.20
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;오기
+ELSEIF ARG:0 == 12
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.15
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.90
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.90
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.90
+	ENDIF
+
+;활발함
+ELSEIF ARG:0 == 13
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.05
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.90
+	ENDIF
+
+;대범함
+ELSEIF ARG:0 == 14
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.95
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 1.20
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.90
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;게으름
+ELSEIF ARG:0 == 15
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 1.10
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.90
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;진지함
+ELSEIF ARG:0 == 16
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 0.90
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.90
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 1.10
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;낙천적
+ELSEIF ARG:0 == 17
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.95
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.95
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.95
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.95
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.95
+	ENDIF
+
+;비관적
+ELSEIF ARG:0 == 18
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 0.90
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.80
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 1.20
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 1.20
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;순종적
+ELSEIF ARG:0 == 19
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.05
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.05
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;츤데레
+ELSEIF ARG:0 == 20
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.20
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.80
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 1.20
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.80
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;얀데레
+ELSEIF ARG:0 == 21
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.40
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.90
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.90
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.40
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.40
+	ENDIF
+
+;과묵함
+ELSEIF ARG:0 == 22
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.10
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 1.10
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.90
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;수다쟁이
+ELSEIF ARG:0 == 23
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.20
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 1.10
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.80
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 1.20
+	ENDIF
+
+;고풍적
+ELSEIF ARG:0 == 24
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.95
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 1.15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.95
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.95
+	ENDIF
+
+;경박함
+ELSEIF ARG:0 == 25
+	;공순
+	IF ARG:1 == 11
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 1.10
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.90
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 1.10
+	ENDIF
+
+;고집쟁이
+ELSEIF ARG:0 == 26
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.20
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.80
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.90
+	;치정
+	ELSEIF ARG:1 == 15
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 1.20
+	;공포
+	ELSEIF ARG:1 == 17
+	ENDIF
+
+;사나움
+ELSEIF ARG:0 == 27
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 1.10
+	;욕정
+	ELSEIF ARG:1 == 13
+	;굴복
+	ELSEIF ARG:1 == 14
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.80
+	;고통
+	ELSEIF ARG:1 == 16
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 1.30
+	ENDIF
+
+;감정결여
+ELSEIF ARG:0 == 28
+	;공순
+	IF ARG:1 == 11
+		TIMES ARG:2, 0.30
+	;욕정
+	ELSEIF ARG:1 == 13
+		TIMES ARG:2, 0.90
+	;굴복
+	ELSEIF ARG:1 == 14
+		TIMES ARG:2, 0.30
+	;치정
+	ELSEIF ARG:1 == 15
+		TIMES ARG:2, 0.30
+	;고통
+	ELSEIF ARG:1 == 16
+		TIMES ARG:2, 0.90
+	;공포
+	ELSEIF ARG:1 == 17
+		TIMES ARG:2, 0.30
+	ENDIF
+ENDIF
+RETURNF ARG:2
+
+;--------------------------------------------------
+;性格による心境変化の補正
+;ARG=性格番号、ARGS=変化を判定する心境
+;基本を30（3割で変化）にし、変化しやすいは50、変化しにくいものは10に
+@SEIKAKU_HOSEI_SHINKYOU, ARG, ARGS
+LOCAL = 30
+;겁쟁이
+IF ARG:0 == 10
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 10
+		CASE "DOUYOU"
+			LOCAL = 50
+	ENDSELECT
+;부끄럼쟁이
+ELSEIF ARG:0 == 11
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 10
+		CASE "KOUYOU"
+			LOCAL = 10
+	ENDSELECT
+;오기
+ELSEIF ARG:0 == 12
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 50
+		CASE "IKARI"
+			LOCAL = 50
+	ENDSELECT
+;활발함
+ELSEIF ARG:0 == 13
+	SELECTCASE ARGS
+		CASE "REISEI"
+			LOCAL = 10
+		CASE "TEIKAN"
+			LOCAL = 10
+	ENDSELECT
+;대범함
+ELSEIF ARG:0 == 14
+	SELECTCASE ARGS
+		CASE "IKARI"
+			LOCAL = 10
+		CASE "SYOUTIN"
+			LOCAL = 10
+	ENDSELECT
+;게으름
+ELSEIF ARG:0 == 15
+	SELECTCASE ARGS
+		CASE "TEIKAN"
+			LOCAL = 50
+		CASE "DOUYOU"
+			LOCAL = 10
+	ENDSELECT
+;진지함
+ELSEIF ARG:0 == 16
+	SELECTCASE ARGS
+		CASE "REISEI"
+			LOCAL = 50
+		CASE "DOUYOU"
+			LOCAL = 50
+	ENDSELECT
+;낙천적
+ELSEIF ARG:0 == 17
+	SELECTCASE ARGS
+		CASE "IKARI"
+			LOCAL = 10
+		CASE "TEIKAN"
+			LOCAL = 10
+		CASE "REISEI"
+			LOCAL = 10
+		CASE "DOUYOU"
+			LOCAL = 10
+		CASE "KOUYOU"
+			LOCAL = 10
+		CASE "SYOUTIN"
+			LOCAL = 10
+	ENDSELECT
+;비관적
+ELSEIF ARG:0 == 18
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 10
+		CASE "TEIKAN"
+			LOCAL = 50
+	ENDSELECT
+;순종적
+ELSEIF ARG:0 == 19
+	SELECTCASE ARGS
+		CASE "KOUYOU"
+			LOCAL = 50
+		CASE "SYOUTIN"
+			LOCAL = 50
+	ENDSELECT
+;츤데레
+ELSEIF ARG:0 == 20
+	SELECTCASE ARGS
+		CASE "IKARI"
+			LOCAL = 50
+		CASE "SYOUTIN"
+			LOCAL = 50
+	ENDSELECT
+;얀데레
+ELSEIF ARG:0 == 21
+	SELECTCASE ARGS
+		CASE "TEIKAN"
+			LOCAL = 10
+		CASE "REISEI"
+			LOCAL = 10
+	ENDSELECT
+;과묵함
+ELSEIF ARG:0 == 22
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 50
+		CASE "REISEI"
+			LOCAL = 50
+	ENDSELECT
+;수다쟁이
+ELSEIF ARG:0 == 23
+	SELECTCASE ARGS
+		CASE "KOUYOU"
+			LOCAL = 50
+		CASE "DOUYOU"
+			LOCAL = 50
+	ENDSELECT
+;고풍적
+ELSEIF ARG:0 == 24
+	SELECTCASE ARGS
+		CASE "TEIKAN"
+			LOCAL = 50
+		CASE "DOUYOU"
+			LOCAL = 10
+	ENDSELECT
+;경박함
+ELSEIF ARG:0 == 25
+	SELECTCASE ARGS
+		CASE "TOUSAKU"
+			LOCAL = 50
+		CASE "KOUYOU"
+			LOCAL = 50
+	ENDSELECT
+;고집쟁이
+ELSEIF ARG:0 == 26
+	SELECTCASE ARGS
+		CASE "TEIKAN"
+			LOCAL = 10
+		CASE "KOUYOU"
+			LOCAL = 10
+	ENDSELECT
+;사나움
+ELSEIF ARG:0 == 27
+	SELECTCASE ARGS
+		CASE "IKARI"
+			LOCAL = 50
+		CASE "REISEI"
+			LOCAL = 10
+	ENDSELECT
+;감정결여
+ELSEIF ARG:0 == 28
+	SELECTCASE ARGS
+		CASE "IKARI"
+			LOCAL = 0
+		CASE "TEIKAN"
+			LOCAL = 0
+		CASE "REISEI"
+			LOCAL = 0
+		CASE "DOUYOU"
+			LOCAL = 0
+		CASE "KOUYOU"
+			LOCAL = 0
+		CASE "SYOUTIN"
+			LOCAL = 0
+	ENDSELECT
+ENDIF
+RETURN LOCAL
+
+
+;性格ごとの調教耐性を表示
+;ARG 性格の番号（素質番号10〜）
+@SHOW_SEIKAKUHOSEI,ARG
+FOR LOCAL,0,14
+	SIF LOCAL >= 3 && LOCAL <= 9
+		CONTINUE
+	LOCAL:1 = SEIKAKU_HOSEI_F(ARG, LOCAL, 100)
+	IF LOCAL:1 < 90
+		SETCOLOR 0,60,250
+		PRINT ×  
+	ELSEIF LOCAL:1 < 100
+		SETCOLOR 120,120,250
+		PRINT ▽  
+	ELSEIF LOCAL:1 < 110
+		SETCOLOR 128,128,128
+		PRINT －  
+	ELSEIF LOCAL:1 < 120
+		SETCOLOR 250,180,0
+		PRINT ○  
+	ELSE
+		SETCOLOR 250,60,0
+		PRINT ◎  
+	ENDIF
+	RESETCOLOR
+	SIF LOCAL == 2
+		PRINT 　
+NEXT
+
+;性格ごとの調教耐性を表示
+;ARG 　　性格の番号（素質番号10〜）
+;ARG:1 　対象者の番号
+;ARG:2 　表示オプション
+@SHOW_RESISTSEX,ARG, ARG:1, ARG:2 = 0
+FOR LOCAL,11,18
+	SIF LOCAL == 12
+		CONTINUE
+	LOCAL:1 = SEIKAKU_HOSEI_PALAM_F(ARG, LOCAL, 100)
+
+	IF LOCAL == 11
+		SIF ARG:2 == 0
+			PRINT 恭:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):쾌감에솔직
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):수줍음
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):모성적
+				LOCAL:1 += 10
+		ENDIF
+	ELSEIF LOCAL == 13
+		SIF ARG:2 == 0
+			PRINT 欲:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):쾌감을부정
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):배짱
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):싸움꾼
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):결벽증
+				LOCAL:1 -= 20
+		ENDIF
+	ELSEIF LOCAL == 14
+		SIF ARG:2 == 0
+			PRINT 屈:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):쾌감을부정
+				LOCAL:1 += 10
+			IF TALENT:(ARG:1):자존심높음 && MARK:(ARG:1):굴복각인 >= 3
+				LOCAL:1 += 20
+			ELSEIF TALENT:(ARG:1):자존심높음
+				LOCAL:1 -= 10
+			ENDIF
+			SIF TALENT:(ARG:1):전투거부
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):소악마
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):결벽증
+				LOCAL:1 -= 10
+		ENDIF
+	ELSEIF LOCAL == 15
+		SIF ARG:2 == 0
+			PRINT 恥:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):수줍음
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):배짱
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):고상함
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):결벽증
+				LOCAL:1 += 30
+		ENDIF
+	ELSEIF LOCAL == 16
+		SIF ARG:2 == 0
+			PRINT 苦:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):쾌감에솔직
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):소심함
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):눈에띄고싶어함
+				LOCAL:1 += 10
+		ENDIF
+	ELSEIF LOCAL == 17
+		SIF ARG:2 == 0
+			PRINT 恐:
+		IF ARG != 28
+			SIF TALENT:(ARG:1):전투거부
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):싸움꾼
+				LOCAL:1 -= 10
+			SIF TALENT:(ARG:1):울보
+				LOCAL:1 += 10
+			SIF TALENT:(ARG:1):결벽증
+				LOCAL:1 += 20
+		ENDIF
+	ENDIF
+
+	IF LOCAL:1 < 90
+		SETCOLOR 250,60,0
+		PRINT ◎  
+	ELSEIF LOCAL:1 < 100
+		SETCOLOR 250,180,0
+		PRINT ○  
+	ELSEIF LOCAL:1 < 110
+		SETCOLOR 128,128,128
+		PRINT －  
+	ELSEIF LOCAL:1 < 120
+		SETCOLOR 120,120,250
+		PRINT ▽  
+	ELSE
+		SETCOLOR 0,60,250
+		PRINT ×  
+	ENDIF
+	RESETCOLOR
+NEXT
+

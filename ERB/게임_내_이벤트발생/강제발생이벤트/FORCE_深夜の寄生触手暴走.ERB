@@ -1,0 +1,1098 @@
+﻿;---------------------------------------------------------------------
+;解放されたキャラの기생촉수が味方を襲う
+@PARASITE
+#DIM CCOUNT
+;기생×なら判定しない
+SIF CONFIG_CHECK_MANIAC_F(3) == 0
+	RETURN
+FOR CCOUNT, 0, CHARANUM
+	FLAG:799 = CCOUNT
+	SIF CCOUNT == MASTER
+		CONTINUE
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+
+	;기생されているなら기생경험が増加
+	IF TALENT:(FLAG:799):기생
+		EXP:(FLAG:799):기생경험 += 1
+		
+		;기생されており、공생を得ていないなら기생촉수順応値増加
+		SIF TALENT:(FLAG:799):공생 == 0
+			CFLAG:(FLAG:799):82 += 1
+		
+		;기생촉수の暴走判定、軽量化のためなるべく条件を分散して判定
+		SIF CFLAG:(FLAG:799):0 != 0
+			CONTINUE
+
+		;昼間は暴走しない
+		SIF TIME == 0
+			CONTINUE
+		
+		;[공생]取得確認
+		IF CFLAG:(FLAG:799):83 > 0
+			;一度でも공생取得イベントが発生している場合、次の공생取得イベントまでのスパンを短くする
+			LOCAL:3 = 20
+		ELSE
+			LOCAL:3 = 50
+		ENDIF
+		IF TALENT:(FLAG:799):공생 == 0 && CFLAG:(FLAG:799):82 >= LOCAL:3 && CFLAG:(FLAG:799):84 == 0
+			CALL SYNBIOSIS_GET_EVENT
+			
+			;공생取得イベントが発生したターンでは暴走・慰み者イベントを発生させない
+			CONTINUE
+		ENDIF
+		
+		;確率判定
+		LOCAL = MIN(EXP:(FLAG:799):기생경험 * EXP:(FLAG:799):기생경험 * 200 / EXP:(FLAG:799):기생경험, 2500)
+
+		IF RAND:10000 < LOCAL
+			
+			SIF LOCAL:2 == 0
+				DRAWLINE
+			LOCAL:2 = 1
+
+			IF TALENT:(FLAG:799):공생 == 1
+				;기생촉수の慰み者
+				CALL SYNBIOSIS_EVENT
+			ELSE
+				;기생촉수の暴走
+				CALL PARASITE_EVENT
+			ENDIF
+		ENDIF
+		
+		;実績
+		CALL GET_STATE_EXPUP,TARGET
+	ELSE
+		CONTINUE
+	ENDIF
+NEXT
+
+;---------------------------------------------------------------------
+;暴走イベントの制御
+@PARASITE_EVENT
+;本来はTALENT:기생での判定が必要だが呼び出し時点で判定済みなので省略
+$LOOP
+;誰を襲うのか決める
+SIF CHARANUM_ACTIVE() == 0
+	RETURN
+IF RAND:4 == 0
+	LOCAL = FLAG:799
+ELSE
+	LOCAL = RAND:(CHARANUM - 1) + 1
+ENDIF
+SIF CHARANUM < 3
+	LOCAL = FLAG:799
+SIF CFLAG:LOCAL:0 != 0 || CFLAG:LOCAL:999 == 0
+	GOTO LOOP	
+
+TARGET = LOCAL
+
+PRINTL 
+FONTBOLD
+PRINTL 기생촉수の暴走
+FONTREGULAR
+PRINTL 
+PRINTFORML 深夜になると不気味な影が動き出す・・・
+;촉수が自分を襲う
+IF LOCAL == FLAG:799
+	PRINTFORMW %PRINT_CALLNAME(FLAG:799)%は自身に기생する촉수を抑えきれずに、暴走を許してしまった！
+	CALL PARASITE_ACTION,0
+;촉수が他のキャラを襲う
+ELSE
+	PRINTFORMW %PRINT_CALLNAME(FLAG:799)%に기생している촉수が暴走し、本人の意志とは無関係に隣室の%CALLNAME:TARGET%に襲いかかった！
+	CALL PARASITE_ACTION,1
+ENDIF
+
+;---------------------------------------------------------------------
+;暴走イベントの実行
+@PARASITE_ACTION, ARG
+#DIM CCOUNT
+VARSET LOCAL
+;快C
+IF ABL:C감각 == 0
+	LOCAL:0 = 100
+ELSEIF ABL:C감각 == 1
+	LOCAL:0 = 200
+ELSEIF ABL:C감각 == 2
+	LOCAL:0 = 500
+ELSEIF ABL:C감각 == 3
+	LOCAL:0 = 1000
+ELSEIF ABL:C감각 == 4
+	LOCAL:0 = 2000
+ELSE
+	LOCAL:0 = 5000
+ENDIF
+
+;快V
+;남자を除外
+IF ISFEMALE()
+	IF ABL:V감각 == 0
+		LOCAL:120 = 2
+		LOCAL:1 = 100
+	ELSEIF ABL:V감각 == 1
+		LOCAL:120 = 5
+		LOCAL:1 = 200
+	ELSEIF ABL:V감각 == 2
+		LOCAL:120 = 8
+		LOCAL:1 = 500
+	ELSEIF ABL:V감각 == 3
+		LOCAL:120 = 11
+		LOCAL:1 = 1000
+	ELSEIF ABL:V감각 == 4
+		LOCAL:120 = 15
+		LOCAL:1 = 2000
+	ELSE
+		LOCAL:120 = 20
+		LOCAL:1 = 5000
+	ENDIF
+ELSE
+ENDIF
+
+;쾌A
+IF ABL:A감각 == 0
+	LOCAL:121 = 2
+	LOCAL:2 = 100
+ELSEIF ABL:A감각 == 1
+	LOCAL:121 = 5
+	LOCAL:2 = 200
+ELSEIF ABL:A감각 == 2
+	LOCAL:121 = 8
+	LOCAL:2 = 500
+ELSEIF ABL:A감각 == 3
+	LOCAL:121 = 11
+	LOCAL:2 = 1000
+ELSEIF ABL:A감각 == 4
+	LOCAL:121 = 15
+	LOCAL:2 = 2000
+ELSE
+	LOCAL:121 = 20
+	LOCAL:2 = 5000
+ENDIF
+
+;快B
+IF ABL:B감각 == 0
+	LOCAL:3 = 100
+ELSEIF ABL:C감각 == 1
+	LOCAL:3 = 200
+ELSEIF ABL:C감각 == 2
+	LOCAL:3 = 500
+ELSEIF ABL:C감각 == 3
+	LOCAL:3 = 1000
+ELSEIF ABL:C감각 == 4
+	LOCAL:3 = 2000
+ELSE
+	LOCAL:3 = 5000
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
+
+
+
+;처녀であれば처녀を破る
+IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
+	LOCAL:10 = 500
+	PRINTL 
+	PRINTL 처녀喪失
+	PRINTL 
+	TALENT:처녀 = -1
+	CFLAG:206 = 4
+ENDIF
+
+;굴복　とりあえず一定で
+LOCAL:8 = 500
+
+;V感覚が低いと공포が入る
+;남자の場合はA感覚で
+IF ISFEMALE()
+	IF ABL:V감각 == 0
+		LOCAL:11 = 800
+	ELSEIF ABL:V감각 == 1
+		LOCAL:11 = 400
+	ELSEIF ABL:V감각 == 2
+		LOCAL:11 = 200
+	ELSEIF ABL:V감각 == 3
+		LOCAL:11 = 100
+	ELSE
+	ENDIF
+ELSE
+	IF ABL:A감각 == 0
+		LOCAL:11 = 800
+	ELSEIF ABL:A감각 == 1
+		LOCAL:11 = 400
+	ELSEIF ABL:A감각 == 2
+		LOCAL:11 = 200
+	ELSEIF ABL:A감각 == 3
+		LOCAL:11 = 100
+	ELSE
+	ENDIF
+ENDIF
+
+;정액경험
+LOCAL:123 = 10
+;펠라경험
+LOCAL:123 = 2
+;이상경험
+LOCAL:150 = 1
+
+;地の文
+PRINTL 
+IF ARG == 0
+	PRINTFORML 촉수の粘液に媚薬効果でもあるのか、
+	IF ISFEMALE(TARGET)
+		PRINTFORML %PRINT_CALLNAME(TARGET)%の秘部は本人の意志とは無関係にしっとりと濡れている。
+	ELSE
+		PRINTFORML %PRINT_CALLNAME(TARGET)%の애널は本人の意志とは無関係にひくひくと伸び縮みしている。
+	ENDIF
+	PRINTFORM 完全に独立した意志を見せる촉수が
+	SIF CHECK_HOLYVIRGIN_F()==0 && ISFEMALE(TARGET)
+		PRINT ヴァギナと
+	PRINTL 尻穴に潜り込み、
+	PRINTFORML 입まで犯された%PRINT_CALLNAME(TARGET)%はくぐもった悲鳴を上げるしかない。
+	PRINTW 
+	PRINTFORML 抵抗できないと見るや촉수は更にその数を増やし、
+	PRINTFORML %PRINT_CALLNAME(TARGET)%が기절するまで一方的な行為は続いた・・・
+ELSE
+	PRINTFORML 蠢く촉수の不意打ちに%PRINT_CALLNAME(TARGET)%は咄嗟に反応できずに捕まってしまい、全身を愛撫されている。
+	IF ISMALE(TARGET)
+		;#region
+		PRINTFORML %PRINT_CALLNAME(FLAG:799)%は仲間のピンチに何とか애널を貫こうとする촉수を止めようとするが、
+		;#endregion
+	ELSE 
+		PRINTFORML %PRINT_CALLNAME(FLAG:799)%は仲間のピンチに何とか秘部と애널を貫こうとする촉수を止めようとするが、
+	ENDIF
+	PRINTFORML 逆に촉수に絡め取られてしまう。
+	PRINTW 
+	PRINTFORML 촉수の粘液に媚薬効果でもあるのか、
+	PRINTFORML 翻弄される二人は絡み合い、どちらともなく唇を重ね合った・・・
+ENDIF
+PRINTW 
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1
+PRINTW 
+
+;---------------------------------------------------------------------
+;공생取得イベント
+@SYNBIOSIS_GET_EVENT
+
+; [공생]の仕様
+; 取得条件 - 기생されてからそれなりの時間経過させる
+;   - 取得を拒否することも可能。拒否する場合、一時的に取得しないか、永遠に取得しないかを選択可能
+;   - 一時的の場合、時間経過で再度공생取得イベントが発生する。発生までの時間は、初回よりも短くなる
+; 戦闘時のコマンドによる체력回復時、回復量に＋補正(変身・距離を取る・관찰한다)
+;   - 기력には補正なし、また、休憩などの日常による回復には影響しない
+;   - 緊急時に촉수の再生能力を使用している、みたいな
+; 直撃率、CRT率にボーナス
+;   - 緊急時に촉수の공격能力を以下略
+; 戦闘時、기생怯み発生確率の半減
+;   - 怯みが発生する時点で공생と言えるのだろうか？　いや、ない(反語)
+; [기생]除去不可
+;   - [기생]を外す場合は周回し、キャラクリエイトで外す
+; "기생촉수の暴走"イベントが発生しなくなる。代わりに、촉수自慰、촉수夜這い、공생촉수暴走イベントが発生する
+
+
+FONTBOLD
+PRINTFORML 기생촉수との공생（%PRINT_CALLNAME(FLAG:799)%）
+FONTREGULAR
+PRINTL 
+
+PRINTFORML %PRINT_CALLNAME(FLAG:799)%の身体が촉수に기생されてから、随分と時間が経過した。
+PRINTFORML 最近、逆に体の調子が良くなっていることに疑問を抱いた%PRINT_CALLNAME(FLAG:799)%は
+PRINTFORML 念のために精密検査をする事にしたようだ。
+PRINTW 
+
+PRINTL ――
+PRINTL ――――
+PRINTW ――――――
+PRINTL 
+
+PRINTFORML 精密検査の結果、%PRINT_CALLNAME(FLAG:799)%の肉体は기생촉수に順応し始めていることが分かった。
+PRINTFORML このまま順応しきれば、기생촉수との関係は、기생ではなく공생となる可能性もある。
+PRINTFORML 上手く촉수と공생関係となる事が出来れば、
+PRINTFORML 촉수が持つ能力――強力な再生能力や공격能力の恩恵を受けることが出来るだろう。
+PRINTFORML 但しその場合、体内の촉수の除去が不可能となってしまうとの事だ。
+PRINTFORML ・・・촉수との공생を望みますか？
+PRINTL 
+
+PRINTL [0] 네
+PRINTL [1] 아니오
+PRINTL [9] 아니오（次から確認しない）
+INPUT
+
+SIF RESULT == 9
+	CFLAG:(FLAG:799):84 = 1
+
+PRINTL 
+IF RESULT == 0
+	TALENT:(FLAG:799):공생 = 1
+	CFLAG:(FLAG:799):83 += CFLAG:(FLAG:799):82
+	CFLAG:(FLAG:799):82 = 0
+	
+	PRINTFORML 촉수の能力を自分のものに出来るのなら、これからの戦闘で優位に立つことが出来る。
+	PRINTFORML 人類の敵を排除できるのなら、やむを得ない犠牲だろう。
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:799)%はそう自分に言い聞かせ、촉수との공생を望んだ・・・。
+	
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:799)%は %TALENTNAME:163% を得た
+ELSE
+	PRINTFORML 流石に、体内に촉수を飼ったまま一生を過ごすのは御免だ。
+	PRINTFORML 医師に何とかならないかと尋ねると、特殊な薬を服用すれば一応対処は可能だと言う。
+		
+	IF RESULT == 1
+		PRINTFORML 但し一時しのぎにしかならず、時間が経てばまた同じことが起こるだろう、と。
+		PRINTFORML %PRINT_CALLNAME(FLAG:799)%は医師の言葉に同意し、用意された薬を服用した・・・。
+	ELSE
+		PRINTFORML 但し、この薬では体内の촉수の除去までは出来ない
+		PRINTFORML 何とかして기생촉수を除去しなければ、状況は好転しないだろう。
+		PRINTFORML %PRINT_CALLNAME(FLAG:799)%は担当医の言葉に同意し、用意された薬を服用した・・・。
+	ENDIF	
+ENDIF
+
+PRINTW 
+
+
+;---------------------------------------------------------------------
+;공생촉수によるイベント
+@SYNBIOSIS_EVENT
+#DIM Y_RESULT
+
+PRINTL 
+FONTBOLD
+PRINTFORML 기생촉수の慰み者（%PRINT_CALLNAME(FLAG:799)%）
+FONTREGULAR
+PRINTW
+
+PRINTFORML 夜も更けた頃、%PRINT_CALLNAME(FLAG:799)%は強烈な渇きを感じて目を覚ました。
+PRINTFORML 渇きを潤すために冷たい水を飲んだものの、気分は一向に晴れない。
+PRINTFORML 水では癒されない、人の体液が欲しい
+PRINTFORML そう思った%PRINT_CALLNAME(FLAG:799)%は――
+PRINTL
+
+;夜這い可能なキャラがいるかチェック
+CALL CHECK_SYNBIOSIS_YOBAI_TARGET
+Y_RESULT = RESULT
+
+PRINTFORML [0]自分自身を慰み者にする
+
+SIF Y_RESULT == 0
+	PRINTFORML [1]仲間の元へ向かう
+
+PRINTFORML [999]我慢して寝る
+
+$INPUT_LOOP_SYNBIOSIS_EVENT
+INPUT
+
+PRINTL
+
+IF RESULT == 0
+	CALL SYNBIOSIS_SOLO_EVENT
+ELSEIF RESULT == 1 && Y_RESULT == 0
+	;공생촉수による夜這い
+	CALL SYNBIOSIS_YOBAI_EVENT
+	
+	IF RESULT == 999
+		PRINTL
+		PRINTFORML やはり止めよう、仲間を傷付けるわけにはいかない。
+		PRINTFORML そう思った%PRINT_CALLNAME(FLAG:799)%は、喉の渇きを我慢しつつベッドの中に潜り込んだ。
+		PRINTW 
+		
+		;夜這いを止めた場合、一定確率で촉수が暴走する
+		;CALL SYNBIOSIS_OUT_OF_CONTROL_EVENT
+	ENDIF
+ELSEIF RESULT == 999
+	PRINTFORML なんて恐ろしいことを考えているのだろう
+	PRINTFORML これではまるで、自分が촉수となってしまったようじゃないか
+	PRINTFORML そう思った%PRINT_CALLNAME(FLAG:799)%は、喉の渇きを我慢しつつベッドの中に潜り込んだ。
+	PRINTW 
+	
+	;我慢した場合、一定確率で촉수が暴走する
+	;CALL SYNBIOSIS_OUT_OF_CONTROL_EVENT
+ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_SYNBIOSIS_EVENT
+ENDIF
+
+
+;---------------------------------------------------------------------
+;自分自身を慰み者とする
+@SYNBIOSIS_SOLO_EVENT
+
+TARGET = FLAG:799
+
+;地の文
+
+DRAWLINE
+PRINTL ――
+PRINTL ――――
+PRINTW ――――――
+PRINTL 
+
+
+IF CHARATALENT_F(TARGET,0,"남자") == 0
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は粘液でぬめりを帯びた촉수を展開すると、
+	PRINTFORM その
+
+	SIF TALENT:왜소함 == 1
+		PRINT 왜소함な
+
+	SIF TALENT:장신 == 1
+		PRINT スラリと伸びた
+		
+	PRINTFORML 身体に舌を這わせるかのように絡みつかせ、
+	
+	IF TALENT:거유 > 2
+		PRINTFORML はち切れんばかりの乳房や
+	ELSEIF TALENT:거유 > 0
+		PRINTFORML たわわに実った乳房や
+	ELSEIF TALENT:빈유 > 0
+		PRINTFORML 小ぶりで愛らしい乳房や
+	ELSE
+		PRINTFORML 程よい大きさに育った乳房や
+	ENDIF
+	
+	IF TALENT:외관 == 1
+		PRINT ぷるぷると震える安産型のお尻に
+	ELSEIF TALENT:외관 == 2
+		PRINT むっちりとした柔らかい肉付きのお尻に
+	ELSEIF TALENT:외관 == 5
+		PRINT むちむちとしたボリュームたっぷりのお尻に
+	ELSEIF TALENT:외관 == 6
+		PRINT ぶるんぶるんと弾むほど膨れ上がったお尻に
+	ELSE
+		PRINT 程よい肉付きのお尻に
+	ENDIF
+	PRINTFORML 촉수を這わせ、激しく愛撫しだした。
+	PRINTL
+	
+	PRINTFORML 媚薬効果のある粘液に塗れ、全身が性感帯のように敏感になった%PRINT_CALLNAME(TARGET)%は、
+	
+	SIF TALENT:모유체질
+		PRINT 母乳と
+	SIF TALENT:후타나리 > 0
+		PRINT 精液と
+	
+	PRINTFORML 潮をまき散らしながら、何度も絶頂を繰り返す。
+	
+	PRINTFORML やがて、それでも満足できなくなった%PRINT_CALLNAME(TARGET)%は
+	PRINTFORML うねり猛る촉수を前後の穴に添えさせ一気に貫かせた。
+	PRINTL
+	
+	PRINTFORML それから数時間後。
+	PRINTFORML 촉수が放つ白濁の液体に塗れ、ようやく満足した%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 深い眠りについた。
+ELSE
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は粘液でぬめりを帯びた촉수を展開すると、
+	PRINTFORM その
+
+	SIF TALENT:왜소함 == 1
+		PRINT 왜소함な
+
+	SIF TALENT:장신 == 1
+		PRINT スラリと伸びた
+		
+	SIF TALENT:보추 == 1
+		PRINT 少女然とした
+		
+	PRINTFORML 身体に舌を這わせるかのように絡みつかせ、
+	
+	PRINTFORML かすかに震える桜色の乳首や
+	
+	IF TALENT:외관 == 1
+		PRINT ぷるぷると震える安産型のお尻に
+	ELSEIF TALENT:외관 == 2
+		PRINT むっちりとした柔らかい肉付きのお尻に
+	ELSEIF TALENT:외관 == 5
+		PRINT むちむちとしたボリュームたっぷりのお尻に
+	ELSEIF TALENT:외관 == 6
+		PRINT ぶるんぶるんと弾むほど膨れ上がったお尻に
+	ELSE
+		PRINT 程よい肉付きのお尻に
+	ENDIF
+	PRINTFORML 촉수を這わせ、激しく愛撫しだした。
+	PRINTL
+	
+	PRINTFORML 媚薬効果のある粘液に塗れ、全身が性感帯のように敏感になった%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 精液をまき散らしながら、何度も絶頂を繰り返す。
+	
+	PRINTFORML やがて、それでも満足できなくなった%PRINT_CALLNAME(TARGET)%は
+	PRINTFORML うねり猛る촉수を唇と後ろの穴に添えさせ一気に貫かせた。
+	PRINTL
+	
+	PRINTFORML それから数時間後。
+	PRINTFORML 촉수が放つ白濁の液体に塗れ、ようやく満足した%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 深い眠りについた。
+ENDIF
+
+CALL SYNBIOSIS_ABL_UP, 0
+
+
+;---------------------------------------------------------------------
+;공생촉수が暴走
+@SYNBIOSIS_OUT_OF_CONTROL_EVENT
+
+;確率判定
+;기생촉수の暴走とは逆に、기생경험が高いほど暴走を起きにくくする。但し最低10%, 最高25%とする
+;기생경험 > 80から25%未満となり、기생경험 == 200が限界の10%となる
+
+;一旦、呼び出しよりをコメントアウト
+
+
+LOCAL = (200000 / EXP:(FLAG:799):기생경험)
+
+LOCAL = MAX(LOCAL, 1000)
+LOCAL = MIN(LOCAL, 2500)
+
+IF RAND:10000 > LOCAL
+	RETURN
+ENDIF
+
+;地の文
+PRINTFORML 地の文検討中
+
+TARGET = FLAG:799
+
+CALL SYNBIOSIS_ABL_UP, 2
+
+
+;---------------------------------------------------------------------
+;공생촉수による夜這い
+@SYNBIOSIS_YOBAI_EVENT
+;기생촉수による夜這い判定
+;基本的には@YOBAIの判定を流用。但し、変身による可否判定は行わない
+;夜這いかける側は촉수で致すし、受け手側は同意プレーじゃないから변신한다暇ないだろうし
+;また、実行者の性경험치や対象者の性경험치による成否判定は行わない。殆どレイプ紛い。
+;공생とは名ばかりの、実質촉수による支配
+
+#DIM CCOUNT
+#DIM FIND
+#DIM LINDEX
+#DIM TARGETLIST, 1000
+
+;初期化
+FIND=0
+VARSET LOCAL
+VARSET TARGETLIST
+
+;(FLAG:799):夜這い実行者
+;TARGET    :夜這いの対象
+;TARGETLIST:夜這いの対象となるキャラの番号が入る
+
+;キャラが一人しかいない場合は判定しない
+SIF CHARANUM_ACTIVE() < 2
+	RETURN
+
+;夜這い対象者が存在するか
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	;実行者は除外
+	SIF CCOUNT == FLAG:799
+		CONTINUE
+	;パーティに参加していないキャラは除外
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+
+	;能動的に動けない場合は除外
+	SIF TALENT:CCOUNT:번식자루 > 0 || TALENT:CCOUNT:사지결손 > 0
+		CONTINUE
+
+	;実行者の性別は考慮しない
+	
+	;性別嗜好による選別
+	SIF (TALENT:(FLAG:799):남성기피 > 0 && TALENT:(FLAG:799):양도 == 0) && ISMALE(CCOUNT)
+		CONTINUE
+	SIF (TALENT:(FLAG:799):여성기피 > 0 && TALENT:(FLAG:799):양도 == 0) && ISFEMALE(CCOUNT)
+		CONTINUE
+	
+	;촉수夜這い対象あり
+	;対象リストにADD
+	TARGETLIST:FIND = CCOUNT
+	
+	FIND++
+NEXT
+
+;デバッグ
+IF FLAG:999 == 1
+	SETCOLOR 105,105,105
+	PRINTFORML 夜這い可能キャラリスト
+	
+	FOR LINDEX, 0, FIND
+		PRINTFORML 対象　%CALLNAME:(TARGETLIST:LINDEX)%, キャラ番号:{TARGETLIST:LINDEX}
+	NEXT
+	
+	RESETCOLOR
+ENDIF
+
+;夜這い対象がいない場合は아무것도안한다
+SIF FIND <= 0
+	RETURN -999
+
+;キャラリスト印刷開始
+
+PRINTL 
+PRINTL 誰の部屋に行きますか？
+PRINTL 
+
+;夜這い対象キャラの印刷
+CALL PRINT_CHARA_LIST(FIND, TARGETLIST)
+
+$INPUT_LOOP_CHARA_LIST
+INPUT
+
+IF RESULT == 999
+	RETURN 999
+ELSEIF RESULT > 0 && RESULT < CHARANUM
+	TARGET = RESULT
+
+	;촉수夜這い実行
+	CALL SYNBIOSIS_YOBAI_ACTION
+ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_CHARA_LIST
+ENDIF
+
+;---------------------------------------------------------------------
+;촉수夜這いイベントの実行
+@SYNBIOSIS_YOBAI_ACTION
+
+;地の文
+
+
+DRAWLINE
+PRINTL ――
+PRINTL ――――
+PRINTW ――――――
+PRINTL 
+
+PRINTFORML %PRINT_CALLNAME(FLAG:799)%は無意識の内に、%PRINT_CALLNAME(TARGET)%の部屋の前まで足を運んでいた。
+PRINTFORML 扉には鍵が掛かっていたが、%PRINT_CALLNAME(FLAG:799)%は鍵穴に細長い촉수を潜り込ませ開錠してしまう。
+PRINTFORML %PRINT_CALLNAME(FLAG:799)%は部屋の中に忍び込むと、ベッドの上で静かに寝息を立てる%PRINT_CALLNAME(TARGET)%の枕元に音もなく近づき、
+PRINTFORML 粘液に塗れた촉수を%PRINT_CALLNAME(TARGET)%に巻き付かせた。
+PRINTL
+
+PRINTFORML 突然촉수に襲われ、悲鳴を上げようとする%PRINT_CALLNAME(TARGET)%だったが、口腔に押し込まれた촉수によって遮られてしまう。
+PRINTFORML 直後、ドロっとした粘着性のある液体を注ぎ込まれ、抵抗も出来ない%PRINT_CALLNAME(TARGET)%は喉を鳴らして飲み干していく。
+PRINTFORML 強力な媚毒が含まれた液体を注ぎ込まれた%PRINT_CALLNAME(TARGET)%の身体は情欲に支配され、
+PRINTFORML 心ではいけないと思いつつも、その肢体を%PRINT_CALLNAME(FLAG:799)%の前にさらけ出した。
+
+PRINTW
+DRAWLINE
+PRINTFORML 暗い部屋に卑猥な水音と嬌声が響いている・・・
+PRINTW 
+
+IF ISMALE(TARGET) || TALENT:(TARGET):빈유 > 0
+	PRINTFORML %PRINT_CALLNAME(FLAG:799)%は%PRINT_CALLNAME(TARGET)%の胸に촉수を這わせ、その先端を強く引っ張るように愛撫した。
+	PRINTFORML 柔らかな胸突起への촉수の力加減を変わるたびに、%PRINT_CALLNAME(TARGET)%はびくびくと背を反らしている。
+ELSE
+	PRINTFORML %PRINT_CALLNAME(FLAG:799)%は%PRINT_CALLNAME(TARGET)%の胸に촉수を巻き付かせ、締め上げるように愛撫した。
+	PRINTFORML 柔らかな双丘は촉수の力加減を変えるたびに、ぐにぐにと形を変えている。
+ENDIF
+PRINTFORML 通常ならば痛みを感じるはずのその行為も、촉수が分泌する粘液の効果によりにより快感へと変わっているようで、
+PRINTFORML %PRINT_CALLNAME(TARGET)%は甘い喘ぎ声を上げながら身をよじっている。
+PRINTL
+
+PRINTFORML %PRINT_CALLNAME(FLAG:799)%の촉수はぬちゃりと大きく口を開くと、
+PRINTFORML ピンと尖った乳首に吸い付き、じゅるじゅると大きな音を立てながら執拗に攻め立てる。
+PRINTFORML やがて限界に達した%PRINT_CALLNAME(TARGET)%は、一際大きな嬌声と共に全身を大きく震わせた。
+PRINTL
+
+PRINTFORML 脳を揺さぶられるかのような快楽に%PRINT_CALLNAME(TARGET)%はぐったりと項垂れるも、%PRINT_CALLNAME(FLAG:799)%の渇きはまだ収まらず、
+PRINTFORML %PRINT_CALLNAME(FLAG:799)%の촉수による攻めは、%PRINT_CALLNAME(TARGET)%が気を失うまで続いた・・・
+
+CALL SYNBIOSIS_ABL_UP, 1
+
+
+;---------------------------------------------------------------------
+;촉수夜這い対象者がいるかチェック
+@CHECK_SYNBIOSIS_YOBAI_TARGET
+
+#DIM CCOUNT
+#DIM FIND
+
+;キャラが一人しかいない場合は判定しない
+SIF CHARANUM_ACTIVE() < 2
+	RETURN -999
+
+FIND = 0
+;夜這い対象者が存在するか
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	;実行者は除外
+	SIF CCOUNT == FLAG:799
+		CONTINUE
+	;パーティに参加していないキャラは除外
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+
+	;反応できない状態は除外
+	SIF TALENT:CCOUNT:번식자루 > 0 || TALENT:CCOUNT:사지결손 > 0
+		CONTINUE
+
+	;実行者の性別は考慮しない
+	
+	;性別嗜好による選別
+	SIF (TALENT:(FLAG:799):남성기피 > 0 && TALENT:(FLAG:799):양도 == 0) && ISMALE(CCOUNT)
+		CONTINUE
+	SIF (TALENT:(FLAG:799):여성기피 > 0 && TALENT:(FLAG:799):양도 == 0) && ISFEMALE(CCOUNT)
+		CONTINUE
+	
+	;一人でも対象者がいればチェックを終える
+	FIND++
+	BREAK
+NEXT
+
+SIF FIND > 0
+	RETURN 0
+
+;見つからなかった場合
+RETURN -999
+
+
+;---------------------------------------------------------------------
+;촉수夜這い時のキャラリスト印刷
+;TARGET_COUNT:TARGET_LISTの配列数
+;TARGET_LIST :夜這い対象のリスト(キャラ番号)
+@PRINT_CHARA_LIST(TARGET_COUNT, TARGET_LIST)
+
+#DIM TARGET_COUNT
+#DIM REF TARGET_LIST
+
+#DIM LINDEX
+#DIM FIND
+#DIM REL
+
+
+;デバッグ
+IF FLAG:999 == 1
+	SETCOLOR 105,105,105
+	PRINTFORML - PRINT_CHARA_LIST - TARGETCOUNT:{TARGET_COUNT}
+	
+	FOR LINDEX, 0, TARGET_COUNT
+		PRINTFORML 対象　%CALLNAME:(TARGET_LIST:LINDEX)%, キャラ番号:{TARGET_LIST:LINDEX}
+	NEXT
+	
+	RESETCOLOR
+ENDIF
+
+FOR LINDEX, 0, TARGET_COUNT
+	REL = RELATION:(FLAG:799):(TARGET_LIST:LINDEX)
+
+	LOCALS =
+
+	IF !(GETBIT(REL, 부모자식) || GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌) || GETBIT(REL, 친구) || GETBIT(REL, 짝사랑) || GETBIT(REL, 연인) || GETBIT(REL, 약혼자) || GETBIT(REL, 배우자) || GETBIT(REL, 주인) || GETBIT(REL, 종자) || GETBIT(REL, 노예))
+		IF GETBIT(REL, 소원한) && GETBIT(REL, 친한)
+			LOCALS += "微妙な距離感の知人"
+		ELSEIF GETBIT(REL, 친한)
+			LOCALS += "친한間柄"
+		ELSEIF GETBIT(REL, 소원한)
+			LOCALS += "顔見知り"
+		ELSEIF GETBIT(REL, 사랑하는) && GETBIT(REL, 증오하는)
+			LOCALS += "複雑な関係"
+		ELSEIF GETBIT(REL, 사랑하는)
+			LOCALS += "大事な人"
+		ELSEIF GETBIT(REL, 증오하는)
+			LOCALS += "仇敵"
+		ENDIF
+	ELSE
+		SIF GETBIT(REL, 생이별한)
+			LOCALS += "생이별한の"
+		IF GETBIT(REL, 소원한) && GETBIT(REL, 친한)
+			LOCALS += "微妙な距離感の"
+		ELSEIF GETBIT(REL, 친한) && GETBIT(REL, 친구) == 0
+			LOCALS += "친한"
+		ELSEIF GETBIT(REL, 소원한)
+			LOCALS += "소원한"
+		ENDIF
+		IF GETBIT(REL, 사랑하는) && GETBIT(REL, 증오하는)
+			LOCALS += "愛憎渦巻く"
+		ELSEIF GETBIT(REL, 사랑하는)
+			LOCALS += "사랑하는"
+		ELSEIF GETBIT(REL, 증오하는)
+			LOCALS += "증오하는"
+		ENDIF
+		IF GETBIT(REL, 부모자식) || GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌)
+			LOCALS += "("
+			IF GETBIT(REL, 의리의)
+				LOCALS += "의리의"
+			ELSE
+				LOCALS += "実の"
+			ENDIF
+		ENDIF
+		IF GETBIT(REL, 부모자식)
+			IF TOSHIUE_F(TARGET, (TARGET_LIST:LINDEX)) > 0
+				IF ISMALE(TARGET_LIST:LINDEX)
+					LOCALS += "息子"
+				ELSE
+					LOCALS += "娘"
+				ENDIF
+			ELSE
+				IF ISMALE(TARGET_LIST:LINDEX)
+					LOCALS += "父親"
+				ELSE
+					LOCALS += "母親"
+				ENDIF
+			ENDIF
+			SIF GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌)
+				LOCALS += "/"
+		ENDIF
+		IF GETBIT(REL, 형제자매)
+			IF TOSHIUE_F(TARGET, (TARGET_LIST:LINDEX))
+				IF ISMALE(TARGET_LIST:LINDEX)
+					LOCALS += "弟"
+				ELSE
+					LOCALS += "妹"
+				ENDIF
+			ELSE
+				IF ISMALE(TARGET_LIST:LINDEX)
+					LOCALS += "兄"
+				ELSE
+					LOCALS += "姉"
+				ENDIF
+			ENDIF
+			SIF GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌)
+				LOCALS += "/"
+		ENDIF
+		IF GETBIT(REL, 조부모손주)
+			IF TOSHIUE_F(TARGET, (TARGET_LIST:LINDEX))
+				LOCALS += "孫"
+			ELSE
+				IF ISMALE(TARGET_LIST:LINDEX)
+					LOCALS += "祖父"
+				ELSE
+					LOCALS += "祖母"
+				ENDIF
+			ENDIF
+			SIF GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌)
+				LOCALS += "/"
+		ENDIF
+		IF GETBIT(REL, 아저씨아줌마)
+			IF ISMALE(TARGET_LIST:LINDEX)
+				LOCALS += "おじ"
+			ELSE
+				LOCALS += "おば"
+			ENDIF
+			SIF GETBIT(REL, 사촌)
+				LOCALS += "/"
+		ENDIF
+		IF GETBIT(REL, 조카조카딸)
+			IF ISMALE(TARGET_LIST:LINDEX)
+				LOCALS += "甥"
+			ELSE
+				LOCALS += "姪"
+			ENDIF
+			SIF GETBIT(REL, 사촌)
+				LOCALS += "/"
+		ENDIF
+		IF GETBIT(REL, 사촌)
+			LOCALS += "사촌"
+		ENDIF
+		SIF (GETBIT(REL, 부모자식) || GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌)) && (GETBIT(REL, 친구) || GETBIT(REL, 짝사랑) || GETBIT(REL, 연인) || GETBIT(REL, 약혼자) || GETBIT(REL, 배우자))
+			LOCALS += "かつ"
+		IF GETBIT(REL, 친구)
+			IF GETBIT(REL, 친한)
+				LOCALS += "親友"
+			ELSE
+				LOCALS += "친구"
+			ENDIF
+		ENDIF
+		SIF GETBIT(REL, 짝사랑)
+			LOCALS += "짝사랑の相手"
+		SIF GETBIT(REL, 연인)
+			LOCALS += "연인"
+		SIF GETBIT(REL, 약혼자)
+			LOCALS += "약혼자"
+		IF GETBIT(REL, 배우자)
+			IF ISMALE(TARGET_LIST:LINDEX)
+				LOCALS += "夫"
+			ELSE
+				LOCALS += "妻"
+			ENDIF
+		ENDIF
+		SIF (GETBIT(REL, 부모자식) || GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸) || GETBIT(REL, 사촌) || GETBIT(REL, 친구) || GETBIT(REL, 짝사랑) || GETBIT(REL, 연인) || GETBIT(REL, 약혼자) || GETBIT(REL, 배우자)) && (GETBIT(REL, 주인) || GETBIT(REL, 종자) || GETBIT(REL, 노예))
+			LOCALS += "かつ"
+		SIF GETBIT(REL, 주인)
+			LOCALS += "주인"
+		SIF GETBIT(REL, 종자)
+			LOCALS += "종자"
+		SIF GETBIT(REL, 노예)
+			LOCALS += "노예"
+		SIF GETBIT(REL, 부모자식) || GETBIT(REL, 형제자매) || GETBIT(REL, 조부모손주) || GETBIT(REL, 아저씨아줌마) || GETBIT(REL, 조카조카딸)
+			LOCALS += ")"
+	ENDIF
+	
+	;候補を表示
+	PRINTFORM [{TARGET_LIST:LINDEX}] 
+	IF CHARATALENT_F(TARGET_LIST:LINDEX, 0, "남자") > 0
+		PRINT (♂)
+	ELSEIF CHARATALENT_F(TARGET_LIST:LINDEX, 0, "후타나리") > 0
+		PRINT (双)
+	ELSE
+		PRINT (♀)
+	ENDIF
+	PRINTFORM  %CALLNAME:(TARGET_LIST:LINDEX), 24, LEFT%　%LOCALS, 24, LEFT%
+	PRINTL 
+
+NEXT
+PRINTFORML [999]夜這いは行わない
+
+
+;---------------------------------------------------------------------
+;공생촉수による경험치増加処理
+;お預けによる촉수暴走時は경험치が増加(予定)
+;ARG = 0:対象が自分, 1:촉수夜這い, 2:공생촉수の暴走
+@SYNBIOSIS_ABL_UP, ARG
+
+#DIM CCOUNT
+VARSET LOCAL
+
+;快C
+IF ABL:C감각 == 0
+	LOCAL:0 = 100
+ELSEIF ABL:C감각 == 1
+	LOCAL:0 = 200
+ELSEIF ABL:C감각 == 2
+	LOCAL:0 = 500
+ELSEIF ABL:C감각 == 3
+	LOCAL:0 = 1000
+ELSEIF ABL:C감각 == 4
+	LOCAL:0 = 2000
+ELSE
+	LOCAL:0 = 5000
+ENDIF
+
+;快V
+;남자を除外
+IF ISFEMALE()
+	IF ABL:V감각 == 0
+		LOCAL:120 = 2
+		LOCAL:1 = 100
+	ELSEIF ABL:V감각 == 1
+		LOCAL:120 = 5
+		LOCAL:1 = 200
+	ELSEIF ABL:V감각 == 2
+		LOCAL:120 = 8
+		LOCAL:1 = 500
+	ELSEIF ABL:V감각 == 3
+		LOCAL:120 = 11
+		LOCAL:1 = 1000
+	ELSEIF ABL:V감각 == 4
+		LOCAL:120 = 15
+		LOCAL:1 = 2000
+	ELSE
+		LOCAL:120 = 20
+		LOCAL:1 = 5000
+	ENDIF
+ELSE
+ENDIF
+
+;쾌A
+IF ABL:A감각 == 0
+	LOCAL:121 = 2
+	LOCAL:2 = 100
+ELSEIF ABL:A감각 == 1
+	LOCAL:121 = 5
+	LOCAL:2 = 200
+ELSEIF ABL:A감각 == 2
+	LOCAL:121 = 8
+	LOCAL:2 = 500
+ELSEIF ABL:A감각 == 3
+	LOCAL:121 = 11
+	LOCAL:2 = 1000
+ELSEIF ABL:A감각 == 4
+	LOCAL:121 = 15
+	LOCAL:2 = 2000
+ELSE
+	LOCAL:121 = 20
+	LOCAL:2 = 5000
+ENDIF
+
+;快B
+IF ABL:B감각 == 0
+	LOCAL:3 = 100
+ELSEIF ABL:C감각 == 1
+	LOCAL:3 = 200
+ELSEIF ABL:C감각 == 2
+	LOCAL:3 = 500
+ELSEIF ABL:C감각 == 3
+	LOCAL:3 = 1000
+ELSEIF ABL:C감각 == 4
+	LOCAL:3 = 2000
+ELSE
+	LOCAL:3 = 5000
+ENDIF
+
+;처녀であれば처녀を破る
+IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
+	LOCAL:10 = 500
+	PRINTL 
+	PRINTL 처녀喪失
+	PRINTL 
+	TALENT:처녀 = -1
+	CFLAG:206 = 4
+ENDIF
+
+;굴복　とりあえず一定で
+LOCAL:8 = 500
+
+;V感覚が低いと공포が入る
+;남자の場合はA感覚で
+IF ISFEMALE()
+	IF ABL:V감각 == 0
+		LOCAL:11 = 800
+	ELSEIF ABL:V감각 == 1
+		LOCAL:11 = 400
+	ELSEIF ABL:V감각 == 2
+		LOCAL:11 = 200
+	ELSEIF ABL:V감각 == 3
+		LOCAL:11 = 100
+	ELSE
+	ENDIF
+ELSE
+	IF ABL:A감각 == 0
+		LOCAL:11 = 800
+	ELSEIF ABL:A감각 == 1
+		LOCAL:11 = 400
+	ELSEIF ABL:A감각 == 2
+		LOCAL:11 = 200
+	ELSEIF ABL:A감각 == 3
+		LOCAL:11 = 100
+	ELSE
+	ENDIF
+ENDIF
+
+;정액경험
+LOCAL:123 = 10
+;펠라경험
+LOCAL:123 = 2
+;이상경험
+LOCAL:150 = 1
+
+PRINTW 
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1
+PRINTW 
+
+

@@ -1,0 +1,128 @@
+﻿;**********************************************************
+;ARG:0で色の指定
+;ARG:1で表示する文字列の指定
+;
+;HTML 3.0およびWindows標準16色を初期設定
+;
+;更新履歴
+;2018.02.14 関数作成、標準16色登録 by 雑魚の人
+;**********************************************************
+@PRINT_RGBTEXT(ARGS:0,ARGS:1)
+#DIMS PRINT_CTEXT
+#DIM BGCOLOR_NOW
+#DIM TEXTCOLOR_NOW
+
+PRINT_CTEXT=%ARGS:1%
+
+SELECTCASE ARGS:0
+	;****************【HTML 3.0仕様＆Windows標準16色】****************
+	;********************************
+	CASE "赤" , "レッド" , "Red" , "RED" , "Ｒｅｄ" , "ＲＥＤ"
+		SETCOLOR 0xFF0000
+	CASE "栗色" , "えび茶色" , "マルーン" , "Maroon", "MAROON" , "Ｍａｒｏｏｎ" , ""
+		SETCOLOR 0x800000
+	CASE "オリーブ" , "オリーブ色" , "Olive" , "OLIVE"
+		SETCOLOR 0x808000
+	CASE "黄" , "イエロー" , "Yellow" , "YELLOW" , "Ｙｅｌｌｏｗ" , "ＹＥＬＬＯＷ"
+		SETCOLOR 0xFFFF00
+	CASE "ライム" , "Lime" , "LIME" , "Ｌｉｍｅ" , "ＬＩＭＥ"
+		SETCOLOR 0x00FF00
+	CASE "緑" , "グリーン"  , "Green" , "GREEN" , "Ｇｒｅｅｎ" , "ＧＲＥＥＮ"
+		SETCOLOR 0x008000
+	CASE "水色" , "アクア" , "Aqua" , "AQUA" , "Ａｑｕａ" , "ＡＱＵＡ"
+		SETCOLOR 0x00FFFF
+	CASE "鴨の羽色" , "鴨の色" ,"真鴨色" , "Teal" , "TEAL" , "Ｔｅａｌ" , "ＴＥＡＬ"
+		SETCOLOR 0x008080
+	CASE "青" , "ブルー" , "Blue" , "BLUE"  , "Ｂｌｕｅ" , "ＢＬＵＥ"
+		SETCOLOR 0x0000FF
+	CASE "ネイビー" , "ネイビー色" , "紺色" , "濃紺" , "ネイビーブルー" , "Navy" , "NAVY" , "Ｎａｖｙ" , "ＮＡＶＹ"
+		SETCOLOR 0x008080
+	CASE "赤紫" , "マゼンタ" , "フクシア" , "フューシャ" , "Fuchsia" , "FUCHSIA" , "Magenta" , "MAGENTA"
+		SETCOLOR 0xFF00FF
+	CASE "紫" ,  "パープル" , "Purple" , "PURPLE" , "Ｐｕｒｐｌｅ" , "ＰＵＲＰＬＥ"
+		SETCOLOR 0x800080
+	CASE "透明" , "純白" , "ホワイト" , "White" , "WHITE" , "Ｗｈｉｔｅ" , "ＷＨＩＴＥ"
+		SETCOLOR 0xFFFFFF
+	CASE "灰色" , "灰" , "グレイ" , "Gray"
+		SETCOLOR 0x808080
+	CASE "Silver"
+		SETCOLOR 0xC0C0C0
+	CASE "黒" , "漆黒" , "純黒" , "真っ黒" , "ブラック" , "Black" , "BLACK" ,"Ｂｌａｃｋ" , "ＢＬＡＣＫ"
+		SETCOLOR 0x000000
+
+
+
+	;****************【X11の色名称】****************
+
+
+
+	;****************【その他】****************
+	CASE "薔薇色"
+		SETCOLOR 0xFF0037
+	CASE "	銀朱"
+		SETCOLOR 0xF80606
+	CASE "ローズ"
+		SETCOLOR 0xFF0037
+	CASE "イチゴ" , "いちご" , "苺" , "ストロベリー"
+		SETCOLOR 0xE50031
+	CASE "牡丹色"
+		SETCOLOR 0xE100B2
+	CASE "紅色"
+		SETCOLOR 0xDB0015
+	CASE "カーマイン"
+		SETCOLOR 0xCC000A
+	CASE "濃紅"
+		SETCOLOR 0xB40926
+	CASE "ワインレッド"
+		SETCOLOR 0xA8002F
+
+
+	CASE "ピンク","ピンク色"
+		SETCOLOR 0xEF8F9C
+	CASE "ローズピンク"
+		SETCOLOR 0xEF7598
+	CASE "桃色", "桃"
+		SETCOLOR 0xEF7585
+	CASE "桜色", "桜"
+		SETCOLOR 0xFCEEEB
+	CASE "サーモンピンク"
+		SETCOLOR 0xFF9E8C
+
+	CASE "暗紅色"
+		SETCOLOR 0x890F65
+	CASE "葡萄酒色" , "ワイン" , "ワインカラー" , "ワイン色"
+		SETCOLOR 0x7B3746
+
+
+	CASEELSE
+		;指定なしならGhostWiteで返す
+		SETCOLOR 0xF8F8FF
+ENDSELECT
+
+;現在の文字色をTEXTCOLOR_NOWに代入
+GETCOLOR
+TEXTCOLOR_NOW=RESULT:0
+;現在の背景色をBGCOLOR_NOWに代入
+GETBGCOLOR
+BGCOLOR_NOW=RESULT:0
+
+;背景色と文字色が一致
+IF TEXTCOLOR_NOW == BGCOLOR_NOW
+	RESETCOLOR
+	;輝度で算出((R*299)+(G*587)+ (B*144))/1000
+	IF ((BGCOLOR_NOW/0x10000*299)+((BGCOLOR_NOW%0x10000)/0x100*587)+(BGCOLOR_NOW%0x100*144))/1000 > 127
+		SETCOLOR 0x000000
+	ELSE
+		SETCOLOR 0xFFFFFF
+	ENDIF
+ENDIF
+
+PRINTFORM %PRINT_CTEXT%
+
+
+RESETCOLOR
+
+
+
+
+

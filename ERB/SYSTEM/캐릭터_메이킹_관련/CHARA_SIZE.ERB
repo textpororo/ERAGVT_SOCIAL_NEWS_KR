@@ -1,0 +1,671 @@
+﻿
+
+;乱数値		キャラクターの部位のサイズを決定する値　RESULT:0で返す
+;		乱数値 = RAND:(11 * 31 * 59 * 15 * 16 * 13 * 23 * 7 * 53)
+;11	신장成長率
+;31	신장補正
+;59	체중(BMI)
+;15	허리둘레
+;16	골반둘레
+;13	アンダー
+;23	胸の張りの強さ
+;7	胸サイズ成長率
+;53	胸サイズ補正
+
+;成長曲線	5歳〜19歳まで1年にどれだけ신장が伸びるかを設定する　RESULT:1で返す
+;		また、そのキャラクターのプロフィールが設定済みかを0かどうかで判定する
+;나이		キャラクターの나이
+
+;RESULT:2	신장を返す(単位：1mm)
+;RESULT:3	체중を返す(単位：10kg ※{RESULT:3 / 10}.{RESULT:3 % 10}で小数第一位まで表せる)
+;RESULT:4	가슴둘레を返す(単位：1mm)
+;RESULT:5	허리둘레を返す(単位：1mm)
+;RESULT:6	골반둘레を返す(単位：1mm)
+;RESULT:7	가슴무게を返す(単位：10kg ※{RESULT:7 / 10}.{RESULT:7 % 10}で小数第一位まで表せる)
+@GENERATE_CHAR_SIZE, 対象キャラ, 変身値
+#DIM KEEPTARGET
+#DIM LCOUNT, 2
+
+#DIM 対象キャラ
+#DIM 나이値
+#DIM 신장
+#DIM 체중, 2
+#DIM 가슴둘레
+#DIM 허리둘레
+#DIM 골반둘레
+#DIM アンダー
+#DIM トップ差分
+#DIM 가슴무게
+#DIM 乱数値, 7
+#DIM 成長曲線
+#DIM 成長値, 15
+#DIM BMI
+#DIM ローレル指数
+#DIM 変身値
+
+#DIM CAL_VAR
+#DIM DEV_VAR, 15
+#DIM RAN_VAR, 2
+
+VARSET 成長値
+
+乱数値 = CFLAG:対象キャラ:33
+成長曲線 = CFLAG:対象キャラ:34
+IF 変身値 > 0
+	나이値 = MAXBASE:対象キャラ:나이
+ELSE
+	나이値 = BASE:対象キャラ:나이
+ENDIF
+
+;乱数値の上書きと決定
+乱数値:1 = 乱数値 % 11
+SIF TALENT:対象キャラ:신장성장률난수 > 0 && TALENT:対象キャラ:신장성장률난수 < 12
+	乱数値:1 = TALENT:対象キャラ:신장성장률난수 - 1
+乱数値:2 = 乱数値 % 31
+SIF TALENT:対象キャラ:신장보정난수 > 0 && TALENT:対象キャラ:신장보정난수 < 32
+	乱数値:2 = TALENT:対象キャラ:신장보정난수 - 1
+乱数値:3 = 乱数値 % 59
+SIF TALENT:対象キャラ:체중난수 > 0 && TALENT:対象キャラ:체중난수 < 60
+	乱数値:3 = TALENT:対象キャラ:체중난수 - 1
+乱数値:4 = 乱数値 % 15
+SIF TALENT:対象キャラ:허리둘레난수 > 0 && TALENT:対象キャラ:허리둘레난수 < 16
+	乱数値:4 = TALENT:対象キャラ:허리둘레난수 - 1
+乱数値:5 = 乱数値 % 16
+SIF TALENT:対象キャラ:골반둘레난수 > 0 && TALENT:対象キャラ:골반둘레난수 < 17
+	乱数値:5 = TALENT:対象キャラ:골반둘레난수 - 1
+乱数値:6 = 乱数値 % 13
+SIF TALENT:対象キャラ:언더난수 > 0 && TALENT:対象キャラ:언더난수 < 14
+	乱数値:6 = TALENT:対象キャラ:언더난수 - 1
+
+;乱数
+LCOUNT:1 = 成長曲線
+
+;나이ごとの成長値の設定(n/100cm)
+FOR LCOUNT, 0, 15
+	成長値:LCOUNT = LCOUNT:1 % 10
+	LCOUNT:1 /= 10
+	成長値:LCOUNT *= 30
+	IF LCOUNT < 7
+		成長値:LCOUNT += 400
+	ELSEIF LCOUNT == 7
+		成長値:LCOUNT += 210
+	ELSEIF LCOUNT == 8
+		成長値:LCOUNT += 100
+	ENDIF
+NEXT
+
+;신장の設定
+
+
+;最低신장の乱数計算
+;5歳時の平均
+신장 = 10940 * (乱数値:1 + 95) / 100
+
+;0歳時	66.2cm
+SIF 나이値 == 0
+	신장 = 신장 * 605 / 1000
+
+;1歳時	79.4cm
+SIF 나이値 == 1
+	신장 = 신장 * 725 / 1000
+
+;2歳時	88.4cm
+SIF 나이値 == 2
+	신장 = 신장 * 808 / 1000
+
+;3歳時	95.9cm
+SIF 나이値 == 3
+	신장 = 신장 * 876 / 1000
+
+;4歳時	102.8cm
+SIF 나이値 == 4
+	신장 = 신장 * 939 / 1000
+
+;
+IF CHARATALENT_F(対象キャラ,変身値,"남자")==0 || CHARATALENT_F(対象キャラ,変身値,"보추")
+	;女性の신장は12歳までほぼ一次関数的に増加、16歳に掛けて急激に止まる
+	;5歳を基準にした場合、～12歳までの7年は一年ごとに＋5～6cm、残り４年で+4 +2 +1 +0.5…が期待値
+	;つまり(35～42)+4+2+1+0.5→約40～50cmほど＋される
+	;日本人女性は最終値158cmが平均
+	FOR LCOUNT, 5,나이値 + 1
+		IF LCOUNT < 13
+			신장 += 成長値:(LCOUNT - 5)
+		ELSEIF LCOUNT < 13
+			신장 += 成長値:(LCOUNT - 5)*2/3
+		ELSEIF LCOUNT < 17
+			신장 += 成長値:(LCOUNT - 5)/((LCOUNT-12)*2)
+		ELSEIF LCOUNT < 25
+			신장 += 成長値:14 / 8
+		ELSEIF LCOUNT < 30
+			신장 += 成長値:14 / 12
+		ELSEIF LCOUNT < 40
+		ELSEIF LCOUNT < 50
+			신장 -= 成長値:14 / 12
+		ELSE
+			신장 -= 成長値:14 / 8
+		ENDIF
+	NEXT
+ELSE
+	FOR LCOUNT, 5,나이値 + 1
+		IF LCOUNT < 20
+			신장 += 成長値:(LCOUNT - 5)
+		ELSEIF LCOUNT < 25
+			신장 += 成長値:14 / 4
+		ELSEIF LCOUNT < 30
+			신장 += 成長値:14 / 8
+		ELSEIF LCOUNT < 40
+		ELSEIF LCOUNT < 50
+			신장 -= 成長値:14 / 8
+		ELSE
+			신장 -= 成長値:14 / 4
+		ENDIF
+	NEXT
+ENDIF
+
+
+;신장の乱数計算
+신장 = 신장 * ((CHARATALENT_F(対象キャラ,変身値,"왜소함") == 0) * 25 + CHARATALENT_F(対象キャラ,変身値,"장신") * 25 + 乱数値:2 + 260) / 3000
+
+;FEATによる신장への影響
+IF TALENT:対象キャラ:소형체구 > 0
+	신장 = 신장 * 75 / 100
+	SIF TALENT:対象キャラ:요정 > 0
+		신장 = 신장 * 50 / 100
+ENDIF
+
+;남자
+SIF CHARATALENT_F(対象キャラ,変身値,"남자") && CHARATALENT_F(対象キャラ,変身値,"보추") == 0
+	신장 = 신장 * 1085 / 1000
+
+
+;신장の上書き
+SIF TALENT:対象キャラ:신장지정 > 0 && 変身値 == 0
+	신장 = TALENT:対象キャラ:신장지정
+SIF TALENT:対象キャラ:변신시키지정 > 0 && 変身値 == 1
+	신장 = TALENT:対象キャラ:변신시키지정
+
+;安産型:5　むちむち:6　イカ腹:7
+;BMIはそれぞれ通常20(美容체중)、むちむち22（健康체중）、スレンダー18（モデル체중）を基本とする
+;장신はBMIが低下、왜소함はBMIが上昇
+
+;2022/02/06 巨尻を골반둘레以外安産型と同じに
+;爆尻を골반둘레以外むちむちと同じに計算して追加
+
+BMI = 乱数値:3 / 20 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 20 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 20 + (CHARATALENT_F(対象キャラ,変身値,"スレンダー") == 0) * 20 - CHARATALENT_F(対象キャラ,変身値,"장신") * 20 + CHARATALENT_F(対象キャラ,変身値,"왜소함") * 20 - (TALENT:対象キャラ:요정 > 0) * 10 + (TALENT:対象キャラ:짐승족 > 0) * 10 + 180
+BMI = BMI * LIMIT(나이値 + 100, 100, 120) / 120
+ローレル指数 = (乱数値:3 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 11 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 11 + (CHARATALENT_F(対象キャラ,変身値,"スレンダー") == 0) * 11 + 178) / 2
+
+체중 = BMI * 신장 * 신장 / 1000000
+체중:1 = 1000000 * 신장 / (13200000 - 6456 * 신장)
+체중:1 = 체중:1 * (BMI * 5292307 - 2700000) / 1000000000
+
+CAL_VAR = LIMIT((1500 - 신장) * 4, 0, 1000)
+
+체중 = (체중:0 * (1000 - CAL_VAR) + 체중:1 * CAL_VAR) / 1000 + 乱数値:3
+
+;ゴールデンカノン
+;신장比でバストは0.54、ウエストは0.38、ヒップは0.54
+;허리둘레の乱数計算
+허리둘레 = 신장 * (BMI * 9 + 乱数値:4 * 30 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 50 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 50 + CHARATALENT_F(対象キャラ,変身値,"イカ腹") * 200 + (CHARATALENT_F(対象キャラ,変身値,"安産型") == 0 && CHARATALENT_F(対象キャラ,変身値,"巨尻") == 0 && CHARATALENT_F(対象キャラ,変身値,"スレンダー") == 0) * 100 + (TALENT:対象キャラ:짐승족 == 0) * 50 + 1650) / 10000
+
+;골반둘레の乱数計算
+골반둘레 = 신장 * (BMI * 7 + 乱数値:5 * 30 + CHARATALENT_F(対象キャラ,変身値,"安産型") * 200 + CHARATALENT_F(対象キャラ,変身値,"巨尻") * 350 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 450 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 25 + (CHARATALENT_F(対象キャラ,変身値,"イカ腹") == 0) * 50 + (CHARATALENT_F(対象キャラ,変身値,"スレンダー") == 0) * 100 + (TALENT:対象キャラ:짐승족 > 0) * 50 + 3710) / 10000
+
+;アンダーの乱数計算
+アンダー = 신장 * (BMI * 5 + 乱数値:6 * 5 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 25 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 25 + (CHARATALENT_F(対象キャラ,変身値,"安産型") == 0 && CHARATALENT_F(対象キャラ,変身値,"巨尻") == 0 && CHARATALENT_F(対象キャラ,変身値,"スレンダー") == 0) * 15 + 3310) / 10000
+
+;25歳以上は徐々に熟女体系化
+IF 나이値 >= 25 && 나이値 < 30
+	LOCAL = 나이値 - 4
+	체중 = 체중 * (1000 + LOCAL * 2 / 3) / 1000
+	허리둘레 = 허리둘레 * (1000 + LOCAL / 2) / 1000
+	골반둘레 = 골반둘레 * (1000 + LOCAL) / 1000
+ELSEIF 나이値 >= 30 && 나이値 < 40
+	LOCAL = 나이値 - 4
+	체중 = 체중 * (1000 + LOCAL) / 1000
+	허리둘레 = 허리둘레 * (1000 + LOCAL * 2 / 3) / 1000
+	골반둘레 = 골반둘레 * (1000 + LOCAL) / 1000
+	アンダー = アンダー * (1000 + LOCAL / 10) / 1000
+ELSEIF 나이値 >= 40
+	LOCAL = MIN(나이値 - 4, 45)
+	체중 = 체중 * (1000 + LOCAL * 3 / 2) / 1000
+	허리둘레 = 허리둘레 * (1000 + LOCAL * 3 / 4) / 1000
+	골반둘레 = 골반둘레 * (1000 + LOCAL) / 1000
+	アンダー = アンダー * (1000 + LOCAL / 8) / 1000
+ENDIF
+
+;가슴둘레 - アンダーの乱数計算
+;カップサイズのため単独で関数化
+CALL TOP_UNDER, 対象キャラ, 変身値
+トップ差分=RESULT
+;체중 +=(RESULT * 124 - 18600 * RESULT:1 / 50) / 1000
+체중 +=(- 18600 * RESULT:1 / 50) / 1000
+;가슴둘레
+가슴둘레 = アンダー + トップ差分
+
+;가슴무게=(RESULT * 124)/1000
+
+;トップ・アンダー・カップサイズに基づく체중の補正
+CALL CUP_SIZE(トップ差分)
+가슴무게=CALC_BREAST_WEIGHT(가슴둘레,アンダー,RESULT)/100
+체중 +=가슴무게
+
+
+
+IF CHARATALENT_F(対象キャラ,変身値,"남자") && CHARATALENT_F(対象キャラ,変身値,"보추") ==0
+	가슴둘레 = -1
+	허리둘레 = -1
+	골반둘레 = -1
+ENDIF
+
+;各パラメータの上書き
+SIF TALENT:対象キャラ:체중지정 > 0 && 変身値 == 0
+	체중 = TALENT:対象キャラ:체중지정
+SIF TALENT:対象キャラ:변신시체중지정 > 0 && 変身値 == 1
+	체중 = TALENT:対象キャラ:변신시체중지정
+SIF TALENT:対象キャラ:가슴둘레지정 > 0 && 変身値 == 0
+	가슴둘레 = TALENT:対象キャラ:가슴둘레지정
+SIF TALENT:対象キャラ:변신시가슴둘레지정 > 0 && 変身値 == 1
+	가슴둘레 = TALENT:対象キャラ:변신시가슴둘레지정
+SIF TALENT:対象キャラ:허리둘레지정 > 0 && 変身値 == 0
+	허리둘레 = TALENT:対象キャラ:허리둘레지정
+SIF TALENT:対象キャラ:변신시허리둘레지정 > 0 && 変身値 == 1
+	허리둘레 = TALENT:対象キャラ:변신시허리둘레지정
+SIF TALENT:対象キャラ:골반둘레지정 > 0 && 変身値 == 0
+	골반둘레 = TALENT:対象キャラ:골반둘레지정
+SIF TALENT:対象キャラ:변신시골반둘레지정 > 0 && 変身値 == 1
+	골반둘레 = TALENT:対象キャラ:변신시골반둘레지정
+SIF TALENT:対象キャラ:가슴무게지정 > 0 && 変身値 == 0
+	가슴무게 = TALENT:対象キャラ:가슴무게지정
+SIF TALENT:対象キャラ:변신시가슴무게지정 > 0 && 変身値 == 1
+	가슴무게 = TALENT:対象キャラ:변신시가슴무게지정
+
+RETURN 乱数値, 成長曲線, 신장, 체중, 가슴둘레, 허리둘레, 골반둘레, 가슴무게
+
+
+
+@TOP_UNDER, 対象キャラ, 変身値
+#DIM 対象キャラ
+#DIM 変身値
+
+#DIM 乱数値, 4
+#DIM 나이値
+#DIM 影響値
+#DIM 最小値
+#DIM 最大値
+#DIM サイズ値
+
+乱数値 = CFLAG:対象キャラ:33
+
+;乱数値の上書きと決定
+乱数値:1 = 乱数値 % 23
+SIF TALENT:対象キャラ:가슴탄력난수 > 0 && TALENT:対象キャラ:가슴탄력난수 < 24
+	乱数値:1 = TALENT:対象キャラ:가슴탄력난수 - 1
+乱数値:2 = 乱数値 % 7
+SIF TALENT:対象キャラ:가슴성장률난수 > 0 && TALENT:対象キャラ:가슴성장률난수 < 8
+	乱数値:2 = TALENT:対象キャラ:가슴성장률난수 - 1
+乱数値:3 = 乱数値 % 53
+SIF TALENT:対象キャラ:가슴사이즈보정난수 > 0 && TALENT:対象キャラ:가슴사이즈보정난수 < 54
+	乱数値:3 = TALENT:対象キャラ:가슴사이즈보정난수 - 1
+
+;나이値の決定
+IF 変身値 > 0
+	나이値 = MAXBASE:対象キャラ:나이
+ELSE
+	나이値 = BASE:対象キャラ:나이
+ENDIF
+나이値 = 나이値
+SIF 나이値 > 22
+	나이値 = 22
+
+;나이値による影響度
+影響値 = (나이値 + 10) * (乱数値:2 * 2 + 26 - 乱数値:1) / 15 + 乱数値:3 / 4
+IF 나이値 < 5
+	影響値 += 나이値 * 6
+ELSEIF 나이値 < 10
+	影響値 += 24 + (나이値 - 4) * 12
+ELSEIF 나이値 < 15
+	影響値 += 84 + (나이値 - 9) * 3
+ELSE
+	影響値 += 99 + (나이値 - 14) * 1
+ENDIF
+
+;サイズを計算
+IF CHARATALENT_F(対象キャラ,変身値,"絶壁") || CHARATALENT_F(対象キャラ,変身値,"보추")
+	サイズ値 = -65
+	最小値 = 0
+	最大値 = 124
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"빈유")
+	サイズ値 = -40
+	最小値 = 0
+	最大値 = 149
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"奇乳")
+	サイズ値 = 170
+	最小値 = 275
+	最大値 = 999
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"魔乳")
+	サイズ値 = 130
+	最小値 = 250
+	最大値 = 474
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"超乳")
+	サイズ値 = 90
+	最小値 = 225
+	最大値 = 399
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"爆乳")
+	サイズ値 = 50
+	最小値 = 200
+	最大値 = 324
+ELSEIF CHARATALENT_F(対象キャラ,変身値,"거유")
+	サイズ値 = 25
+	最小値 = 175
+	最大値 = 249
+ELSE
+	サイズ値 = 0
+	最小値 = 100
+	最大値 = 174
+ENDIF
+最小値 = MAX(最小値 - 75 * MAX(15 - 나이値, 0) / 15, 0)
+最大値 = MAX(最大値 - 75 * MAX(15 - 나이値, 0) / 15, 0)
+サイズ値 = サイズ値 * (乱数値:3 + 50) / 50 + 影響値
+;素質補正
+サイズ値 = サイズ値 * (100 + CHARATALENT_F(対象キャラ,変身値,"むちむち") * 5) / 100
+サイズ値 = サイズ値 * (100 + CHARATALENT_F(対象キャラ,変身値,"爆尻") * 5) / 100
+サイズ値 = サイズ値 * (100 - CHARATALENT_F(対象キャラ,変身値,"イカ腹") * 10) / 100
+;最小値、最大値を適用
+サイズ値 = LIMIT(サイズ値, 最小値, 最大値)
+
+SIF CHARATALENT_F(対象キャラ,変身値,"남자") && CHARATALENT_F(対象キャラ,変身値,"보추") ==0
+	サイズ値 = -1
+
+RETURN サイズ値, 影響値
+
+
+;※TOP_UNDERのRESULT(サイズ値)を渡す
+;RESULTS 対応する文字表記
+;RESULT 生の値
+@CUP_SIZE, ARG
+IF ARG < 25
+	LOCAL = 1
+	RESULTS = ―
+ELSEIF ARG < 75
+	RESULTS = AAA
+ELSEIF ARG < 100
+	RESULTS = AA
+ELSEIF ARG < 125
+	RESULTS = A
+ELSEIF ARG < 150
+	RESULTS = B
+ELSEIF ARG < 175
+	RESULTS = C
+ELSEIF ARG < 200
+	RESULTS = D
+ELSEIF ARG < 225
+	RESULTS = E
+ELSEIF ARG < 250
+	RESULTS = F
+ELSEIF ARG < 275
+	RESULTS = G
+ELSEIF ARG < 300
+	RESULTS = H
+ELSEIF ARG < 325
+	RESULTS = I
+ELSEIF ARG < 350
+	RESULTS = J
+ELSEIF ARG < 375
+	RESULTS = K
+ELSEIF ARG < 400
+	RESULTS = L
+ELSEIF ARG < 425
+	RESULTS = M
+ELSEIF ARG < 450
+	RESULTS = N
+ELSEIF ARG < 475
+	RESULTS = O
+ELSEIF ARG < 500
+	RESULTS = P
+ELSEIF ARG < 525
+	RESULTS = Q
+ELSEIF ARG < 550
+	RESULTS = R
+ELSEIF ARG < 575
+	RESULTS = S
+ELSEIF ARG < 600
+	RESULTS = T
+ELSEIF ARG < 625
+	RESULTS = U
+ELSEIF ARG < 650
+	RESULTS = V
+ELSEIF ARG < 675
+	RESULTS = W
+ELSEIF ARG < 700
+	RESULTS = X
+ELSEIF ARG < 725
+	RESULTS = Y
+ELSEIF ARG < 750
+	RESULTS = Z
+ELSE
+	RESULTS = Z
+ENDIF
+IF ARG < 25
+	LOCAL = 1
+ELSE
+	LOCAL = MAX(2,(ARG-25)/25)
+ENDIF
+
+RETURN LOCAL
+
+
+
+;成長曲線の設定
+@GENERATE_BODYLINE, 対象キャラ
+#DIM LCOUNT, 2
+
+#DIM 対象キャラ
+#DIM 乱数値
+#DIM 成長曲線
+#DIM 成長値, 15
+
+#DIM CAL_VAR
+#DIM DEV_VAR, 15
+#DIM RAN_VAR, 2
+
+VARSET 成長値
+
+;乱数値の設定
+乱数値 = RAND:(11 * 31 * 59 * 15 * 16 * 13 * 23 * 7 * 53)
+
+;11	最低신장
+;31	신장
+;59	체중(BMI)
+;15	허리둘레
+;16	골반둘레
+;13	アンダー
+;23	カップ最低値
+;7	カップ最高値
+;53	カップ基準値
+
+;乱数値の上書き
+SIF TALENT:対象キャラ:체형난수치지정 > 0
+	乱数値 = TALENT:対象キャラ:체형난수치지정
+
+DEV_VAR:0 = 83
+DEV_VAR:1 = 80
+DEV_VAR:2 = 75
+DEV_VAR:3 = 83
+DEV_VAR:4 = 113
+DEV_VAR:5 = 108
+DEV_VAR:6 = 50
+DEV_VAR:7 = 40
+DEV_VAR:8 = 30
+DEV_VAR:9 = 20
+DEV_VAR:10 = 10
+DEV_VAR:11 = 10
+DEV_VAR:12 = 10
+DEV_VAR:13 = 8
+DEV_VAR:14 = 6
+
+VARSET RAN_VAR
+FOR LCOUNT:0, 0, 15
+	RAN_VAR:0 += DEV_VAR:(LCOUNT:0)
+NEXT
+
+FOR LCOUNT:0, 0, 4 * 15
+	CAL_VAR = RAND:(RAN_VAR:0)
+	RAN_VAR:1 = 0
+	FOR LCOUNT:1, 0, 15
+		RAN_VAR:1 += DEV_VAR:(LCOUNT:1)
+		SIF CAL_VAR < RAN_VAR:1
+			BREAK
+	NEXT
+	IF 成長値:(LCOUNT:1 - 1) >= 9
+		LCOUNT:0 -= 1
+		CONTINUE
+	ENDIF
+	成長値:(LCOUNT:1 - 1) += 1
+NEXT
+
+VARSET LCOUNT
+FOR LCOUNT, 0, 15
+	LCOUNT:1 *= 10
+	LCOUNT:1 += 成長値:(14 - LCOUNT)
+NEXT
+成長曲線 = LCOUNT:1
+
+;成長曲線の上書き
+SIF TALENT:対象キャラ:체형성장곡선지정 > 0
+	成長曲線 = TALENT:対象キャラ:체형성장곡선지정
+
+
+CFLAG:対象キャラ:33 = 乱数値
+CFLAG:対象キャラ:34 = 成長曲線
+
+RETURN 0
+
+
+;================================================================
+; 乳房の重さを算出する
+;--------------------------------
+;	nTB			: トップバスト(単位:mm)
+;	nUB			: アンダーバスト(単位:mm)
+;--------------------------------
+; 戻り値など
+;	乳房２つ分の重量が返る。単位は[g]。
+;================================================================
+@CALC_BREAST_WEIGHT( nTB, nUB,cupsize )
+#FUNCTION
+	#DIM nTB
+	#DIM nUB
+	#DIM cupsize
+
+	#DIM nHemisphereValue		; 半球指数（バストの形が半球以上になるときのカップ指数。「nUB/4.8/2.5」）
+	#DIM nCupValue				; カップ指数（ブラのカップを算出するための数値。「(nTB-nUB)/2.5」）
+	#DIM nBallR					; 乳房半径
+	#DIM nBottomR				; 乳房底半径
+	#DIM nBreastRadius_Temp
+	#DIM nH						; 乳房高さ
+	#DIM nBreastVolume			; 乳房の体積(単位:立方cm)
+	#DIM nBreastWeight			; 乳房の重量(単位:g)
+
+	nBreastWeight = 0
+
+	;================================
+	;・胸の形と体積
+	;	まず、乳房の形を一部が切り取られた球体と仮定する。
+	;	1) その球体の半径を算出する
+	;		「nBallR = (nUB / 15 + nCupValue) * 0.45」
+	;	2) 切り取られた平面の半径を算出する
+	;		「nBottomR = (nUB / 15 + nCupValue) * 0.45 - (ABS(nCupValue - nHemisphereValue) * 0.39)
+	;	3) 切り取られた部分を除く球の高さを算出する
+	;		「nH = nBallR + √(nBallR^2 - nBottomR^2)」（半球以上）
+	;		「nH = nBallR - √(nBallR^2 - nBottomR^2)」（半球未満）
+	;	4) 体積を算出する
+	;		「nBreastVolume = nH * (3 * nH * (2 * nBallR - nH) + nH^2) * 314 / 100 / 6」
+	;	5) 重量を算出する（1立方cmあたり0.9gとする（脂肪は水より軽いため））
+	;		「nBreastWeight = nBreastVolume * 0.9」
+	;
+	;	乳房半径	: 乳房の形を一部が切り取られた球体と仮定したときの半径。
+	;	乳房底半径	: バストの底面の半径。
+	;	乳房高さ	: バストの高さ。
+	;================================
+
+	nHemisphereValue = nUB * 100 / 48 / 25
+	nCupValue = (nTB - nUB) * 2 / 5
+
+
+	; 乳房半径の算出
+	nBallR = (nUB / 15 + nCupValue) * 45 / 100
+	; 乳房底半径の算出
+	nBottomR = (nUB / 15 + nCupValue) * 45 / 100 - (ABS( nCupValue - nHemisphereValue ) * 39 / 100)
+
+	;続行不能な値が出たら重量0と見なして中断
+	SIF POWER( nBallR, 2 ) - POWER( nBottomR, 2 )<0
+		RETURNF 0
+
+	; 高さの算出
+	IF nCupValue >= nHemisphereValue
+		nH = nBallR + SQRT( POWER( nBallR, 2 ) - POWER( nBottomR, 2 ) )
+	ELSE
+		nH = nBallR - SQRT( POWER( nBallR, 2 ) - POWER( nBottomR, 2 ) )
+	ENDIF
+	; 乳房体積の算出
+	nBreastVolume = nH * (3 * nH * (2 * nBallR - nH) + POWER( nH, 2 )) * 314 / 100 / 6
+
+	; 乳房重量の算出
+	nBreastWeight = nBreastVolume *2 * 87 / 100 / 1000
+
+;カップサイズによる補正(適当)
+IF cupsize>-1
+	;カップサイズごとの大まかな目安
+	SELECTCASE cupsize-1
+	;-
+	CASE 0
+		LOCAL=18
+	;AAA
+	CASE 1
+		LOCAL=60
+	;AA
+	CASE 2
+		LOCAL=100
+	;A
+	CASE 3
+		LOCAL=300
+	CASE 4
+		LOCAL=460
+	CASE 5
+		LOCAL=590
+	CASE 6
+		LOCAL=758
+	CASE 7
+		LOCAL=1060
+	CASE 8
+		LOCAL=1620
+	CASE 9
+		LOCAL=2200
+	CASE 10
+		LOCAL=3000
+	CASE 11
+		LOCAL=3800
+	CASE 12
+		LOCAL=5000
+	CASE 13
+		LOCAL=6200
+	CASEELSE
+		LOCAL=6200+1200*(cupsize-13)
+	ENDSELECT
+
+	;Ｇカップ以上の場合、計算した値が目安よりも軽かったら重めに補正する
+	;IF LOCAL>nBreastWeight
+	IF cupsize>=9
+		SELECTCASE cupsize
+		CASE 9
+			nBreastWeight=(LOCAL*12+nBreastWeight*2)/14
+		CASE 10
+			nBreastWeight=(LOCAL*11+nBreastWeight*2)/13
+		CASEELSE
+			nBreastWeight=(LOCAL*10+nBreastWeight*2)/12
+		ENDSELECT
+	ELSE
+		nBreastWeight=(LOCAL+nBreastWeight*10)/11
+	ENDIF
+ENDIF
+	RETURNF nBreastWeight

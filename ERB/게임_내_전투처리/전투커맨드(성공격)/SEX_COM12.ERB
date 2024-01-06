@@ -1,0 +1,150 @@
+﻿;イラマチオ
+
+;性コマンド分類
+@SEX_TYPE_COM12
+RETURN 펠라
+
+@SEX_COM12,ARG = 0,ARG:1 = 0
+;追加責め
+EX_COM = 0
+SH_COM = 0
+
+;사정部位フラグ:口と胸を立てる
+TFLAG:4 = TFLAG:4 | 입
+TFLAG:4 = TFLAG:4 | 가슴
+;我慢：確率で사정部位플래그를折る
+SIF RAND:100 < 25
+	TFLAG:4 = 0
+
+;悪堕ちキャラのペニス位置をセット
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
+	TFLAG:18 = 입
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 50
+
+;사정値 350
+CALL TENTACLE_SYASEI_UP, 350
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 12
+
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,-1)
+
+
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	TRYCALLFORM MESSAGE_MOB_{ARG}_COM12, EX_COM, SH_COM
+ELSE
+	;지문: 洗脳/悪堕ちキャラが操作キャラにイラマチオをさせた
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_SEX_COM12
+	;지문: COM12
+	CALL MESSAGE_SEX_COM12
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+;服へのダメージ
+CALL CLOTH_BATTLE_DAMAGE, 5
+
+;ベース
+EXP:펠라경험 += 2
+SIF ABL:마조끼 >= 2
+	EXP:고통쾌락경험 += 1
+SIF ABL:봉사정신 >= 2
+	EXP:봉사쾌락경험 += 1
+
+;공순
+IF ABL:순종 <= 2
+	LOCAL:5 = 200
+ELSEIF ABL:순종 == 3
+	LOCAL:5 = 500
+ELSEIF ABL:순종 == 4
+	LOCAL:5 = 1000
+ELSEIF ABL:순종 >= 5
+	LOCAL:5 = 2000
+ENDIF
+
+;습득
+IF ABL:봉사정신 == 0
+	LOCAL:6 = 100
+ELSEIF ABL:봉사정신 == 1
+	LOCAL:6 = 200
+ELSEIF ABL:봉사정신 == 2
+	LOCAL:6 = 500
+ELSEIF ABL:봉사정신 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:봉사정신 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:봉사정신 >= 5
+	LOCAL:6 = 5000
+ENDIF
+
+;굴복
+IF ABL:순종 == 0
+	LOCAL:8 = 100
+ELSEIF ABL:순종 == 1
+	LOCAL:8 = 200
+ELSEIF ABL:순종 == 2
+	LOCAL:8 = 500
+ELSEIF ABL:순종 == 3
+	LOCAL:8 = 1000
+ELSEIF ABL:순종 == 4
+	LOCAL:8 = 2000
+ELSEIF ABL:순종 >= 5
+	LOCAL:8 = 5000
+ENDIF
+
+;봉사정신に応じてボーナス
+IF ABL:봉사정신 < 3
+ELSEIF ABL:봉사정신 < 4
+	LOCAL:5 += 500
+	LOCAL:6 += 200
+ELSEIF ABL:봉사정신 < 5
+	LOCAL:5 += 1000
+	LOCAL:6 += 500
+ELSE
+	LOCAL:5 += 2000
+	LOCAL:6 += 1000
+ENDIF
+
+;순종が低いと공포が入る　とりあえず固定
+SIF ABL:순종 < 3
+	LOCAL:11 = 500
+
+;行動予約なし
+TFLAG:17 = -1
+;촉수の行動を記録
+TFLAG:20 = 12
+
+;습득基本値
+LOCAL:6 += 4000
+
+;욕정基本値
+LOCAL:7 += 400
+
+;굴복基本値
+LOCAL:8 += 2500
+
+;치정基本値
+LOCAL:9 += 00
+
+;고통基本値
+LOCAL:10 += 8500
+
+;공포基本値
+LOCAL:11 += 1000
+
+;체력消費基本値
+LOCAL:12 += 300
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

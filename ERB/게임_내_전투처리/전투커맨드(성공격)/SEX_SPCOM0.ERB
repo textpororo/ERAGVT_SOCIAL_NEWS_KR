@@ -1,0 +1,112 @@
+﻿;C攻めSP
+
+;性コマンド分類
+@SEX_TYPE_COM1000
+RETURN 통상
+
+@SEX_SPCOM0
+;EX_COM	追加責め実行部位（ビット）
+;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
+;追加責め
+CALL SEX_COMEX_RANDOM, Ｃ
+EX_COM = RESULT:0
+SH_COM = RESULT:1
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 100
+
+;사정値 100
+CALL TENTACLE_SYASEI_UP, 100
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1000
+
+
+;快C
+IF ABL:C감각 == 0
+	LOCAL:0 = 2000
+ELSEIF ABL:C감각 == 1
+	LOCAL:0 = 4000
+ELSEIF ABL:C감각 == 2
+	LOCAL:0 = 10000
+ELSEIF ABL:C감각 == 3
+	LOCAL:0 = 20000
+ELSEIF ABL:C감각 == 4
+	LOCAL:0 = 40000
+ELSEIF ABL:C감각 >= 5
+	LOCAL:0 = 100000
+ENDIF
+;ペニス持ちには効果大
+SIF ISMANLY() || TALENT:후타나리 > 0
+	LOCAL:0 += 1500
+
+;追加責め実行
+IF EX_COM
+	CALL SEX_COMEX, Ｃ, 2, EX_COM | SH_COM
+	REPEAT 12
+		LOCAL:COUNT += RESULT:COUNT
+	REND
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,-1)
+
+
+;지문: 洗脳/悪堕ちキャラが操作キャラにC攻めSPをした
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_SEX_SPCOM0
+
+;지문: SPCOM0
+CALL MESSAGE_SEX_SPCOM0, EX_COM, SH_COM
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+;服へのダメージ
+CALL CLOTH_BATTLE_DAMAGE, 8
+
+;ベース
+EXP:고통쾌락경험 += 1
+
+
+
+;C感覚が低いと고통と공포が入る
+IF ABL:C감각 < 4
+	LOCAL:10 = 1000
+	LOCAL:11 = 1000
+ENDIF
+
+
+;行動予約なし
+TFLAG:17 = -1
+;촉수の行動を記録
+TFLAG:20 = 1000
+
+;습득基本値
+LOCAL:6 += 500
+
+;욕정基本値
+LOCAL:7 += 0
+
+;굴복基本値
+LOCAL:8 += 2000
+
+;치정基本値
+LOCAL:9 += 0
+
+;고통基本値
+LOCAL:10 += 500
+
+;공포基本値
+LOCAL:11 += 1000
+
+;체력消費基本値
+LOCAL:12 += 200
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

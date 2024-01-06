@@ -1,0 +1,169 @@
+﻿;種付けピストン（Ｖ挿入系統からの派生限定行動）
+
+;性コマンド分類
+@SEX_TYPE_COM15
+RETURN 삽입
+
+@SEX_COM15,ARG = 0,ARG:1 = 0
+;EX_COM	追加責め実行部位（ビット）
+;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
+;追加責め
+CALL SEX_COMEX_RANDOM, Ｖ, ARG:1
+EX_COM = RESULT:0
+SH_COM = RESULT:1
+
+INSERT |= 질
+;状態異常：강구속
+SIF (TCVARn:12 & 강구속) == 0
+	CALL STATE_CHANGE_PKOUSOKU, 100
+
+;悪堕ちキャラのペニス位置をセット
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
+	TFLAG:18 = 질
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 5
+
+;사정値 450
+CALL TENTACLE_SYASEI_UP, 450
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 15
+
+;快V
+IF ABL:V감각 == 0
+	LOCAL:1 = 40
+ELSEIF ABL:V감각 == 1
+	LOCAL:1 = 100
+ELSEIF ABL:V감각 == 2
+	LOCAL:1 = 200
+ELSEIF ABL:V감각 == 3
+	LOCAL:1 = 400
+ELSEIF ABL:V감각 == 4
+	LOCAL:1 = 1000
+ELSEIF ABL:V감각 >= 5
+	LOCAL:1 = 2000
+ENDIF
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,1,-1)
+
+
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	TRYCALLFORM MESSAGE_MOB_{ARG}_COM15, EX_COM, SH_COM
+ELSE
+	;지문: 洗脳/悪堕ちキャラが操作キャラに種付けピストンをした
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_SEX_COM15
+	;地の文:COM2
+	CALL MESSAGE_SEX_COM15, EX_COM, SH_COM
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+;服へのダメージ
+CALL CLOTH_BATTLE_DAMAGE, 2
+
+;ベース
+EXP:V경험 += 1
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
+	EXP:근친교배경험 += 1
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
+	EXP:근친교배경험 += 1
+
+
+
+;공순
+IF ABL:순종 <= 2
+	LOCAL:5 = 20
+ELSEIF ABL:순종 == 3
+	LOCAL:5 = 50
+ELSEIF ABL:순종 == 4
+	LOCAL:5 = 100
+ELSEIF ABL:순종 >= 5
+	LOCAL:5 = 200
+ENDIF
+
+;습득
+IF ABL:봉사정신 == 0
+	LOCAL:6 = 10
+ELSEIF ABL:봉사정신 == 1
+	LOCAL:6 = 25
+ELSEIF ABL:봉사정신 == 2
+	LOCAL:6 = 50
+ELSEIF ABL:봉사정신 == 3
+	LOCAL:6 = 100
+ELSEIF ABL:봉사정신 == 4
+	LOCAL:6 = 250
+ELSEIF ABL:봉사정신 >= 5
+	LOCAL:6 = 500
+ENDIF
+
+;윤활が低いと고통が入る
+IF PALAM:윤활 < 1000
+	LOCAL:10 += 1000
+ELSEIF PALAM:윤활 < 2000
+	LOCAL:10 += 200
+ENDIF
+
+;V感覚が低いと공포が入る
+IF ABL:V감각 == 0
+	LOCAL:11 = 400
+ELSEIF ABL:V감각 == 1
+	LOCAL:11 = 100
+ELSEIF ABL:V감각 == 2
+	LOCAL:11 = 40
+ELSEIF ABL:V감각 == 3
+	LOCAL:11 = 20
+ELSE
+ENDIF
+
+;追加責め実行
+IF EX_COM
+	CALL SEX_COMEX, Ｖ, 1, EX_COM | SH_COM
+	REPEAT 12
+		LOCAL:COUNT += RESULT:COUNT
+	REND
+ENDIF
+
+;대량사정可能ならフィニッシュに移行
+IF FLAG:15 >= FLAG:14 * 2
+	TFLAG:17 = 16
+;Ａ追加責めが立っていれば両穴ピストンに移行
+ELSEIF (EX_COM & Ａ) && FLAG:15 >= FLAG:14 && BASE:A결계내구력 == 0 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISHOLE() == 1
+	TFLAG:17 = 19
+;それ以外なら種付け続行
+ELSE
+	TFLAG:17 = 15
+ENDIF
+;촉수の行動を記録
+TFLAG:20 = 15
+
+;습득基本値
+LOCAL:6 += 150
+
+;욕정基本値
+LOCAL:7 += 100
+
+;굴복基本値
+LOCAL:8 += 100
+
+;치정基本値
+LOCAL:9 += 100
+
+;고통基本値
+LOCAL:10 += 50
+
+;공포基本値
+LOCAL:11 += 150
+
+;체력消費基本値
+LOCAL:12 += 1
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

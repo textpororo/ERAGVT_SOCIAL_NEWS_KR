@@ -1,0 +1,557 @@
+﻿
+;★意識の有無
+;　心境と刻印は丸呑み(この場合意識は取り戻す)即死中・即死後に呼ばれる可能性もある
+
+
+
+;처녀・初被弾・拘束中か否かなどで分岐すべきか
+
+
+;●피임결계の崩壊
+;성내성０時
+@KOJO_1_PREGNANCY_BARRIER_COLLAPSED_16
+PRINTDATAL
+	DATAFORM 「っ！？　う、嘘だろ、結界が…！？」
+ENDDATA
+
+
+;★未実装　部位結界の発動
+@KOJO_1_SHIELD_STATE_16(ARG)
+IF BASE:(ARG + 30) <= 0
+	RESULT = - 1
+ELSE
+	CALL PERCENT_CAL, BASE:(ARG + 30), MAXBASE:(ARG + 30)
+ENDIF
+IF RESULT < 0
+	;ついに完全に力を失い、消え去ってしまった
+	;完全に力を失った結界にヒビが入り、粉々に砕けてしまった
+	;結界は完全に力を失い、촉수に引き裂かれてしまった！
+	IF FLAG:700 || CFLAG:0 != 상태_건강
+		IF ARG == 0
+			;無防備な陰核
+		ELSEIF ARG == 1
+			;無防備にひくつく秘所
+		ELSEIF ARG == 2
+			;キュッと引き締まった菊門
+		ELSEIF ARG == 3
+			;ツンと天を衝く乳首
+		ENDIF
+		;が촉수の眼前にさらされて
+	ENDIF
+
+ELSEIF RESULT < 25
+	;今にも破られそうな結界が、かろうじて촉수の動きを止めている
+ELSEIF RESULT < 50
+	;未だ촉수の跳梁を許さない結界ではあるが、もうあまり保ちそうにない
+ELSEIF RESULT < 75
+	;結界は、依然として촉수の侵入を拒んでいる
+ELSE
+	;淡く輝きを放つ結界が、力強く촉수の侵入を阻んだ
+ENDIF
+
+
+;●服の損傷
+;捕獲時とそれ以外で分岐すべきか
+;アウターが大きく破れ始めた　衣装が損傷した　下着防護と挿入抵抗が消える
+;--------------------------------------------------
+@KOJO_1_BATTLE_CLOTH_OUTERDAMAGE_16
+;拘束中
+IF TCVARn:0 == 0
+	PRINTDATAL
+		DATAFORM 「っ！？　…この…最低だなっ！」
+		DATAFORM 「こ、こんなの何ともなっ…%aegi()%…！」
+		DATAFORM 「こ、この程度っ…%aegi()%…！」
+		DATAFORM 「くっ、%aegi()%、こ、こいつっ……」
+	ENDDATA
+ELSE
+	PRINTDATAL
+		DATAFORM 「きゃっ！？　ああもう、妙な真似を！」
+		DATAFORM 「こ、この程度なんともっ……！」
+		DATAFORM 「こ、この程度っ……！」
+		DATAFORM 「くっ、こ、こいつっ……」
+	ENDDATA
+ENDIF
+;アウターが破れた　衣装が完全に破壊された　布きれ　機能が失われる
+;--------------------------------------------------
+@KOJO_1_BATTLE_CLOTH_OUTERBREAK_16
+	PRINTDATAL
+		DATAFORM 「くっ…この屈辱、許しはしない！ 覚悟しろ！」
+		DATAFORM 「よくもこんな真似を……覚悟はできてるんだろうな？」
+		DATAFORM 「っ…い、今すぐ殺すっ！」
+		DATAFORM 「ああもう、最低だっ！」
+	ENDDATA
+
+
+;インナーが大きく破れ始めた　挿入抵抗が消える
+;--------------------------------------------------
+@KOJO_1_BATTLE_CLOTH_INNERDAMAGE_16
+IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+	PRINTDATAL
+	DATAFORM 「痛っ……！」
+	DATAFORM 「きゃあ！？」
+	DATAFORM 「ひあっ！？」
+	ENDDATA
+
+	PRINTFORML 秘所を曝け出されてしまった%CALLNAME%は、一瞬弱気な表情を見せてしまった……
+
+ELSE
+	PRINTDATAL
+	DATAFORM 「こ、こいつ下着までっ……！」
+	DATAFORM 「ちょ、%SELF_CALL_SINGLE()%、%SELF_CALL()%を何だと……！？」
+	DATAFORM 「ど…どこまで%SELF_CALL()%を辱める気だっ！」
+	DATAFORM 「ふ、ふん、今謝れば許してやらなくもないんだけどな」
+	DATAFORM 「い、いい加減にしろよっ！」
+	ENDDATA
+	PRINTFORML 曝け出された大事な箇所を咄嗟に隠しながら、%CALLNAME%は%STR:2500%を睨みつけた…
+ENDIF
+
+
+;インナーが破れた　機能が失われる
+;--------------------------------------------------
+@KOJO_1_BATTLE_CLOTH_INNERBREAK_16
+	IF CFLAG:42 == 398	;剥ぎ取られて秘部丸見えになった場合
+	ELSE
+	ENDIF
+PRINTDATAL
+DATAFORM 「う、嘘だろっ、待てよ…待てって…きゃああぁっ！？」
+DATAFORM 「ひっ、こ、これ以上%SELF_CALL()%に近寄るな……！」
+DATAFORM 「こ、この程度の辱めで%SELF_CALL()%が屈するわけないだろ！？」
+ENDDATA
+
+
+;●変身解除
+;기력が尽きて変身が強制的に解けた
+;--------------------------------------------------
+@KOJO_1_BATTLE_CHARA_TRANSRELEASE_16
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「あ、あぁ……やっぱり%SELF_CALL()%……❤」
+ELSE
+	;처녀が変身解除で半裸or全裸になった
+	IF TALENT:처녀==1 && TCVARn:23>0 && TCVARn:21==0 && TCVARn:25==0
+		PRINTDATAL
+		DATAFORM 「へっ、変身が――きゃあぁあぁぁぁぁっ！？」
+		DATAFORM 「う、嘘だろっ、変身が――きゃぁぁぁぁぁっ！？」
+		DATAFORM 「なっ、変身が――！ え……きゃぁぁぁぁぁっ！？」
+		ENDDATA
+
+		PRINTFORML 変身が解けると同時に裸を晒してしまった事実で軽いパニックを起こし、
+		PRINTFORML %CALLNAME%は半狂乱で変身と変身失敗を繰り返している……
+
+	ELSE
+		PRINTDATAL
+		DATAFORM 「くっ、下等生物の、くせにっ……！」
+		DATAFORM 「そ、そんな、変身がっ！？」
+		DATAFORM 「なっ――――！？」
+		DATAFORM 「しゅ、集中を保てない――！？」
+		DATAFORM 「なっ、こんな時に……！？」
+		DATAFORM 「う、嘘だろ、変身できない……！？」
+		DATAFORM 「う、嘘だろっ、いま変身が解けたら……！」
+		ENDDATA
+
+		PRINTFORM 敵の前で力を失った事実に、
+		PRINTDATAL
+		DATAFORM %CALLNAME%の顔は절망に染まっている……
+		DATAFORM %CALLNAME%の顔は真っ青になっている……
+		ENDDATA
+
+	ENDIF
+ENDIF
+
+
+
+;絶頂で変身が強制的に解けた
+@KOJO_1_BATTLE_CHARA_TRANSRELEASE_ECS_16
+
+IF TALENT:촉수의포로
+	PRINTFORML 「ふぁ、あはぁ……%SELF_CALL()%……また……♥」
+;通常の再変身不可
+ELSEIF BASE:기력*100/MAXBASE:기력 < 10
+	PRINTDATAL
+	DATAFORM 「～～ッ～～～～～ッ？？？」
+	DATAFORM 「ぁ、う、だ、だめっ、変身がっ、あひぅぅ……」
+	DATAFORM 「ぅ、や、やだ、変身がっ、ひぁ、あぁんっ！」
+	ENDDATA
+
+	PRINTDATAL
+	DATAFORM 重い疲労と絶頂の快感で変身を維持できなくなった%CALLNAME%は、もはやただの無力な\@ISMALE() ? 少年 # 少女 \@に過ぎない……
+	DATAFORM 絶頂と共に変身が解けてしまった%CALLNAME%には、もはや再び변신한다ための力が残されていない……
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「う…ぁ……し、しまった、集中が途切れて…！」
+	DATAFORM 「う…ふぁ……あ、ぁあっ、だめっ、変身が…！」
+	DATAFORM 「はぁっ、はぁっ……？ し、しまっ、変身がっ！？」
+	ENDDATA
+ENDIF
+
+
+
+
+;★集中を保てないとか
+;　とか
+
+;●心境変化関連
+;倒錯
+;犯された場合　타락以外で처녀喪失した場合など
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_TOUSAKU_16
+PRINTDATAL
+DATAFORM (ち、違う、%SELF_CALL()%は……辱めなんて求めてない！)
+DATAFORM (な、何なんだ、今の声……%SELF_CALL()%が発したのか……？)
+DATAFORM (%SELF_CALL_SINGLE()%、%SELF_CALL()%の身体、もう化け物の……っ！？)
+ENDDATA
+
+
+;怒り
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_IKARI_16
+;罵倒した場合	;※心境が怒りになりやすいが、快楽に屈するか절망していると動揺してしまう
+IF SELECTCOM == 45
+	;言葉に勢いがない　虚勢
+	IF (MESSAGE_BRANCH_F(TARGET) & 절망)
+	
+	;口汚く매도한다が快楽で呂律が回っていない　強がり
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+	
+	;罵って戦意を奮い起こす
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 고전)
+
+	;負けないという意思を込めて口汚く罵る(？)
+	ELSE
+
+	ENDIF
+;공격を受けた場合
+ELSE
+	PRINTDATAL
+	DATAFORM 「こいつ……今すぐ滅してやる！」
+	DATAFORM 「許さないぞ外道め！ 絶対に生かして帰さない！」
+	ENDDATA
+ENDIF
+
+
+;諦観
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_TEIKAN_16
+;反抗した場合	;※心境が冷静になりやすいが、快楽に屈するか절망していると諦観してしまう
+IF SELECTCOM == 46
+	PRINTDATAL
+	DATAFORM 「くっ……%SELF_CALL()%の力じゃ、ダメなのか……？」
+	DATAFORM 「も、もう……無理、だ……」
+	ENDDATA
+;공격を受けた場合
+ELSE
+ENDIF
+
+
+;冷静
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_REISEI_16
+;反抗した場合	;※心境が冷静になりやすいが、快楽に屈するか절망していると諦観してしまう
+IF SELECTCOM == 46
+	PRINTDATAL
+	DATAFORM (だ、だいじょうぶ……%SELF_CALL()%はまだ戦える！)
+	DATAFORM (落ち着け、%SELF_CALL()%、状況を冷静に分析するんだ)
+	ENDDATA
+;絡みつかれた場合
+ELSE
+
+ENDIF
+
+
+;動揺
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_DOUYOU_16
+;罵倒した場合	;※心境が怒りになりやすいが、快楽に屈するか절망していると動揺してしまう
+IF SELECTCOM == 45
+
+;絡みつかれた場合
+ELSE
+	PRINTDATAL
+	DATAFORM (%SELF_CALL_SINGLE()%、%SELF_CALL()%このままじゃ……あんな奴の、苗床に……成り果てる……？)
+	DATAFORM (こ、これ……こんなのどうすればいいんだ……？！)
+	DATAFORM (おおおおお落ち着くんだ%SELF_CALL()%！ まだ負けたわけじゃないんだからっ！)
+	ENDDATA
+ENDIF
+
+
+;高揚
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_KOUYOU_16
+;背後に回り込んだ場合
+IF SELECTCOM == 6
+
+;공격を回避された場合
+ELSE
+
+ENDIF
+PRINTDATAL
+DATAFORM 「はあ、はあ……目にもの見せてやる……！」
+DATAFORM 「最早欠片も残さない！ %SELF_CALL()%の力、お腹いっぱいに味わわせてやるっ！」
+ENDDATA
+
+
+;消沈
+;--------------------------------------------------
+@KOJO_1_BATTLE_SHINKYOU_CHANGE_SYOUTIN_16
+;공격を回避された場合
+PRINTDATAL
+DATAFORM 「うぅ……も、もう、嫌だ……」
+DATAFORM 「ありえない……%SELF_CALL()%が、押されているなんて……認められない……」
+ENDDATA
+
+
+
+
+
+
+
+;●촉수의포로で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_TORIKO_16
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML (うっ…%SELF_CALL()%の身体、もう、化け物の……逆らうことは、できないのか……？)
+	CASEELSE
+		PRINTFORML (……今……%SELF_CALL()%は負けたいと……？)
+		PRINTFORML (だめだ……それは……そんな事、考えちゃ駄目……)
+		PRINTFORML (あんな事、思い出しちゃダメだ……)
+ENDSELECT
+
+;●刻印と竦み(刻印によるコマンド強制キャンセル)
+;厳密にやるなら精神状態や刻印레벨で分岐すべき
+
+;一度消去した刻印は当該레벨以下について再取得しない＝メッセージを呼ぶのは１周に一度だけ
+
+;쾌락각인１取得　戸惑い
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KAIRAKU_1_16
+PRINTFORML 「ぁえ……あぁう…？ な、何だよ…今の……？」
+
+;쾌락각인２取得　理性が揺らぐ
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KAIRAKU_2_16
+PRINTFORML 「か…ひゅっ…う…ぁ、う、嘘だ、いま、%SELF_CALL()%、感じて…そんな、っ！？」
+
+;쾌락각인３取得　快楽に飲み込まれそう
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KAIRAKU_3_16
+PRINTFORML 「ぐっ、ぅぅぅ！ 気持ちよく、なんか……気持ち良くなんかぁぁぁッ！」
+
+;쾌락각인４取得　快楽に飲み込まれた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KAIRAKU_4_16
+PRINTFORML 「うあ、ふぅうん……！ こんな、こんなの、気持ちいい、よぉ……！」
+
+;쾌락각인５取得　快楽を貪る雌豚
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KAIRAKU_5_16
+PRINTFORML 「んおぉほぉぉお！ も゛っどぎぼぢいいごどぢでぇぇぇぇ！」
+PRINTFORML  %CALLNAME%は自分が何を口走っているかすら理解できていない……
+
+;快楽で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_KAIRAKU_16
+SELECTCASE MARK:쾌락각인
+	CASE 1
+	CASE 2
+	CASE 3
+	CASE 4
+	CASEELSE
+ENDSELECT
+		PRINTDATAL
+		DATAFORM (だめだ、思い出しちゃダメだ！ 呑まれちゃう、身体が呑まれちゃう！)
+		DATAFORM (な、何を考えてるんだ……またあの快楽をだなんて、%SELF_CALL()%そんな……)
+		ENDDATA
+
+
+;고통각인１取得　辛そうに顔を歪めた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUTUU_1_16
+PRINTFORML 「ぃ゛ぎゃっ！ よ、よくもこのっ！」
+
+;고통각인２取得　戦意が揺らいでいく
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUTUU_2_16
+PRINTFORML 「ぶぐぅッ！？ や、やってくれたなっ！」
+
+;고통각인３取得　打ちのめされそう
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUTUU_3_16
+PRINTFORML 「う……ぎぅ……ぴぎゅっ……！ ううう、だめだ、これ以上は、%SELF_CALL()%……」
+
+;고통각인４取得　打ちのめされた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUTUU_4_16
+PRINTFORML 「ぶぎぃいぃぃ～ッ！？ ……ぴぎ……いひぃ……」
+PRINTFORML  激痛に心を砕かれた%CALLNAME%は意味不明の鳴き声を上げている……
+
+;고통각인５取得　命乞いを始めた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUTUU_5_16
+PRINTFORML 「ぎゃううっ！？ ぶ、ぶひ、ぴぎゅ……ゆ、許して……牝豚にでもなんでも、なるからぁ……」
+PRINTFORML  涙と鼻水を垂れながす%CALLNAME%は、無様に失禁までしながら命乞いしている……
+
+;고통で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_KUTUU_16
+SELECTCASE MARK:고통각인
+	CASE 1
+	CASE 2
+	CASE 3
+	CASE 4
+	CASEELSE
+ENDSELECT
+PRINTDATAL
+DATAFORM 「ひっ、嫌だ！ 痛いのはもうやだっ！」
+DATAFORM 「く、来るなッ！ 下がって、あっち行けよぉっ！」
+ENDDATA
+
+
+
+;※굴복각인……フェラなど屈辱的な行為を強制されて雌豚である事実を思い知らされる・その事への躊躇いによる竦み
+;　치욕각인……強制開脚など恥ずかしい行為を強制されてプライドや尊厳が揺らぐ
+
+
+;굴복각인１取得　屈辱で悔しそうに顔を歪めた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUPPUKU_1_16
+IF ENEMY_TYPE_CHECK_F("AKUOTI")
+	PRINTFORML 「……この……よくも、裏切り者ごときが%SELF_CALL()%に……」
+ELSE
+	PRINTFORML 「……この……よくも、下等生物ごときが%SELF_CALL()%に……」
+ENDIF
+
+;굴복각인２取得　無力さを痛感
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUPPUKU_2_16
+PRINTFORML 「ぶぎぃ……%SELF_CALL_SINGLE()%、%SELF_CALL()%は……牝豚なんかじゃ……」
+
+;굴복각인３取得　心が折れそう
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUPPUKU_3_16
+PRINTFORML 「ぶ、ぶひっ……やだ、牝豚になんて……牝豚になんてぇ……ぷぎぃ……」
+PRINTFORML  %CALLNAME%の目から、矜持の光が消えかけている……
+
+;굴복각인４取得　完全に心が折れてしまった
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUPPUKU_4_16
+PRINTFORML 「ぶひっ、ぶひぃぃっ！ ぶぎぃいいいっ！！」
+PRINTFORML  %CALLNAME%の目に、もはや欠片ほどの矜持もなかった……
+
+;굴복각인５取得　倒錯した悦び
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KUPPUKU_5_16
+PRINTFORML 「ぶひぶひぃぃっ！ ふごっ！ ぶごっ！！ ぶひっぶひっぶっひぃい！」
+PRINTFORML  深奥の自意識が完全にヒトから牝豚に染まった%CALLNAME%は、황홀とした顔で豚鳴きしている……
+
+;屈辱で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_KUTUZYOKU_16
+SELECTCASE MARK:굴복각인
+	CASE 1
+	CASE 2
+	CASE 3
+	CASE 4
+	CASEELSE
+ENDSELECT
+PRINTDATAL
+DATAFORM (あんな生き恥をもう一度晒したら、%SELF_CALL()%もう……)
+DATAFORM (ま、また、あんな辱めを受けたら……%SELF_CALL()%……牝豚から戻れなくなっちゃう……)
+ENDDATA
+
+
+
+;공포각인１取得　内心で冷や汗
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KYOUHU_1_16
+PRINTFORML 「な、何だよ……%SELF_CALL_SINGLE()%、%SELF_CALL()%が、怯えてる……？」
+
+;공포각인２取得　怯え始めた
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KYOUHU_2_16
+PRINTFORML 「やだ……やめ……うぅっ……助け……」
+
+;공포각인３取得　強い身の危険
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KYOUHU_3_16
+PRINTFORML 「やだ、やだやだやだ……もうやだぁ……もうやだよぉ……」
+PRINTFORML  공포に竦んだ%CALLNAME%は幼児退行したかのように泣いている。
+
+;공포각인４取得　完全に竦み上がる
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KYOUHU_4_16
+PRINTFORML 「ひいぃ……ひあっ、ぁ、いひぃ……ッ？！」
+PRINTFORML  あまりの공포に、%CALLNAME%は意味不明の鳴き声を漏らしていた……
+
+;공포각인５取得　錯乱状態に陥り理性を失っている
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_KYOUHU_5_16
+PRINTFORML 「ひううぅ……あああぅ、うああ……うああん……あああぅ……」
+PRINTFORML  許容量を超えた공포に、完全に幼児退行した%CALLNAME%はおしっこを漏らしながら泣きじゃくっている……
+
+;공포で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_KYOUHU_16
+SELECTCASE MARK:공포각인
+	CASE 1
+	CASE 2
+	CASE 3
+	CASE 4
+	CASEELSE
+ENDSELECT
+PRINTDATAL
+DATAFORM 「あっち行って、あっち行けよ……お願いだから……」
+DATAFORM 「ま、待って……お願いだから待って、こっち来ないで……」
+ENDDATA
+
+
+
+;치욕각인１取得　辱めに顔を赤らめ
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_TIJYOKU_1_16
+PRINTFORML 「こ、このおっ、見るなぁ……！」
+
+;치욕각인２取得　何とか耐えている
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_TIJYOKU_2_16
+PRINTFORML 「……うぅ、おまえら如きに見られたって……どうってことなんか……」
+
+;치욕각인３取得　プライドがぐらついている
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_TIJYOKU_3_16
+PRINTFORML 「こんな格好……見るな、見ないで……見られたく、ないのに、なんで……」
+
+;치욕각인４取得　完全にプライドを打ち砕かれて
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_TIJYOKU_4_16
+PRINTFORML 「……ぁ…い、はい……そうです、%SELF_CALL(7)%…は……」
+PRINTFORML 「……ぅ、うぅ、め、牝豚……の……無様な姿…もっと、見て……ください……」
+PRINTFORML  恥辱に耐え切れず、%CALLNAME%の心は折れてしまった……
+
+;치욕각인５取得　人としての尊厳を見失ってしまった
+;--------------------------------------------------
+@KOJO_1_SEX_MARK_TIJYOKU_5_16
+PRINTFORML 「バ、バカなメスのくせに……인간のフリなんてしてごめんなさい……」
+PRINTFORML 「あうぅ……どうか、牝豚%CALLNAME%の、下等生物らしいとこ、見てください……ぶひ、ぶひぶひぃ……」
+PRINTFORML  ヒトの尊厳を打ち砕かれた%CALLNAME%は自ら四つん這いになり、そのまま放尿を始めた……
+
+;恥辱で体が竦む
+;--------------------------------------------------
+@KOJO_1_BATTLE_DISACTION_TIZYOKU_16
+SELECTCASE MARK:치욕각인
+	CASE 1
+	CASE 2
+	CASE 3
+	CASE 4
+	CASEELSE
+ENDSELECT
+PRINTDATAL
+DATAFORM (あんな生き恥をまた晒したりしたら、%SELF_CALL()%……！)
+DATAFORM (%SELF_CALL_SINGLE()%、%SELF_CALL()%どうしちゃったんだ……？ あんな屈辱、二度と受けたくないのに……)
+ENDDATA
+
+
+

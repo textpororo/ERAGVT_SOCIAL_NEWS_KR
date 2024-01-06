@@ -1,0 +1,141 @@
+﻿;거리를벌린다
+@COM5
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+;空中공격플래그를進める
+CALL ATTACK_AIR_FLAG
+;끈적끈적中だと失敗することがある
+IF (TCVARn:12 & 끈적끈적) && RAND:100 < 50 && GETBIT(TCVARn:216, 1) == 0
+	;距離表示
+	CALL PRINT_DISTANCE
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は脚を滑らせてしまった！
+	PRINTFORML 移動を伴う行動が失敗した！
+	PRINTW 
+	RETURN 1
+ENDIF
+
+;同一距離플래그를折る
+TFLAG:30 = 0
+;チェインコンボをリセット
+TFLAG:31 = 0
+
+;距離を遠にする
+TCVARn:0 = 3
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;체력45%、기력が20%回復　心境が普通になりやすい
+;회복빠름なら+4%,+2%
+;회복느림なら-4%,-2%
+;[공생]持ちなら更に+4%
+;最大値と衣装と방어力による補正から回復量を計算
+CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
+LOCAL:0 = MAXBASE:체력 + BASE:방어 * RESULT * 2 / 100
+;FEATによる回復量ボーナス
+SIF TALENT:넘치는생명력 > 0
+	TIMES LOCAL:0, 1.25
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:0, 0.49
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:0, 0.41
+ELSE
+	TIMES LOCAL:0, 0.45
+ENDIF
+SIF TALENT:(FLAG:799):공생 == 1
+	TIMES LOCAL:0, 1.04
+SIF BASE:기력 == 0
+	LOCAL:0 /= 2
+;疲労により回復量が減少
+REPEAT CFLAG:99
+	SIF LOCAL:0 <= 1
+		BREAK
+	;FEAT効果による回復量維持
+	IF TALENT:스태미나 > 0
+		TIMES LOCAL:0, 0.985
+	ELSE
+		TIMES LOCAL:0, 0.97
+	ENDIF
+REND
+;疲労が少ない時は체력大回復
+IF TALENT:스태미나 > 0
+	IF CFLAG:99 < 5
+		TIMES LOCAL:0, 1.25
+	ELSEIF CFLAG:99 < 10
+		TIMES LOCAL:0, 1.10
+	ENDIF
+ELSE
+	IF CFLAG:99 == 0
+		TIMES LOCAL:0, 1.25
+	ELSEIF CFLAG:99 < 5
+		TIMES LOCAL:0, 1.10
+	ENDIF
+ENDIF
+;구급 스프레이#####
+SIF CFLAG:TARGET:43 == 504
+	LOCAL:0 = LOCAL:0 + 200
+SIF BASE:체력 + LOCAL:0 >= MAXBASE:체력
+	LOCAL:0 = MAXBASE:체력 - BASE:체력
+;체력が尽きている場合、체력が回復しない
+SIF BASE:체력 == 0
+	LOCAL:0 = 0
+BASE:체력 += LOCAL:0
+
+;最大値と衣装と방어力による補正から回復量を計算
+CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
+LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
+;FEATによる回復量ボーナス
+SIF TALENT:넘치는생명력 > 0
+	TIMES LOCAL:1, 1.25
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:1, 0.22
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:1, 0.18
+ELSE
+	TIMES LOCAL:1, 0.20
+ENDIF
+SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
+	LOCAL:1 = MAXBASE:기력 - BASE:기력
+;疲労により回復量が減少
+REPEAT CFLAG:99
+	SIF LOCAL:1 <= 1
+		BREAK
+	;FEAT効果による回復量維持
+	IF TALENT:스태미나 > 0
+		TIMES LOCAL:1, 0.995
+	ELSE
+		TIMES LOCAL:1, 0.99
+	ENDIF
+REND
+BASE:기력 += LOCAL:1
+
+;疲労が少し蓄積
+TFLAG:99 += 1
+;FEAT効果による反動の増加
+SIF TALENT:공중부유 > 0
+	TFLAG:99 += 1
+
+;지문: 距離を取る
+CALL MESSAGE_BATTLE_CHARA_TAKEAWAY
+;지문: 洗脳/悪堕ちキャラが操作キャラの거리를벌린다を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_TAKEAWAY
+
+IF BASE:체력
+	PRINTFORML %BASENAME:0%が{LOCAL:0}回復した
+ELSE
+	PRINTFORML %BASENAME:0%は既に尽きてしまっている……
+ENDIF
+PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+
+;心境が普通に戻りやすい
+IF TCVARn:1 > 0 && RAND:100 < (TCVARn:11 * 20)
+	CALL SHINKYOU_CHANGE, "NORMAL"
+ELSE
+	TCVARn:11 ++
+ENDIF
+PRINTL 
+RETURN 1

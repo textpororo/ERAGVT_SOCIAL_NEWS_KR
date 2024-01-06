@@ -1,0 +1,506 @@
+﻿
+;＠中国版より(翻訳未完了)
+;欠損ヒロインの処分
+@AMPUTEE
+#DIM CCOUNT
+PRINTL 
+PRINTL 資源と引き換えに誰を犠牲にすべきでしょうか？
+LOCAL = CHARANUM
+FOR CCOUNT, 0, LOCAL
+	SIF CCOUNT == MASTER
+		CONTINUE
+IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:理性喪失 < 1 && TALENT:CCOUNT:훼멸초계시 < 1
+	PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
+	PRINTL 
+ENDIF
+NEXT
+PRINTFORML [999]選択を解除して戻る
+$INPUT_LOOP_CHARA_LIST
+INPUT
+IF RESULT == 999
+	RETURN 999
+ELSEIF RESULT < 1 || RESULT >= LOCAL
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_CHARA_LIST
+ELSE
+	TARGET = RESULT
+	PRINTFORML %CALLNAME:RESULT%をどのように「処理」しますか？
+	PRINTL [0] 裏組織に売却する（大金を受け取る）
+	PRINTL [1] 地下処刑ショーを手配する（大量の人気、資金、촉수の欠片を収穫する）
+	PRINTL [999] キャラクター選択に戻る
+	INPUT
+	$INPUT_AMPUTEE
+	IF RESULT == 0
+		CALL AMPUTEE_SALE,TARGET
+	ELSEIF RESULT == 1
+		CALL AMPUTEE_EXECUTION_PREPARE,TARGET
+	ELSEIF RESULT == 999
+		GOTO INPUT_LOOP_CHARA_LIST
+	ELSE
+		PRINTL 正しい値を入力してください
+		GOTO INPUT_AMPUTEE
+	ENDIF
+ENDIF
+
+@AMPUTEE_SALE,TARGET
+VARSET LOCAL
+PRINTDATAL
+	DATAFORM 「%SELF_CALL()%、これからどんな目に遭うんだろう…」
+	DATAFORM 「死なせてほしいって贅沢な願いだったんだね…」
+	DATAFORM 「こんな身体……%SELF_CALL()%、何に使われるんだろう……」
+	DATAFORM 「%SELF_CALL()%、どうしてあの時死ねなかったのかな…」
+	DATAFORM 「いっそ촉수に殺されるほうがハッピーエンドだったのかな…」
+ENDDATA
+IF TALENT:TARGET:묘상화 > 0 || EXP:TARGET:출산경험 >= 10
+	PRINTDATAL
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%には腕も足もなく、その体は醜い生産苗床と化しきっている。
+		DATAFORM 今の%PRINT_TRANSCALLNAME(TARGET)%には寝返り一つできず、敗北の瞬間で時間も止まってしまったようだ。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は腰を僅かにひねるのが精一杯で、自らの命を絶つことさえできない。
+		DATAFORM 数え切れない出産で伸びきった%PRINT_TRANSCALLNAME(TARGET)%の腹部には、容姿に不釣り合いな醜い임신線が定着している。
+		DATAFORM 開ききった%SLANG_V(TARGET)%からは怪しい体液が漏れ出ている。
+		DATAFORM 壊造された%SLANG_C(TARGET)%は、今や%SLANG_N(TARGET)%とほぼ同じ大きさだった。
+		DATAFORM %SLANG_N(TARGET)%からはまだ黄色っぽいドロドロの乳が分泌され、その体を濡らし続けている。
+	ENDDATA
+ELSE
+	PRINTDATAL
+		DATAFORM 手も足も喪い、その体は完全に性の捌け口となるための道具と化している。
+		DATAFORM 今の%PRINT_TRANSCALLNAME(TARGET)%には身動き一つできず、手足を切り落とされた瞬間で時間が止まってしまったようだ。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は腰を僅かにひねるのが精一杯で、自らの命を絶つことさえできない。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は四肢に幻痛を感じて苦しげに呻いていた。
+		DATAFORM 二度と閉じない%SLANG_V(TARGET)%からは、惨めにも臭い体液が流れ出していた。
+		DATAFORM 壊造された%SLANG_C(TARGET)%は、今や%SLANG_N(TARGET)%とほぼ同じ大きさだった。
+		DATAFORM %SLANG_N(TARGET)%と%SLANG_C(TARGET)%は痛々しいほど赤く腫れ、溶接されたチェーンは癒着して除去も不可能だった。
+	ENDDATA
+ENDIF
+PRINTDATAW
+DATAFORM 「終わってしまった」%PRINT_TRANSCALLNAME(TARGET)%は、ぼんやりと窓の外を見つめていた……
+DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は天井を向かされたまま、枕を涙に濡らしてゆく……
+DATAFORM 自ら命も絶てない%PRINT_TRANSCALLNAME(TARGET)%は、ただ静かに泣いていた……
+DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は死んでいればよかったと心の底から思っていた……
+DATAFORM %PRINT_TRANSCALLNAME(TARGET)%はひたすらに無力な肉体を恨んでいた……
+ENDDATA
+PRINTL ……どれくらい経ったか分からない……
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、ゆっくりと眠りにつく。
+PRINTW ————換気ダクトを通じて流れ込む촉수由来の睡眠ガスが、とても素晴らしく効いているようだった……
+PRINTL 
+PRINTFORML 「え、%PRINT_TRANSCALLNAME(TARGET)%さんですか？　つい先ほど医療仲介業者を通じて闇ルートに引き渡されましたよ」
+PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%が何に使われるか？　知りませんね、どうせ性処理道具や装飾品あたりでしょう」
+PRINTL 
+PRINTL 
+;誘拐監禁
+CFLAG:TARGET:0 = 4
+LOCAL = (25000 + EXP:TARGET:매료경험 * 100 + EXP:TARGET:전투경험 * 100 + EXP:TARGET:고통쾌락경험 * 1000)
+IF EXP:TARGET:매료경험 > 100
+	PRINTFORML 「元」アイドルである%PRINT_TRANSCALLNAME(TARGET)%の容姿は、取引相手にも好評だったようだ……
+ENDIF
+MONEY += LOCAL
+PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%の対価として${LOCAL}の資金が集まりました!
+PRINTW 
+
+
+@AMPUTEE_EXECUTION_PREPARE,TARGET
+PRINTDATAL
+	DATAFORM 「……」
+	DATAFORM 「………………」
+	DATAFORM 「そんな………………」
+	DATAFORM 「………どうして……………」
+	DATAFORM 「なんで………………」
+ENDDATA
+IF TALENT:TARGET:묘상화 > 0 || EXP:TARGET:출산경험 >= 10
+	PRINTDATAL
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%には腕も足もなく、その体は醜い生産苗床と化しきっている。
+		DATAFORM 今の%PRINT_TRANSCALLNAME(TARGET)%には寝返り一つできず、敗北の瞬間で時間も止まってしまったようだ。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は腰を僅かにひねるのが精一杯で、自らの命を絶つことさえできない。
+		DATAFORM 数え切れない出産で伸びきった%PRINT_TRANSCALLNAME(TARGET)%の腹部には、容姿に不釣り合いな醜い임신線が定着している。
+		DATAFORM 開ききった%SLANG_V(TARGET)%からは怪しい体液が漏れ出ている。
+		DATAFORM 壊造された%SLANG_C(TARGET)%は、今や%SLANG_N(TARGET)%とほぼ同じ大きさだった。
+		DATAFORM %SLANG_N(TARGET)%からはまだ黄色っぽいドロドロの乳が分泌され、その体を濡らし続けている。
+	ENDDATA
+ELSE
+	PRINTDATAL
+		DATAFORM 手も足も喪い、その体は完全に性の捌け口となるための道具と化している。
+		DATAFORM 今の%PRINT_TRANSCALLNAME(TARGET)%には身動き一つできず、手足を切り落とされた瞬間で時間が止まってしまったようだ。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は腰を僅かにひねるのが精一杯で、自らの命を絶つことさえできない。
+		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%は四肢に幻痛を感じて苦しげに呻いていた。
+		DATAFORM 二度と閉じない%SLANG_V(TARGET)%からは、惨めにも臭い体液が流れ出していた。
+		DATAFORM 壊造された%SLANG_C(TARGET)%は、今や%SLANG_N(TARGET)%とほぼ同じ大きさだった。
+		DATAFORM %SLANG_N(TARGET)%と%SLANG_C(TARGET)%は痛々しいほど赤く腫れ、溶接されたチェーンは癒着して除去も不可能だった。
+	ENDDATA
+ENDIF
+PRINTFORML 部屋で無力に横たわっていた%PRINT_TRANSCALLNAME(TARGET)%は、「その」通知を受け取った。
+IF TALENT:TARGET:진지함 || TALENT:TARGET:고집쟁이 || TALENT:TARGET:츤데레 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は困惑した表情を浮かべた…。
+	PRINTFORML「……分かりました…同意します…」
+ELSEIF TALENT:TARGET:冷酷 || TALENT:TARGET:坦率|| TALENT:TARGET:堅定 || TALENT:TARGET:고풍적
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は強張った険しい表情のまま、一言も発さない……
+ELSEIF TALENT:TARGET:비관적 || TALENT:TARGET:胆怯 || TALENT:TARGET:害羞
+	PRINTFORML 절망的な表情で未来の運命を想像する%PRINT_TRANSCALLNAME(TARGET)%
+	PRINTFORML 공포で目が潤んでいる…
+ELSEIF TALENT:TARGET:과묵함 || TALENT:TARGET:三無
+	PRINTFORML 無表情で「未来」を想像する%PRINT_TRANSCALLNAME(TARGET)%
+ELSEIF TALENT:TARGET:浮躁 || TALENT:TARGET:暴躁 || TALENT:TARGET:大方
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%叫び、悪態をつき、必死に泣き喚いた
+	PRINTFORML しかし、最終的には決定に同意した……
+ELSEIF TALENT:TARGET:元氣 ||TALENT:TARGET:낙천적 || TALENT:TARGET:活潑 || TALENT:TARGET:얀데레
+	PRINTFORML 「やっとみんなの助けになれて、本当に嬉しいです…」
+	PRINTFORML 瞳には光が宿っていたが、不安な表情は隠せなかった……
+	SIF TALENT:TARGET:얀데레
+		PRINTFORML 「%CSTR:20%……私のために泣いてくれるかな……」
+ELSE
+	PRINTFORML 無言で受け入れの表現を示した…
+ENDIF
+PRINTW 
+PRINTL 同時、
+IF TALENT:TARGET:촉수的俘虜 || TALENT:TARGET:徹底타락
+	PRINTFORML 「촉수様に体を捧げられないのが残念です…」
+ELSEIF TALENT:TARGET:性奴体質 || ABL:TARGET:受虐狂 || TALENT:TARGET:抖Ｍ気質
+	PRINTFORML 「それでこの体はどうなるんだろう……ああ、ちょっと興奮してきた」
+ELSEIF ABL:TARGET:노출벽
+	PRINTFORML 「こんなにたくさんの人の前だと……ああ……興奮しちゃう……」
+ELSE
+	PRINTFORML 「それまでどれだけ時間が残っているのか…」
+ENDIF
+
+SIF TALENT:TARGET:음란
+	PRINTFORM 身体に生じた甘い痺れは、一向に治まらない……
+SIF TALENT:TARGET:음핵 || TALENT:TARGET:음유
+	PRINTFORM 敏感な先端部分が腫れて痛み、硬くなってゆく
+SIF TALENT:TARGET:음호 || TALENT:TARGET:음고
+	PRINTFORM 질は何度もひくひくと締め付けられ、
+PRINTL 
+SIF TALENT:TARGET:扶他 > 0
+	PRINTFORM 先走り液に混ざった精液は、少しずつ男根を濡らしていく。
+SIF TALENT:TARGET:모유체질
+	PRINTFORM 制御できない乳汁が溢れ出し、
+SIF TALENT:TARGET:漏尿癖
+	PRINTFORM ベッドは真新しい尿で濡れてしまっている。
+
+PRINTFORMW 「……%PRINT_TRANSCALLNAME(TARGET)%本人の身体は「準備」ができているようです。
+PRINTFORML 　次は企画に時間がかかりますが……」
+TALENT:TARGET:훼멸초계시 = 1
+PRINTFORML （処刑ショーは数日後に行われます。%PRINT_TRANSCALLNAME(TARGET)%は病院特別病棟に一旦収容されました）
+PRINTW ……
+TALENT:TARGET:破滅へのカウントダウン = 1
+PRINTFORML 
+
+@AMPUTEE_EXECUTION,TARGET
+#DIM LOCAL1
+#DIM LOCAL2
+DRAWLINE
+PRINTFORML 【魔法少女%PRINT_TRANSCALLNAME(TARGET)%の特別処刑ショー】
+PRINTL 
+PRINTFORML 上流階級だけが入れる秘密クラブの照明が暗くなり、
+PRINTFORMW 本日の処刑ショーの始まりを告げた。
+FORCEWAIT
+PRINTL 
+PRINTFORML 会場の中央にスポットライトが当たる。
+PRINTFORML 木枠の上に、裸の女性の胴体が傾いており、
+PRINTFORML には手足がなく、乳首と클리토리스は太い鉄の鎖で締め付けられ、肌は艶めかしく輝いている。
+PRINTFORMW 感嘆の声が相次ぎ、人々の욕망の視線が“元”魔法少女の裸体に釘付けになる。
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は、
+IF TALENT:TARGET:認真 || TALENT:TARGET:倔強 || TALENT:TARGET:傲嬌 
+	PRINTFORML は、笑みを作りながら“魔法少女 %PRINT_TRANSFULLNAME(TARGET)%処刑ショー”の紹介を始めた。
+	PRINTFORML 「いつも魔法少女を応援していただきありがとうございます。仲間たちは必ず촉수を打ち倒します…」
+ELSEIF TALENT:TARGET:冷酷 || TALENT:TARGET:坦率|| TALENT:TARGET:堅定 || TALENT:TARGET:고풍적
+	PRINTFORML は決然とした表情を浮かべ、黙ったままだった…。
+ELSEIF TALENT:TARGET:비관적 || TALENT:TARGET:胆怯 || TALENT:TARGET:害羞
+	PRINTFORML の目には涙があふれていましたが、なんとか平静を保っていました。
+	PRINTFORML 「%SELF_CALL(TARGET)%はもう決めたんだから……怖くなんかない……」
+ELSEIF TALENT:TARGET:과묵함 || TALENT:TARGET:三無
+	PRINTFORML は無表情で群衆を見つめた…。
+ELSEIF TALENT:TARGET:浮躁 || TALENT:TARGET:暴躁 || TALENT:TARGET:大方
+	PRINTFORML は軽蔑的な表情で宣言した。
+	PRINTFORML 「クズども……これが済んだら、絶対にみんなを助けろよ……」
+ELSEIF TALENT:TARGET:元氣 ||TALENT:TARGET:낙천적 || TALENT:TARGET:活潑 || TALENT:TARGET:病嬌
+	PRINTFORML は観客の期待に応えるために、キュートな笑顔を見せようとした。
+	PRINTFORML「皆さん、今夜は楽しい時間をお過ごしください♪　%PRINT_TRANSCALLNAME(TARGET)%は皆様を満足させます❤」
+ELSE
+	PRINTFORML は目の前の「スポンサー」たちに自己紹介をした…
+ENDIF
+PRINTL 
+PRINTL 会場中の大型スクリーンが一斉に点灯し、生放送のインターフェースを模した映像が流れ始めた……。
+PRINTW 
+CALL MESSAGE_SEX_SHOW_Window()
+
+PRINTL 
+PRINTFORML 心の準備はできていたのに、顔を赤らめてしまう%PRINT_TRANSCALLNAME(TARGET)%。
+PRINTDATAW
+	DATAFORM 一見優雅な態度で笑みを浮かべながら、魔法少女をゴミ箱に入れる宴に参加している。
+	DATAFORM 淫らな表情とすすり泣くような声で、今日ここで処刑されるのは自分の意志によるものだと語った。
+	DATAFORM 彼女は微笑み、処刑前にゲスト全員が自分の体を楽しむことができると告げた……
+	DATAFORM 彼女は何も言わず、肉のような胴体を時おりくねらせては、興奮した蜜汁が糸のように垂れ落ちていた……
+ENDDATA
+
+PRINTFORML すぐに群衆が%PRINT_TRANSCALLNAME(TARGET)%を圧倒した。
+PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%の身体は男性に媚びるために隅々まで使われる。
+PRINTFORML 口、乳房、下半身、しなやかな髪、すべてペニスに봉사한다ために使用されるのだった。
+SIF TALENT:乳頭穿環 == 5 && TALENT:陰蒂穿環 == 5
+	PRINTFORM 乳首、膣芯、陰唇を貫く太い鎖が激しく揺れ、
+SIF ISPENIS()
+	PRINTFORM 勃起した男根は脈動を続け、
+SIF TALENT:TARGET:모유체질 != 0 
+	PRINTFORM 弄ばれる度に次々と母乳が噴き出し、
+IF ISFEMALE()
+	PRINTFORML 突き上げられるにしたがって、何の前触れもなく残った身体が何度も何度も締め付けられ、
+	PRINTFORML 질口から愛液と精液の混じった淫汁が逆噴出する。
+ENDIF
+PRINTFORMW 全身が白い욕망に染まっていく…。
+PRINTFORML 
+PRINTL ．．．
+PRINTL ．．．．
+PRINTL ．．．．．
+PRINTFORMW ゲストの욕망が一巡し、正式に処刑開始がアナウンスされた。
+PRINTFORML 息を呑む%PRINT_TRANSCALLNAME(TARGET)%は、かろうじて音のする方向に顔を向け、
+PRINTL 事前に聞かされていたとはいえ、思わず顔が青ざめてしまう。
+PRINTFORML キャスター付きの重い土台が、ステージの中央に押し出された。
+PRINTFORMW 中央には銀色に輝くピアスロッドが立っている。
+PRINTFORML 竹のように分割された棒の長さは2メートルほどで、棒の上部は蓮の花のつぼみのように膨らんでいる、
+PRINTFORML 6枚の刃が蕾の外側にぴったりとくっつき、鋭い刃が冷たい光を受けて輝く。竿の先端はむしろ滑らかである、
+PRINTFORML 軸の中央にはトレーがあり、太く長いディルドが垂直上向きに取り付けられている。
+PRINTFORMW 手足のない%PRINT_TRANSCALLNAME(TARGET)%を処刑するために製造された特別な装置だった。
+PRINTL 
+PRINTL  「………………」
+
+IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+	PRINTFORML ショックからすぐに立ち直った%PRINT_TRANSCALLNAME(TARGET)%は興奮した目を見せた。
+	PRINTFORML 思わず体を激しく揺さぶると、鎖がジャラジャラと鳴る。
+	PRINTFORM %SLANG_V(TARGET)%の中から淫液が湧き出%TALENT:모유체질 > 0 "し、乳頭からも乳が分泌される" ? "す" #%。
+ELSE
+	PRINTL 短い精神的ショックの後、
+	PRINTFORML 自分の最終的な運命を十分に理解していた%PRINT_TRANSCALLNAME(TARGET)%は、弱さを見せなかった。
+	PRINTFORML 疲れきった目は涙に潤みながらも、「元・魔法少女」の最後の矜持として美しく輝いていた。
+ENDIF
+PRINTFORML そして%PRINT_TRANSCALLNAME(TARGET)%は体をよじらせながら、最後の言葉を発した……
+PRINTDATAW
+	DATAFORM "皆様、魔法少女オナホ%PRINT_TRANSNAME(TARGET)%の死に様をお楽しみください"
+	DATAFORM "%PRINT_TRANSCALLNAME(TARGET)%は、皆様の前で人生を終えることができてとても幸せです…"
+	DATAFORM "これより、%PRINT_TRANSNAME(TARGET)%の処刑が開始されます"
+	DATAFORM "肉家畜「%PRINT_TRANSNAME(TARGET)%」の淫らなアクメ死をお楽しみください。"
+ENDDATA
+PRINTL  《カチッ》
+PRINTL  「あ……」
+PRINTFORML スタッフの腕が%PRINT_TRANSCALLNAME(TARGET)%の脇腹を抱え上げ、彼女を直立させて空中に持ち上げた。
+PRINTFORMW \@TALENT:거유 > 0 ? 重い胸袋を持っているにもかかわらず、 # \@手足のない体は\@TALENT:거유 > 0 ? それでも # \@風のように軽い。
+
+PRINTFORML  「\@ABL:受虐狂 >= 3 ? ぁあ……ああぁ…… # \@……」
+PRINTFORML 男は%PRINT_TRANSCALLNAME(TARGET)%を腕に抱えて階段を登り、装置先端の「つぼみ」を浅く差し込んだ。
+PRINTFORML %SLANG_V(TARGET)%の中
+PRINTW 
+IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+	PRINTFORML 完全に발정している%PRINT_TRANSCALLNAME(TARGET)%は、すぐに甘いうめき声を上げる。
+	PRINTFORML %SLANG_LabiaMajora(TARGET)%を開かせ、死神の到来を迎え入れようとしている……
+	IF TALENT:모유체질 > 0
+		PRINTFORM 滾々と湧き出す母乳や愛液が軸棒を滴り落ち、周囲に淫らな雌の臭いを撒き散らす。
+	ELSE
+		PRINTFORM 淫らな汁がシャフトに滴り落ちてゆく。
+	ENDIF
+	PRINTL 촉수生物にとっては極上の餌、観客にとっては最高のスパイス……
+ELSE
+	PRINTFORML 開発されきった肉体は理性を無視して動き、
+	PRINTFORML ぱっくり開いた%SLANG_LabiaMajora(TARGET)%がクラブヘッドを윤활に飲み込んでゆく……
+ENDIF
+PRINTL 
+PRINT  「
+PRINTDATA
+	DATAFORM ぃ、あ、ぐ、くううぅう……
+	DATAFORM く、あ、ぐ、くうぅ……
+	DATAFORM …あ、い、ひぐつ……
+	DATAFORM ぁ、き、う、
+	DATAFORM …う、ううぅ
+	DATAFORM く、あぁぁ…
+ENDDATA
+PRINTDATA
+	DATAFORM うぅぐおぁ
+	DATAFORM ぐ、ぁ、ぎ、ぐぎいいぃおぁああぁ
+	DATAFORM ……いぎぁおぁ
+	DATAFORM ……う……ぅうぐぉあぁぁ
+	DATAFORM …う、ううぅぎぉあぁ
+	DATAFORM …ぎ、あぁぁあぁぁぁぁぁああ
+ENDDATA
+PRINTL ！？」
+PRINTL 
+PRINTFORML 男は意地悪く腕を上下させ、用%PRINT_TRANSCALLNAME(TARGET)%の身体をピアスロッドに挿し込んで弄ぶ。
+PRINTFORML 1cmずつ、ゆっくりと確実に、棒の先端を%SLANG_V(TARGET)%の奥を押し込んでゆく。
+PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%が我慢できずに嬌声を漏らすと、ピアスロッドの先端が%SLANG_W(TARGET)%に近づいてくる
+PRINTL 
+PRINTFORML  「っう？！……」
+PRINTFORML 子宮口を貫かれようとしたその瞬間、スタッフが突然%PRINT_TRANSCALLNAME(TARGET)%ロッドヘッドを取り外した。
+PRINTFORML 《おいどうした？》
+PRINTFORML 《何が起きるんだ？》
+PRINTFORML 観客のざわめきの中、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の少し驚いた音声が通信装置の起動音と共に会場へ響くと、
+PRINTFORML 元々ピアスロッドの真ん中にあったディルドトレイがゆっくりと「つぼみ」に近い位置まで這い上がり、
+PRINTFORMW そして————
+PRINTL 
+PRINTDATA
+	DATAFORM 「哦啊啊……啊！！
+	DATAFORM 「唏咕呀啊啊！！
+	DATAFORM 「嘎呀啊啊！　
+	DATAFORM 「噗咯呃呃呃！　
+	DATAFORM 「嗬哦咯哦哦！　
+ENDDATA
+PRINTDATAL
+	DATAFORM 啊啊啊啊……」
+	DATAFORM 嗚咕呀啊啊！　嘎咕呀啊啊！」
+	DATAFORM 啊啊啊啊！！」
+	DATAFORM 嗚咕呀啊啊！」
+	DATAFORM ぐ、げ、ぎあぁああぁぁ！」
+	DATAFORM ぐが、げぎぃぃぃぃ！」
+	DATAFORM ぐ、げ、ぎぃぁあああぁ！」
+	DATAFORM ぐぎぎゃあ！」
+ENDDATA
+PRINTL 
+PRINTFORML 托盤上的假陽具突破菊门長駆直入%SLANG_A(TARGET)%的最深処、
+PRINTFORMW 菊門被完全撐開、%PRINT_TRANSCALLNAME(TARGET)%扭動着身体発出雌獣般的嬌声
+PRINTL 
+PRINTFORML 工作人员調整着托盤的高低、重新将穿刺杆的「花苞」納入%SLANG_W(TARGET)%之中、
+PRINTFORML %SLANG_H(TARGET)%感到一糸冰涼、%PRINT_TRANSCALLNAME(TARGET)%的残軀被「挿在」了托盤上、
+PRINTFORML 「花苞」頂到了子宮的最深処、従小腹上甚至能看見若有若無的凸起、
+PRINTL 
+PRINTFORMW 然后——————
+PRINTL 
+CALLFORM KOJO_hannyouAA_skewering
+PRINTDATA
+	DATAFORM 「哦啊啊……啊啊！！
+	DATAFORM 「唏咕呀啊啊啊啊啊啊啊啊！！
+	DATAFORM 「嘎呀啊啊啊啊啊啊啊啊！　
+	DATAFORM 「噗咯呃呃呃呃呃呃呃呃！　
+	DATAFORM 「嗬哦咯哦哦哦哦哦哦哦哦哦哦哦哦！　
+ENDDATA
+PRINTDATAL
+	DATAFORM 啊啊啊啊啊啊……」
+	DATAFORM 嗚咕呀啊啊啊啊啊啊啊啊啊啊啊啊啊！　嘎咕呀啊啊啊啊啊啊啊啊啊啊啊啊啊！」
+	DATAFORM 啊啊啊啊啊啊！！」
+	DATAFORM 嗚咕呀啊啊啊啊啊啊啊啊啊啊啊啊啊！」
+	DATAFORM 嘎咕呀啊啊啊啊啊啊啊啊啊啊啊啊啊！」
+	DATAFORM 咯哦哦哦哦哦哦哦哦哦哦！」
+	DATAFORM 咯嘔咯呀啊啊啊啊啊啊！」
+	DATAFORM 嘎呀嘎啊！　嗯咕呀啊啊啊啊啊啊啊！」
+	DATAFORM 咯嘔咯呀啊啊啊啊啊啊！　嘎呀嘎啊！　嗯咕呀啊啊啊啊啊啊啊！」
+ENDDATA
+PRINTL 
+PRINTFORML 口中喷출혈沫、%PRINT_TRANSCALLNAME(TARGET)%长声惨叫、
+PRINTFORML 在托盘开始下降的那一瞬间、「花苞」短暂地张开了一点点又合拢、
+PRINTFORML 锋利的刃瓣轻易地撕开了%SLANG_W(TARGET)%顶端的肉襞、向着腹腔之中前进、
+PRINTFORML 在观众们的欢呼喝彩之中
+PRINTFORMW 缓慢但坚定地将%PRINT_TRANSCALLNAME(TARGET)%送上残酷的末路————
+PRINTL 
+PRINTDATA
+	DATAFORM 「哦咯哦哦哦哦哦哦嘔嘔嘔！　
+	DATAFORM 「嗬咯咯咯咯咯咯！
+	DATAFORM 「嘎呀啊啊啊啊啊啊啊啊！　去了！　
+	DATAFORM 「呼嘰咿咕嗚嗚嗚嗚嗚！　破掉了！
+	DATAFORM 「嗬咯呀啊啊啊啊啊啊啊！　嘰呀啊啊啊啊啊！
+ENDDATA
+PRINTDATA
+	DATAFORM 嗬咯嘔！
+	DATAFORM 咿咕咕咕咕咕咕！
+	DATAFORM 唏咕嗚嗚嗚嗚！！！！！！
+	DATAFORM %S_SLANG_W(TARGET)%去了了了了了了了了！！　
+	DATAFORM 去了！　%S_SLANG_W(TARGET)%去了嗚嗚嗚！　
+	DATAFORM 去了呀啊啊啊啊啊啊啊啊啊啊！　
+	DATAFORM 去了嘎呀啊啊啊啊啊！
+	DATAFORM %S_SLANG_W(TARGET)%破掉了！
+	DATAFORM %S_SLANG_W(TARGET)%好痛啊啊！　要死了啊哦哦哦哦哦哦哦！　
+	DATAFORM 嗯嘎啊啊啊啊！
+ENDDATA
+PRINTDATAL
+	DATAFORM 去了了了了了了了了！！」
+	DATAFORM 咕噗卟卟卟卟卟卟卟卟卟卟卟卟！！」
+	DATAFORM 唏咕嗚嗚嗚嗚嗚嗚嗚嗚嗚！」
+	DATAFORM 呀啊嗚嗚嗚嗚嗚！」
+	DATAFORM 去了呀啊啊啊啊啊啊啊啊啊啊！　去了嘎呀啊啊啊啊啊！」
+	DATAFORM 去了嘎呀啊啊啊啊啊！」
+	DATAFORM 嘎呀啊啊啊啊！」
+	DATAFORM 　啊咯咯咯咯咯嗚！！」
+	DATAFORM 破掉了！啊咯咯咯咯咯嗚！！」
+	DATAFORM 要死了啊哦哦哦哦哦哦哦！」
+	DATAFORM 嗯嘎啊啊啊啊！　嘰嚕嗚嗚嗚嗚嗚嗚！　嘰呀嗚嗚嗚嗚！」
+	DATAFORM 嘰嚕嗚嗚嗚嗚嗚嗚！　嘰呀嗚嗚嗚嗚！」
+	DATAFORM 　嘰嚕嗚嗚嗚嗚嗚嗚！」
+	DATAFORM 唏咕嗚嗚嗚嗚嗚嗚嗚嗚嗚！破掉了！啊咯咯咯咯咯嗚！！」
+	DATAFORM 去了了了了了了了了！！要死了啊哦哦哦哦哦哦哦！」
+	DATAFORM 破掉了！啊咯咯咯咯咯嗚！！ 嗯嘎啊啊啊啊！要死了啊哦哦哦哦哦哦哦！」
+ENDDATA
+PRINTL 
+PRINTFORML 腹中感到激烈残忍的疼痛、%PRINT_TRANSCALLNAME(TARGET)%却不停地達到高潮
+PRINTFORML %SLANG_V(TARGET)%緊緊包裹住竹節状的杆身不停蠕動着、
+PRINTFORML 似乎想要阻止身体的下沉。
+PRINTFORMW \@TALENT:모유체질 > 0 ? 奶水、 # \@淫液、尿水与鮮血一同流下、滋潤着冰冷的穿刺杆
+PRINTL 
+PRINTFORML 「花苞」反覆地張合、一点一点地摧毀着%PRINT_TRANSCALLNAME(TARGET)%的器官
+PRINTFORML 小腸、肝臓、腎臓、胃袋、膈膜……都在刃瓣的開閤中被割得乱七八糟
+PRINTFORML 即使現在抜出穿刺杆、也已経没有生還的機会
+PRINTFORML 這一事実衝撃著%PRINT_TRANSCALLNAME(TARGET)%的理性、体中的疼痛似乎全然化為快感、
+PRINTFORMW 穿過横膈膜之後、「花苞」就不再張開、直到逼近咽喉……
+PRINTL 
+PRINTDATA
+	DATAFORM 「嘎啊啊啊啊……
+	DATAFORM 「啊嘎嘎嘎嘎嘎嘎……嘎啊……
+	DATAFORM 「咿啊……噫嘻嘻嘻嘻……
+	DATAFORM 「噗嘎啊啊啊啊啊啊啊啊啊！！！！！！！……
+ENDDATA
+PRINTDATAW
+	DATAFORM 唏啊……咿嘻嘻……嘻嘻……嘻嘻嘻嘻嘻嘻……！……
+	DATAFORM 嘎噗啊……嘎啊……嘎嘎嘎嘎嘎嘎嘎嘎……
+	DATAFORM 謝謝……唏啊……唏嘰啊……
+	DATAFORM 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！！……
+ENDDATA
+PRINTW ————————————嘔咕！」
+PRINTL 
+PRINTFORML 抽搐着的%PRINT_TRANSCALLNAME(TARGET)%头颅高高扬起、口中喷출혈雾、
+PRINTFORML 自下而上穿透咽喉的「花苞」、穿出%PRINT_TRANSCALLNAME(TARGET)%的口唇
+PRINTFORMW 刃鋒上飛濺的鮮血、像一朵妖豔的紅蓮花従%PRINT_TRANSCALLNAME(TARGET)%的身体内盛放！
+PRINTL 
+CALLFORM KOJO_hannyouAA_skewered
+PRINTDATA
+	DATAFORM 「咕咯咯……呃咯咯……
+	DATAFORM 「嗬咯咯……咯咯咯……
+	DATAFORM 「呃咯咯……咕呃呃……
+	DATAFORM 「咕咯咕……呃呃呃……
+	DATAFORM 「嗬咯咯……咕咯咯…
+ENDDATA
+PRINTDATAL
+	DATAFORM 嗬咯嘔……
+	DATAFORM 咿咕咕……
+	DATAFORM 唏咕嗚嗚……
+	DATAFORM 嗬嗬咯咯……　
+	DATAFORM 嗬嗬呃……
+	DATAFORM 咯咯呃……
+	DATAFORM 咯咕呜……
+	DATAFORM 嘎咯呃呃……
+	DATAFORM 咕呃呃……
+	DATAFORM 呃咕呜呃……
+ENDDATA
+PRINTL 
+PRINTFORML 口中只能発出臨終的吐息、肚子一抽一抽地痙攣、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%空虚地望着天花板、
+PRINTFORMW 双眸慢慢地、慢慢地、失去了神采………………
+PRINTW ．．．
+PRINTL 
+PRINTW ．．．．
+PRINTL 
+PRINTW ．．．．．
+PRINTFORML 全场的欢呼达到了最高峰、%PRINT_TRANSCALLNAME(TARGET)%被公开穿刺処刑了。
+PRINTFORML 这场处刑秀为魔法少女组织带来了许多关注度、人气也急剧上升了
+PRINTFORML 但是、谁能说清这些人是想要支持魔法少女们的战斗
+PRINTFORMW ————还是想要看到更多、更刺激的场面呢？
+PRINTL  
+SETCOLOR 180,0,0
+PRINTFORMW 失去四肢、無法継続戦闘的%PRINT_TRANSNAME(TARGET)%自願在処刑秀中被串刺殺死了
+RESETCOLOR
+CFLAG:0 = 9
+TALENT:TARGET:묘상화 = 0
+TALENT:TARGET:임신 = 0
+TALENT:TARGET:훼멸초계시 = 0
+LOCAL1 = (200000 + EXP:TARGET:매료경험 * 2000 + RAND(20000,50000))
+LOCAL2 = (50 + EXP:TARGET:매료경험 + RAND(30,60))
+MONEY += LOCAL1
+FLAG:200 += LOCAL2
+FLAG:853 += 200
+PRINTFORML 得到了{LOCAL1}$！
+PRINTFORML 得到了{LOCAL2}個촉수的残骸！
+PRINTFORML 인기도上升了200！
+PRINTL  
+PRINTW
+;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신判定中

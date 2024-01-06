@@ -1,0 +1,141 @@
+﻿
+;●素質関連
+;처녀喪失
+;--------------------------------------------------
+@KOJO_0_SEX_LOSTVIRGIN_16
+;子촉수襲撃
+IF CFLAG:TARGET:206 == 1
+
+
+;通常戦闘中	;一瞬で膣の一番奥まで挿入される
+ELSEIF CFLAG:TARGET:206 == 2
+	;욕정しきった虚ろな表情で受け入れ
+	;表情にはどこか幸福の色
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		IF PALAM:윤활 < 2000
+			;ほとんど濡れてすらいない
+		ELSE
+			;濡れそぼった
+		ENDIF
+		IF ENEMY_TYPE_CHECK_F("AKUOTI") && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+			;PRINT かつての仲間のペニスによって
+		ELSE
+			;PRINT 異形の肉槍によって
+		ENDIF
+	;口では止めるように懇願
+	;表情は抑えきれない욕정によって弛緩
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+
+	;無慈悲に踏みにじられた
+	ELSE
+		PRINTFORML 「……%SELF_CALL()%の初めてが……」
+		IF ENEMY_TYPE_CHECK_F("AKUOTI")
+			PRINTFORML 「……こんなふうに、無理やりだなんて……」
+		ELSE
+			PRINTFORML 「……あんな%촉수市民("化け物 # 変態 \@なんかに、醜い\@FLAG:73==0 ? 下等生物","性犯罪者")%ごときに……」
+		ENDIF
+		PRINTFORML 「……ぅう……」
+	ENDIF
+
+	;SPダメージ（敵촉수
+	;Ｖ拡張攻め 甘えん坊授乳プレイ 丸飲み精液攻め 催眠姦 サブミッションファック からは　★喪失구상を呼ばれていない？
+	;ELSEIF GETBIT (CFLAG:TARGET:206,3)
+	;ELSEIF GETBIT (CFLAG:TARGET:206,4)
+	;ELSEIF GETBIT (CFLAG:TARGET:206,5)
+	;ELSEIF GETBIT (CFLAG:TARGET:206,6)
+
+;幽閉中（敵）
+ELSEIF CFLAG:TARGET:206 == 3
+;촉수 구속구/기생촉수
+ELSEIF CFLAG:TARGET:206 == 4
+;연인との夜の営み
+ELSEIF CFLAG:TARGET:206 == 5
+;仲間夜這い
+ELSEIF CFLAG:TARGET:206 == 6
+;枕営業
+ELSEIF CFLAG:TARGET:206 == 7
+;援助交際
+ELSEIF CFLAG:TARGET:206 == 8
+;公衆便所（浮浪者）
+ELSEIF CFLAG:TARGET:206 == 9
+;公衆便所（犬）
+ELSEIF CFLAG:TARGET:206 == 10
+;クズ市民
+ELSEIF CFLAG:TARGET:206 == 11
+;정보원
+ELSEIF CFLAG:TARGET:206 == 12
+ENDIF
+
+
+
+
+
+
+;촉수의포로取得
+@KOJO_0_GETTALENT_TORIKO
+	;内外から叩き込まれる快楽が完全に精神を塗りつぶした
+	;最後まで張り詰めていた何かが、ぷつりと音を立てて切れてしまった
+
+
+;음란取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INRAN_16
+	;身体は注がれ続ける快楽に順応してしまい
+	;絶えず刺激を欲するようになってしまった
+PRINTDATAL
+DATAFORM 「はーっ、はーっ❤ セックス、セックスされたい、%SELF_CALL()%、セックス、あ、あぁぁ…❤❤」
+DATAFORM 「はぁ、あん、も、もっとッ！ %SELF_CALL()%もっと、気持ちいいこと知りたいっ！！」
+DATAFORM 「はぁ、あん、も、もっと滅茶苦茶にされたいっ、%SELF_CALL()%もっと壊されたいっ…❤」
+ENDDATA
+
+
+;음핵取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INKAKU_16
+	;幾度も刺激を受けて慣らされた陰核　そよ風程度の刺激すら快感として感じるようになってしまった
+IF TALENT:후타나리 > 0
+	PRINTFORML 「だ、駄目、勝てない、후타나리チンポには勝てないッ！」
+ELSE
+	PRINTFORML 「クリ、壊れ゛ぅぅッ！ はっ、はちきれぅぅううッ！」
+ENDIF
+
+;음호取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INTUBO_16
+	;촉수によって幾度も突き上げられ、注ぎ込まれる精液によって灼かれ続けた子宮
+	;子を宿す為であるはずの空間を侵すモノを求め続けている
+PRINTDATAL
+DATAFORM 「もっと、もっとぉ！ 孕むまで、%ESTRUS_TEXT_F(TARGET)%子宮いっぱいになるまで犯されたいっっ！」
+DATAFORM 「ん、ひ、ぁっ、だ、誰でも、誰でもいいから、おまんこ突いて、犯してっ…！」
+DATAFORM 「あっ、ああぁっ、%SELF_CALL()%のおまんこ、精子欲しがって、犯されたがってるっ！？」
+DATAFORM 「だ、誰でもいいからっ！ %SELF_CALL()%に挿れて、おまんこ、おまんこ突いてえぇっ！」
+ENDDATA
+
+
+
+;음고取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INJIRI_16
+	;度重なる責めによって緩んだ菊門
+	;埋められる快感と排泄の快感を深く刻み込まれてしまった
+PRINTFORML 「おひりっ！ ほひりひぃぃいいい！ おひりが焼げぅぅッ！」
+
+
+;음유取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INNYUU_16
+	;촉수によって責められ、弄ばれた胸
+	;すっかり作り変えられ、衣擦れ程度の刺激すら快感として感じるようになった
+PRINTDATAL
+DATAFORM 「あ゛、お゛、ひお゛お゛おぉぉっ！！ こ、こんなの、も、もう、無理いぃぃぃっ❤」
+DATAFORM 「ぅ゛も゛おおぉぉっ！ もっとっ、もっとしぼって、あひぃぃいぃっ❤」
+DATAFORM 「お゛お゛お゛おぉぉっ！ これっ、お゛、お゛ひぃぃいぃっ❤」
+ENDDATA
+
+
+
+
+;청순파喪失
+;--------------------------------------------------
+@KOJO_0_LOSETALENT_SEIJUNHA
+

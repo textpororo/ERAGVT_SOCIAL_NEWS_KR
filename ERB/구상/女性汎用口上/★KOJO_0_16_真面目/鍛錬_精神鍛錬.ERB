@@ -1,0 +1,189 @@
+﻿;■精神鍛錬
+;--------------------------------------------------
+@KOJO_0_TRAINING_SEISHIN_16
+
+;通常時はパズルや座禅、精神陥落時は便器舐め
+
+;◆임신等特殊な分岐
+IF CHECK_BODY("異常임신") > 0
+	;凄惨な凌辱の記憶が蘇る
+	;
+;◆후타나리
+ELSEIF TALENT:후타나리 > 0
+	PRINTFORML 「お願い、사정っ、사정させてくださいぃっ！！」
+	PRINTFORML  身も世もない少女の絶叫が響き渡る。一糸まとわぬ肢体をベルトで厳重に戒められ、
+	PRINTFORML  先走りを垂れ零し、牝汁を漏らす男女両方の性器を晒して%CALLNAME%が床に転がされている。
+	PRINTFORML  乳首は痛いほど膨れ、肉棒は血管を浮き上がらせて反り返り、牝穴もしとどに蜜を垂れ流しているが
+	PRINTFORML  鍛錬のために拘束された身体は、指一本動かすことも、床に擦り付けることも許されない。
+	PRINTFORML  弱点が普通の인간よりも多い후타나리の身体は汗にまみれて狂ったようにのたうち回る……
+	PRINTDATAL
+		DATAFORM 「お願い、お願いだからっ！ 
+		DATAFORM 「お願いだからっ、なんでもするからっ！ 
+	ENDDATA
+	PRINTFORML 사정、사정させて、사정ぇええっ！」
+ELSEIF CHECK_BODY("触装")
+
+	;◆촉수服＋精神陥落クリティカルヒット
+	IF ABL:노출벽+MARK:치욕각인 >= 5
+
+		;★
+
+
+	;◆촉수服＋精神トラウマ
+	ELSEIF MARK:굴복각인+MARK:공포각인 >= 5
+		IF 진지함_フラグ_シチュ==""
+			PRINTFORML %CALLNAME%は武器を構え、一人修練場で目の前に촉수の姿を描く。
+			PRINTFORML （…っ、%SELF_CALL()%……また……）
+			PRINTFORM その姿を連想するだけで心は砕けそうになり、
+			;更に촉수의포로の場合
+			IF TALENT:촉수의포로
+				PRINTFORML 下腹が疼き、犯してほしいと蜜を滴らせる。
+				PRINTFORML （違う……だめ……理性を保たないと……）
+			ELSE
+				PRINTFORML 今すぐに膝を折り、戦いを放り出したくなる。
+				PRINTFORML （違う……私は……怯えるわけにはいかない……）
+			ENDIF
+			PRINTFORML それでも必死に戦意を保ち、戦おうとする意志を鍛え続けた。
+			IF TALENT:촉수의포로
+				PRINTFORML 足元に、小さく愛液の水溜りを作りながら。
+			ENDIF
+
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			진지함_フラグ_シチュ=
+			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			IF RESULT < 3
+				PRINTFORML 「……ひっ！」
+				PRINTFORML そんな努力を嘲笑うかのように%ITEMNAME:400%が蠢き、%CALLNAME%の膝が震え始めた。
+			ELSEIF RESULT < 5
+				PRINTFORML 「…い、いや！　やめ……、イク、ぅ……っ！！」
+				PRINTFORML ついに%CALLNAME%は武器を取り落し、絶頂しながらその場にへたり込んでしまった。
+			ELSE
+				PRINTFORML 「……ッ!?ぅあああああ！！？」
+				PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+				PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+				PRINTFORMW %CALLNAME%は何度もイかされ、촉수への反抗心を根こそぎ折られてしまった……
+			ENDIF
+			RETURN
+		ENDIF
+	;◆촉수服通常
+	ELSE
+		IF 진지함_フラグ_シチュ==""
+			;★
+
+
+		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
+			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			IF RESULT < 3
+				PRINTFORML 「……っぁあ！」
+				PRINTFORML しかし、%ITEMNAME:400%の刺激に指先が震え、崩してしまった。
+			ELSEIF RESULT < 5
+				PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
+				PRINTFORML %CALLNAME%は盛大に突っ伏し、組み立てていた物を散乱させてしまった。
+			ELSE
+				PRINTFORML 「……ッ!?ぅあああああ！！？」
+				PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+				PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+				PRINTFORMW %CALLNAME%は何度もイかされ、全く鍛錬を進めることができなかった……
+			ENDIF
+			진지함_フラグ_シチュ=
+			RETURN
+		ENDIF
+	ENDIF
+;◆精神陥落
+ELSEIF ABL:노출벽+MARK:치욕각인 >= 5
+	PRINTFORML  強いアンモニア臭が鼻を突く……
+	PRINTFORML  誰もいない男子トイレに、一糸まとわぬ少女の姿があった。
+	PRINTFORML  震える足で膝をつき、柔らかな手のひらを汚れたタイルに押し当てる。
+	PRINTFORML 「はぁ、はっ……あ……ぅ……」
+	PRINTFORML  壁に設えられた便器に顔を近づけていくと、一層強烈な臭気が%CALLNAME%の理性を腐らせる。
+	PRINTFORML  何度も躊躇いながら、変色した陶器にぬめる舌が押し当てられた。
+	PRINTFORML 「ぁ、はっ…鍛錬、これは鍛錬…ぅ…あぁ……」
+	PRINTFORML  舌が痺れるような味と、脳がはち切れそうな異臭。
+	PRINTFORML  くぐもったうめき声と、かすかな水音が続いていく……
+;◆精神トラウマ
+ELSEIF MARK:굴복각인 >= 3|| MARK:공포각인 >= 3
+	PRINTFORML %CALLNAME%は武器を構え、一人修練場で目の前に촉수の姿を描く。
+	PRINTFORML （…っ、%SELF_CALL()%……また……）
+	PRINTFORM その姿を連想するだけで心は砕けそうになり、
+	;更に촉수의포로の場合
+	IF TALENT:촉수의포로
+		PRINTFORML 下腹が疼き、犯してほしいと蜜を滴らせる。
+		PRINTFORML （違う……だめ……理性を保たないと……）
+	ELSE
+		PRINTFORML 今すぐに膝を折り、戦いを放り出したくなる。
+		PRINTFORML （違う……私は……怯えるわけにはいかない……）
+	ENDIF
+	PRINTFORML それでも必死に戦意を保ち、戦おうとする意志を鍛え続けた。
+	IF TALENT:촉수의포로
+		PRINTFORML 足元に、小さく愛液の水溜りを作りながら。
+	ENDIF
+	CFLAG:270 = 20
+
+;◆はじめて
+ELSEIF GETBIT(CFLAG:271,1)==0
+	SETBIT CFLAG:271,1
+	PRINTDATAL
+		DATAFORM 「……何をすればいいんだろう」
+		DATAFORM 「……どうしよう」
+		DATAFORM 「集中力の鍛え方、言うだけなら簡単だけど……悩むわね」
+	ENDDATA
+	PRINTFORML 촉수との戦いでは、僅かな隙も命取りになりかねない。
+	PRINTFORML “精神力を鍛える”と決めこそしたものの、%CALLNAME%は具体的な手段が思い浮かばず困り果てていた。
+	PRINTFORML 「修行……うーん……座禅？　たぶん、申し込みが必要ね」
+	PRINTFORM 「だったら、今日はとりあえず……
+
+	PRINTDATAL
+	DATAFORM パズルでも、解けばいいのかしら」
+	DATAFORM ああもう、暗譜でもしてみましょうか」
+	DATAFORM ……反復作業、縄跳びとか？」
+	ENDDATA
+	PRINTFORMW まずは身近な範囲から。方針を定めた%CALLNAME%は、早速行動に移り始めていた。
+	PRINTL
+
+	PRINTFORML ……捕らえた獲物の精神があっさり壊れてしまえば、良質な母胎も作れない。
+	PRINTFORML %CALLNAME%が強い決意を抱くほど、強固な精神を鍛えるほど、
+	PRINTFORML 獲物としての価値、苗床としての適性も同時に高まってゆく……
+;◆通常トレーニング
+ELSE
+	IF RAND:5>0
+		PRINTDATAL
+			DATAFORM 「……本当に効果があるのかしら」
+			DATAFORM 「ああもう、こういうの苦手なのに……」
+			DATAFORM 「集中、集中……」
+			DATAFORM 「……ご飯何食べようかな」
+			DATAFORM 「この訓練、本当に効果あるのかしら……」
+			DATAFORM 「化け物の力は強大なのに、本当にこんな訓練で…」
+			DATAFORM 「今だって、あの化け物たちはどこかで……」
+			DATAFORM 「……鍛錬、鍛錬……」
+			DATAFORM 「…冷静にならなきゃ」
+			DATAFORM 「…一度慌てればそれが命取り。だからこれは…必要な訓練だもの」
+			DATAFORM 「焦っちゃダメって、分かってはいるんだけど……」
+		ENDDATA
+		PRINTFORM %CALLNAME%は精神力を鍛えるために
+		PRINTDATAL
+			DATAFORM ドミノ牌をひたすら並べている。
+			DATAFORM ジェンガを積んでいる。
+			DATAFORM トランプタワーを立てている。
+			DATAFORM 100×100のパズルピースを組み立てている。
+			DATAFORM ルービックキューブをかちゃかちゃと回している。
+			DATAFORM 黙々と縄跳びを続けている。
+			DATAFORM 暗譜した曲をピアノで奏でている。
+			DATAFORM 目を瞑ってバイオリンを演奏している。
+		ENDDATA
+		CFLAG:270 = 2
+	ELSE
+		PRINTFORML  %CALLNAME%は座禅を組み、退屈な修練に目を閉じて打ち込む。
+		PRINTDATA
+			DATAFORM 平常心を保つ訓練と論理では分かっているものの、身体を動かせないじれったさから
+			DATAFORM 無我の境地に至れというのも年頃の少女には酷な話であり、
+			DATAFORM 精神の集中こそが戦いでは重要だと知りつつも、じれったさには勝てず
+		ENDDATA
+		PRINTDATAL
+			DATAFORM ついつい集中を乱してしまう。
+			DATAFORM ついつい姿勢が乱れてしまう。
+		ENDDATA
+
+		PRINTFORML  「ひきゃっ！？ お、思い切り叩くことないでしょ！」
+		PRINTFORML  すかさず肩を打たれた%CALLNAME%は目に涙を浮かべながら、再び背筋を伸ばした。
+	ENDIF
+ENDIF

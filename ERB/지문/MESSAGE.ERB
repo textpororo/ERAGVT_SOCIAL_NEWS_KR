@@ -1,0 +1,282 @@
+﻿;--------------------------------------------------
+;一口メッセージ関連の地の文
+
+@MESSAGE_FIRST
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "FIRST")
+
+@MESSAGE_TURNEND
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TURNEND")
+
+;ショップ画面
+@MESSAGE_HITOKUTI_SHOP
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "HITOKUTI_SHOP")
+
+
+
+;鍛錬関連の地の文
+;--------------------------------------------------
+;鍛錬開始
+@MESSAGE_TRAINING_BEGIN
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_BEGIN")
+SIF CONFIG_CHECK_SCREEN_F(3) == 0 && RESULT == 1
+	PRINTW 
+
+;--------------------------------------------------
+;鍛錬終了
+@MESSAGE_TRAINING_END
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_END")
+SIF CONFIG_CHECK_SCREEN_F(3) == 0 && RESULT == 1
+	PRINTW 
+
+;--------------------------------------------------
+;走りこみ
+@MESSAGE_TRAINING_HASHIRI
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は走りこみを開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_HASHIRI")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;精神鍛錬
+@MESSAGE_TRAINING_SEISHIN
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は精神鍛錬を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_SEISHIN")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;瞑想
+@MESSAGE_TRAINING_MEISOU
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は瞑想を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_MEISOU")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;筋トレ
+@MESSAGE_TRAINING_KINTORE
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は筋トレを開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_KINTORE")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;自衛訓練
+@MESSAGE_TRAINING_JIEI
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は自衛訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_JIEI")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;ダッシュ
+@MESSAGE_TRAINING_DASH
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%はダッシュを開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_DASH")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;근거리戦闘訓練
+@MESSAGE_TRAINING_SHORT
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は근거리戦闘訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_SHORT")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;중거리戦闘訓練
+@MESSAGE_TRAINING_MIDDLE
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は중거리戦闘訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_MIDDLE")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;원거리戦闘訓練
+@MESSAGE_TRAINING_LONG
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は원거리戦闘訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_LONG")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;기초전투訓練
+@MESSAGE_TRAINING_BASIS
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は기초전투訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_BASIS")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;戦術研究訓練
+@MESSAGE_TRAINING_TACTICS
+PRINTL 
+PRINTFORML %PRINT_CALLNAME(TARGET,1)%は戦術研究訓練を開始した
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_TACTICS")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+;--------------------------------------------------
+;촉수 구속구が鍛錬の邪魔をする
+@MESSAGE_TRAINING_TENTACLECLOTH
+PRINTFORML しかし、服の下で蠢く%ITEMNAME:(CFLAG:42)%が気になって集中することができない・・・
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "TRAINING_TENTACLECLOTH")
+IF CONFIG_CHECK_SCREEN_F(3) == 0
+	PRINTW 
+ELSE
+	PRINTL 
+ENDIF
+
+
+;--------------------------------------------------
+;기절時の形容を返す式中関数
+@PRINT_SWOON
+#FUNCTIONS
+VARSET LOCALS
+IF (TCVARn:12 & 기절)
+	IF TALENT:주관시점 > 0
+		SELECTCASE RAND:10
+			CASE 9
+				LOCALS = 気を失いかけている
+			CASE 8
+				LOCALS = 寝そべっている
+			CASE 7
+				LOCALS = 伏せっている
+			CASE 6
+				LOCALS = 倒れている
+			CASE 5
+				LOCALS = 기절しかけている
+			CASE 4
+				LOCALS = 気を失いかけた
+			CASE 3
+				LOCALS = 寝そべった
+			CASE 2
+				LOCALS = 地に伏せた
+			CASE 1
+				LOCALS = 倒れ込んだ
+			CASE 0
+				LOCALS = 朦朧とした意識の
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:10
+			CASE 9
+				LOCALS = 気を失っている
+			CASE 8
+				LOCALS = 寝そべっている
+			CASE 7
+				LOCALS = 伏せっている
+			CASE 6
+				LOCALS = 倒れている
+			CASE 5
+				LOCALS = 기절している
+			CASE 4
+				LOCALS = 気を失った
+			CASE 3
+				LOCALS = 寝そべった
+			CASE 2
+				LOCALS = 地に伏せた
+			CASE 1
+				LOCALS = 倒れ込んだ
+			CASE 0
+				LOCALS = 기절した
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURNF LOCALS
+
+
+
+
+;--------------------------------------------------
+;キャラクターの외관を加味した나이帯を返す式中関数
+@GET_AGEBAND(ARG)
+#FUNCTIONS
+#DIM AGE
+
+;プロフィール未設定のキャラは나이帯なし
+LOCALS = なし
+SIF CFLAG:ARG:34 == 0
+	RETURNF LOCALS
+
+IF CFLAG:ARG:1 > 0
+	AGE = MAXBASE:ARG:나이
+ELSE
+	AGE = BASE:ARG:나이
+ENDIF
+
+IF AGE < 10
+	LOCALS = 幼い
+ELSEIF AGE < 16
+	LOCALS = 子供
+ELSEIF AGE < 25
+	LOCALS = 若い
+ELSE
+	LOCALS = 大人
+ENDIF
+
+RETURNF LOCALS
+
+
+
+

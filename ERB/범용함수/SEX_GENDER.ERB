@@ -1,0 +1,114 @@
+﻿;●性別周りの判定を整理
+;	・生物学的オスorメス			ISMALE(id)  ISFEMALE(id)
+;	・외관上の男性or女性(보추用)		ISMANLY(id) ISGIRLY(id)
+;	・ちんまん有無チェック(후타나리用)	ISPENIS(id) ISVAGINA(id)
+
+;-------------------------------------------------
+;「性器の有無を判定(후타나리等も考慮)」
+;ペニス判定　ARG番目のキャラがペニスを持っていれば1を返す
+@ISPENIS, ARG = -999
+#FUNCTION
+SIF ARG == -999
+	ARG = TARGET
+SIF ISMALE(ARG) || TALENT:ARG:후타나리 > 0
+	RETURNF 1
+RETURNF 0
+;ヴァギナ判定　ARG番目のキャラがヴァギナを持っていれば1を返す
+@ISVAGINA, ARG = -999
+#FUNCTION
+SIF ARG == -999
+	ARG = TARGET
+SIF ISFEMALE() || TALENT:ARG:후타나리 > 0
+	RETURNF 1
+RETURNF 0
+
+;-------------------------------------------------
+;「女に見える외관」
+;周囲が女の子扱いする判定(地の文用)　女性または보추なら１が返る
+@ISGIRLY(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF ISFEMALE(LOCAL) || TALENT:LOCAL:보추
+		LOCAL=1
+	ELSE
+		LOCAL=0
+	ENDIF
+RETURNF LOCAL
+;「男らしい외관の남자」
+;周囲が남자扱いする判定(地の文用、↑の逆)　남자かつ보추でなければ１が返る
+;※なお、現行GVTはガチで男に見える男装に非対応です(支払う分岐処理の複雑さに対して需要が薄いと考えられるため)
+@ISMANLY(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF ISFEMALE(LOCAL) || TALENT:LOCAL:보추
+		LOCAL=0
+	ELSE
+		LOCAL=1
+	ENDIF
+RETURNF LOCAL
+;「凌辱対象(穴)となり得る」
+;通常のISGIRLY() ＋ 男女平等オプションOnなら無条件に１が返る
+@ISHOLE(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	SIF ARG == 0
+		RETURNF 1
+	;♀、보추、男女平等オプションなら1
+	;※※※※※※※※※※※※※※※※※※※※※※※※
+	;ここうっかりISHOLE()でラップしないように注意！！
+	;※※※※※※※※※※※※※※※※※※※※※※※※
+	IF ISGIRLY(LOCAL) || CONFIG_CHECK_MANIAC_F(5) == 1
+		LOCAL = 1
+	ELSE
+		LOCAL = 0
+	ENDIF
+RETURNF LOCAL
+
+
+;-------------------------------------------------
+;現時点での物理的な性(SEX)
+;メス
+@ISFEMALE(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF TALENT:(LOCAL):남자 <= 0
+		LOCAL=1
+	ELSE
+		LOCAL=0
+	ENDIF
+RETURNF LOCAL
+;オス
+@ISMALE(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF TALENT:(LOCAL):남자 > 0
+		LOCAL=1
+	ELSE
+		LOCAL=0
+	ENDIF
+RETURNF LOCAL
+;TS変身で女になっている状態なら１
+@ISTSGIRL(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF ISFEMALE(LOCAL) && TALENT:LOCAL:변신시TS > 0
+		LOCAL=1
+	ELSE
+		LOCAL=0
+	ENDIF
+RETURNF LOCAL
+
+;기생されて촉수出せる状態なら1
+;	(主に悪堕ち♀が촉수責めできるかどうかの分岐で使う)
+@ISTENTACLER(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	SIF ARG == 0
+		RETURNF 1
+	IF TALENT:LOCAL:기생 && CONFIG_CHECK_MANIAC_F(13) == 1
+		LOCAL = 1
+	ELSE
+		LOCAL = 0
+	ENDIF
+RETURNF LOCAL
+

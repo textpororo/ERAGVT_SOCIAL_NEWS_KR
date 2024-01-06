@@ -1,0 +1,415 @@
+﻿;ランダム着せ替え
+@PASTIME_FASHION, ARG
+#DIM CCOUNT
+#DIM ＴＳキャラ
+;변신시TS女体化キャラのメッセージ分岐
+IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+	ＴＳキャラ = 1
+ELSE
+	ＴＳキャラ = 0
+ENDIF
+;남자は非対応
+IF ISMALE()
+	RETURN 0
+ENDIF
+
+;CFLAG:310（仮）＝TS娘・完全／強制女体化が街か遠出に出かけた（ファッション）回数
+CCOUNT = CFLAG:310
+
+PRINTL 
+IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+	PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、身綺麗にして街に出ることにした。
+ELSEIF TALENT:성별변화 % 10 == 1
+	PRINTFORML 少しずつ女のカラダに慣れていこうと考え、身綺麗にして街に出ることにした。
+ELSE
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、身綺麗にして街に出ることにした。
+ENDIF
+PRINTW 
+;ビッチ
+IF TALENT:음란 > 0
+	;インナー設定なし　ノーパン　または前張り
+	IF CFLAG:42 == 0 || CFLAG:42 == 398
+		PRINTFORM ラインが浮き出るのがかわいくないのでショーツは履かない。
+	ELSEIF CFLAG:42 == 301 || CFLAG:42 == 302 || CFLAG:42 == 303 || CFLAG:42 == 304 || CFLAG:42 == 309
+		CALL SHITAGI_COLOR
+			PRINT の
+		CALL KAIZOU_PANT
+			PRINT を選んで身に着けた。
+	ELSE
+		PRINTFORML いつ誰に下着を見られても良いように
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORM 透けるレースの
+			CASE 1
+				PRINTFORM 透けないレースの
+			CASE 2
+				PRINTFORM 고상함で清楚な
+			CASE 3
+				PRINTFORM かわいい花柄の
+			CASE 4
+				PRINTFORM ヒョウ柄の
+		ENDSELECT
+		PRINTFORML ショーツを選んで身に着けた。
+	ENDIF
+	PRINTFORML 鏡の前でポーズを変えて自分の身体に見惚れている。
+	;トップ
+	IF RAND:9 == 0 && TALENT:거유 > 0
+		PRINTFORML 一見地味だが%PRINT_TRANSCALLNAME(TARGET)%の大きな胸を強調した服装に
+	ELSEIF RAND:8 == 0
+		PRINTFORM 薄手のキャミソールに
+	ELSEIF RAND:7 == 0
+		PRINTFORM 華やかなレースキャミに
+	ELSEIF RAND:6 == 0
+		PRINTFORM レースの見せブラに
+	ELSEIF RAND:5 == 0
+		PRINTFORM シンプルなスポーツブラに
+	ELSEIF RAND:4 == 0
+		PRINTFORM 白のタンクトップに
+	ELSEIF RAND:3 == 0
+		PRINTFORM 黒のチューブトップに
+	ELSEIF RAND:2 == 0
+		PRINTFORM ノーブラTシャツに
+	ELSE
+		PRINTFORM 露出の多い服装に
+	ENDIF
+	;下着がみえそうな
+	IF RAND:5 == 0
+		PRINTFORM ボディラインがはっきりわかる
+	ELSEIF RAND:4 == 0
+		PRINTFORM 下着がチラチラ見える
+	ELSEIF RAND:3 == 0
+		PRINTFORM 尻肉が見えそうな
+	ELSEIF RAND:2 == 0
+		PRINTFORM 尻肉が見える
+	ELSE
+		PRINTFORM 下着が見えそうな
+	ENDIF
+	;ボトム
+	IF RAND:7 == 0
+		PRINTFORML ダメージカットジーンズ。
+	ELSEIF RAND:6 == 0
+		PRINTFORML デニム地のショートパンツ。
+	ELSEIF RAND:5 == 0
+		PRINTFORML マイクロミニパンツ。
+	ELSEIF RAND:4 == 0
+		PRINTFORML タイトスカート。
+	ELSEIF RAND:3 == 0
+		PRINTFORML お尻まで隠れる大きなパーカー。
+	ELSEIF RAND:2 == 0
+		PRINTFORML フレアミニスカート。
+	ELSE
+		PRINTFORML マイクロミニスカート。
+	ENDIF
+	;악세서리
+	IF RAND:3 == 0
+		PRINTFORM レースアップサンダルを
+	ELSEIF RAND:2 == 0
+		PRINTFORM 派手な色のネイルを
+	ELSE
+		PRINTFORM 派手な色のサイハイソックスを
+	ENDIF
+	PRINTFORM 身に付けた姿は
+	IF RAND:4 == 0
+		PRINTFORM いかにも誘っているような風体だ。
+	ELSEIF RAND:3 == 0
+		PRINTFORM いかにも男好きのしそうな格好だ。
+	ELSEIF RAND:2 == 0
+		PRINTFORM いかにも遊んでいそうな雰囲気だ。
+	ELSE
+		PRINTFORM いかにも腰の軽そうなギャル風だ。
+	ENDIF
+;TS娘or完全／強制女体化娘
+ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변화 % 10 == 1
+	;服選び・여체수용まで数段階。下着セットをノリノリで選ぶのは五段階目で良いのか？
+	;受容１その後
+	IF TALENT:여체수용 > 0 && RAND:4 == 0
+		PRINTFORML 近頃、%PRINT_TRANSCALLNAME(TARGET)%は女の身体になれて良かったと、
+		PRINTFORML もう男になんて戻れなくて良いとさえ思っている。
+		PRINTW 
+		PRINTFORML 服選びもメイクも自信が持てるようになり、
+		PRINTFORM クローゼットを開けると
+	;受容
+	ELSEIF TALENT:여체수용 > 0
+		PRINTFORML 以前に感じていた違和感を今は全く感じなくなり
+		PRINTFORML すっかり女のカラダに慣れた事を実感する。
+		PRINTW 
+		PRINTFORML 女物の服選びもすっかり楽しめるようになり
+		PRINTFORM クローゼットを開けると
+	;七段階目のおしゃれ
+	ELSEIF CCOUNT > 11
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 女の身体にとても慣れて、欲しい服がどんどん増えていく。
+		PRINTFORML 最近はすれ違う男たちの視線を集めるのが楽しい。
+		PRINTW
+		PRINTFORM クローゼットを開けると
+	;六段階目の（以下略）
+	ELSEIF CCOUNT > 9
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 女の身体にずいぶん慣れてきて、服選びに楽しめるようになってきた。
+		PRINTFORML ここ数日、초심者向けの簡単ナチュラルメイクを練習した成果を試す時がきた。
+		PRINTW
+		PRINTFORM ブラとショーツは
+	ELSEIF CCOUNT > 7
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 女の身体に慣れてきて、次はどんな服を試そうか考えるのが楽しい。
+		PRINTFORML 最近は女友達とファッション誌の話題で盛り上がることが多い。
+		PRINTW
+		PRINTFORML ブラも支給品は卒業してショーツとおそろいの
+	ELSEIF CCOUNT > 5
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 女の身体にまあまあ慣れてきたし、服選びもなんとなく分かってきた。
+		PRINTW
+	ELSEIF CCOUNT > 3
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 女の身体に少し慣れてきたし、友達に可愛いと言われると嬉しい。
+		PRINTW
+	ELSEIF CCOUNT > 1
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML まだまだ女の身体に違和感がある。
+		PRINTFORML 先日、街でナンパされたのは少し嬉しかった。
+		PRINTW
+	;受容０
+	ELSE
+		SIF ＴＳキャラ == 1
+			PRINT 女性の姿に変身した
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自室の鏡の前で服を選んでいた。
+		PRINTFORML 가슴やお尻などに違和感を感じる。
+		PRINTFORML 女物の服選びもどうしたらいいのかさっぱりわからない。
+		PRINTW
+	ENDIF
+	;すでに男物の下着をつけていないなら、装備下着を参照する。ノーパン、前張りも
+	IF (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:42 != 397 || CFLAG:42 == 0 || CFLAG:42 == 398)
+		PRINTFORM 普段から着けている
+		;カスタムなし下着7種　注釈ルクテンタショーツ399は촉수 구속구400へ自動的に変わる
+		IF CFLAG:42 == 300 || CFLAG:42 == 307 || CFLAG:42 == 308 || CFLAG:42 == 311 || CFLAG:42 == 397 || CFLAG:42 == 400
+			SIF CFLAG:42 == 400
+				PRINT 普通のパンツに擬態した
+			PRINTFORML %ITEMNAME:(CFLAG:42)%を選んで身に着けた。
+		ELSE
+			CALL SHITAGI_COLOR
+				PRINT の
+			CALL KAIZOU_PANT
+				PRINTL を選んで身に着けた。
+		ENDIF
+	;下着選び・五段階（8回目）からは上下おそろい
+	ELSEIF CCOUNT > 7
+		IF RAND:6 == 0
+			PRINTFORM セクシーな
+		ELSEIF RAND:5 == 0
+			PRINTFORM かわいい
+		ELSEIF RAND:4 == 0
+			PRINTFORM シンプルな
+		ELSEIF RAND:3 == 0
+			PRINTFORM エロエロな
+		ELSEIF RAND:2 == 0
+			PRINTFORM フリフリな
+		ELSE
+			PRINTFORM カジュアルな
+		ENDIF
+		IF RAND:9 == 0
+			PRINTFORM レース
+		ELSEIF RAND:8 == 0
+			PRINTFORM ラグジュアリー
+		ELSEIF RAND:7 == 0
+			PRINTFORM フリル
+		ELSEIF RAND:6 == 0
+			PRINTFORM 無地
+		ELSEIF RAND:5 == 0
+			PRINTFORM ドット
+		ELSEIF RAND:4 == 0
+			PRINTFORM 花柄
+		ELSEIF RAND:3 == 0
+			PRINTFORM リボン
+		ELSEIF RAND:2 == 0
+			PRINTFORM ストライプ
+		ELSE
+			PRINTFORM ボーダー
+		ENDIF
+		PRINTFORML の下着を選んで慣れた手付きで身に着けた。
+	;四段階まではブラは支給品。ショーツは男物もあり
+	ELSE
+		;インナー
+		PRINTFORML とりあえずブラは避けて通れないので支給品を身に着け、
+		PRINTFORM ショーツは
+		IF RAND:6 == 0
+			PRINTFORM まだ抵抗があるので着慣れたトランクス
+		ELSEIF RAND:5 == 0
+			PRINTFORM まだ勇気が出ないので着慣れたボクサーパンツ
+		ELSEIF RAND:4 == 0
+			PRINTFORM 少し譲歩して레깅스
+		ELSEIF RAND:3 == 0
+			PRINTFORM 仕方なしにスポーティなショーツ
+		ELSEIF RAND:2 == 0
+			PRINTFORM 勇気を出して地味なショーツ
+		ELSE
+			PRINTFORM 思い切ってかわいいショーツ
+		ENDIF
+		PRINTFORML を選んだ。
+	ENDIF
+	;共通服選びランダム
+	;トップ
+	IF RAND:7 == 0
+		PRINTFORM Ｔシャツに
+	ELSEIF RAND:6 == 0
+		PRINTFORM ニットに
+	ELSEIF RAND:5 == 0
+		PRINTFORM デニムジャケットに
+	ELSEIF RAND:4 == 0
+		PRINTFORM ブルゾンに
+	ELSEIF RAND:3 == 0
+		PRINTFORM パーカーに
+	ELSEIF RAND:2 == 0
+		PRINTFORM スウェットに
+	ELSE
+		PRINTFORM スタジャンに
+	ENDIF
+	;ボトム
+	IF RAND:6 == 0
+		PRINTFORM ショートパンツ
+	ELSEIF RAND:5 == 0
+		PRINTFORM デニムパンツ
+	ELSEIF RAND:4 == 0
+		PRINTFORM スカート
+	ELSEIF RAND:3 == 0
+		PRINTFORM ワンピース
+	ELSEIF RAND:2 == 0
+		PRINTFORM チュールスカート
+	ELSE
+		PRINTFORM レギンス
+	ENDIF
+	PRINTFORM を合わせ
+	;足
+	IF RAND:6 == 0
+		PRINTFORM サンダル
+	ELSEIF RAND:5 == 0
+		PRINTFORM パンプス
+	ELSEIF RAND:4 == 0
+		PRINTFORM スニーカー
+	ELSEIF RAND:3 == 0
+		PRINTFORM 厚底ブーツ
+	ELSEIF RAND:2 == 0
+		PRINTFORM ジッパーブーツ
+	ELSE
+		PRINTFORM ローファー
+	ENDIF
+	PRINTFORML を選んでみる。
+	PRINTW
+	;着替え後段階
+	;受容その後
+	IF TALENT:여체수용 > 0 && RAND:4 == 0
+		PRINTFORML 多少組み合わせがおかしくても堂々としていれば意外と見映えするものだ。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、鏡の前でポーズを変え笑顔を作って見せる。
+		PRINTFORML なんとなく生まれた時から女だった気がする。もし生まれ変わってもまた女がいい。
+	ELSEIF TALENT:여체수용 > 0
+		PRINTFORML 多少組み合わせがおかしくても堂々としていれば意外と見映えするものだ。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、鏡の前でポーズを変え笑顔を作って見せる。
+		PRINTFORML かわいい自分をもっと見て欲しい。もっと褒めてほしい。
+ 	ELSEIF CCOUNT > 11
+		PRINTFORML 服装もメイクもしっかり整えたつもりだ。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、自分はかわいいという自信があった。
+		PRINTFORML そのうち服に合わせたアクセでも見ようか、それとも帽子を探しに行こうか悩んでいる。
+	ELSEIF CCOUNT > 9
+		PRINTFORML ネットや雑誌を参考にメイクはしっかり整えたつもりだ。
+		PRINTFORML 寄り道して色んな服を試着するのが楽しくてつい時間を忘れてしまうので、
+		PRINTFORML 今日はあまり遅くならないように気をつけようと考えている。
+	ELSEIF CCOUNT > 7
+		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
+		PRINTFORML ファッション誌に載っていたメイクにも興味が湧いてきていた。
+	ELSEIF CCOUNT > 5
+		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は下着選びも気をつけようと考えている。
+		PRINTFORML デザインはもちろんのこと、胸に合ったブラを選ぶことで形も見た目のスタイルも良くなる。
+	ELSEIF CCOUNT > 3
+		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
+		PRINTFORML ナンパされたことを考えると、女の%PRINT_TRANSCALLNAME(TARGET)%はどうやら可愛いらしい。
+	ELSEIF CCOUNT > 1
+		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
+		PRINTFORML ナンパされたことを考えると、どうやら変な目では見られていないらしい。
+	ELSEIF TALENT:여체수용 == 0
+		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだが
+		PRINTFORML 不慣れな為か変な目で見られないかと気になってしまう。
+	ENDIF
+
+	;CFLAG:310＝TS娘・完全／強制女体化が街か遠出に出かけた（ファッション）回数増やす
+	CFLAG:310 += 1
+
+;普通娘
+ELSE
+	;インナー設定なし　ノーパン　または前張り
+	IF CFLAG:42 == 0 || CFLAG:42 == 398
+		IF RAND:6 == 0
+			PRINTFORM セクシーな
+		ELSEIF RAND:5 == 0
+			PRINTFORM かわいい
+		ELSEIF RAND:4 == 0
+			PRINTFORM シンプルな
+		ELSEIF RAND:3 == 0
+			PRINTFORM エロエロな
+		ELSEIF RAND:2 == 0
+			PRINTFORM フリフリな
+		ELSE
+			PRINTFORM カジュアルな
+		ENDIF
+		IF RAND:9 == 0
+			PRINTFORM レース
+		ELSEIF RAND:8 == 0
+			PRINTFORM ラグジュアリー
+		ELSEIF RAND:7 == 0
+			PRINTFORM フリル
+		ELSEIF RAND:6 == 0
+			PRINTFORM 無地
+		ELSEIF RAND:5 == 0
+			PRINTFORM ドット
+		ELSEIF RAND:4 == 0
+			PRINTFORM 花柄
+		ELSEIF RAND:3 == 0
+			PRINTFORM リボン
+		ELSEIF RAND:2 == 0
+			PRINTFORM ストライプ
+		ELSE
+			PRINTFORM ボーダー
+		ENDIF
+		PRINTFORM の下着に
+	;カスタムなし下着7種　注釈ルクテンタショーツ399は촉수 구속구400へ自動的に変わる
+	ELSEIF CFLAG:42 == 300 || CFLAG:42 == 307 || CFLAG:42 == 308 || CFLAG:42 == 311 || CFLAG:42 == 397 || CFLAG:42 == 400
+		SIF CFLAG:42 == 400
+			PRINT 普通のパンツに擬態した
+		PRINTFORM %ITEMNAME:(CFLAG:42)%に
+	ELSE
+		CALL SHITAGI_COLOR
+			PRINT の
+		CALL KAIZOU_PANT
+			PRINT に
+	ENDIF
+
+	IF RAND:6 == 0
+		PRINTFORM カジュアル系
+	ELSEIF RAND:5 == 0
+		PRINTFORM キレイ系
+	ELSEIF RAND:4 == 0
+		PRINTFORM お姉系
+	ELSEIF RAND:3 == 0
+		PRINTFORM エスニック系
+	ELSEIF RAND:2 == 0
+		PRINTFORM ガーリッシュ系
+	ELSE
+		PRINTFORM ボーイッシュ系
+	ENDIF
+	IF ARG == 0
+		PRINTFORML コーデで颯爽と飛び出していった。
+	ELSE
+		PRINTFORML コーデに着替えて出掛けていった。
+	ENDIF
+ENDIF

@@ -1,0 +1,5036 @@
+﻿;eraGVT구상テンプレ
+;各関数のKOJO_0_の0をcsvのキャラ番号に置換して使用します
+;범용 캐릭터（キャラ番号0のキャラ）の구상を作成する場合は구상テンプレ_범용 캐릭터用の方をお使いください
+;
+;例：キャラ番号1のキャラで구상を作成する場合
+;    KOJO_1_HITOKUTI_SHOP
+;
+;--------------------------------------------------
+
+;使っているCFLAG（2016/1/10現在）
+;CFLAG
+;CFLAG:250　C攻め（弱）を受けたことがあるか
+;CFLAG:251　C攻め（強）を受けたことがあるか
+;CFLAG:252　C攻め（SP）を受けたことがあるか
+;CFLAG:253　V攻め（弱）を受けたことがあるか
+;CFLAG:254　V攻め（強/SP）を受けたことがあるか
+;CFLAG:256　A攻め（弱）を受けたことがあるか
+;CFLAG:257　A攻め（強/SP）を受けたことがあるか
+;CFLAG:259　B攻め（弱）を受けたことがあるか
+;CFLAG:260　B攻め（強）を受けたことがあるか
+;CFLAG:261　B攻め（SP）を受けたことがあるか
+;CFLAG:262　被弾経験があるか
+;CFLAG:263　사정경험があるか
+;CFLAG:264　대량사정경험があるか
+;CFLAG:265　모유경험があるか
+;CFLAG:270　訓練内容
+;CFLAG:271　仲間一人を選択
+;CFLAG:272　選択した仲間はどこか
+
+
+;一口メッセージ
+
+;캐릭터 구상 색상
+;--------------------------------------------------
+@KOJO_0_COLOR_20
+SETCOLOR 243,213,26
+
+;キャラ個別のオープニング
+;--------------------------------------------------
+@KOJO_0_FIRST_20
+;（特殊な処理用なので使わなくても良いです）
+
+;ターン終了時の処理
+;--------------------------------------------------
+@KOJO_0_TURNEND_20
+;（特殊な処理用なので使わなくても良いです）
+
+;ショップ画面
+;--------------------------------------------------
+@KOJO_0_HITOKUTI_SHOP_20
+;임신している場合
+IF TALENT:임신 == 1 || TALENT:임신 == 3
+	PRINTFORML 「子供を、孕んじゃったんだ……」
+	PRINTFORMDL  %CALLNAME%は子種を孕んだ自分の下腹部を見て
+	IF EXP:출산경험 >= 10
+		PRINT 「嫌だけど、子供に罪はないわ。それに気持ちいいもの」
+		PRINTD 황홀とした表情を浮かべている……
+		PRINT 「ちゃんとした인간かしら、それとも촉수かな？」
+		PRINTD %CALLNAME%は生まれてくる子を思いながら自慰をしている……
+	ELSEIF EXP:출산경험 >= 5
+		PRINT 「無理やりだからって、この子に罪はないわよね……」
+		PRINTD まんざらでもない表情を浮かべている……
+		PRINT 「でも好きな人と結婚して、子供作りたかったな……」
+	ELSEIF EXP:출산경험 >= 1
+		PRINT 「いやよ、また子供を孕まされたんだ……」
+		PRINTD 複雑そうな表情を浮かべている……
+	ELSE
+		PRINT 「やだ、生みたくないわよ……」
+		PRINTD 険しい表情を浮かべている……
+	ENDIF
+	PRINTFORML 「でも絶対、負けないから……」
+;촉수 구속구を着ている場合
+ELSEIF CFLAG:42 == 400
+	PRINTFORMDL 今日も%CALLNAME%の身を%ITEMNAME:(CFLAG:42)%が苛む。
+	IF RAND:4 == 0
+		PRINTFORML 「負ける、もんかぁ……！」
+		PRINTFORMDL 休む間もなく%CALLNAME%の穴という穴は蹂躙され、堪えることのできない吐息が漏れる。
+		PRINTFORML 「んっ……ひうぅ～～」
+		PRINTFORMDW 気丈にも絶頂をこらえていた%CALLNAME%だが、膣奥を貫かれる感覚に容易く達してしまった……
+	ELSEIF RAND:3 == 0
+		PRINTFORML 「はひゃぁあああ～～」
+		PRINTFORMDL 仲間との談笑の最中、突如勢いよく性感帯を抉られ、たまらず大きな声が漏れた。
+		PRINTFORMDL %CALLNAME%のあげた素っ頓狂な声は当然のように周囲の注目を集めてしまい、
+		PRINTFORML 「な、なんでもない、わよぉ……」
+		PRINTFORMDW 仲間たちに見守られながら、肩を震わせ達してしまった。
+	ELSEIF RAND:2 == 0
+		PRINTFORML 「はーっ、はーっ、はー……んくっ」
+		PRINTFORMDL %ITEMNAME:(CFLAG:42)%の責めは容赦ない。
+		PRINTFORMDL 休息を得るはずのベッドの中で、けれど%CALLNAME%の身体は昂ぶったまま降りてこれずにいる。
+		PRINTFORML 「イかせて……お願いだから、イかせてなさいよぉ……」
+		PRINTFORMDW 夜が明けて空が白み始めるまで、%CALLNAME%は一晩中寸止めを受け続けた。
+	ELSE
+		PRINTFORML 「ひぃっ！」
+		PRINTFORML （なに、どこ触って……！？）
+		PRINTFORMDW 突如股座を覆う%ITEMNAME:(CFLAG:42)%から違和感を感じて、%CALLNAME%はびくりと肩を震わせる。
+		PRINTFORMDW 細い管が膣口のそばへと延び、尿道へと突き刺さる。
+		PRINTFORML 「も、もしかして……おしっこ飲んでるの！？」
+		PRINTFORMDW 痛みを伴わない微かな挿入感と、急速に減退していく尿意に%CALLNAME%はそれを悟る。
+		PRINTFORMDW 恥ずかしい排泄物すら好きにされることで、공포と、微かな快感を覚え身体を震わせた。
+	ENDIF
+;체력が500より少ない場合
+ELSEIF BASE:체력 <= 강제휴식체력
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「ちょっと……疲れたかな」
+		CASE 1
+			PRINTFORML 「今日は%SELF_CALL()%、休ませてもらうから」
+		CASEELSE
+			PRINTFORML 「まだ……やれるわよ」
+	ENDSELECT
+	PRINTFORMDL  %CALLNAME%は相当疲れがたまっているようだ。
+;촉수의포로取得後
+ELSEIF TALENT:촉수의포로 > 0 && RAND:3 == 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「違うの、快楽に負けてなんか、ないの……」
+			PRINTFORML 「（やだ、もっと犯されたい、めちゃくちゃにされたいって……）」
+			PRINTFORMDL  %CALLNAME%は身も心も촉수を求め始めている自分に戸惑っている……。
+		CASE 1
+			PRINTFORML 「やだ、촉수がほしいって、そんな事は思ってない……」
+			PRINTFORML 「（でも、挿入してほしい。精液出されたいって、思ってしまうの……）」
+			PRINTFORMDL %CALLNAME%は肉欲と使命感の間で苦悩している。
+		CASE 2
+			PRINTFORML 「촉수がほしいわ。めちゃくちゃに犯されて精液まみれに……してよ」
+			PRINTFORML 「（ドロドロに犯されて、めちゃくちゃにされたい……）」
+			PRINTFORMDL %CALLNAME%は촉수に侵される快楽の虜になっている……
+	ENDSELECT
+;쾌락각인
+ELSEIF MARK:쾌락각인 > RAND:5
+	SELECTCASE MARK:쾌락각인
+		CASE 1
+			PRINTFORML 「気持ち良くなんてないから、違うんだからっ！」
+			PRINTFORML 「でも体が反応しちゃって……。負けない、負けなんだから！」
+			PRINTFORMDL  %CALLNAME%は嫌がりつつも촉수から与えられる快楽に抗えない自分を感じている。
+		CASE 2
+			PRINTFORML 「気持ちいいけどっ……、違う違うわっ！」
+			PRINTFORML 「快楽に負けたくないわよっ、촉수になんて……」
+			PRINTFORMDL  %CALLNAME%は嫌がりつつも촉수からの快楽を受け入れつつあるようだ。
+		CASE 3
+			PRINTFORML 「気持ち良いものは仕方ないわ。촉수を倒せたらいいのよ」
+			PRINTFORML 「快楽に負けてなんか、촉수に負けてなんか……ないんだから」
+			PRINTFORMDL  %CALLNAME%は嫌がりつつも촉수から与えられる快楽を受け入れたようだ。
+	ENDSELECT
+;고통、공포각인
+ELSEIF (MARK:고통각인 + MARK:공포각인)/2 > RAND:4
+	SELECTCASE RAND:1
+		CASE 0
+			PRINTFORML 「怖くなんかないから！」
+			PRINTFORML 「絶対に負けないんだから!」
+			PRINTFORMDL  %CALLNAME%はなんとか自分を奮い立たせている……。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「촉수なんて私の敵じゃないわ！　この町は私が守ってあげるから！」
+			PRINTFORMDL  %CALLNAME%は強気に微笑んでいる。
+		CASE 1
+			PRINTFORML 「んっ、何時でも動けるようにしておかないと」
+			PRINTFORMDL  %CALLNAME%は出撃に向けて準備運動をしている。
+		CASE 2
+			PRINTFORML 「あら、続きが気になるわね？」
+			PRINTFORMDL %CALLNAME%は暇つぶしに読書をしているようだ。
+	ENDSELECT
+ENDIF
+PRINTFORML 
+
+
+
+;鍛錬
+
+;鍛錬開始
+;--------------------------------------------------
+@KOJO_0_TRAINING_BEGIN_20
+PRINTFORML 「このくらい、簡単なものだわ。私の力を見せてあげるわよ。」
+PRINTFORMDL  %CALLNAME%は準備体操している。
+
+;鍛錬終了
+;--------------------------------------------------
+@KOJO_0_TRAINING_END_20
+PRINTFORML 「…これくらいじゃ、足りないくらいね」
+PRINTFORMDL  %CALLNAME%はシャワーで汗を流している
+
+;走りこみ
+;--------------------------------------------------
+@KOJO_0_TRAINING_HASHIRI_20
+;후타나리/임신
+IF TALENT:후타나리 > 0 || CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORML 「んっ、と、はっ、あぁ……ま、まだ終わらないわね……」
+	PRINTFORMDL  衣服の代わりに無数の端子を素肌に貼り付け、ルームランナーの上で%CALLNAME%が息を切らせている。
+	PRINTFORMD  汗にまみれたふとももに汗以外の雫を伝わせ、
+	SIF TALENT:후타나리 > 0
+		PRINTFORMDL ケーブルの巻き付いたペニスを腹に張り付くほど反り返らせて
+	PRINTFORMDL  %CALLNAME%は機械に囲まれ、のたのたと足を進めている。
+	SIF CHECK_PREGNANT_F(TARGET) > 0
+		PRINTFORMDL  両手で突き出たボテ腹を抱え、よろよろと走るその姿は艶かしかった……
+;노출벽Lv3
+ELSEIF ABL:노출벽 >= 3
+	PRINTFORMDL  人の気配すらない裏路地に足音だけが響いている。
+	PRINTFORMDL  全身に珠のような汗を浮かべ、表情を引き攣らせた%CALLNAME%が
+	PRINTFORMDL  周囲の気配を伺いながら息を切らせて駆けてゆく。
+	PRINTFORMDL  身に着けているものはソックスと靴だけ、少女の肢体を隠すものは何一つ無い。
+	PRINTFORMDL  もしもこんな姿を誰かに見られでもしたら……
+	IF RAND:2 == 0
+		PRINTFORMDL  %CALLNAME%は熱に冒されたように頬を染め、興奮に身を晒しながら更に足を早めた。
+	ELSE
+		PRINTFORMDL  공포と期待に崩折れそうな足を奮い立たせ、%CALLNAME%は更に足を早めた。
+	ENDIF
+;胸が開発済みの場合
+ELSEIF ABL:B감각 >=4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「くぅ……ぁん」
+			PRINTFORML (これ、擦れるぅ…)
+		CASE 1
+			PRINTFORML 「ハァ……ハァ」
+			PRINTFORML (なんで、感じちゃうのよぉ……)
+		CASE 2
+			PRINTFORML 「こんな、ことに……負けないん、だからぁ」
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMDL 走る最中にも、%CALLNAME%の開発された胸は微かな刺激にも敏感に反応している。
+		CASE 1
+			PRINTFORMDL 走る振動に乳首が服に擦れ、%CALLNAME%は悩ましげな吐息を漏らした。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「まだまだいけるわ」
+		CASE 1
+			PRINTFORML 「ぜぇ、はぁ……あと、何周あるの？」
+		CASE 2
+			PRINTFORML 「思ったよりも……長いわね」
+		CASE 3
+			PRINTFORML 「これで５周ね」
+	ENDSELECT
+	PRINTFORMDL %CALLNAME%は黙々と走り込みを続けている。
+ENDIF
+CFLAG:270 = 1
+
+;精神鍛錬
+;--------------------------------------------------
+@KOJO_0_TRAINING_SEISHIN_20
+;치욕각인Lv3
+IF MARK:치욕각인 == 3
+	PRINTFORMDL  強い精臭が鼻を突く……
+	PRINTFORMDL  実験室の촉수の前に、一糸まとわぬ少女の姿があった。
+	PRINTFORMDL  震える足で膝をつき、柔らかな手のひらを先端に押し当てる。
+	PRINTFORML 「촉수……あ……ぅ……ほしいわ」
+	PRINTFORMDL  固くそそり立った촉수に顔を近づけていくと、一層強烈な臭気が%CALLNAME%の理性を鈍らせる。
+	PRINTFORMDL  何度も躊躇いながら、白濁をしたたせる先端にためらいがちに舌が押し当てられた。
+	PRINTFORML 「ぁ、はっ…鍛錬よ、これは鍛錬…だからぁ…あぁ……」
+	PRINTFORMDL  舌がとろけるような味と、脳が爛れるような快感。
+	PRINTFORMDL  くぐもったうめき声と、かすかな水音が続いていく……
+;후타나리
+ELSEIF TALENT:후타나리 > 0
+	PRINTFORML 「사정させて！ 사정、したいのよっ！！」
+	PRINTFORMDL  身も世もない少女の絶叫が響き渡る。一糸まとわぬ肢体をベルトで厳重に戒められ、
+	PRINTFORMDL  先走りを垂れ零し、牝汁を漏らす男女両方の性器を晒して%CALLNAME%が床に転がされている。
+	PRINTFORMDL  乳首は痛いほど膨れ、肉棒は血管を浮き上がらせて反り返り、牝穴もしとどに蜜を垂れ流しているが
+	PRINTFORMDL  鍛錬のために拘束された身体は、指一本動かすことも、床に擦り付けることも許されない。
+	PRINTFORMDL  弱点が普通の인간よりも多い후타나리の身体は汗にまみれて狂ったようにのたうち回る……
+	PRINTFORML 「お願い、お願いだからっ！ 出させてッ！ 사정させてぇぇぇっ！」
+;굴복か공포각인が3の場合
+ELSEIF MARK:굴복각인 >= 3 || MARK:공포각인 >= 3
+	PRINTFORMDL %CALLNAME%は武器を構え、一人修練場で目の前に촉수の姿を描く。
+	PRINTFORML （ぁ……ぁあ……）
+	PRINTFORMD その姿を連想するだけで心は砕けそうになり、
+	;更に촉수의포로の場合
+	IF TALENT:촉수의포로 > 0
+		PRINTFORMDL 下腹が疼き、犯してほしいと蜜を滴らせる。
+	ELSE
+		PRINTFORMDL 今すぐに膝を折り、戦いを放り出したくなる。
+	ENDIF
+	PRINTFORML （だめよ%CALLNAME%……こんな事に負けてはダメ……！）
+	PRINTFORMDL それでも必死に戦意を保ち、戦おうとする意志を鍛え続けた。
+	IF TALENT:촉수의포로 > 0
+		PRINTFORMDL 足元に、小さく愛液の水溜りを作りながら。
+	ENDIF
+	CFLAG:270 = 20
+ELSEIF RAND:3 > 0
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「この、じっとしなさいよ……！」
+		CASE 1
+			PRINTFORML 「ぐらぐら、するわね」
+		CASE 2
+			PRINTFORML 「集中…集中……」
+		CASE 3
+			PRINTFORML 「うぅ～崩れそうで怖いわ」
+	ENDSELECT
+	PRINTFORMD %CALLNAME%は精神力を鍛えるために
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL ドミノ牌をひたすら並べている。
+		CASE 1
+			PRINTFORMDL ジェンガを積んでいる。
+		CASE 2
+			PRINTFORMDL トランプタワーを立てている。
+		CASE 3
+			PRINTFORMDL 100×100のパズルピースを組み立てている。
+	ENDSELECT
+	CFLAG:270 = 2
+ELSE
+	PRINTFORMDL  %CALLNAME%は座禅を組み、退屈な修練に目を閉じて打ち込む。
+	PRINTFORMDL  精神の集中こそが戦いでは重要だと知りつつも、退屈には勝てずついつい欠伸を漏らしてしまう。
+	PRINTFORML  「ひきゃっ！？ お、思い切り叩くことないでしょ！」
+	PRINTFORMDL  すかさず肩を打たれた%CALLNAME%は目に涙を浮かべながら、再び背筋を伸ばした。
+ENDIF
+
+;瞑想
+;--------------------------------------------------
+@KOJO_0_TRAINING_MEISOU_20
+;자위중독が5以上の場合
+IF ABL:자위중독 >= 5
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「なんで、こんなに……疼く、のよぉ！？」
+		CASE 1
+			PRINTFORML 「やだ、%SELF_CALL()%ったら……」
+		CASE 2
+			PRINTFORML 「こんなの、ダメなのに……」
+		CASEELSE
+			PRINTFORML 「あついよぉ……」
+	ENDSELECT
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 瞑想を放り出し、%CALLNAME%は一人自慰にふけっている。
+		CASE 1
+			PRINTFORMDL 修練の事も忘れ、%CALLNAME%は自慰に夢中になっている。
+		CASE 2
+			PRINTFORMDL 身体の疼きを抑えられず、%CALLNAME%は自らの手で慰め始めた。
+		CASEELSE
+			PRINTFORMDL 火照る身体を持て余し、%CALLNAME%はそっと自慰を始めた。
+	ENDSELECT
+;자위중독が3以上の場合
+ELSEIF ABL:자위중독 >= 3
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「ぅぁ……あぁ……」
+		CASE 1
+			PRINTFORML 「く、ふぅ……」
+		CASE 2
+			PRINTFORML (集中、しなきゃ……)
+		CASEELSE
+			PRINTFORML 「体、暑い……」
+	ENDSELECT
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 瞑想中に%CALLNAME%は身体の疼きを覚え、集中を乱してしまった。
+		CASE 1
+			PRINTFORMDL 修練に集中しようとする%CALLNAME%だが、その脳裏は自慰への願望でいっぱいになっていた。
+		CASE 2
+			PRINTFORMDL 疼く体を必死で抑えながら、%CALLNAME%は瞑想しようと努力している。
+		CASEELSE
+			PRINTFORMDL 瞑想中に身体が火照り始め、%CALLNAME%は自慰をこらえるのに必死になっている。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「…………」
+		CASE 1
+			PRINTFORML 「……ふぅ」
+		CASE 2
+			PRINTFORML 「……(眠いわね)」
+		CASEELSE
+			PRINTFORML 「……はぁ」
+	ENDSELECT
+	PRINTFORMDL 座禅を組み、%CALLNAME%は静かに瞑想している。
+ENDIF
+CFLAG:270 = 3
+
+;筋トレ
+;--------------------------------------------------
+@KOJO_0_TRAINING_KINTORE_20
+IF CHECK_PREGNANT_F(TARGET) > 0 || RAND:3 == 0
+	PRINTFORML 「うくっ、も、もう、限界……」
+	PRINTFORMDL  %CALLNAME%は半泣きで器具にしがみつく。
+	;임신
+	IF CHECK_PREGNANT_F(TARGET) > 0
+		PRINTFORMDL  新しい生命を宿した体には普段の力が入らない。衣服の代わりに全身に無数の端子を貼り付けられ、
+		PRINTFORMDL  大股開きで足を踏ん張る痴態をカメラが捉え続けていた……
+	ELSE
+		PRINTFORMDL  ぴっちりしたレオタード一枚で訓練を続ける%CALLNAME%は、
+		;노출벽Lv3
+		IF ABL:노출벽 >= 3
+			PRINTFORMDL  大股開きになり、仲間達に胸の膨らみや股布に浮き出た割れ目を見せつける。
+			PRINTFORMDL  見られる快感の虜になった%CALLNAME%は仲間達の視線を愉しんでしまっていた……
+		ELSE
+			PRINTFORMDL  足をピンと張り、肢体を伸ばして肩で呼吸をする。
+			PRINTFORMDL  가슴につんと浮いた膨らみも、股布に浮き出た割れ目に向けられる視線も
+			SIF TALENT:후타나리 > 0
+				PRINTD  薄布を持ち上げて浮き出ている肉棒にも
+			PRINTFORMDL  気づいていない……
+		ENDIF
+	ENDIF
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「これ……きつい……」
+		CASE 1
+			PRINTFORML 「……ふっ」
+		CASE 2
+			PRINTFORML 「ぐぐ、こんなくらいで……」
+		CASEELSE
+			PRINTFORML 「97、98……」
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMD %CALLNAME%は不慣れな腕立て伏せを続けている。
+			PRINTFORMDL 魔法の助けがあるにせよ、ただの少女には厳しい訓練だ……
+		CASE 1
+			PRINTFORMD %CALLNAME%は不慣れな腹筋を続けている。
+			PRINTFORMDL 魔法に助けられているとはいえ、ただの少女には厳しい訓練だ……
+	ENDSELECT
+ENDIF
+CFLAG:270 = 4
+
+
+;自衛訓練
+;--------------------------------------------------
+@KOJO_0_TRAINING_JIEI_20
+IF ABL:B감각 >=4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「くぅ……ぁん」
+			PRINTFORML (乳首が、擦れる…)
+		CASE 1
+			PRINTFORML 「大丈夫、だか、らぁ……」
+			PRINTFORML (胸が、張って……)
+		CASE 2
+			PRINTFORML 「んうぅ……問題、ないわ」
+			PRINTFORML (何で胸が気持ちいのよぉ……)
+	ENDSELECT
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL 組手の最中だというのに、%CALLNAME%は胸が服に擦れる感覚に翻弄されている。
+		CASE 1
+			PRINTFORMDL 組手の最中、%CALLNAME%の乳首はシャツの上からわかるほど勃起していた。
+		CASE 2
+			PRINTFORMDL 組手に集中しようとする%CALLNAME%を嘲笑うかのように、その乳首は鋭い性感を発し続けていた。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「分かりやすいのよ！」
+		CASE 1
+			PRINTFORML 「丸見えだわ！」
+		CASE 2
+			PRINTFORML 「手加減はいらないわよ！」
+		CASE 3
+			PRINTFORML 「……ッ！」
+	ENDSELECT
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL %CALLNAME%は仲間たちの振り下ろす木剣を、紙一重で捌き続けた。
+		CASE 1
+			PRINTFORMDL %CALLNAME%は仲間たちの투척る折り紙の手裏剣を、紙一重で捌き続けた。
+		CASE 2
+			PRINTFORMDL %CALLNAME%は仲間たちの放つ吸盤付のおもちゃの矢を、紙一重で捌き続けた。
+	ENDSELECT
+ENDIF
+CFLAG:270 = 5
+
+;ダッシュ
+;--------------------------------------------------
+@KOJO_0_TRAINING_DASH_20
+IF CHARANUM < 3
+	CFLAG:271 = 0
+	CFLAG:272 = 0
+ELSE
+	;ライバルに仲間を一人選択
+	$LOOP_0
+	CFLAG:271 = (RAND:(CHARANUM - 1) + 1)
+	SIF CFLAG:271 == 0 || CFLAG:271 == CFLAG:240
+		GOTO LOOP_0
+	FOR LOCAL,0,CHARANUM
+		SIF CFLAG:LOCAL:240 == CFLAG:271
+			CFLAG:272 = LOCAL
+	NEXT
+ENDIF
+
+;胸が開発済みの場合
+IF ABL:B감각 >=4
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「くぅ……ぁん」
+			PRINTFORML (これ、擦れるぅ…)
+		CASE 1
+			PRINTFORML 「ハァ……ハァ」
+			PRINTFORML (なんで、感じちゃうのよぉ……)
+		CASE 2
+			PRINTFORML 「こんな、ことに……負けないん、だからぁ」
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMDL 走る最中にも、%CALLNAME%の開発された胸は微かな刺激にも敏感に反応している。
+		CASE 1
+			PRINTFORMDL 走る振動に乳首が服に擦れ、%CALLNAME%は悩ましげな吐息を漏らした。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「べ、別にこんなので疲れるわけないじゃない！」
+		CASE 1
+			PRINTFORML 「いい汗かいたわ……」
+		CASE 2
+			PRINTFORML 「ふぅ、気持ちいわね」
+		CASE 3
+			;仲間をライバル視して張り合う（ぼっちなら何気ない一言）
+			IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
+				PRINTFORML 「やった、タイム更新ね」
+			ELSE
+				PRINTFORML 「%CALLNAME:(CFLAG:271)%には負けないんだから！」
+			ENDIF
+	ENDSELECT
+	PRINTFORMDL %CALLNAME%は短距離用のコースを一息に走り抜けた。
+ENDIF
+CFLAG:270 = 6
+
+;근거리戦闘訓練
+;--------------------------------------------------
+@KOJO_0_TRAINING_SHORT_20
+IF CHARANUM < 3
+	CFLAG:271 = 0
+	CFLAG:272 = 0
+ELSE
+	;訓練相手に仲間を一人選択
+	$LOOP_0
+	CFLAG:271 = (RAND:(CHARANUM - 1) + 1)
+	SIF CFLAG:271 == 0 || CFLAG:271 == CFLAG:240
+		GOTO LOOP_0
+	FOR LOCAL,0,CHARANUM
+		SIF CFLAG:LOCAL:240 == CFLAG:271
+			CFLAG:272 = LOCAL
+	NEXT
+ENDIF
+
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「このっ」
+		PRINTFORMDL %CALLNAME%は案山子を相手に木剣を振るい続けている。
+	CASE 1
+		PRINTFORML 「剣が軽くなってきたわ」
+		PRINTFORMDL %CALLNAME%は案山子を相手に木剣を振るい続けている。
+	CASE 2
+		PRINTFORML 「ちょっと味気ないのよね……」
+		PRINTFORMDL %CALLNAME%は案山子を相手に木剣を振るい続けている。
+	CASE 3
+		;仲間と打ち合う（ぼっちなら何気ない一言）
+		IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
+			PRINTFORML 「こんなものかしら」
+			PRINTFORMDL %CALLNAME%は案山子を相手に木剣を振るい続けている。
+		ELSE
+			PRINTFORML 「行くわよ、%CALLNAME:(CFLAG:271)%！」
+			PRINTFORMDL %CALLNAME%は守勢に回る%CALLNAME:(CFLAG:271)%に木剣を振るい続けている。
+		ENDIF
+ENDSELECT
+CFLAG:270 = 7
+
+;중거리戦闘訓練
+;--------------------------------------------------
+@KOJO_0_TRAINING_MIDDLE_20
+IF CHARANUM < 3
+	CFLAG:271 = 0
+	CFLAG:272 = 0
+ELSE
+	;訓練相手に仲間を一人選択
+	$LOOP_0
+	CFLAG:271 = (RAND:(CHARANUM - 1) + 1)
+	SIF CFLAG:271 == 0 || CFLAG:271 == CFLAG:240
+		GOTO LOOP_0
+	FOR LOCAL,0,CHARANUM
+		SIF CFLAG:LOCAL:240 == CFLAG:271
+			CFLAG:272 = LOCAL
+	NEXT
+ENDIF
+
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「そこ！」
+		PRINTFORMDL %CALLNAME%は離れた的に、ボールを투척ている。
+	CASE 1
+		PRINTFORML 「コントロールがつかめてきたわ」
+		PRINTFORMDL %CALLNAME%は離れた的に、ボールを투척ている。
+	CASE 2
+		PRINTFORML 「ちょっと味気ないのよね……」
+		PRINTFORMDL %CALLNAME%は離れた的に、ボールを투척ている。
+	CASE 3
+		;仲間とボールを투척合う（ぼっちなら何気ない一言）
+		IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
+			PRINTFORML 「こんなとこかしら」
+			PRINTFORMDL %CALLNAME%は離れた的に、ボールを투척ている。
+		ELSE
+			PRINTFORML 「行くわよ、%CALLNAME:(CFLAG:271)%！」
+			PRINTFORMDL %CALLNAME%は離れた位置の%CALLNAME:(CFLAG:271)%にボールを투척ている。
+		ENDIF
+ENDSELECT
+CFLAG:270 = 8
+
+;원거리戦闘訓練
+;--------------------------------------------------
+@KOJO_0_TRAINING_LONG_20
+IF CHARANUM < 3
+	CFLAG:271 = 0
+	CFLAG:272 = 0
+ELSE
+	;訓練相手に仲間を一人選択
+	$LOOP_0
+	CFLAG:271 = (RAND:(CHARANUM - 1) + 1)
+	SIF CFLAG:271 == 0 || CFLAG:271 == CFLAG:240
+		GOTO LOOP_0
+	FOR LOCAL,0,CHARANUM
+		SIF CFLAG:LOCAL:240 == CFLAG:271
+			CFLAG:272 = LOCAL
+	NEXT
+ENDIF
+
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「そこ！」
+		PRINTFORMDL %CALLNAME%は遠く離れた的に、練習用のライフルで狙いを付けた。
+	CASE 1
+		PRINTFORML 「けっこう反動来るのね……」
+		PRINTFORMDL %CALLNAME%は遠く離れた的に、練習用のライフルで狙いを付けた。
+	CASE 2
+		PRINTFORML 「ちょっと味気ないわね……」
+		PRINTFORMDL %CALLNAME%は遠く離れた的に、練習用のライフルで狙いを付けた。
+	CASE 3
+		;仲間とペイント弾を撃ち合う（ぼっちなら何気ない一言）
+		IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
+			PRINTFORML 「やった、命中！」
+			PRINTFORMDL %CALLNAME%は遠く離れた的に、練習用のライフルで狙いを付けた。
+		ELSE
+			PRINTFORML 「こ、この、やったわね！」
+			PRINTFORMDL %CALLNAME%は%CALLNAME:(CFLAG:271)%と、互いにドロドロになるまでペイント弾で撃ちあった。
+		ENDIF
+ENDSELECT
+CFLAG:270 = 9
+
+;戦術研究
+;--------------------------------------------------
+@KOJO_110_TRAINING_TACTICS_20
+;임신
+IF TALENT:임신 == 1
+	PRINTFORML 「……こ、こういう時の、適切な動きは……！くぅっ、これくらい問題ないわ……」
+	PRINTFORMDL  普段通りに戦術研究を続けようとする%CALLNAME%だったが、その下腹部は膨れ上がっている。
+	PRINTFORMDL  촉수に孕まされボテ腹になる未来など以前は想像しておらず、また想像しようとも思わなかった。
+	PRINTFORMDL  今まで%CALLNAME%が積み重ねた全ての戦術は、%CALLNAME%が孕まされると同時に絵空事となり果ててしまった。
+	PRINTFORML 　
+	PRINTFORML 「ううぅ、負けないんだからぁ……、回避を優先、それか、ら、…っううぅぅっ！？」
+	PRINTFORMDL  必死に考えを纏めようとする%CALLNAME%だが、その試みは胎内の촉수に蠢かれた快感であっさりと中断される。
+	PRINTFORMDL 僅かな刺激で情けないほど簡単に絶頂し、同時に思考が霧散する。今の%CALLNAME%にとって、考えを纏めることほど縁遠い行為もない。
+	PRINTFORML 　
+	PRINTFORMDL  そもそも、異形の子種を孕んだ%CALLNAME%に「戦う」術など、最初から残っていない。
+	PRINTFORMDL  今の%CALLNAME%は最下級の촉수にすら何一つ抵抗出来ないのだから……
+;촉수의포로の場合
+ELSEIF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「こいつの촉수…こんなに大きいんだ……」
+		CASE 1
+			PRINTFORML 「もしこんな風に犯されたらって…考えただけで……」
+		CASE 2
+			PRINTFORML 「こ、こんなことまで……？」
+		CASE 3
+			PRINTFORML 「な、なるほど、こういう時は……」
+	ENDSELECT
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL %CALLNAME%は촉수に犯された時のデータを閲覧している。
+		CASE 1
+			PRINTFORMDL %CALLNAME%は教本と猥本を並べて広げている。
+			PRINTFORMDL ……どうやら猥本にしか目がいかないようだ。
+		CASE 2
+			PRINTFORMDL 촉수の活動報告から、どんなふうに犯されるのか妄想している。
+		CASE 3
+			PRINTFORMDL %CALLNAME%は戦術指南書から、どうすればヤラれるのか研究している。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「こんな風になってるのね……」
+		CASE 1
+			PRINTFORML 「うっ気持ち悪……」
+		CASE 2
+			PRINTFORML 「へぇ、参考になるわ……」
+		CASE 3
+			PRINTFORML 「なるほど、こういう時は……」
+	ENDSELECT
+	SELECTCASE RAND:4
+		CASE 0
+			;戦闘未経験
+			IF EXP:자위경험 == 0
+				PRINTFORMDL %CALLNAME%は先人の戦闘データを閲覧している。
+			ELSE
+				PRINTFORMDL %CALLNAME%は過去の自分の戦闘データを閲覧している。
+			ENDIF
+		CASE 1
+			PRINTFORMDL %CALLNAME%は教本を開いて戦術を研究している。
+		CASE 2
+			PRINTFORMDL 촉수の活動報告から、%CALLNAME%はその行動パターンを分析している。
+		CASE 3
+			PRINTFORMDL %CALLNAME%は戦術指南書から、効率的な立ち回りを学習している。
+	ENDSELECT
+ENDIF
+CFLAG:270 = 10
+
+;촉수 구속구が鍛錬の邪魔をする
+;--------------------------------------------------
+@KOJO_0_TRAINING_TENTACLECLOTH_20
+;走り込み
+IF CFLAG:270 == 1
+	;感覚の最大値で決める
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……動…くなぁ…ぁあ！」
+;;		PRINTFORMDL %CALLNAME%は与えられる刺激に脚をもつれさせた。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は走りこみの最中にイッてしまった…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL %CALLNAME%は何度もイかされながら鍛錬を続けた…
+;;		PRINTFORMDL しかし、絶頂の余韻に震える脚では、歩くこともままならず、近くの壁に身を預けて立っているのがやっとのようだ…
+;;		PRINTFORMDW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には愛液の水溜りが出来上がっていた……
+	ENDIF
+;精神鍛錬（通常）
+ELSEIF CFLAG:270 == 2
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……っぁあ！」
+;;		PRINTFORMDL しかし、%ITEMNAME:400%の刺激に指先が震え、崩してしまった。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は盛大に突っ伏し、組み立てていた物を散乱させてしまった。
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDW %CALLNAME%は何度もイかされ、全く鍛錬を進めることができなかった……
+	ENDIF
+;精神鍛錬（刻印）
+ELSEIF CFLAG:270 == 20
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ひっ！」
+;;		PRINTFORMDL %CALLNAME%の努力を嘲笑うかのように%ITEMNAME:400%が蠢き、膝が震え始めた。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…い、いや！　やめ……、イクぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は武器を取り落し、絶頂しながらその場にへたり込んでしまった。
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDW %CALLNAME%は何度もイかされ、촉수への反抗心を根こそぎ折られてしまった……
+	ENDIF
+;瞑想
+ELSEIF CFLAG:270 == 3
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……心…頭、滅却、…っんん」
+;;		PRINTFORMDL %ITEMNAME:400%に全身を愛撫されながら、%CALLNAME%は瞑想を続けた。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は瞑想するつもりが、%ITEMNAME:400%にイかされただけだった…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+;;		PRINTFORMDW %CALLNAME%は何度もイかされ続け、%ITEMNAME:400%に弄ばれただけだった…
+	ENDIF
+;筋トレ
+ELSEIF CFLAG:270 == 4
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ッ!？」
+;;		PRINTFORMDL %ITEMNAME:400%に全身を愛撫されながら、%CALLNAME%は鍛錬を続けたが
+;;		PRINTFORMDL 全身に上手く力が入らず満足な結果が出せなかった。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は鍛錬中にイかされ、派手に突っ伏した。
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+;;		PRINTFORMW %CALLNAME%は何度もイかされ、途中から一回も鍛錬が出来なくなった…
+	ENDIF
+;自衛訓練
+ELSEIF CFLAG:270 == 5
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ッ!？…グゥ！」
+;;		PRINTFORMDL %CALLNAME%は断続的な刺激に気を取られ、防ぎきることができなかった。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…っんん、ぁあ！！駄、目、……ぅああ、ガッ！！」
+;;		PRINTFORMDL %CALLNAME%は組手中に絶頂すると同時に、공격を受け기절した。
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「イ、ヤぁあああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
+;;		PRINTFORMDL 絶頂し、%CALLNAME%の力が抜けると%ITEMNAME:400%は%CALLNAME%の体を操り
+;;		PRINTFORMDW 何度もイかせながら淫靡な回避を強制させた。
+	ENDIF
+;ダッシュ
+ELSEIF CFLAG:270 == 6
+	;感覚の最大値で決める
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……動…くなぁ…ぁあ！」
+;;		PRINTFORMDL %CALLNAME%は与えられる刺激に脚をもつれさせた
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は全力疾走中にイッてしまい、盛大に転倒した…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL %CALLNAME%は何度もイかされながら鍛錬を続けた…
+;;		PRINTFORMDL しかし、絶頂の余韻に震える脚は力を失い、膝を折ってその場にうずくまるばかりであった…
+;;		PRINTFORMDW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には愛液の水溜りが出来上がっていた……
+	ENDIF
+;근거리戦闘
+ELSEIF CFLAG:270 == 7
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ッ!？」
+;;		PRINTFORMDL %CALLNAME%は股座からこみあげる刺激に気を取られ、振るった木剣はむなしく空を切った。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+;;		PRINTFORMDL あまりの性感に膝を折った%CALLNAME%は、
+;;		PRINTFORMDL 頽れる刹那木剣に股間をこすり付け盛大にイってしまった…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL 絶頂に絶頂を重ね、その度に%CALLNAME%の体は震え、股の間から透明な露をこぼす。
+;;		PRINTFORMDW その下に添えられた、木剣に性器をこすり付けながら……
+	ENDIF
+;중거리戦闘
+ELSEIF CFLAG:270 == 8
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ッ!？」
+;;		PRINTFORMDL %CALLNAME%は股座からこみあげる刺激に気を取られ、투척たボールはむなしく空を切った。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+;;		PRINTFORMDL あまりの性感に%CALLNAME%はたまらず股座を押さえ、
+;;		PRINTFORMDL その拍子に手にしたボールを陰核に押し付け、盛大にイってしまった…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL 絶頂に絶頂を重ね、その度に%CALLNAME%の体は震え、股の間から透明な露をこぼす。
+;;		PRINTFORMDW 必死にこらえるつもりの手で、余計に硬い陰核を刺激しながら……
+	ENDIF
+;원거리戦闘
+ELSEIF CFLAG:270 == 9
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……ッ!？」
+;;		PRINTFORMDL %CALLNAME%は股座からこみあげる刺激に気を取られ、放った弾丸はむなしく空を切った。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
+;;		PRINTFORMDL あまりの性感に膝を折った%CALLNAME%は、
+;;		PRINTFORMDL 頽れる刹那ライフルに股間をこすり付け盛大にイってしまった…
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL 絶頂に絶頂を重ね、その度に%CALLNAME%の体は震え、股の間から透明な露をこぼす。
+;;		PRINTFORMDW その下に添えられた、ライフルに性器をこすり付けながら……
+	ENDIF
+	ELSEIF CFLAG:270 == 10
+	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	IF RESULT < 3
+;;		PRINTFORML 「……っぁあ！」
+;;		PRINTFORMDL しかし、%ITEMNAME:400%の刺激に指先が震え、資料の乱してしまった。
+	ELSEIF RESULT < 5
+;;		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
+;;		PRINTFORMDL %CALLNAME%は盛大に突っ伏し、よだれで資料を汚してしまった。
+	ELSE
+;;		PRINTFORML 「……ッ!？ぅあああああ！！？」
+;;		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
+;;		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
+;;		PRINTFORMDL %CALLNAME%は何度もイかされ、研究どころではなくなってしまった。
+;;		PRINTFORMDW 机の下に落ちた資料は、%CALLNAME%の愛液でカピカピになっている……
+	ENDIF
+ENDIF
+
+
+;촉수と遭遇
+
+;ザコ촉수と戦闘
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_MOB_20
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「ザコはとっとと消えなさい！」
+	CASE 1
+		PRINTFORML 「相手にもならないわねっ！」
+	CASE 2
+		PRINTFORML 「弱いわねっ、暇潰しにもならないわ！」
+ENDSELECT
+IF TALENT:촉수의포로 > 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL 言葉とは裏腹に%CALLNAME%の体は火照り始めている。
+		CASE 1
+			PRINTFORMDL そうつぶやく%CALLNAME%の太ももは透明な汁に濡れていた。
+		CASE 2
+			PRINTFORMDL %CALLNAME%は何かをこらえるように赤い顔でつぶやいた。
+	ENDSELECT
+ELSE
+	PRINTFORMDL  %CALLNAME%は絡みつく촉수の残骸を引き剥がし、鼻を鳴らした。
+	PRINTFORMDL  おぞましい体液で透けた服は肢体にぴっちり張り付いている……
+ENDIF
+
+;보스 촉수と戦闘
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_BOSS_20
+LOCAL = 1
+;最初のボス戦
+CALL TENTACLE_SURVIVE,"NUM"
+;촉수 구속구
+IF CFLAG:42 == 400
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORMDL の放つ臭気に反応し、%ITEMNAME:(CFLAG:42)%が膨れ上がった！
+	PRINTFORMDL  %CALLNAME%の胸と陰核を咥えこんだ촉수は中身を吸い上げながら膨張し
+	PRINTFORMDL  抵抗できない%CALLNAME%を淫らに凌辱していく。
+	PRINTFORMDL  %ITEMNAME:(CFLAG:40)%の下で、精液のような白濁の粘液が
+	PRINTFORMDL  %CALLNAME%の肢体を覆い尽くし、第二の皮膚のようにぴっちりと張り付いた。
+	PRINTFORMDL  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%は全身を粟立たせる……
+;촉수의포로取得後
+ELSEIF TALENT:촉수의포로 > 0
+	PRINTFORML 「また、犯してもらえる……♪」
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORMD を目にした途端、%CALLNAME%
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL はゴクリと唾を飲み込んだ……
+		CASE 1
+			PRINTFORMDL は思わず内股を摺り合わせていた……
+		CASEELSE
+			PRINTFORMDL の顔が喜悦に歪んだ……
+	ENDSELECT
+ELSEIF ABL:촉수중독 > 3
+	PRINTFORML 「また、犯してもらえる……♪」
+ELSEIF ABL:정액중독 > 3 || (ABL:사정중독 > 3 && ISPENIS()) || ABL:모유중독 > 3
+	WHILE LOCAL
+		RESULT = RAND:3
+		IF RESULT == 0 && ABL:정액중독 > 3
+			PRINTFORMDL  ――ゴクリッ
+			PRINTFORMDL %CALLNAME%の喉が大きく鳴った
+			PRINTFORMDL 倒すために出撃してるのか、精液を浴びるために出撃しているのか
+			PRINTFORMDL %CALLNAME%はどちらでも良くなってきている
+			LOCAL = 0
+		ELSEIF RESULT == 1 && ABL:모유중독 > 3
+			PRINTFORML 「あ、あんたたちのせいで、胸が張って仕方ないのよ！」
+			PRINTFORMDL %CALLNAME%のはちきれそうな乳房も布を押し上げ、
+			PRINTFORMDL その開発されきった乳首は立派に勃ち上がり
+			PRINTFORMDL %ITEMNAME:(CFLAG:40)%の上からでもはっきりとわかる……
+			LOCAL = 0
+		ELSEIF RESULT == 2 && (ABL:사정중독 > 3 && ISPENIS())
+			PRINTFORML 「こ、このちんぽ、責任とってあんたが抜きなさいよ！」
+			PRINTFORMDL %CALLNAME%の肉棒はギンギンに勃ち上がっている
+			PRINTFORMDL ……どうやら既に先走り汁まで出ているようだ
+			LOCAL = 0
+		ENDIF
+	WEND
+ELSEIF TALENT:음란 > 0
+	PRINTFORML 「あはぁ…………イき、たい……イかせてぇ……♪」
+ELSEIF TALENT:음유 > 0 || (TALENT:음핵 && ISPENIS() == 0) || TALENT:음고 > 0 || TALENT:음호 > 0
+	PRINTFORML 「はぁ、はぁ、……」
+	WHILE LOCAL
+		RESULT = RAND:4
+		IF RESULT == 0 && TALENT:음유 > 0
+			PRINTFORMDL 촉수の責めを思い出してか、%CALLNAME%の胸は早くも熱く蕩けている……
+			LOCAL = 0
+		ELSEIF RESULT == 1 && TALENT:음핵 > 0
+			PRINTFORMDL %CALLNAME%の陰核は歩くだけで痺れる快感を与えている……
+			LOCAL = 0
+		ELSEIF RESULT == 2 && TALENT:음고 > 0
+			PRINTFORMDL 촉수の責めを思い出して、%CALLNAME%の菊門は熱く燃え上がっている……
+			LOCAL = 0
+		ELSEIF RESULT == 3 && TALENT:음호 > 0
+			PRINTFORMDL これから戦いに赴くというのに%CALLNAME%の蜜壷はヌルヌルと濡れそぼっている……
+			LOCAL = 0
+		ENDIF
+	WEND
+ELSEIF ABL:촉수중독 > 1
+	PRINTFORML 「촉수……촉수……」
+	PRINTFORMDL 闘志を燃え上がらせているのか、%CALLNAME%の体は熱く火照っている…
+ELSEIF ABL:정액중독 > 1 || (ABL:사정중독 > 1 && ISPENIS()) || ABL:모유중독 > 1
+	PRINTFORML 「……っん」
+	WHILE LOCAL
+		RESULT = RAND:3
+		IF RESULT == 0 && ABL:정액중독 > 1
+			PRINTFORMDL 更なる精液を求め%CALLNAME%は발정していく……
+			LOCAL = 0
+		ELSEIF RESULT == 1 && ABL:모유중독 > 1
+			PRINTFORMDL 更なる射乳を求め%CALLNAME%の乳首はゆっくりと勃ち上がっている
+			LOCAL = 0
+		ELSEIF RESULT == 2 && (ABL:사정중독 > 1 && ISPENIS())
+			PRINTFORMDL 更なる사정を求め%CALLNAME%の肉棒はゆっくりと勃ち上がっている
+			LOCAL = 0
+		ENDIF
+	WEND
+ELSEIF ABL:욕망 == 5 || ABL:노출벽 == 5 || ABL:마조끼 == 5 
+	WHILE LOCAL
+		RESULT = RAND:3
+		IF RESULT == 0 &&ABL:욕망 == 5
+			PRINTFORMDL さんざん開発された%CALLNAME%は촉수との戦いに向けて발정してしまう……
+			LOCAL = 0
+		ELSEIF RESULT == 1 && ABL:노출벽 == 5
+			PRINTFORML 「また、見られちゃう……」
+			PRINTFORMDL 全裸で犯された記憶を思い出すと、%CALLNAME%は燃え上がるような官能に包まれた……
+			LOCAL = 0
+		ELSEIF RESULT == 2 && ABL:마조끼 == 5 
+			PRINTFORML 「ふふっ……」
+			PRINTFORMDL 痛みを快楽として受け取る%CALLNAME%にとって、%STR:2500%との戦いはキモチイイものでしかない……
+			LOCAL = 0
+		ENDIF
+	WEND
+ELSEIF ABL:V감각 >= 5 || ABL:A감각 >= 5 || ABL:B감각 >= 5 || ABL:C감각 >= 5
+	PRINTFORML 「はぁ、はぁ、……」
+	WHILE LOCAL
+		RESULT = RAND:4
+		IF RESULT == 0 && ABL:B감각 >= 5 
+			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の胸は、早くも熱く蕩けている……
+			LOCAL = 0
+		ELSEIF RESULT == 1 && ABL:C감각 >= 5
+			PRINTFORMDL 開発され尽くした%CALLNAME%の陰核は、歩くだけで痺れる快感を与えている……
+			LOCAL = 0
+		ELSEIF RESULT == 2 && ABL:A감각 >= 5
+			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の菊門は、強く疼いている……
+			LOCAL = 0
+		ELSEIF RESULT == 3 && ABL:V감각 >= 5
+			PRINTFORMDL これから戦いに赴くというのに%CALLNAME%の蜜壷はヌルヌルと濡れそぼっている……
+			LOCAL = 0
+		ENDIF
+	WEND
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「あんたなんか、私の敵じゃないんだから！」
+		CASE 1
+			PRINTFORML 「出たわね、化け物は私が倒してあげるわ！」
+		CASE 2
+			PRINTFORML 「あんたは絶対許さないから！」
+	ENDSELECT
+	PRINTFORMDL 威勢よく啖呵を切ると、%CALLNAME%は武器を構えた。
+ENDIF
+$END_SENTO_KOJO
+
+;최종 보스 촉수と戦闘
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_LASTBOSS_20
+PRINTFORML 「……あんたで、最後よ」
+IF ABL:촉수중독 > 3
+	PRINTFORMDL そう声を漏らす%CALLNAME%だが、どこかその声は寂しげだ。
+ELSEIF TALENT:촉수의포로 > 0
+	PRINTFORML 「……やっぱり、嫌」
+	PRINTFORMDL 촉수の快楽を教え込まれた%CALLNAME%は、別れを厭うように戦いに身を投じた。
+ELSEIF ABL:촉수중독 > 4
+	PRINTFORML 「……やっぱり、嫌」
+	PRINTFORMDL 촉수の快楽を教え込まれた%CALLNAME%は、別れを厭うように戦いに身を投じた。
+ELSE
+	PRINTFORMDL いつもと変わった様子もなく、ただ%CALLNAME%は武器を構えた。
+ENDIF
+IF ABL:V감각 >= 5 || ABL:A감각 >= 5 || ABL:B감각 >= 5 || ABL:C감각 >= 5
+	PRINTFORML 「はぁ、はぁ、……」
+	WHILE LOCAL
+		RESULT = RAND:4
+		IF RESULT == 0 && ABL:B감각 >= 5 
+			PRINTFORMDL けれど촉수によって開発され尽くした%CALLNAME%の胸は、早くもその先端を屹立させていた……
+			LOCAL = 0
+		ELSEIF RESULT == 1 && ABL:C감각 >= 5
+			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の陰核は、堅くそそり立ちそれだけで快楽を発していた……
+			LOCAL = 0
+		ELSEIF RESULT == 2 && ABL:A감각 >= 5
+			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の菊門は、開閉を繰り返し、ほじくり返される時を待っていた……
+			LOCAL = 0
+		ELSEIF RESULT == 3 && ABL:V감각 >= 5
+			PRINTFORMDL 戦いを前にして、%CALLNAME%の蜜壷はヌルヌルと蜜を溢し続けていた……
+			LOCAL = 0
+		ENDIF
+	WEND
+ENDIF
+
+;初めて洗脳キャラと対峙した
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_SENNOU_FIRST_20
+PRINTFORML 「大丈夫……そうには見えないわね……」
+PRINTFORMDL  覚束ない足取りで構える%PRINT_TRANSCALLNAME(FLAG:111)%の肌には촉수の粘液が絡みつき、
+PRINTFORMDL  曝け出された下半身から垂れ落ちる白濁液は、촉수のものだけではないようにも見える……
+PRINTFORMDL 「今から助けてあげるわ、感謝なさい！」
+
+;洗脳キャラと対峙
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_SENNOU_20
+;촉수의포로取得後
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「くっ、やめなさい……%SELF_CALL()%にそんな姿を見せないで……！ %SELF_CALL()%は、%SELF_CALL()%は……！」
+	PRINTFORMDL  快楽の肉獄に溺れ、心を砕かれた肉人形に成り果てた「元」仲間の姿が、かつての己を呼び起こす。
+	PRINTFORML 「違うっ！ %SELF_CALL()%は、違う、負けたりしないんだからっ、いやああああッ！」
+	PRINTFORMDL  嫌悪が、羨望が、羞恥が、절망が、嫉妬が、肉欲が、一斉に噴出して%PRINT_TRANSCALLNAME(TARGET)%の脆弱な心を焼き切った。
+ELSE
+	PRINTFORML 「……おとなしくしてなさい、すぐに助けてあげるわ」
+	PRINTFORMDL  粘液にまみれた裸身を晒し、ごぼごぼと両穴から濁液を垂らして構える%PRINT_TRANSCALLNAME(FLAG:111)%の姿は、なぜかたまらなく魅惑的に見えた……
+ENDIF
+
+;始めて悪堕ちキャラと対峙した
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_AKUOTI_FIRST_20
+PRINTFORML 「なんて情けないの！ 化け物なんかに心まで負けるなんて！」
+PRINTFORML 「今からお仕置きしてあげるわ、その後にお説教だからね！」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%はきっと柳眉を逆立てた。
+
+;悪堕ちキャラと対峙
+;--------------------------------------------------
+@KOJO_0_ENCOUNT_AKUOTI_20
+;촉수의포로取得後
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ふ、ふん……%SELF_CALL()%の身体が欲しいなら……わかってるでしょ？」
+	PRINTFORMD  身構えた%PRINT_TRANSCALLNAME(TARGET)%
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL はゴクリと唾を飲み込んだ……
+		CASE 1
+			PRINTFORMDL は思わず内股を摺り合わせていた……
+		CASEELSE
+			PRINTFORMDL の顔が喜悦に歪んだ……
+	ENDSELECT
+ELSE
+	PRINTFORML 「ああもう黙って！ 化け物に堕とされるなんて情けない！」
+	PRINTFORML (苗床にならないだけの強さはある……遠慮は不要、ね)
+ENDIF
+
+
+;戦闘関連の구상
+
+;キャラの行動
+
+;変身前のかけ声
+;구상オリジナルのかけ声を使用する場合のみコメントアウトを外して記述してください
+;@KOJO_0_BATTLE_CHARA_TRANSFORMCALL_20
+
+;変身後の名乗り
+;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
+;@KOJO_0_BATTLE_CHARA_NANORI_20
+
+;SP変身時のかけ声
+@KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_20
+PRINTFORML 「見せてあげるわ！！」
+
+;衣装の損傷が酷くなった関連
+
+;アウターが破れ始めた
+;--------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_OUTERDAMAGE_20
+PRINTFORML 「ちょ、服が破けちゃったじゃない！」
+
+;アウターが破れた
+;--------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_OUTERBREAK_20
+PRINTFORML 「この、変態っ！」
+
+;インナーが破れ始めた
+;--------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_INNERDAMAGE_20
+PRINTFORML 「み、見るなバカぁ！」
+
+;インナーが破れた
+;--------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_INNERBREAK_20
+PRINTFORML 「きゃぁあああああ！！！」
+
+;기력が尽きて変身が強制的に解けた
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TRANSRELEASE_20
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「そ、そんな……」
+	CASE 1
+		PRINTFORML 「な、なんで変身できないの！？」
+ENDSELECT
+PRINTFORMDW %CALLNAME%の顔は절망に染まっている……
+
+;撤退成功
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_SUCCESS_20
+;大量絶頂後
+IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+	PRINTFORML 「ンんっ、あっ、んんっ！！」
+	PRINTFORMDL 数えきれないほどイかされた%CALLNAME%。
+	PRINTFORMDW 腰に力を入れられず這いつくばりながら逃げ出した……
+;多数絶頂後
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「……ンんっ」
+	PRINTFORMDL 何度もイかされた%CALLNAME%。
+	PRINTFORMDW 動くだけでも全身が快楽に貫かれ、愛蜜を垂らしながら逃走した……
+;체력0
+ELSEIF BASE:체력 == 0
+	PRINTFORMDL %CALLNAME%は最後の기력を振り絞って、命からがら逃げ出した……
+;기력0=闘志がない状態
+ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
+	PRINTFORML 「こんなのっ……勝てるわけ、ないじゃない！」
+	PRINTFORMDW 心の折れた%CALLNAME%は震えながら逃げ出した……
+;성내성0
+ELSEIF BASE:성내성 == 0
+	PRINTFORML 「……ンんっ」
+	PRINTFORMDW %CALLNAME%は발정し、既に戦える状態ではない……
+;不利な状況
+ELSEIF BASE:체력 < MAXBASE:체력 / 2
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「次会った時は、ぜっっったいブッ飛ばしてやるから」
+			PRINTFORMDW %CALLNAME%は歯を食いしばりながらその場を後にした。
+		CASE 1
+			PRINTFORML 「きょ、今日のところはこのくらいにしといてあげるわ」
+			PRINTFORMDW %CALLNAME%は虚勢を張りながらそそくさと逃げ出した。
+	ENDSELECT
+;それなりな状況
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「次会った時は、命はないと思いなさい」
+		CASE 1
+			PRINTFORML 「今日のところはこんなものかしら」
+	ENDSELECT
+	PRINTFORMDW %CALLNAME%は素早くその場を後にした。
+ENDIF
+
+;撤退失敗
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_FALSE_20
+;大量絶頂後
+IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+	PRINTFORML 「だめ……イってる、イってるからぁ！」
+	PRINTFORMDL 数えきれないほどイかされた%CALLNAME%を逃がすまいと
+	PRINTFORMDW %STR:2500%は、立ち上がれない%CALLNAME%をゆっくりと取り囲んだ……
+;多数絶頂後
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「……ンんっ、これ、以上、イっ、たら……」
+	PRINTFORMDW 何度もイかされた%CALLNAME%を更なる凌辱の予感に공포を隠せない…… 
+;체력0
+ELSEIF BASE:체력 == 0
+	PRINTFORMDL %CALLNAME%の体には逃げ出すための力が残っていない……
+;기력0=闘志がない状態
+ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
+	PRINTFORML 「ああぁ…………」
+	PRINTFORMDL %CALLNAME%は공포と절망に青ざめている……
+;성내성0
+ELSEIF BASE:성내성 == 0
+	PRINTFORML 「……まだ、足りないの……？」
+	PRINTFORMDW %CALLNAME%は발정し、既に戦える状態ではない……
+;不利な状況
+ELSEIF BASE:체력 < MAXBASE:체력 / 2
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「そこ、どきなさいよ！」
+		CASE 1
+			PRINTFORML 「邪魔しないでよ！」
+	ENDSELECT
+	PRINTFORMDW 退路を塞ぐ%STR:2500%の姿に、%CALLNAME%は小さく歯噛みした。
+;それなりな状況
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「そこ、どきなさいよ」
+		CASE 1
+			PRINTFORML 「邪魔しないで」
+	ENDSELECT
+	PRINTFORMDW %CALLNAME%は、退路を塞ぐ%STR:2500%を不機嫌そうににらんでいる。
+ENDIF
+
+;근거리공격
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_SHORT_20
+IF ABL:B감각 >=4
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「ッ!？くぅ…」(乳首が、擦れる…！)
+		CASE 1
+			PRINTFORML 「ハァ…ハァ」(擦れて、集中が…！)
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「そこね！」
+		CASE 1
+			PRINTFORML 「くらいなさい！」
+		CASE 2
+			PRINTFORML 「ハッ！」
+		CASE 3
+			PRINTFORML 「遅いのよ！」
+	ENDSELECT
+ENDIF
+;SELECTCASE RAND:3
+;	CASE 0
+;		PRINTFORMDW %CALLNAME%は手にしたナイフで切り付けた。
+;	CASE 1
+;		PRINTFORMDW %CALLNAME%のナイフが宙に踊った。
+;	CASE 2
+;		PRINTFORMD 鋭く振るわれたナイフが、%STR:2500%
+;		PRINTFORMDW の触体へと迫る。
+;ENDSELECT
+
+;중거리공격
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_MIDDLE_20
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「そこね！」
+	CASE 1
+		PRINTFORML 「くらいなさい！」
+	CASE 2
+		PRINTFORML 「見切ったわ！」
+	CASE 3
+		PRINTFORML 「当たりなさい！」
+ENDSELECT
+;SELECTCASE RAND:3
+;	CASE 0
+;		PRINTFORMDW %CALLNAME%は手にしたナイフを投擲した。
+;	CASE 1
+;		PRINTFORMDW %CALLNAME%のナイフが宙に踊った。
+;	CASE 2
+;		PRINTFORMD 力強く放たれたナイフが、%STR:2500%
+;		PRINTFORMDW の触体へと迫る。
+;ENDSELECT
+
+;원거리공격
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_LONG_20
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「そこね！」
+	CASE 1
+		PRINTFORML 「くらいなさい！」
+	CASE 2
+		PRINTFORML 「見切ったわ！」
+	CASE 3
+		PRINTFORML 「当たりなさい！」
+ENDSELECT
+;SELECTCASE RAND:3
+;	CASE 0
+;		PRINTFORMDW %CALLNAME%のライフルから銃弾が放たれた。
+;	CASE 1
+;		PRINTFORMDW %CALLNAME%はライフルを構え、静かに引き金を引いた。
+;	CASE 2
+;		PRINTFORMD 感情の籠らない弾丸が、%STR:2500%
+;		PRINTFORMDW の触体へと迫る。
+;ENDSELECT
+
+;방어
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_DEFENSE_20
+;HPが低いとき
+IF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「び、ビビってなんかないわよ！」
+		CASE 1
+			PRINTFORML 「痛いわね……」
+		CASE 2
+			PRINTFORML 「て、手加減しなさいよこのバカ！」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「かかってきなさい」
+		CASE 1
+			PRINTFORML 「あんたの공격なんか、効かないんだから！」
+		CASE 2
+			PRINTFORML 「迎え撃つわ」
+		CASE 3
+			PRINTFORML 「こっちよ、バカ！」
+	ENDSELECT
+ENDIF
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORMDW %CALLNAME%は守りを固めている。
+	CASE 1
+		PRINTFORMDW %CALLNAME%は身を守るように武器を構えた。
+ENDSELECT
+
+;거리를벌린다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TAKEAWAY_20
+;HPが低いとき
+IF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「べ、別に逃げてなんかいないわよ！」
+		CASE 1
+			PRINTFORML 「ちょ、ちょっと休憩……」
+		CASE 2
+			PRINTFORML 「や、休ませなさいよこのバカ！」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「追いつけるかしら？」
+		CASE 1
+			PRINTFORML 「少し休むわ」
+		CASE 2
+			PRINTFORML 「あんたの공격なんか当たらないわ」
+		CASE 3
+			PRINTFORML 「こっちよ、ノロマ！」
+	ENDSELECT
+ENDIF
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORMDW %CALLNAME%は距離を取って体を休めている。
+	CASE 1
+		PRINTFORMDW %CALLNAME%は距離を取って体を落ち着けた。
+ENDSELECT
+
+;아무것도안한다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NOACTION_20
+;HPが低いとき
+IF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「…………」
+			PRINTFORMDW %CALLNAME%は肩で息をして、口を開く余裕もない様子だ。
+		CASE 1
+			PRINTFORML 「体が、動かない……」
+			PRINTFORMDW %CALLNAME%は疲労のせいで、満足に動けない様子だ。
+		CASE 2
+			PRINTFORML 「もう、動けない……」
+			PRINTFORMDW 体を蝕む疲労と痛みに、%CALLNAME%は動きを止めた。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「…………」
+		CASE 1
+			PRINTFORML 「ちょっと様子見ね……」
+		CASE 2
+			PRINTFORML 「さて、どうくるかしら……？」
+	ENDSELECT
+	PRINTFORMDW %CALLNAME%は静かに敵の動きを窺っている。
+ENDIF
+
+;풀어낸다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_20
+IF BASE:기력 < MAXBASE:기력 / 4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「……離して！」
+		CASE 1
+			PRINTFORML (このままじゃ…！)
+		CASE 2
+			PRINTFORML 「…力が…はいらな……」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「この、離しなさいよ！」
+		CASE 1
+			PRINTFORML 「触らないで、この変態！」
+		CASE 2
+			PRINTFORML 「いつまで触ってんのよ！」
+		CASE 3
+			PRINTFORML 「……このっ」
+	ENDSELECT
+ENDIF
+
+;날뛴다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ABARERU_20
+IF BASE:기력 < MAXBASE:기력 / 4
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「やめてっ、嫌っ！ 嫌あぁぁっ！」
+		CASE 1
+			PRINTFORML 「ひッ！？」
+		CASE 2
+			PRINTFORML 「嫌、嫌あぁぁっ！」
+		CASEELSE
+			PRINTFORML 「ん゛うぅぅうッ！？ この！ このぉっ！」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「この……離しなさいよっ！　噛むわよ！」
+		CASE 1
+			PRINTFORML 「いやっ！ 触るな、触らないでっ！　気持ち悪いのよ！」
+		CASE 2
+			PRINTFORML 「離して……！　離せ！　触るな！」
+		CASE 3
+			PRINTFORML 「この……くっ、うぅっ！　……このっ」
+	ENDSELECT
+	PRINTFORMDW %CALLNAME%はがむしゃらに暴れている。
+ENDIF
+
+;견딘다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TAERU_20
+;촉수의포로取得後
+IF TALENT:촉수의포로 > 0
+	PRINTFORML （今は好機を待って……）
+	PRINTFORML （いいえ、%SELF_CALL()%は何を待っているの……？）
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「す、好きにすればいいじゃない」
+			PRINTFORML （今は機を待つのよ……耐え、ないと……）
+		CASEELSE
+			PRINTFORML 「%SELF_CALL()%の心まで、好きにできると思わないことね」
+			PRINTFORML （こいつ……今に目にもの見せてあげるわ……）
+	ENDSELECT
+	PRINTFORMDL %CALLNAME%は静かに反撃の機会をうかがっている。
+ENDIF
+
+;가만히있는다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NASUGAMAMA_20
+;촉수의포로取得後
+IF TALENT:촉수의포로 > 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「はぁ……はぁ……」
+			PRINTFORML (身体が疼く……熱くて、ダメ……)
+		CASE 1
+			PRINTFORML 「体が……」
+			PRINTFORML (%촉수市民("化け物なんか","こんな奴ら")%を相手に、%SELF_CALL()%は何を……)
+		CASEELSE
+			PRINTFORML 「ど、どうしよう……」
+			PRINTFORML (あぁ……次はどう嬲られてしまうの……？)
+	ENDSELECT
+ELSE
+	PRINTFORML 「……もういいわ……好きに、してよ……」
+ENDIF
+IF BASE:기력 < MAXBASE:기력 / 4
+	PRINTFORMDW  %CALLNAME%は疲労の為身動きが取れないようだ。
+ELSE
+	PRINTFORMDW  %CALLNAME%の動きが止まっている。
+ENDIF
+
+;받아들인다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_UKEIRERU_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORML 「す、好きにしなさいよ……❤」
+	PRINTFORMD 縛られたまま器用に体勢を変え、%CALLNAME%は%STR:2500%
+	PRINTFORMDW を誘った。
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML (あぁ……%SELF_CALL()%はもう、こいつらに逆らえないんだ……)
+		CASE 1
+			PRINTFORML (%SELF_CALL()%、身も心も……もう……)
+		CASE 2
+			PRINTFORML (あぁ、そうか……%SELF_CALL()%、飼いならされてしまったんだわ……)
+		CASEELSE
+			PRINTFORML (あぁ…次はどんな風に壊されるのかしら……)
+	ENDSELECT
+	IF ABL:촉수중독 > 3
+		PRINTFORML 「……きて❤」
+		PRINTFORMD 縛られたまま器用に体勢を変え、%CALLNAME%は媚びる牝の声で
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORMDW を誘った。
+	ENDIF
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML （今、だけ……）
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW %촉수市民("촉수","ペニス")%の快楽を忘れられず、%CALLNAME%は知らず身体を開いていた。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW 心の内で何度目かわからない言い訳をして、%CALLNAME%は%촉수市民("촉수","ペニス")%に屈した。
+			ELSE
+				PRINTFORMDW 仕方なくといった風に、%CALLNAME%は身体を差し出した。
+			ENDIF
+		CASE 1
+			PRINTFORMDL （後で、殺す……）
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 心の内の戦意とは裏腹に、身体は%촉수市民("촉수","ペニス")%からの快感に期待している。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW 戦意が挫けないよう、%CALLNAME%は心の中でだけ強く思おうとした。
+			ELSE
+				PRINTFORMD %CALLNAME%は昏い殺意を秘めながら、%STR:2500%
+				PRINTFORMDW に身体を開いた
+			ENDIF
+		CASE 2
+			PRINTFORML 「好きに、しなさいよ……」
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 開かれた%CALLNAME%の身体は淡い期待感にふやけていた。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW %CALLNAME%は全てを諦めたように身を差し出した。
+			ELSE
+				PRINTFORMDW %CALLNAME%は視線を逸らしながらつぶやいた。
+			ENDIF
+		CASE 3
+			PRINTFORML 「…………」
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 取り繕ったような無表情とは裏腹に、%CALLNAME%の秘所は潤んでいる。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW %CALLNAME%は全てを諦めたように身を差し出した。
+			ELSE
+				PRINTFORMDW %CALLNAME%は無表情で抵抗をやめた。
+			ENDIF
+	ENDSELECT
+ENDIF
+
+;봉사한다
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HOUSI_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORML 「ほら、%SELF_CALL()%の口で…気持ち良くしてあげる」
+	PRINTFORML 「んむぅ、むぐっ、ぢゅぷ、ちゅぷぁ……」
+	PRINTFORMDW %CALLNAME%は近くの%촉수市民("촉수","ペニス")%を銜え込み奉仕を始めた。
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML (こ、この味……もう何も考えられない……)
+	CASE 1
+		PRINTFORML (これが美味しいだなんて……%SELF_CALL()%の舌、もう……)
+	CASEELSE
+		PRINTFORML (臭い、不味い……もっと……)
+	ENDSELECT
+ELSE
+	PRINTFORML  「き、気持ちよくしてあげるわ。感謝しなさい！」
+	PRINTFORMDL  %CALLNAME%は近くの%촉수市民("촉수","ペニス")%を銜え込み奉仕を始めた。
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML （今、だけ……）
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 心の内で何度目かわからない言い訳をして、%CALLNAME%は%촉수市民("촉수","ペニス")%に屈した。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW 心の内で何度目かわからない言い訳をして、%CALLNAME%は%촉수市民("촉수","ペニス")%に屈した。
+			ELSE
+				PRINTFORMDW 仕方なくといった風に、%CALLNAME%は身体を差し出した。
+			ENDIF
+		CASE 1
+			PRINTFORML （後で、殺す……）
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 心の内の戦意とは裏腹に、身体は%촉수市民("촉수","ペニス")%を丁寧に愛撫している。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW 心の内の戦意とは裏腹に、身体は%촉수市民("촉수","ペニス")%を丁寧に愛撫している。
+			ELSE
+				PRINTFORMDW %CALLNAME%は昏い殺意を秘めながら、手近な%촉수市民("촉수","ペニス")%を口に含んだ
+			ENDIF
+		CASE 2
+			PRINTFORML 「気持ちよくしてあげるわ」
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 仕方なくといった様子で、けれど率先して%CALLNAME%は%촉수市民("촉수","ペニス")%を愛撫している。
+			ELSEIF  MARK:굴복각인 >= 3
+				PRINTFORMDW 仕方なくといった様子で、けれど率先して%CALLNAME%は%촉수市民("촉수","ペニス")%を愛撫している。
+			ELSE
+				PRINTFORMDW %CALLNAME%は視線を逸らしながら%촉수市民("촉수","ペニス")%を手に取った。
+			ENDIF
+		CASE 3
+			PRINTFORML 「か、勘違いしないでよね！　これはベつに、あんたの為じゃ……」
+			IF ABL:촉수중독 >= 1
+				PRINTFORMDW 朱の差した顔で、%CALLNAME%は%촉수市民("촉수","ペニス")%を銜え込んだ。
+			ELSEIF  MARK:굴복각인 >= 3 || MARK:공포각인 >= 3
+				PRINTFORMDW 怯えたような無表情で、%CALLNAME%は%촉수市民("촉수","ペニス")%を銜え込んだ。
+			ELSE
+				PRINTFORMDW %CALLNAME%は何も言わずに%촉수市民("촉수","ペニス")%を銜え込んだ。
+			ENDIF
+	ENDSELECT
+ENDIF
+
+;V삽입방어
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ANTI_V_20
+PRINTFORML 「中でだけはいや……それだけは、させないんだからっ」
+PRINTFORMDL %CALLNAME%は性器への挿入を断固阻止しようとしている。
+
+;SPバースト
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SP_BURST_20
+PRINTFORML 「無駄よッ！！」
+
+
+
+;キャラの行動の結果
+
+;공격がクリティカルヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_CRITICAL_HIT_20
+SELECTCASE RAND:7
+	CASE 0
+		PRINTFORML 「クリーンヒット、だったみたいね？」
+	CASE 1
+		PRINTFORML 「このまま押し切ってあげる！」
+	CASE 2
+		PRINTFORML 「ふふ、覚悟しなさい！」
+	CASE 3
+		PRINTFORML 「なるほど、そこが弱点なのね」
+	CASE 4
+		PRINTFORML 「やった！」
+	CASE 5
+		PRINTFORML 「はい、直撃コース！」
+	CASEELSE
+		PRINTFORML 「ふーん、随分効いてるみたいね？」
+ENDSELECT
+PRINTFORMDL %PRINT_TRANSCALLNAME(TARGET)%は不敵な笑みを浮かべた。
+
+;공격が通常ヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_HIT_20
+SELECTCASE RAND:6
+	CASE 0
+		PRINTFORML 「ふふっ、苦しんでるみたいね」
+	CASE 1
+		PRINTFORML 「あら、見事に入ったみたいね」
+	CASE 2
+		PRINTFORML 「どう、なかなか効いたでしょ？」
+	CASE 3
+		PRINTFORML 「おかわりも要る？ 遠慮しなくていいのよ」
+	CASE 4
+		PRINTFORML 「うん、悪くはないわね」
+	CASEELSE
+		PRINTFORML 「まずまずね」
+ENDSELECT
+
+;공격失敗
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_FALSE_20
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「くっ、なんで避けるのよ！？」
+		PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は忌々しげに촉수を睨み付けている。
+	CASE 1
+		PRINTFORML 「この、当たりなさいよ！」
+		PRINTFORMDL  渾身の一撃を躱された%PRINT_TRANSCALLNAME(TARGET)%は狼狽えている！
+	CASE 2
+		PRINTFORML 「避けるんじゃないわよこのバカ！」
+		PRINTFORMDL  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%は隙だらけだ！
+	CASE 3
+		PRINTFORML 「ぐ……意外に早いわね」
+		PRINTFORMDL  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%は隙だらけだ！
+	CASEELSE
+		PRINTFORML 「つ、次は当てるわ」
+		PRINTFORMDL  平静を装う%PRINT_TRANSCALLNAME(TARGET)%だが、その動きは戸惑いを隠せない……
+ENDSELECT
+
+;풀어낸다成功
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_SUCCESS_20
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「お、思い、知ったかしら……っ！」
+	CASE 1
+		PRINTFORML 「ぐ……この屈辱、どう晴らしてあげましょうか！」
+	CASE 2
+		PRINTFORML 「この無礼は断じて許さない、百万倍にして返してあげるわ！」
+	CASE 3
+		PRINTFORML 「はぁ、ひあっ、くうっ……そ、そろそろ、%SELF_CALL()%の番ねっ！」
+	CASEELSE
+		PRINTFORML 「くっ、好き放題してくれて……この先はずっと%SELF_CALL()%のターンよ！」
+ENDSELECT
+PRINTFORMDL  乱れた髪をうなじに貼り付け、%PRINT_TRANSCALLNAME(TARGET)%は無理矢理余裕の笑みを浮かべた。
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORMDW 言いながら、%CALLNAME%の秘所は新たな蜜に潤んでいた。
+ELSE
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDW 一旦地面に降りた%CALLNAME%は、油断なく武器を構え直した。
+	CASE 1
+		PRINTFORMDW 転げ落ちるように地面に降りた%CALLNAME%は、急いで武器を構え直した。
+	CASE 2
+		PRINTFORMDW 촉수から逃れて地面に降りた%CALLNAME%は、回収した武器を慌てて構え直した。
+	ENDSELECT
+ENDIF
+
+;풀어낸다失敗
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_FALSE_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「このっ、放しなさいよ！　はーなーせー！」
+	CASE 1
+		PRINTFORML 「こいつ、思ったより力が強い……」
+ENDSELECT
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORMDW %CALLNAME%は悔し気に表情をゆがめながら、しかし身体は次なる快楽に期待していた。。
+ELSE
+	PRINTFORMDW %CALLNAME%は自らにまとわりつく촉수を忌々し気に睨み、唇をかんだ。
+ENDIF
+RESETCOLOR
+
+
+;촉수側の行動（공격など）
+
+;촉수が공격
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_20
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORMDL  ごつごつとした棍棒のような촉수が%PRINT_TRANSCALLNAME(TARGET)%を打ち据えてくる！
+	CASE 1
+		PRINTFORMDL  鎌首を擡げた촉수が%PRINT_TRANSCALLNAME(TARGET)%へ弾丸のような速さで突っ込んでくる！
+	CASE 2
+		PRINTFORMDL  絡み合い、丸太のように太くなった촉수が%PRINT_TRANSCALLNAME(TARGET)%へと振り下ろされる！
+	CASE 3
+		PRINTFORMDL  鞭のように撓る無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%の身体を打ち据えようと迫ってくる！
+	CASEELSE
+		PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%の肢体を押し包む様に、無数の촉수が迫る！
+ENDSELECT
+IF MARK:고통각인 > 0 || MARK:공포각인 > 0
+	PRINTFORML 「…ッ!!」
+	PRINTFORMDL %CALLNAME%の体が一瞬すくんだ。
+ENDIF
+
+;촉수が絡みつく
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_20
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%も自覚していない牝のニオイに、大量の촉수が殺到する！
+	CASE 1
+		PRINTFORMDL  びっしりと吸盤の生えたおぞましい촉수が%PRINT_TRANSCALLNAME(TARGET)%に襲いかかる！
+	CASE 2
+		PRINTFORMDL  無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%の身体へ洪水のように押し寄せてくる！
+	CASE 3
+		PRINTFORMDL  粘液を纏わせぬめり光る촉수が%PRINT_TRANSCALLNAME(TARGET)%を捕らえようと素早く伸びてくる！
+	CASEELSE
+		PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%の不意を突き、足下から촉수が絡みついてきた！
+ENDSELECT
+IF MARK:쾌락각인 > 0 || MARK:치욕각인 > 0
+	PRINTFORML 「…ッ!!」
+	PRINTFORMDL %CALLNAME%の体が一瞬すくんだ。
+ENDIF
+
+;촉수が体液を吐く
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_20
+IF ABL:정액중독 > 0
+	PRINTFORML 「……くぅ……」
+	PRINTFORMDL %CALLNAME%は無意識のうちに喉をグビリと鳴らした。
+ELSE
+	PRINTFORML 「き、汚いじゃない！」
+ENDIF
+
+;촉수が거리를벌린다
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAKEAWAY_20
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「逃がすと思った？」
+	CASE 1
+		PRINTFORML 「逃がさないわ」
+	CASE 2
+		PRINTFORML 「……腰抜け」
+	CASE 3
+		PRINTFORML 「ふん、無様ね！」
+ENDSELECT
+
+;촉수の行動の結果
+
+;촉수の공격がクリティカルヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT_20
+CALL KOJO_0_BATTLE_TENTACLE_ATTACK_HIT_20
+
+;촉수の공격が通常ヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_HIT_20
+IF CFLAG:262 == 1
+	PRINTFORML 「……いたっ！？」
+	PRINTFORML 「い……痛くなんてないわよ」
+	PRINTFORMDL %CALLNAME%は初めての被弾に戸惑いを隠せない……
+	SETBIT CFLAG:262,0
+;체력が0の時
+ELSEIF BASE:체력 == 0
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「……もう、いやぁああ！」
+		CASE 1
+			PRINTFORML 「がはっ！」
+		CASE 2
+			PRINTFORML 「ぐもっ！おぇえええええええええ」
+			PRINTFORMDL %CALLNAME%は吐瀉物を撒き散らした……
+		CASE 3
+			PRINTFORML 「…………ぁ」
+			PRINTFORMDL 既に限界を超えている所に追い打ちをかけられた%CALLNAME%は、意識を失いかけている……
+	ENDSELECT
+;瀕死の時
+ELSEIF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 「ガッ！？」
+		CASE 1
+			PRINTFORML 「や、やめ……」
+		CASE 2
+			PRINTFORML 「もう、やめ……」
+		CASE 3
+			PRINTFORMDL %CALLNAME%は震えながら立ち上がった…… 
+		CASE 4
+			PRINTFORMDL %CALLNAME%は、朦朧としている……
+	ENDSELECT
+;촉수拘束服の場合
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「んあ、はぁ、んんっ！」
+			PRINTFORMDL %ITEMNAME:400%の刺激に気を取られた一瞬、%STR:2500%の一撃に当たってしまった……
+		CASE 1
+			PRINTFORML 「ひあぁああ！？」
+			PRINTFORMDL 고통と快楽の二重奏に%CALLNAME%の意識が飛びかけた……
+	ENDSELECT
+;ELSEIF TALENT:촉수의포로 > 0 && RAND:2 == 0
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「痛いじゃないのよ！」
+		CASE 1
+			PRINTFORML 「い、痛っ……く、ないわ」
+		CASE 2
+			PRINTFORML 「こ、このっ！」
+		CASE 3
+			PRINTFORML 「よくも乙女の柔肌に……許さないんだから！」
+	ENDSELECT
+ENDIF
+
+;촉수の공격を回避
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_FALSE_20
+;체력が0の時
+IF BASE:체력 == 0
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「……も、もし当たってたら……」
+		CASE 1
+			PRINTFORML 「……か、かわせた！？」
+		CASE 2
+			PRINTFORMDL %CALLNAME%は、偶然%STR:2500%の공격に当たらなかった。
+		CASE 3
+			PRINTFORMDL %CALLNAME%は、朦朧としながら%STR:2500%を避けた。
+	ENDSELECT
+;瀕死の時
+ELSEIF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 「あ、危ないじゃない！」
+		CASE 1
+			PRINTFORML 「危機一髪ね」
+		CASE 2
+			PRINTFORML 「これ以上はやらせないわよ！」
+		CASE 3
+			PRINTFORMDL %CALLNAME%は、眼前を通り過ぎる%STR:2500%に冷や汗を流した 
+		CASE 4
+			PRINTFORMDL %CALLNAME%は、ふらつきながら辛うじて%STR:2500%を躱した。
+	ENDSELECT
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「……ん、はぁっ、んんっ！」
+			PRINTFORMDL %STR:2500%を躱しても%ITEMNAME:400%に与えられる刺激に、%CALLNAME%の腰が落ちそうになる。
+		CASE 1
+			PRINTFORML 「……っ？ひあぁ！？」
+			PRINTFORMDL %STR:2500%を躱そうと脚を広げた隙に、%ITEMNAME:400%が질내深くまでエグってきた。
+	ENDSELECT
+;ELSEIF TALENT:촉수의포로 > 0 && RAND:2 == 0
+ELSE
+	SELECTCASE RAND:8
+		CASE 0
+			PRINTFORML 「このくらい楽勝ね」
+		CASE 1
+			PRINTFORML 「このノロマ！」
+		CASE 2
+			PRINTFORML 「遅いのよ！」
+		CASE 3
+			PRINTFORML 「ちょ、ちょっと危なかったわね……」
+		CASE 4
+			PRINTFORMDL %CALLNAME%は危なげなく%STR:2500%を躱した。
+		CASE 5
+			PRINTFORMDL %CALLNAME%の一歩横を촉수の공격が通り抜けていった。
+		CASE 6
+			PRINTFORML 「そんな공격、当たらないわよ！」
+		CASE 7
+			PRINTFORML 「%SELF_CALL()%に当てられると思ったの？」
+	ENDSELECT
+ENDIF
+
+;촉수の絡みつくが成功
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_SUCCESS_20
+IF CFLAG:262 ^ 2
+	PRINTFORML 「な、なに！？」
+	PRINTFORML 「このっ、離しなさい！！」
+	SETBIT CFLAG:262,1
+;체력が0
+ELSEIF BASE:체력 == 0
+	PRINTFORML 「…………ぁ」
+	PRINTFORMDL 既に%CALLNAME%は抵抗する力はない……
+;五回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「も、もうイヤァアア！」
+	SIF MARK:굴복각인
+		PRINTFORML 「お願い、いや……もうやめて……」
+	PRINTFORMDL 既に何度もイかされた%CALLNAME%は、更なる凌辱に怯え震えている……
+;一回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+	PRINTFORML 「……くっ、ま、また……っ！！」
+	PRINTFORMDL 未だ絶頂の余韻が抜けきらない内に、%CALLNAME%は再び捕まってしまった……
+;内心期待してる時
+ELSEIF TALENT:촉수의포로 > 0 || MARK:쾌락각인 > 1
+	PRINTFORMDL %CALLNAME%は凌辱の予感に顔を赤らめて耐えようとしている……
+	PRINTFORMDL しかし、気のせいかナニカを期待するような表情をしているようにも見える……
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「こ、この変態！」
+		CASE 1
+			PRINTFORML 「離しなさいよこのバカ！」
+	ENDSELECT
+ENDIF
+
+;촉수の絡みつくを回避
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_FALSE_20
+;内心期待してる時
+IF TALENT:촉수의포로 > 0 || MARK:쾌락각인 > 1
+	PRINTFORML 「あっ……」
+	PRINTFORMDL 見事%STR:2500%を回避した%CALLNAME%だが、どこか残念そうにも見える……
+;五回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「もう……はぁ……これ以上はぁ……耐えられ……ない……！」
+	PRINTFORMDL 既に何度もイかされている%CALLNAME%は、%STR:2500%を避けることすら難しくなっている……
+;一回以上絶頂してる時
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+	PRINTFORML 「だめ、また捕まったら……っ！！」
+	PRINTFORMDL %CALLNAME%は未だに先ほどの絶頂の余韻が抜けきっていない……
+;촉수拘束服
+ELSEIF CFLAG:42 == 400
+	PRINTFORML 「……ああぁ！？」
+	PRINTFORMDL %STR:2500%を回避したが、%ITEMNAME:400%は変わらず%CALLNAME%を苛んでいる……
+ELSE
+	SELECTCASE RAND:8
+		CASE 0
+			PRINTFORML 「このくらい簡単ね」
+		CASE 1
+			PRINTFORML 「このウスノロ！」
+		CASE 2
+			PRINTFORML 「遅いのよ！」
+		CASE 3
+			PRINTFORML 「ちょ、ちょっと危なかったわね……」
+		CASE 4
+			PRINTFORML 「そんな動きじゃ当たらないわよ！」
+		CASE 5
+			PRINTFORML 「%SELF_CALL()%を捕まえられるとでも思ったの？」
+	ENDSELECT
+ENDIF
+
+;촉수の体液を吐くがヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_HIT_20
+IF TALENT:촉수의포로 > 0 || ABL:정액중독 > 1
+	PRINTFORML 「んくっ…じゅる、る……」
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML (この味……頭がぼうっと……)
+		CASE 1
+			PRINTFORML (口も、身体も……끈적끈적……)
+		CASEELSE
+			PRINTFORML (どうして……臭いのに、不味いのに……なぜ美味しくてたまらないの？！)
+	ENDSELECT
+;見られて嬉しい	
+ELSEIF ABL:노출벽 > 2 && RAND:4 == 0
+	PRINTFORML 「……ふんっ♪」
+	PRINTFORMDL %CALLNAME%は何処となく嬉しそうだ……
+;촉수拘束服
+ELSEIF CFLAG:42 == 400
+	PRINTL 「……ぁああぁあああ！？？」
+	PRINTFORMDL %STR:2500%の体液に反応し、%ITEMNAME:400%が急激に活発になった。
+ELSE
+	;インナーがどんどん溶けていく
+	IF CFLAG:25 < CFLAG:24
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTL 「み、見ないでよ！！」
+			CASE 1
+				PRINTL 「このぉ……変態！！」
+			CASE 2
+				PRINTL 「んぷぅ？！……ごきゅ？！……っ！？こほっ、こほっ……！」
+				PRINTFORMDL ちょうど顔に当たった体液を飲み込んでしまったようだ……
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTL 「……うっ」
+				PRINTFORMDL あまりの臭さに%CALLNAME%は一瞬気を失いかけた……
+			CASE 1
+				PRINTL 「く、臭っ！」
+			CASE 2
+				PRINTL 「んぷぅ？！……ごきゅ？！……っ！？んんぅぅっ！」
+				PRINTDL ちょうど顔に当たった体液を飲み込んでしまったようだ……
+		ENDSELECT
+	ENDIF
+	PRINTFORMDL %CALLNAME%は全身に白濁した粘液を被ってしまった……
+	TCVARn:11 += 1
+	IF TCVARn:11 > 5
+		PRINTDL もはや白く染まっていない所はない……
+	ELSEIF TCVARn:11 > 3
+		PRINTDL もはや白く染まっていない所のほうが少ない……
+	ENDIF
+ENDIF
+
+;촉수の体液を吐くを回避
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_FALSE_20
+IF TALENT:촉수의포로 > 0 || ABL:정액중독 > 1
+	PRINTFORML 「ちゃ、ちゃんと狙いなさいよヘタクソ！」
+	PRINTFORMDL %CALLNAME%は地面に落ちた体液をどこか物惜しそうに見ている……
+;촉수拘束服
+ELSEIF CFLAG:42 == 400 && RAND:2 == 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「……ん、はぁっ、んんっ！」
+			PRINTFORMDL 体液を躱した途端、%ITEMNAME:400%が強くした刺激に、%CALLNAME%の腰が落ちそうになる。
+		CASE 1
+			PRINTFORML 「……っ？ひあぁ！？」
+			PRINTFORMDL %STR:2500%の体液を躱そうと脚を広げた隙に、%ITEMNAME:400%が질내深くまでエグってきた。
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:8
+		CASE 0
+			PRINTFORML 「このくらい楽勝ね」
+		CASE 1
+			PRINTFORML 「このノロマ！」
+		CASE 2
+			PRINTFORML 「遅いのよ！」
+		CASE 3
+			PRINTFORML 「ちょ、ちょっと危なかったわね……」
+		CASE 4
+			PRINTFORMDL %CALLNAME%は危なげなく%STR:2500%を躱した。
+		CASE 5
+			PRINTFORMDL %CALLNAME%の一歩横を白濁液が通り抜けていった。
+		CASE 6
+			PRINTFORML 「そんな공격、当たらないわよ！」
+		CASE 7
+			PRINTFORML 「%SELF_CALL()%に当てれると思ったの？」
+	ENDSELECT
+ENDIF
+
+
+;敵の押し倒すがヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_OSHITAOSU_SUCCESS_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML （気持ち良くしてくれないと…許さないんだからっ）
+	PRINTFORMDL %CALLNAME%は期待に満ちた目を촉수に向けた……
+ELSE
+	PRINTFORML 「やだっ、放してよ変態っ！」
+	PRINTFORMDL %CALLNAME%は촉수に隙をつかれて拘束されてしまった……
+ENDIF
+
+;敵の押し倒すを回避
+;--------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_OSHITAOSU_FALSE_20
+IF TALENT:촉수의포로
+	PRINTFORML 「残念……違う、期待なんてしてないったら！」
+ELSE
+	PRINTFORML 「何とか避けられたわね……」
+ENDIF
+PRINTFORMDL  %CALLNAME%は間一髪といったところで回避したようだ
+
+
+;촉수から受ける性コマンド関連
+
+;COM0：C攻め弱　클리토리스を撫でる
+;--------------------------------------------------
+@KOJO_0_SEX_COM0_20
+IF CFLAG:250 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:250 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:C민감
+		LOCAL = ABL:C감각 + 2
+	ELSEIF TALENT:C둔감
+		LOCAL = ABL:C감각 - 2
+	ELSE
+		LOCAL = ABL:C감각
+	ENDIF
+	;敏感持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM1：C攻め強　클리토리스に吸い付く
+;--------------------------------------------------
+@KOJO_0_SEX_COM1_20
+IF CFLAG:251 == 0
+	;初めて
+;;		PRINTFORML 「」
+	CFLAG:251 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:C민감
+		LOCAL = ABL:C감각 + 2
+	ELSEIF TALENT:C둔감
+		LOCAL = ABL:C감각 - 2
+	ELSE
+		LOCAL = ABL:C감각
+	ENDIF
+	;敏感持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;SPCOM0：C攻めSP　클리토리스に噛み付く
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM0_20
+IF CFLAG:252 == 0
+	;初めて
+;;		PRINTFORML 「」
+	CFLAG:252 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:C민감
+		LOCAL = ABL:C감각 + 2
+	ELSEIF TALENT:C둔감
+		LOCAL = ABL:C감각 - 2
+	ELSE
+		LOCAL = ABL:C감각
+	ENDIF
+	;敏感持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+;;		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感な場合
+	ELSE
+	SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM2：V攻め弱　膣口を愛撫（처녀は奪いません）
+;--------------------------------------------------
+@KOJO_0_SEX_COM2_20
+IF CFLAG:253 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:253 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:V민감
+		LOCAL = ABL:V감각 + 2
+	ELSEIF TALENT:V둔감
+		LOCAL = ABL:V감각 - 2
+	ELSE
+		LOCAL = ABL:V감각
+	ENDIF
+	;처녀の時は공포するよね
+	IF TALENT:처녀 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;敏感持ちだけが来れる境地
+	ELSEIF LOCAL > 5 || EX:V절정 > 9
+;;		PRINTFORML 「」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感な場合
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM3：V攻め強　挿入
+;--------------------------------------------------
+@KOJO_0_SEX_COM3_20
+IF CFLAG:254 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:254 = 3
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:V민감
+		LOCAL = ABL:V감각 + 2
+	ELSEIF TALENT:V둔감
+		LOCAL = ABL:V감각 - 2
+	ELSE
+		LOCAL = ABL:V감각
+	ENDIF
+	
+	;敏感持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:V절정 > 9
+;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;初期
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感持ち限定
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;SPCOM1：V攻めSP　奥を突く
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM1_20
+IF CFLAG:254 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:254 = 3
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:V민감
+		LOCAL = ABL:V감각 + 2
+	ELSEIF TALENT:V둔감
+		LOCAL = ABL:V감각 - 2
+	ELSE
+		LOCAL = ABL:V감각
+	ENDIF
+	
+	;敏感持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:V절정 > 9
+;;		PRINTFORML 「」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;初期
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感持ち限定
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM4：A攻め弱　애널を撫で回す
+;--------------------------------------------------
+@KOJO_0_SEX_COM4_20
+IF CFLAG:256 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:256 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:A민감
+		LOCAL = ABL:A감각 + 2
+	ELSEIF TALENT:A둔감
+		LOCAL = ABL:A감각 - 2
+	ELSE
+		LOCAL = ABL:A감각
+	ENDIF
+	
+	;敏感持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+;;		PRINTFORML 「」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;初期
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感持ち限定
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM5：A攻め強　애널に挿入
+;--------------------------------------------------
+@KOJO_0_SEX_COM5_20
+IF CFLAG:257 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:257 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:A민감
+		LOCAL = ABL:A감각 + 2
+	ELSEIF TALENT:A둔감
+		LOCAL = ABL:A감각 - 2
+	ELSE
+		LOCAL = ABL:A감각
+	ENDIF
+	
+	;敏感持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+;;		PRINTFORML 「」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;初期
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感持ち限定
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;SPCOM2：A攻めSP　激しく애널を犯す
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM2_20
+IF CFLAG:257 < 2
+	;初めFORMDて
+;;	PRINTFORML 「」
+;;	SIF CFLAG:257 == 0
+;;		PRINTFORMDL %CALLNAME%の처녀애널は、%STR:2500%によって無惨に蹂躙されていく――
+	CFLAG:257 = 2
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:A민감
+		LOCAL = ABL:A감각 + 2
+	ELSEIF TALENT:A둔감
+		LOCAL = ABL:A감각 - 2
+	ELSE
+		LOCAL = ABL:A감각
+	ENDIF
+	
+	;敏感持ちだけが来れる境地
+	IF  LOCAL > 5 || EX:A절정 > 9
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;鈍感持ちだと来れない境地
+	ELSEIF LOCAL > 3 || EX:A절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;初期
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感持ち限定
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM6：B攻め弱　胸を揉みしだく
+;--------------------------------------------------
+@KOJO_0_SEX_COM6_20
+IF CFLAG:259 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:259 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:V민감
+		LOCAL = ABL:V감각 + 2
+	ELSEIF TALENT:V둔감
+		LOCAL = ABL:V감각 - 2
+	ELSE
+		LOCAL = ABL:V감각
+	ENDIF
+	IF LOCAL > 5 || EX:V절정 > 9
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:V절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感な場合
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM7：B攻め強　乳首に吸い付く
+;--------------------------------------------------
+@KOJO_0_SEX_COM7_20
+IF CFLAG:260 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:260 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:C민감
+		LOCAL = ABL:C감각 + 2
+	ELSEIF TALENT:C둔감
+		LOCAL = ABL:C감각 - 2
+	ELSE
+		LOCAL = ABL:C감각
+	ENDIF
+	;敏感持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;SPCOM3：B攻めSP　乳首に噛み付く
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM3_20
+IF CFLAG:261 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:261 = 1
+ELSE
+	;敏感、鈍感で多少変化
+	IF TALENT:C민감
+		LOCAL = ABL:C감각 + 2
+	ELSEIF TALENT:C둔감
+		LOCAL = ABL:C감각 - 2
+	ELSE
+		LOCAL = ABL:C감각
+	ENDIF
+	;敏感持ちだけが来れる境地
+	IF LOCAL > 5 || EX:C절정 > 9
+;;		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
+;;		PRINTFORMDL %CALLNAME%は瞬く間に上り詰めていく――
+	;敏感状態
+	ELSEIF LOCAL > 3 || EX:C절정 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ELSEIF LOCAL > 1
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;開発前
+	ELSEIF LOCAL >= 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	;鈍感な場合
+	ELSE
+	SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORML 「」
+			CASE 1
+;;				PRINTFORML 「」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;COM8：スパンキング
+;--------------------------------------------------
+@KOJO_0_SEX_COM8_20
+PRINTFORML 「この、くらい……なんとも……ひん！」
+IF ABL:마조끼 >= 3
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMDW 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
+		CASE 1
+			PRINTFORMDW 身体を叩かれながら、%CALLNAME%は上下の口から涎を垂らしていた。
+	ENDSELECT
+ELSE
+	PRINTFORMDW 歯を食いしばりながら、%CALLNAME%は고통に耐えている。
+ENDIF
+
+;COM9：針
+;--------------------------------------------------
+@KOJO_0_SEX_COM9_20
+PRINTFORML 「いや、こんな……ひいぃん！」
+IF ABL:마조끼 >= 3
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMDW 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
+		CASE 1
+			PRINTFORMDW 針の突き刺さる感触に、%CALLNAME%は上下の口から涎を垂らしていた。
+	ENDSELECT
+ELSE
+	PRINTFORMDW 歯を食いしばりながら、%CALLNAME%は고통に耐えている。
+ENDIF
+
+;SPCOM4：電流
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM4_20
+PRINTFORML 「やだ……こんなの……やあぁぁーっ！！」
+IF ABL:마조끼 >= 3
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMDW %CALLNAME%は泣き叫びながらも、その顔は喜悦に歪んでいた。
+		CASE 1
+			PRINTFORMDW 身体を走る電流の痛みに、%CALLNAME%は上下の口から涎を垂らしていた。
+	ENDSELECT
+ELSE
+	PRINTFORMDW %CALLNAME%は耐え難い고통に泣き叫んでいる。
+ENDIF
+
+;COM10：手淫
+;--------------------------------------------------
+@KOJO_0_SEX_COM10_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORML 「そ、その촉수チンポ……貸しなさいよ❤」
+	PRINTFORMDW %CALLNAME%は嫌々を装いながら촉수を手にするが、頬は愛おしげに緩んでいる。
+ELSE
+	PRINTFORML 「擦りつけんじゃないわよ、汚らしい！」
+	PRINTFORMDW %CALLNAME%は両手に押し付けられる촉수を苦々しく睨んでいる。
+ENDIF
+
+;COM11：フェラ
+;--------------------------------------------------
+@KOJO_0_SEX_COM11_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	PRINTFORML 「あ、あんたの%촉수市民("촉수","おちんちん")%が汚れてるから……し、仕方なく掃除してやるんだからね！」
+	PRINTFORML 「んちゅ……む、ん……❤」
+	PRINTFORMDW %CALLNAME%はなんだかんだ言いつつも%촉수市民("촉수","ペニス")%を口にくわえ、熱心に奉仕している。
+ELSE
+	PRINTFORML 「ごきゅ……んぐぅ！？」
+	PRINTFORML （あとで覚えてなさいよ……）
+	PRINTFORMDW %CALLNAME%は口に押し込まれた%촉수市民("촉수","ペニス")%を忌々しげに見つめている。
+ENDIF
+
+;COM12：イラマチオ
+;--------------------------------------------------
+@KOJO_0_SEX_COM12_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「じゅるるるっ、じゅぷっ、んくぅっ、んくぅぅっ……」
+		CASE 1
+			PRINTFORML 「んくぅっ、じゅるっ、んくぅっ、んちゅるぅぅっ……」
+		CASEELSE
+			PRINTFORML 「んくぅっ、ちゅぅ…じゅるっ、じゅる、じゅるぅぅっ……」
+	ENDSELECT
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML (お、おぉおお……美味し、美味しい、これ、もっと……)
+		CASE 1
+			PRINTFORML (汚臭、鼻の中まで、塗りつぶされて、っ❤)
+		CASE 2
+			PRINTFORML (あぁぁあ、あ……この臭い、頭の中、おかしく…❤)
+		CASEELSE
+			PRINTFORML (%SELF_CALL(7)%、口の中、喉まで犯されて、あぁ、あっ❤)
+	ENDSELECT
+	PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は無様に頬を窄め、ぢゅぼぢゅぼと音を立てて喉奥で%촉수市民("촉수","ペニス")%を頬張っている。
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「んぶぅっ！？ やらぁっ、んくぅっ……」
+		CASEELSE
+			PRINTFORML 「こほっ？！ ううぅっ、ぅくぅ、んう……」
+	ENDSELECT
+	
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML (い、息が、助け、て、こんなの死んじゃう……！)
+		CASE 1
+			PRINTFORML (こ、殺される、%SELF_CALL_SUBSTRING(0, SELF_CALL_LENGTH() - 2)%、%SELF_CALL(SELF_CALL_LENGTH() - 1)%、%촉수市民("촉수","おちんちん")%で、窒息、しちゃう……！)
+		CASEELSE
+			PRINTFORML (む、無理、こんなの無理……！)
+	ENDSELECT
+	PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は喉奥を性具同然に扱われている。
+	PRINTFORMDL  心を折るほどの勢い、そして生臭い異臭と吐き気を催す味が%PRINT_TRANSCALLNAME(TARGET)%の理性を腐らせていく……
+ENDIF
+
+;COM13：絶頂禁止
+;--------------------------------------------------
+@KOJO_0_SEX_COM13_20
+PRINTFORML 「イケない、イかせてよっ」
+PRINTFORML 「生殺しなんてやだっ」
+PRINTFORMDL %CALLNAME%は絶頂を禁じられ焦らし責めにされていた
+PRINTFORMDL イカせてほしいと懇願するが望みは叶わない
+
+;COM14：衣装を破く
+;--------------------------------------------------
+@KOJO_0_SEX_COM14_20
+PRINTFORML 「服を破らないでよっ！…」
+PRINTFORML 「この、変態変態変態っ！…」
+PRINTFORMDL %CALLNAME%はコスチュームを破かれてしまった 
+PRINTFORMDL 수줍음と怒りから罵声を放つ
+
+;SPCOM5：パイズリ
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM5_20
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+	;ひんぬー
+	IF TALENT:빈유 > 0
+		PRINTFORML 「……小さくて悪かったわね」
+		PRINTFORMDW %CALLNAME%は薄い胸を健気に%촉수市民("촉수","ペニス")%に擦りつけている。
+	;きょぬー
+	ELSEIF TALENT:거유 > 0
+		PRINTFORML 「あんたもこの胸、気になるんだ？」
+		PRINTFORMDW %CALLNAME%はその大きな胸の谷間に%촉수市民("촉수","ペニス")%を埋もれさせ、乳圧でこすり上げている。
+	;なみちち
+	ELSE
+		PRINTFORML 「%SELF_CALL()%くらいのサイズでも、このくらいできんのよ」
+		PRINTFORMDW %CALLNAME%は%촉수市民("촉수","ペニス")%を胸の谷間に挟み込み、口付けしながら奉仕している。
+	ENDIF
+ELSE
+	;ひんぬー
+	IF TALENT:빈유 > 0
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「……小さくて悪かったわね」
+			CASE 1
+				PRINTFORML 「嫌味のつもりかしら？」
+		ENDSELECT
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML （……あとで覚えてなさいよ）
+				PRINTFORMDW %CALLNAME%の촉수に向ける目が、いつもより冷たいのは気のせいだろうか。
+			CASE 1
+				PRINTFORMDW %CALLNAME%は薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+			CASE 2
+				PRINTFORMDW %CALLNAME%は薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+			CASE 3
+				PRINTFORMDW %CALLNAME%は薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+			CASE 4
+				PRINTFORMDW %CALLNAME%は薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+		ENDSELECT
+	;きょぬー
+	ELSEIF TALENT:거유 > 0
+		PRINTFORML 「この、どいつもこいつも胸ばっかり……」
+		PRINTFORMDW %CALLNAME%は胸の谷間へ埋もれた%촉수市民("촉수","ペニス")%に、嫌悪感を抱いている。
+	;なみちち
+	ELSE
+		PRINTFORML 「この、気色悪い……」
+		PRINTFORMW 가슴の谷間を通って口に近よる%촉수市民("촉수","ペニス")%から、%CALLNAME%は顔を背けた。
+	ENDIF
+ENDIF
+
+;SPCOM6：強制自慰
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM6_20
+IF ABL:자위중독 >= 4
+	PRINTFORML 「んあっ！　きもち、いい……」
+	PRINTFORMDL %CALLNAME%は夢中になって自分の体をまさぐっている。
+	SELECTCASE RAND:4
+		;C
+		CASE 0
+			PRINTFORMDL 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+			PRINTFORML 「ひんっ、ふあぁああ～～！」
+			PRINTFORMDL 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+			PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+		;B
+		CASE 1
+			;ひんぬー
+			IF TALENT:빈유 > 0
+				PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+				PRINTFORML 「ひんっ、ふあぁああ～～！」
+				PRINTFORMDL 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+				PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+			ELSE
+				PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+				PRINTFORML 「ひんっ、ふあぁああ～～！」
+				PRINTFORMDL 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+				PRINTFORMDL 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+			ENDIF
+		;V
+		CASE 2
+			PRINTFORMDL %CALLNAME%が질내に指を突き入れても、そこは甘い蜜を散らすばかりであった。
+			PRINTFORML 「ひんっ、ふあぁああ～～！」
+			PRINTFORMDL 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+			PRINTFORMDL 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+		;A
+		CASE 3
+			PRINTFORMDL %CALLNAME%の菊座に指を突き入れても、そこは甘く腸液を散らすばかりであった。
+			PRINTFORML 「ひんっ、ふあぁああ～～！」
+			PRINTFORMDL 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+			PRINTFORMDL 질口から溢れた愛液と腸液の混合液。
+			PRINTFORMDL その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+	ENDSELECT
+	PRINTFORMDW もはや촉수に強制されているのか、自分の意思なのか判断はつかない。
+ELSEIF ABL:자위중독 >= 1
+	PRINTFORML 「んあっ！　きもち、い…だ、だめ、流されたら……」
+	PRINTFORMDL %CALLNAME%の身体は自慰の虜になっている。
+	SELECTCASE RAND:4
+		;C
+		CASE 0
+			PRINTFORMDL 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+			PRINTFORML 「ひん……ん、ふあっ……」
+			PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+			PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+		;B
+		CASE 1
+			;ひんぬー
+			IF TALENT:빈유 > 0
+				PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+				PRINTFORML 「ひん……ん、ふあっ……」
+				PRINTFORMDL 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+				PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+			ELSE
+				PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+				PRINTFORML 「ひん……ん、ふあっ……」
+				PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+				PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+			ENDIF
+		;V
+		CASE 2
+			PRINTFORMDL %CALLNAME%が질내に指を入れた時、そこは既にしとどに濡れていた。
+			PRINTFORML 「ひん……ん、ふあっ……」
+			PRINTFORMDL そのまま指を引き、再び入れて……指を出し入れするたびに、くちゅくちゅと水音があたりに響く。
+			PRINTFORMDL 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+		;A
+		CASE 3
+			PRINTFORMDL %CALLNAME%の菊座に指を入れた時、そこは一切の抵抗を見せなかった。
+			PRINTFORML 「ひん……ん、ふあっ……」
+			PRINTFORMDL そのまま指を引き、再び入れて……指を出し入れするたびに、指に引かれて腸液が散る。
+			PRINTFORMDL 질口から溢れた愛液と腸液の混合液。
+			PRINTFORMDL その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+	ENDSELECT
+	PRINTFORMDW 決して%CALLNAME%自身の意志ではないはずだが、身体は快楽を貪り続けていた。
+ELSE
+	PRINTFORML 「ん、く……こんな、ことを……」
+	PRINTFORMDL %CALLNAME%の身体は滞ることなく自身を辱める。
+	SELECTCASE RAND:4
+		;C
+		CASE 0
+			;はじめてのナニ
+			IF EXP:자위경험 == 0
+				PRINTFORMDL 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+			ELSE
+				PRINTFORMDL そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+			ENDIF
+			PRINTFORML 「ひん……ん、ふぁ……」
+			PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+			PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+		;B
+		CASE 1
+			;ひんぬー
+			IF TALENT:빈유 > 0
+				PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+			ELSE
+				PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+			ENDIF
+			PRINTFORML 「ひん……ん、ふぁ……」
+			PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+			PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+		;V
+		CASE 2
+			;はじめてのナニ
+			IF EXP:자위경험 == 0
+				PRINTFORMDL 初めて触れる%CALLNAME%の膣口は、しかし既にしとどに濡れていた。
+			ELSE
+				PRINTFORMDL そっと指で触れた%CALLNAME%の膣口は、既にしとどに濡れていた。
+			ENDIF
+			PRINTFORML 「ひん……ん、ふぁ……」
+			PRINTFORMDL そのまま指先を질내に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+			PRINTFORMDL 浅いところをかき回すだけでちゅぷちゅぷと卑猥な水音を響かせ、%CALLNAME%は快感に翻弄されている。
+		;A
+		CASE 3
+			;はじめてのナニ
+			IF EXP:자위경험 == 0
+				PRINTFORMDL トイレの外で初めて触れる%CALLNAME%の菊座は、しかし既に綻びを見せていた。
+			ELSE
+				PRINTFORMDL そっと指をあてがった%CALLNAME%の菊座は、既に綻びを見せていた。
+			ENDIF
+			PRINTFORML 「ひん……ん、ふぁ……」
+			PRINTFORMDL そのまま指先を内に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+			PRINTFORMDL 浅いところをかき回すと腸液が溢れだし、%CALLNAME%を快感に翻弄する。
+	ENDSELECT
+	PRINTFORMDW 望まぬ快楽を自らの手で送り込まれることに、%CALLNAME%は困惑している。
+ENDIF
+
+;SPCOM7：羞恥プレイ
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM7_20
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDL %CALLNAME%が顔を赤くして目をそらしても、淫らな鳴き声と水音が耳に届いた。
+	CASE 1
+;;		PRINTFORMDL 視線をそらすことも許されず、%CALLNAME%は自らの痴態を鑑賞させられた。
+ENDSELECT
+
+
+;SPCOM8：尿道攻め
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM8_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「おしっこの穴いい、気持ちいいわ。ちがう、そんなことそんな事……」
+	PRINTFORML 「もっとぉ…もっとにょうどういじってええええええぇぇぇっっっ！！！❤」
+	PRINTFORMDL 小用の排泄の穴を凌辱され%CALLNAME%は快楽にむせぶ
+ELSE
+	PRINTFORML 「おしっこのあなをいじらないでっ」
+	PRINTFORML 「やだ、やだぁ……」
+	PRINTFORMDL 小用の排泄の穴を凌辱され%CALLNAME%は悲痛に叫ぶ
+ENDIF
+
+;SPCOM9：V拡張攻め
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM9_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ぐいぐいって、あそこを広げられるのいいっ。気持ちいいわよっ、もっとして！」
+	PRINTFORML 「ひろがるぅ…おまんこ広がってイきそうよっっっ！！！❤」
+	PRINTFORMDL 性器を広げるように犯され%CALLNAME%はもっとしてほしいと懇願する
+ELSE
+	PRINTFORML 「痛いっっ、広げないで！」
+	PRINTFORML 「やだ、やだぁ……おまんこ広げられてるよう……」
+	PRINTFORMDL 性器を広げるように犯され%CALLNAME%は悲痛に叫ぶ
+ENDIF
+
+;SPCOM10：A拡張攻め
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM10_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ぐいぐいって、あそこを広げられるのいいっ。気持ちいいわよっ、もっとして！」
+	PRINTFORML 「ひろがるぅ…おしり広がってイきそうよっっっ！！！❤」
+	PRINTFORMDL 菊門を広げるように犯され%CALLNAME%はもっとしてほしいと懇願する
+ELSE
+	PRINTFORML 「痛いっっ、広げないで！」
+	PRINTFORML 「やだ、やだぁ……おしり広げられてるよう……」
+	PRINTFORMDL 菊門を広げるように犯され%CALLNAME%は悲痛に叫ぶ
+ENDIF
+
+;SPCOM11：甘えん坊授乳プレイ
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM11_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「あ゛あ゛っ❤ぃい゛子っ!　でちゅねぇ!　…あ゛っお゛っ❤」
+	PRINTFORML 「も゛っどぉ…も゛っどママのおっぱい吸ってええええええぇぇぇっっっ！！！❤」
+ELSE
+	PRINTFORML 「ごん゛な゛っ❤　い゛や゛な゛の゛に゛ぃっ！❤」
+ENDIF
+
+
+;SPCOM12：ヘソ快楽攻め
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM12_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「おへそ気持ちいいっ、くちゅくちゅってされて気持ちいい！」
+	PRINTFORML 「もっともっとおへそをいじめて？　お願いよ」
+ELSE
+	PRINTFORML 「おへそなんていじらないでっ、変態変態！」
+ENDIF
+
+
+;SPCOM13：P촉수専用SP　丸飲み精液責め
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM13_20
+	IF (TCVARn:12 & 기절)
+		;衝撃で意識を回復したが無数の촉수で浸かったまま拘束・固定されてしまう
+		PRINTDATAL
+		DATAFORM 「…ぅ…ん……%SELF_CALL()%……ここって……」
+		DATAFORM 「ぅ……何よ…ここ…臭い…………」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「捕まって、기절して…ってことは、その後……」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「……嘘…まさか%SELF_CALL()%……っ！？」
+		ENDDATA
+		PRINTFORML 周囲の촉수から放たれる白濁のシャワーが、%PRINT_TRANSCALLNAME(TARGET)%の思考を中断させる。
+	ELSE
+		;脚ジタバタさせつつ頭から丸呑み、異臭のする白濁液に放りこまれ
+		;から구상
+		;消化されるかと思いパニック→安心したのもつかの間、液体に浸かった状態で拘束
+		PRINTDATAL
+		DATAFORM 「っふぅ、はぁ……」
+		DATAFORM 「……なにコレ、臭い……最悪……」
+		DATAFORM 「…やだ…臭くて鼻が曲がりそう…」
+		ENDDATA
+		PRINTDATAL
+		DATAFORM 「…この拘束、どうにかして解かな…きゃあっ！？」
+		ENDDATA
+		PRINTFORML 周囲の촉수から放たれる白濁のシャワーが、%PRINT_TRANSCALLNAME(TARGET)%の思考を中断させる。
+	ENDIF
+
+@KOJO_0_SEX_SPCOM13_FINISHER_0_20
+	;타락で期待　他で無駄な必死にあがき始める
+	IF TALENT:촉수의포로 > 0
+		PRINTFORML 「あ…❤」
+		PRINTFORML （これからどうされちゃうんだろう…❤）
+		PRINTFORML （両穴？　フェラ？　それとも――）
+	ELSE
+		PRINTFORML 「あ…」
+		PRINTFORML （どうにか、どうにかしてここを出ないと！　間に合わな――）
+	ENDIF
+@KOJO_0_SEX_SPCOM13_FINISHER_1_20
+	;続けて大量の사정※　プールの水位が上昇してゆく
+	PRINTDATAL
+	DATAFORM 「あっ……」
+	DATAFORM 「うっ……」
+	DATAFORM 「や、やめっ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (このまま逃げ出せなかったら、%SELF_CALL()%……っ！？　の、喉に촉수がっ…！)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_2_20
+	;上の穴＋両穴
+	PRINTDATA
+	DATAFORM 「むぐっ…
+	DATAFORM 「んぅっ…
+	DATAFORM 「んんぅ…
+	ENDDATA
+	PRINTDATAL
+	DATAFORM う゛ぶっ……」
+	DATAFORM え゛ぶっ……」
+	DATAFORM お゛ぶっ……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (い、息、できなっ……)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_3_20
+	PRINTDATA
+	DATAFORM 「お゛ごぉっ、
+	ENDDATA
+	PRINTDATAL
+	DATAFORM うえ゛ぇえ゛ぇ゛……」
+	ENDDATA
+	PRINTDATAL
+	DATAFORM (こんなの、溺れてっ……)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_4_20
+	PRINTDATAL
+	DATAFORM (はやく、逃げ――)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_5_20
+	PRINTDATAL
+	DATAFORM (はや――く――――)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_6_20
+	PRINTDATAL
+	DATAFORM (――――――――)
+	ENDDATA
+	;・・・・(無数の사정)
+@KOJO_0_SEX_SPCOM13_FINISHER_7_20
+	PRINTDATAL
+	DATAFORM (――)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_8_20
+	PRINTDATAL
+	DATAFORM (―――――)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_9_20
+	PRINTDATAL
+	DATAFORM (――――――――)
+	ENDDATA
+@KOJO_0_SEX_SPCOM13_FINISHER_10_20
+	PRINTDATAL
+	DATAFORM (――――――――ゴポッ)
+	ENDDATA
+
+
+
+;SPCOM14：催眠姦
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM14_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「こんな強引な手を使わなくたって%SELF_CALL()%は받아들인다わよ…」
+	PRINTFORML 「…でも嬉しいわ❤」
+ELSE
+	PRINTFORML 「…ただじゃおかないからね」
+ENDIF
+
+
+;SPCOM15：サブミッションファック
+;--------------------------------------------------
+@KOJO_0_SEX_SPCOM15_20
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ひゃだぁ、いたいいたいぃ！でも気持ちいいのぉ、ひゃうううっ！」
+	PRINTFORML （痛くて気持ち良くて、最高……）
+	PRINTFORMDL 体を破壊するかのような凌辱に%SELF_CALL()%はその고통にすら快楽の喘ぎを上げている……
+ELSE
+	PRINTFORML 「痛い痛い痛いっ！やだぁ、やめて死んじゃう、お願い死んじゃうったらぁぁ！！」
+	PRINTFORMDL 体を破壊するかのような凌辱に%SELF_CALL()%は절망の悲鳴を上げているる……
+ENDIF
+
+
+;キャラが사정
+;--------------------------------------------------
+@KOJO_0_SEX_CHARA_SYASEI_20
+IF CFLAG:263 == 0
+	;初めて
+;;	PRINTFORML 「」
+;;	PRINTFORMDL %CALLNAME%は自らの陰茎が精通までしている事実に呆然としている
+	CFLAG:263 = 1
+ELSEIF TALENT:촉수의포로 > 0
+;;	PRINTFORML 「」
+ELSE
+;;	PRINTFORML 「」
+;;	PRINTFORMDL %CALLNAME%の陰茎は勢いよく精を吐き出した。
+ENDIF
+
+;キャラが대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_CHARA_SYASEI_HI_20
+IF CFLAG:264 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:264 = 1
+ELSEIF TALENT:촉수의포로 > 0
+;	PRINTFORML 「」
+ELSE	
+ENDIF
+
+;キャラが모유
+;--------------------------------------------------
+@KOJO_0_SEX_CHARA_HUNNYU_20
+IF CFLAG:265 == 0
+	;初めて
+;;	PRINTFORML 「」
+	CFLAG:265 = 1
+ELSEIF TALENT:촉수의포로 > 0
+;;	PRINTFORML 「」
+ELSE	
+ENDIF
+
+;キャラが大量모유
+;--------------------------------------------------
+@KOJO_0_SEX_CHARA_HUNNYU_HI_20
+
+;絶頂関連
+
+;C絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_C_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;C強絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_C_HI_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;V絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_V_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;V強絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_V_HI_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;A絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_A_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;A強絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_A_HI_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;B絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_B_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;B強絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_B_HI_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+
+
+;多重絶頂に関する구상
+
+;四重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVAB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CVA三重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVA_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CVB三重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CAB三重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CAB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;VAB三重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VAB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CV二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CV_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CA二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CA_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;CB二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;VA二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VA_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;VB二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+;AB二重絶頂
+;--------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_AB_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+ENDSELECT
+RESETCOLOR
+
+;絶頂抑制
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_INHIBITION_20
+
+;絶頂禁止
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_PROHIBITION_20
+
+;絶頂懇願
+;--------------------------------------------------
+@KOJO_0_SEX_ECSTASY_ENTREATY_20
+
+
+
+;촉수が사정したときの処理
+
+;膣に通常사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_VAGINA_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+;;	PRINTFORMDW %CALLNAME%は嬉しそうにお腹に手を当てている。
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は절망したような表情で膣口を見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;膣に대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_VAGINA_HI_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+;;	PRINTFORMDW %CALLNAME%は嬉しそうにお腹に手を当てている。
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は절망したような表情で精液の溢れる膣口を見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;애널に通常사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_ANAL_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+;;		PRINTFORMDW %CALLNAME%は嬉しそうにお腹に手を当てている。
+	CASE 1
+;;		PRINTFORML 「」
+;;		PRINTFORMDW %CALLNAME%は膣口を広げて%STR:2500%を誘っている。
+ENDSELECT
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は嫌悪の表情で菊座を見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;애널に대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_ANAL_HI_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+;;		PRINTFORMDW %CALLNAME%は嬉しそうにお腹に手を当てている。
+	CASE 1
+;;		PRINTFORML 「」
+;;		PRINTFORMDW %CALLNAME%は膣口を広げて%STR:2500%を誘っている。
+ENDSELECT
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は嫌悪の表情で菊座を見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;手に通常사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_HAND_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は嬉しそうに精液を舐めとった。
+	CASE 1
+;;		PRINTFORMDW 精液に濡れた手を%CALLNAME%は嬉しそうに見つめている。
+ENDSELECT
+
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は手に付着した精液を忌々しげに見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;手に대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_HAND_HI_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は嬉しそうに精液を舐めとった。
+	CASE 1
+;;		PRINTFORMDW 精液に濡れた手を%CALLNAME%は嬉しそうに見つめている。
+ENDSELECT
+
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は手に付着した精液を忌々しげに見つめている。
+	CASE 1
+;;		PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;口内に通常사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「んきゅ……ん❤」
+	CASE 1
+;;		PRINTFORML 「ん……❤　ま、まあまあね」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDW %CALLNAME%は嬉しそうに精液を飲み干している。
+	CASE 1
+;;		PRINTFORMDW 精液を飲む%CALLNAME%は幸せそうだ。
+ENDSELECT
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+;;		PRINTFORMDW 吐き出された精液を反射的に飲んでしまい、%CALLNAME%はむせている。
+	CASE 1
+;;		PRINTFORML 「」
+;;		PRINTFORMDW 입をふさがれてしまい、%CALLNAME%は仕方なく精液を飲み干している。
+ENDSELECT
+ENDIF
+RESETCOLOR
+;口内に대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_HI_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORMDL  「」
+;;		PRINTFORMDL %CALLNAME%は溢れた精液を残念そうに見つめている。
+	CASE 1
+;;		PRINTFORMDL  「」
+;;		PRINTFORMDW 飲みきれない精液を前にした%CALLNAME%は幸せそうだ。
+ENDSELECT
+ELSE
+SELECTCASE RAND:2
+	CASE 0
+;;		PRINTFORML 「」
+;;		PRINTFORMDW 吐き出された精液を反射的に飲んでしまい、%CALLNAME%はむせている。
+	CASE 1
+;;		PRINTFORML 「」
+;;		PRINTFORMDW 입をふさがれてしまい、%CALLNAME%は仕方なく精液を飲み干している。
+ENDSELECT
+ENDIF
+
+	PRINTFORMDW %STR:2500%から離れた%CALLNAME%の口からは精液がこぼれている。
+RESETCOLOR
+;胸に通常사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_BUST_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+	SELECTCASE RAND:2
+		CASE 0
+;;			PRINTFORML 「」
+		CASE 1
+;;			PRINTFORML 「」
+	ENDSELECT
+	;ひんｎ（ｒｙ
+	IF TALENT:빈유 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORMD %CALLNAME%は精液の付いた薄い胸を
+				SELECTCASE RAND:2
+					CASE 0
+;;						PRINTFORMDW 嬉しそうに見下ろしている。
+					CASE 1
+;;						PRINTFORMDW 少し残念そうに見下ろしている。
+				ENDSELECT
+			CASE 1
+;;				PRINTFORMD %CALLNAME%は嬉しそうに精液を
+				SELECTCASE RAND:2
+					CASE 0
+;;						PRINTFORMDL 舐めとろうとした。
+;;						PRINTFORMDW しかし薄い胸のせいで舌が届かなかった。
+					CASE 1
+;;						PRINTFORMDW 舐めとった。
+				ENDSELECT
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORMDW %CALLNAME%は嬉しそうに精液を舐めとった。
+			CASE 1
+;;				PRINTFORMDW 精液に濡れた胸を%CALLNAME%は嬉しそうに見つめている。
+		ENDSELECT
+	ENDIF
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+;;			PRINTFORML 「」
+		CASE 1
+;;			PRINTFORML 「」
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 0
+			;ひん（ｒｙ
+			IF TALENT:빈유 > 0
+;;				PRINTFORMDW %CALLNAME%は薄い胸に付着した精液を忌々しげに見下ろしている。
+			ELSE
+;;				PRINTFORMDW %CALLNAME%は胸に付着した精液を忌々しげに見つめている。
+			ENDIF
+		CASE 1
+;;			PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+	ENDSELECT
+ENDIF
+RESETCOLOR
+;胸に대량사정
+;--------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_BUST_HI_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3 || ABL:정액중독 > 3
+	SELECTCASE RAND:2
+		CASE 0
+;;			PRINTFORML 「」
+		CASE 1
+;;			PRINTFORML 「」
+	ENDSELECT
+	;ひんｎ（ｒｙ
+	IF TALENT:빈유 > 0
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORMD %CALLNAME%は精液に覆われた薄い胸を
+				SELECTCASE RAND:2
+					CASE 0
+;;						PRINTFORMDW 嬉しそうに見下ろしている。
+					CASE 1
+;;						PRINTFORMDW 少し残念そうに見下ろしている。
+				ENDSELECT
+			CASE 1
+;;				PRINTFORMD %CALLNAME%は嬉しそうに精液を
+				SELECTCASE RAND:2
+					CASE 0
+;;						PRINTFORMDL 舐めとろうとした。
+;;						PRINTFORMDW しかし薄い胸のせいで舌が届かなかった。
+					CASE 1
+;;						PRINTFORMDW 舐めとった。
+				ENDSELECT
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+;;				PRINTFORMDW %CALLNAME%は嬉しそうに精液を舐めとった。
+			CASE 1
+;;				PRINTFORMDW 精液に塗れる胸を%CALLNAME%は嬉しそうに見つめている。
+		ENDSELECT
+	ENDIF
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+;;			PRINTFORML 「」
+		CASE 1
+;;			PRINTFORML 「」
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 0
+			;ひん（ｒｙ
+			IF TALENT:빈유 > 0
+;;				PRINTFORMDW %CALLNAME%は薄い胸を覆う精液を忌々しげに見下ろしている。
+			ELSE
+;;				PRINTFORMDW %CALLNAME%は胸に付着した精液を忌々しげに見つめている。
+			ENDIF
+		CASE 1
+;;			PRINTFORMDW %CALLNAME%は%STR:2500%を鋭くにらみつけている。
+	ENDSELECT
+ENDIF
+RESETCOLOR
+
+
+;戦闘終了関連
+
+;보스 촉수・최종 보스 촉수に勝利
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_WIN_20
+SETCOLOR 243,213,26
+LOCAL = 1
+;特定部位絶頂が10回以上
+IF EX:C절정 > 9 || EX:V절정 > 9 || EX:A절정 > 9 || EX:B절정 > 9
+;;	PRINTFORML 「」
+	WHILE LOCAL
+	RESULT = RAND:4
+	IF RESULT == 0 && EX:C절정 > 9
+;;		PRINTFORMDL 数えきれないほど胸でイかされた%CALLNAME%は、蕩けきった顔をしながら呟いた
+		LOCAL = 0
+	ELSEIF RESULT == 1 && EX:V절정 > 9
+;;		PRINTFORMDL  数えきれないほどイかされ、敏感になった%CALLNAME%の陰核は
+;;		PRINTFORMDL 今再び、意思なき微風にすらイかされようとしている……
+		LOCAL = 0
+	ELSEIF RESULT == 2 && EX:A절정 > 9
+;;		PRINTFORMDL  数えきれないほどイかされ、%CALLNAME%の菊門はぽっかりと口をあけている……
+		LOCAL = 0
+	ELSEIF RESULT == 3 && EX:B절정 > 9
+;;		PRINTFORMDL 数えきれないほどイかされた%CALLNAME%の蜜壷は、ドロドロに蕩けている……
+		LOCAL = 0
+	ENDIF
+	WEND
+;絶頂回数10回以上
+ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 9
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 数えきれないほどイかされた%CALLNAME%は、地面に倒れ伏せ、ビクビクと痙攣している。
+ELSEIF PALAM:치정 > 100000
+	IF ABL:노출벽 > 3
+;;		PRINTFORML 「」
+;;		PRINTFORMDL 全てを曝け出した%CALLNAME%は満足そうに太ももを擦り合わせている……
+	ELSE
+;;		PRINTFORML 「」
+;;		PRINTFORMDL 全てを曝け出してしまった%CALLNAME%は蒼白になって절망している……
+	ENDIF
+;特定部位絶頂が3回以上
+ELSEIF EX:C절정 > 2 || EX:V절정 > 2 || EX:A절정 > 2 || EX:B절정 > 2
+;;	PRINTFORML 「」
+	WHILE LOCAL
+	RESULT = RAND:4
+	IF RESULT == 0 && EX:C절정 > 2
+;;		PRINTFORMDL  何度もイかされ、%CALLNAME%は歩くことも出来なさそうだ……
+		LOCAL = 0
+	ELSEIF RESULT == 1 && EX:V절정 > 2
+;;		PRINTFORMDL  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
+		LOCAL = 0
+	ELSEIF RESULT == 2 && EX:A절정 > 2
+;;		PRINTFORMDL  何度もイかされ、%CALLNAME%の菊門は ヒクヒクと痙攣している……
+		LOCAL = 0
+	ELSEIF RESULT == 3 && EX:B절정 > 2
+;;		PRINTFORMDL  何度も胸でイかされた%CALLNAME%は、蕩けきった顔をしながら呟いた
+		LOCAL = 0
+	ENDIF
+	WEND
+;絶頂回数5回以上
+ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 4
+;恥ずかしいこと
+ELSEIF PALAM:치정 > 10000
+	IF ABL:노출벽 > 1
+;;		PRINTFORML 「」
+;;		PRINTFORMDL 野外で裸を披露した%CALLNAME%は満足そうに太ももを擦り合わせている……
+	ELSE
+;;		PRINTFORML 「」
+;;		PRINTFORMDL 公衆に裸を見られた%CALLNAME%は真っ赤な顔を両手で覆い、急いで逃げ帰った……
+	ENDIF
+ELSEIF PALAM:욕정 > 10000
+	PRINTFORML 「ふ、ふん……今回は、%SELF_CALL()%の勝ちね」
+	PRINTFORMDL %CALLNAME%は官能の炎に焼かれながら、勝利を宣言した
+ELSEIF PALAM:공포 > 10000
+;;	PRINTFORML 「」
+;;	PRINTFORMDL %STR:2500%に与えられた공포から歯をカチカチ震わせている%CALLNAME%は
+;;	PRINTFORMDL 倒したことが信じられず、動かない%STR:2500%に怯えている……
+ELSEIF PALAM:고통 > 10000
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 激しい戦いの末、%CALLNAME%は勝利した……
+ELSE
+	IF TALENT:촉수의포로 > 0 || TALENT:음란 > 0 || ABL:촉수중독 > 3
+;;		PRINTFORML 「」
+;;		PRINTFORMDL 色欲に燃え上がった%CALLNAME%は満たせない相手を罵倒した
+	ELSE
+		PRINTFORML 「この程度、造作もないわ」
+		PRINTFORMDL %CALLNAME%は一方的に%STR:2500%を殲滅した
+	ENDIF
+ENDIF
+
+RESETCOLOR
+;최종 보스 촉수出現
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_LASTBOSSAPPEAR_20
+SETCOLOR 243,213,26
+IF MARK:굴복각인 >= 3 || MARK:공포각인 >= 3
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 
+	IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+;;		PRINTFORMDW 肉欲に突き動かされて、%CALLNAME%は次なる戦いを受け入れた。
+	ELSE
+;;		PRINTFORMDW 공포を無理やりに呑み込んで、%CALLNAME%は次なる戦いを受け入れた。
+	ENDIF
+ELSE
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 
+ENDIF
+RESETCOLOR
+;完全殲滅
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_PERFECT_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 
+ELSEIF MARK:굴복각인 >= 3 || MARK:공포각인 >= 3
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 
+ELSE
+;;	PRINTFORML 「」
+;;	PRINTFORMDL 
+ENDIF
+RESETCOLOR
+;捕らわれキャラの救出
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUED_20
+SETCOLOR 243,213,26
+PRINTFORML 「ちょっとあんた、大丈夫？」
+PRINTFORMDL 倒れた仲間を助け起こしながら、%CALLNAME%は声をかけた。
+RESETCOLOR
+;救出された側の구상 
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_20
+SETCOLOR 243,213,26
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「べ、別にこれくらい、%SELF_CALL()%一人でも……」
+		CASE 1
+			PRINTFORML 「わ、悪かったわね」
+		CASE 2
+			PRINTFORML 「礼は言わないわよ」
+	ENDSELECT
+PRINTFORMDL 地面に倒れ伏して動けないのに、%CALLNAME%は強がりを言っている。
+RESETCOLOR
+;敗北
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_LOSS_20
+SETCOLOR 243,213,26
+IF TALENT:촉수의포로 > 0 || ABL:촉수중독 > 3
+;;	PRINTFORML 「」
+;;	PRINTFORMDW
+ELSE
+;;	PRINTFORML 「」
+;;	PRINTFORMDW 
+ENDIF
+RESETCOLOR
+;時間切れ
+;--------------------------------------------------
+@KOJO_0_BATTLE_END_TIMEUP_20
+SETCOLOR 243,213,26
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「今日のところはこのくらいにしておいてあげるわ」
+	CASE 1
+		PRINTFORML 「次も無事だと思わないことね」
+	CASE 2
+		PRINTFORML 「あ、あんたなんか、%SELF_CALL()%が本気を出せばもっと簡単に……！」
+ENDSELECT
+	PRINTFORMDW 去っていく%STR:2500%を見送りながら、%CALLNAME%は強がりを言っている。
+RESETCOLOR
+
+
+;素質関連
+
+;처녀喪失
+;--------------------------------------------------
+@KOJO_0_SEX_LOSTVIRGIN_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;촉수의포로取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_TORIKO_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;음란取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INRAN_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;음핵取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INKAKU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;음호取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INTUBO_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;음고取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INJIRI_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;음유取得
+;--------------------------------------------------
+@KOJO_0_GETTALENT_INNYUU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+
+
+;刻印関連
+
+;쾌락각인１取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;쾌락각인２取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;쾌락각인３取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;고통각인１取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;고통각인２取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;고통각인３取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;굴복각인１取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;굴복각인２取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;굴복각인３取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;공포각인１取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;공포각인２取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;공포각인３取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;치욕각인１取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;치욕각인２取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;치욕각인３取得
+;--------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+
+
+;心境変化関連
+
+;倒錯
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_TOUSAKU_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;怒り
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_IKARI_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;諦観
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_TEIKAN_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;冷静
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_REISEI_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;動揺
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_DOUYOU_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;高揚
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_KOUYOU_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+;消沈
+;--------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_SYOUTIN_20
+SETCOLOR 243,213,26
+;;	PRINTFORMDL （）
+RESETCOLOR
+
+
+;体が竦んだ関連
+
+;촉수의포로で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_TORIKO_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;快楽で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KAIRAKU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;고통で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KUTUU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;屈辱で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KUTUZYOKU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;공포で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KYOUHU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;恥辱で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_TIZYOKU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+
+;기생の影響で体が竦む
+;--------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_PARASITE_20
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML (ダメ…抑えるのよ、%SELF_CALL()%……！　負けちゃ、ダメなんだから……！)
+	CASEELSE
+		PRINTFORML (%SELF_CALL_SINGLE()%、%SELF_CALL()%どうしちゃったの……？ これくらい、耐えられるはずなのに……)
+ENDSELECT
+
+
+;自慰関連
+
+;戦闘後自慰
+;--------------------------------------------------
+@KOJO_0_SELF_BATTLEEND_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「」
+;;	PRINTFORMDW %CALLNAME%は火照る身体を掻き抱いた。
+RESETCOLOR
+;普通の自慰
+;--------------------------------------------------
+@KOJO_0_SELF_N_20
+SETCOLOR 243,213,26
+;처녀
+IF TALENT:처녀 > 0
+	IF ABL:자위중독 >= 4
+		PRINTFORML 「んあっ！　きもち、いい……」
+		PRINTFORMDL %CALLNAME%は夢中になって自分の体をまさぐっている。
+		SELECTCASE RAND:2
+			;C
+			CASE 0
+				PRINTFORMDL 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+				PRINTFORML 「ひんっ、ふあぁああ～～！」
+				PRINTFORMDL 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+					PRINTFORML 「ひんっ、ふあぁああ～～！」
+					PRINTFORMDL 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+					PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひんっ、ふあぁああ～～！」
+					PRINTFORMDL 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+					PRINTFORMDL 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+		ENDSELECT
+		PRINTFORMDW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+	ELSEIF ABL:자위중독 >= 1
+		PRINTFORML 「んあっ！　きもち、い…だ、だめ、流されたら……」
+		PRINTFORMDL %CALLNAME%の身体は自慰の虜になっている。
+		SELECTCASE RAND:2
+			;C
+			CASE 0
+				PRINTFORMDL 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+				PRINTFORML 「ひん……ん、ふあっ……」
+				PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+					PRINTFORML 「ひん……ん、ふあっ……」
+					PRINTFORMDL 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+					PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひん……ん、ふあっ……」
+					PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+					PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+		ENDSELECT
+		PRINTFORMDW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+	ELSE
+		PRINTFORML 「ん、く……こんな、ことを……」
+		PRINTFORMDL %CALLNAME%の身体は滞ることなく自身を辱める。
+		SELECTCASE RAND:2
+			;C
+			CASE 0
+				;はじめてのナニ
+				IF EXP:자위경험 == 0
+					PRINTFORMDL 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+				ELSE
+					PRINTFORMDL そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+				ENDIF
+				PRINTFORML 「ひん……ん、ふぁ……」
+				PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+				ENDIF
+				PRINTFORML 「ひん……ん、ふぁ……」
+				PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+				PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+		ENDSELECT
+		PRINTFORMDW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+	ENDIF
+;非처녀
+ELSE
+	IF ABL:자위중독 >= 4
+		PRINTFORML 「んあっ！　きもち、いい……」
+		PRINTFORMDL %CALLNAME%は夢中になって自分の体をまさぐっている。
+		SELECTCASE RAND:3
+			;C
+			CASE 0
+				PRINTFORMDL 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+				PRINTFORML 「ひんっ、ふあぁああ～～！」
+				PRINTFORMDL 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+					PRINTFORML 「ひんっ、ふあぁああ～～！」
+					PRINTFORMDL 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+					PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひんっ、ふあぁああ～～！」
+					PRINTFORMDL 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+					PRINTFORMDL 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+			;V
+			CASE 2
+				PRINTFORMDL %CALLNAME%が질내に指を突き入れても、そこは甘い蜜を散らすばかりであった。
+				PRINTFORML 「ひんっ、ふあぁああ～～！」
+				PRINTFORMDL 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+				PRINTFORMDL 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+		ENDSELECT
+		PRINTFORMDW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+	ELSEIF ABL:자위중독 >= 1
+		PRINTFORML 「んあっ！　きもち、い…だ、だめ、流されたら……」
+		PRINTFORMDL %CALLNAME%の身体は自慰の虜になっている。
+		SELECTCASE RAND:3
+			;C
+			CASE 0
+				PRINTFORMDL 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+				PRINTFORML 「ひん……ん、ふあっ……」
+				PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+					PRINTFORML 「ひん……ん、ふあっ……」
+					PRINTFORMDL 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+					PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひん……ん、ふあっ……」
+					PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+					PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+			;V
+			CASE 2
+				PRINTFORMDL %CALLNAME%が질내に指を入れた時、そこは既にしとどに濡れていた。
+				PRINTFORML 「ひん……ん、ふあっ……」
+				PRINTFORMDL そのまま指を引き、再び入れて……指を出し入れするたびに、くちゅくちゅと水音があたりに響く。
+				PRINTFORMDL 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+		ENDSELECT
+		PRINTFORMDW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+	ELSE
+		PRINTFORML 「ん、く……こんな、ことを……」
+		PRINTFORMDL %CALLNAME%の身体は滞ることなく自身を辱める。
+		SELECTCASE RAND:3
+			;C
+			CASE 0
+				;はじめてのナニ
+				IF EXP:자위경험 == 0
+					PRINTFORMDL 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+				ELSE
+					PRINTFORMDL そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+				ENDIF
+				PRINTFORML 「ひん……ん、ふぁ……」
+				PRINTFORMDL そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+				PRINTFORMDL 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+			;B
+			CASE 1
+				;ひんぬー
+				IF TALENT:빈유 > 0
+					PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+				ELSE
+					PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+				ENDIF
+				PRINTFORML 「ひん……ん、ふぁ……」
+				PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+				PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+			;V
+			CASE 2
+				;はじめてのナニ
+				IF EXP:자위경험 == 0
+					PRINTFORMDL 初めて触れる%CALLNAME%の膣口は、しかし既にしとどに濡れていた。
+				ELSE
+					PRINTFORMDL そっと指で触れた%CALLNAME%の膣口は、既にしとどに濡れていた。
+				ENDIF
+				PRINTFORML 「ひん……ん、ふぁ……」
+				PRINTFORMDL そのまま指先を질내に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+				PRINTFORMDL 浅いところをかき回すだけでちゅぷちゅぷと卑猥な水音を響かせ、%CALLNAME%は快感に翻弄されている。
+		ENDSELECT
+		PRINTFORMDW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+	ENDIF
+ENDIF
+RESETCOLOR
+;胸自慰
+;--------------------------------------------------
+@KOJO_0_SELF_B_20
+SETCOLOR 243,213,26
+IF ABL:자위중독 >= 4
+	PRINTFORML 「んあっ！　きもち、いい……」
+	PRINTFORMDL %CALLNAME%は夢中になって自分の体をまさぐっている。
+		;ひんぬー
+		IF TALENT:빈유 > 0
+			PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+			PRINTFORML 「ひんっ、ふあぁああ～～！」
+			PRINTFORMDL 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+			PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+		ELSE
+			PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+			PRINTFORML 「ひんっ、ふあぁああ～～！」
+			PRINTFORMDL 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+			PRINTFORMDL 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+		ENDIF
+		PRINTFORMDW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+ELSEIF ABL:자위중독 >= 1
+	PRINTFORML 「んあっ！　きもち、い…だ、だめ、流されたら……」
+	PRINTFORMDL %CALLNAME%の身体は自慰の虜になっている。
+		;ひんぬー
+		IF TALENT:빈유 > 0
+			PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+			PRINTFORML 「ひん……ん、ふあっ……」
+			PRINTFORMDL 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+			PRINTFORMDL 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+		ELSE
+			PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+			PRINTFORML 「ひん……ん、ふあっ……」
+			PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+			PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+		ENDIF
+	PRINTFORMDW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+ELSE
+	PRINTFORML 「ん、く……こんな、ことを……」
+	PRINTFORMDL %CALLNAME%の身体は滞ることなく自身を辱める。
+		;ひんぬー
+		IF TALENT:빈유 > 0
+			PRINTFORMDL 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+		ELSE
+			PRINTFORMDL 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+		ENDIF
+	PRINTFORML 「ひん……ん、ふぁ……」
+	PRINTFORMDL 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+	PRINTFORMDL 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+	PRINTFORMDW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+ENDIF
+RESETCOLOR
+;アナニー
+;--------------------------------------------------
+@KOJO_0_SELF_A_20
+SETCOLOR 243,213,26
+IF ABL:자위중독 >= 4
+	PRINTFORML 「んあっ！　きもち、いい……」
+	PRINTFORMDL %CALLNAME%は夢中になって自分の体をまさぐっている。
+	PRINTFORMDL %CALLNAME%の菊座に指を突き入れても、そこは甘く腸液を散らすばかりであった。
+	PRINTFORML 「ひんっ、ふあぁああ～～！」
+	PRINTFORMDL 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+	PRINTFORMDL 질口から溢れた愛液と腸液の混合液。
+	PRINTFORMDL その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+	PRINTFORMDW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+ELSEIF ABL:자위중독 >= 1
+	PRINTFORML 「んあっ！　きもち、い…だ、だめ、流されたら……」
+	PRINTFORMDL %CALLNAME%の身体は自慰の虜になっている。
+	PRINTFORMDL %CALLNAME%の菊座に指を入れた時、そこは一切の抵抗を見せなかった。
+	PRINTFORML 「ひん……ん、ふあっ……」
+	PRINTFORMDL そのまま指を引き、再び入れて……指を出し入れするたびに、指に引かれて腸液が散る。
+	PRINTFORMDL 질口から溢れた愛液と腸液の混合液。
+	PRINTFORMDL その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+	PRINTFORMDW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+ELSE
+	PRINTFORML 「ん、く……こんな、ことを……」
+	PRINTFORMDL %CALLNAME%の身体は滞ることなく自身を辱める。
+		;はじめてのナニ
+		IF EXP:자위경험 == 0
+			PRINTFORMDL トイレの外で初めて触れる%CALLNAME%の菊座は、しかし既に綻びを見せていた。
+		ELSE
+			PRINTFORMDL そっと指をあてがった%CALLNAME%の菊座は、既に綻びを見せていた。
+		ENDIF
+	PRINTFORML 「ひん……ん、ふぁ……」
+	PRINTFORMDL そのまま指先を内に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+	PRINTFORMDL 浅いところをかき回すと腸液が溢れだし、%CALLNAME%を快感に翻弄する。
+	PRINTFORMDW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+ENDIF
+RESETCOLOR
+
+;幽閉関係
+
+;初めての幽閉
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_FIRST_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;二度目以降の幽閉後の初被姦
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_START_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;幽閉後の被姦開始文
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;取り込まれ
+;--------------------------------------------------
+@KOJO_0_PRISON_DEAD_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;후타나리化
+;--------------------------------------------------
+@KOJO_0_PRISON_HUTANARI_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;모유체질化
+;--------------------------------------------------
+@KOJO_0_PRISON_BONYU_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;C中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_0_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;V中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_1_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;A中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_2_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;B中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_3_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;Sな攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_4_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;強制奉仕
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_5_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;羞恥な攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_6_20
+SETCOLOR 243,213,26
+RESETCOLOR
+
+;子촉수に犯される
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_7_20
+PRINTFORML 「は、はぁ…っ　ママとはエッチしちゃだめなんだからぁ……っ」
+PRINTFORML 「んんっ！？❤　お、教えてあげたんだから、ママの言うこと、聞きいなさいよっ」
+PRINTFORML 「んぁ、あぁっ、エッチが上手なのは、　う、生まれつき…かしらっ❤❤」
+PRINTFORMDL 母である%CALLNAME%の膣口に潜り込んだ子촉수は
+PRINTFORMDL 淫らに出入りを繰り返しながら母乳を得ようとする子のように淫蜜を啜っている。
+PRINTFORMDL 許されざる異種근친상간の宴はまだ始まったばかりだ…。
+
+;種付け
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_104_20
+PRINTFORML 「あ、あひぃぃ…っ/\//　これ普通のえっちじゃないぃ…❤❤」
+PRINTFORML 「じぇったい임신させる気の本気えっちだわ…っ❤」
+PRINTFORML 「やめ、らへぇぇぇ❤❤　わたしのおまんこ子供産まされちゃう…❤」
+PRINTFORML 「やめへぇ…❤　おまんこ口孕んじゃう❤❤　もう犯されて子供を産まされちゃう❤❤」
+PRINTFORMDL 임신を目的とした本当の性交に、%CALLNAME%のなかの雌が目を覚まし、
+PRINTFORMDL %CALLNAME%の生殖器から精を搾り取ろうと収縮を繰り返す。
+PRINTFORMDL %CALLNAME%の意思とは関係なく少女の身体は
+PRINTFORMDL 繁殖に向けての悦楽を貪り、촉수の体液を混ぜ合わせ続けている…
+
+;후타나리攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_100_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;V拡張
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_101_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;A拡張
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_102_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;搾乳攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_103_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;Vに産卵
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_200_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;Aに産卵
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_201_20
+SETCOLOR 243,213,26
+RESETCOLOR
+;注射
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_300_20
+SETCOLOR 243,213,26
+RESETCOLOR
+
+
+;サブイベント関連
+
+;戦闘のサブイベント
+
+;촉수 구속구を着せられた
+;--------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_SETTENTACLECLOTH_20
+SETCOLOR 243,213,26
+;;	PRINTFORML 「なに、これ……！」
+;;	PRINTFORMDL 体に張り付いた触装に、%CALLNAME%はおびえた表情を見せ声を上げる。
+;;	PRINTFORMDL とっさに引きはがそうと股の間に張り付いたそれに手をかけ、思い切り引っ張るが、
+;;	PRINTFORML 「んぁああぁあああ！？？」
+;;	PRINTFORMDL 剥がされることを厭った触装に陰核を吸われ、一瞬にして絶頂に上り詰めてしまう。
+;;	PRINTFORMDL 既に戦闘で疲弊していた%CALLNAME%にこらえる術はなく、いましがたできた足元の愛液溜りへと腰を落とす。
+;;	PRINTFORMDL しばらくはなんとか引き剥がせないものかと手をかけていたが、
+;;	PRINTFORMDL 
+;;	PRINTFORML 「ひゃぁあああ！！？」
+;;	PRINTFORML 「ふあっ！くぅ、はぅうっ！！」
+;;	PRINTFORML 「…だ…め……ぁ、い、イッ、くぅ～～！！」
+;;	PRINTFORMDL 
+;;	PRINTFORMDW その度に声をあげて絶頂を迎えることになった。
+;;	PRINTFORMDL 
+;;	PRINTFORML 「だめ、きちゃ……ぁ～～！」
+;;	PRINTFORMDW やがて何度目かの絶頂を迎えたのち、とうとう%CALLNAME%は触装を剥がすことを諦め、絶頂に震える身体で愛液溜りから這うようにして逃げ出していった……
+RESETCOLOR
+;촉수 구속구による被姦
+;--------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_ACTTENTACLECLOTH_20
+SETCOLOR 243,213,26
+PRINTFORMDL 突如%CALLNAME%の身体を覆う%ITEMNAME:(CFLAG:42)%が蠢き始めた。
+SELECTCASE RAND:4
+	CASE 0
+;;		PRINTFORML 「」
+	CASE 1
+;;		PRINTFORML 「」
+	CASE 2
+;;		PRINTFORML 「」
+	CASE 3
+;;		PRINTFORML 「」
+ENDSELECT
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDL 股座に位置する触装が強く陰核に吸い付き、%CALLNAME%は思わず両手を股間に押し当てる。
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMDL けれど、
+				PRINTFORML 「ひゃぁあああ！！？」
+				PRINTFORMDL 結果としてそれは陰核を吸う触装を押し付け、手助けしたことにしかならなかった。
+				PRINTFORML 「ひゃめぇぇ、とま、とまりなさいよバカぁあぁーー！！」
+				PRINTFORMDL 根元から陰核を吸われる快感に、%CALLNAME%の腰は砕けた。
+			CASE 1
+				PRINTFORMDL 反射的にそのまま触装を引きはがそうとしたが、
+				PRINTFORML 「ひゃぁあああ！！？」
+				PRINTFORMDL 結果としてそれは陰核を吸う触装を引っ張り、性感を助長したことにしかならなかった。
+				PRINTFORML 「ひゃめぇぇ、とま、とまりなさいよバカぁあぁーー！！」
+				PRINTFORMDL 陰核を強烈に吸われる快感に、%CALLNAME%の腰は砕けた。
+		ENDSELECT
+	CASE 1
+		PRINTFORMDL 가슴を覆う触装が蠢きながら、乳首を吸う感覚に%CALLNAME%は思わず両手を胸に押し当てる。
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMDL けれど、
+				PRINTFORML 「ひゃぁあああ！！？」
+				PRINTFORMDL 結果としてそれは触装をより強く押し付け、胸への愛撫を手助けしたことにしかならなかった。
+				PRINTFORML 「ひゃめぇぇ、とま、とまりなさいよバカぁあぁーー！！」
+				PRINTFORMDL 가슴を揉まれながら乳首を吸われる快感に、%CALLNAME%の腰は砕けた。
+			CASE 1
+				PRINTFORMDL 反射的にそのまま触装を引きはがそうとしたが、
+				PRINTFORML 「ひゃぁあああ！！？」
+				PRINTFORMDL 結果としてそれは乳房を覆う触装を引っ張り、胸を、とりわけ乳首を吸う手助けしたことにしかならなかった。
+				PRINTFORML 「ひゃめぇぇ、とま、とまりなさいよバカぁあぁーー！！」
+				PRINTFORMDL 가슴を揉まれながら乳首を吸われる快感に、%CALLNAME%の腰は砕けた。
+		ENDSELECT
+	CASE 2
+		PRINTFORMDL 股座を覆う触装が蠢き、질내深くに촉수が挿入された。
+		PRINTFORML 「ひゃぁあああ！！？」
+		PRINTFORMDL 思わず%CALLNAME%が爪を立てても、%ITEMNAME:(CFLAG:42)%は意に介した様子もなく深いストロークを続ける。
+		PRINTFORML 「ひゃめぇぇ、とま、とまりなさいよバカぁあぁーー！！」
+		PRINTFORMDL 질口も、Ｇスポットも、%ESTRUS_TEXT_F(TARGET,"の")%子宮口も。
+		PRINTFORMDL 全てを一緒くたに蹂躙する快楽に襲われ、%CALLNAME%の腰は砕けた。
+ENDSELECT
+RESETCOLOR

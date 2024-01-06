@@ -1,0 +1,847 @@
+﻿;自慰関連
+
+
+
+
+
+;●前フリ(自慰구상本文の前に挿入される)
+;　続けて普通の自慰구상(ランダム部位)が表示されるので、クドくならないように。
+
+;夜間自慰イベント
+;--------------------------------------------------
+@KOJO_1_SELF_NIGHT_16
+;夜が更けても火照りが治まらず寝つけない
+;寝る前に少しだけなら→自室から切なげな声が響き始める……
+;からの구상
+
+IF TALENT:촉수의포로 > 0
+	;頭の中は촉수に犯される妄想で一杯
+ELSE
+	;もしこんな状態で촉수に犯されたらと思うと興奮してしまう
+ENDIF
+
+
+
+;戦闘後自慰イベント
+;--------------------------------------------------
+@KOJO_1_SELF_BATTLEEND_16
+IF TALENT:촉수의포로
+	PRINTFORML (っ、だめだ……『あれ』が欲しいだなんて%SELF_CALL()%……)
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML (身体が疼く……%SELF_CALL()%…발정…してるのか…？ っ、とにかく、こんな身体のまま、戻るわけには……)
+		CASEELSE
+			PRINTFORML (か、身体が……疼いて……)
+			PRINTFORML (駄目……熱い……！)
+	ENDSELECT
+ENDIF
+PRINTFORMW %CALLNAME%は火照る身体を掻き抱いた……
+
+
+;戦闘中　SPCOM6：強制自慰공격の被弾時
+;;--------------------------------------------------
+;@KOJO_1_SEX_SPCOM6_16
+
+	;対悪堕ち	笑みを浮かべ妖しげな瞳で覗き込んできた(催眠)
+	IF ENEMY_TYPE_CHECK_F("AKUOTI")
+
+	;対촉수		怪しげな臭気を嗅がされてしまう(強制발정)
+	ELSE
+
+	ENDIF
+
+	;「抑え様のない躰の疼き」「両手は自らの意志とは無関係に、己の肢体を撫で回し始めた」
+	;からの구상
+
+
+
+
+
+;●実際の自慰テキスト
+;　通常・胸特化・アナニ―の３種類からランダム分岐
+
+
+;자위중독3未満(恥ずかしい)、5未満(切なげに吐息を漏らす)、それ以上(快感に打ち震える)で分岐
+;--------------------------------------------------
+@KOJO_1_SELF_N_16
+;戦闘中の強制自慰공격(SP6)に続く誘発
+IF FLAG:700 && TFLAG:10 == 1006
+
+	;対悪堕ちヒロイン
+	IF ENEMY_TYPE_CHECK_F("AKUOTI")
+	
+	;対촉수
+	ELSE
+		;치욕각인Lv3
+		IF MARK:치욕각인 >= 3
+			PRINTDATAL
+			DATAFORM 「ゆびっ、指がとまらない、ぉおぉっ！？ ぉっ、ぉほぉぉぉおおッ！」
+			DATAFORM 「んぉおぉぉぉッ！ お゛、お゛な゛に゛ぃ゛ッ！ ら゛い゛しゅきなのおぉぉッ！」
+			DATAFORM 「おほぉぉぉおおッ！ ひゃ、ひゃいこお、な、のお゛ぉッ！」
+			DATAFORM 「もっとっ、もっとおぉっ！ きもちよく、ひてえ゛ぇっ！」
+			ENDDATA
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は욕망のまま、快楽に溺れている……
+		ELSEIF ABL:자위중독 >= 5
+			PRINTDATAL
+			DATAFORM 「こい、つ、このっ、ふざけた、真似、を、ぉ、おほぉぉおッ！」
+			DATAFORM 「なん、なの、身体がッ！ やめぇ、んんぅぅぅぅッ！」
+			DATAFORM 「や、やめ……っ！ んくぅっ……こ、いつ、よくも%SELF_CALL()%の身体を好き勝手に！」
+			ENDDATA
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は揺らぐ理性を総動員してどうにか身体の制御を取り戻そうとしている。
+		ELSEIF ABL:자위중독 >= 3
+			PRINTFORML 「んあっ！ うぅ、ん、きもち、いい……」
+			PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+			SELECTCASE RAND:4
+				;C
+				CASE 0
+					IF ISMALE()
+						;#region
+						PRINTFORML 堪えられず強く抓んだ%CALLNAME%の亀頭部分は、しかし痛みではなく快楽だけを発した。
+						;#endregion
+					ELSE 
+						PRINTFORML 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+					ENDIF
+					PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+					PRINTFORML 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+					IF ISMALE()
+						;#region
+						PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+						;#endregion
+					ELSE 
+						PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+					ENDIF
+				;B
+				CASE 1
+					;ひんぬー
+					IF TALENT:빈유
+						PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+						PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+						PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+						PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+					ELSEIF ISMALE()
+						PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が添えられた。
+						PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+						PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+						PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+					ELSE
+						PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+						PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+						PRINTFORML 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+						PRINTFORML 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+					ENDIF
+				;V
+				CASE 2
+					PRINTFORML %CALLNAME%が질내に指を突き入れても、そこは甘い蜜を散らすばかりであった。
+					PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+					PRINTFORML 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+					PRINTFORML 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+				;A
+				CASE 3
+					PRINTFORML %CALLNAME%の菊座に指を突き入れても、そこは甘く腸液を散らすばかりであった。
+					PRINTFORML 「ひ、んっ、ひあぁああ――っ！」
+					PRINTFORML 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+					IF ISMALE()
+						;#region
+						PRINTFORML ペニスから零れた先走り汁と腸液の芳香が混ざり合う。
+						;#endregion
+					ELSE 
+						PRINTFORML 질口から溢れた愛液と腸液の混合液。
+					ENDIF
+					PRINTFORML その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+			ENDSELECT
+			PRINTFORMW もはや촉수に強制されているのか、自分の意思なのか判断はつかない。
+		ELSEIF ABL:자위중독 >= 1
+			PRINTFORML 「んあっ！　きもち、い……ち、違うっ、だめ、流されたら……」
+			PRINTFORML 自身を御する言葉も虚しく、%CALLNAME%の身体は自慰の虜になっている。
+			SELECTCASE RAND:4
+				;C
+				CASE 0
+					IF ISMALE()
+						;#region
+						PRINTFORML 指で摘み上げた%CALLNAME%のペニスは、これからの快感に期待し、堅く屹立していた。
+						;#endregion
+					ELSE 
+						PRINTFORML 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+					ENDIF
+					PRINTFORML 「ひん……あ、くあぁっ……」
+					IF ISMALE()
+						;#region
+						PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+						;#endregion
+					ELSE 
+						PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+					ENDIF
+					IF ISMALE()
+						;#region
+						PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+						;#endregion
+					ELSE 
+						PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+					ENDIF
+				;B
+				CASE 1
+					;ひんぬー
+					IF TALENT:빈유
+						PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+						PRINTFORML 「ひん……あ、くあぁっ……」
+						PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+						PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+					ELSEIF ISMALE()
+						PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が這うように添えられた。
+						PRINTFORML 「ひん……あ、くあぁっ……」
+						PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+						PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+					ELSE
+						PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+						PRINTFORML 「ひん……あ、くあぁっ……」
+						PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+						PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+					ENDIF
+				;V
+				CASE 2
+					PRINTFORML %CALLNAME%が질내に指を入れた時、そこは既にしとどに濡れていた。
+					PRINTFORML 「ひん……あ、くあぁっ……」
+					PRINTFORML そのまま指を引き、再び入れて……指を出し入れするたびに、くちゅくちゅと水音があたりに響く。
+					PRINTFORML 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+				;A
+				CASE 3
+					PRINTFORML %CALLNAME%の菊座に指を入れた時、そこは一切の抵抗を見せなかった。
+					PRINTFORML 「ひん……あ、くあぁっ……」
+					PRINTFORML そのまま指を引き、再び入れて……指を出し入れするたびに、にちゅにちゅと腸液が鳴る。
+					IF ISMALE()
+						;#region
+						PRINTFORML ペニスから零れた先走り汁と腸液の芳香が混ざり合う。
+						;#endregion
+					ELSE 
+						PRINTFORML 질口から溢れた愛液と腸液の混合液。
+					ENDIF
+					PRINTFORML その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+			ENDSELECT
+			PRINTFORMW 決して%CALLNAME%自身の意志ではないはずだが、身体は快楽を貪り続けていた。
+		ELSE
+			PRINTFORML 「ん、く……な、なんで%SELF_CALL()%、こんな、ことを……っ」
+			PRINTFORML %CALLNAME%の身体は滞ることなく自身を辱める。
+			SELECTCASE RAND:4
+				;C
+				CASE 0
+					;はじめてのナニ
+					IF EXP:자위경험 == 0
+						IF ISMALE()
+							;#region
+							PRINTFORML 初めて触れる%CALLNAME%のペニスは、しかし既に堅く屹立していた。
+							;#endregion
+						ELSE 
+							PRINTFORML 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+						ENDIF
+					ELSE
+						IF ISMALE()
+							;#region
+							PRINTFORML そっと指で触れた%CALLNAME%のペニスは、既に堅く屹立していた。
+							;#endregion
+						ELSE 
+							PRINTFORML そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+						ENDIF
+					ENDIF
+					PRINTFORML 「ひん……ん、くふぅっ……」
+					IF ISMALE()
+						;#region
+						PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+						;#endregion
+					ELSE 
+						PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+					ENDIF
+					IF ISMALE()
+						;#region
+						PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+						;#endregion
+					ELSE 
+						PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+					ENDIF
+				;B
+				CASE 1
+					;ひんぬー
+					IF TALENT:빈유
+						PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+					ELSEIF ISMALE()
+						PRINTFORML ぺたんこながらも柔らかな%CALLNAME%のなだらかな胸を、細い指が寄せるように揉みしだいていく。
+					ELSE
+						PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					ENDIF
+					PRINTFORML 「ひん……ん、ふぁ……」
+					PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+					PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+				;V
+				CASE 2
+					;はじめてのナニ
+					IF EXP:자위경험 == 0
+						PRINTFORML 初めて触れる%CALLNAME%の膣口は、しかし既にしとどに濡れていた。
+					ELSE
+						PRINTFORML そっと指で触れた%CALLNAME%の膣口は、既にしとどに濡れていた。
+					ENDIF
+					PRINTFORML 「ひん……ん、ふぁ……」
+					PRINTFORML そのまま指先を질내に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+					PRINTFORML 浅いところをかき回すだけでちゅぷちゅぷと卑猥な水音を響かせ、%CALLNAME%は快感に翻弄されている。
+				;A
+				CASE 3
+					;はじめてのナニ
+					IF EXP:자위경험 == 0
+						PRINTFORML トイレの外で初めて触れる%CALLNAME%の菊座は、しかし既に綻びを見せていた。
+					ELSE
+						PRINTFORML そっと指をあてがった%CALLNAME%の菊座は、既に綻びを見せていた。
+					ENDIF
+					PRINTFORML 「ひん……ん、くふぁっ……」
+					PRINTFORML そのまま指先を内に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+					PRINTFORML 浅いところをかき回すと腸液が溢れだし、%CALLNAME%を快感に翻弄する。
+			ENDSELECT
+			PRINTFORMW 望まぬ快楽を自らの手で送り込まれることに、%CALLNAME%は困惑している。
+		ENDIF		
+	ENDIF
+;戦闘中強制自慰以外
+ELSE
+		PRINTFORML (少しだけ、少しだけ触れば…おさまる……は、はず……んんッ！？)
+		PRINTFORML (も、もうだめ……弄らないと、%SELF_CALL()%、おかしく……）
+		PRINTFORML (%SELF_CALL_SINGLE()%、%SELF_CALL()%の身体ぁ……こんなの嫌だ、もう嫌なのに……)
+		;堕ちた後
+		IF ABL:촉수중독>=4
+			PRINTDATAL
+			DATAFORM 「んおほぉぉおおおお！ お゛ぉおおっ！ ん゛おぉぉぉおッ！」
+			DATAFORM 「は、ひはっ、いぅぅうぅ、ふっ、くぅぅううぅんっ！？」
+			DATAFORM 「こ、こんな…%SELF_CALL_SINGLE()%、%SELF_CALL()%がこんなこと……お、ぉおぉ、んおぉぉぉッ！？」
+			DATAFORM 「くぅぅぅうんっ！ ひぅっ、ひはっ、ぃぅぅううッ！」
+			ENDDATA
+			PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+		;처녀
+		ELSEIF TALENT:처녀 > 0
+			IF ABL:자위중독 >= 4
+				PRINTFORML 「んあっ！　きもち、いい……」
+				PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+				SELECTCASE RAND:2
+					;C
+					CASE 0
+						IF ISMALE()
+							;#region
+							PRINTFORML 堪えられず強く抓んだ%CALLNAME%のペニスは、しかし痛みではなく快楽だけを発した。
+							;#endregion
+						ELSE 
+							PRINTFORML 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+						ENDIF
+						PRINTFORML 「ひんっ、ふあぁ、ああっ！」
+						PRINTFORML 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+							PRINTFORML 「ひんっ、ふあぁ、ああっ！」
+							PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が添えられた。
+							PRINTFORML 「ひんっ、ふあぁ、ああっ！」
+							PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+							PRINTFORML 「ひんっ、ふあぁ、ああっ！」
+							PRINTFORML 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+							PRINTFORML 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+						ENDIF
+				ENDSELECT
+				PRINTFORMW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+			ELSEIF ABL:자위중독 >= 1
+				PRINTFORML 「んあっ！　きもち、い……だ、だめ、こんな、流されたら%SELF_CALL()%……」
+				PRINTFORML 意志とは裏腹に、%CALLNAME%の身体は自慰の虜になっている。
+				SELECTCASE RAND:2
+					;C
+					CASE 0
+						IF ISMALE()
+							;#region
+							PRINTFORML 指で摘み上げた%CALLNAME%のペニスは、これからの快感に期待し、堅く屹立していた。
+							;#endregion
+						ELSE 
+							PRINTFORML 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+						ENDIF
+						PRINTFORML 「ひん……ん、く、ふあっ……」
+						IF ISMALE()
+							;#region
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+							;#endregion
+						ELSE 
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+						ENDIF
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+							PRINTFORML 「ひん……ん、く、ふあっ……」
+							PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が這うように添えられた。
+							PRINTFORML 「ひん……あ、くあぁっ……」
+							PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+							PRINTFORML 「ひん……ん、く、ふあっ……」
+							PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+							PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+						ENDIF
+				ENDSELECT
+				PRINTFORMW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+			ELSE
+				PRINTFORML 「ん、く……こんな、ことを……」
+				PRINTFORML %CALLNAME%の身体は滞ることなく自身を辱める。
+				SELECTCASE RAND:2
+					;C
+					CASE 0
+						;はじめてのナニ
+						IF EXP:자위경험 == 0
+							IF ISMALE()
+								;#region
+								PRINTFORML 初めて触れる%CALLNAME%のペニスは、しかし既に堅く屹立していた。
+								;#endregion
+							ELSE 
+								PRINTFORML 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+							ENDIF
+						ELSE
+							IF ISMALE()
+								;#region
+								PRINTFORML そっと指で触れた%CALLNAME%のペニスは、既に堅く屹立していた。
+								;#endregion
+							ELSE 
+								PRINTFORML そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+							ENDIF
+						ENDIF
+						PRINTFORML 「ひん……ん、うぅん……っ」
+						IF ISMALE()
+							;#region
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+							;#endregion
+						ELSE 
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+						ENDIF
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかな%CALLNAME%のなだらかな胸を、細い指が寄せるように揉みしだいていく。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+						ENDIF
+						PRINTFORML 「ひん……ん、うぅん……っ」
+						PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+						PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDSELECT
+				PRINTFORMW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+			ENDIF
+		;非처녀
+		ELSE
+			IF ABL:자위중독 >= 4
+				PRINTFORML 「んあっ！　きもち、いい……」
+				PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+				SELECTCASE RAND:3
+					;C
+					CASE 0
+						IF ISMALE()
+							;#region
+							PRINTFORML 堪えられず強く抓んだ%CALLNAME%のペニスは、しかし痛みではなく快楽だけを発した。
+							;#endregion
+						ELSE 
+							PRINTFORML 堪えられず強く抓んだ%CALLNAME%の陰核は、しかし痛みではなく快楽だけを発した。
+						ENDIF
+						PRINTFORML 「ひんっ、うぁ、ふあぁああぁっ！」
+						PRINTFORML 容赦なく抓み、ころがし、押し潰して、時には爪を立てているというのに、頭には強烈な快楽ばかりが響く。
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+							PRINTFORML 「ひんっ、うぁ、ふあぁああぁっ！」
+							PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が添えられた。
+							PRINTFORML 「ひんっ、うぁ、ふあぁああぁっ！」
+							PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+							PRINTFORML 「ひんっ、うぁ、ふあぁああぁっ！」
+							PRINTFORML 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+							PRINTFORML 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+						ENDIF
+					;V
+					CASE 2
+						PRINTFORML %CALLNAME%が질내に指を突き入れても、そこは甘い蜜を散らすばかりであった。
+						PRINTFORML 「ひんっ、うぁ、ふあぁああぁっ！」
+						PRINTFORML 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+						PRINTFORML 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+				ENDSELECT
+				PRINTFORMW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+			ELSEIF ABL:자위중독 >= 1
+				PRINTFORML 「んあっ！　きもち、い…ち、違う、流されちゃ駄目……」
+				PRINTFORML 言葉とは裏腹に、%CALLNAME%の身体は自慰の虜になっている。
+				SELECTCASE RAND:3
+					;C
+					CASE 0
+						IF ISMALE()
+							;#region
+							PRINTFORML 指で摘み上げた%CALLNAME%の亀頭部分は、これからの快感に期待し、堅く屹立していた。
+							;#endregion
+						ELSE 
+							PRINTFORML 指で摘み上げた%CALLNAME%の陰核は、これからの快感に期待し、堅く屹立していた。
+						ENDIF
+						PRINTFORML 「ひん……んく、ふあぁっ……」
+						IF ISMALE()
+							;#region
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+							;#endregion
+						ELSE 
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+						ENDIF
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+							PRINTFORML 「ひん……ん、ふあっ……」
+							PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が這うように添えられた。
+							PRINTFORML 「ひん……あ、くあぁっ……」
+							PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+							PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+							PRINTFORML 「ひん……ん、ふあっ……」
+							PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+							PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+						ENDIF
+					;V
+					CASE 2
+						PRINTFORML %CALLNAME%が질내に指を入れた時、そこは既にしとどに濡れていた。
+						PRINTFORML 「ひん……ん、ふあっ……」
+						PRINTFORML そのまま指を引き、再び入れて……指を出し入れするたびに、くちゅくちゅと水音があたりに響く。
+						PRINTFORML 股座から響く卑猥な水音と快感に、%CALLNAME%はただ翻弄されている。
+				ENDSELECT
+				PRINTFORMW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+			ELSE
+				PRINTFORML 「ん、く……こんな、ことを……」
+				PRINTFORML %CALLNAME%の身体は滞ることなく自身を辱める。
+				SELECTCASE RAND:3
+					;C
+					CASE 0
+						;はじめてのナニ
+						IF EXP:자위경험 == 0
+							IF ISMALE()
+								;#region
+								PRINTFORML 初めて触れる%CALLNAME%のペニスは、しかし既に堅く屹立していた。
+								;#endregion
+							ELSE 
+								PRINTFORML 初めて触れる%CALLNAME%の陰核は、しかし既に堅く屹立していた。
+							ENDIF
+						ELSE
+							IF ISMALE()
+								;#region
+								PRINTFORML そっと指で触れた%CALLNAME%のペニスは、既に堅く屹立していた。
+								;#endregion
+							ELSE 
+								PRINTFORML そっと指で触れた%CALLNAME%の陰核は、既に堅く屹立していた。
+							ENDIF
+						ENDIF
+						PRINTFORML 「ひん……ん、ふぁ……」
+						IF ISMALE()
+							;#region
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ先端の鈴口からしとどに蜜が溢れてくる。
+							;#endregion
+						ELSE 
+							PRINTFORML そのまま指先でくりくりと転がせば、すぐ下の膣口からしとどに蜜が溢れてくる。
+						ENDIF
+						IF ISMALE()
+							;#region
+							PRINTFORML 好き勝手に転がされる淫らな肉棒は、%CALLNAME%を大きな快感に翻弄している。
+							;#endregion
+						ELSE 
+							PRINTFORML 好き勝手に転がされる淫らな小豆は、%CALLNAME%を大きな快感に翻弄している。
+						ENDIF
+					;B
+					CASE 1
+						;ひんぬー
+						IF TALENT:빈유
+							PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+						ELSEIF ISMALE()
+							PRINTFORML ぺたんこながらも柔らかな%CALLNAME%のなだらかな胸を、細い指が寄せるように揉みしだいていく。
+						ELSE
+							PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+						ENDIF
+						PRINTFORML 「ひん……ん、ふぁ……」
+						PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+						PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+					;V
+					CASE 2
+						;はじめてのナニ
+						IF EXP:자위경험 == 0
+							PRINTFORML 初めて触れる%CALLNAME%の膣口は、しかし既にしとどに濡れていた。
+						ELSE
+							PRINTFORML そっと指で触れた%CALLNAME%の膣口は、既にしとどに濡れていた。
+						ENDIF
+						PRINTFORML 「ひん……ん、ふぁ……」
+						PRINTFORML そのまま指先を질내に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+						PRINTFORML 浅いところをかき回すだけでちゅぷちゅぷと卑猥な水音を響かせ、%CALLNAME%は快感に翻弄されている。
+				ENDSELECT
+				PRINTFORMW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+			ENDIF
+		ENDIF
+
+ENDIF
+
+
+
+
+
+;胸特化の自慰
+;모유체질なら零しながら　自慰に没頭してゆく
+;자위중독3未満(恥ずかしい)、5未満(切なげに吐息を漏らす)、それ以上(快感に打ち震える)で分岐
+;--------------------------------------------------
+@KOJO_1_SELF_B_16
+;戦闘中の強制自慰공격に続く誘発
+IF FLAG:700 && TFLAG:10 == 1006
+	;こ、こんな時に
+
+	;対悪堕ちヒロイン
+	IF ENEMY_TYPE_CHECK_F("AKUOTI")
+	
+	;対촉수
+	ELSE
+
+	ENDIF
+ELSE
+		PRINTDATAL
+		DATAFORM (胸が、熱い……胸が、張ってる……)
+		DATAFORM (……だ、だめ、もう耐えられない……！)
+		DATAFORM (%SELF_CALL_SINGLE()%、%SELF_CALL()%は何を……してるのよ……)
+		ENDDATA
+
+		IF ABL:촉수중독>=4
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML  「ぉ゛おおおおおおっ！ おほぉおッ！ あ゛おぉぉおお！」
+				IF ISMALE()
+					;#region
+					PRINTFORML  大股を広げて腰を突き上げ、乳首を摘んで啼き叫ぶ少年の声は、牝牛のそれに近づいていく……
+					;#endregion
+				ELSE 
+					PRINTFORML  大股を広げて腰を突き上げ、乳首を摘んで啼き叫ぶ少女の声は、牝牛のそれに近づいていく……
+				ENDIF
+			CASE 1
+				PRINTFORML 「ん゛お゛ぉぉおぉっ、む゛ね゛、む゛ねぇへぇぇーッ、あ゛おぉぉぉぉッ！！」
+				IF ISMALE()
+					;#region
+					PRINTFORML  震える手が張り詰めた乳首を握りしめた瞬間、少年の理性は消し飛んだ。
+					;#endregion
+				ELSE 
+					PRINTFORML  震える手が張り詰めた乳首を握りしめた瞬間、少女の理性は消し飛んだ。
+				ENDIF
+			CASEELSE
+				PRINTFORML 「んおぉぉおぉッ！ ぅ゛あ゛ぉ゛おぉ゛おぉおッ！」
+				IF ISMALE()
+					;#region
+					PRINTFORML  가슴肌をまさぐり、指の腹で乳首を押しつぶすと、自分のものとは思えない声が飛び出した。
+					;#endregion
+				ELSE 
+					PRINTFORML  乳房をまさぐり、指の腹で乳首を押しつぶすと、自分のものとは思えない声が飛び出した。
+				ENDIF
+			ENDSELECT
+
+		ELSEIF ABL:자위중독 >= 4
+			PRINTFORML 「んあっ！　くっ、ダメ、きもち、いい……っ」
+			PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+				;ひんぬー
+				IF TALENT:빈유
+					PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が添えられた。
+					PRINTFORML 「ひあっ、ふあぁああぁんっ！」
+					PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+					PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSEIF ISMALE()
+					PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が添えられた。
+					PRINTFORML 「ひあっ、ふあぁああぁんっ！」
+					PRINTFORML 双丘の頂に爪を立て、引っ張り、引っ掻くたびに淫靡な声が漏れる。
+					PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひうっ、ふあぁああぁあっ！」
+					PRINTFORML 常に形を歪ませるその果実は、食い込む指に強烈な快楽を感じている。
+					PRINTFORML 頂にある小豆までも狙われ、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+				PRINTFORMW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+		ELSEIF ABL:자위중독 >= 1
+			PRINTFORML 「んあっ！　きもち、い…ち、違う、流されちゃ駄目だ%SELF_CALL()%……」
+			PRINTFORML 言葉では理性的に抵抗するものの、%CALLNAME%の身体は自慰の虜になっている。
+				;ひんぬー
+				IF TALENT:빈유
+					PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみに、細い指が這うように添えられた。
+					PRINTFORML 「ひん……ん、くあっ……」
+					PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+					PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSEIF ISMALE()
+					PRINTFORML ぺたんこながらも柔らかい%CALLNAME%のなだらかな胸肌に、細い指が這うように添えられた。
+					PRINTFORML 「ひん……ん、くあっ……」
+					PRINTFORML 頂にある小豆を集中して転がし、触れるたびに乳首はその硬さを増していく。
+					PRINTFORML 根元から這い上がるようにして乳首に触れた時、%CALLNAME%はより強い快感に翻弄されている。
+				ELSE
+					PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+					PRINTFORML 「ひん……ん、ふぅっ……」
+					PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+					PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+				ENDIF
+			PRINTFORMW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+		ELSE
+			PRINTFORML 「ん、く……こんな、どうして……」
+			PRINTFORML %CALLNAME%の身体は滞ることなく自身を辱める。
+				;ひんぬー
+				IF TALENT:빈유
+					PRINTFORML 小ぶりで可愛らしい%CALLNAME%の胸のふくらみを、細い指が寄せるように揉みしだいていく。
+				ELSEIF ISMALE()
+					PRINTFORML ぺたんこながらも柔らかな%CALLNAME%のなだらかな胸を、細い指が寄せるように揉みしだいていく。
+				ELSE
+					PRINTFORML 形の整った%CALLNAME%の胸のふくらみを、その形を崩すように力強く揉みしだいていく。
+				ENDIF
+			PRINTFORML 「ひん……く、うぁ……」
+			PRINTFORML 一刻として形を同じくしないその果実は、食い込む指に甘い心地よさを感じている。
+			PRINTFORML 一瞬その頂にある小豆に触れることもあり、%CALLNAME%は慣れることのない快感に翻弄されている。
+			PRINTFORMW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+		ENDIF
+ENDIF
+
+
+
+
+
+
+;アナニー
+;ゆっくりと指を沈めてゆく
+;자위중독3未満(恥ずかしい)、5未満(切なげに吐息を漏らす)、それ以上(快感に打ち震える)で分岐
+;--------------------------------------------------
+@KOJO_1_SELF_A_16
+;戦闘中の強制自慰공격に続く誘発
+IF FLAG:700 && TFLAG:10 == 1006
+	
+	;対悪堕ちヒロイン
+	IF ENEMY_TYPE_CHECK_F("AKUOTI")
+	
+	;対촉수
+	ELSE
+	
+	ENDIF
+ELSE
+		IF ABL:촉수중독>=4
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「んおおおぉおおぉおお！ うあぁああっ、あがあぁぁッ！」
+				PRINTFORML  %CALLNAME%はもう、自分が何故気持ちよくなっているのかすら理解できなかった……
+			CASE 1
+				PRINTFORML 「ぉ゛っごおおおおおお゛……！ ぉ゛ほぉ゛ぉぉ……いぃぎぃぃい……！」
+				PRINTFORML  %CALLNAME%は四つん這いになり、大股開きで尻を突き上げて体を震わせている
+			CASEELSE
+				PRINTFORML (……お、おしり……が、もう……だ……だめ……)
+				IF ISMALE()
+					;#region
+					PRINTFORML 끈적끈적になるまで自分の先走り汁を塗りたくっても、満足できない。
+					;#endregion
+				ELSE 
+					PRINTFORML 끈적끈적になるまで牝汁を塗りたくっても、満足できない。
+				ENDIF
+				PRINTFORML 「ぉ゛っ、んお゛ぉぉぉ……ッ！ ぶひっ、ぶぎぃぃい……ッ！」
+				PRINTFORML ゆっくり、できるだけゆっくりと押し広げた途端、意識が爆ぜた。
+			ENDSELECT
+		ELSEIF ABL:자위중독 >= 4
+			PRINTFORML 「んあっ！　くふぅ、きもち、いいの……」
+			PRINTFORML %CALLNAME%は夢中になって自分の体をまさぐっている。
+			PRINTFORML %CALLNAME%の菊座に指を突き入れても、そこは甘く腸液を散らすばかりであった。
+			PRINTFORML 「ひんっ、ふあぁああぁっ！」
+			PRINTFORML 無遠慮に指を出し入れするたびに、くちゅくちゅという水音と、%CALLNAME%の甘い声があたりに響く。
+			IF ISMALE()
+				;#region
+				PRINTFORML ペニスから零れた先走り汁と腸液の芳香が混ざり合う。
+				;#endregion
+			ELSE 
+				PRINTFORML 질口から溢れた愛液と腸液の混合液。
+			ENDIF
+			PRINTFORML その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+			PRINTFORMW 心と身体の求めるままに、%CALLNAME%は自慰に狂っていった。
+		ELSEIF ABL:자위중독 >= 1
+			PRINTFORML 「んあっ！　きもち、い…だ、だめだ、流されちゃだめなんだ……」
+			PRINTFORML しかし、%CALLNAME%の身体は既に自慰の虜になっている。
+			PRINTFORML %CALLNAME%の菊座に指を入れた時、そこは一切の抵抗を見せなかった。
+			PRINTFORML 「ひぅっ……くぅん、ふあぁっ……」
+			PRINTFORML そのまま指を引き、再び入れて……指を出し入れするたびに、指に引かれて腸液が散る。
+			IF ISMALE()
+				;#region
+				PRINTFORML ペニスから零れた先走り汁と腸液の芳香が混ざり合う。
+				;#endregion
+			ELSE 
+				PRINTFORML 질口から溢れた愛液と腸液の混合液。
+			ENDIF
+			PRINTFORML その淫靡な臭いに%CALLNAME%はただ翻弄されている。
+			PRINTFORMW 耐えがたい衝動に任せて、%CALLNAME%は自慰に没頭していった。
+		ELSE
+			PRINTFORML 「ん、く……こんな、ことを……」
+			PRINTFORML %CALLNAME%の身体は滞ることなく自身を辱める。
+				;はじめてのナニ
+				IF EXP:자위경험 == 0
+					PRINTFORML トイレの外で初めて触れる%CALLNAME%の菊座は、しかし既に綻びを見せていた。
+				ELSE
+					PRINTFORML そっと指をあてがった%CALLNAME%の菊座は、既に綻びを見せていた。
+				ENDIF
+			PRINTFORML 「ひん……ふ、ぁあ……」
+			PRINTFORML そのまま指先を内に押し込めば、つぷりと音を立てて容易く飲み込まれる。
+			PRINTFORML 浅いところをかき回すと腸液が溢れだし、%CALLNAME%を快感に翻弄する。
+			PRINTFORMW 身体の疼きに負け、%CALLNAME%は自慰にふけっていった。
+		ENDIF
+ENDIF
+
+
+
+
+

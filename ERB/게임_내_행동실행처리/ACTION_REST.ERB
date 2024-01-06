@@ -1,0 +1,122 @@
+﻿;**********************************************************
+;休憩に関する処理
+@REST
+;체력,기력,성내성回復
+;基本30%回復する、施設레벨に応じて増加
+
+CFLAG:101 = -1
+
+IF FLAG:51 == 1
+	LOCAL:1 = 30
+ELSEIF FLAG:51 == 2
+	LOCAL:1 = 40
+ELSEIF FLAG:51 == 3
+	LOCAL:1 = 50
+ELSEIF FLAG:51 == 4
+	LOCAL:1 = 60
+ELSEIF FLAG:51 == 5
+	LOCAL:1 = 75
+ENDIF
+IF TALENT:회복빠름 > 0
+	LOCAL:1 += 5
+ELSEIF TALENT:회복느림 > 0
+	LOCAL:1 -= 5
+ENDIF
+;FEAT効果による回復量補正
+IF TALENT:마력저장 > 0
+	LOCAL:1 -= 5
+	SIF FLAG:51 >= 4
+		LOCAL:1 -= 5
+	SIF FLAG:51 >= 5
+		LOCAL:1 -= 5
+ENDIF
+IF TALENT:불로장수 > 0
+	LOCAL:1 -= 5
+	SIF FLAG:51 >= 3
+		LOCAL:1 -= 5
+	SIF FLAG:51 >= 4
+		LOCAL:1 -= 5
+	SIF FLAG:51 >= 5
+		LOCAL:1 -= 5
+ENDIF
+SIF TALENT:넘치는생명력 > 0
+	LOCAL:1 += 10
+
+;疲労度に応じて回復量低下（疲労度回復処理の前に計算）
+IF CFLAG:99 >= 50
+	LOCAL:1 = LOCAL:1 * 0 / 100
+ELSEIF CFLAG:99 >= 40
+	LOCAL:1 = LOCAL:1 * 5 / 100
+ELSEIF CFLAG:99 >= 30
+	LOCAL:1 = LOCAL:1 * 25 / 100
+ELSEIF CFLAG:99 >= 20
+	LOCAL:1 = LOCAL:1 * 50 / 100
+ELSEIF CFLAG:99 >= 10
+	LOCAL:1 = LOCAL:1 * 75 / 100
+ENDIF
+
+;回復の処理
+LOCAL = MAXBASE:체력 * LOCAL:1 / 100 + 200
+BASE:체력 = LIMIT(LOCAL + BASE:체력, 0, MAXBASE:체력)
+
+LOCAL = MAXBASE:기력 * LOCAL:1 / 100 + 200
+BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
+
+BASE:성내성 = MAXBASE:성내성
+
+IF CFLAG:0 != -1
+	IF CFLAG:999 != 0
+		PRINTFORML %CALLNAME:TARGET%は休憩しています…
+
+		;구상
+		SIF TALENT:TARGET:사지결손 == 0 && TALENT:TARGET:번식자루 == 0
+			TRYCALLFORM KOJO_ROOT(CFLAG:6, "REST")
+	ENDIF
+
+	;疲労の回復
+	IF CFLAG:99 > 0
+		CFLAG:99 -= 2
+		SIF (FLAG:53 & 목욕설비)
+			CFLAG:99 -= RAND:2
+		SIF (FLAG:53 & 대욕탕)
+			CFLAG:99 -= RAND:2 + 1
+		SIF (FLAG:53 & 미용온천)
+			CFLAG:99 -= 1
+		SIF (FLAG:53 & 뷰티살롱)
+			CFLAG:99 -= 2
+
+		IF TIME == 1 || TALENT:밤악마의귀족 > 0
+			CFLAG:99 -= 4
+			SIF (FLAG:53 & 질좋은침대)
+				CFLAG:99 -= 2
+			SIF (FLAG:53 & 최고급침대)
+				CFLAG:99 -= 2
+		ELSE
+			CFLAG:99 -= 2
+			SIF (FLAG:53 & 게임코너)
+				CFLAG:99 -= 2
+		ENDIF
+		SIF CFLAG:99 < 0
+			CFLAG:99 = 0
+		IF CFLAG:999 != 0
+			IF CFLAG:99 == 0
+				PRINTFORML %CALLNAME:TARGET%の身体から疲労が完全に抜けた！
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%の身体から疲労が少し抜けた…
+			ENDIF
+		ENDIF
+	ENDIF
+
+	IF CFLAG:999 != 0
+		PRINTL 
+		SIF BASE:체력 == MAXBASE:체력 && BASE:기력 == MAXBASE:기력 && CFLAG:99 == 0
+			PRINTFORML %CALLNAME:TARGET%は最大まで回復した！
+
+		IF CONFIG_CHECK_SCREEN_F(3) == 0
+			PRINTW 
+		ELSE
+			PRINTL 
+		ENDIF
+	ENDIF
+ENDIF
+

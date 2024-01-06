@@ -1,0 +1,603 @@
+﻿;================================================================================
+;보스 촉수/対キャラとの遭遇判定
+;※잡몹적との遭遇判定はここではなくMOB_TENTACLE_ENCOUNTで行う
+;--------------------------------------------------
+@ENCOUNT
+;悪堕ち・ボス・ザコの判定
+FLAG:73 = 0
+;まず悪堕ちキャラとの遭遇判定
+CALL ENCOUNT_ENEMY
+;↑でエンカウントしなければボス判定
+SIF RESULT == 0
+	CALL ENCOUNT_BOSS
+RETURN RESULT
+
+
+;================================================================================
+;洗脳/悪堕ちキャラとの遭遇判定
+;--------------------------------------------------------------------------------
+@ENCOUNT_ENEMY
+	#DIM ENCOUNT_UP
+	#DIM CCOUNT
+	SAVESTR:13 = BOSS
+	VARSET LOCAL
+	FLAG:110 = 1
+	ENCOUNT_UP = 0
+
+	;전투경험の加算
+	EXP:전투경험 += 1
+
+	;洗脳/悪堕ちキャラとの遭遇判定
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+		;ＴＳ男性化かつ임신しているキャラは出現しない
+		SIF TALENT:CCOUNT:변신능력 > 0 && CHARATALENT_F(CCOUNT,0,"남자") == 0 && CHARATALENT_F(CCOUNT,1,"남자") > 0 && TALENT:CCOUNT:임신 > 0
+			CONTINUE
+
+		;キャラのリストを取得する
+		IF CFLAG:CCOUNT:0 == 2
+			LOCAL:1 += 1
+			LOCAL:(LOCAL:1 + 99) = CCOUNT
+		
+		ENDIF
+		IF CFLAG:CCOUNT:0 == 3
+			LOCAL:1 += 1
+			LOCAL:(LOCAL:1 + 99) = CCOUNT
+		ENDIF
+
+		;遭遇率アップの効果
+		ENCOUNT_UP += CFLAG:CCOUNT:23
+	NEXT
+
+	;FEATによる遭遇率アップの効果
+	ENCOUNT_UP += TALENT:말려드는체질 * 15
+
+	;昼は4割、夜は2割の確率で遭遇
+	IF TIME == 0
+		LOCAL:2 = 40
+	ELSEIF TIME == 1
+		LOCAL:2 = 20
+	ENDIF
+	LOCAL:2 += ENCOUNT_UP - MIN(FLAG:852 / 500,40)
+	;上限8割
+	LOCAL:2 = MIN(LOCAL:2,80)
+
+	;DEBUG
+	IF FLAG:999 == 1 && LOCAL:1 > 0
+		PRINTL 悪堕ちキャラ遭遇率の入力
+		INPUT
+		LOCAL:2 = RESULT
+	ENDIF
+
+	;遭遇判定
+	IF RAND:100 < LOCAL:2
+		;リストから対峙するキャラを取得する
+		IF LOCAL:1 >= 1 &&ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			LOCAL:2 = RAND:(LOCAL:1)
+			LOCAL:3 = 0
+			FLAG:111 = LOCAL:(LOCAL:2 + 100)
+			;遭遇率アップ効果
+			FOR CCOUNT, 0, CHARANUM
+				IF CFLAG:CCOUNT:23 > 0 && CFLAG:CCOUNT:23 > LOCAL:3 && (CFLAG:CCOUNT:0 == 1 || CFLAG:CCOUNT:0 == 2 || CFLAG:CCOUNT:0 == 3)
+					LOCAL:3 = CFLAG:CCOUNT:23
+					FLAG:111 = CCOUNT
+				ENDIF
+			NEXT
+			CFLAG:(FLAG:111):23 /= 2
+			SIF CFLAG:(FLAG:111):23 < 25
+				CFLAG:(FLAG:111):23 = 0
+
+			IF CFLAG:(FLAG:111):0 == 2
+				IF CFLAG:300 == 0
+					;지문: 初めて洗脳キャラと対峙した
+					CALL MESSAGE_ENCOUNT_SENNOU_FIRST
+					CFLAG:300 = 1
+				ELSE
+					;지문: 洗脳キャラと対峙
+					CALL MESSAGE_ENCOUNT_SENNOU
+				ENDIF
+			ELSEIF CFLAG:(FLAG:111):0 == 3
+				IF CFLAG:301 == 0
+					;지문: 始めて悪堕ちキャラと対峙した
+					CALL MESSAGE_ENCOUNT_AKUOTI_FIRST
+					CFLAG:301 = 1
+				ELSE
+					;지문: 悪堕ちキャラと対峙
+					CALL MESSAGE_ENCOUNT_AKUOTI
+				ENDIF
+			ENDIF
+			
+			;지문: 洗脳/悪堕ちキャラの登場時
+			CALL MESSAGE_OTHER_ENTRY
+
+			;戦闘系フラグのリセット
+			FLAG:12 = MAXBASE:(FLAG:111):체력 + MAXBASE:(FLAG:111):방어 * (15 + ABL:(FLAG:111):레벨) / 2
+			FLAG:13 = FLAG:12
+			
+			;固定値
+			FLAG:14 = 1000
+			FLAG:15 = 0
+			FLAG:16 = 760 + ABL:(FLAG:111):레벨 * 10
+			FLAG:17 = 0
+			FLAG:22 = -1
+
+			;変身可能な悪堕ちキャラは常に변신한다(사악한 마장を装備するので)
+			SIF ENEMY_TYPE_CHECK_F("AKUOTI") && TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 == 0
+				CALL TRANSFORM, 1, FLAG:111
+
+			RETURN 1
+		ENDIF
+	ENDIF
+
+
+;================================================================================
+;보스 촉수/최종 보스 촉수との遭遇判定
+;--------------------------------------------------------------------------------
+@ENCOUNT_BOSS
+#DIM ENCOUNT_PER
+#DIM SELECT
+
+$RAID_LOOP
+SAVESTR:13 = BOSS
+VARSET LOCAL
+FLAG:110 = 0
+FLAG:111 = 0
+ENCOUNT_PER = 0
+SELECT = 0
+;보스 촉수残ってる
+IF FLAG:100 > 0
+	;보스 촉수との遭遇率：昼は合計で約40%、夜は合計で約50%
+	IF TIME == 0
+		ENCOUNT_PER = (40 + FLAG:3 * 3) * FLAG:47 / FLAG:46
+	ELSEIF TIME == 1
+		ENCOUNT_PER = (50 + FLAG:3 * 3) * FLAG:47 / FLAG:46
+	ENDIF
+	;FEATによる遭遇率アップの効果
+	ENCOUNT_PER += TALENT:말려드는체질 * 20
+	;探索度とボス出現停止フラグ(撃破直後ターン)による通常エンカウント禁止
+	SIF FLAG:45 == 0 && (FLAG:47 < FLAG:46 || FLAG:49)
+		RETURN 0
+
+	;拠点防衛時
+	IF CFLAG:100 == 예정_방위
+		;;昼　TIME == 0　夜　TIME == 1
+		;IF GAME_OPTION_CHECK_F(OPTION_hardcore)
+		;	;昼　80-α 30　夜　50-α 20
+		;	ENCOUNT_PER = MAX((80-30*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,30-10*TIME)
+		;ELSEIF GAME_OPTION_CHECK_F(OPTION_easy)
+		;	;昼　60-α 10　夜　40-α 5
+		;	ENCOUNT_PER = MAX((60-20*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,10-5*TIME)
+		;ELSE
+		;	;昼　70-α 15　夜　50-α 5
+		;	ENCOUNT_PER = MAX((70-20*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,15-10*TIME)
+		;ENDIF
+		;防衛時は보스 촉수遭遇無し
+		RETURN 0
+	ENDIF
+
+	;イベント戦闘ならボスとの遭遇率100%
+	SIF FLAG:45 > 0
+		ENCOUNT_PER = 100
+
+	;エンカウント判定に成功した場合
+	IF ENCOUNT_PER > RAND:100
+		;具体的にどの보스 촉수を出すか決める
+
+		;索敵ターゲットが居れば出現率アップ
+		IF CONFIG_CHECK_BALANCE_F(1) > 0 && CFLAG:100 != 예정_방위
+			;通常戦闘
+			IF FLAG:18 > 0 && FLAG:45 == 0 && ENCOUNT_PER > 0
+				CALL TENTACLE_SURVIVE_CHECK, POWER(2,FLAG:18 - 1)
+				IF RESULT
+					;通常は出撃数と戦闘支援の数に応じて確率アップ、ENDLESSモードでは100%ターゲット捕捉
+					SIF RAND:100 < (50 + (FLAG:41 + FLAG:43) * 10) || GAME_OPTION_CHECK_F(OPTION_endless)
+						SELECT = FLAG:18
+				ELSE
+					FLAG:18 = 0
+				ENDIF
+			ENDIF
+		ENDIF
+		IF SELECT == 0
+			;遭遇候補リストの生成
+			CALL CLEARRANDCHOOSE
+
+			;보스 촉수 총 마릿수
+			CALL GET_BOSS_ERB_NUM
+			LOCAL:1 = RESULT
+			FOR LOCAL, 0, LOCAL:1 + 1
+				CALL TENTACLE_SURVIVE_CHECK, POWER(2,LOCAL - 1)
+				SIF RESULT > 0
+					CALL ADDRANDCHOOSE, LOCAL
+			NEXT
+
+			IF CHOICECOUNT_F() > 0
+				SELECT = RANDCHOOSE_F()
+			ELSE
+				SELECT = 0
+			ENDIF
+		ENDIF
+	ELSE
+		SELECT = 0
+	ENDIF
+
+	;捕まってるキャラが居るならそのキャラを捕獲している相手の出現率アップ
+	;＆追加遭遇判定
+	IF CONFIG_CHECK_BALANCE_F(0) > 0 && CFLAG:100 != 예정_방위 && FLAG:45 == 0 && ENCOUNT_PER > 0
+		;보스 촉수 총 마릿수
+		CALL GET_BOSS_ERB_NUM
+		LOCAL:1 = RESULT
+		REPEAT LOCAL:1
+			FOR LOCAL, 0, CHARANUM
+				IF CFLAG:(LOCAL:0):0 == 1 && CFLAG:(LOCAL:0):21 == COUNT && RAND:100 < 50
+					PRINTFORML 捕獲촉수遭遇率アップ判定に成功！
+					SELECT = COUNT
+					BREAK
+				ENDIF
+			NEXT
+		REND
+	ENDIF
+
+	;DEBUG 通常戦闘時の相手指名
+	IF SELECT > 0 && FLAG:999 == 1 && FLAG:45 == 0
+		PRINTL 対戦する촉수番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		INPUT
+		IF RESULT >= 0
+			SELECT = RESULT
+		ENDIF
+	ENDIF
+
+	;襲撃イベントなら絶対に何かしらボスを出現させる
+	IF FLAG:45 > 0 && SELECT == 0
+		PRINTFORML 【エラー：ENCOUNT.ERB…イベントで戦闘する敵を決定できませんでした】
+		RETURN 0
+		;GOTO RAID_LOOP
+	ENDIF
+
+	;不正な値ならキャンセル
+	IF SELECT <= 0
+		RETURN 0
+	ELSE
+		;ボス戦
+		FLAG:10 = 0
+
+		;遭遇した相手を索敵ターゲットとして扱う
+		SIF FLAG:18 == 0 && FLAG:45 == 0
+			FLAG:18 = SELECT
+
+		;戦闘系フラグのリセット
+		FLAG:11 = SELECT
+
+		TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
+		CATCH
+			PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+			FLAG:10 = 0
+			FLAG:11 = 0
+			SAVESTR:13 '=""
+			RETURN 0
+		ENDCATCH
+
+		CALL TENTACLE_ACCESS, "HP"
+		FLAG:12 = RESULT
+		FLAG:13 = FLAG:12
+		CALL TENTACLE_ACCESS, "SYASEI"
+		FLAG:14 = RESULT
+		FLAG:15 = 0
+		CALL TENTACLE_ACCESS, "YUDAN"
+		FLAG:16 = RESULT
+		FLAG:17 = 0
+		;보스경험の加算
+		EXP:보스경험 += 1
+		
+		;ボスの蓄積ダメージを適応
+		FLAG:13 = FLAG:13 * (1000000 - (FLAG:(300 + FLAG:11)/100)) / 1000000
+		SIF FLAG:(300 + FLAG:11)%100
+			FLAG:13 = MIN(FLAG:13+1,FLAG:12)
+		SIF FLAG:13 <= 0
+			FLAG:13 = 1
+
+		;지문: 보스 촉수と遭遇
+		IF FLAG:45 == 0
+			CALL MESSAGE_ENCOUNT_BOSS
+		ELSE
+			CALL MESSAGE_RAID_BOSS
+		ENDIF
+		
+		RETURN 1
+	ENDIF
+;최종 보스 촉수
+ELSE
+	;探索度とボス出現停止フラグ(撃破直後ターン)による通常エンカウント禁止
+	SIF FLAG:45 == 0 && (FLAG:47 < FLAG:46 || FLAG:49)
+		RETURN 0
+	;최종 보스 촉수との遭遇率：昼は合計で約70%、夜は合計で約80%
+	IF TIME == 0
+		ENCOUNT_PER = 70 * FLAG:47 / FLAG:46
+	ELSEIF TIME == 1
+		ENCOUNT_PER = 80 * FLAG:47 / FLAG:46
+	ENDIF
+	;IF CFLAG:100 == 예정_방위 && TIME == 0
+	;	ENCOUNT_PER = MAX(90 - FLAG:852 / 250,30)
+	;ELSEIF CFLAG:100 == 예정_방위 && TIME == 1
+	;	ENCOUNT_PER = MAX(60 - FLAG:852 / 250,20)
+	;ENDIF
+	;防衛時は최종 보스 촉수遭遇無し
+	SIF CFLAG:100 == 예정_방위
+		RETURN 0
+
+	;ボス襲来イベント中なら遭遇率100%
+	SIF FLAG:45 > 0
+		ENCOUNT_PER = 100
+
+	;遭遇チェック
+	IF ENCOUNT_PER > RAND:100
+		;遭遇リストの生成
+		CALL CLEARRANDCHOOSE
+
+		;보스 촉수 총 마릿수
+		CALL GET_BOSS_ERB_NUM
+		LOCAL:1 = RESULT
+		FOR LOCAL, 0, LOCAL:1 + 1
+			CALL TENTACLE_SURVIVE_CHECK, POWER(2,LOCAL - 1)	
+			SIF RESULT > 0
+				CALL ADDRANDCHOOSE, LOCAL
+		NEXT
+		IF CHOICECOUNT_F() > 0
+			SELECT = RANDCHOOSE_F()
+		ELSE
+			SELECT = 0
+		ENDIF
+	ELSE
+		SELECT = 0
+	ENDIF
+
+	SIF FLAG:45 > 0 && SELECT == 0
+		GOTO RAID_LOOP
+
+	;DEBUG
+	IF SELECT > 0 && FLAG:999 == 1 && FLAG:45 == 0
+		PRINTL 対戦する최종 보스 촉수番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		INPUT
+		SIF RESULT >= 0
+			SELECT = RESULT
+	ENDIF
+
+	IF SELECT <= 0
+		RETURN 0
+	ELSE
+		SIF CFLAG:100 == 예정_방위
+			RETURN 0
+
+		;戦闘系フラグのリセット
+		FLAG:11 = SELECT
+
+		TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
+		CATCH
+			PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+			FLAG:10 = 0
+			FLAG:11 = 0
+			SAVESTR:13 '=""
+			RETURN 0
+		ENDCATCH
+
+		;ラスボス戦
+		FLAG:10 = 1
+
+
+		CALL TENTACLE_ACCESS, "HP"
+		FLAG:12 = RESULT
+		;ラスボス強化オプションを適用
+		FLAG:12 = FLAG:12 * LASTBOSS_KYOUKA_F()
+		FLAG:13 = FLAG:12
+
+		;ボスの蓄積ダメージを適応
+		FLAG:13 = FLAG:13 * (1000000 - (FLAG:(400 + FLAG:11)/100)) / 1000000
+		SIF FLAG:(400 + FLAG:11)%100
+			FLAG:13 = MIN(FLAG:13+1,FLAG:12)
+		SIF FLAG:13 <= 0
+			FLAG:13 = 1
+
+		CALL TENTACLE_ACCESS, "SYASEI"
+		FLAG:14 = RESULT
+		FLAG:15 = 0
+		CALL TENTACLE_ACCESS, "YUDAN"
+		FLAG:16 = RESULT
+		FLAG:17 = 0
+		FLAG:22 = 0
+
+		;레벨の設定
+		CALL TENTACLE_LEVEL
+		FLAG:16 += RESULT * 10
+		;최종보스경험の加算
+		EXP:최종보스경험 += 1
+
+		;지문: 최종 보스 촉수と遭遇
+		IF FLAG:45 == 0
+			CALL MESSAGE_ENCOUNT_LASTBOSS
+		ELSE
+			CALL MESSAGE_RAID_LASTBOSS
+		ENDIF
+		
+		RETURN 1
+	ENDIF
+
+ENDIF
+
+
+;--------------------------------------------------
+;ザコ촉수との戦闘
+@MOB_TENTACLE_ENCOUNT
+SAVESTR:13 = MOB
+LOCAL = 0
+EXP:전투경험 += 1
+;------------------------------------------------------------------------------------
+;雑魚戦システム有りならエンカウント先決定、戻った先で戦闘画面へ遷移
+RESULT = 0
+IF CONFIG_CHECK_EVENT_F(4) > 0
+;------------------------------------------------------------------------------------
+	;判定(バグっていなければ何かしら敵番号が返る)
+	CALL MOB_TENTACLE_BATTLE
+	LOCAL=RESULT
+	IF LOCAL > 0
+		;지문: ザコ촉수と遭遇
+		CALL MESSAGE_ENCOUNT_MOB_BATTLE
+		SIF FLAG:999 == 1
+			PRINTFORML ENCOUNT MOB:{LOCAL}
+	ENDIF
+	RETURN LOCAL
+;雑魚戦システム無しなら文章ONLYで処理
+ELSE
+	;지문: ザコ촉수と戦闘
+	CALL MESSAGE_ENCOUNT_MOB
+
+	LOCAL = MAXBASE:체력
+	TIMES LOCAL, 0.35
+	BASE:체력 = LIMIT(BASE:체력 - SYOUHI_KEIGEN(TARGET,LOCAL,체력), 0 , BASE:체력)
+	PRINTFORML %BASENAME:0%が{LOCAL}減少した
+	
+	LOCAL = MAXBASE:기력
+	TIMES LOCAL, 0.30
+	BASE:기력 = LIMIT(BASE:기력 - SYOUHI_KEIGEN(TARGET,LOCAL,기력), 0 , BASE:기력)
+	PRINTFORML %BASENAME:1%が{LOCAL}減少した
+
+	;探索度上昇
+	IF ENEMY_TYPE_CHECK_F("CITIZEN") == 0
+		LOCAL = 6 + RAND:4
+		SIF CFLAG:100 != 예정_출격
+			LOCAL /= 2
+		;FEAT効果による探索度アップ
+		SIF TALENT:사냥꾼의직감 > 0
+			LOCAL += 5
+		PRINTFORML 探索度が{LOCAL}上昇した
+		CALL RESEARCH_PROGRESS, LOCAL
+		PRINTL 
+	ENDIF
+	;------------------------------------------------------------------------------------
+	;경험치の取得
+	CALL GET_EXP_BATTLE
+
+	CALL TENTACLE_SURVIVE, "NUM"
+	LOCAL = RESULT
+	CALL GET_SYUREN, (10 + RAND:15)
+	CALL GET_MONEY, (25 + RAND:11) * (5 + RAND:5)
+	;------------------------------------------------------------------------------------
+	;방위력
+	CALL TENTACLE_LEVEL
+	LOCAL = RAND:50 + RESULT / 2 + 25
+	FLAG:852 += LOCAL
+	SIF FLAG:852 < 0
+		FLAG:852 = 0
+	ABS LOCAL
+	PRINTFORM 방위력が{RESULT}
+	IF LOCAL < 0
+		PRINTL 低下した
+	ELSE
+		PRINTL 上昇した
+	ENDIF
+	;------------------------------------------------------------------------------------
+	;戦闘支援効果で回復
+	IF FLAG:43 && GROUPMATCH(CFLAG:100, 예정_출격, 예정_방위)
+		LOCAL:1 = FLAG:43 * 8
+		;衣装による補正
+		LOCAL = TARGET
+		FOR LOCAL:2,0,CHARANUM
+			SIF LOCAL:2 == MASTER || CFLAG:(LOCAL:2):999 == 0
+				CONTINUE
+			TARGET = LOCAL:2
+			CALL CLOTH_BATTLE_HOSEI, "HEALUP"
+			SIF CFLAG:(LOCAL:2):100 == 예정_지원 && RESULT > 0
+				LOCAL:1 = LOCAL:1 * (100 + RESULT) / 100
+		NEXT
+		TARGET = LOCAL
+		LOCAL = MAXBASE:체력
+		LOCAL = LOCAL * LOCAL:1 / 100
+		BASE:체력 = LIMIT(LOCAL + BASE:체력, 0, MAXBASE:체력)
+		LOCAL = MAXBASE:기력
+		LOCAL = LOCAL * LOCAL:1 / 100
+		BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
+		PRINTL 
+		PRINTFORML 戦闘支援効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
+	ENDIF
+	RETURN 0
+ENDIF
+
+;================================================================================
+;【잡몹적とのエンカウント処理】
+;------------------------------------------------------------------------------------
+;エンカウントした雑魚の番号が返る
+@MOB_TENTACLE_BATTLE
+#DIM ID
+
+;ランダム抽選用に候補をクリア
+;------------------------------------------------------------------------------------
+CALL CLEARRANDCHOOSE
+
+
+IF FLAG:11 == 0
+	;登場フラグの立っている敵のみ出現する
+	;------------------------------------------------------------------------------------
+	FOR LOCAL,0,MOB_CATEGORY
+		FOR LOCAL:1,0,100
+			IF MOB_FLAG:LOCAL:(LOCAL:1) > 0
+				FOR LOCAL:2, 0, MOB_FLAG:LOCAL:(LOCAL:1)
+					CALL ADDRANDCHOOSE, (LOCAL * 100 + LOCAL:1)
+				NEXT
+			ENDIF
+		NEXT
+	NEXT
+	;候補がないなら抜ける
+	;------------------------------------------------------------------------------------
+	SIF CHOICECOUNT_F() == 0
+		RETURN -1
+	LOCAL = RANDCHOOSE_F()
+
+	;DEBUG
+	IF LOCAL > 0 && FLAG:999 == 1 && FLAG:45 == 0
+		PRINTL 対戦するザコ番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		INPUT
+		IF RESULT >= 0
+			LOCAL = RESULT
+		ENDIF
+	ENDIF
+	SIF LOCAL == 0
+		RETURN 0
+
+	;ザコ戦
+	FLAG:10 = 2
+
+
+	FLAG:11 = LOCAL
+ELSE
+	LOCAL = FLAG:11
+ENDIF
+SAVESTR:13 = MOB
+
+TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
+CATCH
+	PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+	FLAG:10 = 0
+	FLAG:11 = 0
+	SAVESTR:13 '=""
+	RETURN 0
+ENDCATCH
+
+
+;戦闘系フラグのリセット
+;------------------------------------------------------------------------------------
+FLAG:10 = 2
+FLAG:11 = LOCAL
+CALL TENTACLE_ACCESS, "HP"
+FLAG:12 = RESULT
+FLAG:13 = FLAG:12
+CALL TENTACLE_ACCESS, "SYASEI"
+FLAG:14 = RESULT
+FLAG:15 = 0
+CALL TENTACLE_ACCESS, "YUDAN"
+FLAG:16 = RESULT
+FLAG:17 = 0
+CALL TENTACLE_LEVEL
+FLAG:16 += RESULT * 10
+FLAG:22 = -1
+
+RETURN LOCAL
+

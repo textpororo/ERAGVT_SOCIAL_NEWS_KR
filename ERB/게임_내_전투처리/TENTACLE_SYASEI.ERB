@@ -1,0 +1,607 @@
+﻿;--------------------------------------------------
+;촉수の사정に関する処理
+;기교の値で촉수の사정ゲージ増加量を求める
+@TENTACLE_SYASEI_UP, ARG
+;기교を見る
+IF ABL:기교 == 0
+	TIMES ARG, 1.00
+ELSEIF ABL:기교 == 1
+	TIMES ARG, 1.10
+ELSEIF ABL:기교 == 2
+	TIMES ARG, 1.20
+ELSEIF ABL:기교 == 3
+	TIMES ARG, 1.25
+ELSEIF ABL:기교 == 4
+	TIMES ARG, 1.30
+ELSEIF ABL:기교 == 5
+	TIMES ARG, 1.35
+ENDIF
+;V감각を見る
+IF (INSERT & 질)
+	IF ABL:V감각 == 0
+		TIMES ARG, 1.00
+	ELSEIF ABL:V감각 == 1
+		TIMES ARG, 1.05
+	ELSEIF ABL:V감각 == 2
+		TIMES ARG, 1.15
+	ELSEIF ABL:V감각 == 3
+		TIMES ARG, 1.25
+	ELSEIF ABL:V감각 == 4
+		TIMES ARG, 1.40
+	ELSEIF ABL:V감각 == 5
+		TIMES ARG, 1.80
+	ENDIF
+ENDIF
+;A감각を見る
+IF (INSERT & 애널)
+	IF ABL:A감각 == 0
+		TIMES ARG, 1.00
+	ELSEIF ABL:A감각 == 1
+		TIMES ARG, 1.05
+	ELSEIF ABL:A감각 == 2
+		TIMES ARG, 1.15
+	ELSEIF ABL:A감각 == 3
+		TIMES ARG, 1.25
+	ELSEIF ABL:A감각 == 4
+		TIMES ARG, 1.40
+	ELSEIF ABL:A감각 == 5
+		TIMES ARG, 1.80
+	ENDIF
+ENDIF
+;거유
+IF (TFLAG:4 & 가슴)
+	IF TALENT:거유 == 5
+		TIMES ARG, 1.40
+	ELSEIF TALENT:거유 == 4
+		TIMES ARG, 1.35
+	ELSEIF TALENT:거유 == 3
+		TIMES ARG, 1.30
+	ELSEIF TALENT:거유 == 2
+		TIMES ARG, 1.25
+	ELSEIF TALENT:거유 == 1
+		TIMES ARG, 1.20
+	ENDIF
+ENDIF
+
+;ランダム性付与
+LOCAL:1 = RAND:100
+IF LOCAL:1 < 20
+	TIMES ARG, 0.90
+ELSEIF LOCAL:1 < 40
+	TIMES ARG, 0.95
+ELSEIF LOCAL:1 < 60
+ELSEIF LOCAL:1 < 80
+	TIMES ARG, 1.05
+ELSE
+	TIMES ARG, 1.10
+ENDIF
+;가만히있는다
+SIF TCVARn:2 == 자세：가만히있는다
+	TIMES ARG, 0.50
+;봉사한다
+SIF TCVARn:2 == 자세：봉사한다
+	TIMES ARG, 1.20
+FLAG:15 += ARG
+
+;사정チェック
+;----------------------------------------------------------
+@TENTACLE_SYASEI_CHECK
+;敵がペニスを持たない場合
+IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:11 == 901 && FLAG:15 >= FLAG:14
+	FONTBOLD
+	PRINTL 敵絶頂
+	FONTREGULAR
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML は耐え切れずに絶頂に達した！
+	PRINTL 
+
+	;油断度の上昇
+	TFLAG:3 += 100
+	;搾精強化機能
+	IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
+		IF FLAG:73 > 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は精液からエネルギーを吸収した！
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+		ENDIF
+		CALL GET_SYUREN, (RAND:10 + RAND:(LOCAL:2 * 3) + (LOCAL:2 * 3) + 2) / 5
+		PRINTL 
+	ENDIF
+	;搾精ダメージの処理
+	CALL TENTACLE_SAKUSEI,FLAG:15, 0, 0, 0, 0
+	;사정ゲージ低下
+	FLAG:15 = FLAG:15 - FLAG:14
+
+	;강구속を解く
+	SIF (TCVARn:12 & 강구속) > 0
+		TCVARn:12 -= 강구속
+
+	RETURN 0, 0, 0, 0
+ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0) && FLAG:15 >= FLAG:14
+	FONTBOLD
+	PRINTL 敵絶頂
+	FONTREGULAR
+	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+	PRINTFORML は耐え切れずに絶頂に達した！
+	PRINTL 
+
+	;油断度の上昇
+	TFLAG:3 += 100
+	;搾精強化機能
+	IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
+		IF FLAG:73 > 0
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は精液からエネルギーを吸収した！
+		ELSE
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+		ENDIF
+		CALL GET_SYUREN, (RAND:10 + RAND:(LOCAL:2 * 3) + (LOCAL:2 * 3) + 2) / 5
+		PRINTL 
+	ENDIF
+	;搾精ダメージの処理
+	CALL TENTACLE_SAKUSEI,FLAG:15, 0, 0, 0, 0
+	;사정ゲージ低下
+	FLAG:15 = FLAG:15 - FLAG:14
+
+	;강구속を解く
+	SIF (TCVARn:12 & 강구속) > 0
+		TCVARn:12 -= 강구속
+
+	RETURN 0, 0, 0, 0
+;사정箇所が指定されていない場合
+ELSEIF (TFLAG:4 == 0 || (TFLAG:4 & 오발)) && FLAG:15 >= FLAG:14
+	IF (FLAG:15 >= FLAG:14 * 2 && TFLAG:20 != 15 && TFLAG:20 != 17 && TFLAG:20 != 19) || (TFLAG:4 & 오발)
+		;대량사정
+
+		;油断度の上昇
+		TFLAG:3 += 200
+
+		;사정場所チェック
+		CALL TENTACLE_SYASEI_POINT, 2
+		;搾精ダメージの処理
+		CALL TENTACLE_SAKUSEI,FLAG:15 * 4, RESULT:0, RESULT:1, RESULT:2, RESULT:3
+		;사정ゲージ低下
+		FLAG:15 = 0
+
+		;강구속を解く
+		SIF (TCVARn:12 & 강구속) > 0
+			TCVARn:12 -= 강구속
+
+		RETURN RESULT:0, RESULT:1, RESULT:2, RESULT:3
+	ELSE
+		;지문: 사정我慢
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_GAMAN
+		;사정値 50
+		CALL TENTACLE_SYASEI_UP, 50
+			RETURN 0, 0, 0, 0
+	ENDIF
+ELSEIF FLAG:15 >= FLAG:14 * 2
+	;대량사정
+
+	;油断度の上昇
+	TFLAG:3 += 200
+
+	;사정場所チェック
+	CALL TENTACLE_SYASEI_POINT, 2
+	;搾精ダメージの処理
+	CALL TENTACLE_SAKUSEI,FLAG:15 * 2, RESULT:0, RESULT:1, RESULT:2, RESULT:3
+	;사정ゲージ低下
+	FLAG:15 = 0
+
+	;강구속を解く
+	SIF (TCVARn:12 & 강구속) > 0
+		TCVARn:12 -= 강구속
+
+	RETURN RESULT:0, RESULT:1, RESULT:2, RESULT:3
+ELSEIF FLAG:15 >= FLAG:14
+	;通常사정
+
+	;油断度の上昇
+	TFLAG:3 += 100
+
+	;사정場所チェック
+	CALL TENTACLE_SYASEI_POINT, 1
+	;搾精ダメージの処理
+	CALL TENTACLE_SAKUSEI,FLAG:15, RESULT:0, RESULT:1, RESULT:2, RESULT:3
+	;사정ゲージ低下
+	FLAG:15 = FLAG:15 - FLAG:14
+
+	;강구속を解く
+	SIF (TCVARn:12 & 강구속) > 0
+		TCVARn:12 -= 강구속
+
+	RETURN RESULT:0, RESULT:1, RESULT:2, RESULT:3
+ELSE
+	TFLAG:5 = 0
+	RETURN 0, 0, 0, 0
+ENDIF
+
+;--------------------------------------------------
+;사정場所チェック ARGは1=通常사정,2=대량사정
+@TENTACLE_SYASEI_POINT, ARG
+VARSET LOCAL
+PRINTL 
+IF TFLAG:4 == 0 || (TFLAG:4 & 오발)
+	;汚れ
+	STAIN:1 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 오발
+
+	;지문: 촉수사정오발
+	CALL MESSAGE_SEX_TENTACLE_SYASEI_EXPLODE
+	EXP:정액경험 += ARG
+
+	LOCAL:2 += ARG
+ENDIF
+
+IF TFLAG:18 != 균열 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 균열) && LOCAL:3
+	;汚れ
+	STAIN:3 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 균열
+	
+	IF ARG == 1
+		;지문: 촉수ワレメ사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_WAREME
+
+		;지문: 洗脳/悪堕ちキャラが操作キャラの질내에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_VAGINA
+
+		;윤활の加算
+		LOCAL:0 += 1000
+		;굴복の加算
+		LOCAL:1 += 500
+		;공순の加算
+		LOCAL:4 += 100 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 100 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수ワレメ대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_WAREME_HI
+
+		;지문: 洗脳/悪堕ちキャラが操作キャラの질내に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_VAGINA_HI
+
+		;윤활の加算
+		LOCAL:0 += 2000
+		;굴복の加算
+		LOCAL:1 += 1000
+		;공순の加算
+		LOCAL:4 += 200 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 200 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+ENDIF
+
+IF TFLAG:18 != 질 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 질) && LOCAL:3
+	;汚れ
+	STAIN:3 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 질
+	;질내사정量を記録
+	TFLAG:7 += ARG
+
+	IF ARG == 1
+		;지문: 촉수질내사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_VAGINA
+
+		;임신確率 出産後の中だし回数と今までの출산경험に応じ可能性が増える
+		CALL NINSIN_HANTEI,ARG,3
+		;지문: 洗脳/悪堕ちキャラが操作キャラの질내에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_VAGINA
+
+		;윤활の加算
+		LOCAL:0 += 2000
+		;굴복の加算
+		LOCAL:1 += 1500
+		;공순の加算
+		LOCAL:4 += 200 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 200 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수질내대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_VAGINA_HI
+		;임신確率 通常사정の5倍
+		CALL NINSIN_HANTEI,ARG,15
+		;지문: 洗脳/悪堕ちキャラが操作キャラの질내に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_VAGINA_HI
+
+		;윤활の加算
+		LOCAL:0 += 4000
+		;굴복の加算
+		LOCAL:1 += 3000
+		;공순の加算
+		LOCAL:4 += 400 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 400 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+
+	;正常임신の場合、사정されると임신期間が確率で短縮される
+	IF TALENT:임신 == 4 || TALENT:임신 == 5
+		SIF TALENT:임신 == 5
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の胎内に宿った新しい命が精液に汚されていく・・・
+		IF RAND:2 == 0 && CFLAG:222 < 50 && CFLAG:222 != 5 && CFLAG:222 != 8 && CFLAG:222 != 11
+			CFLAG:222 += 1
+		ENDIF
+	ENDIF
+ENDIF
+
+IF TFLAG:18 != 애널 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 애널) && LOCAL:3
+	;汚れ
+	STAIN:4 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 애널
+	;애널사정量を記録
+	TFLAG:8 += ARG
+
+	IF ARG == 1
+		;지문: 촉수애널사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_ANAL
+		;지문: 洗脳/悪堕ちキャラが操作キャラの애널에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_ANAL
+
+		;윤활の加算
+		LOCAL:0 += 2000
+		;굴복の加算
+		LOCAL:1 += 1000
+		;공순の加算
+		LOCAL:4 += 100 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 100 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수애널대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_ANAL_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラの애널に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_ANAL_HI
+
+		;윤활の加算
+		LOCAL:0 += 4000
+		;굴복の加算
+		LOCAL:1 += 2000
+		;공순の加算
+		LOCAL:4 += 200 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 200 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+ENDIF
+
+IF TFLAG:18 != 손 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 손) && LOCAL:3
+	;汚れ
+	STAIN:1 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 손
+
+	IF ARG == 1
+		;지문: 촉수手에 사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_HAND
+		;지문: 洗脳/悪堕ちキャラが操作キャラの手에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_HAND
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 250
+		;공순の加算
+		LOCAL:4 += 10 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 10 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수手に대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_HAND_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラの手に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_HAND_HI
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 500
+		;공순の加算
+		LOCAL:4 += 20 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 20 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+ENDIF
+
+IF TFLAG:18 != 입 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 입) && LOCAL:3
+	;汚れ
+	STAIN:0 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 입
+
+	IF ARG == 1
+		;지문: 촉수口内에 사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_MOUTH
+		;지문: 洗脳/悪堕ちキャラが操作キャラの口内에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_MOUTH
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 1000
+		;공순の加算
+		LOCAL:4 += 100 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 100 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수口内に대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_MOUTH_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラの口内に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_MOUTH_HI
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 2000
+		;공순の加算
+		LOCAL:4 += 200 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 200 * ABL:욕망 + 2000
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+	;精液を飲ませられると배란にさせられる場合がある
+	SIF TFLAG:20 != 16
+		CALL STATE_CHANGE_HAIRAN, ARG
+	;低確率で발정
+	CALL STATE_CHANGE_HATUJOU, 5
+ENDIF
+
+IF TFLAG:18 != 가슴 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111)) && ISTENTACLER(FLAG:111) == 0
+	LOCAL:3 = 0
+ELSE
+	LOCAL:3 = 1
+ENDIF
+IF (TFLAG:4 & 가슴) && LOCAL:3
+	;汚れ
+	STAIN:2 |= 4
+	;사정個所を記録
+	TFLAG:5 |= 가슴
+
+	IF ARG == 1
+		;지문: 촉수胸에 사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_BUST
+		;지문: 洗脳/悪堕ちキャラが操作キャラの胸에 사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_BUST
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 500
+		;공순の加算
+		LOCAL:4 += 10 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 10 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ELSEIF ARG == 2
+		;지문: 촉수胸に대량사정
+		CALL MESSAGE_SEX_TENTACLE_SYASEI_BUST_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラの胸に대량사정した
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_TENTACLE_SYASEI_BUST_HI
+
+		;윤활の加算
+		LOCAL:0 += 0
+		;굴복の加算
+		LOCAL:1 += 1000
+		;공순の加算
+		LOCAL:4 += 20 * ABL:순종
+		;욕정の加算
+		LOCAL:5 += 20 * ABL:욕망
+
+		EXP:정액경험 += ARG
+		LOCAL:2 += ARG
+	ENDIF
+ENDIF
+
+;搾精強化機能
+IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+	CALL GET_SYUREN, (RAND:10 + RAND:(LOCAL:2 * 3) + (LOCAL:2 * 3) + 2) / 2
+	PRINTL 
+ENDIF
+
+RETURN LOCAL:0, LOCAL:1, LOCAL:4, LOCAL:5
+
+;--------------------------------------------------------------------------------------
+;搾精ダメージの処理
+@TENTACLE_SAKUSEI,ARG, ARG:1, ARG:2, ARG:3, ARG:4
+;既にキャラが倒れている場合はダメージを与えられない
+SIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
+	RETURN ARG:1, ARG:2, ARG:3, ARG:4
+ARG = (ARG - FLAG:14 / 2) / 10 + 500 + ABL:기교 * 150
+SIF ARG < 500
+	ARG = 500
+;FEAT効果で搾精ダメージ上昇
+SIF TALENT:배덕의낙인 > 0
+	ARG *= 135 / 100
+;搾精공격に耐性がある場合の処理
+CALL TENTACLE_ACCESS, "SAKUSEI"
+ARG = ARG * RESULT / 100
+SIF FLAG:73 > 0
+	ARG = 0
+FLAG:13 -= ARG
+SIF FLAG:13 < 0
+	FLAG:13 = 0
+;사정でダメージ地の文
+IF (FLAG:110 == 0)
+	CALL TENTACLE_ACCESS, "NAME"
+ELSEIF (FLAG:110 == 1)
+	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+ENDIF
+;相手にペニスが無い場合
+IF (FLAG:110 == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)) || (FLAG:110 == 0 && FLAG:11 == 901)
+	PRINTFORMW は絶頂によって체력を{ARG}消耗した！！
+ELSE
+	PRINTFORMW は사정によって체력を{ARG}消耗した！！
+ENDIF
+PRINTL 
+;実績
+IF FLAG:13 <= 0
+	CALL UNLOCK_ACHIEVEMENT(267,"奇跡の逆転勝利")
+ENDIF
+RETURN ARG:1, ARG:2, ARG:3, ARG:4

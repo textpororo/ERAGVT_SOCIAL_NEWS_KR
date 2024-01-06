@@ -1,0 +1,136 @@
+﻿;**********************************************************
+;行動開始時の変身に関する処理
+@ACTION_TRANSFORMATION_SELECT, ARG, ARGS
+#DIMS ACTION_NAME,2
+;컨피그の変身設定受け渡し用。上から順に通常変身、女体化変身の場合、男性化変身の場合
+;中身は0 毎回選択、1 常に변신한다、2 常に変身しない
+#DIM TF_CONFIG_NOMAL
+#DIM TF_CONFIG_GIRL
+#DIM TF_CONFIG_BOY
+
+IF ARGS == "特別活動"
+	ACTION_NAME:0 = 変身した状態で特別活動に行きますか？
+	ACTION_NAME:1 = 変身せずにそのまま特別活動に行きます。
+	TF_CONFIG_NOMAL = GLOBAL:51
+	TF_CONFIG_GIRL  = GLOBAL:52
+	TF_CONFIG_BOY   = GLOBAL:53
+ELSEIF ARGS == "情報収集"
+	ACTION_NAME:0 = 変身した状態で情報収集を行いますか？
+	ACTION_NAME:1 = 変身せずにそのまま情報収集を行います。
+	TF_CONFIG_NOMAL = GLOBAL:54
+	TF_CONFIG_GIRL  = GLOBAL:55
+	TF_CONFIG_BOY   = GLOBAL:56
+ELSEIF ARGS == "気晴らし"
+	ACTION_NAME:0 = 変身した状態で気晴らしに行きますか？
+	ACTION_NAME:1 = 変身せずにそのまま気晴らしに行きます。
+	TF_CONFIG_NOMAL = GLOBAL:57
+	TF_CONFIG_GIRL  = GLOBAL:58
+	TF_CONFIG_BOY   = GLOBAL:59
+ENDIF
+
+;変身可能キャラは変身状態になるか選べる
+;임신が発覚している場合、男体化ＴＳ変身キャラは変身できない
+IF TALENT:ARG:변신능력 > 0 && (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 1 && CHECK_PREGNANT_F(ARG) > 0)
+	PRINTFORMW %CALLNAME:ARG%は임신中のため、変身で男性化できません。%ACTION_NAME:1%
+ELSEIF TALENT:ARG:변신능력 > 0
+	;変身後名チェック
+	CFLAG:ARG:1 = 1
+	LOCALS'=(PRINT_TRANSCALLNAME(ARG)!="あなた" && PRINT_TRANSCALLNAME(ARG)!=CALLNAME:ARG) ? PRINT_TRANSCALLNAME(ARG) # ""
+	CFLAG:ARG:1 = 0
+
+	;変身前に남자で変身後に女の子になり、컨피그で女体化を常にするorしない
+	IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,1,"남자") == 0 && TF_CONFIG_GIRL != 0
+	;はいorいいえの代わり。女体化を常にするなら計算結果１−１＝０＝はい、常にしないなら計算結果２−１＝１＝いいえ
+		RESULT = (TF_CONFIG_GIRL) - 1
+	ELSEIF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && TF_CONFIG_BOY != 0
+		RESULT = (TF_CONFIG_BOY) - 1
+	ELSEIF TF_CONFIG_NOMAL != 0
+		RESULT = (TF_CONFIG_NOMAL) - 1
+	ELSE
+		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,1,"남자") == 0
+			LOCAL=2
+			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"への" # ""%変身で女体化できます。%ACTION_NAME:0%
+		ELSEIF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0
+			LOCAL=3
+			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"への" # ""%変身で男性化できます。%ACTION_NAME:0%
+		ELSE
+			LOCAL=1
+			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"に" # ""%変身できます。%ACTION_NAME:0%
+		ENDIF
+		PRINTL 
+		PRINTFORML 　[0]%"はい",27,LEFT%	[1] いいえ
+		PRINTL
+		PRINTFORML 　[9] 네　 (次から確認しない)	[10] 아니오(次から確認しない)
+		$INPUT_LOOP_0_0
+		INPUT
+	ENDIF
+
+	IF RESULT == 9 || RESULT == 10
+		IF ARGS == "特別活動"
+			GLOBAL:(50+LOCAL)=RESULT==9 ? 1 # 2
+		ELSEIF ARGS == "情報収集"
+			GLOBAL:(53+LOCAL)=RESULT==9 ? 1 # 2
+		ELSEIF ARGS == "気晴らし"
+			GLOBAL:(56+LOCAL)=RESULT==9 ? 1 # 2
+		ENDIF
+		RESULT = RESULT==9 ? 0 # 1
+	ENDIF
+
+	IF RESULT == 0
+		;임신している場合、男体化ＴＳ変身キャラは変身に失敗
+		IF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && TALENT:ARG:임신 > 0
+			PRINTFORML しかし、%LOCALS!="" ? LOCALS+"への" # CALLNAME:ARG+"の"%変身は失敗した！
+			PRINTFORML いつものように変身しようとした筈なのに、なぜか何も起こらない…
+			PRINTFORM 仕方ないので、%CALLNAME:ARG%は%ACTION_NAME:1%
+			IF TALENT:ARG:보추 > 0
+				PRINT (보추)
+			ELSEIF ISMALE(ARG)
+				PRINT (♂)
+			ELSEIF TALENT:ARG:후타나리
+				PRINT (후타나리)
+			ELSE
+				PRINT (♀)
+			ENDIF
+			PRINTL
+		ELSE
+			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"に" # ""%変身した！
+			IF CHARATALENT_F(ARG,0,"남자") != CHARATALENT_F(ARG,1,"남자")
+				IF TALENT:ARG:보추 > 0
+					PRINT (보추)→
+				ELSEIF ISMALE(ARG)
+					PRINT (♂)→
+				ELSEIF TALENT:ARG:후타나리
+					PRINT (후타나리)→
+				ELSE
+					PRINT (♀)→
+				ENDIF
+			ENDIF
+			CALL TRANSFORM, 1
+			IF TALENT:ARG:보추 > 0
+				PRINT (보추)
+			ELSEIF ISMALE(ARG)
+				PRINT (♂)
+			ELSEIF TALENT:ARG:후타나리
+				PRINT (후타나리)
+			ELSE
+				PRINT (♀)
+			ENDIF
+		ENDIF
+		PRINTL
+	ELSEIF RESULT == 1
+		PRINTFORM %ACTION_NAME:1%
+		IF TALENT:ARG:보추 > 0
+			PRINT (보추)
+		ELSEIF ISMALE(ARG)
+			PRINT (♂)
+		ELSEIF TALENT:ARG:후타나리
+			PRINT (후타나리)
+		ELSE
+			PRINT (♀)
+		ENDIF
+		PRINTL
+	ELSE
+		GOTO INPUT_LOOP_0_0
+	ENDIF
+	DRAWLINE
+ENDIF

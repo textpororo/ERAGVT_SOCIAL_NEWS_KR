@@ -1,0 +1,179 @@
+﻿;---------------------------------------------------------------------
+;自衛隊救出イベント
+
+@EVENT_BATTLE_SITUATION_3
+PRINTFORML 自衛官専用の回線に、救援要請が発信されていた。
+PRINTFORML 女性だけの小隊が屋外で訓練していたところ、大型촉수生物の襲撃を受けてしまったらしい。
+PRINTFORML 折悪く付近の部隊は小型촉수と交戦中であり、誰も救援に応えることができない。
+PRINTFORML 目下交戦中とのことだが、大型촉수が相手とあってはあまり長く保たないだろう。
+PRINTFORML %PRINT_CALLNAME(TARGET)%が今すぐ駆け付ければ、どうにか彼女たちを救援できるかもしれない…
+SETCOLORBYNAME HOTPINK
+PRINTFORML 事態は一刻を争い、戦闘前に体勢を整える余裕もなさそうだが……
+RESETCOLOR
+
+PRINTL 
+PRINTFORML 危険を承知で助けに行くべきだろうか？
+
+@EVENT_BATTLE_RESCUE_3
+PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわけにはいかない。
+PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
+
+@EVENT_BATTLE_ABANDON_3
+PRINTFORML 不確定要素も多く、万全でもない状態で촉수生物と戦うのは危険すぎる。
+PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
+;ニュース記事に(失敗時使い回し)
+if !FLAG:60
+	FLAG:60=100000+FLAG:45
+endif
+
+
+@EVENT_BATTLE_EXEC_3
+PRINTFORML 現場に接近した%PRINT_CALLNAME(TARGET)%が見たものは、
+PRINTFORML いまにも陣形が崩れそうになっている女性自衛官の一個小隊と、
+PRINTFORML 獲物を弄ぶかのように執拗に迫る촉수生物の姿だった。
+PRINTL 
+PRINTFORML 見れば、隊員たちは逃げ遅れた一般人を庇いながら戦っている。
+PRINTFORML 自ら囮となり身を張って市民の盾となる彼女たちを嘲笑うように、
+PRINTFORML 촉수生物は촉수を鞭のようにしならせ打ち据えようとしている…！
+PRINTW 
+PRINTL どうする？
+PRINTFORML 　[0]正面から滑り込む　[1]촉수の動きを見極める
+PRINTL 
+$INPUT_LOOP_1
+INPUT
+IF RESULT == 0
+	IF BASE:방어 > 140 || BASE:공격 > 200
+		PRINTFORML ガツン！
+		PRINTFORML 鈍い音が響き渡り、咄嗟に身を竦めた女性隊員の一人が恐る恐る目を開けると……
+		PRINTFORML そこには촉수の공격を正面から受け止める%PRINT_CALLNAME(TARGET)%の姿があった！
+		PRINTFORML コンクリートをも砕く촉수の一撃を受けて傷一つなく立つ%PRINT_CALLNAME(TARGET)%の姿に、
+		PRINTFORML 戦闘中である事も一瞬忘れて呆気にとられてしまったようだ。
+		PRINTW 
+		FLAG:853 += 2
+		PRINTFORML 　인기도が2上昇した！
+		PRINTW 
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が声を掛けると、茫然としていた隊員たちは我に返り、
+		PRINTFORML すぐさま退路を確保するべく行動を開始した。
+		PRINTFORML さすがはプロと言うべきか、立ち直りが早い。逃げ遅れた一般人は任せてもいいだろう。
+		PRINTW 
+		PRINTFORML さて、後は目の前のデカブツを片づけるだけだが…
+		PRINTW 
+	ELSE
+		PRINTFORML グシャッ！
+		PRINTFORML 鈍い音が響き渡り、咄嗟に身を竦めた女性隊員の一人が恐る恐る目を開けると、
+		PRINTFORML 촉수の공격に割り込み弾き飛ばされた%PRINT_CALLNAME(TARGET)%の姿があった……
+		PRINTFORML 狙われていた女性隊員は無事に庇えたものの、自身の방어までは間に合わなかったのだ。
+		PRINTFORML コンクリートをも砕く촉수に薙ぎ倒された%PRINT_CALLNAME(TARGET)%は、
+		PRINTFORML 全身を襲う激痛に苦しみながらもふらつきよろめいて立ち上がる…
+		PRINTW 
+		;実力を弁えぬ미성숙者は相応の報いを受けるのだ
+		LOCAL = BASE:체력 / 6 + RAND:300
+		BASE:체력 = MAX(BASE:체력 - LOCAL, 0)
+		PRINTFORML 　체력が{LOCAL}減少した！
+		PRINTW 
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が必死に呼吸を整えて声を掛けると、
+		PRINTFORML 驚く隊員たちも我に返り、すぐさま退路を確保するべく行動を開始した。
+		PRINTFORML さすがはプロと言うべきか、立ち直りが早い。逃げ遅れた一般人は任せてもいいだろう。
+		PRINTW 
+		PRINTFORML さて、後は%PRINT_CALLNAME(TARGET)%が目の前のデカブツを片づけられるかどうかだが…
+		PRINTW 
+	ENDIF
+ELSEIF RESULT == 1
+	LOCAL = BASE:지성
+	IF LOCAL >= 120
+		PRINTFORML %PRINT_CALLNAME(TARGET)%は冷静に촉수の動きを見極め、弱点と思しき箇所に원거리공격を放った！
+		PRINTFORML %PRINT_CALLNAME(TARGET)%の鋭い一撃は촉수の付け根に直撃し、僅かに起動の逸れた촉수が女性隊員の身体を掠めてゆく。
+		PRINTW 
+	ELSE
+		PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수の動きを見極め奇襲を掛けようとしたが、
+		PRINTFORML 既に%PRINT_CALLNAME(TARGET)%の気配を察知していたらしい촉수が大量の白濁液で迎え撃つ。
+		PRINTFORML 想定外の공격に%PRINT_CALLNAME(TARGET)%は反応できず、腐敗臭の漂う汚液を全身に浴びてしまった！
+		PRINTW 
+		CALL CLOTH_BATTLE_DAMAGE, 8
+		CALL STATE_CHANGE_BETOBETO, 100
+		CALL STATE_CHANGE_HAIRAN, 25
+
+		LOCAL = MAX(BASE:성내성 / 10, 10) + RAND:3
+		BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
+		PRINTFORML 　성내성が{LOCAL}減少した！
+		PRINTW 
+	ENDIF
+	PRINTFORML 驚く隊員たちも、救援が来た事を理解すると即座に退路を確保するべく行動を開始した。
+	PRINTFORML さすがはプロと言うべきか、立ち直りが早い。逃げ遅れた一般人は任せてもいいだろう。
+	PRINTW 
+	PRINTFORML さて、後は%PRINT_CALLNAME(TARGET)%が촉수に立ち向かうだけだが…
+	PRINTW 
+
+ELSE
+	GOTO INPUT_LOOP_1
+ENDIF
+PRINTFORML 
+
+PRINTW 
+PRINTFORML （救援イベント中は撤退できません！　１５ターン耐えればミッション成功です！）
+PRINTW 
+DRAWLINE
+턴상한=15
+CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
+
+
+@EVENT_BATTLE_MISSION_CHECKER_3
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;負けなかったら達成の場合
+	IF TFLAG:98 == 2
+		RETURN 0
+	ELSE
+		RETURN 1
+	ENDIF
+
+@EVENT_BATTLE_SUCCESS_3
+PRINTFORML %PRINT_CALLNAME(TARGET)%の活躍により、女性自衛官の小隊を助け出すことができた。
+PRINTFORML 小隊の誰にも余裕は無く、あと少し%PRINT_CALLNAME(TARGET)%の助けが遅ければ全滅していたに違いない。
+PRINTW 
+PRINTFORML 女性自衛官たちは%PRINT_CALLNAME(TARGET)%に向かって全員で敬礼をすると、気丈にも周辺の被害を調べ始めた。
+PRINTFORML 見ればそのほとんどが年若き新入隊員であったらしく、中には%PRINT_CALLNAME(TARGET)%と同나이の少女も混じっていた。
+PRINTFORML %PRINT_CALLNAME(TARGET)%は救援が間一髪で間に合った事実を改めて噛み締め安堵する。
+PRINTFORML 彼女たちもまた国の護りを担う若き花であり、촉수などに摘み取らせてしまうわけにはいかないのだ……
+PRINTW 
+PRINTFORML 　인기도が3上昇した！
+PRINTFORML 　報酬として政府から$5000入手した！
+FLAG:853 += 3
+MONEY += 5000
+;ニュース記事に
+Sif !FLAG:60
+	FLAG:60=110000+FLAG:45
+
+
+@EVENT_BATTLE_FAILURE_3
+;;幽閉されてはいないがミッションには失敗した
+;IF TFLAG:98 != 2
+;	PRINTFORML 
+;;負けた
+;ELSE
+;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+;ENDIF
+PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、女性自衛官の小隊は壊滅した。
+PRINTFORML 若き女性隊員らは最早成すすべもなく、一人一人念入りに촉수に絡め取られて締め上げられ、
+PRINTFORML 意識を失った%PRINT_CALLNAME(TARGET)%と共にそのまま何処かへと連れ去られてしまった……
+PRINTW 
+PRINTFORML 彼女らは終わりの見えない幽閉の中で倒すべき敵の子種を幾度も注がれ、孕まされてしまうのだろう。
+PRINTFORML 訓練を受けた隊員といえど、女性に巨大촉수の相手など務まるはずもなかったのかもしれない……
+PRINTW 
+PRINTFORML 　救出ミッションに失敗しました……
+;ニュース記事に
+Sif !FLAG:60
+	FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+
+@EVENT_BATTLE_FLASHNEWS_3(ARG)
+;ミッション成功
+IF ARG==1
+	RESULTS'="お見事！ 촉수の奇襲で窮地に陥る女性自衛官らを魔法少女が華麗に救援"
+;ミッション失敗
+ELSEIF ARG==0
+	RESULTS'="凶悪な巨大촉수が女性自衛官の小隊を奇襲、複数の女性隊員が行方不明に……"
+;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+ELSEIF ARG==-1
+	RESULTS'=""
+ENDIF
+

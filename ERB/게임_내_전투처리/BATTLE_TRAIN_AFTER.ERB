@@ -1,0 +1,536 @@
+﻿;戦闘終了時処理(@AFTERTRAIN)
+@EVENTEND
+#DIM LCOUNT
+VARSET LOCAL
+
+;戦闘中플래그를折る
+FLAG:700 = 0
+;避妊効果中に受けた사정量をリセット
+TFLAG:6 = 0
+
+;戦闘終了後の刻印取得
+;쾌락각인　一定量の욕정累積
+LOCAL = 0
+SIF PALAM:욕정 >= (40000 + MARK:쾌락각인방지 * 1000)
+	LOCAL = 1
+SIF PALAM:욕정 >= (80000 + MARK:쾌락각인방지 * 2000) && MARK:쾌락각인 == 1
+	LOCAL = 2
+SIF PALAM:욕정 >= (160000 + MARK:쾌락각인방지 * 4000) && MARK:쾌락각인 == 2
+	LOCAL = 3
+SIF PALAM:욕정 >= (320000 + MARK:쾌락각인방지 * 8000) && MARK:쾌락각인 == 3
+	LOCAL = 4
+SIF PALAM:욕정 >= (640000 + MARK:쾌락각인방지 * 16000) && MARK:쾌락각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:쾌락각인
+	MARK:쾌락각인 = LOCAL
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	FONTBOLD
+	PRINTFORM %MARKNAME:0%{LOCAL}
+	FONTREGULAR
+	PRINTFORML を取得した
+	PRINTL 
+ENDIF
+
+;고통각인　一定量の고통累積
+LOCAL = 0
+SIF PALAM:고통 >= (30000 + MARK:고통각인방지 * 750)
+	LOCAL = 1
+SIF PALAM:고통 >= (60000 + MARK:고통각인방지 * 1500) && MARK:고통각인 == 1
+	LOCAL = 2
+SIF PALAM:고통 >= (120000 + MARK:고통각인방지 * 3000) && MARK:고통각인 == 2
+	LOCAL = 3
+SIF PALAM:고통 >= (240000 + MARK:고통각인방지 * 6000) && MARK:고통각인 == 3
+	LOCAL = 4
+SIF PALAM:고통 >= (480000 + MARK:고통각인방지 * 12000) && MARK:고통각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:고통각인
+	MARK:고통각인 = LOCAL
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	FONTBOLD
+	PRINTFORM %MARKNAME:1%{LOCAL}
+	FONTREGULAR
+	PRINTFORML を取得した
+	PRINTL 
+ENDIF
+
+;굴복각인　一定量の굴복累積
+LOCAL = 0
+SIF PALAM:굴복 >= (20000 + MARK:굴복각인방지 * 500)
+	LOCAL = 1
+SIF PALAM:굴복 >= (40000 + MARK:굴복각인방지 * 1000) && MARK:굴복각인 == 1
+	LOCAL = 2
+SIF PALAM:굴복 >= (80000 + MARK:굴복각인방지 * 2000) && MARK:굴복각인 == 2
+	LOCAL = 3
+SIF PALAM:굴복 >= (160000 + MARK:굴복각인방지 * 4000) && MARK:굴복각인 == 3
+	LOCAL = 4
+SIF PALAM:굴복 >= (320000 + MARK:굴복각인방지 * 8000) && MARK:굴복각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:굴복각인
+	MARK:굴복각인 = LOCAL
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	FONTBOLD
+	PRINTFORM %MARKNAME:2%{LOCAL}
+	FONTREGULAR
+	PRINTFORML を取得した
+	PRINTL 
+ENDIF
+
+;공포각인　一定量の공포累積
+LOCAL = 0
+SIF PALAM:공포 >= (20000 + MARK:공포각인방지 * 500)
+	LOCAL = 1
+SIF PALAM:공포 >= (40000 + MARK:공포각인방지 * 1000) && MARK:공포각인 == 1
+	LOCAL = 2
+SIF PALAM:공포 >= (80000 + MARK:공포각인방지 * 2000) && MARK:공포각인 == 2
+	LOCAL = 3
+SIF PALAM:공포 >= (160000 + MARK:공포각인방지 * 4000) && MARK:공포각인 == 3
+	LOCAL = 4
+SIF PALAM:공포 >= (320000 + MARK:공포각인방지 * 8000) && MARK:공포각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:공포각인
+	MARK:공포각인 = LOCAL
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	FONTBOLD
+	PRINTFORM %MARKNAME:3%{LOCAL}
+	FONTREGULAR
+	PRINTFORML を取得した
+	PRINTL 
+ENDIF
+
+;치욕각인　一定量の치정累積
+LOCAL = 0
+SIF PALAM:치정 >= (20000 + MARK:치욕각인방지 * 500)
+	LOCAL = 1
+SIF PALAM:치정 >= (40000 + MARK:치욕각인방지 * 1000) && MARK:치욕각인 == 1
+	LOCAL = 2
+SIF PALAM:치정 >= (80000 + MARK:치욕각인방지 * 2000) && MARK:치욕각인 == 2
+	LOCAL = 3
+SIF PALAM:치정 >= (160000 + MARK:치욕각인방지 * 4000) && MARK:치욕각인 == 3
+	LOCAL = 4
+SIF PALAM:치정 >= (320000 + MARK:치욕각인방지 * 8000) && MARK:치욕각인 == 4
+	LOCAL = 5
+IF LOCAL > MARK:치욕각인
+	MARK:치욕각인 = LOCAL
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	FONTBOLD
+	PRINTFORM %MARKNAME:4%{LOCAL}
+	FONTREGULAR
+	PRINTFORML を取得した
+	PRINTL 
+ENDIF
+
+;PALAM最大値を戻す
+FOR LCOUNT, 0, PALAM종점
+	PALAM:LCOUNT = LIMIT(MAX_PALAM:LCOUNT, PALAM:LCOUNT, MAX_PALAM:LCOUNT)
+NEXT
+
+;PALAM補正をリセットする
+VARSET COMMON_PALAM
+
+;能力の上昇へ
+IF CFLAG:0 != 1 && CFLAG:0 != 4
+	;通常の能力上昇
+	CALL _ABLUP, 0
+ELSE
+	;珠のみ獲得し、上昇処理をスキップする
+	CALL _ABLUP, 2
+ENDIF
+
+;追加パッチここから（공중 촬영 드론）
+;時間切れ/撤退時の処理
+IF TFLAG:98 == 0
+	;행동포인트が1以上の場合、수련Pが少しだけ入る
+	SIF EX:행동포인트 > 0
+		CALL GET_SYUREN, EX:행동포인트
+	;消耗が激しいほど경험치が入る
+	LOCAL = 100 - PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + MAXBASE:성내성 * 10)
+	CALL TENTACLE_LEVEL
+	LOCAL = (RESULT - 2) / ABL:레벨 * LOCAL / 2 + RAND:10
+	;공중 촬영 드론による上昇
+	SIF CFLAG:TARGET:43 == 505
+		LOCAL = LOCAL * 5 / 4
+	CALL GET_EXP,min(LOCAL,150)
+	;クズ市民戦以外なら방위력低下
+	IF FLAG:73 == 0
+		;MIN(0,経過ターン-10)^2 * (8+(撃破ボス数+経過撃破ノルマ)*難易度補正) + [100〜400]
+		;(0〜1600) * (8 + [0〜7]*[2〜5] + [11〜13]*[0.5〜2]) + [100〜400]
+		LOCAL:1 = POWER(MIN(TFLAG:0 - 10, 0), 2)
+		CALL TENTACLE_LEVEL
+		LOCAL:1 = LOCAL:1 * (8 + RESULT) + RAND:101 + MAX(300 - EX:행동포인트 * 20, 100)
+		SIF ENEMY_TYPE_CHECK_F("MOB") == 1
+			LOCAL:1 /= 10
+		SIF LOCAL:1 == 0
+			LOCAL:1 = 1
+		IF FLAG:852 > 0
+			FLAG:852 -= LOCAL:1
+			SIF FLAG:852 < 0
+				FLAG:852 = 0
+			ABS LOCAL:1
+			PRINTFORML 방위력が{RESULT}低下した
+	
+		;방위력が0なら確率で인기도が低下
+		ELSEIF RAND:100 < LOCAL:1 / 50
+			FLAG:853 -= 1
+			SIF FLAG:853 < -100
+				FLAG:853 = -100
+			PRINTFORML 인기도が1低下した
+		ENDIF
+	;クズ市民戦なら救出は失敗
+	ELSE
+		FOR LOCAL,1,CHARANUM
+			SIF CFLAG:LOCAL:71<=-1
+				CFLAG:LOCAL:71=1
+		NEXT
+	ENDIF
+
+	;イベント戦なら特殊ミッションを確認
+	IF FLAG:45 > 0
+		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
+		CATCH
+			;無指定なら敗北時以外はミッション達成
+			RESULT = 1
+		ENDCATCH
+		IF RESULT == 1
+			CALL RAID_MISSION_SUCCESS
+		ELSE
+			CALL RAID_MISSION_FAILURE
+		ENDIF
+	ENDIF
+
+
+
+
+	;戦闘後の임신チェック
+	CALL NINSIN_CHECK_AFTER
+	;変身している場合、変身を解除する(クズ市民戦の場合はイベント側で処理)
+	CALL TRANSFORM, 0
+	;悪堕ち側も解除
+	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
+		CALL TRANSFORM, 0, FLAG:111
+
+	;敗北扱いになる戦闘でなければ
+	;イベント衣装を解除する
+	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
+
+	;ボスと遭遇して未撃破なら確率をリセット
+	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
+		IF FLAG:47 > FLAG:46
+			FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
+		ELSE
+			;探索度上昇
+			LOCAL = 6 + RAND:4
+			PRINTFORML 探索度が{LOCAL}上昇した
+			CALL RESEARCH_PROGRESS, LOCAL
+			PRINTL 
+		ENDIF
+	ENDIF
+;勝利時の処理(雑魚の場合)
+ELSEIF SAVESTR:13 == "MOB" && TFLAG:98 == 1
+	;잡몹적（戦闘あり）の場合
+	CALL GET_EXP_BATTLE
+
+	CALL TENTACLE_SURVIVE, "NUM"
+	LOCAL = RESULT
+	CALL GET_SYUREN, 10 + (EX:행동포인트 * 2)
+	CALL GET_MONEY, (25 + RAND:11) * (5 + RAND:5)
+	;방위력
+	CALL TENTACLE_LEVEL
+	LOCAL = RAND:50 + RESULT / 2 + 50
+	FLAG:852 += LOCAL
+	SIF FLAG:852 < 0
+		FLAG:852 = 0
+	ABS LOCAL
+	PRINTFORM 방위력が{RESULT}
+	IF LOCAL < 0
+		PRINTL 低下した
+	ELSE
+		PRINTL 上昇した
+	ENDIF
+	PRINTL 
+
+	;戦闘後の임신チェック
+	CALL NINSIN_CHECK_AFTER
+	;変身している場合、変身を解除する
+	CALL TRANSFORM, 0
+	;敵の変身も解除する(現状雑魚戦の敵に悪堕ちヒロインは出ないはずだが念のため)
+	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
+		CALL TRANSFORM, 0, FLAG:111
+
+	;イベント衣装を解除する(現状イベントで雑魚戦は発生しないが後のため)
+	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
+
+;勝利時の処理(ボスの場合)
+ELSEIF TFLAG:98 == 1
+	CALL GET_EXP_BATTLE
+	
+	CALL TENTACLE_SURVIVE, "NUM"
+	LOCAL = RESULT
+	CALL GET_SYUREN, 100 + (EX:행동포인트 * 2)
+	CALL GET_MONEY, (25 + RAND:8) * (100 + (FLAG:3 - LOCAL) * (25 + RAND:8))
+	CALL GET_KAKERA, 3
+	;방위력
+	CALL TENTACLE_LEVEL
+	LOCAL = (RESULT + 4) * 50 + 400 + RAND:101
+	FLAG:852 += LOCAL
+	SIF FLAG:852 < 0
+		FLAG:852 = 0
+	ABS LOCAL
+	PRINTFORML 방위력が{RESULT}上昇した
+	PRINTL 
+	;인기도
+	LOCAL = 3
+	FLAG:853 += LOCAL
+	PRINTFORML 인기도が{LOCAL}上昇した！
+
+	;イベント戦なら特殊ミッションを確認
+	IF FLAG:45 > 0
+		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
+		CATCH
+			;無指定なら敗北時以外はミッション達成
+			RESULT = 1
+		ENDCATCH
+		IF RESULT == 1
+			CALL RAID_MISSION_SUCCESS
+		ELSE
+			CALL RAID_MISSION_FAILURE
+		ENDIF
+	ENDIF
+
+	;戦闘後の임신チェック
+	CALL NINSIN_CHECK_AFTER
+	;変身している場合、変身を解除する
+	CALL TRANSFORM, 0
+	;敵の変身も解除する
+	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
+		CALL TRANSFORM, 0, FLAG:111
+
+	;イベント衣装を解除する
+	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
+
+	;エンドレスモードの場合、撃破数と日数経過で期日が短くなる
+	IF GAME_OPTION_CHECK_F(OPTION_endless)
+		CALL TENTACLE_SURVIVE, "NUM"
+		LOCAL = RESULT
+		LOCAL:1 = DAY / 14 + (FLAG:3 - LOCAL) / 10
+		SIF DAY >= 90 || FLAG:3 - LOCAL >= 20
+			LOCAL:1 += 1
+		SIF DAY >= 135 || FLAG:3 - LOCAL >= 40
+			LOCAL:1 += 1
+		SIF DAY >= 180 || FLAG:3 - LOCAL >= 60
+			LOCAL:1 += 1
+		SIF LOCAL:1 >= FLAG:2
+			LOCAL:1 = FLAG:2
+		DAY:1 -= LOCAL:1
+		$LOOP_ENDLESSMODE
+		IF (FLAG:3 - RESULT + 1) * FLAG:2 - DAY + DAY:1 < -1000
+			DAY:1 += 100
+		ELSEIF (FLAG:3 - RESULT + 1) * FLAG:2 - DAY + DAY:1 < -100
+			DAY:1 += 10
+		ELSEIF (FLAG:3 - RESULT + 1) * FLAG:2 - DAY + DAY:1 < 0
+			DAY:1 += 1
+			GOTO LOOP_ENDLESSMODE
+		ENDIF
+	ENDIF
+;敗北時の処理
+ELSEIF TFLAG:98 == 2
+	;敗北したキャラは大量の수련Pと경험치が入る
+	CALL GET_SYUREN, 40 + (EX:행동포인트 * 4)
+	CALL TENTACLE_LEVEL
+	LOCAL = 250 * RESULT/(ABL:레벨 + 2) + RAND:10
+	;ただしクズ市民戦は控えめ
+	IF FLAG:73 > 0
+		LOCAL /= 8
+	ENDIF
+	CALL GET_EXP,min(LOCAL,750)
+	
+	;방위력
+	CALL TENTACLE_LEVEL
+	LOCAL = (RESULT + 65 - FLAG:52 * 5) * (TFLAG:0 - 50) - 200 - RAND:51
+	FLAG:852 += LOCAL
+	SIF FLAG:852 < 0
+		FLAG:852 = 0
+	ABS LOCAL
+
+	;クズ市民戦なら
+	IF FLAG:73 > 0
+		;「女の子が一人拉致されただけ」(建物などに被害は出ていない)
+		;なので방위력低下は少ない
+		RESULT /= 8
+		;救出は失敗
+		FOR LOCAL,1,CHARANUM
+			SIF CFLAG:LOCAL:71==-1
+				CFLAG:LOCAL:71=1
+		NEXT
+	ENDIF
+
+	PRINTFORM 방위력が{RESULT}
+	IF LOCAL < 0
+		PRINTL 低下した
+	ELSE
+		PRINTL 上昇した
+	ENDIF
+	PRINTL 
+	;인기도
+	LOCAL = 3
+	FLAG:853 -= LOCAL
+	PRINTFORML 인기도が{LOCAL}低下した
+
+	;イベント戦なら特殊ミッションを確認
+	IF FLAG:45 > 0
+		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
+		CATCH
+			;無指定なら敗北時はミッション失敗
+			RESULT = 0
+		ENDCATCH
+		IF RESULT == 1
+			CALL RAID_MISSION_SUCCESS
+		ELSE
+			CALL RAID_MISSION_FAILURE
+		ENDIF
+	ENDIF
+
+	;戦闘後の임신チェック
+	CALL NINSIN_CHECK_AFTER
+
+	;ヒロインの変身解除処理
+	;　幽閉されている場合→オプションに準ずる
+	IF CFLAG:0>0
+		;ＴＳするキャラは変身解除しない、クズ市民戦の場合も解除しない
+		IF (TALENT:변신시TS > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
+			;
+		;力尽きても変身解除しないフラグがoffの場合、変身を解除する
+		ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0
+			CALL TRANSFORM, 0
+		ENDIF
+	;　幽閉されていない場合→解除して戦闘前に戻す
+	ELSE
+		CALL TRANSFORM, 0
+		;イベント衣装も解除する
+		CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
+	ENDIF
+
+	;悪堕ちヒロイン側も解除しておく
+	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
+		CALL TRANSFORM, 0, FLAG:111
+
+
+	;ボスと遭遇して未撃破なら確率をリセット
+	SIF (ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1) && FLAG:47 > FLAG:46
+		FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
+	;遭遇率アップ効果をリセット
+	CFLAG:23 = 0
+ENDIF
+
+;ボス(悪堕ち含む)戦かつ勝利できなかった場合、ボスの蓄積ダメージと解析度の情報を保持
+IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && TFLAG:98 != 1
+	RESULT = (FLAG:13 * 1000000 / FLAG:12)
+	FLAG:(300 + FLAG:11) = 1000000 - RESULT
+	FLAG:(300 + FLAG:11) *= 100
+	SIF FLAG:13 * 1000000 % FLAG:12
+		FLAG:(300 + FLAG:11) += 1
+	FLAG:(500 + FLAG:11) = FLAG:20
+ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1 && TFLAG:98 != 1
+	RESULT = (FLAG:13 * 1000000 / FLAG:12)
+	FLAG:(400 + FLAG:11) = 1000000 - RESULT
+	FLAG:(400 + FLAG:11) = 1000000 - RESULT
+	FLAG:(400 + FLAG:11) *= 100
+	SIF FLAG:13 * 1000000 % FLAG:12
+		FLAG:(400 + FLAG:11) += 1
+	FLAG:(600 + FLAG:11) = FLAG:20
+ENDIF
+
+;戦闘支援効果で回復
+IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
+	LOCAL:1 = FLAG:43 * 8
+	;衣装による補正
+	LOCAL = TARGET
+	FOR LOCAL:2,0,CHARANUM
+		SIF LOCAL:2 == MASTER || CFLAG:(LOCAL:2):999 == 0
+			CONTINUE
+		TARGET = LOCAL:2
+		CALL CLOTH_BATTLE_HOSEI, "HEALUP"
+		SIF CFLAG:(LOCAL:2):100 == 106 && RESULT > 0
+			LOCAL:1 = LOCAL:1 * (100 + RESULT) / 100
+	NEXT
+	TARGET = LOCAL
+	LOCAL = MAXBASE:체력
+	LOCAL = LOCAL * LOCAL:1 / 100
+	BASE:체력 = LIMIT(LOCAL + BASE:체력, 0, MAXBASE:체력)
+	LOCAL = MAXBASE:기력
+	LOCAL = LOCAL * LOCAL:1 / 100
+	BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
+	PRINTL 
+	PRINTFORML 戦闘支援効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
+ENDIF
+
+;疲労増加量が残っていれば処理する
+IF TFLAG:99 > 0
+	CFLAG:99 += TFLAG:99
+	RESULTS = {TFLAG:99}
+	TOFULL RESULTS
+	PRINTFORML %PRINT_CALLNAME(TARGET)%の身体の底に疲労が蓄積した……（＋%RESULTS%）
+	TFLAG:99 = 0
+ENDIF
+
+;戦闘終了後のサブイベントへ
+CALL SUBEVENT_BATTLEEND
+
+;사정ゲージ、모유ゲージのリセット
+BASE:사정 = 0
+BASE:모유 = 0
+
+;空中ゲージの最大値を元に戻す
+;重複してゲージを減少させてしまわないよう、この処理は変身解除処理の後に行う必要があるので注意
+CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
+SIF RESULT > 0
+	MAXBASE:공중대시 -= 1
+;입체기동장치の効果###
+SIF CFLAG:TARGET:43 == 510
+	MAXBASE:공중대시 -= 1
+;FEATによる공중대시増加
+SIF TALENT:날개 > 0
+	MAXBASE:공중대시 -= 1
+
+SIF FLAG:45 == 0
+	PRINTW 
+
+;通常戦闘後のレイプ等
+IF CONFIG_CHECK_EVENT_F(3) > 0 && GETBATTLESITUATION("レイプなし") == 0
+	;戦闘終了後のレイプ
+	SIF FLAG:73 == 0
+		CALL AFTER_TRAIN_RAPE,TFLAG:98
+	;動画流出
+	CALL DOUGA_RYUSUTU,RESULT
+ENDIF
+
+;雑魚戦終了時の処理
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	IF FLAG:100
+		FLAG:10 = 0
+	ELSE
+		FLAG:10 = 1
+	ENDIF
+ENDIF
+
+;その他の플래그를初期化
+VARSET TCVARn
+;追加責め関係の플래그를折る
+VARSET EX_COM
+VARSET SH_COM
+VARSET INSERT
+;拡張度関係の플래그를折る
+VARSET TENTACLE_SIZE
+VARSET TENTACLE_NUM
+FLAG:73 = 0
+
+;人類社会にヒロインが残されていなければ全滅エンド
+SIF CHARANUM_SAFE()+CHARANUM_ENSLAVED() == 0 && !GAME_OPTION_CHECK_F(OPTION_solo) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0 && CHECK_GAMEOVER_F() == 0
+	CALL ENDING_1
+
+;パーティー内の女性が全員クズ市民に監禁された
+SIF CHARANUM_ENSLAVED() == (CHARANUM-1)-CHARANUM_MANLY()
+	CALL UNLOCK_ACHIEVEMENT(278,"所詮はハメ穴に過ぎない")
+
+
+
+BEGIN TURNEND

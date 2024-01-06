@@ -1,0 +1,166 @@
+﻿;---------------------------------------------------------------------
+;ボス襲撃イベント
+@EVENT_BATTLE_EXEC_3002
+
+
+;사지결손なら無条件幽閉される(戦闘発生ごとイベントキャンセル)
+;夜襲とは限らないけど、とりあえず間借り
+;＠未移植コードの都合で欠損かつ번식자루でない状態がまだ存在せ半分くらいデッドコード、追って追加する
+IF TALENT:TARGET:번식자루 > 0 || TALENT:TARGET:사지결손 > 0
+	IF TALENT:TARGET:번식자루 > 0
+		PRINTFORML %PRINT_CALLNAME(TARGET)%は部屋で意識を失ったまま横たわり、突然の大音響に対して何の反応も示さない。
+	ELSE
+		PRINTFORML 部屋の中で力なく横たわっていた%PRINT_CALLNAME(TARGET)%は、突然の大音響に驚く。
+	ENDIF
+	PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%PRINT_CALLNAME(TARGET)%をさらなる衝撃が襲い、
+	PRINTFORML 電線がショートする火花とともに一瞬照明が落ち、非常灯に切り替わる。
+	FORCEWAIT
+	IF TALENT:TARGET:번식자루 < 1
+		PRINTFORM 異変に気付く事も無い
+	ELSE
+		PRINTFORM ベッドから動けない
+	ENDIF
+	PRINTFORM %PRINT_CALLNAME(TARGET)%に
+	IF CHARANUM_SAFE() == 1
+		PRINTFORM 外の世界に警告する方法はなく、助けが来る気配もない。
+	ELSE
+		PRINTFORML 外の世界に警告する方法はなく、ただ仲間%CHARANUM_SAFE()>=3 ? "達" # ""%を待つことしかできない。
+	ENDIF
+
+	PRINTFORML 次の瞬間、%PRINT_CALLNAME(TARGET)%のすぐ傍で壁が崩落し――
+	PRINTW 
+	PRINTFORML ――ヌ　メ　リ
+	PRINTFORM という音と共に現れた촉수
+	SIF TALENT:번식자루 == 0
+		PRINTFORM に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
+	PRINTL
+	PRINTFORML それは――"人類の敵"、촉수生物。
+	PRINTFORML その巨体がズズンと地響きを起こしながら、目の前の闇から姿を現そうとしている！
+	PRINTFORML 光の届かない暗闇から、その巨体が轟音を立てて現れた！
+	PRINTW 
+	PRINTFORML 抵抗など不可能だった。
+	PRINTFORML 動けない%PRINT_CALLNAME(TARGET)%の身体は無数の촉수に捕らえられ、ズルズルと虚空へ引き込まれてゆく。
+	PRINTFORML 彼女を待ち受ける未来は、間違いなく촉수の번식자루としての運命だろう……
+	PRINTL
+	SETCOLOR 150,0,0
+	FONTBOLD
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수生物に拉致されました
+	FONTREGULAR
+	RESETCOLOR
+	CFLAG:TARGET:0 = 9
+	;TALENT:TARGET:훼멸초계시 = 0
+	TALENT:TARGET:묘상화 = 1
+	;一応
+	EXP:유폐경험++
+	BEGIN TURNEND
+ENDIF	
+
+
+IF CFLAG:100 == 102
+	PRINT 鍛錬を終えたばかりの
+ELSEIF CFLAG:100 == 103
+	PRINT 自室に居た
+ELSEIF CFLAG:100 == 104
+	PRINT 特別活動を終えて戻った
+ELSEIF CFLAG:100 == 106
+	PRINT 戦闘支援を行っていた
+ELSEIF CFLAG:100 == 107
+	PRINT 情報収集を終えて戻った
+ELSEIF CFLAG:100 == 108
+	PRINT 自由行動を終えて戻った
+ENDIF
+SIF CFLAG:100 == 106
+	CFLAG:100 = 103
+IF TALENT:주관시점 > 0
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとする。
+ELSE
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとした。
+ENDIF
+
+PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%PRINT_CALLNAME(TARGET)%をさらなる衝撃が襲い、
+PRINTFORML 電線がショートする火花とともに一瞬照明が落ち、非常灯に切り替わる。
+PRINTL 
+;右クリックに備えてフォースウェイト
+FORCEWAIT
+IF CHARANUM_SAFE() == 1
+	PRINTFORML このままでは危ない、何とか外部と連絡を取らなければ…！
+ELSE
+	PRINTFORM このままでは危ない、何とか仲間
+	SIF CHARANUM_SAFE() >= 3
+		PRINT たち
+	PRINTFORML と連絡を取らなければ…！
+ENDIF
+PRINTFORML そう思って%PRINT_CALLNAME(TARGET)%が立ち上がったそのとき！
+PRINTFORML すぐ傍で壁が崩落し――
+PRINTW 
+PRINTFORML ――ヌ　メ　リ
+PRINTFORML という音と共に現れた촉수に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
+PRINTFORML 見間違えるはずもない――"人類の敵"、촉수生物。
+PRINTFORML その巨体がズズンと地響きを起こしながら、目の前の闇から姿を現そうとしている！
+PRINTW 
+PRINTFORML 突然の襲来に驚き戸惑いながらも、
+PRINTFORML %PRINT_CALLNAME(TARGET)%は咄嗟に距離を取って촉수の一撃を避わした。
+PRINTFORML ――まさか自分を狙ってきたのだろうか？
+PRINTW 
+IF CHARANUM_SAFE() == 1
+	PRINTFORML 頼れる相手は他に居らず、逃げようにも退路は塞がれている。
+	PRINTFORML もし自分がここで捕まってしまったら――
+;仲間は出撃中
+ELSEIF CHARANUM_SAFE() - FLAG:41 < 2
+	PRINTFORML 仲間は出払っていて、今この場で対応できるのは自分しか居ない。
+	PRINTFORML もし皆が戻ってくる前に捕まってしまったら――
+ELSE
+	PRINTFORML 仲間が駆けつけてくるまで、何とか時間を稼ぐしかない。
+	PRINTFORML いや、もしも皆が既に捕まっていたら――
+ENDIF
+
+PRINTL 
+PRINTFORML （襲撃イベント中は撤退できません！　何とか１５ターン耐えてください！）
+PRINTW 
+DRAWLINE
+턴상한=15
+CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,耐久戦")
+
+
+@EVENT_BATTLE_MISSION_CHECKER_3002
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;負けなかったら達成の場合
+	IF TFLAG:98 == 2
+		RETURN 0
+	ELSE
+		RETURN 1
+	ENDIF
+
+@EVENT_BATTLE_SUCCESS_3002
+;	PRINTFORML %PRINT_CALLNAME(TARGET)%の活躍により、多数の生存者を助け出すことができた。
+;	;ニュース記事に
+;Sif !FLAG:60
+;	FLAG:60=110000+FLAG:45
+
+@EVENT_BATTLE_FAILURE_3002
+	;;幽閉されてはいないがミッションには失敗した
+	;IF TFLAG:98 != 2
+	;	PRINTFORML 
+	;;負けた
+	;ELSE
+	;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	;ENDIF
+
+	;PRINTFORML 多数の生存者とともに女子高は汚染区域として放棄された……
+	;PRINTW 
+	;PRINTFORML 　救出ミッションに失敗しました……
+	;;ニュース記事に
+	;Sif !FLAG:60
+	;	FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+@EVENT_BATTLE_FLASHNEWS_3002(ARG)
+;;ミッション成功
+;IF ARG==1
+;;	RESULTS'="お手柄！ 女子高襲う촉수生物を撃退、可憐な魔法少女に女生徒ら感謝の声"
+;;ミッション失敗
+;ELSEIF ARG==0
+;	RESULTS'="女子高が촉수生物の襲撃で壊滅、女生徒ら多数残されたまま汚染区域に認定へ…"
+;;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+;ELSEIF ARG==-1
+;	RESULTS'=""
+;ENDIF

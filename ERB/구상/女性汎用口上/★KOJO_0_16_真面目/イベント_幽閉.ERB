@@ -1,0 +1,906 @@
+﻿
+
+;初めての幽閉
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_FIRST_16
+	;皮膚を舐める感触。
+	;反射的に粟立った肌　一気に覚めた目に飛び込んできたのは
+	;卑猥な姿勢で拘束された自分の身体　周囲全てを埋め尽くし、自分の身体を這い回る촉수が集まった肉壁…！→
+
+PRINTFORML 「……うぁ、ぁ……っ！？」
+PRINTFORML  薄暗闇に目が慣れると、視界の全ては蠢く촉수で埋め尽くされていた。
+PRINTFORML  逃れようにも손발は半ばからぬらつく肉の壁に埋め込まれ、
+PRINTFORML  肢体を覆うべきものは全て破り取られていた。
+PRINTFORML  半狂乱で身を捩る%PRINT_TRANSCALLNAME(TARGET)%を取り囲むように、無数の촉수が持ち上がった。
+PRINTFORML 「ひっ……？！ や、め……やだ、あっち……いって…よ……！」
+PRINTFORML  女性としての本能的な공포から、思わずか細い声を震わせてしまう。
+PRINTFORML  弱弱しいその態度に反応したのか、촉수は%PRINT_TRANSCALLNAME(TARGET)%に殺到し始める……
+if TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:봉사정신 >= 3 || ABL:촉수중독 >= 2
+	PRINTFORML  押し包む촉수の中、%PRINT_TRANSCALLNAME(TARGET)%の腰が痺れそうなほど何かを期待していたのもまた事実だった……
+endif
+
+;二度目以降の幽閉後の初被姦
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_START_16
+	;深い意識の遮断から目が覚め、肌を這い回る感触
+	;捕らえられてしまったことを思い出した→
+
+;思わず期待
+IF TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:봉사정신 >= 3 || ABL:촉수중독 >= 2
+	PRINTFORML 「あ……ぁああぁ……」
+	PRINTFORML  生暖かく、おぞましいはずの臭気が鼻を突く。
+	PRINTFORML  손발は大の字に広げられ、半ばまで肉壁に飲み込まれている。
+	PRINTFORML  今の%PRINT_TRANSCALLNAME(TARGET)%にとって、촉수の放つ精臭は媚薬そのものだった。
+	PRINTFORML  もう中毒になって久しいほど嗅いだ臭いに、%PRINT_TRANSCALLNAME(TARGET)%の身体は早くも反応を始めていた……
+	PRINT  隠すべきところは無防備に突き出され、生臭い瘴気に触れた乳首がピンと張り詰め、
+	IF TALENT:후타나리 > 0
+		PRINTFORML 후타나리の肉棒が反り返る。
+	ELSE
+		PRINTFORML 恥ずかしい陰核が脈打つ。
+	ENDIF
+	PRINTFORML  開発されきった膣道は촉수の征服を求めて疼き、
+	PRINTFORML  卵巣は早くも배란の準備を始めて震える……
+	PRINTFORML 
+	IF CHARANUM_ACTIVE()>0
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%にできるのは、仲間の助けが来るまで耐え続けることだけだ。
+		PRINTFORML 
+		PRINTFORML  仲間は絶対に来てくれる。だが、%PRINT_TRANSCALLNAME(TARGET)%が正気を失った肉塊に成り果てるのと、
+	ELSE
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%にできるのは、いつか来る脱出の機会を信じて耐え続けることだけだ。
+		PRINTFORML 
+		PRINTFORML  好機は絶対に訪れる。だが、%PRINT_TRANSCALLNAME(TARGET)%が正気を失った肉塊に成り果てるのと、
+	ENDIF
+	PRINTFORML  はたして、どちらが早いだろうか……
+
+	;촉수의포로取得後
+	IF TALENT:촉수의포로
+		PRINTFORML  既に灼けるような발정に喉を鳴らし、
+	ELSE
+		PRINTFORML  獲物の肌を執拗に撫でる촉수を弱々しく睨み、虚勢を張って
+	ENDIF
+	PRINTFORML  おぞましくも素晴らしい、肉の淫獄を받아들인다ことしかできなかった……
+;嫌悪感
+ELSE
+	PRINTFORML 「う…ぐ……ぁああ……」
+	PRINTFORML  生暖かく、おぞましい臭気が鼻を突く。
+	PRINTFORML  嫌というほど嗅いだ臭いに、%PRINT_TRANSCALLNAME(TARGET)%は自らの置かれた状況を理解した。
+	PRINTFORML  손발は大の字に広げられ、半ばまで肉壁に飲み込まれている。
+	PRINT  隠すべきところを突き出され、生ぬるい空気に張り詰めた乳首が、
+	IF TALENT:후타나리 > 0
+		PRINTFORML 후타나리の肉棒が反り返る。
+	ELSE
+		PRINTFORML 恥ずかしい陰核が脈打つ。
+	ENDIF
+	IF CHARANUM_ACTIVE()>0
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%にできるのは、仲間の助けが来るまで耐え続けることだけだ。
+		PRINTFORML 
+		PRINTFORML  仲間は絶対に来てくれる。だが、%PRINT_TRANSCALLNAME(TARGET)%が正気を失った肉塊に成り果てるのと、
+	ELSE
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%にできるのは、いつか来る脱出の機会を信じて耐え続けることだけだ。
+		PRINTFORML 
+		PRINTFORML  好機は絶対に訪れる。だが、%PRINT_TRANSCALLNAME(TARGET)%が正気を失った肉塊に成り果てるのと、
+	ENDIF
+	PRINTFORML  はたして、どちらが早いだろうか……
+
+	PRINTFORML  獲物の肌を執拗に撫でる촉수を睨み、虚勢を張って
+	PRINTFORML  おぞましくも素晴らしい、肉の監獄を받아들인다ことしかできなかった……
+ENDIF
+
+
+
+
+
+
+;幽閉後の被姦開始文　陥落後も呼ばれる
+;--------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_16
+;洗脳
+IF CFLAG:0 == 상태_세뇌 && CHECK_GAMEOVER_F() == 1
+	;洗脳され、逆らうことを許されない　虚ろな目をしながら自ら脚を開き、凌辱を受け入れた
+;悪堕ち
+ELSEIF CFLAG:0 == 상태_흑화 && CHECK_GAMEOVER_F() == 1
+	;自ら촉수の孕み妻となった　期待に瞳を潤わせながら、媚びるような表情で跪いて
+	;手近な촉수を引き寄せ　上目づかいで種付けを懇願
+;取り込まれ(ロスト)
+ELSEIF CFLAG:0 == 상태_사망 && CHECK_GAMEOVER_F() == 1
+	;촉수に取り込まれ、肉壁に同化しつつある　壊れた人形のように力なくうなだれている・・・
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+	;完全に快楽に屈した
+	;凌辱されることに至上の幸福を感じている
+
+	PRINTDATAL
+	DATAFORM 「あぁ、早く、来てぇ！ もっときもひいいの、もっとッ！」
+	DATAFORM (ああ……もっと、きもちよく……)
+	DATAFORM (%SELF_CALL()%もう……もう、化け物を恋しく感じてる……！)
+	DATAFORM 「あぁぁ……はやく、はやく%SELF_CALL()%を壊してっ！」
+	ENDDATA
+	PRINTFORML  少女が、いや少女の形をした雌便器が蕩けきった声を上げる。
+	PRINTFORML  촉수によって完全に造り替えられた%PRINT_TRANSCALLNAME(TARGET)%の心と体
+	PRINTFORML  촉수と戦っていたのは、こうして完膚なきままに敗北し、捕えられ、蹂躙されるためだったのかもしれない。
+	PRINTFORML  情欲に震える身体を押し包んでいく촉수を、%PRINT_TRANSCALLNAME(TARGET)%は口元を緩ませ見つめていた……
+
+;抵抗中
+ELSEIF CFLAG:31 < 6 && CHECK_GAMEOVER_F() == 0
+	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;★あっさりと快楽に屈してされるがままになっている
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;★与えられる快楽に辛うじて理性を保っている
+	ELSE
+		;凌辱で疲弊しつつも、まだ完全に脱出を諦めていない
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「んっ、ぐ……っぶ……っふう、う゛ぶぅぅ……」
+			PRINTFORML  瘴気に満ちた肉の洞窟。おぞましい촉수の異臭が囚われた獲物を包み、
+			PRINTFORML  呼吸するだけで身体の内から力を奪ってゆく。
+			PRINTFORML  肉の壁に飲まれた손발は指一本自由に動かせず、
+			PRINTFORML  喉に流し込まれる촉수の体液を拒む力も残っていない。
+			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の女性としての尊厳は奪い去られて久しく、
+			PRINTFORML  身体を蹂躙される合間にも、こうして穴という穴へ体液を注がれ続けている。
+			PRINTFORML  いっそ굴복し、絶頂と기절だけを繰り返す雌になった方が楽かもしれない。
+			PRINTFORML  何度目かも分からない精液を飲まされながら、
+			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%はそんな夢想すら覚えてしまう。
+			PRINTFORML  あと何日耐えれば終わりがくるのだろうか。
+			PRINTFORML  窒息しそうな量の粘液を喉に受けつつ、%PRINT_TRANSCALLNAME(TARGET)%の意識は再び薄れていった。
+		CASE 1
+			PRINTFORML 「ぅぶ、えぐ……おぇぇ……」
+			PRINTFORML  半開きの口から、촉수の精液が逆流した。
+			PRINTFORML  朦朧とした%PRINT_TRANSCALLNAME(TARGET)%の口に、鼻に、촉수が押し付けられ
+			PRINTFORML  おぞましい臭いの汚泥にも似た精液を、溢れてもなお注ぎ込んでいく。
+			PRINTFORML  幽閉されてからというもの、ほとんど常に精液の臭いを嗅いでいる。
+			PRINTFORML  このままでは、遠からず他の臭いを忘れてしまいそうだった。
+		CASEELSE
+			PRINTFORML 「ぅ……ぁ……えあ……あ……？」
+			PRINTFORML  悪夢を見ていた。
+			PRINTFORML  촉수の怪物に敗北し、護りたい人々の前で痴態を晒され、穴という穴を蹂躙される夢だった。
+			PRINTFORML  意識の戻った%PRINT_TRANSCALLNAME(TARGET)%は身震いし、自身を囲む촉수を目にした。
+			PRINTFORML  脈打つ촉수が身体に精を放ち、%PRINT_TRANSCALLNAME(TARGET)%の美しい柔肌を粘液が塗り潰してゆく。
+			PRINTFORML  精臭に反応して脱力する中で、%PRINT_TRANSCALLNAME(TARGET)%は夢よりも悪い現実を思い出した。
+			PRINTFORML 「あ、は、あははっ……」
+			PRINTFORML  股間に何本もの촉수が迫り、悪夢の続きが始まろうとしている……
+		ENDSELECT
+	ENDIF
+;苦しい
+ELSEIF CFLAG:31 < 12 && CHECK_GAMEOVER_F() == 0
+	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망)
+		;★長期間に渡って快楽を注ぎ込まれ続け、正常な思考を失いつつある
+	ELSE
+		;度重なる凌辱によって希望を失いつつある
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「んっ、ぅ……ぅあ……はあ、っぐ……」
+			PRINTFORML  光すら差さない生温い肉の洞窟。空気は촉수の異臭のみが生臭く澱み
+			PRINTFORML  捕えられてからいったい何日経ったのか計り知ることもできなかった。
+			PRINTFORML  손발は肉の壁に飲み込まれ、逃れるどころか動くことすら叶わない。
+			PRINTFORML  餌は流し込まれるおぞましい味と鼻が曲がりそうな臭気の촉수の体液、
+			PRINTFORML  排泄物さえ尿道と尻穴から直接촉수が貪り喰らい、%PRINT_TRANSCALLNAME(TARGET)%の自由になることは
+			PRINTFORML  何一つ無かった。%PRINT_TRANSCALLNAME(TARGET)%に許されることは身体を蹂躙され、体液を注がれ、
+			PRINTFORML  動物の様に啼き叫び、絶頂の果てに次の陵辱まで기절することだけだった。
+			PRINTFORML  股がぬらつく。
+			PRINTFORML  昨日か、さっきか、いつか注がれた精液の溢れ垂れ落ちる感触に
+			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は小さく身震いした。
+		CASE 1
+			PRINTFORML 「ぅぶ、うぐ……ぐえ……」
+			PRINTFORML  半開きの口から、촉수の精液が逆流した。
+			PRINTFORML  朦朧とした%PRINT_TRANSCALLNAME(TARGET)%の口に、鼻に、촉수が押し付けられ
+			PRINTFORML  おぞましい臭いの汚泥にも似た精液を、溢れてもなお注ぎ込んでいく。
+			PRINTFORML  唯一の餌は甘美な절망の味がしていた。
+		CASEELSE
+			PRINTFORML 「ぅぁ……あ、ぁえあ……あ……？ あ、ああ……」
+			PRINTFORML  おぞましい夢を見ていた。
+			PRINTFORML  촉수の怪物に囚われ、陵辱の限りを尽くされ、永遠の闇に繋ぎ止められる夢を。
+			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は身震いし、震える唇からでろりと汚濁液を吐きこぼした。
+			PRINTFORML  生暖かくぬめり脈打つ촉수が肌を這いずり回り、粘液が肌を穢す。
+			PRINTFORML  夢と同じ味に、%PRINT_TRANSCALLNAME(TARGET)%は夢が夢でないことをまた思い出した。
+			PRINTFORML  そして夢の続きが始まる……
+		ENDSELECT
+	ENDIF
+;陥落寸前
+ELSE
+	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;★ついに快楽の許容量を超えてしまった　壊れたような笑みを浮かべ、自ら凌辱を懇願
+	ELSE
+		;なおも陵辱され続ける　生気のあせた瞳で虚空を見詰め続けている
+	ENDIF
+ENDIF
+
+
+
+
+
+
+
+;C中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_0_16
+	;結界ガードあり
+	;Ｂ絞り
+	;非처녀ならＶ快楽
+	;Ａ浣腸
+	;ＰコキorＣ巻き上げ吸い
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「ひっ、ひぅっ、ひっ、はっ、ァ……く、うぅぐぅうっ！」
+		PRINTFORML  細い촉수に陰核を括り出され、吸い付いた촉수に釣り上げられる%PRINT_TRANSCALLNAME(TARGET)%
+		PRINTFORML 「とれるッ！ やめッ、はっ、っぐ、ひっ、ィ゛……ッ！！」
+		PRINTFORML  きりきりと引き上げられ、腰を高々と釣り上げられた獲物の金切り声が響いていた……
+	CASEELSE
+		PRINTFORML 「ひっ、ひぃっ！ もっ、もう……もうやめて……っ！」
+		PRINTFORML  ブラシのような繊毛がついた촉수に、赤く腫れ上がった陰核を磨き上げられる%PRINT_TRANSCALLNAME(TARGET)%
+		PRINTFORML 「や、やめ゛ッ！ おがじぐなる、私のクリがお゛がじぐな゛っち゛ゃうぅ……ッ！！」
+		PRINTFORML  もはや抵抗する術を持たない%PRINT_TRANSCALLNAME(TARGET)%には無様に腰を突き上げることしかできなかった……
+ENDSELECT
+
+
+;V中心快楽攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_1_16
+;二つ折り宙吊りor尻を突き出す姿勢
+IF RAND:3 == 0 && SHIELD:1 <= 0
+	;両穴ボコォ
+	IF EXP:A경험 > 0 && SHIELD:2 <= 0
+	;子宮責め
+	ELSE
+	ENDIF
+	;強烈な快楽、窒息寸前になりながら喘ぐなどランダム
+	;→
+	IF TALENT:촉수의포로 || ABL:욕망 >= 3
+		;抉られる快楽に涎を垂らして喘ぐ
+	ELSE
+		;無様に涎を垂らして喘ぐ
+	ENDIF
+;V결계ならＣＶ擦り
+ELSE
+
+ENDIF
+
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTDATAL
+	DATAFORM 「あぁぁぅッ！ %SELF_CALL_SINGLE()%、%SELF_CALL(7)%っ、私を、%SELF_CALL(7)%をはやく孕ませてくださいっ！」
+	DATAFORM 「あぁぁぁッ！ は、やく、はやくっ、私にッ、촉수ザーメン、うあぁぁッ！？」
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「ひぃっ！ 嫌よ、嫌よ嫌よぁっ！ もう許して、許してぇっ！」
+	DATAFORM 「おねが、やめっ、化け物、の、赤ちゃん……孕ま、され、ひっ、ひぅぅうッ！？」
+	ENDDATA
+ENDIF
+PRINTFORML  絶叫が意味を成さないただの啼き声になった頃、%PRINT_TRANSCALLNAME(TARGET)%の最奥でおぞましい液体が弾けた。
+
+
+;A中心侵入攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_2_16
+	;結界時は間接的な接触の感触のみ
+	;非처녀で可能ならＶ複合
+	;尻肉を震わせながら悶える→
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「ん゛あぁ゛おおぉ……きたっ、おぢりぎだぁぁぁっ！！」
+ELSE
+	PRINTFORML 「ん゛おぁ゛ああぁ……お、おぐっ、おひっ、おひりいぃぃ！」
+ENDIF
+PRINTFORML  排泄器官から押し込まれ、体内を突きあげられていく異物感に、絶叫が苦しげに濁り始めた。
+PRINTFORML  詰め込まれていく촉수で、%PRINT_TRANSCALLNAME(TARGET)%の腹は次第に醜く、歪に膨れ上がっていく……
+PRINTFORML 「ぁ゛がっ、あ゛……ぐ、う゛ぐ……っぐぶ、っぐぎ……？」
+PRINTFORML  圧迫感はさらに上昇していき、耐え難い嘔吐感が限界に達した時、
+PRINTFORML  食道を逆流してきた촉수が、%PRINT_TRANSCALLNAME(TARGET)%の口腔を内側から突き回し、
+PRINTFORML  舌に、頬に、異様な味の粘液を塗りこめて蠢きはじめた。
+PRINTW  そして
+PRINTFORML  くぐもった呻き声を上げる口をこじ開けて野太い촉수が這いずり出し、
+PRINTFORML  体内を征服した証とばかりに、完全に白目を剥いて痙攣する%PRINT_TRANSCALLNAME(TARGET)%の肢体を、
+PRINTFORML  黄濁し異臭を放つ大量の精液で彩った。
+
+
+;B中心攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_3_16
+	;全身拘束　B결계방어orＢ巻き擦りで甘い吐息
+	;続けてＭ、非처녀やＶＡ可能なら下半身も
+;촉수의포로取得後
+IF TALENT:촉수의포로 
+	PRINTDATAL
+	DATAFORM 「ん゛お゛ぉぉおぉっ、む゛ね゛、む゛ねぇへぇぇーッ、お゛おぉぉぉぉッ！！」
+	DATAFORM 「ぉ゛おおおおおおっ！ 搾ってッ、私の胸、もっと搾ってぇぇぇっ！」
+	ENDDATA
+	IF TALENT:모유체질
+		PRINTFORML  醜く膨らんだ乳房を촉수が歪めると、勃起しきった乳暈、野太い乳首の乳腺から
+		PRINTFORML  どろりと粘性の濃い母乳が사정でもするかのように迸った。
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は文字通りに촉수の糧とされながら、搾乳快楽に骨の髄まで染まっていく……
+	ELSE
+		PRINTFORML  乳首を摘まれ腰を突き上げ啼き叫ぶ%PRINT_TRANSCALLNAME(TARGET)%の姿は、乳が出ないことを除けば牝牛に他ならなかった……
+	ENDIF
+ELSE
+	PRINTDATAL
+	DATAFORM 「お゛おぉぉッ！ %SELF_CALL_SINGLE()%っ、%SELF_CALL()%っ、牝牛なんかじゃ……なっ、あっ、あ……ッ！」
+	DATAFORM 「や、やめっ……胸なんて、私……んぉぉっ、お゛おぉぉッ！」
+	ENDDATA
+	IF TALENT:모유체질
+		PRINTFORML  言葉とは裏腹に、はちきれんばかりに母乳を蓄えた乳房を촉수が歪めると
+		PRINTFORML  勃起しきった乳暈、野太い乳首の乳腺から飲ませる相手もいない母乳が
+		PRINTFORML  噴水のように撒き散らされていった。
+	ELSE
+		PRINTFORML  四つん這いに固定され、牛が乳搾りを受けるように胸を吸われ続ける%PRINT_TRANSCALLNAME(TARGET)%
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%が乳牛に成り果てるのも、そう先のことではないだろう……
+	ENDIF
+ENDIF
+
+
+;Sな攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_4_16
+	;パターン①　締め上げ→鞭打ち
+	IF ABL:마조끼 >= 2
+		;柔肌に幾筋もの赤い痕、被虐的な悦び
+	ELSE
+		;痛みに叫ぶ　柔肌に幾筋もの赤い痕
+	ENDIF
+	;パターン②　首絞め宙吊り
+	;首元を容赦なく締め上げ、空中に持ち上げ　呼吸困難と喉を潰される痛みで必死にもがく
+	;宙吊りの状態で首元の촉수を掴んで涎を垂らしながら、ひたすら脚をじたばた
+	;反応が薄くなって意識を失う寸前で拘束が解かれ、地面に崩折れて何度も咳き込み続けているともう一回
+
+	IF ABL:마조끼 >= 2
+		;強すぎる고통快楽にピクピクと痙攣
+	ELSE
+		;完全に抵抗する気概を失ってピクピクと痙攣
+	ENDIF
+
+	;無防備なＶＡまたは全身に촉수が殺到、穴という穴を→
+
+PRINTFORML 「ぎゃひいぃぃぃぃッ？！」
+PRINTFORML  鞭打ちに耐え切れず意識を手放した%PRINT_TRANSCALLNAME(TARGET)%は絶叫をあげて叩き起こされた。
+PRINTFORML  細い촉수に包皮を剥き上げられ露わになった陰核に、バチバチ青白い閃光を放つ촉수が押し付けられる。
+PRINTFORML 「ぴぎぃぃぃぃいッ？！」
+PRINTFORML  すさまじい衝撃に、拘束された肢体が滅茶苦茶に날뛴다。
+PRINTFORML 「ぎゃぅ゛！？ がはッ！ ひぎゃッ！ や゛ッ！ がッ……げぇあっ！」
+PRINTFORML  流し込まれる電流に濁りきった絶叫をあげて踊る%PRINT_TRANSCALLNAME(TARGET)%
+PRINTFORML  でたらめに突き出される乳首に、陰核に、放電する촉수が断続的に押し当てられ
+PRINTFORML  哀れな踊り子の舞は激しさを増していく……
+
+
+;強制奉仕
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_5_16
+	;可能ならＶＡ
+	;身動きのとれない
+	;口元に촉수が突き出される→
+	IF TALENT:촉수의포로 || ABL:순종 >= 3
+		;鼻につく濃厚な体液、황홀とした表情で知らず口を開けてしまう
+		;一気に口内に侵入するとストロークを開始
+		;激しい行為に涎を撒き散らしながら、惚けた表情でくぐもった声を漏らす
+	ELSE
+		;必死に唇を閉じて抵抗するが、ぐにぐにと力任せに擦り付けられる촉수をいつまでも防ぐ事はできず、
+		;ついには侵入を許してしまう　激しい行為に目に涙を浮かべて表情を歪める
+	ENDIF
+PRINTFORML 「がぼっ、ぉ゛ぶ……ぅ、うぶっ、むぐ……うぐ、む゛ぐううぅうッ！」
+PRINTFORML  ひとしきり口腔を蹂躙した촉수は大きく脈打ち、おぞましい精液を迸らせた。
+PRINTFORML  粘膜にこびりつき、飲み込むことすらむずかしい精液が最初の사정で口腔に爆ぜ
+PRINTFORML  二発目で頬が膨らむほど口を満たし、三発目が無理やり喉に詰め込んでいく。
+PRINTFORML  半ば白目を剥いて震える%PRINT_TRANSCALLNAME(TARGET)%の口の端から、鼻から、濁液が溢れだした。
+
+
+;羞恥な攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_6_16
+	;④目の前で犯される女性　捕まりたて、처녀貫通式　罵倒も懇願も無駄
+	IF TALENT:촉수의포로 || ABL:욕망 >= 3
+		;見つめながら、羨ましそうに濡れた股を擦り合わせ
+	ELSE
+		;己の無力さに唇を噛み締めて
+	ENDIF
+
+	IF TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:노출벽 >= 2
+		;興奮が抑えられなくなった　早く犯して欲しいと懇願し始める
+	ELSE
+		;悔しさに涙を浮かべる　自身の股間にも幾つもの촉수が取りついており、
+		;ぬちゃぬちゃと卑猥な音を立てて責め立てている
+	ENDIF
+
+SELECTCASE FLAG:900
+;①視界を覆われ過去の凌辱閲覧会
+CASE 1
+	;촉수의포로取得後
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		PRINTFORML 「あ、あぁ……私……最初からこいつら化け物の……」
+		PRINTFORML  生暖かい촉수に顔を覆われた%PRINT_TRANSCALLNAME(TARGET)%の目と耳を陵辱する過去の彼女。
+		PRINTFORML  耳腔にねじ込まれた촉수から響き渡る歓喜の声。
+		PRINTFORML  視界を覆う촉수の見せつける無様な姿。
+		PRINTFORML  どの時とも同じ臭いで鼻腔を犯す臭気に溺れる%PRINT_TRANSCALLNAME(TARGET)%は、
+		PRINTFORML  自分がはしたなく失禁していることすら気づいていない……
+	ELSE
+		PRINTFORML 「嫌よ嫌よ嫌よッ！ こんなの私じゃない！ こんなの絶対私とは違うッ！」
+		PRINTFORML  生暖かい촉수に顔を覆われた%PRINT_TRANSCALLNAME(TARGET)%の目と耳を陵辱する過去の彼女。
+		PRINTFORML  耳腔にねじ込まれた촉수から響き渡る절망の嬌声。
+		PRINTFORML  視界を覆う촉수の見せつける哀れな姿。
+		PRINTFORML  どれほど否定しても、鼻腔を犯す臭気はどの時とも同じ臭いをしていた。
+	ENDIF
+;②目の前で犯される小さな少女　痛みに泣き叫ぶ
+CASE 2
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;見つめながら、羨ましそうに濡れた股を擦り合わせ
+	ELSE
+		;直視できない　思わず目をつぶったが、横から現れた細い촉수が瞼を抉じ開け見ることを強制
+	ENDIF
+;③目の前で犯される女性　白濁ボテ腹　快楽で正気を失いながら悦ぶ
+CASE 3
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;見つめながら、羨ましそうに濡れた股を擦り合わせ
+	ELSE
+		;目を逸らそうとするが、촉수が顔の向きを固定
+		;임신状態で「お前もすぐにこうなるのだ」への反応分岐するとよい
+	ENDIF
+;④目の前で犯される女性　捕まったばかり　처녀貫通式
+CASE 4
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;見つめながら、羨ましそうに濡れた股を擦り合わせ
+	ELSE
+		;目を逸らそうとするが、촉수が顔の向きを固定
+		;임신状態で「お前もすぐにこうなるのだ」への反応分岐するとよい
+	ENDIF
+ENDSELECT
+
+
+
+;子촉수に犯される　産んでいる場合限定
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_7_16
+	IF EXP:근친교배경험 == 0
+		;成長して大きくなったにも関わらず、乳を飲むために乳首に貪りついている
+		;突然押し倒し、陰茎のようになっている部分の先端を股間に擦りつけ始めた
+	ELSE
+		IF TALENT:촉수의포로
+			;母親に甘えるようにすり寄りながらも、陰茎部を大きく勃起させている
+		ELSE
+			;犯すべきメスだと認識するようになったのか　勃起した陰茎部を押し付けてくる
+		ENDIF
+	ENDIF
+	IF TALENT:촉수의포로 || TALENT:음란
+		IF EXP:근친교배경험 == 0
+			;意図を察して優しく微笑みながら自ら身体を開く
+		ELSE
+			;我が子を見て妖しく頬笑み、욕정を子宮で受け止めるべく、自ら身体を開く
+		ENDIF
+		IF EXP:근친교배경험 == 0
+			;幼体とは思えないほど強いストローク
+		ELSEIF EXP:근친교배경험 < 20
+			;深い愛情をもって母親としての顔を崩さない
+			;立派なオスになるよう激励
+		ELSE
+			;すでに母親ではなく孕まされるメスの顔になっている
+			;快楽を貪るのに夢中になっている子촉수に脚を搦めて引き寄せ
+			;연인にするようなディープキスを交わし
+		ENDIF
+		;やがて子촉수が膣奥に精を放つ
+		;脱力した子촉수を誇らしげに撫で
+		IF CFLAG:220 >= 2
+			;次の息子を받아들인다べく白濁液の滴る秘部を広げ
+		ELSE
+			;優しく口づけ
+		ENDIF
+	ELSE
+		;背徳的な悦楽が理性を마비させていき
+		;やがて子촉수が사정、再びor次の子촉수が交尾を開始
+		;何度も中出しされ、ボロ雑巾のように打ち捨てられた
+		IF EXP:근친교배경험 == 0
+			IF ABL:욕망 >= 3
+				;촉수にとって自分は母親ですらなく　単なる肉노예なのだと改めて思い知った
+			ELSEIF ABL:봉사정신 >= 3
+				;膣穴から母子交尾してしまった証である白濁液を垂れ流しながら力なく肩で息
+			ELSE
+				;それでも自分の子の子種で임신することだけは避けようと必死に白濁液を掻き出そうとして
+			ENDIF
+		ELSE
+			IF ABL:욕망 >= 3
+				;完全に理性を見失ったメスの顔　近親交尾の余韻に浸っている
+			ELSEIF ABL:봉사정신 >= 3
+				;自分の子を満足させてあげられた充実感　種付けされた下腹部を静かに撫でた
+			ELSE
+				;白濁液を垂れ流す自身の股間を力なく見つめ　静かに嗚咽
+			ENDIF
+		ENDIF
+	ENDIF
+
+
+
+;후타나리攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_100_16
+	;オナホ촉수の吸引→
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「ん゛おぉおおほぉおッ！ おぉぉぉ、ぁ゛っがぁあ゛っ、あっ、お、おっごぉッ！！」
+	PRINTFORML  微塵も지성の感じられない絶叫と同時に、真っ黄色に濁った精液が半透明の촉수を満たし、
+	PRINTFORML  촉수がずるずると飲み込むのも間に合わず、下腹部を、太ももを汚してこびりつく。
+	PRINTFORML  無数の繊毛は敏感な箇所を柔らかく刺激し、半透明の촉수は生暖かく、ぬめり、吸い付き、
+	PRINTFORML  精を吐いてなお萎えることすらできない%PRINT_TRANSCALLNAME(TARGET)%のペニスを締め上げる。
+	PRINTFORML  涙と涎と鼻水で整っていた顔をぐちゃぐちゃに歪め、白目を剥いた%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML  何度目かすらわからない굴복の証を吐き出した。
+	PRINTFORML 「ぉ゛っごおぉおぉおおッ！ ん゛ぎぃぃいいいッ！ ぁおおおぉぉぉおっ！！」
+;	PRINTFORML  후타나리の快楽に緩みきった%PRINT_TRANSCALLNAME(TARGET)%の尻穴をこじあけ、
+;	PRINTFORML  泥色の大蛇のような汚物が촉수の山の中に産み落とされていく。
+;	PRINT  激しい水流を迸らせて失禁する
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%を支配しているものはもはや촉수ではなく、両性具有の下半身だった。
+ELSE
+	PRINTFORML 「ぉほおぉぉぉおッ！」
+	PRINTFORML  魂消える絶叫と同時に、生黄色い精液が半透明の촉수の中に吐き出され、
+	PRINTFORML  ぢゅるぢゅると飲み込まれていく。無数の繊毛は敏感な箇所を柔らかく刺激し、
+	PRINTFORML  半透明の촉수は生暖かく、ぬめり、吸い付き、
+	PRINTFORML  精を吐いてなお萎えることすらできない%PRINT_TRANSCALLNAME(TARGET)%のペニスを締め上げる。
+	PRINTFORML  逃れようと腰を引くと、絡みつく細い촉수の感触が弾け、2度目の精液が迸った。
+	PRINTFORML  もはや躊躇うことなく腰を前後させる%PRINT_TRANSCALLNAME(TARGET)%の理性は
+	PRINTFORML  精液とともに吐き出されていく……
+ENDIF
+
+
+;V拡張
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_101_16
+	IF EXP:V확장경험 >= 10
+		;度重なる拡張で広がった肉穴　腕ほどの촉수を容易く呑み込んでいく
+		;凌辱の快楽に身悶える
+		;入る異常性に疑問を感じなくなってきている
+	ELSE
+		;息絶え絶えに촉수の攻めを受けていた
+		IF EXP:V확장경험 == 0
+			;見たことのない太さを見せつけられ
+			IF TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:V감각 >= 4 || ABL:마조끼 >= 3
+				;襲い来る快楽を想像して表情の引き攣るヒロインの目の前で
+			ELSE
+				;制止の声を振り切って
+			ENDIF
+			;膣をめりめりと押し広げていく
+		ELSE
+			;見た瞬間に
+			IF TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:V감각 >= 4 || ABL:마조끼 >= 3
+				;察して表情を引き攣らせ　ゆっくり巨大촉수が挿入され
+				;고통より快楽が勝っている様子　愉悦に歯を食いしばる。
+			ELSE
+				;これから何が行われるかを察して蒼白
+				;半狂乱になって制止を懇願する　巨大촉수が膣をめりめりと押し広げて
+			ENDIF
+		ENDIF
+		;ありえない大きさに膨らんだ下腹部に圧迫され
+		;口から空気が声にならない叫びとなって絞り出される
+	ENDIF
+
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「あ、ぁ……また、その太いので……%SELF_CALL(7)%、ぁが、ぅおあぁぁぉッ！？」
+	PRINTFORML  ごくりと唾を飲み込んだ%PRINT_TRANSCALLNAME(TARGET)%の視線の先で、明らかに太すぎる異物がねじ込まれていく。
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の口からは獣じみた絶叫が漏れるが、それは고통から来るものではない。
+	PRINTFORML  めこり、ぼこりと膣を押し広げる촉수が膨れ上がり、腹に醜い畝が浮き上がっていく。
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は自分の体が촉수を悦ばせる肉穴に作り直されていく光景を
+	PRINTFORML  狂喜の声をあげて受け入れていた……
+ELSE
+	PRINTFORML 「ば、ばかッ！ そんなの入るわけ……あ……ぇ……？」
+	PRINTFORML  身体が軋み、息が詰まる。明らかに太すぎる異物がねじ込まれていく。
+	PRINTFORML  圧迫感こそあるものの、恐ろしいことに予想していたはずの고통は無かった。
+	PRINTFORML  めこり、ぼこりと膣を押し広げる촉수が膨れ上がり、腹に醜い畝が浮き上がっていく。
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は自分の体が知っていたそれと別の物に変わっていく光景を
+	PRINTFORML  見つめることしかできなかった。
+ENDIF
+
+
+;A拡張
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_102_16
+	IF EXP:A확장경험 >= 10
+		;大胆な姿勢で尻を突き出したヒロイン
+		;애널に巨大な촉수が挿入され　拡張されきった尻穴は大した抵抗もなく촉수を飲み込む
+		IF TALENT:임신
+			;임신している腹部は更に押し広げられ、人体の限界を超えた大きさにまで膨れ上がり
+		ELSE
+			;人体の限界まで押し広げられた腹部　傍目からも異様な大きさに膨れ上がって
+		ENDIF
+		;ピストンのたびに腸壁が激しく変形、肺から空気が押し出され呼吸もままならない
+		;脳髄を貫き続ける強烈な感覚に悶絶
+		;촉수が満足するまで玩具に
+	ELSE
+		;バックから激しく애널を突き続けられていた
+		IF EXP:A확장경험
+			PRINTFORML 細い촉수の絶え間ない責めでほぐされた%PRINT_TRANSCALLNAME(TARGET)%の尻穴に
+			PRINTFORML 腕よりも太い巨大な촉수がズブズブと挿入されていく。
+		ELSE
+			;ゆっくりと촉수を引き抜かれ、乱れた呼吸を整えようと息を吐いた次の瞬間、
+			;唐突に襲い掛かった激しい衝撃　目を見開いたまま振り返ると、
+			;見たことのない太さの촉수が애널に深々と突き刺さっていた
+		ENDIF
+		IF TALENT:촉수의포로 || ABL:욕망 >= 3 || ABL:A감각 >= 4 || ABL:마조끼 >= 3
+			;肛門を無理やり押し広げられる今まで感じたことのない強烈な고통快楽に
+			;裏返ったような喘ぎ声
+		ELSE
+			;肛門を無理やり押し広げられる고통
+			;泣き叫ぶが、촉수には手加減がなくズンズン突き上げられ
+		ENDIF
+	ENDIF
+
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「ぶごぉぉぉぉぉッ！！」
+	PRINTFORML  獣の姿勢から背を反らせ、%PRINT_TRANSCALLNAME(TARGET)%の濁りきった絶叫が響き渡る。
+	PRINTFORML 「がはッ、ま゛た゛ぁ゛、お゛お゛ぎぃ゛の゛き゛でぇぇッ！ ぶ、ぎっ、イ゛いぃっ！ ぉ゛ごぉおぉお！」
+	PRINTFORML  四つん這いの少女は太すぎる촉수に揺さぶられるまま、絶叫を搾り出されていた。
+	PRINTFORML  なめらかだった腹には醜い畝が盛り上がり、脈打ち、膨れていく。
+	PRINTFORML 「はへ……は、ひ……ひゅ……ひは……ぁ……ああ……ひゅご、ぃぃ……」
+ELSE
+	PRINTFORML 「ふぎぃ゛ぃぃぃぃーッ？！」
+	PRINTFORML  獣の姿勢から背を反らせ、%PRINT_TRANSCALLNAME(TARGET)%の魂消える絶叫が響き渡る。
+	PRINTFORML 「がはッ、ら゛め、う゛ぐ、ぶ、ぎっ、イ゛いぃっ！ ぉ゛ごぉおぉお！」
+	PRINTFORML  四つん這いの少女は太すぎる촉수に揺さぶられるまま、悲鳴を搾り出されていた。
+	PRINTFORML  なめらかだった腹には醜い畝が盛り上がり、脈打ち、膨れていく。
+	PRINTFORML 「はへ……は、ひ……ひゅ……ひは……ぁ……ああ……」
+	PRINTFORML  穴を緩めるための体液で徹底的に蕩けさせられた尻穴は촉수が引きぬかれたあとも
+	PRINTFORML  촉수の太さに拡がったまま、もう閉じることはなかった……
+ENDIF
+;PRINTFORML 「あ゛ぐ……ぅ゛……ぐ、ふぎぃ゛……ッ！ がっ、あが、がぁ゛あぁああ！？」
+;PRINTFORML  そして、拡がりきったままの肉孔が蠕動し、촉수に奥へ追いやられていたものが意志とは全く関係なく降りはじめても
+;PRINTFORML  そこはもう閉じることすらできなくなっていた……
+;PRINTFORML  先程まで尻穴を拡げていた촉수と全く同じ太さの汚物がゆっくりと押し出され、%PRINT_TRANSCALLNAME(TARGET)%の尻穴を均していく。
+;PRINTFORML  自分の体による追い討ちに、%PRINT_TRANSCALLNAME(TARGET)%は歯を食いしばり
+IF TALENT:촉수의포로
+	PRINTFORML  自ら取り返しの付かないほど破壊されていく体に、少女は歓喜の涙を流していた。
+ELSE
+	PRINTFORML  己を裏切り、自ら破壊されていく身体を呪い、少女は涙を流すことしかできなかった。
+ENDIF
+
+
+;搾乳攻め
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_103_16
+	;正統派搾乳機　吸い上げられながら
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「お゛ぉぉぉおっ！ お゛おぉッ！ お、おぁぉぉぉぉッ！！」
+ELSE
+	PRINTFORML 「や、やめなさい！ %SELF_CALL_SINGLE()%、%SELF_CALL()%は家畜じゃな……お゛おぉッ！ お゛ぁぉおっ！」
+ENDIF
+PRINTFORML  膨れ上がった乳首の乳腺を吸われ、%PRINT_TRANSCALLNAME(TARGET)%は舌を突き出し絶叫を上げる。
+PRINTFORML  強烈な吸引に、勃起しきった乳暈の乳腺からも粘つく母乳が迸り、乳房を伝って垂れ落っていく。
+PRINTFORML  乳腺を中から拡げて吸い出されていく高粘度の母乳に刺激され、牝牛はぱんぱんに張った乳房を揺らして身を捩る。
+PRINTFORML  髪を振り乱し、泡を吹いて叫ぶ啼き声が、澱んだ肉の洞窟に消えていった。
+
+
+;種付け
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_104_16
+	;何時間も続く挿入と사정　精液ボテ→噴き出し　임신時はさらに大きくボテ
+IF TALENT:촉수의포로
+	PRINTFORML 「お゛ひぃぃぃい！ お゛、あ゛お゛ぉッ！？ お、ほおぁぉぉぉぉッ！！」
+ELSE
+	PRINTFORML 「こ、こんなの、%SELF_CALL()%無理よ、耐えられない……」
+	PRINTFORML 「も、もう限界、%SELF_CALL()%の、%SELF_CALL()%のお腹、これ以上はっ…お゛う゛ぅ゛ッ！？」
+ENDIF
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORMDL 雌として花開いた%CALLNAME%の身体は、精液で溺れる快楽に多幸感すら錯覚してしまう。
+ELSE
+	PRINTFORMDL 少女を孕ませる目的で繰り返される本当の性交に、%CALLNAME%の身体は굴복しつつあった。
+ENDIF
+PRINTFORMDL %CALLNAME%の膣穴は少しでも多くの精を搾ろうと媚び始め、%CALLNAME%の意思を無視して淫らに収縮を繰り返す。
+PRINTFORMDL 膨らみきった下腹部の奥、%CALLNAME%の%ESTRUS_TEXT_F(TARGET)%子宮は繁殖に向けて촉수の精液を貪り、混ぜ合わせ続けている…
+
+
+;Vに産卵
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_200_16
+	;사정のついでに産卵していく촉수　ボテ
+	;閉じなくなってしまった膣から촉수の卵が精液混じりに零れ落ちて
+
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「はぁ、はあぅ、産まれ……りゅぅ……」
+	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%は嬉しそうに目を細め、
+ELSE
+	PRINTFORML 「%SELF_CALL_SINGLE()%……%SELF_CALL()%、あんな化け物たちの、母親に、され……」
+	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%は절망に顔を歪め、
+ENDIF
+PRINTFORML  歪に膨れ上がったボテ腹を見つめた。
+PRINTFORML  限界まで子宮を押し広げ、膣にまで溢れている卵の脈動は次第に大きくなっていく。
+PRINTFORML 「ん゛ぐあ゛ぁぁ……う、くひぃぃ……ッ！ が、はぁっ！？」
+PRINTFORML  歯を食いしばり、必死にいきむ。精液にまみれた卵がひとつ、またひとつと
+PRINTFORML  吐き出されていく。子宮にみっしりと詰まった卵を押し出そうと、彼女が
+PRINTFORML  渾身の力を振り絞った途端、ぬらつく卵が子宮口を押し広げ、一気に産道に押し出された。
+PRINTFORML  질肉を激しく擦って飛び出していく、いつもの촉수とは違う快感に%PRINT_TRANSCALLNAME(TARGET)%は身を震わせた。
+PRINTFORML  彼女は半ば白目を剥き、意味不明の絶叫を上げて身を捩っては卵を産み続ける。
+PRINTFORML  肉の牢獄で孵化を待つ卵は、精液だけではない粘液にまみれ静かに脈打っていた。
+
+
+;Aに産卵
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_201_16
+	;腸内에 사정、ついでに産卵していく촉수　ボテ
+	;その衝撃にあられもない声
+	;弛緩した애널から大量の精液と卵が垂れ流される
+
+PRINTFORML 「お゛ごぉ゛……お腹、苦ひ…はちきれ……ぅぁあ……」
+PRINTFORML  拡がりきった尻穴を震わせ、%PRINT_TRANSCALLNAME(TARGET)%は涙と鼻水と涎で顔をぐちゃぐちゃに、
+PRINTFORML  必死にいきんでいた。肛門から植え付けられた卵は腸の奥深くまで詰め込まれ、
+PRINTFORML  彼女の腹には歪な畝が醜く浮き上がり、臨月の妊婦よりも更に大きく膨れていた。
+PRINTFORML  更に激しくなる卵の脈動に%PRINT_TRANSCALLNAME(TARGET)%は歯を食いしばり、肛門を拡げ、
+PRINTFORML  渾身の力で腹を絞る。
+PRINTFORML 「ぐ……うぐ……あぐ、うっ、お゛っごぉぉぉッ！」
+PRINTFORML  排泄とも違う、ぶりぶりした感触が肛門を押し広げ、勢い良く押し出されていく。
+PRINTFORML  卵を吐き出すたびに、異様な感触が背筋を走り、力が抜けてしまう。
+PRINTFORML  そして、%PRINT_TRANSCALLNAME(TARGET)%の恐れていた事態が始まった……
+PRINTFORML  み゛ぢり、ぐぢゅり゛、体内で何かが蠢いている。
+PRINTFORML  腸の奥深く植え付けられ、産卵の間に合わなかった卵が孵化しはじめたのだ。
+PRINTFORML 「な゛ッ？！ 何なの！？ 私の腹で、何か、何かがッ、がッ、あ゛……ッ？！」
+PRINTFORML  肛門を無理やり押し広げながら、孵化したばかりの細い촉수が十数本まとめて
+PRINTFORML  先端をのぞかせた。しかし限界まで広がった肛門に詰まり、外に出ることができない。
+PRINTFORML 「ぐぎぃ゛いぃ゛ッ？！ がっ、うぶ？！ 上がって……ぅ゛ぶ、ッぐぶ？！」
+PRINTFORML  苦しげにのたくる촉수に尻穴をこじ開けられ、%PRINT_TRANSCALLNAME(TARGET)%は強烈な嘔吐感に
+PRINTFORML  顔を歪ませた。もうひとつの出口に殺到する촉수で喉がぼごぼごと盛り上がり、頬が膨れる。
+PRINTFORML 「がぼォ゛？！ がっ、あ゛……ぐげぇ゛えぇ゛ッ！」
+PRINTFORML  耐え切れなくなった%PRINT_TRANSCALLNAME(TARGET)%の口を中からこじ開け、鼻を豚鼻に歪め、
+PRINTFORML  孵化したばかりの細い촉수がのたくりながら溢れ出した。
+PRINTFORML (%SELF_CALL_SINGLE()%、%SELF_CALL()%の身体、どうなってしまうの？！)
+PRINTFORML  上下から無数の촉수を滝のように吐き出しながら、彼女は身体を中から犯される
+PRINTFORML  異形の快楽に晒され続けることしかできなかった……
+
+
+;毒液注射
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_300_16
+	;首筋に注射　 瞬間、ビクンッと身体を跳ね上げて目を見開いた
+	;乳首、陰核を中心に身体を芯まで作り変えるべく
+	;針を刺される度に痛みで涙や涎を撒き散らし、限界まで身体を反らして叫んで
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「お゛ごォ゛おおッ！ ぎだっ゛、ま゛たお゛注射ぎだぁ゛ぁ゛ああァッ！」
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は口を大きく開け、あらん限りの絶叫を放つ。
+	PRINTFORML  無慈悲に突き立てられる針から射ち込まれる体液が体を内側から燃え上がらせ、
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は손발をでたらめに痙攣させながら狂乱する。
+	PRINTFORML 「ぃひぎっ！ ぃ゛ぐっ、ぃ゛っ゛、イ゛ギ狂゛う゛ぅ゛ぅぅッ！」
+	PRINTFORML  絶叫を上げる%PRINT_TRANSCALLNAME(TARGET)%の股ぐらから迸る愛液は既に촉수の体液と同じものになっていたが、
+	PRINTFORML  身も心も異常快楽の虜となった%PRINT_TRANSCALLNAME(TARGET)%には分かるはずもなかった……
+ELSE
+	PRINTFORML 「がぎゃぁ゛あがぁ゛あああァッ！ お゛ごォ゛おおッ！ ぎゃぎいぃぃッ！」
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の絶叫は半ば인간のものではなくなっていた。
+	PRINTFORML  執拗に突き立てられる針から射ち込まれる体液が、涙を、涎を、鼻水を
+	PRINTFORML  彼女のものだった体液を身体から押し出し、置き替わっていく。
+	PRINTFORML 「ぐげ゛ぇ゛……が、がぼっ、ぅ゛ぐぇ゛……」
+	PRINTFORML  激痛に耐え切れず失神し、痙攣しながら吐き出した彼女の吐瀉物は、
+	PRINTFORML  촉수の分泌する溶解液と同じものだった……
+	;★幽閉日数で変化させるべき
+ENDIF
+
+
+;촉수の기생　「기생」を得る。この状態で悪堕ちすると描写の多くが촉수寄りになる
+;--------------------------------------------------
+@KOJO_0_PRISON_COM_301_16
+	;絶頂で기력が枯れ果てた瞬間　へそ串刺し　痛みはない
+	;虜なら充足感、違ったら違和感
+	;体内が脈動して기생されたことを自覚
+
+;촉수의포로取得後
+IF TALENT:촉수의포로
+	PRINTFORML 「ん゛おぉおおぉおッ！ おへそ、へそっ、い゛っひゃ、おほぉおおぅうッ！」
+	PRINTFORML  腹を貫いていた촉수が引き抜かれる刺激で、%PRINT_TRANSCALLNAME(TARGET)%は目を剥き、泡を吹いて絶頂を貪る。
+	PRINTFORML  촉수の蹂躙で%PRINT_TRANSCALLNAME(TARGET)%の臍孔は既にキモチイイ場所へと成り下がり、濁液にまみれて口を開け、注がれた精液をでろりと溢れさせていた。
+	PRINTFORML 「あぁ……私のなか、蠢いて……ぅ、ぅああ……あ、あぁあ……ッ！」
+	PRINTFORML  体内で蠢く異物の感触も、もはや%PRINT_TRANSCALLNAME(TARGET)%には快楽でしかなくなっていた……
+ELSE
+	PRINTFORML 「イヤあぁぁ！？ なにこれ！？ 取って、取ってぇッ！」
+	PRINTFORML  腹を貫いていた촉수が引き抜かれ、%PRINT_TRANSCALLNAME(TARGET)%は身も世もなく泣き叫び、戒められた肢体をもがかせる。
+	PRINTFORML  体内で蠢くおぞましい感触は、%PRINT_TRANSCALLNAME(TARGET)%には失禁すらも霞ませるほどの快感だった……
+	PRINTFORML 「お願いだからッ！ お、おっほぉあッ？！ お腹の中、ぉあっ、おぉぉあっ！？」
+ENDIF
+
+
+
+
+
+;후타나리化
+;--------------------------------------------------
+@KOJO_0_PRISON_HUTANARI_16
+	;針のように尖った1本の촉수
+	;ゆっくりとずり下がっていき、
+	;むき出しの클리토리스に先端を突き刺し　ちくりとしたかすかな痛み
+	;IF TALENT:촉수의포로 || ABL:욕망 >= 4 || ABL:마조끼 >= 2
+		;快楽への期待を瞳に浮かべる
+		;予想していたような激しい刺激ではなかったことに失望
+	;ELSE
+		;공포に引き攣った表情
+		;予想していたような激痛ではないことに安堵の息
+	;ENDIF
+	;次の瞬間　刺された部分から強烈な熱　思わず腰を跳ね上げ絶叫
+	;得体の知れない快楽に我を見失い、混乱のままに慌てて下げた視線
+	;在り得ないはずのモノがそそり立っていた→
+PRINTFORML (私に、おっ、男の人の……あれが……！？)
+PRINTFORML  痛いほど敏感な反り立つ肉棒はなおも膨張を繰り返し、形成されたばかりの亀頭が
+PRINTFORML  包皮を押しのけ、完全に露になった。生臭い空気が敏感すぎる粘膜に絡みつく。
+PRINTFORML  未知の感覚が%PRINT_TRANSCALLNAME(TARGET)%を貫き、声にならない絶叫が迸る。
+PRINTFORML  出来立てのペニスは大きくしゃくり上げるように、真っ黄色に濁った、
+PRINTFORML  ヘドロのような精液で精通した。
+PRINTFORML  二度、三度と精液が噴き上がるたび、%PRINT_TRANSCALLNAME(TARGET)%は鞭打たれたかのように身を捩る。
+PRINTFORML  声もなく震える%PRINT_TRANSCALLNAME(TARGET)%は、自分が촉수の精液とほぼ同じ物を사정したことに気づくことはなかった……
+
+
+;모유체질化
+;--------------------------------------------------
+@KOJO_0_PRISON_BONYU_16
+	;2本のイソギンチャク型の촉수が乳首に吸い付く
+	;刺激に身悶え
+	;IF ABL:마조끼 >= 2
+		;胸に突き立てられた痛みに強い快楽
+	;ELSE
+		;胸に鋭い痛みを受けて短い悲鳴
+	;ENDIF
+	;痛みはやがて熱さに　촉수が離れたあとでも胸に異常な火照りを残し→
+PRINTFORML 「胸っ、胸がっ、あっ、熱っ、何か、なっ、ぅ、ぁっ、あぁああっ！？」
+
+
+PRINTFORML  乳首がはち切れそうに疼く。乳暈もいつになく大きく盛り上がり、
+PRINTFORML  体の奥で渦巻く、何かがこみ上げる感覚が限界に達した時、
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の張り詰めた乳首と、勃起した乳暈から生黄色い母乳が
+PRINTFORML  滲むと、そのまま噴水のように迸った。
+PRINTFORML 「ぁぁぁぁあ……ああ、あぁ……あ……」
+PRINTFORML  未知の開放感に、%PRINT_TRANSCALLNAME(TARGET)%は腰を震わせることしかできなかった……
+
+;묘상화
+;--------------------------------------------------
+@KOJO_0_PRISON_NAEDOKO_16
+	;膣に挿入された촉수の先端が開き、微細な촉수が子宮の内部へと侵入
+	;直接胎内を浸食される強い違和感
+	IF TALENT:촉수의포로 || ABL:욕망 >= 3
+		;膣穴を犯される快楽に夢中、공포が幸福感で上書きされてしまう
+	ELSE
+		;女性器を犯す촉수の媚薬で強い快楽、抵抗に力が入らない
+	ENDIF
+	;やがて子宮の最奥に到達
+	;卵巣に顕微鏡サイズの針を突き刺し、薬液を注入
+	;촉수の精液で孕みやすいように作り変えられてしまった下腹部の火照り
+	IF TALENT:촉수의포로
+		;切ない声を上げている。촉수に媚びるような視線を向け、種付けをして貰えるよう口で奉仕を始める
+	ELSE
+		;戸惑いを隠せない。自分の意志に反して、子宮が촉수の精液を求めて疼く
+	ENDIF
+	;→
+
+;洗脳になった陥落
+;--------------------------------------------------
+@KOJO_0_PRISON_SENNOU_16
+	;容赦なく蹂躙され、自我が崩壊
+	;グチュリと耳元で粘ついた音　弱々しく呻くばかり
+	;ヌチャヌチャと頭蓋にあってはならない音が鳴り響き
+	;目から光が失われ→
+PRINTFORML 「あ゛……あ゛が……ぐぇ゛……ごぷっ……ぶひ、ぶぎぃ……」
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%の口から鼻から、体内を満たす촉수の体液がごぼごぼと逆流し、喉を伝って胸を汚していく。
+PRINTFORML  촉수の精液を過剰に摂取し続け、だらしなく肥えた%PRINT_TRANSCALLNAME(TARGET)%の肢体は路地裏の薄暗がりでぬめり光る粘液にまみれ震えていた。
+PRINTFORML  注がれ過ぎた精液が鈍い水音を立て、緩んだ牝穴と尻穴から地面に吐き出されておぞましい水たまりを広げていく。
+PRINTFORML  いつまでかは渇望していた外気に触れても、%PRINT_TRANSCALLNAME(TARGET)%の目に光が戻ることはなかった……
+
+
+;悪堕ちになった陥落
+;--------------------------------------------------
+@KOJO_0_PRISON_AKUOTI_16
+	;訪れた絶頂に愉悦の絶叫
+	;これほどの幸福を前に無駄な抵抗など、自分はなんて愚かだったのだ
+	;촉수を手繰り寄せ　先端に愛おしげに舌を這わす
+	;脳裏に在るのはただ今を愉しむという悦びだけ
+	;拘束を解かれ、意図を理解して狩りに出発→
+PRINTFORML 「ふふ、全部私に任せてよね」
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は目を細め、唇をぬめる舌で濡らして微笑んだ。
+PRINTFORML  たおやかな指先に絡まる촉수を愛おしげに撫で、口付ける。
+PRINTFORML 「他のみんなにも…お腹いっぱい馳走してあげないと、ね❤」
+
+
+;取り込まれロスト
+;--------------------------------------------------
+@KOJO_0_PRISON_DEAD_16
+	;もはや喘ぎ声すら上がらなくなった
+	;陵辱にも鈍い反応、零れるのは薄い吐息と僅かな呻き
+	;意志は壊れ、生理反応も消えかかり　静かに촉수の群の中に飲み込まれていった…→
+PRINTFORML  촉수の精液を摂取し続けた%PRINT_TRANSCALLNAME(TARGET)%の身体は完全に肉塊と化していた。
+PRINTFORML  奇麗だった腋には大量の体毛が生え、巨大な乳房の盛り上がった乳暈の周りも
+PRINTFORML  汚らしく毛が生え揃い、촉수の苗床と成り果てたボテ腹は、
+PRINTFORML  上は鳩尾から、下は汁にまみれた女性器のまわり、
+PRINTFORML  閉じる機能を失った尻穴の上まで獣毛が繁茂していた。
+PRINTFORML  半開きの口に、押し広げられた鼻に、촉수が脈打ちながら餌を注ぎ込む。
+PRINTFORML  伸びた髪には粘液がこびりつき、美しかった少女の身体は最早誰が見ても判別できないほど汚れている。
+PRINTFORML  反応のなかった肉塊が震え、醜く肥大化した胸から촉수のための母乳が勢い良く迸り、肉の洞窟に注がれる。
+PRINTFORML  同時に餌である精液を流し込まれ、異様な太さの異形を産み落とす。
+PRINTFORML  『それ』はもう人格すら残っていない、촉수の付属品、栄養供給装置だった……
+
+
+

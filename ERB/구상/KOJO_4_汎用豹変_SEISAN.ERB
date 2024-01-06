@@ -1,0 +1,321 @@
+﻿;2022//作成（第７支部の>>252）
+;--------------------------------------------------------------------------------------------------------------------------------------------------------
+;CFLAG:100 行動予定
+;CFLAG:277 (仮)豹変するタイミング記憶用(bit)
+;CFLAG:278 (仮)豹変する性格記憶用(普段性格1～3桁、豹変時性格4～6桁)
+
+;[3] 休憩
+;[4] 特別活動
+;[14] 特別活動(変身)
+;[8] 自由行動
+;[18] 自由行動(変身)
+
+;==================================================
+;【独自関数】
+;--------------------------------------------------
+;汎用豹変구상ルート処理_休憩
+;----------------------------------------------------------
+@KOJO_4_ROOT_REST(ARGS)
+CALL GET_SEIKAKU_KOJO_4(TARGET,K4휴식)
+TRYCALLFORM KOJO_{RESULT:0}_COLOR_{RESULT:1}
+TRYCALLFORM KOJO_{RESULT:0}_%ARGS%_{RESULT:1}
+
+;汎用豹変구상ルート処理_SEISAN
+;----------------------------------------------------------
+@KOJO_4_SEISAN_ROOT(ARGS)
+IF CFLAG:1 > 0
+	SELECTCASE CFLAG:100
+		CASE 4
+			CALL GET_SEIKAKU_KOJO_4(TARGET,K4특별활동_변신)
+		CASE 8
+			CALL GET_SEIKAKU_KOJO_4(TARGET,K4자유행동_변신)
+	ENDSELECT
+ELSE
+	SELECTCASE CFLAG:100
+		CASE 4
+			CALL GET_SEIKAKU_KOJO_4(TARGET,K4특별활동)
+		CASE 8
+			CALL GET_SEIKAKU_KOJO_4(TARGET,K4자유행동)
+	ENDSELECT
+ENDIF
+TRYCALLFORM KOJO_{RESULT:0}_COLOR_{RESULT:1}
+TRYCALLFORM KOJO_{RESULT:0}_SEISAN_%ARGS%_{RESULT:1}
+
+;=================================================
+;ACTION_REST.ERB
+;=================================================
+;休憩
+;--------------------------------------------------
+@KOJO_4_REST
+CALL KOJO_4_ROOT_REST("REST")
+
+;=================================================
+;特別活動イベント.ERB
+;PASTIME_ナンパ.ERB
+;PASTIME_酒ナンパ.ERB
+;PASTIME_痴漢.ERB
+;=================================================
+;アルバイト『ファミレス』（通常）
+;--------------------------------------------------
+@KOJO_4_SEISAN_FAMILY_normal
+CALL KOJO_4_SEISAN_ROOT("FAMILY_normal")
+
+;アルバイト『ファミレス』（痴漢）
+;--------------------------------------------------
+@KOJO_4_SEISAN_FAMILY_chikan
+CALL KOJO_4_SEISAN_ROOT("FAMILY_chikan")
+
+;アルバイト『食堂』
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOKUDOU
+CALL KOJO_4_SEISAN_ROOT("SYOKUDOU")
+
+;アルバイト『食堂』(痴漢)
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOKUDOU_chikan
+CALL KOJO_4_SEISAN_ROOT("SYOKUDOU_chikan")
+
+;アルバイト『食堂』(薬)
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOKUDOU_drug
+CALL KOJO_4_SEISAN_ROOT("SYOKUDOU_drug")
+
+;アルバイト『新聞配達』
+;--------------------------------------------------
+@KOJO_4_SEISAN_SHINBUN
+CALL KOJO_4_SEISAN_ROOT("SHINBUN")
+
+;アルバイト『新聞配達』(アクメ自転車)
+;--------------------------------------------------
+@KOJO_4_SEISAN_SHINBUN_acmecycle
+CALL KOJO_4_SEISAN_ROOT("SHINBUN_acmecycle")
+
+;アルバイト『新聞配達』(トップニュース)
+;--------------------------------------------------
+@KOJO_4_SEISAN_SHINBUN_topnews
+CALL KOJO_4_SEISAN_ROOT("SHINBUN_topnews")
+
+;アルバイト『新聞配達』(出歯亀)
+;--------------------------------------------------
+@KOJO_4_SEISAN_SHINBUN_debagame
+CALL KOJO_4_SEISAN_ROOT("SHINBUN_debagame")
+
+;アルバイト『ヒーローショー』（通常）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_normal
+CALL KOJO_4_SEISAN_ROOT("HERO_normal")
+
+;アルバイト『ヒーローショー』（転んだ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_korobi
+CALL KOJO_4_SEISAN_ROOT("HERO_korobi")
+
+;アルバイト『ヒーローショー』（スカート捲り）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_skirtmekuri
+CALL KOJO_4_SEISAN_ROOT("HERO_skirtmekuri")
+
+;アルバイト『ヒーローショー』（痴漢）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_chikan
+CALL KOJO_4_SEISAN_ROOT("HERO_chikan")
+
+;アルバイト『ヒーローショー』（촉수 구속구）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_syokusyu
+CALL KOJO_4_SEISAN_ROOT("HERO_syokusyu")
+
+;アルバイト『ヒーローショー』（陵辱ショー）
+;--------------------------------------------------
+@KOJO_4_SEISAN_HERO_ryoujoku
+CALL KOJO_4_SEISAN_ROOT("HERO_ryoujoku")
+
+;研究所助手（通常）
+;--------------------------------------------------
+@KOJO_4_SEISAN_KENKYU_normal
+CALL KOJO_4_SEISAN_ROOT("KENKYU_normal")
+
+;研究所助手（임신）
+;--------------------------------------------------
+@KOJO_4_SEISAN_KENKYU_ninshin
+CALL KOJO_4_SEISAN_ROOT("KENKYU_ninshin")
+
+;研究所助手（임신経験あり）
+;--------------------------------------------------
+@KOJO_4_SEISAN_KENKYU_after
+CALL KOJO_4_SEISAN_ROOT("KENKYU_after")
+
+;研究所助手（搾乳）
+;--------------------------------------------------
+@KOJO_4_SEISAN_KENKYU_sakunyu
+CALL KOJO_4_SEISAN_ROOT("KENKYU_sakunyu")
+
+;研究所助手（후타나리）
+;--------------------------------------------------
+@KOJO_4_SEISAN_KENKYU_hutanari
+CALL KOJO_4_SEISAN_ROOT("KENKYU_hutanari")
+
+;雑魚촉수退治（通常）
+;--------------------------------------------------
+@KOJO_4_SEISAN_BATTLE_normal
+CALL KOJO_4_SEISAN_ROOT("BATTLE_normal")
+
+;雑魚촉수退治（敗北：고통）
+;--------------------------------------------------
+@KOJO_4_SEISAN_BATTLE_haibokuA
+CALL KOJO_4_SEISAN_ROOT("BATTLE_haibokuA")
+
+;雑魚촉수退治（敗北：陵辱）
+;--------------------------------------------------
+@KOJO_4_SEISAN_BATTLE_haibokuB
+CALL KOJO_4_SEISAN_ROOT("BATTLE_haibokuB")
+
+;雑魚촉수退治（촉수의포로）
+;--------------------------------------------------
+@KOJO_4_SEISAN_BATTLE_toriko
+CALL KOJO_4_SEISAN_ROOT("BATTLE_toriko")
+
+;援助交際・ナンパ・痴漢（調教：快楽）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_nomalA
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_nomalA")
+
+;援助交際・ナンパ・痴漢（調教：フェラ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_nomalB
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_nomalB")
+
+;援助交際・ナンパ・痴漢（調教：キス）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_nomalC
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_nomalC")
+
+;援助交際・ナンパ・痴漢（変態：浣腸）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_hentaiA
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_hentaiA")
+
+;援助交際・ナンパ・痴漢（変態：メスブタ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_hentaiB
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_hentaiB")
+
+;援助交際・ナンパ・痴漢（変態：メスイヌ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_hentaiC
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_hentaiC")
+
+;援助交際・ナンパ（変態：女王様）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_hentaiD
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_hentaiD")
+
+;援助交際（レズ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_SYOUHU_les
+CALL KOJO_4_SEISAN_ROOT("SYOUHU_les")
+
+;AV撮影
+;--------------------------------------------------
+@KOJO_4_SEISAN_AV
+CALL KOJO_4_SEISAN_ROOT("AV")
+
+;公衆便所（路地裏）
+;--------------------------------------------------
+@KOJO_4_SEISAN_TOILET_roji
+CALL KOJO_4_SEISAN_ROOT("TOILET_roji")
+
+;公衆便所（浮浪者）
+;--------------------------------------------------
+@KOJO_4_SEISAN_TOILET_homeless
+CALL KOJO_4_SEISAN_ROOT("TOILET_homeless")
+
+;公衆便所（野良犬）
+;--------------------------------------------------
+@KOJO_4_SEISAN_TOILET_dog
+CALL KOJO_4_SEISAN_ROOT("TOILET_dog")
+
+;アイドル活動（下積み：低知名度）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL1
+CALL KOJO_4_SEISAN_ROOT("IDOL1")
+
+;アイドル活動（下積み：高知名度）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL2
+CALL KOJO_4_SEISAN_ROOT("IDOL2")
+
+;アイドル活動（路上ライブ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL3
+CALL KOJO_4_SEISAN_ROOT("IDOL3")
+
+;アイドル活動（売り込み）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL4
+CALL KOJO_4_SEISAN_ROOT("IDOL4")
+
+;アイドル活動（テレビ番組）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL_TV
+CALL KOJO_4_SEISAN_ROOT("IDOL_TV")
+
+;アイドル活動（グラビア撮影）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL_picture
+CALL KOJO_4_SEISAN_ROOT("IDOL_picture")
+
+;アイドル活動（新曲）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL_music
+CALL KOJO_4_SEISAN_ROOT("IDOL_music")
+
+;アイドル活動（イベント）
+;--------------------------------------------------
+@KOJO_4_SEISAN_IDOL_event
+CALL KOJO_4_SEISAN_ROOT("IDOL_event")
+
+;枕営業（プロデューサー：フェラ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_pro1
+CALL KOJO_4_SEISAN_ROOT("MAKURA_pro1")
+
+;枕営業（プロデューサー：立ちバック）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_pro2
+CALL KOJO_4_SEISAN_ROOT("MAKURA_pro2")
+
+;枕営業（役員：처녀正常位）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_client1
+CALL KOJO_4_SEISAN_ROOT("MAKURA_client1")
+
+;枕営業（お得意様：正常位）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_client2
+CALL KOJO_4_SEISAN_ROOT("MAKURA_client2")
+
+;枕営業（コスプレ：애널）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_client3
+CALL KOJO_4_SEISAN_ROOT("MAKURA_client3")
+
+;枕営業（ファンクラブ：輪姦）
+;--------------------------------------------------
+@KOJO_4_SEISAN_MAKURA_fanclub
+CALL KOJO_4_SEISAN_ROOT("MAKURA_fanclub")
+
+;ライブ公演（通常）
+;--------------------------------------------------
+@KOJO_4_SEISAN_LIVE_normal
+CALL KOJO_4_SEISAN_ROOT("LIVE_normal")
+
+;ライブ公演（転んだ）
+;--------------------------------------------------
+@KOJO_4_SEISAN_LIVE_kobori
+CALL KOJO_4_SEISAN_ROOT("LIVE_kobori")
+
+;ライブ公演（촉수 구속구）
+;--------------------------------------------------
+@KOJO_4_SEISAN_LIVE_syokusyu
+CALL KOJO_4_SEISAN_ROOT("LIVE_syokusyu")

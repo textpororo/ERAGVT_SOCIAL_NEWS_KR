@@ -1,0 +1,167 @@
+﻿;**********************************************************
+;幽閉コマンド
+;PRISON_COM105
+;膨乳化 限界の場合は膨乳攻め
+;**********************************************************
+@PRISON_COM105
+#DIM CCOUNT
+VARSET LOCAL
+TFLAG:10 = 105
+
+;取得する珠
+;LOCAL:0 쾌C
+;LOCAL:1 쾌V
+;LOCAL:2 쾌A
+;LOCAL:3 쾌B
+;LOCAL:4 윤활 윤활は未使用
+;LOCAL:5 공순
+;LOCAL:6 습득
+;LOCAL:7 욕정
+;LOCAL:8 굴복
+;LOCAL:9 치정
+;LOCAL:10 고통
+;LOCAL:11 공포
+
+;経験数の上量値記録用
+;LOCAL:120 V経験
+;LOCAL:121 A経験
+;LOCAL:123 정액경험
+;LOCAL:124 펠라경험
+;LOCAL:130 노출쾌락경험,
+;LOCAL:131 봉사쾌락경험,
+;LOCAL:132 고통쾌락경험,
+;LOCAL:140 자위경험,
+;LOCAL:150 이상경험
+;LOCAL:151 V확장경험
+;LOCAL:152 A확장경험
+;LOCAL:153 사정경험
+;LOCAL:154 모유경험
+;LOCAL:155 방뇨경험
+;LOCAL:156 기생경험
+;LOCAL:157 출산경험
+
+;汚染度
+CFLAG:30 += 10 + RAND:5
+
+;膨乳の余地を判定
+IF TALENT:거유+MAX(0,TALENT:변신시가슴사이즈변동) < 2+(CONFIG_CHECK_MANIAC_F(19) == 1 ? 3 # 0)
+	;変身時に「縮」乳している場合は変身時膨乳を優先
+	IF TALENT:변신시가슴사이즈변동 < 0
+		TALENT:변신시가슴사이즈변동 += 1
+		CFLAG:38 += 1
+	ELSE
+		;膨乳処理
+		IF TALENT:거유 - TALENT:빈유 < 0
+			TALENT:빈유 -= 1
+		ELSE
+			TALENT:거유 += 1
+		ENDIF
+
+		;変身時に限界突破してしまう場合は変身時胸サイズを調整
+		;極端なサイズを抑制されているなら爆乳までが限界
+		IF (TALENT:거유 + TALENT:변신시가슴사이즈변동 > 5) || (CONFIG_CHECK_MANIAC_F(19) == 0 && TALENT:거유 + TALENT:변신시가슴사이즈변동 >= 2)
+			TALENT:변신시가슴사이즈변동 -= 1
+			CFLAG:38 -= 1
+		ENDIF
+
+		CFLAG:37 += 1
+	ENDIF
+	;プロフィールに反映
+	CALL SET_PROFILE, TARGET
+
+	;공포　固定で
+	LOCAL:11 = 800
+	
+	;지문: 悪堕ちキャラが幽閉中の操作キャラを膨乳化した
+	SIF CFLAG:20 == 2
+		CALL MESSAGE_OTHER_PRISON_BOUNYU
+	;지문: 膨乳化
+	CALL MESSAGE_PRISON_BOUNYU
+
+	
+ELSE
+	;快B
+	IF ABL:B감각 == 0
+		LOCAL:3 = 100
+	ELSEIF ABL:B감각 == 1
+		LOCAL:3 = 150
+	ELSEIF ABL:B감각 == 2
+		LOCAL:3 = 200
+	ELSEIF ABL:B감각 == 3
+		LOCAL:3 = 600
+	ELSEIF ABL:B감각 == 4
+		LOCAL:3 = 1000
+	ELSEIF ABL:B감각 >= 5
+		LOCAL:3 = 1500
+	ENDIF
+
+	;メイン部位絶頂見込みの予測
+	CALL PALAM_VABCestimate(LOCAL,3,-1)
+
+
+	
+	;습득
+	IF ABL:봉사정신 == 0
+		LOCAL:6 = 10
+	ELSEIF ABL:봉사정신 == 1
+		LOCAL:6 = 25
+	ELSEIF ABL:봉사정신 == 2
+		LOCAL:6 = 50
+	ELSEIF ABL:봉사정신 == 3
+		LOCAL:6 = 80
+	ELSEIF ABL:봉사정신 == 4
+		LOCAL:6 = 125
+	ELSEIF ABL:봉사정신 >= 5
+		LOCAL:6 = 180
+	ENDIF
+
+	;지문: 悪堕ちキャラが幽閉中の操作キャラに膨乳攻めをした
+	SIF CFLAG:20 == 2
+		CALL MESSAGE_OTHER_PRISON_COM_105
+	;지문: 膨乳攻め
+	CALL MESSAGE_PRISON_COM_105
+	
+ENDIF
+
+;습득基本値
+LOCAL:6 += 20
+
+;욕정基本値
+LOCAL:7 += 100
+
+;굴복基本値
+LOCAL:8 += 200
+
+;치정基本値
+LOCAL:9 += 200
+
+;고통基本値
+LOCAL:10 += 0
+
+;공포基本値
+LOCAL:11 += 50
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+CALL COMMON_PRISON_EXP_SH, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152
+LOCAL:120 = RESULT:0
+LOCAL:121 = RESULT:1
+LOCAL:151 = RESULT:2
+LOCAL:152 = RESULT:3
+
+;拡張度による拡張経験
+CALL PRISON_GAPING, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152, LOCAL:152, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
+LOCAL:151 += RESULT:0
+LOCAL:152 += RESULT:1
+
+;表示と増加の処理
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1

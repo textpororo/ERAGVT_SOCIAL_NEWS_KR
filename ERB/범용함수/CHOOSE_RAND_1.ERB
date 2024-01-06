@@ -1,0 +1,112 @@
+﻿;2018/6/16作成（第７支部の>>252）
+;-------------------------------------------------
+;CFLAG:100（ショップ画面でのスケジュール）を元に
+;特定のスケジュールのキャラをTARGETも含めてランダムで一人を求める
+;第1引数をCFLAG:100にすればTARGETと同一スケジュールのキャラだけ選ばれる
+;第2引数をTARGETなどにすればそのキャラだけ除外される
+;CFLAG:271 = CHOOSE_ACTION_TOGETHER_F(CFLAG:100, TARGET)とするのが基本？
+;いなければ-1を、いればキャラNOを返す
+;（作例）
+;戦闘終了時に「%出撃するキャラ%は大丈夫かな、촉수に捕まってないよね……」と言わせる
+;休憩時に「そうだ%休憩するキャラ%を誘おう！」と言わせる
+;悪堕ちキャラに「%出撃するキャラ%がどうなったか、知りたい？」と煽らせる
+@CHOOSE_ACTION_TOGETHER_F, ARG:0, ARG:1 = -1
+;ARG:0　CFLAG:100（スケジュール）の値
+;ARG:1　弾かれるキャラ
+#FUNCTION
+#DIM LCOUNT, 2
+LCOUNT:0 = -1
+;LCOUNT:0　NO探査
+LCOUNT:1 = 0
+;LCOUNT:1　検出回数
+REPEAT CHARANUM
+	LOCAL:COUNT = 0
+REND
+;LOCAL:0〜　NO格納用
+SIF GAME_OPTION_CHECK_F(OPTION_solo)
+	RETURNF -1
+WHILE 1
+	LCOUNT:0 = FINDCHARA(CFLAG:100, ARG:0, LCOUNT:0 + 1)
+	SIF LCOUNT:0 < 0
+		BREAK
+	IF LCOUNT:0 != ARG:1
+		LOCAL:(LCOUNT:1) = LCOUNT:0
+		LCOUNT:1 += 1
+	ENDIF
+	SIF LCOUNT:0 + 1 > CHARANUM - 1
+		BREAK
+WEND
+SIF LCOUNT:1 == 0
+	RETURNF -1
+RETURNF LOCAL:(RAND:(LCOUNT:1))
+
+
+
+;FLAG:53（リラクゼーション施設）の所持している施設の中からランダムに一つ選ぶ
+;選択されなければ0を、選択されればその値を返す
+@CHOOSE_RELAXATION_FACILITY, ARG:0 = 0b111111111111
+;ARG:0　選択肢　省略されたら全部を選択肢に　FLAG:53を参考に
+#DIM LCOUNT
+;LCOUNT:0　検出回数
+#DIM KEY
+;KEY:0　選択可能な選択肢　選択肢と所持施設を論理積したもの
+LCOUNT = 0
+REPEAT 15
+	LOCAL:COUNT = 0
+REND
+;LOCAL:0〜　選択されたリラクゼーション施設
+KEY:0 = ARG:0 & FLAG:53
+IF (KEY:0 & 관엽식물)
+	LOCAL:(LCOUNT:0) = 관엽식물
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 마음이편안해지는풍경화)
+	LOCAL:(LCOUNT:0) = 마음이편안해지는풍경화
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 세련된오브제)
+	LOCAL:(LCOUNT:0) = 세련된오브제
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 호화로운분수)
+	LOCAL:(LCOUNT:0) = 호화로운분수
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 질좋은침대) || (KEY:0 & 최고급침대)
+	IF (KEY:0 & 최고급침대)
+		LOCAL:(LCOUNT:0) = 최고급침대
+	ELSE
+		LOCAL:(LCOUNT:0) = 질좋은침대
+	ENDIF
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 안마의자)
+	LOCAL:(LCOUNT:0) = 안마의자
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 목욕설비)
+	LOCAL:(LCOUNT:0) = 목욕설비
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 게임코너)
+	LOCAL:(LCOUNT:0) = 게임코너
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 대욕탕) || (KEY:0 & 미용온천)
+	IF (KEY:0 & 대욕탕)
+		LOCAL:(LCOUNT:0) = 미용온천
+	ELSE
+		LOCAL:(LCOUNT:0) = 대욕탕
+	ENDIF
+	LCOUNT:0 += 1
+ENDIF
+IF (KEY:0 & 뷰티살롱)
+	LOCAL:(LCOUNT:0) = 뷰티살롱
+	LCOUNT:0 += 1
+ENDIF
+SIF LCOUNT:0 == 0
+	RETURN 0
+RETURN LOCAL:(RAND:(LCOUNT:0))
+
+
+

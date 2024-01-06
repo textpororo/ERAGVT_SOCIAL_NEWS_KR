@@ -1,0 +1,29 @@
+﻿;EX:攻
+@COM71
+;プレイヤーゲージ増減
+IF GETBIT(TCVARn:3, 0) == 0
+	IF CFLAG:1 == 2
+		IF TCVARn:217
+			TCVARn:6 += -68
+		ELSE
+			TCVARn:6 += -34
+		ENDIF
+	ELSE
+		TCVARn:6 += -100
+	ENDIF
+ELSE
+	IF CFLAG:1 == 2
+		IF TCVARn:217
+			TCVARn:6 += 68
+		ELSE
+			TCVARn:6 += 34
+		ENDIF
+	ELSE
+		TCVARn:6 += 100
+	ENDIF
+ENDIF
+
+;ゲージ使用フラグ
+INVERTBIT TCVARn:3, 0
+
+RETURN 0

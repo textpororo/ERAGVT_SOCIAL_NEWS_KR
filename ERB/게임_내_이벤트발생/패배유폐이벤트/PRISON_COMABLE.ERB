@@ -1,0 +1,261 @@
+﻿;**********************************************************
+;幽閉コマンドのCOMABLE
+;キャラの身体的特徴によって実行不可なコマンドを他のコマンドに割り振ったりしている
+
+;ARG=コマンド番号
+@PRISON_COMABLE, ARG
+#DIM LCOUNT
+#DIM SH_VAR, 감각수
+
+;結界振替え用
+IF ARG == -1
+	$SHIELDED
+
+	;部位結界で阻まれた場合、結界ない箇所をランダムで中心攻め(全箇所結界ならランダム)
+	REPEAT 감각수
+		LOCAL:COUNT = 0
+	REND
+	LCOUNT = 0
+	REPEAT 감각수
+		IF BASE:(COUNT + 30) < 1
+			LOCAL:LCOUNT = COUNT
+			LCOUNT += 1
+		ENDIF
+	REND
+	IF LCOUNT
+		ARG = LOCAL:(RAND:LCOUNT)
+	ELSE
+		ARG = RAND:감각수
+	ENDIF
+;元のはこちら
+;	VARSET SH_VAR
+;	FOR LCOUNT, 0, 감각수
+;		SIF BASE:(LCOUNT + 30) > 0
+;			SH_VAR:LCOUNT = 1
+;	NEXT
+;
+;	DO
+;		ARG = RAND:감각수
+;	LOOP SH_VAR:ARG == 1
+ENDIF
+
+SELECTCASE ARG
+	;C中心攻め
+	CASE 0
+		CALL PRISON_COM0
+	;V中心攻め
+	CASE 1
+		;보추の場合はA中心攻めで代替する
+		IF TALENT:보추 > 0
+			CALL PRISON_COM2
+		;남자の場合はC中心攻めで代替する
+		ELSEIF ISMALE()
+			CALL PRISON_COM0
+		;聖처녀用だったやつ(B攻めに振り変えてたけどやめ)
+		;ELSEIF CHECK_HOLYVIRGIN_F()==1
+		;	CALL PRISON_COM3
+		ELSE
+			CALL PRISON_COM1
+		ENDIF
+	;A中心攻め
+	CASE 2
+		CALL PRISON_COM2
+	;B中心攻め
+	CASE 3
+		CALL PRISON_COM3
+	;Sな攻め
+	CASE 4
+		CALL PRISON_COM4
+	;強制奉仕
+	CASE 5
+		CALL PRISON_COM5
+	;羞恥な攻め
+	CASE 6
+		;감정결여場合はSな攻めで代替する
+		IF TALENT:감정결여 > 0
+			CALL PRISON_COM4
+		ELSE
+			CALL PRISON_COM6
+		ENDIF
+	;子촉수に犯される
+	CASE 7
+		;部位結界
+		SIF SHIELD:1 > 0
+			GOTO SHIELDED
+		;보추の場合はA中心攻めで代替する
+		IF TALENT:보추 > 0
+			CALL PRISON_COM2
+		;남자の場合はC中心攻めで代替する
+		ELSEIF ISMALE()
+			CALL PRISON_COM0
+		;聖처녀の場合は強制奉仕で代替する
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			CALL PRISON_COM5
+		ELSE
+			CALL PRISON_COM7
+		ENDIF
+	;후타나리攻め
+	CASE 100
+		;部位結界
+		SIF SHIELD:0 > 0
+			GOTO SHIELDED
+		;남자の場合や필터×の場合はC中心攻めで代替する
+		IF ISMALE() || CONFIG_CHECK_MANIAC_F(1) == 0
+			CALL PRISON_COM0
+		ELSE
+			CALL PRISON_COM100
+		ENDIF
+	;V拡張
+	CASE 101
+		;部位結界
+		SIF SHIELD:1 > 0
+			GOTO SHIELDED
+		;A経験が少ない보추の場合、A中心攻めにする
+		IF TALENT:보추 > 0 && EXP:A경험 < 20
+			CALL PRISON_COM2
+		;보추の場合はA拡張攻めで代替する
+		ELSEIF TALENT:보추 > 0
+			;部位結界
+			SIF SHIELD:2 > 0
+				GOTO SHIELDED
+			CALL PRISON_COM102
+		;남자の場合はC中心攻めで代替する
+		ELSEIF ISMALE()
+			CALL PRISON_COM0
+		;聖처녀の場合は強制奉仕で代替する
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			CALL PRISON_COM5
+		;V経験が少ない場合、V中心攻めにする
+		ELSEIF EXP:V경험 < 20
+			CALL PRISON_COM1
+		ELSE
+			CALL PRISON_COM101
+		ENDIF
+		
+	;A拡張
+	CASE 102
+		;部位結界
+		SIF SHIELD:2 > 0
+			GOTO SHIELDED
+		;A経験が少ない場合、A中心攻めにする
+		IF EXP:A경험 < 20
+			CALL PRISON_COM2
+		ELSE
+			CALL PRISON_COM102
+		ENDIF
+		
+	;搾乳攻め
+	CASE 103
+		;部位結界
+		SIF SHIELD:3 > 0
+			GOTO SHIELDED
+		;남자の場合や필터×の場合はB中心攻めで代替する
+		IF ISMALE() || CONFIG_CHECK_MANIAC_F(2) == 0
+			CALL PRISON_COM3
+		ELSE
+			CALL PRISON_COM103
+		ENDIF
+	;種付け
+	CASE 104
+		;部位結界
+		SIF SHIELD:1 > 0
+			GOTO SHIELDED
+		;보추の場合は強制奉仕で代替する
+		IF TALENT:보추 > 0
+			CALL PRISON_COM5
+		;남자の場合はC中心攻めで代替する
+		ELSEIF ISMALE()
+			CALL PRISON_COM0
+		;聖처녀の場合は強制奉仕で代替する
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			CALL PRISON_COM5
+		ELSE
+			;V감각Lv5以上かV확장경험が10以上でなければＶ拡張
+			IF ABL:V감각 < 5 && EXP:V확장경험 < 10
+				;V経験が少ない場合、V中心攻めにする
+				IF EXP:V경험 < 20
+					CALL PRISON_COM1
+				ELSE
+					CALL PRISON_COM101
+				ENDIF
+			ELSE
+				CALL PRISON_COM104
+			ENDIF
+		ENDIF
+	;膨乳化
+	CASE 105
+		;部位結界
+		SIF SHIELD:3 > 0
+			GOTO SHIELDED
+		;남자の場合や필터×の場合はB中心攻めで代替する
+		IF ISMALE() || CONFIG_CHECK_MANIAC_F(18) == 0
+			CALL PRISON_COM3
+		ELSE
+			CALL PRISON_COM105
+		ENDIF
+	;Vに産卵
+	CASE 200
+		;部位結界
+		SIF SHIELD:1 > 0
+			GOTO SHIELDED
+		;보추の場合はAに産卵で代替する
+		IF TALENT:보추 > 0
+			;部位結界
+			SIF SHIELD:2 > 0
+				GOTO SHIELDED
+			IF EXP:A확장경험 > 3
+				CALL PRISON_COM201
+			;拡張経験が足りなければ拡張コマンドにする
+			ELSE
+				CALL PRISON_COM102
+			ENDIF
+		;남자の場合はC中心攻めで代替する
+		ELSEIF ISMALE()
+			CALL PRISON_COM0
+		;聖처녀の場合はAに産卵で代替する
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			;部位結界
+			SIF SHIELD:2 > 0
+				GOTO SHIELDED
+			IF EXP:A확장경험 > 3
+				CALL PRISON_COM201
+			;拡張経験が足りなければ拡張コマンドにする
+			ELSE
+				CALL PRISON_COM102
+			ENDIF
+		ELSEIF EXP:V확장경험 > 3
+			CALL PRISON_COM200
+		;拡張経験が足りなければ拡張コマンドにする
+		ELSE
+			CALL PRISON_COM101
+		ENDIF
+	;Aに産卵
+	CASE 201
+		;部位結界
+		SIF SHIELD:2 > 0
+			GOTO SHIELDED
+		IF EXP:A확장경험 > 3
+			CALL PRISON_COM201
+		;拡張経験が足りなければ拡張コマンドにする
+		ELSE
+			CALL PRISON_COM102
+		ENDIF
+	;注射　음란系素質をつける
+	CASE 300
+		CALL PRISON_COM300
+	;기생　촉수を기생させる
+	CASE 301
+		;필터×の場合や既に기생持ちの場合は、C攻め、B攻め、注射に割り振る
+		IF TALENT:기생 || CONFIG_CHECK_MANIAC_F(3) == 0
+			SELECTCASE RAND:3
+				CASE 0
+					CALL PRISON_COM0
+				CASE 1
+					CALL PRISON_COM1
+				CASE 2
+					CALL PRISON_COM300
+			ENDSELECT
+		ELSE
+			CALL PRISON_COM301
+		ENDIF
+ENDSELECT

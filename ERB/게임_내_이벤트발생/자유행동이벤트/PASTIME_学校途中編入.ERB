@@ -1,0 +1,45 @@
+﻿@PASTIME_SelectSchool
+;もし小中高大学に通っていない場合、30の倍数日毎に編入する機会を与える
+;IF DAY % 30 == 0 && TALENT:학생 == 0
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が休日をどう過ごすか考えていると、
+	PRINTFORML 組織の인간が声をかけてきた。
+	IF RAND:5 == 0
+		PRINTFORML 曰く、学校のような閉鎖的社会で촉수生物が活動する例もある。
+		PRINTFORML そこで君に長期の潜入捜査をお願いしたい…と。
+	ELSEIF RAND:3 == 0
+		PRINTFORML 曰く、同年代の친구を作るのもストレス解消に良いのでは…と。
+	ELSE
+		PRINTFORML 曰く、暇を持て余しているなら学業に精を出してはどうか…と。
+	ENDIF
+	PRINTFORML 折角の休日だ、どう過ごすのも自由だが・・・
+	PRINTW 
+	PRINTFORML [0]編入しない
+	;외관나이か変身後외관나이が12歳以下の場合小学校選択可
+	SIF (CFLAG:1 == 0 && BASE:나이 <= 12) || (CFLAG:1 > 0 && MAXBASE:나이 <= 12)
+	PRINTFORML [1]小学校に編入する
+	;외관나이か変身後외관나이が15歳以下の場合中学校選択可
+	SIF (CFLAG:1 == 0 && BASE:나이 <= 15) || (CFLAG:1 > 0 && MAXBASE:나이 <= 15)
+	PRINTFORML [2]中学校に編入する
+	PRINTFORML [3]高校に編入する
+	PRINTFORML [4]大学に編入する
+;ENDIF
+	$INPUT_LOOP
+	INPUT
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	IF RESULT == 0
+		PRINTL どこにも編入しないことにした。
+	ELSEIF RESULT == 1
+		PRINTL 小学校に編入することにした。
+	ELSEIF RESULT == 2
+		PRINTL 中学校に編入することにした。
+	ELSEIF RESULT == 3
+		PRINTL 高校に編入することにした。
+	ELSEIF RESULT == 4
+		PRINTL 大学に編入することにした。
+	ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP
+	ENDIF
+
+LOCAL = RESULT
+TALENT:학생 = LOCAL

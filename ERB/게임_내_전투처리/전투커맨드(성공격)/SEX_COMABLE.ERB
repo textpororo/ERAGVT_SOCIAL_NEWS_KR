@@ -1,0 +1,594 @@
+﻿;**********************************************************
+;性コマンドのCOMABLE
+;キャラの身体的特徴によって実行不可なコマンドを他のコマンドに割り振る
+;ARG=コマンド番号
+@SEX_COMABLE, ARG
+#DIM CLOTH_NO_INNER_L
+#DIM CLOTH_OUTER_PER_L
+#DIM CLOTH_OUTER_DEF_L
+#DIM CLOTH_INNER_PER_L
+#DIM CLOTH_INNER_DEF_L
+;ローカルな変数に値を移して参照する
+CLOTH_NO_INNER_L = CLOTH_NO_INNER
+CLOTH_OUTER_PER_L = CLOTH_OUTER_PER
+CLOTH_OUTER_DEF_L = CLOTH_OUTER_DEF
+CLOTH_INNER_PER_L = CLOTH_INNER_PER
+CLOTH_INNER_DEF_L = CLOTH_INNER_DEF
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	;追加責め部位指定
+	TRYCCALLFORM SEXCOM_OPTION_MOB_{FLAG:11}_COM{ARG}
+		LOCAL = RESULT
+	CATCH
+		LOCAL = -1
+	ENDCATCH
+ELSE
+	LOCAL = 0
+ENDIF
+;特定衣装による保護機能無視
+;インナー：성기 가리개
+IF CFLAG:42 == 398 && CLOTH_NO_INNER_L == 0
+	;Ａ攻め強、Ａ攻めＳＰ、Ａ拡張攻め
+	SIF ARG == 5 || ARG == 1002 || ARG == 1010
+		CLOTH_INNER_DEF_L = 100
+ENDIF
+TFLAG:10 = ARG
+SELECTCASE ARG
+	;C攻め弱
+	CASE 0
+		CALL SEX_COM0, FLAG:11, LOCAL
+	;C攻め強
+	CASE 1
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ENDIF
+	;V攻め弱
+	CASE 2
+		;보추の場合はA攻め弱に振り替える
+		IF TALENT:보추 > 0
+			TFLAG:10 = 0
+			CALL SEX_COM4, FLAG:11, LOCAL
+		;남자の場合はC攻め弱に振り替える
+		ELSEIF ISMALE()
+			TFLAG:10 = 0
+			CALL SEX_COM0, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM2, FLAG:11, LOCAL
+		ENDIF
+	;V攻め強
+	CASE 3
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はA攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM5, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り替える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			;聖처녀はＢ攻めにしたい(今はV攻め弱に振ってる)
+			ELSEIF CHECK_HOLYVIRGIN_F()==1
+			;	CALL SEX_COM7, FLAG:11, LOCAL
+				TFLAG:10 = 2
+				CALL SEX_COM2, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_COM3, FLAG:11, LOCAL
+			ENDIF
+		ENDIF
+	;A攻め弱
+	CASE 4
+		;남자かつ男女平等オフならC攻め弱に振り替える
+		IF ISHOLE() == 0
+			TFLAG:10 = 0
+			CALL SEX_COM0, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM4, FLAG:11, LOCAL
+		ENDIF
+	;A攻め強
+	CASE 5
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならC攻め強に振り替える
+			IF ISHOLE() == 0
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_COM5, FLAG:11, LOCAL
+			ENDIF
+		ENDIF
+	;B攻め弱
+	CASE 6
+		CALL SEX_COM6, FLAG:11, LOCAL
+	;B攻め強
+	CASE 7
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならＣ攻め弱に振り替える
+				IF ISHOLE() == 0
+				TFLAG:10 = 0
+				CALL SEX_COM0, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_COM7, FLAG:11, LOCAL
+			ENDIF
+		ENDIF
+	;スパンキング
+	CASE 8
+		CALL SEX_COM8, FLAG:11, LOCAL
+	;針
+	CASE 9
+		;残酷Offならスパンキングに振り替える
+		IF CONFIG_CHECK_MANIAC_F(14) == 0
+			TFLAG:10 = 8
+			CALL SEX_COM8, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM9, FLAG:11, LOCAL
+		ENDIF
+	;手淫
+	CASE 10
+		;기절中はＣ攻め弱に振り替える
+		IF (TCVARn:12 & 기절)
+			TFLAG:10 = 0
+			CALL SEX_COM0, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM10, FLAG:11, LOCAL
+		ENDIF
+	;フェラ
+	CASE 11
+		;남자かつ男女平等オフならスパンキングに振り替える
+		IF ISHOLE() == 0
+			TFLAG:10 = 8
+			CALL SEX_COM8, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM11, FLAG:11, LOCAL
+		ENDIF
+	;イラマチオ
+	CASE 12
+		;남자かつ男女平等オフならスパンキングに振り替える
+		IF ISHOLE() == 0
+			TFLAG:10 = 8
+			CALL SEX_COM8, FLAG:11, LOCAL
+		;残酷Offならフェラに振り替える
+		ELSEIF CONFIG_CHECK_MANIAC_F(14) == 0
+			TFLAG:10 = 11
+			CALL SEX_COM11, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM12, FLAG:11, LOCAL
+		ENDIF
+	;絶頂禁止
+	CASE 13
+		CALL SEX_COM13, FLAG:11, LOCAL
+	;衣装を破く
+	CASE 14
+		IF (CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L) && RAND:100 < 70
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSEIF (CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > 0) && RAND:100 < 15
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			RETURN 0
+		ENDIF
+	;種付けピストン
+	CASE 15
+		;보추の場合は애널ピストンに振り替える
+		IF TALENT:보추 > 0
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM17, FLAG:11, LOCAL
+		;남자の場合はC攻め強に振り替える
+		ELSEIF ISMALE()
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		;聖처녀はAピストンに振る予定(現状はC強攻め)
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+		;	CALL SEX_COM17, FLAG:11, LOCAL
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM15, FLAG:11, LOCAL
+		ENDIF
+	;種付けフィニッシュ
+	CASE 16
+		;보추の場合は애널フィニッシュに振り替える
+		IF TALENT:보추 > 0
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM18, FLAG:11, LOCAL
+		;남자の場合はC攻め強に振り替える
+		ELSEIF ISMALE()
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		;聖처녀はAフィニッシュに振る予定(現状はC強攻め)
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+		;	CALL SEX_COM18, FLAG:11, LOCAL
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM16, FLAG:11, LOCAL
+		ENDIF
+	;애널ピストン
+	CASE 17
+		;남자かつ男女平等オフならC攻め強に振り替える
+		IF ISHOLE() == 0
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM17, FLAG:11, LOCAL
+		ENDIF
+	;애널フィニッシュ
+	CASE 18
+		;남자かつ男女平等オフならC攻め強に振り替える
+		IF ISHOLE() == 0
+			;강구속を消す
+			SIF (TCVARn:12 & 강구속)
+				TCVARn:12 -= 강구속
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM18, FLAG:11, LOCAL
+		ENDIF
+	;両穴ピストン
+	CASE 19
+		;남자の場合または촉수を持たない洗脳/悪堕ちキャラの場合は前ターンの行動に応じて振り替える
+		IF ISMALE() || (FLAG:110 == 1 && TALENT:(FLAG:111):기생 == 0)
+			IF TFLAG:20 == 15
+				TFLAG:10 = 15
+				CALL SEX_COM15, FLAG:11, LOCAL
+			ELSEIF TFLAG:20 == 17
+				TFLAG:10 = 17
+				CALL SEX_COM17, FLAG:11, LOCAL
+			ELSE
+				;강구속を消す
+				SIF (TCVARn:12 & 강구속)
+					TCVARn:12 -= 강구속
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ENDIF
+		;聖처녀はAピストン
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			TFLAG:10 = 17
+			CALL SEX_COM17, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM19, FLAG:11, LOCAL
+		ENDIF
+	;両穴フィニッシュ
+	CASE 20
+		;남자の場合または촉수を持たない洗脳/悪堕ちキャラの場合は前ターンの行動に応じて振り替える
+		IF ISMALE() || (FLAG:110 == 1 && TALENT:(FLAG:111):기생 == 0)
+			IF TFLAG:20 == 15
+				TFLAG:10 = 16
+				CALL SEX_COM16, FLAG:11, LOCAL
+			ELSEIF TFLAG:20 == 17
+				TFLAG:10 = 18
+				CALL SEX_COM18, FLAG:11, LOCAL
+			ELSE
+				;강구속を消す
+				SIF (TCVARn:12 & 강구속)
+					TCVARn:12 -= 강구속
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ENDIF
+		;聖처녀はAフィニッシュ
+		ELSEIF CHECK_HOLYVIRGIN_F()==1
+			TFLAG:10 = 18
+			CALL SEX_COM18, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_COM20, FLAG:11, LOCAL
+		ENDIF
+	;C攻めSP
+	CASE 1000
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_SPCOM0
+		ENDIF
+	;V攻めSP
+	CASE 1001
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はA攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM5, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り変える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			;聖처녀はC攻めSPに振る予定(現状はC強攻め)
+			ELSEIF CHECK_HOLYVIRGIN_F()==1
+			;	CALL SEX_SPCOM0
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_SPCOM1
+			ENDIF
+		ENDIF
+	;A攻めSP
+	CASE 1002
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならC攻めSPに振り替える
+				IF ISHOLE() == 0
+				TFLAG:10 = 1000
+				CALL SEX_SPCOM0
+			;소프트 바디슈트の場合は貫通できないのでA攻め強に振り返る
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				TFLAG:10 = 5
+				CALL SEX_COM5, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_SPCOM2
+			ENDIF
+		ENDIF
+	;B攻めSP
+	CASE 1003
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならＢ攻め弱に振り替える
+				IF ISHOLE() == 0
+				TFLAG:10 = 6
+				CALL SEX_COM6, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_SPCOM3
+			ENDIF
+		ENDIF
+	;電撃
+	CASE 1004
+		CALL SEX_SPCOM4
+	;パイズリ
+	CASE 1005
+		;남자の場合はB攻め強に振り変える
+		IF ISMALE()
+			TFLAG:10 = 7
+			CALL SEX_COM7, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_SPCOM5
+		ENDIF
+	;強制自慰
+	CASE 1006
+		;기절中はＣ攻め弱に振り替える
+		IF (TCVARn:12 & 기절)
+			TFLAG:10 = 0
+			CALL SEX_COM0, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_SPCOM6
+		ENDIF
+	;羞恥プレイ
+	CASE 1007
+		;기절中はＣ攻め弱に振り替える
+		IF (TCVARn:12 & 기절)
+			TFLAG:10 = 0
+			CALL SEX_COM0, FLAG:11, LOCAL
+		;남자かつ男女平等オフならC攻め強に振り替える
+		ELSEIF ISHOLE() == 0
+			TFLAG:10 = 1
+			CALL SEX_COM1, FLAG:11, LOCAL
+		ELSE
+			CALL SEX_SPCOM7
+		ENDIF
+	;尿道攻め
+	CASE 1008
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			IF BASE:C결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1000
+				CALL SEX_SPCOM0
+			ELSE
+				CALL SEX_SPCOM8
+			ENDIF
+		ENDIF
+	;V拡張攻め
+	CASE 1009
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はA攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM5, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り替える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			;聖처녀はイマラチオに振る予定(現状はC強攻め)
+			ELSEIF CHECK_HOLYVIRGIN_F()==1
+			;	CALL SEX_COM12, FLAG:11, LOCAL
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ELSEIF BASE:V결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			;聖처녀はA拡張
+			ELSEIF CHECK_HOLYVIRGIN_F()==1
+				TFLAG:10 = 12
+				CALL SEX_COM12, FLAG:11, LOCAL
+			ELSE
+				CALL SEX_SPCOM9
+			ENDIF
+		ENDIF
+	;A拡張攻め
+	CASE 1010
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならC攻めSPに振り替える
+				IF ISHOLE() == 0
+				TFLAG:10 = 1000
+				CALL SEX_SPCOM0
+			;소프트 바디슈트の場合は貫通できないのでA攻め強に振り返る
+			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
+				TFLAG:10 = 5
+				CALL SEX_COM5, FLAG:11, LOCAL
+			ELSEIF BASE:A결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1002
+				CALL SEX_SPCOM2
+			ELSE
+				CALL SEX_SPCOM10
+			ENDIF
+		ENDIF
+	;甘えん坊授乳プレイ
+	CASE 1011
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はB攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM7, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り替える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ELSEIF BASE:B결계내구력 > 0 || (TFLAG:20 < 0 && RAND:2 == 0)
+				TFLAG:10 = 1005
+				CALL SEX_SPCOM5
+			ELSEIF BASE:V결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			ELSE
+				CALL SEX_SPCOM11
+			ENDIF
+		ENDIF
+	;ヘソ快楽攻め
+	CASE 1012
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		;残酷Off時は代替
+		ELSEIF CONFIG_CHECK_MANIAC_F(14) == 0
+			CALL SEX_SPCOM12
+		ELSE
+			TFLAG:10 = 8
+			CALL SEX_COM8, FLAG:11, LOCAL
+		ENDIF
+	;丸飲み精液攻め
+	CASE 1013
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;남자かつ男女平等オフならC攻めSPに振り替える
+				IF ISHOLE() == 0
+				TFLAG:10 = 1000
+				CALL SEX_SPCOM0
+			ELSEIF BASE:V결계내구력 > 0 || (TFLAG:20 < 0 && RAND:2 == 0)
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			ELSEIF BASE:A결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1002
+				CALL SEX_SPCOM2
+			ELSE
+				CALL SEX_SPCOM13
+			ENDIF
+		ENDIF
+	;催眠姦
+	CASE 1014
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はA攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM5, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り替える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			;聖처녀の場合もC攻め強に振り替える
+			ELSEIF CHECK_HOLYVIRGIN_F()==1
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			ELSEIF BASE:V결계내구력 > 0 || TFLAG:20 < 0
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			;기절中かつ意中の相手が居ない場合
+			ELSEIF (TCVARn:12 & 기절) && TALENT:교제상대 == 0
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			ELSE
+				CALL SEX_SPCOM14
+			ENDIF
+		ENDIF
+	;サブミッションファック
+	CASE 1015
+		;衣装の耐久度が高ければ衣装破壊を優先する
+		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
+			TFLAG:10 = 14
+			CALL SEX_COM14, FLAG:11, LOCAL
+		ELSE
+			;보추の場合はA攻め強に振り替える
+			IF TALENT:보추 > 0
+				TFLAG:10 = 1
+				CALL SEX_COM5, FLAG:11, LOCAL
+			;남자の場合はC攻め強に振り替える
+			ELSEIF ISMALE()
+				TFLAG:10 = 1
+				CALL SEX_COM1, FLAG:11, LOCAL
+			;選べない場合は代替
+			ELSEIF BASE:V결계내구력 > 0 || CONFIG_CHECK_MANIAC_F(14) == 0 || (TCVARn:12 & 기절) || TFLAG:20 < 0
+				TFLAG:10 = 1001
+				CALL SEX_SPCOM1
+			ELSE
+				CALL SEX_SPCOM15
+			ENDIF
+		ENDIF
+	;잡몹적オリジナルコマンド
+	CASE 2000 TO 2999
+		SIF ENEMY_TYPE_CHECK_F("MOB") == 1
+			TRYCALLFORM SEXCOM_MOB_{FLAG:11}_COM{ARG}, FLAG:11, LOCAL
+ENDSELECT
+RETURN 1
+

@@ -1,0 +1,364 @@
+﻿;接頭語・接尾語用文字追加方法
+;
+;この下（75行目以降）にあるそれぞれのカテゴリの文字群に、/（半角スラッシュ）で区切って
+;好みの文字を記入してください
+;最後の文字の後に/を付けると、空の文字を返してしまう場合があるので、注意してください
+
+@GENERATE_ADD_STR, WEAPON_ST, ADD_POS, WEAPON_AT, WEAPON_CL, ATTACK_AT, SELF_CL
+
+#DIM CONST 連続 = 1
+#DIM CONST 装甲 = 2
+#DIM CONST 攪乱 = 3
+#DIM CONST 重撃 = 4
+#DIM CONST 広範 = 5
+#DIM CONST 全力 = 6
+#DIM CONST 知略 = 7
+#DIM CONST 設置 = 8
+#DIM CONST 使役 = 9
+#DIM CONST 전투스타일 = 10
+
+#DIM CONST 火 = 11
+#DIM CONST 氷 = 12
+#DIM CONST 雷 = 13
+#DIM CONST 水 = 14
+#DIM CONST 風 = 15
+#DIM CONST 地 = 16
+#DIM CONST 毒 = 17
+#DIM CONST 光 = 18
+#DIM CONST 闇 = 19
+#DIM CONST 属性 = 20
+
+#DIM CONST 斬 = 21
+#DIM CONST 打 = 22
+#DIM CONST 突 = 23
+#DIM CONST 射 = 24
+#DIM CONST 術 = 25
+#DIM CONST 斬打 = 26
+#DIM CONST 打突 = 27
+#DIM CONST 突斬 = 28
+#DIM CONST 공격属性 = 29
+
+#DIM CONST 武器なし = 30
+#DIM CONST 剣 = 31
+#DIM CONST 刀 = 32
+#DIM CONST 槍 = 33
+#DIM CONST 斧 = 34
+#DIM CONST 槌 = 35
+#DIM CONST 拳 = 36
+#DIM CONST 爪 = 37
+#DIM CONST 棍 = 38
+#DIM CONST 杖 = 39
+#DIM CONST 鎌 = 40
+#DIM CONST 鞭 = 41
+#DIM CONST 鋼糸 = 42
+#DIM CONST 鎖鋸 = 43
+#DIM CONST 杭槍 = 44
+#DIM CONST 弓 = 45
+#DIM CONST 銃 = 46
+#DIM CONST 砲 = 47
+#DIM CONST 符 = 48
+#DIM CONST 珠 = 49
+#DIM CONST 武器種 = 50
+#DIM CONST 全般 = 51
+
+#DIM AD_VAR, 55
+#DIMS AD_STR, 55
+#DIMS AD_CHR, 55, 100
+
+;追加文字数
+#DIM ADD_LEN
+;属性文字要素数
+#DIM AT_NO, 2
+;文字要素数
+#DIM CHAR_NO, 2
+
+#DIM NOW_NO, 2
+;전투스타일
+#DIM WEAPON_ST
+;属性
+#DIM WEAPON_AT
+;武器種　
+#DIM WEAPON_CL
+;공격属性　1:斬　2:打　4:突　8:射　16:術
+#DIM ATTACK_AT
+
+#DIM ADD_POS
+
+#DIM LFLAG
+#DIM LCOUNT, 2
+
+#DIMS ADD_CHAR, 3
+#DIMS SELF_CL
+
+;====================================================================================
+;		 /////     追加文字設定部     /////
+;====================================================================================
+
+;전투스타일
+AD_STR:連続 = 俊/瞬/迅/閃/双/速/翼/連
+AD_STR:装甲 = 界/殻/護/甲/硬/鋼/砦/守/盾/装/纏/備/壁
+AD_STR:攪乱 = 隠/影/疾/瞬/迅/閃/馳/跳/遁/忍/舞/駛
+AD_STR:重撃 = 剛/轟/重/大/壊/圧/暴/砕
+AD_STR:広範 = 圧/拡/響/散/塵/破/爆/滅/殲/炸/鏖
+AD_STR:全力 = 極/懸/獄/魂/砕/獣/尽/総/統/奮/臨/烈/渾
+AD_STR:知略 = 奇/慧/賢/策/術/仙/智/導/読/謀/理/略/惑
+AD_STR:設置 = 鎖/撒/陣/据/静/操/滞/置/縛/浮/罠
+AD_STR:使役 = 獣/翼/蛇/狼/鳥/群/操/役/符/式/使
+
+;属性
+AD_STR:火 = 火/炎/焔/赫/朱/赤/緋
+AD_STR:氷 = 氷/凍/冷/零/銀/青/蒼/白
+AD_STR:雷 = 雷/黄/金/虎/光/紅/轟/紫/閃/電/白/麟
+AD_STR:水 = 雨/雲/河/海/黒/雫/清/滴/波/霧/流/浪/濤/雹/霰/黒/青/蒼
+AD_STR:風 = 風/嵐/翠/青/碧/緑
+AD_STR:地 = 地/振/土/黄/翠/碧/緑
+AD_STR:毒 = 毒/死/蛇/痺/蠱/紫
+AD_STR:光 = 光/星/正/聖/天/陽/翼
+AD_STR:闇 = 闇/陰/怨/邪/深/魔/冥
+
+;공격属性
+AD_STR:斬 = 斬/切/絶/閃
+AD_STR:打 = 打/砕/衝/破
+AD_STR:突 = 突/鋭/貫/刺/穿/通
+AD_STR:射 = 射/瞬/狙/弾
+AD_STR:術 = 術/祈/護/呪/鎮/縛/封/奉/法/魔/霊
+AD_STR:斬打 = 割/断
+AD_STR:打突 = 貫/砕/衝/穿/破
+AD_STR:突斬 = 薙
+
+;武器種
+;武器種指定なし
+AD_STR:武器なし = 器/具/装
+AD_STR:剣 = 剣/刃
+AD_STR:刀 = 刀/刃/太刀
+AD_STR:槍 = 槍/号/鉾
+AD_STR:斧 = 斧
+AD_STR:槌 = 槌
+AD_STR:拳 = 拳
+AD_STR:爪 = 爪
+AD_STR:棍 = 棍/棒
+AD_STR:杖 = 杖
+AD_STR:鎌 = 鎌
+AD_STR:鞭 = 鞭
+AD_STR:鋼糸 = 鋼糸/絃/鋼線/糸/鉄糸/鉄線/罠
+AD_STR:鎖鋸 = 鎖鋸/機剣/鋸
+AD_STR:杭槍 = 杭槍/機/杭/機杭/機槍/杭打
+AD_STR:弓 = 弓
+AD_STR:銃 = 銃
+AD_STR:砲 = 砲
+AD_STR:符 = 符/札
+AD_STR:珠 = 珠/玉/宝玉/宝珠
+
+;その他追加用文字
+AD_STR:全般 = 影/王/牙/凶/業/銀/撃/血/護/皇/魂/死/浄/心/真/鎮/天/覇/縛/秘/封/宝/鳳/名/命/妖/裏/龍/霊/神
+
+;====================================================================================
+;		 /////     　　以上　　     /////
+;====================================================================================
+
+FOR LCOUNT, 0, 55
+	SPLIT AD_STR:LCOUNT, "/", AD_CHR:0:0
+	AD_VAR:LCOUNT = RESULT
+	REPEAT 100
+		SIF AD_CHR:0:COUNT == ""
+			BREAK
+		AD_CHR:LCOUNT:COUNT = %AD_CHR:0:COUNT%
+		AD_CHR:0:COUNT = 
+	REND
+NEXT
+
+VARSET CHAR_NO
+VARSET AT_NO
+
+;武器種:20
+CHAR_NO:1 = 1
+AT_NO:1 = 1
+
+FOR LCOUNT, 0, 55
+	IF LCOUNT >= 火 && LCOUNT < 属性
+		AT_NO:1 += AD_VAR:LCOUNT
+	ELSE
+		CHAR_NO:1 += AD_VAR:LCOUNT
+	ENDIF
+NEXT
+
+ADD_LEN = RAND:4
+
+SIF WEAPON_CL && ADD_POS != 2
+	ADD_LEN += 1
+
+ADD_LEN = LIMIT(ADD_LEN, 2, 3)
+
+VARSET ADD_CHAR
+VARSET LFLAG
+VARSET NOW_NO
+
+SIF ADD_LEN > 1
+	NOW_NO:0 = RAND:2
+
+DO
+	CHAR_NO:0 = CHAR_NO:1
+	AT_NO:0 = AT_NO:1
+
+;属性関連
+;------------------------------------------
+	FOR LCOUNT:1, 火, 属性
+		SIF WEAPON_AT != LCOUNT:1 - 10
+			CONTINUE
+		FOR LCOUNT, 0, AD_VAR:(LCOUNT:1)
+			AT_NO:0 -= 1
+			IF WEAPON_AT == LCOUNT:1 - 10 && GETBIT(LFLAG, 1) == 0 && RAND:AT_NO == 0
+				ADD_CHAR:(NOW_NO:0) = %AD_CHR:(LCOUNT:1):LCOUNT%
+				SETBIT LFLAG, 0
+				SETBIT LFLAG, 1
+				GOTO END_ADD_CHAR
+			ENDIF
+		NEXT
+	NEXT
+
+;全般文字
+;RANDを水増しして出る確率を少し低下
+;------------------------------------------
+	FOR LCOUNT, 0, AD_VAR:全般
+		CHAR_NO:0 -= 1
+		IF RAND:(CHAR_NO + 16) == 0
+			ADD_CHAR:(NOW_NO:0) = %AD_CHR:全般:LCOUNT%
+			SETBIT LFLAG, 0
+			GOTO END_ADD_CHAR
+		ENDIF
+	NEXT
+
+;전투스타일関連
+;------------------------------------------
+	FOR LCOUNT:1, 連続, 전투스타일
+		FOR LCOUNT, 0, AD_VAR:(LCOUNT:1)
+			CHAR_NO:0 -= 1
+			IF WEAPON_ST == LCOUNT:1 && GETBIT(LFLAG, 2) == 0 && RAND:CHAR_NO == 0
+				ADD_CHAR:(NOW_NO:0) = %AD_CHR:(LCOUNT:1):LCOUNT%
+				SETBIT LFLAG, 0
+				SETBIT LFLAG, 2
+				GOTO END_ADD_CHAR
+			ENDIF
+		NEXT
+	NEXT
+
+;공격属性関連
+;斬 + 打
+;------------------------------------------
+	FOR LCOUNT, 0, AD_VAR:斬打
+		CHAR_NO:0 -= 1
+		IF ATTACK_AT & 1 && ATTACK_AT & 2 && GETBIT(LFLAG, 3) == 0 && RAND:CHAR_NO == 0
+			ADD_CHAR:(NOW_NO:0) = %AD_CHR:斬打:LCOUNT%
+			SETBIT LFLAG, 0
+			SETBIT LFLAG, 3
+			GOTO END_ADD_CHAR
+		ENDIF
+	NEXT
+
+;打 + 突
+;------------------------------------------
+	FOR LCOUNT, 0, AD_VAR:打突
+		CHAR_NO:0 -= 1
+		IF ATTACK_AT & 2 && ATTACK_AT & 4 && GETBIT(LFLAG, 3) == 0 && RAND:CHAR_NO == 0
+			ADD_CHAR:(NOW_NO:0) = %AD_CHR:打突:LCOUNT%
+			SETBIT LFLAG, 0
+			SETBIT LFLAG, 3
+			GOTO END_ADD_CHAR
+		ENDIF
+	NEXT
+
+;斬 + 突
+;------------------------------------------
+	FOR LCOUNT, 0, AD_VAR:突斬
+		CHAR_NO:0 -= 1
+		IF ATTACK_AT & 4 && ATTACK_AT & 1 && GETBIT(LFLAG, 3) == 0 && RAND:CHAR_NO == 0
+			ADD_CHAR:(NOW_NO:0) = %AD_CHR:突斬:LCOUNT%
+			SETBIT LFLAG, 0
+			SETBIT LFLAG, 3
+			GOTO END_ADD_CHAR
+		ENDIF
+	NEXT
+
+;------------------------------------------
+	FOR LCOUNT:1, 斬, 공격属性
+		FOR LCOUNT, 0, AD_VAR:(LCOUNT:1)
+			CHAR_NO:0 -= 1
+			IF GETBIT(ATTACK_AT, LCOUNT:1 - 21) && GETBIT(LFLAG, 3) == 0 && RAND:CHAR_NO == 0
+				ADD_CHAR:(NOW_NO:0) = %AD_CHR:(LCOUNT:1):LCOUNT%
+				SETBIT LFLAG, 0
+				SETBIT LFLAG, 3
+				GOTO END_ADD_CHAR
+			ENDIF
+		NEXT
+	NEXT
+
+;------------------------------------------
+;	IF CHAR_NO:1 == 0
+;		CHAR_NO:0 += 1
+;	ELSE
+;		CHAR_NO:0 -= 1
+;		IF ATTACK_AT & 8 && RAND:CHAR_NO == 0
+;			ADD_CHAR:(NOW_NO:0) = 심안
+;			SETBIT LFLAG, 0
+;			GOTO END_ADD_CHAR
+;		ENDIF
+;	ENDIF
+
+;武器種関連
+;------------------------------------------
+	FOR LCOUNT:1, 30, 50
+		FOR LCOUNT, 0, AD_VAR:(LCOUNT:1)
+			CHAR_NO:0 -= 1
+			IF WEAPON_CL == LCOUNT:1 - 30 && NOW_NO:0 == ADD_LEN - 1 && RAND:CHAR_NO == 0
+				ADD_CHAR:(NOW_NO:0) = %AD_CHR:(LCOUNT:1):LCOUNT%
+				SETBIT LFLAG, 0
+				SETBIT LFLAG, 4
+				GOTO END_ADD_CHAR
+			ENDIF
+		NEXT
+	NEXT
+
+;自由入力
+;------------------------------------------
+	IF WEAPON_CL == 20 && NOW_NO:0 == ADD_LEN - 1
+		ADD_CHAR:(NOW_NO:0) = %SELF_CL%
+		SETBIT LFLAG, 0
+		SETBIT LFLAG, 4
+		GOTO END_ADD_CHAR
+	ENDIF
+	$END_ADD_CHAR
+
+;要素数決定
+;どれかの要素にヒットした
+	IF LFLAG & 1
+		CLEARBIT LFLAG, 0
+;文字が被った
+		SIF (ADD_CHAR:0 != "" && ADD_CHAR:0 == ADD_CHAR:1) || (ADD_CHAR:1 != "" && ADD_CHAR:1 == ADD_CHAR:2) || (ADD_CHAR:2 != "" && ADD_CHAR:2 == ADD_CHAR:0)
+			CONTINUE
+
+		IF NOW_NO:0 == ADD_LEN - 1
+;最後が武器種でない
+			SIF GETBIT(LFLAG, 4) == 0 && ((ADD_LEN == 3 && RAND:8) || (ADD_LEN == 2 && RAND:6))
+				CONTINUE
+			SIF ADD_POS == 2 && GETBIT(LFLAG, 4) == 0 && RAND:8
+				CONTINUE
+;4文字以上
+			STRLENSU ADD_CHAR:(NOW_NO:0)
+			SIF RESULT > 1 && ADD_LEN > 2 && RAND:3
+				CONTINUE
+;
+			SIF ADD_LEN == 2 && RESULT > 1 && RAND:3 == 0
+				ADD_CHAR:0 = 
+
+		ENDIF
+		IF NOW_NO:1 == 0
+			INVERTBIT NOW_NO:0, 0
+		ELSE
+			NOW_NO:0 = 2
+		ENDIF
+		NOW_NO:1 += 1
+		CLEARBIT LFLAG, 0
+	ENDIF
+
+LOOP NOW_NO:1 < ADD_LEN
+RESULTS = %ADD_CHAR:0%%ADD_CHAR:1%%ADD_CHAR:2%

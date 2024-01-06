@@ -1,0 +1,552 @@
+﻿;**********************************************************
+;基本ルール
+;加筆修正は、自由に行ってください
+;ただし、前の方が書いた文章は勝手に消さないでください
+;書き込む順番は、クドくなり過ぎないように3要素と部位で表現します
+;【実況】汁に濡れている、기생されている、촉수 구속구などを装着など
+;【形状】大きさ、深さなど、
+;【動作】開閉している、うごめいているなど、動きを表現
+;【部位呼称】음란や발정や性格で下品な書き方に
+;
+;増やして欲しい隠語は、アウトプットしてリクエストなりしましょう
+;未登録の中に放り込むなり、掲示板にアップするなりすれば、
+;実装される可能性があります
+;
+;by 雑魚の人 2018/02/01
+;**********************************************************
+
+
+;**********************************************************
+;性格でスラングを切り替えるためテンプレ
+;**********************************************************
+;eXample(例)の淫語
+@SLANG_XXXX(ARG)
+
+IF TALENT:겁쟁이
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:부끄럼쟁이
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:오기
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:활발함
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:대범함
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:게으름
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:진지함
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:낙천적
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:비관적
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:순종적
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:츤데레
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:얀데레
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:과묵함
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:수다쟁이
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:고풍적
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:경박함
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:고집쟁이
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:사나움
+	SLANGWORD_XXXX+=
+ELSEIF TALENT:감정결여
+	SLANGWORD_XXXX+=
+ELSE
+	SLANGWORD_XXXX+=
+ENDIF
+
+
+
+
+
+
+
+
+
+
+
+
+;**********************************************************
+;敏感か鈍感かでスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:C민감
+	SLANGWORD_XXXX+="C민감"
+ENDIF
+IF TALENT:C둔감
+	SLANGWORD_XXXX+="C둔감"
+ENDIF
+IF TALENT:V민감
+	SLANGWORD_XXXX+="V민감"
+ENDIF
+IF TALENT:V둔감
+	SLANGWORD_XXXX+="V둔감"
+ENDIF
+IF TALENT:A민감
+	SLANGWORD_XXXX+="A민감"
+ENDIF
+IF TALENT:A둔감
+	SLANGWORD_XXXX+="A둔감"
+ENDIF
+IF TALENT:B민감
+	SLANGWORD_XXXX+="B민감"
+ENDIF
+IF TALENT:B둔감
+	SLANGWORD_XXXX+="B둔감"
+ENDIF
+
+
+
+;**********************************************************
+;敏感か鈍感かでスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:촉수의포로
+	SLANGWORD_XXXX+="촉수의포로"
+ENDIF
+IF TALENT:음란
+	SLANGWORD_XXXX+="음란"
+ENDIF
+IF TALENT:음핵
+	SLANGWORD_XXXX+="음핵"
+ENDIF
+IF TALENT:음호
+	SLANGWORD_XXXX+="음호"
+ENDIF
+IF TALENT:음고
+	SLANGWORD_XXXX+="음고"
+ENDIF
+IF TALENT:음유
+	SLANGWORD_XXXX+="음유"
+ENDIF
+
+
+;**********************************************************
+;変身の有無と戦闘員かどうかでスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:변신능력==1
+	SLANGWORD_XXXX+=""
+ELSEIF TALENT:변신능력==0
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+;**********************************************************
+;変身の有無と戦闘員かどうかでスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:인간
+	SLANGWORD_XXXX+="인간"
+ENDIF
+IF TALENT:이능력자
+	SLANGWORD_XXXX+="이능력자"
+ENDIF
+IF TALENT:마법사
+	SLANGWORD_XXXX+="마법사"
+ENDIF
+IF TALENT:인조인간
+	SLANGWORD_XXXX+="인조인간"
+ENDIF
+IF TALENT:천사
+	SLANGWORD_XXXX+="천사"
+ENDIF
+IF TALENT:마족
+	SLANGWORD_XXXX+="마족"
+ENDIF
+
+
+
+;**********************************************************
+;후타나리の有無でスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:후타나리 > 0
+	IF TALENT:후타나리==3
+		SLANGWORD_XXXX+="天然후타나리"
+	ELSEIF TALENT:후타나리==2
+		SLANGWORD_XXXX+="기생후타나리"
+	ELSE
+		SLANGWORD_XXXX+="後天후타나리"
+	ENDIF
+ENDIF
+
+
+
+;**********************************************************
+;남자・ＴＳの有無でスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:남자
+	SLANGWORD_XXXX+="남자"
+ENDIF
+IF TALENT:변신시TS
+	SLANGWORD_XXXX+="변신시TS"
+ENDIF
+IF TALENT:변신시비처녀
+	SLANGWORD_XXXX+="변신시비처녀"
+ENDIF
+IF TALENT:여체수용
+	SLANGWORD_XXXX+="여체수용"
+ENDIF
+IF TALENT:변신시후타나리
+	SLANGWORD_XXXX+="변신시후타나리"
+ENDIF
+
+
+
+
+;**********************************************************
+;청순파の有無でスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:청순파
+	SLANGWORD_XXXX+="청순파"
+ENDIF
+
+
+
+;**********************************************************
+;청순파の有無でスラングを切り替えるためテンプレ
+;**********************************************************
+IF TALENT:내성적
+	SLANGWORD_XXXX+="내성적"
+ENDIF
+IF TALENT:사교적
+	SLANGWORD_XXXX+="사교적"
+ENDIF
+IF TALENT:제멋대로굼
+	SLANGWORD_XXXX+="제멋대로굼"
+ENDIF
+IF TALENT:헌신적
+	SLANGWORD_XXXX+="헌신적"
+ENDIF
+IF TALENT:소심함
+	SLANGWORD_XXXX+="소심함"
+ENDIF
+IF TALENT:자존심높음
+	SLANGWORD_XXXX+="자존심높음"
+ENDIF
+IF TALENT:보수적
+	SLANGWORD_XXXX+="보수적"
+ENDIF
+IF TALENT:호기심
+	SLANGWORD_XXXX+="호기심"
+ENDIF
+IF TALENT:새드기질
+	SLANGWORD_XXXX+="새드기질"
+ENDIF
+IF TALENT:마조기질
+	SLANGWORD_XXXX+="마조기질"
+ENDIF
+IF TALENT:쾌감에솔직
+	SLANGWORD_XXXX+="쾌감에솔직"
+ENDIF
+IF TALENT:쾌감을부정
+	SLANGWORD_XXXX+="쾌감을부정"
+ENDIF
+IF TALENT:전투거부
+	SLANGWORD_XXXX+="전투거부"
+ENDIF
+IF TALENT:싸움꾼
+	SLANGWORD_XXXX+="싸움꾼"
+ENDIF
+IF TALENT:수줍음
+	SLANGWORD_XXXX+="수줍음"
+ENDIF
+IF TALENT:배짱
+	SLANGWORD_XXXX+="배짱"
+ENDIF
+IF TALENT:인간불신
+	SLANGWORD_XXXX+="인간불신"
+ENDIF
+IF TALENT:양도
+	SLANGWORD_XXXX+="양도"
+ENDIF
+IF TALENT:남성기피
+	SLANGWORD_XXXX+="남성기피"
+ENDIF
+IF TALENT:여성기피
+	SLANGWORD_XXXX+="여성기피"
+ENDIF
+IF TALENT:모성적
+	SLANGWORD_XXXX+="모성적"
+ENDIF
+IF TALENT:소악마
+	SLANGWORD_XXXX+="소악마"
+ENDIF
+IF TALENT:눈에띄고싶어함
+	SLANGWORD_XXXX+="눈에띄고싶어함"
+ENDIF
+IF TALENT:고상함
+	SLANGWORD_XXXX+="고상함"
+ENDIF
+IF TALENT:울보
+	SLANGWORD_XXXX+="울보"
+ENDIF
+
+
+
+
+;**********************************************************
+;刻印の場合
+;**********************************************************
+IF MARK:굴복각인
+	SLANGWORD_XXXX+=""
+ENDIF
+IF MARK:공포각인
+	SLANGWORD_XXXX+=""
+ENDIF
+IF MARK:쾌락각인
+	SLANGWORD_XXXX+=""
+ENDIF
+
+IF MARK:공포각인
+	SLANGWORD_XXXX+=""
+ENDIF
+IF MARK:공포각인
+	SLANGWORD_XXXX+=""
+ENDIF
+IF MARK:공포각인
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+;**********************************************************
+;中毒の場合
+;**********************************************************
+IF ABL:자위중독
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:촉수중독
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:정액중독
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:모유중독
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:사정중독
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:욕망
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:노출벽
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:마조끼
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+;**********************************************************
+;感覚の場合
+;**********************************************************
+IF ABL:C감각
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:V감각
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:A감각
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:B감각
+	SLANGWORD_XXXX+=""
+ENDIF
+IF ABL:V감각
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+
+;**********************************************************
+;絶頂の場合
+;**********************************************************
+IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+	SLANGWORD_XXXX+=""
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	SLANGWORD_XXXX+=""
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 2
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+;**********************************************************
+;스테이터스の場合
+;**********************************************************
+IF BASE:체력 == 0
+	SLANGWORD_XXXX+=""
+ELSEIF BASE:체력 < MAXBASE:체력 / 2
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF BASE:기력 == 0
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF BASE:성내성 == 0
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+IF PALAM:恥辱 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:恥辱 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:恥辱 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:恥辱 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF PALAM:공포 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공포 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공포 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공포 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+IF PALAM:굴복 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:굴복 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:굴복 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:굴복 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+IF PALAM:공순 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공순 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공순 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:공순 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF PALAM:욕정 >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:욕정 < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:욕정 < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:욕정 < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+IF PALAM:쾌C >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌C < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌C < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌C < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF PALAM:쾌V >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌V < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌V < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌V < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF PALAM:쾌A >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌A < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌A < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌A < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+
+
+
+;**********************************************************
+;스테이터스の場合
+;**********************************************************
+IF (TCVAR:12 & 기절)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 배란)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 발정)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 마비)
+	SLANGWORD_XXXX+=""
+ENDIF
+
+IF (TCVAR:12 & 쓰러짐)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 황홀)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 강구속)
+	SLANGWORD_XXXX+=""
+ENDIF
+IF (TCVAR:12 & 絶頂禁止)
+	SLANGWORD_XXXX+=""
+ENDIF
+

@@ -1,0 +1,507 @@
+﻿;----------------------------------------------------------
+;
+@FIRSTSETTING_RANDOMNAMING_ALL
+#DIM LCOUNT,2
+#DIM LINE
+#DIM キープ中フラグ,20
+#DIM 上の句ジャンル,1
+#DIM 下の句ジャンル,1
+#DIM 上の句固定番号,1
+#DIM 下の句固定番号,1
+
+CALL LB
+LINE = LINECOUNT
+上の句ジャンル = 8
+下の句ジャンル = 8
+
+GOTO INPUT_REGENERATE
+
+$INPUT_RESELECT
+LOCAL:5 = 0
+LOCAL:6 = 上の句ジャンル
+DO
+	SIF LOCAL:5 == 0
+		FONTBOLD
+	PRINT 　上の句：
+	IF 上の句ジャンル == 0
+		PRINTL 매지컬적인 단어
+	ELSEIF 上の句ジャンル == 1
+		PRINTL 천체의 이름
+	ELSEIF 上の句ジャンル == 2
+		PRINTL 색깔 이름
+	ELSEIF 上の句ジャンル == 3
+		PRINTL 과일, 채소 등 식물의 이름
+	ELSEIF 上の句ジャンル == 4
+		PRINTL 잡다한 영어 단어
+	ELSEIF 上の句ジャンル == 5
+		PRINTL 보석의 이름
+	ELSEIF 上の句ジャンル == 6
+		PRINTL 사람을 나타내는 단어
+	ELSEIF 上の句ジャンル == 7
+		PRINTL 무기의 이름
+	ELSEIF 上の句ジャンル == 8
+		PRINTL ランダム
+	ENDIF
+	FONTREGULAR
+	SIF LOCAL:5 != 0
+		FONTBOLD
+	PRINT 　下の句：
+	IF 下の句ジャンル == 0
+		PRINTL 매지컬적인 단어
+	ELSEIF 下の句ジャンル == 1
+		PRINTL 천체의 이름
+	ELSEIF 下の句ジャンル == 2
+		PRINTL 색깔 이름
+	ELSEIF 下の句ジャンル == 3
+		PRINTL 과일, 채소 등 식물의 이름
+	ELSEIF 下の句ジャンル == 4
+		PRINTL 잡다한 영어 단어
+	ELSEIF 下の句ジャンル == 5
+		PRINTL 보석의 이름
+	ELSEIF 下の句ジャンル == 6
+		PRINTL 사람을 나타내는 단어
+	ELSEIF 下の句ジャンル == 7
+		PRINTL 무기의 이름
+	ELSEIF 下の句ジャンル == 8
+		PRINTL ランダム
+	ENDIF
+	FONTREGULAR
+
+
+	IF LOCAL:5 == 0
+		PRINT 上
+	ELSE
+		PRINT 下
+	ENDIF
+	PRINTL の句のジャンルを選択してください
+	PRINTL [ 0] 매지컬적인 단어
+	PRINTL [ 1] 천체의 이름
+	PRINTL [ 2] 색깔 이름
+	PRINTL [ 3] 과일, 채소 등 식물의 이름
+	PRINTL [ 4] 잡다한 영어 단어
+	PRINTL [ 5] 보석의 이름
+	PRINTL [ 6] 사람을 나타내는 단어
+	PRINTL [ 7] 무기의 이름
+	PRINTL [ 8] ランダム
+	PRINTL [99] もどる
+	PRINTL 
+	PRINT [100] 
+	IF LOCAL:5 == 0
+		PRINT 下
+	ELSE
+		PRINT 上
+	ENDIF
+	PRINTL の句変更
+	PRINTL [200] 生成
+
+	$INPUT_LOOP1
+	INPUT
+	IF RESULT >= 0 && RESULT <= 8
+		IF LOCAL:5==0
+			上の句ジャンル=RESULT
+		ELSE
+			下の句ジャンル=RESULT
+		ENDIF
+		CLEARLINE LINECOUNT - LINE
+	ELSEIF RESULT == 99
+		RETURN 99
+	ELSEIF RESULT == 100
+		IF LOCAL:5 == 0
+			LOCAL:5 = 1
+		ELSE
+			LOCAL:5 = 0
+		ENDIF
+		CLEARLINE LINECOUNT - LINE
+	ELSEIF RESULT == 200
+		BREAK
+	ELSE
+		GOTO INPUT_LOOP1
+	ENDIF
+LOOP 1
+CLEARLINE LINECOUNT - LINE
+
+;※「DA:(上の句0/下の句1):選択番号」となるようにランダム候補番号を入れておき、結果側で復元している
+$INPUT_REGENERATE
+FOR LCOUNT, 0, 20, 1
+
+	IF キープ中フラグ:LCOUNT==1
+		CONTINUE
+	ENDIF
+	FOR LCOUNT:1, 0, 2, 1
+
+		IF (LCOUNT:1==0 && 上の句固定番号>0)
+			DA:(LCOUNT:1):LCOUNT=上の句固定番号
+			CONTINUE
+		ELSEIF (LCOUNT:1==1 && 下の句固定番号>0)
+			DA:(LCOUNT:1):LCOUNT=下の句固定番号
+			CONTINUE
+		ENDIF
+
+		LCOUNT:1 = LCOUNT:1
+
+		IF LCOUNT:1==0
+			LOCAL=上の句ジャンル
+		ELSE
+			LOCAL=下の句ジャンル
+		ENDIF
+
+
+		SIF LOCAL == 8
+			LOCAL = RAND:8
+		IF LOCAL == 0
+			;매지컬적인 단어
+			LOCAL:5 = RAND:50 + 500
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 500
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 1
+			;천체의 이름
+			LOCAL:5 = RAND:50 + 600
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 600
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 2
+			;색깔 이름
+			LOCAL:5 = RAND:50 + 700
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 700
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 3
+			;과일, 채소 등 식물의 이름
+			LOCAL:5 = RAND:50 + 800
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 800
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 4
+			;잡다한 영어 단어
+			LOCAL:5 = RAND:50 + 900
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 900
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 5
+			;보석의 이름
+			LOCAL:5 = RAND:50 + 1000
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 1000
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 6
+			;사람을 나타내는 단어
+			LOCAL:5 = RAND:50 + 1100
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 1100
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ELSEIF LOCAL == 7
+			;무기의 이름
+			LOCAL:5 = RAND:50 + 1200
+			WHILE STR:(LOCAL:5) == ""
+				LOCAL:5 = RAND:50 + 1200
+			WEND
+			DA:(LCOUNT:1):(LCOUNT) = LOCAL:5
+		ENDIF
+	NEXT
+NEXT
+
+$INPUT_PRINT
+FOR LCOUNT,0,20
+	PRINTFORM [{(LCOUNT), 2}] 
+	PRINTFORM %STR:(DA:0:LCOUNT)%%STR:(DA:1:LCOUNT),26-STRLENS(STR:(DA:0:LCOUNT)),LEFT%
+	PRINTPLAIN 　
+	IF キープ中フラグ:LCOUNT==1
+		CALL SETCOLOR_BY_STR, "金"
+		PRINTFORM [{(LCOUNT)+1000, 4}] ★キープ 
+		RESETCOLOR
+	ELSE
+		PRINTFORM [{(LCOUNT)+1000, 4}] ☆キープ 
+	ENDIF
+	PRINTPLAIN 　
+	PRINTFORM [{(LCOUNT)+2000, 4}] 上の句統一 
+	PRINTPLAIN 　
+	PRINTFORM [{(LCOUNT)+3000, 4}] 下の句統一 
+	PRINTL 
+NEXT
+PRINTL 
+PRINT [100]ジャンルを絞り込む
+PRINTL 　　　　　[300] 上の句・下の句の反転
+PRINTL [200]再生成
+
+
+$INPUT_LOOP2
+INPUT
+IF RESULT >= 0 && RESULT < 20
+	RETURN RESULT
+ELSEIF RESULT == 100
+	CLEARLINE LINECOUNT - LINE
+	上の句固定番号=0
+	下の句固定番号=0
+	GOTO INPUT_RESELECT
+ELSEIF RESULT == 200
+	CLEARLINE LINECOUNT - LINE
+	上の句固定番号=0
+	下の句固定番号=0
+	GOTO INPUT_REGENERATE
+ELSEIF RESULT == 300
+	CLEARLINE LINECOUNT - LINE
+	FOR LCOUNT,0,20
+		IF !キープ中フラグ:(LCOUNT)
+			SWAP DA:0:LCOUNT,DA:1:LCOUNT
+		ENDIF
+	NEXT
+	GOTO INPUT_PRINT
+
+ELSEIF RESULT >=1000 && RESULT <=1019
+	CLEARLINE LINECOUNT - LINE
+	キープ中フラグ:(RESULT-1000)=1-キープ中フラグ:(RESULT-1000)
+	GOTO INPUT_PRINT
+ELSEIF RESULT >=2000 && RESULT <=2019
+	CLEARLINE LINECOUNT - LINE
+	上の句固定番号=DA:0:(RESULT-2000)
+	下の句固定番号=0
+	GOTO INPUT_REGENERATE
+ELSEIF RESULT >=3000 && RESULT <=3019
+	CLEARLINE LINECOUNT - LINE
+	上の句固定番号=0
+	下の句固定番号=DA:1:(RESULT-3000)
+	GOTO INPUT_REGENERATE
+ELSE
+	GOTO INPUT_LOOP2
+ENDIF
+
+;----------------------------------------------------------
+;冠名と変身後名のランダム設定
+@FIRSTSETTING_RANDOMNAMING, ARG:0, ARG:1, ARGS
+PRINTL ジャンルを選択してください
+PRINTL [ 0] 매지컬적인 단어
+PRINTL [ 1] 천체의 이름
+PRINTL [ 2] 색깔 이름
+PRINTL [ 3] 과일, 채소 등 식물의 이름
+PRINTL [ 4] 잡다한 영어 단어
+PRINTL [ 5] 보석의 이름
+PRINTL [ 6] 사람을 나타내는 단어
+PRINTL [ 7] 무기의 이름
+PRINTL [ 8] ランダム
+PRINTL [99] もどる
+
+$INPUT_LOOP
+INPUT
+LOCAL = RESULT
+IF RESULT >= 0 && RESULT <= 8
+	;乱数を引数にしているので、ジャンルを増やした場合はRANDを増やすのを忘れずに
+	CALL FIRSTSETTING_RANDOMNAMING_SELECT, ARG:0, RESULT, ARG:1, ARGS
+ELSEIF RESULT == 99
+	RETURN 99,0
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+RESULTS = %RESULTS%
+RETURN LOCAL, RESULT
+
+;----------------------------------------------------------
+;名称の決定
+;冠名(ARG:0 = 0)と変身後名(ARG:0 = 1)共通のテーブル
+;ARG:1はジャンル、ARG:2はキャラ番号(変身後名の場合のみ)
+;ARGSはキャラの名前(キャラ名＋〇〇　〇〇＋キャラ名　の場合)
+@FIRSTSETTING_RANDOMNAMING_SELECT, ARG:0, ARG:1, ARG:2, ARGS
+PRINTL 
+
+WHILE 1
+	REPEAT 20
+		IF ARG:1 == 8
+			LOCAL:20 = RAND:8
+		ELSE
+			LOCAL:20 = ARG:1
+		ENDIF
+
+		IF LOCAL:20 == 0
+			;매지컬적인 단어
+			LOCAL:COUNT = RAND:50 + 500
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 500
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 1
+			;천체의 이름
+			LOCAL:COUNT = RAND:50 + 600
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 600
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 2
+			;색깔 이름
+			LOCAL:COUNT = RAND:50 + 700
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 700
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 3
+			;과일, 채소 등 식물의 이름
+			LOCAL:COUNT = RAND:50 + 800
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 800
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 4
+			;잡다한 영어 단어
+			LOCAL:COUNT = RAND:50 + 900
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 900
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 5
+			;보석의 이름
+			LOCAL:COUNT = RAND:50 + 1000
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 1000
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 6
+			;사람을 나타내는 단어
+			LOCAL:COUNT = RAND:50 + 1100
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 1100
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ELSEIF LOCAL:20 == 7
+			;무기의 이름
+			LOCAL:COUNT = RAND:50 + 1200
+			WHILE STR:(LOCAL:COUNT) == ""
+				LOCAL:COUNT = RAND:50 + 1200
+			WEND
+			LOCALS = %STR:(LOCAL:COUNT)%
+		ENDIF
+	REND
+
+	$RE_OUTPUT
+
+	LOCALS:2 = 
+	LOCALS:3 = 
+	IF LOCAL:21 == 0
+		LOCALS:2 = %ARGS%
+	ELSE
+		LOCALS:3 = %ARGS%
+	ENDIF
+
+	REPEAT 20
+		PRINTFORML [{COUNT, 2}] %LOCALS:2%%STR:(LOCAL:COUNT)%%LOCALS:3%
+
+	REND
+
+	PRINTL 
+	PRINT [100] ジャンルから選びなおす
+	IF ARGS != ""
+		PRINT 　　　　　[800] 
+		SIF LOCAL:21 == 0
+			FONTBOLD
+		PRINTFORM  %ARGS% ＋ 単語 の順
+		SIF LOCAL:21 == 0
+			FONTREGULAR
+	ENDIF
+	PRINTL 
+
+	PRINT [200] 再生成
+	IF ARGS != ""
+		PRINT 　　　　　　　　　　　　　[801] 
+		SIF LOCAL:21 == 1
+			FONTBOLD
+		PRINTFORM  単語 ＋ %ARGS% の順
+		SIF LOCAL:21 == 1
+			FONTREGULAR
+	ENDIF
+	PRINTL 
+
+	$INPUT_LOOP3
+	INPUT
+
+	IF RESULT >= 0 && RESULT < 20
+		RESULTS = %LOCALS:2%%STR:(LOCAL:RESULT)%%LOCALS:3%
+		CSTR:(ARG:2):202 = %STR:(LOCAL:RESULT)%
+		RETURN 0
+	ELSEIF RESULT == 100
+		RETURN 1
+	ELSEIF RESULT == 200
+		CLEARLINE 24
+	ELSEIF RESULT == 800
+		CLEARLINE 24
+		LOCAL:21 = 0
+		GOTO RE_OUTPUT
+	ELSEIF RESULT == 801
+		CLEARLINE 24
+		LOCAL:21 = 1
+		GOTO RE_OUTPUT
+	ELSE
+		GOTO INPUT_LOOP3
+	ENDIF
+WEND
+
+;ARG:0 == 0なら冠名、ARG:0 == 1なら変身後名
+IF ARG:0 == 0
+	SAVESTR:11 = %LOCALS%
+ELSEIF ARG:0 == 1
+	CSTR:(ARG:2):203 = %LOCALS%
+ENDIF
+
+
+@RANDOMNAMING_FROMGENRE(ARG)
+;1="매지컬적인 단어",2="천체의 이름","색깔 이름","과일, 채소 등 식물의 이름","잡다한 영어 단어","보석의 이름","사람을 나타내는 단어","무기의 이름",9="ランダム"
+		;random
+		SIF ARG==9
+			ARG=1+RAND:8
+
+		IF ARG == 1
+			LOCAL = RAND:50 + 500
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 500
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 2
+			LOCAL = RAND:50 + 600
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 600
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 3
+			LOCAL = RAND:50 + 700
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 700
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 4
+			LOCAL = RAND:50 + 800
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 800
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 5
+			LOCAL = RAND:50 + 900
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 900
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 6
+			LOCAL = RAND:50 + 1000
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 1000
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 7
+			LOCAL = RAND:50 + 1100
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 1100
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ELSEIF ARG == 8
+			LOCAL = RAND:50 + 1200
+			WHILE STR:(LOCAL) == ""
+				LOCAL = RAND:50 + 1200
+			WEND
+			LOCALS = %STR:(LOCAL)%
+		ENDIF
+		RESULTS=%LOCALS%
+		REPLACE RESULTS,"・$",""
+		RETURN

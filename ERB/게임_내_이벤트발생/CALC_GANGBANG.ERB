@@ -1,0 +1,166 @@
+﻿;-----------------------------------------------
+;●クズ市民レイプイベントによるパラメータ変動の共通処理
+@CALC_GANGBANG(シチュエーション,竿の数,NAKADASHI)
+#DIM CCOUNT
+
+;"ナンパ" "戦闘後" "脅迫" "監禁"
+#DIMS シチュエーション,1
+;輪姦経験の増加に影響
+#DIM 竿の数,1
+
+;0…中出ししない　1…中出ししようとする(ピル使用可能)　2…中出ししようとする(ピル使用不可能)
+;	※クズ市民によるレイプなので、Vに挿入したなら必ず中出しまで行く
+#DIM NAKADASHI,1
+
+	;V挿入ブロッカー
+	NAKADASHI=(ISMALE() || CHECK_HOLYVIRGIN_F()==1) ? 0 # NAKADASHI
+
+
+
+IF NAKADASHI
+	IF ABL:V감각 == 0
+		LOCAL:11 = 10
+	ELSEIF ABL:V감각 == 1
+		LOCAL:11 = 20
+	ELSEIF ABL:V감각 == 2
+		LOCAL:11 = 40
+	ELSEIF ABL:V감각 == 3
+		LOCAL:11 = 100
+	ELSEIF ABL:V감각 == 4
+		LOCAL:11 = 200
+	ELSE
+		LOCAL:11 = 400
+	ENDIF
+
+	;V경험
+	LOCAL:120 = 10 + RAND:30
+
+	IF TALENT:처녀 == 1
+		TALENT:처녀 = -1
+		CFLAG:206 = 11
+		;공포補正
+		LOCAL:20 = 500
+	ELSE
+		;快V補正
+		LOCAL:11 *= 3
+	ENDIF
+
+	;膣穴が狭すぎた場合は拡張度追加
+	IF CFLAG:35 <= 40
+		CFLAG:35 += 10
+		LOCAL:151 = 2
+	ENDIF
+
+ENDIF
+
+
+IF ABL:A감각 == 0
+	LOCAL:12 = 6
+ELSEIF ABL:A감각 == 1
+	LOCAL:12 = 50
+ELSEIF ABL:A감각 == 2
+	LOCAL:12 = 200
+ELSEIF ABL:A감각 == 3
+	LOCAL:12 = 600
+ELSEIF ABL:A감각 == 4
+	LOCAL:12 = 900
+ELSE
+	LOCAL:12 = 1200
+ENDIF
+;A경험
+LOCAL:121 = 40 - LOCAL:120 + RAND:5 - RAND:5
+SIF ISMALE()
+	TIMES LOCAL:121 , 1.50
+;尻穴が狭すぎた場合は拡張度追加
+IF CFLAG:36 <= 40
+	CFLAG:36 += 10
+	LOCAL:152 = 2
+ENDIF
+
+;정액경험
+LOCAL:123 = 15 + RAND:16
+;펠라경험
+LOCAL:124 = 12 + RAND:5
+
+;습득、굴복、공포
+LOCAL:16 = 100
+LOCAL:18 = 500
+LOCAL:21 = 500
+
+
+IF シチュエーション=="監禁" || シチュエーション=="生オナホ"
+	;誘拐監禁カウント＋
+	CFLAG:70 += 1
+	;誘拐監禁経験＋
+	LOCAL:142 = 1
+ELSEIF シチュエーション=="ナンパ"
+	;ナンパレイプ回数＋
+	IF CFLAG:1 > 1 && TALENT:변신시TS > 0
+		CFLAG:321 += 1
+	ELSE
+		CFLAG:320 += 1
+	ENDIF
+ELSE
+	;クズ市民レイプ回数＋
+	CFLAG:286 += 1
+ENDIF
+
+
+
+;남자か이상경험が３つ以下なら이상경험＋
+SIF ISMALE() || EXP:이상경험 < 3
+	LOCAL:150 = 1
+
+
+;고통쾌락경험＋
+LOCAL:132 = 2 + RAND:3
+;輪姦経験＋
+SIF 竿の数>1
+	LOCAL:113 = 1
+
+
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18, LOCAL:19, LOCAL:20, LOCAL:21, 1
+;経験数の増加処理
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+PRINTL 
+;珠の取得へ
+CALL _ABLUP, 1
+
+
+;1ならピル可能、2は使わせてもらえないor犯された自覚がなく使えないシチュエーション
+IF NAKADASHI > 0 && TALENT:처녀 < 1
+	;アフターピル
+	SIF NAKADASHI==1 && シチュエーション != "生オナホ"
+		CALL AFTER_PILL, TARGET, 20, 원치않은상대
+	;임신判定
+	SIF シチュエーション != "生オナホ"
+		CALL NINSIN_HANTEI, LOCAL:123, 100, 원치않은상대
+ENDIF
+
+
+IF シチュエーション=="脅迫"
+	IF TALENT:음란 ||  ABL:욕망 >= 3 || ABL:마조끼 >= 3
+		CFLAG:99 = 10
+		BASE:체력 = (BASE:체력*20)/100
+		BASE:기력 = (BASE:기력*20)/100
+		BASE:성내성 = 0
+	ELSE
+		;２ターン強制休憩フラグ　★重くない？
+		CFLAG:15 = 3
+		BASE:체력 = 0
+		BASE:기력 = 0
+		BASE:성내성 = 0
+		CFLAG:99 = 50
+	ENDIF
+ENDIF
+
+;悪い噂
+SIF RAND:100 < 30
+	CFLAG:825 += 1
+
+PRINTFORML 
+PRINTFORML 

@@ -1,0 +1,814 @@
+﻿;**********************************************************
+;自慰関連の処理
+
+;夜間自慰
+@SELF_NIGHT
+VARSET LOCAL
+SIF TIME != 1
+	RETURN
+;초심はいずれかの感覚が3以上でないと自慰しない
+SIF TALENT:초심 > 0 && ABL:C감각 < 3 && ABL:V감각 < 3 && ABL:A감각 < 3 && ABL:B감각 < 3 && ABL:촉수중독 < 3
+	RETURN
+
+LOCAL:2 = TARGET
+FOR LOCAL, 1, CHARANUM
+	;パーティー外は除外
+	SIF CFLAG:LOCAL:999 == 0
+		CONTINUE
+	;能動的に動けない場合は除外
+	SIF TALENT:LOCAL:번식자루 > 0 || TALENT:LOCAL:사지결손 > 0
+		CONTINUE
+
+	TARGET = LOCAL
+
+	;キャラが生存中でなければ発生しない
+	SIF CFLAG:0 != 0
+		CONTINUE
+
+	;처녀でなく、かつ교제상대が居る場合は自慰しにくい
+	SIF TALENT:교제상대 >= 2 && TALENT:교제상대 <= 4 && TALENT:처녀 < 1 && RAND:4 != 0
+		CONTINUE
+	;自慰確率判定値を初期化
+	LOCAL:1 = 0
+	;욕망を見る
+	LOCAL:1 += ABL:욕망 * 5
+	;촉수중독を見る
+	LOCAL:1 += ABL:촉수중독 * 2
+	;자위중독を見る
+	IF ABL:자위중독 >= 5
+		LOCAL:1 += 35
+	ELSEIF ABL:자위중독 == 4
+		LOCAL:1 += 30
+	ELSEIF ABL:자위중독 == 3
+		LOCAL:1 += 25
+	ELSEIF ABL:자위중독 == 2
+		LOCAL:1 += 20
+	ELSEIF ABL:자위중독 == 1
+		LOCAL:1 += 15
+	ENDIF
+	IF RAND:100 < LOCAL:1
+		;지문: 夜間自慰
+		SIF LOCAL:3 == 0
+			DRAWLINE
+		CALL MESSAGE_SELF_NIGHT
+		CALL SELF_KIND, TARGET, 0
+		CALL _ABLUP,0
+		PRINTW 
+		VARSET PALAM
+		LOCAL:3 = 1
+	ENDIF
+NEXT
+TARGET = LOCAL:2
+
+
+;戦闘後自慰
+@SELF_BATTLEEND, ARG
+CALL SELF_CHECK, ARG
+IF RESULT == 1
+	;지문: 戦闘後自慰
+	CALL MESSAGE_SELF_BATTLEEND
+	CALL SELF_KIND, ARG, 1
+	CALL _ABLUP,0
+ENDIF
+
+
+;----------------------------------------------------------
+;自慰をするかのチェック
+@SELF_CHECK, ARG
+
+LOCAL = 0
+LOCAL:1 = 0
+LOCAL:2 = 0
+
+;욕정の値を基本にする
+IF PALAM:ARG:욕정 == 0
+	LOCAL = 0
+ELSEIF PALAM:ARG:욕정 < 100
+	LOCAL = 1
+ELSEIF PALAM:ARG:욕정 < 300
+	LOCAL = 2
+ELSEIF PALAM:ARG:욕정 < 600
+	LOCAL = 4
+ELSEIF PALAM:ARG:욕정 < 1500
+	LOCAL = 6
+ELSEIF PALAM:ARG:욕정 < 3000
+	LOCAL = 8
+ELSEIF PALAM:ARG:욕정 < 6000
+	LOCAL = 10
+ELSEIF PALAM:ARG:욕정 < 10000
+	LOCAL = 12
+ELSEIF PALAM:ARG:욕정 < 30000
+	LOCAL = 15
+ELSEIF PALAM:ARG:욕정 < 60000
+	LOCAL = 18
+ELSEIF PALAM:ARG:욕정 < 150000
+	LOCAL = 21
+ELSEIF PALAM:ARG:욕정 < 300000
+	LOCAL = 25
+ELSE
+	LOCAL = 30
+ENDIF
+
+;補正
+;욕망
+IF ABL:ARG:욕망 == 0
+	TIMES LOCAL, 0.25
+ELSEIF ABL:ARG:욕망 == 1
+	TIMES LOCAL, 0.50
+ELSEIF ABL:ARG:욕망 == 2
+	TIMES LOCAL, 0.75
+ELSEIF ABL:ARG:욕망 == 3
+	TIMES LOCAL, 1.00
+ELSEIF ABL:ARG:욕망 == 4
+	TIMES LOCAL, 1.25
+ELSEIF ABL:ARG:욕망 >= 5
+	TIMES LOCAL, 1.50
+ENDIF
+
+;노출벽
+IF ABL:ARG:노출벽 == 0
+	TIMES LOCAL, 0.25
+ELSEIF ABL:ARG:노출벽 == 1
+	TIMES LOCAL, 0.50
+ELSEIF ABL:ARG:노출벽 == 2
+	TIMES LOCAL, 0.75
+ELSEIF ABL:ARG:노출벽 == 3
+	TIMES LOCAL, 1.00
+ELSEIF ABL:ARG:노출벽 == 4
+	TIMES LOCAL, 1.25
+ELSEIF ABL:ARG:노출벽 >= 5
+	TIMES LOCAL, 1.50
+ENDIF
+
+;자위중독
+IF ABL:ARG:자위중독 == 1
+	TIMES LOCAL, 1.25
+ELSEIF ABL:ARG:자위중독 == 2
+	TIMES LOCAL, 1.50
+ELSEIF ABL:ARG:자위중독 == 3
+	TIMES LOCAL, 2.00
+ELSEIF ABL:ARG:자위중독 == 4
+	TIMES LOCAL, 2.50
+ELSEIF ABL:ARG:자위중독 >= 5
+	TIMES LOCAL, 4.00
+ENDIF
+
+;음란
+SIF TALENT:ARG:음란 == 1
+	TIMES LOCAL, 2.00
+
+;ランダム性付与
+LOCAL:1 = RAND:100
+IF LOCAL:1 < 20
+	TIMES LOCAL, 0.80
+ELSEIF LOCAL:1 < 40
+	TIMES LOCAL, 0.90
+ELSEIF LOCAL:1 < 60
+	TIMES LOCAL, 1.00
+ELSEIF LOCAL:1 < 80
+	TIMES LOCAL, 1.10
+ELSE
+	TIMES LOCAL, 1.20
+ENDIF
+
+;一定値以上で自慰をする
+IF LOCAL >= 15
+	LOCAL:2 = 1
+ENDIF
+RETURN LOCAL:2
+
+;----------------------------------------------------------
+;自慰の種類を決める
+@SELF_KIND, ARG, ARG:1
+#DIM Ｖ自慰可
+#DIM Ａ自慰可
+
+LOCAL:0 = 0
+
+;絶頂回数一度目のリセット
+VARSET NOWEX
+
+;淫○系の素質があればそれを優先
+IF TALENT:ARG:음호 > 0 && RAND:3 == 0 && ISFEMALE(ARG)
+	CALL SELF_V, ARG, ARG:1
+ELSEIF TALENT:ARG:음고 > 0 && RAND:3 == 0
+	CALL SELF_A, ARG, ARG:1
+ELSEIF TALENT:ARG:음유 > 0 && RAND:3 == 0
+	CALL SELF_B, ARG, ARG:1
+ELSEIF TALENT:ARG:음핵 > 0 && RAND:3 == 0
+	CALL SELF_N, ARG, ARG:1
+ENDIF
+
+;追加で自慰が発生した場合に備えて二度目のリセット
+VARSET NOWEX
+
+;V感覚は1、A感覚は2以上なら対応自慰が出来る
+SIF ABL:ARG:V감각 >= 1
+	Ｖ自慰可 = 1
+SIF ABL:ARG:A감각 > 1
+	Ａ自慰可 = 1
+
+IF Ｖ自慰可 == 0 && Ａ自慰可 == 0
+	LOCAL:0 = RAND:100
+	IF LOCAL:0 < 50
+		CALL SELF_N, ARG, ARG:1
+	ELSE
+		CALL SELF_B, ARG, ARG:1
+	ENDIF
+ELSEIF Ｖ自慰可 == 1
+	LOCAL:0 = RAND:99
+	IF LOCAL:0 < 33
+		CALL SELF_N, ARG, ARG:1
+	ELSEIF LOCAL:0 < 66 && ISFEMALE(ARG)
+		CALL SELF_V, ARG, ARG:1
+	ELSE
+		CALL SELF_B, ARG, ARG:1
+	ENDIF
+ELSEIF Ａ自慰可 == 1
+	LOCAL:0 = RAND:99
+	IF LOCAL:0 < 33
+		CALL SELF_N, ARG, ARG:1
+	ELSEIF LOCAL:0 < 66
+		CALL SELF_B, ARG, ARG:1
+	ELSE
+		CALL SELF_A, ARG, ARG:1
+	ENDIF
+ELSEIF Ｖ自慰可 == 1 && Ａ自慰可 == 1
+	LOCAL:0 = RAND:100
+	IF LOCAL:0 < 25
+		CALL SELF_N, ARG, ARG:1
+	ELSEIF LOCAL:0 < 50
+		CALL SELF_B, ARG, ARG:1
+	ELSEIF LOCAL:0 < 75 && ISFEMALE(ARG)
+		CALL SELF_V, ARG, ARG:1
+	ELSE
+		CALL SELF_A, ARG, ARG:1
+	ENDIF
+ENDIF
+
+;----------------------------------------------------------
+;普通の自慰
+@SELF_N, ARG, ARG:1
+
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+EXP:ARG:자위경험 += 1
+;快C
+IF ABL:ARG:C감각 == 0
+	LOCAL:0 = 200
+ELSEIF ABL:ARG:C감각 == 1
+	LOCAL:0 = 1000
+ELSEIF ABL:ARG:C감각 == 2
+	LOCAL:0 = 2000
+ELSEIF ABL:ARG:C감각 == 3
+	LOCAL:0 = 4000
+ELSEIF ABL:ARG:C감각 == 4
+	LOCAL:0 = 10000
+ELSEIF ABL:ARG:C감각 >= 5
+	LOCAL:0 = 20000
+ENDIF
+
+;快B
+IF ABL:ARG:B감각 == 0
+	LOCAL:3 = 200
+ELSEIF ABL:ARG:B감각 == 1
+	LOCAL:3 = 400
+ELSEIF ABL:ARG:B감각 == 2
+	LOCAL:3 = 1000
+ELSEIF ABL:ARG:B감각 == 3
+	LOCAL:3 = 2000
+ELSEIF ABL:ARG:B감각 == 4
+	LOCAL:3 = 4000
+ELSEIF ABL:ARG:B감각 >= 5
+	LOCAL:3 = 10000
+ENDIF
+
+;처녀でなければVも使う
+IF TALENT:ARG:처녀 < 1 && ISFEMALE(ARG)
+	EXP:ARG:V경험 += 1
+	IF ABL:ARG:V감각 == 0
+		LOCAL:1 = 200
+	ELSEIF ABL:ARG:V감각 == 1
+		LOCAL:1 = 400
+	ELSEIF ABL:ARG:V감각 == 2
+		LOCAL:1 = 1000
+	ELSEIF ABL:ARG:V감각 == 3
+		LOCAL:1 = 4000
+	ELSEIF ABL:ARG:V감각 == 4
+		LOCAL:1 = 10000
+	ELSEIF ABL:ARG:V감각 >= 5
+		LOCAL:1 = 20000
+	ENDIF
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:0, 1.10
+	TIMES LOCAL:1, 1.10
+	TIMES LOCAL:3, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:0, 1.25
+	TIMES LOCAL:1, 1.25
+	TIMES LOCAL:3, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:0, 1.50
+	TIMES LOCAL:1, 1.50
+	TIMES LOCAL:3, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:0, 2.00
+	TIMES LOCAL:1, 2.00
+	TIMES LOCAL:3, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
+
+
+
+;지문: 普通の自慰
+CALL MESSAGE_SELF_N
+
+;ARG:1 == 1で戦闘中の自慰
+;지문: 洗脳/悪堕ちキャラが操作キャラの普通の自慰を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
+	CALL MESSAGE_OTHER_SELF_N
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 2000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 2000
+ENDIF
+
+;자위중독があると욕정にボーナス
+IF ABL:ARG:자위중독 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;자위중독に応じて上昇
+IF ABL:ARG:자위중독 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:자위중독 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 150
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+;----------------------------------------------------------
+;胸自慰
+@SELF_B, ARG, ARG:1
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+EXP:ARG:자위경험 += 1
+
+;快B
+IF ABL:ARG:B감각 == 0
+	LOCAL:3 = 200
+ELSEIF ABL:ARG:B감각 == 1
+	LOCAL:3 = 400
+ELSEIF ABL:ARG:B감각 == 2
+	LOCAL:3 = 1000
+ELSEIF ABL:ARG:B감각 == 3
+	LOCAL:3 = 2000
+ELSEIF ABL:ARG:B감각 == 4
+	LOCAL:3 = 4000
+ELSEIF ABL:ARG:B감각 >= 5
+	LOCAL:3 = 10000
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:3, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:3, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:3, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:3, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,3,-1)
+
+
+
+;지문: 胸自慰
+CALL MESSAGE_SELF_B
+
+;ARG:1 == 1で戦闘中の自慰
+;지문: 洗脳/悪堕ちキャラが操作キャラの胸自慰を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
+	CALL MESSAGE_OTHER_SELF_B
+
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 2000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 2000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 4000
+ENDIF
+
+;자위중독があると욕정にボーナス
+IF ABL:ARG:자위중독 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;자위중독に応じて上昇
+IF ABL:ARG:자위중독 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:자위중독 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 100
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+;----------------------------------------------------------
+;アナニー
+@SELF_A, ARG, ARG:1
+
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+EXP:ARG:자위경험 += 1
+EXP:ARG:A경험 += 1
+;快A
+IF ABL:ARG:A감각 == 2
+	LOCAL:2 = 2000
+ELSEIF ABL:ARG:A감각 == 3
+	LOCAL:2 = 4000
+ELSEIF ABL:ARG:A감각 == 4
+	LOCAL:2 = 10000
+ELSEIF ABL:ARG:A감각 >= 5
+	LOCAL:2 = 20000
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:2, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:2, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:2, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:2, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,2,-1)
+
+
+
+;지문: アナニー
+CALL MESSAGE_SELF_A
+
+;ARG:1 == 1で戦闘中の自慰
+;지문: 洗脳/悪堕ちキャラが操作キャラのアナニーを見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
+	CALL MESSAGE_OTHER_SELF_A
+
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 2000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 4000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 2000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 4000
+ENDIF
+
+;자위중독があると욕정にボーナス
+IF ABL:ARG:자위중독 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;자위중독に応じて上昇
+IF ABL:ARG:자위중독 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:자위중독 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 150
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+;----------------------------------------------------------
+;膣オナ
+@SELF_V, ARG, ARG:1
+
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+EXP:ARG:자위경험 += 1
+;快V	처녀だと減少、経験増加なし
+IF TALENT:ARG:처녀 >= 1
+	IF ABL:ARG:V감각 == 0
+		LOCAL:1 = 100
+	ELSEIF ABL:ARG:V감각 == 1
+		LOCAL:1 = 200
+	ELSEIF ABL:ARG:V감각 == 2
+		LOCAL:1 = 500
+	ELSEIF ABL:ARG:V감각 == 3
+		LOCAL:1 = 2000
+	ELSEIF ABL:ARG:V감각 == 4
+		LOCAL:1 = 4000
+	ELSEIF ABL:ARG:V감각 >= 5
+		LOCAL:1 = 10000
+	ENDIF
+;二穴の場合ちょっと下げる
+ELSEIF TALENT:ARG:음고 > 0
+	EXP:ARG:V경험 += 1
+	IF ABL:ARG:V감각 == 0
+		LOCAL:1 = 200
+	ELSEIF ABL:ARG:V감각 == 1
+		LOCAL:1 = 400
+	ELSEIF ABL:ARG:V감각 == 2
+		LOCAL:1 = 1000
+	ELSEIF ABL:ARG:V감각 == 3
+		LOCAL:1 = 3000
+	ELSEIF ABL:ARG:V감각 == 4
+		LOCAL:1 = 7500
+	ELSEIF ABL:ARG:V감각 >= 5
+		LOCAL:1 = 15000
+	ENDIF
+ELSE
+	EXP:ARG:V경험 += 1
+	IF ABL:ARG:V감각 == 0
+		LOCAL:1 = 200
+	ELSEIF ABL:ARG:V감각 == 1
+		LOCAL:1 = 400
+	ELSEIF ABL:ARG:V감각 == 2
+		LOCAL:1 = 1000
+	ELSEIF ABL:ARG:V감각 == 3
+		LOCAL:1 = 4000
+	ELSEIF ABL:ARG:V감각 == 4
+		LOCAL:1 = 10000
+	ELSEIF ABL:ARG:V감각 >= 5
+		LOCAL:1 = 20000
+	ENDIF
+ENDIF
+
+;음고の場合、Ａも使い二穴オナに
+IF TALENT:ARG:음고 > 0
+	EXP:ARG:A경험 += 1
+	IF ABL:ARG:A감각 == 2
+		LOCAL:2 = 1000
+	ELSEIF ABL:ARG:A감각 == 3
+		LOCAL:2 = 3000
+	ELSEIF ABL:ARG:A감각 == 4
+		LOCAL:2 = 7500
+	ELSEIF ABL:ARG:A감각 >= 5
+		LOCAL:2 = 15000
+	ENDIF
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:1, 1.10
+	TIMES LOCAL:2, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:1, 1.25
+	TIMES LOCAL:2, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:1, 1.50
+	TIMES LOCAL:2, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:1, 2.00
+	TIMES LOCAL:2, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,1,2,-1)
+
+
+
+;지문: 膣オナ
+CALL MESSAGE_SELF_V
+
+;ARG:1 == 1で戦闘中の自慰
+;지문: 洗脳/悪堕ちキャラが操作キャラの膣オナを見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
+	CALL MESSAGE_OTHER_SELF_V
+	
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 2000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 2000
+ENDIF
+
+;자위중독があると욕정にボーナス
+IF ABL:ARG:자위중독 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;자위중독に応じて上昇
+IF ABL:ARG:자위중독 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:자위중독 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:자위중독 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:자위중독 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:자위중독 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:자위중독 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 150
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+
+

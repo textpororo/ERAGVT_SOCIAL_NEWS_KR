@@ -1,0 +1,47 @@
+﻿;================================================================================
+;クズ市民との遭遇判定
+;--------------------------------------------------
+@ENCOUNT_CITIZEN(ARG,ARGS)
+
+SAVESTR:13 = MOB
+
+LOCAL = 1150
+
+;クズ市民戦でもイベント処理を呼ぶ
+IF ARG>0
+	VARSET TCVARn
+	;衣装の耐久度を設定
+	CALL CLOTH_BATTLE_SETHP
+	;衣装の情報を更新
+	CALL REFRESH_CLOTH_DATA
+	FLAG:45=ARG
+	;補足文字列が渡されていたらイベント本体に流す
+	TRYCALLFORM EVENT_BATTLE_EXEC_{FLAG:45}(ARGS)
+ENDIF
+
+
+;戦闘系フラグのリセット
+;------------------------------------------------------------------------------------
+FLAG:10 = 2
+;クズ市民の人数が敵HPになる
+FLAG:73 += FLAG:70 + FLAG:71
+FLAG:70 = 0
+FLAG:71 = 0
+FLAG:72 = 0
+SIF FLAG:73 < 3
+	FLAG:73 += 5
+FLAG:11 = LOCAL
+FLAG:12 = FLAG:73
+FLAG:13 = FLAG:12
+CALL TENTACLE_ACCESS, "SYASEI"
+FLAG:14 = RESULT
+FLAG:15 = 0
+CALL TENTACLE_ACCESS, "YUDAN"
+FLAG:16 = RESULT
+FLAG:17 = 0
+CALL TENTACLE_LEVEL
+FLAG:16 += RESULT * 10
+FLAG:22 = -1
+
+RETURN LOCAL
+

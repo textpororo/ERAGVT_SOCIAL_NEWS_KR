@@ -1,0 +1,71 @@
+﻿;펠라공격
+@COM101
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;사정部位フラグ:口を立てる
+TFLAG:4 = TFLAG:4 | 입
+;강구속中は사정部位플래그를折る
+SIF (TCVARn:12 & 강구속)
+	TFLAG:4 = 0
+
+;방어フラグ：봉사한다にする
+TCVARn:2 = 자세：봉사한다
+
+;油断度の上昇
+TFLAG:3 += 25 + 5 * ABL:기교 * ABL:기교
+
+;지문: 펠라공격
+CALL MESSAGE_BATTLE_CHARA_SEX_ATTACK101
+;지문: 洗脳/悪堕ちキャラが操作キャラの펠라공격を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK101
+
+;사정ゲージを記録
+LOCAL:1 = FLAG:15
+
+;사정　基本値は小さい
+LOCAL = 50 + ABL:기교 * MIN((MAXBASE:성내성 - 50) / 5 + 10, 50)
+;펠라경험依存
+IF EXP:펠라경험 <= 5
+	LOCAL += EXP:펠라경험 * 10
+ELSEIF EXP:펠라경험 <= 10
+	LOCAL += 50 + (EXP:펠라경험 - 5) * 5
+ELSEIF EXP:펠라경험 <= 20
+	LOCAL += 75 + (EXP:펠라경험 - 10) * 2
+ELSEIF EXP:펠라경험 <= 25
+	LOCAL += 95 + (EXP:펠라경험 - 20)
+ELSE
+	LOCAL += 100
+ENDIF
+CALL TENTACLE_SYASEI_UP, LOCAL
+PRINTL
+
+IF (FLAG:110 == 0)
+	CALL TENTACLE_ACCESS, "NAME"
+ELSEIF (FLAG:110 == 1)
+	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+ENDIF
+PRINT に
+FONTBOLD
+PRINTFORM {FLAG:15 - LOCAL:1}の快楽
+FONTREGULAR
+PRINTL を与えた！
+PRINTW 
+
+;촉수の사정チェック
+CALL TENTACLE_SYASEI_CHECK
+PRINTL 
+
+;습득の獲得
+COMMON_PALAM:6 += 800 + 40 * (ABL:순종 + ABL:봉사정신 * 2)
+
+;펠라경험が増加
+EXP:펠라경험 += 1
+
+;행동포인트を+1
+EX:행동포인트 += 1
+
+RETURN 1

@@ -1,0 +1,152 @@
+﻿@PASTIME_SHASHIN, ARG
+#DIMS 被害者名,1
+PRINTFORML 【秘密画像】
+;前段
+;今の姿が男
+IF ISMANLY()
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は친한男子
+	IF TALENT:학생 == 4
+	;大학생
+		PRINTFORM 학생
+	ELSE
+	;大학생以外
+		PRINTFORM 生徒
+	ENDIF
+	PRINTFORML ら数人と談笑している。
+	PRINTFORML 친한男子がイイものを見せてやると言い、スマホを取り出した。
+
+;今の姿が女
+ELSE
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の친한男子
+	IF TALENT:학생 == 4
+	;大학생
+		PRINTFORM 학생
+	ELSE
+	;大학생以外
+		PRINTFORM 生徒
+	ENDIF
+	PRINTFORML が、数人でスマホを囲んで談笑している。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が近くを通った時、さりげなく盗み見すると
+	PRINTFORML その手に隠されたスマホが目に入った。
+ENDIF
+
+;中
+LOCALS'=""
+
+;①촉수凌辱動画の流出後
+;②「変身後の姿が女性＆現在未変身」
+;（変身後の姿が보추＆現在未変身を追加）
+;なら専用分岐
+IF CFLAG:284 && ((TALENT:변신능력 == 1 && TALENT:변신시TS == 0 && ISFEMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시TS == 1 && ISMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시보추 == 1 && CFLAG:1 == 0))
+	LOCALS'="촉수凌辱流出"
+	被害者名=%CSTR:1%
+	;変身後の凌辱動画が流出
+	PRINTFORM それは%CSTR:1%の
+	PRINTDATA
+		DATAFORM 戦闘中のパンチラ
+		DATAFORM 戦いで衣服の破れた
+		DATAFORM 戦いでほぼ全裸に剥かれた
+		DATAFORM 촉수に緊縛されている
+		DATAFORM 촉수に凌辱されている
+		DATAFORM 力尽き、가만히있는다に犯されている
+	ENDDATA
+
+ 	PRINTDATA
+		DATAFORM 画像
+		DATAFORM 動画
+	ENDDATA
+
+	PRINTL だった。
+;ディープフェイク被害　現時点での姿が未変身かつ女性、防衛度そこそこ以下(高ければモラルも高い)
+ELSEIF CFLAG:284==0 && FLAG:852<8000 && ISGIRLY() && CFLAG:1 == 0 && RAND:2==0
+	LOCALS'="ディープフェイク"
+	被害者名=%ISGIRLY() ? CALLNAME:TARGET # PRINT_TRANSCALLNAME(TARGET)%
+
+	PRINTFORM それは%被害者名%や校内でも人気の女子生徒たちが
+ 	PRINTDATA
+		DATAFORM 촉수に犯されてボテ腹を揺らす
+		DATAFORM 촉수に犯されながらレズキスしている
+		DATAFORM 촉수に犯されてアヘ顔を晒す
+		DATAFORM 先を争って촉수にしゃぶりつく
+		DATAFORM 촉수に貫かれ下腹部を膨らます
+		DATAFORM プールの中で촉수に輪姦され孕まされる
+		DATAFORM 校庭で촉수に襲われてアクメ顔を晒す
+		DATAFORM 촉수に膣を突かれて下品にボテ腹を揺らす
+	ENDDATA
+	PRINTFORML 「エロ動画」だった。
+	PRINTFORML ……そのような恥ずべき行為の記憶など、現実の%被害者名%たちには存在しない。
+	SIF TALENT:보추 > 0
+		PRINTFORML そもそも動画の子は顔こそ%被害者名%だが、カラダは股間まで女の子だ。
+	PRINTFORML 何らかの手段で作成された、悪質な合成動画である事は明らかだった。
+
+ELSE
+	;現時点での姿が未変身かつ女性なら自分自身が盗撮被害に
+	IF ISGIRLY()
+		LOCALS'="盗撮された"
+		被害者名=%CFLAG:1 == 0 ? CALLNAME:TARGET # PRINT_TRANSCALLNAME(TARGET)%
+		PRINTFORM それは%被害者名%の
+	;現時点での姿が男性なら一般女子生徒が被害に
+	ELSE
+		LOCALS'="一般女子盗撮"
+		被害者名=女子生徒
+		PRINTFORML それは校内でも人気の女子の
+	ENDIF
+ 	PRINTDATA
+		DATAFORM 授業中の
+		DATAFORM 体育の授業中の
+		DATAFORM 水泳の授業中の
+		DATAFORM 食事中のパンチラ
+		DATAFORM 着替え中の
+		DATAFORM トイレの
+	ENDDATA
+ 	PRINTDATA
+		DATAFORM 盗撮画像
+		DATAFORM 盗撮動画
+	ENDDATA
+	PRINTFORML だった。
+ENDIF
+
+;後
+;標的が変身後なら露骨なエロ反応(本人が目の前にいるとは気付いていない)
+SIF 被害者名==CSTR:1
+	PRINTFORML 男子達は%被害者名%の痴態に興奮し、卑猥な言葉で賛美しながら食い入るように見ている。
+
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+
+;今男なら
+IF ISMANLY()
+	PRINTFORML 動揺を隠し男子に話を合わせながら、
+;今女なら被害者は自分
+ELSE
+	PRINTFORML 気付かないフリをして通りすぎたが、
+ENDIF
+
+;変身後の凌辱動画をオカズにされていた場合
+IF LOCALS=="촉수凌辱流出"
+ 	PRINTDATA
+		DATAFORM 親友が自分の痴態で興奮していると知って体の奥が熱くなった・・・
+		DATAFORM 自分の痴態が世界中に拡散されている現実を知り目眩がした・・・
+		DATAFORM 自分の正体がバレたかと気になった・・・
+		DATAFORM もしも魔法少女の正体がバレたらどんな目に遭うのか想像してしまい目眩がした・・・
+	ENDDATA
+
+ELSEIF LOCALS=="ディープフェイク"
+ 	PRINTDATA
+		DATAFORM 親友が「自分」をおかずにオナニーするのを想像して顔を赤くした・・・
+		DATAFORM 自分たち女子生徒が性的な目で見られていると知って動揺した・・・
+		DATAFORM 촉수に犯される妄想でオナニー「されて」いると知って困惑した・・・
+		DATAFORM 動画の中で激しく喘ぐ「自分」を想像して思わず顔を赤らめた・・・
+	ENDDATA
+ELSEIF LOCALS=="盗撮された"
+ 	PRINTDATA
+		DATAFORM 親友が自分をおかずにオナニーするのを想像して顔を赤くした・・・
+		DATAFORM 自分がどうやらモテているらしいと知って動揺した・・・
+		DATAFORM いつの間に盗撮されたのか分からず困惑した・・・
+		DATAFORM 妄想の中でどんな目に遭わされているのか想像して思わず顔を赤らめた・・・
+	ENDDATA
+;"一般女子盗撮"
+ELSE
+	PRINTL いつの間に盗撮したのか気になった・・・
+ENDIF
+	PRINTL 
+	PRINTL 

@@ -1,0 +1,117 @@
+﻿;衣装を破く
+
+;性コマンド分類
+@SEX_TYPE_COM14
+RETURN 통상
+
+@SEX_COM14,ARG = 0, ARG:1 = 0
+#DIM DAMAGE
+;追加責め
+EX_COM = 0
+SH_COM = 0
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 10
+
+;사정値 50
+CALL TENTACLE_SYASEI_UP, 50
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 14
+
+CALL PALAM_VABCestimate(LOCAL,-1)
+
+
+IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	TRYCALLFORM MESSAGE_MOB_{ARG}_COM14, EX_COM, SH_COM
+ELSE
+	;지문: 洗脳/悪堕ちキャラが操作キャラの衣装を破いた
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_SEX_COM14
+	;지문: COM14
+	CALL MESSAGE_SEX_COM14
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+
+;ベース
+;치정、노출벽Lvに応じて軽減
+IF ABL:치정 <= 2
+	LOCAL:9 = 2000
+ELSEIF ABL:치정 == 3
+	LOCAL:9 = 1000
+ELSEIF ABL:치정 == 4
+	LOCAL:9 = 500
+ELSEIF ABL:치정 >= 5
+	LOCAL:9 = 100
+ENDIF
+
+;アウターが残ってる場合は羞恥を軽減
+IF CLOTH_OUTER_PER > 90
+	TIMES LOCAL:9, 0.25
+ELSEIF CLOTH_OUTER_PER > 75
+	TIMES LOCAL:9, 0.75
+ELSEIF CLOTH_INNER_PER < 25
+	TIMES LOCAL:9, 1.25
+ENDIF
+
+;공순/공포
+IF ABL:순종 == 1
+	LOCAL:11 = 2000
+ELSEIF ABL:순종 == 2
+	LOCAL:11 = 1000
+ELSEIF ABL:순종 == 3
+	LOCAL:11 = 500
+ELSEIF ABL:순종 == 4
+	LOCAL:5 = 200
+ELSEIF ABL:순종 >= 5
+	LOCAL:5 = 600
+ENDIF
+
+;ダメージ量を計算
+DAMAGE = RAND:11 + RAND:11 + 10
+
+;衣装へのダメージを反映
+FONTBOLD
+PRINTFORML 衣装に{DAMAGE}の損傷を受けた！
+FONTREGULAR
+PRINTL 
+CALL CLOTH_BATTLE_DAMAGE, DAMAGE
+
+;前のターンが服を破くでない場合、行動予約を引き継ぐ
+SIF TFLAG:20 == 14
+	TFLAG:17 = -1
+
+;촉수の行動を記録
+TFLAG:20 = 14
+
+;습득基本値
+LOCAL:6 += 0
+
+;욕정基本値
+LOCAL:7 += 0
+
+;굴복基本値
+LOCAL:8 += 0
+
+;치정基本値
+LOCAL:9 += 1000
+
+;고통基本値
+LOCAL:10 += 0
+
+;공포基本値
+LOCAL:11 += 0
+
+;체력消費基本値
+LOCAL:12 += 0
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

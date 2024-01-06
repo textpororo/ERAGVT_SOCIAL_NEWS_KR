@@ -1,0 +1,86 @@
+﻿
+;休憩
+;--------------------------------------------------
+@KOJO_0_REST_16
+;촉수 구속구
+IF CFLAG:42 == 400
+	IF RAND:2 == 0	
+	PRINTFORML 今日も%CALLNAME%の身を%ITEMNAME:(CFLAG:42)%が苛む。
+	IF RAND:4 == 0
+		PRINTFORML 「く、ふぅ……」
+		PRINTFORML 昼も夜もなく、%CALLNAME%の穴という穴は蹂躙され、堪えることのできない吐息が漏れる。
+		PRINTFORML 「っ……んう、うぅぅんっ」
+		PRINTFORMW せめて声だけはと必死に堪えながら、%CALLNAME%は肩を震わせて絶頂に達した。
+	ELSEIF RAND:3 == 0
+		PRINTFORML 「ひうぁぁあっ！？」
+		PRINTFORML 突如勢いよく性感帯を抉られ、たまらず大きな声が漏れた。
+		PRINTFORML 普段はクールな%CALLNAME%の珍しい声色は周囲の注目を集めてしまい、
+		PRINTFORML 「な、なん、でも……な、いぃ……っ」
+		PRINTFORMW 必死に誤魔化しつつも、周囲に見守られながら達してしまった。
+	ELSEIF RAND:2 == 0
+		PRINTFORML 「ふぅ、ひぐ、ぅぅうっ…」
+		PRINTFORML %ITEMNAME:(CFLAG:42)%の責めは容赦ない。
+		PRINTFORML 一人だろうと人前であろうと、%CALLNAME%が気を抜けば性感を抉り、身も心も休まる時がない。
+		PRINTFORML 「また、きちゃ……うぁ、――っ！」
+		PRINTFORMW 休息を得るはずのベッドの中で、また一度%CALLNAME%は望まぬ絶頂に導かれた。
+	ELSE
+		PRINTFORML (なんで、%SELF_CALL()%、こんな……）
+		PRINTFORML 明るく仲間たちが語り合う傍で、静かに%CALLNAME%は絶頂をこらえていた。
+		PRINTFORML 普段はクールに振る舞っていることも幸いして、%CALLNAME%が黙っていても誰も不審に思わない。
+		PRINTFORML けれど、
+		PRINTFORML （また、%SELF_CALL()%、みんなの、まえ、で……！）
+		PRINTFORMW 声こそ洩らさなかったが、絶頂を迎えた%CALLNAME%の肩は、そうとはっきり分かるほどに震えていた。
+	ENDIF
+	ELSE
+	PRINTFORML  %ITEMNAME:(CFLAG:42)%を装着させられた%CALLNAME%を待っていたものは
+	SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML  耐え難い陵辱の日々だった。촉수は起きていようが眠っていようがお構いなしに
+		PRINTFORML  %CALLNAME%の穴という穴を貪り、타락の淵へと%CALLNAME%を追い込んでいく……
+		PRINTFORML (んっ、く……、また、中で暴れ……～～ッッ！！)
+	CASE 1
+		PRINTFORML  耐え難い屈辱の日々だった。촉수は%CALLNAME%の尿道や尻穴に入り込み、
+		PRINTFORML  もぞもぞと蠕動しながら排泄物を食らい、肥え太っていく……
+		PRINTFORML (な、なんてこと……化け物の苗床にされるだなんて……)
+	CASE 2
+		PRINTFORML  耐え難い恥辱の日々だった。촉수は仲間の見えないところでいやらしく蠢き、
+		PRINTFORML  %CALLNAME%の敏感な部分を弄り回し、快楽で飼い慣らしていく……
+		PRINTFORML (忌々しい下等生物……ん、くっ……また……っ！)
+	CASEELSE
+		PRINTFORML  耐え難い辱めの日々だった。촉수は仲間の前では醜く肥大した乳首と陰核に擬態し
+		PRINTFORML  開発され尽くした様にしか見えない身体を心配する仲間の優しさがなお辛かった。
+		PRINTFORML (化け物に取り憑かれているなんて……言えるわけがない……)
+	ENDSELECT
+	ENDIF
+ENDIF
+
+
+;研究所助手（임신）
+;--------------------------------------------------
+@KOJO_0_SEISAN_KENKYU_ninshin_16
+;임신すると出撃できないなら絶対こうなるよね
+PRINTL 
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「こんなの…屈辱だわ……」
+	CASE 1
+		PRINTFORML 「なんで……こんな……嫌…化け物なんて、産みたく…ない……」
+	CASEELSE
+		PRINTFORML 「ちょっと、何でこんな恰好をさせられなきゃ… ぅっ、う゛ぶ、げぼお゛ぶぉ゛ぉぉ！？」
+ENDSELECT
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML  今や%CALLNAME%は貴重な資料の宝庫でしかなく、衣服はおろか布一枚まとうことすら許されず
+		PRINTFORML  醜いボテ腹を晒して分娩台に拘束され、あらゆるデータを提供させられ続けていた。
+		PRINTFORML  鼻に栄養剤のチューブを差し込まれ、尿道と尻穴には吸引器が取り付けられ、排泄まで管理されている。
+			SIF TALENT:후타나리 > 0
+				PRINTFORML  だがそんな辱めにあってなお%CALLNAME%の후타나리の肉棒は激しく反り返り、先走りを垂らしている。
+		PRINTFORML  今日もクスコで広げられた牝穴をレンズが覗き込み続けていた……
+	CASEELSE
+		PRINTFORML  입を覆う吸引マスクが音を立てて吐瀉物を吸い上げていく。
+			SIF TALENT:후타나리 > 0
+				PRINTFORML  苦悶の声を上げる%CALLNAME%の후타나리の肉棒は激しく反り返り、先走りを垂らしている。
+		PRINTFORML  촉수に孕まされ戦えなくなった%CALLNAME%は分娩台に拘束され、貴重なデータを提供させられ続けていた。
+		PRINTFORML  特別病棟の奥深く、隔離施設の獣じみた苦悶の声は誰にも届かない……
+ENDSELECT
+

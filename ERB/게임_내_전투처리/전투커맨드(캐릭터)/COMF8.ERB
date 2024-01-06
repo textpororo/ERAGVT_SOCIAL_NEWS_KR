@@ -1,0 +1,53 @@
+﻿;풀어낸다
+@COM8
+
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;지문: 풀어낸다
+CALL MESSAGE_BATTLE_CHARA_HURIHODOKU
+
+
+;풀어낸다成功判定
+CALL ACT_HANTEI_CHARA_TO_TENTACLE, "HURIHODOKU"
+
+IF RESULT == 1
+	TCVARn:0 = 2
+	TFLAG:4 = 0
+	TFLAG:16 = -1
+	TFLAG:17 = -1
+	
+	;지문: 풀어낸다成功
+	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_SUCCESS
+	;지문: 洗脳/悪堕ちキャラが操作キャラに振り解かれてしまった
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
+
+	;촉수の体勢が崩れる
+	TFLAG:1 = 1
+	;自動で戦闘メニューを選択する
+	TCVARn:8 = 1
+	
+ELSE
+	;지문: 풀어낸다失敗
+	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_FALSE
+	;지문: 洗脳/悪堕ちキャラが操作キャラの풀어낸다を防いだ
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_FALSE
+
+ENDIF
+
+;행동포인트を+1
+EX:행동포인트 += 1
+
+;FEAT効果による反動の増加
+SIF TALENT:근력강화 > 0
+	TFLAG:99 += 1
+
+RETURN 1

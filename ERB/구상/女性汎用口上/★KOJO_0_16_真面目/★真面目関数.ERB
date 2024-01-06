@@ -1,0 +1,307 @@
+﻿
+@randt(ARGS,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9,ARGS:10,ARGS:11,ARGS:12,)
+#FUNCTIONS
+	FOR LOCAL, 0, 12
+		SIF ARGS:LOCAL == ""
+			BREAK
+	NEXT
+	IF LOCAL>0
+		LOCAL=RAND:(LOCAL)
+		RETURNF ARGS:LOCAL
+	ENDIF
+	RETURNF
+
+@CHECK_PENIS()
+#FUNCTION
+;기생されていない敵후타나리ヒロイン、男はペニスを使う
+IF FLAG:111>0 && ISTENTACLER(FLAG:111) == 0 && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
+	RETURNF 1
+ENDIF
+;それ以外なら촉수を使う
+RETURNF 0
+
+@TENTACLE_NAME()
+#FUNCTIONS
+	RESULTS=TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
+	;CALL TENTACLE_ACCESS, "GETNAME"
+RETURNF RESULTS
+
+
+
+
+;★★作成中
+@CHECK_BODY(状況)
+#DIMS 状況
+#FUNCTION
+LOCAL=0
+
+SELECTCASE 状況
+	CASE "임신"
+		LOCAL=1
+	CASE "正常임신"
+		LOCAL=1
+	CASE "触装"
+		SIF CFLAG:42 == 400
+			LOCAL=1
+ENDSELECT
+
+RETURNF LOCAL
+
+
+;疲労度が20を超えると与ダメージが25%低下、
+;疲労度が30を超えると与ダメージが50%低下、
+;疲労度が50を超えると与ダメージが75%低下します。
+
+
+
+;★구상용の戦闘シチュエーション確認
+;撮影		…身勝手さに怒る。타락時は悦ぶ
+;市民		…避難を促す。応援されてる場合もある
+;救出		…女子高救出イベント。市民系のメッセージは出ないが体育館や礼拝堂で決戦、雑魚촉수に女子生徒が襲われている
+;奇襲		…夜間襲来。自分一人が狙われて逃げ場も無い耐久戦
+;通常		…タイマン
+;(仲間を捕らえているボス)
+;(悪堕ちした仲間)
+@KOJO_BATTLE_SET_SITUATION
+#FUNCTIONS
+	;屑市民・オタクが撮影中		;高揚or怒りでスタート
+	IF FLAG:71 > 0
+		LOCALS=撮影
+	;善良な市民が逃げ遅れている	;冷静or高揚(声援受けた場合)でスタート
+	ELSEIF FLAG:70 > 0
+		;昼間襲来(街中)
+		IF FLAG:45==501
+
+		;通常戦闘の逃げ遅れ市民
+		ELSE
+
+		ENDIF
+		LOCALS=市民
+	;女子高救出イベントのボス戦
+	ELSEIF FLAG:45==2
+		LOCALS=救出
+	;夜間襲来(自分が狙われた獲物)
+	ELSEIF FLAG:45==502 && TIME==1
+		LOCALS=奇襲
+	;市民の避難完了後の通常戦闘
+	ELSE
+		LOCALS=通常
+	ENDIF
+RETURNF LOCALS
+
+;雑魚戦
+;FLAG:10 == 2
+
+;仲間を囚えているボスかどうか
+
+;戦闘開始時より野次馬が増えている状態かどうか(公開凌辱中判定)
+
+;恥ずかしい服装かどうか
+;全裸
+;임신中
+;半裸
+;　촉수 구속구・촉수服
+;　淫紋
+;연인の有無
+
+;
+;凌辱未経験の清純ヒロイン
+;今回の戦闘で犯されてしまった
+;凌辱済みだが今回の戦闘はまだ無事(無被弾/性공격は受けていない)
+;凌辱済みであり今回の戦闘で犯されてしまった
+;堕ちつつある
+
+
+;●촉수から受ける拘束時性コマンド関連
+
+;★성저항〜쾌락굴복〜堕ちは割と容易に流動するので、決定的な分岐は촉수의포로に限った方が自然かも
+;★極端に強い喘ぎは強い공격用に取っておく
+;★AEGI()関数　短い喘ぎ声を返す、引数を渡すと文末(！)に繋がる喘ぎ声を返す
+;★弱い공격の分岐は程々でいいかも？
+;	あへぇ　おほぉ　おひぃ
+;蕩け	あひん　んひぃ
+;抵抗	くひん　いひぃ
+@CHECK_KANRAKU(ARGS:0)
+#FUNCTION
+IF ARGS:0=="Ｃ"
+	LOCAL = ABL:C감각
+	LOCAL += TALENT:음핵 ? 4 # 0
+	LOCAL += TALENT:C민감 ? 2 # 0
+	LOCAL -= TALENT:C둔감 ? 2 # 0
+ELSEIF ARGS:0=="Ｂ"
+	LOCAL = ABL:B감각
+	LOCAL += TALENT:음유 ? 4 # 0
+	LOCAL += TALENT:B민감 ? 2 # 0
+	LOCAL -= TALENT:B둔감 ? 2 # 0
+ELSEIF ARGS:0=="Ｖ"
+	LOCAL = ABL:V감각
+	LOCAL += TALENT:음호 ? 4 # 0
+	LOCAL += TALENT:V민감 ? 2 # 0
+	LOCAL -= TALENT:V둔감 ? 2 # 0
+ELSEIF ARGS:0=="Ａ"
+	LOCAL = ABL:A감각
+	LOCAL += TALENT:음고 ? 4 # 0
+	LOCAL += TALENT:A민감 ? 2 # 0
+	LOCAL -= TALENT:A둔감 ? 2 # 0
+ENDIF
+RETURNF LOCAL
+
+@aegi(ARGS:0)
+#FUNCTIONS
+SELECTCASE ARGS:0
+CASE "快"
+	STRDATA LOCALS
+	DATAFORM あっ
+	DATAFORM ぁっ
+	DATAFORM っあ
+	DATAFORM ぁ
+	DATAFORM あんっ
+	DATAFORM あぅ
+	DATAFORM あぁっ
+	DATAFORM あぁんっ
+	DATAFORM ぅ
+	DATAFORM ぅぁ
+	DATAFORM ぅあ
+	DATAFORM くぁ
+	DATAFORM ひっ
+	DATAFORM ひあ
+	DATAFORM ひんっ
+	DATAFORM ひぁ
+	DATAFORM ひぅ
+	ENDDATA
+case "！？"
+	STRDATA LOCALS
+	DATAFORM うあぁっ！？
+	DATAFORM うあぁあっ！？
+	DATAFORM きゃうんっ！？
+	DATAFORM はぅっ！？
+	DATAFORM ひあっ！？
+	DATAFORM ひあぁ！？
+	DATAFORM ひぃんっ！？
+	DATAFORM ひうっ！？
+	DATAFORM ひゃぁっ！？
+	DATAFORM ひゃうっ！？
+	DATAFORM ひゃぅっ！？
+	DATAFORM ひゃんっ！？
+	DATAFORM ひゃうんっ！？
+	DATAFORM っきゃん！？
+	DATAFORM っあん！？
+	DATAFORM っはぁあん！？
+	DATAFORM きゃうぅんっ！？
+	DATAFORM きゃふぅんっ！？
+	DATAFORM きひぃっ！？
+	DATAFORM くひぃっ！？
+	DATAFORM くぁあっ！？
+	DATAFORM ひぃいぃっ！？
+	DATAFORM ひきゃぁあっ！？
+	DATAFORM ひゃううぅ！？
+	DATAFORM ひゃううっ！？
+	DATAFORM ひゃううぅん！？
+	DATAFORM っひぁあん！？
+	DATAFORM っきゃぁん！？
+	DATAFORM っきゃうぅん！？
+
+	;浅ましい
+	DATAFORM んひぃっ！？
+	DATAFORM んひっ！？
+	DATAFORM いひっ！？
+	DATAFORM ぃひぃっ！？
+	DATAFORM んはぁっ！？
+	DATAFORM んうぅっ！？
+	DATAFORM ああんっ！？
+	DATAFORM きゃはぁんっ
+	DATAFORM んひぃぃっ！？
+	DATAFORM んひぃぁっ！？
+	DATAFORM んひぃあぁっ！？
+	DATAFORM んひぃぃっ！？
+	DATAFORM んいぃいっ！？
+	DATAFORM あひぃいぃっ！？
+	DATAFORM ひきゃああぁあっ！？
+	DATAFORM きゃああぁああん！？
+	DATAFORM きゃふぅぅうん！？
+	ENDDATA
+;快感耐え
+CASEELSE
+	STRDATA LOCALS
+	DATAFORM あっ
+	DATAFORM ぁっ
+	DATAFORM っあ
+	DATAFORM ぁ
+	DATAFORM ん
+	DATAFORM んぅ
+	DATAFORM んっ
+	DATAFORM うっ
+	DATAFORM うく
+	DATAFORM くっ
+	DATAFORM んくっ
+	DATAFORM ぅ
+	DATAFORM ぅぁ
+	DATAFORM ぅあ
+	DATAFORM あぅ
+	DATAFORM くぁ
+	DATAFORM ひぁ
+	DATAFORM ひぅ
+	DATAFORM ひっ
+	DATAFORM くひっ
+	ENDDATA
+ENDSELECT
+
+RETURNF LOCALS
+
+@list()
+	진지함_リスト数=0
+	진지함_リスト:0=
+
+@li(st)
+#DIMS st
+	진지함_リスト:(진지함_リスト数)=%st%
+	진지함_リスト数+=1
+
+@end()
+	SIF 진지함_リスト数==0
+		RETURN
+	LOCALS=%진지함_リスト:(RAND:(진지함_リスト数))%
+	CALL ss(LOCALS)
+	CALL list()
+
+@ss(st)
+#DIMS st
+
+#DIM startp
+#DIM endp
+
+;?r(あいう/えおか/きくけ)
+WHILE 1
+	STRFIND st,"\?r\("
+	startp=RESULT
+	IF startp>=0
+		STRFIND st,"\)",startp+1
+		endp=RESULT
+		IF endp>=0
+			SUBSTRING st,startp+3,(endp-startp-3)
+			LOCALS=%RESULTS%
+			SPLIT LOCALS,"/",LOCALS
+			LOCALS=%LOCALS:(RAND:(RESULT))%
+	
+			SUBSTRING st,0,startp
+			LOCALS:1=%RESULTS%
+			SUBSTRING st,endp+1,-1
+			LOCALS:2=%RESULTS%
+
+			st=%LOCALS:1+LOCALS+LOCALS:2%
+		ELSE
+			BREAK
+		ENDIF
+	ELSE
+		BREAK
+	ENDIF
+WEND
+
+
+
+;REPLACE st,"",""
+
+PRINTFORML %st%
+;PRINTFORML {LOCAL} {LOCAL:1} %RESULTS%
+
+

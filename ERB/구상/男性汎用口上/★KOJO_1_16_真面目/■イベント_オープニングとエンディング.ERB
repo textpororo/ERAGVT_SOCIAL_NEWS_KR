@@ -1,0 +1,104 @@
+﻿
+
+;キャラ個別のオープニング
+;--------------------------------------------------
+@KOJO_1_FIRST_16
+;ゲーム開始時に表示されるテキストを設定します
+;キャラが戦うに至った動機の説明など
+
+
+
+;完全殲滅
+;--------------------------------------------------
+@KOJO_1_BATTLE_END_PERFECT_16
+PRINTFORML 「滅びろ、下等生物！　おまえたちには地獄すら生温い！」
+PRINTFORML  これで最後とばかりに、%CALLNAME%は至근거리から全身全霊を込めた공격を叩き込んだ。
+PRINTFORML  そして……
+;촉수의포로を消さないからこんなことに
+IF TALENT:촉수의포로
+	PRINTFORML  とどめの一撃を見るや、瀕死の촉수は避けることなく一直線に%CALLNAME%に向かっていった。
+	PRINTFORML  確かな手応えはあった。しかし、圧倒的な質量はそのまま%CALLNAME%を飲み込んだ。
+	IF ISMALE()
+		;#region
+		PRINTFORML  声を上げる間もなく四肢は絡め取られ、口が、鼻が、尻が、次々と촉수に塞がれていく。
+		;#endregion
+	ELSE 
+		PRINTFORML  声を上げる間もなく四肢は絡め取られ、口が、鼻が、膣が、尻が、次々と촉수に塞がれていく。
+	ENDIF
+	PRINTFORML  声にならない絶叫を上げ、半狂乱で날뛴다%CALLNAME%の穴という穴に
+	PRINTFORML  断末魔の痙攣とともに、全てを吐き出すかのような精液が注ぎ込まれる。
+	IF ISMALE()
+		;#region
+		PRINTFORML  もはやプライドも何も無く一人の少年として泣き叫ぼうとする%CALLNAME%だったが、
+		;#endregion
+	ELSE 
+		PRINTFORML  もはやプライドも何も無く一人の少女として泣き叫ぼうとする%CALLNAME%だったが、
+	ENDIF
+	PRINTFORML  입내は喉まで촉수で満たされそれすら叶わない……
+	PRINTFORML  精液を出し尽くし、力尽きた촉수の抜け落ちた穴には即座に別の촉수が潜り込む。
+	PRINTFORML  呼吸すら許されずに%CALLNAME%の意識が途絶える中、촉수たちは次々と最期の精液をぶちまけていった……
+	PRINTFORML 
+	PRINTFORMW  意識を失っていた%CALLNAME%はうっすらと目を開く。
+	PRINTFORML  周囲に動くものは何もない。濁液にまみれた自分の体があるばかりだった。
+	PRINTFORMW  この街を脅かす촉수ももう、ここにはいない。
+	IF ISMALE()
+		;#region
+		PRINTFORML  しかし、最後の촉수が残された力を何に用いたか、彼の身体は知っていた。
+		;#endregion
+	ELSE 
+		PRINTFORML  しかし、最後の촉수が残された力を何に用いたか、彼女の身体は知っていた。
+	ENDIF
+	SIF ISMALE()
+		PRINTFORML  直腸の奥に疑似子宮とも言うべき、남자でありながら촉수を産むことのできる器官が造られたのだ、と。
+	IF ISMALE()
+		;#region
+		PRINTFORML  今の彼……いや彼女ならば、仲間たち全員を妊婦腹に膨れ上がらせてなお余る量の촉수を産み落とし、
+		;#endregion
+	ELSE 
+		PRINTFORML  今の彼女ならば、仲間たち全員を妊婦腹に膨れ上がらせてなお余る量の촉수を産み落とし、
+	ENDIF
+	IF ISMALE()
+		;#region
+		PRINTFORML  そして孕まされることもなく、再び腸内子宮を촉수で満たすことができるだろう。
+		;#endregion
+	ELSE 
+		PRINTFORML  そして孕まされることもなく、再び子宮を촉수で満たすことができるだろう。
+	ENDIF
+	PRINTFORMW 「……そっか。%SELF_CALL()%はもう戻れなかったんだ、人の側じゃなかったんだ」
+	PRINTFORMW 「……情けない。救いようのないバカだな、%SELF_CALL()%」
+	PRINTFORMW  これまでの陵辱も全て、託される者の準備が目的だったのだろうか。
+	PRINTFORML 「ああもう……お腹減っちゃって、疼いて欲してる。ダメそうだな、これ」
+	PRINTFORMW  輝く裸身を艶めかしく晒し、新たな女王촉수は自嘲気味に笑った。
+ELSEIF ABL:촉수중독>=3
+	PRINTFORML  ……
+	PRINTFORML  촉수の爆ぜる轟音は鳴り止み、息を荒げる%CALLNAME%だけがその場に立っていた。
+	PRINTFORMW  この街を脅かす촉수ももう、ここにはいない。しかし――
+	PRINTFORML 
+	PRINTFORML  %CALLNAME%は既に知ってしまった
+	PRINTFORML  限界を超えて供される、人外の快楽を
+	IF ISMALE()
+		;#region
+		PRINTFORML  남자でありながらただの牝として扱われ、溺れるだけの悦びを
+		;#endregion
+	ELSE 
+		PRINTFORML  ただの牝として扱われ、溺れるだけの悦びを
+	ENDIF
+	PRINTFORML 
+	PRINTFORMW  そして、%CALLNAME%は見てしまった
+	PRINTFORMW   視界の隅で僅かに蠢く何かを……
+	PRINTFORML 
+	PRINTFORML  ここに%CALLNAME%の戦いは終結した。
+	PRINTFORML  けれどその身は촉수の快楽に溺れ、ただ平和を謳歌することはできないほどに開発されつくしていた――
+ELSE
+	PRINTFORML  ……
+	PRINTFORML  촉수の爆ぜる轟音が鳴り止むと、%CALLNAME%だけがその場に立っていた。
+	PRINTFORMW  この街を脅かす촉수ももう、ここにはいない。
+	PRINTFORML  頭を失った各地の촉수が討伐されるのも、おそらくは時間の問題だろう。
+	PRINTFORMW  間近で浴びた淫気に疼き始めた衝動を抑え、%CALLNAME%は身を翻す。
+	PRINTFORML  穢された身体も、喪った日常も、今だけは関係ない。
+	PRINTFORMW  髪を靡かせ、一歩一歩踏みしめるように、%CALLNAME%は帰りを待つ人々のもとへと歩み始めた――
+	PRINTFORML 
+	PRINTFORML  ここに%CALLNAME%の戦いは終結した。
+	PRINTFORMW  多くの犠牲を払いながらも、%CALLNAME%たち人類はついに脅威を退けたのだ……！
+ENDIF
+

@@ -1,0 +1,166 @@
+﻿;----------------------------------------------------------
+;●衣装の스테이터스指定
+;@CLOTH_STATUS_***
+;	基本스테이터스は任意個の「キーワード」「補正値」「区切り文字カンマ」で記述します。
+;	@CLOTH_STATUS_***
+;		;(カスタマイズ不可、耐久100(変身時120))
+;		SAVESTR:0'="SLOT-1,HP100@120,"
+;	省略された스테이터스にはCLOTH_衣装カスタマイズ共通処理内.ERBでデフォルト値が割り振られます。
+;
+;●衣装の特殊な補正(複雑な分岐条件を持つ場合の個別判定)
+;		HP!DEF!のように、パラメータ部分に"!"を指定した場合は以下の関数を呼び出し返り値をパラメータとします。
+;		「カスタマイズ次第でインナー兼用になる衣装」が中心ですが、
+;		「アウター無しなら回避上昇」のようにユニークな基準も使用されています。
+;공격補正		@CLOTH_HOSEI_KOUGEKI_***
+;방어補正		@CLOTH_HOSEI_BOUGYO_***
+;민첩補正		@CLOTH_HOSEI_BINSYOU_***
+;지성補正		@CLOTH_HOSEI_CHISEI_***
+;체력減少量		@CLOTH_HOSEI_TAIRYOKU_***
+;기력減少量		@CLOTH_HOSEI_KIRYOKU_***
+;性耐減少量		@CLOTH_HOSEI_SEITAISEI_***
+;油断上昇量		@CLOTH_HOSEI_YUDAN_***
+;
+;命中のみ上昇		@CLOTH_HOSEI_HIT_***
+;回避のみ上昇		@CLOTH_HOSEI_AVOID_***
+;クリティカル補正	@CLOTH_HOSEI_CRITICAL_***
+;粘液ダメージ軽減	@CLOTH_HOSEI_LIQUID_***
+;邪気ダメージ軽減	@CLOTH_HOSEI_WAVE_***
+;羞恥軽減		@CLOTH_HOSEI_SHYNESS_***
+;Ｂ自動増加耐性		@CLOTH_HOSEI_ANTIBUP_***
+;Ｃ自動増加耐性		@CLOTH_HOSEI_ANTICUP_***
+;回復効果強化		@CLOTH_HOSEI_HEALUP_***
+;EXゲージ増幅		@CLOTH_HOSEI_EXBOOST_***
+;空中性能強化		@CLOTH_HOSEI_AIRPLUS_***
+;
+;耐久力			@CLOTH_HOSEI_HP_***
+;下着保護力		@CLOTH_HOSEI_DEF_***
+;インナー兼用		@CLOTH_HOSEI_NOINNER_***
+;改造スロット		@CLOTH_HOSEI_SLOT_***	（-1で改造不可）
+
+;●カスタマイズのオプション記述例
+;	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ミニスカート","ロングスカート@重2護2","お尻が見えそうな超ミニ@軽2晒2","スカートではなくブルマ@軽1晒1","@@")
+;		"オプション名@効果欄","オプション名@効果欄", ... ,"@@"
+;		可変引数を擬似的に扱っており、"@@"が末尾の目印です。カスタマイズあたりのオプションは最大10種類
+;	・効果欄には以下のキーワードと레벨の組み合わせを記述可能です。
+;		軽	…軽装레벨　※1
+;		重	…重装레벨　※1
+;		護	…下着保護＋　※2
+;		晒	…下着保護－　※2
+;		油	…油断度上昇　※3
+;			※1： 1～6　両者は相殺される。両者のうち一方のみ記述する
+;			※2：-6～6　両者は相殺される。両者のうち一方のみ記述する。主に下半身パーツ用？
+;			※3：-6～6　原則としてインナー用
+;　　　　現在のところ、カスタマイズ全体で-9～9の範囲に収める必要があります。
+;
+;	・効果欄の先頭に"!!"を記述すると、そのオプションは選択不能になります。
+;	　あるカスタマイズが別のカスタマイズと排他的である場合に利用してください。
+;		;三項演算で直接記述する例
+;		"레깅스@"+(CFLAG:ARG:42 != 308 ? "!!設定中の下着が레깅스でなければ選択不可" # "軽4晒4")
+;		
+;		;引数に変数を用い、事前に分岐しておく例
+;		IF CUSTOM:1 != 0 && CUSTOM:1 != 1
+;			LOCALS'="レオタード化@!!ワンピース型でないと選択できません"
+;		ELSE
+;			LOCALS'="レオタード化@軽2 インナー兼用"
+;		ENDIF
+;	　後者の方が見やすいかもしれない
+;　実際の補正計算は現在のところカスタマイズ末尾にベタ書きされています。
+;　ちょっと大変ですが、増やした場合はそちらにも頑張って記述してね
+
+
+
+;CLOTH0 ※「装備なし」のデフォルト値を示す
+@CLOTH_STATUS_991
+	SAVESTR:0'="SLOT-1,HP0,def0,"
+
+;********************************************************************************************************************
+;CLOTH991 イベント専用アウター
+;----------------------------------------------------------
+@CLOTH_DESCRIPTION_990
+PRINTL  イベント専用アウターです。このテキストが表示されるべきではありません
+@CLOTH_STATUS_990
+	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","OUTER")
+	CATCH
+		SAVESTR:0'="SLOT-1,HP100,"
+	ENDCATCH
+@CLOTH_DESCRIPTION_991
+PRINTL  イベント専用アウター(変身後)です。このテキストが表示されるべきではありません
+@CLOTH_STATUS_991
+	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","OUTER_TRANS")
+	CATCH
+		SAVESTR:0'="SLOT-1,HP100,"
+	ENDCATCH
+@CLOTH_DESCRIPTION_992
+PRINTL  イベント専用インナーです。このテキストが表示されるべきではありません
+@CLOTH_STATUS_992
+	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","INNER")
+	CATCH
+		SAVESTR:0'="SLOT-1,HP80,SEITAISEI95,"
+	ENDCATCH
+;----------------------------------------------------------
+;固有カスタマイズ
+@CLOTH_CUSTOMIZE_OPTION_DRAW_990(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+RESULTS'=""
+TRYCALLFORM BATTLE_EVENT_CLOTH_STATUS_{ARG}("option","OUTER")
+PRINTFORML %RESULTS%
+
+@CLOTH_CUSTOMIZE_OPTION_DRAW_991(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+RESULTS'=""
+TRYCALLFORM BATTLE_EVENT_CLOTH_STATUS_{ARG}("option","OUTER_TRANS")
+PRINTFORML %RESULTS%
+@CLOTH_CUSTOMIZE_OPTION_DRAW_992(CUSTOM,ID,ARG)
+#DIM REF CUSTOM,0
+#DIM ID,1
+RESULTS'=""
+TRYCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("option","INNER")
+PRINTFORML %RESULTS%
+;SIF CUSTOM:0 == 0
+;	PRINT [カラー：白]
+;PRINT [세라복][スカーフ]
+;SIF CUSTOM:1 == 2
+;	PRINT [下乳露出]
+;SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 1
+;	PRINTL 　変身時追加：[豪華な装飾][軽装甲]
+
+
+@CLOTH_CUSTOMIZE_OPTION_991,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+@CLOTH_CUSTOMIZE_OPTION_991,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+@CLOTH_CUSTOMIZE_OPTION_992,ARG
+#DIM CUSTOM, 5
+#DIM CUSTOM_NUM = 5
+#DIM ID
+PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+
+;露出度合い
+LOCAL = 0
+;SIF CUSTOM:1 == 1
+;	LOCAL -= 1
+;SIF CUSTOM:4 == 4
+;	LOCAL += 1
+;補正効果
+;軽装
+SIF LOCAL < 0
+	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
+;重装
+SIF LOCAL > 0
+	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
+;;下着保護ダウン
+;SIF CUSTOM:3 == 2
+;	EQUIP:ARG:ID += 2 * POWER(10, 11)
+;;下着保護アップ
+;SIF CUSTOM:3 == 1
+;	EQUIP:ARG:ID += 2 * POWER(10, 12)
+
+RETURN -1

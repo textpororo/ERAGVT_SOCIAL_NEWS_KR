@@ -1,0 +1,528 @@
+﻿;**********************************************************
+;연인セックスの処理
+
+;セックス
+@LOVESEX_NIGHT
+VARSET LOCAL
+SIF TIME != 1
+	RETURN
+
+LOCAL:2 = TARGET
+FOR LOCAL, 0, CHARANUM
+	SIF LOCAL == MASTER
+		CONTINUE
+	SIF CFLAG:LOCAL:999 == 0
+		CONTINUE
+
+	TARGET = LOCAL
+
+	;キャラが生存中でなければ発生しない
+	SIF CFLAG:0 != 0
+		CONTINUE
+	
+	;キャラの疲労度が一定以下でなければ発生しない
+	SIF CFLAG:99 >= 30
+		CONTINUE
+	
+	;연인持ちでなければ発生しない　しかし짝사랑の場合は二分の一の確立で発生
+	SIF TALENT:교제상대 == 0 || TALENT:교제상대 >= 5 || (TALENT:교제상대 == 1 && RAND:10 > 4)
+		CONTINUE
+	
+	;男キャラの場合は平等컨피그ONかつA感度2以上の場合のみ
+	SIF (ISHOLE() == 0) || (ISMALE() && ABL:A감각 < 2)
+		CONTINUE
+
+	;聖처녀の場合は奉仕+정액중독+A感度が2以上の場合のみ
+	SIF CHECK_HOLYVIRGIN_F()==1 && ABL:봉사정신 + ABL:정액중독 + ABL:A감각 < 3
+		CONTINUE
+		
+	;男キャラで짝사랑の場合は弾く
+	SIF ISMANLY() && TALENT:교제상대 == 1
+		CONTINUE
+
+	;연인セックス確率判定値を初期化
+	LOCAL:1 = 0
+	LOCAL:3 = 0
+	;처녀の場合、교제상대によっては日数で制限を受ける
+	IF TALENT:처녀 > 0
+		IF TALENT:교제상대 == 2
+			LOCAL:3 = 12
+		ELSEIF TALENT:교제상대 == 3
+			LOCAL:3 = 6
+		ELSEIF TALENT:교제상대 == 4
+			LOCAL:3 = 3
+		ENDIF
+		SIF TALENT:학생 == 1
+			LOCAL:3 += 16
+		SIF TALENT:학생 == 2
+			LOCAL:3 += 8
+		SIF TALENT:학생 == 3
+			LOCAL:3 += 4
+		SIF TALENT:학생 == 4
+			LOCAL:3 += 2
+		SIF DAY < LOCAL:3 && RAND:4 != 0
+			CONTINUE
+	ENDIF
+	;욕망を見る
+	LOCAL:1 += ABL:욕망 * 5
+	;정액중독を見る
+	LOCAL:1 += ABL:정액중독 * 2
+	;봉사정신を見る
+	IF ABL:봉사정신 >= 5
+		LOCAL:1 += 35
+	ELSEIF ABL:봉사정신 == 4
+		LOCAL:1 += 30
+	ELSEIF ABL:봉사정신 == 3
+		LOCAL:1 += 25
+	ELSEIF ABL:봉사정신 == 2
+		LOCAL:1 += 20
+	ELSEIF ABL:봉사정신 == 1
+		LOCAL:1 += 15
+	ENDIF
+	IF RAND:100 < LOCAL:1
+	;짝사랑の場合はセックスではなく告白するように
+		IF TALENT:교제상대 == 1
+			CALL MESSAGE_KATAOMOI_NIGHT
+		ELSE
+			;지문: セックス
+			CALL MESSAGE_LOVESEX_NIGHT
+			CALL LOVESEX_KIND, TARGET, 0
+			CALL _ABLUP,0
+		ENDIF
+		PRINTW 
+		VARSET PALAM
+	ENDIF
+NEXT
+TARGET = LOCAL:2
+
+;----------------------------------------------------------
+;セックスの種類を決める
+@LOVESEX_KIND, ARG, ARG:1
+#DIM SEX_TWICE
+LOCAL:0 = 0
+LOCAL:1 = 0
+;乱数用の関数としてLOCAL:2を追加
+LOCAL:2 = 0
+
+SEX_TWICE = 0
+
+;絶頂回数一度目のリセット
+VARSET NOWEX
+
+LOCAL:2 = RAND:10
+;淫○系の素質があればそれを優先
+IF TALENT:ARG:음호 > 0 && LOCAL:2 > 5 && CHECK_HOLYVIRGIN_F()==0
+	CALL SEX_V, ARG, 0
+	SEX_TWICE += 1
+ELSEIF TALENT:ARG:음고 > 0
+	CALL SEX_A, ARG
+ENDIF
+
+;追加で自慰が発生した場合に備えて二度目のリセット
+VARSET NOWEX
+
+;A感覚が2以上なら애널セックスできる
+SIF ABL:ARG:A감각 > 1
+	LOCAL:0 = 1
+
+IF LOCAL:0 == 0
+	IF SEX_TWICE == 1
+		CALL SEX_V, ARG, 1
+	ELSE
+		CALL SEX_V, ARG, 0
+	ENDIF
+ELSEIF LOCAL:0 == 1
+	SIF ISFEMALE(ARG) && CHECK_HOLYVIRGIN_F()==0
+		LOCAL:1 = RAND:100
+	IF LOCAL:1 >= 50
+		IF SEX_TWICE == 1
+			CALL SEX_V, ARG, 1
+		ELSE
+			CALL SEX_V, ARG, 0
+		ENDIF
+	ELSE
+		CALL SEX_A, ARG
+	ENDIF
+ENDIF
+RETURN 1
+
+;----------------------------------------------------------
+;普通の性行為……ARG:1 == 1 →淫○系の素質による二回目
+@SEX_V, ARG, ARG:1 = 0
+LOCAL:100 = 0
+
+;二回目または처녀ならコンドーム判定は呼ばない
+IF ARG:1 == 1 || TALENT:처녀 > 0
+ELSEIF CONFIG_CHECK_EVENT_F(6) == 1
+	CALL SEX_V_CONDOM, ARG
+	;戻り値が1ならゴム有り、0なら無しのセックス
+	LOCAL:100 = RESULT
+ENDIF
+
+
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+SIF CHECK_HOLYVIRGIN_F()==0
+	EXP:ARG:V경험 += 1
+
+EXP:ARG:정액경험 += 1
+EXP:ARG:펠라경험 += 1
+;快C
+IF ABL:ARG:C감각 == 0
+	LOCAL:0 = 200
+ELSEIF ABL:ARG:C감각 == 1
+	LOCAL:0 = 1000
+ELSEIF ABL:ARG:C감각 == 2
+	LOCAL:0 = 2000
+ELSEIF ABL:ARG:C감각 == 3
+	LOCAL:0 = 4000
+ELSEIF ABL:ARG:C감각 == 4
+	LOCAL:0 = 10000
+ELSEIF ABL:ARG:C감각 >= 5
+	LOCAL:0 = 20000
+ENDIF
+
+;快B
+IF ABL:ARG:B감각 == 0
+	LOCAL:3 = 200
+ELSEIF ABL:ARG:B감각 == 1
+	LOCAL:3 = 400
+ELSEIF ABL:ARG:B감각 == 2
+	LOCAL:3 = 1000
+ELSEIF ABL:ARG:B감각 == 3
+	LOCAL:3 = 2000
+ELSEIF ABL:ARG:B감각 == 4
+	LOCAL:3 = 4000
+ELSEIF ABL:ARG:B감각 >= 5
+	LOCAL:3 = 10000
+ENDIF
+
+;快V
+IF ABL:ARG:V감각 == 0
+	LOCAL:1 = 200
+ELSEIF ABL:ARG:V감각 == 1
+	LOCAL:1 = 400
+ELSEIF ABL:ARG:V감각 == 2
+	LOCAL:1 = 1000
+ELSEIF ABL:ARG:V감각 == 3
+	LOCAL:1 = 4000
+ELSEIF ABL:ARG:V감각 == 4
+	LOCAL:1 = 10000
+ELSEIF ABL:ARG:V감각 >= 5
+	LOCAL:1 = 20000
+ENDIF
+
+IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
+	TALENT:처녀 = -1
+	CFLAG:206 = 5
+	LOCAL:10 = 2500
+ENDIF
+
+;ゴム컨피그オン＆ゴム有りだと快感度が少し減る
+IF CONFIG_CHECK_EVENT_F(6) == 1 && LOCAL:100 == 1
+	TIMES LOCAL:0, 0.95
+	TIMES LOCAL:1, 0.90
+	TIMES LOCAL:3, 0.95
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:0, 1.10
+	TIMES LOCAL:1, 1.10
+	TIMES LOCAL:3, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:0, 1.25
+	TIMES LOCAL:1, 1.25
+	TIMES LOCAL:3, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:0, 1.50
+	TIMES LOCAL:1, 1.50
+	TIMES LOCAL:3, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:0, 2.00
+	TIMES LOCAL:1, 2.00
+	TIMES LOCAL:3, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
+
+
+;지문: セックス
+CALL MESSAGE_SEX_V, LOCAL:100
+
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 2000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 50
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 2000
+ENDIF
+
+;봉사정신があると욕정にボーナス
+IF ABL:ARG:봉사정신 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:봉사정신 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:봉사정신 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:봉사정신 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:봉사정신 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;봉사정신に応じて上昇
+IF ABL:ARG:봉사정신 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:봉사정신 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:봉사정신 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:봉사정신 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:봉사정신 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:봉사정신 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 150
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+;ゴム컨피그オン＆ゴム有りなら判定無し
+IF CONFIG_CHECK_EVENT_F(6) == 1 && LOCAL:100 == 1
+ELSE
+	;연인と生でセックスしたフラグ
+	CFLAG:218++
+	;アフターピル
+	CALL AFTER_PILL, TARGET,75, 사랑하는사람
+	;임신判定
+	SIF ISFEMALE()
+		CALL NINSIN_HANTEI, 6, 800, 사랑하는사람
+ENDIF
+					
+;----------------------------------------------------------
+;애널セックス
+@SEX_A, ARG
+
+
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;ベース
+EXP:ARG:정액경험 += 1
+EXP:ARG:A경험 += 1
+EXP:ARG:펠라경험 += 1
+;快A
+IF ABL:ARG:A감각 == 2
+	LOCAL:2 = 2000
+ELSEIF ABL:ARG:A감각 == 3
+	LOCAL:2 = 4000
+ELSEIF ABL:ARG:A감각 == 4
+	LOCAL:2 = 10000
+ELSEIF ABL:ARG:A감각 >= 5
+	LOCAL:2 = 20000
+ENDIF
+
+;기교の値に応じて快感度のボーナス
+IF ABL:ARG:기교 == 0
+ELSEIF ABL:ARG:기교 == 1
+ELSEIF ABL:ARG:기교 == 2
+	TIMES LOCAL:2, 1.10
+ELSEIF ABL:ARG:기교 == 3
+	TIMES LOCAL:2, 1.25
+ELSEIF ABL:ARG:기교 == 4
+	TIMES LOCAL:2, 1.50
+ELSEIF ABL:ARG:기교 >= 5
+	TIMES LOCAL:2, 2.00
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,2,-1)
+
+
+;지문: 애널セックス
+CALL MESSAGE_SEX_A
+
+;굴복　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:8 = 100
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:8 = 200
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:8 = 500
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:8 = 1000
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:8 = 2000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:8 = 4000
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:ARG:노출벽 == 0
+	LOCAL:9 = 100
+ELSEIF ABL:ARG:노출벽 == 1
+	LOCAL:9 = 200
+ELSEIF ABL:ARG:노출벽 == 2
+	LOCAL:9 = 500
+ELSEIF ABL:ARG:노출벽 == 3
+	LOCAL:9 = 1000
+ELSEIF ABL:ARG:노출벽 == 4
+	LOCAL:9 = 2000
+ELSEIF ABL:ARG:노출벽 >= 5
+	LOCAL:9 = 4000
+ENDIF
+
+;봉사정신があると욕정にボーナス
+IF ABL:ARG:봉사정신 == 1
+	LOCAL:7 = 1000
+ELSEIF ABL:ARG:봉사정신 == 2
+	LOCAL:7 = 2000
+ELSEIF ABL:ARG:봉사정신 == 3
+	LOCAL:7 = 5000
+ELSEIF ABL:ARG:봉사정신 == 4
+	LOCAL:7 = 10000
+ELSEIF ABL:ARG:봉사정신 >= 5
+	LOCAL:7 = 20000
+ENDIF
+
+;습득
+;봉사정신に応じて上昇
+IF ABL:ARG:봉사정신 == 0
+	LOCAL:6 = 200
+ELSEIF ABL:ARG:봉사정신 == 1
+	LOCAL:6 = 400
+ELSEIF ABL:ARG:봉사정신 == 2
+	LOCAL:6 = 800
+ELSEIF ABL:ARG:봉사정신 == 3
+	LOCAL:6 = 1000
+ELSEIF ABL:ARG:봉사정신 == 4
+	LOCAL:6 = 2000
+ELSEIF ABL:ARG:봉사정신 >= 5
+	LOCAL:6 = 4000
+ENDIF
+
+;체력消費基本値
+LOCAL:12 = 150
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+
+;----------------------------------------------------------
+;ゴム有りセックス用
+@SEX_V_CONDOM, ARG
+#DIM イチャックス回数
+#DIM CCOUNT
+LOCAL:0 = 0
+
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+			CONTINUE
+	;パーティの彼氏持ち、婚約、人妻を人数分追加
+	SIF TALENT:CCOUNT:800 > 1 && TALENT:CCOUNT:800 < 5
+		LOCAL:0 += 1
+NEXT
+
+イチャックス回数 += 1
+LOCAL:1 = RAND:3 + 2 + LOCAL:0
+
+;一定回数ごとにゴム無しセックス提案
+IF イチャックス回数 > LOCAL:1
+	PRINTFORML \@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@はどうやらゴムを着けずに生でのセックスがしたいようだ・・・
+	PRINTFORML 受け入れますか？
+	PRINTL [0] 네
+	PRINTL [1] 아니오
+	;頻繁過ぎてもアレなので提案の時点でリセット
+		イチャックス回数 = 0
+	$INPUT_LOOP_0
+	INPUT
+	IF RESULT == 0
+		IF CHECK_PREGNANT_F(TARGET) > 0
+			IF TALENT:묘상화 > 0
+				PRINTFORML 촉수の苗床と成り果て仔を孕んだ身体を愛してくれる\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@を抱きしめ、
+				PRINTFORML %PRINT_CALLNAME(TARGET)%は情欲に塗れた瞳でペニスを直に受け入れた・・・
+			ELSEIF CFLAG:222 > 3
+				PRINTFORML %PRINT_CALLNAME(TARGET)%はお腹の子に優しくしてと言いながら、ギンギンに反り返る男根を
+				PRINTFORML 期待に涎を垂らす下の口へと迎え入れた・・・
+			ELSE
+				PRINTFORML \@ TALENT:교제상대 == 4 ? 夫 # 想い人 \@の子を孕んでもいいと熱に浮かされたようにうなずく%PRINT_CALLNAME(TARGET)%は、
+				PRINTFORML すでに胎児が子宮に宿っていることに気づかぬまま剛直を蜜壺へと飲み込んだ・・・
+			ENDIF
+		ELSE
+			IF ABL:ARG:욕망 >= 6 && ABL:ARG:정액중독 >=2
+				PRINTFORML 子作り交尾への熱い眼差しを向けられた瞬間、直接注ぎ込まれる精液の熱さを想像して
+				PRINTFORML %PRINT_CALLNAME(TARGET)%は子宮の疼きが止まらなくなってしまう。
+				PRINTFORML 自らぐっしょりと濡れた秘所を拡げると、完全に발정した様子でペニスを迎え入れた・・・
+			ELSEIF ABL:ARG:욕망 >= 4
+				PRINTFORML いつもより一回り大きく固く屹立するペニスを前にして、%PRINT_CALLNAME(TARGET)%は
+				PRINTFORML ソレに直接질내を掻き回される誘惑に抗えず、コンドームを脇へと追いやった・・・
+			ELSE
+				PRINTFORML 一瞬戦いへの影響が脳裏にチラつくが、肉体の火照りと\@ TALENT:교제상대 == 4 ? 夫 # 想い人 \@の熱い押しに抗いきれなかった
+				PRINTFORML %PRINT_CALLNAME(TARGET)%は子を孕むかもしれない性交を受け入れた・・・
+			ENDIF
+		ENDIF
+		PRINTL 
+		
+		RETURN 0
+	ELSEIF RESULT == 1
+		IF CHECK_PREGNANT_F(TARGET) > 0
+			IF TALENT:묘상화 > 0
+				PRINTFORML すでに촉수の苗床と成り果てた身体に、인간の精液では満足出来な――……
+				PRINTFORML ……正常に産めるかどうかわからないと、どこか虚ろな眼で
+			ELSEIF CFLAG:222 > 3
+				PRINTFORML お腹の子に影響があるといけないからと、疼く身体を抑えながら
+			ELSE
+				PRINTFORML すでに胎児が子宮に宿っていることに気づかぬまま、避妊のためにと
+			ENDIF
+		ELSE
+			PRINTFORML 何が起きるかわからない촉수という災禍の中、不用意に임신するわけにはいかない。
+			PRINT もどかしさを感じながら、
+		ENDIF
+		PRINTFORML %PRINT_CALLNAME(TARGET)%は\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@のペニスにゴムを装着した・・・
+		PRINTL 
+		
+		RETURN 1
+	ELSE
+		GOTO INPUT_LOOP_0
+	ENDIF
+ENDIF
+
+RETURN 1

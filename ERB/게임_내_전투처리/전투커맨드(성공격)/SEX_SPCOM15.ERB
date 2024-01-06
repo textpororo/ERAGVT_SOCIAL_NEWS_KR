@@ -1,0 +1,159 @@
+﻿;サブミッションファック
+
+;性コマンド分類
+@SEX_TYPE_COM1015
+RETURN 통상
+
+@SEX_SPCOM15
+;EX_COM	追加責め実行部位（ビット）
+;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
+;追加責め
+EX_COM = 2
+SH_COM = 0
+
+;사정部位플래그를 세운다
+TFLAG:4 = TFLAG:4 | 질
+TFLAG:4 = TFLAG:4 | 입
+INSERT = INSERT | 질
+
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;油断度の上昇
+TFLAG:3 += 100
+
+;사정値 800
+CALL TENTACLE_SYASEI_UP, 800
+
+;我慢：대량사정でなければ사정部位플래그를折る
+SIF FLAG:15 < FLAG:14 * 2
+	TFLAG:4 = 0
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1015
+
+;快V
+IF ABL:V감각 == 0
+	LOCAL:1 = 1000
+ELSEIF ABL:V감각 == 1
+	LOCAL:1 = 2000
+ELSEIF ABL:V감각 == 2
+	LOCAL:1 = 4000
+ELSEIF ABL:V감각 == 3
+	LOCAL:1 = 10000
+ELSEIF ABL:V감각 == 4
+	LOCAL:1 = 20000
+ELSEIF ABL:V감각 >= 5
+	LOCAL:1 = 40000
+ENDIF
+;마조끼による쾌V追加
+IF ABL:마조끼 <= 2
+ELSEIF ABL:마조끼 == 3
+	LOCAL:1 += 1000
+ELSEIF ABL:마조끼 == 4
+	LOCAL:1 += 2000
+ELSEIF ABL:마조끼 >= 5
+	LOCAL:1 += 6000
+ENDIF
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,1,-1)
+
+
+;지문: SPCOM15
+CALL MESSAGE_SEX_SPCOM15, EX_COM, SH_COM
+
+;처녀なら고통が大量に入る
+IF TALENT:처녀 > 0
+	LOCAL:10 = 10000
+	TALENT:처녀 = -1
+	CFLAG:206 = 3
+	TCVARn:1 = 1
+ELSE
+	LOCAL:10 = 0
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+;服へのダメージ
+CALL CLOTH_BATTLE_DAMAGE, 2
+
+;ベース
+EXP:V경험 += 3
+EXP:고통쾌락경험 += 2
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
+	EXP:근친교배경험 += 1
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
+	EXP:근친교배경험 += 1
+
+
+
+
+
+;굴복　마조끼で変化
+IF ABL:마조끼 == 0
+	LOCAL:8 = 2000
+ELSEIF ABL:마조끼 == 1
+	LOCAL:8 = 4000
+ELSEIF ABL:마조끼 == 2
+	LOCAL:8 = 6000
+ELSEIF ABL:마조끼 == 3
+	LOCAL:8 = 8000
+ELSEIF ABL:마조끼 == 4
+	LOCAL:8 = 16000
+ELSEIF ABL:마조끼 >= 5
+	LOCAL:8 = 24000
+ENDIF
+
+;공포　순종と마조끼で大まかに
+IF ABL:순종 < 4
+	IF ABL:마조끼 <= 2
+		LOCAL:11 = 20000
+	ELSEIF ABL:마조끼 == 3
+		LOCAL:11 = 10000
+	ELSEIF ABL:마조끼 >= 4
+		LOCAL:11 = 2000
+	ENDIF
+ELSE
+	IF ABL:마조끼 < 4
+		LOCAL:11 = 1500
+	ELSE
+		LOCAL:11 = 200
+	ENDIF
+ENDIF
+
+;윤활が低いと고통が入る
+SIF PALAM:윤활 < 2000
+	LOCAL:10 += 2000
+
+;行動予約なし
+TFLAG:17 = -1
+;촉수の行動を記録
+TFLAG:20 = 1015
+
+;습득基本値
+LOCAL:6 += 2000
+
+;욕정基本値
+LOCAL:7 += 500
+
+;굴복基本値
+LOCAL:8 += 0
+
+;치정基本値
+LOCAL:9 += 0
+
+;고통基本値
+LOCAL:10 += 15000
+
+;공포基本値
+LOCAL:11 += 1500
+
+;체력消費基本値
+LOCAL:12 += 1050
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
+

@@ -1,0 +1,630 @@
+﻿;*******************************************************************************************************
+;裏プロフィール文字列の作成
+;感度
+;5		[Adj:1][部位]を[動詞]のが好き 淫語ON
+;6		[Adj:1][部位]を[動詞]のが好き
+;7		[Adj:1][部位]を[Adv:0][動詞]のが好き
+;8		[Adj:1][Adj:0][部位]を[Adv:0][動詞]のが好き
+;9		[Adj:1][Adj:0][部位]を[Adv:1][動詞]のが好き
+;10		[Adj:2][Adj:1][Adj:0][部位]を[Adv:1][動詞]のが好き
+;11		[Adj:3] [Adj:2] [Adj:1] [Adj:0] [部位] を [Adv:1]  [動詞] のが好き
+;*******************************************************************************************************
+@MAKESEXUALPROFILE, 対象, Lv
+#FUNCTIONS
+
+#DIMS 対象
+#DIM Lv
+
+#DIMS Adj, 4
+#DIMS 部位
+#DIMS Adv, 2
+#DIMS 動詞
+
+VARSET Adj, ""
+VARSET Adv, ""
+
+IF 対象 == "B" || 対象 == "C"|| 対象 == "P"
+;BかCの形容詞をつくる
+	SIF Lv < 11
+		Adj:1 = %MAKE_ADJ_BC(Lv)%
+	SIF Lv >= 8
+		Adj:0 = %MAKE_ONOMATOPE_BC()%
+	IF Lv >= 10
+		Adj:2 = %MAKE_ADJ_BC(Lv)%
+		WHILE Adj:2 == Adj:1
+			Adj:2 = %MAKE_ADJ_BC(Lv)%
+		WEND
+	ENDIF
+ELSEIF 対象 == "V" || 対象 == "A"
+;VかAの形容詞をつくる
+	SIF Lv < 11
+		Adj:1 = %MAKE_ADJ_VA(Lv)%
+	SIF Lv >= 8
+		Adj:0 = %MAKE_ONOMATOPE_VA()%
+	IF Lv >= 10
+		Adj:2 = %MAKE_ADJ_VA(Lv)%
+		WHILE Adj:2 == Adj:1
+			Adj:2 = %MAKE_ADJ_VA(Lv)%
+		WEND
+	ENDIF
+ENDIF
+
+SIF Lv >= 11
+	Adj:3 = %MAKE_BAD_REPUTATION()%
+
+IF 対象 == "B"
+	;思いつかなかった
+	部位 = 乳首
+ELSEIF 対象 == "C"
+	IF Lv >= 5
+		部位 = %MAKE_C_NAME("淫語")%
+	ELSE
+		部位 = %MAKE_C_NAME()%
+	ENDIF
+ELSEIF 対象 == "P"
+	IF Lv >= 5
+		部位 = %MAKE_P_NAME("淫語")%
+	ELSE
+		部位 = %MAKE_P_NAME()%
+	ENDIF
+ELSEIF 対象 == "V"
+	IF Lv >= 5
+		部位 = %MAKE_V_NAME("淫語")%
+	ELSE
+		部位 = %MAKE_V_NAME()%
+	ENDIF
+ELSEIF 対象 == "A"
+	IF Lv >= 5
+		部位 = %MAKE_A_NAME("淫語")%
+	ELSE
+		部位 = %MAKE_A_NAME()%
+	ENDIF
+ELSE
+	部位 = "エラー"
+ENDIF
+
+SIF LV >= 7 && LV < 9
+	Adv:0 = %MAKE_ADV_1()%
+SIF LV >= 9
+	Adv:1 = %MAKE_ADV_2()%
+	
+IF 対象 == "B" || 対象 == "C" || 対象 == "P"
+	動詞 = %MAKE_VERB_BC()%
+ELSEIF 対象 == "V"
+	IF Lv >= 5
+		動詞 = %MAKE_VERB_V("淫語")%
+	ELSE
+		動詞 = %MAKE_VERB_V()%
+	ENDIF
+ELSEIF 対象 == "A"
+	IF Lv >= 5
+		動詞 = %MAKE_VERB_A("淫語")%
+	ELSE
+		動詞 = %MAKE_VERB_A()%
+	ENDIF
+ELSE
+	動詞 = "エラー"
+ENDIF
+RETURNF Adj:3+Adj:2+Adj:1+Adj:0+部位+"を"+Adv:1+Adv:0+動詞+"のが好き"
+
+;*******************************************************************************************************
+;酷い形容詞を返す関数
+;BC兼用
+;*******************************************************************************************************
+@MAKE_ADJ_BC, ARG
+#FUNCTIONS
+#DIMS ADJ
+$LOOP
+IF ARG >= 5
+	STRDATA ADJ
+		DATA 万年발정
+		DATA 常時勃起
+		DATA オナニー狂いの
+		DATA 肥大化した
+		DATA 感度3000倍の
+		DATA クソザコ
+		DATA 굴복した
+		DATA 即落ち
+		DATA 음란
+		DATA 強欲な
+		DATA 欲求不満
+		DATA 風が吹けば絶頂する
+		DATA 衣擦れで絶頂する
+		DATA 変態
+		DATA メス犬の
+		DATA 黒ずんだ
+		DATA よくばり
+		DATA ほしがり
+		DATA 인간失格
+		DATA ゆるふわ
+		DATA メスガキ
+		DATA 청순파（自称）
+		DATA 【冠名】
+	ENDDATA
+ELSEIF ARG >= 3
+	STRDATA ADJ
+		DATA 발정
+		DATA 勃起
+		DATA 開発済みの
+		DATA 感じやすい
+	ENDDATA
+ELSE
+	STRDATA ADJ
+		DATA 未開発の
+		DATA ピンク色の
+		DATA 초심な
+		DATA かわいらしい
+	ENDDATA
+ENDIF
+
+IF ADJ == "【冠名】"
+	IF FLAG:6 == 1
+		ADJ = %SAVESTR:11%(笑)
+	ELSE
+		GOTO LOOP
+	ENDIF
+ENDIF
+
+RETURNF ADJ
+;*******************************************************************************************************
+;酷い形容詞を返す関数
+;VA兼用
+;*******************************************************************************************************
+@MAKE_ADJ_VA, ARG
+#FUNCTIONS
+#DIMS ADJ
+$LOOP
+IF ARG >= 5
+	STRDATA ADJ
+		DATA 万年발정
+		DATA 常時배란
+		DATA 感度3000倍の
+		DATA 開きっぱなしの
+		DATA 誰にでも股を開く
+		DATA 棒なら何でも良い
+		DATA チ〇ポ中毒の
+		DATA 粘液を垂れ流す
+		DATA 恥知らずの
+		DATA ぽっかり開いた
+		DATA クソザコ
+		DATA 強欲な
+		DATA 欲求不満の
+		DATA イキっぱなし
+		DATA 굴복した
+		DATA 変態
+		DATA 即落ち
+		DATA 음란
+		DATA 묘상화
+		DATA メス豚の
+		DATA 黒ずんだ
+		DATA よくばり
+		DATA ほしがり
+		DATA 인간失格の
+		DATA ゆるふわ
+		DATA メスガキ
+		DATA 청순파（自称）
+		DATA 【冠名】
+	ENDDATA
+ELSEIF ARG >= 3
+	STRDATA ADJ
+		DATA 발정
+		DATA 욕정
+		DATA 目覚めた
+		DATA 開発済みの
+		DATA 感じやすい
+	ENDDATA
+ELSE
+	STRDATA ADJ
+		DATA 未開発の
+		DATA ぴっちり閉じた
+		DATA ピンク色の
+		DATA かわいらしい
+	ENDDATA
+ENDIF
+
+IF ADJ == "【冠名】"
+	IF FLAG:6 == 1
+		ADJ = %SAVESTR:11%(笑)
+	ELSE
+		GOTO LOOP
+	ENDIF
+ENDIF
+
+RETURNF ADJ
+;*******************************************************************************************************
+;酷い副詞を返す関数1
+;*******************************************************************************************************
+@MAKE_ADV_1
+#FUNCTIONS
+#DIMS ADV
+STRDATA ADV
+	DATA 激しく
+	DATA 野性的に
+	DATA 情熱的に
+	DATA ゆっくりと
+	DATA じっくりと
+	DATA ねっとりと
+	DATA よってたかって
+	DATA 集団で
+	DATA 인간扱いされずに
+	DATA いやらしく
+	DATA 焦らされつつ
+	DATA キスしながら
+	DATA 拘束されて
+	DATA 奉仕しながら
+	DATA 粘液まみれで
+	DATA 媚薬漬けで
+	DATA わからせ
+	DATA 穴という穴を
+	DATA 無様に
+	DATA 動物のように
+ENDDATA
+RETURNF ADV
+;*******************************************************************************************************
+;酷い副詞を返す関数2
+;*******************************************************************************************************
+@MAKE_ADV_2
+#FUNCTIONS
+#DIMS ADV
+STRDATA ADV
+	DATA 一晩中
+	DATA 朝まで
+	DATA 三日三晩
+	DATA 24時間耐久で
+	DATA 気を失うまで
+	DATA 壊れるまで
+	DATA 公衆の面前で
+	DATA 拘束されて
+	DATA 生中継されながら
+	DATA 動画配信しながら
+	DATA 肉と肉がとろけあうまで
+	DATA 全身精液まみれになるまで
+	DATA 精臭がしみつくまで
+	DATA 目がハートになるまで
+ENDDATA
+RETURNF ADV
+;*******************************************************************************************************
+;酷い動詞を返す関数BC用
+;*******************************************************************************************************
+@MAKE_VERB_BC
+#FUNCTIONS
+#DIMS VERB
+STRDATA VERB
+	DATA ねぶられる
+	DATA 愛撫される
+	DATA 吸われる
+	DATA 扱かれる
+	DATA 虐められる
+	DATA 開発される
+	DATA しゃぶられる
+	DATA 犯される
+ENDDATA
+RETURNF VERB
+;*******************************************************************************************************
+;酷い動詞を返す関数VA用
+;ひどすぎたので選択可能に
+;*******************************************************************************************************
+@MAKE_VERB_V, ARGS = ""
+#FUNCTIONS
+#DIMS VERB
+$LOOP
+IF ARGS == "淫語"
+	STRDATA VERB
+		DATA レ〇プされる
+		DATA 高速ピストンされる
+		DATA 本気ピストンされる
+		DATA 本気種付けされる
+		DATA 強制子作りセックスされる
+		DATA 受精確定交尾される
+		DATA 強制배란性交される
+		DATA ボテ腹不可避交尾される
+		DATA 遺伝子まぜくりされる
+		DATA ほじくり返しされる
+		DATA 両穴犯される
+		DATA 両穴交互挿入される
+		DATA ハメられる
+		DATA ファックされる
+		DATA ハメ倒される
+		DATA ハメハメされる
+		DATA ラブラブえっちされる
+		DATA ラブラブレ〇プされる
+		DATA 合意和姦される
+		DATA ずぽずぽされる
+		DATA ズボズボされる
+		DATA パコられる
+		DATA パコパコされる
+		DATA 交尾される
+		DATA 虐められる
+		DATA 辱められる
+		DATA 肉便器にされる
+		DATA 開発される
+		DATA 輪姦される
+		DATA 獣欲交尾される
+		DATA ケダモノ性交される
+		DATA 濃厚接触される
+		DATA 【かけ声】
+	ENDDATA
+ELSE
+	STRDATA VERB
+		DATA 犯される
+		DATA レ〇プされる
+		DATA ピストンされる
+		DATA 種付けされる
+		DATA ハメられる
+		DATA ハメハメされる
+		DATA ずぽずぽされる
+		DATA パコられる
+		DATA パコパコされる
+		DATA 交尾される
+		DATA 虐められる
+		DATA 開発される
+		DATA 輪姦される
+	ENDDATA
+ENDIF
+
+IF VERB == "【かけ声】"
+	IF FLAG:7 == 1
+		VERB = %SAVESTR:12%(意味深)される
+	ELSE
+		GOTO LOOP
+	ENDIF
+ENDIF
+
+RETURNF VERB
+
+;*******************************************************************************************************
+;酷い動詞を返す関数A用
+;ひどすぎたので選択可能に
+;*******************************************************************************************************
+@MAKE_VERB_A, ARGS = ""
+#FUNCTIONS
+#DIMS VERB
+$LOOP
+IF ARGS == "淫語"
+	STRDATA VERB
+		DATA レ〇プされる
+		DATA 高速ピストンされる
+		DATA 本気ピストンされる
+		DATA ほじくり返しされる
+		DATA 両穴犯される
+		DATA 両穴交互挿入される
+		DATA ファックされる
+		DATA ハメられる
+		DATA ハメ倒される
+		DATA ハメハメされる
+		DATA ラブラブえっちされる
+		DATA ラブラブレ〇プされる
+		DATA 合意和姦される
+		DATA ずぽずぽされる
+		DATA パコられる
+		DATA パコパコされる
+		DATA 交尾される
+		DATA 虐められる
+		DATA 肉便器にされる
+		DATA 開発される
+		DATA 輪姦される
+		DATA 獣欲交尾される
+		DATA ケダモノ性交される
+		DATA ケツ穴性器化調教される
+		DATA 拡張工事される
+		DATA 濃厚接触される
+		DATA 【かけ声】
+	ENDDATA
+ELSE
+	STRDATA VERB
+		DATA 犯される
+		DATA レ〇プされる
+		DATA ピストンされる
+		DATA ハメられる
+		DATA ハメハメされる
+		DATA ずぽずぽされる
+		DATA パコられる
+		DATA パコパコされる
+		DATA 交尾される
+		DATA 虐められる
+		DATA 開発される
+		DATA 輪姦される
+	ENDDATA
+ENDIF
+
+IF VERB == "【かけ声】"
+	IF FLAG:7 == 1
+		VERB = %SAVESTR:12%(意味深)される
+	ELSE
+		GOTO LOOP
+	ENDIF
+ENDIF
+
+RETURNF VERB
+
+;*******************************************************************************************************
+;酷いオノマトペを返す関数
+;BC兼用
+;*******************************************************************************************************
+@MAKE_ONOMATOPE_BC
+#FUNCTIONS
+#DIMS ADJ
+STRDATA ADJ
+	DATA よわよわ
+	DATA ビンビン
+	DATA ギンギン
+	DATA ドロドロ
+	DATA ぬるぬる
+	DATA ざこざこ
+	DATA むらむら
+	DATA ぬらぬら
+ENDDATA
+RETURNF ADJ
+;*******************************************************************************************************
+;酷いオノマトペを返す関数
+;VA兼用
+;*******************************************************************************************************
+@MAKE_ONOMATOPE_VA
+#FUNCTIONS
+#DIMS ADJ
+STRDATA ADJ
+	DATA よわよわ
+	DATA ドロドロ
+	DATA ぬるぬる
+	DATA ざこざこ
+	DATA ガバガバ
+	DATA ひくひく
+	DATA ゆるゆる
+	DATA ふわふわ
+	DATA とろとろ
+	DATA むらむら
+	DATA ぬらぬら
+	DATA ぐちょぐちょ
+	DATA びしょびしょ
+ENDDATA
+RETURNF ADJ
+;*******************************************************************************************************
+;こんな関数他に何に使うの・・・？(自問自答）
+;*******************************************************************************************************
+@MAKE_C_NAME, ARGS = ""
+#FUNCTIONS
+#DIMS BCVA
+
+IF ARGS == "淫語"
+	STRDATA BCVA
+		DATA クリちゃん
+		DATA クリ
+		DATA 음핵
+		DATA お豆
+		DATA メスチ〇ポ
+	ENDDATA
+ELSE
+	STRDATA BCVA
+		DATA 클리토리스
+		DATA 陰核
+		DATA お豆
+		DATA 秘部
+		DATA アソコ
+	ENDDATA
+ENDIF
+RETURNF BCVA
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@MAKE_P_NAME, ARGS = ""
+#FUNCTIONS
+#DIMS BCVA
+
+IF ARGS == "淫語"
+	STRDATA BCVA
+		DATA チ〇ポ
+		DATA おチ〇ポ
+		DATA 肉棒
+	ENDDATA
+ELSE
+	STRDATA BCVA
+		DATA ペニス
+		DATA おちんちん
+		DATA 男性器
+	ENDDATA
+ENDIF
+RETURNF BCVA
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@MAKE_V_NAME, ARGS = ""
+#FUNCTIONS
+#DIMS BCVA
+
+IF ARGS == "淫語"
+	STRDATA BCVA
+		DATA おま〇こ
+		DATA オマ〇コ
+		DATA メス穴
+		DATA 孕み穴
+		DATA ハメ穴
+		DATA コキ穴
+		DATA とろ穴
+		DATA 活オナホ
+		DATA 生オナホ
+		DATA ぷに穴
+		DATA チ〇ポ穴
+		DATA チ〇ポケース
+		DATA 穴
+		DATA ゆる穴
+		DATA ガバ穴
+		DATA 처녀穴（自称）
+	ENDDATA
+ELSE
+	STRDATA BCVA
+		DATA ヴァギナ
+		DATA 女性器
+		DATA 秘部
+		DATA アソコ
+	ENDDATA
+ENDIF
+RETURNF BCVA
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@MAKE_A_NAME, ARGS = ""
+#FUNCTIONS
+#DIMS BCVA
+
+IF ARGS == "淫語"
+	STRDATA BCVA
+		DATA ケツま〇こ
+		DATA ケツマ〇コ
+		DATA ケツ穴
+		DATA ガバケツ
+		DATA ゆるケツ
+		DATA 縦割れ애널
+		DATA 穴
+		DATA 애널
+		DATA チ〇ポ穴
+		DATA チ〇ポケース
+		DATA うしろおま〇こ
+		DATA セカンドおま〇こ
+		DATA うしろ穴
+		DATA おま〇こ化애널
+	ENDDATA
+ELSE
+	STRDATA BCVA
+		DATA おしり
+		DATA 애널
+		DATA アヌス
+		DATA お尻の穴
+		DATA 菊門
+	ENDDATA
+ENDIF
+RETURNF BCVA
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@MAKE_BAD_REPUTATION
+#FUNCTIONS
+#DIMS ADJ
+STRDATA ADJ
+	DATA お嫁にいけない
+	DATA ご先祖様に顔向けできない
+	DATA 親の顔が見てみたい
+	DATA 末代までの恥と言われた
+	DATA ご近所の視線が痛い
+	DATA 白い目で見られる
+	DATA 現代医学ではどうにもできない
+	DATA 現代科学では解明できない
+	DATA 人類の限界を超えた
+	DATA 健康保険適用外の
+	DATA 労災がおりない
+	DATA 要介護認定された
+	DATA 保険に入れない
+	DATA 国辱的な
+	DATA 子どもに見せられない
+	DATA 放送コードを踏みにじる
+	DATA 教育に悪い
+	DATA PTAから目の敵にされる
+	DATA 保護者団体からクレームを受けた
+	DATA Nyorotterで拡散中の
+	DATA Tenstagramで炎上中の
+	DATA Tentubeに流出した
+	DATA ニョロニョロ動画で殿堂入りした
+	DATA 新聞の一面を飾った
+	DATA ワイドショーで叩かれ続ける
+ENDDATA
+RETURNF ADJ
+;*******************************************************************************************************

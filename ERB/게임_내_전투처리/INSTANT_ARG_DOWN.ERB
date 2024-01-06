@@ -1,0 +1,31 @@
+﻿@INSTANT_ARG_DOWN
+;未変身状態だと能力低下5回
+IF CFLAG:1 == 0
+	LOCAL:1 = 5
+	PRINTFORMW 敵の纏う瘴気が体に染み込む……
+;変身・SP変身状態なら能力低下2回
+ELSE
+	LOCAL:1 = 2
+	PRINTFORMW 敵の纏う瘴気が辺りに撒き散らされている……
+ENDIF
+$LOOP_I_ARG_DOWN
+;공격・방어・민첩・지성のどれか1つを減らす
+LOCAL:2 = RAND:5
+IF LOCAL:2 == 0
+	BASE:TARGET:공격 -= 1
+ELSEIF LOCAL:2 == 1
+	BASE:TARGET:방어 -= 1
+ELSEIF LOCAL:2 == 2
+	BASE:TARGET:민첩 -= 1
+ELSEIF LOCAL:2 == 3
+	BASE:TARGET:지성 -= 1
+ELSE
+	BASE:TARGET:기초체력 -=10
+
+ENDIF
+;LOCAL:1が0になるまで繰り返す
+LOCAL:1 -= 1
+IF LOCAL:1 > 0
+	GOTO LOOP_I_ARG_DOWN
+ENDIF
+

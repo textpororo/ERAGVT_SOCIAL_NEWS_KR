@@ -1,0 +1,489 @@
+﻿;【状態異常】	【選択不可になるコマンド】
+;기절		全ての行動　구상もスキップされるので考慮する必要はない
+;変身前		中원거리공격、날뛴다(、エアストライク)、全てのSP○○系
+;마비		Ｖ방어、날뛴다、ひきはがす
+;황홀		(バースト공격、エアストライク)
+;		Ｖ방어、ひきはがす、날뛴다、노려본다、매도한다、반항한다、설득해본다(、救出)
+;			※絶頂の余韻で力が入らない状態。
+;강구속		Ｖ방어、풀어낸다、날뛴다(、救出)
+;			※挿入されてしまっている状態
+;쓰러짐	距離を取る、배후로돈다、[現在の位置以外]距離공격
+;			※脚が震えて思うように動けない
+;疲労(50以上)	距離を取る、배후로돈다(、バースト공격、エアストライク)
+;※발정は媚薬で誘発、끈적끈적(衣装溶かし)or배란は体液で誘発
+
+
+;SP変身中は基本的に기력체력の減少による影響を受けない
+;마비は判定にマイナス補正
+
+;촉수服暴走中など
+
+
+;キャラの戦闘行動
+
+;●変身実行
+;変身時のかけ声(毎回出る)
+;@KOJO_0_BATTLE_CHARA_TRANSFORMCALL_16
+;IF TCVARn:10 == 0
+;	PRINTFORML 「%CSTR:2%」
+;ENDIF
+	;★状態で変えたい
+	;★快楽で変身が中途半端(コスチューム脱げかけ)など
+
+
+;変身後の名乗り(初回のみ出る)
+;@KOJO_0_BATTLE_CHARA_NANORI_16
+;PRINTFORML 「%CSTR:3%」
+	
+
+
+;SP変身時のかけ声	再変身、必殺技の一つ
+@KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_16
+PRINTL 「ここがチャンスっ！」
+
+
+
+
+;●공격　ランダム分岐の地の文から続く。공격そのものは描写済み
+;	무기의 이름とか言わせてもいいんじゃない？
+
+
+;전투스타일変更
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_BATTLE_STYLE_CHANGE_16
+
+
+;근거리공격	武器名	%CSTR:5%
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_SHORT_16
+
+
+LOCALS=%KOJO_BATTLE_SET_SITUATION()%
+IF LOCALS=="市民"
+	;見られてる
+	;早く逃げて
+;今助けるから
+ELSEIF LOCALS=="救出"
+	;犯される女生徒たち
+	;自分もその一人なのではないか
+;はよ逃げろ言うこと聞け
+ELSEIF LOCALS=="撮影"
+	;見ないで　撮らないで
+	;困惑と憤り　でも守らなきゃ
+;なんとかしなきゃ
+ELSEIF LOCALS=="奇襲"
+	;狙われた　どうして？
+	
+;通常戦闘	
+ELSE
+	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		;ふっ、ふぅー…ひうぅぅぅっ♥ に、臭いだけで、私、私っ…♥
+		;ふぅぅぅ、ふぅー、はぁぁっ♥ に、臭いだけで、私、私っ…♥
+		;うぁ…ふぅー、はぁぁぁ、はーっ♥ に、臭いだけで、私、私っ…♥
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		;うぁ……そんな、に、臭いだけで…私っ…
+		;こ、こいつらの臭い…どうして…こんな…！？
+	ELSEIF ((TCVARn:12 & 마비) || ABL:B감각 >=4)
+		PRINTDATAL
+		DATAFORM 「叩き潰して、あげ、くぅっ…」
+		DATAFORM 「食らいなさ、っくぅ、なさいっ！」
+		DATAFORM 「細切れにして、あげ…く、ぁっ…！」
+		DATAFORM 「そこに直りなさ、いっ！」
+		DATAFORM 「許さない、からっ！」
+		ENDDATA
+		IF (TCVARn:12 & 마비)
+			PRINTDATAL
+			DATAFORM (さ、さっきの電流で、身体が…！)
+			DATAFORM (か、身体が、痺れて…！)
+			DATAFORM (っ、身体が、上手く動かなっ…)
+			ENDDATA
+		ELSE
+			PRINTDATAL
+			DATAFORM (そんな…乳首が…擦れて…！)
+			DATAFORM (む、胸が擦れて、集中が…)
+			DATAFORM (む、胸が…私の身体、どうなってるの…)
+			ENDDATA
+		ENDIF
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 고전)
+
+	;★無被弾・被弾
+	;★끈적끈적直後
+
+	ELSE
+		;황홀or疲労時は選択されない
+		;空中から공격
+		IF GETBIT(TCVARn:216, 1)
+			PRINTDATAL
+			DATAFORM 「空からの一撃…食らいなさいっ！」
+			DATAFORM 「この一撃で、少しでも…っ！」
+			;DATAFORM 「%CSTR:6%…%CSTR:7%…私に力を貸して……！」
+			DATAFORM 「私の間合い……空から…決めるっ！」
+			DATAFORM 「この一撃で…決めるわっ！」
+			DATAFORM 「これで…貫いてっ！」
+			ENDDATA
+
+		;황홀or疲労時は選択されない
+		;バースト공격
+		ELSEIF GETBIT(TCVARn:217, 1)
+			PRINTDATAL
+			DATAFORM 「渾身の一撃……食らいなさい！」
+			DATAFORM 「覚悟しなさいっ！」
+			;DATAFORM 「%CSTR:5%…力を見せてあげるわ！」
+			DATAFORM 「距離を詰めればこっちのものよっ！」
+			DATAFORM 「化け物なんか残らず穿ち殺すっ！」
+			ENDDATA
+		;非変身時の공격
+		ELSEIF TALENT:변신능력 && CFLAG:1 == 0
+			;변신한다기력がない
+			IF BASE:기력*100/MAXBASE:기력 < 10
+			;変身可能
+			ELSE
+				;★単に変身前
+				;　強制解除後(再変身可能)
+				;　強制解除後(再変身不可能)
+			ENDIF
+		ELSE
+			PRINTDATAL
+			DATAFORM 「私の間合いね」
+			DATAFORM 「覚悟してっ！」
+			DATAFORM 「弱点丸出しよ！」
+			DATAFORM 「甘いわっ！」
+			DATAFORM 「隙ありっ！」
+			DATAFORM 「ああもう、さっさと倒れてよっ！」
+			ENDDATA
+		ENDIF
+	ENDIF
+
+
+
+ENDIF
+
+;중거리공격	武器名	%CSTR:6%
+;	変身前の인간ヒロインは実行不可
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_MIDDLE_16
+;황홀or疲労時は選択されない
+;空中から공격
+IF GETBIT(TCVARn:216, 1)
+ENDIF
+;バースト공격
+IF GETBIT(TCVARn:217, 1)
+ENDIF
+
+PRINTDATAL
+DATAFORM 「あっち行きなさいッ！」
+DATAFORM 「ああもうっ、いい加減倒れなさい！」
+DATAFORM 「存分に味わうことね」
+DATAFORM 「逃さないわっ！」
+DATAFORM 「%SELF_CALL()%から逃れられると思ったの？」
+ENDDATA
+
+
+;원거리공격	武器名	%CSTR:7%
+;	変身前の인간ヒロインは実行不可
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_LONG_16
+
+;황홀or疲労時は選択されない
+;空中から공격
+IF GETBIT(TCVARn:216, 1)
+	PRINTDATAL
+	DATAFORM 「確実に…当てるっ！」
+	;DATAFORM 「%CSTR:7%……%SELF_CALL()%に力を貸してっ！」
+	DATAFORM 「遠い…でも、空中ならっ！」
+	DATAFORM 「大丈夫、いつも通りに狙うだけ…！」
+	DATAFORM 「……放つっ！」
+	DATAFORM 「……槍よ、舞って！」
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「お願い、当たって！」
+	;DATAFORM 「%CSTR:7%、%SELF_CALL()%に力を貸してっ！」
+	DATAFORM 「遠い…でも、狙うしかないっ！」
+	DATAFORM 「落ち着いて、落ち着いて…！」
+	DATAFORM 「……槍よ、舞って！」
+	ENDDATA
+ENDIF
+;バースト공격
+IF GETBIT(TCVARn:217, 1)
+	;ちうに主体で
+ENDIF
+
+
+
+
+;★공격ヒット구상は拘束時の「날뛴다」兼用なので分岐が必要　拘束中で分岐すればたぶん大丈夫
+;공격がクリティカルヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_CRITICAL_HIT_16
+;날뛴다コマンド
+IF TCVARn:0 == 0
+	RETURN
+ENDIF
+PRINTDATAL
+DATAFORM 「クリーンヒット、だったみたいね？」
+DATAFORM 「このまま押し切ってあげる！」
+DATAFORM 「ふふ、覚悟しなさい！」
+DATAFORM 「なるほど、そこが弱点なのね」
+DATAFORM 「ふーん、随分効いてるみたいね？」
+ENDDATA
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はちらっと唇に指を添えた。
+
+;공격が通常ヒット
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_HIT_16
+;날뛴다コマンド
+IF TCVARn:0 == 0
+	RETURN
+ENDIF
+PRINTDATAL
+DATAFORM 「ふふっ、苦しんでるみたいね」
+DATAFORM 「あら、見事に入ったみたいね」
+DATAFORM 「どう、なかなか効いたでしょ？」
+DATAFORM 「おかわりも要る？ 遠慮しなくていいのよ」
+DATAFORM 「うん、悪くはないわね」
+DATAFORM 「まずまずね」
+ENDDATA
+
+;ひどい臭い…
+
+
+
+
+;공격ガードされた　★未実装(失敗구상が呼ばれる)
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_GUARD_16
+
+;공격失敗
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_FALSE_16
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「ああもう、煩わしい……！」
+		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は忌々しげに촉수を睨み付けている…
+	CASE 1
+		PRINTFORML 「い、今のを避けるの…！？」
+		PRINTFORML  渾身の一撃を躱された%PRINT_TRANSCALLNAME(TARGET)%は狼狽えている！
+	CASE 2
+		PRINTFORML 「ああ忌々しいっ！」
+		PRINTFORML  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%は隙だらけだ！
+	CASE 3
+		PRINTFORML 「くっ、こいつ急に素早く……っ」
+		PRINTFORML  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%は隙だらけだ！
+	CASEELSE
+		PRINTFORML 「惜しいわね」
+		PRINTFORML  平静を装う%PRINT_TRANSCALLNAME(TARGET)%だが、その動きは戸惑いを隠せない……
+ENDSELECT
+
+;少しでも時間を稼がなきゃ
+
+
+
+;방어　「集中して身を固めた」
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_DEFENSE_16
+PRINTDATAL
+DATAFORM 「落ち着きなさい%SELF_CALL()%、今は견딘다時よ……！」
+DATAFORM 「くっ、焦ってはダメ……」
+DATAFORM 「っ……理想通りにはいかないわね……」
+ENDDATA
+
+
+;거리를벌린다　(回復)
+;	腰砕け、疲労50～時は不可
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TAKEAWAY_16
+
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTDATAL
+	DATAFORM 「逃げるわけじゃない、体勢を立て直すだけ……！」
+	DATAFORM 「きょ、距離を取って、回復…っ…」
+	DATAFORM 「っ、はーっ、はーっ……」
+	DATAFORM 「っ、このままじゃ、マズい……っ」
+	ENDDATA
+ELSE
+	PRINTDATAL
+	DATAFORM 「一旦体勢を立て直すっ！」
+	DATAFORM 「%SELF_CALL()%の間合いでやらせてもらうわ」
+	DATAFORM 「まだ、まだっ！」
+	DATAFORM （素早さでは%SELF_CALL()%に分がある…！）
+	ENDDATA
+ENDIF
+
+PRINTDATAL
+DATAFORM %CALLNAME%は距離を取って体を休めている。
+DATAFORM %CALLNAME%は距離を取って体を落ち着けた。
+DATAFORM %CALLNAME%は身を翻して距離をとった…
+DATAFORM %CALLNAME%は建物の合間を縫うように距離をとった…
+ENDDATA
+
+
+;관찰한다　(隙を伺う)
+@KOJO_0_BATTLE_CHARA_SEETHROUGH_16
+PRINTDATAL
+DATAFORM 「…………」
+DATAFORM 「……一旦、様子を見ないと」
+DATAFORM 「……さあ、どう、くるつもり、かし、ら……？」
+ENDDATA
+PRINTFORMW %CALLNAME%は平静を装いつつ敵の動きを窺っている。
+
+;아무것도안한다　(→捕まる)
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NOACTION_16
+IF TALENT:촉수의포로
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML を見る目がおかしい……
+;HPが低いとき
+ELSEIF BASE:체력<MAXBASE:체력/4
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「……はーっ、はーっ、さ、最悪……」
+			PRINTFORMW %CALLNAME%は肩で息をして、周囲を気にする余裕もない様子だ。
+		CASE 1
+			PRINTFORML 「…っ、体が、動かない……！？」
+			PRINTFORMW %CALLNAME%は疲労のせいで、満足に動けない様子だ。
+		CASE 2
+			PRINTFORML 「っぁ…も、もう、動けない……」
+			PRINTFORMW 体を蝕む疲労と痛みに、%CALLNAME%は動きを止めてしまった。
+	ENDSELECT
+ELSEIF RAND:2
+	PRINTDATAL
+	DATAFORM 「……動きが止まった……何のつもり……？」
+	DATAFORM 「急に様子が……何のつもり？」
+	DATAFORM 「動きが、止まった……？」
+	DATAFORM 「……様子がおかしいわ、何をする気……？」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は敵の異変に困惑して一瞬動きを止めてしまった。
+ELSE
+	PRINTDATAL
+	DATAFORM 「な、急に動きが速く――」
+	DATAFORM 「っ、軌道が変わった！？」
+	DATAFORM 「しまっ、%SELF_CALL()%追い詰められて――」
+	DATAFORM 「なっ、いつの間に背後に――」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は敵の動きに対応できず隙を作ってしまった。
+ENDIF
+
+
+
+;끈적끈적、쓰러짐でマイナス補正
+;特殊戦闘は撤退不可なので考慮の必要なし。自分だけが戦っている通常戦闘のみ考えれば
+;★救出時は救出に成功する
+;撤退成功
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_SUCCESS_16
+
+;大量絶頂後
+IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+	PRINTFORML 「ンんっ、あっ、んうぅっ！！」
+	PRINTFORML 数えきれないほどイかされた%CALLNAME%。
+	PRINTFORMW 腰に力を入れられず這いつくばりながら逃げ出した……
+;多数絶頂後
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「……ンんっ、くっ……」
+	PRINTFORML 何度もイかされた%CALLNAME%。
+	PRINTFORMW 動くだけでも全身が快楽に貫かれ、愛蜜を垂らしながら逃走した……
+;체력0
+ELSEIF BASE:체력 == 0
+	PRINTFORML 「……う、あ、ぁ、あぁあ……」
+	PRINTFORML %CALLNAME%は最後の기력を振り絞って、命からがら逃げ出した……
+;기력0=闘志がない状態
+ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
+	PRINTFORML 「……こ、こんなの無理よ…勝てるわけ…ないっ……」
+	PRINTFORMW 心の折れた%CALLNAME%は震えながら逃げ出した……
+;성내성0
+ELSEIF BASE:성내성 == 0
+	PRINTFORML 「……んっ…くうぅ……」
+	PRINTFORMW %CALLNAME%は발정し、既に戦える状態ではない……
+;対悪堕ち
+ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")>0
+	PRINTDATAL
+	DATAFORM 「くっ…助け…られなかった……」
+	DATAFORM 「次は、次こそは正気に戻してあげるから……っ」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は無力感に歯噛みしながらその場を後にした。
+	PRINTFORML 
+;不利な状況
+ELSEIF BASE:체력 < MAXBASE:체력 / 4
+	PRINTDATAL
+	DATAFORM 「つ、次こそは…………！」
+	DATAFORM 「あんたなんかに……！」
+	DATAFORM 「覚えてなさい……！」
+	DATAFORM 「くっ……今度こそ、は、か、必ず、倒す、からっ……！」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は歯を食いしばりながらその場を後にした。
+ELSE
+	PRINTDATAL
+	DATAFORM 「……%촉수市民("化け物","この性犯罪者")%……次は無いと思いなさい！」
+	DATAFORM 「……これで勝ったと思わないことねっ！」
+	DATAFORM 「きょ、今日はこれで許してあげるわ」
+	DATAFORM 「……鍛錬不足ね」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は悔しげにその場を後にした。
+ENDIF
+
+
+;撤退失敗
+;--------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_FALSE_16
+;大量絶頂後
+IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+	PRINTFORML 「だめ……イってる、イってるからぁ！」
+	PRINTFORML 数えきれないほどイかされた%CALLNAME%を逃がすまいと
+	PRINTFORMW %STR:2500%は、立ち上がれない%CALLNAME%をゆっくりと取り囲んだ……
+;多数絶頂後
+ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+	PRINTFORML 「……ンんっ、これ、以上、イっ、たら……」
+	PRINTFORMW 何度もイかされた%CALLNAME%は更なる凌辱の予感に공포を隠せない…… 
+;체력0
+ELSEIF BASE:체력 == 0
+	PRINTFORML 「ぐっ………」
+	PRINTFORML %CALLNAME%の体には逃げ出すための力が残っていない……
+;기력0=闘志がない状態
+ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
+	PRINTDATAL
+	DATAFORM 「あ、ああぁ…………」
+	DATAFORM 「うぁ、こ、来ないで……！」
+	ENDDATA 
+	PRINTFORML %CALLNAME%は공포と절망に青ざめている……
+;성내성0
+ELSEIF BASE:성내성 == 0
+	PRINTFORML 「……まだ、こいつら%SELF_CALL()%を……？」
+	PRINTFORMW %CALLNAME%は발정し、既に戦える状態ではない……
+;不利な状況
+ELSEIF BASE:체력 < MAXBASE:체력 / 4
+	PRINTDATAL
+	DATAFORM 「に、逃げられないの……？」
+	DATAFORM 「じょ、冗談でしょっ……？」
+	DATAFORM 「ちょっと…何よこれ……っ」
+	DATAFORM 「そんな…何よこれ……っ」
+	DATAFORM 「そ、そんな、これ以上はもう……っ」
+	DATAFORM 「う、嘘、私このままじゃ……っ」
+	DATAFORM 「ま、また回り込まれ、ぁあっ……」
+	ENDDATA 
+	PRINTFORMDW 退路を塞いで逃がさない%STR:2500%の姿に、%CALLNAME%は焦りを隠せない……
+ELSEIF BASE:체력 < MAXBASE:체력 / 2
+	PRINTDATAL
+	DATAFORM 「いい加減諦めたらどうなの！？」
+	DATAFORM 「ああ煩わしい！」
+	DATAFORM 「ああもう何なのよ、そんなに逃がしたくないの！？」
+	DATAFORM 「ああもう、しつこい！」
+	ENDDATA 
+	PRINTFORMDW 退路を塞ぐ%STR:2500%の姿に、%CALLNAME%は小さく歯噛みした。
+ELSE
+	PRINTDATAL
+	DATAFORM 「簡単に逃がしてはくれない、か」
+	DATAFORM 「…今は体勢を立て直したいのに」
+	DATAFORM 「獲物は逃がさないって事かしら」
+	DATAFORM 「……甘くはないみたいね」
+	DATAFORM 「見逃す気は無さそうね」
+	DATAFORM 「回り込まれるなんて…油断は禁物ね」
+	ENDDATA
+	PRINTFORMDW %CALLNAME%は退路を塞ぐ%STR:2500%に仕方なく向き直った。
+
+ENDIF
+
+
+
+

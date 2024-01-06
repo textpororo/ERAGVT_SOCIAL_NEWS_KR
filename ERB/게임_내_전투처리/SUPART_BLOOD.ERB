@@ -1,0 +1,177 @@
+﻿@SUPART_BLOOD
+IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は%STR:2500%の返り血を浴びてしまった！
+	IF CONFIG_CHECK_SCREEN_F(3) == 0
+		PRINTW ・・・
+		PRINTW ・・・・・・
+	ELSE
+		PRINTL ・・・
+		PRINTL ・・・・・・
+	ENDIF
+	;VABC촉수
+	IF FLAG:11 < 5
+		PRINTFORML 次の瞬間、%PRINT_TRANSCALLNAME(TARGET)%の脳髄を強烈な快感が走り抜ける！
+		PRINTW 
+		;변신시TSキャラが女体化すると남자に戻れなくなる
+		IF FLAG:11 == 2 && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はしばらく身を震わせながら地面に横たわって何度も絶頂し、
+			PRINTFORML 戦闘後の気の緩みもあって完全に変身が解けてしまった。
+			PRINTFORML ところが、平らに戻るはずの胸は膨らんだままで、
+			PRINTFORML 丸みを帯びた肉付きや腰のラインも変化する様子がない――
+			PRINTW 
+
+			;변신시TSキャラが女体化すると남자に戻れなくなる
+			CALL TS_MtoF, TARGET
+
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は女体化した姿のまま[남자]に戻れなくなった！
+			PRINT さらに、
+		;元が女性の변신시TSキャラが女体化すると남자になれなくなる
+		ELSEIF FLAG:11 == 2 && ISMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+
+			PRINTFORML 思わず叫び声をあげてしまった%PRINT_TRANSCALLNAME(TARGET)%は、
+			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
+			PRINTFORML 見れば胸は膨らみを取り戻し、肉付きや腰のラインも変化して柔らかくなっている。
+			PRINTFORML 変身は解けていないのに、普段の自分とそっくりの状態になってしまっていて――
+			PRINTW 
+
+			;변신시TSキャラが女体化すると남자に戻れなくなる
+			CALL TS_FtoM, TARGET
+
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身しても[남자]になれなくなってしまった！
+			PRINT さらに、
+		;元が남자のキャラがV촉수を倒すと女体化させられる
+		ELSEIF FLAG:11 == 2 && ISMALE() && CHARATALENT_F(TARGET,0,"남자") > 0
+
+			PRINTFORML 思わず叫び声をあげてしまった%PRINT_TRANSCALLNAME(TARGET)%は、
+			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
+			PRINTFORML 見れば胸は膨らみを増し、肉付きや腰のラインも変化して柔らかくなっている。
+			PRINTFORML 張りと瑞々しさを得た肌には健康的な色気が漂い、程よく髪も伸びたその姿は――
+			PRINTW 
+
+			;通常の女体化処理
+			CALL TS_NORMAL, TARGET
+
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は[남자]を失い、完全に女性になってしまった！
+			PRINT さらに、
+		ENDIF
+		;CVAB촉수を倒すと、該当箇所が敏感になる
+		LOCAL:0 = 2*FLAG:11+98
+		IF TALENT:(LOCAL:0) == 0
+			TALENT:(LOCAL:0+1) -= 10
+			TALENT:(LOCAL:0) += 10
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は[%TALENTNAME:(LOCAL:0)%]になってしまった！
+			PRINTW 
+		;既に敏感で感覚がLV5未満だった場合、珠を大量に獲得する
+		ELSEIF ABL:(FLAG:11-1) < 5
+			JUEL:(FLAG:11-1) += 25421
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の身体が熱く疼く……。
+			PRINTW 
+		;敏感かつ開発済みなら淫○付与
+		ELSEIF TALENT:(FLAG:11+152) == 0 && ABL:(FLAG:11-1) >= 5
+			TALENT:(FLAG:11+152) += 10
+				IF FLAG:11 == 1
+					CALL MESSAGE_GETTALENT_INKAKU
+				ELSEIF FLAG:11 == 2
+					CALL MESSAGE_GETTALENT_INTUBO
+				ELSEIF FLAG:11 == 3
+					CALL MESSAGE_GETTALENT_INJIRI
+				ELSE
+					CALL MESSAGE_GETTALENT_INNYUU
+				ENDIF
+		;全部満たしていたら強絶頂
+		ELSE
+			NOWEX:(FLAG:11-1) = 2
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の体を激しい快感が襲う・・・
+			PRINTW 
+		ENDIF
+	ELSEIF FLAG:11 == 5
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の意識が強烈な被虐願望で満たされてゆく・・・
+		PRINTW 
+
+		;S촉수を倒すとマゾッ気上昇
+		ABL:마조끼 += 3
+		SIF ABL:마조끼 > 5
+			ABL:마조끼=5
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ABLNAME:15%が大幅に上がった。
+		PRINTW 
+	ELSEIF FLAG:11 == 6
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の意識が촉수の臭気に満たされ蕩けてゆく・・・
+		PRINTW 
+		;P촉수を倒すと촉수중독上昇
+		ABL:촉수중독 += 2
+		SIF ABL:촉수중독 > 5
+			ABL:촉수중독=5
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ABLNAME:20%が大幅に上がった。
+		PRINTW 
+	ELSEIF FLAG:11 == 7
+		PRINTFORML ありもしない淫らな記憶が%PRINT_TRANSCALLNAME(TARGET)%の意識に刷り込まれてゆく・・・
+		PRINTW 
+		;H촉수を倒すと露出壁、자위중독上昇
+		ABL:노출벽+=3
+		ABL:자위중독 += 2
+		SIF ABL:노출벽 > 5
+			ABL:노출벽=5
+		SIF ABL:자위중독 > 5
+			ABL:자위중독=5
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ABLNAME:14%と%ABLNAME:21%が大幅に上がった。
+		PRINTW 
+	ENDIF
+
+	;絶頂の表示
+	LOCAL = 0
+	IF NOWEX:C절정 == 1
+		;지문: C絶頂
+		CALL MESSAGE_SEX_ECSTASY_C
+		;지문: 洗脳/悪堕ちキャラが操作キャラのC絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_C
+	ELSEIF NOWEX:C절정 == 2
+		;지문: C強絶頂
+		CALL MESSAGE_SEX_ECSTASY_C_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラのC強絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
+	ENDIF
+	IF NOWEX:V절정 == 1
+		;지문: V絶頂
+		CALL MESSAGE_SEX_ECSTASY_V
+		;지문: 洗脳/悪堕ちキャラが操作キャラのV絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_V
+	ELSEIF NOWEX:V절정 == 2
+		;지문: V強絶頂
+		CALL MESSAGE_SEX_ECSTASY_V_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラのV強絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
+	ENDIF
+	IF NOWEX:A절정 == 1
+		;지문: A絶頂
+		CALL MESSAGE_SEX_ECSTASY_A
+		;지문: 洗脳/悪堕ちキャラが操作キャラのA絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_A
+	ELSEIF NOWEX:A절정 == 2
+		;지문: A強絶頂
+		CALL MESSAGE_SEX_ECSTASY_A_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラのA強絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
+	ENDIF
+	IF NOWEX:B절정 == 1
+		;지문: B絶頂
+		CALL MESSAGE_SEX_ECSTASY_B
+		;지문: 洗脳/悪堕ちキャラが操作キャラのB絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_B
+	ELSEIF NOWEX:B절정 == 2
+		;지문: B強絶頂
+		CALL MESSAGE_SEX_ECSTASY_B_HI
+		;지문: 洗脳/悪堕ちキャラが操作キャラのB強絶頂を見た
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_ECSTASY_B_HI
+	ENDIF
+	;実績
+	CALL GET_STATE_ABLUP,TARGET
+ENDIF

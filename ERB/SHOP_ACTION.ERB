@@ -1,0 +1,386 @@
+﻿;**********************************************************
+;キャラの行動予定に関する処理
+
+;----------------------------------------------------------
+;全員分の行動を行う
+@SHOP_ACTION
+#DIM CCOUNT
+
+
+IF FLAG:799 == 0
+	FLAG:798 = TARGET
+	FLAG:799 = 1
+	PRINTL 
+	PRINTL 行動開始！
+ENDIF
+;戦闘支援人数をカウント
+FLAG:43 = 0
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	CALL CHECK_ACTION(예정_지원,CCOUNT)
+	SIF RESULT > 0
+		CONTINUE
+	SIF CFLAG:CCOUNT:0 == 상태_건강 && CFLAG:CCOUNT:100 == 예정_지원
+		FLAG:43 ++
+NEXT
+SIF FLAG:43 >= CHARANUM_ACTIVE()
+	FLAG:43 = 0
+IF FLAG:799 >= CHARANUM
+	FLAG:799 += 1
+	;BEGIN SHOP
+	BEGIN TURNEND
+ELSE
+
+	;戦闘関連フラグ初期化
+	FLAG:10 = 0
+	FLAG:11 = 0
+	FLAG:45 = 0
+	FLAG:48 = 0
+
+	IF CFLAG:(FLAG:799):0 == 상태_건강
+		;キャラの入れ替え
+		TARGET = FLAG:799
+
+		SIF CFLAG:999 == 0
+			GOTO REST
+
+		;予定が入ってない場合は休憩にする
+		SIF CFLAG:100 == 예정_없음
+			CFLAG:100 = 예정_휴식
+		;行動ごとに改行を入れる
+		PRINTL 
+		PRINTL 
+		PRINTL 
+		PRINTFORM 【%CALLNAME%の行動：
+		IF CFLAG:100 == 예정_출격
+			PRINTL 出撃】
+			DRAWLINE
+			
+			;체력が残り少ない場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_출격,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"出撃")%
+				CALL REST
+				BEGIN TURNEND
+			ENDIF
+
+			;同時出撃人数をカウント
+			FLAG:41 ++
+
+			;悪堕ち・ボスエンカウント判定
+			CALL ENCOUNT
+			;ボス遭遇無しなら今度はザコとエンカウント判定
+			SIF RESULT == 0
+				CALL MOB_TENTACLE_ENCOUNT
+
+			SIF RESULT> 0 && FLAG:999 == 1
+				PRINTFORMW エンカウント種別:{FLAG:10}　エンカウント敵番号:{RESULT}
+
+			;エンカウントしなかった
+			IF RESULT == 0
+				IF CONFIG_CHECK_SCREEN_F(3) == 0
+					PRINTW 
+				ELSE
+					PRINTL 
+				ENDIF
+				BEGIN TURNEND
+			;ボス/ラスボス/対キャラにエンカウントした
+			ELSEIF RESULT > 0
+				BEGIN TRAIN
+			ENDIF
+		ELSEIF CFLAG:100 == 예정_단련
+			PRINTL 鍛錬】
+			DRAWLINE
+			
+			;체력が残り少ない場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_단련,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"鍛錬")%
+				CALL REST
+				BEGIN TURNEND
+			ENDIF
+
+			;ソロモードのみ同時出撃人数をカウント
+			SIF GAME_OPTION_CHECK_F(OPTION_solo)
+				FLAG:41 ++
+
+			CALL TRAINING
+			BEGIN TURNEND
+		ELSEIF CFLAG:100 == 예정_휴식
+			PRINTL 休憩】
+			DRAWLINE
+			$REST
+			CALL REST
+			BEGIN TURNEND
+		ELSEIF CFLAG:100 == 예정_활동
+			PRINTL 特別活動】
+			DRAWLINE
+			;체력が残り少ない場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_활동,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				CALL REST
+				BEGIN TURNEND
+			ENDIF
+			CALL SEISAN
+			BEGIN TURNEND
+		ELSEIF CFLAG:100 == 예정_방위
+			PRINTL 拠点防衛】
+			DRAWLINE
+			
+			;체력が残り少ない場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_방위,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				CALL REST
+				
+				BEGIN TURNEND
+			ENDIF
+
+			;同時出撃人数をカウント
+			FLAG:41 ++
+
+			;エンカウント判定
+			CALL GUARD
+
+			;遭遇なし
+			IF RESULT == 0
+				LOCAL = MAXBASE:체력
+				TIMES LOCAL, 0.12
+				BASE:체력 = LIMIT(BASE:체력 - SYOUHI_KEIGEN(TARGET,LOCAL,체력), 0 , BASE:체력)
+
+				LOCAL = MAXBASE:기력
+				TIMES LOCAL, 0.12
+				BASE:기력 = LIMIT(BASE:기력 - SYOUHI_KEIGEN(TARGET,LOCAL,기력), 0 , BASE:기력)
+
+				LOCAL = 125 + ABL:레벨 * 2 + RAND:26
+				FLAG:852 += LOCAL
+				PRINTFORM 방위력が{LOCAL}上昇した
+				IF CONFIG_CHECK_SCREEN_F(3) == 0
+					PRINTW 
+				ELSE
+					PRINTL 
+				ENDIF
+				BEGIN TURNEND
+			;戦闘判定入った
+			ELSE
+				;地の文のみで処理された場合は아무것도안한다
+				IF RESULT == 0
+					BEGIN TURNEND
+				;雑魚戦システム時は戦闘画面へ遷移
+				ELSE
+					BEGIN TRAIN
+				ENDIF
+			ENDIF
+
+		ELSEIF CFLAG:100 == 예정_지원
+			PRINTL 戦闘支援】
+			DRAWLINE
+
+			;戦闘に参加するキャラが居ない場合は休憩する
+			CALL SORTIE_CHECK
+			IF RESULT == 0 && FLAG:41 == 0
+				PRINTL 
+				PRINTL 戦闘を行うメンバーが居ないため、休憩にします
+				CALL REST
+				FLAG:43 --
+				BEGIN TURNEND
+			;체력が残り少ない場合は強制的に休憩にする
+			ELSE
+				CALL CHECK_ACTION(예정_지원,TARGET)
+				IF RESULT > 0
+					PRINTL 
+					PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"支援")%
+					CALL REST
+					BEGIN TURNEND
+				ENDIF
+			ENDIF
+
+			CALL SUPPORT
+
+			BEGIN TURNEND
+		ELSEIF CFLAG:100 == 예정_정보
+			PRINTL 情報収集】
+			DRAWLINE
+
+			;체력が残り少ない場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_정보,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				CALL REST
+				BEGIN TURNEND
+			ENDIF
+
+			;ソロモードのみ同時出撃人数をカウント
+			SIF GAME_OPTION_CHECK_F(OPTION_solo)
+				FLAG:41 ++
+
+			CALL GATHER_INFORMATION
+			IF FLAG:73 > 0
+				BEGIN TRAIN
+			ELSE
+				BEGIN TURNEND
+			ENDIF
+		ELSEIF CFLAG:100 == 예정_자유
+			PRINTL 自由行動】
+			DRAWLINE
+			;フィートで外出不可の場合は強制的に休憩にする
+			CALL CHECK_ACTION(예정_자유,TARGET)
+			IF RESULT > 0
+				PRINTL 
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				CALL REST
+				BEGIN TURNEND
+			ENDIF
+			CALL PASTIME
+			IF FLAG:73 > 0
+				BEGIN TRAIN
+			ELSE
+				BEGIN TURNEND
+			ENDIF
+		ENDIF
+	ELSE
+		BEGIN TURNEND
+	ENDIF
+ENDIF
+
+;----------------------------------------------------------
+;行動予定を表示する関数
+;　0ならショップメニューから(現在不使用)
+;　1なら行動開始前の確認画面から
+@SHOP_ACTION_PLANDISP(ARG = 0)
+#DIM CCOUNT
+VARSET LOCAL
+PRINTL 【行動予定】
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	SIF CFLAG:CCOUNT:999 == 0
+		CONTINUE
+
+	IF CFLAG:CCOUNT:0 != 상태_건강
+		LOCAL += 1
+		CONTINUE
+	ENDIF
+
+	IF CFLAG:CCOUNT:0 == 상태_건강
+		SIF LOCAL:2 % 3 == 0 && LOCAL:2 != 0
+			PRINTL 
+		IF CCOUNT == TARGET && FLAG:9 == 0 && ARG == 0
+			LOCAL:1 = 1
+			FONTBOLD
+			SETCOLOR 0, 255, 150	
+		ELSE
+			LOCAL:1 = 0
+		ENDIF
+		IF ARG == 0
+			PRINTFORM [{CCOUNT}]%CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
+		ELSE
+			PRINTPLAINFORM [{CCOUNT}]%CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
+		ENDIF
+		FONTREGULAR
+		RESETCOLOR
+		;実行可能性のチェック
+		IF ARG != 0
+			RESETCOLOR
+			CALL CHECK_ACTION(CFLAG:CCOUNT:100,CCOUNT)
+			SIF GETBIT(RESULT, 0)
+				PRINT （체력不足）
+			SIF GETBIT(RESULT, 1)
+				PRINT （밤악마의귀족＆昼）
+			SIF GETBIT(RESULT, 2)
+				PRINT （타고난전사）
+			SIF GETBIT(RESULT, 3)
+				PRINT （支援無効）
+			SIF GETBIT(RESULT, 4)
+				PRINT （임신中）
+			SIF GETBIT(RESULT, 5)
+				PRINT （사지결손）
+			SIF GETBIT(RESULT, 6)
+				PRINT （廃人）
+		ENDIF
+		
+		LOCAL:2 += 1
+
+	ENDIF
+NEXT
+FONTREGULAR
+RESETCOLOR
+
+RETURN 0
+
+;----------------------------------------------------------
+;行動コマンド名を返す式中関数
+;ARG:0 行動コマンドの実数
+@PRINT_SHOPACTION, ARG:0, ARG:1
+#FUNCTIONS
+LOCALS = %STRCLEAR()%
+IF ARG:0 == 예정_출격
+	SIF ARG:1 == 0
+		SETCOLOR 255, 170, 170
+	LOCALS = *出撃*
+ELSEIF ARG:0 == 예정_단련
+	SIF ARG:1 == 0
+		SETCOLOR 255, 255, 170
+	LOCALS = *鍛錬*
+ELSEIF ARG:0 == 예정_휴식
+	SIF ARG:1 == 0
+		SETCOLOR 170, 170, 255
+	LOCALS = *休憩*
+
+
+ELSEIF ARG:0 == 예정_활동
+	SIF ARG:1 == 0
+		SETCOLOR 170, 255, 255
+	LOCALS = *活動*
+ELSEIF ARG:0 == 예정_방위
+	SIF ARG:1 == 0
+		SETCOLOR 255, 170, 255
+	LOCALS = *防衛*
+ELSEIF ARG:0 == 예정_지원
+	SIF ARG:1 == 0
+		SETCOLOR 170, 255, 170
+	LOCALS = *支援*
+ELSEIF ARG:0 == 예정_정보
+	SIF ARG:1 == 0
+		SETCOLOR 255, 200, 50
+	LOCALS = *情報*
+ELSEIF ARG:0 == 예정_자유
+	SIF ARG:1 == 0
+		SETCOLOR 50, 200, 255
+	LOCALS = *自由*
+ELSE
+	LOCALS = 　　　
+ENDIF
+RETURNF LOCALS
+
+;----------------------------------------------------------
+;行動コマンド名を返す式中関数
+;対象	行動者が誰か
+@PRINT_SHOPACTION_NAME(対象)
+#FUNCTIONS
+#DIM 対象
+IF CFLAG:対象:100 == 예정_출격
+	RETURNF "出撃"
+ELSEIF CFLAG:対象:100 == 예정_단련
+	RETURNF "鍛錬"
+ELSEIF CFLAG:対象:100 == 예정_휴식
+	RETURNF "休憩"
+ELSEIF CFLAG:対象:100 == 예정_활동
+	RETURNF "特別活動"
+ELSEIF CFLAG:対象:100 == 예정_방위
+	RETURNF "拠点防衛"
+ELSEIF CFLAG:対象:100 == 예정_지원
+	RETURNF "戦闘支援"
+ELSEIF CFLAG:対象:100 == 예정_정보
+	RETURNF "情報収集"
+ELSEIF CFLAG:対象:100 == 예정_자유
+	RETURNF "自由行動"
+ENDIF
+RETURNF 

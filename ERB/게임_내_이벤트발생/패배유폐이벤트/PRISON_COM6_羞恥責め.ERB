@@ -1,0 +1,251 @@
+﻿;**********************************************************
+;幽閉コマンド
+;PRISON_COM6
+;羞恥な攻め
+;**********************************************************
+@PRISON_COM6
+#DIM CCOUNT
+VARSET LOCAL
+TFLAG:10 = 6
+
+;取得する珠
+;LOCAL:0 쾌C
+;LOCAL:1 쾌V
+;LOCAL:2 쾌A
+;LOCAL:3 쾌B
+;LOCAL:4 윤활 윤활は未使用
+;LOCAL:5 공순
+;LOCAL:6 습득
+;LOCAL:7 욕정
+;LOCAL:8 굴복
+;LOCAL:9 치정
+;LOCAL:10 고통
+;LOCAL:11 공포
+
+;経験数の上量値記録用
+;LOCAL:120 V経験
+;LOCAL:121 A経験
+;LOCAL:123 정액경험
+;LOCAL:124 펠라경험
+;LOCAL:130 노출쾌락경험,
+;LOCAL:131 봉사쾌락경험,
+;LOCAL:132 고통쾌락경험,
+;LOCAL:140 자위경험,
+;LOCAL:150 이상경험
+;LOCAL:151 V확장경험
+;LOCAL:152 A확장경험
+;LOCAL:153 사정경험
+;LOCAL:154 모유경험
+;LOCAL:155 방뇨경험
+;LOCAL:156 기생경험
+;LOCAL:157 출산경험
+
+;汚染度
+CFLAG:30 += 5 + RAND:6
+
+;근친교배경험
+SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
+	LOCAL:141 += 1
+
+;快C
+IF ABL:C감각 == 0
+	LOCAL:0 = 1
+ELSEIF ABL:C감각 == 1
+	LOCAL:0 = 2
+ELSEIF ABL:C감각 == 2
+	LOCAL:0 = 20
+ELSEIF ABL:C감각 == 3
+	LOCAL:0 = 100
+ELSEIF ABL:C감각 == 4
+	LOCAL:0 = 200
+ELSEIF ABL:C감각 >= 5
+	LOCAL:0 = 400
+ENDIF
+
+;快V
+IF ISFEMALE()
+	IF ABL:V감각 == 0
+		LOCAL:120 = 2
+		LOCAL:1 = 1
+	ELSEIF ABL:V감각 == 1
+		LOCAL:120 = 5
+		LOCAL:1 = 2
+	ELSEIF ABL:V감각 == 2
+		LOCAL:120 = 8
+		LOCAL:1 = 20
+	ELSEIF ABL:V감각 == 3
+		LOCAL:120 = 11
+		LOCAL:1 = 100
+	ELSEIF ABL:V감각 == 4
+		LOCAL:120 = 15
+		LOCAL:1 = 200
+	ELSEIF ABL:V감각 >= 5
+		LOCAL:120 = 20
+		LOCAL:1 = 400
+	ENDIF
+ENDIF
+
+;快A
+IF ABL:A감각 == 0
+	LOCAL:121 = 2
+	LOCAL:2 = 1
+ELSEIF ABL:A감각 == 1
+	LOCAL:121 = 5
+	LOCAL:2 = 2
+ELSEIF ABL:A감각 == 2
+	LOCAL:121 = 8
+	LOCAL:2 = 20
+ELSEIF ABL:A감각 == 3
+	LOCAL:121 = 11
+	LOCAL:2 = 100
+ELSEIF ABL:A감각 == 4
+	LOCAL:121 = 15
+	LOCAL:2 = 200
+ELSEIF ABL:A감각 >= 5
+	LOCAL:121 = 20
+	LOCAL:2 = 400
+ENDIF
+
+;快B
+IF ABL:B감각 == 0
+	LOCAL:3 = 1
+ELSEIF ABL:B감각 == 1
+	LOCAL:3 = 2
+ELSEIF ABL:B감각 == 2
+	LOCAL:3 = 20
+ELSEIF ABL:B감각 == 3
+	LOCAL:3 = 100
+ELSEIF ABL:B감각 == 4
+	LOCAL:3 = 200
+ELSEIF ABL:B감각 >= 5
+	LOCAL:3 = 400
+ENDIF
+
+;メイン部位絶頂見込みの予測
+CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
+
+
+
+;ベース
+;굴복　노출벽が高くなると多くなる
+IF ABL:노출벽 == 0
+	LOCAL:8 = 1000
+ELSEIF ABL:노출벽 == 1
+	LOCAL:8 = 1200
+ELSEIF ABL:노출벽 == 2
+	LOCAL:8 = 1500
+ELSEIF ABL:노출벽 == 3
+	LOCAL:8 = 2000
+ELSEIF ABL:노출벽 == 4
+	LOCAL:8 = 2500
+ELSEIF ABL:노출벽 >= 5
+	LOCAL:8 = 3500
+ENDIF
+
+;치정　노출벽が高くなると多くなる
+IF ABL:노출벽 == 0
+	LOCAL:9 = 1000
+ELSEIF ABL:노출벽 == 1
+	LOCAL:9 = 1200
+ELSEIF ABL:노출벽 == 2
+	LOCAL:9 = 1500
+ELSEIF ABL:노출벽 == 3
+	LOCAL:9 = 2000
+ELSEIF ABL:노출벽 == 4
+	LOCAL:9 = 2500
+ELSEIF ABL:노출벽 >= 5
+	LOCAL:9 = 3500
+ENDIF
+
+;공포　노출벽が高くなると少なくなる
+IF ABL:노출벽 == 0
+	LOCAL:11 = 800
+ELSEIF ABL:노출벽 == 1
+	LOCAL:11 = 600
+ELSEIF ABL:노출벽 == 2
+	LOCAL:11 = 300
+ELSEIF ABL:노출벽 == 3
+	LOCAL:11 = 150
+ELSEIF ABL:노출벽 == 4
+	LOCAL:11 = 50
+ELSEIF ABL:노출벽 >= 5
+	LOCAL:11 = 0
+ENDIF
+
+;노출벽が高いと욕정にボーナス
+IF ABL:노출벽 == 2
+	LOCAL:7 = 100
+ELSEIF ABL:노출벽 == 3
+	LOCAL:7 = 200
+ELSEIF ABL:노출벽 == 4
+	LOCAL:7 = 400
+ELSEIF ABL:노출벽 >= 5
+	LOCAL:7 = 800
+ENDIF
+
+;습득基本値
+LOCAL:6 += 0
+
+;욕정基本値
+LOCAL:7 += 200
+
+;굴복基本値
+LOCAL:8 += 100
+
+;치정基本値
+LOCAL:9 += 400
+
+;고통基本値
+LOCAL:10 += 0
+
+;공포基本値
+LOCAL:11 += 200
+
+;정액경험
+LOCAL:123 = 10
+;노출쾌락경험
+IF ABL:노출벽 == 0
+	LOCAL:130 = 1
+ELSEIF ABL:노출벽 == 1
+	LOCAL:130 = 2
+ELSEIF ABL:노출벽 == 2
+	LOCAL:130 = 4
+ELSEIF ABL:노출벽 == 3
+	LOCAL:130 = 8
+ELSEIF ABL:노출벽 == 4
+	LOCAL:130 = 16
+ELSEIF ABL:노출벽 >= 5
+	LOCAL:130 = 32
+ENDIF
+
+;지문: 悪堕ちキャラが幽閉中の操作キャラに羞恥な攻めをした
+SIF CFLAG:20 == 2
+	CALL MESSAGE_OTHER_PRISON_COM_6
+;지문: 羞恥な攻め
+CALL MESSAGE_PRISON_COM_6
+
+;幽閉中パラメータ変動共通処理へ
+CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+;経験数の増加
+CALL COMMON_PRISON_EXP_SH, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152
+LOCAL:120 = RESULT:0
+LOCAL:121 = RESULT:1
+LOCAL:151 = RESULT:2
+LOCAL:152 = RESULT:3
+
+;拡張度による拡張経験
+CALL PRISON_GAPING, LOCAL:120, LOCAL:121, LOCAL:151, LOCAL:152, LOCAL:152, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
+LOCAL:151 += RESULT:0
+LOCAL:152 += RESULT:1
+
+;表示と増加の処理
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+
+PRINTL 
+
+;珠の取得へ
+CALL _ABLUP, 1
+

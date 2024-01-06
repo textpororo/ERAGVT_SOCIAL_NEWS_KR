@@ -1,0 +1,170 @@
+﻿;---------------------------------------------------------------------
+;ボス襲撃イベント
+@EVENT_BATTLE_EXEC_3003
+
+;現在のアウターを「무대 의상」に一時設定する
+CALL EVENT_BATTLE_SET_COSTUME(TARGET,(CFLAG:TARGET:1==0 ? 105 # -1),(CFLAG:TARGET:1>0 ? 105 # -1),-1,-1)
+
+PRINT 公演を締め括る挨拶を舞台上で始めていた
+
+SIF CFLAG:100 == 106
+	CFLAG:100 = 103
+IF TALENT:주관시점 > 0
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとする。
+ELSE
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとした。
+ENDIF
+
+PRINTFORML 事態を掴みかねる%PRINT_CALLNAME(TARGET)%をさらなる揺れと衝撃が襲う。
+PRINTFORML 壁が不自然にひしゃげ始め、観客席から悲鳴が上がる。
+PRINTL 
+;右クリックに備えてフォースウェイト
+FORCEWAIT
+PRINTFORML このままでは危険だ、まず観客たちの安全を確保しなければ…！
+PRINTFORML 避難誘導のために%PRINT_CALLNAME(TARGET)%が声を張り上げようとした、その瞬間！
+PRINTFORML すぐ傍で床が陥没し――
+PRINTW 
+PRINTFORML ――ヌ　メ　リ
+PRINTFORML という音と共に現れた촉수に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
+PRINTFORML 見間違えるはずもない――"人類の敵"、촉수生物。
+PRINTFORML 巨体がズズンと地響きを起こしながら、足元の闇から姿を現そうとしている！
+PRINTW 
+PRINTFORML 表情を強張らせた%PRINT_CALLNAME(TARGET)%の周囲で、ボコリ、ボコリとステージを取り囲むように生え揃う촉수。
+PRINTFORML 촉수生物の狙いは若い女性、ここはライブ会場、その中心にいる獲物といえば……！
+PRINTFORML 事の深刻さを察した%PRINT_CALLNAME(TARGET)%は咄嗟に飛び退き距離を作るが、
+PRINTFORML 臨戦態勢を取る寸前で自身の置かれた状況に思い至ってしまった。
+PRINTW 
+PRINTFORML ……この瞬間、%PRINT_CALLNAME(TARGET)%は群衆に紛れた一人の市民ではない。
+PRINTFORML 衆目集まるアイドル「%PRINT_TRANSNAME(TARGET)%」として、舞台の上に立っている。
+PRINTFORML 悲鳴と混乱の中でステージに向けられる観客たちの目、
+PRINTFORML %PRINT_TRANSNAME(TARGET)%の全身を余すところなく捉える何台もの撮影用カメラ……
+PRINTW 
+PRINTFORML 観客の安全は最優先だが、もしもここで「戦って」しまえば正体は隠せない。
+PRINTFORML だとすれば、%PRINT_CALLNAME(TARGET)%が選べる唯一の選択肢は――
+PRINTL
+SETCOLORBYNAME HOTPINK
+PRINTFORML （観客の前では正体を明かせません！　避難誘導完了までアイドルとして囮になってください！）
+RESETCOLOR
+PRINTW 
+DRAWLINE
+
+턴상한=30
+CALL ADDBATTLESITUATION("先制無し,支援無効,身バレ不可,常時撮影,市民確定,レイプなし,耐久戦,")
+
+
+
+@EVENT_BATTLE_TURNEND_3003
+	;７ターン目以降で拘束されていない場合、通常戦闘へ移行
+	IF TFLAG:0 >= 7 && TCVARn:0 != 0
+		SETCOLORBYNAME RED
+		FONTBOLD
+		IF FLAG:70>0
+			PRINTFORML スタッフの懸命な誘導で、逃げ遅れていた観衆の避難が完了したようだ！
+			FLAG:70=0
+		ENDIF
+		IF FLAG:71>0
+			PRINTFORML スタッフに無理矢理引きずられ、残った「観衆」の「避難」が完了したようだ…
+			FLAG:71=0
+		ENDIF
+		RESETCOLOR
+		FONTREGULAR
+		FORCEWAIT
+	ENDIF
+
+
+@EVENT_BATTLE_MISSION_CHECKER_3003
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;負けず、凌辱もされていなければ(アイドルとしての体面を守れて)ミッション達成
+	IF TFLAG:98 == 2 || (TFLAG:98 == 0 && (TFLAG:21 & 3) || (TFLAG:21 & 4) || (TFLAG:21 & 5) || (TFLAG:21 & 6))
+		RETURN 0
+	;頑張って倒したならまあ細かい事は不問とする
+	ELSE
+		RETURN 1
+	ENDIF
+
+@EVENT_BATTLE_SUCCESS_3003
+	;倒してしまっても構わんのだ
+	IF TFLAG:98 == 1
+		PRINTFORML 観客のいないステージで、%PRINT_CALLNAME(TARGET)%は촉수生物と戦っていた。
+		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
+		PRINTFORML のたうつ촉수を踊るように躱し、的確に急所へと공격を叩き込む。
+		PRINTFORML やがて촉수生物に決定的な一撃が入ったのか、どさりと音を立てて倒れ込み、そのまま沈黙した。
+		PRINTFORML 
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が注意深く確かめようとした時、イベントスタッフたちの慌てた声や足音が촉수越しに聞こえてきた。
+		PRINTFORML どうやら「%PRINT_TRANSCALLNAME(TARGET)%」の安否を確かめに戻ってきたようだ。
+		PRINTFORML 
+		PRINTFORML %PRINT_CALLNAME(TARGET)%はくるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
+	;時間切れ
+	ELSE
+		PRINTFORML 時間を稼いだ甲斐あって、スタッフによる避難誘導が無事に完了したようだ。
+		PRINTFORML もう観客の視線はない！　%PRINT_CALLNAME(TARGET)%は촉수に向き直る。
+		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
+		PRINTFORML 本来の実力で戦闘態勢に入り、素早く身構える%PRINT_CALLNAME(TARGET)%。
+		PRINTFORML すると촉수生物は異変を察知したのか、巨体に見合わぬ速度で元来た穴へ潜り込み始めた……
+		PRINTFORML 
+		PRINTFORML 追うべきか、体制を整えるべきか。
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が逡巡していると、イベントスタッフたちの慌てた声や足音が会場に響いた。
+		PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%」の安否を確かめに戻ってきたようだが、こうなると追撃は難しい。
+		PRINTFORML ……幸いこの場の人的被害は抑えられた、今は他にもすべき事がある。
+		PRINTFORML %PRINT_CALLNAME(TARGET)%はくるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
+	ENDIF
+
+	PRINTW 
+	PRINTFORML 　無事に被害を最小限に抑えました！
+	;ニュース記事に
+	Sif !FLAG:60
+		FLAG:60=110000+FLAG:45
+
+@EVENT_BATTLE_FAILURE_3003
+	;負けてはいないが特定ミッションの追加条件を満たせなかった
+	IF TFLAG:98 != 2
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が嬲られている間に、かろうじて観客の避難誘導が完了したようだ。
+		PRINTFORML 既に満身創痍の%PRINT_CALLNAME(TARGET)%だが、それでも촉수に立ち向うため最後の力を振り絞り……
+		PRINTFORML 
+		PRINTFORML ……と、獲物の意外な抵抗を警戒したのだろうか？
+		PRINTFORML 촉수生物は%PRINT_CALLNAME(TARGET)%に向けていた全ての촉수をシュルシュルと引っ込め、
+		PRINTFORMW 巨体に見合わぬ速度で元来た穴へ滑り込んでゆく。
+		PRINTFORML ・・・
+		PRINTFORML 瓦礫まみれのイベントステージに取り残され、呆然とへたり込む%PRINT_CALLNAME(TARGET)%。
+		IF (TFLAG:21 & 4)
+			PRINTFORM ドロリと膣から垂れてきた촉수精液の感触
+		ELSEIF (TFLAG:21 & 5)
+			PRINTFORM ドロリと尻から垂れてきた촉수精液の感触
+		ELSEIF (TFLAG:21 & 6)
+			PRINTFORM 촉수精液でベトついたボロボロの衣装
+		ELSEIF (TFLAG:21 & 3)
+			PRINTFORM ボタボタと垂れる촉수体液の音
+		ELSE
+		ENDIF
+		PRINTFORML で正気に返ると、
+		PRINTFORML アイドル「%PRINT_TRANSNAME(TARGET)%」が永遠に穢されてしまった事実を理解し、声も無くさめざめと泣いた……
+		PRINTW 
+		PRINTFORML 　避難ミッションは成功しましたが、アイドルとしては嬲り尽くされてしまいました……
+	;負けた
+	ELSE
+		PRINTFORML %PRINT_CALLNAME(TARGET)%が力尽きたことで会場は大混乱に陥った。
+		PRINTFORML 촉수生物は意識を失った%PRINT_CALLNAME(TARGET)%をトロフィーのように掲げると、
+		PRINTFORML まるで撮影用カメラへ見せつけるように대량사정を繰り返す。
+		IF FLAG:70>0
+			PRINTFORM 穴から湧き出した無数の촉수生物が逃げ遅れた女性客を襲い始める中、
+		ENDIF
+		PRINTFORML 蠢く촉수が白濁に染まった%PRINT_CALLNAME(TARGET)%を悠々と絡め取り、用は済んだとばかりに大穴へ姿を消した……
+		PRINTW 
+		PRINTFORML 　避難ミッションに失敗しました……
+	ENDIF
+
+	;ニュース記事に
+	Sif !FLAG:60
+		FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+@EVENT_BATTLE_FLASHNEWS_3003(ARG)
+;;ミッション成功
+IF ARG==1
+	RESULTS'="客を魅了、촉수を翻弄！　アイドル「"+PRINT_TRANSNAME(TARGET)+"」が囮となり避難の時間を稼ぐ"
+;ミッション失敗
+ELSEIF ARG==0
+	RESULTS'="巨大촉수がライブ会場を襲撃、アイドル「"+PRINT_TRANSNAME(TARGET)+"」が촉수凌辱の餌食に"
+;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+ELSEIF ARG==-1
+	RESULTS'="巨大촉수がライブ会場を襲撃、アイドル「"+PRINT_TRANSNAME(TARGET)+"」や女性客ら攫われ失踪"
+ENDIF

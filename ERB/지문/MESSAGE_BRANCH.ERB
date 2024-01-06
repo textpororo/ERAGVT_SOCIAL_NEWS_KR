@@ -1,0 +1,378 @@
+﻿;分岐フラグ管理
+
+;--------------------------------------------------
+;地の文分岐制御
+@MESSAGE_BRANCH_F(CHARA)
+#FUNCTION
+#DIM CHARA
+#DIM FAITH_S
+#DIM BRAVE_S
+
+LOCAL = 0
+FAITH_S = BRANCH_PALAM_F(CHARA, "FAITH_S")
+BRAVE_S = BRANCH_PALAM_F(CHARA, "BRAVE_S")
+
+;쾌락굴복
+SIF FAITH_S < 1
+	LOCAL |= 쾌락굴복
+;성저항
+SIF FAITH_S < 5
+	LOCAL |= 성저항
+;절망
+SIF BRAVE_S < 1
+	LOCAL |= 절망
+;고전
+SIF BRAVE_S < 5
+	LOCAL |= 고전
+;타락
+SIF TALENT:CHARA:촉수의포로 > 0
+	LOCAL |= 타락
+SIF TALENT:CHARA:음란 && (LOCAL & 쾌락굴복)
+	LOCAL |= 타락
+SIF (ABL:CHARA:봉사정신 + ABL:CHARA:촉수중독) >= 3 && FAITH_S < -5
+	LOCAL |= 타락
+SIF (ABL:CHARA:봉사정신 >= 4 || ABL:CHARA:촉수중독 >= 4) && (LOCAL & 쾌락굴복)
+	LOCAL |= 타락
+
+RETURNF LOCAL
+
+
+;--------------------------------------------------
+;仮想パラメータ「理性強度」「戦意強度」の取得
+;ARG = 対象キャラ
+;ARGS = FAITH_SかBRAVE_Sのどちらか
+;FAITHとBRAVEのネーミングは適当、どちらも5文字なので見栄えが良いというだけ
+@BRANCH_PALAM_F(ARG, ARGS)
+#FUNCTION
+#DIM FAITH_S
+#DIM BRAVE_S
+
+;基本値は10
+FAITH_S = 10
+BRAVE_S = 10
+
+;FEATによる補正
+SIF TALENT:ARG:신기소유자 > 0
+	FAITH_S += 1
+SIF TALENT:ARG:투쟁본능 > 0
+	BRAVE_S += 1
+SIF TALENT:ARG:정령교신 > 0
+	BRAVE_S -= 1
+SIF TALENT:ARG:야수의후손 > 0
+	FAITH_S -= 1
+IF TALENT:ARG:타고난전사 > 0
+	FAITH_S += 1
+	BRAVE_S += 1
+ENDIF
+SIF TALENT:ARG:축복 > 0
+	FAITH_S += 1
+SIF TALENT:ARG:불굴 > 0
+	BRAVE_S += 1
+
+
+;性格補正
+SELECTCASE SEIKAKU_CHECK_F(ARG)
+	;겁쟁이
+	CASE 10
+		FAITH_S += 1
+		BRAVE_S += -1
+	;부끄럼쟁이
+	CASE 11
+		FAITH_S += -1
+		BRAVE_S += -1
+	;오기
+	CASE 12
+		FAITH_S += 0
+		BRAVE_S += 3
+	;활발함
+	CASE 13
+		FAITH_S += 0
+		BRAVE_S += 0
+	;대범함
+	CASE 14
+		FAITH_S += 3
+		BRAVE_S += 0
+	;게으름
+	CASE 15
+		FAITH_S += 0
+		BRAVE_S += -1
+	;진지함
+	CASE 16
+		FAITH_S += 1
+		BRAVE_S += 1
+	;낙천적
+	CASE 17
+		FAITH_S += -1
+		BRAVE_S += 1
+	;비관적
+	CASE 18
+		FAITH_S += 0
+		BRAVE_S += -3
+	;순종적
+	CASE 19
+		FAITH_S += -2
+		BRAVE_S += -1
+	;츤데레
+	CASE 20
+		FAITH_S += -1
+		BRAVE_S += -2
+	;얀데레
+	CASE 21
+		FAITH_S += 3
+		BRAVE_S += 3
+	;과묵함
+	CASE 22
+		FAITH_S += 0
+		BRAVE_S += 0
+	;수다쟁이
+	CASE 23
+		FAITH_S += -1
+		BRAVE_S += 0
+	;고풍적
+	CASE 24
+		FAITH_S += 2
+		BRAVE_S += 2
+	;경박함
+	CASE 25
+		FAITH_S += -3
+		BRAVE_S += 0
+	;고집쟁이
+	CASE 26
+		FAITH_S += 2
+		BRAVE_S += 1
+	;사나움
+	CASE 27
+		FAITH_S += 1
+		BRAVE_S += 2
+	;감정결여
+	CASE 28
+		FAITH_S += 5
+		BRAVE_S += 5
+ENDSELECT
+
+;素質
+IF TALENT:ARG:처녀 > 0
+	FAITH_S += 3
+	BRAVE_S += 1
+ENDIF
+IF TALENT:ARG:임신 > 0 && TALENT:ARG:임신 != 4
+	FAITH_S += 0
+	BRAVE_S += -3
+ENDIF
+IF TALENT:ARG:교제상대 == 1
+	FAITH_S += 1
+	BRAVE_S += 0
+ENDIF
+IF TALENT:ARG:교제상대 == 2 || TALENT:ARG:교제상대 == 3 || TALENT:ARG:교제상대 == 4
+	FAITH_S += 2
+	BRAVE_S += 0
+ENDIF
+IF TALENT:ARG:가족관계 > 0
+	FAITH_S += 0
+	BRAVE_S += 2
+ENDIF
+IF TALENT:ARG:음란 > 0
+	FAITH_S += -3
+	BRAVE_S += 0
+ENDIF
+IF TALENT:ARG:쾌감에솔직 > 0
+	FAITH_S += -2
+	BRAVE_S += 0
+ENDIF
+IF TALENT:ARG:쾌감을부정 > 0
+	FAITH_S += 2
+	BRAVE_S += 0
+ENDIF
+IF TALENT:ARG:전투거부 > 0
+	FAITH_S += 0
+	BRAVE_S += -2
+ENDIF
+IF TALENT:ARG:싸움꾼 > 0
+	FAITH_S += 0
+	BRAVE_S += 2
+ENDIF
+
+;刻印
+SELECTCASE MARK:ARG:쾌락각인
+	CASE 1
+		FAITH_S += -1
+	CASE 2
+		FAITH_S += -2
+	CASE 3
+		FAITH_S += -3
+	CASE 4
+		FAITH_S += -5
+	CASE 5
+		FAITH_S += -8
+ENDSELECT
+SELECTCASE MARK:ARG:굴복각인
+	CASE 1
+		FAITH_S += -1
+	CASE 2
+		FAITH_S += -2
+	CASE 3
+		FAITH_S += -3
+	CASE 4
+		FAITH_S += -5
+	CASE 5
+		FAITH_S += -8
+ENDSELECT
+SELECTCASE MARK:ARG:고통각인
+	CASE 1
+		BRAVE_S += -1
+	CASE 2
+		BRAVE_S += -2
+	CASE 3
+		BRAVE_S += -3
+	CASE 4
+		BRAVE_S += -5
+	CASE 5
+		BRAVE_S += -8
+ENDSELECT
+SELECTCASE MARK:ARG:공포각인
+	CASE 1
+		BRAVE_S += -1
+	CASE 2
+		BRAVE_S += -2
+	CASE 3
+		BRAVE_S += -3
+	CASE 4
+		BRAVE_S += -5
+	CASE 5
+		BRAVE_S += -8
+ENDSELECT
+
+;戦闘中のみ計算
+IF FLAG:700 > 0
+	;倒錯
+	IF TCVARn:1 == 2
+		FAITH_S += -1
+	;怒り
+	ELSEIF TCVARn:1 == 2
+		FAITH_S += 1
+		BRAVE_S += 1
+	;諦観
+	ELSEIF TCVARn:1 == 3
+		FAITH_S += -1
+		BRAVE_S += -1
+	;冷静
+	ELSEIF TCVARn:1 == 4
+		BRAVE_S += 1
+	;動揺
+	ELSEIF TCVARn:1 == 5
+		BRAVE_S += -1
+	;高揚
+	ELSEIF TCVARn:1 == 6
+		BRAVE_S += 2
+	;消沈
+	ELSEIF TCVARn:1 == 7
+		BRAVE_S += -2
+	ENDIF
+
+	;체력, 기력성내성
+	LOCAL = PERCENT_CAL_F(BASE:ARG:체력, MAXBASE:ARG:체력)
+	IF LOCAL == 0
+		BRAVE_S += -4
+	ELSEIF LOCAL <= 50
+		BRAVE_S += -2
+	ELSEIF LOCAL <= 75
+		BRAVE_S += -1
+	ENDIF
+	LOCAL = PERCENT_CAL_F(BASE:ARG:기력, MAXBASE:ARG:기력)
+	IF LOCAL == 0
+		BRAVE_S += -4
+	ELSEIF LOCAL <= 50
+		BRAVE_S += -2
+	ELSEIF LOCAL <= 75
+		BRAVE_S += -1
+	ENDIF
+	LOCAL = PERCENT_CAL_F(BASE:ARG:성내성, MAXBASE:ARG:성내성)
+	IF LOCAL == 0
+		FAITH_S += -4
+	ELSEIF LOCAL <= 50
+		FAITH_S += -2
+	ELSEIF LOCAL <= 75
+		FAITH_S += -1
+	ENDIF
+
+	;PALAM
+	IF PALAM:욕정 >= 90000 || PALAM:굴복 >= 90000
+		FAITH_S += -3
+	ELSEIF PALAM:욕정 >= 30000 || PALAM:굴복 >= 30000
+		FAITH_S += -2
+	ELSEIF PALAM:욕정 >= 10000 || PALAM:굴복 >= 10000
+		FAITH_S += -1
+	ENDIF
+	IF PALAM:고통 >= 90000 || PALAM:공포 >= 90000
+		BRAVE_S += -3
+	ELSEIF PALAM:고통 >= 30000 || PALAM:공포 >= 30000
+		BRAVE_S += -2
+	ELSEIF PALAM:고통 >= 10000 || PALAM:공포 >= 10000
+		BRAVE_S += -1
+	ENDIF
+	IF PALAM:공순 >= 80000
+		FAITH_S += -2
+		BRAVE_S += -1
+	ELSEIF PALAM:공순 >= 20000
+		FAITH_S += -1
+		BRAVE_S += -1
+	ELSEIF PALAM:공순 >= 5000
+		FAITH_S += -1
+	ENDIF
+	IF ABL:마조끼 == 1 && PALAM:고통 >= 30000
+		FAITH_S += -1
+	ELSEIF ABL:마조끼 == 2 && PALAM:고통 >= 20000
+		FAITH_S += -1
+	ELSEIF ABL:마조끼 == 3 && PALAM:고통 >= 10000
+		FAITH_S += -1
+	ELSEIF ABL:마조끼 == 4 && PALAM:고통 >= 10000
+		FAITH_S += -1
+	ELSEIF ABL:마조끼 == 4 && PALAM:고통 >= 30000
+		FAITH_S += -2
+	ELSEIF ABL:마조끼 == 5 && PALAM:고통 >= 10000
+		FAITH_S += -2
+	ELSEIF ABL:마조끼 == 5 && PALAM:고통 >= 30000
+		FAITH_S += -3
+	ENDIF
+
+	;발정状態
+	SIF (TCVARn:12 & 발정)
+		FAITH_S += -2
+;幽閉中のみ計算
+ELSEIF CFLAG:0 == 1
+	;経過日数に応じて理性強度が低下
+	IF CFLAG:ARG:31 < 3
+		FAITH_S += -2
+	ELSEIF CFLAG:ARG:31 < 6
+		FAITH_S += -3
+	ELSEIF CFLAG:ARG:31 < 9
+		FAITH_S += -4
+	ELSEIF CFLAG:ARG:31 < 12
+		FAITH_S += -5
+	ELSE
+		FAITH_S += -6
+	ENDIF
+	;経過日数に応じて戦意強度が低下
+	IF CFLAG:ARG:31 < 3
+		BRAVE_S += -4
+	ELSEIF CFLAG:ARG:31 < 6
+		BRAVE_S += -5
+	ELSEIF CFLAG:ARG:31 < 9
+		BRAVE_S += -6
+	ELSEIF CFLAG:ARG:31 < 12
+		BRAVE_S += -7
+	ELSE
+		BRAVE_S += -8
+	ENDIF
+ENDIF
+
+;理性強度と戦意強度を返す
+IF ARGS == "FAITH_S"
+	RETURNF FAITH_S
+ELSEIF ARGS == "BRAVE_S"
+	RETURNF BRAVE_S
+ELSE
+	RETURNF 99999
+ENDIF
+
+

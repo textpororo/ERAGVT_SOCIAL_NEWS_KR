@@ -1,0 +1,139 @@
+﻿;--------------------------------------------------
+;特別活動
+@SEISAN
+#DIM SC_VAR, 2
+
+
+;稼ぐ方法
+LOCAL:141 = 0
+
+;変身可能キャラは変身状態になるか選べる
+CALL ACTION_TRANSFORMATION_SELECT, TARGET, "特別活動"
+
+PRINTFORM [0]アルバイト　　　　
+IF EXP:출산경험 > 0 || TALENT:임신 == 1 || TALENT:임신 == 3
+	PRINTFORM [1]研究所で検査協力　
+ELSE
+	PRINTFORM [1]研究所助手　　　　
+ENDIF
+PRINTFORM [2]雑魚촉수退治　　　
+PRINTL 
+;욕망で援助交際解放
+SIF ABL:욕망 > 0 && ISHOLE() == 1
+	PRINTFORM [3]援助交際　　　　　
+;욕망と노출벽、または枕営業回数でAV出演解放
+SIF ((ABL:욕망 + ABL:노출벽) >= 5 || CFLAG:283 >= 10) && ISHOLE() == 1
+	PRINTFORM [4]AV出演　　　　　　
+;욕망と마조끼で公衆便所解放
+SIF (ABL:욕망 + ABL:마조끼) >= 5 && ISHOLE() == 1
+	PRINTFORM [5]公衆便所　　　　　
+PRINTL 
+PRINTFORM [6]アイドル活動　　　
+;デビュー後なら枕営業解放
+SIF EXP:매료경험 > 99 && ISHOLE() == 1
+	PRINTFORM [7]枕営業　　　　　　
+;デビュー後かつ週末ならライブ公演解放
+SIF EXP:매료경험 > 99 && (DAY % 7 == 0 || DAY % 7 == 6)
+	PRINTFORM [8]ライブ公演　　　　
+PRINTL 
+DRAWLINE
+
+IF CFLAG:111 > 0
+	CALL RES_SCHEDULE, 111
+	IF RESULT == 0
+		PRINTL 
+		PRINT スケジュール：アルバイト
+		PRINTL 
+	ENDIF
+	IF RESULT == 1
+		PRINTL 　
+		IF EXP:출산경험 > 0 || TALENT:임신 == 1 || TALENT:임신 == 3
+			PRINT スケジュール：研究所で検査協力　
+		ELSE
+			PRINT スケジュール：研究所助手　　　　
+		ENDIF
+		PRINTL 
+	ENDIF
+	IF RESULT == 2
+		PRINTL 
+		PRINT スケジュール：雑魚촉수退治
+		PRINTL 
+	ENDIF
+	IF RESULT == 3
+		PRINTL 
+		PRINT スケジュール：援助交際
+		IF ABL:욕망 == 0 || (ISHOLE() == 0)
+			PRINT （実行不能）
+			PRINTL 
+			PRINTL 手動で行動を選択してください
+			GOTO INPUT_LOOP
+		ENDIF
+	ENDIF
+	IF RESULT == 4
+		PRINTL 
+		PRINT スケジュール：AV出演
+		IF ((ABL:욕망 + ABL:노출벽) < 5 && CFLAG:283 < 10) || (ISHOLE() == 0)
+			PRINT （実行不能）
+			PRINTL 
+			PRINTL 手動で行動を選択してください
+			GOTO INPUT_LOOP
+		ENDIF
+	ENDIF
+	IF RESULT == 5
+		PRINTL 
+		PRINT スケジュール：公衆便所
+		IF (ABL:욕망 + ABL:마조끼) < 5 || (ISHOLE() == 0)
+			PRINT （実行不能）
+			PRINTL 
+			PRINTL 手動で行動を選択してください
+			GOTO INPUT_LOOP
+		ENDIF
+	ENDIF
+	IF RESULT == 6
+		PRINTL 
+		PRINT スケジュール：アイドル活動
+		PRINTL 
+	ENDIF
+	IF RESULT == 7
+		PRINTL 
+		PRINT スケジュール：枕営業
+		IF (EXP:매료경험 < 100) || ISHOLE() == 0
+			PRINT （実行不能）
+			PRINTL 
+			PRINTL 手動で行動を選択してください
+			GOTO INPUT_LOOP
+		ENDIF
+	ENDIF
+	IF RESULT == 8
+		PRINTL 
+		PRINT スケジュール：ライブ公演
+		IF (EXP:매료경험 < 100) || (DAY % 7 != 0 && DAY % 7 != 6)
+			PRINT （実行不能）
+			PRINTL 
+			PRINTL 手動で行動を選択してください
+			GOTO INPUT_LOOP
+		ENDIF
+	ENDIF
+ELSE
+	$INPUT_LOOP
+	INPUT
+ENDIF
+
+PRINTL 
+;男なら一部のコマンドは選択不可
+IF ISHOLE() == 0 && (RESULT == 3 || RESULT == 4 || RESULT == 5 || RESULT == 7)
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP
+;その他の実行不可コマンド入力時
+ELSEIF RESULT < 0 || RESULT > 8 || (ABL:욕망 < 1 && RESULT == 3) || (ABL:욕망 + ABL:노출벽 < 5 && CFLAG:283 < 10 && RESULT == 4) || ((ABL:욕망 + ABL:마조끼) < 5 && RESULT == 5) || (EXP:매료경험 < 100 && RESULT == 7) || ((EXP:매료경험 < 100 || (DAY % 7 != 0 && DAY % 7 != 6)) && RESULT == 8)
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP
+ELSE
+	LOCAL:141 = RESULT
+	CFLAG:101 = RESULT
+ENDIF
+CALL MESSAGE_SEISAN, LOCAL:141
+CALL _ABLUP, 1
+SIF CFLAG:1 > 0
+	CALL TRANSFORM, 0
+BEGIN TURNEND

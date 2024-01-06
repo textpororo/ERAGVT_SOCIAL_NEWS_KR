@@ -1,0 +1,174 @@
+﻿;*******************************************************************************************************
+;髪色を返す式中間数
+;*******************************************************************************************************
+@PRINT_HAIRCOLORNAME, ARG
+#FUNCTIONS
+;変身中または、悪落ち中かつ변신능력がある場合は変身後の髪色を返す
+IF CFLAG:ARG:1 == 1 || (TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 == 3)
+	RETURNF GETCOLORNAME(CSTR:ARG:31)
+ELSE
+	RETURNF GETCOLORNAME(CSTR:ARG:30)
+ENDIF
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+;髪型を返す式中間数
+;*******************************************************************************************************
+@PRINT_HAIRNAME, ARG
+#FUNCTIONS
+;変身中または、悪落ち中かつ변신능력がある場合は変身後の髪型を返す
+IF CFLAG:ARG:1 == 1 || (TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 == 3)
+	RETURNF CSTR:ARG:14
+ELSE
+	RETURNF CSTR:ARG:13
+ENDIF
+
+;*******************************************************************************************************
+;目の色を返す式中間数
+;第2引数で左右を指定
+;*******************************************************************************************************
+@PRINT_EYECOLORNAME, ARG, ARGS = "右"
+#FUNCTIONS
+;変身中または、悪落ち中かつ변신능력がある場合は変身後の目色を返す
+IF CFLAG:ARG:1 == 1 || (TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 == 3)
+	IF ARGS == "右" || ARGS == "RIGHT"
+		RETURNF GETCOLORNAME(CSTR:ARG:34)
+	ELSE
+		RETURNF GETCOLORNAME(CSTR:ARG:35)
+	ENDIF
+ELSE
+	IF ARGS == "右" || ARGS == "RIGHT"
+		RETURNF GETCOLORNAME(CSTR:ARG:32)
+	ELSE
+		RETURNF GETCOLORNAME(CSTR:ARG:33)
+	ENDIF
+ENDIF
+
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+;肌色を返す式中間数
+;*******************************************************************************************************
+@PRINT_SKINCOLORNAME, ARG
+#FUNCTIONS
+;変身中または、悪落ち中かつ변신능력がある場合は変身後の肌色を返す
+IF CFLAG:ARG:1 == 1 || (TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 == 3)
+	RETURNF GETCOLORNAME(CSTR:ARG:37)
+ELSE
+	RETURNF GETCOLORNAME(CSTR:ARG:36)
+ENDIF
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+;色名を返す
+;色情報は色名の場合とRGB値の場合があるので、
+;RGB値の場合はSTRから色名を探す
+;*******************************************************************************************************
+@GETCOLORNAME, ARGS
+#FUNCTIONS
+
+;ガバガバ判定
+SIF STRCOUNT(ARGS, "/") ==4
+	RETURNF GETCOLORNAMESTR(ARGS)
+
+IF ARGS == "赤" || ARGS == "レッド"
+	RETURNF "赤色"
+ELSEIF ARGS == "緑" || ARGS == "グリーン"
+	RETURNF "緑色"
+ELSEIF ARGS == "青" || ARGS == "ブルー"
+	RETURNF "青色"
+ELSEIF ARGS == "黄" || ARGS == "イエロー"
+	RETURNF "黄色"
+ELSEIF ARGS == "金" || ARGS == "ブロンド" || ARGS == "ゴールド"
+	RETURNF "金色"
+ELSEIF ARGS == "紫" || ARGS == "パープル"
+	RETURNF "紫色"
+ELSEIF ARGS == "橙" || ARGS == "オレンジ"
+	RETURNF "橙色"
+ELSEIF ARGS == "桃" || ARGS == "ピンク"
+	RETURNF "桃色"
+ELSEIF ARGS == "銀" || ARGS == "シルバー"
+	RETURNF "銀色"
+ELSEIF ARGS == "茶" || ARGS == "ブラウン" || ARGS == "ブルネット"
+	RETURNF "茶色"
+ELSEIF ARGS == "黒" || ARGS == "ブラック"
+	RETURNF "黒色"
+ELSEIF ARGS == "肌色"
+	RETURNF "肌色"
+ELSEIF ARGS == "褐色"
+	RETURNF "褐色"
+ELSEIF ARGS == "色白"
+	RETURNF "色白"
+ELSE
+	RETURNF ARGS
+ENDIF
+
+;*******************************************************************************************************
+;引数で指定されたRGB値に最も近い色名をSTRから探して返す
+;引数：R//G//B形式のRGB値
+;返り値：色名
+;*******************************************************************************************************
+@GETCOLORNAMESTR, ARGS
+#FUNCTIONS
+
+#DIM RGBStart
+#DIM NumberOfColor
+#DIM SimilarColorNo
+#DIM ColorDiff
+#DIM NewColorDiff
+#DIM ColorNameOffset
+
+RGBStart = 20000
+NumberOfColor = 1000
+SimilarColorNo = RGBStart
+ColorDiff = 999
+ColorNameOffset = 1000
+
+SIF ARGS == ""
+	RETURNF "未定義"
+
+;ガバガバエラー処理
+SIF STRCOUNT(ARGS, "/") !=4
+	RETURNF "引数がR//G//B形式ではありません"
+
+;RGB値が一致すれば色名を返す
+FOR COUNT, RGBStart, RGBStart + NumberOfColor
+	SIF STR:COUNT == ""
+		CONTINUE
+	SIF ARGS == STR:COUNT
+		RETURNF STR:(COUNT + ColorNameOffset)
+NEXT
+
+;RGB値が一致しなければ、近い色名を探す
+FOR COUNT, RGBStart, RGBStart + NumberOfColor
+	SIF STR:COUNT == ""
+		CONTINUE
+	;RGB値の差の合計を出す
+	NewColorDiff = COMPARE_COLOR(ARGS, STR:(COUNT))
+	IF NewColorDiff < ColorDiff
+		ColorDiff = NewColorDiff
+		SimilarColorNo = COUNT
+	ENDIF
+NEXT
+
+;最もRGB値が近かった色名を返す
+RETURNF STR:(SimilarColorNo + ColorNameOffset)
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+;2つのRGB値の差の合計を返す
+;*******************************************************************************************************
+@COMPARE_COLOR, ARGS:0, ARGS:1
+#FUNCTION
+
+#DIMS SeparatorMajor
+#DIMS RGB_A, 3
+#DIMS RGB_B, 3
+
+SeparatorMajor = //
+
+SPLIT ARGS:0, SeparatorMajor, RGB_A
+SPLIT ARGS:1, SeparatorMajor, RGB_B
+
+RETURNF ABS(TOINT(RGB_A:0) - TOINT(RGB_B:0)) + ABS(TOINT(RGB_A:1) - TOINT(RGB_B:1)) + ABS(TOINT(RGB_A:2) - TOINT(RGB_B:2))
+

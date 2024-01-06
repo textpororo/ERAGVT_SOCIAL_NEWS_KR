@@ -1,0 +1,126 @@
+﻿;변신한다
+@COM0
+#DIM MOVESELECT
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+
+
+CALL TRANSFORM_MOVESELECT
+MOVESELECT = RESULT
+
+
+;空中공격플래그를進める
+CALL ATTACK_AIR_FLAG
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;지문: 変身　変身時かけ声がある場合はこの中で処理
+CALL MESSAGE_BATTLE_CHARA_TRANSFORMCALL
+
+;この戦闘で二度目に変身した場合、名乗り구상を出さない
+IF TCVARn:10 == 1
+	;
+ELSE
+	CALL MESSAGE_BATTLE_CHARA_NANORI
+	TCVARn:10 = 1
+	CALL MESSAGE_BATTLE_CHARA_NANORI_BYOUSHA
+	CALL PERFORM_CHEERS_HATE
+ENDIF
+PRINTW 
+
+;ＴＳ男性化するキャラが임신中、かつ発覚していない場合
+IF CHARATALENT_F(TARGET,0,"남자") == 0 && CHARATALENT_F(TARGET,1,"남자") > 0 && TALENT:임신 > 0
+	PRINTL
+	PRINTFORML しかし、なぜか男性化できない！
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は無防備な体制のまま変身に失敗してしまった！
+	TCVARn:2 = 자세：아무것도안한다
+	RETURN 1
+ENDIF
+
+IF GETBATTLESITUATION("奇襲") && TALENT:변신시TS && TFLAG:0 < 3
+	PRINTFORML しかし、急の襲撃で身体が変身準備に入れない！（変身チャージ完了まで：{3-TFLAG:0}ターン）
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は無防備な体制のまま変身に失敗してしまった！
+	TCVARn:2 = 자세：아무것도안한다
+	RETURN 1
+ENDIF
+
+;変身
+CALL TRANSFORM, 1
+
+;アウター（変身後）のダメージが少し回復する
+SIF CFLAG:41 != 0 && TCVARn:23 == 0
+	TCVARn:23 = 10
+
+;ゲージが増加
+IF MOVESELECT == 1
+	IF CFLAG:99 < 5
+		TCVARn:6 += 30 + RAND:16
+	ELSEIF CFLAG:99 < 15
+		TCVARn:6 += 20 + RAND:11
+	ELSE
+		TCVARn:6 += 10 + RAND:6
+	ENDIF
+ENDIF
+
+;관찰한다플래그를 세운다
+SIF MOVESELECT == 2
+	TFLAG:25 = 1
+
+;체력20%回復
+;회복빠름なら+2%
+;회복느림なら-2%
+;[공생]持ちなら更に+2%
+LOCAL:0 = MAXBASE:체력
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:0, 0.22
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:0, 0.18
+ELSE
+	TIMES LOCAL:0, 0.20
+ENDIF
+SIF TALENT:(FLAG:799):공생 == 1
+	TIMES LOCAL:0, 1.02
+;距離を取った場合
+SIF MOVESELECT == 3
+	TIMES LOCAL:0, 1.50
+SIF BASE:체력 + LOCAL:0 >= MAXBASE:체력
+	LOCAL:0 = MAXBASE:체력 - BASE:체력
+;체력が尽きている場合、체력が回復しない
+SIF BASE:체력 == 0
+	LOCAL:0 = 0
+BASE:체력 += LOCAL:0
+
+;기력20%回復
+;회복빠름なら+2%
+;회복느림なら-2%
+LOCAL:1 = MAXBASE:기력
+IF TALENT:회복빠름 == 1
+	TIMES LOCAL:1, 0.22
+ELSEIF TALENT:회복느림 == 1
+	TIMES LOCAL:1, 0.18
+ELSE
+	TIMES LOCAL:1, 0.20
+ENDIF
+;距離を取った場合
+SIF MOVESELECT == 3
+	TIMES LOCAL:1, 1.50
+SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
+	LOCAL:1 = MAXBASE:기력 - BASE:기력
+BASE:기력 += LOCAL:1
+
+RETURN 1
+
+
+;距離指定変身の間借り
+@COM201
+	CALL COM0
+	RETURN RESULT
+@COM202
+	CALL COM0
+	RETURN RESULT
+@COM203
+	CALL COM0
+	RETURN RESULT

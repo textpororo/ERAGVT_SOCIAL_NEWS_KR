@@ -1,0 +1,22 @@
+﻿
+;--------------------------------
+;ラスボス強化、最大HPが５倍に増加する
+;--------------------------------
+@LASTBOSS_KYOUKA_F
+#FUNCTION
+IF CONFIG_CHECK_BALANCE_F(5) > 0 && ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
+	RETURNF 5
+ELSE
+	RETURNF 1
+ENDIF
+
+;--------------------------------
+;ラスボス強化時、回復量を通常레벨に落とす
+;--------------------------------
+@LASTBOSS_REST
+IF CONFIG_CHECK_BALANCE_F(5) > 0 && ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
+	LOCAL = 8
+ELSE
+	LOCAL = 0
+ENDIF
+RETURN LOCAL

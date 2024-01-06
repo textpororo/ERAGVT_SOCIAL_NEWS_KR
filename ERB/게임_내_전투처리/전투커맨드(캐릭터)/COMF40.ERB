@@ -1,0 +1,103 @@
+﻿;떼어낸다
+@COM40
+
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;지문: 떼어낸다
+CALL MESSAGE_BATTLE_CHARA_HIKIHAGASU
+
+;成功率計算
+CALL COM40_HANTEI
+LOCAL = RESULT
+
+;成功判定
+;Ａ촉수は強制失敗
+IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && FLAG:11 == 3
+;成功
+ELSEIF RAND:100 < LOCAL
+	;ボスの体勢が崩れる
+	TFLAG:1 = 1
+	SIF (TCVARn:12 & 강구속)
+		TCVARn:12 -= 강구속
+ENDIF
+
+IF TFLAG:1 == 1
+	;지문: 떼어낸다成功
+	CALL MESSAGE_BATTLE_CHARA_HIKIHAGASU_SUCCESS
+	;지문: 洗脳/悪堕ちキャラが操作キャラの引き剥がされた
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_HIKIHAGASU_SUCCESS
+ELSE
+	;지문: 떼어낸다失敗
+	CALL MESSAGE_BATTLE_CHARA_HIKIHAGASU_FALSE
+	;지문: 洗脳/悪堕ちキャラが操作キャラの引き剥がしを阻止した
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_HIKIHAGASU_FALSE
+ENDIF
+;행동포인트を+1
+EX:행동포인트 += 1
+
+RETURN 1
+
+
+;成功率の算出
+@COM40_HANTEI
+VARSET LOCAL
+
+;キャラの체력＋기력の残量求める
+LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXBASE:기력)
+;消耗度の最低値は방어力依存
+SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
+	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
+;마비で残量半減
+SIF (TCVARn:12 & 마비)
+	LOCAL:0 /= 2
+;SP変身中は기력체력の減少による影響を受けない
+SIF CFLAG:1 == 2
+	LOCAL:0 = 100
+;効果は1/4
+LOCAL:0 /= 4
+
+;敵の체력残量による補正
+CALL PERCENT_CAL, FLAG:13, FLAG:12
+IF RESULT > 50
+	LOCAL:1 = 75
+ELSEIF RESULT > 25
+	LOCAL:1 = 100
+ELSE
+	LOCAL:1 = 125
+ENDIF
+
+;基本成功率
+LOCAL:2 = (LOCAL:0 + 40) * LOCAL:1 / 100
+
+;날뛴다が成功した次のターンは振りほどきやすくなる
+SIF TCVARn:2 == 자세：날뛴다방어
+	LOCAL:2 += 25
+;耐えた次のターンは少し振りほどきやすくなる
+SIF TCVARn:2 == 자세：견딘다
+	LOCAL:2 += 10
+;睨みつけた次のターンは振りほどきやすくなる
+SIF TCVARn:2 == 자세：노려본다
+	LOCAL:2 += 20
+;罵倒/反抗した次のターンは振りほどきやすくなる
+SIF TCVARn:2 == 자세：매도한다
+	LOCAL:2 += 15
+SIF TCVARn:2 == 자세：반항한다
+	LOCAL:2 += 15
+;Ａ촉수を풀어낸다のは非常に難しい
+SIF ENEMY_TYPE_CHECK_F("BOSS") == 1 && FLAG:11 == 3
+	LOCAL:2 = 1
+;EX:防を使用している場合は確率大アップ
+SIF GETBIT(TCVARn:3, 1)
+	LOCAL:2 += 50
+
+RETURN LOCAL:2
+

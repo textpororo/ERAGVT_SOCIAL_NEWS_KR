@@ -1,0 +1,839 @@
+﻿;※버전 번호는 GameBase.csv에 기술된 수치를 불러옵니다.
+;
+;구 세이브 데이터의 호환성을 확보하는 처리
+;뭔가 파괴적으로 사양을 변경할 때마다 추가해야 한다
+;①신규 게임 시작 직후
+;②세이브 데이터 로드 직후
+;위의 타이밍에 호출되고 있다.
+
+
+;●글로벌 데이터 갱신
+;	(아래에서는 글로벌 변수만 변경한다)
+@UPDATE_GLOBAL
+IF GLOBAL:3 < 364
+	;프로필 표시 글로벌을 소거
+	GLOBAL:9 = 0
+ENDIF
+IF GLOBAL:3 < 371
+	MOB_FLAG:0:1 = 100
+	MOB_GLOBAL:0:1 = 100
+ENDIF
+IF GLOBAL:3 < 380
+	GLOBAL:0 = 0
+	GLOBAL:1 = 0
+	GLOBAL:2 = 0
+	;컨피그를 초기설정으로 변경
+	GLOBAL:10 = 0
+	GLOBAL:11 = 4
+	GLOBAL:12 = 31
+	GLOBAL:13 = 88
+	GLOBAL:14 = 5
+ENDIF
+IF GLOBAL:3 < 390
+	;확장도 필터 값 반전
+	INVERTBIT GLOBAL:4,16
+	INVERTBIT GLOBAL:4,17
+ENDIF
+
+IF GLOBAL:3 < 398
+	;패치 불러오기(取り込み) 사정(다루는 플래그를 바꿨다)
+	GLOBAL:15=0
+	GLOBAL:16=0
+ENDIF
+
+IF GLOBAL:3 < 400
+	;실적 플래그 200번대로 이동
+	FOR LOCAL,111,171
+		GLOBAL:(LOCAL+100)=GLOBAL:LOCAL
+		GLOBAL:LOCAL=0
+	NEXT
+
+	;역대 최고 랭크 이동
+	GLOBAL:113 = GLOBAL:110
+	GLOBAL:110 = 0
+ENDIF
+
+IF GLOBAL:3 < 404
+	;매니악 필터의 판정을 통상 옵션과 동일한 취급(표현 ON이라면 1)으로 갖춘 사정으로
+	;「〇〇의 억제」→「〇〇」로 반전
+	INVERTBIT GLOBAL:4,7
+	INVERTBIT GLOBAL:4,8
+	INVERTBIT GLOBAL:4,9
+	INVERTBIT GLOBAL:4,11
+	INVERTBIT GLOBAL:4,12
+	INVERTBIT GLOBAL:4,19
+	INVERTBIT GLOBAL:4,20
+ENDIF
+
+IF GLOBAL:3 < 406
+	;공통 설정 사양 변경
+	FOR LOCAL,0,9
+		IF GLOBALS:18==transnamegenre:LOCAL
+			GLOBAL:8=LOCAL+1
+			BREAK	
+		ENDIF
+	NEXT
+	GLOBALS:18'=""
+ENDIF
+
+
+
+IF GLOBAL:3 < GAMEBASE_VERSION
+	PRINTL 【글로벌 설정을 최신 버전으로 업데이트했습니다.】
+	GLOBAL:3 = GAMEBASE_VERSION
+	SAVEGLOBAL
+ENDIF
+
+
+;●개별 데이터 갱신
+@UPDATE
+#DIM CCOUNT
+PRINTL 
+;글로벌 데이터 관리***************************
+LOADGLOBAL
+IF RESULT == 1
+	;글로벌 업데이트
+	CALL UPDATE_GLOBAL
+
+	;최신 글로벌 컨피그 데이터 불러오기
+	IF CONFIG_CHECK_MAIN_F(0) > 0
+		SIF GLOBAL:0 + GLOBAL:1 + GLOBAL:2 != 0
+			PRINTW 【글로벌 데이터에서 컨피그 설정을 불러왔습니다.】
+		FLAG:801 = GLOBAL:11
+		FLAG:802 = GLOBAL:12
+		FLAG:803 = GLOBAL:13
+		FLAG:804 = GLOBAL:14
+		FLAG:805 = GLOBAL:15
+	ENDIF
+	;성 기호 필터는 항상 적용한다
+	FLAG:850 = GLOBAL:4
+	;잡몹적 필터는 항상 적용한다
+	FOR LOCAL,0,MOB_CATEGORY
+		FOR LOCAL:1,0,100
+			TRYCCALLFORM TENTACLE_MOB_{LOCAL * 100 + LOCAL:1}
+				MOB_FLAG:LOCAL:(LOCAL:1) = MOB_GLOBAL:LOCAL:(LOCAL:1)
+			CATCH
+				MOB_FLAG:LOCAL:(LOCAL:1) = 0
+			ENDCATCH
+		NEXT
+	NEXT
+
+
+ENDIF
+
+;업데이트용********************************
+IF LASTLOAD_VERSION != -1
+	IF LASTLOAD_VERSION < 190
+		IF FLAG:8 == 0
+			LOCAL = 0
+			LOCAL:1 = TARGET
+			FOR LOCAL,0,CHARANUM
+				TARGET = LOCAL
+				SIF CFLAG:240 == 0
+					CFLAG:240 = LOCAL
+			NEXT
+			TARGET = LOCAL:1
+			FLAG:8 = 3
+		ENDIF
+		SIF FLAG:51 < 100
+			FLAG:51 = 100
+		SIF FLAG:100 < 0
+			FLAG:100 = 0
+		SIF FLAG:101 < 0
+			FLAG:101 = 0
+	ENDIF
+	IF LASTLOAD_VERSION < 191
+		;전용 구상의 번호 설정
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			CFLAG:CCOUNT:6 = NO:CCOUNT
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 200
+		;각 캐릭터에 지성을 추가
+		FOR LOCAL, 0, CHARANUM
+			SIF LOCAL == MASTER
+				CONTINUE
+			IF BASE:LOCAL:지성 <= 0
+				BASE:LOCAL:지성 = 100
+				MAXBASE:LOCAL:지성 = LEVELSTATUS_UP(BASE:LOCAL:지성,ABL:LOCAL:레벨)
+			ENDIF
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 210
+		SIF FLAG:51 >= 100
+			FLAG:51 /= 100
+	ENDIF
+	IF LASTLOAD_VERSION < 212
+		;구상의 CFLAG 재분배(振り直し)를 반영
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+
+			;얀데레
+			IF SEIKAKU_CHECK_F(CCOUNT) == 21
+				SWAP CFLAG:CCOUNT:250,CFLAG:CCOUNT:279
+				SWAP CFLAG:CCOUNT:251,CFLAG:CCOUNT:280
+			ELSE
+				;구상용 플래그를 초기화
+				FOR LOCAL,250,282
+					CFLAG:CCOUNT:LOCAL = 0
+				NEXT
+			ENDIF
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 231
+		;보스 대미지 축적치를 1000000배로
+		FOR LOCAL,300,500
+			FLAG:LOCAL *= 1000000
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 241
+		FOR CCOUNT, 0, CHARANUM
+			IF NAME:CCOUNT == "범용 캐릭터" || CALLNAME:CCOUNT == "LOCALS:1"
+				;모친 서치
+				FOR LOCAL,0,CHARANUM
+					SIF LOCAL == MASTER
+						CONTINUE
+					SIF CFLAG:LOCAL:240 == CFLAG:CCOUNT:7
+						CSTR:CCOUNT:10 = %CSTR:CCOUNT:LOCAL%
+				NEXT
+				PRINTFORML 구버전의 세이브 데이터에서 이름이 불명확한 캐릭터를 발견했습니다.
+				PRINTFORM 캐릭터의 이름을 다시 입력해 주십시오.
+				SIF CSTR:CCOUNT:10 != ""
+					PRINTFORM （모친으로부터 물려받은 성씨『%CSTR:CCOUNT:10%』）
+				PRINTL 
+				PRINTW 
+				CALL FIRSTSETTING_CHARA_NAME, CCOUNT
+			ENDIF
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 263
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			IF MAXBASE:CCOUNT:체력 <= 0 || MAXBASE:CCOUNT:기력 <= 0 || MAXBASE:CCOUNT:성내성 <= 0
+				;우선 캐릭터의 기초치부터 설정을 시도한다
+				IF MAXBASE:CCOUNT:체력 <= 0 && BASE:CCOUNT:기초체력
+					MAXBASE:CCOUNT:체력 = LEVELSTATUS_UP(BASE:CCOUNT:기초체력,ABL:CCOUNT:레벨,400+(BASE:기초체력-1000)/5)
+					BASE:CCOUNT:체력 = MAXBASE:CCOUNT:체력
+					PRINTFORML 구버전 캐릭터의 체력 최대치를 최신 버전에 맞춰 수정했습니다.
+				ENDIF
+				IF MAXBASE:CCOUNT:기력 <= 0 && BASE:CCOUNT:기초기력
+					MAXBASE:CCOUNT:기력 = LEVELSTATUS_UP(BASE:CCOUNT:기초기력,ABL:CCOUNT:레벨,400+(BASE:기초기력-1000)/5)
+					BASE:CCOUNT:기력 = MAXBASE:CCOUNT:기력
+					PRINTFORML 구버전 캐릭터의 기력 최대치를 최신 버전에 맞춰 수정했습니다.
+				ENDIF
+				IF MAXBASE:CCOUNT:성내성 <= 0 && BASE:CCOUNT:기초성내성
+					MAXBASE:CCOUNT:성내성 = LEVELSTATUS_UP(BASE:CCOUNT:기초성내성,ABL:CCOUNT:레벨,10+(BASE:기초성내성-100)/10)
+					BASE:CCOUNT:성내성 = MAXBASE:CCOUNT:성내성
+					PRINTFORML 구버전 캐릭터의 성내성 최대치를 최신 버전에 맞춰 수정했습니다.
+				ENDIF
+			ENDIF
+			IF MAXBASE:CCOUNT:체력 <= 0 || MAXBASE:CCOUNT:기력 <= 0 || MAXBASE:CCOUNT:성내성 <= 0
+				;그래도 안 되면 모친 서치
+				FOR LOCAL,0,CHARANUM
+					SIF LOCAL == MASTER
+						CONTINUE
+					SIF CFLAG:LOCAL:240 == CFLAG:CCOUNT:7
+						LOCAL:1 = LOCAL
+				NEXT
+				IF LOCAL:1
+					IF MAXBASE:CCOUNT:체력 <= 0
+						BASE:CCOUNT:기초체력 = BASE:(LOCAL:1):기초체력*6/10 + 300 + RAND:400
+						;성격 보정
+						BASE:CCOUNT:기초체력 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 50, BASE:CCOUNT:기초체력)
+						MAXBASE:CCOUNT:체력 = LEVELSTATUS_UP(BASE:CCOUNT:기초체력,ABL:CCOUNT:레벨,400+(BASE:기초체력-1000)/5)
+						BASE:CCOUNT:체력 = MAXBASE:CCOUNT:체력
+						PRINTFORML 구버전 캐릭터의 체력 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+					IF MAXBASE:CCOUNT:기력 <= 0
+						BASE:CCOUNT:기초기력 = BASE:(LOCAL:1):기초기력*6/10 + 300 + RAND:400
+						;성격 보정
+						BASE:CCOUNT:기초기력 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 51, BASE:CCOUNT:기초기력)
+						MAXBASE:CCOUNT:기력 = LEVELSTATUS_UP(BASE:CCOUNT:기초기력,ABL:CCOUNT:레벨,400+(BASE:기초기력-1000)/5)
+						BASE:CCOUNT:기력 = MAXBASE:CCOUNT:기력
+						PRINTFORML 구버전 캐릭터의 기력 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+					IF MAXBASE:CCOUNT:성내성 <= 0
+						BASE:CCOUNT:기초성내성 = BASE:(LOCAL:1):기초성내성*6/10 + 300 + RAND:400
+						;성격 보정
+						BASE:CCOUNT:기초성내성 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 52, BASE:CCOUNT:기초성내성)
+						MAXBASE:CCOUNT:성내성 = LEVELSTATUS_UP(BASE:CCOUNT:기초성내성,ABL:CCOUNT:레벨,10+(BASE:기초성내성-100)/10)
+						BASE:CCOUNT:성내성 = MAXBASE:CCOUNT:성내성
+						PRINTFORML 구버전 캐릭터의 성내성 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+				;그래도 안되면 기본값으로 설정
+				ELSE
+					IF MAXBASE:CCOUNT:체력 <= 0
+						BASE:CCOUNT:기초체력 = 1000
+						;성격 보정
+						BASE:CCOUNT:기초체력 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 50, BASE:CCOUNT:기초체력)
+						MAXBASE:CCOUNT:체력 = LEVELSTATUS_UP(BASE:CCOUNT:기초체력,ABL:CCOUNT:레벨,400+(BASE:기초체력-1000)/5)
+						BASE:CCOUNT:체력 = MAXBASE:CCOUNT:체력
+						PRINTFORML 구버전 캐릭터의 체력 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+					IF MAXBASE:CCOUNT:기력 <= 0
+						BASE:CCOUNT:기초기력 = 1000
+						;성격 보정
+						BASE:CCOUNT:기초기력 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 51, BASE:CCOUNT:기초기력)
+						MAXBASE:CCOUNT:기력 = LEVELSTATUS_UP(BASE:CCOUNT:기초기력,ABL:CCOUNT:레벨,400+(BASE:기초기력-1000)/5)
+						BASE:CCOUNT:기력 = MAXBASE:CCOUNT:기력
+						PRINTFORML 구버전 캐릭터의 기력 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+					IF MAXBASE:CCOUNT:성내성 <= 0
+						BASE:CCOUNT:기초성내성 = 100
+						;성격 보정
+						BASE:CCOUNT:기초성내성 = SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(CCOUNT), 52, BASE:CCOUNT:기초성내성)
+						MAXBASE:CCOUNT:성내성 = LEVELSTATUS_UP(BASE:CCOUNT:기초성내성,ABL:CCOUNT:레벨,10+(BASE:기초성내성-100)/10)
+						BASE:CCOUNT:성내성 = MAXBASE:CCOUNT:성내성
+						PRINTFORML 구버전 캐릭터의 성내성 최대치를 최신 버전에 맞춰 수정했습니다.
+					ENDIF
+				ENDIF
+			ENDIF
+			CALL LEVELSTATUS,CCOUNT
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 290
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;스테이터스 재계산
+			CALL LEVELSTATUS,CCOUNT
+			;파티 참가 플래그를 세운다
+			SIF CCOUNT <= 파티인원최대치
+				CFLAG:CCOUNT:999 = 1
+		NEXT
+		CALL SET_PARTYMEMBER
+	ENDIF
+	IF LASTLOAD_VERSION < 300
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;모든 캐릭터의 SP변신 보정률을 CSV 파일의 기술에 맞춘다
+			CFLAG:CCOUNT:11 = CSVCFLAG_F(NO:CCOUNT,11)
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 312
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;모든 캐릭터의 헤어스타일을 기본값으로 설정
+			CSTR:CCOUNT:12 = %CSVCSTR(NO:CCOUNT,12)%
+			CSTR:CCOUNT:13 = %CSVCSTR(NO:CCOUNT,13)%
+			CSTR:CCOUNT:14 = %CSVCSTR(NO:CCOUNT,14)%
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 314
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;모든 캐릭터의 EQUIP을 리셋
+			FOR LOCAL, 0, 1000
+				EQUIP:CCOUNT:LOCAL = 0
+			NEXT
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 320
+		FLAG:854 = FLAG:853
+		FLAG:853 = 0
+		ITEM:299 = ITEM:204
+		ITEM:204 = 0
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;수련P가 0 미만이 되어 있다면 0으로 한다
+			SIF JUEL:CCOUNT:수련P < 0
+				JUEL:CCOUNT:수련P = 0
+			;악세사리 4번 이상의 것들은 외관으로 이동시킨다
+			IF TALENT:CCOUNT:악세서리 > 3
+				TALENT:CCOUNT:외관 = TALENT:CCOUNT:악세서리 - 3
+				TALENT:CCOUNT:악세서리 = 0
+			ENDIF
+			;소프트 바디슈트를 입고 있는 경우에는 번호를 바꿔 넣는다
+			SIF CFLAG:CCOUNT:41 == 204
+				CFLAG:CCOUNT:41 = 299
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 321
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;범용 캐릭터의 어조를 설정
+			SIF NO:CCOUNT == 0 && ISMALE(CCOUNT)
+				CFLAG:CCOUNT:6 = 1
+			SIF NO:CCOUNT == 0 && TALENT:CCOUNT:인조인간 > 0
+				CFLAG:CCOUNT:6 = 2
+			SIF CHARATALENT_F(CCOUNT,0,"남자") != CHARATALENT_F(CCOUNT,1,"남자")
+				TALENT:CCOUNT:변신시TS = 1
+			SIF CSVTALENT_F(NO:CCOUNT,0) == 1 && TALENT:CCOUNT:처녀 == 0
+				TALENT:CCOUNT:처녀 = -1
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 341
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;모든 캐릭터의 공중 대시 횟수를 CSV 파일의 기술에 맞춘다
+			MAXBASE:CCOUNT:공중대시 = CSVBASE_F(NO:CCOUNT,22)
+			SIF TALENT:CCOUNT:공중전특기
+				MAXBASE:CCOUNT:공중대시 = MIN(MAXBASE:CCOUNT:공중대시 + 1, 5)
+			SIF TALENT:CCOUNT:공중전서툼
+				MAXBASE:CCOUNT:공중대시 = MAX(MAXBASE:CCOUNT:공중대시 - 1, 0)
+			BASE:CCOUNT:공중대시 = MAXBASE:CCOUNT:공중대시
+			;체력, 기력 보너스 상승량을 반감
+			BASE:CCOUNT:기초체력 -= CFLAG:CCOUNT:50 * 10
+			BASE:CCOUNT:기초기력 -= CFLAG:CCOUNT:51 * 10
+			;스테이터스 재계산
+			CALL LEVELSTATUS,CCOUNT
+
+			;소질 기본값 기록
+			BASE:CCOUNT:48 = BASE:CCOUNT:42
+			MAXBASE:CCOUNT:48 = MAXBASE:CCOUNT:42
+
+			;존재하지 않게 된 의상을 장비에서 제거한다
+			SIF CFLAG:CCOUNT:41 == 203
+				CFLAG:CCOUNT:41 = 0
+		NEXT
+		SIF ITEM:201 > 0
+			MONEY += 5500
+		SIF ITEM:202 > 0
+			MONEY += 5500
+		SIF ITEM:203 > 0
+			MONEY += 8500
+		SIF ITEM:299 > 0
+			MONEY += 2500
+		ITEM:201 = 1
+		ITEM:202 = 1
+		ITEM:203 = 0
+		ITEM:299 = 1
+	ENDIF
+	IF LASTLOAD_VERSION < 342
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+
+			IF TALENT:CCOUNT:임신 > 0
+				CFLAG:CCOUNT:227 = NUM_CHILD_TENTACLE(CCOUNT)
+				CFLAG:CCOUNT:228 = PREGNANT_RANDOM_SIZE(CCOUNT)
+			ENDIF
+
+			SIF CFLAG:CCOUNT:0 == 3
+				EXP:CCOUNT:함락경험 += 1
+		NEXT
+		;사악한 마장을 소지하고 있지 않다면 늘려 둔다
+		SIF ITEM:401 == 0
+			ITEM:401 += 1
+	ENDIF
+	IF LASTLOAD_VERSION < 351
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+
+			SIF TALENT:CCOUNT:임신 > 0 && CFLAG:CCOUNT:228 == 0
+				CFLAG:CCOUNT:228 = PREGNANT_RANDOM_SIZE(CCOUNT)
+
+			CALL SET_PARTYMEMBER
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 360
+		;플래그 갱신
+		FLAG:49 = FLAG:47
+		LOCAL = FLAG:46
+		CALL MOB_KILL_QUOTA
+		LOCAL = 100 - PERCENT_CAL_F(LOCAL, RESULT)
+		CALL RESEARCH_QUOTA
+		FLAG:47 = FLAG:46 * LOCAL / 100
+		SIF FLAG:47 < 0
+			FLAG:47 = 0
+		;일부 의상 환불
+		IF ITEM:128 > 0
+			ITEM:128 = 0
+			MONEY += 4000
+			FOR LOCAL, 0, CHARANUM
+				SIF LOCAL == MASTER
+					CONTINUE
+				SIF CFLAG:LOCAL:40 == 128 || CFLAG:LOCAL:41 == 128
+					PRINTFORML 구버전에 있던 %CALLNAME:LOCAL%의 일부 의상을 사용할 수가 없어 환불됐습니다.
+				SIF CFLAG:LOCAL:40 == 128
+					CFLAG:LOCAL:40 = 0
+				SIF CFLAG:LOCAL:41 == 128
+					CFLAG:LOCAL:40 = 0
+			NEXT
+		ENDIF
+		IF ITEM:129 > 0
+			ITEM:129 = 0
+			MONEY += 4000
+			FOR LOCAL, 0, CHARANUM
+				SIF LOCAL == MASTER
+					CONTINUE
+				SIF CFLAG:LOCAL:40 == 129 || CFLAG:LOCAL:41 == 129
+					PRINTFORML 구버전에 있던 %CALLNAME:LOCAL%의 일부 의상을 사용할 수가 없어 환불됐습니다.
+				SIF CFLAG:LOCAL:40 == 129
+					CFLAG:LOCAL:40 = 0
+				SIF CFLAG:LOCAL:41 == 129
+					CFLAG:LOCAL:40 = 0
+			NEXT
+		ENDIF
+		;버그로 사라진 아이템의 부활
+		ITEM:200 = 1
+		ITEM:201 = 1
+		ITEM:202 = 1
+		ITEM:299 = 1
+	ENDIF
+	IF LASTLOAD_VERSION < 363
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+
+			LOCAL:9 = 0
+			LOCAL:230 = 0
+			CFLAG:CCOUNT:9 = LOCAL:9
+			CFLAG:CCOUNT:230 = LOCAL:230
+			IF CFLAG:CCOUNT:9 <= -1 && CFLAG:CCOUNT:9 >= -99
+				CFLAG:CCOUNT:9 = LOCAL:9 - 100
+			ELSEIF CFLAG:CCOUNT:9 <= -100
+				CFLAG:CCOUNT:9 = LOCAL:9 - 99
+			ENDIF
+			IF CFLAG:CCOUNT:230 <= -1 && CFLAG:CCOUNT:230 >= -99
+				CFLAG:CCOUNT:230 = LOCAL:230 - 100
+			ELSEIF CFLAG:CCOUNT:230 <= -100
+				CFLAG:CCOUNT:230 = LOCAL:230 - 99
+			ENDIF
+
+			CALL SET_PARTYMEMBER
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 370
+		;제한 일수 재계산
+		IF FLAG:0 == 4
+			FLAG:2 = 13
+		ELSEIF FLAG:0 == 2
+			FLAG:2 = 12
+		ELSEIF FLAG:0 == 10
+			FLAG:2 = 9
+		;INSTANT 모드용입니다
+		ELSEIF FLAG:0 == 16
+			FLAG:2 = 11
+		ELSE
+			FLAG:2 = 11
+		ENDIF
+		IF FLAG:0 != 2
+			FLAG:2 -= MIN(CHARANUM - 4, 3)
+			SIF FLAG:0 != 10
+				FLAG:1 = (FLAG:3 * FLAG:2) + (FLAG:4 * 10)
+		ENDIF
+		;플래그 갱신
+		FLAG:804 = 0
+		CALL RESEARCH_QUOTA
+		;성내성의 조정을 넣었기 때문에 스테이터스를 재계산
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			CALL LEVELSTATUS, CCOUNT
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 372
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;(동방 프로젝트) 하쿠레이 레이무, 키리사메 마리사, 코치야 사나에
+			SIF NAME:CCOUNT == "博麗 霊夢" || NAME:CCOUNT == "霧雨 魔理沙" || NAME:CCOUNT == "東風谷 早苗"
+				NO:CCOUNT += 1000
+			;(인처전대 아이사이가) 모리사키 미쿠, 소피 안드레아 유키토, 히시도우 아이코, 오오사카 히카리, 아카네지마 란가
+			SIF NAME:CCOUNT == "守崎 美紅" || NAME:CCOUNT == "ソフィー・アンドレア・雪籐" || NAME:CCOUNT == "菱堂 藍胡" || NAME:CCOUNT == "桜坂 ひかり" || NAME:CCOUNT == "茜島 蘭牙"
+				NO:CCOUNT += 1000
+			SIF NO:CCOUNT < 700
+				CONTINUE
+			;(마법소녀 리리컬 나노하 시리즈) 타카마치 나노하, 페이트=테스타로사, 페이트・T・하라오운, 야가미 하야테, 타카마치 비비오, 아인하르트・스트라토스, 올리비에・제게브레히트, 빅토리아・다르그륜
+			SIF NAME:CCOUNT == "高町 なのは" || NAME:CCOUNT == "フェイト=テスタロッサ" || NAME:CCOUNT == "フェイト・T・ハラオウン" || NAME:CCOUNT == "八神 はやて" || NAME:CCOUNT == "高町 ヴィヴィオ" || NAME:CCOUNT == "アインハルト・ストラトス" || NAME:CCOUNT == "オリヴィエ・ゼーゲブレヒト" || NAME:CCOUNT == "ヴィクトーリア・ダールグリュン"
+				NO:CCOUNT += 1000
+			;(아이돌 마스터 신데렐라 걸즈) 시마무라 우즈키, 시부야 린, 혼다 미오
+			SIF NAME:CCOUNT == "島村卯月" || NAME:CCOUNT == "渋谷凛" || NAME:CCOUNT == "本田未央"
+				NO:CCOUNT += 1000
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 373
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;보스 촉수가 부친일 경우, ID 어긋남 수정
+			SIF CFLAG:CCOUNT:230 >= 100
+				CFLAG:CCOUNT:230 += 1
+			SIF CFLAG:CCOUNT:9 >= 100
+				CFLAG:CCOUNT:9 += 1
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 380
+		;생략된(omitted) 플래그 초기화
+		FLAG:19 = 0
+		FLAG:851 = 0
+		;컨피그를 초기 설정으로 변경
+		FLAG:800 = 0
+		FLAG:801 = 1
+		FLAG:802 = 31
+		FLAG:803 = 7
+		FLAG:804 = 7
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;각인 방지 초기화
+			MARK:CCOUNT:쾌락각인방지 = 0
+			MARK:CCOUNT:고통각인방지 = 0
+			MARK:CCOUNT:굴복각인방지 = 0
+			MARK:CCOUNT:공포각인방지 = 0
+			MARK:CCOUNT:치욕각인방지 = 0
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 381
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			;소질 기본값을 새 사양에 맞게 변경
+			SIF GETBIT(BASE:CCOUNT:48, 0)
+				BASE:CCOUNT:체격기본값 = -1
+			SIF GETBIT(BASE:CCOUNT:48, 1)
+				BASE:CCOUNT:체격기본값 = 1
+			SIF GETBIT(BASE:CCOUNT:48, 2)
+				BASE:CCOUNT:가슴사이즈기본값 = -1
+			SIF GETBIT(BASE:CCOUNT:48, 3)
+				BASE:CCOUNT:가슴사이즈기본값 = 1
+			SIF GETBIT(BASE:CCOUNT:48, 4)
+				BASE:CCOUNT:성별기본값 = 1
+			;생략된(omitted) BASE를 초기화
+			BASE:CCOUNT:42 = 0
+			MAXBASE:CCOUNT:42 = 0
+			BASE:CCOUNT:48 = 0
+			MAXBASE:CCOUNT:48 = 0
+		NEXT
+	ENDIF
+	IF LASTLOAD_VERSION < 382
+		;상관관계 전체 탐색
+		CALL CHECK_ALL_RELATION
+	ENDIF
+	IF LASTLOAD_VERSION < 394
+		;눈매 추가 (目つきの追加)
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			SIF CSTR:CCOUNT:18 == ""
+				CSTR:CCOUNT:18 = 보통
+		NEXT
+	ENDIF
+
+	IF LASTLOAD_VERSION < 398
+		;패치 불러오기(取り込み) 사정(다루는 플래그를 바꿨다)
+		FLAG:855=0
+		FLAG:856=0
+	ENDIF
+
+	IF LASTLOAD_VERSION < 399
+		;장비 주위(装備周り)의 관리 변경
+		FOR LOCAL,1, CHARANUM
+			FOR LOCAL:1,300, 400
+				IF EQUIP:LOCAL:(LOCAL:1) == 0 && EQUIP:LOCAL:(LOCAL:1 - 100) > 0
+					EQUIP:LOCAL:(LOCAL:1) = EQUIP:LOCAL:(LOCAL:1 - 100)
+				ENDIF
+				EQUIP:LOCAL:(LOCAL:1 - 100) = 0
+			NEXT
+		NEXT
+	ENDIF
+
+	IF LASTLOAD_VERSION < 400
+		;컨피그 번호 정리(유폐・흑화 관련 신설)
+		LOCAL=FLAG:804
+		FLAG:804=0
+		SETBIT FLAG:804,0,GETBIT(LOCAL,1)
+		SETBIT FLAG:804,1,GETBIT(LOCAL,3)
+		SETBIT FLAG:804,2,GETBIT(LOCAL,2)
+		SETBIT FLAG:804,3,GETBIT(LOCAL,15)
+		SETBIT FLAG:804,4,GETBIT(LOCAL,9)
+		SETBIT FLAG:804,5,GETBIT(LOCAL,10)
+		SETBIT FLAG:804,6,GETBIT(LOCAL,11)
+		SETBIT FLAG:804,7,GETBIT(LOCAL,12)
+		SETBIT FLAG:804,8,GETBIT(LOCAL,13)
+		SETBIT FLAG:804,9,GETBIT(LOCAL,16)
+		FLAG:805=0
+		SETBIT FLAG:805,0,GETBIT(LOCAL,0)
+		SETBIT FLAG:805,1,GETBIT(LOCAL,4)
+		SETBIT FLAG:805,2,GETBIT(LOCAL,5)
+		SETBIT FLAG:805,3,GETBIT(LOCAL,6)
+		SETBIT FLAG:805,4,GETBIT(LOCAL,7)
+		SETBIT FLAG:805,5,GETBIT(LOCAL,8)
+		SETBIT FLAG:805,6,GETBIT(LOCAL,14)
+		SETBIT FLAG:805,7,GETBIT(LOCAL,17)
+	ENDIF
+	IF LASTLOAD_VERSION < 401
+		LOCAL=FLAG:804
+		SETBIT FLAG:804,9,GETBIT(LOCAL,10)
+		SETBIT FLAG:804,10,GETBIT(LOCAL,9)
+	ENDIF
+	IF LASTLOAD_VERSION < 402
+		;커맨드 분리에 따른 변신 스타일 고정 폐지
+		FOR LOCAL,1, CHARANUM
+			CFLAG:LOCAL:12=0
+		NEXT
+	ENDIF
+
+	IF LASTLOAD_VERSION < 405
+		IF LASTLOAD_VERSION<=402
+			;확실하게 수정대상(구 사양으로 만들어진 데이터로 확정)
+			LOCAL=1
+		ELSEIF FLAG:0==0 || (FLAG:0!=1 && FLAG:0!=2 && FLAG:0!=4 && FLAG:0!=10 && FLAG:0!=16)
+			;확실히 수정 불필요(GAMEOVER＝플래그 수정 불필요　또는 새로운 사양으로 만들어진 데이터로 확정)
+			LOCAL=0
+		ELSE
+			;성가신 사태가 되어 버린 버전
+			;자동 식별 시행
+			LOCAL=-1
+			;get mode info from last-load text			
+			STRFIND LASTLOAD_TEXT,"NORMAL",0
+			IF RESULT>-1
+				;old data(need to fix) OR new data
+				LOCAL=FLAG:0==1 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"SOLO",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==2 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"HARDCORE",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==4 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"SURVIVAL",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==10 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"FREEPLAY",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==10 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"SANDBOX",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==10 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"ENDLESS",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==10 ? 1 # 0
+			ENDIF
+			STRFIND LASTLOAD_TEXT,"INSTANT",0
+			IF RESULT>-1
+				LOCAL=FLAG:0==16 ? 1 # 0
+			ENDIF
+
+			;세이브 데이터 문자열에 의한 자동 식별에 실패한 경우(만약을 위해)
+			IF LOCAL==-1
+				FONTBOLD
+				PRINTL 커스텀 게임 모드 도입 패치에 의한 FLAG:0 데이터 호환 끊김
+				SETCOLOR 255,128,128
+				PRINTL !　패치 수동 도입, 또는【사회파판2023/08/29】을 경계로 하여, 
+				PRINTL !　세이브 데이터의 내부 호환성이 상실되었습니다.
+				PRINTFORML !　최종 버전이 0.{LASTLOAD_VERSION} 인 데이터에는, 복원 처리가 필요할지도 모릅니다.
+				FONTREGULAR
+				RESETCOLOR
+				PRINTL 《구》
+				PRINTL 	FLAG:0 = n	※GAMEOVER=0　NORMAL=1　SOLO=2　HARDCORE=4　ENDLESS系=10 INSTANT=16
+				PRINTL 《신》
+				PRINTL 	FLAG:0 = 모드옵션:n
+				PRINTFORML 		0 GAMEOVER	{모드옵션:0}
+				PRINTFORML 		1 NORMAL	{모드옵션:1}
+				PRINTFORML 		2 SOLO		{모드옵션:2}
+				PRINTFORML 		3 HARDCORE	{모드옵션:3}
+				PRINTFORML 		4 SURVIVAL	{모드옵션:4}
+				PRINTFORML 		5 FREEPLAY	{모드옵션:5}
+				PRINTFORML 		6 SANDBOX	{모드옵션:6}
+				PRINTFORML 		7 INSTANT	{모드옵션:7}
+				PRINTL 		(내부에서는 비트 연산, DIM.ERH 참조)
+				PRINT 현재 FLAG:0 값…
+				FONTBOLD
+				PRINTFORML {FLAG:0}
+				FONTREGULAR
+				PRINTFORML
+				PRINTL
+				PRINTL 이 세이브 데이터는 패치 도입 이전에 작성된 것입니까?
+				PRINTL [0] 네 (수정 처리 적용)
+				PRINTL [1] 아니오
+				PRINTL [2] 모르겠다, 기억나지 않는다
+				INPUT
+				IF RESULT==0
+					LOCAL=1
+					PRINTL 그럼, 수정 처리를 적용하겠습니다.
+				ELSE
+					LOCAL=0
+					PRINTW 그럼, 수정 처리를 적용하지 않겠습니다.
+				ENDIF
+				PRINTL
+				PRINTL 만약 게임의 동작이 이상하다면, 수동으로 디버그 커맨드
+				PRINTL 「@FLAG:0=모드옵션:n」
+				PRINTL 　　　　　　　　　　　　　※n은 대응하는 번호
+				PRINTW 를 입력・수정해 주세요.
+				PRINTL
+			ENDIF
+		ENDIF
+
+		;복원 처리를 실행하는 경우
+		IF LOCAL==1
+			SELECTCASE FLAG:0
+			CASE 0 TO 2
+				FLAG:0 = 모드옵션:(FLAG:0)
+			;HARDCORE
+			CASE 4
+				FLAG:0 = 모드옵션:(3)
+			;최종 보스 없음(無ラスボス)
+			CASE 10
+				;Endless계 게임 모드를 세분화하던 구 플래그(:906)로 분기
+				;SURVIVE
+				IF FLAG:906 ==0
+					FLAG:0 = 모드옵션:(4)
+				;FREEPLAY
+				ELSEIF FLAG:906 ==1
+					FLAG:0 = 모드옵션:(5)
+				;SANDBOX
+				ELSEIF FLAG:906 ==2
+					FLAG:0 = 모드옵션:(6)
+				ENDIF
+			;INSTANT
+			CASE 16
+				FLAG:0 = 모드옵션:(7)
+			ENDSELECT
+		ENDIF
+		;앞으로는 더 이상 사용하지 않게 되었다
+		FLAG:906 = 0
+	ENDIF
+
+	IF LASTLOAD_VERSION < 406
+		;공통 설정 사양 변경
+		FOR LOCAL,0,9
+			IF SAVESTR:14==transnamegenre:LOCAL
+				FLAG:820=LOCAL+1
+				BREAK	
+			ENDIF
+		NEXT
+		SAVESTR:14'=""
+		;최종 보스 촉수의 수는 출현 시까지 0인 채로
+		SIF FLAG:100 > 0
+			FLAG:101 = 0
+	ENDIF
+
+
+	IF LASTLOAD_VERSION < GAMEBASE_VERSION
+		PRINTL 【세이브 데이터를 최신 버전으로 업데이트했습니다.】
+		LOCALS:0 = {1000 + LASTLOAD_VERSION}
+		SUBSTRING LOCALS:0, 1, 3
+		LOCALS:0 = {LASTLOAD_VERSION / 1000}.%RESULTS%
+		LOCALS:1 = {1000 + GAMEBASE_VERSION}
+		SUBSTRING LOCALS:1, 1, 3
+		LOCALS:1 = {GAMEBASE_VERSION / 1000}.%RESULTS%
+		PRINTFORMW 　ver %LOCALS:0% → %LOCALS:1%
+		;0 나눗셈 버그용
+		SIF LASTLOAD_VERSION < 190
+			CALL ENDING
+	ENDIF
+
+ENDIF
+
+
+
+PRINTL 
+;**********************************************

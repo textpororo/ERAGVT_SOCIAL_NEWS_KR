@@ -1,0 +1,562 @@
+﻿@PASTIME_INKIOKYU, ARG
+#DIM SHOJO
+#DIM S_질내精液
+#DIMS 部位
+#DIM 部位渡し
+
+SHOJO = 0
+S_질내精液 = 0
+
+;男女平等のオプションOff時の中断判定
+SIF ISHOLE() == 0
+	RETURN 0
+
+PRINTFORML 淫気─応急処置─
+PRINTFORML 
+PRINTFORML 物陰から淫気を感じとった%PRINT_TRANSCALLNAME(TARGET)%が用心深く探ると、
+PRINTFORML 淫気に浸された男がうずくまっていた。
+PRINTFORML 助けてくれ…死にたくない…といいながら陰茎をこすり上げている。
+PRINTFORML 
+PRINTFORML 通常、淫気に侵された인간は猛烈な性欲に支配されるが、
+PRINTFORML 性欲の強すぎる男性は촉수に成り果ててしまうケースも多い。
+PRINTFORML 政府公認の応急処置方法は性欲の発散であり、自慰より性交の方が最も効果的とされる。
+PRINTFORML 
+PRINTFORML 淫気浸食患者のフリをして女性に暴行する事件も起こっているが、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の見つけた男は촉수になる공포と戦いながら自慰をしているように見えた。
+; #region 
+SIF ISMALE() 
+	PRINTFORML 男同士での行為に多少の抵抗はあるが、まったく経験がないわけではない。
+; #endregion
+PRINTFORML ましてや善良な一市民が苦しんでいるのを見捨てられる訳がない。
+PRINTFORML 意を決して%PRINT_TRANSCALLNAME(TARGET)%は男に、もう大丈夫です必ず助かりますよ、と声をかけ、
+PRINTFORML これは必要な応急処置だからと心の中で言い訳をしながら
+IF RAND:7 == 0 && TALENT:거유 > 0
+	PRINTFORM パイズリ
+	部位渡し = 7
+	部位 = 双丘
+ELSEIF RAND:6 == 0
+	PRINTFORM フェラ
+	部位渡し = 6
+	部位 = 顔
+ELSEIF RAND:5 == 0
+	PRINTFORM 尻コキ
+	部位渡し = 5
+	部位 = 尻肉
+ELSEIF RAND:4 == 0
+	PRINTFORM 足コキ
+	部位渡し = 4
+	部位 = 脚
+ELSEIF RAND:3 == 0
+	PRINTFORM 下着越し素股
+	部位渡し = 3
+	部位 = 下着
+ELSEIF RAND:2 == 0 && ISFEMALE()
+	PRINTFORM ノーパン素股
+	部位渡し = 2
+	部位 = 割れ目
+ELSEIF RAND:2 == 0 && ISMALE()
+	PRINTFORM 後背位ノーパン素股
+	部位渡し = 2
+	部位 = 太腿
+ELSE
+	PRINTFORM 手コキ
+	部位渡し = 1
+	部位 = 손
+ENDIF
+PRINTFORML で性処理の手伝いをした。
+PRINTW 
+PRINTFORML やがて男が絶頂を迎えると、인간とは思えない大量の白濁液が
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の%部位%を汚したが、男根は萎えることなく充血し続けている。
+PRINTL 
+PRINTL 
+
+;촉수 구속구パターン
+IF CFLAG:42 == 400 && RAND:3 == 0
+	PRINTFORML すると평범한 속옷に擬態していた%ITEMNAME:(CFLAG:42)%が淫気に反応したのか
+	PRINTFORML 突然暴れ始め、%PRINT_TRANSCALLNAME(TARGET)%の自由を奪ってしまった！
+	PRINTL 
+	PRINTFORM 誘うように拡げられた
+	IF ISMALE() || RAND:2 == 0 || CHECK_HOLYVIRGIN_F()==1
+		PRINTFORM 애널
+		SHOJO = 6
+	ELSE
+		PRINTFORM 雌穴
+		SHOJO = 5
+	ENDIF
+	PRINTFORML を突き出す格好で拘束された目の前の供物に、
+	PRINTFORML 理性の限界に達した男は%PRINT_TRANSCALLNAME(TARGET)%へ男根を突き入れた……
+	IF (SHOJO == 5 && BASE:V결계내구력 > 0) || (SHOJO == 6 && BASE:A결계내구력 > 0)
+		PRINTFORML 一瞬、結界が薄っすらと淡く光ったような気がしたが、
+		PRINTFORML それを確認する間も無く肉棒が深々と突き刺さった……
+	ENDIF
+	;처녀で秘裂に入れられたら喪失
+	IF TALENT:처녀 > 0 && SHOJO == 5
+		TALENT:처녀 = -1
+		CFLAG:206 = 11
+		PRINTL 처녀喪失
+		PRINTL 
+		IF (TALENT:음란 || (ABL:욕망 >= 3 && ABL:순종 >= 3) || ABL:마조끼 >= 3) && TALENT:초심 < 1
+			PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
+			PRINTFORML 淫気に支配された男に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまった。
+		ELSE
+			PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに抵抗する기력を完全に奪われ、
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできず
+			PRINTFORML 淫気に支配された男に膣肉の純潔を押し開かれていく。
+		ENDIF
+	ENDIF
+	PRINTW 
+	PRINTFORML ――%PRINT_TRANSCALLNAME(TARGET)%は촉수に強制され、
+	IF RAND:3 == 0
+		PRINTFORML さながら獣の交尾のように激しく結合部を叩きつけ合わされている
+		PRINTFORML 悲鳴とも狂喜ともつかない喘ぎ声が
+		PRINTFORML 肉と肉が激しくぶつかり合う音に混じって、
+		PRINTFORML 男の怒張を更に限界まで膨れ上がらせてゆく……
+	ELSEIF RAND:3 == 1
+		PRINTFORML ねっとりと絡みつくような腰遣いで奉仕させられている
+		PRINTL 
+		PRINTFORML 否定の声を上げる%PRINT_TRANSCALLNAME(TARGET)%だが、
+		PRINTFORML 男根に抉られ続けるにつれ、強張った動きが
+		PRINTFORML 段々と自分の意思であるかのように淫らなものへと変わっていく……
+	ELSE
+		PRINTFORML まるで연인か娼婦のように男に抱き着いている
+		PRINTL 
+		PRINTFORML 密着感に興奮した男のピストンがより激しくなり、
+		PRINTFORML 사정が近付くにつれ공포と快感に震える四肢の拘束が強固になる
+		PRINTFORML 愛の無い見た目だけの蜜月中出し交尾を無理強いされても、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は頭を振って嬌声を上げる事しか出来ない……
+	ENDIF
+	PRINTL 
+	PRINTFORML 異常な勢いで何度も熱い迸りを%PRINT_TRANSCALLNAME(TARGET)%の中へ注ぎ込んだ後、
+	PRINTFORML どうにか一命を取り留めた男性は気を失った
+	PRINTL 
+	PRINTFORML 終わるまでの間、%ITEMNAME:(CFLAG:42)%によってずっと子種が漏れぬよう
+	PRINTFORML ピッチりと穴を塞がれていた%PRINT_TRANSCALLNAME(TARGET)%の腹部は、
+	PRINTFORML 인간同士の性交だったとは思えぬほど精液で大きく膨らんでいた……
+	IF ISMALE()
+		PRINTL 
+		PRINTFORML 남자でありながら男性に犯されて임신させられたような有様に、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の精液ボテ腹に光を失った瞳を向けて茫然としている……
+	ELSE
+	ENDIF
+	;음란
+ELSEIF RAND:2 == 0 && TALENT:음란 > 0 && TALENT:초심 < 1
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は異常な絶倫状態の男根を目の当たりにし、
+	PRINTFORML 입元に笑みが浮かびそうになるのをこらえた。
+	PRINTFORML 사정したい男と性欲を持て余した者が出会ったら誰だってやりまくるだろう。
+	PRINTFORML 旺盛な性欲を発散するのにこれほど都合の良い相手はいない。
+	PRINTL 
+	PRINTFORML 出会ったばかりの他人の男根を愛おしそうに味わった後、
+	PRINTFORML 발정した様子でそのはちきれんばかりの剛直を
+	IF (ISMALE() && RAND:5 == 2) || RAND:5 == 0 || RAND:5 == 1 || CHECK_HOLYVIRGIN_F()==1
+		SHOJO = 4
+		PRINTFORM ひくつく애널に
+	ELSEIF (RAND:5 == 2 || RAND:5 == 3) && ISFEMALE()
+		SHOJO = 3
+		PRINTFORM ひくつく雌穴に
+	ELSE
+		PRINTFORM ゆっくりと喉奥まで
+	ENDIF
+	PRINTFORML 受け入れた……
+
+	;처녀で秘裂に入れられたら喪失
+	IF TALENT:처녀 > 0 && SHOJO == 3
+		TALENT:처녀 = -1
+		CFLAG:206 = 11
+		PRINTL 처녀喪失
+		PRINTL 
+		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
+		PRINTFORML 淫気に支配された男に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+		PRINTFORML すぐに快楽を感じ始めてしまった。
+	ENDIF
+	PRINTW 
+	PRINTFORML お互いの肉体を貪りあうように重ね合わせ、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が満足するまで応急処置の名を借りた性欲処理は続けられた…
+	;暴走レイプ(防衛度によって確率変動)
+ELSEIF RAND:5 == 0 || (RAND:2 == 0 && FLAG:852 <= 2500) || (RAND:3 == 0 && FLAG:852 < 5000)
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は男の淫気が抜けきるまで処理をし続けていたが、
+	PRINTFORML 何度사정しても収まりがつかず暴走した男が襲い掛かってきた。
+	PRINTFORML 
+	PRINTFORML 猛獣のような力で服を引き裂き、制止する%PRINT_TRANSCALLNAME(TARGET)%の声も聞かず
+	PRINTFORM いきり立った肉棒を
+	IF ISMALE() || RAND:2 == 0 || CHECK_HOLYVIRGIN_F()==1
+		PRINTFORM 애널
+		SHOJO = 2
+	ELSE
+		PRINTFORM 秘裂
+		SHOJO = 1
+	ENDIF
+	PRINTFORML に突き入れる。
+	IF (SHOJO == 1 && BASE:V결계내구력 > 0) || (SHOJO == 2 && BASE:A결계내구력 > 0)
+		PRINTFORML 一瞬、結界が薄っすらと淡く光ったような気がしたが、
+		PRINTFORML それを確認する間も無く肉棒が深々と突き刺さった……
+	ENDIF
+	IF ISMALE()
+		;#region
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の肉尻穴は長時間の奉仕と淫気に当たったことで熟れきっており、
+		;#endregion
+	ELSE 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の肉穴は長時間の奉仕と淫気に当たったことで熟れきっており、
+	ENDIF
+	PRINTFORML 男の本能に従ったピストンも容易に受け入れてしまった。
+	;처녀で秘裂に入れられたら喪失
+	IF TALENT:처녀 > 0 && SHOJO == 1
+		TALENT:처녀 = -1
+		CFLAG:206 = 11
+		PRINTL 처녀喪失
+		PRINTL 
+		IF (TALENT:음란 || (ABL:욕망 >= 3 && ABL:순종 >= 3) || ABL:마조끼 >= 3) && TALENT:초심 < 1
+			PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
+			PRINTFORML 淫気に支配された男に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+			PRINTFORML すぐに快楽を感じ始めてしまった。
+		ELSE
+			PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに抵抗する기력を完全に奪われ、
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできず
+			PRINTFORML 淫気に支配された男に膣肉の純潔を押し開かれていく。
+		ENDIF
+	ENDIF
+	PRINTW 
+	PRINTFORML いくら拒絶を言葉にしてもそれを上回る喘ぎ声に掻き消される。
+	IF ISMALE()
+		;#region
+		PRINTFORML 男は声にならない声を上げながら%PRINT_TRANSCALLNAME(TARGET)%の肉尻穴にありったけの子種を注ぎ込むと、
+		;#endregion
+	ELSE 
+		PRINTFORML 男は声にならない声を上げながら%PRINT_TRANSCALLNAME(TARGET)%の肉穴にありったけの子種を注ぎ込むと、
+	ENDIF
+	PRINTFORML 息も絶え絶えに助かった…と呟きながら気を失った。
+	PRINTFORML 
+	IF TALENT:음란 > 0 && TALENT:초심 < 1
+		PRINTFORML 황홀と涎を垂らす%PRINT_TRANSCALLNAME(TARGET)%の表情は、
+		PRINTFORML 犯されたショックや中出しへの절망よりも快楽が勝っているようだった
+		PRINTFORML 精を注がれ絶頂に震えながらも、自分の使命を思い出した%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML なんとか手を動かして本部に連絡を取り男性の救助を要請した…
+	ELSE
+		PRINTFORML 淫気のせいとは言え助けようとした市民に犯されたショックと、
+		IF ISMALE()
+			;#region
+			PRINTFORML 中出しされた절망感と、애널に中出しされて絶頂してしまった自己嫌悪
+			;#endregion
+		ELSE 
+			PRINTFORML 中出しされた절망感と、中出しされて絶頂してしまった自己嫌悪
+		ENDIF
+		PRINTFORML 快楽を感じている複雑な感情に呆然としながらも
+		PRINTFORML なんとか手を動かして本部に連絡を取り男性の救助を要請した…
+	ENDIF
+	;通常処理
+ELSE
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は何度も精液を浴びながら、男の淫気が抜けきるまで処理をし続けた…
+	IF ISFEMALE()
+		;下着兼用アウターの場合
+		CALL CLOTH_NO_INNER, TARGET
+		IF 部位渡し == 3 && RESULT > 0
+			PRINTFORML 공포と本能に突き動かされ、男は%PRINT_TRANSCALLNAME(TARGET)%の性器へ
+			PRINTFORML 肉棒をグリグリと%COSTUME_NAME(TARGET)%越しに押し付ける
+			;소프트 바디슈트(避妊効果)
+			IF CFLAG:41 == 299
+				PRINTFORML 精液がべっとりと張り付いたスーツの下腹部を見ながら、
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は임신はしないはずだと頭の中で繰り返して
+				PRINTFORML 날뛴다強直を抑え込み、腰を振り続けている……
+			ELSE
+				PRINTFORML 사정を導き命を救うために腰を振る%PRINT_TRANSCALLNAME(TARGET)%だったが、
+				PRINTFORML 股の間でどんどんと濃くなっていく白濁と精の臭いに身体が震えている……
+			ENDIF
+			;ノーパンの場合
+		ELSEIF 部位渡し == 2 || (部位渡し == 3 && CFLAG:42 == 0)
+			PRINTFORML 命の危機という切迫さの中、ぬちゅぬちゅと性器同士が触れ合う疑似性交は
+			PRINTFORML 사정する間も絶えず腰を振り続けて行われた
+			PRINTL 
+			PRINTFORML 気付けば肉棒に擦り上げられる過程で割れ目の中心目掛けて
+			PRINTFORML 何度か熱い白濁が注がれており、未挿入ながら
+			PRINTFORML ねっとりとした感覚が淫猥に歪む花弁から伝い零れている
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はそれでも総身を震わせつつ、肉棒から精を吐き出させ続けた……
+			S_질내精液 += (3 + RAND:6)
+			;下着素股
+		ELSEIF 部位渡し == 3
+			;촉수 구속구
+			IF CFLAG:42 == 400
+				PRINTFORML 普通のパンツに擬態していた%ITEMNAME:(CFLAG:42)%は
+				PRINTFORML 性器同士が擦れるのに合わせて%PRINT_TRANSCALLNAME(TARGET)%の性感帯を蹂躙していた
+				PRINTFORML 刺激に翻弄される%PRINT_TRANSCALLNAME(TARGET)%を弄ぶように、
+				PRINTFORML 何度も秘肉を割り開いて男性器の挿入を導こうとしてくる
+				PRINTL 
+				PRINTFORML どうにか素股を続けたものの、
+				PRINTFORML 何度か先端が挿入りかけて白濁をその질내に注がれてしまった……
+				S_질내精液 += (2 + RAND:3)
+
+				;カスタムなし下着(普通の、サラシハイレグ、레깅스、淑女コルセット、훈도시、前張り)
+			ELSEIF CFLAG:42 == 300 || CFLAG:42 == 307 || CFLAG:42 == 308 || CFLAG:42 == 311 || CFLAG:42 == 397 || CFLAG:42 == 398
+				PRINTFORML 肉棒を挟んで腰を振り、吸い取れる水分量の限界に近づいた%ITEMNAME:(CFLAG:42)%に
+				PRINTFORML 大量の白濁液を浴びせ続けられる%PRINT_TRANSCALLNAME(TARGET)%
+				PRINTL 
+				PRINTFORML 사정の勢いに任せ、びゅくっ、びゅくっ、と異常な量の精液が少しづつ
+				PRINTFORML ぐちょぐちょになった布地を超え질내へと染み込んでいく
+			ELSE
+				PRINTFORML 股間に一心不乱に男性器を擦り付けられ、
+				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の
+				CALL KAIZOU_PANT
+				PRINTFORML は白濁に染められていく
+				PRINTL 
+				PRINTFORML 度重なる사정でずっしりと重くなったソレは、
+				PRINTFORML 肉棒で押し潰される度にグジュグジュと淫猥な音を立てて
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の羞恥心を煽り立て続けた
+			ENDIF
+			S_질내精液 += (2 + RAND:3)
+		ENDIF
+	ELSEIF TALENT:보추 > 0
+		;下着兼用アウターの場合
+		CALL CLOTH_NO_INNER, TARGET
+		IF 部位渡し == 3 && RESULT > 0
+			PRINTFORML 공포と本能に突き動かされ、男は%PRINT_TRANSCALLNAME(TARGET)%の股間へ
+			PRINTFORML 肉棒をグリグリと%COSTUME_NAME(TARGET)%越しに押し付ける
+			PRINTL 
+			PRINTFORML 男は理性を欠いているせいか
+			PRINTFORML 女の子にはないはずの膨らみに当たっているにも関わらず、
+			PRINTFORML それでもまだ%PRINT_TRANSCALLNAME(TARGET)%を女の子だと思っているようだ
+			PRINTL 
+			;소프트 바디슈트(避妊効果)
+			IF CFLAG:41 == 299
+				PRINTFORML 精液がべっとりと張り付いたスーツの下腹部を見ながら、
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は直接触れてはいないからと頭の中で繰り返して
+				PRINTFORML 날뛴다強直を抑え込み、腰を振り続けている……
+			ELSE
+				PRINTFORML 사정を導き命を救うために腰を振る%PRINT_TRANSCALLNAME(TARGET)%だったが、
+				PRINTFORML 股の間でどんどんと濃くなっていく他人の白濁と精の臭いに身体が震えている……
+			ENDIF
+			;ノーパンの場合
+		ELSEIF 部位渡し == 5 || 部位渡し == 2
+			PRINTFORM 命の危機という切迫さの中、ぬちゅぬちゅと
+			IF 部位渡し == 5
+				PRINTFORM 尻肉
+			ELSE
+				PRINTFORM 太腿
+			ENDIF
+			PRINTFORML と男性器が触れ合う疑似性交は
+			PRINTFORML 사정する間も絶えず腰を振り続けて行われた
+			PRINTL 
+			PRINTFORML 気付けば肉棒に擦り上げられる過程でお尻の中心目掛けて
+			PRINTFORML 何度か熱い白濁が注がれており、未挿入ながら
+			PRINTFORML ねっとりとした感覚が淫猥に歪む菊門から伝い零れている
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はそれでも総身を震わせつつ、肉棒から精を吐き出させ続けた……
+			;下着素股
+		ELSEIF 部位渡し == 3
+			;촉수 구속구
+			IF CFLAG:42 == 400
+				PRINTFORML 普通のパンツに擬態していた%ITEMNAME:(CFLAG:42)%は
+				PRINTFORML 性器同士が擦れるのに合わせて%PRINT_TRANSCALLNAME(TARGET)%の性感帯を蹂躙していた
+				PRINTFORML 刺激に翻弄される%PRINT_TRANSCALLNAME(TARGET)%を弄ぶように、
+				PRINTFORML 何度も애널を割り開いて男性器の挿入を導こうとしてくる
+				PRINTL 
+				PRINTFORML 男は理性を欠いているせいか
+				PRINTFORML 女の子にはないはずの膨らみに当たっているにも関わらず、
+				PRINTFORML それでもまだ%PRINT_TRANSCALLNAME(TARGET)%を女の子だと思っているようだ
+				PRINTL 
+				PRINTFORML どうにか素股を続けたものの、
+				PRINTFORML 何度か先端が挿入りかけて白濁をその腸内に注がれてしまった……
+				;カスタムなし下着(普通の、サラシハイレグ、레깅스、淑女コルセット、훈도시、前張り)
+			ELSEIF CFLAG:42 == 300 || CFLAG:42 == 307 || CFLAG:42 == 308 || CFLAG:42 == 311 || CFLAG:42 == 397 || CFLAG:42 == 398
+				PRINTFORML 肉棒を挟んで腰を振り、吸い取れる水分量の限界に近づいた%ITEMNAME:(CFLAG:42)%に
+				PRINTFORML 大量の白濁液を浴びせ続けられる%PRINT_TRANSCALLNAME(TARGET)%
+				PRINTL 
+				PRINTFORML 男は理性を欠いているせいか
+				PRINTFORML 女の子にはないはずの膨らみに当たっているにも関わらず、
+				PRINTFORML それでもまだ%PRINT_TRANSCALLNAME(TARGET)%を女の子だと思っているようだ
+				PRINTL 
+				PRINTFORML 사정の勢いに任せ、びゅくっ、びゅくっ、と異常な量の他人の精液が少しづつ
+				PRINTFORML ぐちょぐちょになった布地を超え%PRINT_TRANSCALLNAME(TARGET)%のペニスと腸内へと染み込んでいく
+			ELSE
+				PRINTFORML 股間に一心不乱に男性器を擦り付けられ、
+				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の
+				CALL KAIZOU_PANT
+				PRINTFORML は白濁に染められていく
+				PRINTL 
+				PRINTFORML 男は理性を欠いているせいか
+				PRINTFORML 女の子にはないはずの膨らみに当たっているにも関わらず、
+				PRINTFORML それでもまだ%PRINT_TRANSCALLNAME(TARGET)%を女の子だと思っているようだ
+				PRINTL 
+				PRINTFORM 度重なる사정でずっしりと重くなった
+				CALL KAIZOU_PANT
+				PRINTFORML は、
+				PRINTFORML 肉棒で押し潰される度にグジュグジュと淫猥な音を立てて
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の羞恥心を煽り立て続けた
+			ENDIF
+		ENDIF
+	ENDIF
+	PRINTFORML ……ようやく男が気を失って静かになる頃には、全身他人の精液まみれで臭いがこびりついていた……
+ENDIF
+
+PRINTW 
+
+;計算処理へ
+SELECTCASE SHOJO
+	CASE 1 to 6
+		CALL CALC_INKIOKYU, 部位渡し, SHOJO, S_질내精液
+	CASEELSE
+		SIF S_질내精液 >= 1 && CFLAG:41 == 299
+			S_질내精液 = 0
+		CALL CALC_INKIOKYU, 部位渡し, SHOJO, S_질내精液
+ENDSELECT
+
+PRINTL 
+;-----------------------------------------------------------------------------------------
+;経験増加・임신判定など	ARG:0 == 部位渡し, ARG:1 == SHOJO(性交の種類), ARG:2 == S_질내精液
+;-----------------------------------------------------------------------------------------
+@CALC_INKIOKYU, ARG:0, ARG:1 = 0, ARG:2 = 0
+#DIM CCOUNT
+#DIM SHOJO
+#DIM S_回数
+#DIM S_질내精液
+#DIM C_計算元
+#DIM 部位
+
+VARSET LOCAL
+
+;(部位渡し 손 == 1 割れ目 == 2 下着 ==  3 脚 == 4 尻肉 == 5 顔 == 6 双丘 == 7)
+部位 = ARG:0
+SHOJO = ARG:1
+S_질내精液 = ARG:2
+
+;総処置数
+S_回数 = 12 + RAND:5
+;정액경험
+LOCAL:123 = 15 + RAND:16
+;ACTION_SEISANを参考に基準値を定義
+C_計算元 = BASE:체력 * (10 + RAND:3) / 100
+
+;V경험	A경험---------------------------------------------
+IF SHOJO == 1
+	;V경험
+	LOCAL:120 += 1
+ELSEIF SHOJO == 2
+	;A경험
+	LOCAL:121 += 1
+ELSEIF SHOJO == 3
+	IF ABL:V감각 >= 4 && ABL:A감각 >= 4
+		;V경험
+		LOCAL:120 += 2 + RAND:5
+		;A경험
+		LOCAL:121 += 2 + RAND:5
+	ELSEIF ABL:V감각 >= ABL:A감각
+		;V경험
+		LOCAL:120 += 4 + RAND:5
+	ELSE
+		;A경험
+		LOCAL:121 += 4 + RAND:5
+	ENDIF
+ELSEIF SHOJO == 4
+	;A경험
+	LOCAL:121 += 4 + RAND:5
+ELSEIF SHOJO == 5
+	;V경험
+	LOCAL:120 = S_回数 - 6
+ELSEIF SHOJO == 6
+	;A경험
+	LOCAL:121 = S_回数 - 6
+ENDIF
+
+;피간경험--------------------------------------------------
+SIF SHOJO == 1 || SHOJO == 2 || SHOJO == 5 || SHOJO == 6
+	LOCAL:110 += 1
+
+;絶頂、奉仕快楽、사정、모유、방뇨경험----------------------
+IF SHOJO == 1 || SHOJO == 2
+	LOCAL:122 += 1
+	IF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+		;절정경험
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:4
+		;봉사쾌락경험
+		LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
+		SIF ISPENIS()
+			LOCAL:153 += C_計算元 * (1 + RAND:3) / 100
+		SIF TALENT:모유체질 > 0
+			LOCAL:154 += C_計算元 * (1 + RAND:3) / 100
+		SIF TALENT:오줌싸개버릇 > 0
+			LOCAL:155 += C_計算元 * (1 + RAND:3) / 100
+	ENDIF
+ELSEIF SHOJO == 3 || SHOJO == 4
+	;절정경험
+	SIF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100
+	IF ABL:V감각 >= 4 && ABL:A감각 >= 4
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(1 + (ABL:V감각 + ABL:A감각) / 4)
+	ELSEIF ABL:V감각 >= ABL:A감각
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:V감각 + 4) / 4)
+	ELSE
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:A감각 + 4) / 4)
+	ENDIF
+	;봉사쾌락경험
+	LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
+	SIF ISPENIS()
+		LOCAL:153 += C_計算元 * (1 + RAND:3) / 100
+	SIF TALENT:모유체질 > 0
+		LOCAL:154 += C_計算元 * (1 + RAND:3) / 100
+	SIF TALENT:오줌싸개버릇 > 0
+		LOCAL:155 += C_計算元 * (1 + RAND:3) / 100
+
+ELSEIF SHOJO == 5 || SHOJO == 6
+	;절정경험
+	IF SHOJO == 5
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:V감각 + 4) / 4)
+	ELSEIF SHOJO == 6
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:A감각 + 4) / 4)
+	ENDIF
+	;봉사쾌락경험
+	LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
+	SIF ISPENIS()
+		LOCAL:153 += C_計算元 * (1 + RAND:3) / 100
+	SIF TALENT:모유체질 > 0
+		LOCAL:154 += C_計算元 * (1 + RAND:3) / 100
+	SIF TALENT:오줌싸개버릇 > 0
+		LOCAL:155 += C_計算元 * (1 + RAND:3) / 100
+ELSE
+	IF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+		;절정경험
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:4
+		;봉사쾌락경험
+		LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
+		SIF ISPENIS()
+			LOCAL:153 += C_計算元 * (1 + RAND:3) / 100
+		SIF TALENT:모유체질 > 0
+			LOCAL:154 += C_計算元 * (1 + RAND:3) / 100
+		SIF TALENT:오줌싸개버릇 > 0
+			LOCAL:155 += C_計算元 * (1 + RAND:3) / 100
+	ENDIF
+ENDIF
+;펠라경험------------------------------------------------
+;(セックスの分、フェラ回数が減る。フェラ処理以外はさらに減る)
+IF 部位 == 6 || SHOJO == 3 || SHOJO == 4
+	LOCAL:124 = MAX(S_回数 - (LOCAL:120 + LOCAL:121), 0)
+ELSEIF 部位 == 1 || 部位 == 7 || SHOJO == 5 || SHOJO == 6
+	LOCAL:124 = MAX(S_回数 - (LOCAL:120 + LOCAL:121 + RAND:3), 0)
+ELSE
+	LOCAL:124 = MAX(S_回数 - (LOCAL:120 + LOCAL:121 + 4 + RAND:6), 0)
+ENDIF
+
+;임신判定--------------------------------------------------
+;(セックス回数＋ランダム대량사정、정액경험でキャップ)
+IF SHOJO == 1
+	S_질내精液 += MIN(LOCAL:120 + 10 + RAND:6, LOCAL:123)
+ELSEIF SHOJO == 3 && ((ABL:V감각 >= 4 && ABL:A감각 >= 4) || ABL:V감각 >= ABL:A감각)
+	S_질내精液 += MIN((LOCAL:120 + (LOCAL:120 * RAND:3)), LOCAL:123)
+ELSEIF SHOJO == 5
+	S_질내精液 += MIN((LOCAL:120 + (LOCAL:120 * RAND:4)), LOCAL:123)
+ENDIF
+
+SIF ISFEMALE() && TALENT:처녀 < 1
+	CALL NINSIN_HANTEI, S_질내精液, 100, 원치않은상대
+;アフターピル----------------------------------------------
+IF S_질내精液 > 0
+	SIF ISFEMALE() && TALENT:처녀 < 1
+		CALL AFTER_PILL, TARGET, 20, 원치않은상대
+	PRINTL 
+ENDIF
+
+;幽閉中パラメータ変動共通処理へ
+;CALL COMMON_PRISON, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18, LOCAL:19, LOCAL:20, LOCAL:21, 1
+;経験数の増加
+FOR CCOUNT, 100, 200
+	CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
+NEXT
+;珠の取得へ
+CALL _ABLUP, 1
+

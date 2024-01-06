@@ -1,0 +1,149 @@
+﻿;グローバル　変身処理の選択
+;特別活動時等を実行時の自動変身設定
+;ビット演算ではなく代入である点に注意
+;特別活動
+;GLOBAL:51 通常変身の場合
+;GLOBAL:52 女体化変身の場合
+;GLOBAL:53 男性化変身の場合
+;情報収集
+;GLOBAL:54 通常変身の場合
+;GLOBAL:55 女体化変身の場合
+;GLOBAL:56 男性化変身の場合
+;息抜き
+;GLOBAL:57 通常変身の場合
+;GLOBAL:58 女体化変身の場合
+;GLOBAL:59 男性化変身の場合
+;0 常に選択する
+;1 通常、변신한다
+;2 通常、変身しない
+;---------------------------------------------
+;필터の処理
+;---------------------------------------------
+@CONFIG_T
+#DIM LCOUNT
+#DIM OPTION,10
+LOCAL = LINECOUNT
+FOR LCOUNT, 1, 10
+	OPTION:LCOUNT = GLOBAL:(LCOUNT + 50)
+NEXT
+$MASTER_LOOP
+PRINTL 
+DRAWLINE
+PRINTL ここで変身設定を指定しておくことで、변신한다かどうかの選択肢を省略することができます。
+PRINTL 
+PRINTL 特別活動時の変身設定
+PRINTL
+PRINT 　[11]通常の変身の場合　　　　　　    【
+IF OPTION:1 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:1 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[12]変身時に女体化する場合          【
+IF OPTION:2 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:2 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[13]変身時に男性化する場合          【
+IF OPTION:3 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:3 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINTL 
+PRINTL 情報収集時の変身設定
+PRINTL
+PRINT 　[14]通常の変身の場合　　　　　　    【
+IF OPTION:4 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:4 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[15]変身時に女体化する場合          【
+IF OPTION:5 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:5 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[16]変身時に男性化する場合          【
+IF OPTION:6 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:6 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINTL 
+PRINTL 息抜きの変身設定
+PRINTL
+PRINT 　[17]通常の変身の場合　　　　　　    【
+IF OPTION:7 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:7 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[18]変身時に女体化する場合          【
+IF OPTION:8 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:8 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINT 　[19]変身時に男性化する場合          【
+IF OPTION:9 == 1
+	PRINT 常に변신한다
+ELSEIF OPTION:9 == 2
+	PRINT 常に変身しない
+ELSE
+	PRINT 選択肢を表示する
+ENDIF
+PRINTL 】
+PRINTL 
+PRINTL [200]変更を保存して戻る
+PRINTL 
+$INPUT_LOOP
+INPUT
+IF RESULT > 10 && RESULT < 20
+	IF OPTION:(RESULT - 10) == 1
+		OPTION:(RESULT - 10) = 2
+	ELSEIF OPTION:(RESULT - 10) == 2
+		OPTION:(RESULT - 10) = 0
+	ELSE
+		OPTION:(RESULT - 10) = 1
+	ENDIF
+	CLEARLINE LINECOUNT - LOCAL
+	GOTO MASTER_LOOP
+ELSEIF RESULT == 200
+	FOR LCOUNT, 1, 10
+		GLOBAL:(LCOUNT + 50) = OPTION:LCOUNT
+	NEXT
+	SAVEGLOBAL
+	RETURN
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+
+

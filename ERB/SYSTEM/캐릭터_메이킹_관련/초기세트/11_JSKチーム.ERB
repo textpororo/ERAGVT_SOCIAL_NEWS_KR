@@ -1,0 +1,36 @@
+﻿@SHOKISET_NAME_11
+PRINTL [11]４人：JSKチーム
+;-----------------------------
+;JSKチーム
+;------------------------------
+@SHOKISET_SETUMEI_11
+PRINTL
+PRINTL 　　　（出典：魔法少女バスター、打倒!超魔王様、魔王ってエルフの女騎士に命を狙われるんですか、美唯～隣の制服剣士～）
+PRINTL 　　　『JSK工房』より参戦！
+PRINTL 　　　魔法少女以外全員は変身なし
+PRINTL 　　　砲台1,装甲1,遊撃1,高機動1
+PRINTL
+PRINTL 　　　キャラの戦闘力が強いが、それぞれに弱点があるので、油断は禁物
+PRINTL 　　　初～中級者向け
+PRINTL
+;-------------------------------
+;グループの選択-JSKチーム
+;-------------------------------
+@SHOKISET_SELECT_11
+
+FLAG:5 = 1
+SAVESTR:10=JSKチーム
+
+ADDCHARA 371
+FLAG:8 ++
+ADDCHARA 372
+FLAG:8 ++
+ADDCHARA 373
+FLAG:8 ++
+ADDCHARA 374
+FLAG:8 ++
+
+
+CALL SHOKISET_CSVFIX
+;JUMP CHARA_MAKE_MAIN, 0
+

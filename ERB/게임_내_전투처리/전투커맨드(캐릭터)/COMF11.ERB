@@ -1,0 +1,26 @@
+﻿;가만히있는다
+@COM11
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;방어フラグ：가만히있는다にする
+TCVARn:2 = 자세：가만히있는다
+
+;油断度の上昇
+TFLAG:3 += 25
+
+;기절している場合
+IF (TCVARn:12 & 기절)
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は意識を失っている…
+	PRINTW 
+ELSE
+	;지문: 距離を取る
+	CALL MESSAGE_BATTLE_CHARA_NASUGAMAMA
+	;지문: 洗脳/悪堕ちキャラが操作キャラの가만히있는다を見た
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_NASUGAMAMA
+ENDIF
+
+RETURN 1

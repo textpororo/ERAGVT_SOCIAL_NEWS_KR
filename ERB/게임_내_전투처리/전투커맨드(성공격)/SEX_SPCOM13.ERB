@@ -1,0 +1,325 @@
+﻿;丸飲み精液攻め
+
+;性コマンド分類
+@SEX_TYPE_COM1013
+RETURN 통상
+
+@SEX_SPCOM13
+;取得パラメータ計算
+;ベース値の明示的初期化
+REPEAT 12
+	LOCAL:COUNT = 0
+REND
+
+;촉수サイズの設定
+CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1013
+
+;丸飲み準備
+IF TFLAG:23 == 0
+	;油断度の上昇
+	TFLAG:3 += 0
+
+	;地の文:SPCOM13_PRE
+	CALL MESSAGE_SEX_SPCOM13_PRE
+
+	;촉수의포로なら욕정、それ以外は공포
+	IF TALENT:촉수의포로
+		LOCAL:7 = 1500
+	ELSE
+		LOCAL:11 = 1500
+	ENDIF
+
+	;윤활
+	LOCAL:4 = 0
+
+	;습득基本値
+	LOCAL:6 += 0
+
+	;욕정基本値
+	LOCAL:7 += 0
+
+	;굴복基本値
+	LOCAL:8 += 200
+
+	;치정基本値
+	LOCAL:9 += 0
+
+	;고통基本値
+	LOCAL:10 += 0
+
+	;공포基本値
+	LOCAL:11 += 0
+
+	;체력消費基本値
+	LOCAL:12 += 0
+;기절している場合、または確率で即死。連続実行される度に成功率が上がる
+ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
+	;全個所에 사정
+	IF ISFEMALE()
+		TFLAG:4 = TFLAG:4 | 질
+		TFLAG:4 = TFLAG:4 | 균열
+		INSERT = INSERT | 질
+	ENDIF
+	TFLAG:4 = TFLAG:4 | 애널
+	TFLAG:4 = TFLAG:4 | 가슴
+	TFLAG:4 = TFLAG:4 | 손
+	TFLAG:4 = TFLAG:4 | 입
+	INSERT = INSERT | 애널
+
+	;油断度の上昇
+	TFLAG:3 += 0
+
+	;사정値 1000
+	CALL TENTACLE_SYASEI_UP, 1000
+
+
+	;快V
+	IF ISFEMALE()
+		IF ABL:V감각 == 0
+			LOCAL:1 = 400
+		ELSEIF ABL:V감각 == 1
+			LOCAL:1 = 1000
+		ELSEIF ABL:V감각 == 2
+			LOCAL:1 = 2000
+		ELSEIF ABL:V감각 == 3
+			LOCAL:1 = 4000
+		ELSEIF ABL:V감각 == 4
+			LOCAL:1 = 10000
+		ELSEIF ABL:V감각 >= 5
+			LOCAL:1 = 20000
+		ENDIF
+	ENDIF
+
+	;快A　感覚が低いうちは少なめ
+	IF CONFIG_CHECK_BALANCE_F(7) == 0
+		IF ABL:A감각 == 0
+			LOCAL:2 = 80
+		ELSEIF ABL:A감각 == 1
+			LOCAL:2 = 500
+		ELSEIF ABL:A감각 == 2
+			LOCAL:2 = 2000
+		ELSEIF ABL:A감각 == 3
+			LOCAL:2 = 4000
+		ELSEIF ABL:A감각 == 4
+			LOCAL:2 = 10000
+		ELSEIF ABL:A감각 >= 5
+			LOCAL:2 = 20000
+		ENDIF
+	;컨피그オンで쾌A増加
+	ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
+		IF ABL:A감각 == 0
+			LOCAL:2 = 400
+		ELSEIF ABL:A감각 == 1
+			LOCAL:2 = 1000
+		ELSEIF ABL:A감각 == 2
+			LOCAL:2 = 2000
+		ELSEIF ABL:A감각 == 3
+			LOCAL:2 = 4000
+		ELSEIF ABL:A감각 == 4
+			LOCAL:2 = 10000
+		ELSEIF ABL:A감각 >= 5
+			LOCAL:2 = 20000
+		ENDIF
+	ENDIF
+
+	;メイン部位絶頂見込みの予測
+	CALL PALAM_VABCestimate(LOCAL,1,2,-1)
+
+
+	;地の文:SPCOM13
+	CALL MESSAGE_SEX_SPCOM13
+
+	;丸飲み行動の終了
+	TFLAG:23=-1
+
+	;服へのダメージ
+	CALL CLOTH_BATTLE_DAMAGE, 25
+
+	;ベース
+	SIF ISFEMALE()
+		EXP:V경험 += 5
+	EXP:A경험 += 5
+	EXP:펠라경험 += 5
+	EXP:정액경험 += 20
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
+		EXP:근친교배경험 += 2
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
+		EXP:근친교배경험 += 2
+
+	;윤활
+	LOCAL:4 = 10000
+
+
+
+	;굴복　정액중독で変化
+	IF ABL:정액중독 == 0
+		LOCAL:8 = 2000
+	ELSEIF ABL:정액중독 == 1
+		LOCAL:8 = 4000
+	ELSEIF ABL:정액중독 == 2
+		LOCAL:8 = 6000
+	ELSEIF ABL:정액중독 == 3
+		LOCAL:8 = 8000
+	ELSEIF ABL:정액중독 == 4
+		LOCAL:8 = 16000
+	ELSEIF ABL:정액중독 >= 5
+		LOCAL:8 = 24000
+	ENDIF
+
+	;처녀なら고통が大量に入る
+	IF TALENT:처녀 > 0
+		LOCAL:10 = 10000
+		TALENT:처녀 = -1
+		CFLAG:206 = 3
+		TCVARn:1 = 1
+	ELSE
+		LOCAL:10 = 0
+	ENDIF
+
+	;공순
+	IF ABL:순종 <= 2
+		LOCAL:5 = 200
+	ELSEIF ABL:순종 == 3
+		LOCAL:5 = 500
+	ELSEIF ABL:순종 == 4
+		LOCAL:5 = 1000
+	ELSEIF ABL:순종 >= 5
+		LOCAL:5 = 2000
+	ENDIF
+
+	;습득
+	IF ABL:봉사정신 == 0
+		LOCAL:6 = 20
+	ELSEIF ABL:봉사정신 == 1
+		LOCAL:6 = 50
+	ELSEIF ABL:봉사정신 == 2
+		LOCAL:6 = 100
+	ELSEIF ABL:봉사정신 == 3
+		LOCAL:6 = 200
+	ELSEIF ABL:봉사정신 == 4
+		LOCAL:6 = 500
+	ELSEIF ABL:봉사정신 >= 5
+		LOCAL:6 = 1000
+	ENDIF
+
+	;공포　순종と정액중독で大まかに
+	IF ABL:순종 < 4
+		IF ABL:정액중독 < 4
+			LOCAL:11 = 20000
+		ELSE
+			LOCAL:11 = 2000
+		ENDIF
+	ELSE
+		IF ABL:정액중독 < 4
+			LOCAL:11 = 2000
+		ELSE
+			LOCAL:11 = 200
+		ENDIF
+	ENDIF
+
+	;습득基本値
+	LOCAL:6 += 0
+
+	;욕정基本値
+	LOCAL:7 += 10000
+
+	;굴복基本値
+	LOCAL:8 += 5000
+
+	;치정基本値
+	LOCAL:9 += 500
+
+	;고통基本値
+	LOCAL:10 += 0
+
+	;공포基本値
+	LOCAL:11 += 2000
+
+	;체력消費基本値
+	LOCAL:12 += 1050
+
+	;임신判定を余分に行う
+	SIF ISFEMALE()
+		CALL NINSIN_HANTEI,5,3
+
+	;即死공격、これを食らったら幽閉される
+	BASE:체력 = 0
+	BASE:기력 = 0
+ELSE
+	;油断度の上昇
+	TFLAG:3 += 200
+
+	;地の文:SPCOM13_MISS
+	CALL MESSAGE_SEX_SPCOM13_MISS
+
+	;服へのダメージ
+	CALL CLOTH_BATTLE_DAMAGE, 10
+
+	;ベース
+	EXP:정액경험 += 2
+
+	;윤활
+	LOCAL:4 = 200
+
+	;굴복　정액중독で変化
+	IF ABL:정액중독 == 0
+		LOCAL:8 = 200
+	ELSEIF ABL:정액중독 == 1
+		LOCAL:8 = 400
+	ELSEIF ABL:정액중독 == 2
+		LOCAL:8 = 1000
+	ELSEIF ABL:정액중독 == 3
+		LOCAL:8 = 2000
+	ELSEIF ABL:정액중독 == 4
+		LOCAL:8 = 3000
+	ELSEIF ABL:정액중독 >= 5
+		LOCAL:8 = 4000
+	ENDIF
+
+	;공포　순종で大まかに
+	IF ABL:순종 < 4
+		IF ABL:정액중독 < 4
+			LOCAL:11 = 1000
+		ELSE
+			LOCAL:11 = 100
+		ENDIF
+	ELSE
+		IF ABL:정액중독 < 4
+			LOCAL:11 = 500
+		ELSE
+			LOCAL:11 = 50
+		ENDIF
+	ENDIF
+
+	;습득基本値
+	LOCAL:6 += 100
+
+	;욕정基本値
+	LOCAL:7 += 0
+
+	;굴복基本値
+	LOCAL:8 += 200
+
+	;치정基本値
+	LOCAL:9 += 200
+
+	;고통基本値
+	LOCAL:10 += 0
+
+	;공포基本値
+	LOCAL:11 += 0
+
+	;체력消費基本値
+	LOCAL:12 += 300
+ENDIF
+
+;結界による촉수本数の変動
+CALL SET_TENTACLE_POOL
+
+;行動予約なし
+TFLAG:17 = -1
+;촉수の行動を記録
+TFLAG:20 = 1013
+
+;計算へ
+CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

@@ -1,0 +1,107 @@
+﻿;*******************************************************************************************************
+;悪落ちキャラの容姿を戻す。
+;CSTR:50〜に登録された容姿と現在の容姿を入れ替えることで容姿を戻す。
+;確率でCSTR:50〜に登録済みの容姿を書き換えることで、容姿の定着を表現する。
+;*******************************************************************************************************
+@RECOVER_CORRUPTION, ARG
+#DIM ExpCorrupt
+ExpCorrupt = EXP:ARG:함락경험
+
+;컨피그未設定なら実行しない
+SIF CONFIG_CHECK_PRISON_F(4) == 0
+	RETURN 1
+
+;プロフィール未設定なら実行しない
+SIF CFLAG:ARG:34 == 0
+	RETURN 1
+
+;初回登録未なら実行しない
+SIF GETBIT(CFLAG:ARG:80, 0) == 0
+	RETURN 1
+
+;髪
+IF GETBIT(CFLAG:ARG:80, 4) == 1 && GETBIT(CFLAG:ARG:81, 0) == 0 && RAND:100 <= (ExpCorrupt * 15)
+	CALL STAIN_CORRUPTED_HAIR_COLOR, ARG
+	SETBIT CFLAG:ARG:81, 0
+ENDIF
+
+;右目
+IF GETBIT(CFLAG:ARG:80, 5) == 1 && GETBIT(CFLAG:ARG:81, 1) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
+	CALL STAIN_CORRUPTED_EYE_COLOR_RIGHT, ARG
+	SETBIT CFLAG:ARG:81, 1
+ENDIF
+
+;左目
+IF GETBIT(CFLAG:ARG:80, 5) == 1 && GETBIT(CFLAG:ARG:81, 2) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
+	CALL STAIN_CORRUPTED_EYE_COLOR_LEFT, ARG
+	SETBIT CFLAG:ARG:81, 2
+ENDIF
+
+;肌
+IF GETBIT(CFLAG:ARG:80, 1) == 1 && GETBIT(CFLAG:ARG:81, 3) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
+	CALL STAIN_CORRUPTED_SKIN_COLOR, ARG
+	SETBIT CFLAG:ARG:81, 3
+ENDIF
+
+;함락경험10以上または全定着で目つきを定着させ完堕ちさせる
+IF TALENT:ARG:完堕ち == 0 && (ExpCorrupt > 10 || CFLAG:81 == 0b1111)
+	CSTR:ARG:50 = %CSTR:ARG:18%
+	CALL MESSAGE_CORRUPTION_FINAL, ARG
+	SETBIT CFLAG:ARG:81, 4
+	TALENT:ARG:完堕ち = 1
+ENDIF
+
+;容姿変更
+CALL CORRUPT_CHANGE_LOOKS, ARG
+
+;悪落ち中フラグ削除
+CLEARBIT CFLAG:80, 2
+
+RETURN 0
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@STAIN_CORRUPTED_HAIR_COLOR, ARG
+IF TALENT:ARG:변신능력 == 1
+	CSTR:ARG:51 = %CSTR:ARG:31%
+ELSE
+	CSTR:ARG:51 = %CSTR:ARG:30%
+ENDIF
+CALL MESSAGE_STAIN_CORRUPTED_HAIR_COLOR, ARG
+RETURN 0
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@STAIN_CORRUPTED_EYE_COLOR_RIGHT, ARG
+IF TALENT:ARG:변신능력 == 1
+	CSTR:ARG:52 = %CSTR:ARG:34%
+ELSE
+	CSTR:ARG:52 = %CSTR:ARG:32%
+ENDIF
+CALL MESSAGE_STAIN_CORRUPTED_EYE_COLOR_RIGHT, ARG
+RETURN 0
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@STAIN_CORRUPTED_EYE_COLOR_LEFT, ARG
+IF TALENT:ARG:변신능력 == 1
+	CSTR:ARG:53 = %CSTR:ARG:35%
+ELSE
+	CSTR:ARG:53 = %CSTR:ARG:33%
+ENDIF
+CALL MESSAGE_STAIN_CORRUPTED_EYE_COLOR_LEFT, ARG
+RETURN 0
+;*******************************************************************************************************
+
+;*******************************************************************************************************
+@STAIN_CORRUPTED_SKIN_COLOR, ARG
+IF TALENT:ARG:변신능력 == 1
+	CSTR:ARG:54 = %CSTR:ARG:37%
+ELSE
+	CSTR:ARG:54 = %CSTR:ARG:36%
+ENDIF
+CALL MESSAGE_STAIN_CORRUPTED_SKIN_COLOR, ARG
+RETURN 0
+;*******************************************************************************************************
+
+

@@ -1,0 +1,1937 @@
+﻿;2018/6/16作成（第７支部の>>252）
+;-------------------------------------------------
+;eraGVT구상テンプレ（범용 캐릭터用）
+;범용 캐릭터（キャラ番号0のキャラ）用の구상テンプレです
+;性格によって구상ファイルを分ける目的でこのファイルは用意されています
+;-------------------------------------------------
+;사나움구상。TALENT:악세서리==3（お嬢様）だと悪役令嬢、無いとヤンキーになる。
+;エロ系の部分はほとんど未完成。だれか書き足して
+;-------------------------------------------------
+;使用しているCFLAG（2018/6/16現在）
+;CFLAG:100　ショップ画面でのスケジュール
+;CFLAG:206　처녀喪失の状況
+
+;FLAG:53　リラクゼーション施設
+;FLAG:110　敵が洗脳/悪堕ちキャラなら =1
+;FLAG:111:交戦中の洗脳/悪堕ちキャラのキャラ番号
+
+;=================================================
+;구상 색상設定
+;-------------------------------------------------
+@KOJO_0_COLOR_27
+SETCOLOR 0xF08030
+
+
+;=================================================
+;MESSAGE.ERB
+;=================================================
+;最初
+;-------------------------------------------------
+@KOJO_0_FIRST_27
+
+;ターンエンド
+;-------------------------------------------------
+@KOJO_0_TURNEND_27
+
+;ショップ画面一口メッセージ
+;-------------------------------------------------
+@KOJO_0_HITOKUTI_SHOP_27
+;強制回復で分岐
+IF BASE:체력 <= 강제휴식체력
+	IF RAND:2 == 0
+		PRINTFORML 「zzz……っ！？……zzz……」
+		PRINTFORMDL  %CALLNAME%は寝落ち寸前だ……
+	ELSE
+		PRINTFORML （……）
+		PRINTFORMDL  %CALLNAME%はボーっとしている……
+	ENDIF
+ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0 && RAND:2 == 0
+	PRINTFORML 「昼間だ\@ TALENT:악세서리==3 ? わ # な \@……」
+	PRINTFORMDL  %CALLNAME%は憎々し気な顔でカーテンの隙間から入る光を見ている……
+ELSEIF CFLAG:100 == 예정_출격
+	PRINTFORML 「今日の獲物は何\@ TALENT:악세서리==3 ? かしら # かね \@」
+	PRINTFORMDL  %CALLNAME%は期待に胸を膨らませている……
+ELSEIF CFLAG:100 == 예정_단련
+	PRINTFORML 「体を動か\@ TALENT:악세서리==3 ? そうかしら # すか \@」
+	PRINTFORMDL  %CALLNAME%は心を弾ませている……
+ELSEIF CFLAG:100 == 예정_휴식
+	PRINTFORML 「何をしようか\@ TALENT:악세서리==3 ? しら #  \@」
+	PRINTFORMDL  %CALLNAME%は暇つぶし方法を考えている……
+ELSEIF CFLAG:100 == 예정_활동
+	PRINTFORML 「うぅん。 確かにお金は必要だけ\@ TALENT:악세서리==3 ? れ #  \@ど……」
+	PRINTFORMDL  %CALLNAME%は考え込んでいる……
+ELSEIF CFLAG:100 == 예정_방위
+	PRINTFORML 「何が起きるか\@ TALENT:악세서리==3 ? しら # な \@」
+	PRINTFORMDL  %CALLNAME%は期待に胸を膨らませている……
+ELSEIF CFLAG:100 == 예정_지원
+	PRINTFORML 「できれば%SELF_CALL()%が戦いたい\@ TALENT:악세서리==3 ? わ # んだけどな \@……」
+	PRINTFORMDL  %CALLNAME%は気が重そうだ……
+ELSEIF CFLAG:100 == 예정_정보
+	PRINTFORML 「別に%SELF_CALL()%がやらなくてもいいんじゃないか\@ TALENT:악세서리==3 ? しら # な \@……」
+	PRINTFORMDL  %CALLNAME%は気が重そうだ……
+ELSE
+	PRINTFORML 「今日は何をしようか\@ TALENT:악세서리==3 ? しら # な \@？」
+ENDIF
+PRINTL 
+
+;鍛錬
+;鍛錬開始
+;-------------------------------------------------
+@KOJO_0_TRAINING_BEGIN_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? そろそろ始めましょう # ぼちぼち始める \@か」
+
+;鍛錬終了
+;-------------------------------------------------
+@KOJO_0_TRAINING_END_27
+IF RESULT == 0 || (RESULT >= 3 && RESULT <= 8) || RESULT == 10
+	PRINTFORML 「いい汗かいた\@ TALENT:악세서리==3 ? わ # な \@」
+ELSE
+	PRINTFORML 「ふう、終わった\@ TALENT:악세서리==3 ? わ # な \@」
+ENDIF
+
+;走りこみ
+;-------------------------------------------------
+@KOJO_0_TRAINING_HASHIRI_27
+;임신
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORML 「はぁ、はぁ、げほっ……妊婦、舐めてた\@ TALENT:악세서리==3 ? わ #  \@……」
+	PRINTFORMDL  %CALLNAME%は普段よりのたのたと走りつつ、頻繁に休憩を入れている。
+ELSE
+	PRINTFORML 「ぜぇ、はぁ、ぜぇ、はぁ……ま、まだまだぁ……」
+	PRINTFORMDL  %CALLNAME%は最低限の休憩だけとって、ノルマ達成のためにまた走り始めた。
+ENDIF
+
+;精神鍛錬
+;-------------------------------------------------
+@KOJO_0_TRAINING_SEISHIN_27
+PRINTFORML 「……」
+PRINTFORMD  %CALLNAME%は真剣に
+IF TALENT:악세서리==3
+	IF RAND:2 == 0
+		PRINTFORMDL \@ BASE:TARGET:기력>=7000 ? セーター # マフラー \@を編んでいる……
+	ELSE
+		PRINTFORMDL \@ BASE:TARGET:지성>=400 ? ミルク # ジグソー \@パズルを解いている……
+	ENDIF
+ELSE
+	IF RAND:2 == 0
+		PRINTFORMDL \@ BASE:TARGET:기력>=7000 ? 戦艦 # 人型ロボット \@のプラモデルを作っている……
+	ELSE
+		SELECTCASE RAND:6
+			CASE 0
+				PRINTFORMD クロンダイク
+			CASE 1
+				PRINTFORMD マインスイーパ
+			CASE 2
+				PRINTFORMD ゴミ箱 −GOMIBAKO−
+			CASE 3
+				PRINTFORMD ハローキティといっしょ!ブロッククラッシュ123!!
+			CASE 4
+				PRINTFORMD ずるい龍
+			CASE 5
+				PRINTFORMD たけしの挑戦状
+		ENDSELECT
+	PRINTFORMDL を攻略している……
+	ENDIF
+ENDIF
+
+;瞑想
+;-------------------------------------------------
+@KOJO_0_TRAINING_MEISOU_27
+PRINTFORMDL  %CALLNAME%は\@ TALENT:악세서리==3 ? 椅子に姿勢よく座り # 畳の上で座禅を組んで \@目を閉じている……
+PRINTFORML 「すぅー……ふぅー……」
+PRINTFORML （無心……無心\@ TALENT:악세서리==3 ? よ # だ \@……）
+PRINTL 
+IF RAND:2 == 0
+	PRINTFORMDL  %CALLNAME%は無心というより、何も考えていないようだ……
+ELSE
+	PRINTFORMDL  %CALLNAME%は考え事をしている……
+ENDIF
+
+;筋トレ
+;-------------------------------------------------
+@KOJO_0_TRAINING_KINTORE_27
+;임신
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORML 「ふぐっ、うぅっ……」
+	PRINTFORMDL  %CALLNAME%は思い通りに動かない体にイラつき、大きくなった腹を思わず睨みつけた。
+ELSE
+	PRINTFORML 「ふ\@ TALENT:악세서리==3 ? ふっ！ ふっ # ふんっ！ ふんっ \@……！」
+	PRINTFORMDL  %CALLNAME%は着実にノルマをこなしていく。
+	PRINTFORML （もっと強く……！）
+ENDIF
+
+;自衛訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_JIEI_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? えいやぁ # うらぁ \@！！」
+PRINTFORMDL  %CALLNAME%は過剰防衛気味の공격を対戦相手に叩き込む。
+PRINTFORML 「やっぱり、인간相手じゃ物足りない\@ TALENT:악세서리==3 ? わねぇ # なぁ \@」
+PRINTFORMDL  倒れた対戦相手を足蹴にしつつ、%CALLNAME%は촉수に思いを馳せている……。
+
+;ダッシュ
+;-------------------------------------------------
+@KOJO_0_TRAINING_DASH_27
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORML （もっと速く……っ！？）
+	PRINTFORML 「ふごぉっ！？」
+	PRINTFORMDL  %CALLNAME%は膨らんだ腹部のせいで、バランスを崩して転んだ……。
+ELSE
+	PRINTFORML （もっと速く……！）
+	PRINTFORMDL  %CALLNAME%は진지함に走り込みをしている……。
+ENDIF
+
+;근거리戦闘訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_SHORT_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? えい！ やあ！ はぁっ！ ……ふぅ、次 # うりゃ！ そいや！ でりゃっ！ ……ふぅ、次来いやぁ \@！」
+;임신
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORMDL  腹部が大きくなっている%CALLNAME%は動きに精彩を欠いている。
+	PRINTFORML 「あっ！？\@ RAND:2==0 ? へぶっ # ぶふっ \@……。」
+	IF RAND:3 == 0
+		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
+	ELSEIF RAND:2 == 0
+		PRINTFORMDL  足を滑らせて床にキスする羽目になった……
+	ELSE
+		PRINTFORMDL  공격がスカって顔からターゲットにぶつかってしまった……
+	ENDIF
+ELSE
+	PRINTFORMDL  危なげなく飛んできたボールを避け、確実にターゲットに공격を当てていく。
+ENDIF
+
+;중거리戦闘訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_MIDDLE_27
+PRINTFORML 「っ！ \@ TALENT:악세서리==3 ? えいやぁ！ ……ふっ # せいやっ！ ……チェストォ \@！」
+;임신
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORMDL  腹部が大きくなっている%CALLNAME%は動きが鈍くなっている。
+	PRINTFORML 「あっ！？\@ RAND:2==0 ? げふっ # ぐふっ \@……。」
+	IF RAND:3 == 0
+		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
+	ELSEIF RAND:2 == 0
+		PRINTFORMDL  止まりきれず、突きをした棒に胸から突っ込んでしまった……
+	ELSE
+		PRINTFORMDL  공격がスカって顔からターゲットにぶつかってしまった……
+	ENDIF
+ELSE
+	PRINTFORMDL  身の丈以上の棒を持ち、危なげなく飛んできたボールを避け、確実にターゲットに棒を叩き込んでいく。
+ENDIF
+
+;원거리戦闘訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_LONG_27
+PRINTFORML 「次はっ！？ そこ\@ TALENT:악세서리==3 ? ねっ！ ……当たりっ # かっ！ ……やりぃ \@！」
+;임신
+IF CHECK_PREGNANT_F(TARGET) > 0
+	PRINTFORMDL  腹部が大きくなっている%CALLNAME%は動きが鈍くなっている。
+	PRINTFORML 「あっ！？\@ RAND:2==0 ? げふっ # ぐふっ \@……。」
+	IF RAND:3 == 0
+		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
+	ELSEIF RAND:2 == 0
+		PRINTFORMDL  足を滑らせて床にキスする羽目になった……
+	ELSE
+		PRINTFORMDL  ボールを踏みつけて背中を床に強く打ち付けた……
+	ENDIF
+ELSE
+	PRINTFORMDL  \@ RAND:2==0 ? モデルガン # ソフトテニスボール数個 \@を持ち、危なげなく飛んできたボールを避け、弾を時々補給しつつ確実にターゲットに当てていく。
+ENDIF
+
+;기초전투訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_BASIS_27
+PRINTFORMD  %CALLNAME%は
+IF TALENT:악세서리==3
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMD システマ
+		CASE 1
+			PRINTFORMD 太極拳
+		CASE 2
+			PRINTFORMD 薙刀術
+		CASE 3
+			PRINTFORMD 弓術
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMD 銃剣術
+		CASE 1
+			PRINTFORMD 日本拳法
+		CASE 2
+			PRINTFORMD 杖術
+		CASE 3
+			PRINTFORMD 砲術
+	ENDSELECT
+ENDIF
+PRINTFORMDL の稽古をしている……
+
+;戦術研究訓練
+;-------------------------------------------------
+@KOJO_0_TRAINING_TACTICS_27
+IF RAND:2 == 0
+	PRINTFORML 「へえ、弱点はここにあるの\@ TALENT:악세서리==3 ? ね # か \@……」
+ELSE
+	PRINTFORML 「へえ、苦手な動きなんてあるの\@ TALENT:악세서리==3 ? ね # か \@……」
+ENDIF
+LOCAL:0 = RAND:2
+PRINTFORMDL  %CALLNAME%は\@ LOCAL:0==0 ? 過去の映像 # 蓄積されたデータ \@を元に研究をしている。
+IF RAND:2 == 0 && LOCAL:0 == 0
+	PRINTFORML 「……あっ！」
+	PRINTFORMD  画面上で
+	IF RAND:3 == 0 && EXP:TARGET:피간경험 > 0
+		PRINTFORMD 自身の
+	ELSE
+		PRINTFORMD 他の女性の
+	ENDIF
+	PRINTFORMDL 慮辱が始まったため、
+	IF TALENT:TARGET:촉수의포로 > 0
+		PRINTFORMDL  %CALLNAME%は我慢できずオナニーを初めてしまった……
+	ELSE
+		PRINTFORMDL  %CALLNAME%は思わず電源を消してしまった……
+	ENDIF
+ELSEIF RAND:2 == 0 && LOCAL:0 == 1
+	PRINTFORML 「……あっ！」
+	PRINTFORMDL  資料には推定被害者数の項目もあり、その多さを見て、
+	IF TALENT:TARGET:촉수의포로 > 0
+		PRINTFORMDL  %CALLNAME%は自身の凌辱される様子を想像してオナニーを初めてしまった……
+	ELSE
+		PRINTFORMDL  %CALLNAME%は気炎を上げた……
+	ENDIF
+ELSE
+	PRINTFORML 「ふぅん……」
+	PRINTFORMDL  %CALLNAME%は大人しく研究をしている。
+ENDIF
+
+;촉수 구속구が鍛錬の邪魔をする
+;-------------------------------------------------
+@KOJO_0_TRAINING_TENTACLECLOTH_27
+PRINTFORML 「あふぅ……い、いきなり動\@ TALENT:악세서리==3 ? かないで # くな \@っ……！」
+
+;=================================================
+;MESSAGE_BATTLE.ERB
+;=================================================
+;촉수と遭遇
+;ザコ촉수と戦闘（自動勝利）
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_MOB_27
+IF TALENT:촉수의포로 > 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「弱い\@ TALENT:악세서리==3 ? わね…… 物足りないわ # な…… 物足りないな \@……」
+		CASE 1
+			PRINTFORML 「もっと耐え\@ TALENT:악세서리==3 ? なさいよ。 早すぎるわ # ろよ。 早すぎるって \@」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「他に壊していいもの無いか\@ TALENT:악세서리==3 ? しらねぇ # なぁ \@……」
+		CASE 1
+			PRINTFORML 「まるで話になら\@ TALENT:악세서리==3 ? ないわ # ねえな \@……」
+		CASE 2
+			PRINTFORML 「雑魚\@ TALENT:악세서리==3 ? ね。 物足りないわ # だな。 物足りないな \@……」
+	ENDSELECT
+ENDIF
+
+;雑魚촉수と戦闘
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_MOB_BATTLE_27
+PRINTFORML 「今回の獲物は\@ TALENT:악세서리==3 ? あれね # あいつか \@……」
+PRINTFORMDL %CALLNAME%は舌なめずりしている……
+
+;보스 촉수と戦闘
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_BOSS_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「あれは……！」
+	RESETCOLOR
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORM を目にした途端、%CALLNAME%
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML はゴクリと唾を飲み込んだ……
+		CASE 1
+			PRINTFORML は思わず内股を摺り合わせていた……
+		CASE 2
+			PRINTFORML の顔が喜悦に歪んだ……
+	ENDSELECT
+ELSEIF MARK:공포각인 >= 3
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「それ以上近づ\@ TALENT:악세서리==3 ? かないで # くなよ \@っ！」
+		CASE 1
+			PRINTFORML 「%SELF_CALL()%は…… 勝つ……！」
+		CASE 2
+			PRINTFORML 「そこに居\@ TALENT:악세서리==3 ? なさい # ろよ \@！ %SELF_CALL()%が殺して\@ TALENT:악세서리==3 ? あげる # やる \@っ！」
+	ENDSELECT
+	RESETCOLOR
+	PRINTFORMD  %CALLNAME%は
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORMDL の異様に委縮し、体の震えが止まらない。
+	CALL KOJO_0_COLOR_27
+	PRINTFORML 「\@ TALENT:악세서리==3 ? 行くわよ # スッゾコラー \@！」
+	PRINTFORMDL  %CALLNAME%は震えをごまかすために咆哮した……
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「出た\@ TALENT:악세서리==3 ? わね、化け物 # な、クソ野郎 \@！ %SELF_CALL()%が相手\@ TALENT:악세서리==3 ? よ # だ \@！」
+		CASE 1
+			PRINTFORML 「来\@ TALENT:악세서리==3 ? なさい # いよ \@、生きたサンドバック\@ TALENT:악세서리==3 ? のくせに # 風情が \@！」
+		CASE 2
+			PRINTFORML 「ふん、%SELF_CALL()%を倒せるとでも思ってるの\@ TALENT:악세서리==3 ? かしら、哀れね # か、クソが \@」
+	ENDSELECT
+	PRINTFORMDL  %CALLNAME%は肉食獣のような笑みを浮かべながら、\@ TALENT:악세서리==3 ? 優雅な # 喧嘩慣れした \@動作で戦闘態勢を取った……
+ENDIF
+
+;보스 촉수襲来
+;-------------------------------------------------
+@KOJO_0_RAID_BOSS_27
+
+;최종 보스 촉수と戦闘
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_LASTBOSS_27
+PRINTFORML 「これで、最後\@ TALENT:악세서리==3 ? ね # か \@……」
+IF TALENT:촉수의포로 > 0
+	PRINTFORMDL  %CALLNAME%は寂しさを感じつつも、戦意は鈍っていないようだ。
+ELSEIF MARK:공포각인 >= 3
+	PRINTFORMDL  %CALLNAME%は震える体を抑えるために、頬を叩いて気合を入れている。
+ELSE
+	PRINTFORMDL  %CALLNAME%はウォーミングアップを終え、笑みを浮かべながら相対した。
+ENDIF
+PRINTFORML 「行\@ TALENT:악세서리==3 ? きます # くぞ \@！」
+
+;최종 보스 촉수襲来
+;-------------------------------------------------
+@KOJO_0_RAID_LASTBOSS_27
+
+;初めて洗脳キャラと対峙した
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_SENNOU_FIRST_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? あら # お \@？ サンドバックになりに来\@ TALENT:악세서리==3 ? まし #  \@たか？」
+PRINTFORMDL  %CALLNAME%は%PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
+
+;洗脳キャラと対峙
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_SENNOU_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「くっ、%SELF_CALL()%は、違う……！」
+	PRINTFORMDL  %CALLNAME%は、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
+ELSE
+	PRINTFORML 「\@ TALENT:악세서리==3 ? うふ、うふふふふ # はは、やってやろうじゃん \@！」
+	PRINTFORMDL  %CALLNAME%は인간を合法的にボコボコにできることに興奮して、嗜虐的な笑みを浮かべている……
+ENDIF
+
+;始めて悪堕ちキャラと対峙した
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_AKUOTI_FIRST_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? 黙りなさい。 斜め45度で手刀を食らわせてあげるわよ。 # うるせぇ！ 黙って殴られとけ！ \@」
+PRINTFORMDL  %CALLNAME%は%PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
+
+;悪堕ちキャラと対峙
+;-------------------------------------------------
+@KOJO_0_ENCOUNT_AKUOTI_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「くっ、%SELF_CALL()%は、違う……！」
+	PRINTFORMDL  %CALLNAME%は、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
+ELSE
+	PRINTFORML 「ごちゃごちゃうるさい\@ TALENT:악세서리==3 ? わね # な \@。 さっさと戦\@ TALENT:악세서리==3 ? いましょう？ # おうぜ \@」
+	PRINTFORMDL  %CALLNAME%は인간を合法的に殴り倒せることに興奮して、嗜虐的な笑みを浮かべている……
+ENDIF
+
+
+;戦闘関連の구상
+;キャラの行動
+;変身前のかけ声
+;구상オリジナルのかけ声を使用する場合のみコメントアウトを外して記述してください
+;-------------------------------------------------
+;@KOJO_0_BATTLE_CHARA_TRANSFORMCALL_27
+
+;変身後の名乗り
+;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
+;-------------------------------------------------
+;@KOJO_0_BATTLE_CHARA_NANORI_27
+
+;기력が尽きて変身が強制的に解けた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TRANSRELEASE_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「あ、あぁ……」
+ELSEIF MARK:공포각인 >= 3
+	PRINTFORML 「うっ、\@ TALENT:악세서리==3 ? この # クソ \@っ……」
+ELSE
+	PRINTFORML 「この、\@ TALENT:악세서리==3 ? バカにしないで # なめんじゃねえぞ \@！」
+ENDIF
+
+;絶頂で変身が強制的に解けた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TRANSRELEASE_ECS_27
+PRINTFORML 「はうっ……！ こ、この\@ TALENT:악세서리==3 ?  # クソが \@っ……！」
+
+;撤退成功
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_SUCCESS_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「はぁ……はぁ…… 次は\@ TALENT:악세서리==3 ? 殺るわ # ぶっ殺す \@……」
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「見逃して\@ TALENT:악세서리==3 ? あげるわ # やるよ \@！」
+		CASE 1
+			PRINTFORML 「ふん！ 調子が出ない\@ TALENT:악세서리==3 ? わね # な \@！」
+	ENDSELECT
+ENDIF
+
+;撤退失敗
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TETTAI_FALSE_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「……ちっ！ 逃げれない\@ TALENT:악세서리==3 ? わね # な \@」
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「まだ殴られ足りない\@ TALENT:악세서리==3 ? みたいね # ようだな \@？」
+		CASE 1
+			PRINTFORML 「%SELF_CALL()%に止めを刺されたい\@ TALENT:악세서리==3 ? のね # んだな \@……！」
+		CASE 2
+			PRINTFORML 「しつこい\@ TALENT:악세서리==3 ? わね # な \@！」
+	ENDSELECT
+ENDIF
+
+;COMF1：근거리공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_SHORT_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「\@ TALENT:악세서리==3 ? 食らえっ # チェストォ \@！」
+	CASE 1
+		PRINTFORML 「\@ TALENT:악세서리==3 ? 倒れなさい # チェェイ \@！」
+ENDSELECT
+
+;COMF2：중거리공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_MIDDLE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「逃が\@ TALENT:악세서리==3 ? さないわ # すか \@！」
+	CASE 1
+		PRINTFORML 「当てる\@ TALENT:악세서리==3 ? わ #  \@！」
+ENDSELECT
+
+;COMF3：원거리공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_RANGE_LONG_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「当たれっ！」
+	CASE 1
+		PRINTFORML 「\@ TALENT:악세서리==3 ? 止まりなさい # 動くな \@！」
+ENDSELECT
+
+;공격がクリティカルヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_CRITICAL_HIT_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「まともに入った\@ TALENT:악세서리==3 ? わね # な \@」
+	CASE 1
+		PRINTFORML 「このまま押し切る！」
+ENDSELECT
+
+;공격が通常ヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_HIT_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「悪くはない\@ TALENT:악세서리==3 ? わね # な \@」
+	CASE 1
+		PRINTFORML 「よし、当たった！」
+ENDSELECT
+
+;공격失敗・カス当たり
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ATTACK_FALSE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「避けるんじゃ\@ TALENT:악세서리==3 ? ないわよ # ねえ \@……！」
+	CASE 1
+		PRINTFORML 「ちっ！ 手元が狂った\@ TALENT:악세서리==3 ? わ #  \@……！」
+ENDSELECT
+
+;COMF4：방어
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_DEFENSE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「今は견딘다しかない\@ TALENT:악세서리==3 ? わね # な \@……！」
+	CASE 1
+		PRINTFORML 「くっ！ \@ TALENT:악세서리==3 ? 煩わしい # うざったい \@……！」
+ENDSELECT
+
+;COMF5：거리를벌린다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TAKEAWAY_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「すぅー、ふぅー……」
+	CASE 1
+		PRINTFORML 「……まだまだ行く\@ TALENT:악세서리==3 ? わよ # ぞ \@っ！」
+ENDSELECT
+
+;COMF6：배후로돈다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_STEPIN_27
+IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && RAND:2 == 0
+	PRINTFORML 「こいつの死角ってどこ\@ TALENT:악세서리==3 ?  # だ \@よ！」
+ELSE
+	PRINTFORML 「오니さん、こちら\@ TALENT:악세서리==3 ?  # っと \@！」
+ENDIF
+
+;COMF7：관찰한다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEETHROUGH_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML （どう来る……？）
+	CASE 1
+		PRINTFORML 「来\@ TALENT:악세서리==3 ? なさ #  \@い……！」
+ENDSELECT
+
+;COMF69：아무것도안한다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NOACTION_27
+PRINTFORML （……）
+PRINTFORML 「はっ！？」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%はボーっとしていたようだ。
+
+;COMF8：풀어낸다開始
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「離れ\@ TALENT:악세서리==3 ? 、なさい # ろ \@……！」
+	CASE 1
+		PRINTFORML 「\@ TALENT:악세서리==3 ? うぐぐぐ # くぉのぉ \@……！」
+ENDSELECT
+
+;풀어낸다成功
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_SUCCESS_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「ふぅ…… 反撃開始\@ TALENT:악세서리==3 ? よ # だ \@」
+	CASE 1
+		PRINTFORML 「絶対に、\@ TALENT:악세서리==3 ? 仕留める # ぶっ殺す \@……！」
+ENDSELECT
+
+;풀어낸다失敗
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HURIHODOKU_FALSE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「離っ、ちょっ…… うぐっ！」
+	CASE 1
+		PRINTFORML 「ぐっ！ 離れっ…… がっ！」
+ENDSELECT
+
+;COMF9：날뛴다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ABARERU_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「このっ、このっ！」
+	CASE 1
+		PRINTFORML 「食ら\@ TALENT:악세서리==3 ? え # いやがれ \@！」
+ENDSELECT
+
+;COMF10：견딘다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_TAERU_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML （今は、견딘다しかない……！）
+	CASE 1
+		PRINTFORML （く\@ TALENT:악세서리==3 ?  # そ \@っ…… タイミングが……！）
+ENDSELECT
+
+;COMF11：가만히있는다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NASUGAMAMA_27
+IF TALENT:촉수의포로 > 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「はぁ、はぁ…… もっとぉ……」
+		CASE 1
+			PRINTFORML 「\@ TALENT:악세서리==3 ? き、来なさい。受けて立つわ # こ、来いよ。ふんっ \@」
+	ENDSELECT
+	PRINTFORML （ああっ、すごい……）
+ELSE
+	PRINTFORML 「っ……」
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML （油断を突くしかない\@ TALENT:악세서리==3 ? わね # な \@……）
+		CASE 1
+			PRINTFORML （く\@ TALENT:악세서리==3 ? 、後で磨り潰してあげる # そ、後でぶっ殺す \@っ……！）
+	ENDSELECT
+ENDIF
+
+;COMF12：받아들인다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_UKEIRERU_27
+IF TALENT:촉수의포로 > 0
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「%SELF_CALL()%……」
+		CASE 1
+			PRINTFORML 「あ……」
+	ENDSELECT
+	PRINTFORML （もう……どうなってもいい\@ TALENT:악세서리==3 ? わ #  \@……）
+ELSE
+	PRINTFORML 「っ……」
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML （く\@ TALENT:악세서리==3 ?  # そ \@……油断を誘うためとはいえ、こんなことをっ！）
+		CASE 1
+			PRINTFORML （自由になったら百倍返し\@ TALENT:악세서리==3 ? よ # だ \@！）
+	ENDSELECT
+ENDIF
+
+;COMF13：봉사한다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HOUSI_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「今度は%SELF_CALL()%から……」
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML （好き…… もっとしたい……）
+		CASE 1
+			PRINTFORML （あぁん…… もっとぉ……）
+	ENDSELECT
+ELSE
+	PRINTFORML 「くっ…… こんなことを、しな\@ TALENT:악세서리==3 ? いとならないなんて # くちゃいけないなんて \@……」
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML （……殺す殺す殺す殺す殺す……）
+		CASE 1
+			PRINTFORML （……早く倒れ\@ TALENT:악세서리==3 ? なさい # ろ \@……）
+	ENDSELECT
+ENDIF
+
+;COMF14：V삽입방어
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_ANTI_V_27
+IF TALENT:촉수의포로 > 0
+	IF TALENT:처녀 > 0
+		PRINTFORML 「まだ처녀はあげない\@ TALENT:악세서리==3 ? わよ # からな \@……」
+	ELSE
+		PRINTFORML 「まだ挿れさせない\@ TALENT:악세서리==3 ? わ # からな \@……」
+	ENDIF
+ELSE
+	IF TALENT:처녀 > 0
+		PRINTFORML 「%촉수市民("化け物 # こんな奴ら \@なんかに初めてを\@ TALENT:악세서리==3 ? あげるわけないでしょう","やるもんか")%っ！」
+	ELSE
+		PRINTFORML 「%촉수市民("化け物","こんな奴ら")%のモノなんかっ……！」
+	ENDIF
+ENDIF
+
+;COMF40：떼어낸다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HIKIHAGASU_27
+CALL KOJO_0_BATTLE_CHARA_HURIHODOKU_27
+
+;떼어낸다成功
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HIKIHAGASU_SUCCESS_27
+PRINTFORML 「ちっ！ ……まだ離れない\@ TALENT:악세서리==3 ? わね # な \@」
+
+;떼어낸다失敗
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_HIKIHAGASU_FALSE_27
+CALL KOJO_0_BATTLE_CHARA_HURIHODOKU_FALSE_27
+
+;COMF44：노려본다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_NIRAMI_27
+
+;COMF45：매도한다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_BATOU_27
+
+;COMF46：반항한다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_RESISTANCE_27
+
+;COMF47：설득해본다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_PERSUADE_27
+
+;COMF73：SP変身
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「まだまだ\@ TALENT:악세서리==3 ? これからよ # やるぜ \@っ！！」
+	CASE 1
+		PRINTFORML 「ここから反撃開始\@ TALENT:악세서리==3 ? よ # だ \@っ！」
+ENDSELECT
+
+;COMF70：SPバースト
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SP_BURST_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「まだまだ\@ TALENT:악세서리==3 ? これからよ # やるぜ \@っ！！」
+	CASE 1
+		PRINTFORML 「これで仕切り直し\@ TALENT:악세서리==3 ? よ # だ \@っ！」
+ENDSELECT
+
+
+;촉수側の行動（공격など）
+;공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_27
+
+;촉수の공격がクリティカルヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「おごぉっ！？ ～～っ！！ ぐうぅっ……！」
+	CASE 1
+		PRINTFORML 「ぐげぇっ！？ ……げほっ、ごほっ！」
+ENDSELECT
+
+;ACTION1：촉수の공격が通常ヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_HIT_27
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「ぐふっ！？」
+	CASE 1
+		PRINTFORML 「ふべっ！？」
+	CASE 2
+		PRINTFORML 「ひぐっ！？」
+	CASE 3
+		PRINTFORML 「げふッ！？」
+ENDSELECT
+
+;촉수の공격を回避
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_FALSE_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「うぁっ……！ 危なかった\@ TALENT:악세서리==3 ? わ #  \@……！」
+		CASE 1
+			PRINTFORML 「あぶっ……！ ちっ！」
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「遅い\@ TALENT:악세서리==3 ? わよ # な \@」
+		CASE 1
+			PRINTFORML 「\@ TALENT:악세서리==3 ? あら、この程度かしら # ふん、この程度か \@？」
+	ENDSELECT
+ENDIF
+
+;공격がカス当たり
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_ATTACK_GRAZE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「いたっ！ ……\@ TALENT:악세서리==3 ? やったわね # やりやがったな \@……！」
+	CASE 1
+		PRINTFORML 「くっ！ \@ TALENT:악세서리==3 ? 痛いじゃないの # いてぇな、こいつ \@！」
+ENDSELECT
+
+;ACTION2：絡みつく
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_27
+
+;촉수の絡みつくが成功
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_SUCCESS_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「……あっ！？」
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「やめ\@ TALENT:악세서리==3 ? なさい # ろ \@、変態！」
+		CASE 1
+			PRINTFORML 「なっ！ どこを触って\@ TALENT:악세서리==3 ? いるのよ # やがる \@！」
+	ENDSELECT
+ENDIF
+
+;촉수の絡みつくを回避
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_KARAMITUKU_FALSE_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「い、今はダメ\@ TALENT:악세서리==3 ? よ # だ \@」
+ELSE
+	SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「捕ま\@ TALENT:악세서리==3 ? らないわ # るか \@よ！」
+	CASE 1
+		PRINTFORML 「危ない\@ TALENT:악세서리==3 ? わね # な \@！」
+	ENDSELECT
+ENDIF
+
+
+;ACTION3：촉수が体液を吐く
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_27
+
+;촉수の体液を吐くがヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_HIT_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「うぷっ…… くっ、臭いっ……」
+	CASE 1
+		PRINTFORML 「むぐっ！？ おげぇ……っ」
+ENDSELECT
+
+;촉수の体液を吐くを回避
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAIEKI_FALSE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「……汚\@ TALENT:악세서리==3 ? らわしいわね # いな \@……！」
+	CASE 1
+		PRINTFORML 「そんなの当たる\@ TALENT:악세서리==3 ? はずがないでしょう # わけないだろ \@！」
+ENDSELECT
+
+;ACTION4：촉수が거리를벌린다
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_TAKEAWAY_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「逃げ\@ TALENT:악세서리==3 ? る # ん \@な……！」
+	CASE 1
+		PRINTFORML 「\@ TALENT:악세서리==3 ? 小賢しい真似を # 大人しくしてろ \@！」
+ENDSELECT
+
+;ACTION5：敵キャラが押し倒すを開始
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_OSHITAOSU_27
+
+;敵キャラの押し倒す成功
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_OSHITAOSU_SUCCESS_27
+CALL KOJO_0_BATTLE_TENTACLE_KARAMITUKU_SUCCESS_27
+
+;押し倒す回避
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_OSHITAOSU_FALSE_27
+CALL KOJO_0_BATTLE_TENTACLE_KARAMITUKU_FALSE_27
+
+;ACTION6：敵キャラが邪悪な波動を開始
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_HADOU_27
+
+;邪悪な波動がヒット
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_HADOU_HIT_27
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「うっ！？」
+	CASE 1
+		PRINTFORML 「力がっ！？」
+	CASE 2
+		PRINTFORML 「まずいっ！？」
+ENDSELECT
+
+;邪悪な波動を回避
+;-------------------------------------------------
+@KOJO_0_BATTLE_TENTACLE_HADOU_FALSE_27
+CALL KOJO_0_BATTLE_TENTACLE_TAIEKI_FALSE_27
+
+;衣装の損傷が酷くなった
+;지문: アウターが破れ始めた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_OUTERDAMAGE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「っ！ ……服が破れてっ……！」
+	CASE 1
+		PRINTFORML 「ふ、服ぐらい何\@ TALENT:악세서리==3 ? よ # さ \@」
+ENDSELECT
+
+;지문: アウターが破れた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_OUTERBREAK_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「あっ…… 服……」
+	CASE 1
+		PRINTFORML 「こ、この変態がぁ……！」
+ENDSELECT
+
+;지문: インナーが破れ始めた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_INNERDAMAGE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「あっ！ ……下着までっ……！」
+	CASE 1
+		PRINTFORML 「やめ\@ TALENT:악세서리==3 ? なさい # ろ \@、変態！」
+ENDSELECT
+
+;지문: インナーが破れた
+;-------------------------------------------------
+@KOJO_0_BATTLE_CLOTH_INNERBREAK_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「やっ！ ……下着がっ……！」
+	CASE 1
+		PRINTFORML 「変態！ 変態！ 変態ぃ！」
+ENDSELECT
+
+;보스 촉수・최종 보스 촉수に勝利
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_WIN_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「はあ、はぁ……%SELF_CALL()%の勝ち\@ TALENT:악세서리==3 ? よ # だ \@！」
+ELSE
+	PRINTFORML 「……まだ殴り足りない\@ TALENT:악세서리==3 ? わ # な \@」
+ENDIF
+RESETCOLOR
+PRINTFORMD  %PRINT_TRANSCALLNAME(TARGET)%は
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORMDL の残骸を見て独り言ちた。
+CALL KOJO_0_COLOR_27
+PRINTFORML 「帰\@ TALENT:악세서리==3 ? りましょう # る \@か……」
+
+;敵キャラに勝利
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_WIN_ENEMY_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「はあ、はぁ……%SELF_CALL()%の勝ち\@ TALENT:악세서리==3 ? よ # だ \@！」
+ELSE
+	PRINTFORML 「……まだ殴り足りない\@ TALENT:악세서리==3 ? わ # な \@」
+ENDIF
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は倒れている%PRINT_TRANSCALLNAME(FLAG:111)%を見て独り言ちた。
+PRINTFORML 「持って帰\@ TALENT:악세서리==3 ? りましょう # る \@か……」
+
+;최종 보스 촉수出現
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_LASTBOSSAPPEAR_27
+PRINTFORML 「\@ TALENT:악세서리==3 ? あら、まだいるのね # お？親玉か \@？」
+
+;完全殲滅
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_PERFECT_27
+PRINTFORML 「終わったの\@ TALENT:악세서리==3 ? ね # か \@……」
+
+;촉수に捕らわれていたキャラの救出
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「生きてる？……生きてるだけマシ\@ TALENT:악세서리==3 ? ね # だな \@」
+	CASE 1
+		PRINTFORML 「うっ……酷い姿\@ TALENT:악세서리==3 ? ね # だな \@」
+ENDSELECT
+
+;悪堕ちキャラに捕らわれたキャラの救出
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_AKUOTI_27
+CALL KOJO_0_BATTLE_END_RESCUE_27
+
+;洗脳中キャラの救出
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_SENNOU_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML （ああ、人型サンドバックが……）
+		PRINTFORML 「ん？なんでもない\@ TALENT:악세서리==3 ? わ # ぞ \@」
+	CASE 1
+		PRINTFORML 「ちょっと殴らせて？ほら洗脳が解けてないかもしれないじゃ\@ TALENT:악세서리==3 ? ない # ん \@」
+		PRINTFORML 「叩けば治るってよく言うし？」
+ENDSELECT
+
+;敵キャラの救出
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_RESCUE_ENEMY_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「はぁ、手間のかかる……」
+	CASE 1
+		PRINTFORML 「ほら、立\@ TALENT:악세서리==3 ? ちなさい、引きづって行くわよ # て、引きづってくぞ \@」
+ENDSELECT
+
+;敗北
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_LOSS_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ぐぅっ……」
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「ぐぅっ……この%SELF_CALL()%がっ……」
+		CASE 1
+			IF ENEMY_TYPE_CHECK_F("AKUOTI")==0
+				PRINTFORML 「こっ、殺す…… 絶対にっ……」
+			ELSE
+				PRINTFORML 「次はっ…… 絶対にっ……」
+			ENDIF
+	ENDSELECT
+ENDIF
+
+;時間切れ
+;-------------------------------------------------
+@KOJO_0_BATTLE_END_TIMEUP_27
+IF BASE:체력 < MAXBASE:체력 / 4
+	PRINTFORML 「……はぁ、はぁ……勝てなかった\@ TALENT:악세서리==3 ? わね # な \@……」
+ELSE
+	PRINTFORML 「あっ！ \@ TALENT:악세서리==3 ? 待ちなさい # 逃げるな \@っ！」
+ENDIF
+
+;心境変化関連
+;倒錯
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_TOUSAKU_27
+;犯された場合
+PRINTFORML （あ、気持ち……別に気持ちよくない！）
+
+;怒り
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_IKARI_27
+;罵倒した場合
+IF SELECTCOM == 45
+	PRINTFORML 「\@ TALENT:악세서리==3 ? 去勢するわよ、女の敵が # ぶっ殺すぞオラァ \@！」
+;공격を受けた場合
+ELSE
+	PRINTFORML （……必ず死なす！）
+ENDIF
+
+;諦観
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_TEIKAN_27
+;反抗した場合
+IF SELECTCOM == 46
+	PRINTFORML （だ、駄目か\@ TALENT:악세서리==3 ? しら # な \@……）
+;공격を受けた場合
+ELSE
+	PRINTFORML （ま、まずいかも……）
+ENDIF
+
+;冷静
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_REISEI_27
+;反抗した場合
+IF SELECTCOM == 46
+	PRINTFORML （大丈夫、%SELF_CALL()%が負けるはずがない！）
+;絡みつかれた場合
+ELSE
+	PRINTFORML （冷静にならないと……！）
+ENDIF
+
+;動揺
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_DOUYOU_27
+;罵倒した場合
+IF SELECTCOM == 45
+	PRINTFORML 「こ、この程度でどうにかなる%SELF_CALL()%じゃない\@ TALENT:악세서리==3 ? わ #  \@っ！」
+;絡みつかれた場合
+ELSE
+	PRINTFORML （\@ TALENT:악세서리==3 ? い、一体 # や、やばい。 \@どうすれば……）
+ENDIF
+
+;高揚
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_KOUYOU_27
+;背後に回り込んだ場合
+IF SELECTCOM == 6
+	PRINTFORML （\@ TALENT:악세서리==3 ? このまま、いけるっ！！ # 来た来た来たぁーーーー！ \@）
+;공격を回避された場合
+ELSE
+	PRINTFORML （っ！！、気合を入れないと！）
+ENDIF
+
+;消沈
+;-------------------------------------------------
+@KOJO_0_BATTLE_SHINKYOU_CHANGE_SYOUTIN_27
+;공격を回避された場合
+PRINTFORML （え……うそ\@ TALENT:악세서리==3 ? でしょ # だろ \@……）
+
+;体が竦んだ関連
+;촉수의포로で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_TORIKO_27
+PRINTFORML （촉수様ぁ……はっ！ 今、何を考えて……）
+
+;快楽で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KAIRAKU_27
+PRINTFORML （駄目\@ TALENT:악세서리==3 ? よ # だ \@、思い出したら……）
+
+;고통で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KUTUU_27
+PRINTFORML 「っ！ い、痛みが何\@ TALENT:악세서리==3 ? よ # だ \@！」
+
+;屈辱で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KUTUZYOKU_27
+PRINTFORML （立ち向かったら……でも、立ち向かわないと……）
+
+;공포で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_KYOUHU_27
+PRINTFORML 「ぐ、う……\@ TALENT:악세서리==3 ? 動かないと # 動け、動け \@……！」
+
+;恥辱で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_TIZYOKU_27
+PRINTFORML （ま、また捕まえられたら……）
+
+;기생の影響で体が竦む
+;-------------------------------------------------
+@KOJO_0_BATTLE_DISACTION_PARASITE_27
+PRINTFORML 「ふぐっ……いきなり動\@ TALENT:악세서리==3 ? かないで # くな \@っ……！」
+
+
+;=================================================
+;MESSAGE_MOUSOU.ERB
+;=================================================
+;未設定
+;-------------------------------------------------
+;@KOJO_0_TRAINING_MOUSOU
+
+;未設定
+;-------------------------------------------------
+;@KOJO_0_TRAINING_TENTACLECLOTH_BOOST
+
+;未設定
+;-------------------------------------------------
+;@KOJO_0_SELF_MOUSOU
+
+;未設定
+;-------------------------------------------------
+;@KOJO_0_SELF_MOUSOU_TWICE
+
+
+;=================================================
+;MESSAGE_PRISON.ERB
+;=================================================
+;初めての幽閉
+;-------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_FIRST_27
+
+;二度目以降の幽閉後の初被姦
+;-------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_START_27
+
+;幽閉後の被姦開始文
+;-------------------------------------------------
+@KOJO_0_PRISON_PRISENTENCE_27
+
+;洗脳になった
+;-------------------------------------------------
+@KOJO_0_PRISON_SENNOU_27
+PRINTFORML 「ごほっ！……がふっ！……うぁ……がは……ぐぅ……」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%の口から鼻から、体内を満たす촉수の体液がごぼごぼと逆流し、喉を伝って胸を汚していく。
+PRINTFORMDL  注がれ過ぎた精液が鈍い水音を立て、緩んだ牝穴と尻穴から地面に吐き出されておぞましい水たまりを広げていく。
+PRINTFORML 「がぁ……ううぅ……ぐぅ……ごぼぉっ……！」
+PRINTFORMDL  いつまでかは渇望していた外気に触れても、%PRINT_TRANSCALLNAME(TARGET)%の目に理性が戻ることはなかった……
+
+;悪堕ちになった
+;-------------------------------------------------
+@KOJO_0_PRISON_AKUOTI_27
+PRINTFORML 「ふっ、%SELF_CALL()%に任せてお\@ TALENT:악세서리==3 ? きなさい # け \@」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は目を細め、唇をぬめる舌で濡らして微笑んだ。
+PRINTFORMDL  たおやかな指先に絡まる촉수を愛おしげに撫で、口付ける。
+PRINTFORML 「自由にできる肉人形は多い方がいい\@ TALENT:악세서리==3 ? もの # からな \@」
+
+;自ら悪堕ち
+@KOJO_0_SHOP_AKUOTI_27
+;-------------------------------------------------
+PRINTFORML 「やっぱり인간の方がいい\@ TALENT:악세서리==3 ? わ # な \@」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は通りすがりの女性を\@ TALENT:TARGET:기생>0 ? 촉수で # 腕で \@締め上げながら呟く。
+PRINTFORML 「촉수様、%SELF_CALL()%と一緒に인간と敵対し\@ TALENT:악세서리==3 ? ましょう # ようぜ \@」
+PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%は声一つ上げられずに締め落とされた女性をそのままに、人知れず町の外へ消えていった……
+
+;自ら幽閉
+@KOJO_0_SHOP_PRISON_27
+;-------------------------------------------------
+
+;取り込まれ
+;-------------------------------------------------
+@KOJO_0_PRISON_DEAD_27
+
+;후타나리化
+;-------------------------------------------------
+@KOJO_0_PRISON_HUTANARI_27
+
+;모유체질化
+;-------------------------------------------------
+@KOJO_0_PRISON_BONYU_27
+
+;묘상화
+;-------------------------------------------------
+@KOJO_0_PRISON_NAEDOKO_27
+
+;C中心攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_0_27
+
+;V中心攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_1_27
+
+;A中心攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_2_27
+
+;B中心攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_3_27
+
+;Sな攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_4_27
+
+;強制奉仕
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_5_27
+
+;羞恥な攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_6_27
+
+;子촉수に犯される
+;-----------------------------------------------
+@KOJO_0_PRISON_COM_7_27
+
+;후타나리攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_100_27
+
+;V拡張
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_101_27
+
+;A拡張
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_102_27
+
+;搾乳攻め
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_103_27
+
+;-----------------------------------------------
+;種付け
+@KOJO_0_PRISON_COM_104_27
+
+;Vに産卵
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_200_27
+
+;Aに産卵
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_201_27
+
+;注射
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_300_27
+
+;촉수の기생
+;-------------------------------------------------
+@KOJO_0_PRISON_COM_301_27
+
+
+;=================================================
+;MESSAGE_SEX.ERB
+;=================================================
+;絶頂関連
+;キャラが사정
+;-------------------------------------------------
+@KOJO_0_SEX_CHARA_SYASEI_27
+
+;キャラが대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_CHARA_SYASEI_HI_27
+
+;キャラが모유
+;-------------------------------------------------
+@KOJO_0_SEX_CHARA_HUNNYU_27
+
+;キャラが大量모유
+;-------------------------------------------------
+@KOJO_0_SEX_CHARA_HUNNYU_HI_27
+
+;C絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_C_27
+
+;C強絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_C_HI_27
+
+;V絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_V_27
+
+;V強絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_V_HI_27
+
+;A絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_A_27
+
+;A強絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_A_HI_27
+
+;B絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_B_27
+
+;B強絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_B_HI_27
+
+;多重絶頂に関する구상
+;CVAB四重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVAB_27
+
+;CVA三重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVA_27
+
+;CVB三重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CVB_27
+
+;CAB三重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CAB_27
+
+;VAB三重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VAB_27
+
+;CV二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CV_27
+
+;CA二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CA_27
+
+;CB二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_CB_27
+
+;VA二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VA_27
+
+;VB二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_VB_27
+
+;AB二重絶頂
+;-------------------------------------------------
+@KOJO_0_SEX_MULTIECSTASY_AB_27
+
+;絶頂抑制
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_INHIBITION_27
+
+;絶頂禁止
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_PROHIBITION_27
+
+;絶頂懇願
+;-------------------------------------------------
+@KOJO_0_SEX_ECSTASY_ENTREATY_27
+
+;刻印関連
+;쾌락각인１取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_1_27
+
+;쾌락각인２取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_2_27
+
+;쾌락각인３取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_3_27
+
+;쾌락각인４取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_4_27
+
+;쾌락각인５取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KAIRAKU_5_27
+
+;고통각인１取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_1_27
+
+;고통각인２取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_2_27
+
+;고통각인３取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_3_27
+
+;고통각인４取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_4_27
+
+;고통각인５取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUTUU_5_27
+
+;굴복각인１取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_1_27
+
+;굴복각인２取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_2_27
+
+;굴복각인３取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_3_27
+
+;굴복각인４取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_4_27
+
+;굴복각인５取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KUPPUKU_5_27
+
+;공포각인１取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_1_27
+
+;공포각인２取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_2_27
+
+;공포각인３取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_3_27
+
+;공포각인４取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_4_27
+
+;공포각인５取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_KYOUHU_5_27
+
+;치욕각인１取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_1_27
+
+;치욕각인２取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_2_27
+
+;치욕각인３取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_3_27
+
+;치욕각인４取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_4_27
+
+;치욕각인５取得
+;-------------------------------------------------
+@KOJO_0_SEX_MARK_TIJYOKU_5_27
+
+;촉수사정
+;촉수사정오발
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_EXPLODE
+
+;膣に通常사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_VAGINA_27
+
+;膣に대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_VAGINA_HI_27
+
+;애널に通常사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_ANAL_27
+
+;애널に대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_ANAL_HI_27
+
+;手に通常사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_HAND_27
+
+;手に대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_HAND_HI_27
+
+;口内に通常사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_27
+
+;口内に대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_HI_27
+
+;胸に通常사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_BUST_27
+
+;胸に대량사정
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_BUST_HI_27
+
+;ワレメに通常사정（現在消失中）
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_WAREME_27
+
+;ワレメに대량사정（現在消失中）
+;-------------------------------------------------
+@KOJO_0_SEX_TENTACLE_SYASEI_WAREME_HI_27
+
+;自慰関連
+;夜間自慰
+;-------------------------------------------------
+@KOJO_0_SELF_NIGHT_27
+
+;戦闘後自慰
+;-------------------------------------------------
+@KOJO_0_SELF_BATTLEEND_27
+
+;普通の自慰
+;-------------------------------------------------
+@KOJO_0_SELF_N_27
+
+;胸自慰
+;-------------------------------------------------
+@KOJO_0_SELF_B_27
+
+;アナニー
+;-------------------------------------------------
+@KOJO_0_SELF_A_27
+
+;素質関連
+;처녀喪失
+;-------------------------------------------------
+@KOJO_0_SEX_LOSTVIRGIN_27
+;子촉수襲撃・通常戦闘中（敵）・幽閉中（敵）・촉수 구속구/기생촉수
+IF CFLAG:TARGET:206 >= 1 && CFLAG:TARGET:206 <= 4
+	IF TALENT:촉수의포로 > 0
+		PRINTFORML 「……%SELF_CALL()%の初めて、촉수様にぃ……」
+	ELSE
+		PRINTFORML 「%SELF_CALL()%の初めてが……\@ TALENT:악세서리==3 ? 万死に値するわ # ぶっ殺す \@」
+	ENDIF
+;연인との夜の営み・仲間夜這い
+ELSEIF CFLAG:TARGET:206 == 5 || CFLAG:TARGET:206 == 6
+	PRINTFORML 「……いい\@ TALENT:악세서리==3 ? わ #  \@よ、別に%SELF_CALL()%の初めて程度……」
+;枕営業・援助交際・公衆便所（浮浪者）・公衆便所（犬）・정보원
+ELSEIF CFLAG:TARGET:206 >= 7 && CFLAG:TARGET:206 <= 10 || CFLAG:TARGET:206 == 12
+	PRINTFORML 「なんで%SELF_CALL()%の初めてをこんな奴に……」
+;クズ市民
+ELSEIF CFLAG:TARGET:206 == 11
+	PRINTFORML 「……殺す……」
+ELSE
+	PRINTFORML 「%SELF_CALL()%の初めてが……」
+ENDIF
+
+;촉수의포로取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TORIKO_27
+
+;음란取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_INRAN_27
+
+;음핵取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_INKAKU_27
+
+;음호取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_INTUBO_27
+
+;음고取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_INJIRI_27
+
+;음유取得
+;-------------------------------------------------
+@KOJO_0_GETTALENT_INNYUU_27
+
+;청순파を失う
+;-------------------------------------------------
+@KOJO_0_LOSETALENT_SEIJUNHA_27
+PRINTFORML （……使えるものは何でも使わないとっ……！）
+
+;촉수의포로による여체수용
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TSJYUYOU_TORIKO_27
+
+;음란化による여체수용
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TSJYUYOU_INRAN_27
+
+;女の喜びによる여체수용
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TSJYUYOU_FEMININE_27
+
+;女の魅力による여체수용
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TSJYUYOU_CHARM_27
+
+;양도음란化による여체수용
+;-------------------------------------------------
+@KOJO_0_GETTALENT_TSJYUYOU_RYOUTOU_27
+
+;피임결계が破られた
+;-------------------------------------------------
+@KOJO_0_PREGNANCY_SHIELD_COLLAPSED_27
+
+;プレイヤーキャラによる性공격
+;COMF100：수음공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEX_ATTACK100_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「手でもいいの\@ TALENT:악세서리==3 ? ですか # か \@？」
+ELSE
+	PRINTFORML （うぅ……手が汚れる……）
+ENDIF
+
+;COMF101：펠라공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEX_ATTACK101_27
+PRINTFORML 「ふぁ、じゅるるっ、じゅぶ、うぶっ……」
+IF TALENT:촉수의포로 > 0
+	PRINTFORML （……%촉수市民("촉수 # おちんぽ \@様の\@ TALENT:악세서리==3 ? 暴れん棒","竿")%にご奉仕……）
+ELSE
+	PRINTFORML （ああああぁ……汚い汚い汚い……）
+ENDIF
+
+;COMF102：풋잡공격
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEX_ATTACK102_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「えい、えい、気持ちいい\@ TALENT:악세서리==3 ? です #  \@か？」
+ELSE
+	PRINTFORML （足でなんて……変態だ\@ TALENT:악세서리==3 ? わ #  \@……）
+ENDIF
+
+;COMF103：스마타애태우기
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEX_ATTACK103_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「\@ TALENT:악세서리==3 ? ふふ、入れたいですか # ふん、入れたいか \@？」
+ELSE
+	PRINTFORML （……\@ TALENT:악세서리==3 ? まずいわ、少しズレたら入ってしまいそう # ヤバい、少しズレたら入るだろこれ \@……）
+ENDIF
+
+;COMF104：쥐어짠다
+;-------------------------------------------------
+@KOJO_0_BATTLE_CHARA_SEX_ATTACK104_27
+IF TALENT:촉수의포로 > 0
+	PRINTFORML 「ふっ、ぅん、気持ちいい、\@ TALENT:악세서리==3 ? ですか # か \@？」
+	PRINTFORML （ああ……気持ちいい\@ TALENT:악세서리==3 ? わ #  \@……）
+ELSE
+	PRINTFORML 「うっ、ふっ、こんな……」
+	PRINTFORML （……早く果ててしま\@ TALENT:악세서리==3 ? いなさい # え \@っ！）
+ENDIF
+
+
+;=================================================
+;MESSAGE_SEX_COM.ERB
+;=================================================
+;촉수から受ける性コマンド関連
+;COM0：C攻め弱　클리토리스を撫でる
+;-------------------------------------------------
+@KOJO_0_SEX_COM0_27
+
+;COM1：C攻め強　클리토리스に吸い付く
+;-------------------------------------------------
+@KOJO_0_SEX_COM1_27
+
+;COM2：V攻め弱　膣口を愛撫（처녀は奪いません）
+;-------------------------------------------------
+@KOJO_0_SEX_COM2_27
+
+;COM3：V攻め強　挿入
+;-------------------------------------------------
+@KOJO_0_SEX_COM3_27
+
+;COM4：A攻め弱　애널を撫で回す
+;-------------------------------------------------
+@KOJO_0_SEX_COM4_27
+
+;COM5：A攻め強　애널に挿入
+;-------------------------------------------------
+@KOJO_0_SEX_COM5_27
+
+;COM6：B攻め弱　胸を揉みしだく
+;-------------------------------------------------
+@KOJO_0_SEX_COM6_27
+
+;COM7：B攻め強　乳首に吸い付く
+;-------------------------------------------------
+@KOJO_0_SEX_COM7_27
+
+;COM8：スパンキング
+;-------------------------------------------------
+@KOJO_0_SEX_COM8_27
+
+;COM9：針
+;-------------------------------------------------
+@KOJO_0_SEX_COM9_27
+
+;COM10：手淫
+;-------------------------------------------------
+@KOJO_0_SEX_COM10_27
+
+;COM11：フェラ
+;-------------------------------------------------
+@KOJO_0_SEX_COM11_27
+
+;-------------------------------------------------
+;COM12：イラマチオ
+@KOJO_0_SEX_COM12_27
+
+
+;=================================================
+;MESSAGE_SEX_COMSP.ERB
+;=================================================
+;SPCOM0：C攻めSP　클리토리스に噛み付く
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM0_27
+
+;SPCOM1：V攻めSP　奥を突く
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM1_27
+
+;SPCOM2：A攻めSP　激しく애널を犯す
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM2_27
+
+;SPCOM3：B攻めSP　乳首に噛み付く
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM3_27
+
+;SPCOM4：電流
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM4_27
+
+;SPCOM5：パイズリ
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM5_27
+
+;SPCOM6：強制自慰
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM6_27
+
+;SPCOM7：羞恥プレイ
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM7_27
+
+;SPCOM7：羞恥プレイ
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM7_27
+
+;SPCOM8：尿道攻め
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM8_27
+
+;SPCOM9：V拡張攻め
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM9_27
+
+;SPCOM10：A拡張攻め
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM10_27
+
+;SPCOM11：甘えん坊授乳プレイ
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM11_27
+
+;SPCOM12：ヘソ快楽攻め
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM12_27
+
+;SPCOM13：丸飲み精液攻め
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM13_27
+
+;SPCOM14：催眠姦
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM14_27
+
+;SPCOM15：サブミッションファック
+;-------------------------------------------------
+@KOJO_0_SEX_SPCOM15_27
+
+
+;=================================================
+;MESSAGE_SUBEVENT.ERB
+;=================================================
+;戦闘のサブイベント
+;悪堕ちキャラに敗北して犯される
+;-------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_RAPED_ENEMY_27
+
+;촉수 구속구を着せられた
+;-------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_SETTENTACLECLOTH_27
+
+;촉수 구속구による被姦
+;-------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_ACTTENTACLECLOTH_27
+SELECTCASE RAND:2
+	CASE 0
+		PRINTFORML 「ふぁんっ！？ や、やめ\@ TALENT:악세서리==3 ? なさい # ろ \@っ！」
+	CASE 1
+		PRINTFORML 「あんっ……くっ！ この、いきなりっ……」
+ENDSELECT
+
+;촉수服による被姦
+;-------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_ACTTENTACLESUIT_27
+
+
+;=================================================
+;COM_ATTACK_COMMON.ERB
+;=================================================
+;전투스타일チェンジスキーム
+;-------------------------------------------------
+@KOJO_0_SUBEVENT_BATTLE_CHARA_BATTLE_STYLE_CHANGE_27
+
+
+;=================================================
+;.ERB
+;=================================================
+;服の損傷関連
+;服の損傷LV.2（現在消失中）
+;-------------------------------------------------
+@KOJO_0_BATTLE_SUITS_DAMAGE_2_27
+
+;服の損傷LV.3（現在消失中）
+;-------------------------------------------------
+@KOJO_0_BATTLE_SUITS_DAMAGE_3_27
+
+;服の損傷LV.4（現在消失中）
+;-------------------------------------------------
+@KOJO_0_BATTLE_SUITS_DAMAGE_4_27
+
+;服の損傷LV.5（現在消失中）
+;-------------------------------------------------
+@KOJO_0_BATTLE_SUITS_DAMAGE_5_27
+

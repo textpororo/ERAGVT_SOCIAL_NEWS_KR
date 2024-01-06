@@ -1,0 +1,35 @@
+﻿;방어
+@COM4
+
+;刻印による行動制限判定　１で行動できない
+CALL ACT_LIMIT
+SIF RESULT == 1
+	RETURN 1
+
+;滞空中なら着地状態になる
+IF GETBIT(TCVARn:216, 1)
+	TCVARn:216 = 4
+	;FEAT効果による着地時の反動
+	SIF TALENT:날개 > 0
+		TFLAG:99 += 1
+ELSE
+	TCVARn:216 = 0
+ENDIF
+
+;距離表示
+CALL PRINT_DISTANCE
+PRINTL 
+
+;방어플래그를 세운다
+TCVARn:2 = 자세：방어
+
+;지문: 방어
+CALL MESSAGE_BATTLE_CHARA_DEFENSE
+;지문: 洗脳/悪堕ちキャラが操作キャラの방어を見た
+SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+	CALL MESSAGE_OTHER_BATTLE_CHARA_DEFENSE
+
+;행동포인트を+1
+EX:행동포인트 += 1
+
+RETURN 1

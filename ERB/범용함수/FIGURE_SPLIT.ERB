@@ -1,0 +1,12 @@
+﻿;**********************************************************
+;変数ARGのARG:1番目の桁の値を返す式中関数
+;とりあえず18桁まで取得可能
+@FIGURE_SPLIT(ARG,ARG:1)
+#FUNCTION
+IF ARG:1 >= 2
+	FOR LOCAL, 0,(ARG:1 - 1)
+		ARG = ARG / 10
+	NEXT
+ENDIF
+LOCAL = ARG % 10
+RETURNF LOCAL

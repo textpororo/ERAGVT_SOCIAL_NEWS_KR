@@ -1,0 +1,171 @@
+﻿;---------------------------------------------------------------------
+;ボス襲撃の実行
+@RAID_ATTACK
+#DIM CCOUNT
+DRAWLINE
+FLAG:43 = 0
+
+
+;ランダム抽選用に候補をクリア
+CALL CLEARRANDCHOOSE
+FOR CCOUNT, 0, CHARANUM
+	SIF CCOUNT == MASTER
+		CONTINUE
+	;性別필터
+	SIF ISHOLE() == 0
+		CONTINUE
+	;出撃していないアクティブなヒロインをターゲットとして狙う
+	SIF (CFLAG:CCOUNT:100 == 101 || CFLAG:CCOUNT:100 == 105 || CFLAG:CCOUNT:0 != 0 || CFLAG:CCOUNT:999 == 0)
+		CONTINUE
+	CALL ADDRANDCHOOSE,CCOUNT
+	;FEAT効果で狙われやすくなる
+	IF TALENT:CCOUNT:말려드는체질 > 0
+		CALL ADDRANDCHOOSE,CCOUNT
+		CALL ADDRANDCHOOSE,CCOUNT
+	ENDIF
+	IF TALENT:CCOUNT:남다른미모 > 0
+		CALL ADDRANDCHOOSE,CCOUNT
+		CALL ADDRANDCHOOSE,CCOUNT
+	ENDIF
+NEXT
+;候補がない場合、中断
+IF CHOICECOUNT_F() < 1
+	FLAG:45 = 0
+	RETURN
+ENDIF
+TARGET = RANDCHOOSE_F()
+LOCAL:1 = 0
+LOCAL:2 = 0
+
+;●発生イベントの種別決定
+IF FLAG:999
+	;デバッグ等で指定済み
+ELSE
+	;行動不能ヒロインは戦闘無しで攫われる(夜襲イベント⇒戦闘キャンセル)
+	IF TALENT:사지결손 > 0 || TALENT:번식자루 > 0
+        FLAG:45 = 3002
+    ;ライブ公演直後
+    ELSEIF CFLAG:100 == 104 && CFLAG:101 == 8
+        FLAG:45 = 3003
+    ;昼
+    ELSEIF TIME == 0 && TALENT:밤악마의귀족 == 0
+        FLAG:45 = 3001
+    ;夜
+    ELSE
+        FLAG:45 = 3002
+    ENDIF
+ENDIF
+
+
+PRINTL 
+PRINTL 
+PRINTL 
+;デバッグ中は演出省略
+IF FLAG:999==0
+	REPEAT 30
+		IF LOCAL:2 == 0
+			LOCAL:1 += 50
+			SIF LOCAL:1 == 250
+				LOCAL:2 = 1
+		ELSE
+			LOCAL:1 -= 50
+			SIF LOCAL:1 == 0
+				LOCAL:2 = 0
+		ENDIF
+		FONTBOLD
+		SETCOLOR LOCAL:1,0,0
+		PRINTL 　　　―――――　　　ＷＡＲＮＩＮＧ　！！　　―――――
+		PRINTL 
+		PRINTL 
+		PRINTL 
+		TINPUTS 100,"WARNING",0,""
+		CLEARLINE 5
+		SIF RESULTS != "WARNING"
+			BREAK
+	REND
+ENDIF
+SETCOLOR 250,0,0
+PRINTL 　　　―――――　　　ＷＡＲＮＩＮＧ　！！　　―――――
+PRINTL 
+PRINTL 
+PRINTL 
+RESETCOLOR
+FONTREGULAR
+
+;●イベント内で状態異常等になるかもしれないため、
+;　TRAIN先頭で行われている初期化の一部を先に済ませておく
+;TCVARの手動初期化
+VARSET TCVARn
+;衣装の耐久度を設定
+CALL CLOTH_BATTLE_SETHP
+;衣装の情報を更新
+CALL REFRESH_CLOTH_DATA
+
+;狙われたキャラはわずかに체력, 기력が回復する
+LOCAL = MAXBASE:체력 / 10 + 500
+BASE:체력 = LIMIT(LOCAL + BASE:체력, 0, MAXBASE:체력)
+
+LOCAL = MAXBASE:기력 / 100 + 500
+BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
+
+
+
+PRINTL 
+
+
+
+
+;●イベント内で状態異常等になるかもしれないため、
+;　TRAIN先頭で行われている初期化の一部を先に済ませておく
+;TCVARの手動初期化
+VARSET TCVARn
+;衣装の耐久度を設定
+CALL CLOTH_BATTLE_SETHP
+;衣装の情報を更新
+CALL REFRESH_CLOTH_DATA
+
+;ここで個別イベント呼び出し
+TRYCCALLFORM EVENT_BATTLE_EXEC_{FLAG:45}
+CATCH
+	PRINTL 
+	PRINTL #####     ERROR !!     #####
+	PRINTFORML 存在しない襲撃イベントが選択されました。（EVENT_BATTLE_SITUATION_{FLAG:45}）
+	IF FLAG:999
+		PRINTL 存在するイベントを選択してください
+	ELSE
+		PRINTL 原因究明のため、掲示板にできるだけ詳細な発生状況を報告してください
+	ENDIF
+	PRINTW 
+	PRINTL イベントを強制スキップして無理やりゲームを続行します
+	PRINTW 
+	RETURN
+ENDCATCH
+;RESULT == 1なら↑内でエンカウント演出表示済み
+IF RESULT != 1
+	CALL ENCOUNT_BOSS
+ENDIF
+
+SIF FLAG:999 == 1
+	PRINTFORMW エンカウント番号 == {RESULT}
+IF RESULT != 1
+	PRINTL 
+	PRINTL #####     ERROR !!     #####
+	PRINTL ボス襲撃イベント不発バグです。原因究明のため、
+	PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+	PRINTW 
+	PRINTL イベントを強制スキップして無理やりゲームを続行します
+	PRINTW 
+	RETURN
+ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
+	PRINTL 
+	PRINTL #####     ERROR !!     #####
+	PRINTL ENEMY_TYPE_CHECK_F("AKUOTI")TRUEバグです。原因究明のため、
+	PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+	PRINTW 
+	PRINTL イベントを強制スキップして無理やりゲームを続行します
+	PRINTW 
+	RETURN
+ENDIF
+
+BEGIN TRAIN
+

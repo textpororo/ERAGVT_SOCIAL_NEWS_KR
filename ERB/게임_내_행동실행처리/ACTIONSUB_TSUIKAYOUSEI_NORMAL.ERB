@@ -1,0 +1,163 @@
+﻿;인조인간加入を元にロボ要素排除(……この本末転倒感のある文字列)で加入テスト
+;もうちょっと手を加えてランダム生成機能可能化+手動生成時に種族設定可能に変更
+
+@TSUIKAYOUSEI_NORMAL
+#DIM KEEP_TARGET
+#DIM RACE
+#DIM FEAT_SELECT, 300
+#DIM FEAT_NUM
+	CALL LB
+	PRINTFORML これまでに追加で加入させた人数 {FLAG:250}人
+	PRINTL 新しいキャラクターを新規加入させます。
+	PRINTL キャンセルはできませんが、よろしいですか？
+	PRINTL [0]性別：♀で確定
+	PRINTL [1]性別：♂で確定
+	PRINTL [2]ランダム生成する
+	PRINTL 
+	PRINTL [99]キャンセル
+	$INPUT_LOOP_100_0
+	INPUT
+	IF RESULT == 0 || RESULT == 1 || RESULT == 2
+		FLAG:250 += 1
+		PRINTW 加入要請を行いました。
+		CALL LB
+		CALL DOT_AFTER, 1
+		PRINTL 
+		KEEP_TARGET = TARGET
+		ADDCHARA 0
+		TARGET = CHARANUM - 1
+		IF RESULT != 2
+			PRINTW 加入する新規キャラクターの設定を行います。
+			IF RESULT == 1
+				TALENT:남자 = 1
+				NAME:TARGET = 범용 캐릭터(♂)
+			ENDIF
+			CALL FIRSTSETTING_CHARA_MAIN, TARGET, 0
+		ENDIF
+		;フィートの設定開始
+		;---------------------------------------------------------------------
+		CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",TARGET
+		RACE = RESULT
+		;フィートの開始番号
+		LOCAL:2 = 1000
+		;種族の数
+		LOCAL:3 = 11
+		PRINTFORML 『%CALLNAME%』にフィートを設定しますか？
+		PRINTFORML [0] 네
+		PRINTFORML [1] 아니오
+		PRINTFORML [2]ランダムに設定する
+		$INPUT_LOOP_100_1
+		INPUT
+		IF RESULT == 0
+			;フィートの初期化
+			VARSET FEAT_SELECT
+			FOR LOCAL, 100, 300
+				SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
+					FEAT_SELECT:LOCAL = 0
+			NEXT
+			CALL LB
+			$MASTER_LOOP_100_2
+			;フィートの数をカウント
+			FEAT_NUM = 0
+			FOR LOCAL, 100, 300
+				SIF FEAT_SELECT:LOCAL > 0
+					FEAT_NUM ++
+			NEXT
+			PRINTFORML %TALENTNAME:(RACE)%
+			CALL SHORTLINE
+			CALL SYUZOKU_INFO, (RACE)
+			PRINTL 
+			PRINTL (取得可能フィート)          選択
+			FOR LOCAL, 100, 300
+				SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
+					CONTINUE
+				IF LOCAL < 200
+					PRINT 　★
+				ELSE
+					PRINT 　☆
+				ENDIF
+				PRINTFORM %TALENTNAME:(LOCAL + LOCAL:2),22,LEFT%  [{LOCAL}]  
+				IF LOCAL == 110 && FEAT_SELECT:LOCAL > 0
+					SETCOLOR 255,0,0
+					PRINT ◎
+					RESETCOLOR
+					PRINTPLAIN  固定取得
+				ELSEIF FEAT_SELECT:LOCAL > 0
+					SETCOLOR 255,128,0
+					PRINT ○
+					RESETCOLOR
+				ELSE
+					PRINT ×
+				ENDIF
+				PRINTL 
+			NEXT
+			PRINTL 
+			PRINTFORML 選択したフィート({FEAT_NUM}/3)
+			SIF FEAT_NUM > 3
+				SETCOLOR 128,128,128
+			PRINTL [0]決定
+			RESETCOLOR
+			$INPUT_LOOP_100_2
+			INPUT
+			IF RESULT == 0 && FEAT_NUM <= 3
+			ELSEIF RESULT >= 100 && RESULT <= 300 && FEAT_ABLE_F(RACE, RESULT + LOCAL:2) > 0
+				LOCAL = RESULT
+				CALL LB
+				CALL FEAT_INFO, (LOCAL + LOCAL:2)
+				PRINTL 
+				IF FEAT_SELECT:LOCAL > 0
+					FEAT_SELECT:LOCAL = 0
+				ELSE
+					FEAT_SELECT:LOCAL = 1
+				ENDIF
+				GOTO MASTER_LOOP_100_2
+			ELSE
+				GOTO INPUT_LOOP_100_2
+			ENDIF
+			;フィートの設定
+			FOR LOCAL, 100, 300 
+				IF FEAT_SELECT:LOCAL > 0
+					TALENT:(LOCAL + LOCAL:2) = 1
+				ELSE
+					TALENT:(LOCAL + LOCAL:2) = 0
+				ENDIF
+			NEXT
+			;プロフィールに反映
+			CALL SET_PROFILE, TARGET
+		ELSEIF RESULT == 1
+			PRINTFORML %PRINT_CALLNAME(TARGET)%にはフィートを設定しません
+			PRINTW 
+		ELSEIF RESULT == 2
+			;フィートのランダム設定
+			CALL SET_FEAT_DEFAULT, TARGET, RACE
+			;プロフィールに反映
+			CALL SET_PROFILE, TARGET
+			PRINTFORML ランダムにフィートを設定しました
+			PRINTW 
+		ELSE
+			GOTO INPUT_LOOP_100_1
+		ENDIF
+
+		CALL LB
+		CALL DOT_AFTER, 1
+		PRINTL 
+		PRINTFORML 『%CALLNAME%』を{TARGET}人目のメンバーとして迎え入れました。
+		IF CHARANUM_SAFE_PARTYCHECK()>=6
+			PRINTFORML 『%CALLNAME%』は控えメンバーに加えられます。
+		ELSE
+			CFLAG:TARGET:999 = 1
+		ENDIF
+		;キャラメイク完了処理(個別)
+		CALL CHARA_MAKE_FINALIZE(TARGET)
+
+		PRINTW 
+		TARGET = KEEP_TARGET
+	ELSEIF RESULT == 99
+	ELSE
+		GOTO INPUT_LOOP_100_0
+	ENDIF
+;ENDIF
+PRINTL
+PRINTL 
+
+;----------------------------------------------------------
