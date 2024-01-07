@@ -1719,11 +1719,7 @@ CALL TRANSFORM, 0
 ;행동 예정을 리셋
 CFLAG:ARG:100 = 예정_휴식
 ;음문의 진행도가 저하
-<<<<<<< HEAD
 ;전락하면 저하하지 않는다
-=======
-;完堕ち하면 저하하지 않는다
->>>>>>> 682f2b258eba5e0d4a8ef21dfedb5c950fb6fa33
 CALL TATTOO_ACCESS, "PROGRESS_VAR"
 SIF TALENT:전락 != 1
 	RESULT = RESULT * 7 / 10
@@ -1754,11 +1750,7 @@ ELSEIF TALENT:ARG:사지결손 == 1
 	PRINTL 
 	CFLAG:ARG:0 = 0
 	CALL RECOVER_TO_PARTY, ARG
-<<<<<<< HEAD
 ELSEIF TALENT:ARG:전락 > 0
-=======
-ELSEIF TALENT:ARG:完堕ち > 0
->>>>>>> 682f2b258eba5e0d4a8ef21dfedb5c950fb6fa33
 	PRINTL 묘한 말을 하거나, 기묘한 이름을 대거나 하고 있습니다.
 	PRINTL 눈앞에 있는 것은 정말 동일인일까요…
 	PRINTL 
@@ -1819,13 +1811,8 @@ IF CONFIG_CHECK_MANIAC_F(9) == 1
 				;변신 가능 캐릭터라면 겉옷이 변경된다
 				SIF TALENT:변신능력 == 1
 					CFLAG:41 = 401
-<<<<<<< HEAD
 				;＠중국판　전락 장비
 				IF TALENT:전락 == 1
-=======
-				;＠중국판　完堕ち 장비
-				IF TALENT:完堕ち == 1
->>>>>>> 682f2b258eba5e0d4a8ef21dfedb5c950fb6fa33
 					;변신능력이 있다면 음박의 사슬(淫縛の鎖)
 					IF TALENT:변신능력 == 1
 						CFLAG:41 = 402

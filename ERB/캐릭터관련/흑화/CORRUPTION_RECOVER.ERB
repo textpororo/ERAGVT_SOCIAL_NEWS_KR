@@ -43,13 +43,8 @@ IF GETBIT(CFLAG:ARG:80, 1) == 1 && GETBIT(CFLAG:ARG:81, 3) == 0 && RAND:100 <= (
 	SETBIT CFLAG:ARG:81, 3
 ENDIF
 
-<<<<<<< HEAD
 ;함락경험 10이상 또는 모든 4부위(왼쪽 눈, 오른쪽 눈, 머리색, 피부색)가 흑화 외모로 정착할 시, 눈매를 정착시키고 전락시킨다
 IF TALENT:ARG:전락 == 0 && (ExpCorrupt > 10 || CFLAG:81 == 0b1111)
-=======
-;함락경험 10이상 또는 모든 4부위(왼쪽 눈, 오른쪽 눈, 머리색, 피부색)가 흑화 외모로 정착할 시, 눈매를 정착시키고 完堕ち시킨다
-IF TALENT:ARG:完堕ち == 0 && (ExpCorrupt > 10 || CFLAG:81 == 0b1111)
->>>>>>> 682f2b258eba5e0d4a8ef21dfedb5c950fb6fa33
 	CSTR:ARG:50 = %CSTR:ARG:18%
 	CALL MESSAGE_CORRUPTION_FINAL, ARG
 	SETBIT CFLAG:ARG:81, 4
