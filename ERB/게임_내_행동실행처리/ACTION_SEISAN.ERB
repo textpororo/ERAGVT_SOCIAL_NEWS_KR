@@ -122,11 +122,11 @@ ENDIF
 PRINTL 
 ;男なら一部のコマンドは選択不可
 IF ISHOLE() == 0 && (RESULT == 3 || RESULT == 4 || RESULT == 5 || RESULT == 7)
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ;その他の実行不可コマンド入力時
 ELSEIF RESULT < 0 || RESULT > 8 || (ABL:욕망 < 1 && RESULT == 3) || (ABL:욕망 + ABL:노출벽 < 5 && CFLAG:283 < 10 && RESULT == 4) || ((ABL:욕망 + ABL:마조끼) < 5 && RESULT == 5) || (EXP:매료경험 < 100 && RESULT == 7) || ((EXP:매료경험 < 100 || (DAY % 7 != 0 && DAY % 7 != 6)) && RESULT == 8)
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ELSE
 	LOCAL:141 = RESULT

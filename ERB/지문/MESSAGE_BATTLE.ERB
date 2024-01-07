@@ -102,7 +102,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "ENCOUNT_SENNOU")
 PRINTW 
 
 ;--------------------------------------------------
-;始めて悪堕ちキャラと対峙した
+;始めて흑화 캐릭터と対峙した
 @MESSAGE_ENCOUNT_AKUOTI_FIRST
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は周囲を包む異様な空気に気付き警戒心を強める。
 PRINTFORML いつの間にか、前方に一つの人影が浮かび上がっている。
@@ -119,7 +119,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "ENCOUNT_AKUOTI_FIRST")
 PRINTW 
 
 ;--------------------------------------------------
-;悪堕ちキャラと対峙
+;흑화 캐릭터と対峙
 @MESSAGE_ENCOUNT_AKUOTI
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は独特の雰囲気に息を呑む・・・
 PRINTFORML 視界の先に現れた影は、%PRINT_TRANSCALLNAME(TARGET)%にとって決して遭遇したい相手ではない。
@@ -1573,7 +1573,7 @@ PRINTFORML 殲滅した촉수の屍から捕らわれていた仲間達が吐き
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "BATTLE_END_RESCUE")
 PRINTW 
 
-;悪堕ちキャラに捕らわれたキャラの救出
+;흑화 캐릭터に捕らわれたキャラの救出
 @MESSAGE_BATTLE_END_RESCUE_AKUOTI
 PRINTL 
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%に捕らわれていた仲間達が吐き出された！
@@ -1719,7 +1719,7 @@ PRINTW
 				PRINTFORML そのまま%STR:2500%に取り込まれていってしまった・・・
 			ENDIF
 		ENDIF
-	;悪堕ちに負けた
+	;흑화に負けた
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		PRINTFORML 精根尽き果てて動けなくなった%PRINT_TRANSCALLNAME(TARGET)%に、%PRINT_TRANSCALLNAME(FLAG:111)%が舌なめずりしながら這い寄る・・・
 		PRINTFORML 何処からともなく現れた大量の촉수に絡みつかれた%PRINT_TRANSCALLNAME(TARGET)%は叫び声を上げることすら出来ずに

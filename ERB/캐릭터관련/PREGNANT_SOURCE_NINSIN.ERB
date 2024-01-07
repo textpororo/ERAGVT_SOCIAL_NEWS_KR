@@ -2,7 +2,7 @@
 ;CFLAG:222임신日数*2
 ;CFLAG:223촉수日霊
 ;CFLAG:224育児日数
-;TALENT:임신 임신中
+;TALENT:임신 임신 중
 
 
 ;------------------------------
@@ -40,7 +40,7 @@ IF (CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3 || CFLAG:0 == 9) && ARG:2 == 0
 	PAPA_ID = CFLAG:21 + (CFLAG:20 == 1) * 100
 ;戦闘中の場合
 ELSEIF FLAG:700 > 0 && ARG:2 == 0
-	;洗脳/悪堕ちキャラの場合、そのキャラのＩＤ
+	;세뇌/흑화 캐릭터의 場合、そのキャラのＩＤ
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
 		PAPA_ID = CFLAG:(FLAG:111):240 * -1 - 100
 		;기생후타나리の場合
@@ -440,9 +440,9 @@ IF CFLAG:21 != 0
 ELSE
 	CALL MESSAGE_BIRTH_TENTACLES,LOCAL:1
 	PRINTL
-	;組織にいる場合は촉수の欠片追加
+	;組織にいる場合は촉수의 조각追加
 	FLAG:200 += LOCAL:1
-	PRINTFORML 촉수の欠片＋{LOCAL:1}
+	PRINTFORML 촉수의 조각＋{LOCAL:1}
 ENDIF
 
 CALL ABL_UP_BIRTH,LOCAL:1
@@ -759,7 +759,7 @@ RETURNF LOCAL:1
 
 
 ;--------------------------------------------------
-;임신中かどうかを判定する式中関数
+;임신 중かどうかを判定する式中関数
 @CHECK_PREGNANT_F(ARG)
 #FUNCTION
 IF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || (TALENT:ARG:임신 == 5 && CFLAG:ARG:222 >= 11)

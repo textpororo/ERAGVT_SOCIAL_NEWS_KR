@@ -31,7 +31,7 @@ ENDIF
 ;変身可能キャラは変身状態になるか選べる
 ;임신が発覚している場合、男体化ＴＳ変身キャラは変身できない
 IF TALENT:ARG:변신능력 > 0 && (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 1 && CHECK_PREGNANT_F(ARG) > 0)
-	PRINTFORMW %CALLNAME:ARG%は임신中のため、変身で男性化できません。%ACTION_NAME:1%
+	PRINTFORMW %CALLNAME:ARG%は임신 중のため、変身で男性化できません。%ACTION_NAME:1%
 ELSEIF TALENT:ARG:변신능력 > 0
 	;変身後名チェック
 	CFLAG:ARG:1 = 1

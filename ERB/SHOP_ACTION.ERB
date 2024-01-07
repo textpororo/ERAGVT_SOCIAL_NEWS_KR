@@ -69,7 +69,7 @@ ELSE
 			;同時出撃人数をカウント
 			FLAG:41 ++
 
-			;悪堕ち・ボスエンカウント判定
+			;흑화・ボスエンカウント判定
 			CALL ENCOUNT
 			;ボス遭遇無しなら今度はザコとエンカウント判定
 			SIF RESULT == 0
@@ -148,7 +148,7 @@ ELSE
 			;エンカウント判定
 			CALL GUARD
 
-			;遭遇なし
+			;遭遇없음
 			IF RESULT == 0
 				LOCAL = MAXBASE:체력
 				TIMES LOCAL, 0.12
@@ -299,7 +299,7 @@ FOR CCOUNT, 0, CHARANUM
 			SIF GETBIT(RESULT, 3)
 				PRINT （支援無効）
 			SIF GETBIT(RESULT, 4)
-				PRINT （임신中）
+				PRINT （임신 중）
 			SIF GETBIT(RESULT, 5)
 				PRINT （사지결손）
 			SIF GETBIT(RESULT, 6)

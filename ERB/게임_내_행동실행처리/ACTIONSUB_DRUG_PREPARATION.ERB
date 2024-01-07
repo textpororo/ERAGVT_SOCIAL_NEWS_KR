@@ -1,6 +1,6 @@
 ﻿;**********************************************************
 ;薬の調合
-;β1では촉수の欠片を用いて素質の消去をおこなう
+;β1では촉수의 조각を用いて素質の消去をおこなう
 @DRUG_PREPARATION
 #DIM ROBO
 #DIM KEEP_TARGET
@@ -17,7 +17,7 @@ NEXT
 CALL LB
 PRINTL ロボっ娘ナース：
 PRINTL 「ようこそメディカルルームへ」（ペコリ）
-PRINTL 「ここでは資金や촉수の欠片を消費して特定素質の消去などを行うことができます」
+PRINTL 「ここでは資金や촉수의 조각を消費して特定素質の消去などを行うことができます」
 IF RAND:4 == 0
 	PRINTL 「本日のご用件は何でしょうか？」
 ELSEIF RAND:3 == 0
@@ -28,15 +28,15 @@ ELSE
 	PRINTL 「何かお手伝いできることはございますか？」
 ENDIF
 PRINTL 
-PRINTFORML << 촉수の欠片の所持数：{FLAG:200}個 >>
-PRINTFORML << 避妊用ピル所持数  ：{FLAG:201}個 >>
+PRINTFORML << 촉수의 조각の소지 수：{FLAG:200}個 >>
+PRINTFORML << 避妊用ピル소지 수  ：{FLAG:201}個 >>
 DRAWLINE
-PRINTFORML [0]   [촉수의포로]の消去 - 촉수の欠片5個消費
-PRINTFORML [1]   [후타나리]の消去 - 촉수の欠片2個消費
-PRINTFORML [2]   [모유체질]の消去 - 촉수の欠片2個消費
-PRINTFORML [3]   [기생]の消去　　 - 촉수の欠片2個消費
-PRINTFORML [4]   [묘상화]の消去　 - 촉수の欠片2個消費
-PRINTFORML [5]   [膨乳]の治療　 　- 촉수の欠片2個消費
+PRINTFORML [0]   [촉수의포로]の消去 - 촉수의 조각5個消費
+PRINTFORML [1]   [후타나리]の消去 - 촉수의 조각2個消費
+PRINTFORML [2]   [모유체질]の消去 - 촉수의 조각2個消費
+PRINTFORML [3]   [기생]の消去　　 - 촉수의 조각2個消費
+PRINTFORML [4]   [묘상화]の消去　 - 촉수의 조각2個消費
+PRINTFORML [5]   [膨乳]の治療　 　- 촉수의 조각2個消費
 PRINTL 
 PRINTFORML [10]   임신検査薬                     - 50$
 PRINTFORML [11]   胎内精密検査                   - 250$
@@ -46,11 +46,11 @@ PRINTFORML [14]   避妊用ピルの処方
 SIF ROBO > 0
 	PRINTFORML [15]   인조인간のメンテナンス
 PRINTL 
-PRINTFORML [20]   淫紋の治療                     - 촉수の欠片10個消費
+PRINTFORML [20]   淫紋の治療                     - 촉수의 조각10個消費
 PRINTFORML [21]   淫紋の進行を遅らせる           - 1250$
 PRINTL 
-PRINTFORML [30]   性徴促進薬                     - 촉수の欠片1個消費
-PRINTFORML [31]   성징정체薬                     - 촉수の欠片1個消費
+PRINTFORML [30]   性徴促進薬                     - 촉수의 조각1個消費
+PRINTFORML [31]   성징정체薬                     - 촉수의 조각1個消費
 PRINTL 
 ;キャラが多すぎる場合、またはソロモードの場合は加入不可
 SIF CHARANUM > 등록최대인원 - 1 || GAME_OPTION_CHECK_F(OPTION_solo)
@@ -65,7 +65,7 @@ IF RESULT == 999
 	RETURN 999
 ELSEIF RESULT == 0
 	IF FLAG:200 < 5
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 0
@@ -73,7 +73,7 @@ ELSEIF RESULT == 0
 	ENDIF
 ELSEIF RESULT == 1
 	IF FLAG:200 < 2
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 1
@@ -81,7 +81,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	IF FLAG:200 < 2
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 2
@@ -89,7 +89,7 @@ ELSEIF RESULT == 2
 	ENDIF
 ELSEIF RESULT == 3
 	IF FLAG:200 < 2
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 3
@@ -97,7 +97,7 @@ ELSEIF RESULT == 3
 	ENDIF
 ELSEIF RESULT == 4
 	IF FLAG:200 < 2
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 4
@@ -105,7 +105,7 @@ ELSEIF RESULT == 4
 	ENDIF
 ELSEIF RESULT == 5
 	IF FLAG:200 < 2
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 5
@@ -186,7 +186,7 @@ ELSEIF RESULT == 15 && ROBO > 0
 	GOTO INPUT_LOOP_2
 ELSEIF RESULT == 20
 	IF FLAG:200 < 10
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 20
@@ -202,7 +202,7 @@ ELSEIF RESULT == 21
 	ENDIF
 ELSEIF RESULT == 30
 	IF FLAG:200 < 1
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 30
@@ -210,7 +210,7 @@ ELSEIF RESULT == 30
 	ENDIF
 ELSEIF RESULT == 31
 	IF FLAG:200 < 1
-		PRINTW 촉수の欠片が足りません
+		PRINTW 촉수의 조각이 부족합니다.
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 31
@@ -236,7 +236,7 @@ ELSEIF RESULT == 51
 				PRINTW 手術に必要な資金が不足しています。
 				GOTO INPUT_LOOP_2
 			ELSEIF FLAG:200 < 40
-				PRINTW 手術に必要な촉수の欠片が不足しています。
+				PRINTW 手術に必要な촉수의 조각が不足しています。
 				GOTO INPUT_LOOP_2
 			ELSE
 				CALL CHARA_LIST_DRUG, 51
@@ -268,11 +268,11 @@ ELSEIF RESULT == 51
 			ELSEIF RESULT == 1
 				GOTO INPUT_LOOP_2
 			ELSE
-				PRINTW 正しい値を入力してください
+				PRINTW 올바른 값을 입력해 주십시오.
 				GOTO INPUT_LOOP_AMPUTEE
 			ENDIF
 		ELSE
-			PRINTW 正しい値を入力してください
+			PRINTW 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_25000
 		ENDIF
 	ENDIF
@@ -436,7 +436,7 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 		ENDIF
 	ENDIF
 ELSE
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 PRINTL
@@ -595,12 +595,12 @@ INPUT
 IF RESULT == 999
 	RETURN 999
 ELSEIF RESULT < 1 || RESULT >= LOCAL
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP_CHARA_LIST
 ELSE
 	IF ARG == 0
 		IF TALENT:RESULT:촉수의포로 == 0 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 5
@@ -614,7 +614,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 1
 		IF (TALENT:RESULT:후타나리 < 1 && TALENT:RESULT:변신시후타나리 < 1) || (TALENT:RESULT:후타나리 >= 3 && TALENT:RESULT:변신시후타나리 >= 3) || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
@@ -635,7 +635,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 2
 		IF TALENT:RESULT:모유체질 == 0 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
@@ -645,7 +645,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 3
 		IF TALENT:RESULT:기생 == 0 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
@@ -655,7 +655,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 4
 		IF TALENT:RESULT:묘상화 == 0 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
@@ -665,7 +665,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 5
 		IF (CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 == 0) || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
@@ -699,7 +699,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 10
 		IF (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10 && CFLAG:RESULT:0 != 11) || (ISMALE(RESULT))
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			MONEY -= 50
@@ -717,7 +717,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 11
 		IF (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10 && CFLAG:RESULT:0 != 11) || (ISMALE(RESULT))
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			MONEY -= 250
@@ -811,7 +811,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 12
 		IF (TALENT:RESULT:임신 != 1 && TALENT:RESULT:임신 != 3 && TALENT:RESULT:임신 != 5) || (CFLAG:RESULT:0 != 0 && CFLAG:RESULT:0 != 10)
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			MONEY -= 7000
@@ -835,7 +835,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 14
 		IF TALENT:RESULT:임신 == 1 || TALENT:RESULT:임신 == 3 || TALENT:RESULT:임신 == 5 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			LOCAL = RESULT
@@ -856,13 +856,13 @@ ELSE
 			ELSEIF RESULT < 0 || RESULT == CFLAG:LOCAL:241
 					PRINTFORML %CALLNAME:LOCAL%へのピルの処方数を変更せず{CFLAG:LOCAL:241}個のままとしました
 			ELSE
-				PRINTL 正しい値を入力してください
+				PRINTL 올바른 값을 입력해 주십시오.
 				GOTO INPUT_LOOP_1_14
 			ENDIF
 		ENDIF
 	ELSEIF ARG == 15
 		IF TALENT:RESULT:인조인간 == 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			LOCAL = RESULT
@@ -888,7 +888,7 @@ ELSE
 			ELSEIF TALENT:LOCAL:미성숙 > 0 && ISFEMALE(LOCAL)
 				PRINTFORML [3]人工子宮を取り付ける
 			ENDIF
-			PRINTFORML [999]戻る
+			PRINTFORML [999] 돌아간다
 			$INPUT_LOOP_1_15
 			INPUT
 			IF RESULT == 0 && CFLAG:LOCAL:99 > 0 && CFLAG:LOCAL:99 < 20
@@ -956,7 +956,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 20
 		IF CFLAG:RESULT:32 == 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 10
@@ -967,7 +967,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 21
 		IF CFLAG:RESULT:32 == 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSEIF CFLAG:RESULT:32 < 500000000000000000
 			PRINTFORML 現在の状態では副作用が強くなり過ぎるため、瘴気中和剤を投与できません
@@ -981,7 +981,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 30
 		IF (TALENT:RESULT:미성숙 != 1 && TALENT:RESULT:성징정체 == 0) || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 1
@@ -1006,7 +1006,7 @@ ELSE
 		ENDIF
 	ELSEIF ARG == 31
 		IF CFLAG:RESULT:225 == 0 || CFLAG:RESULT:225 > 14 || TALENT:RESULT:성징정체 > 0 || CFLAG:RESULT:0 != 0
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 1
@@ -1017,7 +1017,7 @@ ELSE
 	;四肢修復
 	ELSEIF ARG == 51
 		IF CFLAG:RESULT:0 != 0 || TALENT:RESULT:사지결손 < 1
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			MONEY -= 25000

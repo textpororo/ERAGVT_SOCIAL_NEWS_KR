@@ -12,7 +12,7 @@ IF TCVARn:2 == 자세：아무것도안한다
 	IF FLAG:11 == 1150 && TCVARn :0 > 1
 	ELSE
 		TFLAG:10 = 2
-		;絡みつく場合、기생なし悪堕ちキャラなら押し倒す
+		;絡みつく場合、기생なし흑화 캐릭터なら押し倒す
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") && TFLAG:10 == 2 && ISTENTACLER(FLAG:111) == 0
 			TFLAG:10 = 5
 		CALL ATTACK_PLACE_DECISION
@@ -30,7 +30,7 @@ IF TCVARn:0 > 0
 			;공격
 			;지문: 敵キャラが공격開始
 			CALL MESSAGE_BATTLE_TENTACLE_ATTACK
-			;지문: 洗脳/悪堕ちキャラが공격を開始した
+			;지문: 세뇌/흑화 캐릭터가 공격を開始した
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK
 			
@@ -45,7 +45,7 @@ IF TCVARn:0 > 0
 				IF RESULT == 0 && CLOTH_OUTER_PER + CLOTH_INNER_PER > 0
 					;지문: 敵キャラの공격を自力回避
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_GRAZE
-					;지문: 洗脳/悪堕ちキャラが공격を回避された
+					;지문: 세뇌/흑화 캐릭터가 공격を回避された
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_GRAZE
 					;衣装へのダメージ
@@ -53,7 +53,7 @@ IF TCVARn:0 > 0
 				ELSE
 					;지문: 敵キャラの공격を回避
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_FALSE
-					;지문: 洗脳/悪堕ちキャラが공격を回避された
+					;지문: 세뇌/흑화 캐릭터가 공격を回避された
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_FALSE
 				ENDIF
@@ -82,7 +82,7 @@ IF TCVARn:0 > 0
 					LOCAL:1 = 15
 					;지문: 敵キャラの공격がクリティカルヒット
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
-					;지문: 洗脳/悪堕ちキャラが공격がクリティカルヒットさせた
+					;지문: 세뇌/흑화 캐릭터가 공격がクリティカルヒットさせた
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
 						
@@ -90,7 +90,7 @@ IF TCVARn:0 > 0
 					LOCAL:1 = 10
 					;지문: 敵キャラの공격が通常ヒット
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_HIT
-					;지문: 洗脳/悪堕ちキャラが공격が通常ヒットさせた
+					;지문: 세뇌/흑화 캐릭터가 공격が通常ヒットさせた
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_HIT
 					
@@ -176,7 +176,7 @@ IF TCVARn:0 > 0
 			;絡みつく　絡みつくが成功して拘束状態になってから性行為にうつる
 			;지문: 敵キャラが絡みつくを開始
 			CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU
-			;지문: 洗脳/悪堕ちキャラが絡みつく開始した
+			;지문: 세뇌/흑화 캐릭터가 絡みつく開始した
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU
 			
@@ -188,7 +188,7 @@ IF TCVARn:0 > 0
 
 				;지문: 絡みつく自力回避
 				CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU_FALSE
-				;지문: 洗脳/悪堕ちキャラが絡みつくを回避された
+				;지문: 세뇌/흑화 캐릭터가 絡みつくを回避された
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU_FALSE
 
@@ -225,7 +225,7 @@ IF TCVARn:0 > 0
 				
 				;지문: 敵キャラの絡みつく成功
 				CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
-				;지문: 洗脳/悪堕ちキャラが絡みつくを成功させた
+				;지문: 세뇌/흑화 캐릭터가 絡みつくを成功させた
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
 				
@@ -288,7 +288,7 @@ IF TCVARn:0 > 0
 			;体液を吐く
 			;지문: 敵キャラが体液を吐くを開始
 			CALL MESSAGE_BATTLE_TENTACLE_TAIEKI
-			;지문: 洗脳/悪堕ちキャラが体液を吐くを開始した
+			;지문: 세뇌/흑화 캐릭터가 体液を吐くを開始した
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI
 			
@@ -300,7 +300,7 @@ IF TCVARn:0 > 0
 
 				;지문: 敵キャラの体液を吐くを自力回避
 				CALL MESSAGE_BATTLE_TENTACLE_TAIEKI_FALSE
-				;지문: 洗脳/悪堕ちキャラが体液を吐くを回避された
+				;지문: 세뇌/흑화 캐릭터가 体液を吐くを回避された
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI_FALSE
 
@@ -324,7 +324,7 @@ IF TCVARn:0 > 0
 
 				;지문: 敵キャラの体液を吐くがヒット
 				CALL MESSAGE_BATTLE_TENTACLE_TAIEKI_HIT
-				;지문: 洗脳/悪堕ちキャラが体液を吐くをヒットさせた
+				;지문: 세뇌/흑화 캐릭터가 体液を吐くをヒットさせた
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI_HIT
 				
@@ -491,7 +491,7 @@ IF TCVARn:0 > 0
 			
 			;지문: 敵キャラが거리를벌린다
 			CALL MESSAGE_BATTLE_TENTACLE_TAKEAWAY
-			;지문: 洗脳/悪堕ちキャラが距離をとった
+			;지문: 세뇌/흑화 캐릭터가 距離をとった
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAKEAWAY
 
@@ -499,7 +499,7 @@ IF TCVARn:0 > 0
 			;押し倒す　絡みつくの改変　ほぼ絡みつくと一緒だが、メインはこちらになる
 			;지문: 敵キャラが押し倒すを開始
 			CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU
-			;지문: 洗脳/悪堕ちキャラが押し倒すを開始した
+			;지문: 세뇌/흑화 캐릭터가 押し倒すを開始した
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU
 			
@@ -511,7 +511,7 @@ IF TCVARn:0 > 0
 
 				;지문: 押し倒す自力回避
 				CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU_FALSE
-				;지문: 洗脳/悪堕ちキャラが押し倒すを回避された
+				;지문: 세뇌/흑화 캐릭터가 押し倒すを回避された
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU_FALSE
 
@@ -548,7 +548,7 @@ IF TCVARn:0 > 0
 				
 				;지문: 敵キャラの押し倒す成功
 				CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
-				;지문: 洗脳/悪堕ちキャラが押し倒すを成功させた
+				;지문: 세뇌/흑화 캐릭터가 押し倒すを成功させた
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
 				
@@ -611,7 +611,7 @@ IF TCVARn:0 > 0
 			;邪悪な波動
 			;지문: 敵キャラが邪悪な波動を開始
 			CALL MESSAGE_BATTLE_TENTACLE_HADOU
-			;지문: 洗脳/悪堕ちキャラが邪悪な波動を開始した
+			;지문: 세뇌/흑화 캐릭터가 邪悪な波動を開始した
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU
 			
@@ -623,7 +623,7 @@ IF TCVARn:0 > 0
 
 				;지문: 敵キャラの邪悪な波動を自力回避
 				CALL MESSAGE_BATTLE_TENTACLE_HADOU_FALSE
-				;지문: 洗脳/悪堕ちキャラが邪悪な波動を回避された
+				;지문: 세뇌/흑화 캐릭터가 邪悪な波動を回避された
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU_FALSE
 
@@ -647,7 +647,7 @@ IF TCVARn:0 > 0
 
 				;지문: 敵キャラの邪悪な波動がヒット
 				CALL MESSAGE_BATTLE_TENTACLE_HADOU_HIT
-				;지문: 洗脳/悪堕ちキャラが邪悪な波動をヒットさせた
+				;지문: 세뇌/흑화 캐릭터가 邪悪な波動をヒットさせた
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU_HIT
 				
@@ -760,7 +760,7 @@ IF TCVARn:0 > 0
 	;衣服の損傷による치정の取得はCOMMON_PALAM_CALの内部で行っている
 	CALL PALAM_CAL, 0, 0, 0, 0, 0, 0, 0, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
-;●悪堕ちキャラの拘束中性コマンド
+;●흑화 캐릭터の拘束中性コマンド
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
 	$ROUTINE_LOOP_0
 	RESULT = -1
@@ -885,7 +885,7 @@ ENDIF
 CALL ATTACK_PLACE_DECISION
 
 ;--------------------------------------------------
-;悪堕ちキャラの行動選択
+;흑화 캐릭터の行動選択
 @SELECT_ENEMY_ACTION
 ;공격箇所플래그를リセット
 TFLAG:11 = 0
@@ -984,7 +984,7 @@ SIF TFLAG:17 >= 0
 	SELECT = TFLAG:17
 SIF TFLAG:10 < 15 || TFLAG:10 > 20
 	VARSET INSERT
-;悪堕ちキャラの性コマンド処理
+;흑화 캐릭터の性コマンド処理
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 
 	;性行動は敵キャラの性的パラメータを参照して決定される

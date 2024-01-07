@@ -337,7 +337,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 		ARG:12 += 600
 		;地の文；キャラが대량사정した
 		CALL MESSAGE_SEX_CHARA_SYASEI_HI
-		;지문: 洗脳/悪堕ちキャラが操作キャラの대량사정を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの대량사정を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_SYASEI_HI
 		;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
@@ -359,7 +359,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 			ARG:12 += 300
 			;지문: キャラが사정した
 			CALL MESSAGE_SEX_CHARA_SYASEI
-			;지문: 洗脳/悪堕ちキャラが操作キャラの사정を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラの사정を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_SYASEI
 			;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
@@ -395,7 +395,7 @@ IF TALENT:모유체질 == 1
 		ARG:9 += 2000
 		;地の文；キャラが大量모유した
 		CALL MESSAGE_SEX_CHARA_HUNNYU_HI
-		;지문: 洗脳/悪堕ちキャラが操作キャラの大量모유を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの大量모유を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU_HI
 		IF CFLAG:201 == 0
@@ -414,7 +414,7 @@ IF TALENT:모유체질 == 1
 			ARG:9 += 1000
 			;지문: キャラが모유した
 			CALL MESSAGE_SEX_CHARA_HUNNYU
-			;지문: 洗脳/悪堕ちキャラが操作キャラの모유を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラの모유を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU
 			IF CFLAG:201 == 0
@@ -652,56 +652,56 @@ IF NOWEX:C절정 > 0
 	IF NOWEX:V절정 > 0 && NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: 四重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVAB
-		;지문: 洗脳/悪堕ちキャラが操作キャラの四重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの四重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVAB
 	ELSEIF NOWEX:V절정 > 0 && NOWEX:A절정 > 0
 		;지문: CVA三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVA
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCVA三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCVA三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVA
 	ELSEIF NOWEX:V절정 > 0 && NOWEX:B절정 > 0
 		;지문: CVB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCVB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCVB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVB
 	ELSEIF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: CAB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CAB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCAB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CAB
 	ELSEIF NOWEX:V절정 > 0
 		;지문: CV二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CV
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCV二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCV二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CV
 	ELSEIF NOWEX:A절정 > 0
 		;지문: CA二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CA
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCA二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CA
 	ELSEIF NOWEX:B절정 > 0
 		;지문: CB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのCB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのCB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CB
 	ELSE
 		IF NOWEX:C절정 == 1
 			;지문: C絶頂
 			CALL MESSAGE_SEX_ECSTASY_C
-			;지문: 洗脳/悪堕ちキャラが操作キャラのC絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのC絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C
 		ELSEIF NOWEX:C절정 > 1
 			;지문: C強絶頂
 			CALL MESSAGE_SEX_ECSTASY_C_HI, NOWEX:C절정
-			;지문: 洗脳/悪堕ちキャラが操作キャラのC強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのC強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
 		ENDIF
@@ -710,32 +710,32 @@ ELSEIF NOWEX:V절정 > 0
 	IF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: VAB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VAB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのVAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのVAB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VAB
 	ELSEIF NOWEX:A절정 > 0
 		;지문: VA二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VA
-		;지문: 洗脳/悪堕ちキャラが操作キャラのVA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのVA二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VA
 	ELSEIF NOWEX:B절정 > 0
 		;지문: VB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのVB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのVB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VB
 	ELSE
 		IF NOWEX:V절정 == 1
 			;지문: V絶頂
 			CALL MESSAGE_SEX_ECSTASY_V
-			;지문: 洗脳/悪堕ちキャラが操作キャラのV絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのV絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V
 		ELSEIF NOWEX:V절정 > 1
 			;지문: V強絶頂
 			CALL MESSAGE_SEX_ECSTASY_V_HI, NOWEX:V절정
-			;지문: 洗脳/悪堕ちキャラが操作キャラのV強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのV強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
 		ENDIF
@@ -744,20 +744,20 @@ ELSEIF NOWEX:A절정 > 0
 	IF NOWEX:B절정 > 0
 		;지문: AB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_AB
-		;지문: 洗脳/悪堕ちキャラが操作キャラのAB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのAB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_AB
 	ELSE
 		IF NOWEX:A절정 == 1
 			;지문: A絶頂
 			CALL MESSAGE_SEX_ECSTASY_A
-			;지문: 洗脳/悪堕ちキャラが操作キャラのA絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのA絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A
 		ELSEIF NOWEX:A절정 > 1
 			;지문: A強絶頂
 			CALL MESSAGE_SEX_ECSTASY_A_HI, NOWEX:A절정
-			;지문: 洗脳/悪堕ちキャラが操作キャラのA強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 操作キャラのA強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
 		ENDIF
@@ -766,13 +766,13 @@ ELSEIF NOWEX:B절정 > 0
 	IF NOWEX:B절정 == 1
 		;지문: B絶頂
 		CALL MESSAGE_SEX_ECSTASY_B
-		;지문: 洗脳/悪堕ちキャラが操作キャラのB絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのB絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B
 	ELSEIF NOWEX:B절정 > 1
 		;지문: B強絶頂
 		CALL MESSAGE_SEX_ECSTASY_B_HI, NOWEX:B절정
-		;지문: 洗脳/悪堕ちキャラが操作キャラのB強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのB強絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B_HI
 	ENDIF
@@ -943,31 +943,31 @@ IF LOCAL > MARK:쾌락각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 쾌락각인１
 		CALL MESSAGE_SEX_MARK_KAIRAKU_1
-		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인１が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_1
 	ELSEIF LOCAL == 2
 		;지문: 쾌락각인２
 		CALL MESSAGE_SEX_MARK_KAIRAKU_2
-		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인２が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_2
 	ELSEIF LOCAL == 3
 		;지문: 쾌락각인３
 		CALL MESSAGE_SEX_MARK_KAIRAKU_3
-		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인３が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_3
 	ELSEIF LOCAL == 4
 		;지문: 쾌락각인４
 		CALL MESSAGE_SEX_MARK_KAIRAKU_4
-		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인４が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_4
 	ELSEIF LOCAL == 5
 		;지문: 쾌락각인５
 		CALL MESSAGE_SEX_MARK_KAIRAKU_5
-		;지문: 洗脳/悪堕ちキャラが操作キャラに쾌락각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인５が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_5
 	ENDIF
@@ -996,31 +996,31 @@ IF LOCAL > MARK:고통각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 고통각인１
 		CALL MESSAGE_SEX_MARK_KUTUU_1
-		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인１が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_1
 	ELSEIF LOCAL == 2
 		;지문: 고통각인２
 		CALL MESSAGE_SEX_MARK_KUTUU_2
-		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인２が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_2
 	ELSEIF LOCAL == 3
 		;지문: 고통각인３
 		CALL MESSAGE_SEX_MARK_KUTUU_3
-		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인３が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_3
 	ELSEIF LOCAL == 4
 		;지문: 고통각인４
 		CALL MESSAGE_SEX_MARK_KUTUU_4
-		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인４が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_4
 	ELSEIF LOCAL == 5
 		;지문: 고통각인５
 		CALL MESSAGE_SEX_MARK_KUTUU_5
-		;지문: 洗脳/悪堕ちキャラが操作キャラに고통각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인５が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_5
 	ENDIF
@@ -1049,31 +1049,31 @@ IF LOCAL > MARK:굴복각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 굴복각인１
 		CALL MESSAGE_SEX_MARK_KUPPUKU_1
-		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인１が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_1
 	ELSEIF LOCAL == 2
 		;지문: 굴복각인２
 		CALL MESSAGE_SEX_MARK_KUPPUKU_2
-		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인２が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_2
 	ELSEIF LOCAL == 3
 		;지문: 굴복각인３
 		CALL MESSAGE_SEX_MARK_KUPPUKU_3
-		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인３が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_3
 	ELSEIF LOCAL == 4
 		;지문: 굴복각인４
 		CALL MESSAGE_SEX_MARK_KUPPUKU_4
-		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인４が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_4
 	ELSEIF LOCAL == 5
 		;지문: 굴복각인５
 		CALL MESSAGE_SEX_MARK_KUPPUKU_5
-		;지문: 洗脳/悪堕ちキャラが操作キャラに굴복각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인５が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_5
 	ENDIF
@@ -1102,31 +1102,31 @@ IF LOCAL > MARK:공포각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 공포각인１
 		CALL MESSAGE_SEX_MARK_KYOUHU_1
-		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인１が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_1
 	ELSEIF LOCAL == 2
 		;지문: 공포각인２
 		CALL MESSAGE_SEX_MARK_KYOUHU_2
-		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인２が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_2
 	ELSEIF LOCAL == 3
 		;지문: 공포각인３
 		CALL MESSAGE_SEX_MARK_KYOUHU_3
-		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인３が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_3
 	ELSEIF LOCAL == 4
 		;지문: 공포각인４
 		CALL MESSAGE_SEX_MARK_KYOUHU_4
-		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인４が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_4
 	ELSEIF LOCAL == 5
 		;지문: 공포각인５
 		CALL MESSAGE_SEX_MARK_KYOUHU_5
-		;지문: 洗脳/悪堕ちキャラが操作キャラに공포각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인５が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_5
 	ENDIF
@@ -1155,31 +1155,31 @@ IF LOCAL > MARK:치욕각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 치욕각인１
 		CALL MESSAGE_SEX_MARK_TIJYOKU_1
-		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인１が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_1
 	ELSEIF LOCAL == 2
 		;지문: 치욕각인２
 		CALL MESSAGE_SEX_MARK_TIJYOKU_2
-		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인２が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_2
 	ELSEIF LOCAL == 3
 		;지문: 치욕각인３
 		CALL MESSAGE_SEX_MARK_TIJYOKU_3
-		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인３が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_3
 	ELSEIF LOCAL == 4
 		;지문: 치욕각인４
 		CALL MESSAGE_SEX_MARK_TIJYOKU_4
-		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인４が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_4
 	ELSEIF LOCAL == 5
 		;지문: 치욕각인５
 		CALL MESSAGE_SEX_MARK_TIJYOKU_5
-		;지문: 洗脳/悪堕ちキャラが操作キャラに치욕각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인５が付くのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_5
 	ENDIF
@@ -1201,7 +1201,7 @@ CALL GET_STATE_EXPUP,TARGET
 SIF FLAG:13 <= 0 && FLAG:700 == 1
 	JUMP SOURCE_CHECK
 
-;即死공격ヒット直後とトドメの一撃は촉수・観衆関係のテキストを出さない
+;즉사공격ヒット直後とトドメの一撃は촉수・観衆関係のテキストを出さない
 IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:성내성>0)
 	;촉수の油断の確認
 	CALL CLOTH_BATTLE_HOSEI, "YUDAN"

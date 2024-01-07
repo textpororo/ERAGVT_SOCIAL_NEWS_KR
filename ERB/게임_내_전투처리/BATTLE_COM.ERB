@@ -573,7 +573,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			IF RESULT == 1
 				;지문: 撤退成功
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_SUCCESS
-				;지문: 洗脳/悪堕ちキャラが操作キャラに撤退されてしまった
+				;지문: 세뇌/흑화 캐릭터가 操作キャラに撤退されてしまった
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 
@@ -584,7 +584,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			ELSE
 				;지문: 撤退失敗
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 洗脳/悪堕ちキャラが操作キャラの撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 操作キャラの撤退を防いだ
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -594,7 +594,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			IF RESULT == 1
 				;지문: 撤退成功
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_SUCCESS
-				;지문: 洗脳/悪堕ちキャラが操作キャラに撤退されてしまった
+				;지문: 세뇌/흑화 캐릭터가 操作キャラに撤退されてしまった
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 				
@@ -602,7 +602,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			ELSE
 				;지문: 撤退失敗
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 洗脳/悪堕ちキャラが操作キャラの撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 操作キャラの撤退を防いだ
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -827,7 +827,7 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && BASE:기력 <= 0 && (TC
 	PRINTL 
 	;지문: 기력が尽きて変身が強制的に解けた
 	CALL MESSAGE_BATTLE_CHARA_TRANSRELEASE
-	;지문: 洗脳/悪堕ちキャラが操作キャラを変身強制解除させた
+	;지문: 세뇌/흑화 캐릭터가 操作キャラを変身強制解除させた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_TRANSRELEASE
 	CALL TRANSFORM, 0
@@ -846,7 +846,7 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && LOCAL:2 > 0 && RAND:100
 	PRINTL 
 	;지문: 絶頂で変身が強制的に解けた
 	CALL MESSAGE_BATTLE_CHARA_TRANSRELEASE_ECS
-	;지문: 洗脳/悪堕ちキャラが絶頂で変身強制解除させた
+	;지문: 세뇌/흑화 캐릭터가 絶頂で変身強制解除させた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_TRANSRELEASE_ECS
 	CALL TRANSFORM, 0

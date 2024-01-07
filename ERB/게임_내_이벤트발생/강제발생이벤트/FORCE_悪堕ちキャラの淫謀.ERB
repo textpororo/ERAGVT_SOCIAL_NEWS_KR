@@ -1,6 +1,6 @@
 ﻿;---------------------------------------------------------------------
-;悪堕ちキャラの侵攻イベント
-;確率で悪堕ちキャラが街を襲う
+;흑화 캐릭터の侵攻イベント
+;確率で흑화 캐릭터가 街を襲う
 ;※洗脳では発生しない
 @AKUOTI_ATTACK
 #DIM CCOUNT
@@ -117,7 +117,7 @@ IF SELECT < SELECT_N:0
 		ENDIF
 		PRINTW 
 
-	;悪堕ちヒロインの狩り
+	;흑화ヒロインの狩り
 	ELSEIF RAND:4 == 0
 		PRINTFORML 警報が鳴り響いた頃には時すでに遅く、
 		PRINTFORML 逃げ遅れた人々を無数の雑魚촉수の群れが飲み込んでいった。
@@ -695,7 +695,7 @@ ELSEIF SELECT < SELECT_N:1
 		CALL CLEARRANDCHOOSE
 		;候補を追加
 		FOR LOCAL,1,CHARANUM
-			;♂はオプション無しなら除外、悪堕ちキャラも除外
+			;♂はオプション無しなら除外、흑화 캐릭터も除外
 			SIF ISHOLE(LOCAL) == 0 || CFLAG:LOCAL:0 == 3
 				CONTINUE
 			IF EXP:LOCAL:피간경험

@@ -307,7 +307,7 @@ CALL BIRTH_HANTEI
 ;判定育児終了
 CALL GROW_HANTEI
 
-;悪堕ちキャラが날뛴다イベント
+;흑화 캐릭터가 날뛴다イベント
 CALL AKUOTI_ATTACK
 ;イチャックス
 CALL LOVESEX_NIGHT
@@ -604,7 +604,7 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL:1 = LOCAL:1 * 75 / 100
 	ENDIF
 
-	;幽閉、洗脳、悪堕ち、死亡キャラは체력, 기력성내성が０になる
+	;幽閉、洗脳、흑화、死亡キャラは체력, 기력성내성が０になる
 	IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_흑화, 상태_사망)
 		BASE:CCOUNT:체력 = 0
 		BASE:CCOUNT:기력 = 0
@@ -654,7 +654,7 @@ FOR CCOUNT, 0, CHARANUM
 		SIF CFLAG:CCOUNT:99 < 0
 			CFLAG:CCOUNT:99 = 0
 		;過剰疲労時は上限でカット(とりあえず上限200)
-		;洗脳または悪堕ち時は上限50
+		;洗脳または흑화時は上限50
 		IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_세뇌, 상태_흑화)
 			SIF CFLAG:CCOUNT:99 > 50
 				CFLAG:CCOUNT:99 = 50

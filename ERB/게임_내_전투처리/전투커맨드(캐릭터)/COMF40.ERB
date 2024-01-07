@@ -31,13 +31,13 @@ ENDIF
 IF TFLAG:1 == 1
 	;지문: 떼어낸다成功
 	CALL MESSAGE_BATTLE_CHARA_HIKIHAGASU_SUCCESS
-	;지문: 洗脳/悪堕ちキャラが操作キャラの引き剥がされた
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの引き剥がされた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_HIKIHAGASU_SUCCESS
 ELSE
 	;지문: 떼어낸다失敗
 	CALL MESSAGE_BATTLE_CHARA_HIKIHAGASU_FALSE
-	;지문: 洗脳/悪堕ちキャラが操作キャラの引き剥がしを阻止した
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの引き剥がしを阻止した
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_HIKIHAGASU_FALSE
 ENDIF

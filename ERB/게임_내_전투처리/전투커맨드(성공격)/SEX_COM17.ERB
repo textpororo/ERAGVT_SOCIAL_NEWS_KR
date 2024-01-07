@@ -28,7 +28,7 @@ SIF CONFIG_CHECK_OTHER_F(4) > 0 && (EX_COM & 질)
 SIF TALENT:청순파 > 0 && TCVARn:2 != 100 && (EX_COM & 질)
 	CALL AUTO_V_DEFENCE, TARGET
 
-;悪堕ちキャラのペニス位置をセット
+;흑화 캐릭터のペニス位置をセット
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	TFLAG:18 = 애널
 
@@ -85,10 +85,10 @@ CALL PALAM_VABCestimate(LOCAL,2,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM17, EX_COM, SH_COM
 ELSE
-	;지문: 洗脳/悪堕ちキャラが操作キャラに애널ピストンをした
+	;지문: 세뇌/흑화 캐릭터가 操作キャラに애널ピストンをした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM17
-	;地の文:COM17
+	;지문: COM17
 	CALL MESSAGE_SEX_COM17, EX_COM, SH_COM
 ENDIF
 

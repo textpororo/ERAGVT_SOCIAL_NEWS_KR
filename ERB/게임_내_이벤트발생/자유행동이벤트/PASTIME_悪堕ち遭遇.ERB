@@ -1,6 +1,6 @@
 ﻿;---------------------------------------------------------------------
-;悪堕ちキャラの街中遭遇イベント（悪堕ちアタックコピペ改造）
-;悪堕ちキャラがエロいことしてくる
+;흑화 캐릭터の街中遭遇イベント（흑화アタックコピペ改造）
+;흑화 캐릭터가 エロいことしてくる
 @PASTIME_AKUOTI_ENCOUNTER, ARG
 #DIM CCOUNT
 VARSET LOCAL
@@ -166,7 +166,7 @@ PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の懸命な愛撫で%PRINT_TRANSCALLNAM
 PRINTFORML その間に%PRINT_TRANSCALLNAME(TARGET)%は何度目かの絶頂をさせられていた。
 PRINTFORML 촉수の巣窟で隅々まで開発された%PRINT_TRANSCALLNAME(FLAG:111)%がその程度で満足するはずもなく、
 ;敵が男・双・기생で自キャラが性別필터OKなら竿で攻めてくる
-;悪堕ち男は特に攻めてきやすい
+;흑화男は特に攻めてきやすい
 IF ((RAND:3 == 0 && (ISPENIS(FLAG:111) || TALENT:(FLAG:111):기생 > 0)) || (RAND:2 == 0 && ISMALE(FLAG:111))) && ISHOLE(TARGET) && CHECK_HOLYVIRGIN_F()==0
 	;竿で攻め
 	IF RAND:2 == 0 && TALENT:(FLAG:111):후타나리 > 0
@@ -194,8 +194,8 @@ IF ((RAND:3 == 0 && (ISPENIS(FLAG:111) || TALENT:(FLAG:111):기생 > 0)) || (RAN
 	ENDIF
 	PRINTFORML 身体の中心に火を付けられるような熱い快楽の波が何度も押し寄せる。
 
-;悪堕ち側が味方に強制攻めさせる
-;悪堕남자の場合は発生しない(悪堕ち♂としてあまりに情けないため？)
+;흑화側が味方に強制攻めさせる
+;悪堕남자の場合は発生しない(흑화♂としてあまりに情けないため？)
 ELSEIF RAND:2 == 0 && (ISHOLE(FLAG:111))
 	;敵が竿なしか竿を使わないなら満か尻で攻める
 	IF ISMALE(FLAG:111)

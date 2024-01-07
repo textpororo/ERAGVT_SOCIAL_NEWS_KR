@@ -18,7 +18,7 @@ TFLAG:4 = TFLAG:4 | 가슴
 SIF RAND:100 < 75
 	TFLAG:4 = 0
 
-;悪堕ちキャラのペニス位置をセット
+;흑화 캐릭터のペニス位置をセット
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	TFLAG:18 = 가슴
 
@@ -66,7 +66,7 @@ ENDIF
 CALL PALAM_VABCestimate(LOCAL,3,-1)
 
 
-;지문: 洗脳/悪堕ちキャラが操作キャラにB攻めSPをした
+;지문: 세뇌/흑화 캐릭터가 操作キャラにB攻めSPをした
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_SEX_SPCOM3
 

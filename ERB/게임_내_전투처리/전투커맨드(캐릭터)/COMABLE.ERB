@@ -540,8 +540,8 @@ SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
 ;타락フラグが立っていたらだめ
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	RETURN 0
-;相手が悪堕ちキャラの場合、強気な性格でないとだめ
-;相手が悪堕ちキャラでない場合、弱気な性格だとだめ
+;相手が흑화 캐릭터の場合、強気な性格でないとだめ
+;相手が흑화 캐릭터でない場合、弱気な性格だとだめ
 IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
 	SIF TALENT:오기 == 0 && TALENT:고풍적 == 0 && TALENT:사나움 == 0
 		RETURN 0
@@ -587,8 +587,8 @@ SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
 ;타락フラグが立っていたらだめ
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	RETURN 0
-;相手が悪堕ちキャラの場合、強気な性格だとだめ
-;相手が悪堕ちキャラでない場合、弱気な性格か감정결여でないとだめ
+;相手が흑화 캐릭터の場合、強気な性格だとだめ
+;相手が흑화 캐릭터でない場合、弱気な性格か감정결여でないとだめ
 IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
 	SIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 		RETURN 0

@@ -298,7 +298,7 @@ FOR LOCAL:1, 1, CHARANUM
 NEXT
 RETURNF LOCAL
 
-;現在幽閉中or洗脳悪堕ち中のキャラ数を返す式中関数(取り込まれ死亡キャラを除外して数える)
+;現在幽閉中or洗脳흑화中のキャラ数を返す式中関数(取り込まれ死亡キャラを除外して数える)
 @CHARANUM_PRISON
 #FUNCTION
 LOCAL = CHARANUM-1
@@ -308,7 +308,7 @@ FOR LOCAL:1, 1, CHARANUM
 NEXT
 RETURNF LOCAL
 
-;現在洗脳悪堕ち中のキャラ数を返す式中関数
+;現在洗脳흑화中のキャラ数を返す式中関数
 @CHARANUM_DARKEN
 #FUNCTION
 LOCAL = CHARANUM-1
@@ -329,7 +329,7 @@ NEXT
 RETURNF LOCAL
 
 ;今なお人類の希望であるヒロインの総数を返す
-;(「無事」または「幽閉中/監禁中だが悪堕ちやロストには至っていない」キャラ数を返す)
+;(「無事」または「幽閉中/監禁中だが흑화やロストには至っていない」キャラ数を返す)
 @CHARANUM_HOPE
 #FUNCTION
 LOCAL = CHARANUM-1
@@ -468,7 +468,7 @@ FOR LCOUNT, 0, CHARANUM
 			SIF CFLAG:LCOUNT:0 == 2
 				PRINT （洗脳）
 			SIF CFLAG:LCOUNT:0 == 3
-				PRINT （悪堕ち）
+				PRINT （흑화）
 			SIF CFLAG:LCOUNT:0 == 4
 				PRINT （誘拐監禁中）
 			;未実装
@@ -493,7 +493,7 @@ INPUT
 IF RESULT == 999 && ARG:2 == 0
 	RETURN 999
 ELSEIF RESULT < 1 || RESULT >= CHARANUM || ((ARG == 0 && CFLAG:RESULT:0 == 9) || (ARG == 1 && CFLAG:RESULT:0 != 0)) || (ARG != 2 && ARG != 3 && CFLAG:RESULT:999 == 0) || (ARG == 3 && CFLAG:RESULT:0 != 1 && CFLAG:RESULT:0 != 2 && CFLAG:RESULT:0 != 3 && CFLAG:RESULT:0 != 4)
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP_CHARA_LIST
 ELSE
 	RETURN RESULT
@@ -575,10 +575,10 @@ MONEY += ARG
 PRINTFORML {ARG}＄を手に入れた
 
 ;--------------------------------------------------
-;촉수の欠片取得
+;촉수의 조각取得
 @GET_KAKERA, ARG
 FLAG:200 += ARG
-PRINTFORML 촉수の欠片を{ARG}個を手に入れた
+PRINTFORML 촉수의 조각を{ARG}個を手に入れた
 
 ;--------------------------------------------------
 ;처녀喪失 
@@ -1141,7 +1141,7 @@ IF GETBIT(ARG:1, 6)
 ELSEIF GETBIT(ARG:1, 5)
 	RESULTS = %CALLNAME:ARG%は사지결손しているため%ARGS%できません
 ELSEIF GETBIT(ARG:1, 4)
-	RESULTS = %CALLNAME:ARG%は임신中なため、休憩します
+	RESULTS = %CALLNAME:ARG%は임신 중なため、休憩します
 ELSEIF GETBIT(ARG:1, 1)
 	RESULTS = %CALLNAME:ARG%は%ARGS%でき\@GETBIT(RESULT, 0) ? ず、체력も残り少ない # ない\@ため、休憩します
 ELSE

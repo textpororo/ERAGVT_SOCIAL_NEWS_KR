@@ -25,7 +25,7 @@ IF RESULT == 1
 	
 	;지문: 풀어낸다成功
 	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_SUCCESS
-	;지문: 洗脳/悪堕ちキャラが操作キャラに振り解かれてしまった
+	;지문: 세뇌/흑화 캐릭터가 操作キャラに振り解かれてしまった
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
 
@@ -37,7 +37,7 @@ IF RESULT == 1
 ELSE
 	;지문: 풀어낸다失敗
 	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_FALSE
-	;지문: 洗脳/悪堕ちキャラが操作キャラの풀어낸다を防いだ
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの풀어낸다を防いだ
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_FALSE
 

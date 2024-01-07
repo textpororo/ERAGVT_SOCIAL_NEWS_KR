@@ -204,7 +204,7 @@ IF TFLAG:98 == 0
 	CALL NINSIN_CHECK_AFTER
 	;変身している場合、変身を解除する(クズ市民戦の場合はイベント側で処理)
 	CALL TRANSFORM, 0
-	;悪堕ち側も解除
+	;흑화側も解除
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
@@ -252,7 +252,7 @@ ELSEIF SAVESTR:13 == "MOB" && TFLAG:98 == 1
 	CALL NINSIN_CHECK_AFTER
 	;変身している場合、変身を解除する
 	CALL TRANSFORM, 0
-	;敵の変身も解除する(現状雑魚戦の敵に悪堕ちヒロインは出ないはずだが念のため)
+	;敵の変身も解除する(現状雑魚戦の敵に흑화ヒロインは出ないはずだが念のため)
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
@@ -409,7 +409,7 @@ ELSEIF TFLAG:98 == 2
 		CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 	ENDIF
 
-	;悪堕ちヒロイン側も解除しておく
+	;흑화ヒロイン側も解除しておく
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
@@ -417,11 +417,11 @@ ELSEIF TFLAG:98 == 2
 	;ボスと遭遇して未撃破なら確率をリセット
 	SIF (ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1) && FLAG:47 > FLAG:46
 		FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
-	;遭遇率アップ効果をリセット
+	;조우율 상승 효과 리셋
 	CFLAG:23 = 0
 ENDIF
 
-;ボス(悪堕ち含む)戦かつ勝利できなかった場合、ボスの蓄積ダメージと解析度の情報を保持
+;ボス(흑화含む)戦かつ勝利できなかった場合、ボスの蓄積ダメージと解析度の情報を保持
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && TFLAG:98 != 1
 	RESULT = (FLAG:13 * 1000000 / FLAG:12)
 	FLAG:(300 + FLAG:11) = 1000000 - RESULT

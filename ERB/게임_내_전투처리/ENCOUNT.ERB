@@ -3,9 +3,9 @@
 ;※잡몹적との遭遇判定はここではなくMOB_TENTACLE_ENCOUNTで行う
 ;--------------------------------------------------
 @ENCOUNT
-;悪堕ち・ボス・ザコの判定
+;흑화・ボス・ザコの判定
 FLAG:73 = 0
-;まず悪堕ちキャラとの遭遇判定
+;まず흑화 캐릭터との遭遇判定
 CALL ENCOUNT_ENEMY
 ;↑でエンカウントしなければボス判定
 SIF RESULT == 0
@@ -14,7 +14,7 @@ RETURN RESULT
 
 
 ;================================================================================
-;洗脳/悪堕ちキャラとの遭遇判定
+;세뇌/흑화 캐릭터との遭遇判定
 ;--------------------------------------------------------------------------------
 @ENCOUNT_ENEMY
 	#DIM ENCOUNT_UP
@@ -27,7 +27,7 @@ RETURN RESULT
 	;전투경험の加算
 	EXP:전투경험 += 1
 
-	;洗脳/悪堕ちキャラとの遭遇判定
+	;세뇌/흑화 캐릭터との遭遇判定
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
@@ -65,7 +65,7 @@ RETURN RESULT
 
 	;DEBUG
 	IF FLAG:999 == 1 && LOCAL:1 > 0
-		PRINTL 悪堕ちキャラ遭遇率の入力
+		PRINTL 흑화 캐릭터遭遇率の入力
 		INPUT
 		LOCAL:2 = RESULT
 	ENDIF
@@ -99,16 +99,16 @@ RETURN RESULT
 				ENDIF
 			ELSEIF CFLAG:(FLAG:111):0 == 3
 				IF CFLAG:301 == 0
-					;지문: 始めて悪堕ちキャラと対峙した
+					;지문: 始めて흑화 캐릭터と対峙した
 					CALL MESSAGE_ENCOUNT_AKUOTI_FIRST
 					CFLAG:301 = 1
 				ELSE
-					;지문: 悪堕ちキャラと対峙
+					;지문: 흑화 캐릭터と対峙
 					CALL MESSAGE_ENCOUNT_AKUOTI
 				ENDIF
 			ENDIF
 			
-			;지문: 洗脳/悪堕ちキャラの登場時
+			;지문: 세뇌/흑화 캐릭터의 登場時
 			CALL MESSAGE_OTHER_ENTRY
 
 			;戦闘系フラグのリセット
@@ -122,7 +122,7 @@ RETURN RESULT
 			FLAG:17 = 0
 			FLAG:22 = -1
 
-			;変身可能な悪堕ちキャラは常に변신한다(사악한 마장を装備するので)
+			;変身可能な흑화 캐릭터は常に변신한다(사악한 마장を装備するので)
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") && TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 == 0
 				CALL TRANSFORM, 1, FLAG:111
 

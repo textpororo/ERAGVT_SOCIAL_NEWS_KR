@@ -53,7 +53,7 @@ CASE 1
 	PRINT [5000]個人　
 	PRINTL 　[2][次ページ]
 
-	PRINT  [999]戻る　　　　　
+	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
 		PRINT 　[100]前のキャラ　　　　　　　　　　
@@ -167,7 +167,7 @@ CASE 1
 		GOTO REPRINT
 	ELSE
 		PRINTL 
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO REPRINT
 	ENDIF
 
@@ -210,7 +210,7 @@ CASE 2
 	PRINT [5000]個人　
 	PRINTL 　[2][次ページ]
 
-	PRINT  [999]戻る　　　　　
+	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
 		PRINT 　[100]前のキャラ　　　　　　　　　　
@@ -242,7 +242,7 @@ CASE 2
 		GOTO REPRINT
 	ELSE
 		PRINTL 
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO REPRINT
 	ENDIF
 
@@ -280,7 +280,7 @@ CASE 3
 	PRINT [4000]相関　
 	PRINT [5000]個人　
 	PRINTL 　[2][次ページ]
-	PRINT  [999]戻る　　　　　　
+	PRINT  [999] 돌아간다　　　　　　
 
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
@@ -313,7 +313,7 @@ CASE 3
 		GOTO REPRINT
 	ELSE
 		PRINTL 
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO REPRINT
 	ENDIF
 
@@ -547,7 +547,7 @@ CASE 4
 	RESETCOLOR
 	PRINT [5000]個人　
 	PRINTL 　[2][次ページ]
-	PRINT  [999]戻る　　　　　　
+	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
 		PRINT [100]前のキャラ　　　　　　　　　　
@@ -579,7 +579,7 @@ CASE 4
 		GOTO REPRINT
 	ELSE
 		PRINTL 
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO REPRINT
 	ENDIF
 
@@ -896,7 +896,7 @@ CASE 5
 	PRINT [5000]個人　
 	RESETCOLOR
 	PRINTL 　[2][次ページ]
-	PRINT  [999]戻る　　　　　　
+	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
 		PRINT [100]前のキャラ　　　　　　　　　　
@@ -948,7 +948,7 @@ CASE 5
 		GOTO REPRINT
 	ELSE
 		PRINTL 
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO REPRINT
 	ENDIF
 ENDSELECT
@@ -1835,9 +1835,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_흑화
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-3)%'>[悪堕ち]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-3)%'>[흑화]</nonbutton>"
 		ELSE
-			PRINTFORM [悪堕ち]
+			PRINTFORM [흑화]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_악질감금
 		IF ARG:2
@@ -2403,7 +2403,7 @@ ELSE
 	;※CFLAG管理だ(TALENT管理ではない)がまとめて載せている
 	;幽閉中
 	;洗脳
-	;悪堕ち
+	;흑화
 	;死亡
 	;入院中
 	;育児中
@@ -2554,7 +2554,7 @@ IF TALENT_VAR == -998
 	CASE 2
 	SUB_STR:0 = 洗脳
 	CASE 3
-	SUB_STR:0 = 悪堕ち
+	SUB_STR:0 = 흑화
 	CASE 4
 	SUB_STR:0 = 誘拐中
 	CASE 9
@@ -2728,7 +2728,7 @@ SELECTCASE ARG
 	;誘拐中
 		RETURNF "クズ市民に誘拐されて行方不明中"
 	CASE -3
-	;悪堕ち
+	;흑화
 		RETURNF "敵に心酔し寝返っている"
 	CASE -2
 	;洗脳
@@ -3127,11 +3127,11 @@ SELECTCASE ARG
 
 	CASE 1105
 	;신기소유자
-		RETURNF "공격,방어,민첩+5/성내성-10,洗脳、悪堕ちしやすくなる"
+		RETURNF "공격,방어,민첩+5/성내성-10,洗脳、흑화しやすくなる"
 
 	CASE 1106
 	;투쟁본능
-		RETURNF "공격+10/성내성-5,洗脳、悪堕ちしやすくなる"
+		RETURNF "공격+10/성내성-5,洗脳、흑화しやすくなる"
 
 	CASE 1107
 	;넘치는생명력

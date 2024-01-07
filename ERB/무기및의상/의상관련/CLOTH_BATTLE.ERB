@@ -277,14 +277,14 @@ IF CFLAG:1 == 0
 	IF LOCAL:0 > 0 && TCVARn:21 <= 0 && TCVARn:20 > 0
 		;지문: アウターが破れた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERBREAK
-		;지문: 洗脳/悪堕ちキャラが操作キャラのアウターが破れたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERBREAK
 			
 	ELSEIF LOCAL:0 >= CLOTH_OUTER_DEF && PERCENT_CAL_F(TCVARn:21,TCVARn:20) < CLOTH_OUTER_DEF && TCVARn:20 > 0
 		;지문: アウターが破れ始めた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERDAMAGE
-		;지문: 洗脳/悪堕ちキャラが操作キャラのアウターが破れ始めたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れ始めたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERDAMAGE
 			
@@ -293,14 +293,14 @@ ELSE
 	IF LOCAL:0 > 0 && TCVARn:23 <= 0 && TCVARn:22 > 0
 		;지문: アウターが破れた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERBREAK
-		;지문: 洗脳/悪堕ちキャラが操作キャラのアウターが破れたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERBREAK
 			
 	ELSEIF LOCAL:0 >= CLOTH_OUTER_DEF && PERCENT_CAL_F(TCVARn:23,TCVARn:22) < CLOTH_OUTER_DEF && TCVARn:22 > 0
 		;지문: アウターが破れ始めた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERDAMAGE
-		;지문: 洗脳/悪堕ちキャラが操作キャラのアウターが破れ始めたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れ始めたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERDAMAGE
 
@@ -310,14 +310,14 @@ ENDIF
 IF LOCAL:1 && TCVARn:25 <= 0 && TCVARn:24 > 0
 	;지문: インナーが破れた
 	CALL MESSAGE_BATTLE_CLOTH_INNERBREAK
-	;지문: 洗脳/悪堕ちキャラが操作キャラのインナーが破れたのを見た
+	;지문: 세뇌/흑화 캐릭터가 操作キャラのインナーが破れたのを見た
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CLOTH_INNERBREAK
 		
 ELSEIF LOCAL:1 >= CLOTH_INNER_DEF && PERCENT_CAL_F(TCVARn:25,TCVARn:24) < CLOTH_INNER_DEF && TCVARn:24 > 0
 	;지문: インナーが破れ始めた
 	CALL MESSAGE_BATTLE_CLOTH_INNERDAMAGE
-	;지문: 洗脳/悪堕ちキャラが操作キャラのインナーが破れ始めたのを見た
+	;지문: 세뇌/흑화 캐릭터가 操作キャラのインナーが破れ始めたのを見た
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CLOTH_INNERDAMAGE
 		
