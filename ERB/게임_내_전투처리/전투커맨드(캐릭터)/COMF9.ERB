@@ -14,7 +14,7 @@ PRINTL
 
 ;지문: 날뛴다
 CALL MESSAGE_BATTLE_CHARA_ABARERU
-;지문: 洗脳/悪堕ちキャラが操作キャラの날뛴다を見た
+;지문: 세뇌/흑화 캐릭터가 操作キャラの날뛴다を見た
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_ABARERU
 
@@ -61,7 +61,7 @@ IF RAND:100 < 5 + RESULT
 	HIT_FLAG = 2
 	;지문: 공격がクリティカルヒット
 	CALL MESSAGE_BATTLE_CHARA_ATTACK_CRITICAL_HIT
-	;지문: 洗脳/悪堕ちキャラが操作キャラの공격をクリティカルヒットされた
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの공격をクリティカルヒットされた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_CRITICAL_HIT
 	;クリティカルした場合、相手を怯ませる
@@ -70,7 +70,7 @@ ELSE
 	LOCAL:0 = 10
 	;지문: 공격が通常ヒット
 	CALL MESSAGE_BATTLE_CHARA_ATTACK_HIT
-	;지문: 洗脳/悪堕ちキャラが操作キャラの공격を通常ヒットされた
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの공격を通常ヒットされた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_HIT
 	

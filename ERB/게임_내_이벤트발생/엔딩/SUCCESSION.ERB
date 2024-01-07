@@ -382,11 +382,11 @@ IF NOWPAGE == 1
 		PRINTFORML  [7] 初期방위력増加　　　　　　　　　　なし
 	ENDIF
 	IF LOCAL:18
-		PRINTL  [8] 촉수の欠片＆研究Lv引き継ぎ　　　　(選択済み)
+		PRINTL  [8] 촉수의 조각＆研究Lv引き継ぎ　　　　(選択済み)
 	ELSE
 		SIF POINTS < 4 || FLAG:200 == 0
 			SETCOLOR 105,105,105
-		PRINTL  [8] 촉수の欠片＆研究Lv引き継ぎ　　　　-4
+		PRINTL  [8] 촉수의 조각＆研究Lv引き継ぎ　　　　-4
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:19
@@ -431,11 +431,11 @@ ELSEIF NOWPAGE == 2
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:24
-		PRINTL [14] 洗脳/悪堕ちしやすい　　　　　　 　(選択済み)
+		PRINTL [14] 세뇌/흑화しやすい　　　　　　 　(選択済み)
 	ELSE
 		SIF POINTS < 3
 			SETCOLOR 105,105,105
-		PRINTL [14] 洗脳/悪堕ちしやすい　　　　　　　 -3
+		PRINTL [14] 세뇌/흑화しやすい　　　　　　　 -3
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:25
@@ -1392,7 +1392,7 @@ ELSEIF RESULT == 999
 	ENDIF
 	;初期방위력増加
 	FLAG:852 = 5000 + LOCAL:17 * 500
-	;촉수の欠片引き継ぎなし
+	;촉수의 조각引き継ぎなし
 	IF LOCAL:18 == 0
 		FLAG:200 = 0
 		FLAG:54 = 0

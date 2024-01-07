@@ -1,8 +1,8 @@
 ﻿;**********************************************************
-;キャラの行動予定に関する処理
+;캐릭터의 행동 예정에 관한 처리
 
 ;----------------------------------------------------------
-;全員分の行動を行う
+;전원분의 행동을 한다
 @SHOP_ACTION
 #DIM CCOUNT
 
@@ -11,9 +11,9 @@ IF FLAG:799 == 0
 	FLAG:798 = TARGET
 	FLAG:799 = 1
 	PRINTL 
-	PRINTL 行動開始！
+	PRINTL 행동 개시!
 ENDIF
-;戦闘支援人数をカウント
+;전투 지원 인원을 카운트
 FLAG:43 = 0
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
@@ -32,53 +32,53 @@ IF FLAG:799 >= CHARANUM
 	BEGIN TURNEND
 ELSE
 
-	;戦闘関連フラグ初期化
+	;전투 관련 플래그 초기화
 	FLAG:10 = 0
 	FLAG:11 = 0
 	FLAG:45 = 0
 	FLAG:48 = 0
 
 	IF CFLAG:(FLAG:799):0 == 상태_건강
-		;キャラの入れ替え
+		;캐릭터 교체
 		TARGET = FLAG:799
 
 		SIF CFLAG:999 == 0
 			GOTO REST
 
-		;予定が入ってない場合は休憩にする
+		예정이 없는 경우는 휴식으로 한다
 		SIF CFLAG:100 == 예정_없음
 			CFLAG:100 = 예정_휴식
-		;行動ごとに改行を入れる
+		;행동마다 줄 바꿈을 넣는다
 		PRINTL 
 		PRINTL 
 		PRINTL 
-		PRINTFORM 【%CALLNAME%の行動：
+		PRINTFORM 【%CALLNAME%의 행동：
 		IF CFLAG:100 == 예정_출격
-			PRINTL 出撃】
+			PRINTL 출격】
 			DRAWLINE
 			
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_출격,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"出撃")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"출격")%
 				CALL REST
 				BEGIN TURNEND
 			ENDIF
 
-			;同時出撃人数をカウント
+			;동시 출격 인원을 카운트
 			FLAG:41 ++
 
-			;悪堕ち・ボスエンカウント判定
+			;흑화・보스 인카운트 판정
 			CALL ENCOUNT
-			;ボス遭遇無しなら今度はザコとエンカウント判定
+			;보스 조우가 없으면 이번에는 잡몹과 인카운트 판정
 			SIF RESULT == 0
 				CALL MOB_TENTACLE_ENCOUNT
 
 			SIF RESULT> 0 && FLAG:999 == 1
-				PRINTFORMW エンカウント種別:{FLAG:10}　エンカウント敵番号:{RESULT}
+				PRINTFORMW 인카운트 종별:{FLAG:10}　인카운트 적 번호:{RESULT}
 
-			;エンカウントしなかった
+			;조우하지 않았다
 			IF RESULT == 0
 				IF CONFIG_CHECK_SCREEN_F(3) == 0
 					PRINTW 
@@ -86,69 +86,69 @@ ELSE
 					PRINTL 
 				ENDIF
 				BEGIN TURNEND
-			;ボス/ラスボス/対キャラにエンカウントした
+			;보스/최종보스/적 캐릭터(対キャラ)와 조우했다
 			ELSEIF RESULT > 0
 				BEGIN TRAIN
 			ENDIF
 		ELSEIF CFLAG:100 == 예정_단련
-			PRINTL 鍛錬】
+			PRINTL 단련】
 			DRAWLINE
 			
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_단련,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"鍛錬")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"단련")%
 				CALL REST
 				BEGIN TURNEND
 			ENDIF
 
-			;ソロモードのみ同時出撃人数をカウント
+			;솔로 모드만 동시 출격 인원을 카운트
 			SIF GAME_OPTION_CHECK_F(OPTION_solo)
 				FLAG:41 ++
 
 			CALL TRAINING
 			BEGIN TURNEND
 		ELSEIF CFLAG:100 == 예정_휴식
-			PRINTL 休憩】
+			PRINTL 휴식】
 			DRAWLINE
 			$REST
 			CALL REST
 			BEGIN TURNEND
 		ELSEIF CFLAG:100 == 예정_활동
-			PRINTL 特別活動】
+			PRINTL 특별 활동】
 			DRAWLINE
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_활동,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"낮에 외출")%
 				CALL REST
 				BEGIN TURNEND
 			ENDIF
 			CALL SEISAN
 			BEGIN TURNEND
 		ELSEIF CFLAG:100 == 예정_방위
-			PRINTL 拠点防衛】
+			PRINTL 거점 방위】
 			DRAWLINE
 			
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_방위,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"낮에 외출")%
 				CALL REST
 				
 				BEGIN TURNEND
 			ENDIF
 
-			;同時出撃人数をカウント
+			;동시 출격 인원을 카운트
 			FLAG:41 ++
 
-			;エンカウント判定
+			;인카운트 판정
 			CALL GUARD
 
-			;遭遇なし
+			;조우 없음
 			IF RESULT == 0
 				LOCAL = MAXBASE:체력
 				TIMES LOCAL, 0.12
@@ -160,42 +160,42 @@ ELSE
 
 				LOCAL = 125 + ABL:레벨 * 2 + RAND:26
 				FLAG:852 += LOCAL
-				PRINTFORM 방위력が{LOCAL}上昇した
+				PRINTFORM 방위력이 {LOCAL} 상승했다.
 				IF CONFIG_CHECK_SCREEN_F(3) == 0
 					PRINTW 
 				ELSE
 					PRINTL 
 				ENDIF
 				BEGIN TURNEND
-			;戦闘判定入った
+			;전투 판정에 들어섰다
 			ELSE
-				;地の文のみで処理された場合は아무것도안한다
+				;지문만으로 처리된 경우는 아무 것도 하지 않는다
 				IF RESULT == 0
 					BEGIN TURNEND
-				;雑魚戦システム時は戦闘画面へ遷移
+				;잡몹전 시스템 시 전투 화면으로 전환
 				ELSE
 					BEGIN TRAIN
 				ENDIF
 			ENDIF
 
 		ELSEIF CFLAG:100 == 예정_지원
-			PRINTL 戦闘支援】
+			PRINTL 전투 지원】
 			DRAWLINE
 
-			;戦闘に参加するキャラが居ない場合は休憩する
+			;전투에 참가할 캐릭터가 없을 경우 휴식을 취한다
 			CALL SORTIE_CHECK
 			IF RESULT == 0 && FLAG:41 == 0
 				PRINTL 
-				PRINTL 戦闘を行うメンバーが居ないため、休憩にします
+				PRINTL 전투를 벌일 멤버가 없기 때문에, 휴식을 취합니다.
 				CALL REST
 				FLAG:43 --
 				BEGIN TURNEND
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			ELSE
 				CALL CHECK_ACTION(예정_지원,TARGET)
 				IF RESULT > 0
 					PRINTL 
-					PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"支援")%
+					PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"지원")%
 					CALL REST
 					BEGIN TURNEND
 				ENDIF
@@ -205,19 +205,19 @@ ELSE
 
 			BEGIN TURNEND
 		ELSEIF CFLAG:100 == 예정_정보
-			PRINTL 情報収集】
+			PRINTL 정보 수집】
 			DRAWLINE
 
-			;체력が残り少ない場合は強制的に休憩にする
+			;체력이 얼마 남지 않은 경우에는 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_정보,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"낮에 외출")%
 				CALL REST
 				BEGIN TURNEND
 			ENDIF
 
-			;ソロモードのみ同時出撃人数をカウント
+			;솔로 모드만 동시 출격 인원을 카운트
 			SIF GAME_OPTION_CHECK_F(OPTION_solo)
 				FLAG:41 ++
 
@@ -228,13 +228,13 @@ ELSE
 				BEGIN TURNEND
 			ENDIF
 		ELSEIF CFLAG:100 == 예정_자유
-			PRINTL 自由行動】
+			PRINTL 자유 행동】
 			DRAWLINE
-			;フィートで外出不可の場合は強制的に休憩にする
+			;피트로 인해 외출이 불가할 경우 강제로 휴식을 취한다
 			CALL CHECK_ACTION(예정_자유,TARGET)
 			IF RESULT > 0
 				PRINTL 
-				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"昼間に外出")%
+				PRINTFORML %PRINT_NGACTION_F(TARGET,RESULT,"낮에 외출")%
 				CALL REST
 				BEGIN TURNEND
 			ENDIF
@@ -251,13 +251,13 @@ ELSE
 ENDIF
 
 ;----------------------------------------------------------
-;行動予定を表示する関数
-;　0ならショップメニューから(現在不使用)
-;　1なら行動開始前の確認画面から
+;행동 예정을 표시하는 함수
+;　0이라면 SHOP 메뉴에서 (현재 미사용)
+;　1이라면 행동 시작 전의 확인 화면에서
 @SHOP_ACTION_PLANDISP(ARG = 0)
 #DIM CCOUNT
 VARSET LOCAL
-PRINTL 【行動予定】
+PRINTL 【행동 예정】
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -280,30 +280,30 @@ FOR CCOUNT, 0, CHARANUM
 			LOCAL:1 = 0
 		ENDIF
 		IF ARG == 0
-			PRINTFORM [{CCOUNT}]%CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
+			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
 		ELSE
-			PRINTPLAINFORM [{CCOUNT}]%CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
+			PRINTPLAINFORM [{CCOUNT}] %CALLNAME:CCOUNT%：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, LOCAL:1)%  
 		ENDIF
 		FONTREGULAR
 		RESETCOLOR
-		;実行可能性のチェック
+		;실행 가능성 체크
 		IF ARG != 0
 			RESETCOLOR
 			CALL CHECK_ACTION(CFLAG:CCOUNT:100,CCOUNT)
 			SIF GETBIT(RESULT, 0)
-				PRINT （체력不足）
+				PRINT (체력 부족)
 			SIF GETBIT(RESULT, 1)
-				PRINT （밤악마의귀족＆昼）
+				PRINT (밤악마의귀족＆낮)
 			SIF GETBIT(RESULT, 2)
-				PRINT （타고난전사）
+				PRINT (타고난전사)
 			SIF GETBIT(RESULT, 3)
-				PRINT （支援無効）
+				PRINT (지원 무효)
 			SIF GETBIT(RESULT, 4)
-				PRINT （임신中）
+				PRINT (임신 중)
 			SIF GETBIT(RESULT, 5)
-				PRINT （사지결손）
+				PRINT (사지결손)
 			SIF GETBIT(RESULT, 6)
-				PRINT （廃人）
+				PRINT (폐인)
 		ENDIF
 		
 		LOCAL:2 += 1
@@ -316,71 +316,71 @@ RESETCOLOR
 RETURN 0
 
 ;----------------------------------------------------------
-;行動コマンド名を返す式中関数
-;ARG:0 行動コマンドの実数
+;행동 커맨드명을 반환하는 식중 함수
+;ARG:0 행동 커맨드의 실수
 @PRINT_SHOPACTION, ARG:0, ARG:1
 #FUNCTIONS
 LOCALS = %STRCLEAR()%
 IF ARG:0 == 예정_출격
 	SIF ARG:1 == 0
 		SETCOLOR 255, 170, 170
-	LOCALS = *出撃*
+	LOCALS = *출격*
 ELSEIF ARG:0 == 예정_단련
 	SIF ARG:1 == 0
 		SETCOLOR 255, 255, 170
-	LOCALS = *鍛錬*
+	LOCALS = *단련*
 ELSEIF ARG:0 == 예정_휴식
 	SIF ARG:1 == 0
 		SETCOLOR 170, 170, 255
-	LOCALS = *休憩*
+	LOCALS = *휴식*
 
 
 ELSEIF ARG:0 == 예정_활동
 	SIF ARG:1 == 0
 		SETCOLOR 170, 255, 255
-	LOCALS = *活動*
+	LOCALS = *활동*
 ELSEIF ARG:0 == 예정_방위
 	SIF ARG:1 == 0
 		SETCOLOR 255, 170, 255
-	LOCALS = *防衛*
+	LOCALS = *방위*
 ELSEIF ARG:0 == 예정_지원
 	SIF ARG:1 == 0
 		SETCOLOR 170, 255, 170
-	LOCALS = *支援*
+	LOCALS = *지원*
 ELSEIF ARG:0 == 예정_정보
 	SIF ARG:1 == 0
 		SETCOLOR 255, 200, 50
-	LOCALS = *情報*
+	LOCALS = *정보*
 ELSEIF ARG:0 == 예정_자유
 	SIF ARG:1 == 0
 		SETCOLOR 50, 200, 255
-	LOCALS = *自由*
+	LOCALS = *자유*
 ELSE
 	LOCALS = 　　　
 ENDIF
 RETURNF LOCALS
 
 ;----------------------------------------------------------
-;行動コマンド名を返す式中関数
-;対象	行動者が誰か
-@PRINT_SHOPACTION_NAME(対象)
+;행동 커맨드명을 반환하는 식중 함수
+;대상	행동자가 누구인가
+@PRINT_SHOPACTION_NAME(대상)
 #FUNCTIONS
-#DIM 対象
-IF CFLAG:対象:100 == 예정_출격
-	RETURNF "出撃"
-ELSEIF CFLAG:対象:100 == 예정_단련
-	RETURNF "鍛錬"
-ELSEIF CFLAG:対象:100 == 예정_휴식
-	RETURNF "休憩"
-ELSEIF CFLAG:対象:100 == 예정_활동
-	RETURNF "特別活動"
-ELSEIF CFLAG:対象:100 == 예정_방위
-	RETURNF "拠点防衛"
-ELSEIF CFLAG:対象:100 == 예정_지원
-	RETURNF "戦闘支援"
-ELSEIF CFLAG:対象:100 == 예정_정보
-	RETURNF "情報収集"
-ELSEIF CFLAG:対象:100 == 예정_자유
-	RETURNF "自由行動"
+#DIM 대상
+IF CFLAG:대상:100 == 예정_출격
+	RETURNF "출격"
+ELSEIF CFLAG:대상:100 == 예정_단련
+	RETURNF "단련"
+ELSEIF CFLAG:대상:100 == 예정_휴식
+	RETURNF "휴식"
+ELSEIF CFLAG:대상:100 == 예정_활동
+	RETURNF "특별 활동"
+ELSEIF CFLAG:대상:100 == 예정_방위
+	RETURNF "거점 방위"
+ELSEIF CFLAG:대상:100 == 예정_지원
+	RETURNF "전투 지원"
+ELSEIF CFLAG:대상:100 == 예정_정보
+	RETURNF "정보 수집"
+ELSEIF CFLAG:대상:100 == 예정_자유
+	RETURNF "자유 행동"
 ENDIF
 RETURNF 

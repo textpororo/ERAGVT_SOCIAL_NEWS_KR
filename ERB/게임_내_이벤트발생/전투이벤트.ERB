@@ -15,7 +15,7 @@ SIF GETBATTLESITUATION("市民なし") == 1
 SIF ENEMY_TYPE_CHECK_F("CITIZEN") == 1
 	RETURN
 
-;発生確率そのものは방위력が低いほどアップ、昼は確率アップ、昼の襲来イベントでは確実に発生
+;発生確率そのものは방위력이 低いほどアップ、昼は確率アップ、昼の襲来イベントでは確実に発生
 LOCAL = 25 + MAX((5000 - FLAG:852) / 100, 0) + (TIME == 0) * 10 + GETBATTLESITUATION("市民確定") * 100
 ;FEAT効果による観衆遭遇率アップ
 SIF TALENT:말려드는체질 > 0
@@ -308,7 +308,7 @@ ENDIF
 ;----------------------------------------------------------------------------------------------------------------------------
 @PERFORM_CHEERS_HATE
 ;罵倒を受ける（声援を受ける改変）
-;사악한 마장を装備している=悪堕ち経験有り
+;사악한 마장を装備している=흑화経験有り
 ;観戦人数が０人なら中断
 SIF FLAG:70 + FLAG:71 == 0
 	RETURN
@@ -516,7 +516,7 @@ IF FLAG:72
 		ENDIF
 	ENDIF
 ELSEIF RAND:100 < 35
-	;悪堕ち経験有り
+	;흑화経験有り
 	IF CFLAG:41 == 401
 		IF RAND:3 == 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は襲われそうになっていた一般人を寸でのところで助け出したが
@@ -525,7 +525,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 -= LOCAL
-				PRINTFORML 인기도が{LOCAL}下降した！
+				PRINTFORML 인기도가 {LOCAL}下降した！
 			ENDIF
 		ELSEIF RAND:2 == 0
 			PRINT 避難中の一般人
@@ -536,7 +536,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 -= LOCAL
-				PRINTFORML 인기도が{LOCAL}下降した！
+				PRINTFORML 인기도가 {LOCAL}下降した！
 			ENDIF
 		ELSE
 			PRINTFORML 咄嗟に%PRINT_TRANSCALLNAME(TARGET)%が身を躱すと、敵の공격が鼻先を掠めていった。
@@ -546,7 +546,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 -= LOCAL
-				PRINTFORML 인기도が{LOCAL}下降した！
+				PRINTFORML 인기도가 {LOCAL}下降した！
 			ENDIF
 		ENDIF
 	ELSE ;通常
@@ -556,7 +556,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 += LOCAL
-				PRINTFORML 인기도が{LOCAL}上昇した！
+				PRINTFORML 인기도가 {LOCAL} 상승했다!
 			ENDIF
 		ELSEIF RAND:2 == 0
 			PRINT 避難中の一般人
@@ -567,7 +567,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 += LOCAL
-				PRINTFORML 인기도が{LOCAL}上昇した！
+				PRINTFORML 인기도가 {LOCAL} 상승했다!
 			ENDIF
 		ELSE
 			PRINTFORML 観衆の「危ない！」という声に反応して咄嗟に%PRINT_TRANSCALLNAME(TARGET)%が身を躱すと、
@@ -577,7 +577,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 += LOCAL
-				PRINTFORML 인기도が{LOCAL}上昇した！
+				PRINTFORML 인기도가 {LOCAL} 상승했다!
 			ENDIF
 		ENDIF
 	ENDIF
@@ -722,7 +722,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 -= LOCAL
-				PRINTFORML 인기도が{LOCAL}下降した！
+				PRINTFORML 인기도가 {LOCAL}下降した！
 			ENDIF
 		ELSEIF RAND:2 == 0
 			PRINT 避難中の一般人
@@ -741,7 +741,7 @@ ELSEIF RAND:100 < 35
 				PRINTL 
 				LOCAL = 1
 				FLAG:853 += LOCAL
-				PRINTFORML 인기도が{LOCAL}上昇した！
+				PRINTFORML 인기도가 {LOCAL} 상승했다!
 			ENDIF
 		ELSEIF RAND:2 == 0
 			PRINT 避難中の一般人
@@ -1030,7 +1030,7 @@ IF CFLAG:286 == 0
 	PRINTFORML 勃起したペニスを露出させた。
 	PRINTFORML 男たちが촉수の淫気に中てられた可能性に思い当たった%PRINT_TRANSCALLNAME(TARGET)%は
 	PRINTFORML 사정させれば正気に戻るはずだと覚悟を決めた・・・
-	;悪堕ち経験有りなら罪悪感で抵抗できない
+	;흑화経験有りなら罪悪感で抵抗できない
 ELSEIF RAND:3 == 0 && ITEM:401 == 1
 	PRINTFORM 男たちは苦々しげに、「お前のせいで
 	IF RAND:8 == 0
@@ -1166,7 +1166,7 @@ IF CFLAG:286 == 0 || RAND:2 == 0
 	;二度目以降
 ELSE
 	PRINTFORML すると男はそのまま%PRINT_TRANSCALLNAME(TARGET)%を押し倒し、
-	IF ITEM:401 == 1 ;悪堕ち経験有り
+	IF ITEM:401 == 1 ;흑화経験有り
 		PRINTFORML 何度も謝罪の言葉を口にする%PRINT_TRANSCALLNAME(TARGET)%を平手打ちで黙らせ、
 	ENDIF
 	IF ISMALE()

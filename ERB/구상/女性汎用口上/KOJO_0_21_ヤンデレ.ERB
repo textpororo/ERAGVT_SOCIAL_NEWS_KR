@@ -137,7 +137,7 @@ ELSE
 	IF BASE:체력 <= 강제휴식체력
 		PRINTFORML 「%CSTR:20%ちゃんのために、少し休んでおかなきゃ」
 		PRINTFORML  %CALLNAME%は疲れが溜まっているようだ。
-	;思い人が死亡、洗脳、悪堕ち
+	;思い人が死亡、洗脳、흑화
 	ELSEIF GROUPMATCH(CFLAG:(CFLAG:280):0, 상태_사망, 상태_세뇌, 상태_흑화)
 		SELECTCASE RAND:3
 			CASE 0
@@ -301,7 +301,7 @@ ELSEIF CFLAG:231
 ELSE
 	CALL YANDERE_SEARCH
 	CALL TENTACLE_SURVIVE,"NUM"
-	;思い人が死亡、洗脳、悪堕ち
+	;思い人が死亡、洗脳、흑화
 	IF GROUPMATCH(CFLAG:(CFLAG:280):0, 상태_사망, 상태_세뇌, 상태_흑화)
 		SELECTCASE RAND:4
 			CASE 0
@@ -412,7 +412,7 @@ ELSEIF CFLAG:231
 	RETURN
 ELSE
 	CALL YANDERE_SEARCH
-	;思い人が死亡、洗脳、悪堕ち
+	;思い人が死亡、洗脳、흑화
 	IF GROUPMATCH(CFLAG:(CFLAG:280):0, 상태_사망, 상태_세뇌, 상태_흑화)
 		SELECTCASE RAND:4
 			CASE 0
@@ -524,7 +524,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;始めて悪堕ちキャラと対峙した
+;始めて흑화 캐릭터と対峙した
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_AKUOTI_FIRST_21
 ;ソロモードの場合
@@ -548,7 +548,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;悪堕ちキャラと対峙
+;흑화 캐릭터と対峙
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_AKUOTI_21
 ;ソロモードの場合
@@ -2032,7 +2032,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_PRISON_SENNOU_21
 
-;悪堕ちになった
+;흑화하고 말았다
 ;--------------------------------------------------
 @KOJO_0_PRISON_AKUOTI_21
 
@@ -2118,7 +2118,7 @@ ENDIF
 
 ;戦闘のサブイベント
 
-;悪堕ちキャラに敗北して犯される
+;흑화 캐릭터に敗北して犯される
 ;--------------------------------------------------
 @KOJO_0_SUBEVENT_BATTLE_RAPED_ENEMY_21
 

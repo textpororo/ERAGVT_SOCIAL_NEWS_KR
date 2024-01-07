@@ -18,7 +18,7 @@ INSERT |= 애널
 SIF (TCVARn:12 & 강구속) == 0
 	CALL STATE_CHANGE_PKOUSOKU, 100
 
-;悪堕ちキャラのペニス位置をセット
+;흑화 캐릭터のペニス位置をセット
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	IF RAND:2 == 0 || TCVARn:2 == 자세：Ｖ방어
 		TFLAG:18 = 질
@@ -114,10 +114,10 @@ ELSE
 	ELSE
 		LOCAL:10 = 0
 	ENDIF
-	;지문: 洗脳/悪堕ちキャラが操作キャラに両穴ピストンをした
+	;지문: 세뇌/흑화 캐릭터가 操作キャラに両穴ピストンをした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM19
-	;地の文:COM17
+	;지문: COM17
 	CALL MESSAGE_SEX_COM19, EX_COM, SH_COM
 ENDIF
 

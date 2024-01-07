@@ -37,7 +37,7 @@ ENDIF
 SIF (EX_COM & 질) && TCVARn:2 == 자세：Ｖ방어 && BASE:V결계내구력 <= 0
 	TFLAG:4 = TFLAG:4 | 균열
 
-;悪堕ちキャラのペニス位置をセット
+;흑화 캐릭터のペニス位置をセット
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	TFLAG:18 = 애널
 
@@ -111,7 +111,7 @@ ELSE
 	ELSE
 		LOCAL:10 = 0
 	ENDIF
-	;지문: 洗脳/悪堕ちキャラが操作キャラにA攻め強をした
+	;지문: 세뇌/흑화 캐릭터가 操作キャラにA攻め強をした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM5
 	;지문: COM5

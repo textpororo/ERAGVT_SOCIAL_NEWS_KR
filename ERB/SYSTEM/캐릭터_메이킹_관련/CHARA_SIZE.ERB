@@ -597,7 +597,7 @@ RETURN 0
 	; 乳房底半径の算出
 	nBottomR = (nUB / 15 + nCupValue) * 45 / 100 - (ABS( nCupValue - nHemisphereValue ) * 39 / 100)
 
-	;続行不能な値が出たら重量0と見なして中断
+	;続行不能な値が出たら重量0と見없음て中断
 	SIF POWER( nBallR, 2 ) - POWER( nBottomR, 2 )<0
 		RETURNF 0
 

@@ -204,7 +204,7 @@ SELECTCASE ARG
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は{RESULT:0}件に新聞配達し、{PAYMENT}＄の報酬を得ました。
 			IF LOCAL:2 > 0
 				FLAG:853 += LOCAL:2
-				PRINTFORML 인기도が{LOCAL:2}上がった
+				PRINTFORML 인기도가 {LOCAL:2}上がった
 			ENDIF
 
 		;ヒーローショー(以下の項目は男に非対応なのでここで確定させる)
@@ -400,7 +400,7 @@ SELECTCASE ARG
 				LOCAL:2 += 1
 			IF LOCAL:2 > 0
 				FLAG:853 += LOCAL:2
-				PRINTFORML 인기도が{LOCAL:2}上がった
+				PRINTFORML 인기도가 {LOCAL:2}上がった
 			ENDIF
 			;ウェイトレス(GIRLY限定)
 		ELSEIF RAND:2 == 0
@@ -435,7 +435,7 @@ SELECTCASE ARG
 				LOCAL:2 += 1
 			IF LOCAL:2 > 0
 				FLAG:853 += LOCAL:2
-				PRINTFORML 인기도が{LOCAL:2}上がった
+				PRINTFORML 인기도가 {LOCAL:2}上がった
 			ENDIF
 			;食堂(GIRLY限定)
 		ELSE
@@ -521,7 +521,7 @@ SELECTCASE ARG
 		ENDIF
 		;研究所助手
 	CASE 1
-		;임신経験がある・もしくは임신中だと子宮の調査
+		;임신経験がある・もしくは임신 중だと子宮の調査
 		IF (EXP:출산경험 && RAND:2 == 0) || TALENT:임신 == 1 || TALENT:임신 == 3
 			PRINTL 研究所で検査協力（子宮）
 			PRINTL 
@@ -532,7 +532,7 @@ SELECTCASE ARG
 				PRINTFORML 観察の邪魔になる陰毛は産毛も残さず奇麗に剃り上げられ、艶やかな少女の秘唇が明かりに曝されている。
 				TALENT:백보지 = 1
 			ENDIF
-			;임신中
+			;임신 중
 			IF TALENT:임신 == 1 || TALENT:임신 == 3
 				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が胎内に宿す、おぞましい異種交配の結晶は貴重な研究対象である。
 				PRINTFORMW 内視鏡が膣を通って子宮に潜り込む感触に、%PRINT_TRANSCALLNAME(TARGET)%は唇を噛んで声を殺して耐えていた。
@@ -1569,7 +1569,7 @@ SELECTCASE ARG
 			LOCAL:2 += 1
 		IF LOCAL:2 > 0
 			FLAG:853 += LOCAL:2
-			PRINTFORML 인기도が{LOCAL:2}上がった
+			PRINTFORML 인기도가 {LOCAL:2}上がった
 		ENDIF
 		SIF RAND:100 < 25
 			CFLAG:825 += 1
@@ -1720,7 +1720,7 @@ SELECTCASE ARG
 				PRINTL 
 			ENDIF
 			LOCALS = 『후타나리な妹とえっちしてみませんか？ %NAME%』
-			;임신中限定
+			;임신 중限定
 		ELSEIF CHECK_PREGNANT_F(TARGET) > 0 && RAND:7 == 0
 			PRINTFORML お父さんとの子を授かったという臨月の少女の究極の근친상간記録。
 			PRINTFORML 週末になると家族から調教・陵辱され続け、家庭内記録だとして父親が撮り貯めた
@@ -2075,7 +2075,7 @@ SELECTCASE ARG
 			CFLAG:281 = RESULT==10 ? 2 # 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はパッケージを見て顔を真っ赤にしている。
 		ELSE
-			PRINTL 正しい値を入力してください
+			PRINTL 올바른 값을 입력해 주십시오.
 		ENDIF
 
 		SAVESTR:(20 + TARGET) = %LOCALS%
@@ -2715,7 +2715,7 @@ SELECTCASE ARG
 				LOCAL:2 += 1
 			IF LOCAL:2 > 0
 				FLAG:853 += LOCAL:2
-				PRINTFORML 인기도が{LOCAL:2}上がった
+				PRINTFORML 인기도가 {LOCAL:2}上がった
 			ENDIF
 		ENDIF
 		;枕営業(アイドル限定)
@@ -3212,7 +3212,7 @@ SELECTCASE ARG
 					LOCAL:2 += 1
 				IF LOCAL:2 > 0
 					FLAG:853 += LOCAL:2
-					PRINTFORML 인기도が{LOCAL:2}上がった
+					PRINTFORML 인기도가 {LOCAL:2}上がった
 				ENDIF
 				;アフターピル
 				CALL AFTER_PILL, TARGET, 10, 쌩판남
@@ -3376,7 +3376,7 @@ SELECTCASE ARG
 			LOCAL:2 += 1
 		IF LOCAL:2 > 0
 			FLAG:853 += LOCAL:2
-			PRINTFORML 인기도が{LOCAL:2}上がった
+			PRINTFORML 인기도가 {LOCAL:2}上がった
 		ENDIF
 		;いくら失敗してもデビュー前の評価には戻らない
 		SIF EXP:매료경험 < 100

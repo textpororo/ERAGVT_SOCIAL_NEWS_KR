@@ -1,12 +1,12 @@
 ﻿;2022//作成（第７支部の>>252）
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
-;CFLAG:0 キャラの生存状態フラグ。-1で救出直後、0で生きている、1で幽閉中、2で洗脳、3で悪堕ち、4で인간に誘拐監禁中、5でメンタルダ
+;CFLAG:0 キャラの生存状態フラグ。-1で救出直後、0で生きている、1で幽閉中、2で洗脳、3で흑화、4で인간に誘拐監禁中、5でメンタルダ
 ;CFLAG:277 (仮)豹変するタイミング記憶用(bit)
 ;CFLAG:278 (仮)豹変する性格記憶用(普段性格1～3桁、豹変時性格4～6桁)
-;FLAG:111 洗脳/悪堕ちキャラの番号
+;FLAG:111 세뇌/흑화 캐릭터의 番号
 
 ;[30] 洗脳
-;[40] 悪堕ち
+;[40] 흑화
 ;==================================================
 ;【独自関数】
 ;--------------------------------------------------
@@ -22,7 +22,7 @@ ELSE
 ENDIF
 TRYCALLFORM KOJO_{RESULT:0}_OTHER_%ARGS%_{RESULT:1}
 
-;洗脳/悪堕ちキャラの구상 색상
+;세뇌/흑화 캐릭터의 구상 색상
 ;----------------------------------------------------------
 @KOJO_4_OTHER_COLOR
 
@@ -32,317 +32,317 @@ TRYCALLFORM KOJO_{RESULT:0}_OTHER_%ARGS%_{RESULT:1}
 ;**************************************************
 ;戦闘のもの
 ;**************************************************
-;洗脳/悪堕ちキャラの登場時
+;세뇌/흑화 캐릭터의 登場時
 ;----------------------------------------------------------
 @KOJO_4_OTHER_ENTRY
 CALL KOJO_4_OTHER_ROOT("ENTRY")
 
-;洗脳/悪堕ちキャラが操作キャラを変身強制解除させた
+;세뇌/흑화 캐릭터가 操作キャラを変身強制解除させた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_TRANSRELEASE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_TRANSRELEASE")
 
-;洗脳/悪堕ちキャラが操作キャラに撤退されてしまった
+;세뇌/흑화 캐릭터가 操作キャラに撤退されてしまった
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_TETTAI_SUCCESS")
 
-;洗脳/悪堕ちキャラが操作キャラの撤退を防いだ
+;세뇌/흑화 캐릭터가 操作キャラの撤退を防いだ
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_TETTAI_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_TETTAI_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラの공격をクリティカルヒットされた
+;세뇌/흑화 캐릭터가 操作キャラの공격をクリティカルヒットされた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_ATTACK_CRITICAL_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_ATTACK_CRITICAL_HIT")
 
-;洗脳/悪堕ちキャラが操作キャラの공격を通常ヒットされた
+;세뇌/흑화 캐릭터가 操作キャラの공격を通常ヒットされた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_ATTACK_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_ATTACK_HIT")
 
-;洗脳/悪堕ちキャラが操作キャラの공격を回避した・カス当たりされた
+;세뇌/흑화 캐릭터가 操作キャラの공격を回避した・カス当たりされた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_ATTACK_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_ATTACK_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラの방어を見た
+;세뇌/흑화 캐릭터가 操作キャラの방어を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_DEFENSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_DEFENSE")
 
-;洗脳/悪堕ちキャラが操作キャラの거리를벌린다を見た
+;세뇌/흑화 캐릭터가 操作キャラの거리를벌린다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_TAKEAWAY
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_TAKEAWAY")
 
-;洗脳/悪堕ちキャラが操作キャラの배후로돈다を見た
+;세뇌/흑화 캐릭터가 操作キャラの배후로돈다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_STEPIN
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_STEPIN")
 
-;洗脳/悪堕ちキャラが操作キャラの관찰한다を見た
+;세뇌/흑화 캐릭터가 操作キャラの관찰한다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEETHROUGH
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEETHROUGH")
 
-;洗脳/悪堕ちキャラが操作キャラの아무것도안한다を見た
+;세뇌/흑화 캐릭터가 操作キャラの아무것도안한다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_NOACTION
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_NOACTION")
 
-;洗脳/悪堕ちキャラが操作キャラに振り解かれてしまった
+;세뇌/흑화 캐릭터가 操作キャラに振り解かれてしまった
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_HURIHODOKU_SUCCESS")
 
-;洗脳/悪堕ちキャラが操作キャラの풀어낸다を防いだ
+;세뇌/흑화 캐릭터가 操作キャラの풀어낸다を防いだ
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_HURIHODOKU_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_HURIHODOKU_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラの날뛴다を見た
+;세뇌/흑화 캐릭터가 操作キャラの날뛴다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_ABARERU
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_ABARERU")
 
-;洗脳/悪堕ちキャラが操作キャラの견딘다を見た
+;세뇌/흑화 캐릭터가 操作キャラの견딘다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_TAERU
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_TAERU")
 
-;洗脳/悪堕ちキャラが操作キャラの가만히있는다を見た
+;세뇌/흑화 캐릭터가 操作キャラの가만히있는다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_NASUGAMAMA
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_NASUGAMAMA")
 
-;洗脳/悪堕ちキャラが操作キャラの받아들인다を見た
+;세뇌/흑화 캐릭터가 操作キャラの받아들인다を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_UKEIRERU
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_UKEIRERU")
 
-;洗脳/悪堕ちキャラが操作キャラの봉사한다をみた
+;세뇌/흑화 캐릭터가 操作キャラの봉사한다をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_HOUSI
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_HOUSI")
 
-;洗脳/悪堕ちキャラが操作キャラのV삽입방어をみた
+;세뇌/흑화 캐릭터가 操作キャラのV삽입방어をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_ANTI_V
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_ANTI_V")
 
-;洗脳/悪堕ちキャラが操作キャラに引き剥がされた
+;세뇌/흑화 캐릭터가 操作キャラに引き剥がされた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_HIKIHAGASU_SUCCESS
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_HIKIHAGASU_SUCCESS")
 
-;洗脳/悪堕ちキャラが操作キャラの引き剥がしを阻止した
+;세뇌/흑화 캐릭터가 操作キャラの引き剥がしを阻止した
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_HIKIHAGASU_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_HIKIHAGASU_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラの노려본다をみた
+;세뇌/흑화 캐릭터가 操作キャラの노려본다をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_NIRAMI
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_NIRAMI")
 
-;洗脳/悪堕ちキャラが操作キャラの매도한다をみた
+;세뇌/흑화 캐릭터가 操作キャラの매도한다をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_BATOU
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_BATOU")
 
-;洗脳/悪堕ちキャラが操作キャラの반항한다をみた
+;세뇌/흑화 캐릭터가 操作キャラの반항한다をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_RESISTANCE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_RESISTANCE")
 
-;洗脳/悪堕ちキャラが操作キャラの설득해본다をみた
+;세뇌/흑화 캐릭터가 操作キャラの설득해본다をみた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_PERSUADE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_PERSUADE")
 
-;洗脳/悪堕ちキャラが操作キャラの수음공격をみた
+;세뇌/흑화 캐릭터가 操作キャラの수음공격をみた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEX_ATTACK100
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEX_ATTACK100")
 
-;洗脳/悪堕ちキャラが操作キャラの펠라공격をみた
+;세뇌/흑화 캐릭터가 操作キャラの펠라공격をみた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEX_ATTACK101
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEX_ATTACK101")
 
-;洗脳/悪堕ちキャラが操作キャラの풋잡공격をみた
+;세뇌/흑화 캐릭터가 操作キャラの풋잡공격をみた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEX_ATTACK102
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEX_ATTACK102")
 
-;洗脳/悪堕ちキャラが操作キャラの스마타애태우기をみた
+;세뇌/흑화 캐릭터가 操作キャラの스마타애태우기をみた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEX_ATTACK103
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEX_ATTACK103")
 
-;洗脳/悪堕ちキャラが操作キャラの쥐어짠다をみた
+;세뇌/흑화 캐릭터가 操作キャラの쥐어짠다をみた
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CHARA_SEX_ATTACK104
 CALL KOJO_4_OTHER_ROOT("BATTLE_CHARA_SEX_ATTACK104")
 
-;洗脳/悪堕ちキャラが공격を開始した
+;세뇌/흑화 캐릭터가 공격を開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_ATTACK
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_ATTACK")
 
-;洗脳/悪堕ちキャラが공격がクリティカルヒットさせた
+;세뇌/흑화 캐릭터가 공격がクリティカルヒットさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_ATTACK_CRITICAL_HIT")
 
-;洗脳/悪堕ちキャラが공격が通常ヒットさせた
+;세뇌/흑화 캐릭터가 공격が通常ヒットさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_ATTACK_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_ATTACK_HIT")
 
-;洗脳/悪堕ちキャラが공격を回避された
+;세뇌/흑화 캐릭터가 공격を回避された
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_ATTACK_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_ATTACK_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラに공격をカス当たりさせた
+;세뇌/흑화 캐릭터가 操作キャラに공격をカス当たりさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_ATTACK_GRAZE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_ATTACK_GRAZE")
 
-;洗脳/悪堕ちキャラが絡みつく開始した
+;세뇌/흑화 캐릭터가 絡みつく開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_KARAMITUKU
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_KARAMITUKU")
 
-;洗脳/悪堕ちキャラが絡みつくを成功させた
+;세뇌/흑화 캐릭터가 絡みつくを成功させた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_KARAMITUKU_SUCCESS")
 
-;洗脳/悪堕ちキャラが絡みつくを回避された
+;세뇌/흑화 캐릭터가 絡みつくを回避された
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_KARAMITUKU_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_KARAMITUKU_FALSE")
 
-;洗脳/悪堕ちキャラが体液を吐くを開始した
+;세뇌/흑화 캐릭터가 体液を吐くを開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_TAIEKI
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_TAIEKI")
 
-;洗脳/悪堕ちキャラが体液を吐くをヒットさせた
+;세뇌/흑화 캐릭터가 体液を吐くをヒットさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_TAIEKI_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_TAIEKI_HIT")
 
-;洗脳/悪堕ちキャラが体液を吐くを回避された
+;세뇌/흑화 캐릭터가 体液を吐くを回避された
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_TAIEKI_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_TAIEKI_FALSE")
 
-;洗脳/悪堕ちキャラが距離をとった
+;세뇌/흑화 캐릭터가 距離をとった
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_TAKEAWAY
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_TAKEAWAY")
 
-;洗脳/悪堕ちキャラが押し倒すを開始した
+;세뇌/흑화 캐릭터가 押し倒すを開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_OSHITAOSU
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_OSHITAOSU")
 
-;洗脳/悪堕ちキャラが押し倒すを成功させた
+;세뇌/흑화 캐릭터가 押し倒すを成功させた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_OSHITAOSU_SUCCESS")
 
-;洗脳/悪堕ちキャラが押し倒すを回避された
+;세뇌/흑화 캐릭터가 押し倒すを回避された
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_OSHITAOSU_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_OSHITAOSU_FALSE")
 
-;洗脳/悪堕ちキャラが邪悪な波動を開始した
+;세뇌/흑화 캐릭터가 邪悪な波動を開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_HADOU
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_HADOU")
 
-;洗脳/悪堕ちキャラが邪悪な波動をヒットさせた
+;세뇌/흑화 캐릭터가 邪悪な波動をヒットさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_HADOU_HIT
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_HADOU_HIT")
 
-;洗脳/悪堕ちキャラが邪悪な波動を回避された
+;세뇌/흑화 캐릭터가 邪悪な波動を回避された
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_TENTACLE_HADOU_FALSE
 CALL KOJO_4_OTHER_ROOT("BATTLE_TENTACLE_HADOU_FALSE")
 
-;洗脳/悪堕ちキャラが操作キャラのアウターが破れ始めたのを見た
+;세뇌/흑화 캐릭터가 操作キャラのアウターが破れ始めたのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CLOTH_OUTERDAMAGE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CLOTH_OUTERDAMAGE")
 
-;洗脳/悪堕ちキャラが操作キャラのアウターが破れたのを見た
+;세뇌/흑화 캐릭터가 操作キャラのアウターが破れたのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CLOTH_OUTERBREAK
 CALL KOJO_4_OTHER_ROOT("BATTLE_CLOTH_OUTERBREAK")
 
-;洗脳/悪堕ちキャラが操作キャラのインナーが破れ始めたのを見た
+;세뇌/흑화 캐릭터가 操作キャラのインナーが破れ始めたのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CLOTH_INNERDAMAGE
 CALL KOJO_4_OTHER_ROOT("BATTLE_CLOTH_INNERDAMAGE")
 
-;洗脳/悪堕ちキャラが操作キャラのインナーが破れたのを見た
+;세뇌/흑화 캐릭터가 操作キャラのインナーが破れたのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_CLOTH_INNERBREAK
 CALL KOJO_4_OTHER_ROOT("BATTLE_CLOTH_INNERBREAK")
 
-;洗脳/悪堕ちキャラが操作キャラに敗北した
+;세뇌/흑화 캐릭터가 操作キャラに敗北した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_END_WIN_ENEMY
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_WIN_ENEMY")
 
-;洗脳/悪堕ちキャラが操作キャラに勝利した
+;세뇌/흑화 캐릭터가 操作キャラに勝利した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_END_LOSS
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_LOSS")
 
-;洗脳/悪堕ちキャラが操作キャラと引き分けた
+;세뇌/흑화 캐릭터가 操作キャラと引き分けた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_END_TIMEUP
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_TIMEUP")
 
-;洗脳/悪堕ちキャラが操作キャラの「촉수의포로で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「촉수의포로で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_TORIKO
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_TORIKO")
 
-;洗脳/悪堕ちキャラが操作キャラの「快楽で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「快楽で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_KAIRAKU
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_KAIRAKU")
 
-;洗脳/悪堕ちキャラが操作キャラの「고통で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「고통で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_KUTUU
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_KUTUU")
 
-;洗脳/悪堕ちキャラが操作キャラの「屈辱で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「屈辱で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_KUTUZYOKU
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_KUTUZYOKU")
 
-;洗脳/悪堕ちキャラが操作キャラの「공포で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「공포で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_KYOUHU
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_KYOUHU")
 
-;洗脳/悪堕ちキャラが操作キャラの「恥辱で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「恥辱で体が竦む」を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_TIZYOKU
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_TIZYOKU")
 
-;洗脳/悪堕ちキャラが操作キャラの「기생の影響で体が竦む」を見た
+;세뇌/흑화 캐릭터가 操作キャラの「기생の影響で体が竦む」を見た
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_DISACTION_PARASITE
 CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_PARASITE")
@@ -353,7 +353,7 @@ CALL KOJO_4_OTHER_ROOT("BATTLE_DISACTION_PARASITE")
 @KOJO_4_OTHER_BATTLE_END_RESCUED_SENNOU
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_RESCUED_SENNOU")
 
-;洗脳/悪堕ち状態で倒された側
+;세뇌/흑화状態で倒された側
 ;--------------------------------------------------
 @KOJO_4_OTHER_BATTLE_END_RESCUED_ENEMY
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_RESCUED_ENEMY")
@@ -362,457 +362,457 @@ CALL KOJO_4_OTHER_ROOT("BATTLE_END_RESCUED_ENEMY")
 ;**************************************************
 ;性行為のもの
 ;**************************************************
-;洗脳/悪堕ちキャラが操作キャラにC攻め弱をした
+;세뇌/흑화 캐릭터가 操作キャラにC攻め弱をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM0
 CALL KOJO_4_OTHER_ROOT("SEX_COM0")
 
-;洗脳/悪堕ちキャラが操作キャラにC攻め強をした
+;세뇌/흑화 캐릭터가 操作キャラにC攻め強をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM1
 CALL KOJO_4_OTHER_ROOT("SEX_COM1")
 
-;洗脳/悪堕ちキャラが操作キャラにV攻め弱をした
+;세뇌/흑화 캐릭터가 操作キャラにV攻め弱をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM2
 CALL KOJO_4_OTHER_ROOT("SEX_COM2")
 
-;洗脳/悪堕ちキャラが操作キャラにV攻め強をした
+;세뇌/흑화 캐릭터가 操作キャラにV攻め強をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM3
 CALL KOJO_4_OTHER_ROOT("SEX_COM3")
 
-;洗脳/悪堕ちキャラが操作キャラにA攻め弱をした
+;세뇌/흑화 캐릭터가 操作キャラにA攻め弱をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM4
 CALL KOJO_4_OTHER_ROOT("SEX_COM4")
 
-;洗脳/悪堕ちキャラが操作キャラにA攻め強をした
+;세뇌/흑화 캐릭터가 操作キャラにA攻め強をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM5
 CALL KOJO_4_OTHER_ROOT("SEX_COM5")
 
-;洗脳/悪堕ちキャラが操作キャラにB攻め弱をした
+;세뇌/흑화 캐릭터가 操作キャラにB攻め弱をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM6
 CALL KOJO_4_OTHER_ROOT("SEX_COM6")
 
-;洗脳/悪堕ちキャラが操作キャラにB攻め強をした
+;세뇌/흑화 캐릭터가 操作キャラにB攻め強をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM7
 CALL KOJO_4_OTHER_ROOT("SEX_COM7")
 
-;洗脳/悪堕ちキャラが操作キャラにスパンキングをした
+;세뇌/흑화 캐릭터가 操作キャラにスパンキングをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM8
 CALL KOJO_4_OTHER_ROOT("SEX_COM8")
 
-;洗脳/悪堕ちキャラが操作キャラに針をした
+;세뇌/흑화 캐릭터가 操作キャラに針をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM9
 CALL KOJO_4_OTHER_ROOT("SEX_COM9")
 
-;洗脳/悪堕ちキャラが操作キャラに手淫をさせた
+;세뇌/흑화 캐릭터가 操作キャラに手淫をさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM10
 CALL KOJO_4_OTHER_ROOT("SEX_COM10")
 
-;洗脳/悪堕ちキャラが操作キャラにフェラをさせた
+;세뇌/흑화 캐릭터가 操作キャラにフェラをさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM11
 CALL KOJO_4_OTHER_ROOT("SEX_COM11")
 
-;洗脳/悪堕ちキャラが操作キャラにイラマチオした
+;세뇌/흑화 캐릭터가 操作キャラにイラマチオした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM12
 CALL KOJO_4_OTHER_ROOT("SEX_COM12")
 
-;洗脳/悪堕ちキャラが操作キャラに絶頂禁止をさせた
+;세뇌/흑화 캐릭터가 操作キャラに絶頂禁止をさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM13
 CALL KOJO_4_OTHER_ROOT("SEX_COM13")
 
-;洗脳/悪堕ちキャラが操作キャラの衣装を破いた
+;세뇌/흑화 캐릭터가 操作キャラの衣装を破いた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM14
 CALL KOJO_4_OTHER_ROOT("SEX_COM14")
 
-;洗脳/悪堕ちキャラが種付けピストンした
+;세뇌/흑화 캐릭터가 種付けピストンした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM15
 CALL KOJO_4_OTHER_ROOT("SEX_COM15")
 
-;洗脳/悪堕ちキャラが種付けフィニッシュした
+;세뇌/흑화 캐릭터가 種付けフィニッシュした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM16
 CALL KOJO_4_OTHER_ROOT("SEX_COM16")
 
-;洗脳/悪堕ちキャラが애널ピストンした
+;세뇌/흑화 캐릭터가 애널ピストンした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM17
 CALL KOJO_4_OTHER_ROOT("SEX_COM17")
 
-;洗脳/悪堕ちキャラが애널フィニッシュした
+;세뇌/흑화 캐릭터가 애널フィニッシュした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM18
 CALL KOJO_4_OTHER_ROOT("SEX_COM18")
 
-;洗脳/悪堕ちキャラが両穴ピストンした
+;세뇌/흑화 캐릭터가 両穴ピストンした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM19
 CALL KOJO_4_OTHER_ROOT("SEX_COM19")
 
-;洗脳/悪堕ちキャラが両穴フィニッシュした
+;세뇌/흑화 캐릭터가 両穴フィニッシュした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_COM20
 CALL KOJO_4_OTHER_ROOT("SEX_COM20")
 
-;洗脳/悪堕ちキャラが操作キャラにC攻めSPをした
+;세뇌/흑화 캐릭터가 操作キャラにC攻めSPをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM0
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM0")
 
-;洗脳/悪堕ちキャラが操作キャラにV攻めSPをした
+;세뇌/흑화 캐릭터가 操作キャラにV攻めSPをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM1
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM1")
 
-;洗脳/悪堕ちキャラが操作キャラにA攻めSPをした
+;세뇌/흑화 캐릭터가 操作キャラにA攻めSPをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM2
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM2")
 
-;洗脳/悪堕ちキャラが操作キャラにB攻めSPをした
+;세뇌/흑화 캐릭터가 操作キャラにB攻めSPをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM3
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM3")
 
-;洗脳/悪堕ちキャラが操作キャラに電流をした
+;세뇌/흑화 캐릭터가 操作キャラに電流をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM4
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM4")
 
-;洗脳/悪堕ちキャラが操作キャラにパイズリをさせた
+;세뇌/흑화 캐릭터가 操作キャラにパイズリをさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM5
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM5")
 
-;洗脳/悪堕ちキャラが操作キャラに強制自慰をさせた
+;세뇌/흑화 캐릭터가 操作キャラに強制自慰をさせた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM6
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM6")
 
-;洗脳/悪堕ちキャラが操作キャラに羞恥プレイをした
+;세뇌/흑화 캐릭터가 操作キャラに羞恥プレイをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_SPCOM7
 CALL KOJO_4_OTHER_ROOT("SEX_SPCOM7")
 
-;洗脳/悪堕ちキャラが操作キャラの사정を見た
+;세뇌/흑화 캐릭터가 操作キャラの사정を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_CHARA_SYASEI
 CALL KOJO_4_OTHER_ROOT("SEX_CHARA_SYASEI")
 
-;洗脳/悪堕ちキャラが操作キャラの대량사정を見た
+;세뇌/흑화 캐릭터가 操作キャラの대량사정を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_CHARA_SYASEI_HI
 CALL KOJO_4_OTHER_ROOT("SEX_CHARA_SYASEI_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの모유を見た
+;세뇌/흑화 캐릭터가 操作キャラの모유を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_CHARA_HUNNYU
 CALL KOJO_4_OTHER_ROOT("SEX_CHARA_HUNNYU")
 
-;洗脳/悪堕ちキャラが操作キャラの大量모유を見た
+;세뇌/흑화 캐릭터가 操作キャラの大量모유を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_CHARA_HUNNYU_HI
 CALL KOJO_4_OTHER_ROOT("SEX_CHARA_HUNNYU_HI")
 
-;洗脳/悪堕ちキャラが操作キャラのC絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのC絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_C
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_C")
 
-;洗脳/悪堕ちキャラが操作キャラのC強絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのC強絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_C_HI
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_C_HI")
 
-;洗脳/悪堕ちキャラが操作キャラのV絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのV絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_V
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_V")
 
-;洗脳/悪堕ちキャラが操作キャラのV強絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのV強絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_V_HI
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_V_HI")
 
-;洗脳/悪堕ちキャラが操作キャラのA絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのA絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_A
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_A")
 
-;洗脳/悪堕ちキャラが操作キャラのA強絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのA強絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_A_HI
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_A_HI")
 
-;洗脳/悪堕ちキャラが操作キャラのB絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのB絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_B
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_B")
 
-;洗脳/悪堕ちキャラが操作キャラのB強絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのB強絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_ECSTASY_B_HI
 CALL KOJO_4_OTHER_ROOT("SEX_ECSTASY_B_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの四重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラの四重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CVAB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CVAB")
 
-;洗脳/悪堕ちキャラが操作キャラのCVA三重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCVA三重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CVA
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CVA")
 
-;洗脳/悪堕ちキャラが操作キャラのCVB三重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCVB三重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CVB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CVB")
 
-;洗脳/悪堕ちキャラが操作キャラのCAB三重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCAB三重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CAB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CAB")
 
-;洗脳/悪堕ちキャラが操作キャラのCV二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCV二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CV
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CV")
 
-;洗脳/悪堕ちキャラが操作キャラのCA二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCA二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CA
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CA")
 
-;洗脳/悪堕ちキャラが操作キャラのCB二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのCB二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_CB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_CB")
 
-;洗脳/悪堕ちキャラが操作キャラのVAB三重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのVAB三重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_VAB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_VAB")
 
-;洗脳/悪堕ちキャラが操作キャラのVA二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのVA二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_VA
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_VA")
 
-;洗脳/悪堕ちキャラが操作キャラのVB二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのVB二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_VB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_VB")
 
-;洗脳/悪堕ちキャラが操作キャラのAB二重絶頂を見た
+;세뇌/흑화 캐릭터가 操作キャラのAB二重絶頂を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MULTIECSTASY_AB
 CALL KOJO_4_OTHER_ROOT("SEX_MULTIECSTASY_AB")
 
-;洗脳/悪堕ちキャラが操作キャラに쾌락각인１が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに쾌락각인１が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KAIRAKU_1
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KAIRAKU_1")
 
-;洗脳/悪堕ちキャラが操作キャラに쾌락각인２が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに쾌락각인２が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KAIRAKU_2
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KAIRAKU_2")
 
-;洗脳/悪堕ちキャラが操作キャラに쾌락각인３が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに쾌락각인３が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KAIRAKU_3
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KAIRAKU_3")
 
-;洗脳/悪堕ちキャラが操作キャラに쾌락각인４が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに쾌락각인４が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KAIRAKU_4
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KAIRAKU_4")
 
-;洗脳/悪堕ちキャラが操作キャラに쾌락각인５が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに쾌락각인５が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KAIRAKU_5
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KAIRAKU_5")
 
-;洗脳/悪堕ちキャラが操作キャラに고통각인１が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに고통각인１が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUTUU_1
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUTUU_1")
 
-;洗脳/悪堕ちキャラが操作キャラに고통각인２が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに고통각인２が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUTUU_2
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUTUU_2")
 
-;洗脳/悪堕ちキャラが操作キャラに고통각인３が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに고통각인３が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUTUU_3
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUTUU_3")
 
-;洗脳/悪堕ちキャラが操作キャラに고통각인４が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに고통각인４が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUTUU_4
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUTUU_4")
 
-;洗脳/悪堕ちキャラが操作キャラに고통각인５が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに고통각인５が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUTUU_5
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUTUU_5")
 
-;洗脳/悪堕ちキャラが操作キャラに굴복각인１が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに굴복각인１が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUPPUKU_1
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUPPUKU_1")
 
-;洗脳/悪堕ちキャラが操作キャラに굴복각인２が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに굴복각인２が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUPPUKU_2
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUPPUKU_2")
 
-;洗脳/悪堕ちキャラが操作キャラに굴복각인３が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに굴복각인３が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUPPUKU_3
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUPPUKU_3")
 
-;洗脳/悪堕ちキャラが操作キャラに굴복각인４が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに굴복각인４が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUPPUKU_4
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUPPUKU_4")
 
-;洗脳/悪堕ちキャラが操作キャラに굴복각인５が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに굴복각인５が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KUPPUKU_5
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KUPPUKU_5")
 
-;洗脳/悪堕ちキャラが操作キャラに공포각인１が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに공포각인１が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KYOUHU_1
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KYOUHU_1")
 
-;洗脳/悪堕ちキャラが操作キャラに공포각인２が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに공포각인２が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KYOUHU_2
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KYOUHU_2")
 
-;洗脳/悪堕ちキャラが操作キャラに공포각인３が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに공포각인３が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KYOUHU_3
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KYOUHU_3")
 
-;洗脳/悪堕ちキャラが操作キャラに공포각인４が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに공포각인４が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KYOUHU_4
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KYOUHU_4")
 
-;洗脳/悪堕ちキャラが操作キャラに공포각인５が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに공포각인５が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_KYOUHU_5
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_KYOUHU_5")
 
-;洗脳/悪堕ちキャラが操作キャラに치욕각인１が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに치욕각인１が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_TIJYOKU_1
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_TIJYOKU_1")
 
-;洗脳/悪堕ちキャラが操作キャラに치욕각인２が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに치욕각인２が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_TIJYOKU_2
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_TIJYOKU_2")
 
-;洗脳/悪堕ちキャラが操作キャラに치욕각인３が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに치욕각인３が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_TIJYOKU_3
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_TIJYOKU_3")
 
-;洗脳/悪堕ちキャラが操作キャラに치욕각인４が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに치욕각인４が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_TIJYOKU_4
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_TIJYOKU_4")
 
-;洗脳/悪堕ちキャラが操作キャラに치욕각인５が付くのを見た
+;세뇌/흑화 캐릭터가 操作キャラに치욕각인５が付くのを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_MARK_TIJYOKU_5
 CALL KOJO_4_OTHER_ROOT("SEX_MARK_TIJYOKU_5")
 
-;洗脳/悪堕ちキャラが操作キャラの질내에 사정した
+;세뇌/흑화 캐릭터가 操作キャラの질내에 사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_VAGINA
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_VAGINA")
 
-;洗脳/悪堕ちキャラが操作キャラの질내に대량사정した
+;세뇌/흑화 캐릭터가 操作キャラの질내に대량사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_VAGINA_HI
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_VAGINA_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの애널에 사정した
+;세뇌/흑화 캐릭터가 操作キャラの애널에 사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_ANAL
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_ANAL")
 
-;洗脳/悪堕ちキャラが操作キャラの애널に대량사정した
+;세뇌/흑화 캐릭터가 操作キャラの애널に대량사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_ANAL_HI
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_ANAL_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの手에 사정した
+;세뇌/흑화 캐릭터가 操作キャラの手에 사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_HAND
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_HAND")
 
-;洗脳/悪堕ちキャラが操作キャラの手に대량사정した
+;세뇌/흑화 캐릭터가 操作キャラの手に대량사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_HAND_HI
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_HAND_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの口内에 사정した
+;세뇌/흑화 캐릭터가 操作キャラの口内에 사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_MOUTH
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_MOUTH")
 
-;洗脳/悪堕ちキャラが操作キャラの口内に대량사정した
+;세뇌/흑화 캐릭터가 操作キャラの口内に대량사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_MOUTH_HI
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_MOUTH_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの胸에 사정した
+;세뇌/흑화 캐릭터가 操作キャラの胸에 사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_BUST
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_BUST")
 
-;洗脳/悪堕ちキャラが操作キャラの胸に대량사정した
+;세뇌/흑화 캐릭터가 操作キャラの胸に대량사정した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SEX_TENTACLE_SYASEI_BUST_HI
 CALL KOJO_4_OTHER_ROOT("SEX_TENTACLE_SYASEI_BUST_HI")
 
-;洗脳/悪堕ちキャラが操作キャラの普通の自慰を見た
+;세뇌/흑화 캐릭터가 操作キャラの普通の自慰を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SELF_N
 CALL KOJO_4_OTHER_ROOT("SELF_N")
 
-;洗脳/悪堕ちキャラが操作キャラの胸自慰を見た
+;세뇌/흑화 캐릭터가 操作キャラの胸自慰を見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SELF_B
 CALL KOJO_4_OTHER_ROOT("SELF_B")
 
-;洗脳/悪堕ちキャラが操作キャラのアナニーを見た
+;세뇌/흑화 캐릭터가 操作キャラのアナニーを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SELF_A
 CALL KOJO_4_OTHER_ROOT("SELF_A")
 
-;洗脳/悪堕ちキャラが操作キャラの膣オナを見た
+;세뇌/흑화 캐릭터가 操作キャラの膣オナを見た
 ;----------------------------------------------------------
 @KOJO_4_OTHER_SELF_V
 CALL KOJO_4_OTHER_ROOT("SELF_V")
@@ -825,127 +825,127 @@ CALL KOJO_4_OTHER_ROOT("SELF_V")
 @KOJO_4_OTHER_BATTLE_END_RESCUED
 CALL KOJO_4_OTHER_ROOT("BATTLE_END_RESCUED")
 
-;悪堕ちキャラが幽閉中の操作キャラに被姦開始した
+;흑화 캐릭터가 幽閉中の操作キャラに被姦開始した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_PRISENTENCE
 CALL KOJO_4_OTHER_ROOT("PRISON_PRISENTENCE")
 
-;悪堕ちキャラが幽閉中の操作キャラを洗脳した
+;흑화 캐릭터가 幽閉中の操作キャラを洗脳した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_SENNOU
 CALL KOJO_4_OTHER_ROOT("PRISON_SENNOU")
 
-;悪堕ちキャラが幽閉中の操作キャラを悪堕ち
+;흑화 캐릭터가 幽閉中の操作キャラを흑화
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_AKUOTI
 CALL KOJO_4_OTHER_ROOT("PRISON_AKUOTI")
 
-;悪堕ちキャラが幽閉中の操作キャラを取り込んだ
+;흑화 캐릭터가 幽閉中の操作キャラを取り込んだ
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_DEAD
 CALL KOJO_4_OTHER_ROOT("PRISON_DEAD")
 
-;悪堕ちキャラが幽閉中の操作キャラを후타나리化した
+;흑화 캐릭터가 幽閉中の操作キャラを후타나리化した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_HUTANARI
 CALL KOJO_4_OTHER_ROOT("PRISON_HUTANARI")
 
-;悪堕ちキャラが幽閉中の操作キャラを모유체질化した
+;흑화 캐릭터가 幽閉中の操作キャラを모유체질化した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_BONYU
 CALL KOJO_4_OTHER_ROOT("PRISON_BONYU")
 
-;悪堕ちキャラが幽閉中の操作キャラを묘상화した
+;흑화 캐릭터가 幽閉中の操作キャラを묘상화した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_NAEDOKO
 CALL KOJO_4_OTHER_ROOT("PRISON_NAEDOKO")
 
-;悪堕ちキャラが幽閉中の操作キャラを膨乳化した
+;흑화 캐릭터가 幽閉中の操作キャラを膨乳化した
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_BOUNYU
 CALL KOJO_4_OTHER_ROOT("PRISON_BOUNYU")
 
-;悪堕ちキャラが幽閉中の操作キャラにC中心攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラにC中心攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_0
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_0")
 
-;悪堕ちキャラが幽閉中の操作キャラにV中心攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラにV中心攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_1
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_1")
 
-;悪堕ちキャラが幽閉中の操作キャラにA中心攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラにA中心攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_2
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_2")
 
-;悪堕ちキャラが幽閉中の操作キャラにB中心攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラにB中心攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_3
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_3")
 
-;悪堕ちキャラが幽閉中の操作キャラにSな攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラにSな攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_4
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_4")
 
-;悪堕ちキャラが幽閉中の操作キャラに強制奉仕させた
+;흑화 캐릭터가 幽閉中の操作キャラに強制奉仕させた
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_5
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_5")
 
-;悪堕ちキャラが幽閉中の操作キャラに羞恥な攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラに羞恥な攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_6
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_6")
 
-;悪堕ちキャラが幽閉中の操作キャラに후타나리攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラに후타나리攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_100
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_100")
 
-;悪堕ちキャラが幽閉中の操作キャラにV拡張をした
+;흑화 캐릭터가 幽閉中の操作キャラにV拡張をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_101
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_101")
 
-;悪堕ちキャラが幽閉中の操作キャラにA拡張をした
+;흑화 캐릭터가 幽閉中の操作キャラにA拡張をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_102
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_102")
 
-;悪堕ちキャラが幽閉中の操作キャラに搾乳攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラに搾乳攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_103
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_103")
 
-;悪堕ちキャラが幽閉中の操作キャラに種付けをした
+;흑화 캐릭터가 幽閉中の操作キャラに種付けをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_104
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_104")
 
-;悪堕ちキャラが幽閉中の操作キャラに膨乳攻めをした
+;흑화 캐릭터가 幽閉中の操作キャラに膨乳攻めをした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_105
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_105")
 
-;悪堕ちキャラが幽閉中の操作キャラにVに産卵をした
+;흑화 캐릭터가 幽閉中の操作キャラにVに産卵をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_200
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_200")
 
-;悪堕ちキャラが幽閉中の操作キャラにAに産卵をした
+;흑화 캐릭터가 幽閉中の操作キャラにAに産卵をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_201
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_201")
 
-;悪堕ちキャラが幽閉中の操作キャラに注射をした
+;흑화 캐릭터가 幽閉中の操作キャラに注射をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_300
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_300")
 
-;悪堕ちキャラが幽閉中の操作キャラに촉수の기생をした
+;흑화 캐릭터가 幽閉中の操作キャラに촉수の기생をした
 ;----------------------------------------------------------
 @KOJO_4_OTHER_PRISON_COM_301
 CALL KOJO_4_OTHER_ROOT("PRISON_COM_301")

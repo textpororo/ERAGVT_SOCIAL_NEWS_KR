@@ -20,13 +20,13 @@ INPUT
 IF RESULT == 999
 	RETURN 999
 ELSEIF RESULT < 1 || RESULT >= LOCAL
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP_CHARA_LIST
 ELSE
 	TARGET = RESULT
 	PRINTFORML %CALLNAME:RESULT%をどのように「処理」しますか？
 	PRINTL [0] 裏組織に売却する（大金を受け取る）
-	PRINTL [1] 地下処刑ショーを手配する（大量の人気、資金、촉수の欠片を収穫する）
+	PRINTL [1] 地下処刑ショーを手配する（大量の人気、資金、촉수의 조각を収穫する）
 	PRINTL [999] キャラクター選択に戻る
 	INPUT
 	$INPUT_AMPUTEE
@@ -37,7 +37,7 @@ ELSE
 	ELSEIF RESULT == 999
 		GOTO INPUT_LOOP_CHARA_LIST
 	ELSE
-		PRINTL 正しい値を入力してください
+		PRINTL 올바른 값을 입력해 주십시오.
 		GOTO INPUT_AMPUTEE
 	ENDIF
 ENDIF

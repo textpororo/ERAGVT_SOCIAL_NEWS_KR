@@ -40,12 +40,12 @@
 ;7	A감각が低い時の쾌A増加
 ;8	敵が行動不能のヒロインを正確に狙う
 ;
-;幽閉・悪堕ちオプション	FLAG:804	判定式：CONFIG_CHECK_PRISON_F(num)
+;幽閉・흑화オプション	FLAG:804	判定式：CONFIG_CHECK_PRISON_F(num)
 ;0	남자の敗北幽閉時に女体化
-;1	ヒロイン悪堕ち機能を使用する
-;2	┣ただし苗床取得キャラは産む機械に(묘상화取得後は悪堕ちしにくい＝取り込まれ死亡コースに乗りやすい)
-;3	┣非戦闘員持ちと놀림받는체질は悪堕ちしない
-;4	┗悪堕ち時に容姿を変更する
+;1	ヒロイン흑화機能を使用する
+;2	┣ただし苗床取得キャラは産む機械に(묘상화取得後は흑화しにくい＝取り込まれ死亡コースに乗りやすい)
+;3	┣非戦闘員持ちと놀림받는체질は흑화しない
+;4	┗흑화時に容姿を変更する
 ;5	  ┣髪型の変更を許可する
 ;6	  ┣髪の色の変更を許可する
 ;7	  ┣目の色の変更を許可する
@@ -268,7 +268,7 @@ ELSEIF PAGE == 1
 
 	PRINT 　●
 	SETCOLOR 60,255,120
-	PRINTFORML 幽閉・悪堕ち関連オプション
+	PRINTFORML 幽閉・흑화関連オプション
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(0) == 0
@@ -277,7 +277,7 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(1) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[61]%CONFIG_CHECK_PRISON_F(1) == 0 ? "▼" # "▲"%ヒロイン悪堕ち機能を使用する
+	PRINTFORML 　[61]%CONFIG_CHECK_PRISON_F(1) == 0 ? "▼" # "▲"%ヒロイン흑화機能を使用する
 	;↑から派生
 	IF CONFIG_CHECK_PRISON_F(1) == 1
 		SETCOLOR 120,255,255
@@ -287,12 +287,12 @@ ELSEIF PAGE == 1
 		SETCOLOR 120,255,255
 		SIF CONFIG_CHECK_PRISON_F(3) == 0
 			SETCOLOR 105,105,105
-		PRINTFORML 　 ┣[63]ただし놀림받는체질を持たない戦闘員だけが悪堕ちする
+		PRINTFORML 　 ┣[63]ただし놀림받는체질を持たない戦闘員だけが흑화する
 
 		SETCOLOR 120,255,255
 		SIF CONFIG_CHECK_PRISON_F(4) == 0
 			SETCOLOR 105,105,105
-		PRINTFORML 　 ┣[64]%CONFIG_CHECK_PRISON_F(4) == 0 ? "▼" # "▲"%悪堕ち時に容姿を変更する
+		PRINTFORML 　 ┣[64]%CONFIG_CHECK_PRISON_F(4) == 0 ? "▼" # "▲"%흑화時に容姿を変更する
 		RESETCOLOR
 		IF CONFIG_CHECK_PRISON_F(4) == 1
 			SETCOLOR 120,255,255
@@ -320,7 +320,7 @@ ELSEIF PAGE == 1
 		SETCOLOR 120,255,255
 		SIF CONFIG_CHECK_PRISON_F(9) == 0
 			SETCOLOR 105,105,105
-		PRINTFORML 　 ┗[69]【촉수의포로】無しでも洗脳ではなく悪堕ちする
+		PRINTFORML 　 ┗[69]【촉수의포로】無しでも洗脳ではなく흑화する
 	ENDIF
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(10) == 0
@@ -488,7 +488,7 @@ ELSEIF RESULT == 36
 ELSEIF RESULT >= 50 && RESULT <= 58
 	INVERTBIT FLAG:803, RESULT - 50
 	GOTO MASTER_LOOP
-;幽閉・悪堕ち関係
+;幽閉・흑화関係
 ELSEIF RESULT >= 60 && RESULT <= 70
 	INVERTBIT FLAG:804, RESULT - 60
 	GOTO MASTER_LOOP
@@ -503,7 +503,7 @@ ELSEIF RESULT >= 71 && RESULT <=79
 	GOTO MASTER_LOOP
 ELSE
 	PRINTL 
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 

@@ -35,7 +35,7 @@ ELSE
 		;幽閉状態で放置
 		SIF CFLAG:CCOUNT:0 == 1
 			LOCAL -= 60 / (CHARANUM - 1)
-		;洗脳、悪堕ち状態で放置
+		;洗脳、흑화状態で放置
 		SIF CFLAG:CCOUNT:0 == 2 || CFLAG:CCOUNT:0 == 3
 			LOCAL -= 30 / (CHARANUM - 1)
 		;死亡状態
@@ -490,7 +490,7 @@ IF GAME_OPTION_CHECK_F(OPTION_solo)
 	IF LOCAL:1 <= 3
 		PRINTL ソロモードでは幽閉されてもゲームオーバーにならない代わりに、
 		PRINTL 幽閉された回数で生存評価が低下してしまいます。
-		PRINTL また、洗脳/悪堕ちするとゲームオーバーになるという
+		PRINTL また、세뇌/흑화するとゲームオーバーになるという
 		PRINTL ソロモード独自の仕様があるので要注意です。
 	ELSEIF LOCAL:1 <= 5
 		PRINTL ソロモードでは一回や二回くらい幽閉されても余裕で脱出できます。
@@ -519,7 +519,7 @@ ELSE
 		PRINTL 一人が捕まったくらいなら、방위력を維持しながら鍛錬するのも容易いはず。
 		PRINTL 戦闘支援を利用すれば撤退しやすくなるので、試しに使ってみては如何でしょう？
 	ELSEIF LOCAL:1 == 5
-		PRINTL 洗脳や悪堕ちしてしまった仲間を見捨てていませんか？
+		PRINTL 洗脳や흑화してしまった仲間を見捨てていませんか？
 		PRINTL 仲間が全員揃っていればクリア評価はＳになるので、もうひと踏ん張りです。
 	ELSE
 		PRINTL 全員を無事に生存させたみたいですね。

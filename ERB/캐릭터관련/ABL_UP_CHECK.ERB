@@ -448,31 +448,31 @@ IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신�
 		IF TALENT:촉수의포로 > 0
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;地の文:촉수의포로獲得による여체수용
+			;지문: 촉수의포로獲得による여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_TORIKO
 		;条件2:음란か음호の取得時、またはV감각Lv5以上かつ사정중독Lvが정액중독Lv+모유중독Lvより低いとき
 		ELSEIF TALENT:음란 > 0 || TALENT:음호 > 0 || (ABL:V감각 >= 5 && (ABL:정액중독 + ABL:모유중독 > ABL:사정중독))
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;地の文:음란化による여체수용
+			;지문: 음란化による여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_INRAN
 		;条件3:出産した、または처녀を사랑하는사람に捧げた
 		ELSEIF (EXP:출산경험 > 0 && CFLAG:230 == 사랑하는사람) || (EXP:출산경험 > 0 && CFLAG:230 < -100 && LOVER_F(TARGET, CHARAID_F(CFLAG:230 * -1 - 100))) || CFLAG:206 == 5
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;地の文:女の喜びによる여체수용
+			;지문: 女の喜びによる여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_FEMININE
 		;条件4:매료경험200以上
 		ELSEIF EXP:매료경험 >= 200
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;地の文:女の魅力による여체수용
+			;지문: 女の魅力による여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_CHARM
 		;条件5:양도かつ음란または음호取得時、またはV감각Lv5以上のとき
 		ELSEIF TALENT:양도 > 0 && (TALENT:음란 > 0 || TALENT:음호 > 0 || ABL:V감각 >= 5)
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;地の文:양도による여체수용
+			;지문: 양도による여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_RYOUTOU
 		ENDIF
 	ENDIF

@@ -1,4 +1,4 @@
-﻿;悪堕ち・洗脳キャラを除いたキャラのリスト表示
+﻿;흑화・洗脳キャラを除いたキャラのリスト表示
 ;ARG=1ならCFLAG:0=0のキャラ（仲間状態で生きているキャラ）からしか選択できない、ARG=2なら全キャラ表示する、ARG=3なら一時離脱しているキャラのみ表示する
 ;ARG:1は表示オプション
 ;ARG:1=1	生存状態
@@ -10,7 +10,7 @@ PRINTL 誰を引退させますか？
 FOR LCOUNT, 0, CHARANUM
 	SIF LCOUNT == MASTER
 		CONTINUE
-	;洗脳か悪堕ちなら飛ばす
+	;洗脳か흑화なら飛ばす
 	SIF CFLAG:LCOUNT:0 == 2 || CFLAG:LCOUNT:0 == 3
 		CONTINUE
 	PRINTFORM [{LCOUNT}] %CALLNAME:LCOUNT,24,LEFT%
@@ -19,7 +19,7 @@ FOR LCOUNT, 0, CHARANUM
 	SIF CFLAG:LCOUNT:0 == 2
 		PRINT （洗脳）
 	SIF CFLAG:LCOUNT:0 == 3
-		PRINT （悪堕ち）
+		PRINT （흑화）
 	SIF CFLAG:LCOUNT:0 == 4
 		PRINT （誘拐監禁中）
 	;メンタルブレイク、未実装
@@ -39,7 +39,7 @@ INPUT
 IF RESULT == 999
 	RETURN 999
 ELSEIF RESULT < 1 || RESULT >= CHARANUM || CFLAG:RESULT:0 == 2 || CFLAG:RESULT:0 == 3
-	PRINTL 正しい値を入力してください
+	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP_CHARA_LIST
 ELSE
 	RETURN RESULT

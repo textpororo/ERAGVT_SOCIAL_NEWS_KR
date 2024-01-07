@@ -180,7 +180,7 @@ ELSE
 	DRAWLINE
 	PRINTL [100]所持衣装一覧
 	DRAWLINE
-	PRINTL [999]戻る
+	PRINTL [999] 돌아간다
 	INPUT
 	IF RESULT == 999
 		IF CHARANUM >= 3
@@ -240,7 +240,7 @@ ELSE
 		GOTO INPUT_LOOP
 	ELSE
 		PRINTL 
-		PRINTW 正しい値を入力してください
+		PRINTW 올바른 값을 입력해 주십시오.
 		GOTO INPUT_LOOP
 	ENDIF
 ENDIF
@@ -304,7 +304,7 @@ ELSEIF RESULT == 1
 		;	CFLAG:ARG:41 = 199
 	ELSE
 		PRINTL 
-		PRINTW 正しい値を入力してください
+		PRINTW 올바른 값을 입력해 주십시오.
 		GOTO INPUT_LOOP
 	ENDIF
 ELSEIF RESULT == 2
@@ -315,7 +315,7 @@ ELSEIF RESULT == 2
 	PRINTW 
 ELSE
 	PRINTL 
-	PRINTW 正しい値を入力してください
+	PRINTW 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 
@@ -405,7 +405,7 @@ ELSEIF RESULT == 1
 		;	CFLAG:ARG:40 = 199
 	ELSE
 		PRINTL 
-		PRINTW 正しい値を入力してください
+		PRINTW 올바른 값을 입력해 주십시오.
 		GOTO INPUT_LOOP
 	ENDIF
 ELSEIF RESULT == 2
@@ -416,7 +416,7 @@ ELSEIF RESULT == 2
 	PRINTW 
 ELSE
 	PRINTL 
-	PRINTW 正しい値を入力してください
+	PRINTW 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 
@@ -562,7 +562,7 @@ ELSEIF RESULT == 1
 		ENDIF
 	ELSE
 		PRINTL 
-		PRINTW 正しい値を入力してください
+		PRINTW 올바른 값을 입력해 주십시오.
 		GOTO INPUT_LOOP
 	ENDIF
 ELSEIF RESULT == 2
@@ -571,7 +571,7 @@ ELSEIF RESULT == 2
 	PRINTW 
 ELSE
 	PRINTL 
-	PRINTW 正しい値を入力してください
+	PRINTW 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 
@@ -618,7 +618,7 @@ ELSEIF RESULT == 1
 		PRINTW 
 	ELSE
 		PRINTL 
-		PRINTW 正しい値を入力してください
+		PRINTW 올바른 값을 입력해 주십시오.
 		GOTO INPUT_LOOP
 	ENDIF
 ELSEIF RESULT == 2
@@ -627,7 +627,7 @@ ELSEIF RESULT == 2
 	PRINTW 
 ELSE
 	PRINTL 
-	PRINTW 正しい値を入力してください
+	PRINTW 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 
@@ -637,7 +637,7 @@ ENDIF
 @CLOTH_RESETTING_TENTACLECLOTH, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTFORML %ITEMNAME:400%を取り外すには촉수の欠片が1個必要です（現在の所持数：{FLAG:200}個）
+PRINTFORML %ITEMNAME:400%を取り外すには촉수의 조각が1個必要です（現在の소지 수：{FLAG:200}個）
 PRINTFORML %ITEMNAME:400%を取り外しますか？
 PRINTL 
 PRINTL [0] 아니오
@@ -646,7 +646,7 @@ INPUT
 IF RESULT == 0
 ELSEIF RESULT == 1
 	IF FLAG:200 < 1
-		PRINTL 촉수の欠片が足りません
+		PRINTL 촉수의 조각이 부족합니다.
 		PRINTW 
 		GOTO INPUT_LOOP
 	ELSE
@@ -657,7 +657,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSE
 	PRINTL 
-	PRINTW 正しい値を入力してください
+	PRINTW 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP
 ENDIF
 

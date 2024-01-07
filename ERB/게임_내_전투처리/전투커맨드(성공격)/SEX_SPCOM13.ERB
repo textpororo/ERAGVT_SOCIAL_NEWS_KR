@@ -19,7 +19,7 @@ IF TFLAG:23 == 0
 	;油断度の上昇
 	TFLAG:3 += 0
 
-	;地の文:SPCOM13_PRE
+	;지문: SPCOM13_PRE
 	CALL MESSAGE_SEX_SPCOM13_PRE
 
 	;촉수의포로なら욕정、それ以外は공포
@@ -52,7 +52,7 @@ IF TFLAG:23 == 0
 
 	;체력消費基本値
 	LOCAL:12 += 0
-;기절している場合、または確率で即死。連続実行される度に成功率が上がる
+;기절している場合、または確率で즉사。連続実行される度に成功率が上がる
 ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	;全個所에 사정
 	IF ISFEMALE()
@@ -126,7 +126,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 
 
-	;地の文:SPCOM13
+	;지문: SPCOM13
 	CALL MESSAGE_SEX_SPCOM13
 
 	;丸飲み行動の終了
@@ -242,14 +242,14 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	SIF ISFEMALE()
 		CALL NINSIN_HANTEI,5,3
 
-	;即死공격、これを食らったら幽閉される
+	;즉사공격、これを食らったら幽閉される
 	BASE:체력 = 0
 	BASE:기력 = 0
 ELSE
 	;油断度の上昇
 	TFLAG:3 += 200
 
-	;地の文:SPCOM13_MISS
+	;지문: SPCOM13_MISS
 	CALL MESSAGE_SEX_SPCOM13_MISS
 
 	;服へのダメージ

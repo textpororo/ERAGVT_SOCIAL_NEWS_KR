@@ -218,7 +218,7 @@ ELSEIF RESULT == 1
 	LOCAL = MAX(BASE:성내성 / 4, 20) + RAND:6
 	BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
 	FLAG:853 += 1
-	PRINTFORML 　인기도が1上昇した！
+	PRINTFORML 　인기도가 1 상승했다!
 	PRINTFORML 　성내성が{LOCAL}減少した！
 	PRINTW 
 ELSE
@@ -276,7 +276,7 @@ CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
 	PRINTFORML 彼女らが失ったものは大きい。だが、それでもきっと立ち直って強く生きていくだろう。
 	PRINTFORML なぜなら少女たちはきっと、촉수と戦う%PRINT_CALLNAME(TARGET)%の姿を一生忘れないだろうから……
 	PRINTW 
-	PRINTFORML 　인기도が3上昇した！
+	PRINTFORML 　인기도가 3 상승했다!
 	PRINTFORML 　報酬として政府から$5000入手した！
 	FLAG:853 += 3
 	MONEY += 5000
