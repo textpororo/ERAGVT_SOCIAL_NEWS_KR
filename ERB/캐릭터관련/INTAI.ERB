@@ -128,7 +128,7 @@ SIF BASE:지성 <= 0
 PRINTW
 
 ;えちぃ
-IF TALENT:完堕ち
+IF TALENT:전락
 	PRINTFORML %STR:2500%が与える快楽に身も心も侵食され尽くした
 ;完全開発済み
 ELSEIF MIN(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
@@ -165,7 +165,7 @@ ENDIF
 
 IF LOCAL:0 == 0
 	PRINT ために、もはや
-ELSEIF TALENT:完堕ち
+ELSEIF TALENT:전락
 	PRINTFORM 今や%STR:2500%の都合の良い繁殖노예に過ぎず、
 ELSEIF MAX(ABL:순종,ABL:욕망,ABL:봉사정신,ABL:마조끼) > 3
 	PRINTFORM %STR:2500%と相対するうちに、やがて
@@ -296,8 +296,8 @@ ELSEIF CFLAG:0 == 상태_악질감금
 	FLAG:255 += 1
 	PRINTW
 ;＠対応イベント移植までコメントアウト
-;;在完堕ち的情況下，処刑
-;ELSEIF TALENT:完堕ち
+;;在전락的情況下，処刑
+;ELSEIF TALENT:전락
 ;	PRINTL 
 ;	PRINTFORMW 촉수の手先になった疑惑があるため、簡単に「引退」することはできない。
 ;	PRINTFORMW %CALLNAME%は秘密裏に拘束され、基地の奥深くで秘密裏に処刑される事になった……

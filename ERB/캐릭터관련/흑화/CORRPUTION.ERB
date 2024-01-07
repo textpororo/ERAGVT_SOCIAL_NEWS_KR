@@ -5,7 +5,7 @@
 ;変身キャラは変身後の容姿を変更する。
 
 ;肌色の変更は함락경험が一定以上で発生。
-;全ての変更が定着すると素質【完堕ち】を追加。目つきが戻らなくなる。
+;全ての変更が定着すると素質【전락】を追加。目つきが戻らなくなる。
 
 ;変身後名は自称感があるので、흑화中のみ変更する。
 
@@ -69,7 +69,7 @@ IF CONFIG_CHECK_PRISON_F(5) == 1 || CONFIG_CHECK_PRISON_F(6) == 1
 		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_HAIR
 ENDIF
 
-;完堕ち前は目つきの変更が発生
+;전락前は目つきの変更が発生
 SIF GETBIT(CFLAG:ARG:81, 4) == 0
 		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_EYES
 		

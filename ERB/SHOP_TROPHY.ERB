@@ -286,7 +286,7 @@ ELSE
 		CALL PRINT_ACHIEVEMENT(264,"처녀애널愛好家","あえて奪わない、奪わせない",10,"처녀のままA경험10突破","","")
 		CALL PRINT_ACHIEVEMENT(262,"淫鬱ハネムーン","皆で촉수のお嫁さん",20,"【촉수의포로】の人数が3人以上","※キャラメイク素質：흑화が解禁","")
 		;＠中国版(番号は重複していたので修正)
-		CALL PRINT_ACHIEVEMENT(279,"淫魔少女組","私たち、これ以上は堕ちません♪",50,"【完堕ち】の人数が3人以上","","")
+		CALL PRINT_ACHIEVEMENT(279,"淫魔少女組","私たち、これ以上は堕ちません♪",50,"【전락】の人数が3人以上","","")
 		CALL PRINT_ACHIEVEMENT(280,"無肢者牧場","この世で一番怖いものは死ではない…",50,"【사지결손】の人数が3人以上","","")
 
 	ELSEIF LOCAL == 3
@@ -484,7 +484,7 @@ ENDIF
 IF GLOBAL:279 == 0
 	LOCAL:1 = 0
 	FOR LOCAL,1,CHARANUM
-		SIF TALENT:LOCAL:完堕ち > 0
+		SIF TALENT:LOCAL:전락 > 0
 			LOCAL:1 ++
 	NEXT
 	IF LOCAL:1 >= 3

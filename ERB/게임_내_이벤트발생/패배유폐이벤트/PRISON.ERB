@@ -183,8 +183,8 @@ CALL CHECK_CONTAMINATION
 今回陥落するフラグ = 0
 LOCAL:1 = RESULT
 ;汚染度が閾値を上回っていれば陥落플래그를 세운다
-;完堕ちなら無条件で陥落플래그를 세운다
-SIF CFLAG:0 == 1 && (CFLAG:30 > LOCAL:1 || TALENT:完堕ち == 1)
+;전락なら無条件で陥落플래그를 세운다
+SIF CFLAG:0 == 1 && (CFLAG:30 > LOCAL:1 || TALENT:전락 == 1)
 	今回陥落するフラグ = 1
 IF FLAG:999 == 1
 	SETCOLOR 105,105,105
@@ -352,8 +352,8 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 		;変身可能キャラならアウターが変更される
 		SIF TALENT:변신능력 == 1
 			CFLAG:41 = 401
-		;＠中国版　完堕ち装備
-		IF TALENT:完堕ち == 1
+		;＠中国版　전락装備
+		IF TALENT:전락 == 1
 			;변신능력アリなら淫縛の鎖
 			IF TALENT:변신능력 == 1
 				CFLAG:41 = 402
