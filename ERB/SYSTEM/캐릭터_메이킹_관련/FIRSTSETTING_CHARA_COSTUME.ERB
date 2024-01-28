@@ -1,8 +1,8 @@
-﻿;アウターの設定
+﻿;겉옷の設定
 @FIRSTSETTING_CLOTH_SETTING_OUTER, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL アウターを選んでください
+PRINTL 겉옷を選んでください
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -20,7 +20,7 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで戻る
-PRINTL [1]アウターを設定しない
+PRINTL [1]겉옷を設定しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -28,7 +28,7 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:40 == 199
 		;	CFLAG:ARG:41 = -1
 		CFLAG:ARG:40 = -1
-		PRINTL アウターを設定しませんでした
+		PRINTL 겉옷を設定しませんでした
 		PRINTW 
 	CASE 100 TO 199
 		LOCAL = RESULT
@@ -79,7 +79,7 @@ SELECTCASE RESULT
 				CFLAG:ARG:40 = LOCAL
 				;SIF CFLAG:ARG:40 == 199
 				;	CFLAG:ARG:41 = 199
-				PRINTFORML アウターを%ITEMNAME:LOCAL%に変更しました
+				PRINTFORML 겉옷を%ITEMNAME:LOCAL%に変更しました
 				PRINTW 
 			ELSE
 				PRINTL 
@@ -96,11 +96,11 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;アウター（変身後）の設定
+;겉옷（変身後）の設定
 @FIRSTSETTING_CLOTH_SETTING_OUTER2, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL アウターを選んでください
+PRINTL 겉옷を選んでください
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -119,7 +119,7 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで戻る
-PRINTL [1]アウター（変身後）を設定しない
+PRINTL [1]겉옷（変身後）を設定しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -127,7 +127,7 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:41 == 199
 		;	CFLAG:ARG:40 = -1
 		CFLAG:ARG:41 = -1
-		PRINTL アウター（変身後）を設定しませんでした
+		PRINTL 겉옷（変身後）を設定しませんでした
 		PRINTW 
 	CASE 100 TO 299
 		IF ITEMNAME:RESULT == ""
@@ -160,7 +160,7 @@ SELECTCASE RESULT
 			CFLAG:ARG:41 = LOCAL
 			;SIF CFLAG:ARG:41 == 199
 			;	CFLAG:ARG:40 = 199
-			PRINTFORML アウター（変身後）を%ITEMNAME:LOCAL%に変更しました
+			PRINTFORML 겉옷（変身後）を%ITEMNAME:LOCAL%に変更しました
 			PRINTW 
 		ELSE
 			PRINTL 
@@ -176,11 +176,11 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;インナーの設定
+;속옷の設定
 @FIRSTSETTING_CLOTH_SETTING_INNER, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL インナーを選んでください
+PRINTL 속옷を選んでください
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -198,13 +198,13 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで戻る
-PRINTL [1]インナーを設定しない
+PRINTL [1]속옷を設定しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
 	CASE 1
 		CFLAG:ARG:42 = -1
-		PRINTL インナーを設定しませんでした
+		PRINTL 속옷を設定しませんでした
 		PRINTW 
 	CASE 300 TO 398
 		IF ITEMNAME:RESULT == ""
@@ -227,7 +227,7 @@ SELECTCASE RESULT
 			GOTO INPUT_LOOP
 		ELSEIF RESULT == 1
 			CFLAG:ARG:42 = LOCAL
-			PRINTFORMW インナーを%ITEMNAME:LOCAL%に変更しました
+			PRINTFORMW 속옷を%ITEMNAME:LOCAL%に変更しました
 			IF CFLAG:ARG:42 != 308
 				IF FIGURE_SPLIT(EQUIP:ARG:103, 4) == 2
 					;露出度合い

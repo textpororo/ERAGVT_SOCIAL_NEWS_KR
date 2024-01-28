@@ -1,11 +1,11 @@
 ﻿;**********************************************************
-;ショップ画面のインフォメーション表示
+;SHOP 화면의 정보 표시
 @SHOP_INFOMATION
 #DIM CCOUNT
 
 LOCAL = 0
 
-;行動に必要な체력などのチェック
+;행동에 필요한 체력 등의 요소 체크
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -14,17 +14,17 @@ FOR CCOUNT, 0, CHARANUM
 		IF RESULT > 0
 			LOCAL = 1
 			IF GETBIT(RESULT, 6)
-				PRINTFORML *%CALLNAME:CCOUNT%は廃人化しているため、休憩以外の行動ができません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는) 폐인화되어 있기 때문에, 휴식 이외의 행동을 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 5)
-				PRINTFORML *%CALLNAME:CCOUNT%は사지결손しているため、%PRINT_SHOPACTION_NAME(CCOUNT)%ができません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는) 사지결손된 상태이기 때문에, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 4)
-				PRINTFORML *%CALLNAME:CCOUNT%は임신 중なので、%PRINT_SHOPACTION_NAME(CCOUNT)%ができません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는) 임신 중이기 때문에, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 1)
-				PRINTFORML *%CALLNAME:CCOUNT%は「밤악마의귀족」なため、昼間は%PRINT_SHOPACTION_NAME(CCOUNT)%ができません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는)「밤악마의귀족」의 효과로 인해, 낮에는 %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 2)
-				PRINTFORML *%CALLNAME:CCOUNT%は「타고난전사」なため、%PRINT_SHOPACTION_NAME(CCOUNT)%ができません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는)「타고난전사」의 효과로 인해, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 0)
-				PRINTFORML *%CALLNAME:CCOUNT%は%PRINT_SHOPACTION_NAME(CCOUNT)%に必要な체력がありません
+				PRINTFORML *%CALLNAME:CCOUNT%은(는) %PRINT_SHOPACTION_NAME(CCOUNT)%에 필요한 체력이 없습니다.
 			ENDIF
 		ENDIF
 	ENDIF

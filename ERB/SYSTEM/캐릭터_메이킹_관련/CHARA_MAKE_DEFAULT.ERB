@@ -395,7 +395,7 @@ FOR SELECT,1,CHARANUM
 	;無しと指定されていたら無し
 	SIF CFLAG:SELECT:41 == -1
 		CFLAG:SELECT:41 = 0
-	;衣装が未設定なら평범한 속옷、ただしアウターが(변신능력があれば変身後アウターも)インナー兼用なら追加しない
+	;衣装が未設定なら평범한 속옷、ただし겉옷が(변신능력があれば変身後겉옷も)속옷겸용なら追加しない
 	IF CFLAG:SELECT:42 == 0
 		LOCAL = 0
 		CALL CLOTH_NO_INNER, SELECT

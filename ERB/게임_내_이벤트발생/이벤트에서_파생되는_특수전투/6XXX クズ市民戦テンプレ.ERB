@@ -46,13 +46,13 @@
 ;イベント호출側で渡せる補足(任意)
 #dims 補足,1
 
-	;;現在の変身状態に対応するアウターを「イベント専用装備」に一時設定する
+	;;現在の変身状態に対応する겉옷を「イベント専用装備」に一時設定する
 	;CALL EVENT_BATTLE_SET_COSTUME(TARGET,(CFLAG:TARGET:1==0 ? 990 # -1),(CFLAG:TARGET:1>0 ? 991 # -1),-1,-1)
 
-	;アウターを一時的に没収、インナーを「イベント専用装備」に一時設定する
+	;겉옷を一時的に没収、속옷を「イベント専用装備」に一時設定する
 	CALL EVENT_BATTLE_SET_COSTUME(TARGET,(CFLAG:TARGET:1==0 ? 0 # -1),(CFLAG:TARGET:1>0 ? 0 # -1),992,-1)
 
-	;;現在の変身状態に対応するアウターを「무대 의상」に一時設定する
+	;;現在の変身状態に対応する겉옷を「무대 의상」に一時設定する
 	;CALL EVENT_BATTLE_SET_COSTUME(TARGET,(CFLAG:TARGET:1==0 ? 105 # -1),(CFLAG:TARGET:1>0 ? 105 # -1),-1,-1)
 
 

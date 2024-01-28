@@ -220,7 +220,7 @@ CALL DOT_AFTER(2)
 
 ;被囚禁、綁架、吸収的情況下被視為失蹤
 IF CFLAG:0 == 상태_사망
-	IF TALENT:훼멸초계시 == -10
+	IF TALENT:괴멸카운트 == -10
 		PRINTFORML 戦闘中に손발を失った%CALLNAME%
 		PRINTL
 		PRINTFORML 「自ら望んで」淫虐な処刑ショーの犠牲者となり、
@@ -228,7 +228,7 @@ IF CFLAG:0 == 상태_사망
 		PRINTFORML その暗い痕跡を世界に残すこともなく、全てのプロファイルデータは削除されてしまった……
 		LOCALS = 生贄虐殺
 		LOCALS:1 = 死亡
-	ELSEIF TALENT:훼멸초계시 == -11
+	ELSEIF TALENT:괴멸카운트 == -11
 		PRINTFORML ダークウェブ上の情報によると、%CALLNAME%은(는) 既に裏社会の組織に処刑されたようだ。
 		PRINTL
 		PRINTFORM その死が濃厚であるため、データベースからプロファイルが抹消された……

@@ -1,77 +1,77 @@
 ﻿;-----------------------------------------------------------------------------------------------
 
-;실적解除
-;立てるフラグの番号と실적名は호출側でセットで指定する
+;실적 해제
+;세운 플래그의 번호와 실적명은 호출쪽에서 세트로 지정한다
 
 @UNLOCK_ACHIEVEMENT(num,achiname)
 #DIM num,1
 #DIMS achiname,1
 
-;サンドボックスモードでは실적をアンロックしない(一人用ゲームなので積極的に意地悪はしないけど一応ね)
+;SANDBOX 모드에서는 실적을 언락하지 않는다(1인용 게임이기 때문에 적극적으로 심술을 부리지는 않지만 일단 말이야)
 SIF GAME_OPTION_CHECK_F(OPTION_실적엔드없음)
 	RETURN
 
 IF GLOBAL:num == 0
-	PRINTFORML 【실적：%achiname%】を達成しました！
+	PRINTFORML 【실적：%achiname%】을(를) 달성했습니다!
 	PRINTW 
 	GLOBAL:num = 1
 	SAVEGLOBAL
 ENDIF
 
 
-;실적トロフィーを表示
+;실적 트로피를 표시
 @SHOW_TROPHY
 #DIM PAGEMAX
 #DIM MODE,1
-;現在のページ
+;현재 페이지
 LOCAL = 1
 
 $START
 CALL LB
-PRINTL ☆☆☆실적＆トロフィーの確認☆☆☆
+PRINTL ☆☆☆실적 ＆ 트로피 확인☆☆☆
 DRAWLINE
 
-;●(不)名誉の殿堂ページ
+;●(不)명예의 전당 페이지
 IF MODE==0 
-	;最大値
+	;최대치
 	PAGEMAX = 2
 	IF LOCAL == 1
-		PRINTFORML  プレイの記録
+		PRINTFORML  플레이 기록
 		CALL SHORTLINE
-		PRINTFORM 　　総合ランク最高記録　　　　　　　　　
+		PRINTFORM 　　종합 랭크 최고 기록　　　　　　　　 
 		IF GLOBAL:110 == 1
-			PRINTL Ｅランク
+			PRINTL Ｅ랭크
 		ELSEIF GLOBAL:110 == 2
-			PRINTL Ｄランク
+			PRINTL Ｄ랭크
 		ELSEIF GLOBAL:110 == 3
-			PRINTL Ｃランク
+			PRINTL Ｃ랭크
 		ELSEIF GLOBAL:110 == 4
-			PRINTL Ｂランク
+			PRINTL Ｂ랭크
 		ELSEIF GLOBAL:110 == 5
-			PRINTL Ａランク
+			PRINTL Ａ랭크
 		ELSEIF GLOBAL:110 == 6
-			PRINTL Ｓランク
+			PRINTL Ｓ랭크
 		ELSE
 			PRINTL 없음
 		ENDIF
-		PRINTFORML 　　周回数累計　　　　　　　　　　　　　 {FLAG:854} 回
+		PRINTFORML 　　주회 수 누계　　　　　　　　　　　　　 {FLAG:854} 회
 		SIF GLOBAL:114 > 0
-			PRINTFORML 　　ENDLESS撃破記録 　　　　　　　　　　 {GLOBAL:114} 体　
+			PRINTFORML 　　ENDLESS 격파 기록 　　　　　　　　　　 {GLOBAL:114} 체　
 		PRINTL 
-		PRINTFORML 　　現在の共通設定
-		PRINTFORM 　　　主題　　　　　　　　　　　　　　　
+		PRINTFORML 　　현재 공통 설정
+		PRINTFORM 　　　주제　　　　　　　　　　　　　　　
 		IF FLAG:5 == 1
 			PRINTFORML 『%SAVESTR:10%』
 		ELSE
 			PRINTFORML 『없음』
 		ENDIF
-		PRINTFORM 　　　冠名　　　　　　　　　　　　　　　
+		PRINTFORM 　　　관명　　　　　　　　　　　　　　　
 		IF FLAG:6 == 1
 			PRINTFORML 『%SAVESTR:11%』
 		ELSE
 			PRINTFORML 『없음』
 		ENDIF
-		PRINTFORM 　　　かけ声　　　　　　　　　　　　　　
+		PRINTFORM 　　　구호　　　　　　　　　　　　　　
 		IF FLAG:7 == 1
 			PRINTFORML 『%SAVESTR:12%』
 		ELSE
@@ -79,9 +79,9 @@ IF MODE==0
 		ENDIF
 		PRINTL  
 		CALL SHORTLINE
-		PRINTFORML  ＨＡＬＬ　ＯＦ　ＦＡＭＥ　〜　歴代記録保持者　〜
+		PRINTFORML  ＨＡＬＬ　ＯＦ　ＦＡＭＥ　〜　역대 기록 보유자　〜
 		CALL SHORTLINE
-		;PRINTL ※一日の終了時に記録が更新されます
+		;PRINTL ※하루의 종료 시에 기록이 갱신됩니다
 		PRINTL 
 		PRINT 　　체력　　　
 		IF GLOBALS:0 == ""
@@ -132,7 +132,7 @@ IF MODE==0
 			PRINTFORML %GLOBALS:13%
 		ENDIF
 		PRINTL 
-		PRINT 　　魅了　　　
+		PRINT 　　매료　　　
 		IF GLOBALS:14 == ""
 			PRINTFORML 없음
 		ELSE
@@ -144,59 +144,59 @@ IF MODE==0
 		PRINTL  
 		SETCOLORBYNAME HOTPINK
 		CALL SHORTLINE
-		PRINTFORML  ＨＯＬＥ　ＯＦ　ＳＨＡＭＥ　〜　歴代恥辱保持者　〜
+		PRINTFORML  ＨＯＬＥ　ＯＦ　ＳＨＡＭＥ　〜　역대 치욕 보유자　〜
 		CALL SHORTLINE
 		PRINTL 
-		PRINT 　　膣穴　　　
+		PRINT 　　보지　　　
 		IF GLOBALS:20 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:20%
 		ENDIF
 		PRINTL 
-		PRINT 　　尻穴　　　
+		PRINT 　　애널　　　
 		IF GLOBALS:21 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:21%
 		ENDIF
 		PRINTL 
-		PRINT 　　自慰　　　
+		PRINT 　　자위　　　
 		IF GLOBALS:22 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:22%
 		ENDIF
 		PRINTL 
-		PRINT 　　フェラ　　
+		PRINT 　　펠라　　　
 		IF GLOBALS:23 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:23%
 		ENDIF
 		PRINTL 
-		PRINT 　　精液　　　
+		PRINT 　　정액　　　
 		IF GLOBALS:24 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:24%
 		ENDIF
 		PRINTL 
-		PRINT 　　絶頂　　　
+		PRINT 　　절정　　　
 		IF GLOBALS:25 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:25%
 		ENDIF
 		PRINTL 
-		PRINT 　　出産　　　
+		PRINT 　　출산　　　
 		IF GLOBALS:26 == ""
 			PRINTFORML 없음
 		ELSE
 			PRINTFORML %GLOBALS:26%
 		ENDIF
 		PRINTL 
-		PRINT 　　交配　　　
+		PRINT 　　교배　　　
 		IF GLOBALS:27 == ""
 			PRINTFORML 없음
 		ELSE
@@ -217,7 +217,7 @@ IF MODE==0
 			PRINTFORML %GLOBALS:29%
 		ENDIF
 		PRINTL 
-		PRINT 　　放尿　　　
+		PRINT 　　방뇨　　　
 		IF GLOBALS:30 == ""
 			PRINTFORML 없음
 		ELSE
@@ -234,102 +234,106 @@ IF MODE==0
 		RESETCOLOR
 	ENDIF
 
-;●실적ページ
+;●실적 페이지
 ELSE
-	;最大ページ数
+	;최대 페이지 수
 	PAGEMAX = 4
-	;・실적名全角１４文字、説明全角１８文字以内
-	;・あまりややこしくない条件はヒントを具体的に
-	;・ややこしい条件はヒントを抽象的に(秘密の실적)
+	;・번호, 실적명, 힌트, 보너스 수치, 설명, 실적 해제 후 추가 설명, 실적 해제 전 추가 설명
+	;・실적명 전각 １４글자, 설명 전각 １８글자 이내
+	;・그다지 까다롭지 않은 조건은 힌트를 구체적으로
+	;・까다로운 조건은 힌트를 추상적으로(비밀의 실적)
 	IF LOCAL == 1
-		;表示上の실적番号は01から始める
+		;표시 상의 실적 번호는 01부터 시작한다
 		CALL PRINT_ACHIEVEMENT(1,"init")
 
-		CALL PRINT_ACHIEVEMENT(211,"覇者の証","セーブ＆ロードなんて邪道だよ！",50,"１周目でセーブロードなしにクリア","","※１周目限定")
-		CALL PRINT_ACHIEVEMENT(212,"へっぽこ大魔王","むしろ褒めてあげたい",50,"１周目で総合Ｅランク","※キャラメイク素質：死亡が解禁","")
-		CALL PRINT_ACHIEVEMENT(213,"eraGVTマスター","１周目で最高スコアを目指すのだ！",50,"１周目で総合Ｓランク","※周回要素：레벨引き継ぎが解禁","")
-		CALL PRINT_ACHIEVEMENT(270,"とびっきりの最強対最強","オラわくわくしてきたぞ！！",20,"히든 보스を撃破した","","")
-		CALL PRINT_ACHIEVEMENT(266,"パーフェクション","思わずドヤ顔したくなる戦果",20,"ノーダメージで보스を撃破した","","")
-		CALL PRINT_ACHIEVEMENT(220,"腕力自慢","能力を特化させてみよう",10,"공격実数値500突破","","")
-		CALL PRINT_ACHIEVEMENT(221,"脳筋こそ至高","能力を特化させてみよう",10,"공격実数値1000突破","","")
-		CALL PRINT_ACHIEVEMENT(222,"メイン盾きた！","能力を特化させてみよう",10,"방어実数値500突破","","")
-		CALL PRINT_ACHIEVEMENT(223,"移動城塞","能力を特化させてみよう",10,"방어実数値1000突破","","")
-		CALL PRINT_ACHIEVEMENT(224,"韋駄天","能力を特化させてみよう",10,"민첩実数値500突破","","")
-		CALL PRINT_ACHIEVEMENT(225,"俊足瞬撃、並ぶものなし","能力を特化させてみよう",10,"민첩実数値1000突破","","")
-		CALL PRINT_ACHIEVEMENT(226,"データにはなかったぞ！？","能力を特化させてみよう",10,"지성実数値500突破","","")
-		CALL PRINT_ACHIEVEMENT(227,"静かなる賢者","能力を特化させてみよう",10,"지성実数値1000突破","","")
-		CALL PRINT_ACHIEVEMENT(228,"不死身のソルジャー","能力を特化させてみよう",20,"체력実数値10000突破","","")
-		CALL PRINT_ACHIEVEMENT(229,"ライオンハート","能力を特化させてみよう",20,"기력実数値10000突破","","")
-		CALL PRINT_ACHIEVEMENT(230,"絶倫魔法少女","能力を特化させてみよう",20,"성내성実数値1000突破","","")
-		CALL PRINT_ACHIEVEMENT(231,"グランドマスター","戦技레벨を特化させてみよう",20,"근거리戦技Lv9達成","","")
-		CALL PRINT_ACHIEVEMENT(232,"主砲オーケストラ","戦技레벨を特化させてみよう",20,"중거리戦技Lv9達成","","")
-		CALL PRINT_ACHIEVEMENT(233,"スナイパードライツェン","戦技레벨を特化させてみよう",20,"원거리戦技Lv9達成","","")
+		CALL PRINT_ACHIEVEMENT(211,"패자(覇者)의 증표","세이브 따위는 내게 사치야！",50,"１회차에서 세이브＆로드 없이 클리어","","※１회차 한정")
+		CALL PRINT_ACHIEVEMENT(212,"엉터리 대마왕","오히려 칭찬해 주고 싶다",50,"１회차에서 종합 Ｅ랭크","※캐릭터 메이킹 소질：사망 해금","")
+		CALL PRINT_ACHIEVEMENT(213,"eraGVT 마스터","１회차에서 최고 스코어를 목표로 하는 것이다！",50,"１회차에서 종합 Ｓ랭크","※주회 요소：레벨 인계 해금","")
+		CALL PRINT_ACHIEVEMENT(270,"월등한 최강 대 최강","나 두근두근 거리는데！！",20,"히든 보스를 격파했다","","")
+		CALL PRINT_ACHIEVEMENT(266,"퍼펙트 킬","어딜 보시는 거죠，그건 제 잔상입니다만？",20,"피해를 입지 않고 보스를 격파했다","","")
+		CALL PRINT_ACHIEVEMENT(220,"마법(물리)소녀","능력을 특화시켜 보자",10,"공격 실수치 500 돌파","","")
+		CALL PRINT_ACHIEVEMENT(221,"근육이 세상을 구한다","최선의 방어는 최고의 공격이다",10,"공격 실수치 1000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(222,"탱커 누가 키웠냐","능력을 특화시켜 보자",10,"방어 실수치 500 돌파","","")
+		CALL PRINT_ACHIEVEMENT(223,"움직이는 성채","아픈 건 싫어서……",10,"방어 실수치 1000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(224,"위타천","능력을 특화시켜 보자",10,"민첩 실수치 500 돌파","","")
+		CALL PRINT_ACHIEVEMENT(225,"준족순격，뒤따를 자 없으니","이클립스 선두, 나머지는 없다.",10,"민첩 실수치 1000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(226,"저런 데이터는 없었다고？！","능력을 특화시켜 보자",10,"지성 실수치 500 돌파","","")
+		CALL PRINT_ACHIEVEMENT(227,"전 L입니다","역시 난… 틀리지 않…았어……",10,"지성 실수치 1000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(228,"불사신의 전사","？？：마법소녀가 쓰러지지 않아",20,"체력 실수치 10000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(229,"Lion Heart","마법소녀라면 4기통 심장은 기본",20,"기력 실수치 10000 돌파","왜 맘이 맘이 자꾸 흔들리니","텔 미 와이〜")
+		CALL PRINT_ACHIEVEMENT(230,"절륜 마법소녀","오죽하면 촉수조차 복상사할 정도라고……",20,"성내성 실수치 1000 돌파","","")
+		CALL PRINT_ACHIEVEMENT(231,"그랜드 마스터","초대 마법소녀도 격투가 주력기라 하더라",20,"근거리 전투기술 Lv9 달성","","")
+		CALL PRINT_ACHIEVEMENT(232,"전원 집중포화！","어찌 보면 제일 까다로운 포지션",20,"중거리 전투기술 Lv9 달성","","")
+		CALL PRINT_ACHIEVEMENT(233,"백발백중 명 사 수","아 ㅇㄷㅊㅇ",20,"원거리 전투기술 Lv9 달성","","")
 	ELSEIF LOCAL == 2
 		CALL PRINT_ACHIEVEMENT(20,"init")
-		CALL PRINT_ACHIEVEMENT(240,"性の目覚め","촉수相手に感じちゃうなんて…",5,"感覚Lv合計5突破","","")
-		CALL PRINT_ACHIEVEMENT(241,"触れられただけで・・・","こんなはずじゃないのに…",10,"感覚Lv合計10突破","","")
-		CALL PRINT_ACHIEVEMENT(242,"艶やかなる饗宴","認めたくなんかないのに…",15,"感覚Lv合計15突破","","")
-		CALL PRINT_ACHIEVEMENT(243,"淫界の住人","もう戻れない…",20,"感覚Lv合計20突破","","")
-		CALL PRINT_ACHIEVEMENT(244,"双なる具現","びゅっびゅっしましょうねぇ〜♪",20,"사정중독Lv5以上","※キャラメイク素質：후타나리が解禁","")
-		CALL PRINT_ACHIEVEMENT(245,"キャトルガール","わたしのおっぱい搾らないで…",20,"모유중독Lv5以上","※キャラメイク素質：모유체질が解禁","")
-		CALL PRINT_ACHIEVEMENT(246,"末期オナニー中毒","ダメなのに止められないの…",20,"자위중독Lv5以上","","")
-		CALL PRINT_ACHIEVEMENT(247,"ザーメンにガチ恋中","欲しくてたまらないんです…",20,"정액중독Lv5以上","","")
-		CALL PRINT_ACHIEVEMENT(250,"初めての出産","こんにちは、あかちゃん",10,"출산경험1","","")
-		CALL PRINT_ACHIEVEMENT(251,"駆け出しママン","ごちそう、いっぱい",10,"출산경험10突破","","")
-		CALL PRINT_ACHIEVEMENT(252,"暗黒ベビーブーム","も゛ぅ…う゛みだくないぃ…",10,"출산경험50突破","","")
-		CALL PRINT_ACHIEVEMENT(253,"촉수を産む機械","…………ごぽっ………",20,"출산경험100突破","※キャラメイク素質：묘상화が解禁","")
-		CALL PRINT_ACHIEVEMENT(254,"幸せ家族計画","それもひとつの愛のカタチ",10,"근친교배경험20突破","","")
-		CALL PRINT_ACHIEVEMENT(255,"기생ジョーカー","これぞダークヒーロー",10,"기생경험50突破","※キャラメイク素質：기생が解禁","")
+		CALL PRINT_ACHIEVEMENT(240,"성에 눈뜨다","촉수 상대로 느껴 버린다니……",5,"감각Lv 합계 5 돌파","","")
+		CALL PRINT_ACHIEVEMENT(241,"만져지기만 해도・・・","이럴 리가 없는데……",10,"감각Lv 합계 10 돌파","","")
+		CALL PRINT_ACHIEVEMENT(242,"요염한 향연","인정하고 싶지 않은데……",15,"감각Lv 합계 15 돌파","","")
+		CALL PRINT_ACHIEVEMENT(243,"음계 거주자","이젠 돌아갈 수 없어……♥",20,"감각Lv 합계 20 돌파","","")
+		CALL PRINT_ACHIEVEMENT(244,"쌍방구현","같이 뷰릇뷰릇 해보아요〜♪",20,"사정중독 Lv5 이상","※캐릭터 메이킹 소질：후타나리 해금","")
+		CALL PRINT_ACHIEVEMENT(245,"마법젖소녀","내 가슴 쥐어 짜지마……",20,"모유중독 Lv5 이상","※캐릭터 메이킹 소질：모유체질 해금","")
+		CALL PRINT_ACHIEVEMENT(246,"자위 중독 말기","그만 둬야 하는데 멈출 수가 없어…♥",20,"자위중독 Lv5 이상","","")
+		CALL PRINT_ACHIEVEMENT(247,"정액에 진심으로 빠지다","갖고 싶어 견딜 수가 없어…",20,"정액중독 Lv5 이상","","")
+		CALL PRINT_ACHIEVEMENT(250,"생애 첫 출산","아가야，안녕？",10,"출산경험 1","","")
+		CALL PRINT_ACHIEVEMENT(251,"신출내기 마망","진수성찬，한가득",10,"출산경험 10 돌파","","")
+		CALL PRINT_ACHIEVEMENT(252,"암흑 베이비 붐","더，느은…보고 싶지，않아……",10,"출산경험 50 돌파","","")
+		;이전에 쓰던 실적명은 THE QUEEN
+		CALL PRINT_ACHIEVEMENT(253,"촉수를 낳는 기계","…………쿨럭………",20,"출산경험 100 돌파","※캐릭터 메이킹 소질：묘상화 해금","역시 어머니는 위대한 거야")
+		CALL PRINT_ACHIEVEMENT(254,"행복가족계획","이 또한 사랑하는 방식 중 하나일 뿐",10,"근친교배경험 20 돌파","","")
+		CALL PRINT_ACHIEVEMENT(255,"기생 조커","이것이야말로 다크 히어로",10,"기생경험 50 돌파","※캐릭터 메이킹 소질：기생 해금","")
 
-		CALL PRINT_ACHIEVEMENT(275,"女性の宿命","ヒロインであっても逃れられない…",5,"촉수に敗北して幽閉された","","")
-		CALL PRINT_ACHIEVEMENT(258,"捕らわれのお姫様","繰り返される悲劇…",10,"유폐경험5突破","※キャラメイク素質：幽閉が解禁","")
-		CALL PRINT_ACHIEVEMENT(264,"처녀애널愛好家","あえて奪わない、奪わせない",10,"처녀のままA경험10突破","","")
-		CALL PRINT_ACHIEVEMENT(262,"淫鬱ハネムーン","皆で촉수のお嫁さん",20,"【촉수의포로】の人数が3人以上","※キャラメイク素質：흑화が解禁","")
-		;＠中国版(番号は重複していたので修正)
-		CALL PRINT_ACHIEVEMENT(279,"淫魔少女組","私たち、これ以上は堕ちません♪",50,"【전락】の人数が3人以上","","")
-		CALL PRINT_ACHIEVEMENT(280,"無肢者牧場","この世で一番怖いものは死ではない…",50,"【사지결손】の人数が3人以上","","")
+		CALL PRINT_ACHIEVEMENT(275,"여성의 숙명","히로인이라 해도 피할 수 없다…",5,"촉수에게 패배하여 유폐됐다","","")
+		CALL PRINT_ACHIEVEMENT(258,"잠자는 촉수 속의 공주님","프로 납치범 쿠파도 한 수 접었다",10,"유폐경험 5 돌파","※캐릭터 메이킹 소질：유폐 해금","")
+		CALL PRINT_ACHIEVEMENT(264,"처녀 빗치 애널광","감히 빼앗지 않겠다，그리 두지도 않겠다",10,"처녀인 채로 A경험 10 돌파","처녀 빗치가 말이 되냐고？！","")
+		CALL PRINT_ACHIEVEMENT(262,"음울(淫鬱) 허니문","모두 다같이 촉수의 아내",20,"【촉수의포로】인 인원이 3명 이상","※캐릭터 메이킹 소질：흑화 해금","")
+		;＠중국판(번호 중복으로 수정)
+		CALL PRINT_ACHIEVEMENT(279,"음마소녀조","우리들，더 이상 타락하지 않을게요♪",50,"【전락】인 인원이 3명 이상","","")
+		CALL PRINT_ACHIEVEMENT(280,"리얼돌 목장","이 세상에서 가장 무서운 것은 죽음이 아니다…",50,"【사지결손】인 인원이 3명 이상","적어도 팔다리 잘린 걸론 안 죽는다……","사람이 언제 죽는지 아는가？")
 
 	ELSEIF LOCAL == 3
 		CALL PRINT_ACHIEVEMENT(40,"init")
-		;ゲーム進捗系
-		CALL PRINT_ACHIEVEMENT(269,"バトルレイヤー","おしゃれしたい、女の子だもの",10,"衣装を10種類以上購入","","")
-		CALL PRINT_ACHIEVEMENT(274,"ファッションリーダー","今日のコーデもカンペキ♪",10,"衣装を30種類以上購入","","")
-		CALL PRINT_ACHIEVEMENT(256,"マジ☆かるアイドル育成計画","キラッ☆",10,"매료경험100突破","","")
-		CALL PRINT_ACHIEVEMENT(257,"ＡＶ女優","これでアナタも有名人★",10,"ＡＶ売上2000$突破","","")
+		;게임 진척계
+		CALL PRINT_ACHIEVEMENT(269,"배틀 코스튬 마니아","예쁘게 다니고 싶어，나도 여자아이인 걸",10,"의상을 10가지 이상 구입","","")
+		CALL PRINT_ACHIEVEMENT(274,"패션 리더","오늘의 코디도 완벽♪",10,"의상을 30가지 이상 구입","","")
+		;ㄴㅋㄴㅋㄴ~
+		CALL PRINT_ACHIEVEMENT(256,"매지컬☆아이돌 육성 계획","키라☆",10,"매료경험 100 돌파","돔 공연 축하해……","")
+		CALL PRINT_ACHIEVEMENT(257,"ＡＶ 여배우","이것으로 당신도 유명인사★",10,"ＡＶ 매출 2000$ 돌파","","")
 
-		CALL PRINT_ACHIEVEMENT(263,"破壊神の一撃","一撃で昇天する威力",10,"一撃のダメージが5000を突破","","")
-		CALL PRINT_ACHIEVEMENT(268,"タクティカルオーダー","仲間の力を合わせよう",10,"전투 지원効果200％突破","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(263,"파괴신의 일격","일격에 승천하는 위력",10,"일격의 피해량이 5000을 돌파","아기를 못 낳게 되는 대미지","")
+		CALL PRINT_ACHIEVEMENT(268,"Tactical Order","동료들의 힘을 모아",10,"전투 지원 효과 200％ 돌파","","※솔로 모드 불가능")
 
-		CALL PRINT_ACHIEVEMENT(276,"絶体絶命ヒロイン","こ、こんな時に…！",5,"기력切れで変身が解けてしまった","","")
-		CALL PRINT_ACHIEVEMENT(277,"絶対絶頂ヒロイン","こっ♥ こんな時にっ♥♥",5,"絶頂の快感で変身が解けてしまった","","")
+		CALL PRINT_ACHIEVEMENT(276,"절체절명 히로인","이，이런 때에…！",5,"기력을 다하여 변신이 풀리고 말았다","","")
+		CALL PRINT_ACHIEVEMENT(277,"절대절정 히로인","이♥ 이러언 때헤엣♥♥",5,"절정의 쾌감으로 변신이 풀리고 말았다","","")
 
-		CALL PRINT_ACHIEVEMENT(271,"いま助けるわ！","きっと今も仲間の助けを信じてる…",10,"囚われたヒロインを救出した","","※ソロモード不可")
-		CALL PRINT_ACHIEVEMENT(272,"正気に戻りなさい！","正気に戻すならこれ！",10,"흑화ヒロインを撃破した","","※ソロモード不可")
-		CALL PRINT_ACHIEVEMENT(273,"わたくしは何を…？","あの子は操られていただけなの…！",10,"ヒロインの세뇌を解いた","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(271,"얼른 도와줄게！","분명 지금도 동료를 믿고 버티고 있을 거에요…",10,"사로잡힌 캐릭터를 구출했다","","※솔로 모드 불가능")
+		CALL PRINT_ACHIEVEMENT(272,"정신 차리세요！","돌이킬 수 없게 되기 전에 막아야 해！",10,"흑화한 캐릭터를 격파했다","솔직히 흑화풀린 마법소녀는 속죄강간을 해야…","※솔로 모드 불가능")
+		CALL PRINT_ACHIEVEMENT(273,"난 지금까지 무엇을…？","저 애는 조종당하고 있었을 뿐이야…！",10,"세뇌된 캐릭터의 세뇌를 풀었다","","※솔로 모드 불가능")
 		
 
 	ELSEIF LOCAL == 4
 		CALL PRINT_ACHIEVEMENT(60,"init")
-		;特殊条件
-		CALL PRINT_ACHIEVEMENT(267,"奇跡の逆転勝利","ピンチからのエッチな逆転劇",10,"搾精ダメージで보스を撃破した","","")
-		CALL PRINT_ACHIEVEMENT(259,"もったいないお化け","余らせるともったいない",10,"修練Ｐ1000残してクリア","","")
-		CALL PRINT_ACHIEVEMENT(260,"촉수なんかに負けない！","あえて感度ビンビンな娘で！",10,"ソロモードを全部位敏感でクリア","","※ソロモード限定")
-		CALL PRINT_ACHIEVEMENT(261,"불굴の闘志","ぐぬぬ…負けるもんか！",10,"ソロモードを유폐경험1以上でクリア","","※ソロモード限定")
-		CALL PRINT_ACHIEVEMENT(265,"NEXT GENERATION","そして次の世代へ…",10,"娘が３人以上いる状態でクリア","","※ソロモード不可")
-		CALL PRINT_ACHIEVEMENT(278,"所詮はハメ穴に過ぎない","私たち戦うヒロインだったはずなのに…",10,"ヒロインが全員クズ市民に監禁されてしまった","※キャラメイク素質：監禁が解禁","※ソロモード不可")
+		;특수 조건
+		CALL PRINT_ACHIEVEMENT(267,"기적의 역전승","위기의 순간에 벌어지는 엣치한 역전극",10,"착정 피해로 보스를 격파했다","","")
+		CALL PRINT_ACHIEVEMENT(259,"기가 막히는 자린고비","아끼기만하면 아까워요",10,"수련Ｐ를 1000 이상 남기고 클리어","","라임 지렸다")
+		CALL PRINT_ACHIEVEMENT(260,"촉수 따위에겐 지지 않아！","일부러 감도 만땅인 캐릭터로！",10,"솔로 모드를 전 부위 민감 상태로 클리어","","※솔로 모드 한정")
+		CALL PRINT_ACHIEVEMENT(261,"불굴의 투지","으그윽…… 질까 보냐！",10,"솔로 모드를 유폐경험 1 이상으로 클리어","","※솔로 모드 한정")
+		CALL PRINT_ACHIEVEMENT(265,"NEXT GENERATION","다음 세대에도 이어지는 소녀들의 의지",10,"딸(娘)이 ３명 이상 있는 상태로 클리어","","※솔로 모드 불가능")
+		;원문은 私たち戦うヒロインだったはずなのに… 우리들 분명 싸우는 히로인이었을 텐데…
+		CALL PRINT_ACHIEVEMENT(278,"결국엔 좆구멍에 불과하다","정말 시민의식이 투철한 세계관이다",10,"캐릭터 전원이 악질 시민에게 감금되어 버렸다","※캐릭터 메이킹 소질：감금 해금","※솔로 모드 불가능")
 
 	ENDIF
 ENDIF
 
 DRAWLINE
-	PRINT [100]前のページへ　　　　　
+	PRINT [100] 앞 페이지로　　　　　
 PRINTPLAINFORM PAGE < {LOCAL}/{PAGEMAX} >　　　　
-	PRINT [200]次のページへ
+	PRINT [200] 뒷 페이지로
 PRINTL 
 SIF MODE==0
-	PRINTL 	　　　　　　　　　[1000]실적を表示
+	PRINTL 	　　　　　　　　　[1000] 실적을 표시한다
 SIF MODE==1
-	PRINTL 	　　　　　　　　　[1000]トロフィーを表示
+	PRINTL 	　　　　　　　　　[1000] 트로피를 표시한다
 
 PRINT [999] 돌아간다　
 
@@ -354,24 +358,24 @@ ENDIF
 @PRINT_ACHIEVEMENT(num,achievename,hint,bonus,desc,otherA,otherB)
 #DIM num,1=0
 #DIMS achievename,1=""
-;실적解除後のテキスト
+;실적 해제 후의 텍스트
 #DIMS desc,1=""
-;ボーナスポイント
+;보너스 포인트
 #DIM bonus,1=0
-;解除前のヒントテキスト
+;해제 전 힌트 텍스트
 #DIMS hint,1=""
-;解除後テキスト(アンロック要素の通知)
+;해제 후 텍스트 (언락 요소 통지)
 #DIMS otherA,1=""
-;解除前の補足テキスト(特定モード限定の場合にその旨を通知)
+;해제 전의 보충 텍스트(특정 모드 한정의 경우에 그 취지를 통지)
 #DIMS otherB,1=""
 
-;表示上の실적番号(内部のフラグとは無関係、ページ先頭で"init"を呼んで指定する)
+;표시상의 실적 번호(내부 플래그와는 무관하며, 페이지 선두에서 "init" 을 불러 지정한다)
 #DIM numhead,1
 #DIMS numtext
 
 
 IF achievename=="init"
-	PRINTL 실적名　　　　　　　　　　　　内容　　　　　　　　　　　　　　　　周回ボーナス
+	PRINTL 실적명　　　　　　　　　　　　내용　　　　　　　　　　　　　　　　주회 보너스
 	CALL SHORTLINE
 	numhead=num
 	return
@@ -394,78 +398,78 @@ ELSE
 ENDIF
 
 
-;ターン終了時に一括チェックするタイプの실적
-;ここに書かれていない複雑な条件の실적はコード各所に散らばっている
+;턴 종료 시 일괄 체크하는 타입의 실적
+;여기에 적혀 있지 않은 복잡한 조건의 실적은 코드 곳곳에 흩어져 있다
 @GET_STATE_TROPHY,ARG
 IF MAXBASE:ARG:공격 >= 500
-	CALL UNLOCK_ACHIEVEMENT(220,"腕力自慢")
+	CALL UNLOCK_ACHIEVEMENT(220,"마법(물리)소녀")
 ENDIF
 IF MAXBASE:ARG:공격 >= 1000
-	CALL UNLOCK_ACHIEVEMENT(221,"脳筋こそ至高")
+	CALL UNLOCK_ACHIEVEMENT(221,"근육이 세상을 구한다")
 ENDIF
 IF MAXBASE:ARG:방어 >= 500
-	CALL UNLOCK_ACHIEVEMENT(222,"メイン盾きた！")
+	CALL UNLOCK_ACHIEVEMENT(222,"탱커 누가 키웠냐")
 ENDIF
 IF MAXBASE:ARG:방어 >= 1000
-	CALL UNLOCK_ACHIEVEMENT(223,"移動城塞")
+	CALL UNLOCK_ACHIEVEMENT(223,"움직이는 성채")
 ENDIF
 IF MAXBASE:ARG:민첩 >= 500
-	CALL UNLOCK_ACHIEVEMENT(224,"韋駄天")
+	CALL UNLOCK_ACHIEVEMENT(224,"위타천")
 ENDIF
 IF MAXBASE:ARG:민첩 >= 1000
-	CALL UNLOCK_ACHIEVEMENT(225,"俊足瞬撃、並ぶ者なし")
+	CALL UNLOCK_ACHIEVEMENT(225,"준족순격，뒤따를 자 없으니")
 ENDIF
 IF MAXBASE:ARG:지성 >= 500
-	CALL UNLOCK_ACHIEVEMENT(226,"データには無かったぞ！？")
+	CALL UNLOCK_ACHIEVEMENT(226,"저런 데이터는 없었다고？！")
 ENDIF
 IF MAXBASE:ARG:지성 >= 1000
-	CALL UNLOCK_ACHIEVEMENT(227,"静かなる賢者")
+	CALL UNLOCK_ACHIEVEMENT(227,"전 L입니다")
 ENDIF
 IF MAXBASE:ARG:체력 >= 10000
-	CALL UNLOCK_ACHIEVEMENT(228,"不死身のソルジャー")
+	CALL UNLOCK_ACHIEVEMENT(228,"불사신의 전사")
 ENDIF
 IF MAXBASE:ARG:기력 >= 10000
-	CALL UNLOCK_ACHIEVEMENT(229,"ライオンハート")
+	CALL UNLOCK_ACHIEVEMENT(229,"Lion Heart")
 ENDIF
 IF MAXBASE:ARG:성내성 >= 1000
-	CALL UNLOCK_ACHIEVEMENT(230,"絶倫魔法少女")
+	CALL UNLOCK_ACHIEVEMENT(230,"절륜 마법소녀")
 ENDIF
 IF ABL:ARG:근거리 >= 9
-	CALL UNLOCK_ACHIEVEMENT(231,"グランドマスター")
+	CALL UNLOCK_ACHIEVEMENT(231,"그랜드 마스터")
 ENDIF
 IF ABL:ARG:중거리 >= 9
-	CALL UNLOCK_ACHIEVEMENT(232,"主砲オーケストラ")
+	CALL UNLOCK_ACHIEVEMENT(232,"전원 집중포화！")
 ENDIF
 IF ABL:ARG:원거리 >= 9
-	CALL UNLOCK_ACHIEVEMENT(233,"スナイパードライツェン")
+	CALL UNLOCK_ACHIEVEMENT(233,"백발백중 명 사 수")
 ENDIF
 
-;ABL関連실적の一括チェック
+;ABL 관련 실적 일괄 체크
 @GET_STATE_ABLUP,ARG
 LOCAL = ABL:ARG:C감각 + ABL:ARG:V감각 + ABL:ARG:A감각 + ABL:ARG:B감각
 IF LOCAL >= 5
-	CALL UNLOCK_ACHIEVEMENT(240,"性の目覚め")
+	CALL UNLOCK_ACHIEVEMENT(240,"성에 눈뜨다")
 ENDIF
 IF LOCAL >= 10
-	CALL UNLOCK_ACHIEVEMENT(241,"触れられただけで・・・")
+	CALL UNLOCK_ACHIEVEMENT(241,"만져지기만 해도・・・")
 ENDIF
 IF LOCAL >= 15
-	CALL UNLOCK_ACHIEVEMENT(242,"艶やかなる饗宴")
+	CALL UNLOCK_ACHIEVEMENT(242,"요염한 향연")
 ENDIF
 IF LOCAL >= 20
-	CALL UNLOCK_ACHIEVEMENT(243,"淫界の住人")
+	CALL UNLOCK_ACHIEVEMENT(243,"음계 거주자")
 ENDIF
 IF ABL:ARG:사정중독 >= 5
-	CALL UNLOCK_ACHIEVEMENT(244,"双なる具現")
+	CALL UNLOCK_ACHIEVEMENT(244,"쌍방구현")
 ENDIF
 IF ABL:ARG:모유중독 >= 5
-	CALL UNLOCK_ACHIEVEMENT(245,"キャトルガール")
+	CALL UNLOCK_ACHIEVEMENT(245,"마법젖소녀")
 ENDIF
 IF ABL:ARG:자위중독 >= 5
-	CALL UNLOCK_ACHIEVEMENT(246,"末期オナニー中毒")
+	CALL UNLOCK_ACHIEVEMENT(246,"자위 중독 말기")
 ENDIF
 IF ABL:ARG:정액중독 >= 5
-	CALL UNLOCK_ACHIEVEMENT(247,"ザーメンにガチ恋中")
+	CALL UNLOCK_ACHIEVEMENT(247,"정액에 진심으로 빠지다")
 ENDIF
 IF GLOBAL:262 == 0
 	LOCAL:1 = 0
@@ -476,11 +480,11 @@ IF GLOBAL:262 == 0
 			LOCAL:1 ++
 	NEXT
 	IF LOCAL:1 >= 3
-		CALL UNLOCK_ACHIEVEMENT(262,"淫鬱ハネムーン")
+		CALL UNLOCK_ACHIEVEMENT(262,"음울(淫鬱) 허니문")
 	ENDIF
 ENDIF
 
-;＠中国版
+;＠중국판
 IF GLOBAL:279 == 0
 	LOCAL:1 = 0
 	FOR LOCAL,1,CHARANUM
@@ -488,7 +492,7 @@ IF GLOBAL:279 == 0
 			LOCAL:1 ++
 	NEXT
 	IF LOCAL:1 >= 3
-		CALL UNLOCK_ACHIEVEMENT(279,"淫魔少女組")
+		CALL UNLOCK_ACHIEVEMENT(279,"음마소녀조")
 	ENDIF
 ENDIF
 IF GLOBAL:280 == 0
@@ -498,39 +502,39 @@ IF GLOBAL:280 == 0
 			LOCAL:1 ++
 	NEXT
 	IF LOCAL:1 >= 3
-		CALL UNLOCK_ACHIEVEMENT(280,"無肢者牧場")
+		CALL UNLOCK_ACHIEVEMENT(280,"리얼돌 목장")
 	ENDIF
 ENDIF
 
 
-;EXP関連の실적一括チェック
+;EXP 관련 실적 일괄 체크
 @GET_STATE_EXPUP,ARG
 IF EXP:ARG:출산경험 >= 1
-	CALL UNLOCK_ACHIEVEMENT(250,"初めての出産")
+	CALL UNLOCK_ACHIEVEMENT(250,"생애 첫 출산")
 ENDIF
 IF EXP:ARG:출산경험 >= 10
-	CALL UNLOCK_ACHIEVEMENT(251,"駆け出しママン")
+	CALL UNLOCK_ACHIEVEMENT(251,"신출내기 마망")
 ENDIF
 IF EXP:ARG:출산경험 >= 50
-	CALL UNLOCK_ACHIEVEMENT(252,"暗黒ベビーブーム")
+	CALL UNLOCK_ACHIEVEMENT(252,"암흑 베이비 붐")
 ENDIF
 IF EXP:ARG:출산경험 >= 100
-	CALL UNLOCK_ACHIEVEMENT(253,"촉수を産む機械")
+	CALL UNLOCK_ACHIEVEMENT(253,"촉수를 낳는 기계")
 ENDIF
 IF EXP:ARG:근친교배경험 >= 20
-	CALL UNLOCK_ACHIEVEMENT(254,"幸せ家族計画")
+	CALL UNLOCK_ACHIEVEMENT(254,"행복가족계획")
 ENDIF
 IF EXP:ARG:기생경험 >= 50
-	CALL UNLOCK_ACHIEVEMENT(255,"기생ジョーカー")
+	CALL UNLOCK_ACHIEVEMENT(255,"기생 조커")
 ENDIF
 IF EXP:ARG:매료경험 >= 100
-	CALL UNLOCK_ACHIEVEMENT(256,"マジ☆かるアイドル育成計画")
+	CALL UNLOCK_ACHIEVEMENT(256,"매지컬☆아이돌 육성 계획")
 ENDIF
 IF EXP:ARG:유폐경험 >= 5
-	CALL UNLOCK_ACHIEVEMENT(258,"捕らわれのお姫様")
+	CALL UNLOCK_ACHIEVEMENT(258,"잠자는 촉수 속의 공주님")
 ENDIF
 IF TALENT:ARG:처녀 > 0 && EXP:ARG:A경험 >= 10
-	CALL UNLOCK_ACHIEVEMENT(264,"처녀애널愛好家")
+	CALL UNLOCK_ACHIEVEMENT(264,"처녀 빗치 애널광")
 ENDIF
 
 

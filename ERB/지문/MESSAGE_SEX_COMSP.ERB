@@ -1147,7 +1147,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0 && ISFEMALE() && (
 	FLAG:900 = 1
 ELSEIF (FLAG:70 + FLAG:71) > 0
 	PRINT は
-	;H촉수かつアウターの防護機能が失われているなら50%でインナーを脱がす
+	;H촉수かつ겉옷の防護機能が失われているなら50%で속옷を脱がす
 	IF FLAG:11 == 7 && TCVARn:25 > 0 && RAND:2 == 0 && CLOTH_OUTER_PER < CLOTH_OUTER_DEF && CLOTH_NO_INNER == 0
 		TCVARn:25 = 0
 		PRINTFORM 拘束した%PRINT_TRANSCALLNAME(TARGET)%을(를)持上げ、
@@ -1166,7 +1166,7 @@ ELSEIF (FLAG:70 + FLAG:71) > 0
 		PRINTFORML 怯え戸惑う野次馬に向けて突き出し、強制的に開脚させた。
 	ENDIF
 	PRINTL
-	;アウターの防護機能が失われていてインナーがない状態なら
+	;겉옷の防護機能が失われていて속옷がない状態なら
 	IF  (CLOTH_NO_INNER == 0 && TCVARn:25 < 1 && CLOTH_OUTER_PER < CLOTH_OUTER_DEF) || (CLOTH_NO_INNER && TCVARn:(CFLAG:1==0 ? 21 # 23) < 1)
 		SIF CFLAG:42 == 400
 			PRINTL 蠢く촉수 구속구が独りでに股間の部分を露出させてしまい、

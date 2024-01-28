@@ -47,19 +47,19 @@ ENDIF
 
 @PRINT_CLOTH_CONDITION()
 #FUNCTIONS
-;アウターが防護機能を失ってない(下着は傷付いていない)
+;겉옷が防護機能を失ってない(下着は傷付いていない)
 IF CLOTH_OUTER_PER >= CLOTH_OUTER_DEF
 	LOCALS = %COSTUME_NAME(TARGET)%
 	RETURNF LOCALS
-;インナーが防護機能を失ってない(アウターが防護機能を失っている=アウターが破れているor無い)
+;속옷が防護機能を失ってない(겉옷が防護機能を失っている=겉옷が破れているor無い)
 ELSEIF CLOTH_INNER_PER >= CLOTH_INNER_DEF
 	LOCALS = \@CLOTH_OUTER_PER > 0 ? 破れた%COSTUME_NAME(TARGET)%と # \@%ITEMNAME:(CFLAG:42)%
 	RETURNF LOCALS
-;インナーが残ってる
+;속옷が残ってる
 ELSEIF CLOTH_INNER_PER > 0
 	LOCALS = 辛うじて引っかかっている\@CLOTH_OUTER_PER > 0 ? %COSTUME_NAME(TARGET)%と # \@%ITEMNAME:(CFLAG:42)%の破片
 	RETURNF LOCALS
-;アウターが残っている(インナーが残ってないor最初から無い)
+;겉옷が残っている(속옷が残ってないor最初から無い)
 ELSEIF CLOTH_OUTER_PER > 0
 	LOCALS = 辛うじて引っかかっている%COSTUME_NAME(TARGET)%
 	RETURNF LOCALS
@@ -112,7 +112,7 @@ LOCAL = 120
 RETURN LOCAL
 
 ;--------------------------------------------------
-;油断度閾値
+;油断度역치
 @TENTACLE_MOB_902_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -296,13 +296,13 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
 PRINTFORM 無数の妖精が%PRINT_TRANSCALLNAME(TARGET)%의 
-;アウターが防護機能を失ってない
+;겉옷が防護機能を失ってない
 IF CLOTH_OUTER_PER >= CLOTH_OUTER_DEF
 	PRINTFORM %COSTUME_NAME(TARGET)%に覆われた
-;インナーが防護機能を失ってない
+;속옷が防護機能を失ってない
 ELSEIF CLOTH_INNER_PER >= CLOTH_INNER_DEF
 	PRINTFORM \@CLOTH_OUTER_PER > 0 ? 破れた%COSTUME_NAME(TARGET)%と # \@%ITEMNAME:(CFLAG:42)%に覆われた
-;インナーが残ってる
+;속옷が残ってる
 ELSEIF CLOTH_INNER_PER > 0
 	PRINTFORM \@CLOTH_OUTER_PER > 0 ? %COSTUME_NAME(TARGET)%と # \@%ITEMNAME:(CFLAG:42)%の破片が辛うじて引っかかっている
 ELSE

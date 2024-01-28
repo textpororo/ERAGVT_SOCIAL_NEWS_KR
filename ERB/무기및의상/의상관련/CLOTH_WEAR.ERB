@@ -120,7 +120,7 @@ ELSE
 	ENDIF
 	DRAWLINE
 	PRINTL どの衣装を設定しますか？
-	PRINT [1]アウター　　　　　　　　　　
+	PRINT [1]겉옷　　　　　　　　　　
 	CALL CLOTH_HOSEI(LOCAL,CFLAG:LOCAL:40,"SLOT")
 	CUSTOMIZE:0 = RESULT
 	IF CUSTOMIZE:0 >= 0
@@ -149,7 +149,7 @@ ELSE
 		PRINTL 
 		PRINTL [3]その他装備品
 	ELSEIF TALENT:LOCAL:변신능력 == 1
-		PRINT [2]アウター（変身後）　　　　　
+		PRINT [2]겉옷（変身後）　　　　　
 		CALL CLOTH_HOSEI(LOCAL,CFLAG:LOCAL:41,"SLOT")
 		CUSTOMIZE:1 = RESULT
 		IF CUSTOMIZE:1 >= 0
@@ -236,7 +236,7 @@ ELSE
 		CSTR:LOCAL:9 =
 		GOTO INPUT_LOOP
 	ELSEIF RESULT == 100
-		CALL SHOW_CLOTH("表示画面")
+		CALL SHOW_CLOTH("표시 화면")
 		GOTO INPUT_LOOP
 	ELSE
 		PRINTL 
@@ -247,13 +247,13 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;アウターの設定
+;겉옷の設定
 @CLOTH_SETTING_OUTER, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:40
 $INPUT_LOOP
 PRINTL 
-PRINTL アウターを選んでください
+PRINTL 겉옷を選んでください
 DRAWLINE
 IF CHECK >= 100 && CHECK < 200 && ITEM:CHECK == 1
 	PRINTL 
@@ -282,7 +282,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで戻る
 PRINTL [1]変更する
-PRINTL [2]アウターを設定しない
+PRINTL [2]겉옷を設定しない
 INPUT
 IF RESULT >= 100 && RESULT < 200 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -292,13 +292,13 @@ ELSEIF RESULT == 1
 	;非戦闘員専用
 	IF CHECK == 197 && ITEM:CHECK == 1 && TALENT:ARG:변신능력 != -1
 		PRINTL 
-		PRINTW このアウターは非戦闘員専用です
+		PRINTW この겉옷は非戦闘員専用です
 		GOTO INPUT_LOOP
 	ELSEIF CHECK >= 100 && CHECK < 200 && ITEM:CHECK == 1
 		;SIF CFLAG:ARG:40 == 199
 		;	CFLAG:ARG:41 = 0
 		CFLAG:ARG:40 = CHECK
-		PRINTFORML アウターを%ITEMNAME:CHECK%に変更しました
+		PRINTFORML 겉옷を%ITEMNAME:CHECK%に変更しました
 		PRINTW 
 		;SIF CFLAG:ARG:40 == 199
 		;	CFLAG:ARG:41 = 199
@@ -311,7 +311,7 @@ ELSEIF RESULT == 2
 	;SIF CFLAG:ARG:40 == 199
 	;	CFLAG:ARG:41 = 0
 	CFLAG:ARG:40 = 0
-	PRINTL アウターを設定しませんでした
+	PRINTL 겉옷を設定しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -322,13 +322,13 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;アウター（変身後）の設定
+;겉옷（変身後）の設定
 @CLOTH_SETTING_OUTER2, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:41
 $INPUT_LOOP
 PRINTL 
-PRINTL アウター（変身後）を選んでください
+PRINTL 겉옷（変身後）を選んでください
 DRAWLINE
 IF CHECK >= 100 && CHECK < 300 && ITEM:CHECK == 1 || CHECK == 401
 	PRINTL 
@@ -370,7 +370,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで戻る
 PRINTL [1]変更する
-PRINTL [2]アウター（変身後）を設定しない
+PRINTL [2]겉옷（変身後）を設定しない
 INPUT
 IF RESULT >= 100 && RESULT < 300 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -383,11 +383,11 @@ ELSEIF RESULT == 1
 	;非戦闘員専用
 	IF CHECK == 197 && ITEM:CHECK == 1 && TALENT:ARG:변신능력 != -1
 		PRINTL 
-		PRINTW このアウターは非戦闘員専用です
+		PRINTW この겉옷は非戦闘員専用です
 		GOTO INPUT_LOOP
 	ELSEIF CHECK == 401 && EXP:ARG:함락경험 <= 0
 		PRINTL 
-		PRINTW このアウターは함락경험이 無いと付けられません
+		PRINTW この겉옷は함락경험이 無いと付けられません
 		GOTO INPUT_LOOP
 	ELSEIF CHECK >= 100 && CHECK < 300 && ITEM:CHECK == 1 || CHECK == 401
 		;SIF CFLAG:ARG:41 == 199
@@ -399,7 +399,7 @@ ELSEIF RESULT == 1
 			NEXT
 		ENDIF
 		CFLAG:ARG:41 = CHECK
-		PRINTFORML アウター（変身後）を%ITEMNAME:CHECK%に変更しました
+		PRINTFORML 겉옷（変身後）を%ITEMNAME:CHECK%に変更しました
 		PRINTW 
 		;SIF CFLAG:ARG:41 == 199
 		;	CFLAG:ARG:40 = 199
@@ -412,7 +412,7 @@ ELSEIF RESULT == 2
 	;SIF CFLAG:ARG:41 == 199
 	;	CFLAG:ARG:40 = 0
 	CFLAG:ARG:41 = 0
-	PRINTL アウター（変身後）を設定しませんでした
+	PRINTL 겉옷（変身後）を設定しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -421,13 +421,13 @@ ELSE
 ENDIF
 
 ;----------------------------------------------------------
-;インナーの設定
+;속옷の設定
 @CLOTH_SETTING_INNER, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:42
 $INPUT_LOOP
 PRINTL 
-PRINTL インナーを選んでください
+PRINTL 속옷を選んでください
 DRAWLINE
 IF CHECK >= 300 && CHECK < 400 && ITEM:CHECK == 1
 	PRINTL 
@@ -456,7 +456,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで戻る
 PRINTL [1]変更する
-PRINTL [2]インナーを設定しない
+PRINTL [2]속옷を設定しない
 INPUT
 IF RESULT >= 300 && RESULT < 400 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -465,7 +465,7 @@ ELSEIF RESULT == 0
 ELSEIF RESULT == 1
 	IF CHECK >= 300 && CHECK < 400 && ITEM:CHECK == 1
 		CFLAG:ARG:42 = CHECK
-		PRINTFORML インナーを%ITEMNAME:CHECK%に変更しました
+		PRINTFORML 속옷を%ITEMNAME:CHECK%に変更しました
 		PRINTW 
 		IF CFLAG:ARG:42 == 399
 			CFLAG:ARG:42 = 400
@@ -567,7 +567,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	CFLAG:ARG:42 = 0
-	PRINTL インナーを設定しませんでした
+	PRINTL 속옷を設定しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -664,7 +664,7 @@ ENDIF
 
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-;アウター（通常）のカスタマイズ
+;겉옷（通常）のカスタマイズ
 @CLOTH_CUSTOMIZE_OUTER, ARG, ARG:1
 #DIM KEEPTARGET
 #DIM LINE
@@ -867,11 +867,11 @@ IF RESULT > 0
 	STRLENS LOCALS:1
 	LOCALS:(1 + (RESULT > STR_LENGTH)) += @"支援時の回復効果増幅　"
 ENDIF
-;インナー兼用
+;속옷겸용
 CALL CLOTH_HOSEI(ARG,CFLAG:ARG:(ARG:1),"NOINNER")
 IF RESULT > 0
 	STRLENS LOCALS:1
-	LOCALS:(1 + (RESULT > STR_LENGTH)) += @"インナー兼用　"
+	LOCALS:(1 + (RESULT > STR_LENGTH)) += @"속옷겸용　"
 ENDIF
 
 ;露出度
@@ -937,7 +937,7 @@ ELSEIF RESULT == -1
 ENDIF
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-;アウター（変身後専用）のカスタマイズ
+;겉옷（変身後専用）のカスタマイズ
 @CLOTH_CUSTOMIZE_OUTER2, ARG, ARG:1
 #DIM KEEPTARGET
 #DIM SLOTMAX
@@ -978,7 +978,7 @@ SIF CFLAG:ARG:(ARG:1) == 299
 		PRINT 避妊効果　
 CALL CLOTH_HOSEI(ARG,CFLAG:ARG:(ARG:1),"NOINNER")
 SIF RESULT > 0
-		PRINT インナー兼用　
+		PRINT 속옷겸용　
 PRINT スロット数：
 REPEAT SLOTUSED
 	PRINT ●
@@ -1289,7 +1289,7 @@ ENDIF
 RETURN 0
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-;インナーのカスタマイズ
+;속옷のカスタマイズ
 @CLOTH_CUSTOMIZE_INNER, ARG, ARG:1
 #DIM KEEPTARGET
 #DIM LINE
@@ -1386,7 +1386,7 @@ IF (RESULT + KIRYOKU_CAL) != 100
 	LOCALS:(1 + (RESULT > STR_LENGTH)) += @"戦闘中の기력の減少量%LOCALS%倍　"
 ENDIF
 ;성내성
-CALL CLOTH_HOSEI(ARG,CFLAG:ARG:(ARG:1),"SEITAISEI");インナーの성내성の基準値は0.95？
+CALL CLOTH_HOSEI(ARG,CFLAG:ARG:(ARG:1),"SEITAISEI");속옷の성내성の基準値は0.95？
 IF (RESULT) != 95
 	LOCAL = RESULT + 5
 	IF LOCAL % 10 == 0

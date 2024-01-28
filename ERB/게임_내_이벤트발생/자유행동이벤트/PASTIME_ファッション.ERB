@@ -27,7 +27,7 @@ ENDIF
 PRINTW 
 ;ビッチ
 IF TALENT:음란 > 0
-	;インナー設定なし　ノーパン　または前張り
+	;속옷設定なし　ノーパン　または前張り
 	IF CFLAG:42 == 0 || CFLAG:42 == 398
 		PRINTFORM ラインが浮き出るのがかわいくないのでショーツは履かない。
 	ELSEIF CFLAG:42 == 301 || CFLAG:42 == 302 || CFLAG:42 == 303 || CFLAG:42 == 304 || CFLAG:42 == 309
@@ -240,7 +240,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 		PRINTFORML の下着を選んで慣れた手付きで身に着けた。
 	;四段階まではブラは支給品。ショーツは男物もあり
 	ELSE
-		;インナー
+		;속옷
 		PRINTFORML とりあえずブラは避けて通れないので支給品を身に着け、
 		PRINTFORM ショーツは
 		IF RAND:6 == 0
@@ -347,7 +347,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 
 ;普通娘
 ELSE
-	;インナー設定なし　ノーパン　または前張り
+	;속옷設定なし　ノーパン　または前張り
 	IF CFLAG:42 == 0 || CFLAG:42 == 398
 		IF RAND:6 == 0
 			PRINTFORM セクシーな

@@ -33,11 +33,11 @@ TCVARn:25 = RESULT
 最大文字数=0
 
 
-LOCALS = ◆アウター無し
+LOCALS = ◆겉옷無し
 SIF COSTUME_NAME(TARGET) != ""
 	LOCALS = ◆%COSTUME_NAME(TARGET)%
 
-LOCALS:1 = ◆インナー無し
+LOCALS:1 = ◆속옷無し
 IF CLOTH_NO_INNER && TCVARn:24 >= 0
 	LOCALS:1 = ◇（下着兼用）
 ELSEIF CFLAG:TARGET:42!=0
@@ -49,7 +49,7 @@ ENDIF
 
 PRINTL 
 
-;●アウター
+;●겉옷
 IF TCVARn:(CFLAG:1==0 ? 20 # 22) < 0
 	SIF TCVARn:41 && CFLAG:(CFLAG:1==0 ? 40 # 41) == 199
 		SETCOLOR 255, 128, 192
@@ -115,7 +115,7 @@ RESETCOLOR
 
 
 
-;●インナー
+;●속옷
 IF TCVARn:24 < 0
 	SIF CFLAG:42 == 400
 		SETCOLOR 255, 128, 192
@@ -223,7 +223,7 @@ IF CFLAG:1 == 0
 	IF TCVARn:20 > 0 || TCVARn:24 > 0
 		IF TCVARn:21 > 0 || TCVARn:25 > 0
 			IF TCVARn:21 == 0 || PERCENT_CAL_F(TCVARn:21,TCVARn:20) < LOCAL:2
-				;インナー兼用衣装の場合はインナーにダメージを与えない
+				;속옷겸용衣装の場合は속옷にダメージを与えない
 				CALL CLOTH_NO_INNER, TARGET
 				IF TCVARn:25 > 0 && RESULT == 0
 					SIF TCVARn:0 != 0 && ARG:1 == 0
@@ -250,7 +250,7 @@ ELSE
 	IF TCVARn:22 > 0 || TCVARn:24 > 0
 		IF TCVARn:23 > 0 || TCVARn:25 > 0
 			IF TCVARn:23 == 0 || PERCENT_CAL_F(TCVARn:23,TCVARn:22) < LOCAL:2
-				;インナー兼用衣装の場合はインナーにダメージを与えない
+				;속옷겸용衣装の場合は속옷にダメージを与えない
 				CALL CLOTH_NO_INNER, TARGET
 				IF TCVARn:25 > 0 && RESULT == 0
 					SIF TCVARn:0 != 0 && ARG:1 == 0
@@ -275,32 +275,32 @@ CALL REFRESH_CLOTH_DATA
 ;地の文
 IF CFLAG:1 == 0
 	IF LOCAL:0 > 0 && TCVARn:21 <= 0 && TCVARn:20 > 0
-		;지문: アウターが破れた
+		;지문: 겉옷が破れた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERBREAK
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの겉옷が破れたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERBREAK
 			
 	ELSEIF LOCAL:0 >= CLOTH_OUTER_DEF && PERCENT_CAL_F(TCVARn:21,TCVARn:20) < CLOTH_OUTER_DEF && TCVARn:20 > 0
-		;지문: アウターが破れ始めた
+		;지문: 겉옷が破れ始めた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERDAMAGE
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れ始めたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの겉옷が破れ始めたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERDAMAGE
 			
 	ENDIF
 ELSE
 	IF LOCAL:0 > 0 && TCVARn:23 <= 0 && TCVARn:22 > 0
-		;지문: アウターが破れた
+		;지문: 겉옷が破れた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERBREAK
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの겉옷が破れたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERBREAK
 			
 	ELSEIF LOCAL:0 >= CLOTH_OUTER_DEF && PERCENT_CAL_F(TCVARn:23,TCVARn:22) < CLOTH_OUTER_DEF && TCVARn:22 > 0
-		;지문: アウターが破れ始めた
+		;지문: 겉옷が破れ始めた
 		CALL MESSAGE_BATTLE_CLOTH_OUTERDAMAGE
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのアウターが破れ始めたのを見た
+		;지문: 세뇌/흑화 캐릭터가 操作キャラの겉옷が破れ始めたのを見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CLOTH_OUTERDAMAGE
 
@@ -308,16 +308,16 @@ ELSE
 ENDIF
 
 IF LOCAL:1 && TCVARn:25 <= 0 && TCVARn:24 > 0
-	;지문: インナーが破れた
+	;지문: 속옷が破れた
 	CALL MESSAGE_BATTLE_CLOTH_INNERBREAK
-	;지문: 세뇌/흑화 캐릭터가 操作キャラのインナーが破れたのを見た
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの속옷が破れたのを見た
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CLOTH_INNERBREAK
 		
 ELSEIF LOCAL:1 >= CLOTH_INNER_DEF && PERCENT_CAL_F(TCVARn:25,TCVARn:24) < CLOTH_INNER_DEF && TCVARn:24 > 0
-	;지문: インナーが破れ始めた
+	;지문: 속옷が破れ始めた
 	CALL MESSAGE_BATTLE_CLOTH_INNERDAMAGE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラのインナーが破れ始めたのを見た
+	;지문: 세뇌/흑화 캐릭터가 操作キャラの속옷が破れ始めたのを見た
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CLOTH_INNERDAMAGE
 		
@@ -362,7 +362,7 @@ ELSE
 			ENDIF
 	ENDIF
 ENDIF
-;インナー
+;속옷
 IF FLAG:700 && (TCVARn:25 == 0 || PERCENT_CAL_F(TCVARn:25,TCVARn:24) < 1) || CLOTH_NO_INNER > 0 && KEEP_TARGET == TARGET
 		;破壊済みなら補正無し
 ELSE
@@ -373,7 +373,7 @@ ELSE
 			LOCAL = LOCAL * RESULT / 100
 		ENDIF
 ENDIF
-;変身中ならカスタマイズパーツについてもチェックする
+;変身中なら커스터마이즈 파츠についてもチェックする
 ;ただし耐久無し衣装の場合はノータッチ
 IF CFLAG:1 > 0 && (ARGS!="HP" || LOCAL!=-1)
 	CALL CLOTH_CUSTOMIZE_COMMONPARTS_CAL, LOCAL, ARGS
@@ -404,7 +404,7 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;ARGが着ている現在のアウターの名称を返す式中関数
+;ARGが着ている現在の겉옷の名称を返す式中関数
 ;現在の状態と無関係に取得するならtransで指定可能
 @COSTUME_NAME(ARG,trans=-1)
 #FUNCTIONS
@@ -433,7 +433,7 @@ ELSE
 ENDIF
 RETURNF LOCALS
 ;--------------------------------------------------
-;インナーの名称を返す式中関数
+;속옷の名称を返す式中関数
 @INNER_NAME(ARG)
 #FUNCTIONS
 IF CFLAG:ARG:42 == 0
@@ -448,7 +448,7 @@ RETURNF LOCALS
 
 
 ;--------------------------------------------------
-;インナー兼用の判定
+;속옷겸용の判定
 @CLOTH_NO_INNER, ARG
 RESULT = 0
 CALL CLOTH_HOSEI(TARGET,CFLAG:(CFLAG:ARG:1 > 0 ? 41 # 40),"NOINNER")
@@ -463,7 +463,7 @@ IF CFLAG:1 == 0
 	CLOTH_OUTER_PER = RESULT
 	CALL CLOTH_HOSEI(TARGET,CFLAG:40,"DEF")
 	CLOTH_OUTER_DEF = RESULT
-	;変身後のアウターの耐久力を同期
+	;変身後の겉옷の耐久力を同期
 	SIF TCVARn:20 > 0 && TCVARn:22 > 0
 		TCVARn:23 = TCVARn:22 * CLOTH_OUTER_PER / 100
 ELSE
@@ -471,7 +471,7 @@ ELSE
 	CLOTH_OUTER_PER = RESULT
 	CALL CLOTH_HOSEI(TARGET,CFLAG:41,"DEF")
 	CLOTH_OUTER_DEF = RESULT
-	;変身前のアウターの耐久力を同期
+	;変身前の겉옷の耐久力を同期
 	SIF TCVARn:20 > 0 && TCVARn:22 > 0
 		TCVARn:21 = TCVARn:20 * CLOTH_OUTER_PER / 100
 ENDIF
@@ -486,24 +486,24 @@ SIF TCVARn:24 < 0
 	CLOTH_INNER_PER = 0
 
 CALL CLOTH_NO_INNER, TARGET
-;インナー兼用衣装の処理
+;속옷겸용衣装の処理
 IF RESULT > 0
 	CLOTH_INNER_PER = CLOTH_OUTER_PER
 	CLOTH_NO_INNER = 1
 	;挿入抵抗力の設定
 	CALL CLOTH_HOSEI(TARGET,CFLAG:(CFLAG:1==0 ? 40 # 41),"DEF")
 	CLOTH_INNER_DEF = RESULT
-	;インナーの耐久力をアウターに同期
+	;속옷の耐久力を겉옷に同期
 	SIF TCVARn:24 > 0 && TCVARn:(CFLAG:1==0 ? 20 # 22) > 0
 		TCVARn:25 = TCVARn:24 * CLOTH_OUTER_PER / 100
-;通常はインナーについて処理
+;通常は속옷について処理
 ELSE
 	CLOTH_NO_INNER = 0
 	;挿入抵抗力の設定
 	CALL CLOTH_HOSEI(TARGET,CFLAG:42,"DEF")
 	CLOTH_INNER_DEF = RESULT
 
-	;変身状態の逆側の衣装がインナー兼用なら(アウター+インナー)/2の耐久力を逆側の衣装に同期
+	;変身状態の逆側の衣装が속옷겸용なら(겉옷+속옷)/2の耐久力を逆側の衣装に同期
 	CALL CLOTH_HOSEI(TARGET,CFLAG:(CFLAG:1==0 ? 41 # 40),"NOINNER")
 	IF RESULT > 0
 		IF TCVARn:(CFLAG:1==0 ? 20 # 22) > 0 && TCVARn:24 > 0

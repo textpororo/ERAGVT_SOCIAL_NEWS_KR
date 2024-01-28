@@ -39,7 +39,7 @@ LOCAL = 50
 RETURN LOCAL
 
 ;--------------------------------------------------
-;油断度閾値
+;油断度역치
 @TENTACLE_MOB_802_YUDAN
 LOCAL = 250
 RETURN LOCAL
@@ -156,7 +156,7 @@ IF FLAG:72 == 1 && RAND:5 == 0
 ELSE
 	LOCAL = RAND:100
 
-	;15%以下の공격（アウター&インナーの방어無視、男女平等）
+	;15%以下の공격（겉옷&속옷の방어無視、男女平等）
 	;C攻め弱
 	IF LOCAL < 13
 		RETURN 0

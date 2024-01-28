@@ -1,14 +1,14 @@
 ﻿;**********************************************************
-;衣装の購入処理
+;의상 구입 처리
 ;**********************************************************
 @SHOW_SHOP_CLOTH
 #LOCALSIZE 1
 #LOCALSSIZE 1
-CALL SHOW_CLOTH("購入画面")
+CALL SHOW_CLOTH("구입 화면")
 RETURN 1
 
 ;----------------------------------------------------------
-;衣装表示UI
+;의상 표시 UI
 ;----------------------------------------------------------
 @SHOW_CLOTH(SHOW_TYPE)
 #LOCALSIZE 1
@@ -20,29 +20,30 @@ RETURN 1
 #DIM LIST_CLOTH, 100
 #DIM LIST_CLOTH_LAST_NO
 #DIM INPUT_NO
-#DIMS CATEGORY = "アウター", "カスタマイズパーツ", "インナー", "その他"
+#DIMS CATEGORY = "겉옷", "커스터마이즈 파츠", "속옷", "기타"
 #DIM SELECT_CATEGORY
-#DIM カタログ
-#DIM 簡易情報
+#DIM 카탈로그
+#DIM 간이정보
 #DIM PAGE
 #DIM MAXPAGE
 #DIM LIST_CLOTH_SELECT_NO
 #DIMS DRAW_TYPE
 #DIM CONST FILTER_INPUT_OFFSET = 50
 
-;1ページに表示する衣装の数(リスト, 単体, カタログ, 簡易情報)
+;1페이지에 표시할 의상의 수(리스트, 단일, 카탈로그, 간이정보)
 #DIM SHOW_COUNT_LIST = 44, 1, 4, 22
-;필터の中身 ビットで管理
+;필터의 내용물 bit로 관리
 #DIM FILTER
-;필터ボタンの表示文字
+;필터 버튼 표시 문자
+;油->방심, 撃->타격, 避->회피, ク->치명(크리티컬), 粘->점성, 邪->사악, 羞->치정, 癒->치유, 空->공중
 {
 #DIMS LABEL =
-"攻", "防", "敏", "知", "体",
-"気", "性", "油", "撃", "避",
-"ク", "粘", "邪", "羞", "Ｂ",
-"Ｃ", "癒", "EX", "空"
+"공격", "방어", "민첩", "지성", "체력",
+"기력", "성내성", "방심", "타격", "회피",
+"치명", "점성", "사악", "치정", "B",
+"C", "치유", "EX", "공중"
 }
-;필터ボタンの効果指定
+;필터 버튼의 효과 지정
 {
 #DIMS HOSEI_NAME =
 "KOUGEKI", "BOUGYO", "BINSYOU", "CHISEI", "TAIRYOKU",
@@ -50,20 +51,20 @@ RETURN 1
 "CRITICAL", "LIQUID", "WAVE", "SHYNESS", "ANTIBUP",
 "ANTICUP", "HEALUP", "EXBOOST", "AIRPLUS"
 }
-;有効にする필터の番号
+;활성화할 필터의 번호
 #DIM CLOTH_HOSEI_ACTIVE = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 
-;初期化
+;초기화
 INPUT_NO = -1
 SELECT_CATEGORY = 0
-カタログ = 0
-簡易情報 = 0
+카탈로그 = 0
+간이정보 = 0
 PAGE = 0
 MAXPAGE = 0
 LIST_CLOTH_SELECT_NO = 0
-DRAW_TYPE '= "リスト"
+DRAW_TYPE '= "리스트"
 
-;現在の表示方法を保存し表示を止める
+;현재 표시 방법을 저장하고 표시를 멈춘다
 CURRENTREDRAW
 KEEP_REDRAW = RESULT
 REDRAW 0
@@ -72,8 +73,8 @@ $INPUT_LOOP
 
 ;戻る
 IF INPUT_NO == 99
-	IF DRAW_TYPE == "リスト" || DRAW_TYPE == "簡易情報"
-		IF SHOW_TYPE == "購入画面"
+	IF DRAW_TYPE == "리스트" || DRAW_TYPE == "간이정보"
+		IF SHOW_TYPE == "구입 화면"
 			;실적
 			LOCAL = 0
 			FOR LCOUNT,100,400
@@ -82,45 +83,45 @@ IF INPUT_NO == 99
 				LOCAL += ITEM:LCOUNT
 			NEXT
 			IF LOCAL >= 10
-				CALL UNLOCK_ACHIEVEMENT(269,"バトルレイヤー")
+				CALL UNLOCK_ACHIEVEMENT(269,"배틀 코스튬 마니아")
 			ENDIF
 			IF LOCAL >= 30
-				CALL UNLOCK_ACHIEVEMENT(274,"ファッションリーダー")
+				CALL UNLOCK_ACHIEVEMENT(274,"패션 리더")
 			ENDIF
 		ENDIF
 		REDRAW KEEP_REDRAW
 		RETURN 1
 	ELSE
-		DRAW_TYPE '= 簡易情報 ? "簡易情報" # "リスト"
+		DRAW_TYPE '= 간이정보 ? "간이정보" # "리스트"
 		PAGE = 0
 		LIST_CLOTH_SELECT_NO = 0
 	ENDIF
-;前へ
+;앞 페이지로
 ELSEIF INPUT_NO == 90
 	PAGE = !PAGE ? MAXPAGE # PAGE - 1
-	IF DRAW_TYPE == "単体"
+	IF DRAW_TYPE == "단일"
 		IF 0 < LIST_CLOTH_SELECT_NO
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_SELECT_NO - 1
 		ELSE
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_LAST_NO - 1
 		ENDIF
-	ELSEIF DRAW_TYPE == "カタログ"
+	ELSEIF DRAW_TYPE == "카탈로그"
 		IF 0 < LIST_CLOTH_SELECT_NO - SHOW_COUNT_LIST:2
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_SELECT_NO - SHOW_COUNT_LIST:2
 		ELSE
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_LAST_NO - 1
 		ENDIF
 	ENDIF
-;次へ
+;뒷 페이지로
 ELSEIF INPUT_NO == 91
 	PAGE = 0 < MAXPAGE - PAGE ? PAGE + 1 # 0
-	IF DRAW_TYPE == "単体"
+	IF DRAW_TYPE == "단일"
 		IF LIST_CLOTH_SELECT_NO < LIST_CLOTH_LAST_NO
 			LIST_CLOTH_SELECT_NO ++
 		ELSE
 			LIST_CLOTH_SELECT_NO = 0
 		ENDIF
-	ELSEIF DRAW_TYPE == "カタログ"
+	ELSEIF DRAW_TYPE == "카탈로그"
 		IF LIST_CLOTH_SELECT_NO + SHOW_COUNT_LIST:2 < LIST_CLOTH_LAST_NO
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_SELECT_NO + SHOW_COUNT_LIST:2
 		ELSEIF LIST_CLOTH_SELECT_NO == LIST_CLOTH_LAST_NO - 1
@@ -129,112 +130,112 @@ ELSEIF INPUT_NO == 91
 			LIST_CLOTH_SELECT_NO = LIST_CLOTH_LAST_NO - 1
 		ENDIF
 	ENDIF
-;カテゴリ
+;카테고리
 ELSEIF INRANGE(INPUT_NO, 0, VARSIZE("CATEGORY") - 1)
-	IF 簡易情報
-		DRAW_TYPE '= "簡易情報"
+	IF 간이정보
+		DRAW_TYPE '= "간이정보"
 	ELSE
-		DRAW_TYPE '= "リスト"
-		簡易情報 = 0
-		カタログ = 0
+		DRAW_TYPE '= "리스트"
+		간이정보 = 0
+		카탈로그 = 0
 	ENDIF
 	SELECT_CATEGORY = INPUT_NO
 	PAGE = 0
 	LIST_CLOTH_SELECT_NO = 0
-;カタログ
+;카탈로그
 ELSEIF INPUT_NO == 10
-	IF カタログ
-		カタログ = 0
-		DRAW_TYPE '= "リスト"
+	IF 카탈로그
+		카탈로그 = 0
+		DRAW_TYPE '= "리스트"
 	ELSE
-		カタログ = 1
-		簡易情報 = 0
-		DRAW_TYPE '= "カタログ"
+		카탈로그 = 1
+		간이정보 = 0
+		DRAW_TYPE '= "카탈로그"
 	ENDIF
 	PAGE = GET_CLOTH_PAGE(LIST_CLOTH_SELECT_NO, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
-;簡易情報
+;간이정보
 ELSEIF INPUT_NO == 11
-	IF 簡易情報
-		簡易情報 = 0
-		DRAW_TYPE '= "リスト"
+	IF 간이정보
+		간이정보 = 0
+		DRAW_TYPE '= "리스트"
 	ELSE
-		簡易情報 = 1
-		カタログ = 0
-		DRAW_TYPE '= "簡易情報"
+		간이정보 = 1
+		카탈로그 = 0
+		DRAW_TYPE '= "간이정보"
 	ENDIF
 	PAGE = GET_CLOTH_PAGE(LIST_CLOTH_SELECT_NO, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 ;필터
-ELSEIF INRANGE(INPUT_NO, FILTER_INPUT_OFFSET, MIN(FILTER_INPUT_OFFSET + VARSIZE("LABEL") - 1, FILTER_INPUT_OFFSET + 19)) && (DRAW_TYPE == "リスト" || DRAW_TYPE == "簡易情報")
+ELSEIF INRANGE(INPUT_NO, FILTER_INPUT_OFFSET, MIN(FILTER_INPUT_OFFSET + VARSIZE("LABEL") - 1, FILTER_INPUT_OFFSET + 19)) && (DRAW_TYPE == "리스트" || DRAW_TYPE == "간이정보")
 	INVERTBIT FILTER, INPUT_NO - FILTER_INPUT_OFFSET
 	PAGE = 0
 	LIST_CLOTH_SELECT_NO = 0
-;衣装
-ELSEIF INRANGE(INPUT_NO, 100, 1000) && ((ITEM:INPUT_NO == 0 && ITEMPRICE:INPUT_NO > 0) || (SHOW_TYPE == "表示画面"))
+;의상
+ELSEIF INRANGE(INPUT_NO, 100, 1000) && ((ITEM:INPUT_NO == 0 && ITEMPRICE:INPUT_NO > 0) || (SHOW_TYPE == "표시 화면"))
 	LIST_CLOTH_SELECT_NO = FINDELEMENT(LIST_CLOTH, INPUT_NO)
 	IF LIST_CLOTH_SELECT_NO == -1
 		INPUT_NO = -1
 		GOTO INPUT_LOOP
 	ENDIF
-	IF DRAW_TYPE == "リスト" || DRAW_TYPE == "簡易情報"
-		DRAW_TYPE '= カタログ ? "カタログ" # "単体"
-		簡易情報 = 0
+	IF DRAW_TYPE == "리스트" || DRAW_TYPE == "간이정보"
+		DRAW_TYPE '= 카탈로그 ? "카탈로그" # "단일"
+		간이정보 = 0
 		PAGE = GET_CLOTH_PAGE(LIST_CLOTH_SELECT_NO, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
-	ELSEIF SHOW_TYPE == "購入画面"
+	ELSEIF SHOW_TYPE == "구입 화면"
 		CALL BUY_CLOTH(LIST_CLOTH, INPUT_NO)
 		IF RESULT == 1
-			PRINTFORML %ITEMNAME:INPUT_NO%を買いました
-			;購入した衣装が最後尾の物なら空欄ページの回避の為一つ前の物を渡す
+			PRINTFORML %ITEMNAME:INPUT_NO%을(를) 구입했습니다.
+			;구입한 의상이 맨 뒤의 것이라면 빈 페이지를 피하기 위해 한 개 앞의 물건을 건네준다
 			IF LIST_CLOTH_SELECT_NO == LIST_CLOTH_LAST_NO - 1
 				PAGE = GET_CLOTH_PAGE(LIST_CLOTH_SELECT_NO - 1, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 			ELSE
 				PAGE = GET_CLOTH_PAGE(LIST_CLOTH_SELECT_NO, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 			ENDIF
 		ELSEIF RESULT == -1
-			PRINTFORML 無効な値です
+			PRINTFORML {RESULT}은(는) 유효하지 않은 값입니다.
 		ELSEIF !RESULT
-			PRINTFORML お金が足りません
+			PRINTFORML 돈이 부족합니다.
 		ENDIF
 		PRINTW
 	ENDIF
 ELSEIF INPUT_NO == 98
 	FILTER = 0
 ELSEIF INPUT_NO != -1
-	PRINTW 想定外の値が入力されました
+	PRINTFORMW {INPUT_NO}은(는) 유효하지 않은 값입니다.
 	PRINTL
 	INPUT_NO = -1
 	GOTO INPUT_LOOP
 ENDIF
 
-;売り物っぽい衣装の配列を作る
-IF SHOW_TYPE == "購入画面"
+;판매 중인 의상의 배열을 만든다
+IF SHOW_TYPE == "구입 화면"
 	CALL LIST_CLOTH_NOTHAVE(LIST_CLOTH, LIST_CLOTH_LAST_NO, CATEGORY:SELECT_CATEGORY)
-;所持衣装の配列を作る（変身衣装は除外）
-ELSEIF SHOW_TYPE == "表示画面"
+;소지 의상의 배열을 만든다（변신 의상 제외）
+ELSEIF SHOW_TYPE == "표시 화면"
 	CALL LIST_CLOTH_HAVE(LIST_CLOTH, LIST_CLOTH_LAST_NO, CATEGORY:SELECT_CATEGORY)
 ENDIF
 IF !RESULT
-	PRINTFORMW 想定外のカテゴリーが指定されました(%CATEGORY:SELECT_CATEGORY%)
+	PRINTFORMW 존재하지 않는 카테고리가 지정되었습니다. (%CATEGORY:SELECT_CATEGORY%)
 	SELECT_CATEGORY = 0
 	GOTO INPUT_LOOP
 ENDIF
 
-;有効な필터ボタンで필터
+;유효한 필터 버튼으로 필터
 SIF FILTER
 	CALL FILTER_CLOTH_HOSEI(LIST_CLOTH, LIST_CLOTH_LAST_NO, HOSEI_NAME, CLOTH_HOSEI_ACTIVE, SELECT_CATEGORY, FILTER)
 
-;1ページに表示する衣装の数と配列の中身の数から最大ページを取得
+;1페이지에 표시할 의상 수와 배열 내용물 수에서 최대 페이지를 가져온다
 MAXPAGE = GET_CLOTH_MAXPAGE(DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 
-;衣装表示前の描画
+;의상 표시 전 묘화
 CALL SHOW_CLOTH_HEADER(SHOW_TYPE, LABEL, CLOTH_HOSEI_ACTIVE, DRAW_TYPE, SELECT_CATEGORY)
 
-;衣装の描画
+;의상 묘화
 CALL SHOW_CLOTH_LIST(SHOW_TYPE, LIST_CLOTH, LIST_CLOTH_LAST_NO, DRAW_TYPE, SELECT_CATEGORY, PAGE, SHOW_COUNT_LIST, LABEL, HOSEI_NAME, CLOTH_HOSEI_ACTIVE)
 
-;衣装表示後の描画
-CALL SHOW_CLOTH_FOOTER(DRAW_TYPE, CATEGORY, SELECT_CATEGORY, カタログ, 簡易情報, LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET, MAXPAGE)
+;의상 표시 후 묘화
+CALL SHOW_CLOTH_FOOTER(DRAW_TYPE, CATEGORY, SELECT_CATEGORY, 카탈로그, 간이정보, LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET, MAXPAGE)
 
-;表示を再開して入力を待つ
+;표시를 재개하고 입력을 기다린다
 REDRAW 2
 INPUT
 REDRAW 0
@@ -244,7 +245,7 @@ INPUT_NO = RESULT
 GOTO INPUT_LOOP
 
 ;----------------------------------------------------------
-;表示するページ数を返す
+;표시할 페이지 수를 반환한다
 ;----------------------------------------------------------
 @GET_CLOTH_PAGE(CLOTH_NO, DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 #FUNCTION
@@ -260,18 +261,18 @@ SIF CLOTH_NO < 1
 SIF LIST_CLOTH_LAST_NO < 1
 	RETURNF 0
 SELECTCASE DRAW_TYPE
-	CASE "リスト"
+	CASE "리스트"
 		RETURNF CLOTH_NO / SHOW_COUNT_LIST
-	CASE "単体"
+	CASE "단일"
 		RETURNF CLOTH_NO / SHOW_COUNT_LIST:1
-	CASE "カタログ"
+	CASE "카탈로그"
 		RETURNF CLOTH_NO / SHOW_COUNT_LIST:2
-	CASE "簡易情報"
+	CASE "간이정보"
 		RETURNF CLOTH_NO / SHOW_COUNT_LIST:3
 ENDSELECT
 
 ;----------------------------------------------------------
-;最大ページ数を返す
+;최대 페이지 수를 반환한다
 ;----------------------------------------------------------
 @GET_CLOTH_MAXPAGE(DRAW_TYPE, LIST_CLOTH_LAST_NO, SHOW_COUNT_LIST)
 #FUNCTION
@@ -284,18 +285,18 @@ ENDSELECT
 SIF !LIST_CLOTH_LAST_NO
 	RETURNF 0
 SELECTCASE DRAW_TYPE
-	CASE "リスト"
+	CASE "리스트"
 		RETURNF (LIST_CLOTH_LAST_NO - 1) / SHOW_COUNT_LIST
-	CASE "単体"
+	CASE "단일"
 		RETURNF (LIST_CLOTH_LAST_NO - 1) / SHOW_COUNT_LIST:1
-	CASE "カタログ"
+	CASE "카탈로그"
 		RETURNF (LIST_CLOTH_LAST_NO - 1) / SHOW_COUNT_LIST:2
-	CASE "簡易情報"
+	CASE "간이정보"
 		RETURNF (LIST_CLOTH_LAST_NO - 1) / SHOW_COUNT_LIST:3
 ENDSELECT
 
 ;----------------------------------------------------------
-;ヘッダの描画
+;머리말(헤더) 묘화
 ;----------------------------------------------------------
 @SHOW_CLOTH_HEADER(SHOW_TYPE, LABEL, CLOTH_HOSEI_ACTIVE, DRAW_TYPE, SELECT_CATEGORY)
 #LOCALSIZE 1
@@ -310,25 +311,25 @@ ENDSELECT
 
 CALL LB
 DRAWLINE
-IF SHOW_TYPE == "購入画面"
+IF SHOW_TYPE == "구입 화면"
 	IF SELECT_CATEGORY == 0
-		PRINTL アウターを購入します
+		PRINTL 겉옷을 구입합니다.
 	ELSEIF SELECT_CATEGORY == 1
-		PRINTL カスタマイズパーツを購入します(注意：変身コスチューム専用)
+		PRINTL 커스터마이즈 파츠를 구입합니다. (주의: 변신 코스튬 전용)
 	ELSEIF SELECT_CATEGORY == 2
-		PRINTL インナーを購入します
+		PRINTL 속옷을 구입합니다.
 	ELSEIF SELECT_CATEGORY == 3
-		PRINTL その他装備を購入します
+		PRINTL 기타 장비를 구입합니다.
 	ENDIF
-	PRINTFORML 資金：{MONEY}＄
+	PRINTFORML 자금：{MONEY}＄
 	DRAWLINE
-ELSEIF SHOW_TYPE == "表示画面"
-	PRINTL 所持衣装一覧
+ELSEIF SHOW_TYPE == "표시 화면"
+	PRINTL 소지 의상 목록
 	DRAWLINE
 ENDIF
-IF DRAW_TYPE == "簡易情報"
+IF DRAW_TYPE == "간이정보"
 	WIDTH = WIDTH_CLOTH + WIDTH_MONEY
-	SIF SHOW_TYPE == "購入画面"
+	SIF SHOW_TYPE == "구입 화면"
 		WIDTH += 11
 	PRINTFORM %LOCALS, WIDTH%|
 	FOR LOCAL, 0, VARSIZE("CLOTH_HOSEI_ACTIVE")
@@ -340,29 +341,29 @@ ENDIF
 RETURN 1
 
 ;----------------------------------------------------------
-;フッタの描画
+;꼬리말(푸터) 묘사
 ;----------------------------------------------------------
-@SHOW_CLOTH_FOOTER(DRAW_TYPE, CATEGORY, SELECT_CATEGORY,  カタログ, 簡易情報, LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET, MAXPAGE)
+@SHOW_CLOTH_FOOTER(DRAW_TYPE, CATEGORY, SELECT_CATEGORY,  카탈로그, 간이정보, LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET, MAXPAGE)
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #DIMS DRAW_TYPE
 #DIMS REF CATEGORY
 #DIM SELECT_CATEGORY
-#DIM カタログ
-#DIM 簡易情報
+#DIM 카탈로그
+#DIM 간이정보
 #DIMS REF LABEL
 #DIM REF CLOTH_HOSEI_ACTIVE
 #DIM FILTER
 #DIM FILTER_INPUT_OFFSET
 #DIM MAXPAGE
 
-#DIM CONST WIDTH = STRLENS("カスタマイズパーツ") + 1
+#DIM CONST WIDTH = STRLENS("커스터마이즈 파츠") + 1
 #DIM CATEGORY_NO
 
-CALL CLOTH_BUTTON("前へ　　", 90, !MAXPAGE ? 0 # 1)
-CALL CLOTH_BUTTON("次へ", 91, !MAXPAGE ? 0 # 1)
+CALL CLOTH_BUTTON("앞 페이지　　", 90, !MAXPAGE ? 0 # 1)
+CALL CLOTH_BUTTON("뒷 페이지", 91, !MAXPAGE ? 0 # 1)
 PRINTL
-IF DRAW_TYPE == "リスト" || DRAW_TYPE == "簡易情報"
+IF DRAW_TYPE == "리스트" || DRAW_TYPE == "간이정보"
 	DRAWLINE
 	CALL SHOW_CLOTH_FILTERBUTTON(LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET)
 ENDIF
@@ -377,16 +378,16 @@ FOR CATEGORY_NO, 0, VARSIZE("CATEGORY")
 NEXT
 PRINTL
 
-LOCALS '= @"%"カタログ表示", WIDTH, LEFT%"
-CALL CLOTH_TOGGLEBUTTON(LOCALS, 10, カタログ)
+LOCALS '= @"%"카탈로그 표시", WIDTH, LEFT%"
+CALL CLOTH_TOGGLEBUTTON(LOCALS, 10, 카탈로그)
 
-LOCALS '= @"%"リスト表示　", WIDTH, LEFT%"
-CALL CLOTH_TOGGLEBUTTON(LOCALS, 11, 簡易情報)
+LOCALS '= @"%"리스트 표시　", WIDTH, LEFT%"
+CALL CLOTH_TOGGLEBUTTON(LOCALS, 11, 간이정보)
 PRINTL
 
 
 PRINT  　　　　　　　　　　　　　　　　　　　　　　　　
-PRINTBUTTON "[98]필터をリセット", 98
+PRINTBUTTON "[98] 필터를 초기화한다", 98
 PRINTL
 
 PRINTBUTTON "[99] 돌아간다", 99
@@ -395,7 +396,7 @@ PRINTL
 RETURN 1
 
 ;----------------------------------------------------------
-;필터ボタンの描画
+;필터 버튼 묘화
 ;----------------------------------------------------------
 @SHOW_CLOTH_FILTERBUTTON(LABEL, CLOTH_HOSEI_ACTIVE, FILTER, FILTER_INPUT_OFFSET)
 #LOCALSIZE 1
@@ -412,7 +413,7 @@ FOR LOCAL, 0, VARSIZE("CLOTH_HOSEI_ACTIVE")
 NEXT
 
 ;----------------------------------------------------------
-;衣装リストの描画
+;의상 리스트 묘화
 ;----------------------------------------------------------
 @SHOW_CLOTH_LIST(SHOW_TYPE, LIST_CLOTH, LIST_CLOTH_LAST_NO, DRAW_TYPE, SELECT_CATEGORY, PAGE, SHOW_COUNT_LIST, LABEL, HOSEI_NAME, CLOTH_HOSEI_ACTIVE)
 #LOCALSIZE 1
@@ -433,27 +434,27 @@ NEXT
 #DIM CLOTH_NO_TO
 #DIM SHOW_COUNT
 #DIM BIT_POS
-#DIM 閾値
+#DIM 역치
 #DIM KEEP_CFLAG
 #DIMS CALL_HOSEI_NAME
 #DIM HOSEI_VAL
 
 IF !LIST_CLOTH_LAST_NO
-	IF SHOW_TYPE == "購入画面"
+	IF SHOW_TYPE == "구입 화면"
 		PRINTL     - SOLD OUT -
 	ELSE
-		PRINTL 未所持
+		PRINTL 미소지
 	ENDIF
 	RETURN 1
 ENDIF
 
-IF DRAW_TYPE == "リスト"
+IF DRAW_TYPE == "리스트"
 	SHOW_COUNT = SHOW_COUNT_LIST:0
-ELSEIF DRAW_TYPE == "単体"
+ELSEIF DRAW_TYPE == "단일"
 	SHOW_COUNT = SHOW_COUNT_LIST:1
-ELSEIF DRAW_TYPE == "カタログ"
+ELSEIF DRAW_TYPE == "카탈로그"
 	SHOW_COUNT = SHOW_COUNT_LIST:2
-ELSEIF DRAW_TYPE == "簡易情報"
+ELSEIF DRAW_TYPE == "간이정보"
 	SHOW_COUNT = SHOW_COUNT_LIST:3
 ENDIF
 
@@ -467,13 +468,13 @@ CLOTH_NO_FROM = PAGE * SHOW_COUNT
 CLOTH_NO_TO = MIN(PAGE * SHOW_COUNT + SHOW_COUNT, LIST_CLOTH_LAST_NO)
 HOSEI_VAL = 0
 
-IF DRAW_TYPE == "リスト"
+IF DRAW_TYPE == "리스트"
 	NOTHAVE_COUNT = 0
 	FOR LOCAL, CLOTH_NO_FROM, CLOTH_NO_TO
 		SIF (NOTHAVE_COUNT % 2) == 1
 			PRINT 　
 		PRINTFORM [%TOSTR(LIST_CLOTH:LOCAL)%] %ITEMNAME:(LIST_CLOTH:LOCAL), WIDTH_CLOTH, LEFT%
-		IF SHOW_TYPE == "購入画面"
+		IF SHOW_TYPE == "구입 화면"
 			SIF MONEY < ITEMPRICE:(LIST_CLOTH:LOCAL)
 				SETCOLOR 0x808080
 			PRINTFORM ({ITEMPRICE:(LIST_CLOTH:LOCAL), WIDTH_MONEY, RIGHT}＄)
@@ -485,11 +486,11 @@ IF DRAW_TYPE == "リスト"
 	NEXT
 	SIF (NOTHAVE_COUNT % 2) == 1
 		PRINTL
-ELSEIF DRAW_TYPE == "簡易情報"
+ELSEIF DRAW_TYPE == "간이정보"
 	KEEP_CFLAG = CFLAG:1
 	FOR LOCAL, CLOTH_NO_FROM, CLOTH_NO_TO
 		PRINTFORM [%TOSTR(LIST_CLOTH:LOCAL)%] %ITEMNAME:(LIST_CLOTH:LOCAL), WIDTH_CLOTH, LEFT%
-		IF SHOW_TYPE == "購入画面"
+		IF SHOW_TYPE == "구입 화면"
 			LOCALS '= TOSTR(ITEMPRICE:(LIST_CLOTH:LOCAL))
 			PRINTFORM (%LOCALS, WIDTH_MONEY, RIGHT%＄) 
 		ENDIF
@@ -498,44 +499,44 @@ ELSEIF DRAW_TYPE == "簡易情報"
 			IF SELECT_CATEGORY == 0
 				SELECTCASE CLOTH_HOSEI_ACTIVE:BIT_POS
 					CASE 0, 1, 2, 3, 7
-						閾値 = 100
+						역치 = 100
 					CASE 8, 9, 10, 14, 15, 16, 17, 18
-						閾値 = 0
+						역치 = 0
 					CASE 4, 5
-						閾値 = -95
+						역치 = -95
 					CASE 6, 11, 12, 13
-						閾値 = -100
+						역치 = -100
 				ENDSELECT
 			ELSEIF SELECT_CATEGORY == 1
 				SELECTCASE CLOTH_HOSEI_ACTIVE:BIT_POS
 					CASE 4, 5, 11, 12
-						閾値 = -100
+						역치 = -100
 					CASEELSE
-						閾値 = 0
+						역치 = 0
 				ENDSELECT
 			ELSEIF SELECT_CATEGORY == 2
 				SELECTCASE CLOTH_HOSEI_ACTIVE:BIT_POS
 					CASE 0, 1, 2, 3, 7
-						閾値 = 100
+						역치 = 100
 					CASE 8, 9, 10, 14, 15, 16, 17, 18
-						閾値 = 0
+						역치 = 0
 					CASE 6
-						閾値 = -95
+						역치 = -95
 					CASE 4, 5, 11, 12, 13
-						閾値 = -100
+						역치 = -100
 				ENDSELECT
 			ELSE
-				閾値 = 0
+				역치 = 0
 			ENDIF
 
-			;補正の有無を調べる(アウター～インナーは参照処理と統合済み)
+			;보정 유무 조사(겉옷～속옷은 참조 처리와 통합 완료)
 			IF LIST_CLOTH:LOCAL<=499
-				;変身後基準
+				;변신 후 기준
 				CFLAG:1 = 1
 
 				CALL CLOTH_HOSEI(TARGET,LIST_CLOTH:LOCAL,HOSEI_NAME:BIT_POS)
 				HOSEI_VAL=RESULT
-			;カスタマイズパーツ(処理が旧来のまま)
+			;커스터마이즈 파츠(처리가 구래(旧来)인 채로)
 			ELSE
 				TRYCCALLFORM %CALL_HOSEI_NAME%_%HOSEI_NAME:(CLOTH_HOSEI_ACTIVE:BIT_POS)%_{LIST_CLOTH:LOCAL}
 					HOSEI_VAL = RESULT
@@ -545,7 +546,7 @@ ELSEIF DRAW_TYPE == "簡易情報"
 				ENDCATCH
 				CFLAG:1 = 1
 				TRYCCALLFORM %CALL_HOSEI_NAME%_%HOSEI_NAME:(CLOTH_HOSEI_ACTIVE:BIT_POS)%_{LIST_CLOTH:LOCAL}
-					IF 閾値 < 0
+					IF 역치 < 0
 						HOSEI_VAL = MIN(RESULT, RESULT, HOSEI_VAL)
 					ELSE
 						HOSEI_VAL = MAX(RESULT, RESULT, HOSEI_VAL)
@@ -555,7 +556,7 @@ ELSEIF DRAW_TYPE == "簡易情報"
 			ENDIF
 
 
-			CALL SHOW_CLOTH_HOSEI_MARK(HOSEI_VAL, 閾値)
+			CALL SHOW_CLOTH_HOSEI_MARK(HOSEI_VAL, 역치)
 			PRINT |
 		NEXT
 		PRINTL
@@ -564,11 +565,11 @@ ELSEIF DRAW_TYPE == "簡易情報"
 ELSE
 	FOR LOCAL, CLOTH_NO_FROM, CLOTH_NO_TO
 		PRINTFORM %ITEMNAME:(LIST_CLOTH:LOCAL), WIDTH_CLOTH, LEFT%
-		IF SHOW_TYPE == "購入画面"
+		IF SHOW_TYPE == "구입 화면"
 			LOCALS '= TOSTR(ITEMPRICE:(LIST_CLOTH:LOCAL)) + "＄"
 			PRINTFORM %LOCALS, WIDTH_MONEY + 2, RIGHT%
 			PRINT 　
-			CALL CLOTH_BUTTON("買う", LIST_CLOTH:LOCAL, ITEMPRICE:(LIST_CLOTH:LOCAL) <= MONEY ? 1 # 0)
+			CALL CLOTH_BUTTON("구입한다", LIST_CLOTH:LOCAL, ITEMPRICE:(LIST_CLOTH:LOCAL) <= MONEY ? 1 # 0)
 		ENDIF
 		PRINTL
 		TRYCALLFORM CLOTH_DESCRIPTION_{LIST_CLOTH:LOCAL}
@@ -579,7 +580,7 @@ ENDIF
 RETURN 1
 
 ;----------------------------------------------------------
-;未所持の売り物っぽい衣装を配列に入れる
+;판매 중인 의상 중 소지하지 않은 의상을 배열에 넣는다
 ;----------------------------------------------------------
 @LIST_CLOTH_NOTHAVE(LIST_CLOTH, LIST_CLOTH_LAST_NO, CATEGORY)
 #LOCALSIZE 1
@@ -611,7 +612,7 @@ LIST_CLOTH_LAST_NO = FINDELEMENT(LIST_CLOTH, 0)
 RETURN 1
 
 ;----------------------------------------------------------
-;所持している衣装を配列に入れる
+;소지하고 있는 의상을 배열에 넣는다
 ;----------------------------------------------------------
 @LIST_CLOTH_HAVE(LIST_CLOTH, LIST_CLOTH_LAST_NO, CATEGORY)
 #LOCALSIZE 1
@@ -643,7 +644,7 @@ LIST_CLOTH_LAST_NO = FINDELEMENT(LIST_CLOTH, 0)
 RETURN 1
 
 ;----------------------------------------------------------
-;カテゴリー別で衣装の範囲を返す
+;카테고리 별로 의상 범위를 반환한다
 ;----------------------------------------------------------
 @GET_CLOTH_CATEGORY_FROM_TO(CATEGORY, CLOTH_NO_FROM, CLOTH_NO_TO)
 #LOCALSIZE 1
@@ -654,16 +655,16 @@ RETURN 1
 #DIMS SHOW_TYPE
 
 SELECTCASE CATEGORY
-	CASE "アウター"
+	CASE "겉옷"
 		CLOTH_NO_FROM = 100
 		CLOTH_NO_TO = 300
-	CASE "カスタマイズパーツ"
+	CASE "커스터마이즈 파츠"
 		CLOTH_NO_FROM = 600
 		CLOTH_NO_TO = 700
-	CASE "インナー"
+	CASE "속옷"
 		CLOTH_NO_FROM = 300
 		CLOTH_NO_TO = 400
-	CASE "その他"
+	CASE "기타"
 		CLOTH_NO_FROM = 500
 		CLOTH_NO_TO = 600
 	CASEELSE
@@ -673,7 +674,7 @@ ENDSELECT
 RETURN 1
 
 ;----------------------------------------------------------
-;필터に対応した能力値の補正を行う関数を探して필터リング
+;필터에 대응한 능력치 보정을 수행하는 함수를 찾아 필터링
 ;----------------------------------------------------------
 @FILTER_CLOTH_HOSEI(LIST_CLOTH, LIST_CLOTH_LAST_NO, HOSEI_NAME, CLOTH_HOSEI_ACTIVE, SELECT_CATEGORY, FILTER)
 #LOCALSIZE 1
@@ -705,7 +706,7 @@ FILTER_FLAG = 1
 ;	CALL_HOSEI_NAME '= "CLOTH_CUSTOM_HOSEI"
 ;ENDIF
 
-;有効になっている全ての필터の効果に補正をかける関数がある物を取得
+;활성화된 모든 필터의 효과에 보정을 거는 함수가 있는 것을 취득
 FOR CLOTH_NO, 0, LIST_CLOTH_LAST_NO
 	FOR BIT_POS, 0, VARSIZE("CLOTH_HOSEI_ACTIVE")
 		GETBIT FILTER, BIT_POS
@@ -717,7 +718,7 @@ FOR CLOTH_NO, 0, LIST_CLOTH_LAST_NO
 				FILTER_FLAG = 0
 				BREAK
 			ENDIF
-			;マイナス補正なら弾く
+			;마이너스 보정이라면 친다(弾く)
 			IF HOSEI_NAME:(CLOTH_HOSEI_ACTIVE:BIT_POS) == "TAIRYOKU" || HOSEI_NAME:(CLOTH_HOSEI_ACTIVE:BIT_POS) == "KIRYOKU" || HOSEI_NAME:(CLOTH_HOSEI_ACTIVE:BIT_POS) == "SEITAISEI"
 				IF RESULT >= 100
 					FILTER_FLAG = 0
@@ -763,7 +764,7 @@ SIF ITEMNAME:ARG != "" && ITEM:ARG == 0
 RETURNF 0
 
 ;----------------------------------------------------------
-;購入処理
+;구입 처리
 ;----------------------------------------------------------
 @BUY_CLOTH(LIST_CLOTH, INPUT_NO)
 #LOCALSIZE 1
@@ -781,21 +782,21 @@ ITEM:INPUT_NO = 1
 RETURN 1
 
 ;----------------------------------------------------------
-;リスト表示における補正マークを描画
+;리스트 표시에 대한 보정 마크를 묘화
 ;----------------------------------------------------------
-@SHOW_CLOTH_HOSEI_MARK(VAL, 閾値)
+@SHOW_CLOTH_HOSEI_MARK(VAL, 역치)
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #DIM VAL
-#DIM 閾値
+#DIM 역치
 
-IF 閾値 < 0
-	閾値 *= -1
-	IF 閾値 < VAL
+IF 역치 < 0
+	역치 *= -1
+	IF 역치 < VAL
 		SETCOLOR 255, 96, 96
 		PRINT ▼
 		RESETCOLOR
-	ELSEIF VAL < 閾値
+	ELSEIF VAL < 역치
 		SETCOLOR 96, 96, 255
 		PRINT ▲
 		RESETCOLOR
@@ -803,11 +804,11 @@ IF 閾値 < 0
 		PRINT 　
 	ENDIF
 ELSE
-	IF VAL < 閾値
+	IF VAL < 역치
 		SETCOLOR 255, 96, 96
 		PRINT ▼
 		RESETCOLOR
-	ELSEIF 閾値 < VAL
+	ELSEIF 역치 < VAL
 		SETCOLOR 96, 96, 255
 		PRINT ▲
 		RESETCOLOR
@@ -819,18 +820,18 @@ ENDIF
 RETURN
 
 ;----------------------------------------------------------
-;有効無効のボタン
+;유효 무효 버튼
 ;----------------------------------------------------------
-@CLOTH_BUTTON(LABEL, INPUT_VAL, BUTTON = 1, COLOR = 0x808080, 括弧 = 1)
+@CLOTH_BUTTON(LABEL, INPUT_VAL, BUTTON = 1, COLOR = 0x808080, 괄호 = 1)
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #DIMS LABEL
 #DIM INPUT_VAL
 #DIM BUTTON
 #DIM COLOR
-#DIM 括弧
+#DIM 괄호
 
-IF 括弧
+IF 괄호
 	LOCALS '= @"%TOSTR(INPUT_VAL), 2%"
 	LOCALS '= "[" + LOCALS + "]" + LABEL
 ELSE
@@ -854,18 +855,18 @@ ENDIF
 RETURN 1
 
 ;----------------------------------------------------------
-;ON/OFFのボタン
+;ON/OFF 버튼
 ;----------------------------------------------------------
-@CLOTH_TOGGLEBUTTON(LABEL, INPUT_VAL, SELECT = 0, COLOR = 0x00FF00, 括弧 = 1)
+@CLOTH_TOGGLEBUTTON(LABEL, INPUT_VAL, SELECT = 0, COLOR = 0x00FF00, 괄호 = 1)
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #DIMS LABEL
 #DIM INPUT_VAL
 #DIM SELECT
 #DIM COLOR
-#DIM 括弧
+#DIM 괄호
 
-IF 括弧
+IF 괄호
 	LOCALS '= @"%TOSTR(INPUT_VAL), 2%"
 	LOCALS '= "[" + LOCALS + "]" + LABEL
 ELSE

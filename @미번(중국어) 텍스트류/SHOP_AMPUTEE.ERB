@@ -9,7 +9,7 @@ LOCAL = CHARANUM
 FOR CCOUNT, 0, LOCAL
 	SIF CCOUNT == MASTER
 		CONTINUE
-IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:理性喪失 < 1 && TALENT:CCOUNT:훼멸초계시 < 1
+IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:理性喪失 < 1 && TALENT:CCOUNT:괴멸카운트 < 1
 	PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 	PRINTL 
 ENDIF
@@ -177,7 +177,7 @@ SIF TALENT:TARGET:漏尿癖
 
 PRINTFORMW 「……%PRINT_TRANSCALLNAME(TARGET)%本人の身体は「準備」ができているようです。
 PRINTFORML 　次は企画に時間がかかりますが……」
-TALENT:TARGET:훼멸초계시 = 1
+TALENT:TARGET:괴멸카운트 = 1
 PRINTFORML （処刑ショーは数日後に行われます。%PRINT_TRANSCALLNAME(TARGET)%은(는)病院特別病棟に一旦収容されました）
 PRINTW ……
 TALENT:TARGET:破滅へのカウントダウン = 1
@@ -197,7 +197,7 @@ PRINTFORML 会場の中央にスポットライトが当たる。
 PRINTFORML 木枠の上に、裸の女性の胴体が傾いており、
 PRINTFORML には手足がなく、乳首と클리토리스は太い鉄の鎖で締め付けられ、肌は艶めかしく輝いている。
 PRINTFORMW 感嘆の声が相次ぎ、人々の욕망の視線が“元”魔法少女の裸体に釘付けになる。
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)、
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%
 IF TALENT:TARGET:認真 || TALENT:TARGET:倔強 || TALENT:TARGET:傲嬌 
 	PRINTFORML は、笑みを作りながら“魔法少女 %PRINT_TRANSFULLNAME(TARGET)%処刑ショー”の紹介を始めた。
 	PRINTFORML 「いつも魔法少女を応援していただきありがとうございます。仲間たちは必ず촉수を打ち倒します…」
@@ -492,7 +492,7 @@ RESETCOLOR
 CFLAG:0 = 9
 TALENT:TARGET:묘상화 = 0
 TALENT:TARGET:임신 = 0
-TALENT:TARGET:훼멸초계시 = 0
+TALENT:TARGET:괴멸카운트 = 0
 LOCAL1 = (200000 + EXP:TARGET:매료경험 * 2000 + RAND(20000,50000))
 LOCAL2 = (50 + EXP:TARGET:매료경험 + RAND(30,60))
 MONEY += LOCAL1

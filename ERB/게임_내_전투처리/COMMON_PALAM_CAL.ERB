@@ -1254,7 +1254,7 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 		ELSEIF TFLAG:2 >= 12 - LOCAL:1 / 10
 			FLAG:17 = 0
 		ENDIF
-		;閾値を越えていれば油断플래그를加算
+		;역치を越えていれば油断플래그를加算
 		IF FLAG:17 >= FLAG:16
 			TFLAG:2 += 1
 		;ターン経過で油断が解ける場合

@@ -9,8 +9,8 @@
 ;
 ;●衣装の特殊な補正(複雑な分岐条件を持つ場合の個別判定)
 ;		HP!DEF!のように、パラメータ部分に"!"を指定した場合は以下の関数を호출返り値をパラメータとします。
-;		「カスタマイズ次第でインナー兼用になる衣装」が中心ですが、
-;		「アウター無しなら回避上昇」のようにユニークな基準も使用されています。
+;		「カスタマイズ次第で속옷겸용になる衣装」が中心ですが、
+;		「겉옷無しなら回避上昇」のようにユニークな基準も使用されています。
 ;공격補正		@CLOTH_HOSEI_KOUGEKI_***
 ;방어補正		@CLOTH_HOSEI_BOUGYO_***
 ;민첩補正		@CLOTH_HOSEI_BINSYOU_***
@@ -34,7 +34,7 @@
 ;
 ;耐久力			@CLOTH_HOSEI_HP_***
 ;下着保護力		@CLOTH_HOSEI_DEF_***
-;インナー兼用		@CLOTH_HOSEI_NOINNER_***
+;속옷겸용		@CLOTH_HOSEI_NOINNER_***
 ;改造スロット		@CLOTH_HOSEI_SLOT_***	（-1で改造不可）
 
 ;●カスタマイズのオプション記述例
@@ -49,7 +49,7 @@
 ;		油	…油断度上昇　※3
 ;			※1： 1～6　両者は相殺される。両者のうち一方のみ記述する
 ;			※2：-6～6　両者は相殺される。両者のうち一方のみ記述する。主に下半身パーツ用？
-;			※3：-6～6　原則としてインナー用
+;			※3：-6～6　原則として속옷用
 ;　　　　現在のところ、カスタマイズ全体で-9～9の範囲に収める必要があります。
 ;
 ;	・効果欄の先頭に"!!"を記述すると、そのオプションは選択不能になります。
@@ -61,7 +61,7 @@
 ;		IF CUSTOM:1 != 0 && CUSTOM:1 != 1
 ;			LOCALS'="レオタード化@!!ワンピース型でないと選択できません"
 ;		ELSE
-;			LOCALS'="レオタード化@軽2 インナー兼用"
+;			LOCALS'="レオタード化@軽2 속옷겸용"
 ;		ENDIF
 ;	　後者の方が見やすいかもしれない
 ;　実際の補正計算は現在のところカスタマイズ末尾にベタ書きされています。
@@ -1120,7 +1120,7 @@ PRINTL 【耐久度】100
 	SAVESTR:0'="HP100,DEF!,CRITICAL0@5,SEITAISEI80,NOINNER!,"
 
 ;----------------------------------------------------------
-;特殊分岐：「インナー無しカスタマイズなら下着保護減少大」
+;特殊分岐：「속옷無しカスタマイズなら下着保護減少大」
 @CLOTH_HOSEI_DEF_106
 CALL CLOTH_HOSEI_NOINNER_106 
 IF RESULT > 0
@@ -1129,7 +1129,7 @@ ELSE
 	LOCAL = DEFAULT_OUTER_DEF
 ENDIF
 RETURN LOCAL
-;インナー有無がカスタマイズで変動
+;속옷有無がカスタマイズで変動
 @CLOTH_HOSEI_NOINNER_106
 IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 6 # 106), 14) == 1
 	LOCAL = 1
@@ -1269,7 +1269,7 @@ ELSEIF RESULT == 40
 	CLEARLINE 1
 	CALL SHORTLINE
 	PRINTL 下半身の着衣を選択してください
-	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"袴","ミニスカート袴@軽1","前垂れ@軽1 晒1","レオタード化@軽2インナー兼用","スカート@晒1","ミニスカート@軽1 晒2","お尻が見えそうな超ミニ@軽2晒3","@@")
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"袴","ミニスカート袴@軽1","前垂れ@軽1 晒1","レオタード化@軽2속옷겸용","スカート@晒1","ミニスカート@軽1 晒2","お尻が見えそうな超ミニ@軽2晒3","@@")
 	CUSTOM:4 = RESULT
 ELSEIF RESULT == 50
 	CLEARLINE 1
@@ -1347,7 +1347,7 @@ SIF CUSTOM:4 == 6
 SIF CUSTOM:1 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 12)
 
-;インナー兼用
+;속옷겸용
 SIF CUSTOM:4 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 13)
 
@@ -1884,7 +1884,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_110
 PRINTL  頑丈さと軽量化を両立した神秘の鎧。装甲面積が少ないのが欠点。
-PRINTL 【 補正 】민첩1.3倍　インナー兼用　露出度が高い（中）
+PRINTL 【 補正 】민첩1.3倍　속옷겸용　露出度が高い（中）
 PRINTL 【変身時】さらに방어1.1倍
 PRINTL 【耐久度】70
 @CLOTH_STATUS_110
@@ -2038,7 +2038,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_111
 PRINTL  男を虜にする性の象徴。ハイヒールにうさみみバンドとしっぽ付き。
-PRINTL 【 補正 】촉수の油断度の上昇量1.3倍　インナー兼用
+PRINTL 【 補正 】촉수の油断度の上昇量1.3倍　속옷겸용
 PRINTL 【変身時】さらに민첩1.1倍
 PRINTL 【耐久度】110
 @CLOTH_STATUS_111
@@ -2862,7 +2862,7 @@ PRINTL 【耐久度】100
 @CLOTH_STATUS_115
 	SAVESTR:0'="HP100,DEF!,CRITICAL5,YUDAN110,AIRPLUS0@1,NOINNER!"
 
-;特殊分岐：「インナー無しカスタマイズなら下着保護減少大」
+;特殊分岐：「속옷無しカスタマイズなら下着保護減少大」
 @CLOTH_HOSEI_DEF_115
 CALL CLOTH_HOSEI_NOINNER_115
 IF RESULT > 0
@@ -2871,7 +2871,7 @@ ELSE
 	LOCAL = DEFAULT_OUTER_DEF
 ENDIF
 RETURN LOCAL
-;インナー有無がカスタマイズで変動
+;속옷有無がカスタマイズで変動
 @CLOTH_HOSEI_NOINNER_115
 IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 15 # 115), 14) == 1
 	LOCAL = 1
@@ -3026,7 +3026,7 @@ ELSEIF RESULT == 30
 	IF CUSTOM:1 != 0 && CUSTOM:1 != 1
 		LOCALS'="レオタード化@!!ワンピース型でないと選択できません"
 	ELSE
-		LOCALS'="レオタード化@軽2 インナー兼用"
+		LOCALS'="レオタード化@軽2 속옷겸용"
 	ENDIF
 	IF CUSTOM:1 >= 4 && CUSTOM:1 <= 7
 		CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ロングスカート","セミロングスカート@軽1晒1","ミニスカート@軽2晒2","お尻が見えそうな超ミニ@軽3晒3",LOCALS,"@@")
@@ -3105,7 +3105,7 @@ SIF CUSTOM:3 == 2
 	EQUIP:ARG:ID += 2 * POWER(10, 11)
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 3 * POWER(10, 11)
-;インナー兼用
+;속옷겸용
 SIF CUSTOM:3 == 4
 	EQUIP:ARG:ID += 1 * POWER(10, 13)
 
@@ -3304,7 +3304,7 @@ PRINTL 【耐久度】80
 	SAVESTR:0'="HP80,DEF!,AIRPLUS1,SHYNESS110,KOUGEKI100@110,BINSYOU100@110,NOINNER!"
 
 ;----------------------------------------------------------
-;特殊分岐：「インナー無しカスタマイズなら下着保護減少大」
+;特殊分岐：「속옷無しカスタマイズなら下着保護減少大」
 @CLOTH_HOSEI_DEF_117
 CALL CLOTH_HOSEI_NOINNER_117
 IF RESULT > 0
@@ -3313,7 +3313,7 @@ ELSE
 	LOCAL = DEFAULT_OUTER_DEF + 5
 ENDIF
 RETURN LOCAL
-;インナー有無がカスタマイズで変動
+;속옷有無がカスタマイズで変動
 @CLOTH_HOSEI_NOINNER_117
 IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 17 # 117), 14) == 1
 	LOCAL = 1
@@ -3433,7 +3433,7 @@ ELSEIF RESULT == 30
 	CLEARLINE 1
 	CALL SHORTLINE
 	PRINTL 下半身の着衣を選択してください
-	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ミニスカート","お尻が見えそうな超ミニ@軽1晒1","長い裾@重1護2","レオタード化@軽1インナー兼用","短い裾","@@")
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ミニスカート","お尻が見えそうな超ミニ@軽1晒1","長い裾@重1護2","レオタード化@軽1속옷겸용","短い裾","@@")
 	CUSTOM:3 = RESULT
 ELSEIF RESULT == 40
 	CLEARLINE 1
@@ -3492,7 +3492,7 @@ SIF CUSTOM:3 == 1
 ;下着保護アップ
 SIF CUSTOM:3 == 2
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
-;インナー兼用
+;속옷겸용
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 13)
 
@@ -3503,7 +3503,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_118
 PRINTL  すらっとしたフォルムのレーシング用全身スーツ。ミステリアスな貴女に。
-PRINTL 【 補正 】空中性能強化　インナー兼用
+PRINTL 【 補正 】空中性能強化　속옷겸용
 PRINTL 【変身時】방어1.1倍　민첩1.1倍
 PRINTL 【耐久度】120
 @CLOTH_STATUS_118
@@ -5458,7 +5458,7 @@ PRINTL 【耐久度】120
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_135
 PRINTL  近未来的な全身防護スーツ。非常に高性能で宇宙空間ですら活動可能。
-PRINTL 【 補正 】방어1.2倍　インナー兼用
+PRINTL 【 補正 】방어1.2倍　속옷겸용
 PRINTL 【変身時】방어1.3倍に効果が上昇
 PRINTL 【耐久度】140
 @CLOTH_STATUS_135
@@ -5470,7 +5470,7 @@ PRINTL 【耐久度】140
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_136
 PRINTL  軍が秘密裏に開発した特殊兵装。レオタード状のスーツに装甲とスラスターを取り付けて装着する。
-PRINTL 【 補正 】空中性能強化　インナー兼用　露出度が高い（中）
+PRINTL 【 補正 】空中性能強化　속옷겸용　露出度が高い（中）
 PRINTL 【変身時】공격1.1倍　방어1.1倍　민첩1.1倍
 PRINTL 【耐久度】160
 @CLOTH_STATUS_136
@@ -6652,7 +6652,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_144
 PRINTL  陸上競技の選手が着用する身軽な運動着。下半身はレオタード状になっている。
-PRINTL 【 補正 】공격1.1倍　민첩1.1倍　방어0.8倍　インナー兼用
+PRINTL 【 補正 】공격1.1倍　민첩1.1倍　방어0.8倍　속옷겸용
 PRINTL 【変身時】공격1.2倍　민첩1.2倍に効果が上昇
 PRINTL 【耐久度】80
 @CLOTH_STATUS_144
@@ -6692,7 +6692,7 @@ ELSEIF CUSTOM:2 == 1
 	PRINT [長袖]
 ENDIF
 
-PRINT [インナーレオタード]
+PRINT [속옷レオタード]
 
 SIF CUSTOM:4 == 3
 	PRINT [絶対領域]
@@ -6804,7 +6804,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_145
 PRINTL  死神の纏うが如き黒き外套。マントの下はセクシーなビキニになっている。
-PRINTL 【 補正 】空中性能強化　邪気ダメージ軽減（大） インナー兼用　露出度が高い（中）
+PRINTL 【 補正 】空中性能強化　邪気ダメージ軽減（大） 속옷겸용　露出度が高い（中）
 PRINTL 【変身時】공격1.1倍　방어1.1倍
 PRINTL 【耐久度】120
 @CLOTH_STATUS_145
@@ -8321,7 +8321,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_152
 PRINTL  特殊な繊維素材で作られた戦闘用のスクール수영복。パンツじゃないから恥ずかしくないもん！
-PRINTL 【 補正 】촉수の油断度の上昇量1.3倍　粘液ダメージ軽減（大）　インナー兼用
+PRINTL 【 補正 】촉수の油断度の上昇量1.3倍　粘液ダメージ軽減（大）　속옷겸용
 PRINTL 【変身時】空中性能強化
 PRINTL 【耐久度】100
 @CLOTH_STATUS_152
@@ -8512,7 +8512,7 @@ PRINTL 【耐久度】90
 	SAVESTR:0'="HP90,DEF!,AVOID010,CRITICAL3,KOUGEKI100@110,BINSYOU100@110,NOINNER!"
 
 ;----------------------------------------------------------
-;特殊分岐：「インナー無しカスタマイズなら下着保護減少大」
+;特殊分岐：「속옷無しカスタマイズなら下着保護減少大」
 @CLOTH_HOSEI_DEF_153
 CALL CLOTH_HOSEI_NOINNER_153
 IF RESULT > 0
@@ -8521,7 +8521,7 @@ ELSE
 	LOCAL = DEFAULT_OUTER_DEF
 ENDIF
 RETURN LOCAL
-;インナー有無がカスタマイズで変動
+;속옷有無がカスタマイズで変動
 @CLOTH_HOSEI_NOINNER_153
 IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 53 # 153), 14) == 1
 	LOCAL = 1
@@ -8661,7 +8661,7 @@ ELSEIF RESULT == 20
 	CLEARLINE 1
 	CALL SHORTLINE
 	PRINTL 上半身の着衣を選択してください
-	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"通常","着崩し@軽1","へそ出し@軽1","ビキニ@軽3インナー兼用","@@")
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:2,"通常","着崩し@軽1","へそ出し@軽1","ビキニ@軽3속옷겸용","@@")
 	CUSTOM:2 = RESULT
 	;※ビキニなら袖なし、更にレオタード化中なら袴、前垂れ＋レオタード化中なら前垂れに変更
 	IF RESULT == 3
@@ -8681,7 +8681,7 @@ ELSEIF RESULT == 40
 	CLEARLINE 1
 	CALL SHORTLINE
 	PRINTL 下半身の着衣を選択してください
-	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"袴","ミニスカート@軽1晒2","お尻が見えそうな超ミニ@軽2晒3","レオタード化@"+(CUSTOM:2 == 3 ? "!!ビキニだと選択できません" # "軽2インナー兼用"),"前垂れ@軽1晒1","前垂れ＋レオタード化@"+(CUSTOM:2 == 3 ? "!!ビキニだと選択できません" # "軽1インナー兼用"),"無し@軽3晒4","@@")
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:4,"袴","ミニスカート@軽1晒2","お尻が見えそうな超ミニ@軽2晒3","レオタード化@"+(CUSTOM:2 == 3 ? "!!ビキニだと選択できません" # "軽2속옷겸용"),"前垂れ@軽1晒1","前垂れ＋レオタード化@"+(CUSTOM:2 == 3 ? "!!ビキニだと選択できません" # "軽1속옷겸용"),"無し@軽3晒4","@@")
 	CUSTOM:4 = RESULT
 ELSEIF RESULT == 50
 	CLEARLINE 1
@@ -8760,7 +8760,7 @@ SIF CUSTOM:4 == 6
 ;下着保護アップ
 SIF CUSTOM:5 == 5 || CUSTOM:5 == 6
 	EQUIP:ARG:ID += 1 * POWER(10, 12)
-;インナー兼用
+;속옷겸용
 SIF CUSTOM:2 == 3 || CUSTOM:4 == 3 || CUSTOM:4 == 5
 	EQUIP:ARG:ID += 1 * POWER(10, 13)
 

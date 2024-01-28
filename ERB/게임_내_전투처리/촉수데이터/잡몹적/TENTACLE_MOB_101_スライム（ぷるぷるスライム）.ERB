@@ -40,7 +40,7 @@ LOCAL = 200
 RETURN LOCAL
 
 ;--------------------------------------------------
-;油断度閾値
+;油断度역치
 @TENTACLE_MOB_101_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -466,7 +466,7 @@ IF CFLAG:42 == 400
 		PRINTFORML 촉수 구속구は、恥辱に濡れる%PRINT_TRANSCALLNAME(TARGET)%의 愛液を啜って喜びに身を震わせている。
 	ENDIF
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、촉수 구속구による辱めに견딘다しかなかった……
-;インナーが破壊されきっていない場合		
+;속옷が破壊されきっていない場合		
 ELSEIF TCVARn:25 > 0
 	SIF TCVARn:25 == TCVARn:24
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、綺麗な%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…

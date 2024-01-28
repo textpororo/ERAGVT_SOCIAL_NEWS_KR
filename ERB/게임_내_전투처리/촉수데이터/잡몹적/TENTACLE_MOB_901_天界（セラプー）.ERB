@@ -40,7 +40,7 @@ LOCAL = 150
 RETURN LOCAL
 
 ;--------------------------------------------------
-;油断度閾値
+;油断度역치
 @TENTACLE_MOB_901_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -158,10 +158,10 @@ IF TCVARn:TARGET:10 == 0
 	ENDIF
 ELSEIF CLOTH_INNER_PER < CLOTH_INNER_DEF
 	IF ISPENIS(TARGET) == 1
-	;インナー방어無し かつ ペニス有り
+	;속옷방어無し かつ ペニス有り
 		RETURN 2004	;搾精
 	ELSEIF (CHARATALENT_F(TARGET,0,"남자")!=1 && CHARATALENT_F(TARGET,0,"후타나리")!=1 && CHARATALENT_F(TARGET,1,"남자")!=1 && CHARATALENT_F(TARGET,1,"후타나리")!=1) && (TFLAG:20 == 1 || TFLAG:0 == 13 || TFLAG:0 == 14)
-	;インナー방어無し かつ女
+	;속옷방어無し かつ女
 		RETURN 2002	;기생準備
 	ENDIF
 ELSEIF (CHARATALENT_F(TARGET,0,"남자")!=1 && CHARATALENT_F(TARGET,0,"후타나리")!=1) && (CHARATALENT_F(TARGET,1,"남자")==1 || CHARATALENT_F(TARGET,1,"후타나리")==1) && (CFLAG:TARGET:1==0 || BASE:TARGET:기력<MAXBASE:TARGET:기력/10)
@@ -1020,7 +1020,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM1")
 PRINTL 
 
 IF (CHARATALENT_F(TARGET,0,"남자")!=1 && CHARATALENT_F(TARGET,0,"후타나리")!=1 && CHARATALENT_F(TARGET,1,"남자")!=1 && CHARATALENT_F(TARGET,1,"후타나리")!=1) &&  CLOTH_INNER_PER < CLOTH_INNER_DEF
-;女、女→女 かつ インナー방어無し
+;女、女→女 かつ 속옷방어無し
 	TFLAG:17 = 2002	;行動予約「기생準備」
 ELSE
 	TFLAG:17 = -1	;行動予約なし

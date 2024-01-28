@@ -1,19 +1,19 @@
 ﻿;@TURNEND
 @EVENTTURNEND
-;악질 시민関係の플래그를リセット
+;악질 시민 관련 플래그를 초기화
 FLAG:70 = 0
 FLAG:71 = 0
 FLAG:72 = 0
 
-;PALAM最大値をリセット
+;PALAM 최대값 초기화
 VARSET MAX_PALAM
 
-;行動ごとに改行を入れる
+;행동마다 줄 바꿈을 넣는다
 PRINTL 
 PRINTL 
 PRINTL 
 
-;次のキャラを行動させる
+;다음 캐릭터를 행동시킨다
 FLAG:799 += 1
 
 BEGIN SHOP
@@ -28,16 +28,16 @@ BEGIN SHOP
 #DIM LCOUNT
 REDRAW 0
 
-;パーティメンバー管理
+;파티 멤버 관리
 CALL SET_PARTYMEMBER
 
 
-;襲撃イベント後のスキップ
-;RAID_HANTEIで判定を通過してイベントが開始されると$RAID_SKIPまで飛び、途中のイベントをスキップする（ターンが余分に経過してしまうため）
-;戦闘が終わるとSHOPに戻ってくるので、元の位置$AFTER_RAIDまで飛ばして処理完了。ここまで１セット
+;습격 이벤트 후 스킵
+;RAID_HANTEI로 판정을 통과하여 이벤트가 개시되면 $RAID_SKIP까지 건너뛰며, 도중의 이벤트를 스킵한다. (턴이 여분으로 남은 채 경과해 버리기 때문)
+;전투가 끝나면 SHOP으로 돌아오므로, 원래 위치 $AFTER_RAID까지 건너뛰며 처리 완료. 여기까지 1세트
 IF FLAG:45 > 0
 	LOCAL = TARGET
-	;救出されたキャラの治療
+	;구출된 캐릭터의 치료
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
@@ -61,10 +61,10 @@ IF FLAG:45 > 0
 	TARGET = LOCAL
 	PRINTW 
 
-	;襲撃플래그를折る
+	;습격 플래그를 끈다
 	FLAG:45 = 0
 
-	;ターン終了処理中に発生していた戦闘なら終了処理をあらためて続ける(＝全員行動済み)
+	;턴 종료 처리중에 발생하고 있던 전투라면 종료 처리를 재차 계속한다(＝전원 행동 완료)
 	IF FLAG:48 > 0
 		FLAG:48 = 0
 		GOTO AFTER_RAID
@@ -72,11 +72,11 @@ IF FLAG:45 > 0
 ENDIF
 
 
-;全てのキャラが行動予定を終了している場合
+;모든 캐릭터가 행동 예정을 종료하고 있는 경우
 IF DAY == 0 || FLAG:799 > CHARANUM || FLAG:64 != 0
 	SIF FLAG:64 == 0
 		FLAG:799 = 0
-	;ゲーム開始直後の処理だった場合
+	;게임 시작 직후의 처리였던 경우
 	IF DAY == 0
 		DAY = 1
 		TIME = 0
@@ -84,13 +84,13 @@ IF DAY == 0 || FLAG:799 > CHARANUM || FLAG:64 != 0
 		FLAG:799 = 0
 		TARGET = 1
 		CALL LB
-		;PRINTL ゲームを開始します
+		;PRINTL 게임을 시작합니다.
 		;PRINTW 
 		GOTO RAID_SKIP
-	;通常のターンエンド
+	;통상의 턴 엔드
 	ELSE
-		;前ターンで行動開始前に選択していたキャラにターゲットをあわせる
-		;ターン中で使用不可になった場合は使用可能なキャラのうち一番若いキャラにあわせる
+		;이전 턴에서 행동 개시 전에 선택했던 캐릭터에 타겟을 맞춘다
+		;턴 중에 사용이 불가할 경우, 다른 사용 가능한 캐릭터 중 가장 어린 캐릭터에 맞춘다
 		IF CFLAG:(FLAG:798):0 != 상태_건강
 			FOR CCOUNT, 0, CHARANUM
 				SIF CCOUNT == MASTER
@@ -105,13 +105,13 @@ IF DAY == 0 || FLAG:799 > CHARANUM || FLAG:64 != 0
 			TARGET = FLAG:798
 		ENDIF
 	ENDIF
-;行動していないキャラがいる場合
+;행동하지 않는 캐릭터가 있는 경우
 ELSE
-	;SHOP_ACTIONに飛ばして再度ループ
+	;SHOP_ACTION으로 건너뛰고 다시 루프
 	JUMP SHOP_ACTION
 ENDIF
 
-;エンディング判定
+;엔딩 판정
 CALL ENDING
 ;強制的にタイトルに戻る場合
 IF FLAG:999 == -999
@@ -123,7 +123,7 @@ ELSEIF FLAG:64 != 0
 ENDIF
 
 PRINTL 
-;救出されたキャラの治療・歴代最高스테이터스記録更新
+;구출된 캐릭터의 치료・역대 최고 스테이터스 기록 갱신
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -147,11 +147,11 @@ FOR CCOUNT, 0, CHARANUM
 	ELSE
 		CALL INMON_RECOVERY,CCOUNT
 	ENDIF
-	;娘を施設に預けた場合の処理
+	;딸을 시설에 맡긴 경우의 처리
 	SIF CCOUNT > CHARANUM - 1
 		BREAK
 
-	;歴代最高記録の更新判定
+	;역대 최고 기록의 갱신 판정
 	IF MAXBASE:CCOUNT:체력 > GLOBAL:103
 		GLOBAL:103 = MAXBASE:CCOUNT:체력
 		GLOBALS:0 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:103}
@@ -188,78 +188,78 @@ FOR CCOUNT, 0, CHARANUM
 	;Shame
 	IF 	EXP:CCOUNT:V경험 > GLOBAL:120
 		GLOBAL:120 = EXP:CCOUNT:V경험
-		GLOBALS:20 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:120}回
+		GLOBALS:20 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:120}회
 	ENDIF
 	IF 	EXP:CCOUNT:A경험 > GLOBAL:121
 		GLOBAL:121 = EXP:CCOUNT:A경험
-		GLOBALS:21 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:121}回
+		GLOBALS:21 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:121}회
 	ENDIF
 	IF 	EXP:CCOUNT:자위경험 > GLOBAL:122
 		GLOBAL:122 = EXP:CCOUNT:자위경험
-		GLOBALS:22 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:122}回
+		GLOBALS:22 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:122}회
 	ENDIF
 	IF 	EXP:CCOUNT:펠라경험 > GLOBAL:123
 		GLOBAL:123 = EXP:CCOUNT:펠라경험
-		GLOBALS:23 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:123}回
+		GLOBALS:23 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:123}회
 	ENDIF
 	IF 	EXP:CCOUNT:정액경험 > GLOBAL:124
 		GLOBAL:124 = EXP:CCOUNT:정액경험
-		GLOBALS:24 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:124}回
+		GLOBALS:24 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:124}회
 	ENDIF
 	IF 	EXP:CCOUNT:절정경험 > GLOBAL:125
 		GLOBAL:125 = EXP:CCOUNT:절정경험
-		GLOBALS:25 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:125}回
+		GLOBALS:25 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:125}회
 	ENDIF
 	IF 	EXP:CCOUNT:출산경험 > GLOBAL:126
 		GLOBAL:126 = EXP:CCOUNT:출산경험
-		GLOBALS:26 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:126}回
+		GLOBALS:26 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:126}회
 	ENDIF
 	IF 	EXP:CCOUNT:근친교배경험 > GLOBAL:127
 		GLOBAL:127 = EXP:CCOUNT:근친교배경험
-		GLOBALS:27 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:127}回
+		GLOBALS:27 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:127}회
 	ENDIF
 	IF 	EXP:CCOUNT:사정경험 > GLOBAL:128
 		GLOBAL:128 = EXP:CCOUNT:사정경험
-		GLOBALS:28 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:128}回
+		GLOBALS:28 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:128}회
 	ENDIF
 	IF 	EXP:CCOUNT:모유경험 > GLOBAL:129
 		GLOBAL:129 = EXP:CCOUNT:모유경험
-		GLOBALS:29 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:129}回
+		GLOBALS:29 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:129}회
 	ENDIF
 	IF 	EXP:CCOUNT:방뇨경험 > GLOBAL:130
 		GLOBAL:130 = EXP:CCOUNT:방뇨경험
-		GLOBALS:30 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:130}回
+		GLOBALS:30 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:130}회
 	ENDIF
 	IF 	EXP:CCOUNT:기생경험 > GLOBAL:131
 		GLOBAL:131 = EXP:CCOUNT:기생경험
-		GLOBALS:31 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:131}回
+		GLOBALS:31 = %NAME:CCOUNT,40,LEFT%（Lv{ABL:CCOUNT:레벨}）　{GLOBAL:131}회
 	ENDIF
 
 
 	SAVEGLOBAL
 
 	
-	;실적獲得判定
+	;실적 획득 판정
 	CALL GET_STATE_TROPHY,CCOUNT
 NEXT
 
 
 ;**********************************************************
-;ターン終了後に起きるイベント各種
+;턴 종료 후 일어나는 각종 이벤트
 
-;ターン終了中フラグ
+;턴 종료 중 플래그
 FLAG:48 = 1
 
-;보스出現停止플래그를折る
+;보스 출현 정지 플래그를 끈다
 FLAG:49 = 0
 
-;보스 촉수のダメージ蓄積値が回復
+;보스 촉수의 피해 축적치가 회복된다
 IF GET_LASTBOSS_PHASE_F() >= 2
-	;히든 보스は回復なし
+	;히든 보스는 회복 없음
 ELSE
 	SETCOLOR 128,128,128
 	SIF FLAG:999 == 1
-		PRINTL DEBUG 보스のキズが回復
+		PRINTL DEBUG 보스 상처가 회복
 	RESETCOLOR
 	FOR LOCAL,1,FLAG:3 + 1
 		FLAG:(300 + LOCAL) -= RAND:3000000 + 8000000
@@ -267,7 +267,7 @@ ELSE
 			FLAG:(300 + LOCAL) = 0
 	NEXT
 	FOR LOCAL,1,FLAG:4 + 1
-		;최종 보스強化時は回復量が低下
+		;최종 보스 강화 시 회복량 저하
 		CALL LASTBOSS_REST
 		FLAG:(400 + LOCAL) -= (RAND:3000000 + 1000000) / (2 + RESULT)
 		SIF FLAG:(400 + LOCAL) < 0
@@ -275,7 +275,7 @@ ELSE
 	NEXT
 ENDIF
 
-;구상のターン終了時処理を호출
+;구상의 턴 종료 시의 처리를 호출
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -284,74 +284,74 @@ FOR CCOUNT, 0, CHARANUM
 	CALL MESSAGE_TURNEND
 NEXT
 
-;TARGETの値を退避
+;TARGET 값을 피난
 FLAG:797 = TARGET
 
-;악질 시민による脅迫あるいは誘拐監禁
+;악질 시민에 의한 협박 혹은 유괴 감금
 FOR CCOUNT, 1, CHARANUM
-	;脅迫イベント
+	;협박 이벤트
 	IF CONFIG_CHECK_PRISON_F(10) == 1 && GROUPMATCH(CFLAG:CCOUNT:0,0,5) && (CFLAG:CCOUNT:286 + CFLAG:CCOUNT:320 + CFLAG:CCOUNT:321) > 0 ;一度でもレイプされたことがあれば発生
 		TARGET = CCOUNT
 		CALL INTIMIDATION_EVENT
-	;監禁イベント(컨피그に関わらずキャラメイクで付与されている可能性がある)
+	;감금 이벤트 (컨피그에 관계없이 캐릭터 메이킹에서 부여되었을 가능성이 있음)
 	ELSEIF CFLAG:CCOUNT:0 == 상태_악질감금
 		TARGET = CCOUNT
 		CALL KIDNAPPING
 	ENDIF
 NEXT
 
-;촉수幽閉
+;촉수 유폐
 CALL PRISON
-;判定出産
+;출산 판정
 CALL BIRTH_HANTEI
-;判定育児終了
+;육아 종료 판정
 CALL GROW_HANTEI
 
-;흑화 캐릭터가 날뛴다イベント
+;흑화 캐릭터가 날뛰는 이벤트
 CALL AKUOTI_ATTACK
-;イチャックス
+;イチャックス 뭔 말인지 모르겠다
 CALL LOVESEX_NIGHT
-;夜間自慰
+;야간 자위
 CALL SELF_NIGHT
-;夜這い
+;요바이
 SIF CONFIG_CHECK_EVENT_F(2) > 0
 	CALL YOBAI
 
-;ゲームオーバーモードでは방위력이 ０になる
+;게임 오버 모드에서는 방어력이 0이 된다
 IF CHECK_GAMEOVER_F() == 1
 	FLAG:852 = 0
 	FLAG:853 = LIMIT(FLAG:853, -100, 0)
 ELSEIF DAY > 0
-	;방위력の自動変動
-	;①誰も「出撃／拠点防衛」していない(ソロモードのみ「鍛錬／정보 수집」も出撃扱いとする)
-	;②放棄ターン＞防衛施設레벨
-	;共に満たす場合に低下
+	;방위력의 자동 변동
+	;①아무도「출격／거점방위」를 하지 않음(SOLO모드만「단련／정보 수집」도 출격 취급)
+	;②포기 턴 ＞방위 시설 레벨
+	;두 조건을 함께 채울 경우에 저하
 	IF FLAG:41 == 0
-		;出撃放棄中は治安の悪化が加速していく
-		;(ただしソロ時は幽閉リスクが高いため、悪化ペースは1/4に抑える)
+		;출격 포기 중에는 치안 악화가 가속되어 간다
+		;(단, SOLO 모드일 때는 유폐 리스크가 높기 때문에 악화 페이스는 1/4로 억제)
 		IF FLAG:41 == 0 && (FLAG:2!=2 || (DAY % 2 ==0 && TIME == 0))
 			FLAG:42 ++
 		ENDIF
 		DRAWLINE
 		PRINTL 
 		FONTBOLD
-		PRINTL 방위력の変動　　
+		PRINTL 방위력 변동　　 
 		IF FLAG:42 < FLAG:52
-			PRINTFORML 　防衛設備が効果的に機能しています
+			PRINTFORML 　방위 설비가 효과적으로 기능하고 있습니다.
 		ELSEIF FLAG:42 < 2 + FLAG:52
-			PRINTFORML 　危険度레벨{FLAG:42 - FLAG:52}：まだ比較的安全です
+			PRINTFORML 　위험도 레벨{FLAG:42 - FLAG:52}：지금은 비교적 안전합니다.
 		ELSEIF FLAG:42 < 3 + FLAG:52
-			PRINTFORML 　危険度레벨{FLAG:42 - FLAG:52}：まだ無視できる레벨です
+			PRINTFORML 　위험도 레벨{FLAG:42 - FLAG:52}：아직은 무시할 만한 수준입니다.
 		ELSEIF FLAG:42 < 5 + FLAG:52
-			PRINTFORML 　危険度레벨{FLAG:42 - FLAG:52}：촉수の活動が活発化しています
+			PRINTFORML 　위험도 레벨{FLAG:42 - FLAG:52}：촉수의 활동이 점점 활발해지고 있습니다.
 		ELSEIF FLAG:42 < 7 + FLAG:52
-			PRINTFORML 　危険度레벨{FLAG:42 - FLAG:52}：あちこちで被害が多発中！
+			PRINTFORML 　위험도 레벨{FLAG:42 - FLAG:52}：도시 곳곳에서 피해가 발생하고 있습니다!
 		ELSE
-			PRINTFORML 　危険度레벨MAX：かなり危険な状態です！
+			PRINTFORML 　위험도 레벨MAX：상당히 위험한 상태입니다!！
 		ENDIF
 		FONTREGULAR
 		PRINTFORM 　방위력( {FLAG:852} )　
-		;このターンに誰も出撃していない場合、放棄ターン数に応じて방위력이 大きく低下
+		;이 턴에 아무도 출격하지 않은 경우, 전투 포기 턴 수에 따라 방위력이 크게 저하
 		LOCAL:852 = 0
 		IF FLAG:41 == 0
 			CALL TENTACLE_LEVEL
@@ -374,33 +374,33 @@ ELSEIF DAY > 0
 			ELSE
 				LOCAL:852 = FLAG:852 * 50 / 100 + RESULT + 320
 			ENDIF
-			PRINTFORM −　時間経過( {LOCAL:852} )　
+			PRINTFORM −　시간 경과( {LOCAL:852} )　
 			FLAG:852 = MAX(FLAG:852 - LOCAL:852, 0)
 		ELSE
-			;誰かが出撃していれば放棄ターン数リセット
+			;누군가 출격한다면 포기 턴 수 리셋
 			FLAG:42 = 0
 		ENDIF
 		LOCAL:852 = FLAG:52 * FLAG:52 * 5
-		;防衛設備が自動で防衛
+		;방위 설비가 자동으로 방위
 		FLAG:852 = FLAG:852 + LOCAL:852
 		SIF LOCAL:852
-			PRINTFORM ＋　防衛設備Lv{FLAG:52}( {LOCAL:852} )　
+			PRINTFORM ＋　방위 설비Lv{FLAG:52}( {LOCAL:852} )　
 		SIF (FLAG:41 == 0 && !GAME_OPTION_CHECK_F(OPTION_solo)) || FLAG:52
 			PRINTFORM ＝　{FLAG:852}
 		PRINTL 
-	;一人でも出撃していれば放棄ターン数はリセット
+	;한 명이라도 출격했다면 포기 턴 수 초기화
 	ELSEIF FLAG:41 > 0
 		FLAG:42 = 0
 	ENDIF
-	;인기도の自動変動
+	;인기도 자동 변동
 	FLAG:853 = LIMIT(FLAG:853, -100, 100)
 	DRAWLINE
 	PRINTL 
 	FONTBOLD
-	PRINTL 인기도の変動　　
+	PRINTL 인기도 변동　　 
 	FONTREGULAR
 	PRINTFORM 　인기도( {FLAG:853} )　
-	;一般評価
+	;시민 평판 (一般評価)
 	LOCAL:853 = 0
 	LOCAL:0 = FLAG:853
 	IF FLAG:852 == 0
@@ -438,12 +438,12 @@ ELSEIF DAY > 0
 	ENDIF
 	IF LOCAL:853 < 0
 		RESULT = ABS(LOCAL:853)
-		PRINTFORM −　一般評価( {RESULT} )　
+		PRINTFORM −　시민 평판( {RESULT} )　
 	ENDIF
 	SIF LOCAL:853 > 0
-		PRINTFORM ＋　一般評価( {LOCAL:853} )　
+		PRINTFORM ＋ 시민 평판( {LOCAL:853} )　
 	FLAG:853 = FLAG:853 + LOCAL:853
-	;처녀ボーナス
+	;처녀 보너스
 	LOCAL:853 = 0
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
@@ -457,9 +457,9 @@ ELSEIF DAY > 0
 		ENDIF
 	NEXT
 	SIF LOCAL:853 > 0
-		PRINTFORM ＋　처녀ボーナス( {LOCAL:853} )　
+		PRINTFORM ＋　처녀 보너스( {LOCAL:853} )　
 	FLAG:853 = FLAG:853 + LOCAL:853
-	;ファン人気
+	;팬 인기
 	LOCAL:853 = 0
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
@@ -476,7 +476,7 @@ ELSEIF DAY > 0
 			LOCAL:853 += 1
 		SIF RAND:100 < MIN(CFLAG:CCOUNT:284 / 4, 10)
 			LOCAL:853 += 1
-		;性格補正
+		;성격 보정
 		SIF TALENT:CCOUNT:모성적 > 0 && RAND:100 < 5
 			LOCAL:853 += 1
 		SIF TALENT:CCOUNT:소악마 > 0 && RAND:100 < 5
@@ -487,16 +487,16 @@ ELSEIF DAY > 0
 			LOCAL:853 += 1
 		SIF TALENT:CCOUNT:울보 > 0 && RAND:100 < 5
 			LOCAL:853 += 1
-		;FEATによる인기도への補正
+		;FEAT에 의한 인기도 보정
 		SIF TALENT:CCOUNT:야수의후손 > 0 && RAND:100 < 5
 			LOCAL:853 += 1
 		SIF TALENT:CCOUNT:남다른미모 > 0 && RAND:100 < 10
 			LOCAL:853 += 1
 	NEXT
 	SIF LOCAL:853 > 0
-		PRINTFORM ＋　ファン人気( {LOCAL:853} )　
+		PRINTFORM ＋　팬 인기( {LOCAL:853} )　　 
 	FLAG:853 = FLAG:853 + LOCAL:853
-	;悪いうわさ
+	;부정적인 소문
 	LOCAL:853 = 0
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
@@ -505,16 +505,16 @@ ELSEIF DAY > 0
 			LOCAL:853 += 1
 	NEXT
 	SIF LOCAL:853 > 0
-		PRINTFORM −　悪いうわさ( {LOCAL:853} )
+		PRINTFORM −　부정적인 소문( {LOCAL:853} )
 	FLAG:853 = FLAG:853 - LOCAL:853
 	FLAG:853 = LIMIT(FLAG:853, -100, 100)
 	PRINTFORM ＝　{FLAG:853}　
 	IF FLAG:853 < LOCAL:0
-		PRINT (↓下降)
+		PRINT (↓하락)
 	ELSEIF FLAG:853 > LOCAL:0
-		PRINT (↑上昇)
+		PRINT (↑상승)
 	ELSE
-		PRINT (変動なし)
+		PRINT (변동 없음)
 	ENDIF
 	PRINTL 
 	DRAWLINE
@@ -525,43 +525,43 @@ ENDIF
 LOCAL:852 = 0
 LOCAL:853 = 0
 
-;보스 촉수襲来判定
+;보스 촉수 내습 판정
 SIF CONFIG_CHECK_EVENT_F(0) > 0
 	CALL RAID_HANTEI
-;襲来発生時は以下をスキップ
+;내습 발생 시에는 아래를 스킵
 SIF FLAG:45 > 0
 	GOTO RAID_SKIP
 $AFTER_RAID
 
 
 
-;기생関係
+;기생 관련
 CALL PARASITE
-;子촉수襲来
+;새끼 촉수 내습
 SIF CONFIG_CHECK_EVENT_F(1) > 0
 	CALL SMALL_TENTACLE_HANTEI
-;子촉수の増殖判定
+;새끼 촉수 증식 판정
 CALL BIRTH_AUTO_RANDOM
 
-;同時出撃人数と전투 지원人数をリセット
+;동시 출격 인원수와 전투 지원 인원수를 초기화
 FLAG:41 = 0
 FLAG:43 = 0
-;TARGETを元に戻す
+;TARGET을 원래대로 되돌린다
 TARGET = FLAG:797
 
 
 ;**********************************************************
 
 
-;昼夜の切り替え
+;밤낮의 전환
 INVERTBIT TIME, 0
 
-;時間経過で自動的に체력,기력,성내성,結界,淫紋が回復する
+;시간 경과에 따라 자동적으로 체력, 기력, 성내성, 결계, 음문이 회복된다
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
 	
-	;一日が経過した直後（昼）だと回復量8%
+	;하루가 경과한 직후 (낮) 이라면 회복량 8%
 	IF TIME == 0
 		LOCAL:1 = 8
 		IF TALENT:CCOUNT:회복빠름 == 1
@@ -569,7 +569,7 @@ FOR CCOUNT, 0, CHARANUM
 		ELSEIF TALENT:CCOUNT:회복느림 == 1
 			LOCAL:1 -= 4
 		ENDIF
-		;自動回復アップの効果
+		;자동 회복 향상 효과
 		SIF FLAG:901
 			LOCAL:1 += 4
 	ELSE
@@ -578,7 +578,7 @@ FOR CCOUNT, 0, CHARANUM
 		SIF TALENT:밤악마의귀족 > 0
 			LOCAL:1 += 8
 	ENDIF
-	;休憩設備레벨に応じて自動回復
+	;휴식 설비 레벨에 비례하여 자동 회복
 	IF FLAG:51 == 1
 		LOCAL:1 += 0
 	ELSEIF FLAG:51 == 2
@@ -591,7 +591,7 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL:1 += 8
 	ENDIF
 
-	;피로도に応じて回復量低下（피로도回復処理の前に計算）
+	;피로도에 따라 회복량 저하（피로도 회복 처리 전에 계산）
 	IF CFLAG:CCOUNT:99 >= 50
 		LOCAL:1 = LOCAL:1 * 0 / 100
 	ELSEIF CFLAG:CCOUNT:99 >= 40
@@ -604,7 +604,7 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL:1 = LOCAL:1 * 75 / 100
 	ENDIF
 
-	;幽閉、세뇌、흑화、死亡キャラは체력, 기력성내성が０になる
+	;;유폐, 세뇌, 흑화, 사망 캐릭터는 체력•기력•성내성이 0이 된다
 	IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_흑화, 상태_사망)
 		BASE:CCOUNT:체력 = 0
 		BASE:CCOUNT:기력 = 0
@@ -621,7 +621,7 @@ FOR CCOUNT, 0, CHARANUM
 		BASE:CCOUNT:성내성 = LIMIT(LOCAL + BASE:CCOUNT:성내성, 0, MAXBASE:CCOUNT:성내성)
 	ENDIF
 
-	;피로도自動회복 처리
+	;피로도 자동 회복 처리
 	IF CFLAG:CCOUNT:99 > 0 && CFLAG:CCOUNT:0 == 상태_건강
 		LOCAL = 0
 		SIF (FLAG:53 & 관엽식물) && RAND:2 == 0
@@ -640,7 +640,7 @@ FOR CCOUNT, 0, CHARANUM
 		SIF CFLAG:CCOUNT:100 == 예정_단련 && (FLAG:53 & 목욕설비)
 			LOCAL += 1
 
-		;FEAT 효과에 따른疲労の自動回復
+		;FEAT 효과에 따른 피로 자동 회복
 		SIF TALENT:CCOUNT:불로장수 > 0 && TIME == 0
 			LOCAL += 1 + RAND:2 + RAND:2
 		SIF TALENT:CCOUNT:불로장수 > 0 && TIME == 1
@@ -649,12 +649,12 @@ FOR CCOUNT, 0, CHARANUM
 		SIF CFLAG:CCOUNT:99 <= 0
 			LOCAL = 0
 
-		;回復実行
+		;회복 실행
 		CFLAG:CCOUNT:99 -= LOCAL
 		SIF CFLAG:CCOUNT:99 < 0
 			CFLAG:CCOUNT:99 = 0
-		;過剰疲労時は上限でカット(とりあえず上限200)
-		;세뇌または흑화時は上限50
+		;과잉피로 시 상한 컷(일단 상한 200)
+		;세뇌 또는 흑화 시에는 상한 50
 		IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_세뇌, 상태_흑화)
 			SIF CFLAG:CCOUNT:99 > 50
 				CFLAG:CCOUNT:99 = 50
@@ -665,40 +665,42 @@ FOR CCOUNT, 0, CHARANUM
 
 		IF CFLAG:CCOUNT:100 != 예정_휴식 && LOCAL > 0
 			IF CFLAG:CCOUNT:99 == 0
-				PRINTFORML %CALLNAME:CCOUNT%の身体から疲労が完全に抜けた！
+				PRINTFORML %CALLNAME:CCOUNT%의 몸에 쌓인 피로가 완전히 풀렸다!
 			ELSE
-				PRINTFORML %CALLNAME:CCOUNT%の身体から疲労が少し抜けた…
+				PRINTFORML %CALLNAME:CCOUNT%의 몸에 쌓인 피로가 조금 풀렸다……
 			ENDIF
 		ENDIF
 
-		;理性回復 概率5%
+		;이성 회복, 개율(概率)5%
 		IF TALENT:CCOUNT:번식자루 == 1
 			IF RAND(25-CHARANUM_ACTRESS()*4) < 1
-				PRINTL 理性回復
-				PRINTFORML %CHARANUM_ACTRESS() > 0 ? "仲間の헌신적な治療による" # "誰にも理由は分からないが、"%絆と愛の力なのかもしれない
-				PRINTFORML 廃人化していた%CALLNAME:CCOUNT%の理性が奇跡的に回復した！
+				PRINTL 이성 회복
+				PRINTFORML %CHARANUM_ACTRESS() > 0 ? "동료의 헌신적인 치료에 의해" # "그 누구도 이유는 모르지만,"% 유대와 사랑의 힘이 바램을 이루어준 걸까,
+				PRINTFORML 폐인화되었던 %CALLNAME:CCOUNT%의 이성이 기적적으로 회복되었다!
 				TALENT:CCOUNT:번식자루 = 0
 				FORCEWAIT
 			ENDIF
 		ENDIF
-		;毁灭倒计时加总
-		;首先如果因为任何原因不再四肢欠损，则倒计时停止
+		[SKIPSTART]
+		;아래 중국판 컨텐츠는 미번인 상태이기에 작동시키지 않도록 했습니다.
+		;괴멸 카운트 합계 (毁灭倒计时加总)
+		;우선 어떤 이유로든 팔다리가 덜 부러지면 카운트다운이 중지됩니다.(首先如果因为任何原因不再四肢欠损，则倒计时停止)
 		IF TALENT:CCOUNT:사지결손 < 1
-		TALENT:CCOUNT:훼멸초계시 = 0
+			TALENT:CCOUNT:괴멸카운트 = 0
 		ENDIF
-		;如果倒计时开始计算，每回合随机增加数值
-		IF TALENT:CCOUNT:훼멸초계시 > 0
-		TALENT:CCOUNT:훼멸초계시 += RAND(1,3)
+		;카운트다운이 시작되면 라운드마다 무작위로 숫자를 늘린다. (如果倒计时开始计算，每回合随机增加数值)
+		IF TALENT:CCOUNT:괴멸카운트 > 0
+			TALENT:CCOUNT:괴멸카운트 += RAND(1,3)
 		ENDIF
-		;当倒计时增加至15或以上，进入处刑
-		IF TALENT:CCOUNT:훼멸초계시 >= 15
-		TARGET = CCOUNT
-		CALL AMPUTEE_EXECUTION,TARGET
+		;카운트다운이 15 혹은 그 이상으로 증가하면, 처형에 들어간다. (当倒计时增加至15或以上，进入处刑)
+		IF TALENT:CCOUNT:괴멸카운트 >= 15
+			TARGET = CCOUNT
+			CALL AMPUTEE_EXECUTION,TARGET
 		ENDIF
-
+		[SKIPEND]
 	ENDIF
 
-	;部位結界の回復
+	;부위 결계의 회복
 	FOR LCOUNT, 0, 감각수
 		LOCAL = 0
 		IF CFLAG:CCOUNT:0 == 상태_건강
@@ -711,14 +713,14 @@ FOR CCOUNT, 0, CHARANUM
 			BASE:CCOUNT:(LCOUNT + 30) = LIMIT(BASE:CCOUNT:(LCOUNT + 30) + LOCAL, 0, MAXBASE:CCOUNT:(LCOUNT + 30))
 	NEXT
 
-	;사교적な場合、低確率でストーカーフラグが増加
+	;사교적일 경우, 낮은 확률로 스토커 플래그 증가
 	SIF TALENT:CCOUNT:사교적 > 0 && RAND:100 < (4 + SQRT(EXP:CCOUNT:매료경험))
 		CFLAG:CCOUNT:285 += 1
-	;소심함の場合、低確率でストーカーフラグが減少
+	;소심함일 경우, 낮은 확률로 스토커 플래그 감소
 	SIF TALENT:CCOUNT:소심함 > 0 && RAND:100 < 8 && CFLAG:CCOUNT:285 > 0
 		CFLAG:CCOUNT:285 -= 1
 
-	;避妊用ピルを処方していれば１つ消費
+	;피임약을 처방하면 1개 소비
 	SIF CFLAG:CCOUNT:241 > 0
 		CFLAG:CCOUNT:241 -= 1
 
@@ -729,39 +731,39 @@ FOR CCOUNT, 0, CHARANUM
 	CFLAG:CCOUNT:400 = 0
 
 	IF TIME == 0
-		;日付変更時に生理周期変数を進行させる
+		;날짜 변경 시 생리 주기 변수를 진행시킨다
 		CALL ESTRUS_CYCLE(CCOUNT)
 	ENDIF
 	
 NEXT
 
-;日数
+;일수
 DRAWLINE
 IF TIME == 0
 	DAY += 1
 	IF DAY > 1
-		PRINTL 一日が終了しました
+		PRINTL 하루가 지나갔습니다.
 		SAVESTR'=""
 		IF CHECK_GAMEOVER_F() == 0
 			IF DAY == 7
-				PRINTW 国から支援表明の通知が届きました。
-				PRINTW これからは一週間ごとに政府からの支援と市民からの義援金が届きます。
-				PRINTW 防衛成果に応じて金額が増えるので、방위력に注意しましょう。
+				PRINTW 국가로부터 원조 표명 통지가 도착했습니다.
+				PRINTW 앞으로는 일주일마다 정부의 원조와 시민들의 의연금도 함께 전달됩니다.
+				PRINTW 방위 성과에 따라 금액이 늘어나기 때문에, 방위력 감소에 주의합시다.
 				PRINTL 
-				PRINTL 最初の資金援助が届いています。
+				PRINTL 첫 지원 자금이 도착했습니다.
 				PRINTW 
 			ELSEIF DAY == 21
-				PRINTL 国からの援助金が増額されました。
+				PRINTL 국가로부터의 원조금이 증액되었습니다.
 				PRINTW 
 			ELSEIF DAY == 42
-				PRINTL 不況の影響で、国からの援助金が大幅に減額されました。
+				PRINTL 불황의 영향으로 인해, 국가로부터의 원조금이 대폭 감액되었습니다.
 				PRINTW 
 			ELSEIF DAY == 63
-				PRINTL 不況の影響で、国からの援助金が打ち切られました。
+				PRINTL 불황의 영향으로 인해, 국가로부터 자금 원조가 중단되었습니다.
 				PRINTW 
 			ENDIF
 
-			;資金援助
+			;자금 원조
 			IF DAY % 7 == 0
 				LOCAL = 1000 + ((FLAG:852 +1) / 25)
 				LOCAL:1 = RAND:((FLAG:852 +1) / 10 + 50) + 10
@@ -793,22 +795,22 @@ IF TIME == 0
 				SIF DAY >= 63
 					LOCAL = 0
 				SIF DAY < 63
-					PRINTFORML 政府からの援助金として資金${LOCAL}を得た！
-				PRINTFORML 市民からの義援金として資金${LOCAL:1 + LOCAL:2}を得た！
+					PRINTFORML 정부로부터 원조금을 받아 자금 {LOCAL}$ 를 얻었다!
+				PRINTFORML 시민들로부터 의연금을 받아 자금 {LOCAL:1 + LOCAL:2}$ 를 얻었다!
 				MONEY += LOCAL + LOCAL:1 + LOCAL:2
 			ENDIF
 
-			;支出
+			;지출
 			LOCAL:2 = 40 + 20 * CHARANUM_SAFE()
 			SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 				LOCAL:2 *= 3
 			IF MONEY >= LOCAL:2
-				PRINTFORML 維持費や生活費として資金${LOCAL:2}を支払った。
+				PRINTFORML 유지비와 생활비 등으로 자금 {LOCAL:2}$ 를 지불했다.
 				MONEY -= LOCAL:2
 				WAIT
 			ELSE
-				PRINTFORML 維持費や生活費のための資金が不足しています！
-				PRINTFORML 체력と기력を消耗しました……
+				PRINTFORML 유지비나 생활비 등을 지불할 자금이 부족합니다!
+				PRINTFORML 체력과 기력을 소모해 버렸습니다……
 				WAIT
 				MONEY = 0
 				FOR CCOUNT, 0, CHARANUM
@@ -822,28 +824,28 @@ IF TIME == 0
 
 	ENDIF
 ELSE
-	PRINTL 夜になりました
+	PRINTL 밤이 되었습니다.
 	WAIT
 ENDIF
 
-;ニュースを初期化
+;뉴스를 초기화
 SAVESTR:20'=""
-;特定状況下ではニュースを固定
-;ゲームオーバーモード
+;특정 상황에서는 뉴스를 고정
+;게임 오버 모드
 IF CHECK_GAMEOVER_F() == 1
 	FLAG:60 = 10001
-;최종 보스出現中
+;최종 보스 출현 중
 ELSEIF FLAG:101 > 0
 	FLAG:60 = 10000
 ENDIF
 
-;TARGETを元に戻す
+;TARGET을 원래대로 되돌린다
 TARGET = FLAG:798
 $RAID_SKIP
-;모든 캐릭터의 結界状態をチェック
+;모든 캐릭터 결계 상태 체크
 CALL CHECK_SHIELD_ALL
 
-;襲撃が発生していなければターン終了処理を終了
+;습격이 발생하지 않았다면 턴 종료 처리를 종료
 SIF FLAG:45 == 0
 	FLAG:48 = 0
 
