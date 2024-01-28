@@ -1,6 +1,6 @@
 ﻿;@TURNEND
 @EVENTTURNEND
-;クズ市民関係の플래그를リセット
+;악질 시민関係の플래그를リセット
 FLAG:70 = 0
 FLAG:71 = 0
 FLAG:72 = 0
@@ -239,7 +239,7 @@ FOR CCOUNT, 0, CHARANUM
 	SAVEGLOBAL
 
 	
-	;実績獲得判定
+	;실적獲得判定
 	CALL GET_STATE_TROPHY,CCOUNT
 NEXT
 
@@ -250,16 +250,16 @@ NEXT
 ;ターン終了中フラグ
 FLAG:48 = 1
 
-;ボス出現停止플래그를折る
+;보스出現停止플래그를折る
 FLAG:49 = 0
 
 ;보스 촉수のダメージ蓄積値が回復
 IF GET_LASTBOSS_PHASE_F() >= 2
-	;裏ボスは回復なし
+	;히든 보스は回復なし
 ELSE
 	SETCOLOR 128,128,128
 	SIF FLAG:999 == 1
-		PRINTL DEBUG ボスのキズが回復
+		PRINTL DEBUG 보스のキズが回復
 	RESETCOLOR
 	FOR LOCAL,1,FLAG:3 + 1
 		FLAG:(300 + LOCAL) -= RAND:3000000 + 8000000
@@ -267,7 +267,7 @@ ELSE
 			FLAG:(300 + LOCAL) = 0
 	NEXT
 	FOR LOCAL,1,FLAG:4 + 1
-		;ラスボス強化時は回復量が低下
+		;최종 보스強化時は回復量が低下
 		CALL LASTBOSS_REST
 		FLAG:(400 + LOCAL) -= (RAND:3000000 + 1000000) / (2 + RESULT)
 		SIF FLAG:(400 + LOCAL) < 0
@@ -275,7 +275,7 @@ ELSE
 	NEXT
 ENDIF
 
-;구상のターン終了時処理を呼び出し
+;구상のターン終了時処理を호출
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -287,7 +287,7 @@ NEXT
 ;TARGETの値を退避
 FLAG:797 = TARGET
 
-;クズ市民による脅迫あるいは誘拐監禁
+;악질 시민による脅迫あるいは誘拐監禁
 FOR CCOUNT, 1, CHARANUM
 	;脅迫イベント
 	IF CONFIG_CHECK_PRISON_F(10) == 1 && GROUPMATCH(CFLAG:CCOUNT:0,0,5) && (CFLAG:CCOUNT:286 + CFLAG:CCOUNT:320 + CFLAG:CCOUNT:321) > 0 ;一度でもレイプされたことがあれば発生
@@ -323,7 +323,7 @@ IF CHECK_GAMEOVER_F() == 1
 	FLAG:853 = LIMIT(FLAG:853, -100, 0)
 ELSEIF DAY > 0
 	;방위력の自動変動
-	;①誰も「出撃／拠点防衛」していない(ソロモードのみ「鍛錬／情報収集」も出撃扱いとする)
+	;①誰も「出撃／拠点防衛」していない(ソロモードのみ「鍛錬／정보 수집」も出撃扱いとする)
 	;②放棄ターン＞防衛施設레벨
 	;共に満たす場合に低下
 	IF FLAG:41 == 0
@@ -543,7 +543,7 @@ SIF CONFIG_CHECK_EVENT_F(1) > 0
 ;子촉수の増殖判定
 CALL BIRTH_AUTO_RANDOM
 
-;同時出撃人数と戦闘支援人数をリセット
+;同時出撃人数と전투 지원人数をリセット
 FLAG:41 = 0
 FLAG:43 = 0
 ;TARGETを元に戻す
@@ -574,7 +574,7 @@ FOR CCOUNT, 0, CHARANUM
 			LOCAL:1 += 4
 	ELSE
 		LOCAL:1 = 0
-		;FEAT効果による回復量補正
+		;FEAT 효과에 따른 회복량 보정
 		SIF TALENT:밤악마의귀족 > 0
 			LOCAL:1 += 8
 	ENDIF
@@ -591,7 +591,7 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL:1 += 8
 	ENDIF
 
-	;疲労度に応じて回復量低下（疲労度回復処理の前に計算）
+	;피로도に応じて回復量低下（피로도回復処理の前に計算）
 	IF CFLAG:CCOUNT:99 >= 50
 		LOCAL:1 = LOCAL:1 * 0 / 100
 	ELSEIF CFLAG:CCOUNT:99 >= 40
@@ -604,12 +604,12 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL:1 = LOCAL:1 * 75 / 100
 	ENDIF
 
-	;幽閉、洗脳、흑화、死亡キャラは체력, 기력성내성が０になる
+	;幽閉、세뇌、흑화、死亡キャラは체력, 기력성내성が０になる
 	IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_유폐, 상태_세뇌, 상태_흑화, 상태_사망)
 		BASE:CCOUNT:체력 = 0
 		BASE:CCOUNT:기력 = 0
 		BASE:CCOUNT:성내성 = 0
-	;回復の処理
+	;회복 처리
 	ELSE
 		LOCAL = MAXBASE:CCOUNT:체력 * LOCAL:1 / 100
 		BASE:CCOUNT:체력 = LIMIT(LOCAL + BASE:CCOUNT:체력, 0, MAXBASE:CCOUNT:체력)
@@ -621,7 +621,7 @@ FOR CCOUNT, 0, CHARANUM
 		BASE:CCOUNT:성내성 = LIMIT(LOCAL + BASE:CCOUNT:성내성, 0, MAXBASE:CCOUNT:성내성)
 	ENDIF
 
-	;疲労度自動回復の処理
+	;피로도自動회복 처리
 	IF CFLAG:CCOUNT:99 > 0 && CFLAG:CCOUNT:0 == 상태_건강
 		LOCAL = 0
 		SIF (FLAG:53 & 관엽식물) && RAND:2 == 0
@@ -640,7 +640,7 @@ FOR CCOUNT, 0, CHARANUM
 		SIF CFLAG:CCOUNT:100 == 예정_단련 && (FLAG:53 & 목욕설비)
 			LOCAL += 1
 
-		;FEAT効果による疲労の自動回復
+		;FEAT 효과에 따른疲労の自動回復
 		SIF TALENT:CCOUNT:불로장수 > 0 && TIME == 0
 			LOCAL += 1 + RAND:2 + RAND:2
 		SIF TALENT:CCOUNT:불로장수 > 0 && TIME == 1
@@ -654,7 +654,7 @@ FOR CCOUNT, 0, CHARANUM
 		SIF CFLAG:CCOUNT:99 < 0
 			CFLAG:CCOUNT:99 = 0
 		;過剰疲労時は上限でカット(とりあえず上限200)
-		;洗脳または흑화時は上限50
+		;세뇌または흑화時は上限50
 		IF GROUPMATCH(CFLAG:CCOUNT:0, 상태_세뇌, 상태_흑화)
 			SIF CFLAG:CCOUNT:99 > 50
 				CFLAG:CCOUNT:99 = 50
@@ -832,7 +832,7 @@ SAVESTR:20'=""
 ;ゲームオーバーモード
 IF CHECK_GAMEOVER_F() == 1
 	FLAG:60 = 10001
-;ラスボス出現中
+;최종 보스出現中
 ELSEIF FLAG:101 > 0
 	FLAG:60 = 10000
 ENDIF

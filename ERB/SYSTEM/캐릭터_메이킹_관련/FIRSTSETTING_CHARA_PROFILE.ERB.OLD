@@ -24,7 +24,7 @@ PRINT [13]肌の色の設定
 PRINTPLAIN  
 CALL SHOW_SKINCOLOR, ARG
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [100]決定して戻る
+PRINTL [100] 결정して戻る
 
 INPUT
 IF RESULT == 100
@@ -61,7 +61,7 @@ PRINTFORML [2]ヘアスタイル　　　『%CSTR:ARG:13%』
 SIF TALENT:ARG:변신능력 == 1
 		PRINTFORML [3]変身中　　　　　　『%CSTR:ARG:14%』
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [100]決定
+PRINTL [100] 결정
 PRINTL [200]ランダムに髪型を設定
 INPUT
 IF RESULT == 100
@@ -232,7 +232,7 @@ IF TALENT:ARG:변신능력 > 0
 	PRINTL [3]変身中の髪の色を変身前に合わせる
 ENDIF
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [100]決定
+PRINTL [100] 결정
 INPUT
 IF RESULT == 100
 	CLEARLINE LINECOUNT - LOCAL
@@ -487,7 +487,7 @@ PRINTL
 PRINTL [4]両目の色を右目に合わせる
 PRINTL [5]両目の色を左目に合わせる
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [100]決定
+PRINTL [100] 결정
 INPUT
 IF RESULT == 100
 	CLEARLINE LINECOUNT - LOCAL
@@ -690,7 +690,7 @@ PRINTBUTTON "■",13
 RESETCOLOR
 PRINTL ]
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [100]決定
+PRINTL [100] 결정
 INPUT
 IF RESULT == 100
 	CLEARLINE LINECOUNT - LOCAL
@@ -716,7 +716,7 @@ ELSE
 ENDIF
 
 
-;変更をプロフィールに反映
+;変更を프로필에 반영
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 @SET_PROFILE, ARG
 CALL GENERATE_CHAR_SIZE, ARG, 0

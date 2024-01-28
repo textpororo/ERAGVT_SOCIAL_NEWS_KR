@@ -56,8 +56,8 @@ CASE 1
 	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
-		PRINT 　[100]前のキャラ　　　　　　　　　　
-		PRINT [200]次のキャラ
+		PRINT 　[100] 이전 캐릭터　　　　　　　　　　
+		PRINT [200] 다음 캐릭터
 	PRINTL 
 	RESETCOLOR
 	INPUT
@@ -213,8 +213,8 @@ CASE 2
 	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
-		PRINT 　[100]前のキャラ　　　　　　　　　　
-		PRINT [200]次のキャラ
+		PRINT 　[100] 이전 캐릭터　　　　　　　　　　
+		PRINT [200] 다음 캐릭터
 	PRINTL 
 	RESETCOLOR
 	INPUT
@@ -284,8 +284,8 @@ CASE 3
 
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
-		PRINT [100]前のキャラ　　　　　　　　　　
-		PRINT [200]次のキャラ
+		PRINT [100] 이전 캐릭터　　　　　　　　　　
+		PRINT [200] 다음 캐릭터
 	PRINTL 
 	RESETCOLOR
 	INPUT
@@ -371,7 +371,7 @@ CASE 4
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 3) && GETBIT(CFLAG:(ARG:0):122, 4)
 			PRINT 老紳士
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 2)
-			PRINT 下品な男
+			PRINT 천박한 남자
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 3)
 			PRINT 고상함な男
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 4)
@@ -550,8 +550,8 @@ CASE 4
 	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
-		PRINT [100]前のキャラ　　　　　　　　　　
-		PRINT [200]次のキャラ
+		PRINT [100] 이전 캐릭터　　　　　　　　　　
+		PRINT [200] 다음 캐릭터
 	PRINTL 
 	RESETCOLOR
 	INPUT
@@ -690,14 +690,14 @@ CASE 5
 			PRINT [빈유]
 		SIF CHARATALENT_F(ARG,1,"거유") > 0
 			PRINT [거유]
-		SIF CHARATALENT_F(ARG,1,"爆乳") > 0
-			PRINT [爆乳]
-		SIF CHARATALENT_F(ARG,1,"超乳") > 0
-			PRINT [超乳]
-		SIF CHARATALENT_F(ARG,1,"魔乳") > 0
-			PRINT [魔乳]
-		SIF CHARATALENT_F(ARG,1,"奇乳") > 0
-			PRINT [奇乳]
+		SIF CHARATALENT_F(ARG,1,"폭유") > 0
+			PRINT [폭유]
+		SIF CHARATALENT_F(ARG,1,"초유") > 0
+			PRINT [초유]
+		SIF CHARATALENT_F(ARG,1,"마유") > 0
+			PRINT [마유]
+		SIF CHARATALENT_F(ARG,1,"기유") > 0
+			PRINT [기유]
 		SIF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,0,"남자") > 0
 			PRINT [남자]
 		SIF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,0,"남자") == 0
@@ -802,14 +802,14 @@ CASE 5
 			PRINT [빈유]
 		SIF CHARATALENT_F(ARG,0,"거유") > 0
 			PRINT [거유]
-		SIF CHARATALENT_F(ARG,0,"爆乳") > 0
-			PRINT [爆乳]
-		SIF CHARATALENT_F(ARG,0,"超乳") > 0
-			PRINT [超乳]
-		SIF CHARATALENT_F(ARG,0,"魔乳") > 0
-			PRINT [魔乳]
-		SIF CHARATALENT_F(ARG,0,"奇乳") > 0
-			PRINT [奇乳]
+		SIF CHARATALENT_F(ARG,0,"폭유") > 0
+			PRINT [폭유]
+		SIF CHARATALENT_F(ARG,0,"초유") > 0
+			PRINT [초유]
+		SIF CHARATALENT_F(ARG,0,"마유") > 0
+			PRINT [마유]
+		SIF CHARATALENT_F(ARG,0,"기유") > 0
+			PRINT [기유]
 		SIF CHARATALENT_F(ARG,0,"남자") > 0
 			PRINT [남자]
 		SIF CHARATALENT_F(ARG,0,"보추") > 0
@@ -899,8 +899,8 @@ CASE 5
 	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
-		PRINT [100]前のキャラ　　　　　　　　　　
-		PRINT [200]次のキャラ
+		PRINT [100] 이전 캐릭터　　　　　　　　　　
+		PRINT [200] 다음 캐릭터
 	PRINTL 
 	RESETCOLOR
 	INPUT
@@ -1292,7 +1292,7 @@ ELSEIF ARG:1 == 1
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:1, 6, BASE:(ARG:0):기력, MAXBASE:(ARG:0):기력, 20)
 	
-	;戦闘支援による補正率
+	;전투 지원による補正率
 	CALL CALC_CHISEI_SHIEN(0)
 	LOCAL:0 = RESULT
 	IF ENEMY_TYPE_CHECK_F("AKUOTI")
@@ -1304,10 +1304,10 @@ ELSEIF ARG:1 == 1
 	LOCAL:0 = 100 * LOCAL:0 / LOCAL:1
 	IF GETBATTLESITUATION("支援無効")
 		SETCOLORBYNAME RED
-		PRINTFORM  戦闘支援効果：支援不可
+		PRINTFORM  전투 지원効果：支援不可
 		RESETCOLOR
 	ELSEIF FLAG:43
-		PRINTFORM  戦闘支援効果：(+ {LOCAL:0}％)
+		PRINTFORM  전투 지원効果：(+ {LOCAL:0}％)
 	ENDIF
 
 	PRINTL 
@@ -1671,7 +1671,7 @@ IF TALENT:ARG:C결계 + TALENT:ARG:V결계 + TALENT:ARG:A결계 + TALENT:ARG:B�
 				CALL COLOR_BAR(BASE:ARG:(LCOUNT + 30),MAXBASE:ARG:(LCOUNT + 30),20,LOCAL:0,LOCAL:1,20,LOCAL:2,6,32,20,1,UNICODE(0x25AE),UNICODE(0x25AE))
 			ELSE
 				SETCOLOR 128, 40, 40
-					PRINT 　　　崩　壊　　　　
+					PRINT 　　　붕　괴　　　　
 				RESETCOLOR
 			ENDIF
 			FONTBOLD
@@ -1829,9 +1829,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_세뇌
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-2)%'>[洗脳]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-2)%'>[세뇌]</nonbutton>"
 		ELSE
-			PRINTFORM [洗脳]
+			PRINTFORM [세뇌]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_흑화
 		IF ARG:2
@@ -1921,27 +1921,27 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			ELSEIF COUNT == 111
 				IF TALENT:ARG:거유 == 5
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[奇乳]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[기유]</nonbutton>"
 					ELSE
-						PRINTFORM [奇乳]
+						PRINTFORM [기유]
 					ENDIF
 				ELSEIF TALENT:ARG:거유 == 4
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[魔乳]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[마유]</nonbutton>"
 					ELSE
-						PRINTFORM [魔乳]
+						PRINTFORM [마유]
 					ENDIF
 				ELSEIF TALENT:ARG:거유 == 3
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[超乳]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[초유]</nonbutton>"
 					ELSE
-						PRINTFORM [超乳]
+						PRINTFORM [초유]
 					ENDIF
 				ELSEIF TALENT:ARG:거유 == 2
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[爆乳]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[폭유]</nonbutton>"
 					ELSE
-						PRINTFORM [爆乳]
+						PRINTFORM [폭유]
 					ENDIF
 				ELSE
 					IF ARG:2
@@ -2402,7 +2402,7 @@ ELSE
 
 	;※CFLAG管理だ(TALENT管理ではない)がまとめて載せている
 	;幽閉中
-	;洗脳
+	;세뇌
 	;흑화
 	;死亡
 	;入院中
@@ -2552,7 +2552,7 @@ IF TALENT_VAR == -998
 	CASE 1
 		SUB_STR:0 = 幽閉中
 	CASE 2
-	SUB_STR:0 = 洗脳
+	SUB_STR:0 = 세뇌
 	CASE 3
 	SUB_STR:0 = 흑화
 	CASE 4
@@ -2590,13 +2590,13 @@ ELSEIF TALENT_VAR == 110 && SUB_TALENT == 1
 	SUB_STR:0 = 빈유
 ;거유
 ELSEIF TALENT_VAR == 111 && SUB_TALENT == 5
-	SUB_STR:0 = 奇乳
+	SUB_STR:0 = 기유
 ELSEIF TALENT_VAR == 111 && SUB_TALENT == 4
-	SUB_STR:0 = 魔乳
+	SUB_STR:0 = 마유
 ELSEIF TALENT_VAR == 111 && SUB_TALENT == 3
-	SUB_STR:0 = 超乳
+	SUB_STR:0 = 초유
 ELSEIF TALENT_VAR == 111 && SUB_TALENT == 2
-	SUB_STR:0 = 爆乳
+	SUB_STR:0 = 폭유
 ELSEIF TALENT_VAR == 111 && SUB_TALENT == 1
 	SUB_STR:0 = 거유
 ;임신
@@ -2726,12 +2726,12 @@ SELECTCASE ARG
 		RETURNF "メンタルダウンして自室に引きこもっている"
 	CASE -4
 	;誘拐中
-		RETURNF "クズ市民に誘拐されて行方不明中"
+		RETURNF "악질 시민に誘拐されて行方不明中"
 	CASE -3
 	;흑화
 		RETURNF "敵に心酔し寝返っている"
 	CASE -2
-	;洗脳
+	;세뇌
 		RETURNF "敵に操られている"
 	CASE -1
 	;幽閉中
@@ -2980,19 +2980,19 @@ SELECTCASE ARG
 
 	;내성적
 	CASE 600
-		RETURNF "경험치効率がアップ、情報収集の効率がダウン"
+		RETURNF "경험치効率がアップ、정보 수집の効率がダウン"
 
 	;사교적
 	CASE 601
-		RETURNF "情報収集の効率がアップ、不審人物に狙われやすい"
+		RETURNF "정보 수집の効率がアップ、不審人物に狙われやすい"
 
 	;제멋대로굼
 	CASE 602
-		RETURNF "경험치効率がアップ、戦闘支援を受けたときの効果ダウン"
+		RETURNF "경험치効率がアップ、전투 지원を受けたときの効果ダウン"
 
 	;헌신적
 	CASE 603
-		RETURNF "戦闘支援の効果アップ、戦闘支援を行ったときの消費アップ"
+		RETURNF "전투 지원の効果アップ、전투 지원を行ったときの消費アップ"
 
 	;소심함
 	CASE 604
@@ -3107,7 +3107,7 @@ SELECTCASE ARG
 
 	CASE 1100
 	;평범
-		RETURNF "拘束された際に油断させやすい/매료경험が上昇しにくい"
+		RETURNF "拘束された際に油断させやすい/매료경험이 上昇しにくい"
 
 	CASE 1101
 	;말려드는체질
@@ -3127,11 +3127,11 @@ SELECTCASE ARG
 
 	CASE 1105
 	;신기소유자
-		RETURNF "공격,방어,민첩+5/성내성-10,洗脳、흑화しやすくなる"
+		RETURNF "공격,방어,민첩+5/성내성-10,세뇌、흑화しやすくなる"
 
 	CASE 1106
 	;투쟁본능
-		RETURNF "공격+10/성내성-5,洗脳、흑화しやすくなる"
+		RETURNF "공격+10/성내성-5,세뇌、흑화しやすくなる"
 
 	CASE 1107
 	;넘치는생명력
@@ -3155,11 +3155,11 @@ SELECTCASE ARG
 
 	CASE 1201
 	;행운아
-		RETURNF "特別活動と情報収集の効率アップ/공격,방어,민첩,지성ボーナス-5"
+		RETURNF "특별 활동と정보 수집の効率アップ/공격,방어,민첩,지성ボーナス-5"
 
 	CASE 1202
 	;타고난전사
-		RETURNF "クリティカル被弾防止,기절防止/特別活動と戦闘支援に参加不能"
+		RETURNF "クリティカル被弾防止,기절防止/특별 활동と전투 지원に参加不能"
 
 	CASE 1203
 	;근력강화
@@ -3215,7 +3215,7 @@ SELECTCASE ARG
 
 	CASE 1216
 	;남다른미모
-		RETURNF "인기도と매료경험が上昇しやすい/襲撃イベントのターゲットにされやすく、観衆が出現しやすい"
+		RETURNF "인기도と매료경험이 上昇しやすい/襲撃イベントのターゲットにされやすく、観衆が出現しやすい"
 
 	CASE 1217
 	;배덕의낙인
@@ -3277,7 +3277,7 @@ REPEAT 99
 REND
 
 ;--------------------------------------------------
-;刻印表示
+;각인 표시
 @SHOW_STATUS_MARK, ARG
 PRINTL ◆刻印
 REPEAT 5
@@ -3884,7 +3884,7 @@ IF LOCAL:1 == 1
 	LOCAL:2 = 0
 	;CRT率
 	LOCAL:3 = 0
-	;バースト공격の疲労度
+	;バースト공격の피로도
 	LOCAL:4 = 0
 
 	;メリット効果

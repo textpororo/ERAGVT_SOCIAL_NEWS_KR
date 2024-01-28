@@ -266,11 +266,11 @@ LOCAL = FLAG:3 - RESULT
 IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 	;撃破数を記録
-	PRINTFORML ボス撃破記録　　{LOCAL} 体
+	PRINTFORML 보스撃破記録　　{LOCAL} 体
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML ボス撃破の新記録を達成しました！
+		PRINTFORML 보스撃破の新記録を達成しました！
 		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
 		PRINTL 
 		GLOBAL:114 = LOCAL
@@ -356,7 +356,7 @@ IF LOCAL:2 > 0
 	PRINTL 。
 	PRINTL 
 	PRINTFORML 敵によって操られていた人々も一人またひとりと正気に戻り、
-	PRINTFORM 洗脳されていた%LOCALS:2%
+	PRINTFORM 세뇌されていた%LOCALS:2%
 	SIF LOCAL:2 >= 2
 		PRINT たち
 	PRINTFORML もまた、自分を取り戻すことができた。
@@ -462,11 +462,11 @@ LOCAL = FLAG:3 - RESULT
 IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 	;撃破数を記録
-	PRINTFORML ボス撃破記録　　{LOCAL} 体
+	PRINTFORML 보스撃破記録　　{LOCAL} 体
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML ボス撃破の新記録を達成しました！
+		PRINTFORML 보스撃破の新記録を達成しました！
 		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
 		PRINTL 
 		GLOBAL:114 = LOCAL
@@ -573,7 +573,7 @@ PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・�
 PRINTL 
 PRINTFORML かくして、『%STR:2500%』に対抗しうる唯一の存在であった%PRINT_CALLNAME(TARGET)%は肉壁の奥へと沈んだ。
 PRINTL 
-PRINTL ……急激に数を増した強大な촉수生物を前に人類は成すすべなく蹂躙され、
+PRINTL ……急激に数を増した強大な촉수 생물を前に人類は成すすべなく蹂躙され、
 PRINTL 都市インフラの維持すらまもなく不可能となった。
 PRINTL 
 PRINTL かつて自宅、学校、市街地だった場所で、数多くの女性が촉수に犯され続けていた。
@@ -655,7 +655,7 @@ FORCEWAIT
 
 
 ;＠中国版より
-;最後のキャラクターがクズ市民に処刑されたエンド
+;最後のキャラクターが악질 시민に処刑されたエンド
 ;＠現在は処刑周り未移植なのでデッドコード
 ;★とりあえず訳したが洗練が足りない
 @ENDING_6
@@ -663,7 +663,7 @@ PRINTL
 PRINTL 全滅した・・・
 FORCEWAIT
 PRINTFORML 最後の魔法少女%PRINT_CALLNAME(TARGET)%は、%STR:2500%との戦いで倒れはしなかった。
-PRINTFORML クズ市民によって不必要に捕らえられ、監禁され、凌辱され、支配され、
+PRINTFORML 악질 시민によって不必要に捕らえられ、監禁され、凌辱され、支配され、
 PRINTFORMW 最終的には動物のように屠殺された。
 PRINTL
 PRINTFORML 魔法少女が消えた後も촉수の공격は続き、
@@ -711,11 +711,11 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 	;撃破数を記録
 	;撃破数を記録
-	PRINTFORML ボス撃破記録　　{LOCAL} 体
+	PRINTFORML 보스撃破記録　　{LOCAL} 体
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML ボス撃破の新記録を達成しました！
+		PRINTFORML 보스撃破の新記録を達成しました！
 		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
 		PRINTL 
 		GLOBAL:114 = LOCAL

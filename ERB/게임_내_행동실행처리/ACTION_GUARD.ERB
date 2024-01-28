@@ -1,15 +1,15 @@
 ﻿
-;拠点防衛
+;거점 방위
 @GUARD
 CFLAG:101 = -1
 PRINTL 
-PRINTFORML %CALLNAME%はパトロールを行っている……
+PRINTFORML %CALLNAME%은(는) 도시를 순찰하고 있다……
 
 ;인카운트 판정
 CALL ENCOUNT
 SIF FLAG:999 == 1
-	PRINTFORMW エンカウント番号 == {RESULT}
-;ボス&&흑화 캐릭터가 決まってない場合にザコ戦開始判定
+	PRINTFORMW 인카운트 번호 == {RESULT}
+;보스&&흑화 캐릭터가 결정되지 않은 경우 잡몹전 개시 판정
 SIF !RESULT && !FLAG:110
 	CALL MOB_TENTACLE_ENCOUNT
 

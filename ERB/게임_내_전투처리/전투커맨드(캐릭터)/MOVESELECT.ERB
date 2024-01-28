@@ -62,21 +62,21 @@ IF RESULT == TCVARn:0
 	RETURN 0
 ELSEIF RESULT == 1 && ABLE6 > 0
 	TCVARn:0 = 1
-	;FEAT効果による反動の増加
+	;FEAT 효과에 따른反動の増加
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT
 	RETURN 1
 ELSEIF RESULT == 2 && ABLE7 > 0
 	TCVARn:0 = 2
-	;FEAT効果による反動の増加
+	;FEAT 효과에 따른反動の増加
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT
 	RETURN 2
 ELSEIF RESULT == 3 && ABLE5 > 0
 	TCVARn:0 = 3
-	;FEAT効果による反動の増加
+	;FEAT 효과에 따른反動の増加
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT

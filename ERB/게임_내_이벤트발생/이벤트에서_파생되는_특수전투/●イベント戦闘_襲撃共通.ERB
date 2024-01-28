@@ -1,5 +1,5 @@
 ﻿;---------------------------------------------------------------------
-;ボス襲撃の実行
+;보스襲撃の実行
 @RAID_ATTACK
 #DIM CCOUNT
 DRAWLINE
@@ -124,7 +124,7 @@ CALL CLOTH_BATTLE_SETHP
 ;衣装の情報を更新
 CALL REFRESH_CLOTH_DATA
 
-;ここで個別イベント呼び出し
+;ここで個別イベント호출
 TRYCCALLFORM EVENT_BATTLE_EXEC_{FLAG:45}
 CATCH
 	PRINTL 
@@ -150,7 +150,7 @@ SIF FLAG:999 == 1
 IF RESULT != 1
 	PRINTL 
 	PRINTL #####     ERROR !!     #####
-	PRINTL ボス襲撃イベント不発バグです。原因究明のため、
+	PRINTL 보스襲撃イベント不発バグです。原因究明のため、
 	PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 	PRINTW 
 	PRINTL イベントを強制スキップして無理やりゲームを続行します

@@ -106,7 +106,7 @@ SIF FLAG:909
 ;피임결계持ちが破られた場合、かつ相手が촉수の場合は임신確率アップ
 SIF TALENT:피임결계 > 0 && PAPA_ID > 0
 	PREG_PER = PREG_PER * 2
-;FEAT効果による임신確率補正
+;FEAT 효과에 따른임신確率補正
 SIF TALENT:야수의후손 > 0
 	PREG_PER = PREG_PER * 125 / 100
 SIF TALENT:축복 > 0
@@ -150,13 +150,13 @@ IF RAND:1000 < (PREG_PER + 100 * (CFLAG:0 == 0)) && (TALENT:임신 == 0)
 	IF FLAG:700 == 1
 		CALL TENTACLE_ACCESS, "GETNAME"
 		IF RESULTS == "Ｈ촉수" && (TCVARn:12 & 배란)
-			PRINTFORML Ｈ촉수が広げた薄膜のモニターには%PRINT_TRANSCALLNAME(TARGET)%の胎内の様子が映し出されており、
+			PRINTFORML Ｈ촉수が広げた薄膜のモニターには%PRINT_TRANSCALLNAME(TARGET)%의 胎内の様子が映し出されており、
 			PRINTFORML 成熟した卵子の周りには無数の촉수の精子が群がっている。
 			PRINTFORML そのうちの一匹が表皮を突き破って悲願を達成し、爆発的な細胞の増殖が始まった。
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目の前で異種間受精の瞬間を見せつけられてしまった・・・
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)目の前で異種間受精の瞬間を見せつけられてしまった・・・
 			PRINTW 
 			TALENT:임신 = 1
-			PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は[임신]した
+			PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는)[임신]した
 			CALL NINSIN_TS_FIX
 		ENDIF
 	ENDIF
@@ -414,7 +414,7 @@ TARGET =LOCAL:0
 ;------------------------------
 ;LOCAL:1 촉수の数
 @BIRTH_TENTACLES
-;出産するキャラは疲労度が蓄積する
+;出産するキャラは피로도가 蓄積する
 CFLAG:99 += 45 + PREGNANCY_BELLY_EXPAND(TARGET) / 20
 ;生存時に再び行動可能に復帰する
 SIF CFLAG:0 == 10
@@ -543,7 +543,7 @@ SIF TALENT:모유체질 == 1
 LOCAL:151 = 1
 
 ;출산경험とV拡張経験追加
-;初めての出産なら이상경험が入り、체력, 기력が少し上昇する
+;初めての出産なら이상경험이 入り、체력, 기력が少し上昇する
 IF EXP:출산경험 == 0
 	LOCAL:150 += 1
 	CFLAG:204 = 1
@@ -844,7 +844,7 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;アフターピルで緊急避妊
+;사후피임약で緊急避妊
 @AFTER_PILL, ARG, ARG:1, ARG:2
 #DIM LCOUNT
 SIF CONFIG_CHECK_OTHER_F(3) == 0
@@ -869,18 +869,18 @@ IF ARG:1 < 25
 ELSE
 	PRINTFORM このままでは임신してしまうかもしれないが、
 ENDIF
-PRINTFORML $500支払って緊急用アフターピルを飲んでおくべきだろうか？
-PRINTFORML [0]アフターピルは飲まない
-PRINTFORML [1]アフターピルを飲んで避妊する（所持金:${MONEY}）
+PRINTFORML $500支払って緊急用사후피임약を飲んでおくべきだろうか？
+PRINTFORML [0]사후피임약は飲まない
+PRINTFORML [1]사후피임약を飲んで避妊する（소지금:${MONEY}）
 LCOUNT = LINECOUNT
 $INPUT_LOOP_0
 INPUT
 IF RESULT == 0
-	PRINTFORML %PRINT_CALLNAME(ARG)%はアフターピルを飲まないことにした…
+	PRINTFORML %PRINT_CALLNAME(ARG)%は사후피임약を飲まないことにした…
 ELSEIF RESULT == 1
 	IF MONEY >= 500
 		MONEY -= 500
-		PRINTFORML %PRINT_CALLNAME(ARG)%はアフターピルを飲んだ…
+		PRINTFORML %PRINT_CALLNAME(ARG)%は사후피임약を飲んだ…
 		PRINTFORML 身体の底に疲労が蓄積した……（＋１５）
 		CFLAG:ARG:99 += 15
 		IF RAND:100 < ARG:1
@@ -891,13 +891,13 @@ ELSEIF RESULT == 1
 		IF FLAG:999 == 1
 			SETCOLOR 105,105,105
 			PRINTL 
-			PRINTFORML アフターピル成功率 {ARG:1}％
+			PRINTFORML 사후피임약成功率 {ARG:1}％
 			PRINTFORML 避妊 = {CFLAG:ARG:241}　/　임신 = {TALENT:ARG:임신}
 			PRINTL 
 			RESETCOLOR
 		ENDIF
 	ELSE
-		PRINTFORML なんと、所持金が足りない！
+		PRINTFORML なんと、소지금が足りない！
 	ENDIF
 ELSE
 	PRINTFORML 임신の可能性に慌ててしまう気持ちも分かるが、ここは冷静になるべきだろう…

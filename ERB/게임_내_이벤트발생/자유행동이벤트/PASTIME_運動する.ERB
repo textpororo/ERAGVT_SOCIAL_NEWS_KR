@@ -1,40 +1,40 @@
-﻿@PASTIME_運動する, ARG
+﻿@PASTIME_운동한다, ARG
 #DIM EROEVENT
 #DIMS 目的地
 
 EROEVENT = 0
 
-PRINTL 運動する
+PRINTL 운동한다
 PRINTL 
 IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 	IF TALENT:음란 > 0 && TALENT:초심 < 1
-		PRINTFORML 女性の姿に変身した%PRINT_TRANSCALLNAME(TARGET)%は、身綺麗にして街に繰り出していた。
+		PRINTFORML 女性の姿に変身した%PRINT_TRANSCALLNAME(TARGET)%은(는)、身綺麗にして街に繰り出していた。
 		PRINTW 
 		PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
 		PRINTFORML とどめに派手な色のサイハイソックスを身に付けた姿はいかにも腰の軽そうなギャル風だ。
 	ELSEIF TALENT:여체수용 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は女性化した状態で体を動かしに外出することにした。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)女性化した状態で体を動かしに外出することにした。
 		PRINTW 
 		PRINTFORML 以前に感じていた違和感を今は全く感じなくなり
 		PRINTFORML すっかり変身中のカラダに慣れた事を実感する。
 	ELSE
 		PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は女性化した状態で体を動かしに外出することにした。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)女性化した状態で体を動かしに外出することにした。
 		PRINTW 
 		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだが
 		PRINTFORML 不慣れな為か変な目で見られていないかと気になってしまう。
 	ENDIF
 ELSEIF TALENT:음란 > 0 && TALENT:초심 < 1 && ISFEMALE()
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、身綺麗にして街に繰り出していた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、身綺麗にして街に繰り出していた。
 	PRINTW 
 	PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
 	PRINTFORML とどめに派手な色のサイハイソックスを身に付けた姿はいかにも腰の軽そうなギャル風だ。
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、体を動かしに外出することにした。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、体を動かしに外出することにした。
 ENDIF
 PRINTW 
 PRINTL 
-PRINTFORML 身体を動かそうと思った%PRINT_TRANSCALLNAME(TARGET)%の行き先は・・・
+PRINTFORML 身体を動かそうと思った%PRINT_TRANSCALLNAME(TARGET)%의 行き先は・・・
 PRINTL 
 PRINTFORML [0]運動公園
 PRINTFORML [1]フィットネスクラブ
@@ -85,7 +85,7 @@ CALL PASTIME_NANPA
 IF RESULT > 0 && EROEVENT < 1
 	CALL MESSAGE_PASTIME_NANPA,ARG
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、%目的地%で身体を動かしてきた様だ。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、%目的地%で身体を動かしてきた様だ。
 ENDIF
 
 
@@ -101,7 +101,7 @@ ELSE
 	CCOUNT = CFLAG:330
 ENDIF
 
-PRINTFORM 運動公園に訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 運動公園に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 PRINTFORML 身動きしやすい格好に着替えランニングを始めた。
 PRINTL 
 ;연인なしで運動公園に行った回数で発生
@@ -110,7 +110,7 @@ IF TALENT:교제상대 == 0
 ENDIF
 ;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の服の上からでもわかる
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 服の上からでもわかる
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
 	ELSEIF TALENT:거유 > 1
@@ -125,7 +125,7 @@ IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 	PRINTFORML バストにささっている。
 	PRINTL  
 ELSEIF RAND:2 == 0 && ISHOLE()
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%のバストにささっている。
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 バストにささっている。
 	PRINT 汗に濡れたＴシャツから
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
@@ -148,34 +148,34 @@ ELSEIF RAND:2 == 0 && ISHOLE()
 	PRINTL 
 ENDIF
 IF RAND:2 == 0 && TALENT:B민감 > 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の乳首は他人に比べて敏感で、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 乳首は他人に比べて敏感で、
 	PRINTFORML 走るリズムに合わせて甘い快感を与えていた。
 ENDIF
 IF RAND:2 == 0 && TALENT:음유 > 0 && TALENT:초심 < 1
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の息遣いは荒く苦しそうだが口元はにやけていた。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の乳首は度重なる淫闘で開発され、
-	PRINTFORML 一歩走るごとにこすれる乳首が%PRINT_TRANSCALLNAME(TARGET)%の脳の快楽中枢を刺激していた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 息遣いは荒く苦しそうだが口元はにやけていた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 乳首は度重なる淫闘で開発され、
+	PRINTFORML 一歩走るごとにこすれる乳首が%PRINT_TRANSCALLNAME(TARGET)%의 脳の快楽中枢を刺激していた。
 ENDIF
 IF RAND:2 == 0 && TALENT:모유체질 > 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の乳首は擦れる刺激だけで母乳が出るようになってしまっていた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 乳首は擦れる刺激だけで母乳が出るようになってしまっていた。
 	PRINTFORML 誰かに吸われているわけでもなく、性的興奮があるわけでもないのに、
-	PRINTFORML 走るごとにこすれる乳首が%PRINT_TRANSCALLNAME(TARGET)%のブラを母乳で濡らしていく。
-	PRINTFORML すれ違う男の視線を感じて%PRINT_TRANSCALLNAME(TARGET)%は頬を赤く染めた。
+	PRINTFORML 走るごとにこすれる乳首が%PRINT_TRANSCALLNAME(TARGET)%의 ブラを母乳で濡らしていく。
+	PRINTFORML すれ違う男の視線を感じて%PRINT_TRANSCALLNAME(TARGET)%은(는)頬を赤く染めた。
 ENDIF
 PRINTW
 ;夜の촉수
 IF RAND:4 == 0 && ISHOLE() == 1 && TIME > 0
 	PRINTFORML 捨て犬
 	PRINTFORML 
-	PRINTFORML 夜の運動公園で%PRINT_TRANSCALLNAME(TARGET)%が走っていると物陰から仔犬のような鳴き声が聞こえてきた。
+	PRINTFORML 夜の運動公園で%PRINT_TRANSCALLNAME(TARGET)%이(가)走っていると物陰から仔犬のような鳴き声が聞こえてきた。
 	PRINTFORML 近寄ってみると段ボール箱が捨てられており、中には産まれたばかりの桃色肌の仔犬が数匹……
 	PRINTFORML 仔犬のようなそれをよく見ると四本の足と尻尾は醜く蠢く촉수だった。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は思わず身構えたが、この程度の仔촉수なら子供でも叩き潰せるほど無力だ。
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)思わず身構えたが、この程度の仔촉수なら子供でも叩き潰せるほど無力だ。
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	;ここの優先順位をどうするべきかわからない・・・
 	IF TALENT:모유체질 > 0
 		PRINTFORML ふと自分が모유체질であることを思い出した。
-		PRINTFORML これは敵であるが産まれたばかりの無力さが%PRINT_TRANSCALLNAME(TARGET)%の母性本能を呼び起こす。
+		PRINTFORML これは敵であるが産まれたばかりの無力さが%PRINT_TRANSCALLNAME(TARGET)%의 母性本能を呼び起こす。
 	ELSEIF (TALENT:음란 > 0 || ABL:자위중독 > 2) && TALENT:초심 < 1
 		PRINTFORML ふと邪まな考えが浮かんだ。
 		PRINTFORML これほど無力な촉수なら自慰グッズと同じなのではないかと。
@@ -189,17 +189,17 @@ IF RAND:4 == 0 && ISHOLE() == 1 && TIME > 0
 			PRINT 촉수に기생されているせいだと
 		ENDIF
 		PRINTFORML 理性では反論出来ても
-		PRINTFORML 産まれたばかりの無力さが%PRINT_TRANSCALLNAME(TARGET)%の母性本能を呼び起こす。
+		PRINTFORML 産まれたばかりの無力さが%PRINT_TRANSCALLNAME(TARGET)%의 母性本能を呼び起こす。
 	ENDIF
 	PRINTFORML 試しに人差し指を仔촉수犬の口に近づけると、母犬のおっぱいを吸うように人差し指を吸っていた。
 	SIF TALENT:보추 > 0
 		PRINTFORML 女の子扱いばかりされる生活の中で、心の内に育っていた倒錯した호기심が頭をもたげる……
 	IF ISMALE()
 		;#region
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は周囲に人影のないことを確認すると、シャツをまくり上げ
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)周囲に人影のないことを確認すると、シャツをまくり上げ
 		;#endregion
 	ELSE 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は周囲に人影のないことを確認すると、シャツをまくり上げブラを緩め
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)周囲に人影のないことを確認すると、シャツをまくり上げブラを緩め
 	ENDIF
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
@@ -217,20 +217,20 @@ IF RAND:4 == 0 && ISHOLE() == 1 && TIME > 0
 		PRINT 미성숙な
 	ENDIF
 	PRINTFORML 胸を仔촉수犬の口に近づけると、ようやく母乳にありつけたとばかりに物凄い吸引力で吸い付いた。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はその吸引力に驚いて離そうとしたが、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)その吸引力に驚いて離そうとしたが、
 	PRINTFORML 仔촉수犬が吸い付いたまま離れようとしないので
 	PRINTFORML その生命力の強さに気圧されて諦めた・・・
 	PRINTW
 	IF (TALENT:음란 > 0 || ABL:자위중독 > 2) && TALENT:초심 < 1
 		IF TALENT:모유체질 > 0
-			PRINTFORML 母乳を与え始めてわずかのうちに、%PRINT_TRANSCALLNAME(TARGET)%の음유は性感の火を灯し、
+			PRINTFORML 母乳を与え始めてわずかのうちに、%PRINT_TRANSCALLNAME(TARGET)%의 음유は性感の火を灯し、
 			PRINTFORML か弱い命を救うためではなく快楽に耽った結果として乳を噴き出していた。
 		ELSE
-			PRINTFORML 悪戯心で乳を吸わせ始めてわずかのうちに、%PRINT_TRANSCALLNAME(TARGET)%の음유は性感の火を灯していた。
+			PRINTFORML 悪戯心で乳を吸わせ始めてわずかのうちに、%PRINT_TRANSCALLNAME(TARGET)%의 음유は性感の火を灯していた。
 		ENDIF
 		PRINTFORML 片方の乳首は二匹の、もう片方は三匹の仔촉수犬が競うように乳首を奪い合っている。
 		PRINTFORML その不規則な刺激といざ\@TALENT:모유체질 > 0 ? 母乳 # 獲物 \@にありつけた本気の乳吸いは
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%をさらなる\@TALENT:모유체질 > 0 ? 모유 # 悦楽 \@の高みへと押し上げる。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)さらなる\@TALENT:모유체질 > 0 ? 모유 # 悦楽 \@の高みへと押し上げる。
 		IF ISMALE()
 			;#region
 			PRINTFORML 片腕で仔촉수犬たちを抱きかかえながら、もう片方の手は疼くお尻の中心に伸びていた。
@@ -242,18 +242,18 @@ IF RAND:4 == 0 && ISHOLE() == 1 && TIME > 0
 		PRINTL
 	ELSEIF TALENT:촉수의포로 > 0 || TALENT:기생 > 0
 		IF TALENT:모유체질 > 0
-			PRINTFORML 母乳は順調に出始め慣れてきた%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML 母乳は順調に出始め慣れてきた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 			PRINTFORML もう一匹を空いている胸にあてがい、二匹ずつ同時に授乳した。
 		ELSE
 			PRINTFORML 母乳など出るはずもない%PRINT_TRANSCALLNAME(TARGET)%だったが
 			PRINTFORML もう一匹を空いている胸にあてがい、二匹ずつ同時に授乳ごっこをした。
 		ENDIF
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は生命の尊さと多幸感を感じ取り、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)生命の尊さと多幸感を感じ取り、
 		PRINTFORML その異常さに気付きながらも仔촉수犬たちに癒された。
 		PRINTL
 	ENDIF
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は今この場で処理しようか悩んでいたが
-	PRINTFORML 촉수生物を研究している機関を思い出し、そこへ連絡することにした。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)今この場で処理しようか悩んでいたが
+	PRINTFORML 촉수 생물を研究している機関を思い出し、そこへ連絡することにした。
 	PRINTFORML 情けをかけたつもりか、死よりも残酷な仕打ちを与えたのか、%PRINT_TRANSCALLNAME(TARGET)%にも分からなかった…
 ENDIF
 PRINTW
@@ -261,11 +261,11 @@ PRINTW
 ;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 	IF RAND:2 == 0
-		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%は息も絶え絶えに
+		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)息も絶え絶えに
 		PRINTFORML 膝に手を当てて屈みながら休憩している・・・
 		PRINT 両腕に挟まれた
 	ELSE
-		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%は息も絶え絶えに
+		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)息も絶え絶えに
 		PRINTFORML 芝生に大の字になって休憩している・・・
 		PRINT 呼吸に合わせて上下する
 	ENDIF
@@ -284,32 +284,32 @@ IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 		PRINTFORML 胸が、その双丘の存在感を強調している。
 	ENDIF
 	IF TALENT:음란 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はその双丘を見せつけるようにして
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)その双丘を見せつけるようにして
 		PRINTFORML 男たちの욕정した目線を楽しんでいる。
 	ELSE
 		PRINTFORML 通り過ぎる男たちの好色な目がその双丘に釘付けになっていることに
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は気付いていない。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない。
 	ENDIF
 ELSEIF RAND:3 == 0 && TALENT:보추 > 0
 	IF RAND:2 == 0
-		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%は息も絶え絶えに
+		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)息も絶え絶えに
 		PRINTFORML 膝に手を当てて屈みながら休憩している・・・
 		PRINTFORML 両腕の間から覗く汗塗れのぺたんこな胸が、フェミニンな身体つきを強調している。
 	ELSE
-		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%は息も絶え絶えに
+		PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)息も絶え絶えに
 		PRINTFORML 芝生に大の字になって休憩している・・・
 		PRINTFORML 呼吸に合わせて上下する汗塗れのぺたんこな胸が、フェミニンな身体つきを強調している。
 	ENDIF
 	IF TALENT:음란 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は汗に濡れそぼった肢体を見せつけるようにして
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)汗に濡れそぼった肢体を見せつけるようにして
 		PRINTFORML 男たちの욕정した目線を楽しんでいる。
 	ELSE
 		PRINTFORML 通り過ぎる男たちの好色な目が汗に濡れそぼった肢体に釘付けになっていることに
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は気付いていない。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない。
 	ENDIF
 ELSE
 	PRINTW	
-	PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%はいい汗をかけたようで
+	PRINTFORML 走り終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)いい汗をかけたようで
 	PRINTFORML 心地良い疲労感を感じながら休憩している・・・
 ENDIF
 PRINTW 
@@ -336,7 +336,7 @@ ELSE
 ENDIF
 
 IF CCOUNT == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は身体を作ろうと会員制のフィットネスクラブを訪れた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)身体を作ろうと会員制のフィットネスクラブを訪れた。
 	IF FLAG:50 >= 5
 		PRINTFORML 組織施設の設備はこれ以上無い程に素晴らしい為、単純な興味本位だ。
 	ELSEIF FLAG:50 > 3
@@ -349,10 +349,10 @@ IF CCOUNT == 0
 	PRINTFORML 如何にも体育会系と言った風貌の人物から声が掛けられた。
 	PRINTFORML どうやらこの人物が担当らしく、軽く自己紹介と挨拶を済ませる。
 	PRINTFORML 早速トレーニングを初めて貰えるらしく、着替えるように促されると
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は更衣室へと入って行った。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)更衣室へと入って行った。
 	PRINTL 
 	PRINTFORML 動きやすい格好に着替え、インストラクターと合流すると早速指導が始まった。
-	PRINTFORML まずは能力のチェックから、と言うことらしく%PRINT_TRANSCALLNAME(TARGET)%は指示される運動をこなしていく。
+	PRINTFORML まずは能力のチェックから、と言うことらしく%PRINT_TRANSCALLNAME(TARGET)%은(는)指示される運動をこなしていく。
 	IF ISHOLE() == 1
 		PRINTFORML …少々、スキンシップと言うかボディタッチが多い気がするが
 		PRINTFORML フィットネスクラブではこんなものかもしれないと考え、一先ず気にしないことにした。
@@ -361,10 +361,10 @@ IF CCOUNT == 0
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%も指導への礼を返すと、今日の指導は終了となった・・・
 	EROEVENT = 1
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は身体を作ろうと会員制のフィットネスクラブを訪れた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)身体を作ろうと会員制のフィットネスクラブを訪れた。
 	PRINTL 
 	PRINTFORML 受付を済ませ着替えを終えると丁度インストラクターが来たようだ。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はインストラクターの指導の元、トレーニングを行っている。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)インストラクターの指導の元、トレーニングを行っている。
 	IF ISHOLE() == 0
 		IF RAND:3 == 0 && CCOUNT >= 5
 			PRINTFORML …やはりボディタッチが多く、しかもその手つきはどことなくイヤらしく撫で回すような手つきだ。
@@ -375,7 +375,7 @@ ELSE
 	ENDIF
 	PRINTL 
 	PRINTFORML 次々とメニューをこなしていくと、今日のメニューは終了したらしく終わりを告げられた。
-	PRINTFORML インストラクターに挨拶を済ませた%PRINT_TRANSCALLNAME(TARGET)%はシャワーを浴び服を着替えると
+	PRINTFORML インストラクターに挨拶を済ませた%PRINT_TRANSCALLNAME(TARGET)%은(는)シャワーを浴び服を着替えると
 	PRINTFORML 心地良い疲労感を感じながらクラブを後にした・・・
 ENDIF
 PRINTW 
@@ -401,7 +401,7 @@ ELSE
 	CCOUNT = CFLAG:338
 ENDIF
 IF CCOUNT == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は疲労回復に効果的と話題のマッサージサロンを訪れた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)疲労回復に効果的と話題のマッサージサロンを訪れた。
 	IF FLAG:51 >= 5
 		PRINTFORML 組織施設の設備はこれ以上無い程に素晴らしい為、単純な興味本位だ。
 	ELSEIF FLAG:51 > 3
@@ -412,7 +412,7 @@ IF CCOUNT == 0
 	PRINTL 
 ELSE
 ENDIF
-PRINTFORML 運動し終えた%PRINT_TRANSCALLNAME(TARGET)%はいい汗をかけたようで
+PRINTFORML 運動し終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)いい汗をかけたようで
 PRINTFORML 心地良い疲労感を感じながら休憩している・・・
 PRINTW 
 
@@ -439,7 +439,7 @@ ENDIF
 
 SIF TIME==1
 	PRINT ナイト
-PRINTFORM プールに訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM プールに訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 	IF TALENT:여체수용 == 0
 		PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、
@@ -467,7 +467,7 @@ IF TALENT:음란 > 0 && TALENT:초심 < 1 && ISGIRLY()
 		ENDIF
 		PRINTL に着替えて繰り出していた。
 	PRINTFORML 男漁りに来たと思われても当然の格好だった。
-	PRINTFORML 事実、%PRINT_TRANSCALLNAME(TARGET)%は半分くらいはそのつもりだった…。
+	PRINTFORML 事実、%PRINT_TRANSCALLNAME(TARGET)%은(는)半分くらいはそのつもりだった…。
 ELSE
 	IF ISMANLY()
 		PRINTFORM 普通の
@@ -478,7 +478,7 @@ ELSE
 	ENDIF
 	PRINTFORML 수영복に着替えて繰り出していた。
 	SIF TALENT:거유 > 0
-		PRINTFORML 露出は少ないが体にフィットする수영복が%PRINT_TRANSCALLNAME(TARGET)%の거유を際立たせる・・・
+		PRINTFORML 露出は少ないが体にフィットする수영복が%PRINT_TRANSCALLNAME(TARGET)%의 거유を際立たせる・・・
 	SIF TALENT:보추 > 0 && (TALENT:음란 <= 0 || TALENT:초심 > 0)
 		PRINTFORML なぜ思わず着てしまったのか自分でもよくわからず、もじもじと股間を隠してしまう・・・
 ENDIF
@@ -497,7 +497,7 @@ IF RAND:2 == 0 && ISGIRLY()
 		LOCAL = TALENT:외관
 	SIF CFLAG:1 >= 1
 		LOCAL = TALENT:변신시외관
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
 	ELSEIF TALENT:거유 > 1
@@ -521,7 +521,7 @@ ELSEIF RAND:2 == 0 && ISGIRLY()
 		LOCAL = TALENT:외관
 	SIF CFLAG:1 >= 1
 		LOCAL = TALENT:변신시외관
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF LOCAL == 2
 		PRINT むちむちとした
 	ELSEIF LOCAL == 1
@@ -541,7 +541,7 @@ ELSEIF RAND:2 == 0 && ISGIRLY()
 		LOCAL = TALENT:외관
 	SIF CFLAG:1 >= 1
 		LOCAL = TALENT:변신시외관
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
 	ELSEIF TALENT:거유 > 1
@@ -576,7 +576,7 @@ ELSEIF RAND:2 == 0 && ISGIRLY()
 	PRINTFORML ヒップにささっている。
 ENDIF
 IF  ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は男共が股間のモノを大きくしているのを察して
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)男共が股間のモノを大きくしているのを察して
 	IF TALENT:여체수용 > 0
 		PRINTL ほくそ笑んだ。
 	ELSE	
@@ -584,7 +584,7 @@ IF  ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 	ENDIF
 ENDIF
 IF  TALENT:보추 > 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は男共が股間のモノを大きくしているのを察して
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)男共が股間のモノを大きくしているのを察して
 	IF TALENT:음란 > 0 && TALENT:초심 <= 0
 		PRINTL ほくそ笑んだ。
 	ELSE	
@@ -603,7 +603,7 @@ ENDIF
 SIF ISGIRLY()
 	PRINTL 
 IF RAND:2 == 0 && ABL:노출벽 > 4 && TALENT:초심 < 1
-	PRINTFORM 見られることで快感を得てしまう%PRINT_TRANSCALLNAME(TARGET)%は、
+	PRINTFORM 見られることで快感を得てしまう%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 	IF TALENT:보추 > 0
 		PRINTFORML 男共の視姦によってペニスを疼かせて수영복に先走りのシミを作っていた。
 		PRINTFORML 誰かにバレたらと想像すると腰から脳天に快楽が走り、さらに火照った애널も潤ってくる。
@@ -624,18 +624,18 @@ ELSEIF RAND:1 == 0 && ABL:노출벽 > 2
 		PRINTFORML 男共に視姦されることは極上のオカズだった。
 	ENDIF
 ELSEIF TALENT:보추 > 0
-	PRINTFORML 男共の視線を集めて悪い気はしない自分に戸惑い、%PRINT_TRANSCALLNAME(TARGET)%は落ち着かなかった。
+	PRINTFORML 男共の視線を集めて悪い気はしない自分に戸惑い、%PRINT_TRANSCALLNAME(TARGET)%은(는)落ち着かなかった。
 ELSE
 	IF ISMALE()
 		;#region
-		PRINTFORML 周囲の視線を感じて悪い気はしないものの、%PRINT_TRANSCALLNAME(TARGET)%は少し落ち着かなかった。
+		PRINTFORML 周囲の視線を感じて悪い気はしないものの、%PRINT_TRANSCALLNAME(TARGET)%은(는)少し落ち着かなかった。
 		;#endregion
 	ELSE 
-		PRINTFORML 男共の視線を集めて悪い気はしないものの、%PRINT_TRANSCALLNAME(TARGET)%は少し落ち着かなかった。
+		PRINTFORML 男共の視線を集めて悪い気はしないものの、%PRINT_TRANSCALLNAME(TARGET)%은(는)少し落ち着かなかった。
 	ENDIF
 ENDIF
 PRINTL 
-PRINTFORML 泳ぎ終えた%PRINT_TRANSCALLNAME(TARGET)%はいい汗をかけたようで
+PRINTFORML 泳ぎ終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)いい汗をかけたようで
 PRINTFORML 心地良い疲労感を感じながら休憩している・・・
 PRINTW 
 

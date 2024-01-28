@@ -26,7 +26,7 @@
 ;　ABL:20~24			中毒系				だいぶ開発が進んだ様子を表現したい場合など
 ;　IF FLAG:15 >= FLAG:14	촉수が사정する場合		Ｖ強攻めやＡ強攻めなどと組み合わせて、「な、中に出すのだけは……！」などを表現できる
 ;　IF FLAG:111 > 0		相手が세뇌/흑화の場合		戦いながら正気に戻るように설득해본다、などが表現できる
-;　IF FLAG:13 <= 0		ボスの체력が０以下		とどめ演出用に。RETURN 999 を返すと촉수への与ダメージ表示が１６倍になる
+;　IF FLAG:13 <= 0		보스の체력が０以下		とどめ演出用に。RETURN 999 を返すと촉수への与ダメージ表示が１６倍になる
 ;--------------------------------------------------
 
 
@@ -54,7 +54,7 @@ SETCOLOR 230,170,70
 @KOJO_0_HITOKUTI_SHOP_17
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 「アチャー。こりゃやっちゃったなぁ」
-	PRINTFORML  %CALLNAME%は子種を孕んだ自分の下腹部を見て
+	PRINTFORML  %CALLNAME%은(는) 子種を孕んだ自分の下腹部を見て
 	IF EXP:출산경험 >= 10
 		PRINT 황홀とした表情を浮かべている……
 	ELSEIF EXP:출산경험 >= 5
@@ -70,33 +70,33 @@ ELSEIF BASE:0 <= 강제휴식체력
 	SELECTCASE RAND:1
 		CASE 0
 			PRINTFORML 「アハハ、少し休んでいいかな～」
-			PRINTFORML  %CALLNAME%は強がっているものの、疲労の色を隠せないでいる……
+			PRINTFORML  %CALLNAME%은(는) 強がっているものの、疲労の色を隠せないでいる……
 	ENDSELECT
 ;촉수의포로取得後
 ELSEIF TALENT:150 && RAND:3 == 0
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「早く来てくれないかな～」
-			PRINTFORML  %CALLNAME%は촉수の到来を心から楽しみにしているようだ……
+			PRINTFORML  %CALLNAME%은(는) 촉수の到来を心から楽しみにしているようだ……
 		CASE 1
 			PRINTFORML 「陵辱・裏切り・快楽！　これこそ魔法少女の基本だね！」
-			PRINTFORML  %CALLNAME%は邪悪な笑みを浮かべた。
+			PRINTFORML  %CALLNAME%은(는) 邪悪な笑みを浮かべた。
 		CASE 2
 			PRINTFORML 「いっそのこと촉수を町まで持ってきて…ブツブツ…」
-			PRINTFORML %CALLNAME%はなにやら恐ろしい計画を考えている……
+			PRINTFORML %CALLNAME%은(는) なにやら恐ろしい計画を考えている……
 	ENDSELECT
 ;쾌락각인
 ELSEIF MARK:0 > RAND:5
 	SELECTCASE MARK:0
 		CASE 1
 			PRINTFORML 「あちゃ～、ヤバいやつにハマっちゃったなぁ…」
-			PRINTFORML  %CALLNAME%は촉수の공격に快楽を見出し始めたようだ……
+			PRINTFORML  %CALLNAME%은(는) 촉수の공격に快楽を見出し始めたようだ……
 		CASE 2
 			PRINTFORML 「まあ戦いながら気持ち良くしてもらえるんだから役得ではあるけれど…」
-			PRINTFORML  %CALLNAME%は촉수からの快楽を受け入れつつあるようだ。
+			PRINTFORML  %CALLNAME%은(는) 촉수からの快楽を受け入れつつあるようだ。
 		CASE 3
 			PRINTFORML 「まあこうなっちゃったら仕方ないし、楽しむとしますか！」
-			PRINTFORML  %CALLNAME%は촉수から与えられる快楽を受け入れたようだ。
+			PRINTFORML  %CALLNAME%은(는) 촉수から与えられる快楽を受け入れたようだ。
 	ENDSELECT
 ;고통、공포각인
 ELSEIF (MARK:1 + MARK:3)/2 > RAND:4
@@ -109,13 +109,13 @@ ELSE
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「努力・友情・勝利！　これこそ魔法少女の基本だね！」
-			PRINTFORML  %CALLNAME%は飄々とした笑みを浮かべた。
+			PRINTFORML  %CALLNAME%은(는) 飄々とした笑みを浮かべた。
 		CASE 1
 			PRINTFORML 「いっちにっ！」
-			PRINTFORML  %CALLNAME%は出撃に向けて準備運動をしている。
+			PRINTFORML  %CALLNAME%은(는) 出撃に向けて準備運動をしている。
 		CASE 2
 			PRINTFORML 「ほっ！　はっ！　やぁっ！」
-			PRINTFORML %CALLNAME%は暇つぶしに携帯ゲームをしているようだ。
+			PRINTFORML %CALLNAME%은(는) 暇つぶしに携帯ゲームをしているようだ。
 	ENDSELECT
 ENDIF
 PRINTFORML 
@@ -127,13 +127,13 @@ PRINTFORML
 ;--------------------------------------------------
 @KOJO_0_TRAINING_BEGIN_17
 PRINTFORML 「よし、勝つためには練習あるのみだね！」
-PRINTFORML  %CALLNAME%は柔軟体操をしている。
+PRINTFORML  %CALLNAME%은(는) 柔軟体操をしている。
 
 ;鍛錬終了
 ;--------------------------------------------------
 @KOJO_0_TRAINING_END_17
 PRINTFORML 「いい汗かいたよ」
-PRINTFORML  %CALLNAME%は汗で重くなった衣服を脱ぎながらタオルで汗を拭いている。
+PRINTFORML  %CALLNAME%은(는) 汗で重くなった衣服を脱ぎながらタオルで汗を拭いている。
 
 ;走りこみ
 ;--------------------------------------------------
@@ -141,20 +141,20 @@ PRINTFORML  %CALLNAME%は汗で重くなった衣服を脱ぎながらタオル�
 SELECTCASE RAND:1
 	CASE 0
 		PRINTFORML 「よし…あと10メートル」
-		PRINTFORML  %CALLNAME%は長距離走をしている。
+		PRINTFORML  %CALLNAME%은(는) 長距離走をしている。
 ENDSELECT
 
 ;精神鍛錬
 ;--------------------------------------------------
 @KOJO_0_TRAINING_SEISHIN_17
 PRINTFORML 「……ッ！」
-PRINTFORML  %CALLNAME%は滝行を行っている。
+PRINTFORML  %CALLNAME%은(는) 滝行を行っている。
 
 ;瞑想
 ;--------------------------------------------------
 @KOJO_0_TRAINING_MEISOU_17
 PRINTFORML 「心を…空に…」
-PRINTFORML  %CALLNAME%は座禅を組んでいる。
+PRINTFORML  %CALLNAME%은(는) 座禅を組んでいる。
 
 ;筋トレ
 ;--------------------------------------------------
@@ -162,20 +162,20 @@ PRINTFORML  %CALLNAME%は座禅を組んでいる。
 PRINTFORML 「31…！　32…！」
 SELECTCASE RAND:4
 	CASE 0
-		PRINTFORML  %CALLNAME%は腕立て伏せをしているようだ。
+		PRINTFORML  %CALLNAME%은(는) 腕立て伏せをしているようだ。
 	CASE 1
-		PRINTFORML  %CALLNAME%はスクワットをしているようだ。
+		PRINTFORML  %CALLNAME%은(는) スクワットをしているようだ。
 	CASE 2
-		PRINTFORML  %CALLNAME%は腹筋をしているようだ。
+		PRINTFORML  %CALLNAME%은(는) 腹筋をしているようだ。
 	CASE 3
-		PRINTFORML  %CALLNAME%は背筋をしているようだ。
+		PRINTFORML  %CALLNAME%은(는) 背筋をしているようだ。
 ENDSELECT
 
 ;自衛訓練
 ;--------------------------------------------------
 @KOJO_0_TRAINING_JIEI_17
 PRINTFORML 「グッ！…よし、前よりはラクになった」
-PRINTFORML  %CALLNAME%はピッチングセンターから発射される硬球を受け止めている。
+PRINTFORML  %CALLNAME%은(는) ピッチングセンターから発射される硬球を受け止めている。
 
 ;ダッシュ
 ;--------------------------------------------------
@@ -183,42 +183,42 @@ PRINTFORML  %CALLNAME%はピッチングセンターから発射される硬球�
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「…ふう、70回か。まだまだだね」
-		PRINTFORML  %CALLNAME%は20Mシャトルランを終えたようだ。
+		PRINTFORML  %CALLNAME%은(는) 20Mシャトルランを終えたようだ。
 	CASE 1
 		PRINTFORML 「…ふう、7.88秒か。まだまだだね」
-		PRINTFORML  %CALLNAME%は短距離走を終えたようだ。
+		PRINTFORML  %CALLNAME%은(는) 短距離走を終えたようだ。
 ENDSELECT
 
 ;근거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_0_TRAINING_SHORT_17
 PRINTFORML 「ほっ、はっ、やぁっ！」
-PRINTFORML  %CALLNAME%は次から次へと出現する標的に体術を披露している。
+PRINTFORML  %CALLNAME%은(는) 次から次へと出現する標的に体術を披露している。
 
 ;중거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_0_TRAINING_MIDDLE_17
 PRINTFORML 「……！」
-PRINTFORML  %CALLNAME%は次々と現れる標的を、拳銃を持って次々と打ち落としている。
+PRINTFORML  %CALLNAME%은(는) 次々と現れる標的を、拳銃を持って次々と打ち落としている。
 
 ;원거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_0_TRAINING_LONG_17
 PRINTFORML 「……よしっ！当たった」
-PRINTFORML  %CALLNAME%はスナイパーライフルで見事遠くの標的を撃ち抜いた。
+PRINTFORML  %CALLNAME%은(는) スナイパーライフルで見事遠くの標的を撃ち抜いた。
 
 ;戦術研究
 ;--------------------------------------------------
 @KOJO_0_TRAINING_TACTICS_17
 PRINTFORML 「ここをこうすれば……うん。完璧だね」
-PRINTFORML  %CALLNAME%はチェス盤を前に何やら考え込んでいる。
+PRINTFORML  %CALLNAME%은(는) チェス盤を前に何やら考え込んでいる。
 
-;촉수 구속구が鍛錬の邪魔をする
+;촉수 구속구가 단련을 방해한다
 ;--------------------------------------------------
 @KOJO_0_TRAINING_TENTACLECLOTH_17
 PRINTFORML  %CALLNAME%に取りついた촉수が訓練中に蠢きだした！
 PRINTFORML 「こ、こんなときに…アッ！ヒャァン！」
-PRINTFORML  촉수に体をまさぐられ、%CALLNAME%はただ喘ぐことしかできない……
+PRINTFORML  촉수に体をまさぐられ、%CALLNAME%은(는) ただ喘ぐことしかできない……
 
 
 ;촉수と遭遇
@@ -232,22 +232,22 @@ SELECTCASE RAND:2
 	CASEELSE
 		PRINTFORML 「ちょっとだけ歯ごたえのある敵だったね。ちょっとだけだけど」
 ENDSELECT
-PRINTFORML  %CALLNAME%は小型の촉수を殲滅した。
+PRINTFORML  %CALLNAME%은(는) 小型の촉수を殲滅した。
 
 ;보스 촉수と戦闘
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_BOSS_17
-;最初のボス戦
+;最初の보스戦
 CALL TENTACLE_SURVIVE,"NUM"
 IF (FLAG:3 - RESULT) == 0
 	PRINTFORML 「うっわぁー…グロいなぁ…」
-	PRINTFORML  %CALLNAME%は初めて見る촉수の容貌に拒否反応を示している。
+	PRINTFORML  %CALLNAME%은(는) 初めて見る촉수の容貌に拒否反応を示している。
 ELSE
 	IF ABL:촉수중독
 		SELECTCASE ABL:촉수중독
 			CASE IS >= 3
 				PRINTFORML 「お手柔らかに、ね♥」
-				PRINTFORML  %CALLNAME%は촉수に欲にまみれた目線を送っている……
+				PRINTFORML  %CALLNAME%은(는) 촉수に欲にまみれた目線を送っている……
 			CASEELSE
 				PRINTFORML 「……♥」
 				PRINTFORML 「…ハッ！　キ、キミなんか3秒で倒してやる！」
@@ -256,10 +256,10 @@ ELSE
 		SELECTCASE RAND:2
 			CASE 0
 				PRINTFORML 「チョチョイと倒すよ！」
-				PRINTFORML  %CALLNAME%は武器を構えながら宣言した！
+				PRINTFORML  %CALLNAME%은(는) 武器を構えながら宣言した！
 			CASE 1
 				PRINTFORML 「この%SELF_CALL()%に歯向かったこと、地獄で後悔しな！」
-				PRINTFORML  %CALLNAME%は好戦的な笑みを浮かべながら宣言した！
+				PRINTFORML  %CALLNAME%은(는) 好戦的な笑みを浮かべながら宣言した！
 		ENDSELECT
 	ENDIF
 ENDIF
@@ -276,14 +276,14 @@ SELECTCASE RAND:2
 		PRINTFORML 「…だからね、ちょっと大人しくしててくれるかな」
 ENDSELECT
 
-;初めて洗脳キャラと対峙した
+;初めて세뇌キャラと対峙した
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_SENNOU_FIRST_17
 PRINTFORML 「さーて」
 PRINTFORML 「恨みはないけど、助けるためだからね」
-PRINTFORML  %CALLNAME%は軽口を叩いているが、その眼差しは真剣そのものだ……
+PRINTFORML  %CALLNAME%은(는) 軽口を叩いているが、その眼差しは真剣そのものだ……
 
-;洗脳キャラと対峙
+;세뇌キャラと対峙
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_SENNOU_17
 PRINTFORML 「叩けば直る、って言うしね」
@@ -293,7 +293,7 @@ PRINTFORML 「叩けば直る、って言うしね」
 @KOJO_0_ENCOUNT_AKUOTI_FIRST_17
 PRINTFORML 「怒ってないから戻ってきなよ」
 PRINTFORML 「……だなんて言っても君は聞いてくれないんだろうね」
-PRINTFORML  %CALLNAME%は普段よりも険しい表情でかつての仲間と対峙している。
+PRINTFORML  %CALLNAME%은(는) 普段よりも険しい表情でかつての仲間と対峙している。
 PRINTFORML  しかしその顔はどこか儚く、悲しげだ……
 
 ;흑화 캐릭터と対峙
@@ -327,19 +327,19 @@ PRINTL 「今から泣いて謝っても遅いからね！」
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CLOTH_OUTERDAMAGE_17
 PRINTFORML 「イヤーンエッチ！」
-PRINTFORML  %CALLNAME%は촉수をからかうように笑っている。
+PRINTFORML  %CALLNAME%은(는) 촉수をからかうように笑っている。
 
 ;アウターが破れた
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CLOTH_OUTERBREAK_17
 PRINTFORML 「ひ、ひひ人前で脱がすだなんてハレンチな！」
-PRINTFORML  %CALLNAME%は촉수に説教をしているが、ちょっとした冗談のつもりのようだ。
+PRINTFORML  %CALLNAME%은(는) 촉수に説教をしているが、ちょっとした冗談のつもりのようだ。
 
 ;インナーが破れ始めた
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CLOTH_INNERDAMAGE_17
 PRINTFORML 「ちょっと！　乙女の秘密を覗くのはダメだよ！」
-PRINTFORML  %CALLNAME%は촉수に無意味な抗議をしている。
+PRINTFORML  %CALLNAME%은(는) 촉수に無意味な抗議をしている。
 
 ;インナーが破れた
 ;--------------------------------------------------
@@ -355,7 +355,7 @@ PRINTFORML 「うわっヤバッ！」
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CHARA_TETTAI_SUCCESS_17
 PRINTFORML 「三十六計逃げるが勝ちってね！　…あれ？　違う？」
-PRINTFORML  %CALLNAME%は촉수の공격の隙をつき、一気に逃げ出した。
+PRINTFORML  %CALLNAME%은(는) 촉수の공격の隙をつき、一気に逃げ出した。
 
 ;撤退失敗
 ;--------------------------------------------------
@@ -366,7 +366,7 @@ SELECTCASE RAND:2
 		PRINTFORML  %촉수市民("촉수","男たち")%の隙の少なさに、%CALLNAME%も焦りを隠せない……
 	CASEELSE
 		PRINTFORML 「まあ、失敗は成功の基って言うしね」
-		PRINTFORML  %CALLNAME%はまだまだ余裕を保ったままのようだ。
+		PRINTFORML  %CALLNAME%은(는) まだまだ余裕を保ったままのようだ。
 ENDSELECT
 
 ;근거리공격
@@ -384,7 +384,7 @@ SELECTCASE RAND:5
 	CASE 4
 		PRINTFORML 「ホラッ！」
 ENDSELECT
-;PRINTFORML  %CALLNAME%は촉수の死角目掛けて鋭い蹴りをお見舞いした。
+;PRINTFORML  %CALLNAME%은(는) 촉수の死角目掛けて鋭い蹴りをお見舞いした。
 
 
 ;중거리공격
@@ -402,7 +402,7 @@ SELECTCASE RAND:5
 	CASE 4
 		PRINTFORML 「かわしてごらん！」
 ENDSELECT
-;PRINTFORML  %CALLNAME%は촉수の不意をつくように拳銃を発砲した。
+;PRINTFORML  %CALLNAME%은(는) 촉수の不意をつくように拳銃を発砲した。
 
 ;원거리공격
 ;--------------------------------------------------
@@ -419,19 +419,19 @@ SELECTCASE RAND:5
 	CASE 4
 		PRINTFORML 「失せろ！」
 ENDSELECT
-;PRINTFORML  %CALLNAME%は対촉수用ライフルを放った。
+;PRINTFORML  %CALLNAME%은(는) 対촉수用ライフルを放った。
 
 ;방어
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CHARA_DEFENSE_17
 PRINTFORML 「！！！……おお怖い怖い」
-PRINTFORML  %CALLNAME%は不敵な笑みを浮かべている。
+PRINTFORML  %CALLNAME%은(는) 不敵な笑みを浮かべている。
 
 ;거리를벌린다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CHARA_TAKEAWAY_17
 PRINTFORML 「오니さんこっちらっこっこまっでおいでってね！」
-PRINTFORML  %CALLNAME%は촉수を挑発しながら距離をとった。
+PRINTFORML  %CALLNAME%은(는) 촉수を挑発しながら距離をとった。
 
 ;아무것도안한다
 ;--------------------------------------------------
@@ -585,7 +585,7 @@ PRINTFORML 「そういうのはパスで！」
 ;--------------------------------------------------
 @KOJO_0_BATTLE_TENTACLE_TAIEKI_HIT_17
 PRINTFORML 「うげぇベトベト……」
-PRINTFORML  %CALLNAME%は촉수の体液に塗れながら眉を顰めている。
+PRINTFORML  %CALLNAME%은(는) 촉수の体液に塗れながら眉を顰めている。
 SIF TALENT:촉수의포로
 	PRINTFORML しかし%CALLNAME%の顔は真っ赤に染まり、だらしなく蕩けた顔は욕정を隠しきれていない……
 
@@ -600,10 +600,10 @@ PRINTFORML 「そんな気持ち悪いものを出さないでほしいね！」
 @KOJO_0_BATTLE_TENTACLE_OSHITAOSU_SUCCESS_17
 IF TALENT:촉수의포로
 	PRINTFORML 「あっ…♥」
-	PRINTFORML %CALLNAME%は期待に満ちた目を촉수に向けた……
+	PRINTFORML %CALLNAME%은(는) 期待に満ちた目を촉수に向けた……
 ELSE
 	PRINTFORML 「しまった！」
-	PRINTFORML %CALLNAME%は촉수に隙をつかれて拘束されてしまった……
+	PRINTFORML %CALLNAME%은(는) 촉수に隙をつかれて拘束されてしまった……
 ENDIF
 
 ;敵の押し倒すを回避
@@ -614,7 +614,7 @@ IF TALENT:촉수의포로
 ELSE
 	PRINTFORML 「ふぃー助かったぁ…」
 ENDIF
-PRINTFORML  %CALLNAME%は間一髪といったところで回避したようだ。
+PRINTFORML  %CALLNAME%은(는) 間一髪といったところで回避したようだ。
 
 
 ;敵から受ける性コマンド関連
@@ -654,10 +654,10 @@ ENDIF
 @KOJO_0_SEX_SPCOM1_17
 IF TALENT:촉수의포로 || ABL:V감각 >= 4
 	PRINTFORML 「ハァァンッ♥」
-	PRINTFORML  %CALLNAME%は%ESTRUS_TEXT_F(TARGET)%子宮を촉수で小突かれ、強い快楽に襲われている……
+	PRINTFORML  %CALLNAME%은(는) %ESTRUS_TEXT_F(TARGET)%子宮を촉수で小突かれ、強い快楽に襲われている……
 ELSE
 	PRINTFORML 「グッ！グァッ！」
-	PRINTFORML  %CALLNAME%は%ESTRUS_TEXT_F(TARGET)%子宮を촉수で小突かれ、痛みにうめいている……
+	PRINTFORML  %CALLNAME%은(는) %ESTRUS_TEXT_F(TARGET)%子宮を촉수で小突かれ、痛みにうめいている……
 ENDIF
 
 ;COM4：A攻め弱　애널を撫で回す
@@ -690,10 +690,10 @@ ENDIF
 IF TALENT:촉수의포로 || ABL:A감각 == 5
 	PRINTFORML 「ア゛♥ア゛ァ゛ッ♥」
 	PRINTFORML 「お゛じり゛でぇ゛っ♥お゛じり゛でにんじんしぢゃうう゛っ♥」
-	PRINTFORML %CALLNAME%は촉수の妙技に飲まれ、狂ったように快楽を貪っている……
+	PRINTFORML %CALLNAME%은(는) 촉수の妙技に飲まれ、狂ったように快楽を貪っている……
 ELSE
 	PRINTFORML 「ヴグゥッ！！」
-	PRINTFORML %CALLNAME%の菊門を蠢く촉수の激しさに、%CALLNAME%は痛みを訴える……
+	PRINTFORML %CALLNAME%の菊門を蠢く촉수の激しさに、%CALLNAME%은(는) 痛みを訴える……
 ENDIF
 
 ;COM6：B攻め弱　胸を揉みしだく
@@ -704,7 +704,7 @@ IF TALENT:촉수의포로 || ABL:B감각 >= 2
 	PRINTFORML 「あっ♥そんなっ♥やさしく揉まないでぇっ♥」
 ELSE
 	PRINTFORML 「……」
-	PRINTFORML  %CALLNAME%は露骨に嫌そうな顔をしている
+	PRINTFORML  %CALLNAME%은(는) 露骨に嫌そうな顔をしている
 ENDIF
 
 ;COM7：B攻め強　乳首に吸い付く
@@ -715,7 +715,7 @@ IF TALENT:촉수의포로 || ABL:B감각 >= 3
 	PRINTFORML 「乳首ペロペロしちゃだめぇっ♥」
 ELSE
 	PRINTFORML 「くっ…」
-	PRINTFORML %CALLNAME%は촉수に乳首を吸われることに、不快感を隠せないようだ……
+	PRINTFORML %CALLNAME%은(는) 촉수に乳首を吸われることに、不快感を隠せないようだ……
 ENDIF
 
 ;SPCOM3：B攻めSP　乳首に噛み付く
@@ -958,26 +958,26 @@ PRINTFORML  全方位から来る快楽に軽口を叩くキャパシティも�
 @KOJO_0_SEX_MULTIECSTASY_CVA_17
 PRINTFORML 「あっちょっと待って！？」
 PRINTFORML 「下のほうからぐ…るぅッ！？♥」
-PRINTFORML  %CALLNAME%は下半身の全てを責め立てた공격になす術もない……
+PRINTFORML  %CALLNAME%은(는) 下半身の全てを責め立てた공격になす術もない……
 
 ;CVB三重絶頂
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVB_17
 PRINTFORML 「あっちょっとやめて！」
 PRINTFORML 「やめないと…ヒャァァン♥」
-PRINTFORML  %CALLNAME%は性感帯をことごとく責め立てられて無様にもイってしまったようだ……
+PRINTFORML  %CALLNAME%은(는) 性感帯をことごとく責め立てられて無様にもイってしまったようだ……
 
 ;CAB三重絶頂
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CAB_17
 PRINTFORML 「アンッ♥ハァンッ♥ヒィャンッ♥」
-PRINTFORML  %CALLNAME%は前と後ろからの快楽に、胸を責め立てられて絶頂してしまった……
+PRINTFORML  %CALLNAME%은(는) 前と後ろからの快楽に、胸を責め立てられて絶頂してしまった……
 
 ;VAB三重絶頂
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VAB_17
 PRINTFORML 「ア゛ッ♥エ゛ッ♥オ゛ッ♥」
-PRINTFORML  %CALLNAME%は二つの穴を責め立てられ、おまけに胸をいじくられ、そして達した。
+PRINTFORML  %CALLNAME%은(는) 二つの穴を責め立てられ、おまけに胸をいじくられ、そして達した。
 
 ;CV二重絶頂
 ;--------------------------------------------------
@@ -989,7 +989,7 @@ PRINTFORML 촉수が%CALLNAME%の女性器に与える容赦ない快楽に彼�
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CA_17
 PRINTFORML 「クリだけじゃなくてっ♥お尻まで気持ちよくなっちゃうぅ♥」
-PRINTFORML %CALLNAME%は陰核とアヌスのもたらす快楽の奔流に飲み込まれている……
+PRINTFORML %CALLNAME%은(는) 陰核とアヌスのもたらす快楽の奔流に飲み込まれている……
 
 ;CB二重絶頂
 ;--------------------------------------------------
@@ -1001,19 +1001,19 @@ PRINTFORML 女性の証を二箇所同時に責め立てられ、%CALLNAME%の�
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VA_17
 PRINTFORML 「前も後ろもだなんて卑怯だよぅ…♥」
-PRINTFORML %CALLNAME%は二つの穴を容赦なく責める촉수に情けなくイかされた。
+PRINTFORML %CALLNAME%은(는) 二つの穴を容赦なく責める촉수に情けなくイかされた。
 
 ;VB二重絶頂
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VB_17
 PRINTFORML 「おマンコもおっぱいもいっしょになんて気持ちよくなっちゃうでしょぉぉ♥」
-PRINTFORML 乳房と陰唇を同時に絶頂まで導かれた%CALLNAME%ははしたなく獣の本性をさらけ出している……
+PRINTFORML 乳房と陰唇を同時に絶頂まで導かれた%CALLNAME%은(는) はしたなく獣の本性をさらけ出している……
 
 ;AB二重絶頂
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_AB_17
 PRINTFORML 「お尻とっ♥おっぱいでっ♥イっちゃうなんてぇっ♥」
-PRINTFORML %CALLNAME%はその乳房と不浄の穴による圧倒的な快楽に翻弄されている……
+PRINTFORML %CALLNAME%은(는) その乳房と不浄の穴による圧倒的な快楽に翻弄されている……
 
 
 
@@ -1069,10 +1069,10 @@ ENDIF
 @KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_17
 IF TALENT:촉수의포로 || ABL:정액중독 >= 2
 	PRINTFORML 「フンッ…ンッ…ハァ♥濃くて飲み込みづらくて…おいしい♥」
-	PRINTFORML  %CALLNAME%は촉수の精液に病みつきになってしまっている。
+	PRINTFORML  %CALLNAME%은(는) 촉수の精液に病みつきになってしまっている。
 ELSE
 	PRINTFORML 「ヴッ！…オエッ、ゲホッゲホッ」
-	PRINTFORML  %CALLNAME%は精液を吐き出し、촉수を睨み付けた。
+	PRINTFORML  %CALLNAME%은(는) 精液を吐き出し、촉수を睨み付けた。
 ENDIF
 
 ;口内に대량사정
@@ -1080,10 +1080,10 @@ ENDIF
 @KOJO_0_SEX_TENTACLE_SYASEI_MOUTH_HI_17
 IF TALENT:촉수의포로 || ABL:정액중독 >= 3
 	PRINTFORML 「ウグッ！　ンッ…クッ…ヴヴンッ…ハァ…♥」
-	PRINTFORML  %CALLNAME%は大量の精液に咽ながらも、황홀とした笑みを浮かべている……
+	PRINTFORML  %CALLNAME%은(는) 大量の精液に咽ながらも、황홀とした笑みを浮かべている……
 ELSE
 	PRINTFORML 「ングゥッ！　グッ…グブッ…ググゥッ…ゲー、嫌なモン飲まされた」
-	PRINTFORML  %CALLNAME%は大量の精液を喉に叩きつけられた。
+	PRINTFORML  %CALLNAME%은(는) 大量の精液を喉に叩きつけられた。
 	PRINTFORML  半ば反射的に吐き出したものの、多少飲み込んでしまったようだ……
 ENDIF
 
@@ -1137,7 +1137,7 @@ PRINTFORML 「…終わった。終わったんだ」
 @KOJO_0_BATTLE_END_RESCUED_17
 PRINTFORML 「救出完了！」
 
-;洗脳中キャラの救出
+;세뇌中キャラの救出
 ;--------------------------------------------------
 @KOJO_0_BATTLE_END_RESCUE_SENNOU_17
 PRINTFORML 「ホラいったでしょ？　叩けば直るって」
@@ -1164,7 +1164,7 @@ PRINTFORML 「…どうにか追い返しはできたか」
 
 ;素質関連
 
-;처녀喪失
+;처녀 상실
 ;--------------------------------------------------
 @KOJO_0_SEX_LOSTVIRGIN_17
 PRINTFORML 「…ッ！」
@@ -1175,21 +1175,21 @@ PRINTFORML 「…これで大人の階段を一つ登った、と考えるべき
 @KOJO_0_GETTALENT_TORIKO_17
 PRINTFORML 「あぁ…촉수気持ちいいよぉ…♥」
 PRINTFORML 「もっとぉ…もっとぉ…アンッ♥」
-PRINTFORML  %CALLNAME%は촉수のことを想いながら、一晩中己を慰めた……
+PRINTFORML  %CALLNAME%은(는) 촉수のことを想いながら、一晩中己を慰めた……
 
 ;음란取得
 ;--------------------------------------------------
 @KOJO_0_GETTALENT_INRAN_17
 PRINTFORML 「アァ…気持ちいいのぉ…♥」
 PRINTFORML 「気持ちいいのだいしゅきぃ…♥」
-PRINTFORML  %CALLNAME%は황홀とした表情で己を慰めている。
+PRINTFORML  %CALLNAME%은(는) 황홀とした表情で己を慰めている。
 PRINTFORML  どうやら快楽の虜になってしまったようだ……
 
 ;음핵取得
 ;--------------------------------------------------
 @KOJO_0_GETTALENT_INKAKU_17
 PRINTFORML 「止まらない…止まらないよぉ…♥」
-PRINTFORML  %CALLNAME%は\@ISPENIS() ? ペニスをしごきながら# クリスリスをいじりながら\@切ない声を上げている……
+PRINTFORML  %CALLNAME%은(는) \@ISPENIS() ? ペニスをしごきながら# クリスリスをいじりながら\@切ない声を上げている……
 
 ;음호取得
 ;--------------------------------------------------
@@ -1327,7 +1327,7 @@ PRINTFORML （これは……ちょっとミスしちゃったかな）
 ;촉수의포로で体が竦む
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_TORIKO_17
-PRINTFORML  %CALLNAME%は촉수の姿を視認した途端、その場にひれ伏してしまった。
+PRINTFORML  %CALLNAME%은(는) 촉수の姿を視認した途端、その場にひれ伏してしまった。
 
 ;快楽で体が竦む
 ;--------------------------------------------------
@@ -1399,10 +1399,10 @@ PRINTFORML 「お尻の…穴がアッ♥　こんなに気持ちいいなんて
 ;--------------------------------------------------
 @KOJO_0_PRISON_PRISENTENCE_17
 
-;洗脳になった
+;세뇌になった
 ;--------------------------------------------------
 @KOJO_0_PRISON_SENNOU_17
-PRINTFORML  %CALLNAME%はいつものように、촉수への奉仕を強制させられていた。
+PRINTFORML  %CALLNAME%은(는) いつものように、촉수への奉仕を強制させられていた。
 PRINTFORML  幾度となく精液を飲み込まされ、撒き散らされ、絶頂に追い込まれながらも、彼女は決して心から촉수に堕ちるようなことはなかった。
 PRINTFORML  そして今日も、そうである筈だった。
 PRINTFORML  今日、%CALLNAME%の心は確かに촉수に反抗していた。飲まれまいとしていた。
@@ -1414,9 +1414,9 @@ PRINTFORML  彼女がそれに気づいたとき、すでに촉수は今まで�
 ;흑화하고 말았다
 ;--------------------------------------------------
 @KOJO_0_PRISON_AKUOTI_17
-PRINTFORML  %CALLNAME%は思う。何故自分は촉수を拒んでいたのかと。
+PRINTFORML  %CALLNAME%은(는) 思う。何故自分は촉수を拒んでいたのかと。
 PRINTFORML  そしてこう考える。촉수の素晴らしさを理解していなかったからである、と。
-PRINTFORML  ならば他の者にも教えてやれば良い。%CALLNAME%は愛しい\@EXP:근친교배경험 >= 1 ? 子供たち # 촉수\@に奉仕しながら決意した。
+PRINTFORML  ならば他の者にも教えてやれば良い。%CALLNAME%은(는) 愛しい\@EXP:근친교배경험 >= 1 ? 子供たち # 촉수\@に奉仕しながら決意した。
 PRINTFORML  それが"彼ら"によって植えつけられたものであるとも知らずに……。
 
 ;取り込まれ
@@ -1433,13 +1433,13 @@ IF EXP:근친교배경험 >= 1
 	PRINTFORML  飲み込まれていく最中、彼女の生んだ落し子たちが彼女の膣を、尻を、胸を、全身を責め立てる。
 	PRINTFORML  しかし彼女にはそのようなことは判らない。
 ENDIF
-PRINTFORML  촉수に挑んだ勇敢な少女%CALLNAME%は、촉수の中に飲み込まれ、そして消えた。
+PRINTFORML  촉수に挑んだ勇敢な少女%CALLNAME%은(는) 、촉수の中に飲み込まれ、そして消えた。
 
 ;후타나리化
 ;--------------------------------------------------
 @KOJO_0_PRISON_HUTANARI_17
 PRINTFORML 「ハハッ……これで二倍気持ちよくなれるってことかな？」
-PRINTFORML  %CALLNAME%はずいぶんと消耗した様子だがそれでも軽口を忘れない
+PRINTFORML  %CALLNAME%은(는) ずいぶんと消耗した様子だがそれでも軽口を忘れない
 
 ;모유체질化
 ;--------------------------------------------------
@@ -1550,7 +1550,7 @@ IF TALENT:촉수의포로
 ELSE
 	PRINTFORML 「グヴッ！」
 	PRINTFORML 「グッ…ン゛ッ…」
-	PRINTFORML  %CALLNAME%は촉수に無理やり奉仕させられて、殺気に満ちた目で촉수をにらんでいる……
+	PRINTFORML  %CALLNAME%은(는) 촉수に無理やり奉仕させられて、殺気に満ちた目で촉수をにらんでいる……
 ENDIF
 
 ;羞恥な攻め
@@ -1563,11 +1563,11 @@ ENDIF
 IF TALENT:촉수의포로
 	PRINTFORML 「ハンッ♥アッ♥ハウンッ♥」
 	PRINTFORML 「もう…そんなにがっついちゃダメだよ♥アッ♥」
-	PRINTFORML  %CALLNAME%は근친상간の快楽に溺れている……
+	PRINTFORML  %CALLNAME%은(는) 근친상간の快楽に溺れている……
 ELSE
 	PRINTFORML 「あっ♥ハンッ♥ヒャンッ♥」
 	PRINTFORML 「なん…で…ヒンッ♥」
-	PRINTFORML  %CALLNAME%は촉수とは言え、我が子の凶行に戸惑いを隠しきれていないようだ……
+	PRINTFORML  %CALLNAME%은(는) 촉수とは言え、我が子の凶行に戸惑いを隠しきれていないようだ……
 ENDIF
 
 ;후타나리攻め
@@ -1629,12 +1629,12 @@ ENDIF
 IF TALENT:촉수의포로
 	PRINTFORML 「…お願い」
 	PRINTFORML 「%SELF_CALL()%を君たちナシじゃいられない음란に…して？♥」
-	PRINTFORML %CALLNAME%は촉수に身体を預けた……
+	PRINTFORML %CALLNAME%은(는) 촉수に身体を預けた……
 ELSE
 	PRINTFORML 「や、やめろ！」
 	PRINTFORML %CALLNAME%の静止もむなしく、その体内に촉수が入り込む
 	PRINTFORML 「…ッ！　…アッ…アアッ…♥」
-	PRINTFORML その촉수がもたらす快楽と熱に、%CALLNAME%はただ喘ぐことしかできない……
+	PRINTFORML その촉수がもたらす快楽と熱に、%CALLNAME%은(는) ただ喘ぐことしかできない……
 ENDIF
 
 

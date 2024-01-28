@@ -6,7 +6,7 @@
 @BIRTH_DAUGHTER_HUMAN_ORIGIN
 #DIM CCOUNT
 
-;出産するキャラは疲労度が蓄積する
+;出産するキャラは피로도가 蓄積する
 CFLAG:99 += 45 + PREGNANCY_BELLY_EXPAND(TARGET) / 20
 CFLAG:222 = 0
 CFLAG:227 = 0
@@ -112,7 +112,7 @@ ELSE
 	ELSEIF CFLAG:230 == 근친상간
 		PRINTFORML だがそれは근친상간によって産まれた禁忌の子だった。
 		PRINTFORML このことは誰にも、子供本人にすら言えないという罪悪感を飲み込みながら、
-		PRINTFORML %CALLNAME%はこれから育児をどうするべきか悩み続けた…
+		PRINTFORML %CALLNAME%은(는) これから育児をどうするべきか悩み続けた…
 	ELSEIF CFLAG:230 == 사랑하는사람
 		;사랑하는사람の子供を産んだ回数
 		CFLAG:219++
@@ -151,7 +151,7 @@ ELSE
 		PRINTFORML 我が子に過酷な運命を課してまで、手元に置いておくべきだろうか？
 		PRINTL
 		PRINTFORML [0] 아니오
-		PRINTFORML [1] 네（所持金:${MONEY}）
+		PRINTFORML [1] 네（소지금:${MONEY}）
 		$INPUT_CHILD_CRADLE
 		INPUT
 		IF RESULT == 1

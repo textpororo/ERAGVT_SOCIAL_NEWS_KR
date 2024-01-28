@@ -578,7 +578,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 
 				TRYCALL KYUSHUTU_SUCCESS_HANTEI
-				;ラスボス強化
+				;최종 보스強化
 				;TRYCALLFORM LASTBOSS_KYOUKA_{FLAG:11}_BATTLEEND,0
 				BEGIN AFTERTRAIN
 			ELSE
@@ -752,7 +752,7 @@ ELSE
 		;의욕 스위치#####
 		SIF CFLAG:43 == 503
 			LOCAL += 30
-		;FEAT効果によるゲージ増加量低下
+		;FEAT 효과에 따른ゲージ増加量低下
 		SIF TALENT:불굴 > 0
 			LOCAL -= 15
 		SIF TALENT:스태미나 > 0
@@ -862,13 +862,13 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && LOCAL:2 > 0 && RAND:100
 	ENDIF
 ELSEIF CFLAG:1 == 1 && LOCAL:2 > 0 && RESULT < 50 && (TCVARn:12 & 기절) == 0
 	PRINTL 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は기력を振り絞り何とか変身を維持した！
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)기력を振り絞り何とか変身を維持した！
 ENDIF
 
-;ボスの解析度を지성の基礎値に応じて上昇させる（実数値ではない）
+;보스の解析度を지성の基礎値に応じて上昇させる（実数値ではない）
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:20 < 100
 	LOCAL = MAX(BASE:지성 - 100, 1)
-	;戦闘支援による補正
+	;전투 지원による補正
 	CALL CALC_CHISEI_SHIEN(2)
 	LOCAL = RESULT
 	;心境による増減

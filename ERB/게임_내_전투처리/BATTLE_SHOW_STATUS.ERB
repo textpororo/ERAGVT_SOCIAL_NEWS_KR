@@ -83,7 +83,7 @@ SETCOLOR 250,75,15
 ;襲撃、逃げ遅れ市民
 IF GETBATTLESITUATION("撤退不可") == 1 || ((FLAG:70 + FLAG:71) > 0 && CONFIG_CHECK_EVENT_F(3) > 0)
 	PRINTFORM [撤退不能]
-;クズ市民offかつ通常戦闘の場合
+;악질 시민offかつ通常戦闘の場合
 ELSEIF TFLAG:0 < 8 && CONFIG_CHECK_EVENT_F(3) == 0 && PERCENT_CAL_F(BASE:체력, MAXBASE:체력) > 50 && PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 50 && FLAG:45 == 0
 	PRINTFORM [撤退可能まで {8 - TFLAG:0}ターン]
 ENDIF
@@ -157,7 +157,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
 ;적 캐릭터
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	IF CFLAG:(FLAG:111):0 == 상태_세뇌
-		PRINTFORM 洗脳された
+		PRINTFORM 세뇌された
 		PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 		PRINT [
 		CALL TENTACLE_ACCESS_PRISON,FLAG:111, "NAME"
@@ -174,7 +174,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	PRINTFORM  Lv.{ABL:(FLAG:111):레벨} 
 ENDIF
 
-;幽閉・洗脳状況
+;幽閉・세뇌状況
 LOCAL = 0
 LOCAL:1 = 0
 LOCALS'=""
@@ -182,7 +182,7 @@ LOCALS:1'=""
 ;보스 촉수
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
 	FOR CCOUNT, 1, CHARANUM
-		;誰かを洗脳している敵ならその尖兵を表示
+		;誰かを세뇌している敵ならその尖兵を表示
 		IF CFLAG:CCOUNT:0 == 상태_세뇌 && CFLAG:CCOUNT:21 == FLAG:11
 			LOCAL:1 += 1
 			LOCALS:1+="["+CALLNAME:CCOUNT+"]"
@@ -197,7 +197,7 @@ ELSE
 	FOR CCOUNT, 1, CHARANUM
 		IF CCOUNT == FLAG:111
 			;
-		;誰かを洗脳している敵ならその尖兵を表示
+		;誰かを세뇌している敵ならその尖兵を表示
 		ELSEIF CFLAG:CCOUNT:0 == 상태_세뇌 && CFLAG:CCOUNT:21 == FLAG:111
 			LOCAL:1 += 1
 			LOCALS:1+="["+CALLNAME:CCOUNT+"]"
@@ -211,7 +211,7 @@ ENDIF
 SIF LOCAL
 	PRINTFORM 　幽閉中：%LOCALS%
 SIF LOCAL:1
-	PRINTFORM 　洗脳中：%LOCALS:1%
+	PRINTFORM 　세뇌中：%LOCALS:1%
 ;SIF LOCAL || LOCAL:1
 ;	PRINTL 
 PRINTL 
@@ -227,7 +227,7 @@ CALL SHOW_TRAIN_PALAM_STATUS("下部")
 
 
 ;通常の雑魚戦(制限15ターン)
-;通常のボス戦 (制限50ターン)
+;通常の보스戦 (制限50ターン)
 ;襲来イベント(15ターン耐久で勝利)
 IF 턴상한 > 0
 	PRINT 残り時間
@@ -461,7 +461,7 @@ PRINTFORM %LOCALS:1%
 RESETCOLOR
 PRINT ]
 
-;戦闘支援による지성補正率計算
+;전투 지원による지성補正率計算
 ;ARG　支援補正の基礎値パターン
 @CALC_CHISEI_SHIEN(ARG)
 #DIM CHISEI_CAL

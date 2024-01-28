@@ -32,7 +32,7 @@ endif
 @EVENT_BATTLE_EXEC_5
 
 
-PRINTFORML 촉수生物が這いずった粘液の痕だけを頼りに、アリの巣よりも複雑に枝分かれする触巣を潜る%PRINT_CALLNAME(TARGET)%。
+PRINTFORML 촉수 생물が這いずった粘液の痕だけを頼りに、アリの巣よりも複雑に枝分かれする触巣を潜る%PRINT_CALLNAME(TARGET)%。
 PRINTFORML 粘液は時間が経てば揮発し、手掛かりとして機能しなくなるばかりか媚毒ガスとして追加の被害をもたらす。
 PRINTFORML …地上は完全な混戦状態で、特殊部隊をもってしても制圧には時間が掛かりそうだった。
 PRINTFORML 単身突入する%PRINT_CALLNAME(TARGET)%の背後で増援を誓った彼らだったが、おそらく揮発には間に合わないだろう。
@@ -123,7 +123,7 @@ PRINTFORML %PRINT_CALLNAME(TARGET)%が意を決して空洞の中心まで踏み
 
 ;＠中国版
 ;イベント分岐：能力値と乱数に基づいてさまざまな戦闘状況に突入します。
-;ボスor흑화で공격の方向＝正解のコマンドが変わる仕様だが後者を未移植
+;보스or흑화で공격の方向＝正解のコマンドが変わる仕様だが後者を未移植
 PRINTFORML 
 IF FLAG:111 == 0
 	PRINTL 突然どこからともなく笛のような鋭い音が聞こえてきた。
@@ -312,13 +312,13 @@ CASE 2
 			BASE:성내성 = MAX(BASE:성내성 -LOCAL, 0)
 			PRINTFORML 성내성が{LOCAL}減少した！
 			PRINTL
-			PRINTFORML 촉수に拘束されてもがく%PRINT_CALLNAME(TARGET)%の前に、超중량급の촉수生物が姿を現した……！
+			PRINTFORML 촉수に拘束されてもがく%PRINT_CALLNAME(TARGET)%の前に、超중량급の촉수 생물が姿を現した……！
 		ENDIF
 		PRINTW 
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,強制발정,強制拘束")
+		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
 	ENDIF
 
 ;CASE7/9，高い俊敏性/高い지성で공격を回避
@@ -334,7 +334,7 @@ CASE 7,8,9
 			PRINTFORML ……%PRINT_CALLNAME(TARGET)%華麗に공격を回避した！！
 		ENDIF
 	ENDIF
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が奇襲공격の出所を見上げると、超중량급の촉수生物が肉の地面へと落ちてきた。
+	PRINTFORML %PRINT_CALLNAME(TARGET)%が奇襲공격の出所を見上げると、超중량급の촉수 생물が肉の地面へと落ちてきた。
 	PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
 	PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
 	PRINTW 
@@ -358,13 +358,13 @@ CASEELSE
 			BASE:성내성 = MAX(BASE:성내성 -LOCAL, 0)
 			PRINTFORML 성내성が{LOCAL}減少した！
 			PRINTL
-			PRINTFORML 촉수に拘束されてもがく%PRINT_CALLNAME(TARGET)%の前に、超중량급の촉수生物が姿を現した……！
+			PRINTFORML 촉수に拘束されてもがく%PRINT_CALLNAME(TARGET)%の前に、超중량급の촉수 생물が姿を現した……！
 		ENDIF
 		PRINTW 
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,強制발정,強制拘束")
+		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
 ENDSELECT
 
 
@@ -432,7 +432,7 @@ ENDSELECT
 	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで救出作戦は失敗した。
 	PRINTL
 	PRINTFORML 特殊部隊がようやく地上の掃討を終えつつあった頃、
-	PRINTFORML 触巣の入り口から大量の媚毒ガスと共に新たな촉수生物が湧き出してきた。
+	PRINTFORML 触巣の入り口から大量の媚毒ガスと共に新たな촉수 생물が湧き出してきた。
 	PRINTFORML 疲弊していた特殊部隊の隊員らに媚毒の中で連戦する余力は無く…
 	PRINTFORML 部隊は壊滅し、若い女性隊員にいたっては全員が촉수に絡み付かれ、触巣の中へと引きずり込まれてしまった。
 	PRINTL
@@ -471,7 +471,7 @@ ENDSELECT
 @EVENT_BATTLE_FLASHNEWS_5(ARG)
 ;ミッション成功
 IF ARG==1
-	RESULTS'="촉수生物に攫われた女性たちを魔法少女が華麗に救出、市民ら感謝の声"
+	RESULTS'="촉수 생물に攫われた女性たちを魔法少女が華麗に救出、市民ら感謝の声"
 ;ミッション失敗
 ELSEIF ARG==0
 	RESULTS'="市街地に突如大穴、触巣出現で集団下校中の女子生徒ら犠牲に"

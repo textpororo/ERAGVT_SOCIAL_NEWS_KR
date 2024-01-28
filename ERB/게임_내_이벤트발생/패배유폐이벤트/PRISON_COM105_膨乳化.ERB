@@ -1,7 +1,7 @@
 ﻿;**********************************************************
 ;幽閉コマンド
 ;PRISON_COM105
-;膨乳化 限界の場合は膨乳攻め
+;팽유화 限界の場合は팽유攻め
 ;**********************************************************
 @PRISON_COM105
 #DIM CCOUNT
@@ -43,14 +43,14 @@ TFLAG:10 = 105
 ;汚染度
 CFLAG:30 += 10 + RAND:5
 
-;膨乳の余地を判定
+;팽유の余地を判定
 IF TALENT:거유+MAX(0,TALENT:변신시가슴사이즈변동) < 2+(CONFIG_CHECK_MANIAC_F(19) == 1 ? 3 # 0)
-	;変身時に「縮」乳している場合は変身時膨乳を優先
+	;変身時に「縮」乳している場合は変身時팽유を優先
 	IF TALENT:변신시가슴사이즈변동 < 0
 		TALENT:변신시가슴사이즈변동 += 1
 		CFLAG:38 += 1
 	ELSE
-		;膨乳処理
+		;팽유処理
 		IF TALENT:거유 - TALENT:빈유 < 0
 			TALENT:빈유 -= 1
 		ELSE
@@ -58,7 +58,7 @@ IF TALENT:거유+MAX(0,TALENT:변신시가슴사이즈변동) < 2+(CONFIG_CHECK_
 		ENDIF
 
 		;変身時に限界突破してしまう場合は変身時胸サイズを調整
-		;極端なサイズを抑制されているなら爆乳までが限界
+		;極端なサイズを抑制されているなら폭유までが限界
 		IF (TALENT:거유 + TALENT:변신시가슴사이즈변동 > 5) || (CONFIG_CHECK_MANIAC_F(19) == 0 && TALENT:거유 + TALENT:변신시가슴사이즈변동 >= 2)
 			TALENT:변신시가슴사이즈변동 -= 1
 			CFLAG:38 -= 1
@@ -66,16 +66,16 @@ IF TALENT:거유+MAX(0,TALENT:변신시가슴사이즈변동) < 2+(CONFIG_CHECK_
 
 		CFLAG:37 += 1
 	ENDIF
-	;プロフィールに反映
+	;프로필에 반영
 	CALL SET_PROFILE, TARGET
 
 	;공포　固定で
 	LOCAL:11 = 800
 	
-	;지문: 흑화 캐릭터가 幽閉中の操作キャラを膨乳化した
+	;지문: 흑화 캐릭터가 幽閉中の操作キャラを팽유화した
 	SIF CFLAG:20 == 2
 		CALL MESSAGE_OTHER_PRISON_BOUNYU
-	;지문: 膨乳化
+	;지문: 팽유화
 	CALL MESSAGE_PRISON_BOUNYU
 
 	
@@ -115,10 +115,10 @@ ELSE
 		LOCAL:6 = 180
 	ENDIF
 
-	;지문: 흑화 캐릭터가 幽閉中の操作キャラに膨乳攻めをした
+	;지문: 흑화 캐릭터가 幽閉中の操作キャラに팽유攻めをした
 	SIF CFLAG:20 == 2
 		CALL MESSAGE_OTHER_PRISON_COM_105
-	;지문: 膨乳攻め
+	;지문: 팽유攻め
 	CALL MESSAGE_PRISON_COM_105
 	
 ENDIF

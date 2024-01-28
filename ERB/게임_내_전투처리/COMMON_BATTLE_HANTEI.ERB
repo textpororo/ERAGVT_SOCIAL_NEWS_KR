@@ -13,7 +13,7 @@ LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXB
 ;消耗度の最低値は방어力依存
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT効果による消耗度軽減
+;FEAT 효과에 따른消耗度軽減
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
 ;마비で残量半減
@@ -53,7 +53,7 @@ IF ARGS == "HURIHODOKU"
 
 	;변신능력のあるキャラの補正
 	IF FLAG:73 > 0
-		;ただしクズ市民戦では変身していても未変身基準の倍率を参照する
+		;ただし악질 시민戦では変身していても未変身基準の倍率を参照する
 		;(変身の有無はフレーバーであるため)
 		LOCAL:2 = MIN(LOCAL:2,CORRECTION_TRANS(LOCAL:2))
 	ELSE
@@ -71,19 +71,19 @@ IF ARGS == "HURIHODOKU"
 	CALL SHINKYOU_CHECK, "CHISEI", CHISEI_COR
 	CHISEI_COR = RESULT
 
-	;戦闘支援による補正
+	;전투 지원による補正
 	CALL CALC_CHISEI_SHIEN(1)
 	CHISEI_COR += RESULT
 	;消耗度による지성への補正
 	CHISEI_COR = CHISEI_COR * 2 * (100 - LOCAL:0) / 100
 
-	;(クズ市民戦では影響薄い)
+	;(악질 시민戦では影響薄い)
 	IF FLAG:73 > 0
 		CHISEI_COR = MAXBASE:지성 / 8
 	ENDIF
 
 	IF FLAG:73 > 0 && CFLAG:1 > 0
-		;クズ市民戦で変身状態なら適当に弱化させておく
+		;악질 시민戦で変身状態なら適当に弱化させておく
 		LOCAL:2 = MIN(LOCAL/2,50)
 	ENDIF
 
@@ -130,7 +130,7 @@ ELSE
 	LOCAL:3 = CORRECTION_SENGI_AVOID(LOCAL:3, 0, FLAG:111)
 ENDIF
 
-;敵の油断による補正(クズ市民戦では無効)
+;敵の油断による補正(악질 시민戦では無効)
 SIF TFLAG:2 >= 1 && FLAG:73 == 0
 	TIMES LOCAL:3, 0.25
 
@@ -280,7 +280,7 @@ SELECTCASE ARGS
 			LOCAL:5 -= 10
 		ENDIF
 
-		;FEAT効果による풀어낸다補正
+		;FEAT 효과에 따른풀어낸다補正
 		SIF TALENT:근력강화 > 0
 			LOCAL:5 += 10
 		SIF TALENT:소형체구 > 0
@@ -293,12 +293,12 @@ SELECTCASE ARGS
 		IF TFLAG:2 >= 1 && (TCVARn:12 & 황홀) == 0
 			IF FLAG:73==0
 				LOCAL:5 = 100
-			;クズ市民戦ではボーナスのみ
+			;악질 시민戦ではボーナスのみ
 			ELSE
 				LOCAL:5 += 10
 			ENDIF
 		ENDIF
-		;;クズ市民からの拘束は5ターン目以降は確定で振りほどける
+		;;악질 시민からの拘束は5ターン目以降は確定で振りほどける
 		;SIF FLAG:73 > 0 && TFLAG:0 > 4
 		;	LOCAL:5 = 100
 
@@ -413,7 +413,7 @@ LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXB
 ;消耗度の最低値は방어力依存
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT効果による消耗度軽減
+;FEAT 효과에 따른消耗度軽減
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
 ;SP変身中は기력체력の減少による影響を受けない
@@ -559,7 +559,7 @@ LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXB
 ;消耗度の最低値は방어力依存
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT効果による消耗度軽減
+;FEAT 효과에 따른消耗度軽減
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
 ;마비で残量半減
@@ -1004,7 +1004,7 @@ IF LOCAL:5 == -1
 ELSEIF RAND:100 < LOCAL:5
 	RETURN 1
 ELSE
-	;FEAT効果による絶対回避
+	;FEAT 효과에 따른絶対回避
 	IF TALENT:고속회피 > 0 && TFLAG:80 == 0 && TCVARn:2 != 자세：아무것도안한다
 		TFLAG:80 += 1
 		SETCOLOR 255,128,0
@@ -1027,7 +1027,7 @@ LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXB
 ;消耗度の最低値は방어力依存
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75) + 20
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75) + 20
-;FEAT効果による消耗度軽減
+;FEAT 효과에 따른消耗度軽減
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
 ;끈적끈적、쓰러짐で残量半減
@@ -1109,7 +1109,7 @@ LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 ;撤退成功の最低値
 SIF LOCAL:5 < 50
 	LOCAL:5 = 50
-;戦闘支援効果
+;전투 지원効果
 LOCAL:5 += 20 * FLAG:43
 
 ;観客がいると確定失敗
@@ -1429,7 +1429,7 @@ IF GETBIT(TCVARn:217,0) && ARGS != "CHARA"
 		CASE "通常"
 			LOCAL:3 = LOCAL:3 * 110 / 100
 	ENDSELECT
-	;FEAT効果によるバースト威力上昇
+	;FEAT 효과에 따른バースト威力上昇
 	SIF TALENT:풀버스트 > 0
 		LOCAL:3 = LOCAL:3 * 125 / 100
 ENDIF

@@ -1,25 +1,25 @@
 ﻿;-----------------------------------------------------------------------------------------------
 
-;実績解除
-;立てるフラグの番号と実績名は呼び出し側でセットで指定する
+;실적解除
+;立てるフラグの番号と실적名は호출側でセットで指定する
 
 @UNLOCK_ACHIEVEMENT(num,achiname)
 #DIM num,1
 #DIMS achiname,1
 
-;サンドボックスモードでは実績をアンロックしない(一人用ゲームなので積極的に意地悪はしないけど一応ね)
+;サンドボックスモードでは실적をアンロックしない(一人用ゲームなので積極的に意地悪はしないけど一応ね)
 SIF GAME_OPTION_CHECK_F(OPTION_실적엔드없음)
 	RETURN
 
 IF GLOBAL:num == 0
-	PRINTFORML 【実績：%achiname%】を達成しました！
+	PRINTFORML 【실적：%achiname%】を達成しました！
 	PRINTW 
 	GLOBAL:num = 1
 	SAVEGLOBAL
 ENDIF
 
 
-;実績トロフィーを表示
+;실적トロフィーを表示
 @SHOW_TROPHY
 #DIM PAGEMAX
 #DIM MODE,1
@@ -28,7 +28,7 @@ LOCAL = 1
 
 $START
 CALL LB
-PRINTL ☆☆☆実績＆トロフィーの確認☆☆☆
+PRINTL ☆☆☆실적＆トロフィーの確認☆☆☆
 DRAWLINE
 
 ;●(不)名誉の殿堂ページ
@@ -234,22 +234,22 @@ IF MODE==0
 		RESETCOLOR
 	ENDIF
 
-;●実績ページ
+;●실적ページ
 ELSE
 	;最大ページ数
 	PAGEMAX = 4
-	;・実績名全角１４文字、説明全角１８文字以内
+	;・실적名全角１４文字、説明全角１８文字以内
 	;・あまりややこしくない条件はヒントを具体的に
-	;・ややこしい条件はヒントを抽象的に(秘密の実績)
+	;・ややこしい条件はヒントを抽象的に(秘密の실적)
 	IF LOCAL == 1
-		;表示上の実績番号は01から始める
+		;表示上の실적番号は01から始める
 		CALL PRINT_ACHIEVEMENT(1,"init")
 
 		CALL PRINT_ACHIEVEMENT(211,"覇者の証","セーブ＆ロードなんて邪道だよ！",50,"１周目でセーブロードなしにクリア","","※１周目限定")
 		CALL PRINT_ACHIEVEMENT(212,"へっぽこ大魔王","むしろ褒めてあげたい",50,"１周目で総合Ｅランク","※キャラメイク素質：死亡が解禁","")
 		CALL PRINT_ACHIEVEMENT(213,"eraGVTマスター","１周目で最高スコアを目指すのだ！",50,"１周目で総合Ｓランク","※周回要素：레벨引き継ぎが解禁","")
-		CALL PRINT_ACHIEVEMENT(270,"とびっきりの最強対最強","オラわくわくしてきたぞ！！",20,"裏ボスを撃破した","","")
-		CALL PRINT_ACHIEVEMENT(266,"パーフェクション","思わずドヤ顔したくなる戦果",20,"ノーダメージでボスを撃破した","","")
+		CALL PRINT_ACHIEVEMENT(270,"とびっきりの最強対最強","オラわくわくしてきたぞ！！",20,"히든 보스を撃破した","","")
+		CALL PRINT_ACHIEVEMENT(266,"パーフェクション","思わずドヤ顔したくなる戦果",20,"ノーダメージで보스を撃破した","","")
 		CALL PRINT_ACHIEVEMENT(220,"腕力自慢","能力を特化させてみよう",10,"공격実数値500突破","","")
 		CALL PRINT_ACHIEVEMENT(221,"脳筋こそ至高","能力を特化させてみよう",10,"공격実数値1000突破","","")
 		CALL PRINT_ACHIEVEMENT(222,"メイン盾きた！","能力を特化させてみよう",10,"방어実数値500突破","","")
@@ -298,20 +298,20 @@ ELSE
 		CALL PRINT_ACHIEVEMENT(257,"ＡＶ女優","これでアナタも有名人★",10,"ＡＶ売上2000$突破","","")
 
 		CALL PRINT_ACHIEVEMENT(263,"破壊神の一撃","一撃で昇天する威力",10,"一撃のダメージが5000を突破","","")
-		CALL PRINT_ACHIEVEMENT(268,"タクティカルオーダー","仲間の力を合わせよう",10,"戦闘支援効果200％突破","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(268,"タクティカルオーダー","仲間の力を合わせよう",10,"전투 지원効果200％突破","","※ソロモード不可")
 
 		CALL PRINT_ACHIEVEMENT(276,"絶体絶命ヒロイン","こ、こんな時に…！",5,"기력切れで変身が解けてしまった","","")
 		CALL PRINT_ACHIEVEMENT(277,"絶対絶頂ヒロイン","こっ♥ こんな時にっ♥♥",5,"絶頂の快感で変身が解けてしまった","","")
 
 		CALL PRINT_ACHIEVEMENT(271,"いま助けるわ！","きっと今も仲間の助けを信じてる…",10,"囚われたヒロインを救出した","","※ソロモード不可")
 		CALL PRINT_ACHIEVEMENT(272,"正気に戻りなさい！","正気に戻すならこれ！",10,"흑화ヒロインを撃破した","","※ソロモード不可")
-		CALL PRINT_ACHIEVEMENT(273,"わたくしは何を…？","あの子は操られていただけなの…！",10,"ヒロインの洗脳を解いた","","※ソロモード不可")
+		CALL PRINT_ACHIEVEMENT(273,"わたくしは何を…？","あの子は操られていただけなの…！",10,"ヒロインの세뇌を解いた","","※ソロモード不可")
 		
 
 	ELSEIF LOCAL == 4
 		CALL PRINT_ACHIEVEMENT(60,"init")
 		;特殊条件
-		CALL PRINT_ACHIEVEMENT(267,"奇跡の逆転勝利","ピンチからのエッチな逆転劇",10,"搾精ダメージでボスを撃破した","","")
+		CALL PRINT_ACHIEVEMENT(267,"奇跡の逆転勝利","ピンチからのエッチな逆転劇",10,"搾精ダメージで보스を撃破した","","")
 		CALL PRINT_ACHIEVEMENT(259,"もったいないお化け","余らせるともったいない",10,"修練Ｐ1000残してクリア","","")
 		CALL PRINT_ACHIEVEMENT(260,"촉수なんかに負けない！","あえて感度ビンビンな娘で！",10,"ソロモードを全部位敏感でクリア","","※ソロモード限定")
 		CALL PRINT_ACHIEVEMENT(261,"불굴の闘志","ぐぬぬ…負けるもんか！",10,"ソロモードを유폐경험1以上でクリア","","※ソロモード限定")
@@ -327,7 +327,7 @@ PRINTPLAINFORM PAGE < {LOCAL}/{PAGEMAX} >　　　　
 	PRINT [200]次のページへ
 PRINTL 
 SIF MODE==0
-	PRINTL 	　　　　　　　　　[1000]実績を表示
+	PRINTL 	　　　　　　　　　[1000]실적を表示
 SIF MODE==1
 	PRINTL 	　　　　　　　　　[1000]トロフィーを表示
 
@@ -354,7 +354,7 @@ ENDIF
 @PRINT_ACHIEVEMENT(num,achievename,hint,bonus,desc,otherA,otherB)
 #DIM num,1=0
 #DIMS achievename,1=""
-;実績解除後のテキスト
+;실적解除後のテキスト
 #DIMS desc,1=""
 ;ボーナスポイント
 #DIM bonus,1=0
@@ -365,13 +365,13 @@ ENDIF
 ;解除前の補足テキスト(特定モード限定の場合にその旨を通知)
 #DIMS otherB,1=""
 
-;表示上の実績番号(内部のフラグとは無関係、ページ先頭で"init"を呼んで指定する)
+;表示上の실적番号(内部のフラグとは無関係、ページ先頭で"init"を呼んで指定する)
 #DIM numhead,1
 #DIMS numtext
 
 
 IF achievename=="init"
-	PRINTL 実績名　　　　　　　　　　　　内容　　　　　　　　　　　　　　　　周回ボーナス
+	PRINTL 실적名　　　　　　　　　　　　内容　　　　　　　　　　　　　　　　周回ボーナス
 	CALL SHORTLINE
 	numhead=num
 	return
@@ -394,8 +394,8 @@ ELSE
 ENDIF
 
 
-;ターン終了時に一括チェックするタイプの実績
-;ここに書かれていない複雑な条件の実績はコード各所に散らばっている
+;ターン終了時に一括チェックするタイプの실적
+;ここに書かれていない複雑な条件の실적はコード各所に散らばっている
 @GET_STATE_TROPHY,ARG
 IF MAXBASE:ARG:공격 >= 500
 	CALL UNLOCK_ACHIEVEMENT(220,"腕力自慢")
@@ -440,7 +440,7 @@ IF ABL:ARG:원거리 >= 9
 	CALL UNLOCK_ACHIEVEMENT(233,"スナイパードライツェン")
 ENDIF
 
-;ABL関連実績の一括チェック
+;ABL関連실적の一括チェック
 @GET_STATE_ABLUP,ARG
 LOCAL = ABL:ARG:C감각 + ABL:ARG:V감각 + ABL:ARG:A감각 + ABL:ARG:B감각
 IF LOCAL >= 5
@@ -503,7 +503,7 @@ IF GLOBAL:280 == 0
 ENDIF
 
 
-;EXP関連の実績一括チェック
+;EXP関連の실적一括チェック
 @GET_STATE_EXPUP,ARG
 IF EXP:ARG:출산경험 >= 1
 	CALL UNLOCK_ACHIEVEMENT(250,"初めての出産")

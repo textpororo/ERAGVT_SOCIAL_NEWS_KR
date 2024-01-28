@@ -47,7 +47,7 @@ SELECTCASE ARG
 	CASE K4유폐_변신
 		PRINTFORML [{ARG}] 幽閉(変身)　　
 	CASE K4세뇌
-		PRINTFORML [{ARG}] 洗脳　　　　　
+		PRINTFORML [{ARG}] 세뇌　　　　　
 	CASE K4흑화
 		PRINTFORML [{ARG}] 흑화　　　　
 ENDSELECT
@@ -221,7 +221,7 @@ PRINTFORM [-1]ページ変更({PAGE+1}/2)
 PRINT 　　
 PRINT [99]ランダム
 PRINT 　　
-PRINTL [100]決定
+PRINTL [100] 결정
 
 INPUT
 IF RESULT == -1
@@ -352,7 +352,7 @@ CALL KOJO_4_ROOT_TRAINING("TRAINING_BASIS")
 @KOJO_4_TRAINING_TACTICS
 CALL KOJO_4_ROOT_TRAINING("TRAINING_TACTICS")
 
-;촉수 구속구が鍛錬の邪魔をする
+;촉수 구속구가 단련을 방해한다
 ;-------------------------------------------------
 @KOJO_4_TRAINING_TENTACLECLOTH
 CALL KOJO_4_ROOT_TRAINING("TRAINING_TENTACLECLOTH")
@@ -393,12 +393,12 @@ CALL KOJO_4_ROOT_ENCOUNT("LASTBOSS")
 @KOJO_4_RAID_LASTBOSS
 CALL KOJO_4_ROOT_RAID("LASTBOSS")
 
-;初めて洗脳キャラと対峙した
+;初めて세뇌キャラと対峙した
 ;-------------------------------------------------
 @KOJO_4_ENCOUNT_SENNOU_FIRST
 CALL KOJO_4_ROOT_ENCOUNT("SENNOU_FIRST")
 
-;洗脳キャラと対峙
+;세뇌キャラと対峙
 ;-------------------------------------------------
 @KOJO_4_ENCOUNT_SENNOU
 CALL KOJO_4_ROOT_ENCOUNT("SENNOU")
@@ -749,7 +749,7 @@ CALL KOJO_4_ROOT_BATTLE("BATTLE_END_RESCUE")
 @KOJO_4_BATTLE_END_RESCUE_AKUOTI
 CALL KOJO_4_ROOT_BATTLE("BATTLE_END_RESCUE_AKUOTI")
 
-;洗脳中キャラの救出
+;세뇌中キャラの救出
 ;-------------------------------------------------
 @KOJO_4_BATTLE_END_RESCUE_SENNOU
 CALL KOJO_4_ROOT_BATTLE("BATTLE_END_RESCUE_SENNOU")
@@ -864,7 +864,7 @@ CALL KOJO_4_ROOT_PRISON("PRISENTENCE_START")
 @KOJO_4_PRISON_PRISENTENCE
 CALL KOJO_4_ROOT_PRISON("PRISENTENCE")
 
-;洗脳になった
+;세뇌になった
 ;-------------------------------------------------
 @KOJO_4_PRISON_SENNOU
 CALL KOJO_4_ROOT_PRISON("SENNOU")
@@ -899,7 +899,7 @@ CALL KOJO_4_ROOT_PRISON("HUTANARI")
 @KOJO_4_PRISON_BONYU
 CALL KOJO_4_ROOT_PRISON("BONYU")
 
-;膨乳化
+;팽유화
 ;-------------------------------------------------
 @KOJO_4_PRISON_BOUNYU
 CALL KOJO_4_ROOT_PRISON("BOUNYU")
@@ -974,7 +974,7 @@ CALL KOJO_4_ROOT_PRISON("COM_103")
 @KOJO_4_PRISON_COM_104
 CALL KOJO_4_ROOT_PRISON("COM_104")
 
-;膨乳攻め
+;팽유攻め
 ;-----------------------------------------------
 @KOJO_4_PRISON_COM_105
 CALL KOJO_4_ROOT_PRISON("COM_105")
@@ -1361,7 +1361,7 @@ CALL KOJO_4_ROOT_SHOP("SELF_V")
 ;**************************************************
 ;素質関連
 ;**************************************************
-;처녀喪失
+;처녀 상실
 ;-------------------------------------------------
 @KOJO_4_SEX_LOSTVIRGIN
 CALL KOJO_4_ROOT_BATTLE_TO_PRISON("SEX_LOSTVIRGIN")

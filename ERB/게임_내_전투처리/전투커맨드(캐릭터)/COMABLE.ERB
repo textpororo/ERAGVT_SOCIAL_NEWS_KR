@@ -120,7 +120,7 @@ SIF PREVCOM == 5
 ;拘束中はだめ
 SIF TCVARn:0 == 0
 	RETURN 0
-;疲労度が50以上だとだめ
+;피로도가 50以上だとだめ
 SIF CFLAG:99 >= 50
 	RETURN 0
 ;기절中はだめ
@@ -143,7 +143,7 @@ SIF PREVCOM == 6
 ;拘束中はだめ
 SIF TCVARn:0 == 0
 	RETURN 0
-;疲労度が50以上だとだめ
+;피로도가 50以上だとだめ
 SIF CFLAG:99 >= 50
 	RETURN 0
 ;기절中はだめ
@@ -166,7 +166,7 @@ SIF PREVCOM == 7
 ;拘束中はだめ
 SIF TCVARn:0 == 0
 	RETURN 0
-;疲労度が50以上だとだめ
+;피로도가 50以上だとだめ
 SIF CFLAG:99 >= 50
 	RETURN 0
 ;기절中はだめ
@@ -194,7 +194,7 @@ SIF (TCVARn:12 & 기절)
 	RETURN 0
 SIF TCVARn:8 < 10
 	RETURN 0
-;クズ市民戦は5ターン目から可能
+;악질 시민戦は5ターン目から可能
 SIF  FLAG:73 > 0 && TFLAG:0 < 5
 	RETURN 0
 RETURN 1
@@ -394,7 +394,7 @@ SIF BASE:공중대시 == 0
 ;変身前はだめ
 SIF TALENT:변신능력 && CFLAG:1 == 0
 	RETURN 0
-;疲労度が50以上だとだめ
+;피로도가 50以上だとだめ
 SIF CFLAG:99 >= 50
 	RETURN 0
 ;기절中はだめ
@@ -426,7 +426,7 @@ SIF TCVARn:4 < 200 && CFLAG:1 < 2 && TALENT:핫스타트 == 0
 ;変身前はだめ
 SIF TALENT:변신능력 && CFLAG:1 == 0
 	RETURN 0
-;疲労度が50以上だとだめ
+;피로도가 50以上だとだめ
 SIF CFLAG:99 >= 50
 	RETURN 0
 ;기절中はだめ

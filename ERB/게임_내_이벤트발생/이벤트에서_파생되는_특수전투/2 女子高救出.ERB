@@ -2,7 +2,7 @@
 ;女子高救出イベント
 
 @EVENT_BATTLE_SITUATION_2
-PRINTFORML どうやら近くの女子高に大型촉수生物が出現し、大暴れしているらしい。
+PRINTFORML どうやら近くの女子高に大型촉수 생물が出現し、大暴れしているらしい。
 PRINTFORML 自衛隊が出動したが、生徒たちは校舎の中に取り残されたままだという。
 PRINTFORML 放っておけば多数の犠牲者が出るだろう。
 SETCOLORBYNAME HOTPINK
@@ -17,7 +17,7 @@ PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわ
 PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
 
 @EVENT_BATTLE_ABANDON_2
-PRINTFORML 不確定要素も多く、万全でもない状態で촉수生物と戦うのは危険すぎる。
+PRINTFORML 不確定要素も多く、万全でもない状態で촉수 생물と戦うのは危険すぎる。
 PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
 ;ニュース記事に(失敗時使い回し)
 if !FLAG:60
@@ -32,7 +32,7 @@ PRINTFORML 周囲は返り血と粘液と弾痕で酷い有様だ。
 PRINTFORML 自衛隊員に襲いかかっていた雑魚촉수を叩き伏せ、%PRINT_CALLNAME(TARGET)%は状況の悪さに眉をしかめた。
 PRINTW 
 PRINTFORML このまま雑魚촉수を倒し続けても埒が明かない。
-PRINTFORML ボスを叩かなければ収拾が付かないだろう……そう判断して外部の制圧を自衛隊に任せ、
+PRINTFORML 보스を叩かなければ収拾が付かないだろう……そう判断して外部の制圧を自衛隊に任せ、
 PRINTFORML %PRINT_CALLNAME(TARGET)%は校舎の内部へと踏み込むことにする。
 PRINTW
 PRINTFORML 学校内部は촉수の浸食により、建物と肉とがグロテスクに融合した촉수の巣になりつつあった。
@@ -305,10 +305,10 @@ CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
 @EVENT_BATTLE_FLASHNEWS_2(ARG)
 ;ミッション成功
 IF ARG==1
-	RESULTS'="お手柄！ 女子高襲う촉수生物を撃退、可憐な魔法少女に女生徒ら感謝の声"
+	RESULTS'="お手柄！ 女子高襲う촉수 생물を撃退、可憐な魔法少女に女生徒ら感謝の声"
 ;ミッション失敗
 ELSEIF ARG==0
-	RESULTS'="女子高が촉수生物の襲撃で壊滅、女生徒ら多数残されたまま汚染区域に認定へ…"
+	RESULTS'="女子高が촉수 생물の襲撃で壊滅、女生徒ら多数残されたまま汚染区域に認定へ…"
 ;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
 ELSEIF ARG==-1
 	RESULTS'=""

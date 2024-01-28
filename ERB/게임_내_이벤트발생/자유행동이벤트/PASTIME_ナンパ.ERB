@@ -86,10 +86,10 @@ PRINTW
 ;ナンパされた場所が街中か遠出中
 IF ARG == 0 || ARG == 1
 	IF (ＴＳキャラ == 1 || TALENT:보추 > 0) && TALENT:음란 < 1
-		PRINTFORML 不意に%PRINT_TRANSCALLNAME(TARGET)%は知らない相手に声をかけられてしまい、
+		PRINTFORML 不意に%PRINT_TRANSCALLNAME(TARGET)%은(는)知らない相手に声をかけられてしまい、
 		PRINTFORM あたふたと慌てているうちに
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はふと知らない相手に声を掛けられた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ふと知らない相手に声を掛けられた。
 	ENDIF
 	誘い内容 = RAND:5
 	IF 誘い内容 == 0
@@ -131,7 +131,7 @@ IF ARG == 0 || ARG == 1
 	IF ＴＳキャラ == 1 || TALENT:보추 > 0
 		PRINTFORML …ナンパだ…！
 		SIF TALENT:보추 > 0
-			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%のことを女の子だと勘違いしているらしい…
+			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%의 ことを女の子だと勘違いしているらしい…
 	ELSE
 		PRINTFORML これが噂に聞くナンパという奴かもしれない。
 	ENDIF
@@ -169,16 +169,16 @@ IF ARG == 0 || ARG == 1
 		PRINTFORML ナンパしてきた男は외관だけなら%誘ってきた相手%風の男だ。
 	ELSE
 		誘ってきた相手 = 知らない相手
-		PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%のカラダに送っている。
+		PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%의 カラダに送っている。
 	ENDIF
 	;ナンパされた場所がスポーツ施設
 ELSEIF ARG == 2
 	;とりあえず暫定で設定。中身は同じ
 	IF (ＴＳキャラ == 1 || TALENT:보추 > 0) && TALENT:음란 < 1
-		PRINTFORML すると%PRINT_TRANSCALLNAME(TARGET)%は不意に知らない相手に声をかけられてしまい、
+		PRINTFORML すると%PRINT_TRANSCALLNAME(TARGET)%은(는)不意に知らない相手に声をかけられてしまい、
 		PRINTFORM あたふたと慌てているうちに
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はふと知らない相手に声を掛けられた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ふと知らない相手に声を掛けられた。
 	ENDIF
 	誘い内容 = RAND:5 + 5
 	IF 誘い内容 == 5
@@ -220,7 +220,7 @@ ELSEIF ARG == 2
 	IF ＴＳキャラ == 1 || TALENT:보추 > 0
 		PRINTFORML …ナンパだ…！
 		SIF TALENT:보추 > 0
-			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%のことを女の子だと勘違いしているらしい…
+			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%의 ことを女の子だと勘違いしているらしい…
 	ELSE
 		PRINTFORML これが噂に聞くナンパという奴かもしれない。
 	ENDIF
@@ -254,15 +254,15 @@ ELSEIF ARG == 2
 		PRINTFORML ナンパしてきた男は見るからに仕事帰りの%誘ってきた相手%だ。
 	ELSE
 		誘ってきた相手 = 知らない相手
-		PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%のカラダに送っている。
+		PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%의 カラダに送っている。
 	ENDIF
 	;ナンパされた場所が学校
 ELSEIF ARG == 3
 	IF (ＴＳキャラ == 1 || TALENT:보추 > 0) && TALENT:음란 < 1
-		PRINTFORML 不意に%PRINT_TRANSCALLNAME(TARGET)%は見覚えのある男子生徒に声をかけられてしまい、
+		PRINTFORML 不意に%PRINT_TRANSCALLNAME(TARGET)%은(는)見覚えのある男子生徒に声をかけられてしまい、
 		PRINTFORM あたふたと慌てているうちに
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はふと見覚えのある男子生徒に声を掛けられた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ふと見覚えのある男子生徒に声を掛けられた。
 	ENDIF
 
 	;部活動表示
@@ -359,7 +359,7 @@ ELSEIF ARG == 3
 		IF ＴＳキャラ == 1 || TALENT:보추 > 0
 			PRINTFORML …ナンパだ…！
 			SIF TALENT:보추 > 0
-				PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%のことを女子だと勘違いしているらしい…
+				PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%의 ことを女子だと勘違いしているらしい…
 		ELSE
 			PRINTFORML これが噂に聞くナンパという奴かもしれない。
 		ENDIF
@@ -403,15 +403,15 @@ ELSEIF ARG == 3
 		PRINTFORML 話しかけてきた男子生徒は見るからに%誘ってきた相手%だ。
 	ELSE
 		誘ってきた相手 = 名前を知らない相手
-		PRINTFORML 話しかけてきた男子生徒はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%のカラダに送っている。
+		PRINTFORML 話しかけてきた男子生徒はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%의 カラダに送っている。
 	ENDIF
 	;現状未使用
 ELSE
 	IF (ＴＳキャラ == 1 || TALENT:보추 > 0) && TALENT:음란 < 1
-		PRINTFORML すると%PRINT_TRANSCALLNAME(TARGET)%は不意に知らない相手に声をかけられてしまい、
+		PRINTFORML すると%PRINT_TRANSCALLNAME(TARGET)%은(는)不意に知らない相手に声をかけられてしまい、
 		PRINTFORM あたふたと慌てているうちに
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はふと知らない相手に声を掛けられた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ふと知らない相手に声を掛けられた。
 	ENDIF
 	誘い内容 = RAND:5
 	IF 誘い内容 == 0
@@ -453,19 +453,19 @@ ELSE
 	IF ＴＳキャラ == 1 || TALENT:보추 > 0
 		PRINTFORML …ナンパだ…！
 		SIF TALENT:보추 > 0
-			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%のことを女の子だと勘違いしているらしい…
+			PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%의 ことを女の子だと勘違いしているらしい…
 	ELSE
 		PRINTFORML これが噂に聞くナンパという奴かもしれない。
 	ENDIF
 	PRINTW 
 	誘ってきた相手 = 知らない相手
-	PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%のカラダに送っている。
+	PRINTFORML ナンパしてきた男はニヤニヤとした視線を%PRINT_TRANSCALLNAME(TARGET)%의 カラダに送っている。
 ENDIF
 
 IF TALENT:음란 > 0
-	PRINTFORML どう反応するべきか%PRINT_TRANSCALLNAME(TARGET)%は考えている・・・
+	PRINTFORML どう反応するべきか%PRINT_TRANSCALLNAME(TARGET)%은(는)考えている・・・
 ELSE
-	PRINTFORML どう反応するべきか%PRINT_TRANSCALLNAME(TARGET)%は迷っている・・・
+	PRINTFORML どう反応するべきか%PRINT_TRANSCALLNAME(TARGET)%은(는)迷っている・・・
 ENDIF
 PRINTW 
 PRINTL 
@@ -495,29 +495,29 @@ ELSEIF RESULT == 1
 		PRINTFORML %誘い文句%程度なら…と相手に着いていくことにした…
 		CALL PASTIME_NANPA_DATE,ARG,ＴＳキャラ,誘い内容,誘ってきた相手
 	ELSE
-		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML やんわりと誘いを断っている…
 		PRINTW 
 		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
 			IF RAND:100 < 30
-				PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+				PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 				PRINTFORML 立っていることもままなくなる。
 				PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 				PRINTL 
 				PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 				PRINTW 
 				CALL PASTIME_NANPA_RAPE
 			ELSE
 				PRINTFORML %誘ってきた相手%は諦めてボヤきながら去っていった・・・
 			ENDIF
 		ELSEIF RAND:100 < 2
-			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
@@ -527,15 +527,15 @@ ELSEIF RESULT == 1
 ELSEIF RESULT == 2
 	PRINTL 
 	IF 	誘ってきた相手 == "ヤクザ" || 	誘ってきた相手 == "不良"
-		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML はっきり誘いを断った…
 		PRINTW 
-		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 		PRINTFORML 立っていることもままなくなる。
 		PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が抱き止める。
 		PRINTL 
 		PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 		PRINTW 
 		CALL PASTIME_NANPA_RAPE
 	ELSEIF RAND:100 < ABL:순종 * 10 + 15
@@ -549,16 +549,16 @@ ELSEIF RESULT == 2
 		PRINTFORML %誘い文句%程度なら…と相手に着いていくことにした…
 		CALL PASTIME_NANPA_DATE,ARG,ＴＳキャラ,誘い内容,誘ってきた相手
 	ELSE
-		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は、
+		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 		PRINTFORML はっきり誘いを断った…
 		PRINTW 
 		IF RAND:100 < 5
-			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
@@ -567,29 +567,29 @@ ELSEIF RESULT == 2
 	ENDIF
 ELSEIF RESULT == 3
 	PRINTL 
-	PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML 声をかけてきた相手を無視して立ち去ることにした…
 	PRINTW 
 	IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
 		IF RAND:100 < 50
-			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
 			PRINTFORML %誘ってきた相手%は諦めてボヤきながら去っていった・・・
 		ENDIF
 	ELSEIF RAND:100 < 5
-		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 		PRINTFORML 立っていることもままなくなる。
 		PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 		PRINTL 
 		PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 		PRINTW 
 		CALL PASTIME_NANPA_RAPE
 	ELSE
@@ -618,75 +618,75 @@ PRINTL
 IF 誘い内容 == 0
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML 高級レストランで会話を交えつつ食事をしている。
 		PRINTL 
 		PRINTFORML 星を所持している有名店らしく、料理はとても美味しい。
-		PRINTFORML 気がつけば%PRINT_TRANSCALLNAME(TARGET)%は警戒心を解いて、談笑に応じてしまっていた。
+		PRINTFORML 気がつけば%PRINT_TRANSCALLNAME(TARGET)%은(는)警戒心を解いて、談笑に応じてしまっていた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML レストランで会話を交えつつ食事をしている。
 		PRINTL 
 		PRINTFORML それなりにいい値段がする店だけあって味は確かな物で
 		PRINTFORML 自然と相手との会話が弾んでしまう。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ファミレスで会話を交えつつ食事をしている。
 		PRINTL 
 		PRINTFORML …ナンパするのならもう少しいい店を選べ、と言いたくもなるが
-		PRINTFORML 会計は相手持ちなのだからと%PRINT_TRANSCALLNAME(TARGET)%は気にしないことにした。
+		PRINTFORML 会計は相手持ちなのだからと%PRINT_TRANSCALLNAME(TARGET)%은(는)気にしないことにした。
 	ENDIF
 	PRINTW 
 	PRINTFORML 食事を終えた%PRINT_TRANSCALLNAME(TARGET)%達は会計を済ませて店を後にした。
 ELSEIF 誘い内容 == 1
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML 行列のできる洋菓子店で会話を交えつつお茶している。
 		PRINTL 
 		PRINTFORML テレビでも有名なパティシエ作の洋菓子だけでなく、お茶もとても美味しい。
-		PRINTFORML 気がつけば%PRINT_TRANSCALLNAME(TARGET)%は警戒心を解いて、談笑に応じてしまっていた。
+		PRINTFORML 気がつけば%PRINT_TRANSCALLNAME(TARGET)%은(는)警戒心を解いて、談笑に応じてしまっていた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML 落ち着いた雰囲気の喫茶店で会話を交えつつお茶している。
 		PRINTL 
 		PRINTFORML マスター自慢のブレンドは苦味がありながらもほのかに甘い落ち着く味で
 		PRINTFORML 自然と相手への警戒心が緩み談笑が弾んでしまった。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML コーヒーチェーンで会話を交えつつお茶している。
 		PRINTL 
 		PRINTFORML …ナンパするのならもう少しいい店を選べ、と言いたくもなるが
-		PRINTFORML 会計は相手持ちなのだからと%PRINT_TRANSCALLNAME(TARGET)%は気にしないことにした。
+		PRINTFORML 会計は相手持ちなのだからと%PRINT_TRANSCALLNAME(TARGET)%은(는)気にしないことにした。
 	ENDIF
 	PRINTW 
 	PRINTFORML 喫食を終えた%PRINT_TRANSCALLNAME(TARGET)%達は会計を済ませて店を後にした。
 ELSEIF 誘い内容 == 2
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML カラオケボックスで歌っている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の歌唱力はプロ顔負けと思えるほどの物で
-		PRINTFORML 思わず%PRINT_TRANSCALLNAME(TARGET)%は聴き惚れてしまっていた。
+		PRINTFORML 思わず%PRINT_TRANSCALLNAME(TARGET)%은(는)聴き惚れてしまっていた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML カラオケボックスで歌っている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%はカラオケを盛り上げ慣れているようで
 		PRINTFORML 気がつけば%PRINT_TRANSCALLNAME(TARGET)%もすっかりいい気になり、デュエットまでしていた。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML カラオケボックスで歌っている。
 		PRINTL 
 		PRINTFORML しかし%誘ってきた相手%は歌声で惚れさせたいのかマイクを握りっぱなしで
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の番が全然回って来ない。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 番が全然回って来ない。
 		IF RAND:3 == 0
 			PRINTFORML その上、%誘ってきた相手%の歌は雑音にしか聴こえない…
 		ELSEIF RAND:2 == 0
@@ -698,36 +698,36 @@ ELSEIF 誘い内容 == 2
 ELSEIF 誘い内容 == 3
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ゲームセンターで遊んでいる。
 		PRINTL 
-		PRINTFORML クレーンゲームの景品に%PRINT_TRANSCALLNAME(TARGET)%が目を奪われていると
+		PRINTFORML クレーンゲームの景品に%PRINT_TRANSCALLNAME(TARGET)%이(가)目を奪われていると
 		PRINTFORML %誘ってきた相手%はアレが欲しいのかと聞くとコインを投入し、あっさり獲得してしまった。
 		PRINTFORML あまりの鮮やかさに唖然としている%PRINT_TRANSCALLNAME(TARGET)%だったが
 		PRINTFORML 景品を渡されるとハっとしてハニカミながら感謝の言葉を伝えていた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ゲームセンターで遊んでいる。
 		PRINTL 
 		PRINTFORML 音楽ゲームの同時プレイを誘われた。
 		PRINTFORML %誘ってきた相手%の腕前はかなりの物で、うっかり見惚れてしまっている内に
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はゲームオーバーになってしまっていた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ゲームオーバーになってしまっていた。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ゲームセンターで遊んでいる。
 		PRINTL 
 		PRINTFORML しかし%誘ってきた相手%は対戦格闘ゲームでいいところを見せたかったようだが
 		PRINTFORML 対戦相手の方が格段に強く、いいところが全くないまま連敗してしまっている。
-		PRINTFORML 挙句、ムキになって連コインまでし始めた様を%PRINT_TRANSCALLNAME(TARGET)%は呆れた目でみている。
+		PRINTFORML 挙句、ムキになって連コインまでし始めた様を%PRINT_TRANSCALLNAME(TARGET)%은(는)呆れた目でみている。
 	ENDIF
 	PRINTW 
 	PRINTFORML 遊びを終えた%PRINT_TRANSCALLNAME(TARGET)%達は会計を済ませて店を後にした。
 ELSEIF 誘い内容 == 4
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML 高級スタジオで写真を撮られている。
 		PRINTL 
 		PRINTFORML 高額な利用料相応の設備が整っているのが素人目でも見て取れる。
@@ -745,21 +745,21 @@ ELSEIF 誘い内容 == 4
 		ENDIF
 		PRINTL 
 		PRINTFORML 出来上がった写真はとても素晴らしく
-		PRINTFORML 写真に映る自分を見て%PRINT_TRANSCALLNAME(TARGET)%は思わずうっとりしてしまった。
+		PRINTFORML 写真に映る自分を見て%PRINT_TRANSCALLNAME(TARGET)%은(는)思わずうっとりしてしまった。
 		PRINTFORML %誘ってきた相手%も今まで撮って来た中でも会心の出来栄えだと誇らしげにしている。
 		PRINTW 
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達は会計を済ませて店を後にした。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML エッチな雰囲気が漂うスタジオで写真を撮られている。
 		PRINTL 
 		IF (TALENT:청순파 > 0 || ABL:욕망 <= 2) && RAND:3 != 0
 			IF TALENT:청순파 > 0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%の指示に従わずに去ろうとしたが……
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%の指示に従わずに去ろうとしたが……
 				PRINTFORML 「せっかくだから〜」とせがんできたため、仕方なく普通の写真を撮ることになった。
 			ELSE
-				PRINTFORML 戸惑いを見せつつ%PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%の指示に従う気がないが……
+				PRINTFORML 戸惑いを見せつつ%PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%の指示に従う気がないが……
 				PRINTFORML 「せっかくだから〜」と頼まれて、普通な写真を撮ってしまった。
 			ENDIF
 		ELSE
@@ -770,7 +770,7 @@ ELSEIF 誘い内容 == 4
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達は会計を済ませて店を後にした。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML 人気のない道端で写真を撮られている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の使用している機材は貧相どころかスマフォのカメラのみだ。
@@ -783,11 +783,11 @@ ELSEIF 誘い内容 == 4
 ELSEIF 誘い内容 == 5
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ランニングマシーンで会話を交えつつ運動をしている。
 		PRINTL 
 		PRINTFORML 周囲でランニングマシーンを使っている人の数がいつもより多い。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が視線を感じて振り向くと視線が外れるのだが
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)視線を感じて振り向くと視線が外れるのだが
 		IF TALENT:보추 > 0 || TALENT:빈유 > 0
 			PRINTFORML 汗に塗れたトレーニングウェアの張りついたぺたんこな胸をじろじろと見られている。
 		ELSE
@@ -799,14 +799,14 @@ ELSEIF 誘い内容 == 5
 			PRINTFORML センチの胸をじろじろと見られている。
 		ENDIF
 		PRINTFORML それは%誘ってきた相手%も例外ではなかった。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は見えざる手に胸を嬲られる想像をしてしまった……
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)見えざる手に胸を嬲られる想像をしてしまった……
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ランニングマシーンで会話を交えつつ運動をしている。
 		PRINTL 
 		PRINTFORML 周囲でランニングマシーンを使っている人の数がいつもより多い。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が視線を感じて鏡越しに確認すると
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)視線を感じて鏡越しに確認すると
 		PRINTFORM 揺れる
 		SIF CFLAG:1 == 0
 			LOCAL = TALENT:외관
@@ -827,11 +827,11 @@ ELSEIF 誘い内容 == 5
 		ENDIF
 		PRINTFORML 尻を確かに見られている。
 		PRINTFORML それは%誘ってきた相手%も例外ではなかった。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は見えざる手に尻を嬲られる想像をしてしまった……
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)見えざる手に尻を嬲られる想像をしてしまった……
 	ELSEIF RAND:3 == 0
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ランニングマシーンで会話を交えつつ運動をしている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%はさりげなくトレーニングの知識を披露しながらも
@@ -843,17 +843,17 @@ ELSEIF 誘い内容 == 5
 ELSEIF 誘い内容 == 6
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%のアドバイスを受けながら
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%のアドバイスを受けながら
 		PRINTFORML バーベルスクワットをしている。
 		PRINTFORML 全身の筋肉を使うが特に下半身全体を鍛えられる…と%誘ってきた相手%は説明している。
 		PRINTL 
 		PRINTFORML バーベルを両肩に担いだままスクワットをするが、そのままでは危険だという事で
-		PRINTFORML %誘ってきた相手%は%PRINT_TRANSCALLNAME(TARGET)%の後ろから補助をしてバーベルを軽く持っている。
-		PRINTFORML 当然身体は密着し、%誘ってきた相手%の股間のモノが%PRINT_TRANSCALLNAME(TARGET)%の尻谷間に当たり、擦れる。
+		PRINTFORML %誘ってきた相手%は%PRINT_TRANSCALLNAME(TARGET)%의 後ろから補助をしてバーベルを軽く持っている。
+		PRINTFORML 当然身体は密着し、%誘ってきた相手%の股間のモノが%PRINT_TRANSCALLNAME(TARGET)%의 尻谷間に当たり、擦れる。
 		PRINTFORML お互い気付かないフリをして続けていると、%誘ってきた相手%の股間のモノが次第に固くなってきた……
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%のアドバイスを受けながら
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%のアドバイスを受けながら
 		PRINTFORML ラットプルダウンをしている。
 		PRINTFORML 広背筋を鍛えるが、姿勢が良くなることでバストが綺麗に見えるようになる…と%誘ってきた相手%は説明している。
 		PRINTL 
@@ -894,12 +894,12 @@ ELSEIF 誘い内容 == 6
 		ENDIF
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%のアドバイスを受けながら
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%のアドバイスを受けながら
 		PRINTFORML ヒップスラストをしている。
 		PRINTFORML 大腿筋を鍛えるため、ヒップアップ効果がある…と%誘ってきた相手%は説明している。
 		PRINTL 
 		PRINTFORML ベンチに背中をつけて座り、脚の付け根にバーベルを載せ、腰が水平になるまで持ち上げる。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が腰を上げ下げするたびに、なまめかしい吐息がこぼれ、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)腰を上げ下げするたびに、なまめかしい吐息がこぼれ、
 		PRINTFORML 周囲の男共のいやらしい想像を掻き立てる。
 	ENDIF
 	PRINTW 
@@ -909,7 +909,7 @@ ELSEIF 誘い内容 == 7
 
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と並んで
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と並んで
 		PRINTFORML 一緒にマッサージ無料体験を受けている。
 		PRINTL 
 		PRINTFORML マッサージ師の腕は確かだったが、あまりの気持ち良さに艶っぽい溜息が出てしまう。
@@ -918,41 +918,41 @@ ELSEIF 誘い内容 == 7
 		PRINTFORML 甘ったるい泣き声を漏らしてしまう。
 		PRINTFORML 
 		PRINTW 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の身体は火照り、いつの間にか性感さえも昂らせてしまっていた…
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体は火照り、いつの間にか性感さえも昂らせてしまっていた…
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と並んで
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と並んで
 		PRINTFORML 一緒にマッサージ無料体験を受けている。
 		PRINTL 
-		PRINTFORML マッサージ師の腕は確かで、あまりの気持ち良さに%PRINT_TRANSCALLNAME(TARGET)%はそのまま眠ってしまった…。
+		PRINTFORML マッサージ師の腕は確かで、あまりの気持ち良さに%PRINT_TRANSCALLNAME(TARGET)%은(는)そのまま眠ってしまった…。
 		IF TALENT:보추 > 0
-			PRINTFORML マッサージ師は無言のまま、%PRINT_TRANSCALLNAME(TARGET)%の股間へと手を伸ばしたが、
+			PRINTFORML マッサージ師は無言のまま、%PRINT_TRANSCALLNAME(TARGET)%의 股間へと手を伸ばしたが、
 			PRINTFORML そこに想定外のモノがついていることに気付いたのか、固まってしまった。
 			PRINTW
-			PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%の顔とカラダを改めて眺めると気を取り直したように、
-			PRINTFORML ますます熱心な手付きで%PRINT_TRANSCALLNAME(TARGET)%の乳首や尻谷間の底に刺激を与え、
+			PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%의 顔とカラダを改めて眺めると気を取り直したように、
+			PRINTFORML ますます熱心な手付きで%PRINT_TRANSCALLNAME(TARGET)%의 乳首や尻谷間の底に刺激を与え、
 		ELSE
-			PRINTFORML マッサージ師は無言のまま、%PRINT_TRANSCALLNAME(TARGET)%の乳首や음핵に刺激を与え、
+			PRINTFORML マッサージ師は無言のまま、%PRINT_TRANSCALLNAME(TARGET)%의 乳首や음핵に刺激を与え、
 		ENDIF
 		PRINTFORML 甘ったるい吐息を漏らさせる。
 		PRINTFORML その様子に気付いた%誘ってきた相手%とそのマッサージ師は目配せをすると、
 		PRINTFORML 眠っている%PRINT_TRANSCALLNAME(TARGET)%へのマッサージに参加した……。
 		PRINTFORML 
 		PRINTW 
-		PRINTFORML ふと目覚めた%PRINT_TRANSCALLNAME(TARGET)%はいつの間にか眠っていたことに気付き赤面した。
+		PRINTFORML ふと目覚めた%PRINT_TRANSCALLNAME(TARGET)%은(는)いつの間にか眠っていたことに気付き赤面した。
 		PRINTFORML 疲れは取れたようだが、全身汗でびしょ濡れで恥ずかしいし、身体も少し気だるい。
 		PRINTFORML マッサージ師は、よほどお疲れのようですね、と紳士的に微笑んでいた。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML 一緒にマッサージ無料体験を受けに来たが、運悪く今日はマッサージ師が不在だった。
 		PRINTL 
 		PRINTFORML しかし%誘ってきた相手%はお詫びに自分がマッサージをしてあげると言い出し
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は断り切れずに人気の少ないベンチでマッサージを受けることになった。
-		PRINTFORML %誘ってきた相手%は素人の割りにはマッサージが上手く%PRINT_TRANSCALLNAME(TARGET)%の身体を揉みほぐす。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)断り切れずに人気の少ないベンチでマッサージを受けることになった。
+		PRINTFORML %誘ってきた相手%は素人の割りにはマッサージが上手く%PRINT_TRANSCALLNAME(TARGET)%의 身体を揉みほぐす。
 		PRINTW
 		IF RAND:3 == 0
-			PRINTFORML %誘ってきた相手%は調子に乗って胸や尻肉を揉んだりしたが、%PRINT_TRANSCALLNAME(TARGET)%が軽く身をよじると潔く手を引っ込めた。
+			PRINTFORML %誘ってきた相手%は調子に乗って胸や尻肉を揉んだりしたが、%PRINT_TRANSCALLNAME(TARGET)%이(가)軽く身をよじると潔く手を引っ込めた。
 		ELSEIF RAND:2 == 0
 			PRINTFORML %誘ってきた相手%の手はたまに胸に当たったり、股関節の際どい所を揉んだりしたが騒ぐほどではなかった。
 		ELSE
@@ -965,31 +965,31 @@ ELSEIF 誘い内容 == 7
 ELSEIF 誘い内容 == 8
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ダンスフロアでヨガをしている。
 		PRINTL 
 		PRINTFORML 女性のヨガトレーナーが%PRINT_TRANSCALLNAME(TARGET)%に熱心に指導している。
-		PRINTFORML 身体を密着させ姿勢を正してくれるが、その指は見えない所で%PRINT_TRANSCALLNAME(TARGET)%の性感帯を刺激している。
-		PRINTFORML ヨガと性感の高まりで息を荒くしている%PRINT_TRANSCALLNAME(TARGET)%を見て、
+		PRINTFORML 身体を密着させ姿勢を正してくれるが、その指は見えない所で%PRINT_TRANSCALLNAME(TARGET)%의 性感帯を刺激している。
+		PRINTFORML ヨガと性感の高まりで息を荒くしている%PRINT_TRANSCALLNAME(TARGET)%을(를)見て、
 		PRINTFORML %誘ってきた相手%はニヤニヤと笑みを浮かべていた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ダンスフロアでヨガをしている。
 		PRINTL 
 		PRINTFORML 女性のヨガトレーナーが%PRINT_TRANSCALLNAME(TARGET)%に熱心に指導している。
 		PRINTFORML 身体を密着させ姿勢を正している。
-		PRINTFORML ヨガトレーナーは息を荒くしている%PRINT_TRANSCALLNAME(TARGET)%を見て、
+		PRINTFORML ヨガトレーナーは息を荒くしている%PRINT_TRANSCALLNAME(TARGET)%을(를)見て、
 		PRINTFORML ニヤニヤと笑みを浮かべていた。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と
 		PRINTFORML ダンスフロアでヨガをしている。
 		PRINTL 
 		PRINTFORML 女性のヨガトレーナーが%誘ってきた相手%に熱心に指導している。
 		PRINTFORML 身体を密着させ姿勢を正している。
 		PRINTFORML ニヤニヤと笑みを浮かべている%誘ってきた相手%を見て、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は呆れている…
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)呆れている…
 	ENDIF
 	PRINTW 
 	PRINTFORML ヨガを終えた%PRINT_TRANSCALLNAME(TARGET)%達はダンスフロアを後にした。
@@ -997,7 +997,7 @@ ELSEIF 誘い内容 == 8
 ELSEIF 誘い内容 == 9
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML 高級スタジオで写真を撮られている。
 		PRINTL 
 		PRINTFORML 高額な利用料相応の設備が整っているのが素人目でも見て取れる。
@@ -1021,17 +1021,17 @@ ELSEIF 誘い内容 == 9
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達はスタジオを後にした。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML エッチな雰囲気が漂うスタジオで写真を撮られている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の指示に従いポーズを取り、スポーツブラとショーツで撮影されている%PRINT_TRANSCALLNAME(TARGET)%だったが
 		PRINTFORML スタジオの雰囲気も相まってかなり際どい写真まで撮られてしまった。
 		IF ISMALE()
 			;#region
-			PRINTFORML 雰囲気に飲まれた%PRINT_TRANSCALLNAME(TARGET)%のペニスの先端は先走りで湿り気を帯び始め、
+			PRINTFORML 雰囲気に飲まれた%PRINT_TRANSCALLNAME(TARGET)%의 ペニスの先端は先走りで湿り気を帯び始め、
 			;#endregion
 		ELSE 
-			PRINTFORML 雰囲気に飲まれた%PRINT_TRANSCALLNAME(TARGET)%の股間は湿り気を帯び始め、
+			PRINTFORML 雰囲気に飲まれた%PRINT_TRANSCALLNAME(TARGET)%의 股間は湿り気を帯び始め、
 		ENDIF
 		IF ISMALE()
 			;#region
@@ -1044,7 +1044,7 @@ ELSEIF 誘い内容 == 9
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達はスタジオを後にした。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML ジムの中で写真を撮られている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の使用している機材は貧相どころかスマフォのカメラのみだ。
@@ -1055,33 +1055,33 @@ ELSEIF 誘い内容 == 9
 	ENDIF
 	;運動部
 ELSEIF 誘い内容 == 10
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%達のマネージャーをしている。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%達のマネージャーをしている。
 	PRINTFORML 実力はほぼ互角で一度ついた点差が縮められずに続いている。
 	PRINTFORML 業を煮やした%誘ってきた相手%は%PRINT_TRANSCALLNAME(TARGET)%に耳打ちをした。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は呆気にとられていたせいで、土下座する勢いの%誘ってきた相手%の頼みを受け入れてしまった。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)呆気にとられていたせいで、土下座する勢いの%誘ってきた相手%の頼みを受け入れてしまった。
 	PRINTL 
 	IF (ABL:순종 > 2 || ABL:욕망 > 2) && RAND:3 != 0 && TALENT:초심 < 1
 		IF RAND:2 == 0
 			MOOD = 2
 			PRINTFORML 練習試合終了後、見事に逆転勝利し湧きたつチームメイト達をよそに、
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に勝利のご褒美として、
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に勝利のご褒美として、
 			PRINTFORML 物陰で手コキをしていた。
 			PRINTFORML チームメイトに見つかっては面倒なことになる、とからかう%誘ってきた相手%を睨みながら、
 			IF ABL:기교 > 2
 				PRINTFORML 持てる限りのテクニックで手早く사정させた…
 			ELSE
-				PRINTFORML 早く済ませようとするが、つたない手付きの%PRINT_TRANSCALLNAME(TARGET)%は사정に導くまでしばらくかかった…
+				PRINTFORML 早く済ませようとするが、つたない手付きの%PRINT_TRANSCALLNAME(TARGET)%은(는)사정に導くまでしばらくかかった…
 			ENDIF
 		ELSE
 			MOOD = 1
 			PRINTFORML 練習試合終了後、見事に逆転勝利し湧きたつチームメイト達をよそに、
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に勝利のご褒美として、
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に勝利のご褒美として、
 			IF TALENT:보추 > 0
 				PRINTFORML シャツの中に手を入れるのを許してぺたんこな胸を好きにさせていた。
 			ELSE
 				PRINTFORML ブラのホックを外しシャツの中で生乳を揉ませていた。
 			ENDIF
-			PRINTFORML チームメイトに見つかっては面倒なことになる、と心配する%PRINT_TRANSCALLNAME(TARGET)%を無視し、
+			PRINTFORML チームメイトに見つかっては面倒なことになる、と心配する%PRINT_TRANSCALLNAME(TARGET)%을(를)無視し、
 			PRINTFORM %誘ってきた相手%は一心不乱に
 			IF TALENT:거유 > 2
 				PRINT ダイナミックな大きさの
@@ -1102,13 +1102,13 @@ ELSEIF 誘い内容 == 10
 			ENDIF
 			PRINTFORML 가슴を
 			PRINTFORML 揉み続けるだけでは飽き足らず、服の上からむしゃぶりついて乳首を刺激し
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が乳首絶頂するまでご褒美は続いた…
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)乳首絶頂するまでご褒美は続いた…
 		ENDIF
 	ELSE
 		MOOD = 0
-		PRINTFORML 練習試合も終盤の頃、チアガール姿に着替えた%PRINT_TRANSCALLNAME(TARGET)%が現れ応援し始めた。
+		PRINTFORML 練習試合も終盤の頃、チアガール姿に着替えた%PRINT_TRANSCALLNAME(TARGET)%이(가)現れ応援し始めた。
 		PRINTFORML すらりと伸びた足が上がるとスコートがまくれ上がり、白いアンダーがチラチラ見える。
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%が跳びはねると
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)跳びはねると
 		IF TALENT:보추 > 0
 			PRINTFORML 今度はシャツがまくれて、ぺたんこな胸と乳首までチラリと覗く。
 		ELSE
@@ -1128,41 +1128,41 @@ ELSEIF 誘い内容 == 10
 		PRINTFORML 相手チームのみならず味方チーム全員の眼も釘付けになり
 		PRINTFORML あわや試合続行不可能かと思われたが、味方チームは雄叫びを上げながら快進撃。
 		PRINTFORML 見事に逆転勝利し湧きたつチームメイト達は勝利の喜びと下心で
-		PRINTFORML チアガール姿の%PRINT_TRANSCALLNAME(TARGET)%を胴上げした…
+		PRINTFORML チアガール姿の%PRINT_TRANSCALLNAME(TARGET)%을(를)胴上げした…
 	ENDIF
 	PRINTW 
 	PRINTFORML 練習試合を終えた%PRINT_TRANSCALLNAME(TARGET)%達は帰り支度をはじめた。
 	;水泳部
 ELSEIF 誘い内容 == 11
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は水泳部の練習試合の助っ人をしている。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)水泳部の練習試合の助っ人をしている。
 	PRINTFORML 男女混合リレーの実力はほぼ互角で一度差がつけば逆転は難しい。
 	; #region 
 	SIF TALENT:보추 > 0
 		PRINTFORML 成り行きとはいえ衆人環視の中、女子用수영복姿で性別を偽る恥ずかしさもあってか、
 	; #endregion
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はリレーの引き継ぎでわずかに早く飛び込んでしまい、失格とされ敗れた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)リレーの引き継ぎでわずかに早く飛び込んでしまい、失格とされ敗れた。
 	PRINTFORML 残る個人種目は正規部員が日頃の成果を発揮する場だ。
 	PRINTW 
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に物陰に呼び出され、行き場のない怒りのはけ口にされていた。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分のせいで負けたことを認めて%誘ってきた相手%の気が済むまで
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に物陰に呼び出され、行き場のない怒りのはけ口にされていた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分のせいで負けたことを認めて%誘ってきた相手%の気が済むまで
 		PRINTFORML 大人しく叱られ続けるつもりでいることが態度に現れていた。
-		PRINTFORML 八つ当たりと嗜虐性の結果、%誘ってきた相手%はおしおきと称して、%PRINT_TRANSCALLNAME(TARGET)%の乳首を嬲りはじめた。
+		PRINTFORML 八つ当たりと嗜虐性の結果、%誘ってきた相手%はおしおきと称して、%PRINT_TRANSCALLNAME(TARGET)%의 乳首を嬲りはじめた。
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は罵られながら、なめらかな수영복の上から乳首を焦らされたり、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)罵られながら、なめらかな수영복の上から乳首を焦らされたり、
 		PRINTFORML 爪を立ててカリカリと擦られたりしながら、乳首だけで絶頂させられた。
 		PRINTFORML ふと%誘ってきた相手%の股間に目をやると、競泳パンツからはみ出しそうなほど陰茎が勃起していた…
 		PRINTW 
 		PRINTFORML おしおきを終えた%PRINT_TRANSCALLNAME(TARGET)%達はその場を後にした。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に物陰に呼び出され、行き場のない怒りのはけ口にされていた。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分のせいで負けたことを認めて%誘ってきた相手%の気が済むまで
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に物陰に呼び出され、行き場のない怒りのはけ口にされていた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分のせいで負けたことを認めて%誘ってきた相手%の気が済むまで
 		PRINTFORML 大人しく叱られ続けるつもりでいることが態度に現れていた。
-		PRINTFORML 八つ当たりと嗜虐性の結果、%誘ってきた相手%はおしおきと称して、%PRINT_TRANSCALLNAME(TARGET)%の尻を叩きはじめた。
+		PRINTFORML 八つ当たりと嗜虐性の結果、%誘ってきた相手%はおしおきと称して、%PRINT_TRANSCALLNAME(TARGET)%의 尻を叩きはじめた。
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は罵られながら、尻を叩かれて弾けるような音を発している。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)罵られながら、尻を叩かれて弾けるような音を発している。
 		IF ISMALE()
 			;#region
 			PRINTFORML やがて悲鳴は甘い艶声に変わり、先走り汁で股間が濡れているのを咎められ更に叩かれる。
@@ -1175,17 +1175,17 @@ ELSEIF 誘い内容 == 11
 		PRINTFORML おしおきを終えた%PRINT_TRANSCALLNAME(TARGET)%達はその場を後にした。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に物陰で自分のミスで負けたことを謝っていた。
-		PRINTFORML %誘ってきた相手%は怒るどころか%PRINT_TRANSCALLNAME(TARGET)%を慰め、感謝さえした。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の肩にそっと%誘ってきた相手%の手が置かれる。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自然と%誘ってきた相手%の鍛えられた身体にもたれかかり優しさに甘えた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に物陰で自分のミスで負けたことを謝っていた。
+		PRINTFORML %誘ってきた相手%は怒るどころか%PRINT_TRANSCALLNAME(TARGET)%을(를)慰め、感謝さえした。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 肩にそっと%誘ってきた相手%の手が置かれる。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自然と%誘ってきた相手%の鍛えられた身体にもたれかかり優しさに甘えた。
 	ENDIF
 	;美術部
 ELSEIF 誘い内容 == 12
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は美術部でヌードモデルをしている。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)美術部でヌードモデルをしている。
 	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%にしか頼めない」
-	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%の均整のとれた身体は芸術だ」
-	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%の自然な美しさを描きたい」
+	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%의 均整のとれた身体は芸術だ」
+	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%의 自然な美しさを描きたい」
 	PRINTFORML とおだてられたり真剣に頼まれては断り切れず、
 	PRINTFORML 作品が出来上がるまで動かないという約束までしてしまっていた。
 	PRINTW
@@ -1211,20 +1211,20 @@ ELSEIF 誘い内容 == 12
 			PRINT 下着が必要ないくらい미성숙な
 		ENDIF
 		PRINTFORML 가슴を撫でた。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が抗議の声をあげると
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)抗議の声をあげると
 		PRINTFORML 「これは色を確かめるためだ」と言いながら今度は乳首の色を確かめはじめる。
-		PRINTFORML 他の部員も後を追うように%PRINT_TRANSCALLNAME(TARGET)%のいたることろに絵の具を塗って色を確かめる。
-		PRINTFORML どの部員も股間にテントを張っていたがそれ以上のことはされず%PRINT_TRANSCALLNAME(TARGET)%の身体は無駄に火照ったままだった…
+		PRINTFORML 他の部員も後を追うように%PRINT_TRANSCALLNAME(TARGET)%의 いたることろに絵の具を塗って色を確かめる。
+		PRINTFORML どの部員も股間にテントを張っていたがそれ以上のことはされず%PRINT_TRANSCALLNAME(TARGET)%의 身体は無駄に火照ったままだった…
 	ELSEIF RAND:3 == 0
 		MOOD = 1
 		PRINTFORML ふと一人の部員が%PRINT_TRANSCALLNAME(TARGET)%に近づくと
-		PRINTFORML ウエストからヒップのラインを指でそっと撫でた。%PRINT_TRANSCALLNAME(TARGET)%が抗議の声をあげると
+		PRINTFORML ウエストからヒップのラインを指でそっと撫でた。%PRINT_TRANSCALLNAME(TARGET)%이(가)抗議の声をあげると
 		PRINTFORML 「女体の柔らかさを知るためだ」と言いながらそのまま太腿を撫で始める。
 		; #region 
 		SIF TALENT:보추 > 0
 			PRINT 誰のカラダが女体だ、と抗議する暇もなく、
 		; #endregion
-		PRINTFORML 他の部員も「筋肉の付き方を知りたい」などと言い%PRINT_TRANSCALLNAME(TARGET)%の身体を触り始め、
+		PRINTFORML 他の部員も「筋肉の付き方を知りたい」などと言い%PRINT_TRANSCALLNAME(TARGET)%의 身体を触り始め、
 		IF ISMALE()
 			;#region
 			PRINTFORML ついには筆の柄で陰茎の鈴口、菊門の位置までいじられ確かめられる。
@@ -1232,27 +1232,27 @@ ELSEIF 誘い内容 == 12
 		ELSE 
 			PRINTFORML ついには筆の柄で陰核や膣口、菊門の位置までいじられ確かめられる。
 		ENDIF
-		PRINTFORML どの部員も股間にテントを張っていたがそれ以上のことはされず%PRINT_TRANSCALLNAME(TARGET)%の身体は無駄に火照ったままだった…
+		PRINTFORML どの部員も股間にテントを張っていたがそれ以上のことはされず%PRINT_TRANSCALLNAME(TARGET)%의 身体は無駄に火照ったままだった…
 	ELSE
 		MOOD = 0
 		PRINTFORML 美術部員達は一心不乱に筆を動かしている…
 		PRINTFORML 中には赤面したり性欲丸出しでにやけた顔もしていた者もいる。
 		PRINTFORML どの部員も股間にテントを張っていたが一切手出しをしなかったのは
 		PRINTFORML 室内のいたるところに盗撮用カメラを仕掛けていたからなのだが、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はそれに気付かず部員の진지함な態度に好印象を抱いていた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)それに気付かず部員の진지함な態度に好印象を抱いていた。
 	ENDIF
 	PRINTW 
-	PRINTFORML ヌードモデルを終えた%PRINT_TRANSCALLNAME(TARGET)%は帰り支度をはじめた。
+	PRINTFORML ヌードモデルを終えた%PRINT_TRANSCALLNAME(TARGET)%은(는)帰り支度をはじめた。
 	;料理部
 ELSEIF 誘い内容 == 13
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%の料理を試食している。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%の料理を試食している。
 	PRINTFORML %誘ってきた相手%は新作スイーツと言っていたが、その材料は怪しい人物から入手した촉수の切れ端だった。
-	PRINTFORML そうとは知らず%PRINT_TRANSCALLNAME(TARGET)%は食レポ芸能人になったつもりで感想を述べている。
+	PRINTFORML そうとは知らず%PRINT_TRANSCALLNAME(TARGET)%은(는)食レポ芸能人になったつもりで感想を述べている。
 	PRINTFORML 
 	PRINTW 
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はその後%誘ってきた相手%とスイーツ談義に花を咲かせていたが、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)その後%誘ってきた相手%とスイーツ談義に花を咲かせていたが、
 		IF ISMALE()
 			;#region
 			PRINTFORML 身体が火照り意識が朦朧とし、%誘ってきた相手%を妙に意識してペニスの先端は先走りで濡れていた。
@@ -1264,30 +1264,30 @@ ELSEIF 誘い内容 == 13
 			;#region
 			IF ISMALE()
 				;#region
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の指は無意識のうちにお尻へ伸び、衣服の上から尻谷間の底をぐりぐりと押しつぶしている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 指は無意識のうちにお尻へ伸び、衣服の上から尻谷間の底をぐりぐりと押しつぶしている。
 				;#endregion
 			ELSE 
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の指は無意識のうちに股間へ伸び、衣服の上から尻谷間の底をぐりぐりと押しつぶしている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 指は無意識のうちに股間へ伸び、衣服の上から尻谷間の底をぐりぐりと押しつぶしている。
 			ENDIF
 			;#endregion
 		ELSE 
 			IF ISMALE()
 				;#region
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の指は無意識のうちにお尻へ伸び、スカートの上から陰核をぐりぐりと押しつぶしている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 指は無意識のうちにお尻へ伸び、スカートの上から陰核をぐりぐりと押しつぶしている。
 				;#endregion
 			ELSE 
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の指は無意識のうちに股間へ伸び、スカートの上から陰核をぐりぐりと押しつぶしている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 指は無意識のうちに股間へ伸び、スカートの上から陰核をぐりぐりと押しつぶしている。
 			ENDIF
 		ENDIF
 		PRINTFORML %誘ってきた相手%は촉수の媚薬効果が本物だったと判断すると、%PRINT_TRANSCALLNAME(TARGET)%に下校の準備を促した…
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はその後%誘ってきた相手%とスイーツ談義に花を咲かせていたが、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)その後%誘ってきた相手%とスイーツ談義に花を咲かせていたが、
 		PRINTFORML 身体が火照り意識が朦朧とし、少し違和感を覚えていた。
 		PRINTFORML %誘ってきた相手%は촉수の媚薬効果は失敗だったと判断すると、%PRINT_TRANSCALLNAME(TARGET)%に下校の準備を促した…
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はその後%誘ってきた相手%とスイーツ談義に花を咲かせて、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)その後%誘ってきた相手%とスイーツ談義に花を咲かせて、
 		PRINTFORML 次の休みに話題のスイーツ店に一緒に行こうと盛り上がっていた。
 		PRINTFORML %誘ってきた相手%はこれはデートの誘いかと舞い上がって、%PRINT_TRANSCALLNAME(TARGET)%に下校の準備を促した…
 	ENDIF
@@ -1317,17 +1317,17 @@ ELSEIF 誘い内容 == 14
 	PRINTW 
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に屋上で写真を撮られている。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に屋上で写真を撮られている。
 		PRINTFORML いかついカメラが高額そうなのは素人目でも見て取れる。
 		PRINTL 
 		PRINTFORML 出来上がった写真はとても素晴らしく
-		PRINTFORML 写真に映る自分を見て%PRINT_TRANSCALLNAME(TARGET)%は思わずうっとりしてしまった。
+		PRINTFORML 写真に映る自分を見て%PRINT_TRANSCALLNAME(TARGET)%은(는)思わずうっとりしてしまった。
 		PRINTFORML %誘ってきた相手%も今まで撮って来た中でも会心の出来栄えだと誇らしげにしている。
 		PRINTW 
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達は帰り支度をはじめた。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML 人気のない旧校舎で写真を撮られている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の指示に従いポーズを取り撮影されている%PRINT_TRANSCALLNAME(TARGET)%だったが
@@ -1336,7 +1336,7 @@ ELSEIF 誘い内容 == 14
 		PRINTFORML 撮影を終えた%PRINT_TRANSCALLNAME(TARGET)%達は帰り支度をはじめた。
 	ELSE
 		MOOD = 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%に
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%に
 		PRINTFORML 人気のない空き教室で写真を撮られている。
 		PRINTL 
 		PRINTFORML %誘ってきた相手%の使用している機材は貧相どころかスマフォのカメラのみだ。
@@ -1347,7 +1347,7 @@ ELSEIF 誘い内容 == 14
 	ENDIF
 	;同人
 ELSEIF 誘い内容 == 15
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%の二次創作漫画を読んでいる。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%の二次創作漫画を読んでいる。
 	PRINTFORM 今人気の
 	IF RAND:3 == 0
 		PRINTFORM ロボットアニメの
@@ -1360,9 +1360,9 @@ ELSEIF 誘い内容 == 15
 		MOOD = 2
 		PRINTFORML ヒロインが敵に凌辱されるエロ同人誌だ。
 		PRINTFORML 最初から分かっていたら断っていたかも知れないが、約束してしまっては仕方がない。
-		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%が読み終わるのを待っている。
+		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%이(가)読み終わるのを待っている。
 		PRINTFORML 
-		PRINTFORML 絵も内容も良く%PRINT_TRANSCALLNAME(TARGET)%は言葉を選びながら褒めたが、
+		PRINTFORML 絵も内容も良く%PRINT_TRANSCALLNAME(TARGET)%은(는)言葉を選びながら褒めたが、
 		PRINTFORML 本に描かれた無修正のペニスがやけにリアルで大きかったのは%誘ってきた相手%のモノを参考にしたのか
 		;		PRINTFORML 気になって聞いてみると、%誘ってきた相手%は目を逸らしながら頷いた。
 		PRINTFORML 気になったが聞くに聞けず、悶々としたままだった。
@@ -1370,28 +1370,28 @@ ELSEIF 誘い内容 == 15
 		MOOD = 1
 		PRINTFORML ヒロインの純愛ラブコメ同人誌だ。
 		PRINTFORML 楽しみながら読み進めるうちに、ラブラブセックスな場面になっていった。
-		PRINTFORML 直接的な性器や乳房の描写はないが、着衣のままの濃厚なキス責め描写に%PRINT_TRANSCALLNAME(TARGET)%は赤面する。
-		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%が読み終わるのを待っている。
+		PRINTFORML 直接的な性器や乳房の描写はないが、着衣のままの濃厚なキス責め描写に%PRINT_TRANSCALLNAME(TARGET)%은(는)赤面する。
+		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%이(가)読み終わるのを待っている。
 		PRINTFORML 
-		PRINTFORML 絵も内容も良く%PRINT_TRANSCALLNAME(TARGET)%は言葉を選びながら褒めた。
+		PRINTFORML 絵も内容も良く%PRINT_TRANSCALLNAME(TARGET)%은(는)言葉を選びながら褒めた。
 		PRINTFORML 思い切って性描写にも触れて感想を述べると、%誘ってきた相手%は本物の資料がないから描けないだけだと言う。
 	ELSE
 		MOOD = 0
 		PRINTFORML ヒロインのギャグ同人誌だ。
 		PRINTFORML 楽しみながら読み進めるうちにあっという間に読み終わってしまった。
-		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%が読み終わるのを待っていたが、それは杞憂に終わった。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%誘ってきた相手%と時間の許す限り、漫画やアニメについて語り合った…。
+		PRINTFORML %誘ってきた相手%はやや不安そうに%PRINT_TRANSCALLNAME(TARGET)%이(가)読み終わるのを待っていたが、それは杞憂に終わった。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%と時間の許す限り、漫画やアニメについて語り合った…。
 	ENDIF
 	PRINTFORML 
 	PRINTFORML 下校時間を迎えた%PRINT_TRANSCALLNAME(TARGET)%達はその場を後にした。
 	;図書
 ELSEIF 誘い内容 == 16
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は図書室で%誘ってきた相手%の本を探すのを手伝っている。
-	PRINTFORML 踏み台を使って奥の書架の上の方を探していた%PRINT_TRANSCALLNAME(TARGET)%はバランスを崩し転倒してしまった。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)図書室で%誘ってきた相手%の本を探すのを手伝っている。
+	PRINTFORML 踏み台を使って奥の書架の上の方を探していた%PRINT_TRANSCALLNAME(TARGET)%은(는)バランスを崩し転倒してしまった。
 	PRINTFORML 運の良いことに%誘ってきた相手%が下敷きになり、%PRINT_TRANSCALLNAME(TARGET)%にケガはなかったが、
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORM 偶然抱き止めた%誘ってきた相手%の両手は、%PRINT_TRANSCALLNAME(TARGET)%の
+		PRINTFORM 偶然抱き止めた%誘ってきた相手%の両手は、%PRINT_TRANSCALLNAME(TARGET)%의 
 		IF TALENT:거유 > 2
 			PRINT ダイナミックな大きさの
 		ELSEIF TALENT:거유 > 1
@@ -1412,29 +1412,29 @@ ELSEIF 誘い内容 == 16
 		PRINTFORML 가슴を後ろから鷲掴みしていた。
 		IF ISMALE()
 			;#region
-			PRINTFORML お互いパニックになり慌てて動くと衣服は乱れ、%誘ってきた相手%の腿が%PRINT_TRANSCALLNAME(TARGET)%の股間をなぞり、
+			PRINTFORML お互いパニックになり慌てて動くと衣服は乱れ、%誘ってきた相手%の腿が%PRINT_TRANSCALLNAME(TARGET)%의 股間をなぞり、
 			;#endregion
 		ELSE 
-			PRINTFORML お互いパニックになり慌てて動くとスカートはめくれ、%誘ってきた相手%の腿が%PRINT_TRANSCALLNAME(TARGET)%の股間をなぞり、
+			PRINTFORML お互いパニックになり慌てて動くとスカートはめくれ、%誘ってきた相手%の腿が%PRINT_TRANSCALLNAME(TARGET)%의 股間をなぞり、
 		ENDIF
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の手がなぜか%誘ってきた相手%の勃起した肉棒を握ってしまう。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 手がなぜか%誘ってきた相手%の勃起した肉棒を握ってしまう。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%の股間の真下にあった。
+		PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%의 股間の真下にあった。
 		PRINTFORML 思わず悲鳴を上げそうになるのを両手で口を抑えて堪える。こんなところを見られたら社会的に死ぬ。
 		PRINTW
 		PRINTFORML %誘ってきた相手%が股間の下でふがふがと何かを訴えかけたが、%PRINT_TRANSCALLNAME(TARGET)%には性的刺激しか伝わらず、
 		PRINTFORML 続けて口を抑えて喘ぎ声が漏れないように我慢する。
 		PRINTFORML %誘ってきた相手%は顔を左右に振り、荒い息を吹きかけ、足をバタつかせている。
-		PRINTFORML その動きが偶然性感帯を刺激し、%PRINT_TRANSCALLNAME(TARGET)%は軽くイッて脱力した。
+		PRINTFORML その動きが偶然性感帯を刺激し、%PRINT_TRANSCALLNAME(TARGET)%은(는)軽くイッて脱力した。
 	ELSE
 		MOOD = 0
 		IF ISMALE()
 			;#region
-			PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%の乳首の下にあった。
+			PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%의 乳首の下にあった。
 			;#endregion
 		ELSE 
-			PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%の胸の谷間にあった。
+			PRINTFORML 抱き止めたそこなった%誘ってきた相手%の顔は、%PRINT_TRANSCALLNAME(TARGET)%의 胸の谷間にあった。
 		ENDIF
 		PRINTFORML %誘ってきた相手%が胸の下でふがふがと何かを訴えかけたが、%PRINT_TRANSCALLNAME(TARGET)%には性的刺激しか伝わらず、
 		PRINTFORML 喘ぎ声が漏れないように我慢した。
@@ -1445,32 +1445,32 @@ ELSEIF 誘い内容 == 16
 	;写真
 ELSEIF 誘い内容 == 17
 	PRINTFORML %誘ってきた相手%の依頼は校内の日常を切り取った写真を撮って来てほしいという内容だった。
-	PRINTFORML 素人の視点が逆に新鮮であることも多いという話で、%PRINT_TRANSCALLNAME(TARGET)%はカメラを手に校内を散策した。
+	PRINTFORML 素人の視点が逆に新鮮であることも多いという話で、%PRINT_TRANSCALLNAME(TARGET)%은(는)カメラを手に校内を散策した。
 	PRINTW
 	IF RAND:5 == 0
 		MOOD = 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が屋上の扉を開けると、水音と小刻みな悲鳴が聞こえてきた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)屋上の扉を開けると、水音と小刻みな悲鳴が聞こえてきた。
 		PRINTFORML まさかと思い物陰を覗き込むと壁に手をついた女子と後ろから激しくピストンする男子の後ろ姿が見えた。
 		PRINTFORML 驚きのあまり、知らずの内にシャッターボタンを押してしまう。
 		PRINTFORML 男子が「今シャッター音が聞こえたな。誰かに見られてるかも」と言うと
 		PRINTFORML 女子が身体を痙攣させながら、こらえ切れなかった喘ぎ声が溢れ出た。
 		PRINTW
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は急いでその場を後にした。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)急いでその場を後にした。
 		PRINTFORML 他にいくつかの写真を撮って%誘ってきた相手%に渡すと、性交の写真について問い詰められた。
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%自身もまさか撮ってしまっていたとは知らず、説明するのに大分苦労した…。
 	ELSEIF RAND:3 == 0
 		MOOD = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が空き教室の前を通ると、水音と小刻みな悲鳴が聞こえてきた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)空き教室の前を通ると、水音と小刻みな悲鳴が聞こえてきた。
 		PRINTFORML まさかと思い空き教室を覗き込むと、机の角に股間を押し付ける女子の姿が見えた。
 		PRINTFORML 驚きのあまり、知らずの内にシャッターボタンを押してしまう。
 		PRINTFORML シャッター音が静かに鳴った瞬間、女子が身体を痙攣させながらこらえ切れなかった喘ぎ声を零した。
 		PRINTW
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は急いでその場を後にした。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)急いでその場を後にした。
 		PRINTFORML 他にいくつかの写真を撮って%誘ってきた相手%に渡すと、角オナの写真について問い詰められた。
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%自身もまさか撮ってしまっていたとは知らず、説明するのに大分苦労した…。		
 	ELSE
 		MOOD = 0
-		PRINTFORML 素人の視点と言われてもピンとこない%PRINT_TRANSCALLNAME(TARGET)%はお茶を濁すように、
+		PRINTFORML 素人の視点と言われてもピンとこない%PRINT_TRANSCALLNAME(TARGET)%은(는)お茶を濁すように、
 		PRINTFORML 各部活動の様子を順番にカメラに収めている。
 		PRINTFORML
 		;小中高
@@ -1480,7 +1480,7 @@ ELSEIF 誘い内容 == 17
 			PRINTFORML 三人組の男子が寄り道の相談をしながら帰っていく。
 		ENDIF
 		PRINTFORML 実につまらないありふれた日常だ。
-		PRINTFORML だが、この日常こそが%PRINT_TRANSCALLNAME(TARGET)%達、촉수生物と戦う者達の守るべき日常だ。
+		PRINTFORML だが、この日常こそが%PRINT_TRANSCALLNAME(TARGET)%達、촉수 생물と戦う者達の守るべき日常だ。
 	ENDIF
 	;ゴミ捨て
 ELSEIF 誘い内容 == 18
@@ -1490,14 +1490,14 @@ ELSEIF 誘い内容 == 18
 			PRINTFORML ゴミ捨て場へ向かう途中、死角に当たる物陰から怪しい気配を感じた。
 			PRINTFORML 息を潜めて覗いてみると、目隠しと猿轡をされた女子が数人の男子と性交していた。
 			PRINTFORML 双方合意の複数プレイか輪姦かは分からないが、校内の風紀の乱れを見逃して良いものか……
-			PRINTFORML 動揺した%PRINT_TRANSCALLNAME(TARGET)%は物音を立ててしまい、男たちに気付かれた。
+			PRINTFORML 動揺した%PRINT_TRANSCALLNAME(TARGET)%은(는)物音を立ててしまい、男たちに気付かれた。
 		ELSE
 			MOOD = 1
 			PRINTFORML ゴミ捨て場へ向かう途中、死角に当たる物陰から怪しい気配を感じた。
 			PRINTFORML 息を潜めて覗いてみると、数人の男子がタバコのような物を吸っていた。
-			PRINTFORML その煙は桃色をしていて촉수生物由来の危険ドラッグに似ている。
+			PRINTFORML その煙は桃色をしていて촉수 생물由来の危険ドラッグに似ている。
 			PRINTFORML もし本当にそうならこれを見逃して良いものか……
-			PRINTFORML 動揺した%PRINT_TRANSCALLNAME(TARGET)%は物音を立ててしまい、男たちに気付かれた。
+			PRINTFORML 動揺した%PRINT_TRANSCALLNAME(TARGET)%은(는)物音を立ててしまい、男たちに気付かれた。
 		ENDIF
 		;選択肢分岐後確率でナンパ失敗レイプに飛ばす案
 		PRINTFORML [0] やんわりと注意する（交渉失敗率{ABL:순종 * 10 + 45}％）
@@ -1511,31 +1511,31 @@ ELSEIF 誘い内容 == 18
 				PRINTFORML やんわりと注意しようとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 				PRINTFORML 近寄ってくる男たちの目は正気ではなく、抵抗する間もなく捕らえられてしまう。
 				PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 				PRINTW 
 				CALL PASTIME_NANPA_RAPE
 				RETURN 0
 			ELSE
 				PRINTFORML やんわりと注意しようとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 				PRINTFORML 近寄ってくる男たちの目は正気ではなく、本能が最後の警鐘を鳴らす。
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は厄介事は避け、その場から逃げ出した。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)厄介事は避け、その場から逃げ出した。
 			ENDIF
 		ELSEIF RESULT == 1
 			IF RAND:100 < ABL:순종 * 10 + 20
 				PRINTFORML はっきりと注意しようとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 				PRINTFORML 近寄ってくる男たちの目は正気ではなく、抵抗する間もなく捕らえられてしまう。
 				PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 				PRINTW 
 				CALL PASTIME_NANPA_RAPE
 				RETURN 0
 			ELSE
 				PRINTFORML はっきりと注意しようとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 				PRINTFORML 近寄ってくる男たちの目は正気ではなく、本能が最後の警鐘を鳴らす。
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は厄介事は避け、その場から逃げ出した。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)厄介事は避け、その場から逃げ出した。
 			ENDIF
 		ELSEIF RESULT == 2
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は厄介事は避け、教師に知らせようと立ち去った。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)厄介事は避け、教師に知らせようと立ち去った。
 		ELSE
 			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP
@@ -1545,16 +1545,16 @@ ELSEIF 誘い内容 == 18
 		PRINTFORML ゴミ捨て場へ向かう途中、死角に当たる物陰から怪しい気配を感じた。
 		PRINTFORML 息を潜めて覗いてみると、数人の男子が何やら話し込んでいる。
 		PRINTFORML 特に問題ないなら見逃しても良いか……
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はゴミ捨てを終え、%誘ってきた相手%に知らせようと立ち去った。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ゴミ捨てを終え、%誘ってきた相手%に知らせようと立ち去った。
 	ENDIF
 ENDIF
 
 PRINTL 
 PRINTW 
 IF TALENT:음란 > 0 && TALENT:초심 < 1
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%がそろそろ来るかな等と考えていると
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)そろそろ来るかな等と考えていると
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%がそろそろ別れて帰路に着こうと考えていると
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)そろそろ別れて帰路に着こうと考えていると
 ENDIF
 
 ;街中か遠出
@@ -1571,7 +1571,7 @@ ELSEIF ARG == 3
 	PRINTFORML ちょっと人のいない所で話さないかないか、と声を掛けられた。
 ENDIF
 
-PRINTFORML %誘ってきた相手%のイヤラシイ視線がはっきり%PRINT_TRANSCALLNAME(TARGET)%のカラダを舐め回している。
+PRINTFORML %誘ってきた相手%のイヤラシイ視線がはっきり%PRINT_TRANSCALLNAME(TARGET)%의 カラダを舐め回している。
 PRINTL 
 IF TALENT:음란 > 0 && TALENT:초심 < 1
 	PRINTFORML やっと来たかと思った%PRINT_TRANSCALLNAME(TARGET)%だったが、
@@ -1580,14 +1580,14 @@ ELSEIF TALENT:감정결여 > 0
 	PRINTFORML まったく気にした風もない無愛想な態度の%PRINT_TRANSCALLNAME(TARGET)%だが
 	PRINTFORML 相手はそういうタイプが好みなのかニヤニヤ笑っている…
 ELSEIF ARG:1 == 1 || TALENT:초심 > 0
-	PRINTFORML 女性に向けられるそういった視線に晒された経験が薄い%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML 女性に向けられるそういった視線に晒された経験が薄い%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML 顔を真っ赤にしながら必死に気持ちを落ち着けている…
 ELSE
 	PRINTFORML やっぱりそれが目当てか…と自分に言い聞かせながら、
 	PRINTFORML 表情に出てしまわないように気を遣うので精いっぱいだ…
 ENDIF
 PRINTW 
-PRINTFORML どうするべきか%PRINT_TRANSCALLNAME(TARGET)%は迷っている・・・
+PRINTFORML どうするべきか%PRINT_TRANSCALLNAME(TARGET)%은(는)迷っている・・・
 PRINTL 
 PRINTFORML [0]着いていく
 PRINTFORML [1]やんわりと断る（交渉失敗率{ABL:순종 * 10 + MOOD * 10 + 30}％）
@@ -1601,17 +1601,17 @@ IF RESULT == 0
 		PRINTFORML それを待っていたと言わんばかりに身を寄せると%誘ってきた相手%は
 	ELSE
 		IF RAND: 3 == 0
-			PRINTFORML 顔を赤くしながら%PRINT_TRANSCALLNAME(TARGET)%が小さく頷く。
-			PRINTFORML %誘ってきた相手%は%PRINT_TRANSCALLNAME(TARGET)%の肩に手を回してを抱き寄せると
+			PRINTFORML 顔を赤くしながら%PRINT_TRANSCALLNAME(TARGET)%이(가)小さく頷く。
+			PRINTFORML %誘ってきた相手%は%PRINT_TRANSCALLNAME(TARGET)%의 肩に手を回してを抱き寄せると
 		ELSEIF RAND: 2 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が小さく一歩相手に近寄る。
-			PRINTFORML %誘ってきた相手%はニヤリとして%PRINT_TRANSCALLNAME(TARGET)%の腰に手を回し
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)小さく一歩相手に近寄る。
+			PRINTFORML %誘ってきた相手%はニヤリとして%PRINT_TRANSCALLNAME(TARGET)%의 腰に手を回し
 		ELSE
 			PRINTFORML どうしようか迷っていた%PRINT_TRANSCALLNAME(TARGET)%だったが
 			PRINTFORML 雰囲気に呑まれてなし崩し的に肩を抱き寄せられた。%誘ってきた相手%は
 		ENDIF
 	ENDIF
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%を連れて
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%을(를)連れて
 	IF ARG == 0 || ARG == 1
 		PRINTFORML 街の人ごみの中へと消えていった…
 	ELSE
@@ -1630,13 +1630,13 @@ ELSEIF RESULT == 1
 		IF RAND: 3 == 0
 			PRINTFORML やんわりと断ろうとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 			PRINTFORML 消極的な断りの言葉を遠回しな同意と取られてしまったらしく
-			PRINTFORML %誘ってきた相手%は強引に%PRINT_TRANSCALLNAME(TARGET)%の腰に手を回すと
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を連れて街の人ごみの中へと歩き出した…
+			PRINTFORML %誘ってきた相手%は強引に%PRINT_TRANSCALLNAME(TARGET)%의 腰に手を回すと
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)連れて街の人ごみの中へと歩き出した…
 		ELSEIF RAND: 2 == 0
 			PRINTFORML やんわりと断ろうとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 			PRINTFORML %誘ってきた相手%はまともに取り合わず更に誘いの言葉を続ける。
-			PRINTFORML 業を煮やしたのか急に%PRINT_TRANSCALLNAME(TARGET)%の肩に手を回して抱き寄せると
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が抵抗する間も無くえっちな言葉を투척かけつつ引き連れていった…
+			PRINTFORML 業を煮やしたのか急に%PRINT_TRANSCALLNAME(TARGET)%의 肩に手を回して抱き寄せると
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)抵抗する間も無くえっちな言葉を투척かけつつ引き連れていった…
 		ELSE
 			PRINTFORML やんわりと断ろうとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 			PRINTFORML 相手の勢いと雰囲気に流され押し切られてしまい、着いていくことにした…
@@ -1644,16 +1644,16 @@ ELSEIF RESULT == 1
 		PRINTW 
 		CALL PASTIME_NANPA_TAKEOUT, ARG, 誘い内容, 持ち帰り先, 誘ってきた相手, ARG:1
 	ELSE
-		PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML やんわりと誘いを断っている…
 		PRINTL 
 		IF RAND:100 < 20
-			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
@@ -1663,23 +1663,23 @@ ELSEIF RESULT == 1
 ELSEIF RESULT == 2
 	PRINTL 
 	IF 誘ってきた相手 == "ヤクザ" || 誘ってきた相手 == "不良"
-		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML はっきり誘いを断った…
 		PRINTL 
 		IF RAND:100 < 80
-			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
 			PRINTFORML %誘ってきた相手%はボヤきながら去っていった・・・
 		ENDIF
 	ELSEIF RAND:100 < ABL:순종 * 10 + MOOD * 5 + 15
-		PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%は、はっきり誘いを断ろうとしたが
+		PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)、はっきり誘いを断ろうとしたが
 		IF TALENT:보추 > 0
 			PRINTFORML これでも남자だからといくら言ってもまともに取り合って貰えず、
 			PRINT 最後には
@@ -1689,29 +1689,29 @@ ELSEIF RESULT == 2
 		PRINTW 
 		CALL PASTIME_NANPA_TAKEOUT, ARG, 誘い内容, 持ち帰り先, 誘ってきた相手, ARG:1
 	ELSE
-		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML はっきり誘いを断った…
 		PRINTL 
 		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
 			IF RAND:100 < 30
-				PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+				PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 				PRINTFORML 立っていることもままなくなる。
 				PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 				PRINTL 
 				PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+				PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 				PRINTW 
 				CALL PASTIME_NANPA_RAPE
 			ELSE
 				PRINTFORML %誘ってきた相手%はボヤきながら去っていった・・・
 			ENDIF
 		ELSEIF RAND:100 < 10
-			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
@@ -1720,29 +1720,29 @@ ELSEIF RESULT == 2
 	ENDIF
 ELSEIF RESULT == 3
 	PRINTL 
-	PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML 声をかけてきた相手を無視して立ち去ることにした…
 	PRINTW 
 	IF 	TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
 		IF RAND:100 < 40
-			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
 			PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 			PRINTL 
 			PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+			PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 			PRINTW 
 			CALL PASTIME_NANPA_RAPE
 		ELSE
 			PRINTFORML %誘ってきた相手%はボヤきながら去っていった・・・
 		ENDIF
 	ELSEIF RAND:100 < 5
-		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%のカラダから急に力が抜けていき
+		PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 		PRINTFORML 立っていることもままなくなる。
 		PRINTFORML 倒れそうになったカラダを%誘ってきた相手%が優しく声を掛け抱き止める。
 		PRINTL 
 		PRINTFORML ふと相手の手にスプレー缶の様な物が握られているのを見つけ、何かされた事に気がつく。
-		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%は徐々に意識を失っていった・・・
+		PRINTFORML 力の抜けた%PRINT_TRANSCALLNAME(TARGET)%은(는)徐々に意識を失っていった・・・
 		PRINTW 
 		CALL PASTIME_NANPA_RAPE
 	ELSE
@@ -1820,18 +1820,18 @@ ENDIF
 IF RAND:4 != 0
 	IF TALENT:보추 > 0
 		IF ABL:A감각 < 2
-			PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%の嬌声が響いている。
+			PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 			NAMAHAME = 0
 			PRINTL 
 			IF ABL:욕망 < 3 || TALENT:초심 > 0
-				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 				PRINTFORML 仕方なく股間のモノを確かめさせて恥じらう少女然とした姿に、むしろ昂奮してしまったようだ…
 			ELSE
-				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 				PRINTFORML 頬を上気させながら証拠の股間のモノを露わにする少女然とした姿に、むしろ昂奮したようだ…
 			ENDIF
 			PRINTW 
-			PRINTFORML たっぷり애널を弄られて腸淫液を溢れさせている%PRINT_TRANSCALLNAME(TARGET)%は、
+			PRINTFORML たっぷり애널を弄られて腸淫液を溢れさせている%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 			;애널처녀分岐
 			IF EXP:A경험 <= 0
 				PRINTFORML お尻に挿れる以外なら何でも言うことを聞くから犯さないでほしいと訴えた。
@@ -1875,16 +1875,16 @@ IF RAND:4 != 0
 			ENDIF
 			;A감각２以上
 		ELSE
-			PRINTFORM で、%PRINT_TRANSCALLNAME(TARGET)%は%ARGS%の前で膝をついて
+			PRINTFORM で、%PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%の前で膝をついて
 			SIF TALENT:음란 > 0
 				PRINTFORM 慣れた様子で
 			PRINTFORML 입で奉仕している。
 			PRINTL 
 			IF ABL:욕망 < 3 || TALENT:초심 > 0
-				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 				PRINTFORML 仕方なく股間のモノを確かめさせて恥じらう少女然とした姿に、むしろ昂奮してしまったようだ…
 			ELSE
-				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+				PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 				PRINTFORML 頬を上気させながら証拠の股間のモノを露わにする少女然とした姿に、むしろ昂奮したようだ…
 			ENDIF
 			PRINTW 
@@ -1931,13 +1931,13 @@ IF RAND:4 != 0
 		PRINTW 
 		;服の脱ぎっぷり
 		IF RAND:4 == 0
-			PRINTFORML 獣欲にまかせた%ARGS%は、%PRINT_TRANSCALLNAME(TARGET)%の服を脱がすのも煩わしいとばかりに
+			PRINTFORML 獣欲にまかせた%ARGS%は、%PRINT_TRANSCALLNAME(TARGET)%의 服を脱がすのも煩わしいとばかりに
 			PRINTFORML 挿入するのに必要なだけ服をずらして性交に及んでいた。
 		ELSEIF RAND:3 == 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%と%ARGS%は、服を大きくはだけた半裸で絡み合っていた。
 			PRINTFORML 服を脱がしながら愛撫していたが途中で我慢がきかなくなったらしい。
 		ELSEIF RAND:2 == 0		
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は下着とソックスは履いたまま性交に及んでいた。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)下着とソックスは履いたまま性交に及んでいた。
 			PRINTFORML 衣服はその辺に脱ぎ捨てられている。
 		ELSE
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%と%ARGS%の衣服はきちんと折り畳まれ、
@@ -1945,22 +1945,22 @@ IF RAND:4 != 0
 		ENDIF
 		PRINTW
 		IF RAND:4 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ARGS%のペニスを受け入れ、激しく突き上げられていた。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%のペニスを受け入れ、激しく突き上げられていた。
 		ELSEIF RAND:3 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ARGS%の上に跨り、騎乗位で
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%の上に跨り、騎乗位で
 			PRINTFORML 薄いながらも柔らかい胸を揉まれながら自分から腰を振っていた。
 			PRINTFORML 大きく開脚した体勢で尻を上下に叩きつけ、ひたすら腸肉でペニスを扱き上げていく…
 		ELSEIF RAND:2 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は壁に手をついた体勢で後ろから%ARGS%に犯されていた。
-			PRINTFORML 激しさを増していく動きに、肘で체중を支える%PRINT_TRANSCALLNAME(TARGET)%の
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)壁に手をついた体勢で後ろから%ARGS%に犯されていた。
+			PRINTFORML 激しさを増していく動きに、肘で체중を支える%PRINT_TRANSCALLNAME(TARGET)%의 
 			PRINTFORML 慎ましやかな보추ペニスの揺れが増して、ぺちぺちと下腹に当たっている…
 		ELSE
-			PRINTFORML %ARGS%に圧し掛かられた%PRINT_TRANSCALLNAME(TARGET)%は完全に無防備を晒して何時間も責められ続けていた。
-			PRINTFORML ねちっこい腰使いで執拗に直腸の突き当たりを責められ、%PRINT_TRANSCALLNAME(TARGET)%は幾度となく絶頂に導かれてしまう…
+			PRINTFORML %ARGS%に圧し掛かられた%PRINT_TRANSCALLNAME(TARGET)%은(는)完全に無防備を晒して何時間も責められ続けていた。
+			PRINTFORML ねちっこい腰使いで執拗に直腸の突き当たりを責められ、%PRINT_TRANSCALLNAME(TARGET)%은(는)幾度となく絶頂に導かれてしまう…
 		ENDIF
 		PRINTW
 		IF RAND:5 == 0
-			PRINTFORM 相手は歪んだ욕망を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%を自分の
+			PRINTFORM 相手は歪んだ욕망を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%을(를)自分の
 			IF RAND:2 == 0
 				PRINT 実
 			ELSE
@@ -1984,7 +1984,7 @@ IF RAND:4 != 0
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%もまた%レスポンス%背徳感を煽り立てつつ、
 		ELSEIF RAND:4 == 0
-			PRINTFORML 相手は赤ちゃん願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%を犯しながら、
+			PRINTFORML 相手は赤ちゃん願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%을(를)犯しながら、
 			PRINTFORML 母乳を吸う赤子のように乳首責めに勤しんでいる…
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%も母性本能から%ARGS%を赤ちゃん言葉であやしつつ、
@@ -1994,18 +1994,18 @@ IF RAND:4 != 0
 			PRINTFORML %ARGS%の男性器はさらに硬くなり%PRINT_TRANSCALLNAME(TARGET)%に快楽を与える。
 		ELSEIF RAND:2 == 0
 			PRINTFORML 相手は연인ごっこがしたいと言い出し、%PRINT_TRANSCALLNAME(TARGET)%に何度も好き好きと繰り返すように命じ、
-			PRINTFORML 言うとおりにした%PRINT_TRANSCALLNAME(TARGET)%は次第に本当に%ARGS%のことを연인と錯覚しはじめた。
-			PRINTFORM 調子に乗った%ARGS%がキスを要求すると、%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML 言うとおりにした%PRINT_TRANSCALLNAME(TARGET)%은(는)次第に本当に%ARGS%のことを연인と錯覚しはじめた。
+			PRINTFORM 調子に乗った%ARGS%がキスを要求すると、%PRINT_TRANSCALLNAME(TARGET)%은(는)
 			IF TALENT:교제상대 > 0
 				PRINTFORML それだけはダメ、と頑なに拒んだ。
-				PRINTFORML それまでの연인ごっこから一転して、逆上した%ARGS%の激しい腰遣いで%PRINT_TRANSCALLNAME(TARGET)%は犯され、
+				PRINTFORML それまでの연인ごっこから一転して、逆上した%ARGS%の激しい腰遣いで%PRINT_TRANSCALLNAME(TARGET)%은(는)犯され、
 			ELSE
 				PRINTFORML 無言のまま唇を押し付け、舌と舌で唾液の交換をした。
-				PRINTFORML 燃え上がった%ARGS%のねちっこい腰遣いに%PRINT_TRANSCALLNAME(TARGET)%は사정の予感に震え、
+				PRINTFORML 燃え上がった%ARGS%のねちっこい腰遣いに%PRINT_TRANSCALLNAME(TARGET)%은(는)사정の予感に震え、
 			ENDIF
 		ELSE
 			PRINTFORML 相手はレイプ願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%に抵抗する演技をするように注文をつけてきた。
-			PRINTFORML イヤ、誰か助けてと声を上げると更に硬くなったペニスが%PRINT_TRANSCALLNAME(TARGET)%を蹂躙し、
+			PRINTFORML イヤ、誰か助けてと声を上げると更に硬くなったペニスが%PRINT_TRANSCALLNAME(TARGET)%을(를)蹂躙し、
 		ENDIF
 		IF RAND:4 == 0
 			PRINTFORML おもちゃの手錠と目隠し、鎖付きの首輪を付けられ
@@ -2049,7 +2049,7 @@ IF RAND:4 != 0
 				PRINTFORM た…
 			ENDIF
 		ELSEIF RAND:3 == 0 && NAMAHAME > 1
-			PRINTFORML 言われるがまま腸内사정のおねだりをさせられ、屈従の証を直腸に注ぎ込まれてしまった…
+			PRINTFORML 言われるがまま장내사정のおねだりをさせられ、屈従の証を直腸に注ぎ込まれてしまった…
 		ELSEIF RAND:2 == 0
 			PRINTFORM 言われるがまま
 			IF RAND:3 == 0
@@ -2087,7 +2087,7 @@ IF RAND:4 != 0
 		PRINTW
 		;애널中出し
 		IF NAMAHAME == 2
-			PRINTL 腸内사정
+			PRINTL 장내사정
 			PRINTL 
 			IF RAND:4 == 0
 				PRINTFORML %ARGS%は出すぞ！中に出すぞ！と叫びながらピストンを加速させ、
@@ -2098,11 +2098,11 @@ IF RAND:4 != 0
 			ELSE
 				PRINTFORML %ARGS%は無言のまま오니気迫る勢いでピストンを加速させ、
 			ENDIF
-			PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%の肉穴に解き放った。
+			PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%의 肉穴に解き放った。
 			PRINTFORML 最後の一滴まで出しきってペニスが引き抜かれると、たっぷり注ぎ込まれた精液が
 			PRINTFORM こってりと溢れ出てきた
 			SIF TALENT:음란 > 0
-				PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%は満足気な笑みを浮かべた
+				PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%은(는)満足気な笑みを浮かべた
 			PRINTFORML …
 			PRINTW 
 			NAKADASHI = 1
@@ -2111,21 +2111,21 @@ IF RAND:4 != 0
 			;外出し失敗
 			IF RAND:5 == 0
 				IF RAND:4 == 0
-					PRINTL 腸内사정
+					PRINTL 장내사정
 					PRINTL 
-					PRINTFORML %ARGS%の限界が近付いていると察した%PRINT_TRANSCALLNAME(TARGET)%は外で出すように頼んだが
+					PRINTFORML %ARGS%の限界が近付いていると察した%PRINT_TRANSCALLNAME(TARGET)%은(는)外で出すように頼んだが
 					PRINTFORML %ARGS%は無視してピストンを続け、そのまま腸内に精液を放出した…
 					PRINTW 
 					PRINTFORML %ARGS%を咎めても悪びれる様子もなく、何食わぬ顔で気持ち良かったよ等と言っている…
 					NAKADASHI = 1
 				ELSEIF RAND:3 == 0
-					PRINTL 腸内사정
+					PRINTL 장내사정
 					PRINTL 
 					PRINTFORML %ARGS%は사정の限界が近付いていると感じ、寸前でペースを緩めたが、
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は絶頂の高みまであと少しというところで終わるのを焦れったく思い、
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)絶頂の高みまであと少しというところで終わるのを焦れったく思い、
 					PRINTFORML もう少し我慢して、もっとメチャクチャに突いて、と懇願した。
 					PRINTFORML %ARGS%が、もう無理！外に出す！と引き抜こうとすると、
-					PRINTFORML あろうことか%PRINT_TRANSCALLNAME(TARGET)%は両足を%ARGS%の腰に絡めて
+					PRINTFORML あろうことか%PRINT_TRANSCALLNAME(TARGET)%은(는)両足を%ARGS%の腰に絡めて
 					IF  RAND:2 == 0
 						PRINT お尻の中に出しちゃダメ！もうちょっとだけ我慢して！
 					ELSE
@@ -2133,25 +2133,25 @@ IF RAND:4 != 0
 					ENDIF
 					PRINTFORML と叫び、自分からも腰を迎えるように打ちつけた。
 					PRINTFORML %ARGS%は男の意地で持ちこたえた分の濃厚なザーメンを直腸奥に解き放ち、
-					PRINTFORML その사정の衝撃と熱さで%PRINT_TRANSCALLNAME(TARGET)%は絶頂を迎えた…
+					PRINTFORML その사정の衝撃と熱さで%PRINT_TRANSCALLNAME(TARGET)%은(는)絶頂を迎えた…
 					PRINTW 
-					PRINTFORML 気持ち良かったよと言う%ARGS%を咎めるわけにもいかず、%PRINT_TRANSCALLNAME(TARGET)%は苦笑いするしかなかった。
+					PRINTFORML 気持ち良かったよと言う%ARGS%を咎めるわけにもいかず、%PRINT_TRANSCALLNAME(TARGET)%은(는)苦笑いするしかなかった。
 					PRINTFORML 後でいきんで出しておかなければ…
 					NAKADASHI = 1
 				ELSEIF RAND:2 == 0
-					PRINTL 腸内사정
+					PRINTL 장내사정
 					PRINTL 
 					PRINTFORML %ARGS%は사정寸前でペニスを引き抜こうとしたが、
 					PRINTFORML もたついて外に出すのが少し遅れてしまった。
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が指で菊門を押し広げると、僅かだが白濁液が流れ出てきた…
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)指で菊門を押し広げると、僅かだが白濁液が流れ出てきた…
 					PRINTW 
 					PRINTFORML %ARGS%を咎めても後の祭りでしかない。後でいきんで出しておかなければ…
 					NAKADASHI = 1
 				ELSE
-					PRINTL 腸内사정
+					PRINTL 장내사정
 					PRINTL 
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が叩きつけられる快楽に流されていると、
-					PRINTFORML %ARGS%が突然力尽きて痙攣し、そのまま%PRINT_TRANSCALLNAME(TARGET)%の上にしなだれかかってきた。
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)叩きつけられる快楽に流されていると、
+					PRINTFORML %ARGS%が突然力尽きて痙攣し、そのまま%PRINT_TRANSCALLNAME(TARGET)%의 上にしなだれかかってきた。
 					PRINTFORML まさかと思いながら慌ててペニスを引き抜かせると、
 					PRINTFORML 案の定たっぷりと中出しされた精液がどろりと애널から溢れ出していた…
 					PRINTW 
@@ -2162,7 +2162,7 @@ IF RAND:4 != 0
 			ELSEIF RAND:3 == 0
 				PRINTL お尻の谷間에 사정
 				PRINTL 
-				PRINTFORML %ARGS%は사정寸前でペニスを引き抜くと、%PRINT_TRANSCALLNAME(TARGET)%のお尻の谷間に욕망を解き放った…
+				PRINTFORML %ARGS%は사정寸前でペニスを引き抜くと、%PRINT_TRANSCALLNAME(TARGET)%의 お尻の谷間に욕망を解き放った…
 				;애널セックス後なので念のためスカトロ필터ーチェック
 			ELSEIF RAND:2 == 0 && CONFIG_CHECK_MANIAC_F(15) == 1
 				PRINTL 입에 사정
@@ -2174,7 +2174,7 @@ IF RAND:4 != 0
 				PRINTL 腸外사정
 				PRINTL 
 				PRINTFORML %ARGS%が사정寸前でペニスを引き抜くと、
-				PRINTFORML 危うく迸った白濁が%PRINT_TRANSCALLNAME(TARGET)%の下腹部を汚していった…
+				PRINTFORML 危うく迸った白濁が%PRINT_TRANSCALLNAME(TARGET)%의 下腹部を汚していった…
 				PRINTW 
 			ENDIF
 			;コンドーム에 사정
@@ -2185,7 +2185,7 @@ IF RAND:4 != 0
 					PRINTL 無許可中出し
 					PRINTL 
 					PRINTFORML %ARGS%が限界に達すると、あろうことかコンドームを取り外して再度挿入し
-					PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%を無視して生ハメの状態でピストンしはじめた。
+					PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%을(를)無視して生ハメの状態でピストンしはじめた。
 					PRINTFORML レイプ同然の状態に抵抗するも、%ARGS%はそのまま無許可での애널中出しを敢行した…
 					PRINTW 
 					PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
@@ -2193,18 +2193,18 @@ IF RAND:4 != 0
 				ELSEIF RAND:3 == 0 && NAMAHAME == -1
 					PRINTL 焦らし快楽堕ち
 					PRINTL 
-					PRINTFORML 何度も絶頂しそうになるとピストンを止めて焦らされた%PRINT_TRANSCALLNAME(TARGET)%がイカせてと懇願すると、
+					PRINTFORML 何度も絶頂しそうになるとピストンを止めて焦らされた%PRINT_TRANSCALLNAME(TARGET)%이(가)イカせてと懇願すると、
 					PRINTFORML %ARGS%は生ハメさせてくれたら何度でもイカせてやると迫ってきた。
-					PRINTFORML どうせ임신しないのだからと自分に言い訳しながら、%PRINT_TRANSCALLNAME(TARGET)%は快楽に屈した…
+					PRINTFORML どうせ임신しないのだからと自分に言い訳しながら、%PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に屈した…
 					PRINTFORML %ARGS%がコンドームを取り外して再度挿入し、生ハメの状態でピストンしはじめた。
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は溢れ出る絶頂快楽に飲まれ、%ARGS%の熱く滾った精子を感じていた…
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)溢れ出る絶頂快楽に飲まれ、%ARGS%の熱く滾った精子を感じていた…
 					PRINTW 
 					PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
 					NAKADASHI = 1
 				ELSE
 					PRINTL 破れたコンドーム
 					PRINTL 
-					PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%の腸内にたっぷりと욕망を吐き出した。
+					PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%의 腸内にたっぷりと욕망を吐き出した。
 					PRINTFORML …が、どうにも様子がおかしく、何やら腸内に妙な感触が広がっていく。
 					PRINTFORML まさかと思いながら慌ててペニスを引き抜かせると、
 					PRINTFORML 案の定コンドームが破れており、濃厚な精液がどろりと애널から溢れ出していた…
@@ -2214,7 +2214,7 @@ IF RAND:4 != 0
 			ELSE
 				PRINTL コンドーム에 사정
 				PRINTL 
-				PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%の腸内にたっぷりと욕망を吐き出した。
+				PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%의 腸内にたっぷりと욕망を吐き出した。
 				PRINTFORML ゴム越しでも精液の熱さと感触は%PRINT_TRANSCALLNAME(TARGET)%に伝わり、絶頂の余韻を味わわせる。
 				PRINTFORML ペニスを引き抜いてみると、コンドームは濃厚な精液でぷっくり膨らんでいた…
 				PRINTW 
@@ -2242,9 +2242,9 @@ IF RAND:4 != 0
 		NAKADASHI = 0
 	ELSE
 		IF TALENT:처녀 > 0
-			PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%の嬌声が響いている。
+			PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 			NAMAHAME = 0
-			PRINTFORML たっぷり愛撫されて淫液を溢れさせている%PRINT_TRANSCALLNAME(TARGET)%は、
+			PRINTFORML たっぷり愛撫されて淫液を溢れさせている%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 			;聖처녀分岐
 			IF CHECK_HOLYVIRGIN_F()==1
 				PRINTFORML 本番以外なら何でも言うことを聞くから처녀は奪わないでほしいと訴えた。
@@ -2288,7 +2288,7 @@ IF RAND:4 != 0
 			ENDIF
 			;非처녀
 		ELSE
-			PRINTFORM で、%PRINT_TRANSCALLNAME(TARGET)%は%ARGS%の前で膝をついて
+			PRINTFORM で、%PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%の前で膝をついて
 			SIF TALENT:음란 > 0
 				PRINTFORM 慣れた様子で
 			PRINTFORML 입で奉仕している。
@@ -2351,13 +2351,13 @@ IF RAND:4 != 0
 		PRINTW 
 		;服の脱ぎっぷり
 		IF RAND:4 == 0
-			PRINTFORML 獣欲にまかせた%ARGS%は、%PRINT_TRANSCALLNAME(TARGET)%の服を脱がすのも煩わしいとばかりに
+			PRINTFORML 獣欲にまかせた%ARGS%は、%PRINT_TRANSCALLNAME(TARGET)%의 服を脱がすのも煩わしいとばかりに
 			PRINTFORML 挿入するのに必要なだけ服をずらして性交に及んでいた。
 		ELSEIF RAND:3 == 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%と%ARGS%は、服を大きくはだけた半裸で絡み合っていた。
 			PRINTFORML 服を脱がしながら愛撫していたが途中で我慢がきかなくなったらしい。
 		ELSEIF RAND:2 == 0		
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は下着とソックスは履いたまま性交に及んでいた。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)下着とソックスは履いたまま性交に及んでいた。
 			PRINTFORML 衣服はその辺に脱ぎ捨てられている。
 		ELSE
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%と%ARGS%の衣服はきちんと折り畳まれ、
@@ -2365,9 +2365,9 @@ IF RAND:4 != 0
 		ENDIF
 		PRINTW
 		IF RAND:4 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ARGS%のペニスを受け入れ、激しく突き上げられていた。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%のペニスを受け入れ、激しく突き上げられていた。
 		ELSEIF RAND:3 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ARGS%の上に跨り、騎乗位で
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%の上に跨り、騎乗位で
 			IF TALENT:거유 > 2
 				PRINT ダイナミックな大きさの
 			ELSEIF TALENT:거유 > 1
@@ -2387,8 +2387,8 @@ IF RAND:4 != 0
 				PRINTFORML 질肉でペニスを扱き上げていく…
 			ENDIF
 		ELSEIF RAND:2 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は壁に手をついた体勢で後ろから%ARGS%に犯されていた。
-			PRINTFORML 激しさを増していく動きに、肘で체중を支える%PRINT_TRANSCALLNAME(TARGET)%の
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)壁に手をついた体勢で後ろから%ARGS%に犯されていた。
+			PRINTFORML 激しさを増していく動きに、肘で체중を支える%PRINT_TRANSCALLNAME(TARGET)%의 
 			IF TALENT:거유 > 2
 				PRINT ダイナミックな大きさの
 			ELSEIF TALENT:거유 > 1
@@ -2400,18 +2400,18 @@ IF RAND:4 != 0
 			ENDIF
 			PRINTFORML 乳房の前後が加速していく…
 		ELSE
-			PRINTFORML %ARGS%に圧し掛かられた%PRINT_TRANSCALLNAME(TARGET)%は完全に無防備を晒して何時間も責められ続けていた。
+			PRINTFORML %ARGS%に圧し掛かられた%PRINT_TRANSCALLNAME(TARGET)%은(는)完全に無防備を晒して何時間も責められ続けていた。
 			PRINTFORM ねちっこい腰使いで執拗に
 			IF NAMAHAME == 3
 				PRINT 애널
 			ELSE
 				PRINTFORM %ESTRUS_TEXT_F(TARGET,"の")%子宮口
 			ENDIF
-			PRINTFORML を責められ、%PRINT_TRANSCALLNAME(TARGET)%は幾度となく絶頂に導かれてしまう…
+			PRINTFORML を責められ、%PRINT_TRANSCALLNAME(TARGET)%은(는)幾度となく絶頂に導かれてしまう…
 		ENDIF
 		PRINTW
 		IF RAND:5 == 0
-			PRINTFORM 相手は歪んだ욕망を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%を自分の
+			PRINTFORM 相手は歪んだ욕망を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%을(를)自分の
 			IF RAND:2 == 0
 				PRINT 実
 			ELSE
@@ -2435,7 +2435,7 @@ IF RAND:4 != 0
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%もまた%レスポンス%背徳感を煽り立てつつ、
 		ELSEIF RAND:4 == 0
-			PRINTFORML 相手は赤ちゃん願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%を犯しながら、
+			PRINTFORML 相手は赤ちゃん願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%을(를)犯しながら、
 			PRINTFORML 母乳を吸う赤子のように乳首責めに勤しんでいる…
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%も母性本能から%ARGS%を赤ちゃん言葉であやしつつ、
@@ -2445,18 +2445,18 @@ IF RAND:4 != 0
 			PRINTFORML %ARGS%の男性器はさらに硬くなり%PRINT_TRANSCALLNAME(TARGET)%に快楽を与える。
 		ELSEIF RAND:2 == 0
 			PRINTFORML 相手は연인ごっこがしたいと言い出し、%PRINT_TRANSCALLNAME(TARGET)%に何度も好き好きと繰り返すように命じ、
-			PRINTFORML 言うとおりにした%PRINT_TRANSCALLNAME(TARGET)%は次第に本当に%ARGS%のことを연인と錯覚しはじめた。
-			PRINTFORM 調子に乗った%ARGS%がキスを要求すると、%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML 言うとおりにした%PRINT_TRANSCALLNAME(TARGET)%은(는)次第に本当に%ARGS%のことを연인と錯覚しはじめた。
+			PRINTFORM 調子に乗った%ARGS%がキスを要求すると、%PRINT_TRANSCALLNAME(TARGET)%은(는)
 			IF TALENT:교제상대 > 0
 				PRINTFORML それだけはダメ、と頑なに拒んだ。
-				PRINTFORML それまでの연인ごっこから一転して、逆上した%ARGS%の激しい腰遣いで%PRINT_TRANSCALLNAME(TARGET)%は犯され、
+				PRINTFORML それまでの연인ごっこから一転して、逆上した%ARGS%の激しい腰遣いで%PRINT_TRANSCALLNAME(TARGET)%은(는)犯され、
 			ELSE
 				PRINTFORML 無言のまま唇を押し付け、舌と舌で唾液の交換をした。
-				PRINTFORML 燃え上がった%ARGS%のねちっこい腰遣いに%PRINT_TRANSCALLNAME(TARGET)%は사정の予感に震え、
+				PRINTFORML 燃え上がった%ARGS%のねちっこい腰遣いに%PRINT_TRANSCALLNAME(TARGET)%은(는)사정の予感に震え、
 			ENDIF
 		ELSE
 			PRINTFORML 相手はレイプ願望を秘めているらしく、%PRINT_TRANSCALLNAME(TARGET)%に抵抗する演技をするように注文をつけてきた。
-			PRINTFORML イヤ、誰か助けてと声を上げると更に硬くなったペニスが%PRINT_TRANSCALLNAME(TARGET)%を蹂躙し、
+			PRINTFORML イヤ、誰か助けてと声を上げると更に硬くなったペニスが%PRINT_TRANSCALLNAME(TARGET)%을(를)蹂躙し、
 		ENDIF
 		IF RAND:4 == 0
 			PRINTFORML おもちゃの手錠と目隠し、鎖付きの首輪を付けられ
@@ -2469,7 +2469,7 @@ IF RAND:4 != 0
 		ENDIF
 		IF NAMAHAME == 3
 			IF RAND:3 == 0 
-				PRINTFORML 言われるがまま腸内사정のおねだりをさせられ、屈従の証を直腸に注ぎ込まれてしまった…
+				PRINTFORML 言われるがまま장내사정のおねだりをさせられ、屈従の証を直腸に注ぎ込まれてしまった…
 			ELSEIF RAND:2 == 0 
 				PRINTFORML 直腸越しに%ESTRUS_TEXT_F(TARGET)%子宮をノックされ、子宮の快楽に굴복させられてしまった…
 			ELSE
@@ -2478,7 +2478,7 @@ IF RAND:4 != 0
 		ELSEIF TALENT:처녀 > 0
 			PRINTFORML 처녀を失ったばかりなのに絶頂させられる快楽に굴복させられてしまった…
 			PRINTW 
-			PRINTL 처녀喪失
+			PRINTL 처녀 상실
 			CFLAG:206 = 8
 			TALENT:처녀 = -1
 		ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
@@ -2576,7 +2576,7 @@ IF RAND:4 != 0
 				PRINTL 無許可中出し
 				PRINTL 
 				PRINTFORML %ARGS%が限界近くになると、あろうことか애널からペニスを抜いて膣に再度挿入し
-				PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%を無視して生ハメの状態でピストンしはじめた。
+				PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%을(를)無視して生ハメの状態でピストンしはじめた。
 				PRINTFORML レイプ同然の状態に抵抗するも、%ARGS%はそのまま無許可での中出しを敢行した…
 				PRINTW 
 				PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
@@ -2593,11 +2593,11 @@ IF RAND:4 != 0
 				ELSE
 					PRINTFORML %ARGS%は無言のまま오니気迫る勢いでピストンを加速させ、
 				ENDIF
-				PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%の尻穴に解き放った。
+				PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%의 尻穴に解き放った。
 				PRINTFORML 最後の一滴まで出しきってペニスが引き抜かれると、たっぷり注ぎ込まれた精液が
 				PRINTFORM こってりと溢れ出てきた
 				SIF TALENT:음란 > 0
-					PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%は満足気な笑みを浮かべた
+					PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%은(는)満足気な笑みを浮かべた
 				PRINTFORML …
 				PRINTW 
 			ENDIF
@@ -2614,11 +2614,11 @@ IF RAND:4 != 0
 			ELSE
 				PRINTFORML %ARGS%は無言のまま오니気迫る勢いでピストンを加速させ、
 			ENDIF
-			PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%の肉穴に解き放った。
+			PRINTFORML 痙攣しながら濃厚な욕망を%PRINT_TRANSCALLNAME(TARGET)%의 肉穴に解き放った。
 			PRINTFORML 最後の一滴まで出しきってペニスが引き抜かれると、たっぷり注ぎ込まれた精液が
 			PRINTFORM こってりと溢れ出てきた
 			SIF TALENT:음란 > 0
-				PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%は満足気な笑みを浮かべた
+				PRINTFORM のを見て、%PRINT_TRANSCALLNAME(TARGET)%은(는)満足気な笑みを浮かべた
 			PRINTFORML …
 			PRINTW 
 			NAKADASHI = 1
@@ -2629,7 +2629,7 @@ IF RAND:4 != 0
 				IF RAND:4 == 0
 					PRINTL 질내사정
 					PRINTL 
-					PRINTFORML %ARGS%の限界が近付いていると察した%PRINT_TRANSCALLNAME(TARGET)%は外で出すように頼んだが
+					PRINTFORML %ARGS%の限界が近付いていると察した%PRINT_TRANSCALLNAME(TARGET)%은(는)外で出すように頼んだが
 					PRINTFORML %ARGS%は無視してピストンを続け、そのまま질내に精液を放出した…
 					PRINTW 
 					PRINTFORML %ARGS%を咎めても悪びれる様子もなく、何食わぬ顔で気持ち良かったよ等と言っている…
@@ -2638,10 +2638,10 @@ IF RAND:4 != 0
 					PRINTL 질내사정
 					PRINTL 
 					PRINTFORML %ARGS%は사정の限界が近付いていると感じ、寸前でペースを緩めたが、
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は絶頂の高みまであと少しというところで終わるのを焦れったく思い、
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)絶頂の高みまであと少しというところで終わるのを焦れったく思い、
 					PRINTFORML もう少し我慢して、もっとメチャクチャに突いて、と懇願した。
 					PRINTFORML %ARGS%が、もう無理！外に出す！と引き抜こうとすると、
-					PRINTFORML あろうことか%PRINT_TRANSCALLNAME(TARGET)%は両足を%ARGS%の腰に絡めて
+					PRINTFORML あろうことか%PRINT_TRANSCALLNAME(TARGET)%은(는)両足を%ARGS%の腰に絡めて
 					IF  RAND:2 == 0
 						PRINT 질내に出しちゃダメ！もうちょっとだけ我慢して！
 					ELSE
@@ -2649,9 +2649,9 @@ IF RAND:4 != 0
 					ENDIF
 					PRINTFORML と叫び、自分からも腰を迎えるように打ちつけた。
 					PRINTFORML %ARGS%は男の意地で持ちこたえた分の濃厚なザーメンを膣奥に解き放ち、
-					PRINTFORML その사정の衝撃と熱さで%PRINT_TRANSCALLNAME(TARGET)%は絶頂を迎えた…
+					PRINTFORML その사정の衝撃と熱さで%PRINT_TRANSCALLNAME(TARGET)%은(는)絶頂を迎えた…
 					PRINTW 
-					PRINTFORML 気持ち良かったよと言う%ARGS%を咎めるわけにもいかず、%PRINT_TRANSCALLNAME(TARGET)%は苦笑いするしかなかった。
+					PRINTFORML 気持ち良かったよと言う%ARGS%を咎めるわけにもいかず、%PRINT_TRANSCALLNAME(TARGET)%은(는)苦笑いするしかなかった。
 					PRINTFORML 後でピルを飲んでおかなければ…
 					NAKADASHI = 1
 				ELSEIF RAND:2 == 0
@@ -2659,15 +2659,15 @@ IF RAND:4 != 0
 					PRINTL 
 					PRINTFORML %ARGS%は사정寸前でペニスを引き抜こうとしたが、
 					PRINTFORML もたついて外に出すのが少し遅れてしまった。
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が指で秘裂を押し広げると、僅かだが白濁液が流れ出てきた…
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)指で秘裂を押し広げると、僅かだが白濁液が流れ出てきた…
 					PRINTW 
 					PRINTFORML %ARGS%を咎めても後の祭りでしかない。後でピルを飲んでおかなければ…
 					NAKADASHI = 1
 				ELSE
 					PRINTL 질내사정
 					PRINTL 
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が叩きつけられる快楽に流されていると、
-					PRINTFORML %ARGS%が突然力尽きて痙攣し、そのまま%PRINT_TRANSCALLNAME(TARGET)%の上にしなだれかかってきた。
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)叩きつけられる快楽に流されていると、
+					PRINTFORML %ARGS%が突然力尽きて痙攣し、そのまま%PRINT_TRANSCALLNAME(TARGET)%의 上にしなだれかかってきた。
 					PRINTFORML まさかと思いながら慌ててペニスを引き抜かせると、
 					PRINTFORML 案の定たっぷりと中出しされた精液がどろりとワレメから溢れ出していた…
 					PRINTW 
@@ -2678,7 +2678,7 @@ IF RAND:4 != 0
 			ELSEIF RAND:3 == 0
 				PRINTL ワレメ에 사정
 				PRINTL 
-				PRINTFORML %ARGS%は사정寸前でペニスを引き抜くと、%PRINT_TRANSCALLNAME(TARGET)%のワレメに욕망を解き放った…
+				PRINTFORML %ARGS%は사정寸前でペニスを引き抜くと、%PRINT_TRANSCALLNAME(TARGET)%의 ワレメに욕망を解き放った…
 			ELSEIF RAND:2 == 0
 				PRINTL 입에 사정
 				PRINTL 
@@ -2689,7 +2689,7 @@ IF RAND:4 != 0
 				PRINTL 질외사정
 				PRINTL 
 				PRINTFORML %ARGS%が사정寸前でペニスを引き抜くと、
-				PRINTFORML 危うく迸った白濁が%PRINT_TRANSCALLNAME(TARGET)%の下腹部を汚していった…
+				PRINTFORML 危うく迸った白濁が%PRINT_TRANSCALLNAME(TARGET)%의 下腹部を汚していった…
 				PRINTW 
 			ENDIF
 			;コンドーム에 사정
@@ -2700,7 +2700,7 @@ IF RAND:4 != 0
 					PRINTL 無許可中出し
 					PRINTL 
 					PRINTFORML %ARGS%が限界に達すると、あろうことかコンドームを取り外して再度挿入し
-					PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%を無視して生ハメの状態でピストンしはじめた。
+					PRINTFORML 制止する%PRINT_TRANSCALLNAME(TARGET)%을(를)無視して生ハメの状態でピストンしはじめた。
 					PRINTFORML レイプ同然の状態に抵抗するも、%ARGS%はそのまま無許可での中出しを敢行した…
 					PRINTW 
 					PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
@@ -2708,18 +2708,18 @@ IF RAND:4 != 0
 				ELSEIF RAND:3 == 0 && NAMAHAME == -1
 					PRINTL 焦らし快楽堕ち
 					PRINTL 
-					PRINTFORML 何度も絶頂しそうになるとピストンを止めて焦らされた%PRINT_TRANSCALLNAME(TARGET)%がイカせてと懇願すると、
+					PRINTFORML 何度も絶頂しそうになるとピストンを止めて焦らされた%PRINT_TRANSCALLNAME(TARGET)%이(가)イカせてと懇願すると、
 					PRINTFORML %ARGS%は生ハメさせてくれたら何度でもイカせてやると迫ってきた。
-					PRINTFORML どうせピルがあるのだからと自分に言い訳しながら、%PRINT_TRANSCALLNAME(TARGET)%は快楽に屈した…
+					PRINTFORML どうせピルがあるのだからと自分に言い訳しながら、%PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に屈した…
 					PRINTFORML %ARGS%がコンドームを取り外して再度挿入し、生ハメの状態でピストンしはじめた。
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は溢れ出る絶頂快楽に飲まれ、%ARGS%の熱く滾った精子を感じていた…
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)溢れ出る絶頂快楽に飲まれ、%ARGS%の熱く滾った精子を感じていた…
 					PRINTW 
 					PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
 					NAKADASHI = 1
 				ELSE
 					PRINTL 破れたコンドーム
 					PRINTL 
-					PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%の질내にたっぷりと욕망を吐き出した。
+					PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%의 질내にたっぷりと욕망を吐き出した。
 					PRINTFORML …が、どうにも様子がおかしく、何やら질내に妙な感触が広がっていく。
 					PRINTFORML まさかと思いながら慌ててペニスを引き抜かせると、
 					PRINTFORML 案の定コンドームが破れており、濃厚な精液がどろりとワレメから溢れ出していた…
@@ -2729,7 +2729,7 @@ IF RAND:4 != 0
 			ELSE
 				PRINTL コンドーム에 사정
 				PRINTL 
-				PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%の질내にたっぷりと욕망を吐き出した。
+				PRINTFORML %ARGS%はゴム越しに%PRINT_TRANSCALLNAME(TARGET)%의 질내にたっぷりと욕망を吐き出した。
 				PRINTFORML ゴム越しでも精液の熱さと感触は%PRINT_TRANSCALLNAME(TARGET)%に伝わり、絶頂の余韻を味わわせる。
 				PRINTFORML ペニスを引き抜いてみると、コンドームは濃厚な精液でぷっくり膨らんでいた…
 				PRINTW 
@@ -2758,14 +2758,14 @@ IF RAND:4 != 0
 	;ねちっこく調教される
 ELSEIF RAND:3 == 0
 	;場所削除
-	PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%の嬌声が響いている。
+	PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 	IF TALENT:보추 > 0
 		PRINTL 
 		IF ABL:욕망 < 3 || TALENT:초심 > 0
-			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 			PRINTFORML 仕方なく股間のモノを確かめさせて恥じらう少女然とした姿に、むしろ昂奮してしまったようだ…
 		ELSE
-			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 			PRINTFORML 頬を上気させながら証拠の股間のモノを露わにする少女然とした姿に、むしろ昂奮したようだ…
 		ENDIF
 	ENDIF
@@ -2773,23 +2773,23 @@ ELSEIF RAND:3 == 0
 	;クンニ
 	;フェラ
 	IF RAND:4 == 0 && ISHOLE() == 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は街で知り合った%ARGS%の前に跪き、硬く反り返った男性器に口で奉仕していた。
-		PRINTFORML %ARGS%の言うままに%PRINT_TRANSCALLNAME(TARGET)%は洗ってもいない肉棒に舌を這わせ、先走りを啜っていく…
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)街で知り合った%ARGS%の前に跪き、硬く反り返った男性器に口で奉仕していた。
+		PRINTFORML %ARGS%の言うままに%PRINT_TRANSCALLNAME(TARGET)%은(는)洗ってもいない肉棒に舌を這わせ、先走りを啜っていく…
 		IF EXP:펠라경험 > 99
 			PRINTFORML 舌と唇と喉奥とがそれぞれ別の生き物のように変幻自在に男性器を愛撫し、
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は妖艶な笑みを見せながら優れた舌技で奉仕していた。
-			PRINTFORML 歓喜の声をあげる%ARGS%に%PRINT_TRANSCALLNAME(TARGET)%はさらに昂ぶり、持てる限りの舌技を披露して
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)妖艶な笑みを見せながら優れた舌技で奉仕していた。
+			PRINTFORML 歓喜の声をあげる%ARGS%に%PRINT_TRANSCALLNAME(TARGET)%은(는)さらに昂ぶり、持てる限りの舌技を披露して
 		ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 			PRINTFORML 元々男である%PRINT_TRANSCALLNAME(TARGET)%にとって男性器のどこが感じるかは熟知している。
 			PRINTFORML 男の自分がフェラをされている想像をしながら%ARGS%の男性器を舐めしゃぶると、
-			PRINTFORML 今の自分にはない架空の男性器が快感を受けて、%PRINT_TRANSCALLNAME(TARGET)%の口腔奉仕はさらに淫らになり、
+			PRINTFORML 今の自分にはない架空の男性器が快感を受けて、%PRINT_TRANSCALLNAME(TARGET)%의 口腔奉仕はさらに淫らになり、
 		ELSEIF TALENT:보추 > 0
 			PRINTFORML こんな見た目でも一応は男である%PRINT_TRANSCALLNAME(TARGET)%にとって男性器のどこが感じるかは熟知している。
 			PRINTFORML 自分の股間にあるモノよりもずっと逞しい%ARGS%の男性器を舐めしゃぶると、
-			PRINTFORML 男としての敗北感と惨めさが快感にすり替わって、%PRINT_TRANSCALLNAME(TARGET)%の口腔奉仕はさらに淫らになり、
+			PRINTFORML 男としての敗北感と惨めさが快感にすり替わって、%PRINT_TRANSCALLNAME(TARGET)%의 口腔奉仕はさらに淫らになり、
 		ELSE
 			PRINTFORML 舌の使い方から始まり、最後には喉を性器のように扱う術まで教えられ、
-			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は%ARGS%に口で봉사한다術をたっぷりと教え込まれ
+			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)%ARGS%に口で봉사한다術をたっぷりと教え込まれ
 		ENDIF
 		;何度もメガネにぶっかけられてしまった…（メガネはない）
 		IF RAND:4 == 0
@@ -2818,10 +2818,10 @@ ELSEIF RAND:3 == 0
 		LOCAL:131 = 3
 		;おっぱい
 	ELSEIF RAND:3 == 0 && ISHOLE() == 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の持ち帰りに成功した%ARGS%は挿入もせず、乳首責めを繰り返していた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 持ち帰りに成功した%ARGS%は挿入もせず、乳首責めを繰り返していた。
 		PRINTFORML 乳首の周りを焦らすようになぞられ、乳首の先端にわずかに触れるところで爪先や筆でこすられ、
 		PRINTFORML ローションまみれになった乳首を強く引っ張られる…。
-		PRINTFORML %ARGS%の執拗な乳首開発に理性を蕩かされ、%PRINT_TRANSCALLNAME(TARGET)%のほうからおねだりするまで狂わされてしまった…
+		PRINTFORML %ARGS%の執拗な乳首開発に理性を蕩かされ、%PRINT_TRANSCALLNAME(TARGET)%의 ほうからおねだりするまで狂わされてしまった…
 		;굴복
 		;JUEL:굴복
 		LOCAL:18 = 100
@@ -2833,14 +2833,14 @@ ELSEIF RAND:3 == 0
 		LOCAL:122 = 3
 		;おもちゃ
 	ELSEIF RAND:2 == 0 && ISHOLE() == 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は手枷足枷、目隠しと口枷をされ身動きが取れなくされていた。
-		PRINTFORML %ARGS%はローターで%PRINT_TRANSCALLNAME(TARGET)%の体中を責め立て、性感帯を探り当て、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)手枷足枷、目隠しと口枷をされ身動きが取れなくされていた。
+		PRINTFORML %ARGS%はローターで%PRINT_TRANSCALLNAME(TARGET)%의 体中を責め立て、性感帯を探り当て、
 		IF TALENT:처녀 > 0 || ISMALE()
 			PRINTFORML 乳首ローターや애널ビーズで全身快楽責めを延々と続ける。
 		ELSE
 			PRINTFORML バイブや애널ビーズで両穴を犯すのを延々と続ける。
 		ENDIF
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はくぐもったうめき声を上げながら何度も体を痙攣させ、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)くぐもったうめき声を上げながら何度も体を痙攣させ、
 		PRINTFORML のけぞる체력もなくなるまでイカされ続けてしまった…
 		;C감각
 		;JUEL:쾌C
@@ -2867,10 +2867,10 @@ ELSEIF RAND:3 == 0
 		LOCAL:122 = 9
 		;キス
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の持ち帰りに成功した%ARGS%は挿入もせず、ただただ執拗にキスを繰り返していた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 持ち帰りに成功した%ARGS%は挿入もせず、ただただ執拗にキスを繰り返していた。
 		PRINTFORML 唾液をたっぷりと流し込まれ、口の中で音を立てながら混ぜ合わされ、それを嚥下させられる…
 		PRINTFORML 最初はその行為に嫌悪感しかなかった%PRINT_TRANSCALLNAME(TARGET)%だが、%ARGS%の卓越した舌使いに理性を蕩かされていくに従って
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%のほうから%ARGS%にキスを媚びるまでに狂わされてしまった…
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 ほうから%ARGS%にキスを媚びるまでに狂わされてしまった…
 		;구상
 		TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_normalC")
 		;습득
@@ -2887,7 +2887,7 @@ ELSEIF RAND:3 == 0
 		LOCAL:122 = 1
 	ENDIF
 	PRINTL
-	PRINTFORML %ARGS%による%PRINT_TRANSCALLNAME(TARGET)%の調教は、時間の許す限り続いた…
+	PRINTFORML %ARGS%による%PRINT_TRANSCALLNAME(TARGET)%의 調教は、時間の許す限り続いた…
 	IF CONFIG_CHECK_SCREEN_F(3) == 0
 		PRINTW 
 	ELSE
@@ -2898,20 +2898,20 @@ ELSEIF RAND:2 == 0
 	PRINT で、
 	IF TALENT:보추 > 0
 		; #region 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は言われるままに行為の準備を進めている。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)言われるままに行為の準備を進めている。
 		PRINTL 
 		IF ABL:욕망 < 3 || TALENT:초심 > 0
-			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 			PRINTFORML 仕方なく股間のモノを確かめさせて恥じらう少女然とした姿に、むしろ昂奮してしまったようだ…
 		ELSE
-			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと知って%ARGS%も最初は驚いたものの、
+			PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと知って%ARGS%も最初は驚いたものの、
 			PRINTFORML 頬を上気させながら証拠の股間のモノを露わにする少女然とした姿に、むしろ昂奮したようだ…
 		ENDIF
 		PRINTW
 		; #endregion
 	ENDIF
 	IF RAND:4 == 0 && TALENT:마조기질 < 1
-		PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%はボンテージに身を包み、手にした鞭で%ARGS%を打ち据えていた。
+		PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는)ボンテージに身を包み、手にした鞭で%ARGS%を打ち据えていた。
 		PRINTFORML 손발を縛られ満足に動くこともできない%ARGS%を、ヒールで踏みつけながら鞭で嬲り、爪先を舐めさせ、
 		PRINTFORML さらに%ARGS%自身をヒールで踏みにじり、女王様として崇めさせる、その倒錯的な行為…
 		PRINTL 
@@ -3008,9 +3008,9 @@ PRINTL
 CALL _ABLUP, 1
 
 IF NAKADASHI > 0
-	;アフターピル
+	;사후피임약
 	CALL AFTER_PILL, TARGET, 35, 원치않은상대
-	;임신判定
+	;임신 판정
 	SIF ISFEMALE()
 		CALL NINSIN_HANTEI, 3, 800, 원치않은상대
 ENDIF
@@ -3043,38 +3043,38 @@ PRINTL ――――
 PRINTW ――――――
 PRINTL 
 IF RAPECOUNT == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が気が付くと、周りを複数の男に囲まれているようだ。
-	PRINTFORML 取り囲んでいる男の内一人が%PRINT_TRANSCALLNAME(TARGET)%の意識が戻った事に気づき
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)気が付くと、周りを複数の男に囲まれているようだ。
+	PRINTFORML 取り囲んでいる男の内一人が%PRINT_TRANSCALLNAME(TARGET)%의 意識が戻った事に気づき
 	PRINTFORML そろそろヤッちまおうと宣言すると男達がにじり寄ってくる…
 	IF TALENT:보추 > 0
 		; #region 
 		PRINTL 
-		PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%が本当は남자だと彼らも気付いたはずだが、
+		PRINTFORML 女の子にしか見えない%PRINT_TRANSCALLNAME(TARGET)%이(가)本当は남자だと彼らも気付いたはずだが、
 		PRINTFORML 男に犯されるのが大好きなメスにしてやるよ、とむしろ股間をいきり立たせているようだ…
 		; #endregion	ELSE
 	ENDIF
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が気が付くと、周りを複数の男に囲まれているようだ。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)気が付くと、周りを複数の男に囲まれているようだ。
 	PRINTFORML 取り囲んでいる男の内一人が、今回も頼むわと下卑た声を掛けてきた。
-	PRINTFORML どうやら以前%PRINT_TRANSCALLNAME(TARGET)%を犯した男達の時の一人だったようだ…
+	PRINTFORML どうやら以前%PRINT_TRANSCALLNAME(TARGET)%을(를)犯した男達の時の一人だったようだ…
 ENDIF
 PRINTL 
 PRINTFORML 覆面で顔を隠した男たちに取り押さえられ、目の前に勃起したペニスが突き付けられる。
 IF TALENT:음란 && TALENT:초심 < 1
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は誘惑するように、上目遣いで男に奉仕し始めた・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)誘惑するように、上目遣いで男に奉仕し始めた・・・
 ELSEIF ABL:욕망 >= 3 && TALENT:초심 < 1
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は心の中で言い訳をしながら、男のペニスに奉仕し始めた・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)心の中で言い訳をしながら、男のペニスに奉仕し始めた・・・
 ELSEIF ABL:순종 >= 3
-	PRINTFORML %STR:2500%との戦いで身体と心に雄への服従を教え込まれている%PRINT_TRANSCALLNAME(TARGET)%は、
+	PRINTFORML %STR:2500%との戦いで身体と心に雄への服従を教え込まれている%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 	PRINTFORML 碌に鍛錬もしていないであろう男たちを振り払うことができない・・・
 ELSE
-	PRINTFORML 先程何かされた影響なのか、%PRINT_TRANSCALLNAME(TARGET)%はまったく身体に力が入らず、
+	PRINTFORML 先程何かされた影響なのか、%PRINT_TRANSCALLNAME(TARGET)%은(는)まったく身体に力が入らず、
 	PRINTFORML 碌に鍛錬もしていないであろう男たちを振り払うことができない・・・
 ENDIF
 PRINTW 
 
 IF CONFIG_CHECK_EVENT_F(5) == 1
-	;クズ市民エンカウントイベントの処理
+	;악질 시민エンカウントイベントの処理
 	CALL ENCOUNT_CITIZEN(6001)
 	IF CFLAG:1 > 1 && TALENT:변신시TS > 0
 		CFLAG:321 += 1
@@ -3091,9 +3091,9 @@ ELSEIF RAPECOUNT == 0 || RAND:2 == 0
 	PRINTFORML するといきなり男たちに押し倒されて、손발を抑えつけられてしまう。
 	PRINTW 
 	IF TALENT:음란
-		PRINTFORML 驚きの声を上げる%PRINT_TRANSCALLNAME(TARGET)%の唇を奪い、
+		PRINTFORML 驚きの声を上げる%PRINT_TRANSCALLNAME(TARGET)%의 唇を奪い、
 	ELSE
-		PRINTFORML 制止しようとする%PRINT_TRANSCALLNAME(TARGET)%の説得も空しく、
+		PRINTFORML 制止しようとする%PRINT_TRANSCALLNAME(TARGET)%의 説得も空しく、
 	ENDIF
 	PRINTFORM 男が
 	IF ISMALE()
@@ -3119,14 +3119,14 @@ ELSEIF RAPECOUNT == 0 || RAND:2 == 0
 		PRINTL ペニスをヴァギナに深々と挿入して、ゆっくり腰を使い始めた。
 	ENDIF
 	IF TALENT:교제상대 > 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は無駄な事と知りながら、사랑하는人に助けを求め続けた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄な事と知りながら、사랑하는人に助けを求め続けた。
 	ELSEIF TALENT:교제상대 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は無駄な事と知りながら、恋する人に助けを求め続けた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄な事と知りながら、恋する人に助けを求め続けた。
 	ENDIF
 	SIF TALENT:음란 == 0 && ABL:욕망 < 3
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の悲鳴が辺りに響き渡る・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 悲鳴が辺りに響き渡る・・・
 ELSE
-	PRINTFORML すると男はそのまま%PRINT_TRANSCALLNAME(TARGET)%を押し倒し、
+	PRINTFORML すると男はそのまま%PRINT_TRANSCALLNAME(TARGET)%을(를)押し倒し、
 	IF ISMALE()
 		; #region 
 		PRINTL 애널に挿入して乱暴にピストンし始めた。
@@ -3144,9 +3144,9 @@ ELSE
 		PRINTL ヴァギナに挿入して乱暴にピストンし始めた。
 	ENDIF
 	IF TALENT:교제상대 > 2
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は無駄な事と知りながら、사랑하는人に許しを求め続けた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄な事と知りながら、사랑하는人に許しを求め続けた。
 	ELSEIF TALENT:교제상대 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は無駄な事と知りながら、恋する人に助けを求め続けた。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄な事と知りながら、恋する人に助けを求め続けた。
 	ENDIF
 ENDIF
 PRINTW 
@@ -3163,7 +3163,7 @@ ELSEIF CHECK_HOLYVIRGIN_F()==1
 	ENDIF
 ELSEIF TALENT:처녀 > 0
 	FONTBOLD
-	PRINTL 처녀喪失
+	PRINTL 처녀 상실
 	TALENT:처녀 = -1
 	CFLAG:206 = 11
 	LOCAL:20 = 500
@@ -3171,15 +3171,15 @@ ELSEIF TALENT:처녀 > 0
 	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
 		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
 		IF TALENT:주관시점 > 0
-			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%の体は興奮して
+			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%의 体は興奮して
 			PRINTFORML すぐに快楽を感じ始めてしまう。
 		ELSE
-			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%は興奮して
+			PRINTFORML 誰とも知らない男性に처녀を奪われたという事実に%PRINT_TRANSCALLNAME(TARGET)%은(는)興奮して
 			PRINTFORML すぐに快楽を感じ始めてしまった。
 		ENDIF
 	ELSE
 		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに抵抗する기력を完全に奪われ、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分の身に起きた出来事を現実だと受け止めることすらできずに
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分の身に起きた出来事を現実だと受け止めることすらできずに
 		PRINTFORML 誰とも知らない男に膣肉の純潔を押し開かれていく。
 	ENDIF
 	PRINTW 
@@ -3193,14 +3193,14 @@ ENDIF
 IF RAPECOUNT > 2 || RAND:3 != 0
 	PRINTFORML 順番待ちをしていた仲間と場所を代わってすぐに凌辱が再開される。
 	IF (TALENT:음란 || ABL:욕망 >= 3) && TALENT:초심 < 1
-		PRINTFORML 既に男たちの相手をすることにも慣れてきた%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 既に男たちの相手をすることにも慣れてきた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML 手際よく精液を搾り取っていく。
 	ELSEIF RAPECOUNT > 6 || RAND:2 == 0
-		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML 目から希望の光を失い、少しでも早く終わるように
 		PRINTFORML 少しでも自分の心が壊れないように、無心になって奉仕している。
 	ELSE
-		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 既に何度もレイプされたことのある%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		IF TALENT:주관시점 > 0
 			PRINTFORML 歯を食いしばり、諦めたように奉仕に専念する。
 		ELSE
@@ -3211,14 +3211,14 @@ ELSE
 	PRINTFORML 順番待ちをしていた仲間と場所を代わってすぐに凌辱が再開される。
 	PRINTFORML 全員に順番が回ると２週目、３週目が始まって休むことも許されず、
 	IF TALENT:주관시점 > 0
-		PRINTFORML 体を穢され続ける痛みと屈辱に、%PRINT_TRANSCALLNAME(TARGET)%の頬を熱い液体が伝っていく。
+		PRINTFORML 体を穢され続ける痛みと屈辱に、%PRINT_TRANSCALLNAME(TARGET)%의 頬を熱い液体が伝っていく。
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は目の端に涙を滲ませながら凌辱に耐えている。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)目の端に涙を滲ませながら凌辱に耐えている。
 	ENDIF
 ENDIF
 PRINTW 
 PRINTFORML 男たちの욕망をどれくらい受け止めたか分からなくなったころ、
-PRINTFORML ようやく満足した彼らは%PRINT_TRANSCALLNAME(TARGET)%を地面に放り捨てた。
+PRINTFORML ようやく満足した彼らは%PRINT_TRANSCALLNAME(TARGET)%을(를)地面に放り捨てた。
 IF RAPECOUNT > 0 || RAND:2 == 0
 	PRINTFORML 「次も頼むわ」という言葉と共に、男たちは下卑た笑いだけ残して去っていった。
 ELSE
@@ -3226,7 +3226,7 @@ ELSE
 	PRINTFORML 誰かに言えばネットに動画を公開するとひと通り脅して立ち去って行った。
 ENDIF
 PRINTW 
-PRINTFORML 全身を白く染められた%PRINT_TRANSCALLNAME(TARGET)%は焦点も定まらず、
+PRINTFORML 全身を白く染められた%PRINT_TRANSCALLNAME(TARGET)%은(는)焦点も定まらず、
 IF (TALENT:음란 ||  ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
 	PRINTFORML 快楽の余韻に脳髄を蕩けさせている・・・
 ELSE

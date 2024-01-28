@@ -1,7 +1,7 @@
 ﻿;---------------------------------------------------------------------
 ;흑화 캐릭터の侵攻イベント
 ;確率で흑화 캐릭터가 街を襲う
-;※洗脳では発生しない
+;※세뇌では発生しない
 @AKUOTI_ATTACK
 #DIM CCOUNT
 VARSET LOCAL
@@ -63,14 +63,14 @@ IF SELECT < SELECT_N:0
 	;幼稚園バス襲撃、昼間限定
 	IF RAND:6 == 0 && TIME == 0
 		PRINTFORML それはよく晴れた朝の出来事だった。
-		PRINTFORML 児童たちが乗った幼稚園バスを、촉수生物を率いる謎の一味が強襲したのだ。
+		PRINTFORML 児童たちが乗った幼稚園バスを、촉수 생물を率いる謎の一味が強襲したのだ。
 		PRINTFORML 運転手と女性教員二名、および十数名の児童が人質となり、
 		PRINTFORML バスの中に立て篭もる犯人グループと
 		PRINTFORML 駆け付けた機動隊とが住宅街のど真ん中で睨み合う事態となった。
 		PRINTW 
 		PRINTFORML 犯人グループは「世界に촉수様の支配と공포を広げる」という声明を発表。
 		PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%と名乗るリーダー以外の構成員の人数は不明。
-		PRINTFORML 複数の촉수生物を従えていることから差し迫った脅威であると判断され、
+		PRINTFORML 複数の촉수 생물を従えていることから差し迫った脅威であると判断され、
 		PRINTFORML 現地部隊は強行突入を決行した。
 		PRINTW 
 		IF RAND:4 == 0
@@ -244,7 +244,7 @@ IF SELECT < SELECT_N:0
 		PRINTW 
 	;一般女性の末路
 	ELSEIF RAND:2 == 0
-		PRINTFORML 一人の女性が何匹もの촉수生物に追い詰められている。
+		PRINTFORML 一人の女性が何匹もの촉수 생물に追い詰められている。
 		SELECT = 0
 		IF RAND:8 == 0
 			PRINTFORML 彼女にはどうすることもできなかった。
@@ -313,7 +313,7 @@ IF SELECT < SELECT_N:0
 			PRINTFORML 사정しながらもなお動きを止めない촉수の責めに、
 			PRINTFORML だんだんと快楽を感じ始めている自分を自覚しながら・・・
 			PRINTW 
-			PRINTFORML 数時間後、そこには複数の촉수生物に犯されながら
+			PRINTFORML 数時間後、そこには複数の촉수 생물に犯されながら
 			PRINTFORML 快楽に心を奪われてよがり狂う女性の姿があった。
 			PRINTFORML その表情には"生前"の고통の様子はなく、
 			PRINTFORML ある意味では最も幸福な結末を迎えたのかもしれなかった・・・
@@ -408,7 +408,7 @@ IF SELECT < SELECT_N:0
 			PRINTW 
 			PRINTFORML そんな淡い期待は、%PRINT_TRANSCALLNAME(FLAG:111)%が現れた途端に打ち砕かれた。
 			PRINTFORML 小手先の知恵など圧倒的な能力の差の前には為す術も無く、
-			PRINTFORML やがて気が付けば周囲を無数の촉수生物たちが取り囲んでいた・・・
+			PRINTFORML やがて気が付けば周囲を無数の촉수 생물たちが取り囲んでいた・・・
 		ELSEIF RAND:2 == 0
 			PRINTFORML 男には多少の武術の心得があった。
 			PRINTFORML 道中で何体もの촉수を薙ぎ倒し、ここまで逃げてきたのだ。
@@ -1056,22 +1056,22 @@ ELSEIF SELECT < SELECT_N:1
 		PRINTFORML この場所は現地の温泉旅館や街の水道に関わる重要な場所であり、
 		PRINTFORML また周囲の環境に影響を及ぼすため外来種の放流が禁止されている。
 		PRINTFORML そんなことを意に介する風もなく、
-		PRINTFORML あろうことか%PRINT_TRANSCALLNAME(FLAG:111)%は촉수生物を水源に放流し始めた。
+		PRINTFORML あろうことか%PRINT_TRANSCALLNAME(FLAG:111)%は촉수 생물を水源に放流し始めた。
 		PRINTW 
 		PRINTFORML 幸いにも異常に気付いたダムの当直が警察と消防に即座に通報。
 		PRINTFORML 気付かれた%PRINT_TRANSCALLNAME(FLAG:111)%はそそくさと去って行ったが、
 		IF RAND:2 == 0
-			PRINTFORML すでに放流されていた촉수生物の粘液が水質を汚染し、
+			PRINTFORML すでに放流されていた촉수 생물の粘液が水質を汚染し、
 			PRINTFORML 水道局が断水にまで踏み切る事態となった。
 			SELECT = 2
 		ELSE
-			PRINTFORML すでに放流されていた촉수生物の粘液が源泉を汚染し、
+			PRINTFORML すでに放流されていた촉수 생물の粘液が源泉を汚染し、
 			PRINTFORML 多数の温泉旅館が営業停止に陥る事態となった。
 			SELECT = 1
 		ENDIF
 		PRINTW 
 		PRINTFORML 水源では原生の魚類が食い荒らされる被害が出たものの、
-		PRINTFORML 放流された촉수生物が弱小個体だったこともあり、
+		PRINTFORML 放流された촉수 생물が弱小個体だったこともあり、
 		PRINTFORML 駆け付けた自衛隊により対象は即座に駆除された。
 		PRINTW 
 		IF SELECT == 2
@@ -1414,7 +1414,7 @@ ELSEIF SELECT < SELECT_N:1
 			PRINTFORML 激しく仰け反り、%PRINT_TRANSCALLNAME(FLAG:111)%の腰を掴んで腰を突き上げる%LOCALS:3%。
 			PRINTFORML さながら生命力をまるごと注ぎ込むかのよう에 사정し続け、
 			PRINTFORML まるで痙攣する動きに呼応するかのように%LOCALS:3%の身体もだんだんと形を失って崩れていく――
-			PRINTFORML 사정を終える頃には、%LOCALS:3%の全身は촉수生物そのものと化していた。
+			PRINTFORML 사정を終える頃には、%LOCALS:3%の全身は촉수 생물そのものと化していた。
 			PRINTW 
 			PRINTFORML さてと・・・せめてもの慈悲だ。
 			PRINTFORML この女の調教は、お前自身に任せてやるぞ・・・
@@ -1520,7 +1520,7 @@ ELSEIF SELECT < SELECT_N:1
 			PRINTFORML 人通りのない路地裏で、先ほどの%LOCALS%が촉수に犯されている。
 			PRINTFORML 貞操を汚され공포と고통を与えられてなお気丈な姿勢を崩さず、
 			PRINTFORML 無理やり絶頂させられながらも愛しい%LOCALS:2%の名を呼び続ける彼女は
-			PRINTFORML 目の前の촉수生物こそが%LOCALS:3%のなれの果てであることを知らない・・・
+			PRINTFORML 目の前の촉수 생물こそが%LOCALS:3%のなれの果てであることを知らない・・・
 			IF ISFEMALE(FLAG:111)
 				;V경험
 				LOCAL:120 = 1 + RAND:3
@@ -1694,7 +1694,7 @@ ELSEIF CHECK_GAMEOVER_F() == 0
 
 	;搾精強化機能
 	IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)촉수の精液からエネルギーを吸収した！
 		CALL GET_SYUREN, RAND:5 + RAND:5 + 6
 		PRINTL 
 	ENDIF

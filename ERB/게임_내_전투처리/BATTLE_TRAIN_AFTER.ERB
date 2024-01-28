@@ -23,7 +23,7 @@ SIF PALAM:욕정 >= (640000 + MARK:쾌락각인방지 * 16000) && MARK:쾌락각
 	LOCAL = 5
 IF LOCAL > MARK:쾌락각인
 	MARK:쾌락각인 = LOCAL
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	FONTBOLD
 	PRINTFORM %MARKNAME:0%{LOCAL}
 	FONTREGULAR
@@ -45,7 +45,7 @@ SIF PALAM:고통 >= (480000 + MARK:고통각인방지 * 12000) && MARK:고통각
 	LOCAL = 5
 IF LOCAL > MARK:고통각인
 	MARK:고통각인 = LOCAL
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	FONTBOLD
 	PRINTFORM %MARKNAME:1%{LOCAL}
 	FONTREGULAR
@@ -67,7 +67,7 @@ SIF PALAM:굴복 >= (320000 + MARK:굴복각인방지 * 8000) && MARK:굴복각�
 	LOCAL = 5
 IF LOCAL > MARK:굴복각인
 	MARK:굴복각인 = LOCAL
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	FONTBOLD
 	PRINTFORM %MARKNAME:2%{LOCAL}
 	FONTREGULAR
@@ -89,7 +89,7 @@ SIF PALAM:공포 >= (320000 + MARK:공포각인방지 * 8000) && MARK:공포각�
 	LOCAL = 5
 IF LOCAL > MARK:공포각인
 	MARK:공포각인 = LOCAL
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	FONTBOLD
 	PRINTFORM %MARKNAME:3%{LOCAL}
 	FONTREGULAR
@@ -111,7 +111,7 @@ SIF PALAM:치정 >= (320000 + MARK:치욕각인방지 * 8000) && MARK:치욕각�
 	LOCAL = 5
 IF LOCAL > MARK:치욕각인
 	MARK:치욕각인 = LOCAL
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	FONTBOLD
 	PRINTFORM %MARKNAME:4%{LOCAL}
 	FONTREGULAR
@@ -150,9 +150,9 @@ IF TFLAG:98 == 0
 	SIF CFLAG:TARGET:43 == 505
 		LOCAL = LOCAL * 5 / 4
 	CALL GET_EXP,min(LOCAL,150)
-	;クズ市民戦以外なら방위력低下
+	;악질 시민戦以外なら방위력低下
 	IF FLAG:73 == 0
-		;MIN(0,経過ターン-10)^2 * (8+(撃破ボス数+経過撃破ノルマ)*難易度補正) + [100〜400]
+		;MIN(0,経過ターン-10)^2 * (8+(撃破보스数+経過撃破ノルマ)*難易度補正) + [100〜400]
 		;(0〜1600) * (8 + [0〜7]*[2〜5] + [11〜13]*[0.5〜2]) + [100〜400]
 		LOCAL:1 = POWER(MIN(TFLAG:0 - 10, 0), 2)
 		CALL TENTACLE_LEVEL
@@ -175,7 +175,7 @@ IF TFLAG:98 == 0
 				FLAG:853 = -100
 			PRINTFORML 인기도가 1低下した
 		ENDIF
-	;クズ市民戦なら救出は失敗
+	;악질 시민戦なら救出は失敗
 	ELSE
 		FOR LOCAL,1,CHARANUM
 			SIF CFLAG:LOCAL:71<=-1
@@ -202,7 +202,7 @@ IF TFLAG:98 == 0
 
 	;戦闘後の임신チェック
 	CALL NINSIN_CHECK_AFTER
-	;変身している場合、変身を解除する(クズ市民戦の場合はイベント側で処理)
+	;変身している場合、変身を解除する(악질 시민戦の場合はイベント側で処理)
 	CALL TRANSFORM, 0
 	;흑화側も解除
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
@@ -212,7 +212,7 @@ IF TFLAG:98 == 0
 	;イベント衣装を解除する
 	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
-	;ボスと遭遇して未撃破なら確率をリセット
+	;보스と遭遇して未撃破なら確率をリセット
 	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
 		IF FLAG:47 > FLAG:46
 			FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
@@ -259,7 +259,7 @@ ELSEIF SAVESTR:13 == "MOB" && TFLAG:98 == 1
 	;イベント衣装を解除する(現状イベントで雑魚戦は発生しないが後のため)
 	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
-;勝利時の処理(ボスの場合)
+;勝利時の処理(보스の場合)
 ELSEIF TFLAG:98 == 1
 	CALL GET_EXP_BATTLE
 	
@@ -337,7 +337,7 @@ ELSEIF TFLAG:98 == 2
 	CALL GET_SYUREN, 40 + (EX:행동포인트 * 4)
 	CALL TENTACLE_LEVEL
 	LOCAL = 250 * RESULT/(ABL:레벨 + 2) + RAND:10
-	;ただしクズ市民戦は控えめ
+	;ただし악질 시민戦は控えめ
 	IF FLAG:73 > 0
 		LOCAL /= 8
 	ENDIF
@@ -351,7 +351,7 @@ ELSEIF TFLAG:98 == 2
 		FLAG:852 = 0
 	ABS LOCAL
 
-	;クズ市民戦なら
+	;악질 시민戦なら
 	IF FLAG:73 > 0
 		;「女の子が一人拉致されただけ」(建物などに被害は出ていない)
 		;なので방위력低下は少ない
@@ -395,7 +395,7 @@ ELSEIF TFLAG:98 == 2
 	;ヒロインの変身解除処理
 	;　幽閉されている場合→オプションに準ずる
 	IF CFLAG:0>0
-		;ＴＳするキャラは変身解除しない、クズ市民戦の場合も解除しない
+		;ＴＳするキャラは変身解除しない、악질 시민戦の場合も解除しない
 		IF (TALENT:변신시TS > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
 			;
 		;力尽きても変身解除しないフラグがoffの場合、変身を解除する
@@ -414,14 +414,14 @@ ELSEIF TFLAG:98 == 2
 		CALL TRANSFORM, 0, FLAG:111
 
 
-	;ボスと遭遇して未撃破なら確率をリセット
+	;보스と遭遇して未撃破なら確率をリセット
 	SIF (ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1) && FLAG:47 > FLAG:46
 		FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
 	;조우율 상승 효과 리셋
 	CFLAG:23 = 0
 ENDIF
 
-;ボス(흑화含む)戦かつ勝利できなかった場合、ボスの蓄積ダメージと解析度の情報を保持
+;보스(흑화含む)戦かつ勝利できなかった場合、보스の蓄積ダメージと解析度の情報を保持
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && TFLAG:98 != 1
 	RESULT = (FLAG:13 * 1000000 / FLAG:12)
 	FLAG:(300 + FLAG:11) = 1000000 - RESULT
@@ -439,7 +439,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1 && TFLAG:98 != 1
 	FLAG:(600 + FLAG:11) = FLAG:20
 ENDIF
 
-;戦闘支援効果で回復
+;전투 지원効果で回復
 IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
 	LOCAL:1 = FLAG:43 * 8
 	;衣装による補正
@@ -460,7 +460,7 @@ IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
 	LOCAL = LOCAL * LOCAL:1 / 100
 	BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
 	PRINTL 
-	PRINTFORML 戦闘支援効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
+	PRINTFORML 전투 지원効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
 ENDIF
 
 ;疲労増加量が残っていれば処理する
@@ -527,7 +527,7 @@ FLAG:73 = 0
 SIF CHARANUM_SAFE()+CHARANUM_ENSLAVED() == 0 && !GAME_OPTION_CHECK_F(OPTION_solo) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0 && CHECK_GAMEOVER_F() == 0
 	CALL ENDING_1
 
-;パーティー内の女性が全員クズ市民に監禁された
+;パーティー内の女性が全員악질 시민に監禁された
 SIF CHARANUM_ENSLAVED() == (CHARANUM-1)-CHARANUM_MANLY()
 	CALL UNLOCK_ACHIEVEMENT(278,"所詮はハメ穴に過ぎない")
 

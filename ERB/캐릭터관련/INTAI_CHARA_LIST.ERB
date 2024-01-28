@@ -1,4 +1,4 @@
-﻿;흑화・洗脳キャラを除いたキャラのリスト表示
+﻿;흑화・세뇌キャラを除いたキャラのリスト表示
 ;ARG=1ならCFLAG:0=0のキャラ（仲間状態で生きているキャラ）からしか選択できない、ARG=2なら全キャラ表示する、ARG=3なら一時離脱しているキャラのみ表示する
 ;ARG:1は表示オプション
 ;ARG:1=1	生存状態
@@ -10,14 +10,14 @@ PRINTL 誰を引退させますか？
 FOR LCOUNT, 0, CHARANUM
 	SIF LCOUNT == MASTER
 		CONTINUE
-	;洗脳か흑화なら飛ばす
+	;세뇌か흑화なら飛ばす
 	SIF CFLAG:LCOUNT:0 == 2 || CFLAG:LCOUNT:0 == 3
 		CONTINUE
 	PRINTFORM [{LCOUNT}] %CALLNAME:LCOUNT,24,LEFT%
 	SIF CFLAG:LCOUNT:0 == 1
 		PRINT （幽閉中）
 	SIF CFLAG:LCOUNT:0 == 2
-		PRINT （洗脳）
+		PRINT （세뇌）
 	SIF CFLAG:LCOUNT:0 == 3
 		PRINT （흑화）
 	SIF CFLAG:LCOUNT:0 == 4

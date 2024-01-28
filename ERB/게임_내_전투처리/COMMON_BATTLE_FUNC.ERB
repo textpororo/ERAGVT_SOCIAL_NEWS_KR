@@ -198,7 +198,7 @@ LOCAL = 0
 LOCAL:1 = 0
 IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 == 2 && TCVARn == 3
 	PRINTL 
-	PRINTFORML 戦っている%PRINT_TRANSCALLNAME(TARGET)%の後ろにいる観衆が
+	PRINTFORML 戦っている%PRINT_TRANSCALLNAME(TARGET)%의 後ろにいる観衆が
 	PRINTFORML さっきよりも近づいている気がする
 ENDIF
 IF TALENT:촉수의포로 == 1
@@ -207,13 +207,13 @@ IF TALENT:촉수의포로 == 1
 		;空中にいる場合は着地する
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT効果による着地時の反動
+		;FEAT 효과에 따른着地時の反動
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
 		;距離表示
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の様子がおかしい・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
 		;地の文 敵キャラの虜で体が竦む
 		CALL MESSAGE_BATTLE_DISACTION_TORIKO
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの「촉수의포로で体が竦む」を見た
@@ -236,13 +236,13 @@ IF TALENT:기생 == 1
 		;空中にいる場合は着地する
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT効果による着地時の反動
+		;FEAT 효과에 따른着地時の反動
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
 		;距離表示
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の様子がおかしい・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
 		;地の文 기생した촉수が暴れて体が竦む
 		CALL MESSAGE_BATTLE_DISACTION_PARASITE
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの「기생で体が竦む」を見た
@@ -259,20 +259,20 @@ IF (TALENT:임신 == 4 || TALENT:임신 == 5) && CFLAG:222 >= 56
 		;空中にいる場合は着地する
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT効果による着地時の反動
+		;FEAT 효과에 따른着地時の反動
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
 		;距離表示
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の様子がおかしい・・・
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は突然強い吐き気を感じて
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)突然強い吐き気を感じて
 		PRINTL 体が竦んでしまった・・・
 		RETURN 1
 
 	ENDIF
 ENDIF
-;クズ市民
+;악질 시민
 IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 > 2 && TCVARn == 3
 	LOCAL = RAND:100
 	IF LOCAL < 11
@@ -282,7 +282,7 @@ IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 > 2 && TCVARn == 3
 		;距離表示
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が動こうとすると
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)動こうとすると
 		PRINTFORML 観衆の一人に腕をつかまれてしまい
 		PRINTFORML 動くことができなかった・・・
 		RETURN 1
@@ -321,7 +321,7 @@ REPEAT 5
 	ELSEIF COUNT == 4
 		LOCAL:2 = 15
 	ELSE
-		PRINTW ERROR 刻印の呼び出し先が不正です
+		PRINTW ERROR 刻印の호출先が不正です
 		RETURN 0
 	ENDIF
 	LOCAL = SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), LOCAL:2, LOCAL)
@@ -340,13 +340,13 @@ REPEAT 5
 			;空中にいる場合は着地する
 			SIF (TCVARn:216 & 1)
 				TCVARn:216 = 4
-			;FEAT効果による着地時の反動
+			;FEAT 효과에 따른着地時の反動
 			SIF TALENT:날개 > 0
 				TFLAG:99 += 1
 			;距離表示
 			CALL PRINT_DISTANCE
 			PRINTL 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の様子がおかしい・・・
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
 			IF COUNT == 0
 				;地の文 快楽で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_KAIRAKU
@@ -400,12 +400,12 @@ IF FLAG:999 == 0
 	;拘束されているならだめ
 	SIF TCVARn:0 == 0
 		RETURNF 0
-	;クズ市民戦は拘束されてなければ逃げれる
+	;악질 시민戦は拘束されてなければ逃げれる
 	IF FLAG:73 > 0
-		;クズ市民機能がオフの場合、8ターン目以降か체력, 기력どちらかが50%未満でないとだめ
+		;악질 시민機能がオフの場合、8ターン目以降か체력, 기력どちらかが50%未満でないとだめ
 		SIF CONFIG_CHECK_EVENT_F(3) == 0 && TFLAG:0 < 8 && PERCENT_CAL_F(BASE:체력, MAXBASE:체력) > 50 && PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 50
 			RETURNF 0
-		;クズ市民機能がオンの場合、避難が完了していないとだめ
+		;악질 시민機能がオンの場合、避難が完了していないとだめ
 		SIF CONFIG_CHECK_EVENT_F(3) > 0 && (FLAG:70 + FLAG:71) > 0
 			RETURNF 0
 		;襲撃イベント中ならだめ

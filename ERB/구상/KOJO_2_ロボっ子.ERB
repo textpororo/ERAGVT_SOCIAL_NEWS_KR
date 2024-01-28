@@ -41,7 +41,7 @@ ELSE
 			PRINTFORML 「ミッション了解」
 			PRINTFORML 「哨戒モードに移行し、周辺区域の警備に当たります」
 		CASE 예정_지원
-			PRINTFORML 「戦闘支援のため、データベースにアクセス中……」
+			PRINTFORML 「전투 지원のため、データベースにアクセス中……」
 			PRINTFORML 「アクセス完了。ご指示をどうぞ」
 		CASEELSE
 			PRINTFORML 「了解。出撃せずに臨時ミッションに当たります」
@@ -65,64 +65,64 @@ PRINTFORML
 ;--------------------------------------------------
 @KOJO_2_TRAINING_HASHIRI
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;精神鍛錬
 ;--------------------------------------------------
 @KOJO_2_TRAINING_SEISHIN
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;瞑想
 ;--------------------------------------------------
 @KOJO_2_TRAINING_MEISOU
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;筋トレ
 ;--------------------------------------------------
 @KOJO_2_TRAINING_KINTORE
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;自衛訓練
 ;--------------------------------------------------
 @KOJO_2_TRAINING_JIEI
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;ダッシュ
 ;--------------------------------------------------
 @KOJO_2_TRAINING_DASH
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;근거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_2_TRAINING_SHORT
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;중거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_2_TRAINING_MIDDLE
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;원거리戦闘訓練
 ;--------------------------------------------------
 @KOJO_2_TRAINING_LONG
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 ;戦術研究
 ;--------------------------------------------------
 @KOJO_2_TRAINING_TACTICS
 PRINTFORML 「…………」
-PRINTFORML  %CALLNAME%は黙々とトレーニングをこなしている。
+PRINTFORML  %CALLNAME%은(는) 黙々とトレーニングをこなしている。
 
 
-;촉수 구속구が鍛錬の邪魔をする
+;촉수 구속구가 단련을 방해한다
 ;--------------------------------------------------
 @KOJO_2_TRAINING_TENTACLECLOTH
 PRINTFORML  %CALLNAME%に取りついた촉수が訓練中に蠢きだした！
@@ -169,7 +169,7 @@ ENDIF
 ;보스 촉수と戦闘
 ;--------------------------------------------------
 @KOJO_2_ENCOUNT_BOSS
-;最初のボス戦
+;最初の보스戦
 CALL TENTACLE_SURVIVE,"NUM"
 IF (FLAG:3 - RESULT) == 0
 	PRINTFORML 「――周辺の脅威度評価を更新。危険度：高」
@@ -202,7 +202,7 @@ ELSE
 		CASE 5
 			PRINTFORML 「戦闘を開始します」
 	ENDSELECT
-	PRINTFORML  %CALLNAME%は機械的な正確さで武器を取り出し、構えた。
+	PRINTFORML  %CALLNAME%은(는) 機械的な正確さで武器を取り出し、構えた。
 ENDIF
 
 ;최종 보스 촉수と戦闘
@@ -212,13 +212,13 @@ PRINTFORML 「最終ミッションを開始します」
 PRINTFORML 「戦闘モード、起動。データリンク、良好」
 PRINTFORML 「エンゲージ」
 
-;初めて洗脳キャラと対峙した
+;初めて세뇌キャラと対峙した
 ;--------------------------------------------------
 @KOJO_2_ENCOUNT_SENNOU_FIRST
 PRINTFORML 「要救助者、%NAME:(FLAG:111)%を発見」
 PRINTL 「無力化の後、回収します」
 
-;洗脳キャラと対峙
+;세뇌キャラと対峙
 ;--------------------------------------------------
 @KOJO_2_ENCOUNT_SENNOU
 PRINTFORML 「要救助者、%NAME:(FLAG:111)%を発見」
@@ -830,7 +830,7 @@ TRYCALLFORM KOJO_2_BATTLE_END_PERFECT_{RESULT}
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 TRYCALLFORM KOJO_2_BATTLE_END_RESCUED_{RESULT}
 
-;洗脳中キャラの救出
+;세뇌中キャラの救出
 ;--------------------------------------------------
 @KOJO_2_BATTLE_END_RESCUE_SENNOU
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
@@ -858,7 +858,7 @@ TRYCALLFORM KOJO_2_BATTLE_END_TIMEUP_{RESULT}
 
 ;素質関連
 
-;처녀喪失
+;처녀 상실
 ;--------------------------------------------------
 @KOJO_2_SEX_LOSTVIRGIN
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
@@ -1129,7 +1129,7 @@ TRYCALLFORM KOJO_2_PRISON_PRISENTENCE_FIRST_{RESULT}
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 TRYCALLFORM KOJO_2_PRISON_PRISENTENCE_START_{RESULT}
 
-;洗脳になった
+;세뇌になった
 ;--------------------------------------------------
 @KOJO_2_PRISON_SENNOU
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET

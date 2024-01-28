@@ -257,7 +257,7 @@ ELSEIF ARG == 1
 			LOCAL:1 *= 3
 		ENDIF
 		IF TALENT:처녀 < 1
-			;アフターピル
+			;사후피임약
 			CALL AFTER_PILL, TARGET, 35, 200
 			;임신確率 出産後の中だし回数と今までの출산경험に応じ可能性が増える
 			CALL NINSIN_HANTEI, LOCAL:123, 30, 200
@@ -335,24 +335,24 @@ ELSEIF ARG == 3
 				;母乳×なら아무것도안한다
 			ELSEIF TALENT:모유체질 == 0
 				TALENT:모유체질 = 1
-			;모유체질かつ限界でなければ膨乳する
+			;모유체질かつ限界でなければ팽유する
 			ELSEIF CONFIG_CHECK_MANIAC_F(18) == 1 && (TALENT:거유 < 2 || (CONFIG_CHECK_MANIAC_F(19) == 1 && TALENT:거유 < 5))
 
 				;変身時に限界突破してしまう場合は変身時胸サイズを調整
-				;極端なサイズを抑制されているなら爆乳までが限界
+				;極端なサイズを抑制されているなら폭유までが限界
 				IF (TALENT:거유 + TALENT:변신시가슴사이즈변동 > 5) || (CONFIG_CHECK_MANIAC_F(19) == 0 && TALENT:거유 + TALENT:변신시가슴사이즈변동 >= 2)
 					TALENT:변신시가슴사이즈변동 -= 1
 					CFLAG:38 -= 1
 				ENDIF
 
-				;膨乳処理
+				;팽유処理
 				IF TALENT:거유 - TALENT:빈유 < 0
 					TALENT:빈유 -= 1
 				ELSE
 					TALENT:거유 += 1
 				ENDIF
 				CFLAG:37 += 1
-				;プロフィールに反映
+				;프로필에 반영
 				CALL SET_PROFILE, TARGET
 			ELSE
 				LOCAL:154 += 5

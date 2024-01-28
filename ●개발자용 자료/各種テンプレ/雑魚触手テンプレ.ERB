@@ -5,8 +5,8 @@
 ;
 ;------------------------------------------------------------------------------------------------------------------------
 ;★基本の仕組み
-;　　잡몹적は基本的にボス戦の処理を流用していますが、幾つか異なる点があります。
-;　　 1.FLAG:10の値が2になる(この値でボスか잡몹적か判別している)
+;　　잡몹적は基本的に보스戦の処理を流用していますが、幾つか異なる点があります。
+;　　 1.FLAG:10の値が2になる(この値で보스か잡몹적か判別している)
 ;　　 2.SAVESTR:13の中身が"MOB"になる
 ;　　 3.잡몹적はSPCOM(IDが1000～1999の性コマンド)が使用できない
 ;　　 4.잡몹적の使用するコマンドは専用の地の文を表示させることができる
@@ -99,7 +99,7 @@ RETURN RESULT
 ;--------------------------------------------------
 ;민첩
 ;100を基準に、高ければ高いほど命中率と回避率が上がります。
-;ボスと違ってHPが少ないので、민첩が低いと意外と早く沈みます。
+;보스と違ってHPが少ないので、민첩が低いと意外と早く沈みます。
 @TENTACLE_MOB_###_BINSYOU
 LOCAL = 100
 CALL TENTACLE_STATUS_HOSEI, LOCAL
@@ -215,7 +215,7 @@ ENDIF
 ;
 ;注意点として、性行為ルーチンでは必ずRETURNで値を返すようにしてください。
 ;RETURNを省略するとRETURN 0となりC攻め弱が返されてしまいます。-1以下の値を返すことも禁止です。
-;また、ID1000～1999のSPCOMはボス専用なので使用させないでください。バグります。
+;また、ID1000～1999のSPCOMは보스専用なので使用させないでください。バグります。
 ;
 ;基本の性コマンドで不足の場合はオリジナルのコマンドを作成することができます。
 ;その場合はID2000～2999を利用してください。
@@ -343,7 +343,7 @@ LOCAL:6 = 0
 ;追加責めの効果とPALAM影響度の両方が強化される
 LOCAL:7 = 0
 
-;처녀喪失の有無（なし0 あり1 あり、地の文なし2）
+;처녀 상실の有無（なし0 あり1 あり、地の文なし2）
 LOCAL:8 = 0
 
 ;特殊効果
@@ -382,7 +382,7 @@ EXP:펠라경험 += 0
 ;방뇨경험
 EXP:방뇨경험 += 0
 
-;共通処理を呼び出し
+;共通処理を호출
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
@@ -432,7 +432,7 @@ PRINT 全身愛撫
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
-PRINTFORML 無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%の全身に絡みつき、肌の上を這っている・・・
+PRINTFORML 無数の촉수が%PRINT_TRANSCALLNAME(TARGET)%의 全身に絡みつき、肌の上を這っている・・・
 PRINTW 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM0")
@@ -474,7 +474,7 @@ FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 IF RAND:3 == 0
 	PRINTFORML は촉수の先端から濁った色の粘液を勢いよく吐き出した！
-	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%の全身に降りかかり、
+	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%의 全身に降りかかり、
 	PRINTFORML 衣装がみるみる溶かされていく・・・
 	PRINTL 
 	;구상
@@ -483,8 +483,8 @@ IF RAND:3 == 0
 	;状態異常：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
-	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%の全身に絡まり、激しく蠢いている！
-	PRINTFORML もみくちゃにされた%PRINT_TRANSCALLNAME(TARGET)%の衣装が引き裂かれていく・・・
+	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身に絡まり、激しく蠢いている！
+	PRINTFORML もみくちゃにされた%PRINT_TRANSCALLNAME(TARGET)%의 衣装が引き裂かれていく・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -522,11 +522,11 @@ ENDIF
 @MESSAGE_BATTLE_MOB_###_KARAMITUKU
 PRINT 無数の촉수幼体たち
 IF TFLAG:12 == 3
-	PRINTFORM が全身をバネにして、%PRINT_TRANSCALLNAME(TARGET)%の四方八方から飛びかかってきた！
+	PRINTFORM が全身をバネにして、%PRINT_TRANSCALLNAME(TARGET)%의 四方八方から飛びかかってきた！
 ELSEIF RAND:2 == 0
-	PRINTFORM が全身をバネにして、%PRINT_TRANSCALLNAME(TARGET)%の脚元から飛びかかってきた！
+	PRINTFORM が全身をバネにして、%PRINT_TRANSCALLNAME(TARGET)%의 脚元から飛びかかってきた！
 ELSE
-	PRINTFORM が%PRINT_TRANSCALLNAME(TARGET)%の頭上から飛びかかってきた！
+	PRINTFORM が%PRINT_TRANSCALLNAME(TARGET)%의 頭上から飛びかかってきた！
 ENDIF
 PRINT （
 IF TFLAG:11 & 1
@@ -557,7 +557,7 @@ PRINTL
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_###_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML に絡み付かれ、
 PRINTFORML 群れの中に取り込まれてしまった！

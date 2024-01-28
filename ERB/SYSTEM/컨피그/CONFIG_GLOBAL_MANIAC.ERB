@@ -20,8 +20,8 @@
 ;15 スカトロ表現	16384
 ;16 拡張度表示		32768
 ;17 極端な拡張	65536
-;18 膨乳の取得		131072
-;19 極端な膨乳	262144
+;18 팽유の取得		131072
+;19 極端な팽유	262144
 ;20 極端な촉수の太さ	524288
 
 ;---------------------------------------------
@@ -155,13 +155,13 @@ CALL CONFIG_CHECK_MANIAC,18
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [28]%RESULT==1 ? "▲" # "▼"%膨乳の取得   　 　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [28]%RESULT==1 ? "▲" # "▼"%팽유の取得   　 　　　　　　　【\@RESULT?○#×\@】
 IF RESULT == 1
 	CALL CONFIG_CHECK_MANIAC,19
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [29]┗極端な膨乳　　　　　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [29]┗極端な팽유　　　　　　　　　　【\@RESULT?○#×\@】
 ENDIF
 
 RESETCOLOR

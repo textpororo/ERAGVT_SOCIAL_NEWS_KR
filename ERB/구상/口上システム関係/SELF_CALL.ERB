@@ -171,7 +171,7 @@ ENDIF
 FOR LCOUNT, 0, S_ST + S_ED
 	C_ROW = CAL_VAR % 1000
 	IF LCOUNT >= S_ST
-		;呼び出しの最後かつ文字が長音記号かつ伸ばす場合
+		;호출の最後かつ文字が長音記号かつ伸ばす場合
 		IF LCOUNT == S_ST + S_ED - 1 && C_ROW == 95 && SELF_LENGTH > 0
 			SELFCALL_STR = %SELFCALL_STR%―
 		ELSE

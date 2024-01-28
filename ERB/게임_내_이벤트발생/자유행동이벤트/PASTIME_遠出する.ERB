@@ -1,14 +1,14 @@
-﻿@PASTIME_遠出する, ARG
+﻿@PASTIME_멀리나간다, ARG
 #DIMS 目的地
 
-PRINTL 遠出する
+PRINTL 멀리나간다
 PRINTL 
 ;-------ここファッション-------
 CALL PASTIME_FASHION
 ;-------------------------------
 PRINTW 
 PRINTL 
-PRINTFORML 電車を待つ%PRINT_TRANSCALLNAME(TARGET)%の行き先は・・・
+PRINTFORML 電車を待つ%PRINT_TRANSCALLNAME(TARGET)%의 行き先は・・・
 PRINTL 
 PRINT [0]動物園　　　　　　　　
 PRINT [1]水族館　　　　　　　　
@@ -94,7 +94,7 @@ IF RESULT == 0
 	ELSEIF RAND:100 > FLAG:852 / 100	
 		CALL PASTIME_INKIOKYU
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は、%目的地%を楽しんできたようだ。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、%目的地%を楽しんできたようだ。
 		PRINTW 
 	ENDIF
 ENDIF
@@ -103,7 +103,7 @@ ENDIF
 ;動物園の内容
 @MESSAGE_PASTIME_Zoo
 
-PRINTFORML 動物園を訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORML 動物園を訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF RAND:4 == 0
 	PRINTFORML 園内を散策して様々な動物を観ている。
 	PRINTL 
@@ -112,16 +112,16 @@ ELSEIF RAND:3 == 0
 	PRINTFORML ふれあいコーナーに入っていった。
 	PRINTL 
 	PRINTFORML もこもこした羊を撫でたりもふもふのウサギを抱き上げたりと
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は可愛い動物達に癒やされている・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)可愛い動物達に癒やされている・・・
 ELSE
 	PRINTFORML 園内を散策して様々な動物を眺めている。
 	PRINTL 
-	PRINTFORML ふと気になる動物を見つけた%PRINT_TRANSCALLNAME(TARGET)%はケージの前に立った。
+	PRINTFORML ふと気になる動物を見つけた%PRINT_TRANSCALLNAME(TARGET)%은(는)ケージの前に立った。
 	;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 	IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 		PRINTFORML もっとよく見ようと前のめりになっているが
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 
 		PRINTFORML 柵に乗っかかっている服の上からでもわかる
 		IF TALENT:거유 > 2
 			PRINT ダイナミックな大きさの
@@ -135,7 +135,7 @@ ELSE
 		SIF CFLAG:1 >= 1
 			LOCAL = TALENT:변신시외관
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML もっとよく見ようと前のめりになっている%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+		PRINTFORML もっとよく見ようと前のめりになっている%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 		IF LOCAL == 2
 			PRINT むちむちとした
 		ELSEIF LOCAL == 1
@@ -150,7 +150,7 @@ ELSE
 			PRINT 小振りな
 		ENDIF
 		PRINTFORML ヒップにささっているが
-		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%は気付いていない・・・
+		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない・・・
 	ELSE
 		PRINTFORML じっくり観察して満足すると次は何を見ようかと離れていった・・・
 	ENDIF
@@ -162,7 +162,7 @@ PRINTW
 ;水族館の内容
 @MESSAGE_PASTIME_Aquarium
 
-PRINTFORM 水族館を訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 水族館を訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF RAND:3 == 0 && ISHOLE() == 1
 	PRINTFORML イルカショーを楽しんでいる。
 	PRINTL 
@@ -180,45 +180,45 @@ IF RAND:3 == 0 && ISHOLE() == 1
 	ELSE 
 		PRINTFORML 濡れた服からうっすらと下着が透けてしまっている事に気がついた。
 	ENDIF
-	PRINTFORML 男の視線はイルカではなく%PRINT_TRANSCALLNAME(TARGET)%のカラダに釘付けになっている。
+	PRINTFORML 男の視線はイルカではなく%PRINT_TRANSCALLNAME(TARGET)%의 カラダに釘付けになっている。
 	PRINTL 
 	IF (TALENT:음란 > 0 || ABL:노출벽 > 2) && TALENT:초심 < 1
-		PRINTFORML ショーが終わると%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML ショーが終わると%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML 濡れ透けたカラダを他の客にも見せ付けるような足取りで会場を立ち去った・・・
 	ELSE
-		PRINTFORML ショーが終わるや否や%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML ショーが終わるや否や%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML 顔を真赤にして濡れ透けたカラダを隠すように足早で会場を立ち去った・・・
 	ENDIF
 ELSEIF RAND:2 == 0
 	PRINTFORML アシカショーを楽しんでいる。
 	PRINTFORML 次々に芸をこなしていくアシカ達が可愛らしい。
 	PRINTL 
-	PRINTFORML 客がアシカにエサを上げられるプログラムで指名された%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORML 客がアシカにエサを上げられるプログラムで指名された%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML あざとくエサを強請るアシカ達にエサを与えている。
 	PRINTL 
-	PRINTFORML アシカと直接触れ合えた%PRINT_TRANSCALLNAME(TARGET)%はご満悦な顔で会場を去った・・・
+	PRINTFORML アシカと直接触れ合えた%PRINT_TRANSCALLNAME(TARGET)%은(는)ご満悦な顔で会場を去った・・・
 ELSE
 	PRINTFORML 水槽を眺めながら順路を進んでいる。
 	PRINTL 
-	PRINTFORML ふと気になる魚を見つけた%PRINT_TRANSCALLNAME(TARGET)%は水槽の前に貼り付いている。
+	PRINTFORML ふと気になる魚を見つけた%PRINT_TRANSCALLNAME(TARGET)%은(는)水槽の前に貼り付いている。
 	;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 	IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の水槽に押し潰された服の上からでもわかる
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 水槽に押し潰された服の上からでもわかる
 		IF TALENT:거유 > 2
 			PRINT ダイナミックな大きさの
 		ELSE
 			PRINT 豊満な
 		ENDIF
 		PRINTFORML バストにささっているが
-		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%は気付いていない・・・
+		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない・・・
 	ELSEIF RAND:3 == 0 && ISHOLE() == 1
 		SIF CFLAG:1 == 0
 			LOCAL = TALENT:외관
 		SIF CFLAG:1 >= 1
 			LOCAL = TALENT:변신시외관
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 		IF LOCAL == 2
 			PRINT むちむちとした
 		ELSEIF LOCAL == 1
@@ -233,7 +233,7 @@ ELSE
 			PRINT 小振りな
 		ENDIF
 		PRINTFORML ヒップにささっているが
-		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%は気付いていない・・・
+		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない・・・
 	ELSE
 		PRINTFORML じっくり観察して満足すると次の水槽へと順路を進んでいった・・・
 	ENDIF
@@ -245,17 +245,17 @@ PRINTW
 ;遊園地の内容
 @MESSAGE_PASTIME_AmusementPark
 
-PRINTFORM 遊園地に訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 遊園地に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF RAND:2 == 0
 	PRINTFORML ウォーター・ライドに列にならんでいる。
 	PRINTL 
 	PRINTFORML 大人気アトラクションだけあって待ち時間は長かったが、それだけに期待感は膨らんでいく。
-	PRINTFORML やがて順番が来ると、%PRINT_TRANSCALLNAME(TARGET)%を乗せたライドが発進していった。
+	PRINTFORML やがて順番が来ると、%PRINT_TRANSCALLNAME(TARGET)%을(를)乗せたライドが発進していった。
 	PRINTL 
 	PRINTFORML 発進して暫くすると、急な加減速や坂の昇降、噴霧など次々に乗客を楽しませるギミックが作動していく。
 	PRINTFORML それらに気持ちを盛り上げられていると徐々にライドの速度が上昇していくのを感じる。
 	PRINTFORML アトラクションの目玉、クライマックスの滝下りだ！
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を乗せたライドが一気に滝を駆け下りて行くと
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)乗せたライドが一気に滝を駆け下りて行くと
 	PRINTFORML 盛大な水飛沫と上方へ水が噴射され悲鳴混じりの歓声が沸き起こった。
 	PRINTL 
 	IF RAND:3 == 0 && ISHOLE() == 1
@@ -270,28 +270,28 @@ IF RAND:2 == 0
 		ELSE 
 			PRINTFORML 濡れた服からうっすらと下着が透けてしまっている事に気がついた。
 		ENDIF
-		PRINTFORML 男の視線は%PRINT_TRANSCALLNAME(TARGET)%のカラダに釘付けになっている。
+		PRINTFORML 男の視線は%PRINT_TRANSCALLNAME(TARGET)%의 カラダに釘付けになっている。
 		PRINTL 
 		IF (TALENT:음란 > 0 || ABL:노출벽 > 2) && TALENT:초심 < 1
-			PRINTFORML ライドが乗り場に到着すると%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML ライドが乗り場に到着すると%PRINT_TRANSCALLNAME(TARGET)%은(는)
 			PRINTFORML 濡れ透けたカラダを他の客にも見せ付けるような足取りで会場を立ち去った・・・
 		ELSE
-			PRINTFORML ライドが乗り場に到着すると%PRINT_TRANSCALLNAME(TARGET)%は
+			PRINTFORML ライドが乗り場に到着すると%PRINT_TRANSCALLNAME(TARGET)%은(는)
 			PRINTFORML 顔を真赤にして濡れ透けたカラダを隠すように足早で会場を立ち去った・・・
 		ENDIF
 	ELSE
-		PRINTFORML 人気に違わぬ興奮ぶりに満足した%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORML 人気に違わぬ興奮ぶりに満足した%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML 興奮冷めやらぬままにアトラクションを後にした・・・
 	ENDIF
 ELSE
 	PRINTFORML 観覧車に乗っている。
 	PRINTL 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を乗せたゴンドラは
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)乗せたゴンドラは
 	PRINTFORML ゆっくり回転していくとやがて頂点にさしかかった。
 	PRINTFORML 窓の外を見ると園内どころか遥か遠く海の水平線まで見渡すことが出来た。
 	PRINTFORML 広大な景色に感動していると徐々にゴンドラは下界へと降りて行った。
 	PRINTL 
-	PRINTFORML 高所からの風景を堪能した%PRINT_TRANSCALLNAME(TARGET)%は観覧車を後にした・・・
+	PRINTFORML 高所からの風景を堪能した%PRINT_TRANSCALLNAME(TARGET)%은(는)観覧車を後にした・・・
 ENDIF
 PRINTW 
 
@@ -301,29 +301,29 @@ PRINTW
 @MESSAGE_PASTIME_BotanicalGarden
 ;申し訳程度の촉수くん要素。一般植物にまぎれて襲撃とかあってもいいかも
 
-PRINTFORM 植物園に訪れた%PRINT_TRANSCALLNAME(TARGET)%は、
+PRINTFORM 植物園に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 PRINTFORML 色とりどりの草花を眺めながら順路を進んでいる。
 PRINTL 
 IF RAND:3 == 0
-	PRINTFORML ふと気になる花を見つけた%PRINT_TRANSCALLNAME(TARGET)%は花の前に貼り付いている。
+	PRINTFORML ふと気になる花を見つけた%PRINT_TRANSCALLNAME(TARGET)%은(는)花の前に貼り付いている。
 	;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 	IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された服の上からでもわかる
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された服の上からでもわかる
 		IF TALENT:거유 > 2
 			PRINT ダイナミックな大きさの
 		ELSE
 			PRINT 豊満な
 		ENDIF
 		PRINTFORML バストにささっているが
-		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%は気付いていない・・・
+		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない・・・
 	ELSEIF RAND:3 == 0 && ISHOLE() == 1
 		SIF CFLAG:1 == 0
 			LOCAL = TALENT:외관
 		SIF CFLAG:1 >= 1
 			LOCAL = TALENT:변신시외관
 		PRINTFORML すれ違う男共の視線が
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 		IF LOCAL == 2
 			PRINT むちむちとした
 		ELSEIF LOCAL == 1
@@ -338,7 +338,7 @@ IF RAND:3 == 0
 			PRINT 小振りな
 		ENDIF
 		PRINTFORML ヒップにささっているが
-		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%は気付いていない・・・
+		PRINTFORML 集中のあまり%PRINT_TRANSCALLNAME(TARGET)%은(는)気付いていない・・・
 	ELSE
 		PRINTFORML じっくり観察して満足すると次の水槽へと順路を進んでいった・・・
 	ENDIF
@@ -352,7 +352,7 @@ PRINTW
 ;----------------------------------------------------------------------------------------------------------------------------
 ;ライブの内容
 @MESSAGE_PASTIME_LiveShow
-PRINTFORM ライブ会場に訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM ライブ会場に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF RAND:100 == 0
 	PRINTFORML 本業は農家のアイドルグループのライブを楽しんでいる。
 ELSEIF RAND:90 == 0
@@ -371,7 +371,7 @@ ELSE
 	PRINTFORML デビューしたばかりの新人アイドルのライブを楽しんでいる。
 ENDIF
 PRINTL 
-PRINTFORML 周囲の熱に浮かされ、%PRINT_TRANSCALLNAME(TARGET)%の声援にも熱が入ってる。
+PRINTFORML 周囲の熱に浮かされ、%PRINT_TRANSCALLNAME(TARGET)%의 声援にも熱が入ってる。
 PRINTFORML 最後の一曲まで熱中し、祭り後の静けさに一抹の寂しさを覚えつつも会場を後にした・・・
 PRINTW 
 
@@ -380,12 +380,12 @@ PRINTW
 ;ウォーターパークの内容
 @MESSAGE_PASTIME_WaterPark
 
-PRINTFORM ウォーターパークに訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM ウォーターパークに訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 PRINTFORML 수영복に着替えると水遊びを始めた。
 PRINTL 
 ;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
 	ELSE
@@ -398,7 +398,7 @@ ELSEIF RAND:3 == 0 && ISHOLE() == 1
 		LOCAL = TALENT:외관
 	SIF CFLAG:1 >= 1
 		LOCAL = TALENT:변신시외관
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF LOCAL == 2
 		PRINT むちむちとした
 	ELSEIF LOCAL == 1
@@ -420,7 +420,7 @@ ELSEIF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 		LOCAL = TALENT:외관
 	SIF CFLAG:1 >= 1
 		LOCAL = TALENT:변신시외관
-	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%の無防備に晒された
+	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒された
 	IF TALENT:거유 > 2
 		PRINT ダイナミックな大きさの
 	ELSE
@@ -440,20 +440,20 @@ ELSEIF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 	PRINTL 
 ENDIF
 IF RAND:3 == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はウォータースライダーを楽しんだ。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ウォータースライダーを楽しんだ。
 ELSEIF RAND:2 == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は流れるプールを楽しんだ。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)流れるプールを楽しんだ。
 ELSE 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は波の出るプールを楽しんだ。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)波の出るプールを楽しんだ。
 ENDIF
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は少し休憩しようとその場を後にした・・・
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)少し休憩しようとその場を後にした・・・
 PRINTW 
 
 
 ;----------------------------------------------------------------------------------------------------------------------------
 ;海辺の内容
 @MESSAGE_PASTIME_BeachSide
-PRINTFORM 海辺に訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 海辺に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 PRINTFORML 수영복に着替えると水遊びを始めた。
 PRINTL 
 PRINTFORML 海辺を楽しんだ様だ・・・
@@ -463,7 +463,7 @@ PRINTW
 ;----------------------------------------------------------------------------------------------------------------------------
 ;温泉の内容
 @MESSAGE_PASTIME_Spa
-PRINTFORM 温泉に訪れた%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 温泉に訪れた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 PRINTFORML 早速温泉につかることにした。
 PRINTL 
 PRINTFORML ゆっくり疲れが取れた様だ・・・

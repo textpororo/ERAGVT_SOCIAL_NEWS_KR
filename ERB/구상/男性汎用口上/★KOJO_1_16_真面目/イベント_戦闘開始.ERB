@@ -24,14 +24,14 @@ IF CFLAG:42 == 400
 		PRINTFORML  反対に클리토리스同然に異常縮小したペニスと睾丸は%ITEMNAME:(CFLAG:40)%の内に隠れてしまう。
 		PRINTFORML  %ITEMNAME:(CFLAG:40)%の下で、%ITEMNAME:(CFLAG:42)%からじくじくと滲み出た体液が、
 		PRINTFORML  %CALLNAME%の肢体を覆い尽くし、第二の皮膚のようにぴっちりと張り付いた。
-		PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%は全身を粟立たせる……
+		PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%은(는) 全身を粟立たせる……
 	ELSE
 		PRINTFORML  %CALLNAME%の胸と陰核を咥えこんだ촉수は中身を吸い上げながら膨張し
 		PRINTFORML  가슴を半ばまで覆う巨大乳暈と肉棒のように肥大した乳首と、
 		PRINTFORML  ペニス同然に異常成長した陰核は%ITEMNAME:(CFLAG:40)%を突き破らんばかりに醜く変容しはじめた。
 		PRINTFORML  %ITEMNAME:(CFLAG:40)%の下で、%ITEMNAME:(CFLAG:42)%からじくじくと滲み出た体液が、
 		PRINTFORML  %CALLNAME%の肢体を覆い尽くし、第二の皮膚のようにぴっちりと張り付いた。
-		PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%は全身を粟立たせる……
+		PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%은(는) 全身を粟立たせる……
 	ENDIF
 	PRINTFORML
 ENDIF
@@ -54,7 +54,7 @@ ELSEIF ABL:정액중독 > 3 || (ABL:사정중독 > 3 && ISPENIS()) || ABL:모유
 		PRINTFORML  ――ゴクリッ
 		PRINTFORML %CALLNAME%の喉が大きく鳴った
 		PRINTFORML 倒すために出撃しているのか、精液を浴びるために出撃しているのか
-		PRINTFORML %CALLNAME%は次第にどちらでも良くなってきている……
+		PRINTFORML %CALLNAME%은(는) 次第にどちらでも良くなってきている……
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:모유중독 > 3
 		PRINTFORML 「また……いっぱい、絞られ……っ♪」
@@ -101,7 +101,7 @@ ELSEIF ABL:정액중독 > 1 || (ABL:사정중독 > 1 && ISPENIS()) || ABL:모유
 	WHILE LOCAL
 	RESULT = RAND:3
 	IF RESULT == 0 && ABL:정액중독 > 1
-		PRINTFORML 更なる精液を求め%CALLNAME%は발정していく……
+		PRINTFORML 更なる精液を求め%CALLNAME%은(는) 발정していく……
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:모유중독 > 1
 		PRINTFORML 更なる射乳を求め%CALLNAME%の乳首はゆっくりと勃ち上がっている…
@@ -119,7 +119,7 @@ ELSEIF ABL:욕망 == 5 || ABL:노출벽 == 5 || ABL:마조끼 == 5
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:노출벽 == 5
 		PRINTFORML 「また……見られちゃう……」
-		PRINTFORML 全裸で犯された記憶を思い出すと、%CALLNAME%は燃え上がるような官能に包まれた……
+		PRINTFORML 全裸で犯された記憶を思い出すと、%CALLNAME%은(는) 燃え上がるような官能に包まれた……
 		LOCAL = 0
 	ELSEIF RESULT == 2 && ABL:마조끼 == 5 
 		PRINTFORML 「ふふ……また……」
@@ -158,7 +158,7 @@ ELSEIF ABL:V감각 >= 5 || ABL:A감각 >= 5 || ABL:B감각 >= 5 || ABL:C감각 >
 	ENDIF
 	WEND
 ELSE
-	;最初のボス戦
+	;最初の보스戦
 	CALL TENTACLE_SURVIVE,"NUM"
 	IF (FLAG:3 - RESULT) == 0
 
@@ -250,7 +250,7 @@ ENDIF
 
 ;昼は街中で襲来　人々を守るため咄嗟に駆け出した
 IF TIME == 0
-	;FLAG:45==2なら女子高救出イベントにおける〆のボス戦、体育館or礼拝堂　雑魚촉수に襲われ庇い合う少女たちor기절した少女たち
+	;FLAG:45==2なら女子高救出イベントにおける〆の보스戦、体育館or礼拝堂　雑魚촉수に襲われ庇い合う少女たちor기절した少女たち
 	;FLAG:45==3なら自衛隊加勢イベント　遅れてやって来たヒーロー(ヒロイン)的登場
 	;FLAG:45==4なら逃走した촉수に連れ去られた女性たちの救出ミッション★未実装
 
@@ -259,9 +259,9 @@ IF TIME == 0
 	ELSEIF CFLAG:100 == 103
 		;息抜きがてらに街に出ていた
 	ELSEIF CFLAG:100 == 104
-		;特別活動を終えて帰り仕度していた
+		;특별 활동を終えて帰り仕度していた
 	ELSEIF CFLAG:100 == 106
-		;戦闘支援を終えて街に出ていた
+		;전투 지원を終えて街に出ていた
 	ENDIF
 ;夜はピンポイントに狙われる　逃げられない
 ELSE
@@ -270,11 +270,11 @@ ELSE
 	ELSEIF CFLAG:100 == 103
 		;自室で休んでいた
 	ELSEIF CFLAG:100 == 104
-		;特別活動を終えて戻った
+		;특별 활동を終えて戻った
 		;★詳細知りたい(バイトと円光帰りではシチュが違うはず)
 		;　→구상側で플래그를仕込んでおく
 	ELSEIF CFLAG:100 == 106
-		;戦闘支援を行っていた
+		;전투 지원を行っていた
 	ENDIF
 ENDIF
 
@@ -283,7 +283,7 @@ ENDIF
 
 
 
-;初めて洗脳キャラと対峙した
+;初めて세뇌キャラと対峙した
 ;こちらは明らかに操られている敵
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_SENNOU_FIRST_16
@@ -294,7 +294,7 @@ PRINTFORML 「酷い……すぐに助けてやるからな、絶対に」
 
 
 
-;洗脳キャラと対峙
+;세뇌キャラと対峙
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_SENNOU_16
 ;촉수의포로取得後
@@ -302,7 +302,7 @@ IF TALENT:촉수의포로
 	PRINTFORML 「くっ、やめろ……%SELF_CALL()%にそんな姿を見せないでくれ……！ %SELF_CALL()%は、%SELF_CALL()%は……！」
 	PRINTFORML  快楽の肉獄に溺れ、心を砕かれた肉人形に成り果てた「元」仲間の姿が、かつての己を呼び起こす。
 	PRINTFORML 「イヤだっ！ %SELF_CALL()%は、違う、ちが、ああああッ！」
-	PRINTFORML  嫌悪が、羨望が、羞恥が、절망が、嫉妬が、肉欲が、一斉に噴出して%PRINT_TRANSCALLNAME(TARGET)%の脆弱な心を焼き切った。
+	PRINTFORML  嫌悪が、羨望が、羞恥が、절망が、嫉妬が、肉欲が、一斉に噴出して%PRINT_TRANSCALLNAME(TARGET)%의 脆弱な心を焼き切った。
 	PRINTFORML 「お゛ぶッ？！ げぼォ、がぼ、お゛ごお゛……げぼ、い゛や゛……あ゛……！」
 	PRINTFORML  無様に膝をつき、嘔吐と失禁を繰り返す%PRINT_TRANSCALLNAME(TARGET)%に、覚束ない足取りで%PRINT_TRANSCALLNAME(FLAG:111)%が近づいてくる……！
 ELSE
@@ -317,7 +317,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_AKUOTI_FIRST_16
 PRINTFORML 「なッ、何を言ってるのかわかってるのか？！ ああもう、化け物なんかに狂わされやがって！」
-PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%はきっと柳眉を逆立てた。
+PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)きっと柳眉を逆立てた。
 
 
 
@@ -337,7 +337,7 @@ ELSE
 	PRINTFORML 「ああもう黙れ！ 化け物に堕とされるなんて情けないやつ！」
 	PRINTFORML (苗床にならないだけの強さはある……遠慮は不要、だな)
 ;	PRINTFORML  今なら「元」仲間と本気で戦い、存分に打ちのめしてもよい。
-;	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%は湧き上がる衝動を、공격的な笑みを隠しすらしない……
+;	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)湧き上がる衝動を、공격的な笑みを隠しすらしない……
 
 ENDIF
 

@@ -1,5 +1,5 @@
-﻿;인조인간加入を元にロボ要素排除(……この本末転倒感のある文字列)で加入テスト
-;もうちょっと手を加えてランダム生成機能可能化+手動生成時に種族設定可能に変更
+﻿;인조인간 가입을 기반으로 로보요소를 배제(……이 본말전도 느낌이 있는 문자열)한 가입 테스트
+;조금 더 손봐서 랜덤생성 기능 가능화 + 수동 생성 시 종족 설정 가능으로 변경
 
 @TSUIKAYOUSEI_NORMAL
 #DIM KEEP_TARGET
@@ -7,19 +7,19 @@
 #DIM FEAT_SELECT, 300
 #DIM FEAT_NUM
 	CALL LB
-	PRINTFORML これまでに追加で加入させた人数 {FLAG:250}人
-	PRINTL 新しいキャラクターを新規加入させます。
-	PRINTL キャンセルはできませんが、よろしいですか？
-	PRINTL [0]性別：♀で確定
-	PRINTL [1]性別：♂で確定
-	PRINTL [2]ランダム生成する
+	PRINTFORML 지금까지 추가로 가입시킨 인원：{FLAG:250}명
+	PRINTL 새 캐릭터를 신규 가입시킵니다.
+	PRINTL 도중에 취소는 불가능합니다. 이대로 진행하시겠습니까?
+	PRINTL [0] 성별:♀로 확정
+	PRINTL [1] 성별:♂로 확정
+	PRINTL [2] 랜덤으로 정한다
 	PRINTL 
-	PRINTL [99]キャンセル
+	PRINTL [99] 취소
 	$INPUT_LOOP_100_0
 	INPUT
 	IF RESULT == 0 || RESULT == 1 || RESULT == 2
 		FLAG:250 += 1
-		PRINTW 加入要請を行いました。
+		PRINTW 가입 요청을 했습니다.
 		CALL LB
 		CALL DOT_AFTER, 1
 		PRINTL 
@@ -27,29 +27,29 @@
 		ADDCHARA 0
 		TARGET = CHARANUM - 1
 		IF RESULT != 2
-			PRINTW 加入する新規キャラクターの設定を行います。
+			PRINTW 가입하게 될 신규 캐릭터의 설정을 진행합니다.
 			IF RESULT == 1
 				TALENT:남자 = 1
 				NAME:TARGET = 범용 캐릭터(♂)
 			ENDIF
 			CALL FIRSTSETTING_CHARA_MAIN, TARGET, 0
 		ENDIF
-		;フィートの設定開始
+		;FEAT 설정 시작
 		;---------------------------------------------------------------------
 		CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",TARGET
 		RACE = RESULT
-		;フィートの開始番号
+		;FEAT 개시 번호
 		LOCAL:2 = 1000
-		;種族の数
+		;종족의 수
 		LOCAL:3 = 11
-		PRINTFORML 『%CALLNAME%』にフィートを設定しますか？
+		PRINTFORML 『%CALLNAME%』에게 FEAT를 설정하시겠습니까?
 		PRINTFORML [0] 네
 		PRINTFORML [1] 아니오
-		PRINTFORML [2]ランダムに設定する
+		PRINTFORML [2] 랜덤으로 설정한다
 		$INPUT_LOOP_100_1
 		INPUT
 		IF RESULT == 0
-			;フィートの初期化
+			;FEAT 초기화
 			VARSET FEAT_SELECT
 			FOR LOCAL, 100, 300
 				SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
@@ -57,7 +57,7 @@
 			NEXT
 			CALL LB
 			$MASTER_LOOP_100_2
-			;フィートの数をカウント
+			;FEAT의 수를 카운트
 			FEAT_NUM = 0
 			FOR LOCAL, 100, 300
 				SIF FEAT_SELECT:LOCAL > 0
@@ -67,7 +67,7 @@
 			CALL SHORTLINE
 			CALL SYUZOKU_INFO, (RACE)
 			PRINTL 
-			PRINTL (取得可能フィート)          選択
+			PRINTL (취득 가능한 FEAT)          선택
 			FOR LOCAL, 100, 300
 				SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
 					CONTINUE
@@ -81,7 +81,7 @@
 					SETCOLOR 255,0,0
 					PRINT ◎
 					RESETCOLOR
-					PRINTPLAIN  固定取得
+					PRINTPLAIN  고정 취득
 				ELSEIF FEAT_SELECT:LOCAL > 0
 					SETCOLOR 255,128,0
 					PRINT ○
@@ -92,10 +92,10 @@
 				PRINTL 
 			NEXT
 			PRINTL 
-			PRINTFORML 選択したフィート({FEAT_NUM}/3)
+			PRINTFORML 선택한 FEAT({FEAT_NUM}/3)
 			SIF FEAT_NUM > 3
 				SETCOLOR 128,128,128
-			PRINTL [0]決定
+			PRINTL [0] 결정
 			RESETCOLOR
 			$INPUT_LOOP_100_2
 			INPUT
@@ -114,7 +114,7 @@
 			ELSE
 				GOTO INPUT_LOOP_100_2
 			ENDIF
-			;フィートの設定
+			;FEAT 설정
 			FOR LOCAL, 100, 300 
 				IF FEAT_SELECT:LOCAL > 0
 					TALENT:(LOCAL + LOCAL:2) = 1
@@ -122,17 +122,17 @@
 					TALENT:(LOCAL + LOCAL:2) = 0
 				ENDIF
 			NEXT
-			;プロフィールに反映
+			;프로필에 반영
 			CALL SET_PROFILE, TARGET
 		ELSEIF RESULT == 1
-			PRINTFORML %PRINT_CALLNAME(TARGET)%にはフィートを設定しません
+			PRINTFORML %PRINT_CALLNAME(TARGET)%에게 FEAT를 설정하지 않았습니다.
 			PRINTW 
 		ELSEIF RESULT == 2
-			;フィートのランダム設定
+			;FEAT 랜덤 설정
 			CALL SET_FEAT_DEFAULT, TARGET, RACE
-			;プロフィールに反映
+			;프로필에 반영
 			CALL SET_PROFILE, TARGET
-			PRINTFORML ランダムにフィートを設定しました
+			PRINTFORML %PRINT_CALLNAME(TARGET)%에게 랜덤으로 FEAT를 설정했습니다.
 			PRINTW 
 		ELSE
 			GOTO INPUT_LOOP_100_1
@@ -141,13 +141,13 @@
 		CALL LB
 		CALL DOT_AFTER, 1
 		PRINTL 
-		PRINTFORML 『%CALLNAME%』を{TARGET}人目のメンバーとして迎え入れました。
+		PRINTFORML 『%CALLNAME%』을(를) {TARGET}번째 멤버로 영입했습니다.
 		IF CHARANUM_SAFE_PARTYCHECK()>=6
-			PRINTFORML 『%CALLNAME%』は控えメンバーに加えられます。
+			PRINTFORML 『%CALLNAME%』은(는) 대기 멤버로 추가됩니다.
 		ELSE
 			CFLAG:TARGET:999 = 1
 		ENDIF
-		;キャラメイク完了処理(個別)
+		;캐릭터 메이킹 완료 처리(개별)
 		CALL CHARA_MAKE_FINALIZE(TARGET)
 
 		PRINTW 

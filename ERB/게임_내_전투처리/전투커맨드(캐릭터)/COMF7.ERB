@@ -11,7 +11,7 @@ IF (TCVARn:12 & 끈적끈적) && RAND:100 < 50 && GETBIT(TCVARn:216, 1) == 0
 	;距離表示
 	CALL PRINT_DISTANCE
 	PRINTL 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は脚を滑らせてしまった！
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)脚を滑らせてしまった！
 	PRINTFORML 移動を伴う行動が失敗した！
 	PRINTW 
 	RETURN 1
@@ -65,7 +65,7 @@ SIF BASE:기력 == 0
 REPEAT CFLAG:99
 	SIF LOCAL:0 <= 1
 		BREAK
-	;FEAT効果による回復量維持
+	;FEAT 효과에 따른回復量維持
 	IF TALENT:스태미나 > 0
 		TIMES LOCAL:0, 0.985
 	ELSE
@@ -115,7 +115,7 @@ SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 REPEAT CFLAG:99
 	SIF LOCAL:1 <= 1
 		BREAK
-	;FEAT効果による回復量維持
+	;FEAT 효과에 따른回復量維持
 	IF TALENT:스태미나 > 0
 		TIMES LOCAL:1, 0.995
 	ELSE
@@ -126,7 +126,7 @@ BASE:기력 += LOCAL:1
 
 ;疲労が少し蓄積
 TFLAG:99 += 1
-;FEAT効果による反動の増加
+;FEAT 효과에 따른反動の増加
 SIF TALENT:공중부유 > 0
 	TFLAG:99 += 1
 

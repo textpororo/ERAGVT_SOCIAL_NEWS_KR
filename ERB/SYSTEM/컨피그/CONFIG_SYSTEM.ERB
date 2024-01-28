@@ -21,12 +21,12 @@
 ;5～8　戦闘画面の調教스테이터스 표시
 ;
 ;イベント関連		FLAG:802	判定式：CONFIG_CHECK_EVENT_F(num)
-;0	ボス襲撃イベント
+;0	보스襲撃イベント
 ;1	子촉수の夜這い
 ;2	仲間による夜這い
-;3	クズ市民イベント
+;3	악질 시민イベント
 ;4	잡몹적との戦闘
-;5	クズ市民との戦闘
+;5	악질 시민との戦闘
 ;6	연인セックス時のゴム装着
 ;
 ;ゲームバランス変更	FLAG:803	判定式：CONFIG_CHECK_BALANCE_F(num)
@@ -35,7 +35,7 @@
 ;2	オート振り解き
 ;3	搾精強化
 ;4	返り血
-;5	ラスボス強化
+;5	최종 보스強化
 ;6	力尽きても変身が解けない　※체력, 기력低下や絶頂や敗北時に変身解除されない
 ;7	A감각が低い時の쾌A増加
 ;8	敵が行動不能のヒロインを正確に狙う
@@ -50,13 +50,13 @@
 ;6	  ┣髪の色の変更を許可する
 ;7	  ┣目の色の変更を許可する
 ;8	  ┗肌の色の変更を許可する
-;9	クズ市民による幽閉イベントを許可する
+;9	악질 시민による幽閉イベントを許可する
 
 ;その他オプション	FLAG:805	判定式：CONFIG_CHECK_OTHER_F(num)
 ;0	娘育成(ONなら촉수に孕まされても娘を임신する場合がある)
 ;1	항복한다コマンドを使用する
 ;2	┏임신・出産機能を使用しない(↓と択一)
-;3	┗アフターピル使用可能モード(↑と択一)
+;3	┗사후피임약使用可能モード(↑と択一)
 ;4	애널プレイではＶに挿入しない
 ;5	基本처녀を失わない(全員に聖처녀をつけるのと同じ効果)
 ;6	裏プロフィール(感覚進行時、パーソナリティ欄の下部にエロverがなんか出る　プロフィール設定時のみ反映)
@@ -65,7 +65,7 @@
 ;--------------------------------------------------
 ;컨피그
 @CONFIG(FROM)
-;呼び出し元"mainmenu"か？
+;호출元"mainmenu"か？
 #DIMS FROM,1
 
 #DIM PAGE
@@ -180,7 +180,7 @@ IF PAGE == 0
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_EVENT_F(3) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[33]クズ市民イベント
+	PRINTFORML 　[33]악질 시민イベント
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_EVENT_F(4) == 0
@@ -191,7 +191,7 @@ IF PAGE == 0
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_EVENT_F(5) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[35]クズ市民との戦闘
+	PRINTFORML 　[35]악질 시민との戦闘
 	RESETCOLOR
 	
 	SETCOLOR 120,255,255
@@ -246,7 +246,7 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_BALANCE_F(5) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[55]ラスボス強化機能　　　　　　　　　　　難易度：上昇
+	PRINTFORML 　[55]최종 보스強化機能　　　　　　　　　　　難易度：上昇
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_BALANCE_F(6) == 0
@@ -320,12 +320,12 @@ ELSEIF PAGE == 1
 		SETCOLOR 120,255,255
 		SIF CONFIG_CHECK_PRISON_F(9) == 0
 			SETCOLOR 105,105,105
-		PRINTFORML 　 ┗[69]【촉수의포로】無しでも洗脳ではなく흑화する
+		PRINTFORML 　 ┗[69]【촉수의포로】無しでも세뇌ではなく흑화する
 	ENDIF
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(10) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[70]クズ市民による幽閉を許可する
+	PRINTFORML 　[70]악질 시민による幽閉を許可する
 	RESETCOLOR
 	PRINTL 
 
@@ -351,7 +351,7 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(3) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[74]┗避妊のためにアフターピルを使用する
+	PRINTFORML 　[74]┗避妊のために사후피임약を使用する
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(4) == 0
@@ -361,7 +361,7 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(5) == 0
 		SETCOLOR 105,105,105
-		;非イベントにおける필터、および性공격に伴う처녀喪失抑制
+		;非イベントにおける필터、および性공격に伴う처녀 상실抑制
 		;「にくく」というかほぼ完全に抑制される
 		;　例外がＶ촉수幽閉中のＶ責め、Ｖ촉수だし意図的な例外だと思われる
 	PRINTFORML 　[76]ヒロインが常に聖처녀となる（基本的に처녀を喪失しない）
@@ -492,7 +492,7 @@ ELSEIF RESULT >= 50 && RESULT <= 58
 ELSEIF RESULT >= 60 && RESULT <= 70
 	INVERTBIT FLAG:804, RESULT - 60
 	GOTO MASTER_LOOP
-;その他オプション　※常時避妊／アフターピルは択一
+;その他オプション　※常時避妊／사후피임약は択一
 ELSEIF RESULT == 73 || RESULT == 74
 	INVERTBIT FLAG:805, RESULT-71
 	CLEARBIT FLAG:805, 2+(74-RESULT)

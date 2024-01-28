@@ -28,20 +28,20 @@ IF BASE:체력 <= 강제휴식체력
 	SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML 「さすがにそろそろ休まないと……」
-			PRINTFORML  %CALLNAME%は疲れが溜まっているようだ。
+			PRINTFORML  %CALLNAME%은(는) 疲れが溜まっているようだ。
 		CASE 1
 			PRINTFORML 「まだ…頑張れるよ！」
-			PRINTFORML  %CALLNAME%は無理をしているのが見え見えだ。
+			PRINTFORML  %CALLNAME%은(는) 無理をしているのが見え見えだ。
 	ENDSELECT
 ;촉수의포로取得後
 ELSEIF TALENT:촉수의포로 && RAND:3 == 0
 	SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML （そっか、もう%SELF_CALL()%、戻れないんだ――）
-			PRINTFORML  %CALLNAME%は身の内に感じる熱い衝動に抗えない自分を感じている。
+			PRINTFORML  %CALLNAME%은(는) 身の内に感じる熱い衝動に抗えない自分を感じている。
 		CASE 1
 			PRINTFORML （今日はできるかな、エッチなこと――）
-			PRINTFORML  %CALLNAME%は自分の思考を恥じるべきという発想も持てなくなっている。
+			PRINTFORML  %CALLNAME%은(는) 自分の思考を恥じるべきという発想も持てなくなっている。
 	ENDSELECT
 ;쾌락각인
 ELSEIF MARK:쾌락각인 > RAND:5
@@ -53,65 +53,65 @@ ELSEIF MARK:쾌락각인 > RAND:5
 			ELSE
 				PRINTFORML 「――や、やだなあ、%SELF_CALL()%は남자なのに…」
 			ENDIF
-			PRINTFORML  %CALLNAME%は心持ち顔を赤くしている。
+			PRINTFORML  %CALLNAME%은(는) 心持ち顔を赤くしている。
 		CASE 1
 			PRINTFORML 「――ぁ、ああ、ごめんごめん。聞いてなかった」
-			PRINTFORML  %CALLNAME%は何やらぽーっとしている。
+			PRINTFORML  %CALLNAME%은(는) 何やらぽーっとしている。
 		CASE 2
 			PRINTFORML （エッチなことをされて、気持ちよくなるなんて――）
-			PRINTFORML  %CALLNAME%は凌辱された時の悔しさを思い出し、唇を噛んだ。
+			PRINTFORML  %CALLNAME%은(는) 凌辱された時の悔しさを思い出し、唇を噛んだ。
 		CASE 3
 			PRINTFORML 「えっと、別に変なこと考えてたわけじゃなくて！」
-			PRINTFORML  %CALLNAME%はなぜか赤くなっている。
+			PRINTFORML  %CALLNAME%은(는) なぜか赤くなっている。
 	ENDSELECT
 ;고통、공포각인
 ELSEIF (MARK:고통각인 + MARK:공포각인)/2 > RAND:4
 	SELECTCASE RAND:6
 		CASE 0
 			PRINTFORML 「ヒーローは敵を恐れない…　ヒーローは敵を恐れない…」
-			PRINTFORML  %CALLNAME%は自分に言い聞かせている。
+			PRINTFORML  %CALLNAME%은(는) 自分に言い聞かせている。
 		CASE 1
 			PRINTFORML 「えっと、う、うん、今日も絶好調！」
 			PRINTFORML  %CALLNAME%の表情はやや無理をしているように見える。
 		CASE 2
 			PRINTFORML （弱音なんて、吐いてる場合じゃない――）
-			PRINTFORML  %CALLNAME%は自分の頬をパンパンと叩いて気分を切り替えた。
+			PRINTFORML  %CALLNAME%은(는) 自分の頬をパンパンと叩いて気分を切り替えた。
 		CASE 3
 			PRINTFORML 「ははは、なんでだろう、震えが止まらない…」
-			PRINTFORML  %CALLNAME%は手の震えが止まらない自分に愕然としている。
+			PRINTFORML  %CALLNAME%은(는) 手の震えが止まらない自分に愕然としている。
 		CASE 4
 			PRINTFORML 「よ、弱気になってどうすんの、%SELF_CALL()%の馬鹿馬鹿！」
-			PRINTFORML  %CALLNAME%は空元気で自分を誤魔化した……。
+			PRINTFORML  %CALLNAME%은(는) 空元気で自分を誤魔化した……。
 		CASE 5
 			PRINTFORML 「正義は、必ず勝つ。必ず勝つ……」
-			PRINTFORML  %CALLNAME%は呪文のように繰り返し呟いている。
+			PRINTFORML  %CALLNAME%은(는) 呪文のように繰り返し呟いている。
 	ENDSELECT
 ELSE
 	SELECTCASE RAND:8
 		CASE 0
 			PRINTFORML 「さぁて、今日もエンジン全開で行くよ！」
-			PRINTFORML  %CALLNAME%は張り切っている。
+			PRINTFORML  %CALLNAME%은(는) 張り切っている。
 		CASE 1
 			PRINTFORML 「うんうん、今日も絶好調！」
-			PRINTFORML  身体の調子を確かめるように、%CALLNAME%は準備運動している。
+			PRINTFORML  身体の調子を確かめるように、%CALLNAME%은(는) 準備運動している。
 		CASE 2
 			PRINTFORML 「駅前のパフェ、もっと食べたいなぁ」
-			PRINTFORML  %CALLNAME%はヨダレを垂らしている……。
+			PRINTFORML  %CALLNAME%은(는) ヨダレを垂らしている……。
 		CASE 3
 			PRINTFORML 「今日は何しようかな？」
-			PRINTFORML  %CALLNAME%は居ても立っても居られないといった様子だ。
+			PRINTFORML  %CALLNAME%은(는) 居ても立っても居られないといった様子だ。
 		CASE 4
 			PRINTFORML 「よーし、張り切って行こう！」
-			PRINTFORML  %CALLNAME%は一人で拳をグーの形で突き上げた。
+			PRINTFORML  %CALLNAME%은(는) 一人で拳をグーの形で突き上げた。
 		CASE 5
 			PRINTFORML 「正義のヒーローに、休みは無いんだ！」
-			PRINTFORML  %CALLNAME%は高らかに宣言している。
+			PRINTFORML  %CALLNAME%은(는) 高らかに宣言している。
 		CASE 6
 			PRINTFORML 「栄養補給もヒーローの務め！　もぐもぐ……」
-			PRINTFORML  %CALLNAME%は意味不明な言い訳をしながら豪勢な食事を平らげている。
+			PRINTFORML  %CALLNAME%은(는) 意味不明な言い訳をしながら豪勢な食事を平らげている。
 		CASE 7
 			PRINTFORML 「よーし、頑張っちゃうよ！」
-			PRINTFORML  %CALLNAME%は今日も気合十分のようだ。
+			PRINTFORML  %CALLNAME%은(는) 今日も気合十分のようだ。
 	ENDSELECT
 ENDIF
 PRINTFORML 
@@ -135,10 +135,10 @@ PRINTFORML
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「はっ、はっ、はっ…　あと６ｋｍ……」
-		PRINTFORML  %CALLNAME%は早めのペースを乱さずに走り続けている。
+		PRINTFORML  %CALLNAME%은(는) 早めのペースを乱さずに走り続けている。
 	CASE 1
 		PRINTFORML 「ファイト、ファイトーッ！」
-		PRINTFORML  %CALLNAME%は息を切らせながらも走り続けている。
+		PRINTFORML  %CALLNAME%은(는) 息を切らせながらも走り続けている。
 ENDSELECT
 
 ;精神鍛錬
@@ -147,10 +147,10 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「ぐっ…くはっ、も、もう一度……」
-		PRINTFORML  %CALLNAME%は精神力を鍛えるため、あえて타격を受ける訓練をしている。
+		PRINTFORML  %CALLNAME%은(는) 精神力を鍛えるため、あえて타격を受ける訓練をしている。
 	CASE 1
 		PRINTFORML 「絶対に負けないもん…！」
-		PRINTFORML  %CALLNAME%は涙を浮かべながらも厳しい訓練に耐えている。
+		PRINTFORML  %CALLNAME%은(는) 涙を浮かべながらも厳しい訓練に耐えている。
 ENDSELECT
 
 ;瞑想
@@ -161,11 +161,11 @@ SELECTCASE RAND:2
 		PRINTFORML 「…………」
 		PRINTFORML 「……zzzZ」
 		PRINTFORML 「……はっ！？」
-		PRINTFORML  %CALLNAME%は瞑想の途中で何度か寝てしまったようだ。
+		PRINTFORML  %CALLNAME%은(는) 瞑想の途中で何度か寝てしまったようだ。
 	CASE 1
 		PRINTFORML 「…………」
 		PRINTFORML 「……ん～……むにゃむにゃ……」
-		PRINTFORML  %CALLNAME%は瞑想は苦手のようだ。
+		PRINTFORML  %CALLNAME%은(는) 瞑想は苦手のようだ。
 ENDSELECT
 
 ;筋トレ
@@ -174,10 +174,10 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「ひゃあくにじゅういち、ひゃあくにじゅうにっ、ひゃあくにじゅうさん……」
-		PRINTFORML  %CALLNAME%は順調にトレーニングメニューをこなしている。
+		PRINTFORML  %CALLNAME%은(는) 順調にトレーニングメニューをこなしている。
 	CASE 1
 		PRINTFORML 「はぁはぁ……こ、根性～～っ！」
-		PRINTFORML  %CALLNAME%は根性で訓練を乗り越えたようだ。
+		PRINTFORML  %CALLNAME%은(는) 根性で訓練を乗り越えたようだ。
 ENDSELECT
 
 ;自衛訓練
@@ -186,11 +186,11 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「ふんっ、やぁ、そやっ！」
-		PRINTFORML  %CALLNAME%は訓練用弾幕に自ら飛び込み、ゴム弾を避わしていく。
+		PRINTFORML  %CALLNAME%은(는) 訓練用弾幕に自ら飛び込み、ゴム弾を避わしていく。
 		PRINTFORML  目の前に飛び込んできた弾は拳で撃ち返し、背後からの공격にも反応していく…。
 	CASE 1
 		PRINTFORML 「とっさに出来るかなぁ……」
-		PRINTFORML  %CALLNAME%は何度も同じ動作を繰り返し、体に覚えさせているようだ。
+		PRINTFORML  %CALLNAME%은(는) 何度も同じ動作を繰り返し、体に覚えさせているようだ。
 ENDSELECT
 
 ;ダッシュ
@@ -199,10 +199,10 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「～～～っ、はぁっ、はぁ、ふぅぅう。あとコンマ２秒縮められれば…！」
-		PRINTFORML  %CALLNAME%は全力疾走で好タイムを出し続けている。
+		PRINTFORML  %CALLNAME%은(는) 全力疾走で好タイムを出し続けている。
 	CASE 1
 		PRINTFORML 「はぁはぁ…ま、まだ平気…！　それっ、もう一本！」
-		PRINTFORML  %CALLNAME%は荒い息をつきながらも、再びスタート位置に戻っていった。
+		PRINTFORML  %CALLNAME%은(는) 荒い息をつきながらも、再びスタート位置に戻っていった。
 ENDSELECT
 
 ;근거리戦闘訓練
@@ -211,11 +211,11 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「はぁあ！　てりゃあ！　せいっ！」
-		PRINTFORML  %CALLNAME%は訓練用の標的に拳を叩きこんでいく。
+		PRINTFORML  %CALLNAME%은(는) 訓練用の標的に拳を叩きこんでいく。
 		PRINTFORML  最後にトドメのキックを入れ、ふぅぅぅと息を吐き出した。
 	CASE 1
 		PRINTFORML 「ていやぁぁぁぁ！！」
-		PRINTFORML  %CALLNAME%は木刀を渾身の一撃で振るい、標的の人形を袈裟斬りに切り捨てた。
+		PRINTFORML  %CALLNAME%은(는) 木刀を渾身の一撃で振るい、標的の人形を袈裟斬りに切り捨てた。
 		PRINTFORML  汗の粒がキラキラと宙を舞っている。
 ENDSELECT
 
@@ -225,12 +225,12 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「よおし、次は３番か６番！！」
-		PRINTFORML  %CALLNAME%は野球ボールを撃ち返してパネルを射抜く訓練をしている。
+		PRINTFORML  %CALLNAME%은(는) 野球ボールを撃ち返してパネルを射抜く訓練をしている。
 		PRINTFORML  爽やかな汗が%CALLNAME%の運動着を透けさせ、
 		PRINTFORML  健康的な肌が露わになっている……
 	CASE 1
 		PRINTFORML 「えい！　たあ！　まだまだ行くよぉ！」
-		PRINTFORML  %CALLNAME%はテニスを通じて離れた距離にいる相手と戦う訓練を積んでいるようだ。
+		PRINTFORML  %CALLNAME%은(는) テニスを通じて離れた距離にいる相手と戦う訓練を積んでいるようだ。
 		IF ISMALE()
 			PRINTFORML  その姿はただの快活なスポーツ少年にしか見えない……
 		ELSE
@@ -244,12 +244,12 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML  「…そこっ！　あと何体！？」
-		PRINTFORML  %CALLNAME%は模擬ライフル銃で訓練用ロボットと撃ち合いながら、
+		PRINTFORML  %CALLNAME%은(는) 模擬ライフル銃で訓練用ロボットと撃ち合いながら、
 		PRINTFORML  射撃を避わして遮蔽物の影に隠れた。
 		PRINTFORML  その表情は高揚と興奮で上気している……
 	CASE 1
 		PRINTFORML 「うう…この距離はさすがに……」
-		PRINTFORML  %CALLNAME%はスコープを覗き込み、원거리から標的を狙撃した。
+		PRINTFORML  %CALLNAME%은(는) スコープを覗き込み、원거리から標的を狙撃した。
 		PRINTFORML  何度も訓練を重ねればきっと上達するだろう。
 ENDSELECT
 
@@ -259,15 +259,15 @@ ENDSELECT
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「ふわあぁぁあ…　こういうのってあまり得意じゃないんだよぅ」
-		PRINTFORML  %CALLNAME%は資料室で촉수の生態について学んでいるが、
+		PRINTFORML  %CALLNAME%은(는) 資料室で촉수の生態について学んでいるが、
 		PRINTFORML  どうも退屈そうだ……
 	CASE 1
 		PRINTFORML 「ふぇぇ……こ、こんなことを……？」
-		PRINTFORML  %CALLNAME%は촉수の繁殖方法について勉強している。
+		PRINTFORML  %CALLNAME%은(는) 촉수の繁殖方法について勉強している。
 		PRINTFORML  その顔は羞恥で真っ赤に染まっている……
 ENDSELECT
 
-;촉수 구속구が鍛錬の邪魔をする
+;촉수 구속구가 단련을 방해한다
 ;--------------------------------------------------
 @KOJO_1_TRAINING_TENTACLECLOTH_13
 PRINTFORML  %CALLNAME%に取りついた촉수が訓練中に蠢きだした！
@@ -275,7 +275,7 @@ PRINTFORML 「ちょっ、こ、こんな場所でぇ！？」
 PRINTFORML 「ひっ、やぁあ、こんなときに……へ、変なとこ触んないでぇ！！」
 PRINTFORML 「やぁぁぁああっ、んぐぅぅゥウううぅ～～～ッ！！」
 PRINTFORML  ぬっぷむっぷと卑猥な音と共に責め立てられ、
-PRINTFORML  %CALLNAME%は指を軽く噛みながらそのまま何度かイッてしまった……
+PRINTFORML  %CALLNAME%은(는) 指を軽く噛みながらそのまま何度かイッてしまった……
 
 
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -297,13 +297,13 @@ SELECTCASE RAND:5
 	CASE 4
 		PRINTFORML 「とりゃーっ！」
 ENDSELECT
-PRINTFORML  小型の촉수を駆逐した%CALLNAME%は顔にべっとり付いた粘液や返り血を拭いながら言った
+PRINTFORML  小型の촉수を駆逐した%CALLNAME%은(는) 顔にべっとり付いた粘液や返り血を拭いながら言った
 
 
 ;보스 촉수と戦闘
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_BOSS_13
-;最初のボス戦
+;最初の보스戦
 CALL TENTACLE_SURVIVE,"NUM"
 IF (FLAG:3 - RESULT) == 0
 	PRINTFORML 「――！　こいつ、周りの奴より遥かに強い……」
@@ -336,7 +336,7 @@ ELSEIF MARK:쾌락각인 > RAND:4
 ;고통、공포각인
 ELSEIF (MARK:고통각인 + MARK:공포각인 + 1)/2 > RAND:3
 	PRINTFORML （なんで――　%SELF_CALL()%――）
-	PRINTFORML  かつて受けた공포と고통の記憶が甦り、%CALLNAME%は身を竦ませる……
+	PRINTFORML  かつて受けた공포と고통の記憶が甦り、%CALLNAME%은(는) 身を竦ませる……
 	PRINTFORML  手にした武器の震えは止まらず、
 	PRINTFORML  %CALLNAME%の精神は真っ白な공포に塗りつぶされていく……
 ELSE
@@ -354,7 +354,7 @@ ELSE
 		CASE 5
 			PRINTFORML 「こいつ、他のと違う……っ！」
 	ENDSELECT
-	PRINTFORML  %CALLNAME%は武器を構えながら宣言した！
+	PRINTFORML  %CALLNAME%은(는) 武器を構えながら宣言した！
 ENDIF
 
 
@@ -375,22 +375,22 @@ ELSEIF MARK:쾌락각인 && RAND:2 == 0
 ELSEIF MARK:고통각인 || MARK:공포각인
 	PRINTFORML  相手の巨大な촉수に殴り飛ばされる공포に、%CALLNAME%が一歩後ずさる。
 	PRINTFORML 「あなたなんかに、負けないんだから！」
-	PRINTFORML  %CALLNAME%は己を叱咤するように言い聞かせた。
+	PRINTFORML  %CALLNAME%은(는) 己を叱咤するように言い聞かせた。
 ELSE
 	PRINTFORML  相手の巨体に威圧されながらも、%CALLNAME%の表情にもはや恐れはない。
 	PRINTFORML 「あなたなんかに、負けないんだから！」
-	PRINTFORML  %CALLNAME%は我が身を顧みずに武器を取った。
+	PRINTFORML  %CALLNAME%은(는) 我が身を顧みずに武器を取った。
 ENDIF
 
 
-;初めて洗脳キャラと対峙した
+;初めて세뇌キャラと対峙した
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_SENNOU_FIRST_13
 PRINTFORML 「お願い、正気に戻ってよ！」
-PRINTFORML  %CALLNAME%は説得を試みるが、通じる様子はない……
+PRINTFORML  %CALLNAME%은(는) 説得を試みるが、通じる様子はない……
 PRINTFORML 「諦めない…　絶対にあなたを助けるんだから！！」
 
-;洗脳キャラと対峙
+;세뇌キャラと対峙
 ;--------------------------------------------------
 @KOJO_1_ENCOUNT_SENNOU_13
 PRINTFORML 「早く連れ戻して、治療してあげるよ！」
@@ -1500,7 +1500,7 @@ ENDIF
 ;連続でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
 
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
-;ボス専用SPコマンド関連
+;보스専用SPコマンド関連
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ;SPCOM0：C攻めSP　클리토리스に噛み付く/逆レイプされる
@@ -2089,7 +2089,7 @@ PRINTFORML 「大、大、大勝利！！　正義は必ず勝つ！！」
 ;--------------------------------------------------
 @KOJO_1_BATTLE_END_RESCUED_13
 
-;洗脳中キャラの救出
+;세뇌中キャラの救出
 ;--------------------------------------------------
 @KOJO_1_BATTLE_END_RESCUE_SENNOU_13
 
@@ -2113,10 +2113,10 @@ PRINTFORML 「次は絶対勝つんだから！」
 ;素質関連
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-;처녀喪失
+;처녀 상실
 ;--------------------------------------------------
 @KOJO_1_SEX_LOSTVIRGIN_13
-;연인との夜の営み/仲間夜這い/枕営業/援助交際/정보원
+;연인との夜の営み/仲間夜這い/베개 영업/援助交際/정보원
 IF CFLAG:TARGET:206 == 5 || CFLAG:TARGET:206 == 6 || CFLAG:TARGET:206 == 7 || CFLAG:TARGET:206 == 8 || CFLAG:TARGET:206 == 12
 	PRINTFORML 「……痛っ…うん、大丈夫だよ……」
 ;타락
@@ -2532,7 +2532,7 @@ ENDIF
 ;幽閉後の被姦開始文
 ;--------------------------------------------------
 @KOJO_1_PRISON_PRISENTENCE_13
-;洗脳
+;세뇌
 IF CFLAG:0 == 상태_세뇌 && CHECK_GAMEOVER_F() == 1
 	PRINTFORML 「はい……ご奉仕します……」
 ;흑화
@@ -2576,7 +2576,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;洗脳になった
+;세뇌になった
 ;--------------------------------------------------
 @KOJO_1_PRISON_SENNOU_13
 PRINTFORML 「%SELF_CALL()%は……촉수様の노예……」

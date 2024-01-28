@@ -1,6 +1,6 @@
 ﻿;--------------------------------------------------
 ;캐릭터 강화
-;수련Pを使用してベース値を上昇させたり、刻印を消したりする
+;수련P를 사용하여 BASE값을 상승시키거나 각인을 지우거나 한다
 @CHARA_POWERUP,ARG
 #DIM LCOUNT
 #DIM CAL_VAR, 2
@@ -11,16 +11,16 @@
 #DIM SUM_COST
 #DIM SUM_PRICE
 #DIM MRK_VAR, 5
-#DIM CONST BASE数 = 3
-#DIM CONST ST数 = 7
-#DIM CONST ST始点 = 10
-#DIM CONST ST終点 = 14
-#DIM CONST 刻印数 = 5
-;振り分け済みボーナス値
+#DIM CONST BASE수 = 3
+#DIM CONST ST수 = 7
+#DIM CONST ST시점 = 10
+#DIM CONST ST종점 = 14
+#DIM CONST 각인수 = 5
+;배분 후 보너스 값
 #DIM BASE_DIG
-;스테이터스の最大桁数
+;스테이터스 최대 자릿수
 #DIMS SH_STR
-;キャラ管理
+;캐릭터 관리
 #DIM LCHAR
 #DIM RCHAR
 ;--------------------------------
@@ -28,17 +28,17 @@ $LOOP_FIRST
 REDRAW 0
 
 BASE_DIG = 4
-FOR LCOUNT, 0, ST数
+FOR LCOUNT, 0, ST수
 	CAL_VAR = LCOUNT
-	SIF LCOUNT >= BASE数
-		CAL_VAR += ST始点 - BASE数
+	SIF LCOUNT >= BASE수
+		CAL_VAR += ST시점 - BASE수
 	STRLENFORM {MAXBASE:ARG:CAL_VAR + 1}
 	BASE_DIG = LIMIT(RESULT, BASE_DIG, 100)
 
 	ST_UP:LCOUNT = MAXBASE:ARG:CAL_VAR
 NEXT
 
-;基本の消費수련P
+;기본 수련P 소비량
 LOCAL:99 = 50
 
 $LOOP_CHARA_POWERUP
@@ -47,10 +47,10 @@ IF RESULT == 999
 ELSE
 	LOCAL:99 = TARGET
 	TARGET = RESULT
-	PRINTFORML %CALLNAME:TARGET%を選びました
-	;部位結界の上限設定
+	PRINTFORML %CALLNAME:TARGET%을(를) 선택했습니다.
+	;부위 결계의 상한 설정
 	CALL BASEUP_CAL_SHIELD, TARGET
-	;自分より左にCFLAG:0 == 0のキャラが居るか
+	;자기보다 왼쪽에 CFLAG:0 == 0 인 캐릭터가 있는가
 	LCHAR = 0
 	FOR LOCAL,0,TARGET
 		SIF LOCAL == MASTER
@@ -62,7 +62,7 @@ ELSE
 		SIF CFLAG:LOCAL:0 == 0
 			LCHAR = LOCAL
 	NEXT
-	;自分より右にCFLAG:0 == 0のキャラが居るか
+	;자기보다 오른쪽에 CFLAG:0 == 0 인 캐릭터가 있는가
 	RCHAR = 0
 	FOR LOCAL,TARGET+1,CHARANUM
 		SIF LOCAL == MASTER
@@ -75,57 +75,57 @@ ELSE
 		ENDIF
 	NEXT
 	
-	;強化の処理
+	;강화 처리
 	$LOOP_CHARA_POWERUP_HOWDO
 	PRINTL 
-	PRINTFORML %CALLNAME:TARGET%の%PALAMNAME:20%  {JUEL:수련P}P
+	PRINTFORML %CALLNAME:TARGET%의 %PALAMNAME:20%  {JUEL:수련P}P
 	DRAWLINE
 
-	;総必要修練値の計算
+	;총 필요 수련값 계산
 	SUM_COST = 0
-	FOR LCOUNT, 0, ST数 + 刻印数
+	FOR LCOUNT, 0, ST수 + 각인수
 		SUM_COST += COST_VAR:LCOUNT
 	NEXT
 	FOR LCOUNT, 0, 감각수
-		SIF BNS_VAR:(LCOUNT + ST数 + 刻印数) == 1
+		SIF BNS_VAR:(LCOUNT + ST수 + 각인수) == 1
 			SUM_COST += 30
 	NEXT
 	SUM_COST += COST_VAR:12
 
 	CAL_VAR = BASE_DIG / 2
-	PRINTFORML 　　 %UNICODE(0x2000) * CAL_VAR%強化後 %UNICODE(0x2000) * BASE_DIG%基礎値　 消費수련P
+	PRINTFORML 　　 %UNICODE(0x2000) * CAL_VAR% 강화 후 %UNICODE(0x2000) * BASE_DIG% 기초치　 소비 수련P
 	MAG_VAR = 50
-	FOR LCOUNT, 0, ST数
-		;ベース値表示
+	FOR LCOUNT, 0, ST수
+		;BASE값 표시
 		CAL_VAR:0 = LCOUNT
-		SIF LCOUNT >= BASE数
-			CAL_VAR:0 += ST始点 - BASE数
+		SIF LCOUNT >= BASE수
+			CAL_VAR:0 += ST시점 - BASE수
 		PRINTFORM %BASENAME:(CAL_VAR:0), 6, LEFT%：
 		SIF ST_UP:LCOUNT > MAXBASE:(CAL_VAR:0)
 			SETCOLOR 255, 255, 0
 		RESULTS = {ST_UP:LCOUNT, MIN(BASE_DIG,5),RIGHT}
 		PRINTFORM %RESULTS,7,LEFT%
 		RESETCOLOR
-		;基礎値の変動
-		PRINTFORM \@ LCOUNT < BASE数  ? {BASE:(CAL_VAR:0 + 50) + FEAT_BONUS_F(TARGET,LCOUNT), BASE_DIG} # {BASE:(CAL_VAR:0) + FEAT_BONUS_F(TARGET,LCOUNT), BASE_DIG} \@ → 
-		PRINTFORM \@ LCOUNT < BASE数  ? {BASE:(CAL_VAR:0 + 50) + FEAT_BONUS_F(TARGET,LCOUNT) + BNS_VAR:LCOUNT * MAG_VAR, BASE_DIG} # {BASE:(CAL_VAR:0) + FEAT_BONUS_F(TARGET,LCOUNT) + BNS_VAR:LCOUNT * MAG_VAR, BASE_DIG} \@（{COST_VAR:LCOUNT, 4}）
+		;기초값의 변동
+		PRINTFORM \@ LCOUNT < BASE수  ? {BASE:(CAL_VAR:0 + 50) + FEAT_BONUS_F(TARGET,LCOUNT), BASE_DIG} # {BASE:(CAL_VAR:0) + FEAT_BONUS_F(TARGET,LCOUNT), BASE_DIG} \@ → 
+		PRINTFORM \@ LCOUNT < BASE수  ? {BASE:(CAL_VAR:0 + 50) + FEAT_BONUS_F(TARGET,LCOUNT) + BNS_VAR:LCOUNT * MAG_VAR, BASE_DIG} # {BASE:(CAL_VAR:0) + FEAT_BONUS_F(TARGET,LCOUNT) + BNS_VAR:LCOUNT * MAG_VAR, BASE_DIG} \@（{COST_VAR:LCOUNT, 4}）
 		PRINTPLAIN  
 
-		;2段階ダウン
+		;2단계 다운
 		SETCOLOR 240, 240, 255
 		SIF BNS_VAR:LCOUNT < 2
 			SETCOLOR 128, 128, 128
 		PRINTFORM [{LCOUNT * 10, 2}]-{MAG_VAR * 2, 3}
 		PRINTPLAIN  　 
 
-		;1段階ダウン
+		;1단계 다운
 		SETCOLOR 240, 240, 255
 		SIF BNS_VAR:LCOUNT < 1
 			SETCOLOR 128, 128, 128
 		PRINTFORM [{LCOUNT * 10 + 1, 2}]-{MAG_VAR * 1, 3}
 		PRINTPLAIN  　 
 
-		;1段階アップ
+		;1단계 업
 		SETCOLOR 240, 240, 255
 		SIF SUM_COST + 50 > JUEL:수련P
 			SETCOLOR 128, 128, 128
@@ -133,7 +133,7 @@ ELSE
 		RESETCOLOR
 		PRINTPLAIN  　 
 
-		;2段階アップ
+		;2단계 업
 		SETCOLOR 240, 240, 255
 		SIF SUM_COST + 100 > JUEL:수련P
 			SETCOLOR 128, 128, 128
@@ -147,12 +147,12 @@ ELSE
 	NEXT
 	PRINTL 
 
-	;刻印の消去
-	SH_STR = 刻印　：　
-	FOR LCOUNT, 0, 刻印数
+	;각인 소거
+	SH_STR = 각인　：　
+	FOR LCOUNT, 0, 각인수
 
-		;刻印の消去にかかるコスト計算
-		;基本値
+		;각인의 소거에 드는 비용 계산
+		;기본값
 		CAL_VAR = (MARK:(LCOUNT) - BNS_VAR:(LCOUNT + 7)) * 100
 		IF LCOUNT == 0
 			CAL_VAR:1 = 13
@@ -167,31 +167,31 @@ ELSE
 		ELSE
 			CAL_VAR:1 = 0
 		ENDIF
-		;二重に性格補正をかける
+		;이중으로 성격 보정을 건다
 		MRK_VAR:LCOUNT = SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), CAL_VAR:1, SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), CAL_VAR:1, CAL_VAR))
 
 		PRINTFORM %SH_STR%%MARKNAME:LCOUNT%　
-		SIF BNS_VAR:(LCOUNT + ST数)
+		SIF BNS_VAR:(LCOUNT + ST수)
 			SETCOLOR 255, 255, 0
- 		CAL_VAR = MARK:LCOUNT - BNS_VAR:(LCOUNT + ST数)
-		;刻印を*で表示
+ 		CAL_VAR = MARK:LCOUNT - BNS_VAR:(LCOUNT + ST수)
+		;각인을「*」별표로 표시
 		PRINTFORM [%UNICODE(0x002A) * CAL_VAR%%UNICODE(0x002E) * (5 - CAL_VAR)%]
 		RESETCOLOR
-		PRINTFORM （{COST_VAR:(LCOUNT + ST数), 4}）
+		PRINTFORM （{COST_VAR:(LCOUNT + ST수), 4}）
 		PRINTPLAIN  
 
 		CAL_VAR = 0
-			CAL_VAR = (MARK:(LCOUNT) == 0) || (MARK:(LCOUNT) == BNS_VAR:(LCOUNT + ST数)) || (SUM_COST + MRK_VAR:LCOUNT) > JUEL:수련P
-		;ボタン表示
+			CAL_VAR = (MARK:(LCOUNT) == 0) || (MARK:(LCOUNT) == BNS_VAR:(LCOUNT + ST수)) || (SUM_COST + MRK_VAR:LCOUNT) > JUEL:수련P
+		;버튼 표시
 		SETCOLOR 240, 240, 255
 		SIF CAL_VAR
 			SETCOLOR 128, 128, 128
 		PRINTFORM [{LCOUNT + 70}] 
 
-		;刻印表示
-		PRINTFORM {MARK:LCOUNT - BNS_VAR:(LCOUNT + ST数)} → {LIMIT((MARK:LCOUNT - BNS_VAR:(LCOUNT + ST数) - 1), 0, 5)}　　
+		;각인 표시
+		PRINTFORM {MARK:LCOUNT - BNS_VAR:(LCOUNT + ST수)} → {LIMIT((MARK:LCOUNT - BNS_VAR:(LCOUNT + ST수) - 1), 0, 5)}　　
 
-		;必要P表示
+		;필요 수련P 표시
 		PRINTFORM +{MRK_VAR:LCOUNT, 4}
 		RESETCOLOR
 
@@ -199,22 +199,22 @@ ELSE
 		SETCOLOR 240, 240, 255
 		SIF BNS_VAR:7 + BNS_VAR:8 + BNS_VAR:9 + BNS_VAR:10 + BNS_VAR:11 == 0
 			SETCOLOR 128, 128, 128
-		;最後の行のみ「解除」を表示
-		SIF LCOUNT == 刻印数 - 1
-			PRINT 　　　　　　　　[79]解除
+		;마지막 행만「해제」를 표시
+		SIF LCOUNT == 각인수 - 1
+			PRINT 　　　　　　　　[79] 해제
 		RESETCOLOR
 		PRINTL 
 	NEXT
 
-	;結界の再構築
-	;いずれかを素質として持っている場合のみ表示
+	;결계 재구축
+	;어느 하나를 소질로 가지고 있는 경우에만 표시
 	IF TALENT:C결계 + TALENT:V결계 + TALENT:A결계 + TALENT:B결계
 		PRINTL 
-		SH_STR = 結界　：　
+		SH_STR = 결계　：　
 		FOR LCOUNT, 0, 감각수
-				CAL_VAR = LCOUNT + ST数 + 刻印数
+				CAL_VAR = LCOUNT + ST수 + 각인수
 			IF TALENT:(LCOUNT + 190)
-				PRINTFORM %SH_STR%%TALENTNAME:(LCOUNT + 190)%の再構築　 （  \@BNS_VAR:CAL_VAR == 1 ? {30, 2} # {0, 2}\@）
+				PRINTFORM %SH_STR%%TALENTNAME:(LCOUNT + 190)% 재구축　 （  \@BNS_VAR:CAL_VAR == 1 ? {30, 2} # {0, 2}\@）
 				PRINTPLAIN  
 				SETCOLOR 240, 240, 255
 				SIF BASE:(LCOUNT + 30) == MAXBASE:(LCOUNT + 30) || SUM_COST + 30 > JUEL:수련P || BNS_VAR:CAL_VAR == 2
@@ -226,27 +226,27 @@ ELSE
 				CALL PERCENT_CAL, BASE:(LCOUNT + 30), MAXBASE:(LCOUNT + 30)
 				CAL_VAR:0 = LIMIT(255 - RESULT * RESULT * 4 / 200, 0, 255)
 				CAL_VAR:1 = LIMIT(-215 - RESULT * RESULT / 100 + RESULT * 5, 0, 255)
-				IF BNS_VAR:(LCOUNT + ST数 + 刻印数)
+				IF BNS_VAR:(LCOUNT + ST수 + 각인수)
 					CAL_VAR:0 = 255
 					CAL_VAR:1 = 255
 				ENDIF
-				;資金を使用して再構築する場合
+				;자금을 사용하여 재구축하는 경우
 				IF BASE:(LCOUNT + 30) > 0
 					CALL COLOR_BAR(BASE:(LCOUNT + 30),MAXBASE:(LCOUNT + 30),20,CAL_VAR:0,CAL_VAR:1,20,-160,6,32,20,1,UNICODE(0x25AE),UNICODE(0x25AE))
 				ELSE
 					SETCOLOR 128, 40, 40
-						PRINT 　　　崩　壊　　　　
+						PRINT 　　　붕　괴　　　　
 					RESETCOLOR
 				ENDIF
 				SETCOLOR 240, 240, 255
-				SIF BASE:(LCOUNT + 30) == MAXBASE:(LCOUNT + 30) || BNS_VAR:(LCOUNT + ST数 + 刻印数) == 1 || SUM_PRICE + ABL:레벨 * 625 > MONEY
+				SIF BASE:(LCOUNT + 30) == MAXBASE:(LCOUNT + 30) || BNS_VAR:(LCOUNT + ST수 + 각인수) == 1 || SUM_PRICE + ABL:레벨 * 625 > MONEY
 					SETCOLOR 128, 128, 128
-				SIF BNS_VAR:(LCOUNT + ST数 + 刻印数) == 2
+				SIF BNS_VAR:(LCOUNT + ST수 + 각인수) == 2
 					SETCOLOR 255, 255, 0
 				PRINTFORM [{LCOUNT + 85}] ${ABL:레벨 * 625, 5}
 				SH_STR = 　　　　　
 				RESETCOLOR
-				;最後の行のみ「解除」を表示
+				;마지막 행만「해제」를 표시
 				FOR CAL_VAR, 0, 감각수
 					SIF TALENT:(감각수 + 189 - CAL_VAR)
 						BREAK
@@ -255,16 +255,16 @@ ELSE
 				SIF BNS_VAR:12 + BNS_VAR:13 + BNS_VAR:14 + BNS_VAR:15 == 0
 					SETCOLOR 128, 128, 128
 				SIF LCOUNT == 감각수 - CAL_VAR
-					PRINT  [89]解除
+					PRINT  [89] 해제
 				RESETCOLOR
 				PRINTL 
 			ENDIF
 		NEXT
 	ENDIF
 
-	;結界の獲得
+	;결계 획득
 	PRINTL 
-	PRINTFORM           結界の獲得  　　 （{COST_VAR:12, 4}
+	PRINTFORM           결계 획득  　　 （{COST_VAR:12, 4}
 	PRINTPLAIN ） 
 	LOCAL = 0
 	FOR LCOUNT, 0, 감각수
@@ -293,24 +293,24 @@ ELSE
 		SETCOLOR 80, 255, 80
 	SIF GETBIT(BNS_VAR:16, 감각수)
 		SETCOLOR 255, 255, 0
-	PRINTFORM [94]피임결계　
+	PRINTFORM [94] 피임결계　
 	RESETCOLOR
 	PRINTL 
 
 	DRAWLINE
-	PRINT [100]決定　
+	PRINT [100] 결정　
 	PRINTPLAIN 　　　　　　
-	PRINTFORML 合 計{SUM_COST, 5} / {JUEL:수련P, 5}　　　　　資 金{SUM_PRICE, 5} / {MONEY}
-	PRINT [200]全て解除
+	PRINTFORML 합 계{SUM_COST, 5} / {JUEL:수련P, 5}　　　　　자 금{SUM_PRICE, 5} / {MONEY}
+	PRINT [200] 모두 해제
 	PRINTPLAIN 　　　　　
 	IF LCHAR
-		PRINT [300]前のキャラ
+		PRINT [300] 이전 캐릭터
 	ELSE
 		PRINT                
 	ENDIF
 	PRINTPLAIN 　　　　　　 
 	IF RCHAR
-		PRINT [500]次のキャラ
+		PRINT [500] 다음 캐릭터
 	ELSE
 		PRINT                
 	ENDIF
@@ -333,7 +333,7 @@ ELSE
 	SIF CAL_VAR > 1
 		CLEARLINE CAL_VAR
 
-	;デバッグモード
+	;디버그 모드
 	IF RESULT == 400
 		INVERTBIT FLAG:999, 0
 		IF FLAG:999 == 1
@@ -342,51 +342,51 @@ ELSE
 			RESETBGCOLOR
 		ENDIF
 		GOTO LOOP_CHARA_POWERUP
-	;ベース値ダウン*2
+	;BASE값 다운 * 2
 	ELSEIF RESULT < 70 && RESULT >= 0 && RESULT % 10 == 0
 		CAL_VAR = RESULT / 10
 		IF BNS_VAR:CAL_VAR >= 2
 			BNS_VAR:CAL_VAR -= 2
 			COST_VAR:CAL_VAR -= 100
 		ENDIF
-	;ベース値ダウン
+	;BASE값 다운
 	ELSEIF RESULT < 70 && RESULT >= 0 && RESULT % 10 == 1
 		CAL_VAR = RESULT / 10
 		IF BNS_VAR:CAL_VAR >= 1
 			BNS_VAR:CAL_VAR -= 1
 			COST_VAR:CAL_VAR -= 50
 		ENDIF
-	;ベース値アップ
+	;BASE값 업
 	ELSEIF RESULT < 70 && RESULT >= 0 && RESULT % 10 == 2
 		CAL_VAR = RESULT / 10
 		IF JUEL:수련P >= SUM_COST + 50
 			BNS_VAR:CAL_VAR += 1
 			COST_VAR:CAL_VAR += 50
 		ENDIF
-	;ベース値アップ*2
+	;BASE값 업 * 2
 	ELSEIF RESULT < 70 && RESULT >= 0 && RESULT % 10 == 3
 		CAL_VAR = RESULT / 10
 		IF JUEL:수련P >= SUM_COST + 100
 			BNS_VAR:CAL_VAR += 2
 			COST_VAR:CAL_VAR += 100
 		ENDIF
-	;刻印の消去
-	ELSEIF RESULT < 70 + 刻印数 && RESULT >= 70
-		CAL_VAR = RESULT % 10 + ST数
+	;각인 소거
+	ELSEIF RESULT < 70 + 각인수 && RESULT >= 70
+		CAL_VAR = RESULT % 10 + ST수
 		IF MARK:(RESULT % 10) - BNS_VAR:CAL_VAR > 0 && JUEL:수련P >= SUM_COST + MRK_VAR:(RESULT % 10)
 			COST_VAR:CAL_VAR += MRK_VAR:(RESULT % 10)
 			BNS_VAR:CAL_VAR += 1
 		ENDIF
-	;刻印の消去の解除
+	;각인 소거의 해제
 	ELSEIF RESULT == 79
-		FOR LCOUNT, 0, 刻印数
-			CAL_VAR = LCOUNT + ST数
+		FOR LCOUNT, 0, 각인수
+			CAL_VAR = LCOUNT + ST수
 			COST_VAR:CAL_VAR = 0
 			BNS_VAR:CAL_VAR = 0
 		NEXT
-	;結界の再構築	수련P
+	;결계 재구축: 수련P
 	ELSEIF RESULT < 80 + 감각수 && RESULT >= 80
-		CAL_VAR = RESULT % 10 + ST数 + 刻印数
+		CAL_VAR = RESULT % 10 + ST수 + 각인수
 		IF BNS_VAR:CAL_VAR == 1
 			BNS_VAR:CAL_VAR = 0
 		ELSEIF JUEL:수련P >= SUM_COST + 30 && BASE:(RESULT % 10 + 30) < MAXBASE:(RESULT % 10 + 30)
@@ -394,9 +394,9 @@ ELSE
 				SUM_PRICE -= ABL:레벨 * 625
 			BNS_VAR:CAL_VAR = 1
 		ENDIF
-	;結界の再構築	資金
+	;결계 재구축: 자금
 	ELSEIF RESULT < 85 + 감각수 && RESULT >= 85
-		CAL_VAR = RESULT % 10 + ST数 + 刻印数 - 5
+		CAL_VAR = RESULT % 10 + ST수 + 각인수 - 5
 		IF BNS_VAR:CAL_VAR == 2
 			BNS_VAR:CAL_VAR = 0
 			SUM_PRICE -= ABL:레벨 * 625
@@ -404,14 +404,14 @@ ELSE
 			BNS_VAR:CAL_VAR = 2
 			SUM_PRICE += ABL:레벨 * 625
 		ENDIF
-	;結界の再構築の解除
+	;결계 재구축의 해제
 	ELSEIF RESULT == 89
 		FOR LCOUNT, 0, 감각수
-			CAL_VAR = LCOUNT + ST数 + 刻印数
+			CAL_VAR = LCOUNT + ST수 + 각인수
 			BNS_VAR:CAL_VAR = 0
 		NEXT
 		SUM_PRICE = 0
-	;結界の獲得
+	;결계 획득
 	ELSEIF RESULT < 90 + 감각수 && RESULT >= 90
 		CAL_VAR = RESULT % 10
 		IF GETBIT(BNS_VAR:16, CAL_VAR)
@@ -464,37 +464,37 @@ ELSE
 			COST_VAR:12 += 1
 		COST_VAR:12 *= 50
 		
-	;決定
+	;결정
 	ELSEIF RESULT == 100
-		;ベース値の上昇
-		FOR LCOUNT, 0, ST数
+		;BASE값 상승
+		FOR LCOUNT, 0, ST수
 			MAG_VAR = 5
 			SIF LCOUNT < 2
 				MAG_VAR = 50
-			IF LCOUNT < BASE数
+			IF LCOUNT < BASE수
 				BASE:(LCOUNT + 50) += BNS_VAR:LCOUNT * MAG_VAR
 			ELSE
-				BASE:(LCOUNT + ST始点 - BASE数) += BNS_VAR:LCOUNT * MAG_VAR
+				BASE:(LCOUNT + ST시점 - BASE수) += BNS_VAR:LCOUNT * MAG_VAR
 			ENDIF
 		NEXT
-		;刻印の消去
-		FOR LCOUNT, 0, 刻印数
-			CAL_VAR = LCOUNT + ST数
+		;각인 소거
+		FOR LCOUNT, 0, 각인수
+			CAL_VAR = LCOUNT + ST수
 			SIF BNS_VAR:CAL_VAR > 0 && MARK:(90 + LCOUNT) < MARK:LCOUNT
 				MARK:(90 + LCOUNT) = MARK:LCOUNT
 			MARK:LCOUNT -= BNS_VAR:CAL_VAR
 		NEXT
-		;結界の再構築
+		;결계 재구축
 		FOR LCOUNT, 0, 감각수
-			CAL_VAR = LCOUNT + ST数 + 刻印数
+			CAL_VAR = LCOUNT + ST수 + 각인수
 			SIF BNS_VAR:CAL_VAR
 				BASE:(LCOUNT + 30) = MAXBASE:(LCOUNT + 30)
 		NEXT
-		;結界の獲得
+		;결계 획득
 		FOR LCOUNT, 0, 감각수
 			IF GETBIT(BNS_VAR:16, LCOUNT)
 				TALENT:(LCOUNT + 190) = 1
-				;部位結界の設定
+				;부위 결계 설정
 				MAXBASE:(LCOUNT + 30) = CAL_SHIELD_F(TARGET)
 				BASE:(LCOUNT + 30) = MAXBASE:(LCOUNT + 30)
 			ENDIF
@@ -509,7 +509,7 @@ ELSE
 		VARSET BNS_VAR
 		VARSET COST_VAR
 		VARSET SUM_PRICE
-	;全て解除
+	;모두 해제
 	ELSEIF RESULT == 200
 		VARSET BNS_VAR
 		VARSET COST_VAR
@@ -528,14 +528,14 @@ ELSE
 		GOTO LOOP_FIRST
 	ENDIF
 
-	;仮스테이터스設定
-	FOR LCOUNT, 0, ST数
+	;임시 스테이터스 설정
+	FOR LCOUNT, 0, ST수
 		MAG_VAR = 50
 		SIF LCOUNT > 1
 			MAG_VAR = 5
-		CAL_VAR:0 = LCOUNT + ST始点 - BASE数
+		CAL_VAR:0 = LCOUNT + ST시점 - BASE수
 		CAL_VAR:1 = BASE:(CAL_VAR:0) + BNS_VAR:LCOUNT * MAG_VAR
-		IF LCOUNT < BASE数
+		IF LCOUNT < BASE수
 			CAL_VAR:0 = LCOUNT
 			CAL_VAR:1 = BASE:(LCOUNT + 50) + BNS_VAR:LCOUNT * MAG_VAR
 		ENDIF

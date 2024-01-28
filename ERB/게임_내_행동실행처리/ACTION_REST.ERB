@@ -1,8 +1,8 @@
 ﻿;**********************************************************
-;休憩に関する処理
+;휴식에 관한 처리
 @REST
-;체력,기력,성내성回復
-;基本30%回復する、施設레벨に応じて増加
+;체력, 기력, 성내성 회복
+;기본 30% 회복하며, 시설 수준에 따라 증가
 
 CFLAG:101 = -1
 
@@ -22,7 +22,7 @@ IF TALENT:회복빠름 > 0
 ELSEIF TALENT:회복느림 > 0
 	LOCAL:1 -= 5
 ENDIF
-;FEAT効果による回復量補正
+;FEAT 효과에 따른 회복량 보정
 IF TALENT:마력저장 > 0
 	LOCAL:1 -= 5
 	SIF FLAG:51 >= 4
@@ -42,7 +42,7 @@ ENDIF
 SIF TALENT:넘치는생명력 > 0
 	LOCAL:1 += 10
 
-;疲労度に応じて回復量低下（疲労度回復処理の前に計算）
+;피로도에 따라 회복량 저하（피로도 회복 처리 전에 계산）
 IF CFLAG:99 >= 50
 	LOCAL:1 = LOCAL:1 * 0 / 100
 ELSEIF CFLAG:99 >= 40
@@ -55,7 +55,7 @@ ELSEIF CFLAG:99 >= 10
 	LOCAL:1 = LOCAL:1 * 75 / 100
 ENDIF
 
-;回復の処理
+;회복 처리
 LOCAL = MAXBASE:체력 * LOCAL:1 / 100 + 200
 BASE:체력 = LIMIT(LOCAL + BASE:체력, 0, MAXBASE:체력)
 
@@ -66,14 +66,14 @@ BASE:성내성 = MAXBASE:성내성
 
 IF CFLAG:0 != -1
 	IF CFLAG:999 != 0
-		PRINTFORML %CALLNAME:TARGET%は休憩しています…
+		PRINTFORML %CALLNAME:TARGET%은(는) 쉬고 있습니다……
 
 		;구상
 		SIF TALENT:TARGET:사지결손 == 0 && TALENT:TARGET:번식자루 == 0
 			TRYCALLFORM KOJO_ROOT(CFLAG:6, "REST")
 	ENDIF
 
-	;疲労の回復
+	;피로 회복
 	IF CFLAG:99 > 0
 		CFLAG:99 -= 2
 		SIF (FLAG:53 & 목욕설비)
@@ -100,9 +100,9 @@ IF CFLAG:0 != -1
 			CFLAG:99 = 0
 		IF CFLAG:999 != 0
 			IF CFLAG:99 == 0
-				PRINTFORML %CALLNAME:TARGET%の身体から疲労が完全に抜けた！
+				PRINTFORML %CALLNAME:TARGET%의 몸에 쌓인 피로가 완전히 풀렸다!
 			ELSE
-				PRINTFORML %CALLNAME:TARGET%の身体から疲労が少し抜けた…
+				PRINTFORML %CALLNAME:TARGET%의 몸에 쌓인 피로가 조금 풀렸다……
 			ENDIF
 		ENDIF
 	ENDIF
@@ -110,7 +110,7 @@ IF CFLAG:0 != -1
 	IF CFLAG:999 != 0
 		PRINTL 
 		SIF BASE:체력 == MAXBASE:체력 && BASE:기력 == MAXBASE:기력 && CFLAG:99 == 0
-			PRINTFORML %CALLNAME:TARGET%は最大まで回復した！
+			PRINTFORML %CALLNAME:TARGET%의 체력, 기력과 피로도가 완전히 회복됐다!
 
 		IF CONFIG_CHECK_SCREEN_F(3) == 0
 			PRINTW 

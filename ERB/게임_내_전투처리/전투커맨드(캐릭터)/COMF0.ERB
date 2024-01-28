@@ -35,14 +35,14 @@ PRINTW
 IF CHARATALENT_F(TARGET,0,"남자") == 0 && CHARATALENT_F(TARGET,1,"남자") > 0 && TALENT:임신 > 0
 	PRINTL
 	PRINTFORML しかし、なぜか男性化できない！
-	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は無防備な体制のまま変身に失敗してしまった！
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는)無防備な体制のまま変身に失敗してしまった！
 	TCVARn:2 = 자세：아무것도안한다
 	RETURN 1
 ENDIF
 
 IF GETBATTLESITUATION("奇襲") && TALENT:변신시TS && TFLAG:0 < 3
 	PRINTFORML しかし、急の襲撃で身体が変身準備に入れない！（変身チャージ完了まで：{3-TFLAG:0}ターン）
-	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%は無防備な体制のまま変身に失敗してしまった！
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는)無防備な体制のまま変身に失敗してしまった！
 	TCVARn:2 = 자세：아무것도안한다
 	RETURN 1
 ENDIF

@@ -165,7 +165,7 @@ EXP:피간경험 += 1
 CFLAG:31 += 1
 ;汚染度の自動上昇
 CFLAG:30 += 3 + RAND:4
-;FEAT効果による汚染度補正
+;FEAT 효과에 따른汚染度補正
 SIF TALENT:신기소유자 > 0
 	CFLAG:30 += 3
 SIF TALENT:투쟁본능 > 0
@@ -173,7 +173,7 @@ SIF TALENT:투쟁본능 > 0
 
 ;搾精強化機能
 IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は촉수の精液からエネルギーを吸収した！
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)촉수の精液からエネルギーを吸収した！
 	CALL GET_SYUREN, RAND:5 + RAND:5 + 6
 	PRINTL 
 ENDIF
@@ -336,12 +336,12 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 
 	PRINTL 
 	DRAWLINE
-	;촉수의포로があれば흑화に、なければ洗脳に(ただし흑화優先フラグON時は常に흑화)
+	;촉수의포로があれば흑화に、なければ세뇌に(ただし흑화優先フラグON時は常に흑화)
 	IF TALENT:촉수의포로 == 0 && CONFIG_CHECK_PRISON_F(9) == 0
 		CFLAG:0 = 2
-		;지문: 洗脳になった
+		;지문: 세뇌になった
 		CALL MESSAGE_PRISON_SENNOU
-		;지문: 흑화 캐릭터가 幽閉中の操作キャラを洗脳した
+		;지문: 흑화 캐릭터가 幽閉中の操作キャラを세뇌した
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_PRISON_SENNOU
 

@@ -5,7 +5,7 @@
 #DIM C_NO
 #DIMS CODE
 #DIM FORCEPRINT
-;기절状態の場合は구상なし、ただしFORCEPRINTフラグが立っている呼び出しは除く
+;기절状態の場合は구상なし、ただしFORCEPRINTフラグが立っている호출は除く
 IF (TCVARn:12 & 기절) && !FORCEPRINT
 	;ランダム分岐플래그를リセット
 	FLAG:900 = 0
@@ -53,7 +53,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;구상呼び出し
+;구상 호출
 ;----------------------------------------------
 IF C_NO == 0 || C_NO == 1
 	IF STRFIND(CODE, "OTHER_") == -1

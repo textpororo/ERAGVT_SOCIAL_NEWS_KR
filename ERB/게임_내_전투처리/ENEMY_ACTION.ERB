@@ -77,7 +77,7 @@ IF TCVARn:0 > 0
 				TFLAG:33 = 0
 
 				;クリティカル判定
-				;FEAT効果による被クリティカル防止
+				;FEAT 효과에 따른被クリティカル防止
 				IF RAND:100 < 5 && FSTYLE_NAME_F(TARGET,TCVARn:0) != "装甲" && TALENT:타고난전사 == 0
 					LOCAL:1 = 15
 					;지문: 敵キャラの공격がクリティカルヒット
@@ -262,7 +262,7 @@ IF TCVARn:0 > 0
 				
 				FONTBOLD
 				SETCOLOR 250,0,0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は拘束されてしまった！
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)拘束されてしまった！
 				RESETCOLOR
 				FONTREGULAR
 
@@ -349,7 +349,7 @@ IF TCVARn:0 > 0
 					LOCAL:3 *= 2
 				ENDIF
 
-				;FEAT効果による粘液ダメージ増大
+				;FEAT 효과에 따른粘液ダメージ増大
 				IF TALENT:축복 > 0
 					LOCAL:2 = LOCAL:2 * 125 / 100
 					LOCAL:3 = LOCAL:3 * 125 / 100
@@ -455,7 +455,7 @@ IF TCVARn:0 > 0
 				ELSE
 					TIMES LOCAL:3, 0.08
 				ENDIF
-				;ラスボス強化時はさらに回復量が低下
+				;최종 보스強化時はさらに回復量が低下
 				CALL LASTBOSS_REST
 				LOCAL:3 /= (2 + RESULT)
 			ENDIF
@@ -585,7 +585,7 @@ IF TCVARn:0 > 0
 
 				FONTBOLD
 				SETCOLOR 250,0,0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は押し倒されてしまった！
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)押し倒されてしまった！
 				RESETCOLOR
 				FONTREGULAR
 
@@ -675,7 +675,7 @@ IF TCVARn:0 > 0
 					LOCAL:3 = LOCAL:3 * (100 - GET_COUNTER_ATTACK(2)) / 100
 				ENDIF
 
-				;FEAT効果による波動ダメージ増大
+				;FEAT 효과에 따른波動ダメージ増大
 				IF TALENT:축복 > 0
 					LOCAL:2 = LOCAL:2 * 125 / 100
 					LOCAL:3 = LOCAL:3 * 125 / 100
@@ -765,7 +765,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
 	$ROUTINE_LOOP_0
 	RESULT = -1
 
-	;ルーチン呼び出し
+	;ルーチン호출
 	CALL ENEMY_ACTION_SEX_ROUTINE
 	;コマンド実行
 	CALL SEX_COMABLE, RESULT
@@ -794,7 +794,7 @@ ELSE
 	$ROUTINE_LOOP_1
 	RESULT = -1
 
-	;ルーチン呼び出し
+	;ルーチン호출
 	CALL ENEMY_ACTION_SEX_ROUTINE
 	;コマンド実行
 	CALL SEX_COMABLE, RESULT

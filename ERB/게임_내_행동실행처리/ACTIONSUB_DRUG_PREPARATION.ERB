@@ -1,6 +1,6 @@
 ﻿;**********************************************************
-;薬の調合
-;β1では촉수의 조각を用いて素質の消去をおこなう
+;약의 조제
+;β1에서는 촉수 조각을 이용하여 소질의 소거를 행한다
 @DRUG_PREPARATION
 #DIM ROBO
 #DIM KEEP_TARGET
@@ -15,57 +15,55 @@ FOR LOCAL, 0, CHARANUM
 		ROBO ++
 NEXT
 CALL LB
-PRINTL ロボっ娘ナース：
-PRINTL 「ようこそメディカルルームへ」（ペコリ）
-PRINTL 「ここでは資金や촉수의 조각を消費して特定素質の消去などを行うことができます」
-IF RAND:4 == 0
-	PRINTL 「本日のご用件は何でしょうか？」
-ELSEIF RAND:3 == 0
-	PRINTL 「今回はどなたを治療致しましょうか？」
-ELSEIF RAND:2 == 0
-	PRINTL 「健康には気を付けてくださいね」
-ELSE
-	PRINTL 「何かお手伝いできることはございますか？」
-ENDIF
+PRINTL 로봇 여간호사씨：
+PRINTL 「메디컬 룸에 오신 것을 환영합니다.」(꾸벅)
+PRINTL 「이곳에서 자금과 촉수 조각을 이용하여 특정 소질을 제거할 수 있습니다.」
+PRINTDATAL
+	DATA 「오늘은 무슨 용건으로 오셨습니까?」
+	DATA 「이번에는 누구를 치료하면 되겠습니까?」
+	DATA 「늘 건강 관리에 신경 써주시기를 바랍니다.」
+	DATA 「무언가 도움이 필요한 일이 있습니까?」
+ENDDATA
 PRINTL 
-PRINTFORML << 촉수의 조각の소지 수：{FLAG:200}個 >>
-PRINTFORML << 避妊用ピル소지 수  ：{FLAG:201}個 >>
+PRINTFORML << 촉수의 조각 소지 수：{FLAG:200}개 >>
+PRINTFORML   << 피임약 소지 수 ：{FLAG:201}개 >>
 DRAWLINE
-PRINTFORML [0]   [촉수의포로]の消去 - 촉수의 조각5個消費
-PRINTFORML [1]   [후타나리]の消去 - 촉수의 조각2個消費
-PRINTFORML [2]   [모유체질]の消去 - 촉수의 조각2個消費
-PRINTFORML [3]   [기생]の消去　　 - 촉수의 조각2個消費
-PRINTFORML [4]   [묘상화]の消去　 - 촉수의 조각2個消費
-PRINTFORML [5]   [膨乳]の治療　 　- 촉수의 조각2個消費
+PRINTFORML [0]   [촉수의포로] 소거 - 촉수의 조각 5개 소비
+PRINTFORML [1]   [후타나리] 소거　 - 촉수의 조각 2개 소비
+PRINTFORML [2]   [모유체질] 소거　 - 촉수의 조각 2개 소비
+PRINTFORML [3]   [기생] 소거　　　 - 촉수의 조각 2개 소비
+PRINTFORML [4]   [묘상화] 소거　　 - 촉수의 조각 2개 소비
+PRINTFORML [5]   [팽유] 치료　　　 - 촉수의 조각 2개 소비
 PRINTL 
-PRINTFORML [10]   임신検査薬                     - 50$
-PRINTFORML [11]   胎内精密検査                   - 250$
-PRINTFORML [12]   堕胎手術（入院中のキャラも可） - 7000$
-PRINTFORML [13]   避妊用ピルの購入               - 125$
-PRINTFORML [14]   避妊用ピルの処方
+PRINTFORML [10]   임신 테스트기                  - 50$
+PRINTFORML [11]   태내 정밀 검사                 - 250$
+PRINTFORML [12]   낙태 수술(입원 중이어도 가능)  - 7000$
+PRINTFORML [13]   피임약 구입                    - 125$
+PRINTFORML [14]   피임약 자동 처방
 SIF ROBO > 0
-	PRINTFORML [15]   인조인간のメンテナンス
+	PRINTFORML [15]   인조인간 점검
 PRINTL 
-PRINTFORML [20]   淫紋の治療                     - 촉수의 조각10個消費
-PRINTFORML [21]   淫紋の進行を遅らせる           - 1250$
+PRINTFORML [20]   음문 치료                      - 촉수의 조각 10개 소비
+PRINTFORML [21]   음문의 진행을 늦춘다           - 1250$
 PRINTL 
-PRINTFORML [30]   性徴促進薬                     - 촉수의 조각1個消費
-PRINTFORML [31]   성징정체薬                     - 촉수의 조각1個消費
+PRINTFORML [30]   성징촉진제                     - 촉수의 조각 1개 소비
+PRINTFORML [31]   성징정체제                     - 촉수의 조각 1개 소비
 PRINTL 
-;キャラが多すぎる場合、またはソロモードの場合は加入不可
+PRINTFORML [51]   
+;캐릭터가 너무 많은 경우, 또는 SOLO모드일 경우 가입 불가
 SIF CHARANUM > 등록최대인원 - 1 || GAME_OPTION_CHECK_F(OPTION_solo)
 	SETCOLOR 128,128,128
-PRINTFORML [100]  인조인간の新規加入　　　　　 　- 50000$
+PRINTFORML [100]  인조인간 신규 가입　　　　　 　- 50000$
 RESETCOLOR
 PRINTL 
-PRINTFORML [999] やめる
+PRINTFORML [999] 그만둔다
 $INPUT_LOOP
 INPUT
 IF RESULT == 999
 	RETURN 999
 ELSEIF RESULT == 0
 	IF FLAG:200 < 5
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {5 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 0
@@ -73,7 +71,7 @@ ELSEIF RESULT == 0
 	ENDIF
 ELSEIF RESULT == 1
 	IF FLAG:200 < 2
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {2 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 1
@@ -81,7 +79,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	IF FLAG:200 < 2
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {2 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 2
@@ -89,7 +87,7 @@ ELSEIF RESULT == 2
 	ENDIF
 ELSEIF RESULT == 3
 	IF FLAG:200 < 2
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {2 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 3
@@ -97,7 +95,7 @@ ELSEIF RESULT == 3
 	ENDIF
 ELSEIF RESULT == 4
 	IF FLAG:200 < 2
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {2 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 4
@@ -105,7 +103,7 @@ ELSEIF RESULT == 4
 	ENDIF
 ELSEIF RESULT == 5
 	IF FLAG:200 < 2
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {2 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 5
@@ -113,7 +111,7 @@ ELSEIF RESULT == 5
 	ENDIF
 ELSEIF RESULT == 10
 	IF MONEY < 50
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {50 - MONEY}$ 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 10
@@ -121,7 +119,7 @@ ELSEIF RESULT == 10
 	ENDIF
 ELSEIF RESULT == 11
 	IF MONEY < 500
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {500 - MONEY}$ 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 11
@@ -129,7 +127,7 @@ ELSEIF RESULT == 11
 	ENDIF
 ELSEIF RESULT == 12
 	IF MONEY < 7000
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {7000 - MONEY}$ 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 12
@@ -137,19 +135,19 @@ ELSEIF RESULT == 12
 	ENDIF
 ELSEIF RESULT == 13
 	IF MONEY < 125
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {125 - MONEY}$ 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		PRINTL 
-		PRINTFORML 　＊　避妊用ピルの購入　＊
-		PRINTFORML 避妊用ピルは１つで半日間だけ임신を防ぐ効果があります
-		PRINTFORML ただし、촉수の受精能力が強力すぎるため촉수に対しては効果がありません
-		PRINTFORML 　購入数を入力してください(1-{MONEY / 125}個)
-		PRINTFORML 　(0か負の数入力でキャンセル)
+		PRINTFORML 　＊　피임약 구입　＊
+		PRINTFORML 「피임약은 한 정 복용 시 반나절 동안만 임신을 막는 효과가 있습니다.」
+		PRINTFORML 「단, 촉수의 수정 능력이 너무 강력하여 촉수에 대해서는 효과가 없는 점 유의하시길 바랍니다.」
+		PRINTFORML 　구매량을 입력해 주십시오. (1~{MONEY / 125}개)
+		PRINTFORML 　(0이나 음수 입력으로 취소)
 		INPUT
 		IF RESULT > 0 && RESULT * 125 <= MONEY
 			LOCAL = RESULT
-			PRINTFORML 避妊用ピルを{LOCAL}個購入で${125 * LOCAL}になります。宜しいですか？
+			PRINTFORML 피임약을 {LOCAL}개 구입하여 {125 * LOCAL}$ 의 비용이 듭니다. 구입하시겠습니까?
 			PRINTFORML [0] 네
 			PRINTFORML [1] 아니오
 			$INPUT_LOOP_0_13
@@ -163,7 +161,7 @@ ELSEIF RESULT == 13
 			ENDIF
 		ELSEIF RESULT < 1
 		ELSE
-			PRINTW 資金が足りません
+			PRINTW 「자금이 부족합니다.」
 		ENDIF
 		GOTO INPUT_LOOP_2
 	ENDIF
@@ -175,7 +173,7 @@ ELSEIF RESULT == 14
 			LOCAL:1 += CFLAG:LOCAL:241
 	NEXT
 	IF FLAG:201 + LOCAL:1 < 1
-		PRINTW 避妊用ピルを所持していません
+		PRINTW 「피임약을 소지하고 있지 않습니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 14
@@ -186,7 +184,7 @@ ELSEIF RESULT == 15 && ROBO > 0
 	GOTO INPUT_LOOP_2
 ELSEIF RESULT == 20
 	IF FLAG:200 < 10
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTFORMW 「촉수 조각이 {10 - FLAG:200}개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 20
@@ -194,7 +192,7 @@ ELSEIF RESULT == 20
 	ENDIF
 ELSEIF RESULT == 21
 	IF MONEY < 1250
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {1250 - MONEY}$ 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 21
@@ -202,7 +200,7 @@ ELSEIF RESULT == 21
 	ENDIF
 ELSEIF RESULT == 30
 	IF FLAG:200 < 1
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTL 「촉수 조각이 1개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 30
@@ -210,7 +208,7 @@ ELSEIF RESULT == 30
 	ENDIF
 ELSEIF RESULT == 31
 	IF FLAG:200 < 1
-		PRINTW 촉수의 조각이 부족합니다.
+		PRINTW 「촉수 조각이 1개 부족합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL CHARA_LIST_DRUG, 31
@@ -218,48 +216,49 @@ ELSEIF RESULT == 31
 	ENDIF
 ELSEIF RESULT == 51
 	IF FLAG:54 < 5
-		PRINTL 촉수のバイオマスを利用して人体の機能を回復する技術を開発中です
-		PRINTW （より高い레벨の촉수研究が必要です！）
+		PRINTL 「촉수의 바이오매스를 이용하여 인체의 기능을 회복하는 기술이 개발 중에 있습니다.」
+		PRINTW  (더 높은 레벨의 촉수 연구가 필요합니다!)
 		GOTO INPUT_LOOP_2
 	ELSE 
-		PRINTL 現在の研究레벨では、
-		PRINTL 촉수からのバイオマスは人体の機能を回復するために使用でき、
-		PRINTL 【사지결손】の場合は$25,000と촉수の残骸40消費が必要となります。
-		PRINTL そして촉수との【공생】状態となります
-		PRINTL 本当に手術をしてよろしいですか？
+		PRINTL 「현재 연구 레벨에서는,
+		PRINTL   촉수로부터 채취한 바이오매스를 인체의 기능을 회복하기 위해 사용할 수 있으며,
+		PRINTL  【사지결손】의 경우 $25,000과 촉수의 조각 40개가 필요합니다.
+		PRINTL   그리고 촉수와【공생】상태가 됩니다.
+		PRINTL   정말 수술을 해도 되겠습니까?」
 		PRINTL [0] 네
 		PRINTL [1] 아니오
 		INPUT
 		$INPUT_LOOP_25000
 		IF RESULT == 0
 			IF MONEY < 25000
-				PRINTW 手術に必要な資金が不足しています。
+				PRINTFORMW 「수술에 필요한 자금이 {25000 - MONEY}$ 부족합니다.」
 				GOTO INPUT_LOOP_2
 			ELSEIF FLAG:200 < 40
-				PRINTW 手術に必要な촉수의 조각が不足しています。
+				PRINTFORMW 「수술에 필요한 촉수의 조각이 {40 - FLAG:200}개 부족합니다.」
 				GOTO INPUT_LOOP_2
 			ELSE
 				CALL CHARA_LIST_DRUG, 51
 				GOTO INPUT_LOOP_2
 			ENDIF
-		;＠中国版より
-		;＠↓翻訳・移植終わるまでデッドコード化
+		;＠중국판 분기
+		;＠↓번역, 이식이 끝날 때까지 데드 코드화
 		ELSEIF 1==0 && RESULT == 1
-			;原文は提案者が不明
-			;別系統を仄めかしつつなんか怪しげな感じのNPCを生やしておく
-			;(ただし主役はあくまでヒロインであるため深く掘り下げはしない)
-			PRINTL 「おや、手術しないのですか？　それなら別の選択肢も提示できますよ」
-			PRINTL ロボっ娘ナースを脇に押し退け、白衣の少女研究者が現れた
+			;원문은 제안자가 불명
+			;다른 계통을 암시하면서 뭔가 수상한 느낌의 NPC를 길러둔다
+			;(다만 주역은 어디까지나 히로인이기 때문에 깊이 파고들지는 않는다)
+			PRINTL 「얼레, 수술 안 할 거에요?　그럼 다른 선택지도 제시할 수 있는데.」
+			;이 시발련 24시간 갱뱅 참교육당할 관상이네
+			PRINTL 로봇 여간호사씨를 옆으로 밀어내고, 백의의 소녀 연구자가 나타났다.
 			PRINTL 
-			PRINTL 「……というのもですね。実は現在の肥大化する運営予算とリソース、到底持続可能な状態ではありません。
-			PRINTL 　たとえば【사지결손】した魔法少女のケア、あれには多額のリソースを浪費する必要があります。
-			PRINTW 　ご存知でしょう、正義感の強い彼女たちがどれほど苦しんでいるか……」
+			PRINTL 「……라는 것도 말이죠. 사실 현재 비대해지는 운영 예산과 자원, 도저히 지속 가능한 상태가 아니에요.
+			PRINTL 　예를 들어【사지결손】된 마법소녀의 치료라 하면, 고액의 자원을 낭비해야만 하는 작업이에요.
+			PRINTW 　알고 계시잖아요? 정의감 강한 그녀들이 얼마나 괴로워하고 있는지……」
 			PRINTL 
-			PRINTL 「ねえ、あのような生き地獄を続けさせるくらいなら、いっそ「再利用」したらどうですか？
-			PRINTL 　あるいはスポンサーを増やすために「特別」なショーを企画できるかもしれませんが…どうです？」
+			PRINTL 「저기, 그런 생지옥을 계속 겪게 할 바에야, 차라리「재활용」하는 건 어때요?
+			PRINTL 　혹은 스폰서를 늘리기 위해「특별한」쇼를 기획할 수 있을지도 모르는데… 어떻게 생각해요?」
 			PRINTL 
-			PRINTL [0]……
-			PRINTL [1]仲間を売るなんてとんでもない！
+			PRINTL [0] ……
+			PRINTL [1] 동료를 팔다니 말도 안 돼!
 			INPUT
 			$INPUT_LOOP_AMPUTEE
 			IF RESULT == 0
@@ -279,26 +278,26 @@ ELSEIF RESULT == 51
 
 ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK_F(OPTION_solo)
 	IF MONEY < 50000
-		PRINTW 資金が足りません
+		PRINTFORMW 「자금이 {50000 - MONEY}$ 더 필요합니다.」
 		GOTO INPUT_LOOP_2
 	ELSE
 		CALL LB
-		PRINTFORML  所持金： {MONEY}$
+		PRINTFORML  소지금： {MONEY}$
 		CALL SHORTLINE
-		PRINTL 資金を50000$支払い인조인간を新規加入させます。
-		PRINTL キャンセルはできませんが、よろしいですか？
-		PRINTL [0]性別：♀で確定
-		PRINTL [1]性別：♂で確定
+		PRINTL 「자금을 50000$ 지불하여 인조인간을 새로이 가입시킵니다.」
+		PRINTL 「한 번 결정하면 취소는 불가능합니다. 괜찮으시겠습니까?」
+		PRINTL [0] 성별:♀로 확정
+		PRINTL [1] 성별:♂로 확정
 		PRINTL 
-		PRINTL [99]キャンセル
+		PRINTL [99] 취소
 		$INPUT_LOOP_100_0
 		INPUT
 		IF RESULT == 0 || RESULT == 1
-			PRINTW 加入要請を行いました。
+			PRINTW 「가입 요청이 접수되었습니다.」
 			CALL LB
 			CALL DOT_AFTER, 1
 			PRINTL 
-			PRINTW 加入する新規キャラクターの設定を行います。
+			PRINTW 파티에 가입할 신규 캐릭터를 설정합니다.
 			KEEP_TARGET = TARGET
 			MONEY -= 50000
 			ADDCHARA 0
@@ -314,22 +313,22 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 			TALENT:인조인간 = 1
 			CALL FIRSTSETTING_CHARA_MAIN, TARGET, 0, 1
 			
-			;フィートの設定開始
+			;FEAT 설정 시작
 			;---------------------------------------------------------------------
 			CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",TARGET
 			RACE = RESULT
-			;フィートの開始番号
+			;FEAT 개시 번호
 			LOCAL:2 = 1000
-			;種族の数
+			;종족의 수
 			LOCAL:3 = 11
-			PRINTFORML 『%CALLNAME%』にフィートを設定しますか？
+			PRINTFORML 『%CALLNAME%』에게 FEAT를 설정하시겠습니까?
 			PRINTFORML [0] 네
 			PRINTFORML [1] 아니오
-			PRINTFORML [2]ランダムに設定する
+			PRINTFORML [2] 랜덤으로 설정한다
 			$INPUT_LOOP_100_1
 			INPUT
 			IF RESULT == 0
-				;フィートの初期化
+				;FEAT 초기화
 				VARSET FEAT_SELECT
 				FOR LOCAL, 100, 300
 					SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
@@ -337,7 +336,7 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 				NEXT
 				CALL LB
 				$MASTER_LOOP_100_2
-				;フィートの数をカウント
+				;FEAT의 수를 카운트
 				FEAT_NUM = 0
 				FOR LOCAL, 100, 300
 					SIF FEAT_SELECT:LOCAL > 0
@@ -347,7 +346,7 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 				CALL SHORTLINE
 				CALL SYUZOKU_INFO, (RACE)
 				PRINTL 
-				PRINTL (取得可能フィート)          選択
+				PRINTL (취득 가능한 FEAT)          선택
 				FOR LOCAL, 100, 300
 					SIF FEAT_ABLE_F(RACE, LOCAL + LOCAL:2) == 0
 						CONTINUE
@@ -361,7 +360,7 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 						SETCOLOR 255,0,0
 						PRINT ◎
 						RESETCOLOR
-						PRINTPLAIN  固定取得
+						PRINTPLAIN  고정 취득
 					ELSEIF FEAT_SELECT:LOCAL > 0
 						SETCOLOR 255,128,0
 						PRINT ○
@@ -372,10 +371,10 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 					PRINTL 
 				NEXT
 				PRINTL 
-				PRINTFORML 選択したフィート({FEAT_NUM}/3)
+				PRINTFORML 선택한 FEAT({FEAT_NUM}/3)
 				SIF FEAT_NUM > 3
 					SETCOLOR 128,128,128
-				PRINTL [0]決定
+				PRINTL [0] 결정
 				RESETCOLOR
 				$INPUT_LOOP_100_2
 				INPUT
@@ -394,7 +393,7 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 				ELSE
 					GOTO INPUT_LOOP_100_2
 				ENDIF
-				;フィートの設定
+				;FEAT 설정
 				FOR LOCAL, 100, 300 
 					IF FEAT_SELECT:LOCAL > 0
 						TALENT:(LOCAL + LOCAL:2) = 1
@@ -402,17 +401,17 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 						TALENT:(LOCAL + LOCAL:2) = 0
 					ENDIF
 				NEXT
-				;プロフィールに反映
+				;프로필에 반영
 				CALL SET_PROFILE, TARGET
 			ELSEIF RESULT == 1
-				PRINTFORML %PRINT_CALLNAME(TARGET)%にはフィートを設定しません
+				PRINTFORML %PRINT_CALLNAME(TARGET)%에게 FEAT를 설정하지 않았습니다.
 				PRINTW 
 			ELSEIF RESULT == 2
-				;フィートのランダム設定
+				;FEAT 랜덤 설정
 				CALL SET_FEAT_DEFAULT, TARGET, RACE
-				;プロフィールに反映
+				;프로필에 반영
 				CALL SET_PROFILE, TARGET
-				PRINTFORML ランダムにフィートを設定しました
+				PRINTFORML %PRINT_CALLNAME(TARGET)%에게 랜덤으로 FEAT를 설정했습니다.
 				PRINTW 
 			ELSE
 				GOTO INPUT_LOOP_100_1
@@ -421,9 +420,9 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 			CALL LB
 			CALL DOT_AFTER, 1
 			PRINTL 
-			PRINTFORML 『%CALLNAME%』を{TARGET}人目のメンバーとして迎え入れました。
-			PRINTFORML 『%CALLNAME%』は控えメンバーに加えられます。
-			;キャラメイク完了処理(個別)
+			PRINTFORML 『%CALLNAME%』을(를) {TARGET}번째 멤버로 영입했습니다.
+			PRINTFORML 『%CALLNAME%』은(는) 대기 멤버로 추가됩니다.
+			;캐릭터 메이킹 완료 처리(개별)
 			CALL CHARA_MAKE_FINALIZE(TARGET)
 
 			PRINTW 
@@ -443,11 +442,11 @@ PRINTL
 PRINTL 
 
 ;----------------------------------------------------------
-;素質を消去するキャラを選ぶ
+;소질을 지울 캐릭터를 고른다
 @CHARA_LIST_DRUG, ARG
 #DIM CCOUNT
 PRINTL 
-PRINTL 誰を選びますか？
+PRINTL 「누구를 선택하시겠습니까?」
 LOCAL = CHARANUM
 FOR CCOUNT, 0, LOCAL
 	SIF CCOUNT == MASTER
@@ -464,13 +463,13 @@ FOR CCOUNT, 0, LOCAL
 		IF CFLAG:CCOUNT:0 == 0 && (TALENT:CCOUNT:후타나리 == 1 || TALENT:CCOUNT:후타나리 == 2 || (TALENT:CCOUNT:변신능력 > 0 && (TALENT:CCOUNT:변신시후타나리 == 1 || TALENT:CCOUNT:변신시후타나리 == 2)))
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			SIF TALENT:CCOUNT:후타나리 == 1
-				PRINTFORM 　　　後天후타나리
+				PRINTFORM 　　　후천적 후타나리
 			SIF TALENT:CCOUNT:후타나리 == 2
-				PRINTFORM 　　　기생후타나리
+				PRINTFORM 　　　기생 후타나리
 			SIF TALENT:CCOUNT:변신시후타나리 == 1 && TALENT:CCOUNT:변신능력 > 0
-				PRINTFORM 　　　後天후타나리(変身時)
+				PRINTFORM 　　　후천적 후타나리(변신 시)
 			SIF TALENT:CCOUNT:변신시후타나리 == 2 && TALENT:CCOUNT:변신능력 > 0
-				PRINTFORM 　　　기생후타나리(変身時)
+				PRINTFORM 　　　기생 후타나리(변신 시)
 			PRINTL 
 		ENDIF
 	;모유체질
@@ -481,7 +480,7 @@ FOR CCOUNT, 0, LOCAL
 		ENDIF
 	;기생
 	ELSEIF ARG == 3
-		;[공생]取得時は기생除去不可能とする
+		;[공생] 취득 시에는 기생 제거가 불가능하다
 		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:기생 > 0 && TALENT:CCOUNT:공생 <= 0
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
@@ -492,73 +491,73 @@ FOR CCOUNT, 0, LOCAL
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;膨乳化
+	;팽유화
 	ELSEIF ARG == 5
 		IF CFLAG:CCOUNT:0 == 0 && (CFLAG:CCOUNT:37 > 0 || CFLAG:CCOUNT:38 != 0)
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			IF CHARATALENT_F(CCOUNT,0,"빈유")
 				PRINT  　　　빈유
-			ELSEIF CHARATALENT_F(CCOUNT,0,"奇乳")
-				PRINT  　　　奇乳
-			ELSEIF CHARATALENT_F(CCOUNT,0,"魔乳")
-				PRINT  　　　魔乳
-			ELSEIF CHARATALENT_F(CCOUNT,0,"超乳")
-				PRINT  　　　超乳
-			ELSEIF CHARATALENT_F(CCOUNT,0,"爆乳")
-				PRINT  　　　爆乳
+			ELSEIF CHARATALENT_F(CCOUNT,0,"기유")
+				PRINT  　　　기유
+			ELSEIF CHARATALENT_F(CCOUNT,0,"마유")
+				PRINT  　　　마유
+			ELSEIF CHARATALENT_F(CCOUNT,0,"초유")
+				PRINT  　　　초유
+			ELSEIF CHARATALENT_F(CCOUNT,0,"폭유")
+				PRINT  　　　폭유
 			ELSEIF CHARATALENT_F(CCOUNT,0,"거유")
 				PRINT  　　　거유
 			ELSE
-				PRINT  　　　普乳
+				PRINT  　　　보유
 			ENDIF
 			IF CHARATALENT_F(CCOUNT,1,"빈유")
-				PRINT  　　　빈유(変身時)
-			ELSEIF CHARATALENT_F(CCOUNT,1,"奇乳")
-				PRINT  　　　奇乳(変身時)
-			ELSEIF CHARATALENT_F(CCOUNT,1,"魔乳")
-				PRINT  　　　魔乳(変身時)
-			ELSEIF CHARATALENT_F(CCOUNT,1,"超乳")
-				PRINT  　　　超乳(変身時)
-			ELSEIF CHARATALENT_F(CCOUNT,1,"爆乳")
-				PRINT  　　　爆乳(変身時)
+				PRINT  　　　빈유(변신 시)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"기유")
+				PRINT  　　　기유(변신 시)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"마유")
+				PRINT  　　　마유(변신 시)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"초유")
+				PRINT  　　　초유(변신 시)
+			ELSEIF CHARATALENT_F(CCOUNT,1,"폭유")
+				PRINT  　　　폭유(변신 시)
 			ELSEIF CHARATALENT_F(CCOUNT,1,"거유")
-				PRINT  　　　거유(変身時)
+				PRINT  　　　거유(변신 시)
 			ELSE
-				PRINT  　　　普乳(変身時)
+				PRINT  　　　보유(변신 시)
 			ENDIF
 			PRINTL 
 		ENDIF
-	;임신検査薬
+	;임신 테스트기
 	ELSEIF ARG == 10
 		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10 || CFLAG:CCOUNT:0 == 11) && (ISFEMALE(CCOUNT))
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;精密検査
+	;태내 정밀 검사
 	ELSEIF ARG == 11
 		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10 || CFLAG:CCOUNT:0 == 11) && (ISFEMALE(CCOUNT))
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;堕胎
+	;낙태 수술
 	ELSEIF ARG == 12
 		IF (CFLAG:CCOUNT:0 == 0 || CFLAG:CCOUNT:0 == 10) && (TALENT:CCOUNT:임신 == 1 || TALENT:CCOUNT:임신 == 3 || TALENT:CCOUNT:임신 == 5)
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;避妊用ピル
+	;피임약
 	ELSEIF ARG == 14
 		IF (CFLAG:CCOUNT:0 == 0) && (ISFEMALE(CCOUNT)) && (TALENT:CCOUNT:임신 != 1 || TALENT:CCOUNT:임신 != 3 || TALENT:CCOUNT:임신 != 5)
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT,24,LEFT%　ピル処方数：({CFLAG:CCOUNT:241})
 			PRINTL 
 		ENDIF
-	;인조인간のメンテナンス
+	;인조인간 점검
 	ELSEIF ARG == 15
 		IF (CFLAG:CCOUNT:0 == 0) && (ISFEMALE(CCOUNT)) && (TALENT:CCOUNT:인조인간 > 0)
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;淫紋
+	;음문
 	ELSEIF ARG == 20
 		IF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:32
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
@@ -569,19 +568,19 @@ FOR CCOUNT, 0, LOCAL
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;性徴促進薬
+	;성징촉진제
 	ELSEIF ARG == 30
 		IF CFLAG:CCOUNT:0 == 0 && (TALENT:CCOUNT:미성숙 == 1 || TALENT:CCOUNT:성징정체 > 0)
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;성징정체薬
+	;성징정체제
 	ELSEIF ARG == 31
 		IF CFLAG:CCOUNT:0 == 0 && CFLAG:CCOUNT:225 > 0 && CFLAG:CCOUNT:225 < 15 && TALENT:CCOUNT:성징정체 == 0
 			PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
 			PRINTL 
 		ENDIF
-	;四肢修復
+	;사지 수복
 	ELSEIF ARG == 51
 		IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:훼멸초계시 < 1
 		PRINTFORM [{CCOUNT}] %CALLNAME:CCOUNT%
@@ -589,7 +588,7 @@ FOR CCOUNT, 0, LOCAL
 		ENDIF
 	ENDIF
 NEXT
-PRINTFORML [999]キャラ選択をやめる
+PRINTFORML [999] 캐릭터 선택을 그만둔다
 $INPUT_LOOP_CHARA_LIST
 INPUT
 IF RESULT == 999
@@ -608,9 +607,8 @@ ELSE
 			ABL:RESULT:촉수중독 = 0
 			JUEL:RESULT:욕정 = 0
 			JUEL:RESULT:굴복 = 0
-			PRINTFORML 記憶調整薬を投与し、
-			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:150%を消去しました
-			PRINTFORML %CALLNAME:RESULT%の촉수중독が初期化されました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 기억조정제를 투여하여, [%TALENTNAME:150%] 가 소거되었습니다.」
+			PRINTFORML 「더불어 %CALLNAME:RESULT%씨의 촉수중독 증상도 완전히 해소되었습니다.」
 		ENDIF
 	ELSEIF ARG == 1
 		IF (TALENT:RESULT:후타나리 < 1 && TALENT:RESULT:변신시후타나리 < 1) || (TALENT:RESULT:후타나리 >= 3 && TALENT:RESULT:변신시후타나리 >= 3) || CFLAG:RESULT:0 != 0
@@ -618,18 +616,19 @@ ELSE
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
+			PRINTFORM 「%CALLNAME:RESULT%씨에게 
 			IF TALENT:RESULT:후타나리 == 2
-				PRINTFORML 抗촉수薬を投与し、기생部位を治療しました
+				PRINTFORML 항촉수제를 투여하여, 기생 부위를 치료하였습니다.」
 			ELSEIF TALENT:RESULT:후타나리 == 1
-				PRINTFORML ホルモンバランス調整剤を投与し、클리토리스を正常に戻しました
+				PRINTFORML 호르몬 밸런스 조정제를 투여하여, 클리토리스를 정상으로 되돌렸습니다.」
 			ENDIF
 			IF TALENT:RESULT:후타나리 == 1 || TALENT:RESULT:후타나리 == 2
-				PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:300%を消去しました
+				PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:300%] 가 소거되었습니다.」
 				TALENT:RESULT:후타나리 = 0
 			ENDIF
 			IF TALENT:RESULT:변신시후타나리 == 1 || TALENT:RESULT:변신시후타나리 == 2
 				SIF TALENT:RESULT:변신능력 > 0
-					PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:404%を消去しました
+					PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:404%] 가 소거되었습니다.」
 				TALENT:RESULT:변신시후타나리 = 0
 			ENDIF
 		ENDIF
@@ -640,8 +639,8 @@ ELSE
 		ELSE
 			FLAG:200 -= 2
 			TALENT:RESULT:모유체질 = 0
-			PRINTFORML ホルモンバランス調整剤を投与し、母乳を出なくしました
-			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:1%を消去しました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 호르몬 밸런스 조정제를 투여하여, 모유가 나오지 않도록 조치하였습니다.」
+			PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:1%] 이 소거되었습니다.」
 		ENDIF
 	ELSEIF ARG == 3
 		IF TALENT:RESULT:기생 == 0 || CFLAG:RESULT:0 != 0
@@ -650,8 +649,8 @@ ELSE
 		ELSE
 			FLAG:200 -= 2
 			TALENT:RESULT:기생 = 0
-			PRINTFORML 抗촉수薬を投与し、기생部位を除去しました
-			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:160%を消去しました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 항촉수제를 투여하여, 기생 부위를 제거하였습니다.」
+			PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:160%] 이 소거되었습니다.」
 		ENDIF
 	ELSEIF ARG == 4
 		IF TALENT:RESULT:묘상화 == 0 || CFLAG:RESULT:0 != 0
@@ -660,8 +659,8 @@ ELSE
 		ELSE
 			FLAG:200 -= 2
 			TALENT:RESULT:묘상화 = 0
-			PRINTFORML 抗촉수薬を投与し、子宮の異常を治療しました
-			PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:161%を消去しました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 항촉수제를 투여하여, 자궁의 이상을 치료하였습니다.」
+			PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:161%] 가 소거되었습니다.」
 		ENDIF
 	ELSEIF ARG == 5
 		IF (CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 == 0) || CFLAG:RESULT:0 != 0
@@ -669,19 +668,19 @@ ELSE
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			FLAG:200 -= 2
-			PRINTFORML ホルモンバランス調整剤を投与し、胸の張りを治療しました
-			;通常時正常で変身時膨乳の場合は変身時のみ縮乳
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 호르몬 밸런스 조정제를 투여하여, 가슴의 팽만을 치료했습니다.」
+			;평상시 정상으로 변신 시 팽유일 경우에는 변신 시만 축유
 			IF CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 > 0
 				TALENT:RESULT:변신시가슴사이즈변동 -= 1
 				CFLAG:RESULT:38 -= 1
-				PRINTFORM 変身時の
+				PRINTFORM 변신 시의 
 			ELSEIF CFLAG:RESULT:37 > 0
-				;変身時の方が大きかった場合は変身時胸サイズ維持
+				;변신 시의 사이즈가 더 컸다면 변신 시 가슴 사이즈 유지
 				IF CFLAG:RESULT:38 < 0
 					TALENT:RESULT:변신시가슴사이즈변동 += 1
 					CFLAG:RESULT:38 += 1
 				ENDIF
-				;縮乳処理
+				;축유 처리
 				IF TALENT:RESULT:거유 - TALENT:RESULT:빈유 > 0
 					TALENT:RESULT:거유 -= 1
 				ELSE
@@ -690,11 +689,11 @@ ELSE
 			ENDIF
 			CFLAG:RESULT:37 = MAX(CFLAG:RESULT:37-1,0)
 			IF CFLAG:RESULT:37 > 0 || CFLAG:RESULT:38 != 0
-				PRINTFORML %CALLNAME:RESULT%の胸を小さくしました
+				PRINTFORML %CALLNAME:RESULT% 가슴을 작게 했습니다.
 			ELSE
-				PRINTFORML %CALLNAME:RESULT%の胸を正常に戻しました
+				PRINTFORML %CALLNAME:RESULT% 가슴을 정상으로 되돌렸습니다.
 			ENDIF
-			;プロフィールに反映
+			;프로필에 반영
 			CALL SET_PROFILE, RESULT
 		ENDIF
 	ELSEIF ARG == 10
@@ -705,12 +704,12 @@ ELSE
 			MONEY -= 50
 			CALL DOT_AFTER, 2
 			IF TALENT:RESULT:임신 == 0 || (TALENT:RESULT:임신 == 4 && CFLAG:RESULT:222 < 3)
-				PRINTFORML 임신検査薬の反応は陰性です。
-				PRINTFORML ※임신から日が浅いと検査薬が反応しないことがあります。
+				PRINTFORML 임신 테스트기의 반응은 음성입니다.
+				PRINTFORML ※임신한지 얼마 되지 않았다면 검사약이 반응하지 않을 수 있습니다.
 			ELSE
-				PRINTFORML 임신検査薬の反応は陽性です。
+				PRINTFORML 임신 테스트기의 반응은 양성입니다.
 				IF TALENT:RESULT:임신 == 4
-					PRINTFORML %CALLNAME:RESULT%の임신が発覚しました！
+					PRINTFORML %CALLNAME:RESULT%의 임신이 밝혀졌습니다!
 					TALENT:RESULT:임신 = 5
 				ENDIF
 			ENDIF
@@ -723,90 +722,93 @@ ELSE
 			MONEY -= 250
 			CALL DOT_AFTER, 2
 			IF TALENT:RESULT:기생 > 0 && TALENT:RESULT:묘상화 > 0
-				PRINTFORML %CALLNAME:RESULT%さんの子宮は기생かつ묘상화されており、
-				PRINTFORML 例え인간相手による임신でも異常が発生する可能性があるようです。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁은 기생 및 묘상화 상태입니다.」
+				PRINTFORML 「설령 인간 상대에 의해 임신하더라도 이상이 발생할 가능성이 있는 듯 합니다.」
 			ELSEIF TALENT:RESULT:기생 > 0
-				PRINTFORML %CALLNAME:RESULT%さんの子宮は촉수生物の細胞に기생されており、
-				PRINTFORML 例え인간相手による임신でも正常な子供が生まれない可能性があります。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁은 촉수 생물의 세포에 기생당한 상태입니다.」
+				PRINTFORML 「설령 인간 상대에 의해 임신하더라도 정상적인 아이가 태어나지 않을 가능성이 있습니다.」
 			ELSEIF TALENT:RESULT:묘상화 > 0
-				PRINTFORML %CALLNAME:RESULT%さんの子宮は촉수生物によって묘상화されており、
-				PRINTFORML 異常に出産が早まる可能性があるようです。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁은 촉수 생물에 의해 묘상화된 상태입니다.」
+				PRINTFORML 「임신 시 비정상적으로 출산이 빨라질 가능성이 있는 듯 합니다.」
 			ELSEIF TALENT:RESULT:미성숙 == 2 && TALENT:RESULT:인조인간
-				PRINTFORML %CALLNAME:RESULT%さんには임신可能な子宮がありません。
-				PRINTFORML 解剖学的に임신・出産することはあり得ません。
+				PRINTFORML 「%CALLNAME:RESULT%씨에게는 임신이 가능한 자궁이 없습니다.」
+				PRINTFORML 「해부학적으로 %CALLNAME:RESULT%씨가 임신・출산하는 것은 현재 불가능합니다.」
 			ELSEIF TALENT:RESULT:미성숙 == 2
-				PRINTFORML %CALLNAME:RESULT%さんの子宮の機能には何らかの異常があるようです。
-				PRINTFORML おそらく임신・出産することは難しいでしょう。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁의 기능에 어떠한 이상이 있는 것 같습니다.」
+				PRINTFORML 「아마 현재의 몸으로는 임신・출산을 하기가 어려울 것입니다.」
 			ELSEIF TALENT:RESULT:미성숙 == 1
-				PRINTFORML %CALLNAME:RESULT%さんの子宮には特に異常は見当たりませんでした。
-				PRINTFORML しかし肉体が未成熟のため、まだ임신・出産はできないでしょう。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁에 특별한 이상은 발견되지 않았습니다.」
+				PRINTFORML 「다만 육체가 아직 미성숙하기 때문에, 현재로서 임신・출산은 불가능할 것입니다.」
 			ELSE
-				PRINTFORML %CALLNAME:RESULT%さんの子宮には特に異常は見当たりませんでした。
-				PRINTFORML 正常に임신・出産することができるでしょう。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 자궁에 특별한 이상은 발견되지 않았습니다.」
+				PRINTFORML 「따라서 정상적인 임신・츨산이 가능할 것입니다.」
 			ENDIF
 			PRINTL 
 			IF TALENT:RESULT:임신 > 0
-				PRINT また、
+				PRINT 「또한, 
 				IF TALENT:RESULT:임신 == 4
-					PRINTFORML 精密検査の結果、%CALLNAME:RESULT%さんの胎内に임신の兆候が見つかりました。
+					PRINTFORML 정밀검사 결과 %CALLNAME:RESULT%씨의 태내에 임신의 징후가 발견되었습니다.
 					TALENT:RESULT:임신 = 5
 				ENDIF
+				PRINTL 」
 			ENDIF
 			IF TALENT:RESULT:임신 == 1
-				PRINTFORML %CALLNAME:RESULT%さんの胎内に宿っているのは촉수の幼体{CFLAG:RESULT:227}匹のようです。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 태내에는 촉수의 유체 {CFLAG:RESULT:227}마리가 번식 중인 것 같습니다.」
 				IF TALENT:RESULT:묘상화 > 0
-					PRINTL 成長速度的に、すぐにでも産まれて来そうです。
+					PRINTL 「성장 속도를 보아하니, 금방이라도 태어날 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:222 < 7
-					PRINTL 産まれてくるまで、まだ数日かかりそうです。
+					PRINTL 「아직 유체가 태어나기까지 며칠은 더 걸릴 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:0 == 10
-					PRINTL 現在は出産に備えて入院中です。
+					PRINTFORML 「따라서 %CALLNAME:RESULT%씨는 현재 출산에 대비하여 입원 중에 있습니다.」
 				ELSE
-					PRINTL そろそろ入院の準備が必要かもしれません。
+					PRINTL 「슬슬 입원할 준비가 필요할지도 모릅니다.」
 				ENDIF
 			ELSEIF TALENT:RESULT:임신 == 3
-				PRINTFORML %CALLNAME:RESULT%さんの胎内に宿っているのはヒトの胎児のようです。
+				PRINTFORML 「%CALLNAME:RESULT%씨의 태내에는 인간의 태아가 있는 것 같습니다.」
 				IF TALENT:RESULT:묘상화 > 0
-					PRINTL 成長速度が異常に早く、すぐにでも産まれて来そうです。
+					PRINTL 「성장 속도가 비정상적으로 빨라, 금방이라도 태어날 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:222 < 7
-					PRINTL 信じられない速度で成長しており、あと数日で産まれそうです。
+					PRINTL 「믿기지 않을 정도로 빠르게 성장하고 있으며, 앞으로 며칠 안에 태어날 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:0 == 10
-					PRINTL 現在は出産に備えて入院中です。
+					PRINTL 「따라서 %CALLNAME:RESULT%씨는 현재 출산에 대비하여 입원 중에 있습니다.」
 				ELSE
-					PRINTL そろそろ入院の準備が必要かもしれません。
+					PRINTL 「슬슬 입원할 준비가 필요할지도 모릅니다.」
 				ENDIF
 			ELSEIF TALENT:RESULT:임신 == 5
-				PRINTFORM %CALLNAME:RESULT%さんの胎内に宿っているのは
+				PRINTFORM 「%CALLNAME:RESULT%씨의 태내에는
 				IF CFLAG:RESULT:222 < 5
-					PRINTL ヒトの受精卵のようです。
-					PRINTL まだ着床した段階ですが、임신は成立しています。
+					PRINTL 인간의 수정란이 있는 것 같습니다.」
+					PRINTL 「아직 착상한 단계이지만, 임신은 성립되어 있습니다.」
 				ELSEIF CFLAG:RESULT:222 < 8
-					PRINTL ヒトの受精卵のようです。
-					PRINTL 胎嚢が確認できます。経過は順調のようです。
+					;원문은 受精卵 수정란이지만, 수정란이 태아가 되기까지 즉, 8~9주까지 "배아" 라고 부른다 해서 배아로 바꿈
+					PRINTL 인간의 배아가 있는 것 같습니다.」
+					PRINTL 「태낭을 확인할 수 있는 걸로 보아, 임신 배아기까지 순조롭게 경과된 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:222 < 11
-					PRINTL ヒトの胎芽のようです。
-					PRINTL しっかりと心拍を打っている様子が確認されています。
+					;"배아" 의 원문은 胎芽
+					PRINTL 인간의 배아가 있는 것 같습니다.」
+					PRINTL 「제대로 심장 박동을 치는 모습이 확인되고 있습니다.」
 				ELSEIF CFLAG:RESULT:222 < 12
-					PRINTL ヒトの胎児のようです。
-					PRINTL まだサイズは小さいですが、ヒトの形になってきています。
+					PRINTL 인간의 태아가 있는 것 같습니다.」
+					PRINTL 「아직 크기는 작지만 사람의 형태를 갖추고 있는 듯 보입니다.」
 				ELSEIF CFLAG:RESULT:222 < 22
-					PRINTL ヒトの胎児のようです。
-					PRINTL はっきりと赤ん坊の姿になっているのが分かります。
+					PRINTL 인간의 태아가 있는 것 같습니다.」
+					PRINTL 「확실하게 아기의 모습을 갖춘 것을 알 수 있습니다.」
 				ELSEIF CFLAG:RESULT:222 < 36
-					PRINTL ヒトの胎児のようです。
-					PRINTL 赤ちゃんは元気です。すくすくと成長しているようです。
+					PRINTL 인간의 태아가 있는 것 같습니다.」
+					PRINTL 「임신 중기에 이르러, 아기는 무럭무럭 건강하게 자라고 있습니다.」
 				ELSEIF CFLAG:RESULT:222 < 50
-					PRINTL ヒトの胎児のようです。
-					PRINTL 経過は良好で母子ともに健康です。
+					PRINTL 인간의 태아가 있는 것 같습니다.」
+					PRINTL 「임신은 양호하게 경과되고 있으며, 아기와 임산부 모두 건강합니다.」
 				ELSEIF CFLAG:RESULT:222 < 54
-					PRINTL ヒトの胎児のようです。
-					PRINTL 時折腹を蹴ったり、活発に動いている様子が見られます。
+					PRINTL 사람의 태아가 있는 것 같습니다.」
+					PRINTL 「가끔 배를 차거나 활발하게 움직이는 모습을 볼 수 있습니다.」
 				ELSE
-					PRINTL ヒトの胎児のようです。
-					PRINTL もう出産間近です。いつでも手術室に移動できるよう準備しておきましょう。
+					PRINTL 사람의 태아가 있는 것 같습니다.」
+					PRINTL 「이제 출산이 임박하였습니다. 언제든지 수술실로 이동할 수 있도록 준비해 둡시다.」
 				ENDIF
-				PRINTFORML (임신{CFLAG:RESULT:222 * 20 / 28}／40週目相当)
+				PRINTFORML (임신 {CFLAG:RESULT:222 * 20 / 28}／40주차 진행 중)
 			ELSE
-				PRINTFORML %CALLNAME:RESULT%さんの胎内に임신の兆候は見つかりませんでした。
+				PRINTFORML %CALLNAME:RESULT%씨의 태내에서 임신의 징후는 발견되지 않았습니다.」
 			ENDIF
 		ENDIF
 	ELSEIF ARG == 12
@@ -825,12 +827,13 @@ ELSE
 			CFLAG:RESULT:232 = 0
 			CFLAG:RESULT:233 = 0
 			CALL DOT_AFTER, 2
-			PRINTFORML %CALLNAME:RESULT%の堕胎手術は無事に成功しました
+			PRINTFORML 「%CALLNAME:RESULT%씨의 낙태 수술은 무사히 성공하였습니다.」
+			PRINTL 「수술을 하여 몸에 피로가 쌓이셨을 터이니, 어느 정도 휴식을 취할 것을 권합니다.」
 			IF CFLAG:RESULT:0 == 10
-				PRINTFORML %CALLNAME:RESULT%が戦線に復帰しました
+				PRINTFORML %CALLNAME:RESULT%이(가) 전선에 복귀하였습니다.
 				CALL RECOVER_TO_PARTY,RESULT
 			ENDIF
-			;疲労が蓄積する
+			;피로가 축적된다
 			CFLAG:RESULT:99 += 25
 		ENDIF
 	ELSEIF ARG == 14
@@ -839,9 +842,11 @@ ELSE
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSE
 			LOCAL = RESULT
-			PRINTFORML 半日ごとに処方したピルを自動で1個消費します
-			PRINTFORML %CALLNAME:LOCAL%に処方する避妊用ピルの量を選択してください(0-{FLAG:201 + CFLAG:LOCAL:241})
-			PRINTFORML << 現在の処方数  ：残り{CFLAG:LOCAL:241}個 >>　　(負の数でキャンセル)
+			PRINTL 「반나절이 지날 때마다 피임약을 1정 복용하도록 자동으로 처방해드릴 수 있습니다.」
+			PRINTL 「만약 자동 처방을 중지하고자 한다면 0을 선택하시면 됩니다.」
+			PRINTL
+			PRINTFORML 「%CALLNAME:LOCAL%씨가 처방받으실 피임약의 개수를 입력해 주십시오.」(0 ~ {FLAG:201 + CFLAG:LOCAL:241})
+			PRINTFORML << 현재 처방수 ：나머지 {CFLAG:LOCAL:241}개 >>　　(0 입력 시 처방 중지, 음수 입력 시 취소)
 			$INPUT_LOOP_1_14
 			INPUT
 			IF RESULT >= 0 && RESULT <= FLAG:201 + CFLAG:LOCAL:241
@@ -849,12 +854,12 @@ ELSE
 				CFLAG:LOCAL:241 = RESULT
 				FLAG:201 -= RESULT
 				IF RESULT == 0
-					PRINTFORML %CALLNAME:LOCAL%によるピルの使用を中止させました
+					PRINTFORML 「%CALLNAME:LOCAL%씨의 피임약 처방을 중지시켰습니다.」
 				ELSE
-					PRINTFORML %CALLNAME:LOCAL%へのピルの処方数を{RESULT}個としました
+					PRINTFORML 「%CALLNAME:LOCAL%씨가 처방받으실 피임약을 {RESULT}개로 정하였습니다.」
 				ENDIF
 			ELSEIF RESULT < 0 || RESULT == CFLAG:LOCAL:241
-					PRINTFORML %CALLNAME:LOCAL%へのピルの処方数を変更せず{CFLAG:LOCAL:241}個のままとしました
+					PRINTFORML 「%CALLNAME:LOCAL%씨의 피임약 처방수를 변경하지 않고 {CFLAG:LOCAL:241}개 그대로 처방됩니다.」
 			ELSE
 				PRINTL 올바른 값을 입력해 주십시오.
 				GOTO INPUT_LOOP_1_14
@@ -868,32 +873,37 @@ ELSE
 			LOCAL = RESULT
 			$INPUT_LOOP_0_15
 			CALL LB
-			PRINTL スケジュールの設定
+			PRINTL 스케줄 설정
 			CALL SHORTLINE
-			PRINTFORML %CALLNAME:LOCAL%に対して行う処置を選択してください
+			PRINTL 로봇 회사원씨：
+			PRINTL 「인조인간 서비스 센터에 오신 것을 환영합니다.」
+			PRINTL 「이곳에서는 인조인간 가입자 분들을 위한 일명 "A/S" 기능을 제공하고 있습니다.」
+			PRINTL
+			PRINTFORML 「접수하신 %CALLNAME:LOCAL%씨에 대한 A/S 조치를 선택하여 주십시오.」
 			SIF CFLAG:LOCAL:99 < 1 || CFLAG:LOCAL:99 >= 20
 				SETCOLOR 128,128,128
-			PRINTFORML [0]パーツ交換　　　（疲労回復：小）　　　　$500
+			PRINTFORML [0] 부품 교환　　　 (피로 회복：소)　　　　$500
 			RESETCOLOR
 			SIF CFLAG:LOCAL:99 < 10 || CFLAG:LOCAL:99 >= 30
 				SETCOLOR 128,128,128
-			PRINTFORML [1]集中メンテナンス（疲労回復：大）　　 　 $1500
+			PRINTFORML [1] 집중 점검　　　 (피로 회복：대)　　 　 $1500
 			RESETCOLOR
 			SIF CFLAG:LOCAL:99 < 20
 				SETCOLOR 128,128,128
-			PRINTFORML [2]オーバーホール　（疲労完全回復）　　　  $5500
+			;원문은 オーバーホール(overhaul)
+			PRINTFORML [2] 분해 수리　　　 (피로 완전 회복)　　　 $5500
 			RESETCOLOR
 			IF TALENT:LOCAL:미성숙 == 0 && ISFEMALE(LOCAL)
-				PRINTFORML [3]人工子宮を取り外す
+				PRINTFORML [3] 인공 자궁을 해체한다
 			ELSEIF TALENT:LOCAL:미성숙 > 0 && ISFEMALE(LOCAL)
-				PRINTFORML [3]人工子宮を取り付ける
+				PRINTFORML [3] 인공 자궁을 부착한다
 			ENDIF
 			PRINTFORML [999] 돌아간다
 			$INPUT_LOOP_1_15
 			INPUT
 			IF RESULT == 0 && CFLAG:LOCAL:99 > 0 && CFLAG:LOCAL:99 < 20
 				IF MONEY < 500
-					PRINTW 資金が足りません
+					PRINTW 「자금이 {500 - MONEY}$ 부족합니다.」
 					GOTO INPUT_LOOP_1_15
 				ELSE
 					MONEY -= 500
@@ -902,13 +912,13 @@ ELSE
 						CFLAG:LOCAL:99 = 0
 					CALL DOT_AFTER, 1
 					PRINTL 
-					PRINTFORML %CALLNAME:LOCAL%に対してパーツ交換を行いました
+					PRINTFORML %CALLNAME:LOCAL%씨에 대한 부품 교환을 실시하였습니다.」
 					PRINTW 
 					GOTO INPUT_LOOP_0_15
 				ENDIF
 			ELSEIF RESULT == 1 && CFLAG:LOCAL:99 > 10 && CFLAG:LOCAL:99 < 30
 				IF MONEY < 1500
-					PRINTW 資金が足りません
+					PRINTW 「자금이 {1500 - MONEY}$ 부족합니다.」
 					GOTO INPUT_LOOP_1_15
 				ELSE
 					MONEY -= 1500
@@ -917,20 +927,20 @@ ELSE
 						CFLAG:LOCAL:99 = 0
 					CALL DOT_AFTER, 1
 					PRINTL 
-					PRINTFORML %CALLNAME:LOCAL%に対して集中メンテナンスを行いました
+					PRINTFORML 「%CALLNAME:LOCAL%씨에 대한 집중 점검을 실시하였습니다.」
 					PRINTW 
 					GOTO INPUT_LOOP_0_15
 				ENDIF
 			ELSEIF RESULT == 0 && CFLAG:LOCAL:99 > 20
 				IF MONEY < 5500
-					PRINTW 資金が足りません
+					PRINTW 「자금이 {5500 - MONEY}$ 부족합니다.」
 					GOTO INPUT_LOOP_1_15
 				ELSE
 					MONEY -= 5500
 					CFLAG:LOCAL:99 = 0
 					CALL DOT_AFTER, 1
 					PRINTL 
-					PRINTFORML %CALLNAME:LOCAL%に対してオーバーホールを行いました
+					PRINTFORML 「%CALLNAME:LOCAL%씨에 대한 분해 수리를 실시하였습니다.」
 					PRINTW 
 					GOTO INPUT_LOOP_0_15
 				ENDIF
@@ -938,18 +948,18 @@ ELSE
 				CALL DOT_AFTER, 1
 				PRINTL 
 				IF TALENT:LOCAL:미성숙 == 0
-					PRINTFORML %CALLNAME:LOCAL%の人工子宮を取り外しました
-					PRINTFORML %CALLNAME:LOCAL%は不妊になります
+					PRINTFORML 「%CALLNAME:LOCAL%씨의 인공 자궁을 해체하였습니다.」
+					PRINTFORML 「현재부로 %CALLNAME:LOCAL%씨는 불임 상태가 됩니다.」
 					TALENT:LOCAL:미성숙 = 2
 				ELSE
-					PRINTFORML %CALLNAME:LOCAL%に人工子宮を取り付けました
-					PRINTFORML %CALLNAME:LOCAL%は임신可能になります
+					PRINTFORML 「%CALLNAME:LOCAL%씨에게 인공 자궁을 부착하였습니다.」
+					PRINTFORML 「현재부로 %CALLNAME:LOCAL%씨는 임신이 가능한 상태가 됩니다.」
 					TALENT:LOCAL:미성숙 = 0
 				ENDIF
 				PRINTW 
 				GOTO INPUT_LOOP_0_15
 			ELSEIF RESULT == 999
-				PRINTL メディカルルームに戻ります
+				PRINTL 「인조인간 서비스 센터를 이용해주셔서 감사합니다, 안녕히 가십시오.」
 			ELSE
 				GOTO INPUT_LOOP_1_15
 			ENDIF
@@ -962,22 +972,22 @@ ELSE
 			FLAG:200 -= 10
 			CFLAG:RESULT:30 = 0
 			CFLAG:RESULT:32 = 0
-			PRINTFORML %CALLNAME:RESULT%の身体から瘴気が抜けていく・・・
-			PRINTFORML %CALLNAME:RESULT%の淫紋を消去しました
+			PRINTFORML %CALLNAME:RESULT%의 신체에서 독기가 빠져 나간다……
+			PRINTFORML 「%CALLNAME:RESULT%씨의 음문을 소거하였습니다.」
 		ENDIF
 	ELSEIF ARG == 21
 		IF CFLAG:RESULT:32 == 0
 			PRINTL 올바른 값을 입력해 주십시오.
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSEIF CFLAG:RESULT:32 < 500000000000000000
-			PRINTFORML 現在の状態では副作用が強くなり過ぎるため、瘴気中和剤を投与できません
-			PRINTFORML しばらくして症状が酷くなったらまたお越しください
+			PRINTFORML 「현재 상태로는 부작용이 너무 강해져, 독기 중화제를 투여할 수 없습니다.」
+			PRINTFORML「얼마 이후에 증상이 심해지면 그 때에 다시 방문해주세요.」
 		ELSE
 			MONEY -= 1250
 			TIMES CFLAG:RESULT:30, 0.10
 			TIMES CFLAG:RESULT:32, 0.10
-			PRINTFORML %CALLNAME:RESULT%に瘴気中和剤を注射したが、完治はしなかった・・・
-			PRINTFORML %CALLNAME:RESULT%の淫紋の進行度が減少しました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 독기 중화제를 주사하였지만, 안타깝게도 완치는 되지 않았습니다……」
+			PRINTFORML 「당장 음문의 진행을 늦출 수는 있지만, 서둘러 근본적인 원인을 해결하는 것이 좋겠습니다.」
 		ENDIF
 	ELSEIF ARG == 30
 		IF (TALENT:RESULT:미성숙 != 1 && TALENT:RESULT:성징정체 == 0) || CFLAG:RESULT:0 != 0
@@ -986,21 +996,21 @@ ELSE
 		ELSE
 			FLAG:200 -= 1
 			IF ISMALE(RESULT)
-				PRINTFORML 性徴促進薬を投与しました
+				PRINTFORML 「%CALLNAME:RESULT%씨에게 성징촉진제를 투여하였습니다.」
 			ELSE
-				PRINTFORML 性徴促進薬を投与しました
+				PRINTFORML 「%CALLNAME:RESULT%씨에게 성징촉진제를 투여하였습니다.」
 			ENDIF
 			IF TALENT:RESULT:미성숙 == 1
-				PRINTFORML %CALLNAME:RESULT%の%TALENTNAME:4%を消去しました
+				PRINTFORML 「%CALLNAME:RESULT%씨의 [%TALENTNAME:4%] 을 소거하였습니다.」
 				IF ISMALE(RESULT)
-					PRINTFORML %CALLNAME:RESULT%は사정できるようになりました
+					PRINTFORML 「%CALLNAME:RESULT%씨는 음경으로부터 사정할 수 있게 되었습니다.」
 				ELSE
-					PRINTFORML %CALLNAME:RESULT%は임신できるようになりました
+					PRINTFORML 「%CALLNAME:RESULT%씨의 신체가 임신할 수 있게 되었습니다.」
 				ENDIF
 				TALENT:RESULT:미성숙 = -1
 			ENDIF
 			IF TALENT:RESULT:성징정체 > 0
-				PRINTFORML %CALLNAME:RESULT%の肉体的性徴が再び始まりました
+				PRINTFORML %CALLNAME:RESULT%씨의 육체적 성징이 다시 시작되었습니다.」
 				TALENT:RESULT:성징정체 = 0
 			ENDIF
 		ENDIF
@@ -1011,10 +1021,10 @@ ELSE
 		ELSE
 			FLAG:200 -= 1
 			TALENT:RESULT:성징정체 = 1
-			PRINTFORML 성징정체薬を投与しました
-			PRINTFORML %CALLNAME:RESULT%の肉体的性徴が止まりました
+			PRINTFORML 「%CALLNAME:RESULT%씨에게 성징 정체제를 투여하였습니다.」
+			PRINTFORML 「이제 %CALLNAME:RESULT%씨의 육체적 성징이 멈추게 되었습니다.」
 		ENDIF
-	;四肢修復
+	;사지 수복
 	ELSEIF ARG == 51
 		IF CFLAG:RESULT:0 != 0 || TALENT:RESULT:사지결손 < 1
 			PRINTL 올바른 값을 입력해 주십시오.
@@ -1025,12 +1035,12 @@ ELSE
 			TALENT:RESULT:사지결손 = 0
 			TALENT:RESULT:공생 = 1
 			PRINTW . . .
+			PRINTL . . .
 			PRINTW . . .
-			PRINTW . . .
-			PRINTFORML 촉수のバイオマスを利用して손발を形成し、
-			PRINTFORMW それらが%CALLNAME:RESULT%の身体に接続された。
-			PRINTFORML %CALLNAME:RESULT%の손발は完全に復元されました
-			PRINTFORMW 代償として、%CALLNAME:RESULT%は%TALENTNAME:163%を獲得しました
+			PRINTFORML 촉수의 바이오매스를 이용하여 손발을 형성하고,
+			PRINTFORMW 그것들이 %CALLNAME:RESULT%의 신체에 연결되었다.
+			PRINTFORML 「%CALLNAME:RESULT%씨의 손발은 완전히 복원되었습니다.」
+			PRINTFORMW 「그 후유증으로, %CALLNAME:RESULT%씨는 [%TALENTNAME:163%] 상태가 되었습니다.」
 		ENDIF
 
 	ENDIF

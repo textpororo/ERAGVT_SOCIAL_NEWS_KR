@@ -20,7 +20,7 @@ FOR LOCAL, 0, CHARANUM
 	SIF CFLAG:0 != 0
 		CONTINUE
 	
-	;キャラの疲労度が一定以下でなければ発生しない
+	;キャラの피로도가 一定以下でなければ発生しない
 	SIF CFLAG:99 >= 30
 		CONTINUE
 	
@@ -329,9 +329,9 @@ IF CONFIG_CHECK_EVENT_F(6) == 1 && LOCAL:100 == 1
 ELSE
 	;연인と生でセックスしたフラグ
 	CFLAG:218++
-	;アフターピル
+	;사후피임약
 	CALL AFTER_PILL, TARGET,75, 사랑하는사람
-	;임신判定
+	;임신 판정
 	SIF ISFEMALE()
 		CALL NINSIN_HANTEI, 6, 800, 사랑하는사람
 ENDIF

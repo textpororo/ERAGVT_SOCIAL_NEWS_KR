@@ -8,12 +8,12 @@
 RACE = -1
 ;種族の開始番号
 LOCAL:1 = 201
-;フィートの開始番号
+;FEAT 개시 번호
 LOCAL:2 = 1000
-;種族の数
+;종족의 수
 LOCAL:3 = 11
 $MASTER_LOOP
-;フィートの初期化
+;FEAT 초기화
 VARSET FEAT_SELECT
 FOR LOCAL, 100, 300
 	;所持フィートの読み込み
@@ -50,7 +50,7 @@ ELSE
 	;뱀파이어ならば밤악마의귀족を必ず取得
 	SIF RACE == 9
 		FEAT_SELECT:110 = 1
-	;フィートの数をカウント
+	;FEAT의 수를 카운트
 	FEAT_NUM = 0
 	FOR LOCAL, 100, 300
 		SIF FEAT_SELECT:LOCAL > 0
@@ -88,7 +88,7 @@ ELSE
 	PRINTFORML 選択したフィート({FEAT_NUM}/3)
 	SIF FEAT_NUM > 3
 		SETCOLOR 128,128,128
-	PRINTL [0]決定
+	PRINTL [0] 결정
 	RESETCOLOR
 	PRINTL [1]キャンセル
 	$INPUT_LOOP_0
@@ -150,7 +150,7 @@ ELSE
 			ENDIF
 		ENDIF
 	ENDIF
-	;フィートの設定
+	;FEAT 설정
 	FOR LOCAL, 100, 300 
 		IF FEAT_SELECT:LOCAL > 0
 			TALENT:ARG:(LOCAL + LOCAL:2) = 1
@@ -158,7 +158,7 @@ ELSE
 			TALENT:ARG:(LOCAL + LOCAL:2) = 0
 		ENDIF
 	NEXT
-	;プロフィールに反映
+	;프로필에 반영
 	CALL SET_PROFILE, ARG
 ENDIF
 PRINTL 

@@ -222,7 +222,7 @@ PRINTFORML 　　공격　：{BASE:ARG:공격 + CFLAG:ARG:53 + FEAT_BONUS_F(ARG,
 PRINTFORML 　　민첩　：{BASE:ARG:민첩 + CFLAG:ARG:55 + FEAT_BONUS_F(ARG,5),4}    지성　：{BASE:ARG:지성 + CFLAG:ARG:56 + FEAT_BONUS_F(ARG,6),4}
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
-PRINTLC [99]決定
+PRINTLC [99] 결정
 SIF (ARG:2) == 0
 	PRINTLC [999]CSVから読み込む
 PRINTL 
@@ -316,7 +316,7 @@ ELSEIF RESULT == 24 && TALENT:ARG:변신능력 != -1
 	CALL WEAPON_CUSTOMIZE, ARG, 1
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 99
-	;部位結界の設定
+	;부위 결계 설정
 	CALL BASEUP_CAL_SHIELD, ARG
 ELSEIF RESULT == 999 && (ARG:2) == 0
 	CALL FIRSTSETTING_CHARA_LOADCSV, ARG
@@ -414,7 +414,7 @@ IF RESULT == 0 || (RESULT == 1 && TALENT:ARG:변신능력 == 1)
 		;初期経験を設定可能な場合、사정경험をリセット
 		SIF TALENT:ARG:고유캐릭터 == 0 && TALENT:ARG:초기경험설정불가 == 0
 			EXP:ARG:사정경험 = 0
-		;プロフィールに反映
+		;프로필에 반영
 		CALL SET_PROFILE, ARG
 	ELSE
 		GOTO INPUT_LOOP_1
@@ -482,7 +482,7 @@ ELSEIF RESULT == 2 || (RESULT == 3 && TALENT:ARG:변신능력 == 1)
 			EXP:ARG:출산경험 = 0
 		ENDIF
 
-		;プロフィールに反映
+		;프로필에 반영
 		CALL SET_PROFILE, ARG
 	ELSE
 		GOTO INPUT_LOOP_2
@@ -1259,7 +1259,7 @@ PRINTFORML 読み：\@CALL_STR:0 == "" ? 　-　 # %CALL_STR:0%\@　表記：\@C
 PRINTL 
 SIF CALL_STR:0 == "" || CALL_STR:1 == ""
 	SETCOLOR 128, 128, 128
-PRINT [99]決定　　　　
+PRINT [99] 결정　　　　
 RESETCOLOR
 PRINTL [98]キャンセル
 $INPUT_LOOP0

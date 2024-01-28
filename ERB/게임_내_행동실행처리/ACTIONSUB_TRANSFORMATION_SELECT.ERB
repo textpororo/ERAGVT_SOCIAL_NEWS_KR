@@ -1,46 +1,47 @@
 ﻿;**********************************************************
-;行動開始時の変身に関する処理
+;행동 개시 시 변신에 관한 처리
 @ACTION_TRANSFORMATION_SELECT, ARG, ARGS
 #DIMS ACTION_NAME,2
-;컨피그の変身設定受け渡し用。上から順に通常変身、女体化変身の場合、男性化変身の場合
-;中身は0 毎回選択、1 常に변신한다、2 常に変身しない
+;컨피그의 변신 설정 주고받기용. 위에서부터 순서대로 통상 변신, 여체화 변신일 경우, 남성화 변신일 경우
+;내용은 0=매번 선택、1=항상 변신한다、2=항상 변신하지 않는다
 #DIM TF_CONFIG_NOMAL
 #DIM TF_CONFIG_GIRL
 #DIM TF_CONFIG_BOY
 
-IF ARGS == "特別活動"
-	ACTION_NAME:0 = 変身した状態で特別活動に行きますか？
-	ACTION_NAME:1 = 変身せずにそのまま特別活動に行きます。
+IF ARGS == "특별 활동"
+	ACTION_NAME:0 = 변신한 상태로 특별 활동을 가시겠습니까?
+	ACTION_NAME:1 = 변신하지 않은 상태 그대로 특별 활동을 갑니다.
 	TF_CONFIG_NOMAL = GLOBAL:51
 	TF_CONFIG_GIRL  = GLOBAL:52
 	TF_CONFIG_BOY   = GLOBAL:53
-ELSEIF ARGS == "情報収集"
-	ACTION_NAME:0 = 変身した状態で情報収集を行いますか？
-	ACTION_NAME:1 = 変身せずにそのまま情報収集を行います。
+ELSEIF ARGS == "정보 수집"
+	ACTION_NAME:0 = 변신한 상태로 정보 수집을 진행하시겠습니까?
+	ACTION_NAME:1 = 변신하지 않은 상태 그대로 정보 수집을 진행합니다.
 	TF_CONFIG_NOMAL = GLOBAL:54
 	TF_CONFIG_GIRL  = GLOBAL:55
 	TF_CONFIG_BOY   = GLOBAL:56
-ELSEIF ARGS == "気晴らし"
-	ACTION_NAME:0 = 変身した状態で気晴らしに行きますか？
-	ACTION_NAME:1 = 変身せずにそのまま気晴らしに行きます。
+;원문은 気晴らし 기분 전환
+ELSEIF ARGS == "여가 활동"
+	ACTION_NAME:0 = 변신한 상태로 여가 활동을 즐기러 가시겠습니까?
+	ACTION_NAME:1 = 변신하지 않은 채로 여가 활동을 갑니다.
 	TF_CONFIG_NOMAL = GLOBAL:57
 	TF_CONFIG_GIRL  = GLOBAL:58
 	TF_CONFIG_BOY   = GLOBAL:59
 ENDIF
 
-;変身可能キャラは変身状態になるか選べる
-;임신が発覚している場合、男体化ＴＳ変身キャラは変身できない
+;변신 가능 캐릭터는 변신 상태가 될지 선택할 수 있다
+;임신이 밝혀진 경우, 남체화 TS변신 캐릭터는 변신 불가능
 IF TALENT:ARG:변신능력 > 0 && (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 1 && CHECK_PREGNANT_F(ARG) > 0)
-	PRINTFORMW %CALLNAME:ARG%は임신 중のため、変身で男性化できません。%ACTION_NAME:1%
+	PRINTFORMW %CALLNAME:ARG%은(는) 임신 중이기 때문에, 변신하여 남성화할 수 없습니다. %ACTION_NAME:1%
 ELSEIF TALENT:ARG:변신능력 > 0
-	;変身後名チェック
+	;변신 후 이름 체크
 	CFLAG:ARG:1 = 1
-	LOCALS'=(PRINT_TRANSCALLNAME(ARG)!="あなた" && PRINT_TRANSCALLNAME(ARG)!=CALLNAME:ARG) ? PRINT_TRANSCALLNAME(ARG) # ""
+	LOCALS'=(PRINT_TRANSCALLNAME(ARG)!="당신" && PRINT_TRANSCALLNAME(ARG)!=CALLNAME:ARG) ? PRINT_TRANSCALLNAME(ARG) # ""
 	CFLAG:ARG:1 = 0
 
-	;変身前に남자で変身後に女の子になり、컨피그で女体化を常にするorしない
+	;변신 전에 남자인 상태에서 변신 후에 여자가 되고, 컨피그에서 여체화를 항상 한다 or 하지 않는다
 	IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,1,"남자") == 0 && TF_CONFIG_GIRL != 0
-	;はいorいいえの代わり。女体化を常にするなら計算結果１−１＝０＝はい、常にしないなら計算結果２−１＝１＝いいえ
+	;네or아니오 대체용. 여체화를 항상 한다면 계산 결과(１−１＝０＝네), 항상 하지 않는다면 계산 결과(２−１＝１＝아니오)
 		RESULT = (TF_CONFIG_GIRL) - 1
 	ELSEIF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && TF_CONFIG_BOY != 0
 		RESULT = (TF_CONFIG_BOY) - 1
@@ -49,39 +50,39 @@ ELSEIF TALENT:ARG:변신능력 > 0
 	ELSE
 		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,1,"남자") == 0
 			LOCAL=2
-			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"への" # ""%変身で女体化できます。%ACTION_NAME:0%
+			PRINTFORM %CALLNAME:ARG%은(는) %LOCALS!="" ? LOCALS+"(으)로 " # ""%변신하여 여체화할 수 있습니다. %ACTION_NAME:0%
 		ELSEIF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0
 			LOCAL=3
-			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"への" # ""%変身で男性化できます。%ACTION_NAME:0%
+			PRINTFORM %CALLNAME:ARG%은(는) %LOCALS!="" ? LOCALS+"(으)로 " # ""%변신하여 남성화할 수 있습니다. %ACTION_NAME:0%
 		ELSE
 			LOCAL=1
-			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"に" # ""%変身できます。%ACTION_NAME:0%
+			PRINTFORM %CALLNAME:ARG%은(는) %LOCALS!="" ? LOCALS+"(으)로 " # ""%변신할 수 있습니다. %ACTION_NAME:0%
 		ENDIF
 		PRINTL 
-		PRINTFORML 　[0]%"はい",27,LEFT%	[1] いいえ
+		PRINTFORML 　[0] %"네",27,LEFT%	[1] 아니오
 		PRINTL
-		PRINTFORML 　[9] 네　 (次から確認しない)	[10] 아니오(次から確認しない)
+		PRINTFORML 　[9] 네　 (다음부터 확인하지 않는다)	[10] 아니오(다음부터 확인하지 않는다)
 		$INPUT_LOOP_0_0
 		INPUT
 	ENDIF
 
 	IF RESULT == 9 || RESULT == 10
-		IF ARGS == "特別活動"
+		IF ARGS == "특별 활동"
 			GLOBAL:(50+LOCAL)=RESULT==9 ? 1 # 2
-		ELSEIF ARGS == "情報収集"
+		ELSEIF ARGS == "정보 수집"
 			GLOBAL:(53+LOCAL)=RESULT==9 ? 1 # 2
-		ELSEIF ARGS == "気晴らし"
+		ELSEIF ARGS == "여가 활동"
 			GLOBAL:(56+LOCAL)=RESULT==9 ? 1 # 2
 		ENDIF
 		RESULT = RESULT==9 ? 0 # 1
 	ENDIF
 
 	IF RESULT == 0
-		;임신している場合、男体化ＴＳ変身キャラは変身に失敗
+		;임신했을 경우, 남체화 TS변신 캐릭터는 변신에 실패
 		IF CHARATALENT_F(ARG,0,"남자") == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && TALENT:ARG:임신 > 0
-			PRINTFORML しかし、%LOCALS!="" ? LOCALS+"への" # CALLNAME:ARG+"の"%変身は失敗した！
-			PRINTFORML いつものように変身しようとした筈なのに、なぜか何も起こらない…
-			PRINTFORM 仕方ないので、%CALLNAME:ARG%は%ACTION_NAME:1%
+			PRINTFORML 그러나, %LOCALS!="" ? LOCALS+"(으)로의 " # CALLNAME:ARG+"의 "%변신이 실패했다!
+			PRINTFORML 평소처럼 변신하려고 다시 시도해 봤지만, 어째선지 아무 일도 일어나지 않는다……
+			PRINTFORM 어쩔 수 없이, %CALLNAME:ARG%은(는) %ACTION_NAME:1%
 			IF TALENT:ARG:보추 > 0
 				PRINT (보추)
 			ELSEIF ISMALE(ARG)
@@ -93,7 +94,7 @@ ELSEIF TALENT:ARG:변신능력 > 0
 			ENDIF
 			PRINTL
 		ELSE
-			PRINTFORM %CALLNAME:ARG%は%LOCALS!="" ? LOCALS+"に" # ""%変身した！
+			PRINTFORM %CALLNAME:ARG%은(는) %LOCALS!="" ? LOCALS+"(으)로 " # ""%변신했다!
 			IF CHARATALENT_F(ARG,0,"남자") != CHARATALENT_F(ARG,1,"남자")
 				IF TALENT:ARG:보추 > 0
 					PRINT (보추)→

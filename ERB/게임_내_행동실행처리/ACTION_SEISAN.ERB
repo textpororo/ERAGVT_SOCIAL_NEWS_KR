@@ -1,40 +1,41 @@
 ﻿;--------------------------------------------------
-;特別活動
+;특별 활동
 @SEISAN
 #DIM SC_VAR, 2
 
 
-;稼ぐ方法
+;돈 버는 방법
 LOCAL:141 = 0
 
-;変身可能キャラは変身状態になるか選べる
-CALL ACTION_TRANSFORMATION_SELECT, TARGET, "特別活動"
+;변신 가능 캐릭터는 변신 상태가 될지 선택할 수 있다
+CALL ACTION_TRANSFORMATION_SELECT, TARGET, "특별 활동"
 
-PRINTFORM [0]アルバイト　　　　
+PRINTFORM [0] 아르바이트　　　 
 IF EXP:출산경험 > 0 || TALENT:임신 == 1 || TALENT:임신 == 3
-	PRINTFORM [1]研究所で検査協力　
+	PRINTFORM [1] 연구소 검사 협력 
 ELSE
-	PRINTFORM [1]研究所助手　　　　
+	PRINTFORM [1] 연구소 조수　　　
 ENDIF
-PRINTFORM [2]雑魚촉수退治　　　
+PRINTFORM [2] 잡몹 촉수 퇴치　 
 PRINTL 
-;욕망で援助交際解放
+;욕망으로 원조 교제 해방
 SIF ABL:욕망 > 0 && ISHOLE() == 1
-	PRINTFORM [3]援助交際　　　　　
-;욕망と노출벽、または枕営業回数でAV出演解放
+	PRINTFORM [3] 원조 교제　　　　
+;욕망과 노출벽, 또는 매춘 횟수로 AV 출연 해방
 SIF ((ABL:욕망 + ABL:노출벽) >= 5 || CFLAG:283 >= 10) && ISHOLE() == 1
-	PRINTFORM [4]AV出演　　　　　　
-;욕망と마조끼で公衆便所解放
+	PRINTFORM [4] AV 출연　　　　　
+;욕망과 마조끼로 공중 변소 해방
 SIF (ABL:욕망 + ABL:마조끼) >= 5 && ISHOLE() == 1
-	PRINTFORM [5]公衆便所　　　　　
+	PRINTFORM [5] 공중 변소　　　　
 PRINTL 
-PRINTFORM [6]アイドル活動　　　
-;デビュー後なら枕営業解放
+PRINTFORM [6] 아이돌 활동　　　
+;데뷔 후라면 매춘 해방
+;원문은 베개 영업 베개 영업, 우리말로는 성상납이라고도 하던가
 SIF EXP:매료경험 > 99 && ISHOLE() == 1
-	PRINTFORM [7]枕営業　　　　　　
-;デビュー後かつ週末ならライブ公演解放
+	PRINTFORM [7] 베개 영업　　　　
+;데뷔 후인 동시에 주말이라면 라이브 공연 해방
 SIF EXP:매료경험 > 99 && (DAY % 7 == 0 || DAY % 7 == 6)
-	PRINTFORM [8]ライブ公演　　　　
+	PRINTFORM [8] 라이브 공연　　　
 PRINTL 
 DRAWLINE
 
@@ -42,75 +43,75 @@ IF CFLAG:111 > 0
 	CALL RES_SCHEDULE, 111
 	IF RESULT == 0
 		PRINTL 
-		PRINT スケジュール：アルバイト
+		PRINT 스케쥴：아르바이트
 		PRINTL 
 	ENDIF
 	IF RESULT == 1
 		PRINTL 　
 		IF EXP:출산경험 > 0 || TALENT:임신 == 1 || TALENT:임신 == 3
-			PRINT スケジュール：研究所で検査協力　
+			PRINT 스케쥴：연구소 검사 협력 
 		ELSE
-			PRINT スケジュール：研究所助手　　　　
+			PRINT 스케쥴：연구소 조수　　　　
 		ENDIF
 		PRINTL 
 	ENDIF
 	IF RESULT == 2
 		PRINTL 
-		PRINT スケジュール：雑魚촉수退治
+		PRINT 스케쥴：잡몹 촉수 퇴치
 		PRINTL 
 	ENDIF
 	IF RESULT == 3
 		PRINTL 
-		PRINT スケジュール：援助交際
+		PRINT 스케쥴：원조 교제
 		IF ABL:욕망 == 0 || (ISHOLE() == 0)
-			PRINT （実行不能）
+			PRINT （실행 불능）
 			PRINTL 
-			PRINTL 手動で行動を選択してください
+			PRINTL 수동으로 행동을 선택하십시오.
 			GOTO INPUT_LOOP
 		ENDIF
 	ENDIF
 	IF RESULT == 4
 		PRINTL 
-		PRINT スケジュール：AV出演
+		PRINT 스케쥴：AV 출연
 		IF ((ABL:욕망 + ABL:노출벽) < 5 && CFLAG:283 < 10) || (ISHOLE() == 0)
-			PRINT （実行不能）
+			PRINT （실행 불능）
 			PRINTL 
-			PRINTL 手動で行動を選択してください
+			PRINTL 수동으로 행동을 선택하십시오.
 			GOTO INPUT_LOOP
 		ENDIF
 	ENDIF
 	IF RESULT == 5
 		PRINTL 
-		PRINT スケジュール：公衆便所
+		PRINT 스케쥴：공중 변소
 		IF (ABL:욕망 + ABL:마조끼) < 5 || (ISHOLE() == 0)
-			PRINT （実行不能）
+			PRINT （실행 불능）
 			PRINTL 
-			PRINTL 手動で行動を選択してください
+			PRINTL 수동으로 행동을 선택하십시오.
 			GOTO INPUT_LOOP
 		ENDIF
 	ENDIF
 	IF RESULT == 6
 		PRINTL 
-		PRINT スケジュール：アイドル活動
+		PRINT 스케쥴：아이돌 활동
 		PRINTL 
 	ENDIF
 	IF RESULT == 7
 		PRINTL 
-		PRINT スケジュール：枕営業
+		PRINT 스케쥴：베개 영업
 		IF (EXP:매료경험 < 100) || ISHOLE() == 0
-			PRINT （実行不能）
+			PRINT （실행 불능）
 			PRINTL 
-			PRINTL 手動で行動を選択してください
+			PRINTL 수동으로 행동을 선택하십시오.
 			GOTO INPUT_LOOP
 		ENDIF
 	ENDIF
 	IF RESULT == 8
 		PRINTL 
-		PRINT スケジュール：ライブ公演
+		PRINT 스케쥴：라이브 공연
 		IF (EXP:매료경험 < 100) || (DAY % 7 != 0 && DAY % 7 != 6)
-			PRINT （実行不能）
+			PRINT （실행 불능）
 			PRINTL 
-			PRINTL 手動で行動を選択してください
+			PRINTL 수동으로 행동을 선택하십시오.
 			GOTO INPUT_LOOP
 		ENDIF
 	ENDIF
@@ -120,11 +121,12 @@ ELSE
 ENDIF
 
 PRINTL 
-;男なら一部のコマンドは選択不可
+;남자라면 일부 커맨드는 선택 불가
 IF ISHOLE() == 0 && (RESULT == 3 || RESULT == 4 || RESULT == 5 || RESULT == 7)
 	PRINTL 올바른 값을 입력해 주십시오.
+	PRINTL (남자인 캐릭터는 실행할 수 없는 커맨드입니다.)
 	GOTO INPUT_LOOP
-;その他の実行不可コマンド入力時
+;기타 실행 불가 커맨드 입력 시
 ELSEIF RESULT < 0 || RESULT > 8 || (ABL:욕망 < 1 && RESULT == 3) || (ABL:욕망 + ABL:노출벽 < 5 && CFLAG:283 < 10 && RESULT == 4) || ((ABL:욕망 + ABL:마조끼) < 5 && RESULT == 5) || (EXP:매료경험 < 100 && RESULT == 7) || ((EXP:매료경험 < 100 || (DAY % 7 != 0 && DAY % 7 != 6)) && RESULT == 8)
 	PRINTL 올바른 값을 입력해 주십시오.
 	GOTO INPUT_LOOP

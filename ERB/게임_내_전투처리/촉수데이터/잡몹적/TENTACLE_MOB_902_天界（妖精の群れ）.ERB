@@ -295,7 +295,7 @@ PRINTL 全身愛撫
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
-PRINTFORM 無数の妖精が%PRINT_TRANSCALLNAME(TARGET)%の
+PRINTFORM 無数の妖精が%PRINT_TRANSCALLNAME(TARGET)%의 
 ;アウターが防護機能を失ってない
 IF CLOTH_OUTER_PER >= CLOTH_OUTER_DEF
 	PRINTFORM %COSTUME_NAME(TARGET)%に覆われた
@@ -373,7 +373,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
 IF (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%が妖精達に
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)妖精達に
 	IF ((ARG & Ｖ) || (ARG & Ａ)) && (ARG & Ｂ)
 		PRINT 全身
 	ELSEIF (ARG & Ｖ)==0 && (ARG & Ａ)==0 && (ARG & Ｂ)
@@ -386,12 +386,12 @@ ENDIF
 PRINT 一匹の妖精が
 IF ISPENIS(TARGET) == 1
 	IF (ARG & Ｃ) == 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%のペニスを拡張した膣で貪ろうとしたが、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 ペニスを拡張した膣で貪ろうとしたが、
 		PRINTFORM 結界に阻まれて触れることができない
 	ELSE
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%のペニスを自らの拡張した膣で飲み込み、
+		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを自らの拡張した膣で飲み込み、
 		PRINTFORML 前後に動いてシゴき\@TFLAG:20 == 1 ? 続けている # 始めた\@。
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 妖精オナホから与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -408,9 +408,9 @@ ELSE
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%클리토리스を頬張ろうとしたが
 		PRINTFORM 結界に阻まれて触れることができない
 	ELSE
-		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%の全身を愛撫しながら클리토리스を頬張り、
+		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら클리토리스を頬張り、
 		PRINTFORML 激しく舐めしゃぶり\@TFLAG:20 == 1 ? 続けている # 始めた\@。
-		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%は
+		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 淫豆に与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -458,7 +458,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
 IF (ARG & Ｃ) || (ARG & Ｂ)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%が妖精達に
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)妖精達に
 	IF (ARG & Ｃ) && (ARG & Ｂ)
 		PRINT 全身
 	ELSEIF (ARG & Ｃ)==0 && (ARG & Ｂ)
@@ -468,13 +468,13 @@ IF (ARG & Ｃ) || (ARG & Ｂ)
 	ENDIF
 	PRINTL を愛撫されている中、
 ENDIF
-PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の
+PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
 IF (ARG & Ｖ) == 0
 	PRINTFORML 질に近づいたが
 	PRINTFORM 結界に阻まれて触れることができなかった
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 	PRINTFORML 질に近づいたが
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が咄嗟に身を捻って抵抗したため、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)咄嗟に身を捻って抵抗したため、
 	PRINTFORM うまく近づけなかったようだ
 ELSEIF TALENT:처녀 > 0
 	PRINTFORML \@PALAM:윤활 > 2000 ? 濡れそぼった # まだ濡れてもいない\@膣に近づき、
@@ -487,36 +487,36 @@ ELSEIF TALENT:처녀 > 0
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれる・・・
 		PRINTL 
-		PRINTL 처녀喪失
+		PRINTL 처녀 상실
 		PRINTW 
-		PRINTFORML つぅと純潔の血を流しながらも、%PRINT_TRANSCALLNAME(TARGET)%の意識が戻る気配はない。
+		PRINTFORML つぅと純潔の血を流しながらも、%PRINT_TRANSCALLNAME(TARGET)%의 意識が戻る気配はない。
 		PRINTFORML それを良いことに妖精は「初めてのオンナ」の질내の感触に身を震わせ、
 		PRINTFORM がむしゃらに욕망を叩き付け始めた
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
 		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に倒錯した喜びを感じてしまっている。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれる・・・
 		PRINTL 
-		PRINTL 처녀喪失
+		PRINTL 처녀 상실
 		PRINTW 
 		PRINTFORML ぎこちなく、そして激しく。
 		PRINTFORML 「初めてのオンナ」に夢中で욕망をぶつける妖精を見つめながら
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は形ばかりの抵抗の言葉を口にしつつ
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)形ばかりの抵抗の言葉を口にしつつ
 		PRINTFORM 頬を染めて満足げな吐息を洩らしている
 	ELSE
-		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%PRINT_TRANSCALLNAME(TARGET)%が必死に抵抗するも、
+		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%PRINT_TRANSCALLNAME(TARGET)%이(가)必死に抵抗するも、
 		PRINTFORML 無数の妖精たちに纏わりつかれた状態では満足に振り払うことができない。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれてしまう・・・
 		PRINTL 
-		PRINTL 처녀喪失
+		PRINTL 처녀 상실
 		PRINTW 
 		PRINTFORML 自分より遥かに力の劣る相手にろくに抵抗もできずに처녀を奪われ、
 		IF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 			PRINTFORML 悔しさに涙を浮かべながらも毅然とした表情を保つ%PRINT_TRANSCALLNAME(TARGET)%。
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は茫然自失となっている。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)茫然自失となっている。
 		ENDIF
 		PRINTFORM そんな様子にはお構いなしに、妖精は「初めてのオンナ」を犯すのに夢中になっている
 	ENDIF
@@ -574,7 +574,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
 IF (ARG & Ｃ) || (ARG & Ｂ)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%が妖精達に
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)妖精達に
 	IF (ARG & Ｃ) && (ARG & Ｂ)
 		PRINT 全身
 	ELSEIF (ARG & Ｃ)==0 && (ARG & Ｂ)
@@ -584,7 +584,7 @@ IF (ARG & Ｃ) || (ARG & Ｂ)
 	ENDIF
 	PRINTL を愛撫されている中、
 ENDIF
-PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の
+PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
 IF (ARG & Ａ) == 0
 	PRINTFORML 애널に近づいたが
 	PRINTFORM 結界に阻まれて触れることができなかった
@@ -605,19 +605,19 @@ IF (ARG & Ｖ)
 	ENDIF
 	IF TALENT:처녀 > 0
 		PRINTL 
-		PRINTL 처녀喪失
+		PRINTL 처녀 상실
 		PRINTW 
 		IF (TCVARn:12 & 기절)
-			PRINTFORML つぅと純潔の血を流しながらも、%PRINT_TRANSCALLNAME(TARGET)%の意識が戻る気配はない。
+			PRINTFORML つぅと純潔の血を流しながらも、%PRINT_TRANSCALLNAME(TARGET)%의 意識が戻る気配はない。
 		ELSE
 			PRINTFORML 自分より遥かに力の劣る相手にろくに抵抗もできずに처녀を奪われ、
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락)
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は形ばかりの抵抗の言葉を口にしつつ
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)形ばかりの抵抗の言葉を口にしつつ
 				PRINTFORM 頬を染めて満足げな吐息を洩らしている。
 			ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は悔しさに涙を浮かべながらも毅然とした表情を保っている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)悔しさに涙を浮かべながらも毅然とした表情を保っている。
 			ELSE
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は茫然自失となっている。
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)茫然自失となっている。
 			ENDIF
 		ENDIF
 	ENDIF
@@ -660,7 +660,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
 SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が妖精達に下半身を愛撫されている中、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)妖精達に下半身を愛撫されている中、
 PRINT 二匹の妖精が
 IF (ARG & Ｂ) == 0
 	IF ISMALE()
@@ -681,17 +681,17 @@ ELSE
 	ENDIF
 	IF ISMALE()
 		;#region
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の%BUST_SIZE_NAME(TARGET,0)%胸肌に吸い付\@TFLAG:20 == 7 ? き続けている # いていく\@。
+		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 %BUST_SIZE_NAME(TARGET,0)%胸肌に吸い付\@TFLAG:20 == 7 ? き続けている # いていく\@。
 		;#endregion
 	ELSE 
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の%BUST_SIZE_NAME(TARGET,0)%乳房に吸い付\@TFLAG:20 == 7 ? き続けている # いていく\@。
+		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 %BUST_SIZE_NAME(TARGET,0)%乳房に吸い付\@TFLAG:20 == 7 ? き続けている # いていく\@。
 	ENDIF
 	PRINTFORML まるで一匹一匹が小型の搾乳器のように、
 	PRINTFORM 小さな全身を大きく使って引き絞るように吸い上げていく
 	IF TALENT:모유체질 > 0
 		PRINTFORML 。
 		PRINTL 
-		PRINTFORML その動きが%PRINT_TRANSCALLNAME(TARGET)%の肉体の母性を刺激したのか、
+		PRINTFORML その動きが%PRINT_TRANSCALLNAME(TARGET)%의 肉体の母性を刺激したのか、
 		PRINTFORML ねっとりと乳首を弄ばれる感触に先端から母乳が滲みだすと、
 		PRINTFORML 妖精たちは性欲に並ぶ本能的欲求「食欲」に従って、
 		PRINTFORM さらに激しく目の前の獲物に縋りつき、貪りはじめた
@@ -742,7 +742,7 @@ ELSE
 	PRINTL 尻叩き
 ENDIF
 FONTREGULAR
-PRINTFORML 妖精達が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の손발を外側に強く引っ張り始めたと思ったら、
+PRINTFORML 妖精達が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 손발を外側に強く引っ張り始めたと思ったら、
 IF 	FLAG:900 == 1
 	PRINTFORML 大の字の状態でいきなり地面に叩きつけ\@TALENT:주관시점 > 0 ? られ # \@た！
 ELSE
@@ -756,7 +756,7 @@ ELSE
 	ENDIF
 	PRINTFORML に向かって淡く透き通る黒いもやを放っ\@TALENT:주관시점 > 0 ? てき # \@た！
 ENDIF
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は痛みに喘いでいる・・・
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)痛みに喘いでいる・・・
 PRINTW 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM8")
@@ -782,9 +782,9 @@ FONTREGULAR
 ;	ELSE
 ;		PRINTFORM %BUST_SIZE_NAME(TARGET,0)%胸
 ;	ENDIF
-;	PRINTFORML に纏わりつかれている%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%をよそに
+;	PRINTFORML に纏わりつかれている%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%을(를)よそに
 ;ENDIF
-PRINTFORM 一匹の妖精が針を虚空から取り出し、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の
+PRINTFORM 一匹の妖精が針を虚空から取り出し、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
 IF RAND:2 == 0 && (ARG & Ｃ) == 0 && ISPENIS(TARGET) == 0
 	PRINT 클리토리스
 	;ランダム分岐フラグ
@@ -800,11 +800,11 @@ ELSE
 ENDIF
 IF (TCVARn:12 & 기절)
 	PRINTL を突き刺し、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の意識を取り戻させた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 意識を取り戻させた。
 ELSE
 	PRINTL を突き刺した。
 ENDIF
-PRINTFORML あまりの痛みに%PRINT_TRANSCALLNAME(TARGET)%は泣き叫ぶが、
+PRINTFORML あまりの痛みに%PRINT_TRANSCALLNAME(TARGET)%은(는)泣き叫ぶが、
 PRINTFORML 손발をがっちりと拘束されており逃れることはできない・・・
 PRINTW 
 ;구상
@@ -842,15 +842,15 @@ FONTBOLD
 PRINTL 입辱
 FONTREGULAR
 ;SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
-;	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%が妖精達に全身を愛撫されている中、
-PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%の
+;	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)妖精達に全身を愛撫されている中、
+PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
 IF RAND:2 == 0
 	PRINTFORML 頬に肥大化させたペニスを擦りつけて\@TALENT:주관시점 > 0 ? く # い\@る。
-	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	IF (TCVARn:12 & 기절)
 		PRINTFORM 無防備に半開きになった唇を抉じ開けられ、口をオナホのように扱われている
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%PRINT_TRANSCALLNAME(TARGET)%は我慢しきれず、
+		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%PRINT_TRANSCALLNAME(TARGET)%은(는)我慢しきれず、
 		PRINTFORM 半ば無意識にペニスを口に含み、丁寧に舌を絡めて奉仕し初め\@TALENT:주관시점 > 0 ? てき # \@た
 	ELSE
 		PRINTFORML その臭気に何とか顔を逸らそうとするが、
@@ -908,10 +908,10 @@ FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 IF LOCAL == 1
 	PRINTFORML の一部が虚空から青紫色の粘液を放出し\@TALENT:주관시점 > 0 ? てき # \@た！
-	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%の全身に降りかかり、
+	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%의 全身に降りかかり、
 ELSE
 	PRINTFORML の一部が風の刃を生み出し%PRINT_TRANSCALLNAME(TARGET)%に向かって放っ\@TALENT:주관시점 > 0 ? てき # \@た！
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%の
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 ENDIF
 PRINTFORML %PRINT_CLOTH_CONDITION()%がみるみる\@LOCAL == 1 ? 溶かさ # 切り裂か\@れていく・・・
 PRINTW 
@@ -1027,7 +1027,7 @@ PRINTL
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_902_KARAMITUKU
 CALL TENTACLE_ACCESS, "NAME"
-PRINTFORM \@TFLAG:12 == 3 ?  # の一部\@が羽を激しく震わせて、%PRINT_TRANSCALLNAME(TARGET)%の
+PRINTFORM \@TFLAG:12 == 3 ?  # の一部\@が羽を激しく震わせて、%PRINT_TRANSCALLNAME(TARGET)%의 
 IF TFLAG:12 == 3
 	PRINT 四方八方
 ELSEIF TFLAG:12 == 2
@@ -1062,7 +1062,7 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_902_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
 CALL TENTACLE_ACCESS, "NAME"
 PRINTL に纏わりつかれ、
 PRINTL 空中に持ち上げられてしまった！
@@ -1076,22 +1076,22 @@ PRINTL 空中に持ち上げられてしまった！
 ;コメントアウトすると通常の地の文が表示される
 @MESSAGE_BATTLE_CHARA_MOB_902_SEX_ATTACK100
 IF (MESSAGE_BRANCH_F(TARGET) & 타락)
-	PRINTFORM 발정しきった様子の%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM 발정しきった様子の%PRINT_TRANSCALLNAME(TARGET)%은(는)
 ELSEIF TALENT:음란 > 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は妖艶な笑みを浮かべながら
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)妖艶な笑みを浮かべながら
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は虚ろな表情で
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)虚ろな表情で
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は蕩熱に浮かされた表情で
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)蕩熱に浮かされた表情で
 ELSE
 	IF TALENT:감정결여 > 0
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%はつまらない物を扱うような無表情で
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)つまらない物を扱うような無表情で
 	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は泣きそうになるのを堪えながら
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)泣きそうになるのを堪えながら
 	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は強気な表情で
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)強気な表情で
 	ELSE
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は油断を誘おうと
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)油断を誘おうと
 	ENDIF
 ENDIF
 PRINTL 妖精のペニスに指を絡め、扱き始めた！
@@ -1101,7 +1101,7 @@ ELSEIF ABL:기교 < 4
 	PRINTL しゅコしゅコと淫猥な音を立てて責め立てると、
 	PRINTL 妖精はたまらず肉棒を大きく勃起させビクビクと反応した・・・
 ELSE
-	PRINTFORML 丁寧に愛撫しつつ%PRINT_TRANSCALLNAME(TARGET)%が顔を寄せて舌で肉筋を舐め上げると、
+	PRINTFORML 丁寧に愛撫しつつ%PRINT_TRANSCALLNAME(TARGET)%이(가)顔を寄せて舌で肉筋を舐め上げると、
 	PRINTL 妖精はギンギンに勃起した先端からカウパー液を溢れさせている・・・
 ENDIF
 
@@ -1111,28 +1111,28 @@ ENDIF
 ;コメントアウトすると通常の地の文が表示される
 @MESSAGE_BATTLE_CHARA_MOB_902_SEX_ATTACK101
 IF (MESSAGE_BRANCH_F(TARGET) & 타락)
-	PRINTFORM 발정しきった様子の%PRINT_TRANSCALLNAME(TARGET)%は
+	PRINTFORM 발정しきった様子の%PRINT_TRANSCALLNAME(TARGET)%은(는)
 ELSEIF TALENT:음란 > 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は妖艶な笑みを浮かべながら
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)妖艶な笑みを浮かべながら
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は虚ろな表情で
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)虚ろな表情で
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は蕩熱に浮かされた表情で
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)蕩熱に浮かされた表情で
 ELSE
 	IF TALENT:감정결여 > 0
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は情動を感じさせない無表情さで
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)情動を感じさせない無表情さで
 	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は嫌悪感を堪えながら
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)嫌悪感を堪えながら
 	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は強気な表情で
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)強気な表情で
 	ELSE
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は仕返しとばかりに
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)仕返しとばかりに
 	ENDIF
 ENDIF
 	PRINTFORML 妖精のペニスにフェラチオし始めた！
 IF EXP:펠라경험 < 5 && ABL:기교 < 3
 	PRINTL まだ初々しい미성숙な舌使いでは妖精を興奮させるには不十分な様子で、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は半ば自棄気味に肉棒を頬張った・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)半ば自棄気味に肉棒を頬張った・・・
 ELSEIF EXP:펠라경험 < 20
 	PRINTL 先端を舌で弄びつつ、じゅるっと音を立てて吸い上げていく。
 	PRINTL 妖精はたまらず肉棒を大きく勃起させている・・・
@@ -1146,12 +1146,12 @@ ENDIF
 ;--------------------------------------------------
 ;コメントアウトすると通常の地の文が表示される
 @MESSAGE_BATTLE_CHARA_MOB_902_SEX_ATTACK102
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は풋잡공격の構え！
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)풋잡공격の構え！
 PRINTW 
 FONTBOLD
 PRINTL 挿入行動にカウンター
 FONTREGULAR
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は襲い掛かってきた妖精のペニスを両足で挟み込み、
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)襲い掛かってきた妖精のペニスを両足で挟み込み、
 PRINTL 挿入を阻止すると同時に足コキで反撃した！
 PRINTL 
 PRINTL 妖精は思わぬ反撃にたじろいでいる・・・
@@ -1163,7 +1163,7 @@ PRINTL
 ;--------------------------------------------------
 ;コメントアウトすると通常の地の文が表示される
 @MESSAGE_BATTLE_CHARA_MOB_902_SEX_ATTACK103
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は스마타애태우기の構え！
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)스마타애태우기の構え！
 PRINTW 
 IF TALENT:처녀 > 0 && RAND:3 == 0 && BASE:V결계내구력 < 1
 	PRINTFORML 挑発するように素股していた%PRINT_TRANSCALLNAME(TARGET)%だったが
@@ -1172,7 +1172,7 @@ IF TALENT:처녀 > 0 && RAND:3 == 0 && BASE:V결계내구력 < 1
 	PRINTL 
 	PRINTL 危うく挿入を許しそうになりながらも、何とか腰を浮かして回避した！
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は隙を突いて相手のペニスを素股するように太ももで包み、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)隙を突いて相手のペニスを素股するように太ももで包み、
 	IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		IF CLOTH_NO_INNER > 0
 			PRINT 衣装越しに
@@ -1194,7 +1194,7 @@ PRINTL
 ;--------------------------------------------------
 ;コメントアウトすると通常の地の文が表示される
 @MESSAGE_BATTLE_CHARA_MOB_902_SEX_ATTACK104
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%は
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	PRINTL 完全にメスの顔になって種付けされる快楽を貪っている・・・
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)

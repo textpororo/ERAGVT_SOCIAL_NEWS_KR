@@ -1,17 +1,17 @@
 ﻿
 ;**********************************************************
 @SCHEDULE
-;SC_MODE	鍛錬か特別活動
-;		0：鍛錬　1：特別活動　2：情報収集
-;SC_FLAG	スケジュール使用の可否　MODEごとに設定
-;SC_LIMIT	スケジュールの設定総数　MODEごとに設定
-;SC_ACTION	次の行動時に何番目を実行するか
-;SC_ITEM	実際の設定値　MODEごと0-8…でいいはずがなぜかループで範囲外までいっちゃうのでちょっと多めに
-;NOW_INPUT	どこに入力するか
-;ITEM_NUM	設定できる項目の数　0-98　99は削除
-;IT_FLAG	その項目が使用可能かどうか　0-99
-;SC_STR		項目表示用文字列　0-99
-;**********************************************************]
+;SC_MODE	단련이나 특별 활동
+;		0：단련　1：특별활동　2：정보수집
+;SC_FLAG	스케쥴 사용 여부　MODE별로 설정
+;SC_LIMIT	스케쥴의 설정 총수　MODE별로 설정
+;SC_ACTION	다음 행동 시에 몇 번째를 실행할 것인가
+;SC_ITEM	실제 설정값　MODE마다 0-8… 이라면 될텐데 어째선지 루프로 범위 밖까지 가버리니까 좀 넉넉하게
+;NOW_INPUT	어디에 입력할 것인가
+;ITEM_NUM	설정할 수 있는 항목의 수　0-98　99는 삭제
+;IT_FLAG	그 항목이 사용 가능한지의 여부　0-99
+;SC_STR		항목 표시용 문자열　0-99
+;**********************************************************
 #DIM LCOUNT, 2
 #DIM CCOUNT
 #DIM SC_MODE
@@ -24,13 +24,13 @@
 #DIM IT_FLAG, 100
 #DIM LOST
 #DIMS SC_STR, 100
-;行方不明の仲間が居るかどうかサーチ(ヒロイン視点では取り込まれキャラも探せるほうが自然だがとりあえず除外)
+;행방불명된 동료가 있는지 없는지 서치 (히로인 시점에서는 거두어진 캐릭터도 찾는 편이 자연스럽지만 일단 제외)
 LOST = CHARANUM_PRISON()+CHARANUM_ENSLAVED()
 
 REDRAW 0
 DRAWLINE
 
-;CFLAGからローカル変数へ
+;CFLAG로부터 로컬(LOCAL)변수에
 FOR LCOUNT, 0, 3
 	NOW_INPUT = CFLAG:(LCOUNT + 110)
 	IF NOW_INPUT < 0
@@ -65,132 +65,132 @@ FOR LCOUNT, 0, 100
 	SC_STR:LCOUNT = 
 NEXT
 
-;スケジュール文字列等設定
-;鍛錬
+;스케쥴 문자열 등 설정
+;단련
 IF SC_MODE == 0
 	ITEM_NUM = 11
 
 	IT_FLAG:0 = 1
-	SC_STR:0 = 走り込み
+	SC_STR:0 = 런닝
 
 	IT_FLAG:1 = 1
-	SC_STR:1 = 精神鍛錬
+	SC_STR:1 = 정신 단련
 
 	IT_FLAG:2 = 1
-	SC_STR:2 = 瞑想
+	SC_STR:2 = 명상
 
 	IT_FLAG:3 = 1
-	SC_STR:3 = 筋トレ 
+	SC_STR:3 = 근력 운동 
 
 	IT_FLAG:4 = 1
-	SC_STR:4 = 自衛訓練
+	SC_STR:4 = 자기 방어 훈련
 
 	IT_FLAG:5 = 1
-	SC_STR:5 = ダッシュ
+	SC_STR:5 = 대시(Dash)
 
 	SIF TALENT:변신능력 != -1
 		IT_FLAG:6 = 1
-	SC_STR:6 = 근거리戦闘訓練
+	SC_STR:6 = 근거리 전투 훈련
 
 	SIF TALENT:변신능력 != -1
 		IT_FLAG:7 = 1
-	SC_STR:7 = 중거리戦闘訓練
+	SC_STR:7 = 중거리 전투 훈련
 
 	SIF TALENT:변신능력 != -1
 		IT_FLAG:8 = 1
-	SC_STR:8 = 원거리戦闘訓練
+	SC_STR:8 = 원거리 전투 훈련
 
 	IT_FLAG:9 = 1
-	SC_STR:9 = 戦術研究
+	SC_STR:9 = 전술 연구
 
 	SIF TALENT:변신능력 == -1
 		IT_FLAG:10 = 1
-	SC_STR:10 = 기초전투訓練
+	SC_STR:10 = 기초 전투 훈련
 ENDIF
 
-;特別活動
+;특별 활동
 IF SC_MODE == 1
 	ITEM_NUM = 9
 
 	IT_FLAG:0 = 1
-	SC_STR:0 = アルバイト
+	SC_STR:0 = 아르바이트
 
 	IT_FLAG:1 = 1
 	IF (EXP:출산경험 > 0 || TALENT:임신 == 1 || TALENT:임신 == 3)
-		SC_STR:1 = 研究所で検査協力
+		SC_STR:1 = 연구소 검사 협력
 	ELSE
-		SC_STR:1 = 研究所助手
+		SC_STR:1 = 연구소 조수
 	ENDIF
 
 	IT_FLAG:2 = 1
-	SC_STR:2 = 雑魚촉수退治
+	SC_STR:2 = 잡몹 촉수 퇴치
 
-	;욕망で援助交際解放
+	;욕망으로 원조 교제 해방
 	SIF ABL:욕망 > 0 && ISHOLE() == 1
 		IT_FLAG:3 = 1
-	SC_STR:3 = 援助交際
+	SC_STR:3 = 원조 교제
 
-	;욕망と노출벽、または枕営業回数でAV出演解放
+	;욕망과 노출벽, 또는 매춘 횟수로 AV 출연 해방
 	SIF (ABL:욕망 + ABL:노출벽 >= 5 || CFLAG:283 >= 10) && ISHOLE() == 1
 		IT_FLAG:4 = 1
-	SC_STR:4 = AV出演
+	SC_STR:4 = AV 출연
 
-	;욕망と마조끼で公衆便所解放
+	;욕망과 마조끼로 공중 변소 해방
 	SIF ABL:욕망 + ABL:마조끼 >= 5 && ISHOLE() == 1
 		IT_FLAG:5 = 1
-	SC_STR:5 = 公衆便所
+	SC_STR:5 = 공중 변소
 
 	IT_FLAG:6 = 1
-	SC_STR:6 = アイドル活動
+	SC_STR:6 = 아이돌 활동
 
-	;デビュー後なら枕営業解放
+	;데뷔 후라면 베개 영업 해방
 	SIF EXP:매료경험 > 99 && ISHOLE() == 1
 		IT_FLAG:7 = 1
-	SC_STR:7 = 枕営業
+	SC_STR:7 = 베개 영업
 
-	;デビュー後かつ週末ならライブ公演解放
+	;데뷔 후이며 주말이라면 라이브 공연 해방
 	SIF EXP:매료경험 > 99
 		IT_FLAG:8 = 1
-	SC_STR:8 = ライブ公演
+	SC_STR:8 = 라이브 공연
 ENDIF
 
-;情報収集
+;정보 수집
 IF SC_MODE == 2
 	ITEM_NUM = 4
 
 	IT_FLAG:0 = 1
-	SC_STR:0 = 噂話の聞き込み
+	SC_STR:0 = 소문난 이야기 탐문
 
 	IT_FLAG:1 = 1
-	SC_STR:1 = 事件の捜査
+	SC_STR:1 = 사건 수사
 
-	;정보원とのコネを見る
+	;정보원과의 연줄을 본다
 	SIF CFLAG:122 > 0
 		IT_FLAG:2 = 1
-	SC_STR:2 = 情報を買う
+	SC_STR:2 = 정보 구입
 
-	;仲間の捜索
+	;동료 수색
 	SIF LOST > 0
 		IT_FLAG:3 = 1
-	SC_STR:3 = 仲間の捜索
+	SC_STR:3 = 동료 수색
 ENDIF
 
-;現在のモード表示
+;현재의 MODE 표시
 PRINTFORM  %CALLNAME% 
 IF SC_MODE == 0
-	PRINTL の鍛錬スケジュール設定
+	PRINTL 의 단련 스케쥴 설정
 ELSEIF SC_MODE == 1
-	PRINTL の特別活動スケジュール設定
+	PRINTL 의 특별 활동 스케쥴 설정
 ELSEIF SC_MODE == 2
-	PRINTL の情報収集スケジュール設定
+	PRINTL 의 정보 수집 스케쥴 설정
 ELSEIF SC_MODE == 3
-	PRINTL の自由行動スケジュール設定
+	PRINTL 의 자유 행동 스케쥴 설정
 ENDIF
 DRAWLINE
 
 $INPUT_LOOP
 
-;各変数正規化
+;각 변수 정규화
 SIF SC_LIMIT:SC_MODE < 1
 	SC_LIMIT:SC_MODE = 0
 SIF SC_LIMIT:SC_MODE > 10
@@ -215,7 +215,7 @@ PRINTPLAIN 　　　　　　　　　　　
 
 SIF SC_MODE == 0
 	SETCOLOR 255, 255, 0
-PRINTFORML \@SC_MODE == 0 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [200] 鍛錬
+PRINTFORML \@SC_MODE == 0 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [200] 단련
 RESETCOLOR
 
 FOR LCOUNT, 0, 9
@@ -240,7 +240,7 @@ FOR LCOUNT, 0, 9
 		PRINTPLAIN 　　　　　　　　　　 
 		SIF SC_MODE == 1
 			SETCOLOR 255, 255, 0
-		PRINTFORM \@SC_MODE == 1 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [201] 特別活動
+		PRINTFORM \@SC_MODE == 1 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [201] 특별 활동
 		RESETCOLOR
 	ENDIF
 
@@ -255,7 +255,7 @@ FOR LCOUNT, 0, 9
 		PRINTFORM 　　　　　　　　　　 %BASENAME:13, 6, LEFT%：{MAXBASE:지성, 6}
 
 	SIF LCOUNT == 8
-		PRINTPLAIN 　  実行できない場合は休憩になります
+		PRINTPLAIN 　  실행할 수 없는 경우 휴식을 취합니다.
 	PRINTL 
 
 	SETCOLOR 0, 0, 0
@@ -268,7 +268,7 @@ FOR LCOUNT, 0, 9
 		PRINTPLAIN 　　　　　　　　　　 
 		SIF SC_MODE == 2
 			SETCOLOR 255, 255, 0
-		PRINTFORM \@SC_MODE == 2 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@  [202] 情報収集
+		PRINTFORM \@SC_MODE == 2 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@  [202] 정보 수집
 		RESETCOLOR
 	ENDIF
 
@@ -285,12 +285,12 @@ FOR LCOUNT, 0, 9
 		PRINTFORM 　　　　　　　　　　　　%BASENAME:12, 6, LEFT%：{MAXBASE:민첩, 6}
 
 	SIF LCOUNT == 6
-		PRINTFORM 　　　　　　　　近LV：{ABL:근거리} 　中LV：{ABL:중거리} 　遠LV：{ABL:원거리}
+		PRINTFORM 　　　　　　　　근LV：{ABL:근거리} 　중LV：{ABL:중거리} 　원LV：{ABL:원거리}
 
 	SIF LCOUNT == 7
-		PRINTPLAIN 　　※ 行動時、上から順に繰り返し実行されます
+		PRINTPLAIN 　　※ 행동 시 위에서부터 순서대로 반복 실행됩니다.
 
-;モード変更ボタン表示
+;MODE 변경 버튼 표시
 ;	IF LCOUNT == 0
 ;		PRINTPLAIN 　　　　　　　　　　  
 ;		SIF SC_MODE == 1
@@ -315,28 +315,28 @@ FOR LCOUNT, 0, ITEM_NUM
 NEXT
 SIF ITEM_NUM % 3 != 0
 	PRINTL 
-;４行決め打ちで合わせているので将来１２項以上になる場合はここと↓のCLEARLINE２つを書き換える
+;4행 미리 결정(4行決め打ち)으로 맞추고 있기에 장래 12항 이상이 되는 경우는 여기와 ↓아래의 CLEARLINE 2개를 고쳐 쓴다
 FOR LCOUNT,0,4-(ITEM_NUM+2)/3
 	PRINTL 
 NEXT
-PRINTL [99]項目削除　　　　　　
+PRINTL [99] 항목 삭제　　　　　
 
 DRAWLINE
-PRINT [999] 決定　[998] キャンセル
+PRINT [999] 결정　[998] 취소　　　
 PRINTPLAIN  　　　　　　 　　　　
-PRINTFORML [997] スケジュール機能 - \@SC_FLAG:SC_MODE ? ON # OFF \@
+PRINTFORML [997] 스케쥴 기능 - \@SC_FLAG:SC_MODE ? ON # OFF \@
 
 INPUT
 
-;モード変更
+;MODE 변경
 IF RESULT >= 200 && RESULT < 203
 	SC_MODE = RESULT - 200
 	NOW_INPUT = (SC_LIMIT:SC_MODE + 11) * 10
 	CLEARLINE 26 + (ITEM_NUM / 3) + SQRT(ITEM_NUM % 3)+(4-(ITEM_NUM+2)/3)
 	GOTO CHANGE_MODE
-;項目削除
+;항목 삭제
 ELSEIF RESULT == 99
-	;未設定項目を削除してもSC_LIMITは減らない
+	;미설정 항목을 삭제해도 SC_LIMIT 는 줄지 않는다
 	SIF SC_ITEM:SC_MODE:(NOW_INPUT / 10 - 11) != 0
 		SC_LIMIT:SC_MODE -= 1
 	FOR LCOUNT, 0, 21 - NOW_INPUT / 10
@@ -346,23 +346,23 @@ ELSEIF RESULT == 99
 			SC_ITEM:SC_MODE:(NOW_INPUT / 10 - 11 + LCOUNT) = SC_ITEM:SC_MODE:(NOW_INPUT / 10 - 10 + LCOUNT)
 		ENDIF
 	NEXT
-;項目入力
+;항목 입력
 ELSEIF RESULT > 0 && RESULT < ITEM_NUM + 1 && IT_FLAG:(RESULT - 1) > 0
-	;未設定項目に入力した場合のみSC_LIMITが増える
+	;미설정 항목에 입력한 경우에만 SC_LIMIT 가 늘어난다
 	SIF SC_ITEM:SC_MODE:(NOW_INPUT / 10 - 11) == 0
 		SC_LIMIT:SC_MODE += 1
 	SC_ITEM:SC_MODE:(NOW_INPUT / 10 - 11) = RESULT
 	NOW_INPUT += 10
-;入力箇所変更
+;입력 장소 변경
 ELSEIF RESULT > 100 && RESULT < 200 && RESULT % 10 == 0
 	NOW_INPUT = RESULT
-;スケジュール使用のONOFF
+;스케쥴 사용 ON/OFF
 ELSEIF RESULT == 997
 	INVERTBIT SC_FLAG:SC_MODE, 0
-;キャンセル　設定を保存せずに終了
+;취소　설정을 저장하지 않고 종료
 ELSEIF RESULT == 998
 	RETURN 0
-;決定　設定を保存して終了
+;결정　설정을 저장하고 종료
 ELSEIF RESULT == 999
 	FOR LCOUNT, 0, 3
 		CFLAG:(LCOUNT + 110) = 0
@@ -387,10 +387,10 @@ GOTO INPUT_LOOP
 ;**********************************************************
 @RES_SCHEDULE, ARG
 ;**********************************************************
-;ARG		使用するCFLAG
-;SC_RES		最終的にRETURNする値
-;SC_VAR:0	実行番号
-;SC_VAR:1	スケジュールの総設定数
+;ARG		사용하는 CFLAG
+;SC_RES		최종적으로 RETURN하는 값
+;SC_VAR:0	실행 번호
+;SC_VAR:1	스케쥴의 총설 상수(総設定数)
 
 #DIM SC_RES
 #DIM SC_VAR, 2

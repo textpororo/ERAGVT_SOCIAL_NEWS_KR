@@ -298,7 +298,7 @@ FOR LOCAL:1, 1, CHARANUM
 NEXT
 RETURNF LOCAL
 
-;現在幽閉中or洗脳흑화中のキャラ数を返す式中関数(取り込まれ死亡キャラを除外して数える)
+;現在幽閉中or세뇌흑화中のキャラ数を返す式中関数(取り込まれ死亡キャラを除外して数える)
 @CHARANUM_PRISON
 #FUNCTION
 LOCAL = CHARANUM-1
@@ -308,7 +308,7 @@ FOR LOCAL:1, 1, CHARANUM
 NEXT
 RETURNF LOCAL
 
-;現在洗脳흑화中のキャラ数を返す式中関数
+;現在세뇌흑화中のキャラ数を返す式中関数
 @CHARANUM_DARKEN
 #FUNCTION
 LOCAL = CHARANUM-1
@@ -318,7 +318,7 @@ FOR LOCAL:1, 1, CHARANUM
 NEXT
 RETURNF LOCAL
 
-;クズ市民に監禁・性노예化されているキャラ数を返す
+;악질 시민に監禁・性노예化されているキャラ数を返す
 @CHARANUM_ENSLAVED
 #FUNCTION
 LOCAL = 0
@@ -408,9 +408,9 @@ RETURNF LOCALS
 ;変身中なら変身後呼び名を返す式中関数
 @PRINT_TRANSCALLNAME, ARG
 #FUNCTIONS
-;あなた구상選択時
+;당신(あなた) 구상選択時
 IF CFLAG:ARG:6 == 3
-	LOCALS = あなた
+	LOCALS = 당신
 ELSEIF CFLAG:ARG:3 == 1 && CFLAG:ARG:1 != 0
 	LOCALS = %CSTR:ARG:1%
 ELSE
@@ -421,23 +421,23 @@ RETURNF LOCALS
 ;※変身状態に関わらず変身後名を取得したければ%CSTR:1%を直接使う
 
 ;--------------------------------------------------
-;あなた구상に対応した呼び名を返す式中関数
+;당신(あなた) 구상に対応した呼び名を返す式中関数
 @PRINT_CALLNAME, ARG, ARG:1 = 0
 #FUNCTIONS
 ;地の文用
 IF ARG:1 == 0
-	;あなた구상選択時
+	;당신(あなた) 구상選択時
 	IF CFLAG:ARG:6 == 3
-		LOCALS = あなた
+		LOCALS = 당신
 	ELSE
 		LOCALS = %CALLNAME:ARG%
 	ENDIF
 ;システム表示用
 ELSE
 	LOCALS = %CALLNAME:ARG%
-	;あなた구상選択時
+	;당신(あなた) 구상選択時
 	SIF CFLAG:ARG:6 == 3
-		LOCALS += "(あなた)"
+		LOCALS += "(당신)"
 ENDIF
 RETURNF LOCALS
 
@@ -466,7 +466,7 @@ FOR LCOUNT, 0, CHARANUM
 			SIF CFLAG:LCOUNT:0 == 1
 				PRINT （幽閉中）
 			SIF CFLAG:LCOUNT:0 == 2
-				PRINT （洗脳）
+				PRINT （세뇌）
 			SIF CFLAG:LCOUNT:0 == 3
 				PRINT （흑화）
 			SIF CFLAG:LCOUNT:0 == 4
@@ -530,7 +530,7 @@ IF (SAVESTR:13 == "MOB") || FLAG:73 > 0
 		TIMES LOCAL, 1.10
 
 	CALL GET_EXP,min(LOCAL,75)
-;ボス戦
+;보스戦
 ELSEIF (SAVESTR:13 == "BOSS")
 	CALL TENTACLE_LEVEL
 	LOCAL = 50 * (RESULT + 2)/ABL:레벨 + RAND(15) + 25
@@ -549,7 +549,7 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;경험치の取得
+;경험치 취득
 @GET_EXP, ARG
 ;내성적
 SIF TALENT:내성적 > 0
@@ -558,7 +558,7 @@ SIF TALENT:내성적 > 0
 SIF TALENT:제멋대로굼 > 0
 	TIMES ARG, 1.10
 JUEL:경험치 += ARG
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は경험치を{ARG}％得た
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)경험치を{ARG}％得た
 ;레벨アップするか確認
 CALL CHECK_LEVELUP
 
@@ -581,7 +581,7 @@ FLAG:200 += ARG
 PRINTFORML 촉수의 조각を{ARG}個を手に入れた
 
 ;--------------------------------------------------
-;처녀喪失 
+;처녀 상실 
 ;！！！！この関数は現在戦闘中限定で呼ばれている　要統合
 @LOSTVIRGIN, ARG:0 = 0
 SIF TALENT:처녀 == -1
@@ -590,12 +590,12 @@ TALENT:처녀 = -1
 SIF ARG:0 != 0
 	ARG:0 = 1
 CFLAG:206 = 2 + ARG:0
-;지문: 戦闘中처녀喪失
+;지문: 戦闘中처녀 상실
 CALL MESSAGE_SEX_LOSTVIRGIN
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락) == 0
 	CALL SHINKYOU_CHANGE, "TOUSAKU"
 
-;聖처녀状態(or처녀を失わないオプションON)の判定を返す式中関数 처녀喪失しない状態なら1
+;聖처녀状態(or처녀を失わないオプションON)の判定を返す式中関数 처녀 상실しない状態なら1
 ;ARGキャラ番号、省略時TARGET
 @CHECK_HOLYVIRGIN_F,ARG=-1
 #FUNCTION
@@ -696,7 +696,7 @@ IF RESULT != 0
 	
 	;스테이터스 재계산
 	CALL LEVELSTATUS, ARG:0
-	;部位結界の設定
+	;부위 결계 설정
 	CALL BASEUP_CAL_SHIELD, ARG:0
 ENDIF
 
@@ -942,7 +942,7 @@ IF EXP:ARG:(LOCAL:1) >= LOCAL:2 && ABL:ARG:(LOCAL:0) < 9
 	ENDIF
 
 	PRINTL 
-	;実績
+	;실적
 	CALL GET_STATE_TROPHY,ARG
 ENDIF
 
@@ -1075,9 +1075,9 @@ WHILE JUEL:경험치 > 100 && ABL:레벨 < 998
 WEND
 IF LOCAL > 0
 	ABL:레벨 += LOCAL
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は레벨が{LOCAL}上がった
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 레벨이 {LOCAL} 올랐다!
 	CALL LEVELSTATUS,TARGET
-	;実績
+	;실적
 	CALL GET_STATE_TROPHY,TARGET
 ENDIF
 SIF ABL:레벨 >= 999
@@ -1300,19 +1300,19 @@ IF CFLAG:ARG:1 > 0
 			ELSEIF TALENT:ARG:장신 > 0
 				LOCALS = 장신
 			ENDIF
-		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "폭유" || ARGS == "초유" || ARGS == "마유" || ARGS == "기유"
 			IF TALENT:ARG:빈유 == 2
 				LOCALS = 絶壁
 			ELSEIF TALENT:ARG:빈유 == 1
 				LOCALS = 빈유
 			ELSEIF TALENT:ARG:거유 == 5
-				LOCALS = 奇乳
+				LOCALS = 기유
 			ELSEIF TALENT:ARG:거유 == 4
-				LOCALS = 魔乳
+				LOCALS = 마유
 			ELSEIF TALENT:ARG:거유 == 3
-				LOCALS = 超乳
+				LOCALS = 초유
 			ELSEIF TALENT:ARG:거유 == 2
-				LOCALS = 爆乳
+				LOCALS = 폭유
 			ELSEIF TALENT:ARG:거유 == 1
 				LOCALS = 거유
 			ENDIF
@@ -1354,20 +1354,20 @@ IF CFLAG:ARG:1 > 0
 					LOCALS = 장신
 				ENDIF
 			ENDIF
-		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "폭유" || ARGS == "초유" || ARGS == "마유" || ARGS == "기유"
 			LOCAL = TALENT:ARG:거유 - TALENT:ARG:빈유 - TALENT:ARG:변신시가슴사이즈변동
 			IF LOCAL < -1
 				LOCALS = 絶壁
 			ELSEIF LOCAL < 0
 				LOCALS = 빈유
 			ELSEIF LOCAL > 4
-				LOCALS = 奇乳
+				LOCALS = 기유
 			ELSEIF LOCAL > 3
-				LOCALS = 魔乳
+				LOCALS = 마유
 			ELSEIF LOCAL > 2
-				LOCALS = 超乳
+				LOCALS = 초유
 			ELSEIF LOCAL > 1
-				LOCALS = 爆乳
+				LOCALS = 폭유
 			ELSEIF LOCAL > 0
 				LOCALS = 거유
 			ELSEIF TALENT:ARG:변신시가슴사이즈변동 == 0
@@ -1376,13 +1376,13 @@ IF CFLAG:ARG:1 > 0
 				ELSEIF TALENT:ARG:빈유 == 1
 					LOCALS = 빈유
 				ELSEIF TALENT:ARG:거유 == 5
-					LOCALS = 奇乳
+					LOCALS = 기유
 				ELSEIF TALENT:ARG:거유 == 4
-					LOCALS = 魔乳
+					LOCALS = 마유
 				ELSEIF TALENT:ARG:거유 == 3
-					LOCALS = 超乳
+					LOCALS = 초유
 				ELSEIF TALENT:ARG:거유 == 2
-					LOCALS = 爆乳
+					LOCALS = 폭유
 				ELSEIF TALENT:ARG:거유 == 1
 					LOCALS = 거유
 				ENDIF
@@ -1426,7 +1426,7 @@ ELSE
 			ELSEIF LOCAL > 0
 				LOCALS = 장신
 			ENDIF
-		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "폭유" || ARGS == "초유" || ARGS == "마유" || ARGS == "기유"
 			LOCAL = TALENT:ARG:거유 - TALENT:ARG:빈유 + TALENT:ARG:변신시가슴사이즈변동
 			IF ISMALE(ARG)
 				SIF TALENT:ARG:변신시TS == 0
@@ -1439,13 +1439,13 @@ ELSE
 			ELSEIF LOCAL < 0
 				LOCALS = 빈유
 			ELSEIF LOCAL > 4
-				LOCALS = 奇乳
+				LOCALS = 기유
 			ELSEIF LOCAL > 3
-				LOCALS = 魔乳
+				LOCALS = 마유
 			ELSEIF LOCAL > 2
-				LOCALS = 超乳
+				LOCALS = 초유
 			ELSEIF LOCAL > 1
-				LOCALS = 爆乳
+				LOCALS = 폭유
 			ELSEIF LOCAL > 0
 				LOCALS = 거유
 			ENDIF
@@ -1484,19 +1484,19 @@ ELSE
 			ELSEIF TALENT:ARG:장신 > 0
 				LOCALS = 장신
 			ENDIF
-		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "爆乳" || ARGS == "超乳" || ARGS == "魔乳" || ARGS == "奇乳"
+		ELSEIF ARGS == "絶壁" || ARGS == "빈유" || ARGS == "거유" || ARGS == "폭유" || ARGS == "초유" || ARGS == "마유" || ARGS == "기유"
 			IF TALENT:ARG:빈유 == 2
 				LOCALS = 絶壁
 			ELSEIF TALENT:ARG:빈유 == 1
 				LOCALS = 빈유
 			ELSEIF TALENT:ARG:거유 == 5
-				LOCALS = 奇乳
+				LOCALS = 기유
 			ELSEIF TALENT:ARG:거유 == 4
-				LOCALS = 魔乳
+				LOCALS = 마유
 			ELSEIF TALENT:ARG:거유 == 3
-				LOCALS = 超乳
+				LOCALS = 초유
 			ELSEIF TALENT:ARG:거유 == 2
-				LOCALS = 爆乳
+				LOCALS = 폭유
 			ELSEIF TALENT:ARG:거유 == 1
 				LOCALS = 거유
 			ENDIF
@@ -1582,10 +1582,10 @@ RETURN RESULT
 ;0=未出現　1=K出現　2～=천사の樹:第(N-1)形態
 @GET_LASTBOSS_PHASE_F()
 #FUNCTION
-;ラスボス(K)
+;최종 보스(K)
 SIF FLAG:101 == 1
 	RETURNF 1
-;裏ボス第ｎ形態
+;히든 보스第ｎ形態
 SIF FLAG:101 == 2
 	RETURNF 1+FLAG:21
 RETURNF 0
@@ -1596,9 +1596,9 @@ RETURNF 0
 ;보스 촉수
 IF ARGS=="BOSS"
 	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 0) ? 1 # 0
-;ラスボス/裏ボス
+;최종 보스/히든 보스
 ELSEIF ARGS=="LASTBOSS"
-	;Kは１ 裏ボスは２＋形態変化回数(GET_LASTBOSS_PHASE_F()扱い)
+	;Kは１ 히든 보스は２＋形態変化回数(GET_LASTBOSS_PHASE_F()扱い)
 	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 1) ? (FLAG:101 == 1 ? 1 # 1+FLAG:21) # 0
 ELSEIF ARGS=="MOB"
 	RETURNF (FLAG:110 == 0 && FLAG:73 == 0 && FLAG:10 == 2) ? 1 # 0

@@ -101,9 +101,9 @@ PRINTL
 		ELSEIF CFLAG:100 == 예정_휴식
 			PRINT 息抜きがてらに街に出ていた
 		ELSEIF CFLAG:100 == 예정_활동
-			PRINT 特別活動を終えて帰り仕度していた
+			PRINT 특별 활동を終えて帰り仕度していた
 		ELSEIF CFLAG:100 == 예정_지원
-			PRINT 戦闘支援を終えて街に出ていた
+			PRINT 전투 지원を終えて街に出ていた
 		ENDIF
 		PRINTFORML %PRINT_CALLNAME(TARGET)%のもとに、緊急の連絡が入った。
 	ELSE
@@ -112,11 +112,11 @@ PRINTL
 		ELSEIF CFLAG:100 == 예정_휴식
 			PRINT 自室に居た
 		ELSEIF CFLAG:100 == 예정_활동
-			PRINT 特別活動を終えて戻った
+			PRINT 특별 활동を終えて戻った
 		ELSEIF CFLAG:100 == 예정_지원
-			PRINT 戦闘支援を行っていた
+			PRINT 전투 지원を行っていた
 		ELSEIF CFLAG:100 == 107
-			PRINT 情報収集を終えて戻った
+			PRINT 정보 수집を終えて戻った
 		ELSEIF CFLAG:100 == 108
 			PRINT 自由行動を終えて戻った
 		ENDIF
@@ -124,7 +124,7 @@ PRINTL
 		PRINTFORML %PRINT_CALLNAME(TARGET)%のもとに、緊急の連絡が入った。
 	ENDIF
 
-	;ここで個別イベント呼び出し
+	;ここで個別イベント호출
 	TRYCCALLFORM EVENT_BATTLE_SITUATION_{FLAG:45}
 	CATCH
 		PRINTL 
@@ -189,7 +189,7 @@ SIF FLAG:999 == 1
 IF RESULT != 1
 	PRINTL 
 	PRINTL #####     ERROR !!     #####
-	PRINTL ボス襲撃イベント不発バグです。原因究明のため、
+	PRINTL 보스襲撃イベント不発バグです。原因究明のため、
 	PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 	PRINTW 
 	PRINTL イベントを強制スキップして無理やりゲームを続行します

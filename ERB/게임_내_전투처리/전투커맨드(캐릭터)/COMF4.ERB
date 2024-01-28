@@ -9,7 +9,7 @@ SIF RESULT == 1
 ;滞空中なら着地状態になる
 IF GETBIT(TCVARn:216, 1)
 	TCVARn:216 = 4
-	;FEAT効果による着地時の反動
+	;FEAT 효과에 따른着地時の反動
 	SIF TALENT:날개 > 0
 		TFLAG:99 += 1
 ELSE

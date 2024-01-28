@@ -1,5 +1,5 @@
 ﻿;--------------------------------------------------
-;鍛錬
+;단련
 @TRAINING
 LOCAL:0 = 0
 LOCAL:1 = 0
@@ -10,18 +10,18 @@ LOCAL:99 = 0
 LOCAL:100 = 0
 LOCAL:101 = 0
 
-;基本の基礎値上昇量
-;체력、기력の上昇量
+;기본 기초치 상승량
+;체력, 기력 상승량
 LOCAL:0 = 45 + FLAG:50 * 25 / 100
-;성내성、공격、방어、민첩、지성の上昇量
+;성내성, 공격, 방어, 민첩, 지성 상승량
 LOCAL:1 = 3 + FLAG:50 / 2
 SIF !GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL:1 += 2
-;○距離전투경험の上昇量
+;○거리 전투 경험의 상승량
 LOCAL:2 = 7 + FLAG:50 / 2
-;経験Ｐの上昇量
+;경험P의 상승량 
 LOCAL:3 = 2 + RAND:(5 + FLAG:50 * 2)
-;子供の혈연보정
+;아이의 혈연 보정
 TRYCALL TRAINING_HOSEI_CHILD,LOCAL:0
 LOCAL:0 = RESULT
 TRYCALL TRAINING_HOSEI_CHILD,LOCAL:1
@@ -29,38 +29,41 @@ LOCAL:1 = RESULT
 TRYCALL TRAINING_HOSEI_CHILD,LOCAL:2
 LOCAL:2 = RESULT
 
-;基本の체력減少量
+;기본 체력 감소량
 CALL TRAINING_DOWNTAIRYOKU,TARGET
 LOCAL:4 = RESULT
 PRINTL 
 
-;구상呼び出し：鍛錬開始
+;구상 호출：단련 개시
 CALL MESSAGE_TRAINING_BEGIN
 
-PRINTL どの鍛錬を行いますか？
-PRINTFORML 현재 설비 레벨：Lv.{FLAG:50}　消費체력：{LOCAL:4}
+PRINTL 어떤 단련을 하시겠습니까?
+PRINTFORML 현재 설비 레벨：Lv.{FLAG:50}　소비 체력：{LOCAL:4}
 
 $INPUT_LOOP_SELECT
 DRAWLINE
 CALL SHOW_STATUS_BASE_TRAINING, TARGET
 
-PRINTFORMLC [0] 走りこみ
-PRINTFORMLC [1] 精神鍛錬
-PRINTFORMLC [2] 瞑想
+PRINTFORMLC [0] 런닝
+PRINTFORMLC [1] 정신 단련
+PRINTFORMLC [2] 명상
 PRINTL 
-PRINTFORMLC [3] 筋トレ
-PRINTFORMLC [4] 自衛訓練
-PRINTFORMLC [5] ダッシュ
+;원문은 筋トレ, 0.291 구번역판에선 "근력 트레이닝" 으로 번역됨
+PRINTFORMLC [3] 근력 운동
+;원문은 自衛訓練 자위훈련…… 자기 방위 훈련이다
+PRINTFORMLC [4] 자기 방어 훈련
+;원문은 ダッシュ, 순발력 운동으로 바꾸고 싶긴 하지만 패스한다
+PRINTFORMLC [5] 대시(Dash)
 PRINTL 
 IF TALENT:변신능력 != -1
-	PRINTFORMLC [6] 근거리戦闘訓練
-	PRINTFORMLC [7] 중거리戦闘訓練
-	PRINTFORMLC [8] 원거리戦闘訓練
+	PRINTFORMLC [6] 근거리 전투 훈련
+	PRINTFORMLC [7] 중거리 전투 훈련
+	PRINTFORMLC [8] 원거리 전투 훈련
 	PRINTL 
 ENDIF
-PRINTFORMLC [9] 戦術研究
+PRINTFORMLC [9] 전술 연구
 SIF TALENT:변신능력 == -1
-	PRINTFORMLC [10]기초전투訓練
+	PRINTFORMLC [10] 기초 전투 훈련
 PRINTL 
 DRAWLINE
 
@@ -75,107 +78,107 @@ PRINTL
 CFLAG:101 = RESULT
 
 IF RESULT == 0
-	;지문: 鍛錬走りこみ
+	;지문: 단련 - 런닝
 	CALL MESSAGE_TRAINING_HASHIRI
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:0
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "TAIRYOKU", TARGET, LOCAL:100
 ELSEIF RESULT == 1
-	;지문: 鍛錬精神鍛錬
+	;지문: 단련 - 정신 단련
 	CALL MESSAGE_TRAINING_SEISHIN
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:0
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "KIRYOKU", TARGET, LOCAL:100
 ELSEIF RESULT == 2
-	;지문: 鍛錬瞑想
+	;지문: 단련 - 명상
 	CALL MESSAGE_TRAINING_MEISOU
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:1
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "SEITAISEI", TARGET, LOCAL:100
 ELSEIF RESULT == 3
-	;지문: 鍛錬筋トレ
+	;지문: 단련 - 근력 운동
 	CALL MESSAGE_TRAINING_KINTORE
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:1
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "KOUGEKI", TARGET, LOCAL:100
 ELSEIF RESULT == 4
-	;지문: 鍛錬自衛訓練
+	;지문: 단련 - 자기 방어 훈련
 	CALL MESSAGE_TRAINING_JIEI
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:1
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "BOUGYO", TARGET, LOCAL:100
 
 ELSEIF RESULT == 5
-	;지문: 鍛錬ダッシュ
+	;지문: 단련 - 대시(Dash)
 	CALL MESSAGE_TRAINING_DASH
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:1
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "BINSYOU", TARGET, LOCAL:100
 ELSEIF RESULT == 6 && TALENT:변신능력 != -1
-	;지문: 鍛錬근거리戦闘訓練
+	;지문: 단련 - 근거리 전투 훈련
 	CALL MESSAGE_TRAINING_SHORT
 
 	TIMES LOCAL:1, 0.30
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:1, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
@@ -185,19 +188,19 @@ ELSEIF RESULT == 6 && TALENT:변신능력 != -1
 	CALL BASEUP, "BINSYOU", TARGET, LOCAL:100
 
 	EXP:근거리전투경험 += LOCAL:2
-	PRINTFORML 근거리戦闘が\@(LOCAL:2 <= 3 + FLAG:50) ?少し #\@上達した（＋{LOCAL:2}）
+	PRINTFORML 근거리 전투에 \@(LOCAL:2 <= 3 + FLAG:50) ?조금 #\@능숙해졌다.（＋{LOCAL:2}）
 	CALL SENGIUP, TARGET, 0
 ELSEIF RESULT == 7 && TALENT:변신능력 != -1
-	;지문: 鍛錬중거리戦闘訓練
+	;지문: 단련 - 중거리 전투 훈련
 	CALL MESSAGE_TRAINING_MIDDLE
 
 	TIMES LOCAL:1, 0.30
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:1, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
@@ -207,19 +210,19 @@ ELSEIF RESULT == 7 && TALENT:변신능력 != -1
 	CALL BASEUP, "BOUGYO", TARGET, LOCAL:100
 
 	EXP:중거리전투경험 += LOCAL:2
-	PRINTFORML 중거리戦闘が\@(LOCAL:2 <= 3 + FLAG:50) ?少し #\@上達した（＋{LOCAL:2}）
+	PRINTFORML 중거리 전투에 \@(LOCAL:2 <= 3 + FLAG:50) ?조금 #\@능숙해졌다.（＋{LOCAL:2}）
 	CALL SENGIUP, TARGET, 1
 ELSEIF RESULT == 8 && TALENT:변신능력 != -1
-	;지문: 鍛錬원거리戦闘訓練
+	;지문: 단련 - 원거리 전투 훈련
 	CALL MESSAGE_TRAINING_LONG
 
 	TIMES LOCAL:1, 0.30
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:1, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
@@ -229,38 +232,38 @@ ELSEIF RESULT == 8 && TALENT:변신능력 != -1
 	CALL BASEUP, "BINSYOU", TARGET, LOCAL:100
 
 	EXP:원거리전투경험 += LOCAL:2
-	PRINTFORML 원거리戦闘が\@(LOCAL:2 <= 3 + FLAG:50) ?少し #\@上達した（＋{LOCAL:2}）
+	PRINTFORML 원거리 전투에 \@(LOCAL:2 <= 3 + FLAG:50) ?조금 #\@능숙해졌다.（＋{LOCAL:2}）
 	CALL SENGIUP, TARGET, 2
 ELSEIF RESULT == 9
-	;지문: 戦術研究
+	;지문: 단련 - 전술 연구
 	CALL MESSAGE_TRAINING_TACTICS
 
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 	LOCAL:100 = LOCAL:1
 
-	;非戦闘員は지성の伸びにボーナス
+	;비전투원은 지성의 성장에 보너스
 	SIF TALENT:변신능력 == -1
 		TIMES LOCAL:100,1.5
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:100, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
 	CALL BASEUP, "CHISEI", TARGET, LOCAL:100
 ELSEIF RESULT == 10 && TALENT:변신능력 == -1
-	;지문: 기초전투訓練
+	;지문: 단련 - 기초 전투 훈련
 	CALL MESSAGE_TRAINING_BASIS
 
 	TIMES LOCAL:1, 0.30
 	BASE:체력 =  LIMIT(BASE:체력 - LOCAL:4, 0, MAXBASE:체력)
 
-	;촉수 구속구を着ている
+	;촉수 구속구를 입고 있다
 	IF CFLAG:42 == 400
 		TIMES LOCAL:1, 0.8
-		;지문: 촉수 구속구が鍛錬の邪魔をする
+		;지문: 촉수 구속구가 단련을 방해한다
 		CALL MESSAGE_TRAINING_TENTACLECLOTH
 	ENDIF
 
@@ -269,7 +272,7 @@ ELSEIF RESULT == 10 && TALENT:변신능력 == -1
 
 	LOCAL:2 = LOCAL:2 * (150 + ABL:기초전투 * 50) / 100 + RAND:3
 	EXP:기초전투경험 += LOCAL:2
-	PRINTFORML 戦闘の基礎が\@(LOCAL:2 <= 30 + FLAG:50 * 2) ?少し #\@上達した（＋{LOCAL:2}）
+	PRINTFORML 기초 전투 능력이 \@(LOCAL:2 <= 30 + FLAG:50 * 2) ?조금 #\@향상됐다.（＋{LOCAL:2}）
 	CALL SENGIUP, TARGET, 3
 ELSE
 	IF CFLAG:111 > 0
@@ -280,19 +283,19 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 
-;경험치の取得
+;경험치 취득
 LOCAL = 10 + RAND(5)
 CALL GET_EXP, LOCAL
 
 CALL GET_SYUREN, LOCAL:3
-;部位結界の上限設定
+;부위 결계의 상한 설정
 CALL BASEUP_CAL_SHIELD, TARGET
 
-;実績
+;실적
 CALL GET_STATE_TROPHY,TARGET
 PRINTL 
 
-;구상呼び出し：鍛錬終了
+;구상 호출：단련 종료
 CALL MESSAGE_TRAINING_END
 
 PRINTW 
@@ -301,11 +304,11 @@ $END_TRAINING
 BEGIN TURNEND
 
 ;--------------------------------------------------
-;昼の場合、鍛錬に打ち込む度合いを決められる　（←　β２から決められなくした）
+;낮의 경우, 단련에 몰두하는 정도를 결정할 수 있다　（←　β2부터 결정할 수 없게 했다）
 @TRAINING_DAYTIME, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4
 IF TIME == 0
-	;PRINTFORML [0]全力で取り組む 체력 -{ARG:4 * 200 / 80}
-	;PRINTFORML [1]普通に取り組む 체력 -{ARG:4}
+	;PRINTFORML [0] 진심을 다해 단련한다 체력 -{ARG:4 * 200 / 80}
+	;PRINTFORML [1] 평소처럼 단련한다 체력 -{ARG:4}
 	;$INPUT_LOOP_DOAI
 	;INPUT
 	;IF RESULT == 0
@@ -322,7 +325,7 @@ ENDIF
 RETURN ARG:0, ARG:1, ARG:2, ARG:3, ARG:4
 
 ;---------------------------------------------------------
-;トレーニングの消費체력計算
+;단련의 소비 체력 계산
 @TRAINING_DOWNTAIRYOKU, ARG
 LOCAL = MAXBASE:ARG:체력
 TIMES LOCAL, 0.10

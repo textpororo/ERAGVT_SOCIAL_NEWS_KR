@@ -35,7 +35,7 @@ ELSE
 		;幽閉状態で放置
 		SIF CFLAG:CCOUNT:0 == 1
 			LOCAL -= 60 / (CHARANUM - 1)
-		;洗脳、흑화状態で放置
+		;세뇌、흑화状態で放置
 		SIF CFLAG:CCOUNT:0 == 2 || CFLAG:CCOUNT:0 == 3
 			LOCAL -= 30 / (CHARANUM - 1)
 		;死亡状態
@@ -465,7 +465,7 @@ PRINTL *** クリアスコア ***
 CALL SHORTLINE
 PRINTFORML キャラの生存・・・%LOCALS:1%
 IF GAME_OPTION_CHECK_F(OPTION_endless)
-	PRINTFORML ボス撃破数・・・・%LOCALS:2%
+	PRINTFORML 보스撃破数・・・・%LOCALS:2%
 ELSE
 	PRINTFORML クリア日数・・・・%LOCALS:2%
 ENDIF
@@ -514,12 +514,12 @@ ELSE
 		PRINTL 早めに撤退すれば敗北は避けられます。
 	ELSEIF LOCAL:1 == 3
 		PRINTL あらら・・・ずいぶん犠牲者が出てしまったようですね。
-		PRINTL 仲間を幽閉したボスは遭遇率がグーンと伸びるので、諦めずに救出に向かいましょう。
+		PRINTL 仲間を幽閉した보스は遭遇率がグーンと伸びるので、諦めずに救出に向かいましょう。
 	ELSEIF LOCAL:1 == 4
 		PRINTL 一人が捕まったくらいなら、방위력を維持しながら鍛錬するのも容易いはず。
-		PRINTL 戦闘支援を利用すれば撤退しやすくなるので、試しに使ってみては如何でしょう？
+		PRINTL 전투 지원を利用すれば撤退しやすくなるので、試しに使ってみては如何でしょう？
 	ELSEIF LOCAL:1 == 5
-		PRINTL 洗脳や흑화してしまった仲間を見捨てていませんか？
+		PRINTL 세뇌や흑화してしまった仲間を見捨てていませんか？
 		PRINTL 仲間が全員揃っていればクリア評価はＳになるので、もうひと踏ん張りです。
 	ELSE
 		PRINTL 全員を無事に生存させたみたいですね。
@@ -534,35 +534,35 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTFORML 撃破評価：%LOCALS:2%
 	IF LOCAL:2 <= 2
 		PRINTL あまり撃破数が伸びなかったようですね。
-		PRINTL 鍛錬するかボスに挑むかのバランスが攻略の鍵です。
-		PRINTL ENDLESSモードではボスの레벨アップが少しだけ遅いので、
+		PRINTL 鍛錬するか보스に挑むかのバランスが攻略の鍵です。
+		PRINTL ENDLESSモードでは보스の레벨アップが少しだけ遅いので、
 		PRINTL 思い切って突撃してみると意外と倒せたりします。
 	ELSEIF LOCAL:2 == 3
 		PRINTL 普通にプレイした場合の平均的な撃破数ですね。
 		PRINTL キャラクターにも苦手な相手と得意な相手が居ると思うので、
-		PRINTL どのボスが出現するか等の運の要素も絡んできます。
+		PRINTL どの보스が出現するか等の運の要素も絡んできます。
 	ELSEIF LOCAL:2 == 4
-		PRINTL ENDLESSモードではボス撃破数20を突破すると期限があまり伸びなくなるので、
+		PRINTL ENDLESSモードでは보스撃破数20を突破すると期限があまり伸びなくなるので、
 		PRINTL この先はひたすら제한 일수との戦いになります。
 		PRINTL ここまで来たらキャラ引き継ぎや레벨引き継ぎで最高の戦力を用意して挑みましょう。
 	ELSEIF LOCAL:2 == 5
 		PRINTL 素晴らしい撃破数ですが、おしい。
-		PRINTL どんな手段を使ってでも期日を延ばして１体でも多くのボスを撃破しましょう。
+		PRINTL どんな手段を使ってでも期日を延ばして１体でも多くの보스を撃破しましょう。
 		PRINTL 最高評価まではあと一歩です！
 	ELSE
 		PRINTL お見事です。かなり効率的なプレイをしたみたいですね。
-		PRINTL この数のボスを撃破するのは並大抵のことではありません。
+		PRINTL この数の보스を撃破するのは並大抵のことではありません。
 		PRINTL 堂々のＳ評価おめでとうございます。
 	ENDIF
 ELSE
 	PRINTFORML 日数評価：%LOCALS:2%
 	IF LOCAL:2 == 1
 		PRINTL かなりギリギリだったようですね。
-		PRINTL 時間を掛け過ぎるとボスの레벨が上がってしまうので、
+		PRINTL 時間を掛け過ぎると보스の레벨が上がってしまうので、
 		PRINTL 慎重になりすぎるのも考えものです。
 	ELSEIF LOCAL:2 == 2
 		PRINTL 慎重なプレイスタイルだったみたいですね。
-		PRINTL ラスボスのＨＰはかなり多いので、こまめに削っていくことが重要です。
+		PRINTL 최종 보스のＨＰはかなり多いので、こまめに削っていくことが重要です。
 	ELSEIF LOCAL:2 == 3
 		PRINTL 初見プレイならば標準的な日数でクリアできました。
 		PRINTL より効率的な戦い方もできるので、探してみるのも楽しいですよ？
@@ -571,7 +571,7 @@ ELSE
 		PRINTL 鍛錬施設Lvを早めに上げれば、もっと短縮できるはずです。
 	ELSEIF LOCAL:2 == 5
 		PRINTL 惜しいところでしたね。
-		PRINTL ボスとうまく遭遇できない場合もあるので、仕方ないかもしれません。
+		PRINTL 보스とうまく遭遇できない場合もあるので、仕方ないかもしれません。
 	ELSE
 		PRINTL お見事です。かなり効率的なプレイをしたみたいですね。
 		PRINTL さらなる記録を目指すのもよし、別の攻略法を試してみるのも良いでしょう。
@@ -635,10 +635,10 @@ ELSEIF LOCAL:5 == 2
 	IF GAME_OPTION_CHECK_F(OPTION_solo)
 		PRINTL ソロモードでは방위력の管理が簡単なので、
 		PRINTL 인기도の維持をすること自体は難しくないはず。
-		PRINTL まずはボスに敗北せずにクリアすることを目指しましょう。
+		PRINTL まずは보스に敗北せずにクリアすることを目指しましょう。
 	ELSE
 		PRINTL ヒーローとしてはまずまずの評価です。
-		PRINTL ボスに고전して、何度か敗北してしまったのではないでしょうか？
+		PRINTL 보스に고전して、何度か敗北してしまったのではないでしょうか？
 		PRINTL やられるくらいなら撤退した方が良いので、戦闘では引き際が肝心です。
 	ENDIF
 ELSEIF LOCAL:5 == 3

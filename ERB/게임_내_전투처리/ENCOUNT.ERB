@@ -1,20 +1,20 @@
 ﻿;================================================================================
-;보스 촉수/적 캐릭터との遭遇判定
-;※잡몹적との遭遇判定はここではなくMOB_TENTACLE_ENCOUNTで行う
+;보스 촉수/적 캐릭터와의 조우 판정
+;※잡몹적과의 조우 판정はここではなくMOB_TENTACLE_ENCOUNTで行う
 ;--------------------------------------------------
 @ENCOUNT
-;흑화・ボス・ザコの判定
+;흑화・보스・잡몹 판정
 FLAG:73 = 0
-;まず흑화 캐릭터との遭遇判定
+;우선 흑화 캐릭터와의 조우 판정
 CALL ENCOUNT_ENEMY
-;↑でエンカウントしなければボス判定
+;↑위 함수에서 인카운트하지 않으면 보스 판정
 SIF RESULT == 0
 	CALL ENCOUNT_BOSS
 RETURN RESULT
 
 
 ;================================================================================
-;세뇌/흑화 캐릭터との遭遇判定
+;세뇌/흑화 캐릭터와의 조우 판정
 ;--------------------------------------------------------------------------------
 @ENCOUNT_ENEMY
 	#DIM ENCOUNT_UP
@@ -24,18 +24,18 @@ RETURN RESULT
 	FLAG:110 = 1
 	ENCOUNT_UP = 0
 
-	;전투경험の加算
+	;전투경험 가산
 	EXP:전투경험 += 1
 
-	;세뇌/흑화 캐릭터との遭遇判定
+	;세뇌/흑화 캐릭터와의 조우 판정
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
-		;ＴＳ男性化かつ임신しているキャラは出現しない
+		;TS남성화임과 동시에 임신한 상태인 캐릭터는 출현하지 않는다
 		SIF TALENT:CCOUNT:변신능력 > 0 && CHARATALENT_F(CCOUNT,0,"남자") == 0 && CHARATALENT_F(CCOUNT,1,"남자") > 0 && TALENT:CCOUNT:임신 > 0
 			CONTINUE
 
-		;キャラのリストを取得する
+		;캐릭터 리스트를 취득한다
 		IF CFLAG:CCOUNT:0 == 2
 			LOCAL:1 += 1
 			LOCAL:(LOCAL:1 + 99) = CCOUNT
@@ -46,38 +46,39 @@ RETURN RESULT
 			LOCAL:(LOCAL:1 + 99) = CCOUNT
 		ENDIF
 
-		;遭遇率アップの効果
+		;조우율 향상 효과
 		ENCOUNT_UP += CFLAG:CCOUNT:23
 	NEXT
 
-	;FEATによる遭遇率アップの効果
+	;FEAT에 의한 조우율 향상 효과
 	ENCOUNT_UP += TALENT:말려드는체질 * 15
 
-	;昼は4割、夜は2割の確率で遭遇
+	;낮에는 40%, 밤에는 20%의 확률로 조우
 	IF TIME == 0
 		LOCAL:2 = 40
 	ELSEIF TIME == 1
 		LOCAL:2 = 20
 	ENDIF
 	LOCAL:2 += ENCOUNT_UP - MIN(FLAG:852 / 500,40)
-	;上限8割
+	;상한은 80%
 	LOCAL:2 = MIN(LOCAL:2,80)
 
 	;DEBUG
 	IF FLAG:999 == 1 && LOCAL:1 > 0
-		PRINTL 흑화 캐릭터遭遇率の入力
+		PRINTL 흑화 캐릭터 조우율 입력
+		PRINTFORML 현재 조우율：({LOCAL:2%}％)
 		INPUT
 		LOCAL:2 = RESULT
 	ENDIF
 
-	;遭遇判定
+	;조우 판정
 	IF RAND:100 < LOCAL:2
-		;リストから対峙するキャラを取得する
-		IF LOCAL:1 >= 1 &&ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		;리스트에서 대치하는 캐릭터를 취득한다
+		IF LOCAL:1 >= 1 && ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			LOCAL:2 = RAND:(LOCAL:1)
 			LOCAL:3 = 0
 			FLAG:111 = LOCAL:(LOCAL:2 + 100)
-			;遭遇率アップ効果
+			;조우율 향상 효과
 			FOR CCOUNT, 0, CHARANUM
 				IF CFLAG:CCOUNT:23 > 0 && CFLAG:CCOUNT:23 > LOCAL:3 && (CFLAG:CCOUNT:0 == 1 || CFLAG:CCOUNT:0 == 2 || CFLAG:CCOUNT:0 == 3)
 					LOCAL:3 = CFLAG:CCOUNT:23
@@ -90,39 +91,39 @@ RETURN RESULT
 
 			IF CFLAG:(FLAG:111):0 == 2
 				IF CFLAG:300 == 0
-					;지문: 初めて洗脳キャラと対峙した
+					;지문: 처음으로 세뇌 캐릭터와 대치했다
 					CALL MESSAGE_ENCOUNT_SENNOU_FIRST
 					CFLAG:300 = 1
 				ELSE
-					;지문: 洗脳キャラと対峙
+					;지문: 세뇌 캐릭터와 대치
 					CALL MESSAGE_ENCOUNT_SENNOU
 				ENDIF
 			ELSEIF CFLAG:(FLAG:111):0 == 3
 				IF CFLAG:301 == 0
-					;지문: 始めて흑화 캐릭터と対峙した
+					;지문: 처음으로 흑화 캐릭터와 대치했다
 					CALL MESSAGE_ENCOUNT_AKUOTI_FIRST
 					CFLAG:301 = 1
 				ELSE
-					;지문: 흑화 캐릭터と対峙
+					;지문: 흑화 캐릭터와 대치
 					CALL MESSAGE_ENCOUNT_AKUOTI
 				ENDIF
 			ENDIF
 			
-			;지문: 세뇌/흑화 캐릭터의 登場時
+			;지문: 세뇌/흑화 캐릭터 등장 시
 			CALL MESSAGE_OTHER_ENTRY
 
-			;戦闘系フラグのリセット
+			;전투계 플래그 초기화
 			FLAG:12 = MAXBASE:(FLAG:111):체력 + MAXBASE:(FLAG:111):방어 * (15 + ABL:(FLAG:111):레벨) / 2
 			FLAG:13 = FLAG:12
 			
-			;固定値
+			;고정값
 			FLAG:14 = 1000
 			FLAG:15 = 0
 			FLAG:16 = 760 + ABL:(FLAG:111):레벨 * 10
 			FLAG:17 = 0
 			FLAG:22 = -1
 
-			;変身可能な흑화 캐릭터は常に변신한다(사악한 마장を装備するので)
+			;변신 가능한 흑화 캐릭터는 항상 변신한다 (사악한 마장을 장비하기 때문)
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") && TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 == 0
 				CALL TRANSFORM, 1, FLAG:111
 
@@ -132,7 +133,7 @@ RETURN RESULT
 
 
 ;================================================================================
-;보스 촉수/최종 보스 촉수との遭遇判定
+;보스 촉수/최종 보스 촉수와의 조우 판정
 ;--------------------------------------------------------------------------------
 @ENCOUNT_BOSS
 #DIM ENCOUNT_PER
@@ -145,52 +146,52 @@ FLAG:110 = 0
 FLAG:111 = 0
 ENCOUNT_PER = 0
 SELECT = 0
-;보스 촉수残ってる
+;보스 촉수가 남아있을 경우
 IF FLAG:100 > 0
-	;보스 촉수との遭遇率：昼は合計で約40%、夜は合計で約50%
+	;보스 촉수와의 조우율：낮에는 합계 약 40%, 밤에는 합계 약 50%
 	IF TIME == 0
 		ENCOUNT_PER = (40 + FLAG:3 * 3) * FLAG:47 / FLAG:46
 	ELSEIF TIME == 1
 		ENCOUNT_PER = (50 + FLAG:3 * 3) * FLAG:47 / FLAG:46
 	ENDIF
-	;FEATによる遭遇率アップの効果
+	;FEAT에 의한 조우율 향상 효과
 	ENCOUNT_PER += TALENT:말려드는체질 * 20
-	;探索度とボス出現停止フラグ(撃破直後ターン)による通常エンカウント禁止
+	;탐색도와 보스 출현 정지 플래그(격파 직후 턴)에 따른 통상 인카운트 금지
 	SIF FLAG:45 == 0 && (FLAG:47 < FLAG:46 || FLAG:49)
 		RETURN 0
 
-	;拠点防衛時
+	;거점 방위 시
 	IF CFLAG:100 == 예정_방위
-		;;昼　TIME == 0　夜　TIME == 1
+		;;낮　TIME == 0　밤　TIME == 1
 		;IF GAME_OPTION_CHECK_F(OPTION_hardcore)
-		;	;昼　80-α 30　夜　50-α 20
+		;	;낮　80-α 30　밤　50-α 20
 		;	ENCOUNT_PER = MAX((80-30*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,30-10*TIME)
 		;ELSEIF GAME_OPTION_CHECK_F(OPTION_easy)
-		;	;昼　60-α 10　夜　40-α 5
+		;	;낮　60-α 10　밤　40-α 5
 		;	ENCOUNT_PER = MAX((60-20*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,10-5*TIME)
 		;ELSE
-		;	;昼　70-α 15　夜　50-α 5
+		;	;낮　70-α 15　밤　50-α 5
 		;	ENCOUNT_PER = MAX((70-20*TIME) - FLAG:852 / 250 - FLAG:43 * 20 ,15-10*TIME)
 		;ENDIF
-		;防衛時は보스 촉수遭遇無し
+		;방위 시에는 보스 촉수 조우 없음
 		RETURN 0
 	ENDIF
 
-	;イベント戦闘ならボスとの遭遇率100%
+	;이벤트 전투라면 보스와의 조우율 100%
 	SIF FLAG:45 > 0
 		ENCOUNT_PER = 100
 
-	;인카운트 판정に成功した場合
+	;인카운트 판정에 성공했을 경우
 	IF ENCOUNT_PER > RAND:100
-		;具体的にどの보스 촉수を出すか決める
+		;구체적으로 어떤 보스 촉수를 출현시킬지 결정한다
 
-		;索敵ターゲットが居れば出現率アップ
+		;색적 타겟이 있다면 출현율 향상
 		IF CONFIG_CHECK_BALANCE_F(1) > 0 && CFLAG:100 != 예정_방위
-			;通常戦闘
+			;통상 전투
 			IF FLAG:18 > 0 && FLAG:45 == 0 && ENCOUNT_PER > 0
 				CALL TENTACLE_SURVIVE_CHECK, POWER(2,FLAG:18 - 1)
 				IF RESULT
-					;通常は出撃数と戦闘支援の数に応じて確率アップ、ENDLESSモードでは100%ターゲット捕捉
+					;보통 출격 수와 전투 지원 수에 따라 확률 향상, ENDLESS 모드에서는 100% 타겟 포착
 					SIF RAND:100 < (50 + (FLAG:41 + FLAG:43) * 10) || GAME_OPTION_CHECK_F(OPTION_endless)
 						SELECT = FLAG:18
 				ELSE
@@ -199,7 +200,7 @@ IF FLAG:100 > 0
 			ENDIF
 		ENDIF
 		IF SELECT == 0
-			;遭遇候補リストの生成
+			;조우 후보 리스트 생성
 			CALL CLEARRANDCHOOSE
 
 			;보스 촉수 총 마릿수
@@ -221,8 +222,8 @@ IF FLAG:100 > 0
 		SELECT = 0
 	ENDIF
 
-	;捕まってるキャラが居るならそのキャラを捕獲している相手の出現率アップ
-	;＆追加遭遇判定
+	;잡혀있는 캐릭터가 있다면 그 캐릭터를 포획하고 있는 상대의 출현율 향상
+	;＆추가 조우 판정
 	IF CONFIG_CHECK_BALANCE_F(0) > 0 && CFLAG:100 != 예정_방위 && FLAG:45 == 0 && ENCOUNT_PER > 0
 		;보스 촉수 총 마릿수
 		CALL GET_BOSS_ERB_NUM
@@ -230,7 +231,7 @@ IF FLAG:100 > 0
 		REPEAT LOCAL:1
 			FOR LOCAL, 0, CHARANUM
 				IF CFLAG:(LOCAL:0):0 == 1 && CFLAG:(LOCAL:0):21 == COUNT && RAND:100 < 50
-					PRINTFORML 捕獲촉수遭遇率アップ判定に成功！
+					PRINTFORML 포획 촉수 조우율 향상 판정에 성공했다!
 					SELECT = COUNT
 					BREAK
 				ENDIF
@@ -238,39 +239,39 @@ IF FLAG:100 > 0
 		REND
 	ENDIF
 
-	;DEBUG 通常戦闘時の相手指名
+	;DEBUG 통상 전투 시의 상대 지명
 	IF SELECT > 0 && FLAG:999 == 1 && FLAG:45 == 0
-		PRINTL 対戦する촉수番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		PRINTL 대전할 촉수 번호 입력 (0 입력 시 조우 취소, 음수 입력 시 통상 처리)
 		INPUT
 		IF RESULT >= 0
 			SELECT = RESULT
 		ENDIF
 	ENDIF
 
-	;襲撃イベントなら絶対に何かしらボスを出現させる
+	;습격 이벤트라면 반드시 보스를 뭐든 출현시킨다
 	IF FLAG:45 > 0 && SELECT == 0
-		PRINTFORML 【エラー：ENCOUNT.ERB…イベントで戦闘する敵を決定できませんでした】
+		PRINTFORML 【!ERROR!：ENCOUNT.ERB…이벤트에서 전투할 적을 결정하지 못했습니다.】
 		RETURN 0
 		;GOTO RAID_LOOP
 	ENDIF
 
-	;不正な値ならキャンセル
+	;부정한 값이라면 취소
 	IF SELECT <= 0
 		RETURN 0
 	ELSE
-		;ボス戦
+		;보스전
 		FLAG:10 = 0
 
-		;遭遇した相手を索敵ターゲットとして扱う
+		;조우한 상대를 색적 타겟으로 취급한다
 		SIF FLAG:18 == 0 && FLAG:45 == 0
 			FLAG:18 = SELECT
 
-		;戦闘系フラグのリセット
+		;전투계 플래그 초기화
 		FLAG:11 = SELECT
 
 		TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
 		CATCH
-			PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+			PRINTFORML 【!ERROR!：TENTACLE_%SAVESTR:13%_{FLAG:11}은(는) 정의되지 않은 번호입니다.】
 			FLAG:10 = 0
 			FLAG:11 = 0
 			SAVESTR:13 '=""
@@ -286,17 +287,17 @@ IF FLAG:100 > 0
 		CALL TENTACLE_ACCESS, "YUDAN"
 		FLAG:16 = RESULT
 		FLAG:17 = 0
-		;보스경험の加算
+		;보스경험 가산
 		EXP:보스경험 += 1
 		
-		;ボスの蓄積ダメージを適応
+		;보스의 축적 피해량을 적응
 		FLAG:13 = FLAG:13 * (1000000 - (FLAG:(300 + FLAG:11)/100)) / 1000000
 		SIF FLAG:(300 + FLAG:11)%100
 			FLAG:13 = MIN(FLAG:13+1,FLAG:12)
 		SIF FLAG:13 <= 0
 			FLAG:13 = 1
 
-		;지문: 보스 촉수と遭遇
+		;지문: 보스 촉수와 조우
 		IF FLAG:45 == 0
 			CALL MESSAGE_ENCOUNT_BOSS
 		ELSE
@@ -307,10 +308,10 @@ IF FLAG:100 > 0
 	ENDIF
 ;최종 보스 촉수
 ELSE
-	;探索度とボス出現停止フラグ(撃破直後ターン)による通常エンカウント禁止
+	;탐색도와 보스 출현 정지 플래그(격파 직후 턴)에 따른 통상 인카운트 금지
 	SIF FLAG:45 == 0 && (FLAG:47 < FLAG:46 || FLAG:49)
 		RETURN 0
-	;최종 보스 촉수との遭遇率：昼は合計で約70%、夜は合計で約80%
+	;최종 보스 촉수와의 조우율：낮에는 합계 약 70%, 밤에는 합계 약 80%
 	IF TIME == 0
 		ENCOUNT_PER = 70 * FLAG:47 / FLAG:46
 	ELSEIF TIME == 1
@@ -321,17 +322,17 @@ ELSE
 	;ELSEIF CFLAG:100 == 예정_방위 && TIME == 1
 	;	ENCOUNT_PER = MAX(60 - FLAG:852 / 250,20)
 	;ENDIF
-	;防衛時は최종 보스 촉수遭遇無し
+	;방위 시에는 최종 보스 촉수 조우 없음
 	SIF CFLAG:100 == 예정_방위
 		RETURN 0
 
-	;ボス襲来イベント中なら遭遇率100%
+	;보스 내습 이벤트 중이라면 조우율100%
 	SIF FLAG:45 > 0
 		ENCOUNT_PER = 100
 
-	;遭遇チェック
+	;조우 체크
 	IF ENCOUNT_PER > RAND:100
-		;遭遇リストの生成
+		;조우 리스트 생성
 		CALL CLEARRANDCHOOSE
 
 		;보스 촉수 총 마릿수
@@ -356,7 +357,7 @@ ELSE
 
 	;DEBUG
 	IF SELECT > 0 && FLAG:999 == 1 && FLAG:45 == 0
-		PRINTL 対戦する최종 보스 촉수番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		PRINTL 대전할 최종 보스 촉수 번호 입력 (0 입력 시 조우 취소, 음수 입력 시 통상 처리)
 		INPUT
 		SIF RESULT >= 0
 			SELECT = RESULT
@@ -368,29 +369,29 @@ ELSE
 		SIF CFLAG:100 == 예정_방위
 			RETURN 0
 
-		;戦闘系フラグのリセット
+		;전투계 플래그 초기화
 		FLAG:11 = SELECT
 
 		TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
 		CATCH
-			PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+			PRINTFORML 【!ERROR!：TENTACLE_%SAVESTR:13%_{FLAG:11}은(는) 정의되지 않은 번호입니다.】
 			FLAG:10 = 0
 			FLAG:11 = 0
 			SAVESTR:13 '=""
 			RETURN 0
 		ENDCATCH
 
-		;ラスボス戦
+		;최종 보스전
 		FLAG:10 = 1
 
 
 		CALL TENTACLE_ACCESS, "HP"
 		FLAG:12 = RESULT
-		;ラスボス強化オプションを適用
+		;최종 보스 강화 옵션 적용
 		FLAG:12 = FLAG:12 * LASTBOSS_KYOUKA_F()
 		FLAG:13 = FLAG:12
 
-		;ボスの蓄積ダメージを適応
+		;보스의 축적 피해량을 적응
 		FLAG:13 = FLAG:13 * (1000000 - (FLAG:(400 + FLAG:11)/100)) / 1000000
 		SIF FLAG:(400 + FLAG:11)%100
 			FLAG:13 = MIN(FLAG:13+1,FLAG:12)
@@ -405,13 +406,13 @@ ELSE
 		FLAG:17 = 0
 		FLAG:22 = 0
 
-		;레벨の設定
+		;레벨 설정
 		CALL TENTACLE_LEVEL
 		FLAG:16 += RESULT * 10
-		;최종보스경험の加算
+		;최종보스경험 가산
 		EXP:최종보스경험 += 1
 
-		;지문: 최종 보스 촉수と遭遇
+		;지문: 최종 보스 촉수와 조우
 		IF FLAG:45 == 0
 			CALL MESSAGE_ENCOUNT_LASTBOSS
 		ELSE
@@ -425,55 +426,55 @@ ENDIF
 
 
 ;--------------------------------------------------
-;ザコ촉수との戦闘
+;잡몹 촉수와의 전투
 @MOB_TENTACLE_ENCOUNT
 SAVESTR:13 = MOB
 LOCAL = 0
 EXP:전투경험 += 1
 ;------------------------------------------------------------------------------------
-;雑魚戦システム有りならエンカウント先決定、戻った先で戦闘画面へ遷移
+;잡몹전 시스템이 ON이라면 인카운트 후 결정, 돌아온 이후에(戻った先で) 전투 화면으로 전이
 RESULT = 0
 IF CONFIG_CHECK_EVENT_F(4) > 0
 ;------------------------------------------------------------------------------------
-	;判定(バグっていなければ何かしら敵番号が返る)
+	;판정 (버그가 일어나지 않는다면 적 번호가 뭐든 반환된다)
 	CALL MOB_TENTACLE_BATTLE
 	LOCAL=RESULT
 	IF LOCAL > 0
-		;지문: ザコ촉수と遭遇
+		;지문: 잡몹 촉수와 조우
 		CALL MESSAGE_ENCOUNT_MOB_BATTLE
 		SIF FLAG:999 == 1
 			PRINTFORML ENCOUNT MOB:{LOCAL}
 	ENDIF
 	RETURN LOCAL
-;雑魚戦システム無しなら文章ONLYで処理
+;잡몹전 시스템이 OFF라면 문장 ONLY로 처리
 ELSE
-	;지문: ザコ촉수と戦闘
+	;지문: 잡몹 촉수와 전투
 	CALL MESSAGE_ENCOUNT_MOB
 
 	LOCAL = MAXBASE:체력
 	TIMES LOCAL, 0.35
 	BASE:체력 = LIMIT(BASE:체력 - SYOUHI_KEIGEN(TARGET,LOCAL,체력), 0 , BASE:체력)
-	PRINTFORML %BASENAME:0%が{LOCAL}減少した
+	PRINTFORML %BASENAME:0%이 {LOCAL} 감소했다.
 	
 	LOCAL = MAXBASE:기력
 	TIMES LOCAL, 0.30
 	BASE:기력 = LIMIT(BASE:기력 - SYOUHI_KEIGEN(TARGET,LOCAL,기력), 0 , BASE:기력)
-	PRINTFORML %BASENAME:1%が{LOCAL}減少した
+	PRINTFORML %BASENAME:1%이 {LOCAL} 감소했다.
 
-	;探索度上昇
+	;탐색도 상승
 	IF ENEMY_TYPE_CHECK_F("CITIZEN") == 0
 		LOCAL = 6 + RAND:4
 		SIF CFLAG:100 != 예정_출격
 			LOCAL /= 2
-		;FEAT効果による探索度アップ
+		;FEAT 효과에 의한 탐색도 향상
 		SIF TALENT:사냥꾼의직감 > 0
 			LOCAL += 5
-		PRINTFORML 探索度が{LOCAL} 상승했다.
+		PRINTFORML 탐색도가 {LOCAL} 상승했다!
 		CALL RESEARCH_PROGRESS, LOCAL
 		PRINTL 
 	ENDIF
 	;------------------------------------------------------------------------------------
-	;경험치の取得
+	;경험치 취득
 	CALL GET_EXP_BATTLE
 
 	CALL TENTACLE_SURVIVE, "NUM"
@@ -488,17 +489,17 @@ ELSE
 	SIF FLAG:852 < 0
 		FLAG:852 = 0
 	ABS LOCAL
-	PRINTFORM 방위력이 {RESULT}
+	PRINTFORM 방위력이 {RESULT} 
 	IF LOCAL < 0
-		PRINTL 低下した
+		PRINTL 감소했다.
 	ELSE
-		PRINTL 上昇した
+		PRINTL 상승했다!
 	ENDIF
 	;------------------------------------------------------------------------------------
-	;戦闘支援効果で回復
+	;전투 지원 효과로 회복
 	IF FLAG:43 && GROUPMATCH(CFLAG:100, 예정_출격, 예정_방위)
 		LOCAL:1 = FLAG:43 * 8
-		;衣装による補正
+		;의상에 따른 보정
 		LOCAL = TARGET
 		FOR LOCAL:2,0,CHARANUM
 			SIF LOCAL:2 == MASTER || CFLAG:(LOCAL:2):999 == 0
@@ -516,25 +517,25 @@ ELSE
 		LOCAL = LOCAL * LOCAL:1 / 100
 		BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
 		PRINTL 
-		PRINTFORML 戦闘支援効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
+		PRINTFORML 전투 지원 효과로 %PRINT_CALLNAME(TARGET)%의 체력과 기력이 회복됐다!
 	ENDIF
 	RETURN 0
 ENDIF
 
 ;================================================================================
-;【잡몹적とのエンカウント処理】
+;【잡몹적과의 인카운트 처리】
 ;------------------------------------------------------------------------------------
-;エンカウントした雑魚の番号が返る
+;인카운트한 잡몹 번호가 반환된다
 @MOB_TENTACLE_BATTLE
 #DIM ID
 
-;ランダム抽選用に候補をクリア
+;랜덤 추첨용으로 후보 클리어
 ;------------------------------------------------------------------------------------
 CALL CLEARRANDCHOOSE
 
 
 IF FLAG:11 == 0
-	;登場フラグの立っている敵のみ出現する
+	;등장 플래그가 서 있는 적만 출현한다
 	;------------------------------------------------------------------------------------
 	FOR LOCAL,0,MOB_CATEGORY
 		FOR LOCAL:1,0,100
@@ -545,7 +546,7 @@ IF FLAG:11 == 0
 			ENDIF
 		NEXT
 	NEXT
-	;候補がないなら抜ける
+	;후보가 없다면 빠진다
 	;------------------------------------------------------------------------------------
 	SIF CHOICECOUNT_F() == 0
 		RETURN -1
@@ -553,7 +554,7 @@ IF FLAG:11 == 0
 
 	;DEBUG
 	IF LOCAL > 0 && FLAG:999 == 1 && FLAG:45 == 0
-		PRINTL 対戦するザコ番号の入力(ゼロで遭遇キャンセル、負数で通常処理)
+		PRINTL 대전할 잡몹적 번호 입력 (0 입력 시 조우 취소, 음수 입력 시 통상 처리)
 		INPUT
 		IF RESULT >= 0
 			LOCAL = RESULT
@@ -562,7 +563,7 @@ IF FLAG:11 == 0
 	SIF LOCAL == 0
 		RETURN 0
 
-	;ザコ戦
+	;잡몹전
 	FLAG:10 = 2
 
 
@@ -574,7 +575,7 @@ SAVESTR:13 = MOB
 
 TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
 CATCH
-	PRINTFORML 【エラー：TENTACLE_%SAVESTR:13%_{FLAG:11}は定義されていない番号です】
+	PRINTFORML 【!ERROR!：TENTACLE_%SAVESTR:13%_{FLAG:11}은(는) 정의되지 않은 번호입니다.】
 	FLAG:10 = 0
 	FLAG:11 = 0
 	SAVESTR:13 '=""
@@ -582,7 +583,7 @@ CATCH
 ENDCATCH
 
 
-;戦闘系フラグのリセット
+;전투계 플래그 초기화
 ;------------------------------------------------------------------------------------
 FLAG:10 = 2
 FLAG:11 = LOCAL

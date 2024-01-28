@@ -71,7 +71,7 @@ IF TALENT:근거리특기 || TALENT:중거리특기 || TALENT:원거리특기
 	ENDIF
 	PRINTFORM た%CALLNAME%であったが
 ELSE
-	PRINTFORM %CALLNAME%は
+	PRINTFORM %CALLNAME%은(는) 
 ENDIF
 
 ;消耗度合い判定
@@ -142,7 +142,7 @@ ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
 	IF ABL:A감각 == 5
 		PRINTFORML %CALLNAME%の菊門は性器以上に敏感に作り替えられた
 	ELSEIF ABL:V감각 == 5
-		PRINTFORML %CALLNAME%は雌穴に挿入される度、イキ狂うようになった
+		PRINTFORML %CALLNAME%은(는) 雌穴に挿入される度、イキ狂うようになった
 	ELSEIF ABL:B감각 == 5
 		PRINTL 乳首は収まることなく屹立し続ける
 	ELSEIF ABL:C감각 == 5
@@ -189,14 +189,14 @@ ENDIF
 
 ;感覚もその他も3以下で中毒持ちってあるのかな
 IF LOCAL:0 >= 3 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORM もともとの素質が음란だったのか、%CALLNAME%は
+	PRINTFORM もともとの素質が음란だったのか、%CALLNAME%은(는) 
 ELSEIF LOCAL:0 == 2 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORM 結果、
 ELSEIF LOCAL:0 == 1 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORM ると同時に
 ELSEIF (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORML てしまうようになった。
-	PRINTFORML さんざん開発された%CALLNAME%は
+	PRINTFORML さんざん開発された%CALLNAME%은(는) 
 ELSE
 
 ENDIF
@@ -229,14 +229,14 @@ IF CFLAG:0 == 상태_사망
 		LOCALS = 生贄虐殺
 		LOCALS:1 = 死亡
 	ELSEIF TALENT:훼멸초계시 == -11
-		PRINTFORML ダークウェブ上の情報によると、%CALLNAME%は既に裏社会の組織に処刑されたようだ。
+		PRINTFORML ダークウェブ上の情報によると、%CALLNAME%은(는) 既に裏社会の組織に処刑されたようだ。
 		PRINTL
 		PRINTFORM その死が濃厚であるため、データベースからプロファイルが抹消された……
 		PRINTL
 		LOCALS = 残虐処刑
 		LOCALS:1 = 死亡
 	ELSEIF TALENT:묘상화
-		PRINTFORML %CALLNAME%は徹底的に吸収され、
+		PRINTFORML %CALLNAME%은(는) 徹底的に吸収され、
 		PRINTL
 		PRINTFORML %STR:2500%の幼体を出産する孕み袋になった
 		PRINTL
@@ -300,7 +300,7 @@ ELSEIF CFLAG:0 == 상태_악질감금
 ;ELSEIF TALENT:전락
 ;	PRINTL 
 ;	PRINTFORMW 촉수の手先になった疑惑があるため、簡単に「引退」することはできない。
-;	PRINTFORMW %CALLNAME%は秘密裏に拘束され、基地の奥深くで秘密裏に処刑される事になった……
+;	PRINTFORMW %CALLNAME%은(는) 秘密裏に拘束され、基地の奥深くで秘密裏に処刑される事になった……
 ;	PRINTW
 ;	FLAG:252 += 1
 ;	LOCALS = 秘密処刑

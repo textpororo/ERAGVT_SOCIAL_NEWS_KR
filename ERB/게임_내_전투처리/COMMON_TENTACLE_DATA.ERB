@@ -7,7 +7,7 @@ LOCAL:0 = 1
 LOCAL:1 = 0
 LOCAL:2 = 0
 LOCAL:3 = 0
-;ボス残存or雑魚戦
+;보스残存or雑魚戦
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	FOR LOCAL:2, 0, FLAG:3
 		CALL TENTACLE_SURVIVE_CHECK, LOCAL:0
@@ -27,7 +27,7 @@ IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 		CASE "NUM"
 			RETURN LOCAL:1
 	ENDSELECT
-;ラスボスのみ
+;최종 보스のみ
 ELSE
 	FOR LOCAL:2, 0, FLAG:4
 		CALL TENTACLE_SURVIVE_CHECK, LOCAL:0
@@ -53,7 +53,7 @@ ENDIF
 ;ビット値を투척て生きている보스 촉수・최종 보스 촉수の番号を返す
 ;BOSSx.ERBの番号を返す
 @TENTACLE_SURVIVE_CHECK, ARG
-;ボス残存or雑魚戦
+;보스残存or雑魚戦
 IF FLAG:100 > 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	IF FLAG:100 & ARG
 		;C촉수
@@ -82,19 +82,19 @@ IF FLAG:100 > 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
 			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしているボスIDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
+			PRINTFORML 参照しようとしている보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
 			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 			PRINTW 
 		ELSE
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
 			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしているボスIDが範囲外（ARG = {ARG}）になっています。原因究明のため、
+			PRINTFORML 参照しようとしている보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
 			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 			PRINTW 
 		ENDIF
 	ENDIF
-;生存ボス＝ラスボスのみ
+;生存보스＝최종 보스のみ
 ELSE
 	IF FLAG:101 & ARG
 		;K촉수
@@ -108,14 +108,14 @@ ELSE
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
 			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしているラスボスIDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
+			PRINTFORML 参照しようとしている최종 보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
 			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 			PRINTW 
 		ELSE
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
 			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしているラスボスIDが範囲外（ARG = {ARG}）になっています。原因究明のため、
+			PRINTFORML 参照しようとしている최종 보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
 			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 			PRINTW 
 		ENDIF
@@ -126,7 +126,7 @@ ENDIF
 ;BOSSx.ERBの番号を元に보스 촉수・최종 보스 촉수のビット値を返す
 ;上の関数の逆版
 @TENTACLE_BITVALUE, ARG
-;ボスor雑魚
+;보스or雑魚
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	;C촉수
 	IF ARG == 1
@@ -154,18 +154,18 @@ IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
 		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしているボスIDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
+		PRINTFORML 参照しようとしている보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
 		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 		PRINTW 
 	ELSE
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
 		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしているボスIDが範囲外（ARG = {ARG}）になっています。原因究明のため、
+		PRINTFORML 参照しようとしている보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
 		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 		PRINTW 
 	ENDIF
-;ラスボス
+;최종 보스
 ELSE
 	;K촉수
 	IF ARG == 1
@@ -178,14 +178,14 @@ ELSE
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
 		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしているラスボスIDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
+		PRINTFORML 参照しようとしている최종 보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
 		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 		PRINTW 
 	ELSE
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
 		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしているラスボスIDが範囲外（ARG = {ARG}）になっています。原因究明のため、
+		PRINTFORML 参照しようとしている최종 보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
 		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
 		PRINTW 
 	ENDIF
@@ -197,7 +197,7 @@ ENDIF
 ;パッチ1 幼体とか雑魚촉수生成用　置換BOSS→%SAVESTR:13%
 @TENTACLE_ACCESS, ARGS
 
-;ボスまたはザコ
+;보스またはザコ
 RESULTS'="【エラー："+SAVESTR:13+"_"+TOSTR(FLAG:11)+"'"+ARGS+"'のTENTACLE_ACCESS関数失敗】"
 IF GET_LASTBOSS_PHASE_F() == 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	SELECTCASE ARGS
@@ -252,7 +252,7 @@ IF GET_LASTBOSS_PHASE_F() == 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 			TRYCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_PALAM_HOSEI
 			RETURN RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11
 	ENDSELECT
-;ラスボス
+;최종 보스
 ELSE
 	SELECTCASE ARGS
 		CASE "NAME"
@@ -442,16 +442,16 @@ RETURN LOCAL - 1
 
 
 ;--------------------------------------------------
-;ボス撃破時のフラグ処理関係
+;보스撃破時のフラグ処理関係
 @AFTER_KILLED_BOSS
-;ターン終了までボス出現を抑制
+;ターン終了まで보스出現を抑制
 FLAG:49 = 1
 CALL RESEARCH_QUOTA
 
 
 ;--------------------------------------------------
 ;探索ノルマ
-;ボスの레벨と同様の算出方法
+;보스の레벨と同様の算出方法
 @RESEARCH_QUOTA
 #DIM LCOUNT
 #DIM 撃破数
@@ -504,7 +504,7 @@ FLAG:47 = 0
 
 ;--------------------------------------------------
 ;雑魚撃破ノルマ
-;ボスの레벨と同様の算出方法
+;보스の레벨と同様の算出方法
 @MOB_KILL_QUOTA
 #DIM 撃破数
 #DIM 討伐補正

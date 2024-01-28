@@ -12,7 +12,7 @@ FOR CCOUNT, 0, CHARANUM
 	SIF CFLAG:CCOUNT:999 == 0
 		CONTINUE
 
-	;기생されているなら기생경험が増加
+	;기생されているなら기생경험이 増加
 	IF TALENT:(FLAG:799):기생
 		EXP:(FLAG:799):기생경험 += 1
 		
@@ -60,7 +60,7 @@ FOR CCOUNT, 0, CHARANUM
 			ENDIF
 		ENDIF
 		
-		;実績
+		;실적
 		CALL GET_STATE_EXPUP,TARGET
 	ELSE
 		CONTINUE
@@ -70,7 +70,7 @@ NEXT
 ;---------------------------------------------------------------------
 ;暴走イベントの制御
 @PARASITE_EVENT
-;本来はTALENT:기생での判定が必要だが呼び出し時点で判定済みなので省略
+;本来はTALENT:기생での判定が必要だが호출時点で判定済みなので省略
 $LOOP
 ;誰を襲うのか決める
 SIF CHARANUM_ACTIVE() == 0
@@ -193,7 +193,7 @@ CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
 IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
 	LOCAL:10 = 500
 	PRINTL 
-	PRINTL 처녀喪失
+	PRINTL 처녀 상실
 	PRINTL 
 	TALENT:처녀 = -1
 	CFLAG:206 = 4
@@ -542,10 +542,10 @@ CALL SYNBIOSIS_ABL_UP, 0
 @SYNBIOSIS_OUT_OF_CONTROL_EVENT
 
 ;確率判定
-;기생촉수の暴走とは逆に、기생경험が高いほど暴走を起きにくくする。但し最低10%, 最高25%とする
+;기생촉수の暴走とは逆に、기생경험이 高いほど暴走を起きにくくする。但し最低10%, 最高25%とする
 ;기생경험 > 80から25%未満となり、기생경험 == 200が限界の10%となる
 
-;一旦、呼び出しよりをコメントアウト
+;一旦、호출よりをコメントアウト
 
 
 LOCAL = (200000 / EXP:(FLAG:799):기생경험)
@@ -1037,7 +1037,7 @@ ENDIF
 IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
 	LOCAL:10 = 500
 	PRINTL 
-	PRINTL 처녀喪失
+	PRINTL 처녀 상실
 	PRINTL 
 	TALENT:처녀 = -1
 	CFLAG:206 = 4

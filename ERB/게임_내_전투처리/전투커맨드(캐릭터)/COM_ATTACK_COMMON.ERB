@@ -315,7 +315,7 @@ IF GETBIT(TCVARn:217, 0)
 		CASE "通常"
 			TFLAG:99 += 1
 	ENDSELECT
-	;FEAT効果による反動増加
+	;FEAT 효과에 따른反動増加
 	SIF TALENT:핫스타트 > 0
 		TFLAG:99 += 1
 	SIF TALENT:풀버스트 > 0
@@ -324,12 +324,12 @@ IF GETBIT(TCVARn:217, 0)
 	;[装甲]バーストのオートガード効果
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"
 		TCVARn:2 = 자세：방어
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は방어態勢になった！
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)방어態勢になった！
 	ENDIF
 	;[知略]バーストの관찰한다効果
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "知略"
 		TFLAG:25 = 1
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は관찰한다状態になった！
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)관찰한다状態になった！
 	ENDIF
 ENDIF
 
@@ -354,7 +354,7 @@ RETURN 1
 @ATTACK_AIR_FLAG
 IF GETBIT(TCVARn:216, 1) && GETBIT(TCVARn:216, 0) == 0
 	TCVARn:216 = 4
-	;FEAT効果による着地時の反動
+	;FEAT 효과에 따른着地時の反動
 	SIF TALENT:날개 > 0
 		TFLAG:99 += 1
 ELSEIF GETBIT(TCVARn:216, 0) && BASE:공중대시
@@ -362,10 +362,10 @@ ELSEIF GETBIT(TCVARn:216, 0) && BASE:공중대시
 	BASE:공중대시 -= 1
 	;空中공격の反動
 	TFLAG:99 += 1
-	;FEAT効果による反動の軽減
+	;FEAT 효과에 따른反動の軽減
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 -= 1
-	;FEAT効果による反動の増加
+	;FEAT 효과에 따른反動の増加
 	SIF TALENT:에어마스터 > 0
 		TFLAG:99 += 1
 ENDIF

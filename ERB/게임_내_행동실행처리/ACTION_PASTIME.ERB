@@ -1,55 +1,55 @@
 ﻿;--------------------------------------------------
-;息抜き
+;여가 활동 (息抜き)
 @PASTIME
 #DIM REST = 0
 FLAG:11 = 0
 
-;もし小中高大学に通っていない場合、30の倍数日に編入する機会を与える
+;만약 초중고 대학에 다니지 않을 경우, 30의 배수일에 편입할 기회를 준다
 IF TALENT:학생 == 0 && DAY % 30 == 0 && DAY > 29
 	CALL PASTIME_SelectSchool
 ENDIF
 
-;変身可能キャラは変身状態になるか選べる
-CALL ACTION_TRANSFORMATION_SELECT, TARGET, "気晴らし"
+;변신 가능 캐릭터는 변신 상태가 될지 선택할 수 있다
+CALL ACTION_TRANSFORMATION_SELECT, TARGET, "여가 활동"
 
-PRINTFORM [0]街に出る　　　　　　
-PRINTFORM [1]遠出する　　　　　　
-PRINTFORM [2]運動をする　　　　　
-;学校は昼のみ表示する
+PRINTFORM [0] 거리로 나간다　　　
+PRINTFORM [1] 멀리 나간다　　　　
+PRINTFORM [2] 운동하러 간다　　　
+;학교는 낮에만 표시한다
 SIF TIME > 0
 	SETCOLOR 105,105,105
 SIF TALENT:학생 > 0
-	PRINTFORM [3]学校に行く　　　　　
+	PRINTFORM [3] 학교에 간다　　　　
 RESETCOLOR
 PRINTL 
 PRINTL
 DRAWLINE
 
-;スケジュール機能は実装するならこんなの
+;스케쥴 기능은 구현한다면 이런 느낌
 ;IF CFLAG:113 > 0
 ;	CALL RES_SCHEDULE, 113
 ;	IF RESULT == 0
 ;		PRINTL 
-;		PRINT スケジュール：街に出る
+;		PRINT 스케쥴：거리로 나간다
 ;		PRINTL 
 ;	ENDIF
 ;	IF RESULT == 1
 ;		PRINTL 
-;		PRINT スケジュール：遠出する
+;		PRINT 스케쥴：멀리나간다
 ;		PRINTL 
 ;	ENDIF
 ;	IF RESULT == 2
 ;		PRINTL 
-;		PRINT スケジュール：運動する
+;		PRINT 스케쥴：운동하러 나간다
 ;		PRINTL 
 ;	ENDIF
 ;	IF RESULT == 3
 ;		PRINTL 
-;		PRINT スケジュール：学校に行く
+;		PRINT 스케쥴：학교에 간다
 ;		IF TALENT:학생 > 0 && TIME == 0
-;			PRINT （実行不能）
+;			PRINT （실행 불능）
 ;			PRINTL 
-;			PRINTL 手動で行動を選択してください
+;			PRINTL 수동으로 행동을 선택하십시오.
 ;			GOTO INPUT_LOOP
 ;		ENDIF
 ;	ENDIF
@@ -64,28 +64,28 @@ PRINTL
 IF INRANGE(RESULT, 0, 3)
 	DRAWLINE
 	SELECTCASE RESULT
-		;街に出る
+		;거리로 나간다
 		CASE 0
-			CALL PASTIME_街に出る, RESULT
+			CALL PASTIME_거리로나간다, RESULT
 			REST = RESULT
-		;遠出をする
+		;멀리 나간다 (遠出をする)
 		CASE 1
-			CALL PASTIME_遠出する, RESULT
+			CALL PASTIME_멀리나간다, RESULT
 			REST = RESULT
-		;運動をする
+		;운동하러 나간다
 		CASE 2
-			CALL PASTIME_運動する, RESULT
+			CALL PASTIME_운동한다, RESULT
 			REST = RESULT
-		;学校
+		;학교
 		CASE 3
 			IF TALENT:학생 < 1
 				PRINTL 올바른 값을 입력해 주십시오.
 				GOTO INPUT_LOOP
 			ELSEIF TIME > 0
-				PRINTL 学校に行けるのは昼のみです
+				PRINTL 야간에는 학교에 갈 수 없습니다.
 				GOTO INPUT_LOOP
 			ELSE
-				CALL PASTIME_学校に行く, RESULT
+				CALL PASTIME_학교에간다, RESULT
 				REST = RESULT
 			ENDIF
 	ENDSELECT
@@ -104,11 +104,11 @@ ENDIF
 
 CALL PASTIME_REST
 
-;매료경험の上昇とFEATの効果
+;매료경험의 상승과 FEAT 효과
 LOCAL = CALC_CHARM_FEAT_OTHER(TARGET)
 IF LOCAL > 0
 	EXP:매료경험 += LOCAL
-	PRINTFORML 매료경험が{LOCAL}上がった
+	PRINTFORML 매료경험이 {LOCAL} 올랐다!
 ENDIF
 
 CALL _ABLUP, 1
@@ -117,13 +117,13 @@ SIF CFLAG:1 > 0
 BEGIN TURNEND
 
 ;--------------------------------------------------
-;息抜き回復処理
+;여가 활동의 회복 처리
 @PASTIME_REST
-;체력・기력・성내성・疲労度の回復
-;체력は基本10%回復する
-;기력は基本30%回復する
-;성내성は50%回復する
-;疲労度は施設拡張していくと最終的に逆転
+;체력・기력・성내성・피로도 회복
+;체력은 기본 10% 회복한다
+;기력은 기본 30% 회복한다
+;성내성은 50% 회복한다
+;피로도는 시설 확장을 해나가면 최종적으로 역전, 원문은 "疲労度は施設拡張していくと最終的に逆転"
 
 LOCAL:1 = 10
 LOCAL:2 = 30
@@ -135,7 +135,7 @@ ELSEIF TALENT:회복느림 > 0
 	LOCAL:1 -= 5
 	LOCAL:2 += 5
 ENDIF
-;FEAT効果による回復量補正
+;FEAT 효과에 따른 회복량 보정
 IF TALENT:마력저장 > 0
 	LOCAL:1 -= 5
 	LOCAL:2 -= 5
@@ -159,21 +159,21 @@ IF CFLAG:0 != -1 && CFLAG:999 != 0
 	;구상
 	;TRYCALLFORM KOJO_ROOT(CFLAG:6, "REST")
 
-	;疲労の回復
+	;피로 회복
 	IF CFLAG:99 > 0
 		CFLAG:99 -= 10
 		SIF CFLAG:99 < 0
 			CFLAG:99 = 0
 		IF CFLAG:99 == 0
-			PRINTFORML %CALLNAME:TARGET%の身体から疲労が完全に抜けた！
+			PRINTFORML %CALLNAME:TARGET%의 몸에 쌓인 피로가 완전히 풀렸다!
 		ELSE
-			PRINTFORML %CALLNAME:TARGET%の身体から疲労が少し抜けた…
+			PRINTFORML %CALLNAME:TARGET%의 몸에 쌓인 피로가 조금 풀렸다……
 		ENDIF
 	ENDIF
 	PRINTL 
 
 	SIF BASE:체력 == MAXBASE:체력 && BASE:기력 == MAXBASE:기력 && CFLAG:99 == 0
-		PRINTFORML %CALLNAME:TARGET%は最大まで回復した！
+		PRINTFORML %CALLNAME:TARGET%의 체력, 기력과 피로도가 완전히 회복됐다!
 
 	IF CONFIG_CHECK_SCREEN_F(3) == 0
 		PRINTW 
@@ -183,33 +183,33 @@ IF CFLAG:0 != -1 && CFLAG:999 != 0
 ENDIF
 
 ;--------------------------------------------------
-;完全女体化時の回数上書き
+;완전 여체화 시의 횟수 덮어쓰기
 @PASTIME_TSFLAG_OVERWRITE
 
-;ナンパ男にレイプされた回数
+;헌팅남에게 강간당한 횟수
 CFLAG:320 = CFLAG:321
 
-;痴漢された回数
+;치한당한 횟수
 CFLAG:325 = CFLAG:326
 CFLAG:327 = CFLAG:328
 
-;運動公園の回数
+;운동 공원의 횟수
 CFLAG:330 = CFLAG:331
 CFLAG:332 = CFLAG:333
 
-;フィットネスクラブの回数
+;피트니스 클럽의 횟수
 CFLAG:334 = CFLAG:335
 CFLAG:336 = CFLAG:337
 
-;マッサージサロンの回数
+;마사지 살롱의 횟수
 CFLAG:338 = CFLAG:339
 CFLAG:340 = CFLAG:341
 
-;プールの回数
+;수영장(pool)의 횟수
 CFLAG:342 = CFLAG:343
 CFLAG:344 = CFLAG:345
 
-;学校イベント
+;학교 이벤트
 CFLAG:350 = CFLAG:351
 CFLAG:352 = CFLAG:353
 CFLAG:354 = CFLAG:355

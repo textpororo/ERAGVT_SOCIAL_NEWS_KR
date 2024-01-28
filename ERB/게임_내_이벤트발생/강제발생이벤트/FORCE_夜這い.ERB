@@ -84,7 +84,7 @@ IF CHOICECOUNT_F()
 		RESETCOLOR
 		GOTO REROLL
 	ENDIF
-	;実績
+	;실적
 	CALL GET_STATE_EXPUP,TARGET
 	;모든 캐릭터의 変身を解除
 	FOR LOCAL, 0, CHARANUM
@@ -251,15 +251,15 @@ PRINTFORML %PRINT_CALLNAME(TARGET)%は眠れぬ夜を過ごしている・・・
 IF SELECT:0 + SELECT:1 == 0
 	IF TALENT:여체수용 > 0 || TALENT:변신시보추 > 0
 		IF TALENT:변신시보추 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で보추化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で보추化できます。変身した状態で夜這いを行いますか？
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で女体化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で女体化できます。変身した状態で夜這いを行いますか？
 		ENDIF
 		PRINTFORML  [0] 네　[1]夜這いを行わずに終了する
 		$INPUT_LOOP_0_0
 		INPUT
 		IF RESULT == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身した！
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身した！
 			PRINTW 
 			CALL TRANSFORM, 1
 		ELSEIF RESULT == 1
@@ -278,19 +278,19 @@ IF SELECT:0 + SELECT:1 == 0
 ELSEIF SELECT:10 + SELECT:11 > 0
 	IF ((TALENT:변신시TS > 0 || TALENT:변신시후타나리 > 0) && (ISFEMALE() || TALENT:여체수용 > 0)) || TALENT:변신시보추 > 0
 		IF TALENT:변신시보추 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で보추化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で보추化できます。変身した状態で夜這いを行いますか？
 		ELSEIF ISMALE()
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で女体化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で女体化できます。変身した状態で夜這いを行いますか？
 		ELSEIF TALENT:변신시후타나리 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で후타나리化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で후타나리化できます。変身した状態で夜這いを行いますか？
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身で男性化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で男性化できます。変身した状態で夜這いを行いますか？
 		ENDIF
 		PRINTFORML 　[0] 네　　[1] 아니오
 		$INPUT_LOOP_0_1
 		INPUT
 		IF RESULT == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は変身した！
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身した！
 			PRINTW 
 			CALL TRANSFORM, 1
 		ELSEIF RESULT == 1
@@ -1190,12 +1190,12 @@ SELECTCASE ARG
 								PRINTFORML %PRINT_CALLNAME(TARGET)%は何故か、もう남자に戻れない気がした。
 							ENDIF
 							PRINTL 
-							PRINTL 처녀喪失
+							PRINTL 처녀 상실
 							PRINTW 
 							GOTO V_LOSTVERGIN_SEX
 							;고통
 							LOCAL:10 = 50
-							;처녀喪失の相手が사랑하는사람かどうか
+							;처녀 상실の相手が사랑하는사람かどうか
 							IF LOVER_F(TARGET, FLAG:799) > 0
 								CFLAG:206 = 5
 							ELSE
@@ -1276,7 +1276,7 @@ SELECTCASE ARG
 				CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
 			NEXT
 			CALL _ABLUP, 1
-			;임신判定
+			;임신 판정
 			SIF (TALENT:TARGET:음란 > 0 || LOVER_F(FLAG:799, TARGET) > 0) && LOCAL:123 > 0 && TALENT:TARGET:미성숙 == 0
 				CALL NINSIN_HANTEI, LOCAL:123, 400, CFLAG:(FLAG:799):240 * -1 - 100
 			PRINTW 
@@ -1302,7 +1302,7 @@ SELECTCASE ARG
 			NEXT
 			CALL _ABLUP, 1
 			IF NAKADASHI == 1
-				;アフターピル
+				;사후피임약
 				CALL AFTER_PILL, LCOUNT, 75, CFLAG:(TARGET):240 * -1 - 100
 			ENDIF
 
@@ -1449,7 +1449,7 @@ SELECTCASE ARG
 				PRINTFORML 少し恥ずかしそうな表情で腰を動かし膣口と亀頭をあわせると、ゆっくりと腰を落とす。
 				PRINTFORML ずぷ、と、%CALLNAME:ARG%の질내へと%CALLNAME:MASTER%の一物が挿入された。
 			ELSE
-				;★血縁者처녀喪失
+				;★血縁者처녀 상실
 				IF INCEST_F(TARGET, FLAG:799) > 0
 					;가족관계テスト
 					PRINTFORM %PRINT_CALLNAME(FLAG:799)%は
@@ -1513,7 +1513,7 @@ SELECTCASE ARG
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は何故か、もう남자に戻れない気がした。
 			ENDIF
 			PRINTL 
-			PRINTL 처녀喪失
+			PRINTL 처녀 상실
 			PRINTW 
 			$V_LOSTVERGIN_SEX
 			;★
@@ -1586,7 +1586,7 @@ SELECTCASE ARG
 				LOCAL:141 = 1
 			;처녀を失う
 			TALENT:처녀 = -1
-			;처녀喪失の相手が사랑하는사람かどうか
+			;처녀 상실の相手が사랑하는사람かどうか
 			IF LOVER_F(TARGET, FLAG:799) > 0
 				CFLAG:206 = 5
 			ELSE
@@ -1599,7 +1599,7 @@ SELECTCASE ARG
 				CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
 			NEXT
 			CALL _ABLUP, 1
-			;임신判定
+			;임신 판정
 			SIF (TALENT:TARGET:음란 > 0 || LOVER_F(FLAG:799, TARGET) > 0) && LOCAL:123 > 0 && TALENT:TARGET:미성숙 == 0
 				CALL NINSIN_HANTEI, LOCAL:123, 400, CFLAG:(FLAG:799):240 * -1 - 100
 			PRINTW 
@@ -1625,7 +1625,7 @@ SELECTCASE ARG
 			NEXT
 			CALL _ABLUP, 1
 			IF NAKADASHI == 1
-				;アフターピル
+				;사후피임약
 				CALL AFTER_PILL, LCOUNT, 75, CFLAG:(TARGET):240 * -1 - 100
 			ENDIF
 			;相手남자、自分처녀ではない・挿入
@@ -1746,7 +1746,7 @@ SELECTCASE ARG
 				CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
 			NEXT
 			CALL _ABLUP, 1
-			;임신判定
+			;임신 판정
 			SIF (TALENT:TARGET:음란 > 0 || LOVER_F(FLAG:799, TARGET) > 0) && LOCAL:123 > 0 && TALENT:TARGET:미성숙 == 0
 				CALL NINSIN_HANTEI, LOCAL:123, 400, CFLAG:(FLAG:799):240 * -1 - 100
 			PRINTW 
@@ -1772,7 +1772,7 @@ SELECTCASE ARG
 			NEXT
 			CALL _ABLUP, 1
 			IF NAKADASHI == 1
-				;アフターピル
+				;사후피임약
 				CALL AFTER_PILL, LCOUNT, 75, CFLAG:(TARGET):240 * -1 - 100
 			ENDIF
 		ENDIF
@@ -1795,7 +1795,7 @@ SELECTCASE ARG
 				PRINTFORML 少し恥ずかしそうな表情で腰を動かし菊穴と亀頭をあわせると、ゆっくりとお尻を押しつける。
 				PRINTFORML ずぷ、と、%CALLNAME:ARG%の腸内へと%CALLNAME:MASTER%の一物が挿入された。
 			ELSE
-				;★血縁者처녀喪失
+				;★血縁者처녀 상실
 				IF INCEST_F(TARGET, FLAG:799) > 0
 					;가족관계テスト
 					PRINTFORM %PRINT_CALLNAME(FLAG:799)%は
@@ -1889,7 +1889,7 @@ SELECTCASE ARG
 					IF TALENT:TARGET:800 == 4
 						PRINTFORML 辛うじて残っていた理性によって中出しは回避したほうがと頭をよぎるが、
 						PRINTFORML %PRINT_CALLNAME(TARGET)%は頬を赤くしながら、情熱的なおねだりで%PRINT_CALLNAME(FLAG:799)%の思考を遮ると、
-						PRINTFORML ぐいぐいとしりたぶを%PRINT_CALLNAME(FLAG:799)%の腰に押しつけてペニスを奥深くまで咥えこみ、身体でも腸内사정をねだった。
+						PRINTFORML ぐいぐいとしりたぶを%PRINT_CALLNAME(FLAG:799)%の腰に押しつけてペニスを奥深くまで咥えこみ、身体でも장내사정をねだった。
 						PRINTFORML %PRINT_CALLNAME(FLAG:799)%もまた我慢できなくなり、その誘いに応えて腸奥へと精液を解き放った、
 						PRINTFORML 남자の味に慣れていない초심な直腸内が白く染め上げられていく。
 						PRINTFORML %PRINT_CALLNAME(TARGET)%は甘い喘ぎ声を漏らし、自らの最も大事な場所に夫以外の子種を받아들인다喜びに浸っていた・・・
@@ -2003,7 +2003,7 @@ SELECTCASE ARG
 				PRINTFORML 辛うじて残っていた理性によって中出しは回避したほうがと頭をよぎるが、
 				;★
 				IF SUIMIN == 1
-					PRINTFORML 快楽に倒錯した本能がメスに染まって임신を望み、脳が腸内사정の快楽信号を欲している。
+					PRINTFORML 快楽に倒錯した本能がメスに染まって임신を望み、脳が장내사정の快楽信号を欲している。
 					PRINTFORML 昂った욕정の内奥で%PRINT_CALLNAME(FLAG:799)%の子種をすべて受け止めた。
 				ELSE
 					PRINTFORML %PRINT_CALLNAME(TARGET)%は%PRINT_CALLNAME(FLAG:799)%の腰にぐいぐいとお尻を押しつけて放さない。
@@ -2988,7 +2988,7 @@ IF TALENT:(FLAG:799):처녀 > 0
 	SIF SUIMIN == 0
 		PRINTFORML %PRINT_CALLNAME(FLAG:799)%は涙を浮かべながらも幸せそうな表情をしている・・・
 	PRINTL 
-	PRINTL 처녀喪失
+	PRINTL 처녀 상실
 	PRINTW 
 	PRINTFORML パンパンと肉と肉のぶつかる音と荒い息遣いが部屋の空気を震わせる。
 	PRINTFORML 激しくはないが情熱的なピストンに질내を抉られ、
@@ -3084,7 +3084,7 @@ IF TALENT:(FLAG:799):처녀 > 0
 		LOCAL:141 = 1
 	;처녀を失う
 	TALENT:처녀 = -1
-	;처녀喪失の相手が사랑하는사람かどうか
+	;처녀 상실の相手が사랑하는사람かどうか
 	IF LOVER_F(LCOUNT, FLAG:799) > 0
 		CFLAG:LCOUNT:206 = 5
 	ELSE
@@ -3096,12 +3096,12 @@ IF TALENT:(FLAG:799):처녀 > 0
 	FOR CCOUNT, 100, 200
 		CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
 	NEXT
-	;임신判定
+	;임신 판정
 	SIF (TALENT:LCOUNT:음란 > 0 || LOVER_F(LCOUNT, TARGET) > 0) && LOCAL:123 > 0 && TALENT:LCOUNT:미성숙 == 0
 		CALL NINSIN_HANTEI, LOCAL:123, 400, CFLAG:LCOUNT:240 * -1 - 100
 	CALL _ABLUP, 1
 	IF NAKADASHI == 1
-		;アフターピル
+		;사후피임약
 		CALL AFTER_PILL, TARGET, 75, CFLAG:LCOUNT:240 * -1 - 100
 	ENDIF
 
@@ -3244,12 +3244,12 @@ ELSE
 	FOR CCOUNT, 100, 200
 		CALL COMMON_PRISON_EXP, CCOUNT, LOCAL:CCOUNT
 	NEXT
-	;임신判定
+	;임신 판정
 	SIF (TALENT:LCOUNT:음란 > 0 || LOVER_F(LCOUNT, TARGET) > 0) && LOCAL:123 > 0 && TALENT:LCOUNT:미성숙 == 0
 		CALL NINSIN_HANTEI, LOCAL:123, 400, CFLAG:LCOUNT:240 * -1 - 100
 	CALL _ABLUP, 1
 	IF NAKADASHI == 1
-		;アフターピル
+		;사후피임약
 		CALL AFTER_PILL, TARGET, 75, CFLAG:LCOUNT:240 * -1 - 100
 	ENDIF
 ENDIF
@@ -3414,7 +3414,7 @@ ELSEIF ABL:(FLAG:799):A감각 < 2
 			PRINTFORML %PRINT_CALLNAME(FLAG:799)%の寝込みを襲い、ゴムも付けずに生挿入し、無抵抗を良いことにアヌスを奪い、
 			PRINTFORML そのうえ女性器にするように無責任中出ししたらと想像すると、動悸が激しくなり怒張もさらに張りつめる。
 			PRINTFORML 限界に近付いた%PRINT_CALLNAME(TARGET)%はペニスを腸奥に押し付け、無言で中出しを敢行した。
-			PRINTFORML %PRINT_CALLNAME(FLAG:799)%は寝入ったまま腸内사정を迎え、
+			PRINTFORML %PRINT_CALLNAME(FLAG:799)%は寝入ったまま장내사정を迎え、
 			PRINTFORML 不慣れな尻穴性交にも関わらず二人は同時に絶頂し、勢いよく精液が腸内へと注ぎこまれていった・・・
 			;★;★;★
 		ELSEIF RAND:2 == 0

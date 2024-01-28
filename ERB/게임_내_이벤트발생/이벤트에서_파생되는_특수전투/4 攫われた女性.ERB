@@ -2,7 +2,7 @@
 ;攫われた女性たちの救出イベント(未実装)
 
 @EVENT_BATTLE_SITUATION_4
-PRINTFORML つい先ほど起きた襲撃事件後に逃走した大型촉수生物が、もう間もなく近くを通過するらしい。
+PRINTFORML つい先ほど起きた襲撃事件後に逃走した大型촉수 생물が、もう間もなく近くを通過するらしい。
 PRINTFORML 女性数名が連れ去られたとのことで、救出の依頼が来ている。
 PRINTFORML 付近の部隊が急行しているものの、このままでは逃亡速度に間に合わないようだ。
 SETCOLORBYNAME HOTPINK
@@ -16,7 +16,7 @@ PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわ
 PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
 
 @EVENT_BATTLE_ABANDON_4
-PRINTFORML 不確定要素も多く、万全でもない状態で촉수生物と戦うのは危険すぎる。
+PRINTFORML 不確定要素も多く、万全でもない状態で촉수 생물と戦うのは危険すぎる。
 PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
 ;ニュース記事に(失敗時使い回し)
 if !FLAG:60
@@ -25,7 +25,7 @@ endif
 
 
 @EVENT_BATTLE_EXEC_4
-PRINTFORML 現場に辿り着いた%PRINT_CALLNAME(TARGET)%の前に촉수生物が現れた。
+PRINTFORML 現場に辿り着いた%PRINT_CALLNAME(TARGET)%の前に촉수 생물が現れた。
 PRINTFORML ズルズルと気味の悪い粘液を引きながら、捕らえた女性たちを何処かへと連れ去ろうとしていたようだ。
 PRINTFORML 漂う臭気に思わず身震いした%PRINT_CALLNAME(TARGET)%の気配を察知したのか、
 IF ISGIRLY()
@@ -38,7 +38,7 @@ PRINTFORML 一度姿を消した촉수の行方を追うのは%PRINT_CALLNAME(TA
 PRINTFORML 何としてもこの場で決着を付けなければ……
 PRINTW 
 
-PRINTFORML （追撃イベントは規定ターン以内に촉수生物を撃破する必要があります！）
+PRINTFORML （追撃イベントは規定ターン以内に촉수 생물を撃破する必要があります！）
 PRINTW 
 DRAWLINE
 턴상한=40
@@ -101,11 +101,11 @@ Sif !FLAG:60
 @EVENT_BATTLE_FLASHNEWS_4(ARG)
 ;ミッション成功
 IF ARG==1
-	RESULTS'="촉수生物に攫われかけた女性らを魔法少女が華麗に救出、市民ら感謝の声"
+	RESULTS'="촉수 생물に攫われかけた女性らを魔法少女が華麗に救出、市民ら感謝の声"
 ;ミッション失敗
 ELSEIF ARG==0
-	RESULTS'="大型촉수生物が市街地を襲来、複数の女性が行方不明に"
+	RESULTS'="大型촉수 생물が市街地を襲来、複数の女性が行方不明に"
 ;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
 ELSEIF ARG==-1
-	RESULTS'="大型촉수生物が市街地を襲来、女性ら多数行方不明。中には魔法少女の姿も？"
+	RESULTS'="大型촉수 생물が市街地を襲来、女性ら多数行方不明。中には魔法少女の姿も？"
 ENDIF

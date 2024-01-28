@@ -1,5 +1,5 @@
 ﻿;---------------------------------------------------------------------
-;ボス襲撃イベント
+;보스襲撃イベント
 @EVENT_BATTLE_EXEC_3003
 
 ;現在のアウターを「무대 의상」に一時設定する
@@ -26,11 +26,11 @@ PRINTFORML すぐ傍で床が陥没し――
 PRINTW 
 PRINTFORML ――ヌ　メ　リ
 PRINTFORML という音と共に現れた촉수に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
-PRINTFORML 見間違えるはずもない――"人類の敵"、촉수生物。
+PRINTFORML 見間違えるはずもない――"人類の敵"、촉수 생물。
 PRINTFORML 巨体がズズンと地響きを起こしながら、足元の闇から姿を現そうとしている！
 PRINTW 
 PRINTFORML 表情を強張らせた%PRINT_CALLNAME(TARGET)%の周囲で、ボコリ、ボコリとステージを取り囲むように生え揃う촉수。
-PRINTFORML 촉수生物の狙いは若い女性、ここはライブ会場、その中心にいる獲物といえば……！
+PRINTFORML 촉수 생물の狙いは若い女性、ここはライブ会場、その中心にいる獲物といえば……！
 PRINTFORML 事の深刻さを察した%PRINT_CALLNAME(TARGET)%は咄嗟に飛び退き距離を作るが、
 PRINTFORML 臨戦態勢を取る寸前で自身の置かれた状況に思い至ってしまった。
 PRINTW 
@@ -85,10 +85,10 @@ CALL ADDBATTLESITUATION("先制無し,支援無効,身バレ不可,常時撮影,
 @EVENT_BATTLE_SUCCESS_3003
 	;倒してしまっても構わんのだ
 	IF TFLAG:98 == 1
-		PRINTFORML 観客のいないステージで、%PRINT_CALLNAME(TARGET)%は촉수生物と戦っていた。
+		PRINTFORML 観客のいないステージで、%PRINT_CALLNAME(TARGET)%は촉수 생물と戦っていた。
 		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
 		PRINTFORML のたうつ촉수を踊るように躱し、的確に急所へと공격を叩き込む。
-		PRINTFORML やがて촉수生物に決定的な一撃が入ったのか、どさりと音を立てて倒れ込み、そのまま沈黙した。
+		PRINTFORML やがて촉수 생물に決定的な一撃が入ったのか、どさりと音を立てて倒れ込み、そのまま沈黙した。
 		PRINTFORML 
 		PRINTFORML %PRINT_CALLNAME(TARGET)%が注意深く確かめようとした時、イベントスタッフたちの慌てた声や足音が촉수越しに聞こえてきた。
 		PRINTFORML どうやら「%PRINT_TRANSCALLNAME(TARGET)%」の安否を確かめに戻ってきたようだ。
@@ -100,7 +100,7 @@ CALL ADDBATTLESITUATION("先制無し,支援無効,身バレ不可,常時撮影,
 		PRINTFORML もう観客の視線はない！　%PRINT_CALLNAME(TARGET)%は촉수に向き直る。
 		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
 		PRINTFORML 本来の実力で戦闘態勢に入り、素早く身構える%PRINT_CALLNAME(TARGET)%。
-		PRINTFORML すると촉수生物は異変を察知したのか、巨体に見合わぬ速度で元来た穴へ潜り込み始めた……
+		PRINTFORML すると촉수 생물は異変を察知したのか、巨体に見合わぬ速度で元来た穴へ潜り込み始めた……
 		PRINTFORML 
 		PRINTFORML 追うべきか、体制を整えるべきか。
 		PRINTFORML %PRINT_CALLNAME(TARGET)%が逡巡していると、イベントスタッフたちの慌てた声や足音が会場に響いた。
@@ -122,7 +122,7 @@ CALL ADDBATTLESITUATION("先制無し,支援無効,身バレ不可,常時撮影,
 		PRINTFORML 既に満身創痍の%PRINT_CALLNAME(TARGET)%だが、それでも촉수に立ち向うため最後の力を振り絞り……
 		PRINTFORML 
 		PRINTFORML ……と、獲物の意外な抵抗を警戒したのだろうか？
-		PRINTFORML 촉수生物は%PRINT_CALLNAME(TARGET)%に向けていた全ての촉수をシュルシュルと引っ込め、
+		PRINTFORML 촉수 생물は%PRINT_CALLNAME(TARGET)%に向けていた全ての촉수をシュルシュルと引っ込め、
 		PRINTFORMW 巨体に見合わぬ速度で元来た穴へ滑り込んでゆく。
 		PRINTFORML ・・・
 		PRINTFORML 瓦礫まみれのイベントステージに取り残され、呆然とへたり込む%PRINT_CALLNAME(TARGET)%。
@@ -143,10 +143,10 @@ CALL ADDBATTLESITUATION("先制無し,支援無効,身バレ不可,常時撮影,
 	;負けた
 	ELSE
 		PRINTFORML %PRINT_CALLNAME(TARGET)%が力尽きたことで会場は大混乱に陥った。
-		PRINTFORML 촉수生物は意識を失った%PRINT_CALLNAME(TARGET)%をトロフィーのように掲げると、
+		PRINTFORML 촉수 생물は意識を失った%PRINT_CALLNAME(TARGET)%をトロフィーのように掲げると、
 		PRINTFORML まるで撮影用カメラへ見せつけるように대량사정を繰り返す。
 		IF FLAG:70>0
-			PRINTFORM 穴から湧き出した無数の촉수生物が逃げ遅れた女性客を襲い始める中、
+			PRINTFORM 穴から湧き出した無数の촉수 생물が逃げ遅れた女性客を襲い始める中、
 		ENDIF
 		PRINTFORML 蠢く촉수が白濁に染まった%PRINT_CALLNAME(TARGET)%を悠々と絡め取り、用は済んだとばかりに大穴へ姿を消した……
 		PRINTW 

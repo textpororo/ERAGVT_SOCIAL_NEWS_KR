@@ -3,14 +3,14 @@
 
 ;흑화 캐릭터に敗北して犯される
 @MESSAGE_SUBEVENT_BATTLE_RAPED_ENEMY
-PRINTFORML 力無く横たわる%PRINT_TRANSCALLNAME(TARGET)%は、%PRINT_TRANSCALLNAME(FLAG:111)%の激辱を
+PRINTFORML 力無く横たわる%PRINT_TRANSCALLNAME(TARGET)%은(는)、%PRINT_TRANSCALLNAME(FLAG:111)%の激辱を
 PRINTL ただ甘んじて받아들인다しかなかった・・・
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SUBEVENT_BATTLE_RAPED_ENEMY")
 
-;クズ市民に敗北して犯される(監禁Off時)
+;악질 시민に敗北して犯される(監禁Off時)
 @MESSAGE_SUBEVENT_BATTLE_RAPED_CITIZEN
-PRINTFORML 力無く横たわる%PRINT_TRANSCALLNAME(TARGET)%は、守るべき市民から受ける屈辱的な激辱を
+PRINTFORML 力無く横たわる%PRINT_TRANSCALLNAME(TARGET)%은(는)、守るべき市民から受ける屈辱的な激辱を
 PRINTL ただ甘んじて받아들인다しかなかった・・・
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SUBEVENT_BATTLE_RAPED_CITIZEN")
@@ -29,20 +29,20 @@ ENDIF
 PRINTFORML の姿で息を切らす%PRINT_TRANSCALLNAME(TARGET)%・・・
 PRINTFORML 撤退の動きをみせた%STR:2500%に気を抜いてしまった次の瞬間！
 PRINTFORML %STR:2500%が突如体液の塊を飛ばしてきた！
-PRINTFORML 驚いた%PRINT_TRANSCALLNAME(TARGET)%はそれを回避できずに直撃してしまう
+PRINTFORML 驚いた%PRINT_TRANSCALLNAME(TARGET)%은(는)それを回避できずに直撃してしまう
 PRINTFORMW 
 PRINTFORML 粘り気のある体液が肌を舐める感触に顔を歪める%PRINT_TRANSCALLNAME(TARGET)%・・・
 IF ISMALE()
 	;#region
-	PRINTFORML 体液はまるで意志を持つかのように流れ、%PRINT_TRANSCALLNAME(TARGET)%の乳首や股間に集中する
+	PRINTFORML 体液はまるで意志を持つかのように流れ、%PRINT_TRANSCALLNAME(TARGET)%의 乳首や股間に集中する
 	;#endregion
 ELSE 
-	PRINTFORML 体液はまるで意志を持つかのように流れ、%PRINT_TRANSCALLNAME(TARGET)%の胸や秘部に集中する
+	PRINTFORML 体液はまるで意志を持つかのように流れ、%PRINT_TRANSCALLNAME(TARGET)%의 胸や秘部に集中する
 ENDIF
-PRINTFORML ざわざわとした感触に%PRINT_TRANSCALLNAME(TARGET)%は思わず喘ぎ声をあげた
+PRINTFORML ざわざわとした感触に%PRINT_TRANSCALLNAME(TARGET)%은(는)思わず喘ぎ声をあげた
 PRINTFORMW 
 PRINTFORML やがて醜い色に変色した体液はそのまま촉수化し、
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%を常に弄ぶ拘束具へと変貌を遂げたのだった・・・
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)常に弄ぶ拘束具へと変貌を遂げたのだった・・・
 PRINTL 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SUBEVENT_BATTLE_SETTENTACLECLOTH")
@@ -54,7 +54,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "SUBEVENT_BATTLE_SETTENTACLECLOTH")
 FONTBOLD
 PRINTFORML %ITEMNAME:400%（愛撫）
 FONTREGULAR
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は%ITEMNAME:400%から与えられる刺激に身を悶えさせている・・・
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ITEMNAME:400%から与えられる刺激に身を悶えさせている・・・
 PRINTL 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SUBEVENT_BATTLE_ACTTENTACLECLOTH")
@@ -88,42 +88,42 @@ PRINTFORML %LOCALS%はエネルギー供給を断たれて暴走している！
 PRINTW 
 IF TCVARn:0 == 0
 	PRINTFORML %LOCALS%はまるで相手の凌辱を手助けするかのように
-	;PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の身動きを封じつつ、無理やりＭ字に開脚させた・・・
+	;PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身動きを封じつつ、無理やりＭ字に開脚させた・・・
 	IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の身動きを封じ、抵抗できないようにした・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身動きを封じ、抵抗できないようにした・・・
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の身動きを封じつつ、股間部分が露出するように形状を変化させている・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身動きを封じつつ、股間部分が露出するように形状を変化させている・・・
 	ENDIF
 	SELECTCASE TCVARn:2
 		CASE 자세：아무것도안한다,자세：통상,자세：가만히있는다,자세：받아들인다
 		CASEELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は態勢を崩された！
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)態勢を崩された！
 	ENDSELECT
 ELSEIF TCVARn:41 == -1
-	PRINTFORML %LOCALS%は再び%PRINT_TRANSCALLNAME(TARGET)%の全身に촉수を絡みつかせ、
+	PRINTFORML %LOCALS%は再び%PRINT_TRANSCALLNAME(TARGET)%의 全身に촉수を絡みつかせ、
 	PRINTFORML 凌辱を再開した・・・
 ELSEIF TCVARn:41 == 0 || ISMALE()
 	PRINTFORML 制御を失った%LOCALS%は正体を現し、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の全身に촉수を絡みつかせながら強引に愛撫している。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 全身に촉수を絡みつかせながら強引に愛撫している。
 	SIF ISFEMALE()
 		PRINTFORML 激しい責めに股間からはくちゅくちゅと水音がし始めている・・・
 ELSEIF TCVARn:41 == 1
 	IF CHECK_HOLYVIRGIN_F()==0
 		PRINTFORML %LOCALS%はアソコが十分に濡れてきたことを確かめると、
 		IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%のヴァギナと애널に촉수の先端をあてがい、
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナと애널に촉수の先端をあてがい、
 		ELSE
 			PRINTL 股間部分の形状を変化させ一際大きな촉수を形作った。
-			PRINTFORML そしてその先端を%PRINT_TRANSCALLNAME(TARGET)%のヴァギナと애널にあてがい、
+			PRINTFORML そしてその先端を%PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナと애널にあてがい、
 		ENDIF
 		PRINTFORML そのまま蛇行させながら질내に挿入してピストンし始めた・・・
 		IF TALENT:처녀 > 0
 			PRINTW 
-			PRINTL 처녀喪失
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%はあっさりと처녀を奪われてしまった・・・
+			PRINTL 처녀 상실
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)あっさりと처녀を奪われてしまった・・・
 		ENDIF
 	ELSE
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%の애널に윤활液をたっぷりと塗り込むと、
+		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 애널に윤활液をたっぷりと塗り込むと、
 		SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) != 0
 			PRINT 股間部分の形状を変化させ形作った一際大きな
 		PRINTL 촉수の先端をあてがい、
@@ -131,38 +131,38 @@ ELSEIF TCVARn:41 == 1
 	ENDIF
 ELSEIF TCVARn:41 == 2
 	IF TALENT:처녀 < 1
-		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%の全身を愛撫しながら両穴を犯している。
+		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら両穴を犯している。
 	ELSE
-		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%の全身を愛撫しながら菊穴を犯している。
+		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら菊穴を犯している。
 	ENDIF
 	PRINTFORML だんだんピストンが加速し、責めが激しくなっているようだ。
 	PRINTFORML このままではマズイかもしれない・・・
 ELSEIF TCVARn:41 == 3
 	IF TALENT:처녀 < 1
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%の両穴を激しく犯しながらも更にピストンを加速させていく。
+		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 両穴を激しく犯しながらも更にピストンを加速させていく。
 		PRINTFORML やがて深くまで突き入れられた촉수の根元がムクリと膨らみ、
 		PRINTFORML 一気に大量の精液が질내と菊穴の奥へと注ぎ込まれていった・・・
 	ELSE
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%を激しく犯しながらも更にピストンを加速させていく。
+		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%을(를)激しく犯しながらも更にピストンを加速させていく。
 		PRINTFORML やがて深くまで突き入れられた촉수の根元がムクリと膨らみ、
 		PRINTFORML 一気に大量の精液が菊穴の奥へと注ぎ込まれていった・・・
 	ENDIF
 ELSEIF RAND:3 == 0 && TALENT:처녀 < 1
-	PRINTFORML %LOCALS%は사정しながら%PRINT_TRANSCALLNAME(TARGET)%を犯し続けている。
+	PRINTFORML %LOCALS%は사정しながら%PRINT_TRANSCALLNAME(TARGET)%을(를)犯し続けている。
 	PRINTFORM 애널をずんと突きあげられて海老反りになると、すぐさま前から질내を抉られ抑えつけられる。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は股間から精液を噴き出させながら翻弄されるままだ・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)股間から精液を噴き出させながら翻弄されるままだ・・・
 ELSEIF RAND:2 == 0 && TALENT:처녀 < 1
-	PRINTFORML %LOCALS%は사정しながら%PRINT_TRANSCALLNAME(TARGET)%を犯し続けている。
+	PRINTFORML %LOCALS%は사정しながら%PRINT_TRANSCALLNAME(TARGET)%을(를)犯し続けている。
 	PRINTFORML 小刻みに動く촉수に%ESTRUS_TEXT_F(TARGET,"の")%子宮口をコツコツと叩かれ、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%は질내사정される感触に理性を塗りつぶされていく・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)질내사정される感触に理性を塗りつぶされていく・・・
 ELSE
 	IF  TALENT:처녀 < 1
-		PRINTFORML %LOCALS%の사정は終わらず、%PRINT_TRANSCALLNAME(TARGET)%の両穴に精液を注ぎながらも
+		PRINTFORML %LOCALS%の사정は終わらず、%PRINT_TRANSCALLNAME(TARGET)%의 両穴に精液を注ぎながらも
 	ELSE
-		PRINTFORML %LOCALS%の사정は終わらず、%PRINT_TRANSCALLNAME(TARGET)%の菊穴に精液を注ぎながらも
+		PRINTFORML %LOCALS%の사정は終わらず、%PRINT_TRANSCALLNAME(TARGET)%의 菊穴に精液を注ぎながらも
 	ENDIF
 	PRINTFORML なおも責めを緩めずにピストンを続け、愛撫を止める様子もない。
-	PRINTFORML 立っているのもやっとな%PRINT_TRANSCALLNAME(TARGET)%の股間からは絶えず新鮮な白濁液が流れ落ちている・・・
+	PRINTFORML 立っているのもやっとな%PRINT_TRANSCALLNAME(TARGET)%의 股間からは絶えず新鮮な白濁液が流れ落ちている・・・
 ENDIF
 PRINTL 
 ;구상
@@ -176,6 +176,6 @@ FONTBOLD
 PRINTL 絶頂解放
 FONTREGULAR
 
-PRINTFORML 医療班に回収された%PRINT_TRANSCALLNAME(TARGET)%は、絶頂を阻害している成分を中和する薬を投与され、
+PRINTFORML 医療班に回収された%PRINT_TRANSCALLNAME(TARGET)%은(는)、絶頂を阻害している成分を中和する薬を投与され、
 PRINTL 医師や看護師たちに見られる中で望まぬ絶頂を迎えた・・・
 PRINTL 

@@ -1,6 +1,6 @@
 ﻿;**********************************************************
 ;幽閉コマンド
-;膨乳化 限界の場合は膨乳攻め
+;팽유화 限界の場合は팽유攻め
 ;**********************************************************
 ;四肢離断
 @INTIMIDATION_RYONA_AMPUTEE,TARGET
@@ -180,7 +180,7 @@ SIF TALENT:TARGET:陰蒂穿環 < 5 || TALENT:TARGET:乳頭穿環 < 5
 	CALL FORCE_PIERCING
 
 
-;膨乳相关计算部分
+;팽유相关计算部分
 @FORCE_BOUNYU
 #DIM CCOUNT
 VARSET LOCAL
@@ -221,9 +221,9 @@ TFLAG:10 = 105
 ;汚染度
 CFLAG:30 += 10 + RAND:5
 
-;膨乳判定
+;팽유判定
 IF TALENT:거유 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:거유 < 2 || TALENT:거유 + TALENT:変身時胸大小変動 < 2))
-	;変身時縮乳する場合は変身時膨乳を優先
+	;変身時縮乳する場合は変身時팽유を優先
 	IF TALENT:変身時胸大小変動 < 0
 		TALENT:変身時胸大小変動 += 1
 		CFLAG:38 += 1
@@ -233,7 +233,7 @@ IF TALENT:거유 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:거유 < 2 || TALENT
 			TALENT:変身時胸大小変動 -= 1
 			CFLAG:38 -= 1
 		ENDIF
-		;膨乳処理
+		;팽유処理
 		IF TALENT:거유 - TALENT:빈유 < 0
 			TALENT:빈유 -= 1
 		ELSEIF TALENT:사지결손 == 1
@@ -244,13 +244,13 @@ IF TALENT:거유 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:거유 < 2 || TALENT
 		ENDIF
 		CFLAG:37 += 1
 	ENDIF
-	;プロフィールに反映
+	;프로필에 반영
 	CALL SET_PROFILE, TARGET
 
 	;공포　固定で
 	LOCAL:11 = 800
 
-	;지문: 膨乳化
+	;지문: 팽유화
 	CALL MESSAGE_FORCE_BOUNYU
 
 	
@@ -290,7 +290,7 @@ ELSE
 		LOCAL:6 = 180
 	ENDIF
 
-	;지문: 膨乳失败
+	;지문: 팽유失败
 	CALL MESSAGE_FORCE_BOUNYU_FAILED
 	
 ENDIF
@@ -339,7 +339,7 @@ PRINTL
 CALL _ABLUP, 1
 
 
-;膨乳成功
+;팽유成功
 @MESSAGE_FORCE_BOUNYU
 FONTBOLD
 PRINTL 猟奇改造·乳房膨大
@@ -403,13 +403,13 @@ ENDIF
 		PRINTFORM 発现自己的胸部大了一圈、変成了
 		IF CHARATALENT_F(TARGET,0,"빈유")
 			PRINT 小巧玲珑的
-		ELSEIF CHARATALENT_F(TARGET,0,"奇乳")
+		ELSEIF CHARATALENT_F(TARGET,0,"기유")
 			PRINT 肥大化到极限的规格外的
-		ELSEIF CHARATALENT_F(TARGET,0,"魔乳")
+		ELSEIF CHARATALENT_F(TARGET,0,"마유")
 			PRINT 和身体完全不相称的
-		ELSEIF CHARATALENT_F(TARGET,0,"超乳")
+		ELSEIF CHARATALENT_F(TARGET,0,"초유")
 			PRINT 沉甸甸的像在主张着存在感的
-		ELSEIF CHARATALENT_F(TARGET,0,"爆乳")
+		ELSEIF CHARATALENT_F(TARGET,0,"폭유")
 			PRINT 充満魅力能吸引周囲的人的目光的
 		ELSEIF CHARATALENT_F(TARGET,0,"거유")
 			PRINT 和同年龄的人相比要稍大的
@@ -424,35 +424,35 @@ ENDIF
 		PRINTFORM 変身後的胸部变為
 		IF CHARATALENT_F(TARGET,1,"빈유")
 			PRINT 빈유
-		ELSEIF CHARATALENT_F(TARGET,1,"奇乳")
-			PRINT 奇乳
-		ELSEIF CHARATALENT_F(TARGET,1,"魔乳")
-			PRINT 魔乳
-		ELSEIF CHARATALENT_F(TARGET,1,"超乳")
-			PRINT 超乳
-		ELSEIF CHARATALENT_F(TARGET,1,"爆乳")
-			PRINT 爆乳
+		ELSEIF CHARATALENT_F(TARGET,1,"기유")
+			PRINT 기유
+		ELSEIF CHARATALENT_F(TARGET,1,"마유")
+			PRINT 마유
+		ELSEIF CHARATALENT_F(TARGET,1,"초유")
+			PRINT 초유
+		ELSEIF CHARATALENT_F(TARGET,1,"폭유")
+			PRINT 폭유
 		ELSEIF CHARATALENT_F(TARGET,1,"거유")
 			PRINT 거유
 		ELSE
-			PRINT 普乳
+			PRINT 보유
 		ENDIF
 	ELSE
 		PRINT 変成
 		IF CHARATALENT_F(TARGET,0,"빈유")
 			PRINT 빈유
-		ELSEIF CHARATALENT_F(TARGET,0,"奇乳")
-			PRINT 奇乳
-		ELSEIF CHARATALENT_F(TARGET,0,"魔乳")
-			PRINT 魔乳
-		ELSEIF CHARATALENT_F(TARGET,0,"超乳")
-			PRINT 超乳
-		ELSEIF CHARATALENT_F(TARGET,0,"爆乳")
-			PRINT 爆乳
+		ELSEIF CHARATALENT_F(TARGET,0,"기유")
+			PRINT 기유
+		ELSEIF CHARATALENT_F(TARGET,0,"마유")
+			PRINT 마유
+		ELSEIF CHARATALENT_F(TARGET,0,"초유")
+			PRINT 초유
+		ELSEIF CHARATALENT_F(TARGET,0,"폭유")
+			PRINT 폭유
 		ELSEIF CHARATALENT_F(TARGET,0,"거유")
 			PRINT 거유
 		ELSE
-			PRINT 普乳
+			PRINT 보유
 		ENDIF
 	ENDIF
 	PRINTFORML 了

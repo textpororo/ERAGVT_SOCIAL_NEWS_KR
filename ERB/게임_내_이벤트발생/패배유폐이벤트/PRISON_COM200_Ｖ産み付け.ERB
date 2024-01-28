@@ -73,7 +73,7 @@ ELSEIF ABL:V감각 >= 5
 	LOCAL:151 = 8
 	LOCAL:1 = 2000
 ENDIF
-;출산경험が少ない場合は快Vが入りにくい
+;출산경험이 少ない場合は快Vが入りにくい
 IF EXP:출산경험 < 3
 	TIMES LOCAL:1, 0.30
 ELSEIF EXP:출산경험 < 5
@@ -89,7 +89,7 @@ CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
 ;공순
-;출산경험が多いと공순が入る
+;출산경험이 多いと공순が入る
 IF EXP:출산경험 < 3
 ELSEIF EXP:출산경험 < 5
 	LOCAL:5 = 200
@@ -112,7 +112,7 @@ ELSE
 ENDIF
 
 ;치정
-;출산경험が低いと치정が入る
+;출산경험이 低いと치정が入る
 IF EXP:출산경험 < 3
 	LOCAL:9 = 800
 ELSEIF EXP:출산경험 < 5
@@ -124,7 +124,7 @@ ELSE
 ENDIF
 
 ;고통
-;출산경험が低いと入る
+;출산경험이 低いと入る
 IF EXP:출산경험 < 3
 	LOCAL:10 = 1500
 ELSEIF EXP:출산경험 < 5
@@ -136,7 +136,7 @@ ELSE
 ENDIF
 
 ;공포
-;출산경험が低いと入る
+;출산경험이 低いと入る
 IF EXP:출산경험 < 3
 	LOCAL:11 = 1500
 ELSEIF EXP:출산경험 < 5
@@ -168,7 +168,7 @@ LOCAL:10 += 500
 ;공포基本値
 LOCAL:11 += 500
 
-;初めてのV出産の場合、이상경험が入る
+;初めてのV出産の場合、이상경험이 入る
 IF CFLAG:204 == 0
 	CFLAG:204 = 1
 	LOCAL:150 = 1

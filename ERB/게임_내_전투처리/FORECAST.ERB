@@ -104,7 +104,7 @@ SIF TFLAG:12 == 0 && TFLAG:10 != 4
 	GOTO SELECT_LOOP
 
 ;対空공격の設定
-;クズ市民は対空を行わない
+;악질 시민は対空を行わない
 IF FLAG:11 == 1150
 ELSEIF TFLAG:10 == 1
 	IF RAND:4 == 0
@@ -156,7 +156,7 @@ LOCAL:0 = LOCAL:0 * RESULT / 100
 CALL SHINKYOU_CHECK, "CHISEI", LOCAL:0
 LOCAL:0 = RESULT
 
-;戦闘支援による補正
+;전투 지원による補正
 CALL CALC_CHISEI_SHIEN(0)
 LOCAL:0 += RESULT
 
@@ -281,7 +281,7 @@ PRINT  遠:
 CALL FORECAST_OUTPUT_NUM, LOCAL
 PRINT  %
 
-	;戦闘支援による補正率
+	;전투 지원による補正率
 	CALL CALC_CHISEI_SHIEN(0)
 	LOCAL:0 = RESULT
 

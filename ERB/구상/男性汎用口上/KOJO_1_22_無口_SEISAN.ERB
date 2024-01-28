@@ -23,9 +23,9 @@
 ;CFLAG:260　B攻め（強）を受けたことがあるか
 ;CFLAG:261　B攻め（SP）を受けたことがあるか
 ;CFLAG:262　被弾経験があるか
-;CFLAG:263　사정경험があるか
-;CFLAG:264　대량사정경험があるか
-;CFLAG:265　모유경험があるか
+;CFLAG:263　사정경험이 あるか
+;CFLAG:264　대량사정경험이 あるか
+;CFLAG:265　모유경험이 あるか
 ;CFLAG:270　訓練内容
 ;CFLAG:271　仲間一人を選択
 ;CFLAG:272　選択した仲間はどこか
@@ -54,7 +54,7 @@ ENDIF
 IF CFLAG:42 == 400
 SELECTCASE RAND:7
 		CASE 0
-			PRINTFORMDL %CALLNAME%は図書館で読書をしている。
+			PRINTFORMDL %CALLNAME%은(는) 図書館で読書をしている。
 			PRINTL 「……ッ……ッッ！」
 			PRINTFORMDL しかし、%ITEMNAME:400%の刺激で本に集中できず、先ほどから一ページも読み進めていない。
 			;感覚の最大値で派生
@@ -66,7 +66,7 @@ SELECTCASE RAND:7
 				PRINTFORMDL ……촉수に\@ISMALE() ? 直腸 # 질 \@奥を抉られ、静かな館内で声を上げてイってしまった。
 			ENDIF
 		CASE 1
-			PRINTFORMDL %CALLNAME%は一人、個室で浴槽に浸かっている。
+			PRINTFORMDL %CALLNAME%은(는) 一人、個室で浴槽に浸かっている。
 			PRINTL 「んく……ふっ……！」
 			PRINTFORMDL しかし、%ITEMNAME:400%を脱ぐことはできず、お湯の中でまで体を弄ばれている。
 			PRINTL 「おふろで……イッ……ッッ！」
@@ -84,13 +84,13 @@ SELECTCASE RAND:7
 				PRINTFORMDL ……絶頂した際に盛大に潮を吹き、お湯に大量の愛液が混じってしまった。
 			ENDIF
 		CASE 2
-			PRINTFORMDL %CALLNAME%は自室で布団に入っている。
+			PRINTFORMDL %CALLNAME%은(는) 自室で布団に入っている。
 			PRINTL 「ぅ、ぅうくっ……んああああ！！」
 			PRINTFORMDL しかし%ITEMNAME:400%に刺激されていては眠ることなどできず、声を上げて悶え続けている。
 			PRINTL 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
 			PRINTFORMDL ……誰にも聞かれないのを幸いと、声を我慢せず快感に耐えているようだ。
 		CASE 3
-			PRINTFORMD %CALLNAME%はふれあい公園で
+			PRINTFORMD %CALLNAME%은(는) ふれあい公園で
 			SELECTCASE RAND:3
 				CASE 0
 					PRINTFORMDL 猫とたわむれている。
@@ -107,9 +107,9 @@ SELECTCASE RAND:7
 			ENDSELECT
 			PRINTFORMDL が%CALLNAME%の顔を舐める最中、服の下では%ITEMNAME:400%が\@ISMALE() ? 乳首と陰茎 # 가슴とクリ \@を舐め続けている。 
 			PRINTL 「イ、ヤぁあああアぁああ！！」
-			PRINTFORMDL ……無垢な瞳を向ける動物の前で、%CALLNAME%は声を上げてイってしまった。
+			PRINTFORMDL ……無垢な瞳を向ける動物の前で、%CALLNAME%은(는) 声を上げてイってしまった。
 		CASE 4
-			PRINTFORMDL %CALLNAME%は人気のない森を散歩している。
+			PRINTFORMDL %CALLNAME%은(는) 人気のない森を散歩している。
 			PRINTL 「止まって……こんな、やだ……」
 			PRINTFORMDL %ITEMNAME:400%に体を操られ、服を脱ぎ捨てた姿――
 			PRINTFORMDL ――それも촉수をくわえ込んだ\@ISMALE() ? 菊座 # 秘所 \@や、固くとがった乳首は丸見えの状態で、歩くことを強要されている。
@@ -126,37 +126,37 @@ SELECTCASE RAND:7
 			;仲間とお出かけ（ぼっちなら名もなき友人）
 			IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
 				IF TALENT:교제상대 == 2
-					PRINTFORMDL %CALLNAME%は연인に無理矢理町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 연인に無理矢理町へ連れ出された。
 					PRINTL 「お願い、待って……」
 					PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、彼は%CALLNAME%を引っ張り回している。
 					PRINTL 「まって、ダメ……止まっ、てぇ、ま、ぁぁああああ！！？」
 					PRINTFORMDL ……最後は、よりによって연인の目の前で絶頂してしまった。
 				ELSEIF TALENT:교제상대 == 3
-					PRINTFORMDL %CALLNAME%は약혼자に無理矢理町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 약혼자に無理矢理町へ連れ出された。
 					PRINTL 「お願い、待って……」
 					PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、彼は%CALLNAME%を引っ張り回している。
 					PRINTL 「まって、ダメ……止まっ、てぇ、ま、ぁぁああああ！！？」
 					PRINTFORMDL ……最後は、よりによって약혼자の目の前で絶頂してしまった。
 				ELSEIF TALENT:교제상대 == 4
-					PRINTFORMDL %CALLNAME%は夫に無理矢理町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 夫に無理矢理町へ連れ出された。
 					PRINTL 「お願い、待って……」
 					PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、彼は%CALLNAME%を引っ張り回している。
 					PRINTL 「まって、ダメ……止まっ、てぇ、ま、ぁぁああああ！！？」
 					PRINTFORMDL ……最後は、よりによって夫の目の前で絶頂してしまった。
 				ELSEIF TALENT:가족관계 == 1
-					PRINTFORMDL %CALLNAME%は弟に無理矢理町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 弟に無理矢理町へ連れ出された。
 					PRINTL 「お願い、待って……」
 					PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、弟は%CALLNAME%を引っ張り回している。
 					PRINTL 「まって、ダメ……止まっ、てぇ、ま、ぁぁああああ！！？」
 					PRINTFORMDL ……最後は、よりによって弟の目の前で絶頂してしまった。
 				ELSEIF TALENT:가족관계 == 2
-					PRINTFORMDL %CALLNAME%は妹に無理矢理町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 妹に無理矢理町へ連れ出された。
 					PRINTL 「お願い、待って……」
 					PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、妹は%CALLNAME%を引っ張り回している。
 					PRINTL 「まって、ダメ……止まっ、てぇ、ま、ぁぁああああ！！？」
 					PRINTFORMDL ……最後は、よりによって妹の目の前で絶頂してしまった。
 				ELSE
-					PRINTFORMD %CALLNAME%は
+					PRINTFORMD %CALLNAME%은(는) 
 					SIF TALENT:학생 > 0
 						PRINTFORMD 学校の
 					PRINTFORMDL 友人に無理矢理町へ連れ出された。
@@ -166,7 +166,7 @@ SELECTCASE RAND:7
 					PRINTFORMDL ……最後は、よりによって友人の目の前で絶頂してしまった。
 				ENDIF
 			ELSE
-				PRINTFORMDL %CALLNAME%は%CALLNAME:(CFLAG:271)%に無理矢理町へ連れ出された。
+				PRINTFORMDL %CALLNAME%은(는) %CALLNAME:(CFLAG:271)%に無理矢理町へ連れ出された。
 				PRINTL 「お願い、待って……」
 				PRINTFORMDL %ITEMNAME:400%に弄ばれる%CALLNAME%の異常に気付く様子もなく、%CALLNAME:(CFLAG:271)%は%CALLNAME%を引っ張り回している。
 				PRINTL 「まって、ダメ……止まっ、て、ま、ぁぁああああ！！？」
@@ -177,7 +177,7 @@ SELECTCASE RAND:7
 			IF TALENT:학생 > 0 && TIME == 0
 				PRINTFORMDL %CALLNAME%の姿は、授業中の教室にあった。
 				PRINTL 「んく……ふぅ、う、ぅ……」
-				PRINTFORMDL しかし制服の下では%ITEMNAME:400%が蠢いており、%CALLNAME%は声と快感を我慢するのに必死になっている。
+				PRINTFORMDL しかし制服の下では%ITEMNAME:400%が蠢いており、%CALLNAME%은(는) 声と快感を我慢するのに必死になっている。
 				PRINTFORMDL 授業内容など、欠片も頭に入っていないようだ。
 				PRINTFORMDL 
 				PRINTFORMDL ――ポン
@@ -186,7 +186,7 @@ SELECTCASE RAND:7
 			ELSE
 				PRINTFORMDL %CALLNAME%の姿は、街中にあった。
 				PRINTL 「んく……ふぅ、う、ぅ……」
-				PRINTFORMDL %ITEMNAME:400%に無理矢理外を歩かされ、%CALLNAME%は声と快感を我慢するのに必死になっている。
+				PRINTFORMDL %ITEMNAME:400%に無理矢理外を歩かされ、%CALLNAME%은(는) 声と快感を我慢するのに必死になっている。
 				PRINTFORMDL 辺りの風景など、欠片も目に入っていないようだ。
 				PRINTFORMDL 
 				PRINTFORMDL ――トン
@@ -198,19 +198,19 @@ ELSE
 	SELECTCASE RAND:8
 		CASE 0
 			PRINTL 「…………」
-			PRINTFORMDL %CALLNAME%は図書館で読書をしている。
+			PRINTFORMDL %CALLNAME%은(는) 図書館で読書をしている。
 			PRINTFORMDL ……心なしか、楽しそうだ。
 		CASE 1
 			PRINTL 「……ほぅ」
-			PRINTFORMDL %CALLNAME%は温泉に入って疲れを取っている。
+			PRINTFORMDL %CALLNAME%은(는) 温泉に入って疲れを取っている。
 			PRINTFORMDL ……上気した頬が妙に色っぽい。
 		CASE 2
 			PRINTL 「んん……すぅ……」
-			PRINTFORMDL %CALLNAME%は自室で睡眠をとっている。
+			PRINTFORMDL %CALLNAME%은(는) 自室で睡眠をとっている。
 			PRINTFORMDL ……無防備な寝顔だ。
 		CASE 3
 			PRINTL 「かわいい……」
-			PRINTFORMD %CALLNAME%はふれあい公園で
+			PRINTFORMD %CALLNAME%은(는) ふれあい公園で
 			SELECTCASE RAND:3
 				CASE 0
 					PRINTFORMD 猫
@@ -223,10 +223,10 @@ ELSE
 			PRINTFORMDL ……顔を舐められてくすぐったそうだ。
 		CASE 4
 			PRINTL 「風が、気持ちいい……」
-			PRINTFORMDL %CALLNAME%は森の中を散歩している。
+			PRINTFORMDL %CALLNAME%은(는) 森の中を散歩している。
 			IF ABL:노출벽 == 3
 				PRINTL （ここなら、平気そう……）
-				PRINTFORMD %CALLNAME%は木陰で立ち止まり、\@ISMALE() ? 衣服をずらして # スカートをたくし上げて \@
+				PRINTFORMD %CALLNAME%은(는) 木陰で立ち止まり、\@ISMALE() ? 衣服をずらして # スカートをたくし上げて \@
 					;履いてない
 					IF CFLAG:42 == 0
 						PRINTFORMD むき出しになった
@@ -238,10 +238,10 @@ ELSE
 						PRINTFORMD %ITEMNAME:(CFLAG:42)%を
 					ENDIF
 				PRINTFORMDL 外気にさらしている。
-				PRINTFORMDL ……いけないことをしているという背徳感に、%CALLNAME%は背筋を震わせた。
+				PRINTFORMDL ……いけないことをしているという背徳感に、%CALLNAME%은(는) 背筋を震わせた。
 			ELSEIF ABL:노출벽 == 4
 				PRINTL （誰も、いない……よね？）
-				PRINTFORMDL %CALLNAME%は木陰で立ち止まると服を脱ぎ捨て、下着姿のまま歩き出した。
+				PRINTFORMDL %CALLNAME%은(는) 木陰で立ち止まると服を脱ぎ捨て、下着姿のまま歩き出した。
 					;履いてない（露出用に下着着用）
 					IF CFLAG:42 == 0
 						PRINTFORMD ……履いている下着には、
@@ -251,7 +251,7 @@ ELSE
 				PRINTFORMDL 興奮に漏れた\@ISMALE() ? 我慢汁 # 愛液 \@で染みができている。
 			ELSEIF ABL:노출벽 == 5
 				PRINTL （誰かに、見つかっちゃったら……♡）
-				PRINTFORMDL %CALLNAME%は木陰で立ち止まると着ているものを全て脱ぎ捨て、生まれたままの姿で歩き出した。
+				PRINTFORMDL %CALLNAME%은(는) 木陰で立ち止まると着ているものを全て脱ぎ捨て、生まれたままの姿で歩き出した。
 				;1/4で人に見つかる。
 				SELECTCASE RAND:4
 					CASE 0
@@ -260,19 +260,19 @@ ELSE
 						SELECTCASE RAND:4
 							CASE 0
 								PRINTL 「ひっ……や、やめ……んはぁああぁぁあ！！」
-								PRINTFORMDL ……%CALLNAME%は男に裸を見られたうえ、襲われ、弄ばれた。
+								PRINTFORMDL ……%CALLNAME%은(는) 男に裸を見られたうえ、襲われ、弄ばれた。
 							CASE 1
 								PRINTL 「これは……その、違っ……！」
-								PRINTFORMDL ……%CALLNAME%は散歩中の男に見つかり、しどろもどろになって言い訳している。
+								PRINTFORMDL ……%CALLNAME%은(는) 散歩中の男に見つかり、しどろもどろになって言い訳している。
 							CASE 2
 								PRINTL 「ちがっ……！　\@ISMALE() ? 変態 # 痴女 \@、なんかじゃ……ふわぁああぁぁあ！？」
-								PRINTFORMDL ……\@ISMALE() ? 変態 # 痴女 \@相手なら何をしてもいいと語る男に、%CALLNAME%は\@ISMALE() ? 後ろの穴を # \@犯されてしまった。
+								PRINTFORMDL ……\@ISMALE() ? 変態 # 痴女 \@相手なら何をしてもいいと語る男に、%CALLNAME%은(는) \@ISMALE() ? 後ろの穴を # \@犯されてしまった。
 							CASE 3
 								PRINTL 「だ、誰……！？」
 								PRINTFORMDL ……どうやら気のせいだった様だ。
 						ENDSELECT
 					CASEELSE
-						PRINTFORMDL ……%CALLNAME%はスリルと背徳感に、赤い顔をして\@ISMALE() ? 尻穴を潤わせ # 股を濡らし \@た。
+						PRINTFORMDL ……%CALLNAME%은(는) スリルと背徳感に、赤い顔をして\@ISMALE() ? 尻穴を潤わせ # 股を濡らし \@た。
 				ENDSELECT
 			ELSE
 				PRINTFORMDL ……とても穏やかな表情だ。
@@ -282,27 +282,27 @@ ELSE
 			IF CHARANUM < 3 || CFLAG:(CFLAG:272):0 == 1 || CFLAG:(CFLAG:272):0 == 2 || CFLAG:(CFLAG:272):0 == 3 || CFLAG:(CFLAG:272):0 == 9
 				IF TALENT:교제상대 == 2
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMDL %CALLNAME%は연인に町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 연인に町へ連れ出された。
 					PRINTFORMDL ……彼に振り回されているが、満更でもなさそうだ。
 				ELSEIF TALENT:교제상대 == 3
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMDL %CALLNAME%は약혼자に町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 약혼자に町へ連れ出された。
 					PRINTFORMDL ……彼に振り回されているが、満更でもなさそうだ。
 				ELSEIF TALENT:교제상대 == 4
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMDL %CALLNAME%は夫に町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 夫に町へ連れ出された。
 					PRINTFORMDL ……彼に振り回されているが、満更でもなさそうだ。
 				ELSEIF TALENT:가족관계 == 1
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMDL %CALLNAME%は弟に町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 弟に町へ連れ出された。
 					PRINTFORMDL ……わがままに振り回されているが、満更でもなさそうだ。
 				ELSEIF TALENT:가족관계 == 2
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMDL %CALLNAME%は妹に町へ連れ出された。
+					PRINTFORMDL %CALLNAME%은(는) 妹に町へ連れ出された。
 					PRINTFORMDL ……わがままに振り回されているが、満更でもなさそうだ。
 				ELSE
 					PRINTL 「どこに、行くの……？」
-					PRINTFORMD %CALLNAME%は
+					PRINTFORMD %CALLNAME%은(는) 
 					SIF TALENT:학생 > 0
 						PRINTFORMD 学校の
 					PRINTFORMDL 友人に町へ連れ出された。
@@ -310,18 +310,18 @@ ELSE
 				ENDIF
 			ELSE
 				PRINTL 「どこに、行くの……？」
-				PRINTFORMDL %CALLNAME%は%CALLNAME:(CFLAG:271)%に町へ連れ出された。
+				PRINTFORMDL %CALLNAME%은(는) %CALLNAME:(CFLAG:271)%に町へ連れ出された。
 				PRINTFORMDL ……%CALLNAME:(CFLAG:271)%に振り回されているが、満更でもなさそうだ。
 			ENDIF
 		CASE 6
 			;昼間は학생なら学校へ
 			IF TALENT:학생 > 0 && TIME == 0
 				PRINTL 「ここに、さっきの答えを持ってきて……」
-				PRINTFORMDL %CALLNAME%は学校で授業を受けている。
+				PRINTFORMDL %CALLNAME%은(는) 学校で授業を受けている。
 				PRINTFORMDL ……ありふれた日常が何よりも楽しそうだ。
 			ELSE
 				PRINTL 「……暇」
-				PRINTFORMDL 休みに暇を持て余した%CALLNAME%は、適当に基地の中を見て回っている。
+				PRINTFORMDL 休みに暇を持て余した%CALLNAME%은(는) 、適当に基地の中を見て回っている。
 				PRINTFORMDL ……いい余暇の過ごし方が浮かばなかったようだ。
 			ENDIF
 		CASE 7
@@ -329,28 +329,28 @@ ELSE
 			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 			IF RESULT == 0
 				PRINTL 「…………んっ」
-				PRINTFORMDL %CALLNAME%はマッサージを受けている。
+				PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 				PRINTFORMDL ……ツボを刺激されて気持ちよさそうだ。
 			ELSEIF RESULT < 3
 			SELECTCASE RAND:2
 				CASE 0
 					PRINTL 「んっ……はあっ……」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMDL ……ツボを押されたとき、妙になまめかしい声を上げている。
 				CASE 1
 					PRINTL 「あっ♡　……な、なんでも、ない……です」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMDL ……偶然性感帯に触れた指に、感じてしまっているようだ。
 			ENDSELECT
 			ELSEIF RESULT < 5
 			SELECTCASE RAND:4
 				CASE 0
 					PRINTL 「ぁっ♡　……そこ、らめ……あぁっ！？」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMDL ……偶然を装って性感帯に触れられ、声を抑えられないようだ。
 				CASE 1
 					PRINTL 「ひあっ……なんで、そこぉ……」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMD ……マッサージだと騙されて
 					SELECTCASE RAND:3
 						CASE 0
@@ -375,40 +375,40 @@ ELSE
 					ENDSELECT
 				CASE 2
 					PRINTL 「んっ……ふぅ……はぁっ……！」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMDL ……ただのマッサージのはずだが、\@ISMALE() ? ペニスの鈴口 # 秘所 \@からは蜜がこぼれ、シーツに染みを作っている。
 				CASE 3
 					PRINTL 「……動…くなぁ…ぁあ！」
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTFORMDL ……マッサージを装ったセクハラ行為に冷たい声を上げようとするが、
 					PRINTFORMDL 敏感な突起をつままれるとふやけた声に変わってしまった。
 			ENDSELECT
 			ELSE
 			SELECTCASE RAND:4
 				CASE 0
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTL 「んあっ、はあっ……んひぃいいぃぃいいい！！」
 					PRINTFORMDL ……が、もはやマッサージを装うことすらなく、整体師は%CALLNAME%の体を好きに弄んでいる。
 					PRINTL 「ぐちゅぐちゅ、だめ！　もう、いじらな……はあぁああぁぁッーーー！」
-					PRINTFORMDL ……\@ISMALE() ? ひくつく後ろの窄まり # 蜜をこぼす秘所 \@を抉られると、%CALLNAME%はあっけなく絶頂に達した。
+					PRINTFORMDL ……\@ISMALE() ? ひくつく後ろの窄まり # 蜜をこぼす秘所 \@を抉られると、%CALLNAME%은(는) あっけなく絶頂に達した。
 				CASE 1
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTL 「もっ、いい！　……もう、やめ――」
-					PRINTFORMDL ……マッサージだと言い張る性行為に、%CALLNAME%は制止の声を上げようとする。
+					PRINTFORMDL ……マッサージだと言い張る性行為に、%CALLNAME%은(는) 制止の声を上げようとする。
 					PRINTL 「や――ひゃあぁあぁぁああ！？」
 					PRINTFORMDL ……しかし敏感な突起をひねられると、甘い嬌声を上げることしかできなかった。
 				CASE 2
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTL 「……ッ!?　ッッッ――――！？」」
 					PRINTFORMDL ……しかし実態はマッサージとは名ばかりに、整体師の男は%CALLNAME%の\@ISMALE() ? 尻穴 # 秘所 \@に剛直を突き入れていた。
 					PRINTL 「ッ……ァ、ぃ、クゥッ――――！！」
-					PRINTFORMDL ……度重なる快感に%CALLNAME%は声も上げられず、やっとこぼれたそれは無様な絶頂宣言だった。
+					PRINTFORMDL ……度重なる快感に%CALLNAME%은(는) 声も上げられず、やっとこぼれたそれは無様な絶頂宣言だった。
 				CASE 3
-					PRINTFORMDL %CALLNAME%はマッサージを受けている。
+					PRINTFORMDL %CALLNAME%은(는) マッサージを受けている。
 					PRINTL 「ダメっ！イクっ、あああアぁああ！！」
-					PRINTFORMDL ……全身の性感を刺激されて、%CALLNAME%は先ほどから絶頂を極めている。
+					PRINTFORMDL ……全身の性感を刺激されて、%CALLNAME%은(는) 先ほどから絶頂を極めている。
 					PRINTL 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
-					PRINTFORMD ……巧みな性感マッサージに抵抗できず、%CALLNAME%は
+					PRINTFORMD ……巧みな性感マッサージに抵抗できず、%CALLNAME%은(는) 
 					IF TIME == 0
 						PRINTFORMDL 日が落ちるまでイかされ続けた。
 					ELSE
@@ -429,19 +429,19 @@ PRINTFORMDL
 IF TALENT:보추
 	PRINTFORMDL 店長から渡された%CALLNAME%の制服は案の定、女性用のものだ。
 	PRINTFORMDL 自分は남자だと抗議しても、君にはそちらの方が似合うからと取り付く島もない。
-	PRINTFORMDL 仕方なく、これも対촉수生物の活動資金を稼ぐためだと、しぶしぶ着替えて接客に向かった。
+	PRINTFORMDL 仕方なく、これも対촉수 생물の活動資金を稼ぐためだと、しぶしぶ着替えて接客に向かった。
 	PRINTL 
 ENDIF
 IF CFLAG:42 == 400
 	SELECTCASE RAND:3
 		CASE 0
-			PRINTFORMDL %CALLNAME%は来店したお客さんの案内をしているようだ。
+			PRINTFORMDL %CALLNAME%은(는) 来店したお客さんの案内をしているようだ。
 			PRINTL 「いらっしゃいま……んっ」
 			PRINTFORMDL しかし制服の下の%ITEMNAME:400%の刺激により、言葉に詰まってしまった。
 			PRINTL 「……い、いらっしゃいませ」
 			PRINTFORMDL 取り繕うように無表情で再び挨拶する%CALLNAME%だが、その頬は赤く染まっていた。
 		CASE 1
-			PRINTFORMDL %CALLNAME%はテーブルでオーダーを取っているようだ。
+			PRINTFORMDL %CALLNAME%은(는) テーブルでオーダーを取っているようだ。
 			PRINTL 「ひぅっ……ご、ご注文は。お、お決まり、でしょうか？」
 			PRINTFORMD しかし制服の下では%ITEMNAME:400%に敏感な場所を刺激され、
 			PRINTFORMD \@ISGIRLY() ? 短いスカートから覗く # スマートなロング \@
@@ -453,16 +453,16 @@ IF CFLAG:42 == 400
 						CASE 0
 							PRINTL 「んぅ……くふっ……」
 							PRINTFORMDL ニヤニヤといやらしい笑みを浮かべた客は、わざと注文を遅らせて%CALLNAME%の赤い顔と濡れた\@ISMALE() ? 股間 # 太もも \@に視線を向けている。
-							PRINTFORMDL オーダーを待つ%CALLNAME%は、太ももをこすり合わせながら注文が終わるのを待つしかない。
+							PRINTFORMDL オーダーを待つ%CALLNAME%은(는) 、太ももをこすり合わせながら注文が終わるのを待つしかない。
 						CASEELSE
 							PRINTL 「か、かしこまり……ましたっ」
 							PRINTFORMDL 顔を赤くしたお客さんは、視線をそらして早口に注文を告げる。
-							PRINTFORMDL オーダーを受けた%CALLNAME%は、羞恥で真っ赤に染まった顔を伏せて逃げるようにテーブルから離れていった。
+							PRINTFORMDL オーダーを受けた%CALLNAME%은(는) 、羞恥で真っ赤に染まった顔を伏せて逃げるようにテーブルから離れていった。
 					ENDSELECT
 				CASEELSE
 			ENDSELECT
 		CASE 2
-			PRINTFORMDL %CALLNAME%はスタッフルームで一人、うずくまっている
+			PRINTFORMDL %CALLNAME%은(는) スタッフルームで一人、うずくまっている
 			PRINTL 「……だ、め………また、イッ……！」
 			PRINTFORMDL 制服の下の%ITEMNAME:400%に性感を刺激され、身動きが取れないようだ。
 			PRINTFORMDL ……よく見ると、足元に\@ISMALE() ? 我慢汁 # 愛液 \@の水溜りができている。
@@ -472,13 +472,13 @@ ELSE
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTL 「……いらっしゃいませ」
-			PRINTFORMDL %CALLNAME%は無表情でお客さんを案内している。
+			PRINTFORMDL %CALLNAME%은(는) 無表情でお客さんを案内している。
 		CASE 1
 			PRINTL 「……ご注文は、お決まり、でしょうか？」
-			PRINTFORMDL %CALLNAME%はぎこちない笑顔で接客している。
+			PRINTFORMDL %CALLNAME%은(는) ぎこちない笑顔で接客している。
 		CASE 2
 			PRINTL 「…………」
-			PRINTFORMDL %CALLNAME%はスタッフルームで笑顔の練習をしている。
+			PRINTFORMDL %CALLNAME%은(는) スタッフルームで笑顔の練習をしている。
 			PRINTFORMDL ……慣れない笑顔に、大分頬が引きつっているようだ。
 	ENDSELECT
 ENDIF
@@ -492,7 +492,7 @@ PRINTFORMDL
 IF TALENT:보추
 	PRINTFORMDL 店長から渡された%CALLNAME%の制服は案の定、女性用のものだ。
 	PRINTFORMDL 自分は남자だと抗議しても、君にはそちらの方が似合うからと取り付く島もない。
-	PRINTFORMDL 仕方なく、これも対촉수生物の活動資金を稼ぐためだと、しぶしぶ着替えて接客に向かった。
+	PRINTFORMDL 仕方なく、これも対촉수 생물の活動資金を稼ぐためだと、しぶしぶ着替えて接客に向かった。
 	PRINTL 
 ENDIF
 	;感覚の最大値で決める
@@ -503,7 +503,7 @@ ENDIF
 			PRINTL 「……いらっしゃいませ」
 			PRINTFORMDL %CALLNAME%がお客さんを席に案内していると、後ろからお尻を撫でられた。
 			PRINTL 「…………っ」
-			PRINTFORMDL 不快な感触を努めて無視し、%CALLNAME%は無表情のまま案内を続けている。
+			PRINTFORMDL 不快な感触を努めて無視し、%CALLNAME%은(는) 無表情のまま案内を続けている。
 		CASE 1
 			PRINTFORMD %CALLNAME%がテーブルへオーダーを取りに行くと、座っていた客が
 			SELECTCASE RAND:2
@@ -526,11 +526,11 @@ ENDIF
 			ENDSELECT
 			PRINTFORMDL 가슴に手を伸ばしてきた。
 			PRINTL 「……ご注文はお決まりでしょうか？」
-			PRINTFORMDL %CALLNAME%は自分に触れる客に冷たい視線を向けている。
+			PRINTFORMDL %CALLNAME%은(는) 自分に触れる客に冷たい視線を向けている。
 		CASE 2
 			PRINTFORMDL %CALLNAME%がレジを打っていると、そばの男性に\@ISMANLY() ? お尻 # スカートの中 \@をまさぐられた。
 			PRINTL 「……会計はこちらになります」
-			PRINTFORMDL %CALLNAME%は手を軽く払い、淡々と会計処理を続けている。
+			PRINTFORMDL %CALLNAME%은(는) 手を軽く払い、淡々と会計処理を続けている。
 	ENDSELECT
 	ELSEIF RESULT < 3
 	SELECTCASE RAND:3
@@ -538,7 +538,7 @@ ENDIF
 			PRINTL 「いらっしゃいま……っ」
 			PRINTFORMDL %CALLNAME%がお客さんを席に案内していると、不意に後ろからお尻を撫でられた。
 			PRINTL 「ふ……ん……」
-			PRINTFORMDL 一瞬肩をびくりと震わせ、%CALLNAME%は顔を赤くして案内を続けている。
+			PRINTFORMDL 一瞬肩をびくりと震わせ、%CALLNAME%은(는) 顔を赤くして案内を続けている。
 		CASE 1
 			PRINTFORMD %CALLNAME%がテーブルへオーダーを取りに行くと、座っていた客が無遠慮に
 			SELECTCASE RAND:2
@@ -561,11 +561,11 @@ ENDIF
 			ENDSELECT
 			PRINTFORMDL 가슴に手を伸ばしてきた。
 			PRINTL 「っ……ご注文を、お願いします」
-			PRINTFORMDL %CALLNAME%は自分に触れる腕を押しのけながら、距離を取って注文を聞いた。
+			PRINTFORMDL %CALLNAME%은(는) 自分に触れる腕を押しのけながら、距離を取って注文を聞いた。
 		CASE 2
 			PRINTFORMDL %CALLNAME%がレジを打っていると、そばの男性に\@ISMANLY() ? お尻 # スカートの中 \@をまさぐられた。
 			PRINTL 「会計はっ……く、失礼しました」
-			PRINTFORMDL 思わぬ刺激に%CALLNAME%はタイプミスをしてしまい、会計処理を訂正している。
+			PRINTFORMDL 思わぬ刺激に%CALLNAME%은(는) タイプミスをしてしまい、会計処理を訂正している。
 	ENDSELECT
 	ELSEIF RESULT < 5
 	SELECTCASE RAND:3
@@ -574,7 +574,7 @@ ENDIF
 			PRINTFORMDL %CALLNAME%がお客さんを席に案内していると、不意に後ろからお尻を鷲掴みにされた。
 			PRINTL 「お客、さま……おやめ、ひゃああ！」
 			PRINTFORMDL 声をかけて注意を促そうとするも、敏感な身体がそれすらも許さなかった。
-			PRINTFORMDL 客が席に着くまでの間、%CALLNAME%は顔を赤くして弄ばれ続けた。
+			PRINTFORMDL 客が席に着くまでの間、%CALLNAME%은(는) 顔を赤くして弄ばれ続けた。
 		CASE 1
 			PRINTFORMD %CALLNAME%がテーブルへオーダーを取りに行くと、座っていた客が無遠慮に
 			SELECTCASE RAND:2
@@ -614,7 +614,7 @@ ENDIF
 		CASE 2
 			PRINTFORMDL %CALLNAME%がレジを打っていると、そばの男性に\@ISMANLY() ? お尻 # スカートの中 \@をまさぐられた。
 			PRINTL 「会計、はぁっ……く、ひゃあ！」
-			PRINTFORMDL 強い刺激にレジをタイプする指が止まってしまい、%CALLNAME%はその場に固まってしまった。
+			PRINTFORMDL 強い刺激にレジをタイプする指が止まってしまい、%CALLNAME%은(는) その場に固まってしまった。
 			PRINTFORMDL カウンターの内側を覗けば、%CALLNAME%の足元には小さな\@ISMALE() ? 腸液の # \@水たまりができている。
 	ENDSELECT
 	ELSE
@@ -635,7 +635,7 @@ ENDIF
 		;オーダー
 		CASE 1
 			PRINTL 「ひゃっ……おきゃ、しゃま……ごちゅ、もんぅぅう～～！」
-			PRINTFORMD %CALLNAME%はテーブルへオーダーを取りに行った途端、座っていた客に
+			PRINTFORMD %CALLNAME%은(는) テーブルへオーダーを取りに行った途端、座っていた客に
 			SELECTCASE RAND:2
 				CASE 0
 					PRINTFORMDL \@ISMANLY() ? ロングパンツをずりおろさ # スカートをまくら \@れ、
@@ -650,7 +650,7 @@ ENDIF
 						PRINTFORMD 無毛の
 					PRINTFORMDL \@ISMALE() ? 後ろの窄まり # 秘所 \@をかき回された。
 					PRINTL 「ひやっ、あひ、が……ん、くぅう～～！！」
-					PRINTFORMDL がくがくと震える足は自身の체중を支え切れず、%CALLNAME%は上体をテーブルに突っ伏して感じ入っている。
+					PRINTFORMDL がくがくと震える足は自身の체중を支え切れず、%CALLNAME%은(는) 上体をテーブルに突っ伏して感じ入っている。
 					PRINTFORMDL くちゅくちゅと淫らな水音を響かせる\@ISMALE() ? 尻穴 # 秘所 \@は周囲からも丸見えになり、
 					PRINTFORMDL 店内の客はみなニヤニヤと%CALLNAME%の痴態を鑑賞している。
 					PRINTL 「ひゃめ、みにゃい……み、にゃあぁあああ！！」
@@ -674,10 +674,10 @@ ENDIF
 					ENDIF
 					PRINTFORMDL 가슴を思い切り直に揉みしだかれた。
 					PRINTL 「ひやっ、あひ、が……ん、くぅう～～！！」
-					PRINTFORMDL がくがくと震える足は自身の체중を支え切れず、%CALLNAME%はその場にぺたりと座り込んでしまった。
+					PRINTFORMDL がくがくと震える足は自身の체중を支え切れず、%CALLNAME%은(는) その場にぺたりと座り込んでしまった。
 					PRINTFORMDL 丁度いい高さになったと客は好きに胸を弄り回し、頂にあるぽっちを軽くひねった。
 					PRINTL 「ひゃめ……ちくび、よわ……んひぃいいぃぃいいい！！」
-					PRINTFORMDL 自ら弱点を明かした%CALLNAME%は、注文を取ることも忘れ絶頂を迎えてしまった。
+					PRINTFORMDL 自ら弱点を明かした%CALLNAME%은(는) 、注文を取ることも忘れ絶頂を迎えてしまった。
 					PRINTL 「ま、へ……まら、いっへ……――――ッッッ！！」
 					PRINTFORMDL 絶頂の余韻に震える%CALLNAME%に配慮することなく、客はミルクをせがむように胸に吸い付いた。
 			ENDSELECT
@@ -740,30 +740,30 @@ PRINTFORMDL
 IF CFLAG:42 == 400
 	SELECTCASE RAND:3
 		CASE 0
-			PRINTFORMDL %CALLNAME%は顔を真っ赤にして厨房で皿を洗っている。
+			PRINTFORMDL %CALLNAME%은(는) 顔を真っ赤にして厨房で皿を洗っている。
 			PRINTL 「……んく……ふぅっ」
 			PRINTFORMDL ……その\@ISMALE() ? お尻 # 股座 \@からは、水道とは別の淫らな水音が響いている。
 		CASE 1
-			PRINTFORMDL %CALLNAME%は危なっかしい手つきで食材の下ごしらえをしている。
+			PRINTFORMDL %CALLNAME%은(는) 危なっかしい手つきで食材の下ごしらえをしている。
 			PRINTL 「……ん……はあっ！？」
 			PRINTFORMDL %ITEMNAME:400%に\@ISMALE() ? 後ろの窄まり # 질 \@を抉られた拍子に、野菜の皮が切れてしまった。
 		CASE 2
-			PRINTFORMDL %CALLNAME%はふらつきながら厨房の掃除をしている。
+			PRINTFORMDL %CALLNAME%은(는) ふらつきながら厨房の掃除をしている。
 			PRINTL 「……ま、た……ふか、なきゃ……」
 			PRINTFORMDL 床を拭き終えたようだが、あちこちに%CALLNAME%から垂れた\@ISMALE() ? 我慢汁 # 愛液 \@が落ちている。
 		ENDSELECT
 ELSE
 	SELECTCASE RAND:3
 		CASE 0
-			PRINTFORMDL %CALLNAME%は厨房で皿を洗っている。
+			PRINTFORMDL %CALLNAME%은(는) 厨房で皿を洗っている。
 			PRINTL 「……綺麗に、なった」
 			PRINTFORMDL ピカピカの皿を見て満足そうだ。
 		CASE 1
-			PRINTFORMDL %CALLNAME%は食材の下ごしらえをしている。
+			PRINTFORMDL %CALLNAME%은(는) 食材の下ごしらえをしている。
 			PRINTL 「……上手く、剥けた」
 			PRINTFORMDL 野菜の皮を、薄くきれいな一枚につなげて剥いたようだ。
 		CASE 2
-			PRINTFORMDL %CALLNAME%は厨房の掃除をしている。
+			PRINTFORMDL %CALLNAME%은(는) 厨房の掃除をしている。
 			PRINTL 「……次は、モップがけ」
 			PRINTFORMDL シンクを磨き終え、次は床の掃除をするらしい。
 	ENDSELECT
@@ -792,28 +792,28 @@ IF CFLAG:42 == 400
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTL 「お願い、止まって……んっ」
-			PRINTFORMDL %CALLNAME%は道端に座り込み、%ITEMNAME:400%のもたらす快感に必死に耐えている。
+			PRINTFORMDL %CALLNAME%은(는) 道端に座り込み、%ITEMNAME:400%のもたらす快感に必死に耐えている。
 			PRINTFORMDL その足元には、\@ISMALE() ? 腸 # 愛 \@液で小さな水たまりができていた。
 		CASE 1
 			PRINTL 「はぁ……はぁ……はぁ……ひぅっ！」
-			PRINTFORMDL %CALLNAME%は息を乱し、ふらつきながら新聞を配達している。
+			PRINTFORMDL %CALLNAME%은(는) 息を乱し、ふらつきながら新聞を配達している。
 			PRINTFORMDL その通ってきた道には、ぽつぽつと\@ISMALE() ? 我慢汁 # 愛液 \@によるシミができていた。
 		CASE 2
 			PRINTL 「んあっ……次……いかなきゃ……」
-			PRINTFORMDL %CALLNAME%は間違った家に新聞を入れてしまったが、
+			PRINTFORMDL %CALLNAME%은(는) 間違った家に新聞を入れてしまったが、
 			PRINTFORMDL 촉수が\@ISMALE() ? 尻穴 # 秘所 \@を抉る快楽に気を取られて気付かなかった。
 		ENDSELECT
 ELSE
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTL 「……これで、３件」
-			PRINTFORMDL %CALLNAME%は黙々と配達を続けている。
+			PRINTFORMDL %CALLNAME%은(는) 黙々と配達を続けている。
 		CASE 1
 			PRINTL 「……ふぅ、はぁ」
-			PRINTFORMDL %CALLNAME%はジョギングしながら新聞を投函している。
+			PRINTFORMDL %CALLNAME%은(는) ジョギングしながら新聞を投函している。
 		CASE 2
 			PRINTL 「…………あ」
-			PRINTFORMDL %CALLNAME%は、危うく別の家に新聞を配達するところだった。
+			PRINTFORMDL %CALLNAME%은(는) 、危うく別の家に新聞を配達するところだった。
 	ENDSELECT
 ENDIF
 RESETCOLOR
@@ -848,10 +848,10 @@ SELECTCASE RAND:3
 		ELSE
 			PRINTL 「サイレントブルー……参上」
 		ENDIF
-		PRINTFORMDL ショーの役に合わせて、%CALLNAME%は静かに名乗りを上げた。
+		PRINTFORMDL ショーの役に合わせて、%CALLNAME%은(는) 静かに名乗りを上げた。
 	CASE 1
 		PRINTL 「%SELF_CALL()%の名前は、アビスブラック……お前たちを、倒してやる」
-		PRINTFORMDL ショーの役に合わせて、%CALLNAME%は華麗に名乗りを上げた。
+		PRINTFORMDL ショーの役に合わせて、%CALLNAME%은(는) 華麗に名乗りを上げた。
 		PRINTFORMDL ……どうやら今日は悪役らしい。
 	CASE 2
 		PRINTL 「みんな、また会おうね」
@@ -867,10 +867,10 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL 「……あっ」
-		PRINTFORMDL %CALLNAME%は急いでスカートを抑えている。
+		PRINTFORMDL %CALLNAME%은(는) 急いでスカートを抑えている。
 	CASE 1
 		PRINTL 「……失敗、した」
-		PRINTFORMD %CALLNAME%は転んだことに落ち込んでいるが、
+		PRINTFORMD %CALLNAME%은(는) 転んだことに落ち込んでいるが、
 		;履いてない
 		IF CFLAG:42 == 0
 			;生えてない
@@ -883,7 +883,7 @@ SELECTCASE RAND:3
 		PRINTFORMDL 観客に見えていることには気づいていない。
 	CASE 2
 		PRINTL 「み……見た……？」
-		PRINTFORMDL %CALLNAME%は素早く立ち上がると、顔を赤くして小声で尋ねた。
+		PRINTFORMDL %CALLNAME%은(는) 素早く立ち上がると、顔を赤くして小声で尋ねた。
 ENDSELECT
 RESETCOLOR
 
@@ -895,13 +895,13 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL 「……だめ」
-		PRINTFORMDL %CALLNAME%はスカートをめくる怪人の手をぴしゃりとはたき、赤い顔をしてショーへ戻った。
+		PRINTFORMDL %CALLNAME%은(는) スカートをめくる怪人の手をぴしゃりとはたき、赤い顔をしてショーへ戻った。
 	CASE 1
 		PRINTL 「……なに、やって！？」
-		PRINTFORMDL %CALLNAME%は鍔競り合いをしていた怪人から、顔を赤くして大きく飛びのいた。
+		PRINTFORMDL %CALLNAME%은(는) 鍔競り合いをしていた怪人から、顔を赤くして大きく飛びのいた。
 	CASE 2
 		PRINTL 「必殺……サイレント・シュート！」
-		PRINTFORMDL ……%CALLNAME%は不埒な怪人の急所に向けて、容赦なく必殺技を的中させた。
+		PRINTFORMDL ……%CALLNAME%은(는) 不埒な怪人の急所に向けて、容赦なく必殺技を的中させた。
 ENDSELECT
 RESETCOLOR
 
@@ -916,16 +916,16 @@ IF RESULT == 0
 SELECTCASE RAND:2
 	CASE 0
 		PRINTL 「……だめ」
-		PRINTFORMDL %CALLNAME%は体に触れる怪人の手をぴしゃりとはたき、何事もないかのようにショーへ戻った。
+		PRINTFORMDL %CALLNAME%은(는) 体に触れる怪人の手をぴしゃりとはたき、何事もないかのようにショーへ戻った。
 	CASE 1
 		PRINTL 「必殺……サイレント・シュート！」
-		PRINTFORMDL ……%CALLNAME%は不埒な怪人の急所に向けて、容赦なく必殺技を的中させた。
+		PRINTFORMDL ……%CALLNAME%은(는) 不埒な怪人の急所に向けて、容赦なく必殺技を的中させた。
 ENDSELECT
 ELSEIF RESULT < 3
 SELECTCASE RAND:2
 	CASE 0
 		PRINTL 「んっ……だ、だめ……！」
-		PRINTFORMD %CALLNAME%は
+		PRINTFORMD %CALLNAME%은(는) 
 		SELECTCASE RAND:2
 			CASE 0
 				PRINTFORMD 尻を撫でまわす
@@ -950,33 +950,33 @@ SELECTCASE RAND:2
 		PRINTFORMDL 怪人の手を払おうとして、勢いあまって突き飛ばしてしまった。
 	CASE 1
 		PRINTL 「んっ……あなたの、思い通り、には……」
-		PRINTFORMDL \@ISMALE() ? 남자だというのになぜか # \@囚われのヒロインという役柄だが、%CALLNAME%は怪人に鋭く抗議の目を向けた。
+		PRINTFORMDL \@ISMALE() ? 남자だというのになぜか # \@囚われのヒロインという役柄だが、%CALLNAME%은(는) 怪人に鋭く抗議の目を向けた。
 ENDSELECT
 ELSE
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「な、や、やめっ……」
-		PRINTFORMDL 戦闘中、%CALLNAME%は倒れ込む怪人に巻き込まれるように押し倒されてしまった。
+		PRINTFORMDL 戦闘中、%CALLNAME%은(는) 倒れ込む怪人に巻き込まれるように押し倒されてしまった。
 		PRINTL 「ひあっ、どこ、さわって……だ、めぇ……」
 		PRINTFORMDL 倒れた怪人はこれ幸いと、\@ISMALE() ? 女装衣装の # \@%CALLNAME%の胸やスカートの中に手を伸ばし、弄ぶ。
 		PRINTL 「だめ、こんな、と……や、くぅうぅぅうう――ッッ！？」
-		PRINTFORMDL 制止の声を上げてもやめてもらえるはずもなく、%CALLNAME%は舞台の上で絶頂してしまった。
+		PRINTFORMDL 制止の声を上げてもやめてもらえるはずもなく、%CALLNAME%은(는) 舞台の上で絶頂してしまった。
 		PRINTFORMDL ……その後は共演のヒーローに助け出される形でショーは進み、どうにか舞台は終了した。
 	CASE 1
 		PRINTL 「あっ……♡　あ、あなたの、思い通り、には……ぁぁッ」
-		PRINTFORMDL \@ISMALE() ? 남자だというのになぜか # \@敵の基地にとらわれたヒロインを演じる%CALLNAME%は、怪人に尋問と称したセクハラを受けている。
+		PRINTFORMDL \@ISMALE() ? 남자だというのになぜか # \@敵の基地にとらわれたヒロインを演じる%CALLNAME%은(는) 、怪人に尋問と称したセクハラを受けている。
 		PRINTL 「や、やめ……これじゃ……セリフ、いえ……～～～ッ」
-		PRINTFORMDL 役柄上、大々的に반항한다こともできない%CALLNAME%は小声で訴えかけるが、それを黙殺するように突起を捻られ、悶えてしまう。
+		PRINTFORMDL 役柄上、大々的に반항한다こともできない%CALLNAME%은(는) 小声で訴えかけるが、それを黙殺するように突起を捻られ、悶えてしまう。
 		PRINTL 「やめ、や、あぁあぁぁあぁーー！！？？」
-		PRINTFORMDL 結局、台詞も制止の言葉も発することはできず、%CALLNAME%は嬌声を上げて達してしまった。
+		PRINTFORMDL 結局、台詞も制止の言葉も発することはできず、%CALLNAME%은(는) 嬌声を上げて達してしまった。
 		PRINTFORMDL ……その後は仲間のヒーローが予定より早く助けにくる形でショーは進み、どうにか舞台は終了した。
 	CASE 2
 		PRINTL 「この……はな、せ……！」
-		PRINTFORMDL 戦闘中、%CALLNAME%は敵の怪人に抱きしめられるように拘束されてしまった。
+		PRINTFORMDL 戦闘中、%CALLNAME%은(는) 敵の怪人に抱きしめられるように拘束されてしまった。
 		PRINTL 「んあっ、なに、やって……んうぅぅ……！？」
 		PRINTFORMDL %CALLNAME%を捕えた怪人は、無遠慮に胸や下着の中の敏感な突起に手を伸ばし、公衆の面前でこね回し始める。
 		PRINTL 「んく、やめっ……ん、ふぅうぅぅ――ッッ！！」
-		PRINTFORMDL %CALLNAME%は立ったままイってしまい、どうにか声は抑えたものの足下に\@ISMALE() ? 精液 # 愛液 \@の水溜りを作ってしまった。
+		PRINTFORMDL %CALLNAME%은(는) 立ったままイってしまい、どうにか声は抑えたものの足下に\@ISMALE() ? 精液 # 愛液 \@の水溜りを作ってしまった。
 		PRINTFORMDL ……その後は共演のヒーローに助け出される形でショーは進み、どうにか舞台は終了した。
 	CASE 3
 		PRINTL 「ひうっ！？　な……なに、して……！」
@@ -984,47 +984,47 @@ SELECTCASE RAND:4
 		PRINTL 「いま、劇の……ひゃあ！」
 		PRINTFORMDL 密着し合って観客から見えにくいのをいいことに、怪人は衣装の内側にまで手を伸ばしてくる。
 		PRINTL 「だめ、いっちゃ……イッ……――――ッッ！」
-		PRINTFORMDL %CALLNAME%は\@ISMALE() ? 尻穴 # 秘所 \@を抉られてイった拍子に膝から崩れ落ち、その場にへたり込んで痙攣している。
+		PRINTFORMDL %CALLNAME%은(는) \@ISMALE() ? 尻穴 # 秘所 \@を抉られてイった拍子に膝から崩れ落ち、その場にへたり込んで痙攣している。
 		PRINTFORMDL ……その後は共演のヒーローに助け起こされる形でショーは進み、どうにか舞台は終了した。
 ENDSELECT
 ;;ELSE
 ;;SELECTCASE RAND:4
 ;;	CASE 0
-;;		PRINTFORMDL %CALLNAME%は戦闘中の怪人に押し倒されてしまった。
+;;		PRINTFORMDL %CALLNAME%은(는) 戦闘中の怪人に押し倒されてしまった。
 ;;		PRINTL 「な、なにす……やめ、ひゃめえぇえぇぇえぇーー！！」
 ;;		PRINTFORMDL %CALLNAME%を押さえつけた怪人は、周りに配慮することなく衣装をめくり上げ、下着をずらしてその肢体を弄ぶ。
 ;;		PRINTL 「んくぅ、ふっ……んあっ、あん！」
 ;;		PRINTFORMDL 既に開発されきっている%CALLNAME%の体は、例えステージの上でも敏感に反応を示し、甘い嬌声を響かせる。
 ;;		PRINTL 「」
-;;		PRINTFORMDL そのまま%CALLNAME%は、観客に見守られながら幾度となく絶頂に達した。
-;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%は陵辱され続けた。
+;;		PRINTFORMDL そのまま%CALLNAME%은(는) 、観客に見守られながら幾度となく絶頂に達した。
+;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%은(는) 陵辱され続けた。
 ;;	CASE 1
-;;		PRINTFORMDL %CALLNAME%は戦闘中の怪人にいたずらされている。
+;;		PRINTFORMDL %CALLNAME%은(는) 戦闘中の怪人にいたずらされている。
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
-;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%は陵辱され続けた。
+;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%은(는) 陵辱され続けた。
 ;;	CASE 2
-;;		PRINTFORMDL %CALLNAME%は戦闘中に、怪人の手につかまってしまった。
+;;		PRINTFORMDL %CALLNAME%은(는) 戦闘中に、怪人の手につかまってしまった。
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
-;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%は陵辱され続けた。
+;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%은(는) 陵辱され続けた。
 ;;	CASE 3
-;;		PRINTFORMDL 囚われのヒロインを演じる%CALLNAME%は、怪人の가만히있는다になっている。
+;;		PRINTFORMDL 囚われのヒロインを演じる%CALLNAME%은(는) 、怪人の가만히있는다になっている。
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
 ;;		PRINTL 「」
 ;;		PRINTFORMDL 
-;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%は陵辱され続けた。
+;;		PRINTFORMDL ……その後仲間に助けられるということもなく、時間いっぱい%CALLNAME%은(는) 陵辱され続けた。
 ;;ENDSELECT
 ENDIF
 RESETCOLOR
@@ -1043,10 +1043,10 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL 「お願い、止まってぇ……」
-		PRINTFORMDL 決戦のアクションシーンが始まろうとしているが、%CALLNAME%は%ITEMNAME:400%に気を取られている。
+		PRINTFORMDL 決戦のアクションシーンが始まろうとしているが、%CALLNAME%은(는) %ITEMNAME:400%に気を取られている。
 	CASE 1
 		PRINTL 「あなた達は……絶対、にぃいぃぃいい！？」
-		PRINTFORMDL 台詞の途中で%ITEMNAME:400%が暴れ出し、%CALLNAME%はあられもない声を上げてしまった。
+		PRINTFORMDL 台詞の途中で%ITEMNAME:400%が暴れ出し、%CALLNAME%은(는) あられもない声を上げてしまった。
 	CASE 2
 		PRINTL 「んひゃあぁあぁぁああ！？」
 		PRINTFORMDL 共演者の台詞の途中で、油断していた\@ISMALE() ? 尻穴 # 秘所 \@を%ITEMNAME:400%に抉られ嬌声を上げてしまった。
@@ -1063,13 +1063,13 @@ IF CFLAG:42 == 400
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTL 「どうぞ、見て、くださ……んあっ」
-			PRINTFORMDL %CALLNAME%はスカートをたくし上げ、研究者たちに%ITEMNAME:400%をさらしている。
+			PRINTFORMDL %CALLNAME%은(는) スカートをたくし上げ、研究者たちに%ITEMNAME:400%をさらしている。
 			PRINTFORMD 意地の悪い%ITEMNAME:400%は、そのことに気付くと股間の一部を覆うのをやめ、
 			;生えてない
 			SIF TALENT:백보지 == 1
 				PRINTFORMD 毛の生えていない
 			PRINTFORMDL \@ISMALE() ? 委縮したペニス # 秘所 \@をむき出しにした。
-			PRINTFORMD 秘すべき場所を見られることを、%CALLNAME%は
+			PRINTFORMD 秘すべき場所を見られることを、%CALLNAME%은(는) 
 			IF ABL:노출벽 >= 3
 				PRINTFORMDL 嬉しそうに小さくほほ笑んでいる。
 			ELSE
@@ -1077,7 +1077,7 @@ IF CFLAG:42 == 400
 			ENDIF				
 		CASE 1
 			PRINTL 「くぅ……ぁん」
-			PRINTFORMDL %CALLNAME%は書架で촉수の資料を探している。
+			PRINTFORMDL %CALLNAME%은(는) 書架で촉수の資料を探している。
 			PRINTL 「だめ……また、イッ……！」
 			PRINTFORMDL しかし書棚に向ける視線は虚ろで、体は何かをこらえるように固まっている。
 			PRINTFORMDL ……どうやら、服の下の%ITEMNAME:400%に邪魔されているようだ。
@@ -1085,23 +1085,23 @@ IF CFLAG:42 == 400
 			PRINTL 「この時、촉수は……はひぃいぃぃいい！？」
 			PRINTFORMDL %CALLNAME%が過去の전투경험を報告していると、%ITEMNAME:400%に\@ISMALE() ? 尻穴 # 질내 \@を思いきり抉られた。
 			PRINTL 「違っ、そんな、こと……してっ！　んくうぅううぅーー！？」
-			PRINTFORMDL 記憶とは違う強烈な快楽攻めにあい、%CALLNAME%はその場に悶えるしかできなたった。
+			PRINTFORMDL 記憶とは違う強烈な快楽攻めにあい、%CALLNAME%은(는) その場に悶えるしかできなたった。
 		ENDSELECT
 ELSE
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTL 「これ……資料」
-			PRINTFORMDL %CALLNAME%は、研究者に書類の束を渡している。
+			PRINTFORMDL %CALLNAME%은(는) 、研究者に書類の束を渡している。
 		CASE 1
 			PRINTL 「……ここ、計算が違う」
-			PRINTFORMDL %CALLNAME%は、資料の間違いを発見し、訂正している。
+			PRINTFORMDL %CALLNAME%은(는) 、資料の間違いを発見し、訂正している。
 		CASE 2
 			PRINTL 「この時、촉수は……」
 			;戦闘未経験
 			IF EXP:자위경험 == 0
-				PRINTFORMDL %CALLNAME%は、資料を基に研究者と相談している。
+				PRINTFORMDL %CALLNAME%은(는) 、資料を基に研究者と相談している。
 			ELSE
-				PRINTFORMDL %CALLNAME%は、過去の전투경험を研究者に報告している。
+				PRINTFORMDL %CALLNAME%은(는) 、過去の전투경험を研究者に報告している。
 			ENDIF
 	ENDSELECT
 ENDIF
@@ -1115,10 +1115,10 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL （……早く……終わって）
-		PRINTFORMDL %CALLNAME%は目を閉じて歯を食いしばり、必死に検査を耐えている。
+		PRINTFORMDL %CALLNAME%은(는) 目を閉じて歯を食いしばり、必死に検査を耐えている。
 	CASE 1
 		PRINTL 「……んあぁあ！？」
-		PRINTFORMDL 深く潜り込んだカメラに突然膣壁を抉られ、%CALLNAME%は甘い声を上げた。
+		PRINTFORMDL 深く潜り込んだカメラに突然膣壁を抉られ、%CALLNAME%은(는) 甘い声を上げた。
 	CASE 2
 		PRINTL 「ひっ……いま、動いちゃ、だめぇ……」
 		PRINTFORMDL %CALLNAME%の子宮では、異物に驚いた腹の子が性感を刺激しながら暴れている。
@@ -1133,13 +1133,13 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL （……早く……終わって）
-		PRINTFORMDL %CALLNAME%は目を閉じて歯を食いしばり、必死に検査を耐えている。
+		PRINTFORMDL %CALLNAME%은(는) 目を閉じて歯を食いしばり、必死に検査を耐えている。
 	CASE 1
 		PRINTL 「……んあぁあ！？」
-		PRINTFORMDL 深く潜り込んだカメラに突然膣壁を抉られ、%CALLNAME%は甘い声を上げた。
+		PRINTFORMDL 深く潜り込んだカメラに突然膣壁を抉られ、%CALLNAME%은(는) 甘い声を上げた。
 	CASE 2
 		PRINTL 「ひっ……ひっかいちゃ、だめぇ……」
-		PRINTFORMDL サンプル採取の為、冷たい器具が子宮の表面をこそぐ感覚に、%CALLNAME%は震えている。
+		PRINTFORMDL サンプル採取の為、冷たい器具が子宮の表面をこそぐ感覚に、%CALLNAME%은(는) 震えている。
 ENDSELECT
 RESETCOLOR
 
@@ -1151,13 +1151,13 @@ PRINTFORMDL
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL 「また、出ちゃ……あぁああぁ！」
-		PRINTFORMDL 何度目かもわからない絶頂に、%CALLNAME%は乳房から勢いよく母乳を吐き出した。
+		PRINTFORMDL 何度目かもわからない絶頂に、%CALLNAME%은(는) 乳房から勢いよく母乳を吐き出した。
 	CASE 1
 		PRINTL 「すぐ……出る。出る、から……吸っちゃ、だ、めぇえぇぇえーー！」
 		PRINTFORMDL 母乳の出が悪いと言われ、搾乳機の吸引を強くされ、思い切り果ててしまった。
 	CASE 2
 		PRINTL 「もう……イッてる……イッてる、からぁあぁぁ！」
-		PRINTFORMDL 連続して吐き出させた方が効率が良いと、%CALLNAME%は哀願を無視して絞られ続けた。
+		PRINTFORMDL 連続して吐き出させた方が効率が良いと、%CALLNAME%은(는) 哀願を無視して絞られ続けた。
 ENDSELECT
 RESETCOLOR
 
@@ -1175,7 +1175,7 @@ SELECTCASE RAND:3
 		PRINTFORMDL 母乳に比べて精液の出が悪いと言われ、搾精機の吸引を強くされ、果ててしまった。
 	CASE 2
 		PRINTL 「もう……イッてる……イッてる、からぁあぁぁ！」
-		PRINTFORMDL 連続して吐き出させた方が効率が良いと、%CALLNAME%は哀願を無視して絞られ続けた。
+		PRINTFORMDL 連続して吐き出させた方が効率が良いと、%CALLNAME%은(는) 哀願を無視して絞られ続けた。
 ENDSELECT
 RESETCOLOR
 
@@ -1196,14 +1196,14 @@ SELECTCASE RAND:4
 ENDSELECT
 SELECTCASE RAND:4
 	CASE 0
-		PRINTFORMDL %CALLNAME%は촉수の体液の付いたナイフを軽く振り、鞘に納めた。
+		PRINTFORMDL %CALLNAME%은(는) 촉수の体液の付いたナイフを軽く振り、鞘に納めた。
 	CASE 1
 		PRINTFORMDL ――フッ、と。
-		PRINTFORMDL %CALLNAME%はライフルから立ち上る硝煙を吹いた。
+		PRINTFORMDL %CALLNAME%은(는) ライフルから立ち上る硝煙を吹いた。
 	CASE 2
-		PRINTFORMDL %CALLNAME%は촉수の死骸に冷たい視線を向けている。
+		PRINTFORMDL %CALLNAME%은(는) 촉수の死骸に冷たい視線を向けている。
 	CASE 3
-		PRINTFORMDL %CALLNAME%は武器をしまうとその場を後にした。
+		PRINTFORMDL %CALLNAME%은(는) 武器をしまうとその場を後にした。
 ENDSELECT
 RESETCOLOR
 
@@ -1215,13 +1215,13 @@ PRINTFORMDL
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「痛い、の……もう、いやぁ」
-		PRINTFORMDL 幾度も打ち据えられ、与えられる고통に%CALLNAME%は涙を流している。
+		PRINTFORMDL 幾度も打ち据えられ、与えられる고통に%CALLNAME%은(는) 涙を流している。
 	CASE 1
 		PRINTL 「普段、なら……こんな……！」
-		PRINTFORMDL 自分よりはるかに弱い相手に負けた悔しさに、%CALLNAME%は歯を食いしばった。
+		PRINTFORMDL 自分よりはるかに弱い相手に負けた悔しさに、%CALLNAME%은(는) 歯を食いしばった。
 	CASE 2
 		PRINTL 「こんな……程度、で……！」
-		PRINTFORMD %CALLNAME%は心を強く保とうとしているが、与えられる痛みに
+		PRINTFORMD %CALLNAME%은(는) 心を強く保とうとしているが、与えられる痛みに
 		IF ABL:마조끼 >= 3
 			PRINTFORMDL 頬が緩むのを抑えられない。
 		ELSE
@@ -1229,7 +1229,7 @@ SELECTCASE RAND:4
 		ENDIF
 	CASE 3
 		PRINTL 「あぐっ、はあっ……いやぁっ！」
-		PRINTFORMDL 촉수の鞭に打ち据えられるたび、%CALLNAME%は艶掛かった悲鳴を上げた。
+		PRINTFORMDL 촉수の鞭に打ち据えられるたび、%CALLNAME%은(는) 艶掛かった悲鳴を上げた。
 ENDSELECT
 RESETCOLOR
 
@@ -1241,13 +1241,13 @@ PRINTFORMDL
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「そんな、たくさん……はい、らな……やめ！」
-		PRINTFORMDL 我先にと\@ISMALE() ? 尻穴 # 질穴 \@に殺到する촉수たちに蹂躙され、%CALLNAME%は悲鳴を上げている。
+		PRINTFORMDL 我先にと\@ISMALE() ? 尻穴 # 질穴 \@に殺到する촉수たちに蹂躙され、%CALLNAME%은(는) 悲鳴を上げている。
 	CASE 1
 		PRINTL 「普段、なら……こんな……んはぁああぁぁあ！？」
-		PRINTFORMDL 自分よりはるかに弱い相手にイカされて、%CALLNAME%は甘い声を上げている。
+		PRINTFORMDL 自分よりはるかに弱い相手にイカされて、%CALLNAME%은(는) 甘い声を上げている。
 	CASE 2
 		PRINTL 「――ッッ！！？　まっ、てぇ……まだ、イって、イッ、ッッッッ――――！！？」
-		PRINTFORMDL 常に全身を愛撫する촉수の群れに、%CALLNAME%は絶頂から降りられずにいる。
+		PRINTFORMDL 常に全身を愛撫する촉수の群れに、%CALLNAME%은(는) 絶頂から降りられずにいる。
 	CASE 3
 		PRINTL 「んぐっ、ふぅっ……はひゃあっ！！」
 		PRINTFORMDL せめてもの抵抗に声を我慢しようとする%CALLNAME%だが、全身を襲う快感に嬌声を抑えられずにいる。
@@ -1262,13 +1262,13 @@ PRINTFORMDL
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「もっとぉ……もっと、きて……♡」
-		PRINTFORMDL %CALLNAME%は촉수達を誘うように体を揺らし、快楽にふやけた顔をしている――
+		PRINTFORMDL %CALLNAME%은(는) 촉수達を誘うように体を揺らし、快楽にふやけた顔をしている――
 	CASE 1
 		PRINTL 「んちゅ、む……気持ちいい？」
-		PRINTFORMDL %CALLNAME%は近くの촉수に口づけ、愛情を込めて奉仕している――
+		PRINTFORMDL %CALLNAME%은(는) 近くの촉수に口づけ、愛情を込めて奉仕している――
 	CASE 2
 		PRINTL 「いっ、いぃ……気持ち、いいの……イって、イッ、クッッッッ――――！！？」
-		PRINTFORMDL 全身を襲う快感を受け入れ、%CALLNAME%は絶頂を極め続けている――
+		PRINTFORMDL 全身を襲う快感を受け入れ、%CALLNAME%은(는) 絶頂を極め続けている――
 	CASE 3
 		IF ISMALE()
 			;#region
@@ -1277,7 +1277,7 @@ SELECTCASE RAND:4
 		ELSE 
 			PRINTFORML 「くり、クリぃ……！？　くりくり、いいのぉ……」
 		ENDIF
-		PRINTFORMDL %CALLNAME%は敏感な突起を弄られ、うっとりとした表情をしている――
+		PRINTFORMDL %CALLNAME%은(는) 敏感な突起を弄られ、うっとりとした表情をしている――
 ENDSELECT
 RESETCOLOR
 
@@ -1382,7 +1382,7 @@ RESETCOLOR
 SETCOLOR 0xAEB4DE
 PRINTFORMDL
 PRINTL 「……何、これ？」
-PRINTFORMDL %CALLNAME%は見慣れない茶封筒に小首を傾げている。
+PRINTFORMDL %CALLNAME%은(는) 見慣れない茶封筒に小首を傾げている。
 IF TALENT:가족관계 == 1
 	PRINTFORMDL ……どうやら、弟が勝手にオーディションに応募していたようだ。
 ELSEIF TALENT:가족관계 == 2
@@ -1409,7 +1409,7 @@ RESETCOLOR
 @KOJO_1_SEISAN_IDOL2_22
 PRINTFORMDL
 PRINTL 「……何、これ？」
-PRINTFORMDL %CALLNAME%は見慣れない茶封筒に小首を傾げている。
+PRINTFORMDL %CALLNAME%은(는) 見慣れない茶封筒に小首を傾げている。
 IF TALENT:가족관계 == 1
 	PRINTFORMDL ……どうやら、弟が勝手にオーディションに応募していたようだ。
 ELSEIF TALENT:가족관계 == 2
@@ -1421,11 +1421,11 @@ PRINTFORMDW
 PRINTFORML 「%NAME%……です」
 SELECTCASE RAND:4
 	CASE 0
-		PRINTFORMDL 噂通りクールな%CALLNAME%は、格好良いと評判の様だ。
+		PRINTFORMDL 噂通りクールな%CALLNAME%은(는) 、格好良いと評判の様だ。
 	CASE 1
-		PRINTFORMDL 噂通り과묵함で大人しい%CALLNAME%は、庇護欲をかき立てると評判の様だ。
+		PRINTFORMDL 噂通り과묵함で大人しい%CALLNAME%은(는) 、庇護欲をかき立てると評判の様だ。
 	CASE 2
-		PRINTFORMDL 噂通り%CALLNAME%は、心安らぐと評判の様だ。
+		PRINTFORMDL 噂通り%CALLNAME%은(는) 、心安らぐと評判の様だ。
 	CASE 3
 		PRINTFORMDL クールな噂と裏腹に、可愛らしい%CALLNAME%の容姿は、ギャップを生んで評判の様だ。
 ENDSELECT
@@ -1466,13 +1466,13 @@ SELECTCASE RAND:5
 	CASE 0
 		PRINTFORMDL 伴奏はないが、%CALLNAME%の澄んだ声が辺りに響いている。
 	CASE 1
-		PRINTFORMDL 行き交う人々の注目を受け、%CALLNAME%は赤くなっている。
+		PRINTFORMDL 行き交う人々の注目を受け、%CALLNAME%은(는) 赤くなっている。
 	CASE 2
-		PRINTFORMDL %CALLNAME%は滑らかな発音で歌っている。
+		PRINTFORMDL %CALLNAME%은(는) 滑らかな発音で歌っている。
 	CASE 3
-		PRINTFORMDL 普段とは打って変わって、%CALLNAME%は大きな声で歌っている。
+		PRINTFORMDL 普段とは打って変わって、%CALLNAME%은(는) 大きな声で歌っている。
 	CASE 4
-		PRINTFORMDL %CALLNAME%は歌に夢中になっている。
+		PRINTFORMDL %CALLNAME%은(는) 歌に夢中になっている。
 ENDSELECT
 RESETCOLOR
 
@@ -1483,10 +1483,10 @@ SETCOLOR 0xAEB4DE
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「……歌は、好きです」
-		PRINTFORMDL 事務所の面接で、%CALLNAME%は受け答えをしている。
+		PRINTFORMDL 事務所の面接で、%CALLNAME%은(는) 受け答えをしている。
 	CASE 1
 		PRINTFORML 「%NAME%……です。その……」
-		PRINTFORMDL 慣れない面接に、%CALLNAME%は固くなっているようだ。
+		PRINTFORMDL 慣れない面接に、%CALLNAME%은(는) 固くなっているようだ。
 	CASE 2
 		IF TALENT:변신능력 == 1
 			PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%……？　はい、%SELF_CALL()%の事です」
@@ -1509,10 +1509,10 @@ SELECTCASE RAND:4
 				PRINTFORML 「魔法少女の%CALLNAME%……？　はい、%SELF_CALL()%の事です」
 			ENDIF
 		ENDIF
-		PRINTFORMDL %CALLNAME%は面接官に魔法\@ISMANLY() ? 少年 # 少女 \@との関係を問われ、순종적にうなずいている。
+		PRINTFORMDL %CALLNAME%은(는) 面接官に魔法\@ISMANLY() ? 少年 # 少女 \@との関係を問われ、순종적にうなずいている。
 	CASE 3
 		PRINTL 『輝く空は...』
-		PRINTFORMDL 実際に歌っているところを見たいと言われ、%CALLNAME%はその場でアカペラを披露した。
+		PRINTFORMDL 実際に歌っているところを見たいと言われ、%CALLNAME%은(는) その場でアカペラを披露した。
 ENDSELECT
 RESETCOLOR
 
@@ -1525,28 +1525,28 @@ SELECTCASE RAND:5
 		;バラエティ。학생なら学校の話題
 		IF TALENT:학생 > 0
 			PRINTL 「学校も……楽しいです。大切な日常だから」
-			PRINTFORMDL バラエティ番組で学校の話題を振られ、%CALLNAME%ははにかみながら答えた。
+			PRINTFORMDL バラエティ番組で学校の話題を振られ、%CALLNAME%은(는) はにかみながら答えた。
 		ELSE
 			PRINTL 「……楽しいです。大切な日常だから」
-			PRINTFORMDL バラエティ番組で私生活の話題を振られ、%CALLNAME%ははにかみながら答えた。
+			PRINTFORMDL バラエティ番組で私生活の話題を振られ、%CALLNAME%은(는) はにかみながら答えた。
 		ENDIF
 	CASE 1
 		;クイズ。おバカだと……（지성派生）
 		IF BASE:지성 < 100
 			PRINTFORMDL ――「吾輩は猫である」の一文で始まる夏目漱石の小説のタイトルは？
 			PRINTL 「……名前は、もうない？」
-			PRINTFORMDL %CALLNAME%は、クイズ番組で珍解答を連発しスタジオを沸かせた。
+			PRINTFORMDL %CALLNAME%은(는) 、クイズ番組で珍解答を連発しスタジオを沸かせた。
 		ELSE
 			PRINTFORMDL ――ここ、日本で最も長い川と言えば……信濃川ですが、その長さは？
 			PRINTL 「……367km」
-			PRINTFORMDL %CALLNAME%は、クイズ番組で記憶問題をすらすらと答えスタジオを沸かせた。
+			PRINTFORMDL %CALLNAME%은(는) 、クイズ番組で記憶問題をすらすらと答えスタジオを沸かせた。
 		ENDIF
 	CASE 2
 		;スポーツ。ドジっ子だと……（俊敏派生）
-		PRINTFORMDL %CALLNAME%は、運動自慢の芸能人による運動会に参加した。
+		PRINTFORMDL %CALLNAME%은(는) 、運動自慢の芸能人による運動会に参加した。
 		IF BASE:민첩 < 100
 			PRINTL 「このくらい、いつもの戦いより……あっ」
-			PRINTFORMDL %CALLNAME%はアスレチックで足を滑らせ水に落ちてしまった。
+			PRINTFORMDL %CALLNAME%은(는) アスレチックで足を滑らせ水に落ちてしまった。
 			IF ABL:노출벽 >= 3
 				PRINTFORMD ……服が透けて肌がうっすらと見え、
 			ELSE
@@ -1555,39 +1555,39 @@ SELECTCASE RAND:5
 			PRINTFORMDL 図らずもサービスシーンとなったようだ。
 		ELSE
 			PRINTL 「……楽勝」
-			PRINTFORMDL %CALLNAME%は難関もすいすいと乗り越え、番組でも好成績を残した。
+			PRINTFORMDL %CALLNAME%은(는) 難関もすいすいと乗り越え、番組でも好成績を残した。
 		ENDIF
 	CASE 3
 		;ドラマ。あっさりランダム派生
 		SELECTCASE RAND:4
 			CASE 0
 				PRINTL 「どうしたんです、刑事さん……？」
-				PRINTFORMDL %CALLNAME%は刑事ドラマに犯人役で出演し、クールな犯罪者を演じた。
+				PRINTFORMDL %CALLNAME%은(는) 刑事ドラマに犯人役で出演し、クールな犯罪者を演じた。
 			CASE 1
 				PRINTL 「………………」（台詞が、ない……）
-				PRINTFORMDL %CALLNAME%は連続ドラマに主役の\@ISMANLY() ? 弟 # 妹 \@として出演し、失語症の\@ISMANLY() ? 少年 # 少女 \@を演じきった。
+				PRINTFORMDL %CALLNAME%은(는) 連続ドラマに主役の\@ISMANLY() ? 弟 # 妹 \@として出演し、失語症の\@ISMANLY() ? 少年 # 少女 \@を演じきった。
 			CASE 2
 				PRINTL 「好きだよ……少なくとも、嫌いじゃない」
-				PRINTFORMDL %CALLNAME%は学園ドラマに生徒役で出演し、大人しい학생を演じた。
+				PRINTFORMDL %CALLNAME%은(는) 学園ドラマに生徒役で出演し、大人しい학생を演じた。
 			CASE 3
 				PRINTL 「……別に」
-				PRINTFORMDL %CALLNAME%は恋愛ドラマに\@ISMANLY() ? ヒーロー # ヒロイン \@の一人として出演し、과묵함で不器用な\@ISMANLY() ? 少年 # 少女 \@を演じきった。
+				PRINTFORMDL %CALLNAME%은(는) 恋愛ドラマに\@ISMANLY() ? ヒーロー # ヒロイン \@の一人として出演し、과묵함で不器用な\@ISMANLY() ? 少年 # 少女 \@を演じきった。
 		ENDSELECT
 	CASE 4
 		;歌番組。あっさりランダム派生
 		SELECTCASE RAND:4
 			CASE 0
 				PRINTL 「それじゃあ……デビューシングル、歌います」
-				PRINTFORMDL %CALLNAME%は歌番組で、アイドルとして初めて歌った曲をうたった。
+				PRINTFORMDL %CALLNAME%은(는) 歌番組で、アイドルとして初めて歌った曲をうたった。
 			CASE 1
 				PRINTFORML 「この曲……%SELF_CALL()%も歌えて、嬉しいです」
-				PRINTFORMDL %CALLNAME%は歌番組で、他の歌手と互いの曲を歌い合った。
+				PRINTFORMDL %CALLNAME%은(는) 歌番組で、他の歌手と互いの曲を歌い合った。
 			CASE 2
 				PRINTL 「純粋に……声が、綺麗だったから」
-				PRINTFORMDL %CALLNAME%は歌番組で、採点員として他人の歌を評価した。
+				PRINTFORMDL %CALLNAME%은(는) 歌番組で、採点員として他人の歌を評価した。
 			CASE 3
 				PRINTL 「……次は、思い出のあの歌。……少し、気合い入れるよ」
-				PRINTFORMDL %CALLNAME%は歌番組で、メドレーを歌うことになり途切れることなく歌声を響かせた。
+				PRINTFORMDL %CALLNAME%은(는) 歌番組で、メドレーを歌うことになり途切れることなく歌声を響かせた。
 		ENDSELECT
 ENDSELECT
 RESETCOLOR
@@ -1604,10 +1604,10 @@ ENDIF
 SELECTCASE RAND:3
 	CASE 0
 		PRINTL 「これ……恥ずかしい、です」
-		PRINTFORMDL 布面積の少ない수영복を着せられ、%CALLNAME%は顔を赤くしている。
+		PRINTFORMDL 布面積の少ない수영복を着せられ、%CALLNAME%은(는) 顔を赤くしている。
 	CASE 1
 		PRINTL 「胸……？」
-		PRINTFORMD %CALLNAME%は、カメラマンの言葉に
+		PRINTFORMD %CALLNAME%은(는) 、カメラマンの言葉に
 		;ひんぬー
 		IF TALENT:빈유 > 0 || ISMALE()
 			PRINTFORMDL 自分のぺたんこな胸を見下ろして呟いた。
@@ -1617,15 +1617,15 @@ SELECTCASE RAND:3
 		ELSEIF TALENT:거유 > 0
 			PRINTFORMDL 自分の豊満な胸を見下ろして呟いた。
 			PRINTL 「こんな、感じで……いい、ですか？」
-			PRINTFORMDL %CALLNAME%は地面に寝そべり、ぐにゃりと柔らかく形を変える胸をカメラに撮られた。
+			PRINTFORMDL %CALLNAME%은(는) 地面に寝そべり、ぐにゃりと柔らかく形を変える胸をカメラに撮られた。
 		ELSE
 			PRINTFORMDL 自分の胸を見下ろして呟いた。
 			PRINTL 「こう……ですか？」
-			PRINTFORMDL %CALLNAME%は両手を前にやり、胸を寄せるポーズを写真に撮られた。
+			PRINTFORMDL %CALLNAME%은(는) 両手を前にやり、胸を寄せるポーズを写真に撮られた。
 		ENDIF
 	CASE 2
 		PRINTL 「笑わないで……いいん、ですか？」
-		PRINTFORMDL %CALLNAME%は疑問に首をかしげていたが、クールさを前面に出すのだと言われて納得した。
+		PRINTFORMDL %CALLNAME%은(는) 疑問に首をかしげていたが、クールさを前面に出すのだと言われて納得した。
 ENDSELECT
 RESETCOLOR
 
@@ -1636,16 +1636,16 @@ SETCOLOR 0xAEB4DE
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「今の……もう一度、お願いします」
-		PRINTFORMDL %CALLNAME%は妥協することなく、自分が納得できるまで何度も収録をやり直している。
+		PRINTFORMDL %CALLNAME%은(는) 妥協することなく、自分が納得できるまで何度も収録をやり直している。
 	CASE 1
 		PRINTL 「このパート……また、聴かせてください」
-		PRINTFORMDL %CALLNAME%は収録の前に、念入りに伴奏の確認をしている。
+		PRINTFORMDL %CALLNAME%은(는) 収録の前に、念入りに伴奏の確認をしている。
 	CASE 2
 		PRINTL 「あー…あ～～♪」
-		PRINTFORMDL %CALLNAME%は発声練習を兼ねて、収録前に喉の調子を見ている。
+		PRINTFORMDL %CALLNAME%은(는) 発声練習を兼ねて、収録前に喉の調子を見ている。
 	CASE 3
 		PRINTL 「テンポが、速い……」
-		PRINTFORMDL %CALLNAME%は新曲のスピード合わせに難儀しているようだ。
+		PRINTFORMDL %CALLNAME%은(는) 新曲のスピード合わせに難儀しているようだ。
 ENDSELECT
 RESETCOLOR
 
@@ -1656,50 +1656,50 @@ SETCOLOR 0xAEB4DE
 SELECTCASE RAND:4
 	CASE 0
 		PRINTL 「今の……もう一度、お願いします」
-		PRINTFORMDL %CALLNAME%は妥協することなく、自分が納得できるまで何度も収録をやり直している。
+		PRINTFORMDL %CALLNAME%은(는) 妥協することなく、自分が納得できるまで何度も収録をやり直している。
 	CASE 1
 		PRINTL 「このパート……また、聴かせてください」
-		PRINTFORMDL %CALLNAME%は収録の前に、念入りに伴奏の確認をしている。
+		PRINTFORMDL %CALLNAME%은(는) 収録の前に、念入りに伴奏の確認をしている。
 	CASE 2
 		PRINTL 「あー…あ～～♪」
-		PRINTFORMDL %CALLNAME%は発声練習を兼ねて、収録前に喉の調子を見ている。
+		PRINTFORMDL %CALLNAME%은(는) 発声練習を兼ねて、収録前に喉の調子を見ている。
 	CASE 3
 		PRINTL 「テンポが、速い……」
-		PRINTFORMDL %CALLNAME%は新曲のスピード合わせに難儀しているようだ。
+		PRINTFORMDL %CALLNAME%은(는) 新曲のスピード合わせに難儀しているようだ。
 ENDSELECT
 RESETCOLOR
 
-;枕営業（プロデューサー：フェラ）
+;베개 영업（プロデューサー：フェラ）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_pro1_22
 SETCOLOR 0xAEB4DE
 RESETCOLOR
 
-;枕営業（プロデューサー：立ちバック）
+;베개 영업（プロデューサー：立ちバック）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_pro2_22
 SETCOLOR 0xAEB4DE
 RESETCOLOR
 
-;枕営業（役員：처녀正常位）
+;베개 영업（役員：처녀正常位）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_client1_22
 SETCOLOR 0xAEB4DE
 RESETCOLOR
 
-;枕営業（お得意様：正常位）
+;베개 영업（お得意様：正常位）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_client2_22
 SETCOLOR 0xAEB4DE
 RESETCOLOR
 
-;枕営業（コスプレ：애널）
+;베개 영업（コスプレ：애널）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_client3_22
 SETCOLOR 0xAEB4DE
 RESETCOLOR
 
-;枕営業（ファンクラブ：輪姦）
+;베개 영업（ファンクラブ：輪姦）
 ;--------------------------------------------------
 @KOJO_1_SEISAN_MAKURA_fanclub_22
 SETCOLOR 0xAEB4DE

@@ -1,5 +1,5 @@
 ﻿;---------------------------------------------------------------------
-;ボス襲撃イベント
+;보스襲撃イベント
 @EVENT_BATTLE_EXEC_3002
 
 
@@ -34,7 +34,7 @@ IF TALENT:TARGET:번식자루 > 0 || TALENT:TARGET:사지결손 > 0
 	SIF TALENT:번식자루 == 0
 		PRINTFORM に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
 	PRINTL
-	PRINTFORML それは――"人類の敵"、촉수生物。
+	PRINTFORML それは――"人類の敵"、촉수 생물。
 	PRINTFORML その巨体がズズンと地響きを起こしながら、目の前の闇から姿を現そうとしている！
 	PRINTFORML 光の届かない暗闇から、その巨体が轟音を立てて現れた！
 	PRINTW 
@@ -44,7 +44,7 @@ IF TALENT:TARGET:번식자루 > 0 || TALENT:TARGET:사지결손 > 0
 	PRINTL
 	SETCOLOR 150,0,0
 	FONTBOLD
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수生物に拉致されました
+	PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수 생물に拉致されました
 	FONTREGULAR
 	RESETCOLOR
 	CFLAG:TARGET:0 = 9
@@ -61,11 +61,11 @@ IF CFLAG:100 == 102
 ELSEIF CFLAG:100 == 103
 	PRINT 自室に居た
 ELSEIF CFLAG:100 == 104
-	PRINT 特別活動を終えて戻った
+	PRINT 특별 활동を終えて戻った
 ELSEIF CFLAG:100 == 106
-	PRINT 戦闘支援を行っていた
+	PRINT 전투 지원を行っていた
 ELSEIF CFLAG:100 == 107
-	PRINT 情報収集を終えて戻った
+	PRINT 정보 수집を終えて戻った
 ELSEIF CFLAG:100 == 108
 	PRINT 自由行動を終えて戻った
 ENDIF
@@ -95,7 +95,7 @@ PRINTFORML すぐ傍で壁が崩落し――
 PRINTW 
 PRINTFORML ――ヌ　メ　リ
 PRINTFORML という音と共に現れた촉수に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
-PRINTFORML 見間違えるはずもない――"人類の敵"、촉수生物。
+PRINTFORML 見間違えるはずもない――"人類の敵"、촉수 생물。
 PRINTFORML その巨体がズズンと地響きを起こしながら、目の前の闇から姿を現そうとしている！
 PRINTW 
 PRINTFORML 突然の襲来に驚き戸惑いながらも、
@@ -156,10 +156,10 @@ CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,
 @EVENT_BATTLE_FLASHNEWS_3002(ARG)
 ;;ミッション成功
 ;IF ARG==1
-;;	RESULTS'="お手柄！ 女子高襲う촉수生物を撃退、可憐な魔法少女に女生徒ら感謝の声"
+;;	RESULTS'="お手柄！ 女子高襲う촉수 생물を撃退、可憐な魔法少女に女生徒ら感謝の声"
 ;;ミッション失敗
 ;ELSEIF ARG==0
-;	RESULTS'="女子高が촉수生物の襲撃で壊滅、女生徒ら多数残されたまま汚染区域に認定へ…"
+;	RESULTS'="女子高が촉수 생물の襲撃で壊滅、女生徒ら多数残されたまま汚染区域に認定へ…"
 ;;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
 ;ELSEIF ARG==-1
 ;	RESULTS'=""
