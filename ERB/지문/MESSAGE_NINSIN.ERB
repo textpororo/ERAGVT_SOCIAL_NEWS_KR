@@ -1,12 +1,12 @@
 ﻿
 ;--------------------------------
-;촉수임신に対する地の文
+;촉수임신に対する지문
 ;--------------------------------
 @MESSAGE_NINNSIN
 IF TALENT:주관시점 > 0
 	PRINTFORMW %PRINT_CALLNAME(TARGET)%は自分の体に強い違和感を感じる・・・
 ELSE
-	PRINTFORMW %PRINT_CALLNAME(TARGET)%の様子がおかしい・・・
+	PRINTFORMW %PRINT_CALLNAME(TARGET)%의 상태가 이상하다・・・
 ENDIF
 IF (TCVARn:12 & 배란)
 	PRINTFORM 배란させられた状態での질내사정により、%PRINT_CALLNAME(TARGET)%の腹に
@@ -34,7 +34,7 @@ PRINTFORML ・・・・
 PRINTFORML ・・・・・・
 PRINTFORML 胎内に宿った儚くまだ新しい生命が、
 PRINTFORML %PRINT_CALLNAME(TARGET)%の肉体の根本的な部分を変化させていく。
-PRINTFORML その感覚の意味を本能的に理解した%PRINT_CALLNAME(TARGET)%は、
+PRINTFORML その감각の意味を本能的に理解した%PRINT_CALLNAME(TARGET)%は、
 PRINTFORML 自分がもう後には引けないことを悟った・・・
 PRINTL 
 PRINTFORM %PRINT_CALLNAME(TARGET)%は임신した影響で[남자]に
@@ -46,7 +46,7 @@ ENDIF
 PRINTW 
 
 ;--------------------------------
-;촉수産卵、임신に対する地の文
+;촉수産卵、임신に対する지문
 ;--------------------------------
 @MESSAGE_PRISON_COM_200_DASH
 
@@ -169,7 +169,7 @@ ELSEIF ABL:봉사정신 >= 3
 	PRINTFORML 乳首にむしゃぶり着く我が子をそっと撫でた・・・
 ELSEIF TALENT:감정결여 > 0
 	PRINTFORML %PRINT_CALLNAME(TARGET)%は疲労で肩で息をしながらも
-	PRINTFORML 這いまわる子촉수の様子を無表情に見つめている・・・
+	PRINTFORML 這いまわる새끼 촉수の様子を無表情に見つめている・・・
 ELSEIF TALENT:주관시점 > 0
 	PRINTFORML %PRINT_CALLNAME(TARGET)%は湧き上がる절망感を抑えきれず、
 	PRINTFORML 肩で息をしている%PRINT_CALLNAME(TARGET)%の頬を一筋の涙が伝っていく・・・
@@ -178,7 +178,7 @@ ELSE
 	PRINTFORML 절망の涙を流しながら肩で息をしている・・・
 ENDIF
 PRINTW 
-PRINTFORML 子촉수を{ARG}匹産み落としました
+PRINTFORML 새끼 촉수を{ARG}匹産み落としました
 
 ;--------------------------------
 ;촉수出産＠病院

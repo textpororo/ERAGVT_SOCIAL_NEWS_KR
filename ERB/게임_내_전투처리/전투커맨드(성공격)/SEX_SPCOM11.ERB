@@ -21,7 +21,7 @@ REPEAT 12
 	LOCAL:COUNT = 0
 REND
 
-;油断度の上昇
+;油断度 상승
 TFLAG:3 += 100
 
 ;사정値 800
@@ -128,7 +128,7 @@ ENDIF
 SIF PALAM:윤활 < 2000
 	LOCAL:10 += 1000
 
-;V感覚が低いと공포が入る
+;V감각が低いと공포が入る
 IF ABL:V감각 == 0
 	LOCAL:11 = 2000
 ELSEIF ABL:V감각 == 1
@@ -144,12 +144,12 @@ ENDIF
 
 ;성내성が残り50%以上なら派生しにくい
 IF PERCENT_CAL_F(BASE:성내성, MAXBASE:성내성) >= 50 && RAND:2 == 0
-;ＶＡ挿入成功＆사정ゲージ不足なら両穴ピストン＋강구속状態
+;ＶＡ挿入成功＆사정 게이지不足なら両穴ピストン＋강구속状態
 ELSEIF (EX_COM & Ｖ) && (EX_COM & Ａ) && FLAG:15 < FLAG:14 && BASE:V결계내구력 == 0 && BASE:A결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
 	TFLAG:17 = 19
 	;状態異常：강구속
 	CALL STATE_CHANGE_PKOUSOKU, 100
-;Ｖ挿入成功＆사정ゲージ不足なら種付けピストン＋강구속状態
+;Ｖ挿入成功＆사정 게이지不足なら種付けピストン＋강구속状態
 ELSEIF FLAG:15 < FLAG:14 && BASE:V결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE() && TALENT:처녀 < 1
 	TFLAG:17 = 15
 	;状態異常：강구속

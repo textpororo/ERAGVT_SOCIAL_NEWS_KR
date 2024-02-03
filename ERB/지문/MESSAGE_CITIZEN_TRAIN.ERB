@@ -1,13 +1,13 @@
 ﻿;**********************************************************
-;監禁および인간による調教の地の文
+;監禁および인간による調教の지문
 
 ;------------------------------------------------
 
-;●監禁開始メッセージ(脅迫/＠中国版戦闘敗北)
+;●監禁開始メッセージ(脅迫/＠중국판戦闘敗北)
 @MESSAGE_CITIZEN_HIACED(ARG,ARGS,ARGS:1)
 	PRINTFORML  廃ビルの地下倉庫に「戦利品」を運び込んだ%ARGS%は、展示物を飾るかのように哀れな犠牲者を「設置」した。
 
-	;＠中国版より
+	;＠중국판より
 	PRINTFORM  %PRINT_TRANSCALLNAME(ARG)%の
 	PRINTDATAL
 		DATAFORM 両手は首の横で固定されていた。
@@ -78,7 +78,7 @@
 
 
 
-;●各所:ナンパ/酒ナンパ/痴漢/특별 활동/＠中国版監禁で使い回されている地の文の共通化
+;●各所:ナンパ/酒ナンパ/痴漢/특별 활동/＠중국판監禁で使い回されている지문の共通化
 ;豚プレイ
 ;　対象、責め行為者、호출元判別用文字列
 @MESSAGE_CITIZEN_TRAIN_PIG(ARG,ARGS,ARGS:1)
@@ -336,11 +336,11 @@
 	ENDIF
 	PRINTW 
 
-	;＠中国版より　★日日翻訳まだ
+	;＠중국판より　★日日翻訳まだ
 	;＠翻訳完了まで호출元デッドコード
 	;以下加筆：獸交-狗
 	PRINTW 
-	IF (ARGS:1=="監禁" && CONFIG_CHECK_MANIAC_F(15) == 1 && ABL:마조끼 > 4 || TALENT:놀림받는체질 > 0 ) && MARK:굴복각인 >= 3 && ISFEMALE()
+	IF (ARGS:1=="監禁" && CONFIG_CHECK_MANIAC_F(15) == 1 && ABL:마조끼 > 4 || TALENT:희롱특화체질 > 0 ) && MARK:굴복각인 >= 3 && ISFEMALE()
 		PRINTW
 		PRINTL 
 		PRINTFORML %ARGS%は、完全に開発された %PRINT_TRANSCALLNAME(TARGET)% に特別な報酬を与えることにしたようだ。
@@ -365,7 +365,7 @@
 		ELSE
 			PRINTFORML 男たちは %PRINT_TRANSCALLNAME(TARGET)% さんを押し倒しましたが、リーダーの叱責を受けながら、%PRINT_TRANSCALLNAME(TARGET)% さんは顔を上げて脚を M 字に広げ、まったく動こうとはしませんでした。
 			PRINTFORML お尻の下には膣を高くするために柔らかいパッドが詰められており、体全体は頭を天に上げたカエルのように見えます。
-			PRINTFORML 自分が雌犬であることを受け入れたとしても、異種にレイプされる공포と裏切られたという感覚が、%PRINT_TRANSCALLNAME(TARGET)% を不安そうに首を横に振らせます。
+			PRINTFORML 自分が雌犬であることを受け入れたとしても、異種にレイプされる공포と裏切られたという감각が、%PRINT_TRANSCALLNAME(TARGET)% を不安そうに首を横に振らせます。
 			PRINTFORMW 周囲を旋回する狼犬の喘ぎ声と低い吠え声を聞いて、彼の目には涙が溢れ、顔中の精液を洗い流した。
 			PRINTL 
 			PRINTFORML リーダーは%PRINT_TRANSCALLNAME(TARGET)%의 局部に발정雌犬の尿を噴射しました。
@@ -385,7 +385,7 @@
 			PRINTFORMW 奇妙な性的刺激で %PRINT_TRANSCALLNAME(TARGET)% は気が狂いそうになり、蜜の穴からの汁があちこちに飛び散りました。
 			PRINTL 
 			PRINTFORML ついに狼犬は我慢できなくなって사정し始め、前かがみになって動かなかったにもかかわらず、柔軟な犬のペニスが股間の管で何度もピクピクと子宮口を叩いていた。
-			PRINTFORML 子宮が動物の精液で満たされているという奇妙な感覚に、%PRINT_TRANSCALLNAME(TARGET)% は嬉しそうに吠えました。
+			PRINTFORML 子宮が動物の精液で満たされているという奇妙な감각に、%PRINT_TRANSCALLNAME(TARGET)% は嬉しそうに吠えました。
 			PRINTFORML 사정後は半固形に近い精液が体の奥深くに溜まり、下腹部が徐々に膨らみ、
 			PRINTW 
 			SIF TALENT:후타나리 > 0

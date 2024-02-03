@@ -1,7 +1,7 @@
 ﻿;--------------------------------------------------
-;キャラの性格に関する処理
+;캐릭터의 성격에 관한 처리
 ;--------------------------------------------------
-;性格のチェック
+;성격 체크
 @SEIKAKU_CHECK, ARGS, ARG
 LOCAL = 0
 LOCAL:1 = 0
@@ -28,16 +28,16 @@ FOR LOCAL:3,0,LOCAL:1
 NEXT
 SELECTCASE ARGS
 	CASE "STRING"
-		RESULTS = ランダム
+		RESULTS = 랜덤
 	CASE "PRINT"
-		PRINTFORM ランダム
+		PRINTFORM 랜덤
 		RETURN 0
 	CASE "GET_TALENT_VALUE"
 		RETURN 0
 ENDSELECT
 ;--------------------------------------------------
-;性格のチェック、式中関数版
-;ARG = キャラ番号
+;성격 체크, 식중 함수판
+;ARG = 캐릭터 번호
 @SEIKAKU_CHECK_F(ARG)
 #FUNCTION
 LOCAL = 0
@@ -56,10 +56,10 @@ NEXT
 RETURNF 0
 
 ;--------------------------------------------------
-;性格によるベースの補正
-;ARG:0 性格の番号（素質番号10〜）
-;ARG:1 どのベースか（0=체력,1=기력,2=성내성,10=공격,11=방어,12=민첩,13=지성）
-;ARG:2 補正前の元値
+;성격에 따른 베이스 보정
+;ARG:0 성격의 번호 (소질 번호 10~), CSV에서 의역된 일부 소질명들의 원문과 직역을 주석으로 달았다
+;ARG:1 어떤 베이스인지（0=체력 1=기력 2=성내성 10=공격 11=방어 12=민첩 13=지성）
+;ARG:2 보정 전의 원래 값
 @SEIKAKU_HOSEI_F(ARG:0, ARG:1, ARG:2)
 #FUNCTION
 ;겁쟁이
@@ -465,10 +465,10 @@ ENDIF
 RETURNF ARG:2
 
 ;--------------------------------------------------
-;性格によるパラメータの補正
-;ARG:0 性格の番号（素質番号10〜）
-;ARG:1 どのパラメータか（11=공순,13=욕정,14=굴복,15=치정,16=고통,17=공포）
-;ARG:2 補正前の元値
+;성격에 따른 파라미터 보정
+;ARG:0 성격의 번호 (소질 번호 10~), CSV에 의역된 일부 소질명들의 원문과 직역을 주석으로 달았음
+;ARG:1 어떤 파라미터인지（11=공순,13=욕정,14=굴복,15=치정,16=고통,17=공포）
+;ARG:2 보정 전의 원래 값
 @SEIKAKU_HOSEI_PALAM_F(ARG:0, ARG:1, ARG:2)
 #FUNCTION
 ;겁쟁이
@@ -844,9 +844,10 @@ ENDIF
 RETURNF ARG:2
 
 ;--------------------------------------------------
-;性格による心境変化の補正
-;ARG=性格番号、ARGS=変化を判定する心境
-;基本を30（3割で変化）にし、変化しやすいは50、変化しにくいものは10に
+;성격에 따른 심경 변화 보정
+;ARG=성격의 번호 (소질 번호 10~), CSV에 의역된 일부 소질명들의 원문과 직역을 주석으로 달았음
+;ARGS=변화를 판정하는 심경
+;기본을 30으로 하여(30%로 변화), 50으로 두면 변화하기 쉽고, 10으로 두면 잘 변화하지 않는다
 @SEIKAKU_HOSEI_SHINKYOU, ARG, ARGS
 LOCAL = 30
 ;겁쟁이
@@ -1021,8 +1022,8 @@ ENDIF
 RETURN LOCAL
 
 
-;性格ごとの調教耐性を表示
-;ARG 性格の番号（素質番号10〜）
+;성격 별 조교 내성 표시
+;ARG 성격의 번호 (소질 번호 10~), CSV에 의역된 일부 소질명들의 원문과 직역을 주석으로 달았음
 @SHOW_SEIKAKUHOSEI,ARG
 FOR LOCAL,0,14
 	SIF LOCAL >= 3 && LOCAL <= 9
@@ -1049,10 +1050,10 @@ FOR LOCAL,0,14
 		PRINT 　
 NEXT
 
-;性格ごとの調教耐性を表示
-;ARG 　　性格の番号（素質番号10〜）
-;ARG:1 　対象者の番号
-;ARG:2 　表示オプション
+;성격 별 조교 내성을 표시한다
+;ARG 　　성격의 번호 (소질 번호 10~), CSV에 의역된 일부 소질명들의 원문과 직역을 주석으로 달았음
+;ARG:1 　대상자의 번호
+;ARG:2 　표시 설정
 @SHOW_RESISTSEX,ARG, ARG:1, ARG:2 = 0
 FOR LOCAL,11,18
 	SIF LOCAL == 12
@@ -1061,7 +1062,7 @@ FOR LOCAL,11,18
 
 	IF LOCAL == 11
 		SIF ARG:2 == 0
-			PRINT 恭:
+			PRINT 공순:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):쾌감에솔직
 				LOCAL:1 += 10
@@ -1072,7 +1073,7 @@ FOR LOCAL,11,18
 		ENDIF
 	ELSEIF LOCAL == 13
 		SIF ARG:2 == 0
-			PRINT 欲:
+			PRINT 욕정:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):쾌감을부정
 				LOCAL:1 -= 10
@@ -1085,7 +1086,7 @@ FOR LOCAL,11,18
 		ENDIF
 	ELSEIF LOCAL == 14
 		SIF ARG:2 == 0
-			PRINT 屈:
+			PRINT 굴복:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):쾌감을부정
 				LOCAL:1 += 10
@@ -1103,7 +1104,7 @@ FOR LOCAL,11,18
 		ENDIF
 	ELSEIF LOCAL == 15
 		SIF ARG:2 == 0
-			PRINT 恥:
+			PRINT 치정:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):수줍음
 				LOCAL:1 += 10
@@ -1116,7 +1117,7 @@ FOR LOCAL,11,18
 		ENDIF
 	ELSEIF LOCAL == 16
 		SIF ARG:2 == 0
-			PRINT 苦:
+			PRINT 고통:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):쾌감에솔직
 				LOCAL:1 -= 10
@@ -1127,7 +1128,7 @@ FOR LOCAL,11,18
 		ENDIF
 	ELSEIF LOCAL == 17
 		SIF ARG:2 == 0
-			PRINT 恐:
+			PRINT 공포:
 		IF ARG != 28
 			SIF TALENT:(ARG:1):전투거부
 				LOCAL:1 += 10

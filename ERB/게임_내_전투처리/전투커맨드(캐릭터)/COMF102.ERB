@@ -28,7 +28,7 @@ IF (LOCAL & 삽입) && RAND:100 < 95 || (RAND:100 < SQRT(1 + 50 * ABL:기교))
 	TFLAG:4 = TFLAG:4 | 균열
 	TFLAG:4 = TFLAG:4 | 오발
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 105 + 5 * ABL:기교
 
 	;지문: 풋잡공격
@@ -37,7 +37,7 @@ IF (LOCAL & 삽입) && RAND:100 < 95 || (RAND:100 < SQRT(1 + 50 * ABL:기교))
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK102
 
-	;사정ゲージを記録
+	;사정 게이지を記録
 	LOCAL:1 = FLAG:15
 
 	;사정

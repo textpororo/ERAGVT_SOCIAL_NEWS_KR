@@ -16,7 +16,7 @@ REDRAW 1
 IF FLAG:45==0
 	CALL INITBATTLESITUATION()
 	VARSET TCVARn
-	;雑魚戦15ターン、보스戦50ターンが基本
+	;雑魚戦15ターン、보스전50ターンが基本
 	턴상한=(FLAG:10 == 2 ? 15 # 50)
 ENDIF
 ;戦闘開始時に戦闘距離を원거리に設定する
@@ -60,7 +60,7 @@ SIF (MESSAGE_BRANCH_F(TARGET) & 고전)
 ;PALAM最大値をリセット
 VARSET MAX_PALAM
 
-;사정ゲージ、모유ゲージのリセット
+;사정 게이지、모유 게이지のリセット
 BASE:사정 = 0
 BASE:모유 = 0
 
@@ -79,10 +79,10 @@ BASE:공중대시 = MAXBASE:공중대시
 SIF BASE:공중대시 >= 8
 	BASE:공중대시 = 8
 
-;FEAT 효과에 따른EXゲージ増加
+;FEAT 효과에 따른EX 게이지増加
 IF TALENT:마력저장 > 0
 	SETCOLOR 255,128,0
-	PRINTFORMW [마력저장]の効果で%CALLNAME%のEXゲージが2つチャージされた！
+	PRINTFORMW [마력저장]の効果で%CALLNAME%のEX 게이지が2つチャージされた！
 	RESETCOLOR
 	TCVARn:4 += 200
 ENDIF
@@ -95,7 +95,7 @@ IF FLAG:45==0
 	CALL REFRESH_CLOTH_DATA
 ENDIF
 
-;＠中国版より
+;＠중국판より
 ;　アイデアだけ書いてたsetbattlesituationに対応してくれた分
 IF GETBATTLESITUATION("강제 발정") == 1
 	TCVARn:12 |= 발정

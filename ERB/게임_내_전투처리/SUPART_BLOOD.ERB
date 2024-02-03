@@ -8,7 +8,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 		PRINTL ・・・
 		PRINTL ・・・・・・
 	ENDIF
-	;VABC촉수
+	;VABＣ촉수
 	IF FLAG:11 < 5
 		PRINTFORML 次の瞬間、%PRINT_TRANSCALLNAME(TARGET)%의 脳髄を強烈な快感が走り抜ける！
 		PRINTW 
@@ -62,7 +62,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			TALENT:(LOCAL:0) += 10
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)[%TALENTNAME:(LOCAL:0)%]になってしまった！
 			PRINTW 
-		;既に敏感で感覚がLV5未満だった場合、珠を大量に獲得する
+		;既に敏感で감각がLV5未満だった場合、珠を大量に獲得する
 		ELSEIF ABL:(FLAG:11-1) < 5
 			JUEL:(FLAG:11-1) += 25421
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体が熱く疼く……。

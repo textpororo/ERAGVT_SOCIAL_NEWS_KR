@@ -48,7 +48,7 @@ SIF TALENT:말려드는체질 > 0
 	LOCAL += 1
 SIF TALENT:남다른미모 > 0
 	LOCAL += 1
-SIF TALENT:놀림받는체질 > 0
+SIF TALENT:희롱특화체질 > 0
 	LOCAL += 3
 
 SIF LOCAL < RAND:30 ;クズに呼び出される確率, まとめて30ポイント越えたら100％呼び出される
@@ -162,7 +162,7 @@ ELSE
 		PRINTFORML 舐めているのかとばかりにヤクザらしき男に殴られ、下腹部を力強く蹴り飛ばされてしまった。
 
 		;★ここなんか描写欲しくない？　촉수のせいで腹の上から蹴られて感じるくらい子宮よわよわになっちゃってるとか
-		;　⇒中国版が加筆してくれてたわ！
+		;　⇒중국판が加筆してくれてたわ！
 		IF (TALENT:음란 || TALENT:마조기질 && ABL:마조끼 >= 3) && TALENT:초심 < 1
 			PRINTFORML 直撃された性器は、激しく弾け飛んだかのように絶頂の信号を発した。
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)あっさりとオーガズムに屈し、目を大きく見開いてあてもなく涙を流す。
@@ -362,7 +362,7 @@ PRINTL
 
 
 ;イベント後拉致監禁への派生
-IF CHARANUM_ENSLAVED()==0 && (CFLAG:290>=3 || RAND:100 < 20 +MIN(20,CFLAG:286 +CFLAG:320+ CFLAG:321)+ ((TALENT:놀림받는체질 > 0) + (TALENT:말려드는체질 > 0) + (TALENT:남다른미모 > 0)) * 10)
+IF CHARANUM_ENSLAVED()==0 && (CFLAG:290>=3 || RAND:100 < 20 +MIN(20,CFLAG:286 +CFLAG:320+ CFLAG:321)+ ((TALENT:희롱특화체질 > 0) + (TALENT:말려드는체질 > 0) + (TALENT:남다른미모 > 0)) * 10)
 	PRINTFORML  何巡も輪姦されて力尽き、男達の前で無防備に失神している%PRINT_TRANSCALLNAME(TARGET)%。
 	PRINTFORML  このまま노예として飼ってしまわないか？ と提案されたリーダーらしき男は、
 	PRINTFORML  足元に倒れ伏す%PRINT_TRANSCALLNAME(TARGET)%을(를)冷酷な目付きで舐め回す。
@@ -454,10 +454,10 @@ IF CFLAG:71 <= 0 ;정보 수집による救出イベント
 	PRINTFORML 男達に監禁され、性処理道具として扱われ続けた%PRINT_TRANSCALLNAME(TARGET)%からは、
 	IF ISMALE()
 		;#region
-		PRINTFORML もはや日付や昼夜の感覚、魔法少年としての誇り……ヒトとしての自覚すら消え去りつつあった。
+		PRINTFORML もはや日付や昼夜の감각、魔法少年としての誇り……ヒトとしての自覚すら消え去りつつあった。
 		;#endregion
 	ELSE 
-		PRINTFORML もはや日付や昼夜の感覚、魔法少女としての誇り……ヒトとしての自覚すら消え去りつつあった。
+		PRINTFORML もはや日付や昼夜の감각、魔法少女としての誇り……ヒトとしての自覚すら消え去りつつあった。
 	ENDIF
 	IF ISMALE()
 		;#region
@@ -543,7 +543,7 @@ ELSEIF CFLAG:70 > 6 && RAND:10 < 2+MIN(2,(CFLAG:70-6)/2) ;監禁3日後以降低
 			DATAFORM 抵抗する기력はとうに失せ、反応も鈍ってきた
 			DATAFORM 抵抗力を失い、순종に媚びるだけの雌家畜となった
 			DATAFORM ただ男の言葉に従い、抵抗する力もない
-			DATAFORM 目の輝きを失い、ただ無感覚に봉사한다だけの
+			DATAFORM 目の輝きを失い、ただ無감각に봉사한다だけの
 		ENDDATA
 	ENDIF
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%。次第に男性たちは不満を抱き始め、
@@ -577,7 +577,7 @@ ELSEIF CFLAG:70 > 6 && RAND:10 < 2+MIN(2,(CFLAG:70-6)/2) ;監禁3日後以降低
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)飼い続けたくないが、%PRINT_TRANSCALLNAME(TARGET)%을(를)手放すことで犯行が漏洩することも望まない男たち。
 		PRINTFORML どうやら彼らは%PRINT_TRANSCALLNAME(TARGET)%을(를)「完全に」廃棄する予定らしい……
 		FORCEWAIT 
-		;★中国版では素質の組み合わせによって악질 시민による処刑と촉수取り込まれを上手い事区別している
+		;★중국판では素質の組み合わせによって악질 시민による処刑と촉수取り込まれを上手い事区別している
 		;　(「取り込まれたなら必ず묘상화しているため、묘상화==0かつcflag:0==9は촉수の外で死んだと分かる」)
 		;　というのはGVTのコードに関する知識が必要なテクニックであり、後々問題になりそうなので枠を設けるべきだと思う
 		;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신 판정中
@@ -643,7 +643,7 @@ ELSE
 	PRINTFORMW  黴臭いビルの地下室に監禁され、%PRINT_TRANSCALLNAME(TARGET)%은(는)今も性処理道具として男達に使われている。
 	PRINTL
 
-	;＠中国版より
+	;＠중국판より
 	;＠↓移植終わるまでデッドコード化
 	IF 1==0 && TALENT:TARGET:사지결손 > 0
 		;欠損キャラは脅迫イベントに派生しないため、売られたか今回監禁中に四肢切断されたパターン
@@ -661,7 +661,7 @@ ELSE
 		;	CALL INTIMIDATION_PIG,TARGET
 		;CASE 11 TO 15
 		;	CALL INTIMIDATION_DOG,TARGET
-		;CASE 25;&& (TALENT:TARGET:놀림받는체질 > 0 || ABL:TARGET:마조끼 > 3 || TALENT:TARGET:전락 > 0 )
+		;CASE 25;&& (TALENT:TARGET:희롱특화체질 > 0 || ABL:TARGET:마조끼 > 3 || TALENT:TARGET:전락 > 0 )
 		;	CALL INTIMIDATION_RYONA,TARGET
 		CASEELSE
 			;★現分岐　これそういやholyvirgin考慮してないな
@@ -672,7 +672,7 @@ ELSE
 ENDIF
 
 
-;元の地の文(악질 시민監禁独自のやつ)
+;元の지문(악질 시민監禁独自のやつ)
 @INTIMIDATION_RAPE,ARG:0
 #DIM CCOUNT
 VARSET LOCAL
@@ -717,7 +717,7 @@ VARSET LOCAL
 	ENDIF
 	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)
 	PRINTDATA
-	;＠ここ中国版が四字熟語で詩的に揃えているんだけど翻訳困難なので適当に代替
+	;＠ここ중국판が四字熟語で詩的に揃えているんだけど翻訳困難なので適当に代替
 	;DATAFORM 從順迎合
 	;DATAFORM 娇媚骚浪
 	;DATAFORM 热情淫贱
@@ -764,7 +764,7 @@ VARSET LOCAL
 	IF CFLAG:0 == 4
 		PRINTFORML 白濁と욕망をどれくらい受け止めたか分からなくなったころ、
 		PRINTFORML ようやく満足したらしい男達は、既にピクリとも動かない%PRINT_TRANSCALLNAME(TARGET)%을(를)冷たい床に打ち捨てた。
-			;＠中国版　他の投獄されたキャラクターを監禁パートに挿入するテスト
+			;＠중국판　他の投獄されたキャラクターを監禁パートに挿入するテスト
 			;　テスト止まりらしい
 			;PARTNER = CFLAG:0
 			;IF CFLAG:PARTNER:0 == 4 

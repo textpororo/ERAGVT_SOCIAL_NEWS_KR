@@ -23,15 +23,15 @@ SIF ARG == 3 && CFLAG:356 != 2 && ARG == 3
 IF ARG == 3
 	IF CFLAG:358 == 1
 		;都心の学校に通う途中なら常に満員
-		KONZATU = RAND:30 + 70 + 30+(TALENT:놀림받는체질 ? 5 # 0)
+		KONZATU = RAND:30 + 70 + 30+(TALENT:희롱특화체질 ? 5 # 0)
 		学校所在地=都心
 	ELSE
 		;郊外の学校に通う途中なら混雑度高め
-		KONZATU = RAND:70 + 30+(TALENT:놀림받는체질 ? 10 # 0)
+		KONZATU = RAND:70 + 30+(TALENT:희롱특화체질 ? 10 # 0)
 		学校所在地=郊外
 	ENDIF
 	;遠出
-ELSEIF TALENT:놀림받는체질 > 0
+ELSEIF TALENT:희롱특화체질 > 0
 	KONZATU = RAND:60 + 40
 ELSE
 	KONZATU = RAND:95
@@ -177,7 +177,7 @@ SIF TALENT:남다른미모 > 0
 	CHIKAN_CHECK += 5
 SIF TALENT:소형체구 > 0
 	CHIKAN_CHECK -= 3
-SIF TALENT:놀림받는체질 > 0
+SIF TALENT:희롱특화체질 > 0
 	CHIKAN_CHECK += 10
 
 LOCAL = 0
@@ -346,7 +346,7 @@ IF (RAND:80 <= CHIKAN_CHECK && ISHOLE() == 1) && KONZATU >= 40 && STAND_POS >= 0
 		PRINTFORML [0]我慢する
 	ENDIF
 	PRINTFORML [1]抵抗　　　　　　　　（抵抗失敗率{ABL:순종 * 10 + LOCAL + 35}％）
-	PRINTFORML [2]電車を降りる　　　　（抵抗失敗率{ABL:순종 * 7 + 5 + (TALENT:놀림받는체질 > 0) * 20}％）
+	PRINTFORML [2]電車を降りる　　　　（抵抗失敗率{ABL:순종 * 7 + 5 + (TALENT:희롱특화체질 > 0) * 20}％）
 	PRINTFORML [3]防犯ブザーを鳴らす　（抵抗失敗率 0％）
 	$INPUT_LOOP_CHIKAN
 	INPUT
@@ -408,7 +408,7 @@ IF (RAND:80 <= CHIKAN_CHECK && ISHOLE() == 1) && KONZATU >= 40 && STAND_POS >= 0
 		PRINTL 
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)最寄りの駅に着くなり逃げ出せるように身構えた…
 		PRINTW 
-		IF RAND:100 < ABL:순종 * 7 + 5 + (TALENT:놀림받는체질 > 0) * 20
+		IF RAND:100 < ABL:순종 * 7 + 5 + (TALENT:희롱특화체질 > 0) * 20
 			IF RAND:4 == 0
 				PRINTFORML 電車が停止し扉が開いた瞬間、逃げようとした%PRINT_TRANSCALLNAME(TARGET)%だったが
 				PRINTFORML 공포に見を竦ませてしまい何も出来ずにいる。
@@ -426,7 +426,7 @@ IF (RAND:80 <= CHIKAN_CHECK && ISHOLE() == 1) && KONZATU >= 40 && STAND_POS >= 0
 				PRINTFORML 停車する際に大きく揺れ動き、人混みが流れてきた為更に大きな圧力がかかってしまった。
 				PRINTFORML なんとか振り払って出入口に進もうとするが、一歩も進めずに扉は閉まってしまった・・・
 			ENDIF
-			IF FLAG:852 < 1000 || TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
+			IF FLAG:852 < 1000 || TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:희롱특화체질 > 0
 				PRINTFORML 気のせいか他の乗客たちも%PRINT_TRANSCALLNAME(TARGET)%의 いる方へ詰めて来ているようだ・・・
 				NABURARE = 1
 			ENDIF
@@ -535,7 +535,7 @@ SIF TALENT:남다른미모 > 0
 	TAKEOUT += 5
 SIF TALENT:소형체구 > 0
 	TAKEOUT -= 3
-SIF TALENT:놀림받는체질 > 0
+SIF TALENT:희롱특화체질 > 0
 	TAKEOUT -= 15
 
 IF TALENT:변신시TS > 0 && CFLAG:1 > 0
@@ -643,7 +643,7 @@ IF ARG:1 == 0
 	ELSEIF RAND:2 == 0
 		PRINTFORM %ARGS%は%PRINT_TRANSCALLNAME(TARGET)%의 
 		IF HIP_SIZE == 2
-			PRINT むちむちとした
+			PRINT 포동포동とした
 		ELSEIF HIP_SIZE == 1
 			PRINT 豊満な
 		ELSEIF HIP_SIZE == 0
@@ -854,7 +854,7 @@ ELSE
 	ELSEIF RAND:4 == 0
 		PRINTFORM %ARGS%は後ろに手を回し%PRINT_TRANSCALLNAME(TARGET)%의 
 		IF HIP_SIZE == 2
-			PRINT むちむちとした
+			PRINT 포동포동とした
 		ELSEIF HIP_SIZE == 1
 			PRINT 豊満な
 		ELSEIF HIP_SIZE == 0

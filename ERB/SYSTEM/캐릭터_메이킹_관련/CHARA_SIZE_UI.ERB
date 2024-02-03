@@ -318,8 +318,8 @@ DO
 	ELSE
 		PRINTPLAIN [ 3]　
 	ENDIF
-	IF CHARATALENT_F(ARG,0,"絶壁")
-		PRINT [絶壁]
+	IF CHARATALENT_F(ARG,0,"절벽")
+		PRINT [절벽]
 	ELSEIF CHARATALENT_F(ARG,0,"빈유")
 		PRINT [빈유]
 	ELSEIF CHARATALENT_F(ARG,0,"기유")
@@ -355,8 +355,8 @@ DO
 		ELSE
 			PRINTPLAIN [13]　
 		ENDIF
-		IF CHARATALENT_F(ARG,1,"絶壁")
-			PRINT [絶壁]
+		IF CHARATALENT_F(ARG,1,"절벽")
+			PRINT [절벽]
 		ELSEIF CHARATALENT_F(ARG,1,"빈유")
 			PRINT [빈유]
 		ELSEIF CHARATALENT_F(ARG,1,"기유")
@@ -402,14 +402,14 @@ DO
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	LOCALS = 
-	SIF CHARATALENT_F(ARG,0,"安産型")
-		LOCALS = [安産型]
-	SIF CHARATALENT_F(ARG,0,"むちむち")
-		LOCALS = [むちむち]
-	SIF CHARATALENT_F(ARG,0,"イカ腹")
-		LOCALS = [イカ腹]
-	SIF CHARATALENT_F(ARG,0,"スレンダー")
-		LOCALS = [スレンダー]
+	SIF CHARATALENT_F(ARG,0,"순산형")
+		LOCALS = [순산형]
+	SIF CHARATALENT_F(ARG,0,"포동포동")
+		LOCALS = [포동포동]
+	SIF CHARATALENT_F(ARG,0,"유아배")
+		LOCALS = [유아배]
+	SIF CHARATALENT_F(ARG,0,"날씬함")
+		LOCALS = [날씬함]
 	SIF CHARATALENT_F(ARG,0,"巨尻")
 		LOCALS = [巨尻]
 	SIF CHARATALENT_F(ARG,0,"爆尻")
@@ -417,14 +417,14 @@ DO
 	PRINTFORM \@골반둘레値:0 > 0 ? {골반둘레値:0 / 10, 5}.{골반둘레値:0 % 10} # 　 　―\@ cm
 	PRINTPLAIN 　
 	LOCALS = [ ― ]
-	SIF CHARATALENT_F(ARG,0,"安産型")
-		LOCALS = [安産型]
-	SIF CHARATALENT_F(ARG,0,"むちむち")
-		LOCALS = [むちむち]
-	SIF CHARATALENT_F(ARG,0,"イカ腹")
-		LOCALS = [イカ腹]
-	SIF CHARATALENT_F(ARG,0,"スレンダー")
-		LOCALS = [スレンダー]
+	SIF CHARATALENT_F(ARG,0,"순산형")
+		LOCALS = [순산형]
+	SIF CHARATALENT_F(ARG,0,"포동포동")
+		LOCALS = [포동포동]
+	SIF CHARATALENT_F(ARG,0,"유아배")
+		LOCALS = [유아배]
+	SIF CHARATALENT_F(ARG,0,"날씬함")
+		LOCALS = [날씬함]
 	SIF CHARATALENT_F(ARG,0,"巨尻")
 		LOCALS = [巨尻]
 	SIF CHARATALENT_F(ARG,0,"爆尻")
@@ -444,14 +444,14 @@ DO
 		PRINTPLAINFORM 　　\@골반둘레値:1 > 0 ? {골반둘레値:1 / 10, 5}.{골반둘레値:1 % 10} # 　 　―\@ cm
 		PRINTPLAIN 　
 		LOCALS = [ ― ]
-		SIF CHARATALENT_F(ARG,1,"安産型")
-			LOCALS = [安産型]
-		SIF CHARATALENT_F(ARG,1,"むちむち")
-			LOCALS = [むちむち]
-		SIF CHARATALENT_F(ARG,1,"イカ腹")
-			LOCALS = [イカ腹]
-		SIF CHARATALENT_F(ARG,1,"スレンダー")
-			LOCALS = [スレンダー]
+		SIF CHARATALENT_F(ARG,1,"순산형")
+			LOCALS = [순산형]
+		SIF CHARATALENT_F(ARG,1,"포동포동")
+			LOCALS = [포동포동]
+		SIF CHARATALENT_F(ARG,1,"유아배")
+			LOCALS = [유아배]
+		SIF CHARATALENT_F(ARG,1,"날씬함")
+			LOCALS = [날씬함]
 		SIF CHARATALENT_F(ARG,1,"巨尻")
 			LOCALS = [巨尻]
 		SIF CHARATALENT_F(ARG,1,"爆尻")
@@ -1561,7 +1561,7 @@ DO
 				TALENT:ARG:보추 = 1
 				TALENT:ARG:변신시보추 = 1
 			ELSEIF ISMALE(ARG)
-				SIF CHARATALENT_F(ARG,1,"絶壁")
+				SIF CHARATALENT_F(ARG,1,"절벽")
 					TALENT:ARG:빈유 = 2
 				SIF CHARATALENT_F(ARG,1,"빈유")
 					TALENT:ARG:빈유 = 1
@@ -1617,7 +1617,7 @@ DO
 				TALENT:ARG:변신시가슴사이즈변동 += 1
 			ELSEIF CHARATALENT_F(ARG,1,"기유")
 				TALENT:ARG:변신시가슴사이즈변동 = -2
-			ELSEIF CHARATALENT_F(ARG,1,"絶壁")
+			ELSEIF CHARATALENT_F(ARG,1,"절벽")
 				TALENT:ARG:변신시가슴사이즈변동 += 1
 			ELSEIF CHARATALENT_F(ARG,1,"빈유")
 				TALENT:ARG:변신시가슴사이즈변동 += 1
@@ -1640,7 +1640,7 @@ DO
 			ELSEIF CHARATALENT_F(ARG,0,"기유")
 				TALENT:ARG:거유 = 0
 				TALENT:ARG:빈유 = 2
-			ELSEIF CHARATALENT_F(ARG,0,"絶壁")
+			ELSEIF CHARATALENT_F(ARG,0,"절벽")
 				TALENT:ARG:빈유 = 1
 			ELSEIF CHARATALENT_F(ARG,0,"빈유")
 				TALENT:ARG:빈유 = 0
@@ -2148,7 +2148,7 @@ TARGET = KEEP_TARGET
 @CHARA_SIZE_DEFAULT, C_ID
 #DIM C_ID
 
-;スリーサイズ等設定
+;쓰리 사이즈 등 설정
 SIF TALENT:C_ID:변신능력 < 1
 	MAXBASE:C_ID:나이 = -1
 

@@ -2,7 +2,7 @@
 ;触巣突入イベント
 ;
 ;
-;環境	【支援無効】
+;環境	【지원 무효】
 ;備考	たぶんH●LO3のフラッドステージを魔法少女エロゲにしたらこんな感じになると思う
 
 @EVENT_BATTLE_SITUATION_5
@@ -121,7 +121,7 @@ PRINTFORML 服は大半溶かされて素肌を晒しており、既に凌辱さ
 PRINTW
 PRINTFORML %PRINT_CALLNAME(TARGET)%が意を決して空洞の中心まで踏み込むと、
 
-;＠中国版
+;＠중국판
 ;イベント分岐：能力値と乱数に基づいてさまざまな戦闘状況に突入します。
 ;보스or흑화で공격の方向＝正解のコマンドが変わる仕様だが後者を未移植
 PRINTFORML 
@@ -162,7 +162,7 @@ CASE 0
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 			ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
 				PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
@@ -170,7 +170,7 @@ CASE 0
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制拘束")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
 			ELSE
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
 				PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
@@ -179,7 +179,7 @@ CASE 0
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制挿入")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
 			ENDIF
 		;回避成功
 		ELSE
@@ -189,7 +189,7 @@ CASE 0
 			PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
 			PRINTW 
 			DRAWLINE
-			CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+			CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 		ENDIF
 	ENDIF
 CASE 1 
@@ -214,7 +214,7 @@ CASE 1
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 			ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
 				PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
@@ -222,7 +222,7 @@ CASE 1
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制拘束")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
 			ELSE
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
 				PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
@@ -231,7 +231,7 @@ CASE 1
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制挿入")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
 
 			ENDIF
 		ELSE
@@ -241,7 +241,7 @@ CASE 1
 			PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
 			PRINTW 
 			DRAWLINE
-			CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+			CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 		ENDIF
 	ENDIF
 
@@ -269,7 +269,7 @@ CASE 2
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 				ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
 					PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
 					PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
@@ -277,7 +277,7 @@ CASE 2
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制拘束")
+					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
 				ELSE
 					PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
 					PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
@@ -286,7 +286,7 @@ CASE 2
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし,強制挿入")
+					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
 
 				ENDIF
 			ELSE
@@ -296,7 +296,7 @@ CASE 2
 				PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 			ENDIF
 		ENDIF
 	;지성不足
@@ -318,7 +318,7 @@ CASE 2
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
+		CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
 	ENDIF
 
 ;CASE7/9，高い俊敏性/高い지성で공격を回避
@@ -342,7 +342,7 @@ CASE 7,8,9
 	PRINTW 
 	DRAWLINE
 	;★支援効果無効
-	CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし")
+	CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし")
 
 ;それ以外の入力は지성不足扱いでデバフ
 ;＠誤入力へのペナルティ分岐ってユニークでいいね
@@ -364,7 +364,7 @@ CASEELSE
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,支援無効,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
+		CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
 ENDSELECT
 
 
@@ -376,7 +376,7 @@ ENDSELECT
 ;PRINTW 
 ;DRAWLINE
 ;;★支援効果無効
-;CALL ADDBATTLESITUATION("撤退不可,支援無効,耐久戦,市民なし,レイプなし")
+;CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
 
 
 

@@ -1,6 +1,6 @@
 ﻿;--------------------------------------------------
 ;촉수の사정に関する処理
-;기교の値で촉수の사정ゲージ増加量を求める
+;기교の値で촉수の사정 게이지増加量を求める
 @TENTACLE_SYASEI_UP, ARG
 ;기교を見る
 IF ABL:기교 == 0
@@ -89,13 +89,13 @@ FLAG:15 += ARG
 ;敵がペニスを持たない場合
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:11 == 901 && FLAG:15 >= FLAG:14
 	FONTBOLD
-	PRINTL 敵絶頂
+	PRINTL 적 절정
 	FONTREGULAR
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は耐え切れずに絶頂に達した！
 	PRINTL 
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 100
 	;搾精強化機能
 	IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
@@ -109,7 +109,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:11 == 901 && FLAG:15 >= FLAG:14
 	ENDIF
 	;搾精ダメージの処理
 	CALL TENTACLE_SAKUSEI,FLAG:15, 0, 0, 0, 0
-	;사정ゲージ低下
+	;사정 게이지低下
 	FLAG:15 = FLAG:15 - FLAG:14
 
 	;강구속を解く
@@ -119,13 +119,13 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:11 == 901 && FLAG:15 >= FLAG:14
 	RETURN 0, 0, 0, 0
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0) && FLAG:15 >= FLAG:14
 	FONTBOLD
-	PRINTL 敵絶頂
+	PRINTL 적 절정
 	FONTREGULAR
 	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 	PRINTFORML は耐え切れずに絶頂に達した！
 	PRINTL 
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 100
 	;搾精強化機能
 	IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
@@ -139,7 +139,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:
 	ENDIF
 	;搾精ダメージの処理
 	CALL TENTACLE_SAKUSEI,FLAG:15, 0, 0, 0, 0
-	;사정ゲージ低下
+	;사정 게이지低下
 	FLAG:15 = FLAG:15 - FLAG:14
 
 	;강구속を解く
@@ -152,14 +152,14 @@ ELSEIF (TFLAG:4 == 0 || (TFLAG:4 & 오발)) && FLAG:15 >= FLAG:14
 	IF (FLAG:15 >= FLAG:14 * 2 && TFLAG:20 != 15 && TFLAG:20 != 17 && TFLAG:20 != 19) || (TFLAG:4 & 오발)
 		;대량사정
 
-		;油断度の上昇
+		;油断度 상승
 		TFLAG:3 += 200
 
 		;사정場所チェック
 		CALL TENTACLE_SYASEI_POINT, 2
 		;搾精ダメージの処理
 		CALL TENTACLE_SAKUSEI,FLAG:15 * 4, RESULT:0, RESULT:1, RESULT:2, RESULT:3
-		;사정ゲージ低下
+		;사정 게이지低下
 		FLAG:15 = 0
 
 		;강구속を解く
@@ -177,14 +177,14 @@ ELSEIF (TFLAG:4 == 0 || (TFLAG:4 & 오발)) && FLAG:15 >= FLAG:14
 ELSEIF FLAG:15 >= FLAG:14 * 2
 	;대량사정
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 200
 
 	;사정場所チェック
 	CALL TENTACLE_SYASEI_POINT, 2
 	;搾精ダメージの処理
 	CALL TENTACLE_SAKUSEI,FLAG:15 * 2, RESULT:0, RESULT:1, RESULT:2, RESULT:3
-	;사정ゲージ低下
+	;사정 게이지低下
 	FLAG:15 = 0
 
 	;강구속を解く
@@ -195,14 +195,14 @@ ELSEIF FLAG:15 >= FLAG:14 * 2
 ELSEIF FLAG:15 >= FLAG:14
 	;通常사정
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 100
 
 	;사정場所チェック
 	CALL TENTACLE_SYASEI_POINT, 1
 	;搾精ダメージの処理
 	CALL TENTACLE_SAKUSEI,FLAG:15, RESULT:0, RESULT:1, RESULT:2, RESULT:3
-	;사정ゲージ低下
+	;사정 게이지低下
 	FLAG:15 = FLAG:15 - FLAG:14
 
 	;강구속を解く
@@ -587,7 +587,7 @@ SIF FLAG:73 > 0
 FLAG:13 -= ARG
 SIF FLAG:13 < 0
 	FLAG:13 = 0
-;사정でダメージ地の文
+;사정でダメージ지문
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
 ELSEIF (FLAG:110 == 1)

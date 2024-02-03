@@ -905,7 +905,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)半ばパニックに陥りながら고통に泣き叫んで\@TALENT:주관시점 > 0 ? しまう # いる\@・・・
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる感覚に耐えている・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる감각に耐えている・・・
 ENDIF
 PRINTW 
 IF (TCVARn:12 & 기절)
@@ -1027,7 +1027,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)半ばパニックに陥りながら고통に泣き叫んで\@TALENT:주관시점 > 0 ? しまって # \@いる・・・
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる感覚に耐えている・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる감각に耐えている・・・
 ENDIF
 PRINTW 
 IF (TCVARn:12 & 기절)
@@ -1160,7 +1160,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)半ばパニックに陥りながら고통に泣き叫んで\@TALENT:주관시점 > 0 ? しまう # いる\@・・・
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる感覚に耐えている・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)歯を食いしばりながら強烈すぎる감각に耐えている・・・
 ENDIF
 PRINTW 
 IF (TCVARn:12 & 기절)
@@ -1210,7 +1210,7 @@ SIF BASE:A결계내구력 > 0
 SIF BASE:B결계내구력 > 0 
 	LOCAL:2 += Ｂ
 
-;油断度上昇量
+;油断度상승량
 LOCAL:3 += 10
 
 ;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 ワレメ64 오발128 ビット演算）
@@ -1220,7 +1220,7 @@ SIF BASE:B결계내구력 > 0
 SIF BASE:C결계내구력 > 0 || BASE:V결계내구력 > 0 || BASE:A결계내구력 > 0 
 	LOCAL:4 += 균열
 
-;사정ゲージ上昇量
+;사정 게이지상승량
 LOCAL:5 = 10
 
 ;服へのダメージ
@@ -1230,7 +1230,7 @@ LOCAL:6 = RAND:11 + RAND:11 + 10
 ;追加責めの効果とPALAM影響度の両方が強化される
 LOCAL:7 = 1
 
-;처녀 상실の有無（なし0 あり1 あり、地の文なし2）
+;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:8 = 0
 
 ;特殊効果
@@ -1445,7 +1445,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "BATTLE_TENTACLE_ATTACK")
 PRINTL 
 ;電撃属性
 SIF LOCAL == 1
-	CALL STATE_SET_EXTRAEFFECT("電撃",100)
+	CALL STATE_SET_EXTRAEFFECT("전격",100)
 
 ;==================================================
 ;【粘液공격】

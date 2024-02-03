@@ -20,7 +20,7 @@ FOR LOCAL:98, 0, PALAM수
 	LOCAL:(LOCAL:99+100) = PALAM:(LOCAL:99)
 NEXT
 
-;感覚LV6以上補正
+;감각LV6以上補正
 FOR LOCAL:0, 0, 감각수
 	CALL PALAM_OVERFEEL, TARGET, LOCAL:0
 	ARG:(LOCAL:0) = ARG:(LOCAL:0) * RESULT / 100
@@ -83,7 +83,7 @@ IF LOCAL:1 > 0
 	;가만히있는다選択中なら絶頂しやすくなる
 	SIF TCVARn:2 == 자세：가만히있는다
 		TIMES ECS_FLAG, 1.25
-	;사정ゲージが限界なら絶頂しやすくなる
+	;사정 게이지が限界なら絶頂しやすくなる
 	IF BASE:사정 >= MAXBASE:사정 * 2
 		TIMES ECS_FLAG, 1.5
 	ELSEIF BASE:사정 >= MAXBASE:사정
@@ -284,7 +284,7 @@ FOR LOCAL:0, 감각수, PALAM수
 		SIF ARG:(LOCAL:0) <= 0
 			ARG:(LOCAL:0) = 1
 		
-		;取得パラメータの上昇チェック
+		;取得パラメータ 상승チェック
 		;CALL PALAM_LIMIT, LOCAL:1, ARG:(LOCAL:0)
 	ENDIF
 NEXT
@@ -335,7 +335,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 		ARG:8 += 8000
 		ARG:9 += 8000
 		ARG:12 += 600
-		;地の文；キャラが대량사정した
+		;지문；キャラが대량사정した
 		CALL MESSAGE_SEX_CHARA_SYASEI_HI
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの대량사정を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -393,7 +393,7 @@ IF TALENT:모유체질 == 1
 		ARG:5 += 2000
 		ARG:7 += 2000
 		ARG:9 += 2000
-		;地の文；キャラが大量모유した
+		;지문；キャラが大量모유した
 		CALL MESSAGE_SEX_CHARA_HUNNYU_HI
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの大量모유を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -445,7 +445,7 @@ SIF TCVARn:2 == 자세：봉사한다
 CALL PALAM_TIJOU_CLOTH_DAMAGE
 ARG:9 += RESULT
 
-;快C,快V,快A,快Bの上昇値,絶頂の状態で計算する
+;快C,快V,快A,快B 상승値,絶頂の状態で計算する
 CALL PALAM_TIJOU, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:9 += RESULT
 IF ARG:9 > 0
@@ -490,7 +490,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;욕정の主計算
-;快C,快V,快A,快B,치정の上昇値,고통の上昇値(마조끼あり),絶頂の状態で計算する
+;快C,快V,快A,快B,치정 상승値,고통 상승値(마조끼あり),絶頂の状態で計算する
 CALL PALAM_YOKUJOU, ARG:0, ARG:1, ARG:2, ARG:3, ARG:9, ARG:10
 ARG:7 += RESULT
 IF ARG:7 > 0
@@ -528,7 +528,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;윤활の主計算
-;욕정の上昇値で計算する
+;욕정 상승値で計算する
 CALL PALAM_JUNKATU, ARG:7
 ARG:4 += RESULT
 IF ARG:4 > 0
@@ -562,7 +562,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;공순の主計算
-;快C,快V,快A,快Bの上昇値,絶頂の状態で計算する
+;快C,快V,快A,快B 상승値,絶頂の状態で計算する
 CALL PALAM_KYOUJUN, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:5 += RESULT
 IF ARG:5 > 0
@@ -599,7 +599,7 @@ IF ARG:5 > 0
 ENDIF
 
 ;----------------------------------------------------------
-;기절中は굴복、치정、고통、공포の上昇が抑えられる
+;기절中は굴복、치정、고통、공포 상승が抑えられる
 IF (TCVARn:12 & 기절)
 	TIMES ARG:8, 0.25
 	TIMES ARG:9, 0.25
@@ -861,7 +861,7 @@ SIF TALENT:울보 > 0
 	TIMES ARG:11, 1.10
 
 FOR LOCAL:0, 감각수, PALAM수
-	;取得パラメータの上昇チェック
+	;取得パラメータ 상승チェック
 	SIF ARG:(LOCAL:0) > 0
 		CALL PALAM_LIMIT, LOCAL:0 + PALAM시점 - 감각수, ARG:(LOCAL:0)
 NEXT
@@ -1244,7 +1244,7 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 			RESETCOLOR
 		ENDIF
 
-		;油断度上昇量をリセット
+		;油断度상승량をリセット
 		TFLAG:3 = 0
 
 		;２ターン目までなら確実に油断が持続
@@ -2154,7 +2154,7 @@ ENDIF
 RETURNF LOCAL
 
 ;--------------------------------------------------
-;感覚LV6以上補正
+;감각LV6以上補正
 ;ARG:0	対象キャラ
 ;ARG:1	部位
 @PALAM_OVERFEEL, ARG:0, ARG:1
@@ -2189,7 +2189,7 @@ FOR LOCAL,0,감각수
 		現在部位=ARG:LOCAL
 		現在値=部位:現在部位
 
-		;感覚LV6以上補正
+		;감각LV6以上補正
 		CALL PALAM_OVERFEEL, TARGET, 現在部位
 		現在値 = 現在値 * RESULT / 100
 

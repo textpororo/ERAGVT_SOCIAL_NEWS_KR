@@ -6,7 +6,7 @@
 VARSET LOCAL
 SIF TIME != 1
 	RETURN
-;초심はいずれかの感覚が3以上でないと自慰しない
+;초심はいずれかの감각が3以上でないと自慰しない
 SIF TALENT:초심 > 0 && ABL:C감각 < 3 && ABL:V감각 < 3 && ABL:A감각 < 3 && ABL:B감각 < 3 && ABL:촉수중독 < 3
 	RETURN
 
@@ -202,7 +202,7 @@ ENDIF
 ;追加で自慰が発生した場合に備えて二度目のリセット
 VARSET NOWEX
 
-;V感覚は1、A感覚は2以上なら対応自慰が出来る
+;V감각は1、A감각は2以上なら対応自慰が出来る
 SIF ABL:ARG:V감각 >= 1
 	Ｖ自慰可 = 1
 SIF ABL:ARG:A감각 > 1

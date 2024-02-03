@@ -1,11 +1,11 @@
 ﻿;**********************************************************
-;ARG:0で色の指定
-;ARG:1で表示する文字列の指定
+;ARG:0으로 색 지정
+;ARG:1로 표시할 문자열 지정
 ;
-;HTML 3.0およびWindows標準16色を初期設定
+;HTML 3.0 및 Windows표준 16색을 초기 설정
 ;
-;更新履歴
-;2018.02.14 関数作成、標準16色登録 by 雑魚の人
+;갱신 이력
+;2018.02.14 함수 작성, 표준 16색 등록 by 雑魚の人
 ;**********************************************************
 @PRINT_RGBTEXT(ARGS:0,ARGS:1)
 #DIMS PRINT_CTEXT
@@ -15,7 +15,7 @@
 PRINT_CTEXT=%ARGS:1%
 
 SELECTCASE ARGS:0
-	;****************【HTML 3.0仕様＆Windows標準16色】****************
+	;****************【HTML 3.0사양＆Windows표준 16색】****************
 	;********************************
 	CASE "赤" , "レッド" , "Red" , "RED" , "Ｒｅｄ" , "ＲＥＤ"
 		SETCOLOR 0xFF0000
@@ -52,11 +52,11 @@ SELECTCASE ARGS:0
 
 
 
-	;****************【X11の色名称】****************
+	;****************【X11의 색 명칭】****************
 
 
 
-	;****************【その他】****************
+	;****************【기타】****************
 	CASE "薔薇色"
 		SETCOLOR 0xFF0037
 	CASE "	銀朱"
@@ -95,21 +95,21 @@ SELECTCASE ARGS:0
 
 
 	CASEELSE
-		;指定なしならGhostWiteで返す
+		;지정이 없다면 GhostWite로 반환한다
 		SETCOLOR 0xF8F8FF
 ENDSELECT
 
-;現在の文字色をTEXTCOLOR_NOWに代入
+;현재 문자색을 TEXTCOLOR_NOW에 대입
 GETCOLOR
 TEXTCOLOR_NOW=RESULT:0
-;現在の背景色をBGCOLOR_NOWに代入
+;현재 배경색을 BGCOLOR_NOW에 대입
 GETBGCOLOR
 BGCOLOR_NOW=RESULT:0
 
-;背景色と文字色が一致
+;배경색과 글자색이 일치
 IF TEXTCOLOR_NOW == BGCOLOR_NOW
 	RESETCOLOR
-	;輝度で算出((R*299)+(G*587)+ (B*144))/1000
+	;휘도(輝度)로 산출 ((R*299)+(G*587)+ (B*144))/1000
 	IF ((BGCOLOR_NOW/0x10000*299)+((BGCOLOR_NOW%0x10000)/0x100*587)+(BGCOLOR_NOW%0x100*144))/1000 > 127
 		SETCOLOR 0x000000
 	ELSE

@@ -22,7 +22,7 @@ SIF TALENT:말려드는체질 > 0
 	LOCAL += 15
 SIF TALENT:남다른미모 > 0
 	LOCAL += 15
-SIF TALENT:놀림받는체질 > 0
+SIF TALENT:희롱특화체질 > 0
 	LOCAL += 15
 SIF FLAG:999 == 1
 	PRINTFORML 応援発生確率：{LOCAL} ％
@@ -51,7 +51,7 @@ SIF TIME == 1 && FLAG:70
 ;ライブ直後は大勢の観客が取り残される
 FLAG:70+=MIN(980+RAND:40,CFLAG:400/10)
 
-;隠し보스戦中なら中断
+;隠し보스전中なら中断
 SIF ENEMY_TYPE_CHECK_F("LASTBOSS") > 0
 	RETURN
 ;観戦人数が０人なら中断
@@ -68,14 +68,14 @@ LOCAL = LOCAL - (CFLAG:284 / 4 + CFLAG:285) * 5 - MIN(EXP:피간경험 / 5, 20)
 ;FEAT 효과에 따른악질 시민率増加
 SIF TALENT:남다른미모 > 0
 	LOCAL -= 5
-SIF TALENT:놀림받는체질 > 0
+SIF TALENT:희롱특화체질 > 0
 	LOCAL -= 10
 IF RAND:100 < LOCAL
 	FLAG:72 = 0
 ELSE
 	FLAG:72 = 1
-	;놀림받는체질はストーカーを追加
-	SIF TALENT:놀림받는체질 > 0
+	;희롱특화체질はストーカーを追加
+	SIF TALENT:희롱특화체질 > 0
 		FLAG:70 += RAND:5
 ENDIF
 ;雑魚戦闘中は악질 시민以外発生しない
@@ -974,7 +974,7 @@ SIF ISHOLE() == 0
 	RETURN 0
 
 ;襲われる確率
-LOCAL = MIN((5000 - FLAG:852) / 100, 50) + MIN(CFLAG:285 * 2, 50) + (TALENT:놀림받는체질 > 0) * 10
+LOCAL = MIN((5000 - FLAG:852) / 100, 50) + MIN(CFLAG:285 * 2, 50) + (TALENT:희롱특화체질 > 0) * 10
 ;악질 시민フラグが立っていない場合は発生しにくい
 SIF FLAG:72 == 0
 	LOCAL = LOCAL / 2
@@ -992,7 +992,7 @@ PRINTL
 LOCAL:1 = PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + BASE:성내성 * 10)
 PRINTL 
 ;消耗率が低い、または勝利した場合はやや襲われにくい。ただし夜は襲われやすい
-IF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 < LOCAL:1 * 3 / 4 + (TFLAG:98 == 1) * 6 - (TIME == 1) * 12 - (TALENT:놀림받는체질 > 0) * 12
+IF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 < LOCAL:1 * 3 / 4 + (TFLAG:98 == 1) * 6 - (TIME == 1) * 12 - (TALENT:희롱특화체질 > 0) * 12
 	IF LOCAL < 25 || RAND:2 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)誰かに尾けられているような気がしたが、
 		PRINTFORML どうやら気のせいだったようだ・・・

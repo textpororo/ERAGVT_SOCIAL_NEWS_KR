@@ -498,7 +498,7 @@ ELSEIF RESULT == 1
 		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML やんわりと誘いを断っている…
 		PRINTW 
-		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
+		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:희롱특화체질 > 0
 			IF RAND:100 < 30
 				PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 				PRINTFORML 立っていることもままなくなる。
@@ -570,7 +570,7 @@ ELSEIF RESULT == 3
 	PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML 声をかけてきた相手を無視して立ち去ることにした…
 	PRINTW 
-	IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
+	IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:희롱특화체질 > 0
 		IF RAND:100 < 50
 			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。
@@ -813,7 +813,7 @@ ELSEIF 誘い内容 == 5
 		SIF CFLAG:1 >= 1
 			LOCAL = TALENT:변신시외관
 		IF LOCAL == 2
-			PRINT むちむちとした
+			PRINT 포동포동とした
 		ELSEIF LOCAL == 1
 			PRINT 豊満な
 		ELSEIF LOCAL == 0
@@ -821,7 +821,7 @@ ELSEIF 誘い内容 == 5
 		ELSEIF LOCAL == 6
 			PRINT たびに尻肉が弾むほどの爆
 		ELSEIF LOCAL == 5
-			PRINT たびにむちむちと鳴るような巨
+			PRINT たびに포동포동と鳴るような巨
 		ELSE
 			PRINT 小振りな
 		ENDIF
@@ -1692,7 +1692,7 @@ ELSEIF RESULT == 2
 		PRINTFORML あまり良い印象が無かったので警戒していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML はっきり誘いを断った…
 		PRINTL 
-		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
+		IF TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:희롱특화체질 > 0
 			IF RAND:100 < 30
 				PRINTFORML しかし、断りをいれている%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 				PRINTFORML 立っていることもままなくなる。
@@ -1723,7 +1723,7 @@ ELSEIF RESULT == 3
 	PRINTFORML そういう事をするつもりがなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
 	PRINTFORML 声をかけてきた相手を無視して立ち去ることにした…
 	PRINTW 
-	IF 	TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:놀림받는체질 > 0
+	IF 	TALENT:말려드는체질 > 0 || TALENT:남다른미모 > 0 || TALENT:희롱특화체질 > 0
 		IF RAND:100 < 40
 			PRINTFORML しかし、立ち去ろうとした%PRINT_TRANSCALLNAME(TARGET)%의 カラダから急に力が抜けていき
 			PRINTFORML 立っていることもままなくなる。

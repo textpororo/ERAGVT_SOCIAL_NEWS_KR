@@ -1,39 +1,41 @@
-﻿;흑화・세뇌キャラを除いたキャラのリスト表示
-;ARG=1ならCFLAG:0=0のキャラ（仲間状態で生きているキャラ）からしか選択できない、ARG=2なら全キャラ表示する、ARG=3なら一時離脱しているキャラのみ表示する
-;ARG:1は表示オプション
-;ARG:1=1	生存状態
-;ARG:1=2	修練Ｐ
-;ARG:2=1	キャンセル不可
+﻿;흑화・세뇌 캐릭터를 제외한 캐릭터 리스트 표시
+;ARG=1이라면 CFLAG:0=0인 캐릭터(동료상태로 살아있는 캐릭터)중에서 밖에 선택할 수 없다
+;ARG=2라면 모든 캐릭터를 표시한다
+;ARG=3이라면 일시적으로 이탈한 캐릭터만 표시한다
+;ARG:1은 표시 설정
+;ARG:1=1	생존 상태
+;ARG:1=2	수련Ｐ
+;ARG:2=1	취소 풀가
 @INTAI_CHARA_LIST
 #DIM LCOUNT
-PRINTL 誰を引退させますか？
+PRINTL 누구를 은퇴시키겠습니까?
 FOR LCOUNT, 0, CHARANUM
 	SIF LCOUNT == MASTER
 		CONTINUE
-	;세뇌か흑화なら飛ばす
+	;세뇌 또는 흑화라면 날린다
 	SIF CFLAG:LCOUNT:0 == 2 || CFLAG:LCOUNT:0 == 3
 		CONTINUE
 	PRINTFORM [{LCOUNT}] %CALLNAME:LCOUNT,24,LEFT%
 	SIF CFLAG:LCOUNT:0 == 1
-		PRINT （幽閉中）
+		PRINT （유폐 중）
 	SIF CFLAG:LCOUNT:0 == 2
 		PRINT （세뇌）
 	SIF CFLAG:LCOUNT:0 == 3
 		PRINT （흑화）
 	SIF CFLAG:LCOUNT:0 == 4
-		PRINT （誘拐監禁中）
-	;メンタルブレイク、未実装
+		PRINT （유괴 감금 중）
+	;멘탈 붕괴, 미구현
 	;SIF CFLAG:LCOUNT:0 == 5
-	;	PRINT （引きこもり中）
+	;	PRINT （히키코모리 중）
 	SIF CFLAG:LCOUNT:0 == 9
-		PRINT （取り込まれ）
+		PRINT （거두어짐）
 	SIF CFLAG:LCOUNT:0 == 10
-		PRINT （出産に備えて入院中）
+		PRINT （출산에 대비하여 입원 중）
 	SIF CFLAG:LCOUNT:0 == 11
-		PRINT （育児中）
+		PRINT （육아 중）
 	PRINTL 
 NEXT
-PRINTFORML [999]引退キャラ選択をやめる
+PRINTFORML [999] 은퇴 캐릭터 선택을 그만둔다
 $INPUT_LOOP_CHARA_LIST
 INPUT
 IF RESULT == 999

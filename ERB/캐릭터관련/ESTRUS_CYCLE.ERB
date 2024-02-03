@@ -1,6 +1,6 @@
 ﻿
 
-;生理周期を表示
+;생리 주기 표시
 @PRINT_ESTRUS_CYCLE(ARG=-1)
 	SIF ARG==-1
 		ARG=TARGET
@@ -8,25 +8,25 @@
 		RETURN
 
 	LOCALS'=""
-	;배란이상だと危険日開始が早まる
+	;배란이상이라면 위험일 개시가 빨라진다
 	IF CFLAG:ARG:217 >= (13 - TALENT:ARG:배란이상) && CFLAG:ARG:217 <= 15
 		SETCOLOR 250,50,50
-		LOCALS=危険日
-	;危険日が終わると배란　배란이상では危険日以外の日にずっと배란
+		LOCALS=위험일
+	;위험일이 끝나면 배란　배란이상이라면 위험일 이외의 날에 계속 배란
 	ELSEIF TALENT:ARG:배란이상>=3 || (CFLAG:ARG:217>=16 && CFLAG:ARG:217<=(TALENT:ARG:배란이상==2 ? 19 # 18))
 		SETCOLOR 250,30,200
-		LOCALS=배란日
-	;危険日の反対側に月経(生理)
+		LOCALS=배란일
+	;위험일의 반대쪽에 월경(생리)
 	ELSEIF CFLAG:ARG:217 == 1
 		SETCOLOR 50,120,230
-		LOCALS=月経
+		LOCALS=월경
 	ENDIF
 	IF LOCALS!=""
 		PRINTFORM [%LOCALS%]
 	ENDIF
 	RESETCOLOR
 
-;危険日or배란日なら「危険日」とテキストを返す式中関数
+;위험일 or 배란일이라면「위험일」이라는 텍스트를 반환하는 식중함수
 @ESTRUS_TEXT_F(ARG=-1,footertext="")
 #FUNCTIONS
 #DIMS footertext,1
@@ -36,30 +36,30 @@
 		RETURNF 
 
 	LOCALS'=""
-	;배란이상だと危険日開始が早まる
+	;배란이상이라면 위험일 개시가 빨라진다
 	IF CFLAG:ARG:217 >= (13 - TALENT:ARG:배란이상) && CFLAG:ARG:217 <= 15
-		LOCALS=危険日%footertext%
-	;危険日が終わると배란　배란이상では危険日以外の日にずっと배란
+		LOCALS=위험일%footertext%
+	;위험일이 끝나면 배란　배란이상이라면 위험일 이외의 날에 계속 배란
 	ELSEIF TALENT:ARG:배란이상>=3 || (CFLAG:ARG:217>=16 && CFLAG:ARG:217<=(TALENT:ARG:배란이상==2 ? 19 # 18))
-		LOCALS=危険日%footertext%
+		LOCALS=위험일%footertext%
 	ENDIF
 	RETURNF LOCALS
 
-;周期の進行(日付変更時に呼ばれる)
+;주기 진행(날짜 변경 시 호출된다)
 @ESTRUS_CYCLE(ARG=-1)
 	SIF ARG==-1
 		ARG=TARGET
 
-	;サイクル進行中
+	;사이클 진행 중
 	IF CFLAG:ARG:217>0
-		;1-29の範囲でサイクル(배란이상だと周期最大値が早まる)
+		;1-29 범위 내에서 사이클(배란이상이라면 주기 최대치가 빨라진다)
 		IF CFLAG:ARG:217<=29-TALENT:ARG:배란이상*2
 			CFLAG:ARG:217++
-		;一周した
+		;한 바퀴 돌았다
 		ELSE
 			CFLAG:ARG:217=1+TALENT:ARG:배란이상*2
 		ENDIF
-	;初期化用(1-29の範囲で設定)
+	;초기화용(1-29 범위에서 설정)
 	ELSE
 		CFLAG:ARG:217=1+RAND:29
 	ENDIF

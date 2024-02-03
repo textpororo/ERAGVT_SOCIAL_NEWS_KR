@@ -200,7 +200,7 @@ SIF TALENT:처녀 < -2
 MAXBASE:나이 = BASE:나이
 
 ;胸サイズ、体格を通常時に合わせる
-IF CHARATALENT_F(TARGET,0,"絶壁") > 0
+IF CHARATALENT_F(TARGET,0,"절벽") > 0
 	TALENT:빈유 = 2
 	TALENT:거유 = 0
 ELSEIF CHARATALENT_F(TARGET,0,"빈유") > 0
@@ -374,8 +374,8 @@ CALL TRANSFORM, 0
 PRINTL 【通常時】　胸サイズ　を選択してください
 IF TALENT:변신시TS > 0
 	PRINT [0] 変身後 [
-	IF CHARATALENT_F(TARGET,1,"絶壁") > 0
-		PRINT 絶壁
+	IF CHARATALENT_F(TARGET,1,"절벽") > 0
+		PRINT 절벽
 		BREAST = -2
 	ELSEIF CHARATALENT_F(TARGET,1,"빈유") > 0
 		PRINT 빈유
@@ -401,13 +401,13 @@ IF TALENT:변신시TS > 0
 	ENDIF
 	PRINTL ] に合わせる
 ENDIF
-PRINTL [1] 絶壁　　[2] 빈유　　[3] 普通　　
+PRINTL [1] 절벽　　[2] 빈유　　[3] 普通　　
 PRINTL [4] 거유　　[5] 폭유　　[6] 초유　　[7] 마유　　[8] 기유　　
 $INPUT_LOOP_1
 INPUT
 IF RESULT == 0 && TALENT:변신시TS > 0
 	;胸サイズを変身後に合わせる
-	IF CHARATALENT_F(TARGET,1,"絶壁") > 0
+	IF CHARATALENT_F(TARGET,1,"절벽") > 0
 		TALENT:빈유 = 2
 		TALENT:거유 = 0
 	ELSEIF CHARATALENT_F(TARGET,1,"빈유") > 0
@@ -527,8 +527,8 @@ PRINTL
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	PRINTL 【変身後】　胸サイズ　を選択してください
 	PRINT [0] 通常時 [
-	IF CHARATALENT_F(TARGET,0,"絶壁") > 0
-		PRINT 絶壁
+	IF CHARATALENT_F(TARGET,0,"절벽") > 0
+		PRINT 절벽
 	ELSEIF CHARATALENT_F(TARGET,0,"빈유") > 0
 		PRINT 빈유
 	ELSEIF CHARATALENT_F(TARGET,0,"기유") > 0
@@ -545,7 +545,7 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 		PRINT 普通
 	ENDIF
 	PRINTL ] に合わせる
-	PRINTL [1] 絶壁　　[2] 빈유　　[3] 普通　　
+	PRINTL [1] 절벽　　[2] 빈유　　[3] 普通　　
 	PRINTL [4] 거유　　[5] 폭유　　[6] 초유　　[7] 마유　　[8] 기유　　
 	$INPUT_LOOP_3
 	INPUT
@@ -618,13 +618,13 @@ PRINTL 【通常時】　외관的特徴　を選択してください
 IF TALENT:변신시TS > 0
 	PRINT [0] 変身後 [
 	IF TALENT:변신시외관 == 1
-		PRINT 安産型
+		PRINT 순산형
 	ELSEIF TALENT:변신시외관 == 2
-		PRINT むちむち
+		PRINT 포동포동
 	ELSEIF TALENT:변신시외관 == 3
-		PRINT イカ腹
+		PRINT 유아배
 	ELSEIF TALENT:변신시외관 == 4
-		PRINT スレンダー
+		PRINT 날씬함
 	ELSEIF TALENT:변신시외관 == 5
 		PRINT 巨尻
 	ELSEIF TALENT:변신시외관 == 6
@@ -634,10 +634,10 @@ IF TALENT:변신시TS > 0
 	ENDIF
 	PRINTL ] に合わせる
 ENDIF
-PRINTL [1] 安産型　　
-PRINTL [2] むちむち　
-PRINTL [3] イカ腹　　
-PRINTL [4] スレンダー
+PRINTL [1] 순산형　　
+PRINTL [2] 포동포동　
+PRINTL [3] 유아배　　
+PRINTL [4] 날씬함
 PRINTL [5] 巨尻　　　
 PRINTL [6] 爆尻　　　
 PRINTL [7] 普通　　　
@@ -659,13 +659,13 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	PRINTL 【変身後】　외관的特徴　を選択してください
 	PRINT [0] 通常時 [
 	IF TALENT:외관 == 1
-		PRINT 安産型
+		PRINT 순산형
 	ELSEIF TALENT:외관 == 2
-		PRINT むちむち
+		PRINT 포동포동
 	ELSEIF TALENT:외관 == 3
-		PRINT イカ腹
+		PRINT 유아배
 	ELSEIF TALENT:외관 == 4
-		PRINT スレンダー
+		PRINT 날씬함
 	ELSEIF TALENT:외관 == 5
 		PRINT 巨尻
 	ELSEIF TALENT:외관 == 6
@@ -674,10 +674,10 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 		PRINT 普通
 	ENDIF
 	PRINTL ] に合わせる
-	PRINTL [1] 安産型　　
-	PRINTL [2] むちむち　
-	PRINTL [3] イカ腹　　
-	PRINTL [4] スレンダー
+	PRINTL [1] 순산형　　
+	PRINTL [2] 포동포동　
+	PRINTL [3] 유아배　　
+	PRINTL [4] 날씬함
 	PRINTL [5] 巨尻　　　
 	PRINTL [6] 爆尻
 	PRINTL [7] 普通　　　

@@ -1,22 +1,22 @@
 ﻿;--------------------------------------------------
-;キャラの心境に関する処理
+;캐릭터의 심경에 관한 처리
 ;--------------------------------------------------
-;心境による補正等
+;심경에 따른 보정 등
 @SHINKYOU_CHECK, ARGS, ARG
 IF TCVARn:1 == 0
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 普通
+			PRINT 보통
 		CASE "PRINTSTATE"
-			PRINT 普通（補正なし）
+			PRINT 보통（보정 없음）
 	ENDSELECT
 	RETURN ARG
 ELSEIF TCVARn:1 == 1
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 倒錯
+			PRINT 도착(도착(倒錯))
 		CASE "PRINTSTATE"
-			PRINT 倒錯（攻・防・敏ダウン）
+			PRINT 도착(도착(倒錯))（공・방・민 DOWN）
 		CASE "KOUGEKI"
 			TIMES ARG, 0.80
 		CASE "BOUGYO"
@@ -29,9 +29,9 @@ ELSEIF TCVARn:1 == 1
 ELSEIF TCVARn:1 == 2
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 怒り
+			PRINT 분노
 		CASE "PRINTSTATE"
-			PRINT 怒り（공격・방어アップ）
+			PRINT 분노（공격・방어 UP　지성 DOWN）
 		CASE "KOUGEKI"
 			TIMES ARG, 1.20
 		CASE "BOUGYO"
@@ -44,9 +44,9 @@ ELSEIF TCVARn:1 == 2
 ELSEIF TCVARn:1 == 3
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 諦観
+			PRINT 체념
 		CASE "PRINTSTATE"
-			PRINT 諦観（공격・방어ダウン）
+			PRINT 체념（공격・방어・지성 DOWN）
 		CASE "KOUGEKI"
 			TIMES ARG, 0.80
 		CASE "BOUGYO"
@@ -59,9 +59,9 @@ ELSEIF TCVARn:1 == 3
 ELSEIF TCVARn:1 == 4
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 冷静
+			PRINT 냉정
 		CASE "PRINTSTATE"
-			PRINT 冷静（방어・민첩アップ）
+			PRINT 냉정（방어・민첩・지성 UP）
 		CASE "KOUGEKI"
 		CASE "BOUGYO"
 			TIMES ARG, 1.20
@@ -74,9 +74,9 @@ ELSEIF TCVARn:1 == 4
 ELSEIF TCVARn:1 == 5
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 動揺
+			PRINT 동요
 		CASE "PRINTSTATE"
-			PRINT 動揺（방어・민첩ダウン）
+			PRINT 동요（방어・민첩 DOWN　지성 UP）
 		CASE "KOUGEKI"
 		CASE "BOUGYO"
 			TIMES ARG, 0.80
@@ -89,9 +89,9 @@ ELSEIF TCVARn:1 == 5
 ELSEIF TCVARn:1 == 6
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 高揚
+			PRINT 고양
 		CASE "PRINTSTATE"
-			PRINT 高揚（공격・민첩アップ）
+			PRINT 고양（공격・민첩 UP）
 		CASE "KOUGEKI"
 			TIMES ARG, 1.20
 		CASE "BOUGYO"
@@ -103,9 +103,9 @@ ELSEIF TCVARn:1 == 6
 ELSEIF TCVARn:1 == 7
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 消沈
+			PRINT 소침
 		CASE "PRINTSTATE"
-			PRINT 消沈（공격・민첩ダウン）
+			PRINT 소침（공격・민첩 DOWN）
 		CASE "KOUGEKI"
 			TIMES ARG, 0.80
 		CASE "BOUGYO"
@@ -118,15 +118,15 @@ ENDIF
 
 
 ;--------------------------------------------------
-;心境変化のチェック
+;심경 변화 체크
 
 ;--------------------------------------------------
-;共通処理
+;공통 처리
 @SHINKYOU_CHANGE, ARGS
 LOCAL = 0
-;心境強度の判定
+;심경 강도 판정
 SELECTCASE TCVARn:1
-	;倒錯
+	;도착(倒錯)
 	CASE 1
 		SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			LOCAL += 1
@@ -136,7 +136,7 @@ SELECTCASE TCVARn:1
 			LOCAL += 1
 		SIF TCVARn:11 < 1
 			LOCAL = 20
-	;怒り
+	;분노
 	CASE 2
 		SIF (MESSAGE_BRANCH_F(TARGET) & 고전) == 0
 			LOCAL += 1
@@ -146,7 +146,7 @@ SELECTCASE TCVARn:1
 			LOCAL += 1
 		SIF TCVARn:11 < 2
 			LOCAL = 20
-	;諦観
+	;체념
 	CASE 3
 		SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 			LOCAL += 2
@@ -158,7 +158,7 @@ SELECTCASE TCVARn:1
 			LOCAL += 2
 		SIF TCVARn:11 < 1
 			LOCAL = 20
-	;冷静
+	;냉정
 	CASE 4
 		SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 			LOCAL += 2
@@ -168,7 +168,7 @@ SELECTCASE TCVARn:1
 			LOCAL += 1
 		SIF TCVARn:11 < 2
 			LOCAL = 20
-	;動揺
+	;동요
 	CASE 5
 		SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 			LOCAL += 1
@@ -178,7 +178,7 @@ SELECTCASE TCVARn:1
 			LOCAL += 2
 		SIF TCVARn:11 < 1
 			LOCAL = 20
-	;高揚
+	;고양
 	CASE 6
 		SIF (MESSAGE_BRANCH_F(TARGET) & 고전) == 0
 			LOCAL += 1
@@ -188,7 +188,7 @@ SELECTCASE TCVARn:1
 			LOCAL = 20
 		SIF TCVARn:0 == 0
 			LOCAL = 0
-	;消沈
+	;소침
 	CASE 7
 		SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 			LOCAL += 1
@@ -197,29 +197,29 @@ SELECTCASE TCVARn:1
 		SIF TCVARn:11 < 1
 			LOCAL = 20
 ENDSELECT
-;心境強度に応じて心境が変わりにくくなる
+;심경 강도에 따라 심경이 변하기 어려워진다
 SIF RAND:100 < LOCAL * 5
 		RETURN 0
 
 TRYCALLFORM SHINKYOU_CHANGE_%ARGS%
 
 ;--------------------------------------------------
-;普通
-;呼び出されたら無条件で普通に戻る
+;보통
+;호출되면 무조건 보통으로 돌아간다
 @SHINKYOU_CHANGE_NORMAL
 SIF TCVARn:1 == 0
 	RETURN
 TCVARn:1 = 0
 PRINTL 
-PRINTFORM %PRINT_CALLNAME(TARGET,1)%の心境が
+PRINTFORM %PRINT_CALLNAME(TARGET,1)%의 심경이 
 CALL SHINKYOU_CHECK, "PRINT", 0
-PRINTL に戻った
-;心境の持続ターンをリセット
+PRINTL (으)로 변화하였다.
+;심경의 지속 턴 초기화
 TCVARn:11 = 0
 
 ;--------------------------------------------------
-;倒錯
-;체력60%以下かつ기력60%以下で倒錯になる判定をかける
+;도착(倒錯)
+;체력과 기력 모두 60% 이하로 '도착(倒錯)' 이 되는 판정을 낸다
 @SHINKYOU_CHANGE_TOUSAKU
 LOCAL:0 = 0
 LOCAL:1 = 0
@@ -227,7 +227,7 @@ CALL PERCENT_CAL, BASE:체력, MAXBASE:체력
 LOCAL:0 = RESULT
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 LOCAL:1 = RESULT
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력, 기력 감소로 인한 영향을 받지 않는다
 IF CFLAG:1 == 2
 	LOCAL:0 = 100
 	LOCAL:1 = 100
@@ -238,8 +238,9 @@ CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 	IF RAND:100 < RESULT
 		IF TCVARn:1 != 1
 			TCVARn:1 = 1
+			;지문: 도착(倒錯)
 			CALL MESSAGE_SHINKYOU_CHANGE_TOUSAKU
-			;心境の持続ターンをリセット
+			;심경의 지속 턴 초기화
 			TCVARn:11 = 0
 		ENDIF
 	ENDIF
@@ -247,9 +248,9 @@ ENDIF
 
 
 ;--------------------------------------------------
-;怒り/諦観
-;체력60%以上かつ기력60%以上で怒りになる判定をかける
-;체력20%以下かつ기력20%以下で諦観になる判定をかける
+;분노/체념
+;체력과 기력 모두 60% 이상으로 분노가 되는 판정을 낸다
+;체력과 기력 모두 20% 이하로 체념이 되는 판정을 낸다
 @SHINKYOU_CHANGE_IKARI_TEIKAN
 LOCAL:0 = 0
 LOCAL:1 = 0
@@ -257,7 +258,7 @@ CALL PERCENT_CAL, BASE:체력, MAXBASE:체력
 LOCAL:0 = RESULT
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 LOCAL:1 = RESULT
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력, 기력 감소로 인한 영향을 받지 않는다.
 IF CFLAG:1 == 2
 	LOCAL:0 = 100
 	LOCAL:1 = 100
@@ -274,9 +275,9 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "IKARI"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 2
 		TCVARn:1 = 2
-		;지문: 怒り
+		;지문: 분노
 		CALL MESSAGE_SHINKYOU_CHANGE_IKARI
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF
@@ -287,17 +288,17 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "TEIKAN"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 3
 		TCVARn:1 = 3
-		;지문: 諦観
+		;지문: 체념
 		CALL MESSAGE_SHINKYOU_CHANGE_TEIKAN
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF
 
 ;--------------------------------------------------
-;冷静/動揺
-;체력60%以上かつ기력60%以上で冷静になる判定をかける
-;체력20%以下かつ기력20%以下で動揺になる判定をかける
+;냉정/동요
+;체력과 기력 모두 60% 이상으로 냉정이 되는 판정을 낸다
+;체력과 기력 모두 20% 이하로 동요가 되는 판정을 낸다
 @SHINKYOU_CHANGE_REISEI_DOUYOU
 LOCAL:0 = 0
 LOCAL:1 = 0
@@ -305,7 +306,7 @@ CALL PERCENT_CAL, BASE:체력, MAXBASE:체력
 LOCAL:0 = RESULT
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 LOCAL:1 = RESULT
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력, 기력 감소로 인한 영향을 받지 않는다.
 IF CFLAG:1 == 2
 	LOCAL:0 = 100
 	LOCAL:1 = 100
@@ -322,9 +323,9 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "REISEI"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 4
 		TCVARn:1 = 4
-		;지문: 冷静
+		;지문: 냉정
 		CALL MESSAGE_SHINKYOU_CHANGE_REISEI
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF
@@ -335,17 +336,17 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "DOUYOU"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 5
 		TCVARn:1 = 5
-		;지문: 動揺
+		;지문: 동요
 		CALL MESSAGE_SHINKYOU_CHANGE_DOUYOU
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF
 
 ;--------------------------------------------------
-;高揚/消沈
-;체력60%以上かつ기력60%以上で高揚になる判定をかける
-;체력20%以下かつ기력20%以下で消沈になる判定をかける
+;고양/소침
+;체력과 기력 모두 60% 이상으로 고양이 되는 판정을 낸다
+;체력과 기력 모두 20% 이하로 소침이 되는 판정을 낸다
 @SHINKYOU_CHANGE_KOUYOU_SYOUTIN
 LOCAL:0 = 0
 LOCAL:1 = 0
@@ -353,7 +354,7 @@ CALL PERCENT_CAL, BASE:체력, MAXBASE:체력
 LOCAL:0 = RESULT
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 LOCAL:1 = RESULT
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력, 기력 감소로 인한 영향을 받지 않는다.
 IF CFLAG:1 == 2
 	LOCAL:0 = 100
 	LOCAL:1 = 100
@@ -370,9 +371,9 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "KOUYOU"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 6
 		TCVARn:1 = 6
-		;지문: 高揚
+		;지문: 고양
 		CALL MESSAGE_SHINKYOU_CHANGE_KOUYOU
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF
@@ -383,9 +384,9 @@ CALL SEIKAKU_HOSEI_SHINKYOU, RESULT, "SYOUTIN"
 IF RAND:100 < RESULT
 	IF TCVARn:1 != 7
 		TCVARn:1 = 7
-		;지문: 消沈
+		;지문: 소침
 		CALL MESSAGE_SHINKYOU_CHANGE_SYOUTIN
-		;心境の持続ターンをリセット
+		;심경의 지속 턴 초기화
 		TCVARn:11 = 0
 	ENDIF
 ENDIF

@@ -211,7 +211,7 @@ FOR LCOUNT, 0, 감각수
 				L_VAR:LCOUNT = 8000
 			ENDIF
 		ELSE
-			;快A　感覚が低いうちは少なめ
+			;快A　감각が低いうちは少なめ
 			IF CONFIG_CHECK_BALANCE_F(7) == 0
 				IF ABL:LCOUNT == 0
 					L_VAR:LCOUNT = 40
@@ -292,7 +292,7 @@ IF AT_PART:2 == 1
 	SIF SHIEDED:2 == 0
 		EXP:A경험 += 1
 
-;感覚と윤활が低いと고통が入る
+;감각と윤활が低いと고통が入る
 	CAL_VAR:0 = 0
 	IF ABL:A감각 < 3
 		IF PALAM:윤활 < 100
@@ -313,7 +313,7 @@ IF AT_PART:2 == 1
 	SIF SHIEDED:2 == 0
 		L_VAR:10 += CAL_VAR:0
 
-;感覚が低いと공포が入る
+;감각が低いと공포が入る
 	CAL_VAR:0 = 0
 	IF ABL:A감각 == 0
 		CAL_VAR:0 += 1000

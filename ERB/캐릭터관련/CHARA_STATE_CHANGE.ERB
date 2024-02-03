@@ -1,15 +1,15 @@
 ﻿;--------------------------------------------------
-;状態異常の付与チェック(直接指定ではなく、戦闘中被弾に伴って状態遷移が起きるかどうかの判定)
-;ARGは基礎確率
+;상태 이상 부여 체크(직접 지정이 아닌, 피격에 따라 상태 전이가 일어날 것인지 여부 판정)
+;ARG는 기초확률
 ;--------------------------------------------------
-;ダメージによる기절判定
+;적의 피해에 의한 기절 판정
 @STATE_CHANGE_KIZETU_DAMAGE, ARG
 SIF (TCVARn:12 & 기절)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:타고난전사 > 0
 	RETURN 0
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
@@ -25,13 +25,13 @@ ELSEIF CFLAG:99 >= 10
 ENDIF
 LOCAL:0 = LIMIT(LOCAL:0,0,50)
 IF RAND:150 < LOCAL:0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)大きすぎるダメージによって
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 너무 강한 대미지를 입어 
 	FONTBOLD
 	SETCOLOR 250,180,50
 	PRINT [기절]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL した！
+	PRINTL 해 버렸다!
 	PRINTW 
 	TCVARn:12 |= 기절
 	IF CONFIG_CHECK_SCREEN_F(2) > 0
@@ -44,45 +44,45 @@ IF RAND:150 < LOCAL:0
 ENDIF
 
 ;--------------------------------------------------
-;絶頂した場合
+;절정에 달했을 경우
 @STATE_CHANGE_EX, ARG
 VARSET LOCAL
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 FOR LOCAL, 0, 4
 	LOCAL:1 += ABL:LOCAL
 NEXT
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:투쟁본능 > 0
 	GOTO SKIP_1
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	GOTO SKIP_1
 IF (RAND:100 < MIN(ARG * ARG * 4 + LOCAL:1 * 4, 75) || (TCVARn:12 & 발정)) && (TCVARn:12 & 기절) == 0 && (TCVARn:12 & 황홀) == 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)絶頂の余韻で
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 절정의 여운으로 
 	FONTBOLD
 	SETCOLOR 255,182,193
 	PRINT [황홀]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL としている！
+	PRINTL 상태가 되어 버렸다!
 	TCVARn:12 |= 황홀
 	LOCAL ++
 ENDIF
 $SKIP_1
 
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	GOTO SKIP_2
 CALL TENTACLE_ACCESS, "GETNAME"
 IF RAND:100 < ARG * ARG * 8 && (TCVARn:12 & 기절) == 0 && (TCVARn:12 & 황홀) == 0 && RESULTS != "Ｈ촉수"
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)激しい絶頂によって
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 격렬한 절정에 의해 
 	FONTBOLD
 	SETCOLOR 250,180,50
 	PRINT [기절]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL した！
+	PRINTL 해 버렸다!
 	TCVARn:12 |= 기절
 	IF CONFIG_CHECK_SCREEN_F(2) > 0
 		IF TCVARn:0 == 0
@@ -95,7 +95,7 @@ IF RAND:100 < ARG * ARG * 8 && (TCVARn:12 & 기절) == 0 && (TCVARn:12 & 황홀)
 ENDIF
 $SKIP_2
 
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	GOTO SKIP_3
 IF RAND:100 < ARG * ARG * 12 + 5 && (TCVARn:12 & 쓰러짐) == 0
@@ -105,7 +105,7 @@ IF RAND:100 < ARG * ARG * 12 + 5 && (TCVARn:12 & 쓰러짐) == 0
 	PRINT [쓰러짐]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL になってしまった！
+	PRINTL 상태가 되어 버렸다!
 	TCVARn:12 |= 쓰러짐
 	LOCAL ++
 ENDIF
@@ -115,27 +115,27 @@ SIF LOCAL > 0
 
 
 ;--------------------------------------------------
-;電流を受けた場合(기절or마비が発生、)
+;전류를 받은 경우(기절or마비가 발생)
 @STATE_CHANGE_DENGEKI(ARG=100)
 LOCAL = 0
 SIF RAND:100 > ARG
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:타고난전사 > 0
 	GOTO SKIP_1
 SIF TALENT:축복 > 0 && RAND:2 == 0
 	GOTO SKIP_2
 IF RAND:100 < 10 && (TCVARn:12 & 기절) == 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)電流のショックで
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 전류의 충격으로 인해 
 	FONTBOLD
 	SETCOLOR 250,180,50
 	PRINT [기절]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL した！
+	PRINTL 해 버렸다!
 	TCVARn:12 |= 기절
 	IF CONFIG_CHECK_SCREEN_F(2) > 0
 		IF TCVARn:0 == 0
@@ -148,17 +148,17 @@ IF RAND:100 < 10 && (TCVARn:12 & 기절) == 0
 ENDIF
 $SKIP_1
 
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && RAND:2 == 0
 	GOTO SKIP_2
 IF RAND:100 < 75 && (TCVARn:12 & 마비) == 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)全身が
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 온몸이 
 	FONTBOLD
 	SETCOLOR 250,250,0
 	PRINT [마비]
 	RESETCOLOR
 	FONTREGULAR
-	PRINTL した！
+	PRINTL 되어 버렸다!
 	TCVARn:12 |= 마비
 	LOCAL ++
 ENDIF
@@ -167,39 +167,39 @@ SIF LOCAL > 0
 	PRINTW 
 
 
-;마비(電撃以外の単独効果)
+;마비(전격 이외의 단독 효과)
 @STATE_CHANGE_MAHI, ARG
 SIF (TCVARn:12 & 마비)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	RETURN 0
 SIF RAND:100 > ARG
 	RETURN 0
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)全身が
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 온몸이
 FONTBOLD
 SETCOLOR 250,250,0
 PRINT [마비]
 RESETCOLOR
 FONTREGULAR
-PRINTL してしまった！
+PRINTL 되고 말았다!
 PRINTW 
 TCVARn:12 |= 마비
 
 
 
 ;--------------------------------------------------
-;기절
+;강제 기절
 @STATE_CHANGE_KIZETU, ARG
 SIF (TCVARn:12 & 기절)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	RETURN 0
 SIF RAND:100 > ARG
@@ -210,7 +210,7 @@ SETCOLOR 250,180,50
 PRINT [기절]
 RESETCOLOR
 FONTREGULAR
-PRINTL してしまった！
+PRINTL 하고 말았다!
 PRINTW 
 TCVARn:12 |= 기절
 IF CONFIG_CHECK_SCREEN_F(2) > 0
@@ -228,23 +228,23 @@ SIF TALENT:임신 > 0
 	RETURN 0
 SIF (TCVARn:12 & 배란)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 SIF ISMALE()
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	RETURN 0
 SIF RAND:100 > ARG
 	RETURN 0
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)強制的に
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 강제로 
 FONTBOLD
 SETCOLOR 150,0,250
 PRINT [배란]
 RESETCOLOR
 FONTREGULAR
-PRINTL 状態にされてしまった！
+PRINTL 상태가 되어 버렸다!
 PRINTW 
 TCVARn:12 |= 배란
 
@@ -253,21 +253,21 @@ TCVARn:12 |= 배란
 @STATE_CHANGE_HATUJOU, ARG
 SIF (TCVARn:12 & 발정)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:2 == 0
 	RETURN 0
 SIF RAND:100 > ARG
 	RETURN 0
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)媚薬の効果で
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 미약의 효과로 인해 
 FONTBOLD
 SETCOLOR 250,0,150
 PRINT [발정]
 RESETCOLOR
 FONTREGULAR
-PRINTL してしまった！
+PRINTL 하고 말았다!
 PRINTW 
 TCVARn:12 |= 발정
 
@@ -276,54 +276,54 @@ TCVARn:12 |= 발정
 @STATE_CHANGE_BETOBETO, ARG
 SIF (TCVARn:12 & 끈적끈적)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
-;FEAT 효과에 따른状態異常無効
+;FEAT 효과로 인한 상태 이상 무효
 SIF TALENT:축복 > 0 && ARG < 100 && RAND:4 != 0
 	RETURN 0
 SIF RAND:100 > ARG
 	RETURN 0
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)粘液で全身が
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 점액으로 인해 온몸이 
 FONTBOLD
 SETCOLOR 0,250,150
 PRINT [끈적끈적]
 RESETCOLOR
 FONTREGULAR
-PRINTL になってしまった！
+PRINTL 하게 되어 버렸다!
 PRINTW 
 TCVARn:12 |= 끈적끈적
 
 ;--------------------------------------------------
-;강구속(≒挿入されてる状態)
+;강구속(≒삽입되어 있는 상태)
 @STATE_CHANGE_PKOUSOKU, ARG
 SIF (TCVARn:12 & 강구속)
 	RETURN 0
-;SP変身中は状態異常無効
+;SP변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 SIF RAND:100 > ARG
 	RETURN 0
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 
 FONTBOLD
 SETCOLOR 200,50,50
 PRINT [강구속]
 RESETCOLOR
 FONTREGULAR
-PRINTL 状態になってしまった！
+PRINTL 상태가 되어 버렸다!
 PRINTW 
 TCVARn:12 |= 강구속
-;방어体勢をリセット
+;방어 자세를 초기화
 TCVARn:2 = 자세：통상
 
 
 
-;非拘束時공격ヒット時に発生するエネミー独自の追加状態異常
-;TCVARn:14…状態異常番号
-;TCVARn:15…発生率
-;	★状態異常はTCVARn:12準拠なのでビットで複数指定可能だが、
-;	　発生率は現在一律になっている
-;	　とりあえず技一つにつき単独指定を前提とする
+;구속되지 않았다면 공격 명중 시 발생하는 에너미 자체 추가 상태 이상
+;TCVARn:14…상태 이상 번호
+;TCVARn:15…발생률
+;	★상태 이상은 TCVARn:12 에 준거하므로 비트로 여러 개 지정 가능하지만,
+;	　발생률은 현재 일률적으로 되어 있다
+;	　우선 기술 하나에 대해 단독 지정을 전제로 한다
 @STATE_CHANGE_EXTRAEFFECT(ARG,ARG:1)
 	SELECTCASE ARG
 	CASE 1
@@ -341,7 +341,7 @@ TCVARn:2 = 자세：통상
 	CASE 7
 		CALL STATE_CHANGE_KIZETU_DAMAGE(ARG:1)
 	ENDSELECT
-;※腰砕け、황홀は絶頂から派生するサブ異常なので指定しない
+;※쓰러짐(腰砕け), 황홀은 절정에서 파생되는 서브 상태 이상이므로 지정하지 않는다
 ;
 @STATE_SET_EXTRAEFFECT(ARGS,ARG:1)
 	SIF ARGS == "기절"
@@ -350,14 +350,15 @@ TCVARn:2 = 자세：통상
 		TCVARn:14 = 2
 	SIF ARGS == "발정"
 		TCVARn:14 = 3
-	SIF ARGS == "電撃"
+	SIF ARGS == "전격"
 		TCVARn:14 = 4
 	SIF ARGS == "끈적끈적"
 		TCVARn:14 = 5
-	SIF ARGS == "마비"	;非電撃由来
+	SIF ARGS == "마비"	;비전격 유래
 		TCVARn:14 = 6
-	SIF ARGS == "기절ダメージ"
+	;원문은 気絶ダメージ
+	SIF ARGS == "기절 피해량"
 		TCVARn:14 = 7
-	;基礎確率
+	;기초 확률
 	TCVARn:15 = ARG:1
 

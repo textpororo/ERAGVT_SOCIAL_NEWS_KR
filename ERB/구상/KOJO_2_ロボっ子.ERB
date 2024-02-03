@@ -169,7 +169,7 @@ ENDIF
 ;보스 촉수と戦闘
 ;--------------------------------------------------
 @KOJO_2_ENCOUNT_BOSS
-;最初の보스戦
+;最初の보스전
 CALL TENTACLE_SURVIVE,"NUM"
 IF (FLAG:3 - RESULT) == 0
 	PRINTFORML 「――周辺の脅威度評価を更新。危険度：高」
@@ -1207,7 +1207,7 @@ TRYCALLFORM KOJO_2_PRISON_COM_5_{RESULT}
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 TRYCALLFORM KOJO_2_PRISON_COM_6_{RESULT}
 
-;子촉수に犯される
+;새끼 촉수に犯される
 ;--------------------------------------------------
 @KOJO_2_PRISON_COM_7
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET

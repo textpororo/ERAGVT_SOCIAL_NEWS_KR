@@ -97,17 +97,17 @@ CASE 1
 			INPUT
 			IF RESULT == 1
 				TALENT:ARG:주관시점 = 0
-				PRINTW 地の文を変更しました
+				PRINTW 지문を変更しました
 			ENDIF
 		ELSE
-			PRINTL ※地の文をより主観的な描写に変更します
+			PRINTL ※지문をより主観的な描写に変更します
 			PRINTL 　この設定は個別に適用されます
 			PRINTL [0]使用しない
 			PRINTL [1]使用する
 			INPUT
 			IF RESULT == 1
 				TALENT:ARG:주관시점 = 1
-				PRINTW 地の文を変更しました
+				PRINTW 지문を変更しました
 			ENDIF
 		ENDIF
 		GOTO REPRINT
@@ -132,20 +132,20 @@ CASE 1
 		$INPUT_LOOP_12
 		INPUT
 		IF RESULT == 0
-			;キャラの変身後名前の設定
+			;캐릭터의 변신 후 이름 설정
 			CALL FIRSTSETTING_CHARA_TRANSAFTERNAME, ARG
 		ELSEIF RESULT == 1
-			;キャラの変身後呼び名の設定
+			;캐릭터 변신 후 통칭 설정
 			IF CFLAG:ARG:2 == 1
-				;キャラの変身後呼び名플래그를 세운다
+				;캐릭터 변신 후 통칭 플래그를 세운다
 				CFLAG:ARG:3 = 1
 				CALL FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, ARG
 			ENDIF
 		ELSEIF RESULT == 2
-			;キャラの変身時のかけ声の設定
+			;캐릭터 변신 시 구호 설정
 			CALL FIRSTSETTING_CHARA_TRANSCALL, ARG
 		ELSEIF RESULT == 3
-			;キャラの名乗り구상の設定
+			;캐릭터의 자칭 구상을 설정
 			CALL FIRSTSETTING_CHARA_NANORI, ARG
 		ELSEIF RESULT == 99
 			GOTO REPRINT
@@ -396,7 +396,7 @@ CASE 4
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), 혈통불명)
 			PRINT 　？？？
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), Ｃ촉수)
-			PRINT 　C촉수
+			PRINT 　Ｃ촉수
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), Ｖ촉수)
 			PRINT 　Ｖ촉수
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), Ａ촉수)
@@ -684,8 +684,8 @@ CASE 5
 			PRINT [왜소함]
 		SIF CHARATALENT_F(ARG,1,"장신") > 0
 			PRINT [장신]
-		SIF CHARATALENT_F(ARG,1,"絶壁") > 0
-			PRINT [絶壁]
+		SIF CHARATALENT_F(ARG,1,"절벽") > 0
+			PRINT [절벽]
 		SIF CHARATALENT_F(ARG,1,"빈유") > 0
 			PRINT [빈유]
 		SIF CHARATALENT_F(ARG,1,"거유") > 0
@@ -713,7 +713,7 @@ CASE 5
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
-		PRINTFORML \@ TALENT:ARG:변신시외관 == 1 ? [安産型] #  \@\@ TALENT:ARG:변신시외관 == 2 ? [むちむち] #  \@\@ TALENT:ARG:변신시외관 == 3 ? [イカ腹] #  \@\@ TALENT:ARG:변신시외관 == 4 ? [スレンダー] #  \@\@ TALENT:ARG:변신시외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:변신시외관 == 6 ? [爆尻] #  \@
+		PRINTFORML \@ TALENT:ARG:변신시외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:변신시외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:변신시외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:변신시외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:변신시외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:변신시외관 == 6 ? [爆尻] #  \@
 
 		PRINT 　　　肌の色：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:37
@@ -796,8 +796,8 @@ CASE 5
 			PRINT [왜소함]
 		SIF CHARATALENT_F(ARG,0,"장신") > 0
 			PRINT [장신]
-		SIF CHARATALENT_F(ARG,0,"絶壁") > 0
-			PRINT [絶壁]
+		SIF CHARATALENT_F(ARG,0,"절벽") > 0
+			PRINT [절벽]
 		SIF CHARATALENT_F(ARG,0,"빈유") > 0
 			PRINT [빈유]
 		SIF CHARATALENT_F(ARG,0,"거유") > 0
@@ -821,7 +821,7 @@ CASE 5
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
-		PRINTFORML \@ TALENT:ARG:외관 == 1 ? [安産型] #  \@\@ TALENT:ARG:외관 == 2 ? [むちむち] #  \@\@ TALENT:ARG:외관 == 3 ? [イカ腹] #  \@\@ TALENT:ARG:외관 == 4 ? [スレンダー] #  \@\@ TALENT:ARG:외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:외관 == 6 ? [爆尻] #  \@
+		PRINTFORML \@ TALENT:ARG:외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:외관 == 6 ? [爆尻] #  \@
 
 		PRINT 　　　肌の色：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:36
@@ -866,7 +866,7 @@ CASE 5
 		LOCAL=0
 		REPEAT 4
 			IF CSTR:ARG:(45 + COUNT) != ""
-				;感覚に応じて10段階で白からショッキングピンクに色変え
+				;감각に応じて10段階で白からショッキングピンクに色変え
 				SETCOLOR 255, 255 - 23 * LIMIT(ABL:ARG:(0 + COUNT), 0, 10), 255 - 11 * LIMIT(ABL:ARG:(0 + COUNT), 0, 10), 
 				PRINTFORM 　　『%CSTR:ARG:(45 + COUNT)%
 				PRINTFORML %UNICODE(0x2665)*LIMIT(ABL:ARG:(0 + COUNT)/2, 0, 5)%』
@@ -917,7 +917,7 @@ CASE 5
 		INVERTBIT LOCAL:0, 0
 		GOTO REPRINT
 	ELSEIF RESULT == 20 && FLAG:700 == 0
-		;スリーサイズ等設定
+		;쓰리 사이즈 등 설정
 		SIF CFLAG:ARG:34 == 0
 			CALL GENERATE_BODYLINE, ARG
 		CALL CHARA_MAKE_AGE_SETTING, ARG
@@ -1302,7 +1302,7 @@ ELSEIF ARG:1 == 1
 		LOCAL:1 = RESULT
 	ENDIF
 	LOCAL:0 = 100 * LOCAL:0 / LOCAL:1
-	IF GETBATTLESITUATION("支援無効")
+	IF GETBATTLESITUATION("지원 무효")
 		SETCOLORBYNAME RED
 		PRINTFORM  전투 지원効果：支援不可
 		RESETCOLOR
@@ -1342,7 +1342,7 @@ ELSEIF ARG:1 == 1
 		CALL COLOR_BAR(TCVARn:5, 500, 20, 128, 128, 180, -100, LOCAL:0, LOCAL:0, LOCAL:1, 1, UNICODE(0x25AE), UNICODE(0x25AE))
 		PRINTFORM %UNICODE(0x208E)%　
 	ELSE
-		;EXゲージ破壊済みの場合
+		;EX 게이지破壊済みの場合
 		IF GETBATTLESITUATION("EX不可")==1
 			PRINTFORM E.X.　
 			CALL STATUS_PRINT_EX(2)
@@ -1907,9 +1907,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			ELSEIF COUNT == 110
 				IF TALENT:ARG:빈유 == 2
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[絶壁]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[절벽]</nonbutton>"
 					ELSE
-						PRINTFORM [絶壁]
+						PRINTFORM [절벽]
 					ENDIF
 				ELSE
 					IF ARG:2
@@ -2117,13 +2117,13 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			LOCALS += @"</nonbutton><nonbutton title='%TALENT_INFO(812)%'>"
 		IF CFLAG:ARG:1 > 0
 			IF TALENT:ARG:변신시외관 == 1
-				LOCALS += @"[安産型]"
+				LOCALS += @"[순산형]"
 			ELSEIF TALENT:ARG:변신시외관 == 2
-				LOCALS += @"[むちむち]"
+				LOCALS += @"[포동포동]"
 			ELSEIF TALENT:ARG:변신시외관 == 3
-				LOCALS += @"[イカ腹]"
+				LOCALS += @"[유아배]"
 			ELSEIF TALENT:ARG:변신시외관 == 4
-				LOCALS += @"[スレンダー]"
+				LOCALS += @"[날씬함]"
 			ELSEIF TALENT:ARG:변신시외관 == 5
 				LOCALS += @"[巨尻]"
 			ELSEIF TALENT:ARG:변신시외관 == 6
@@ -2131,13 +2131,13 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			ENDIF
 		ELSE
 			IF TALENT:ARG:외관 == 1
-				LOCALS += @"[安産型]"
+				LOCALS += @"[순산형]"
 			ELSEIF TALENT:ARG:외관 == 2
-				LOCALS += @"[むちむち]"
+				LOCALS += @"[포동포동]"
 			ELSEIF TALENT:ARG:외관 == 3
-				LOCALS += @"[イカ腹]"
+				LOCALS += @"[유아배]"
 			ELSEIF TALENT:ARG:외관 == 4
-				LOCALS += @"[スレンダー]"
+				LOCALS += @"[날씬함]"
 			ELSEIF TALENT:ARG:외관 == 5
 				LOCALS += @"[巨尻]"
 			ELSEIF TALENT:ARG:외관 == 6
@@ -2310,8 +2310,8 @@ ELSE
 		ENDIF
 	ENDIF
 	
-	;304놀림받는체질
-	SIF TALENT:ARG:놀림받는체질 > 0 && (ISGIRLY(ARG))
+	;304희롱특화체질
+	SIF TALENT:ARG:희롱특화체질 > 0 && (ISGIRLY(ARG))
 		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 304
 
 	;112,젖기쉬움,
@@ -2351,7 +2351,7 @@ ELSE
 	SIF TALENT:ARG:성별변화 == 1 || TALENT:ARG:성별변화 == 10 || TALENT:ARG:성별변화 == 11
 		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 900, TALENT:ARG:성별변화
 
-	;----------------	　性癖　	----------------
+	;----------------	　성벽　	----------------
 	;100,C민감,
 	;101,C둔감,
 	;102,V민감,
@@ -2362,7 +2362,7 @@ ELSE
 	;107,B둔감,
 	FOR LOCAL, 100, 108
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "性癖", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "성벽", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;150,촉수의포로,
@@ -2374,7 +2374,7 @@ ELSE
 	;156,음유,
 	FOR LOCAL, 150, 157
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "性癖", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "성벽", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;----------------	　戦闘　	----------------
@@ -2585,7 +2585,7 @@ ELSEIF TALENT_VAR == 4 && SUB_TALENT == -2 && CONFIG_CHECK_SCREEN_F(4) > 0
 	SUB_STR:1 = 薬品によって精通を迎えた
 ;빈유
 ELSEIF TALENT_VAR == 110 && SUB_TALENT == 2
-	SUB_STR:0 = 絶壁
+	SUB_STR:0 = 절벽
 ELSEIF TALENT_VAR == 110 && SUB_TALENT == 1
 	SUB_STR:0 = 빈유
 ;거유
@@ -2657,13 +2657,13 @@ ELSEIF TALENT_VAR == 811
 ;외관
 ELSEIF TALENT_VAR == 812
 	IF SUB_TALENT == 1
-		SUB_STR:0 = 安産型
+		SUB_STR:0 = 순산형
 	ELSEIF SUB_TALENT == 2
-		SUB_STR:0 = むちむち
+		SUB_STR:0 = 포동포동
 	ELSEIF SUB_TALENT == 3
-		SUB_STR:0 = イカ腹
+		SUB_STR:0 = 유아배
 	ELSEIF SUB_TALENT == 4
-		SUB_STR:0 = スレンダー
+		SUB_STR:0 = 날씬함
 	ELSEIF SUB_TALENT == 5
 		SUB_STR:0 = 巨尻
 	ELSEIF SUB_TALENT == 6
@@ -2943,7 +2943,7 @@ SELECTCASE ARG
 	;피임결계
 		RETURNF "성내성が残っている限り촉수の精液による임신を防ぐ"
 	CASE 304
-	;놀림받는체질
+	;희롱특화체질
 		RETURNF "妙にエッチな目に合ってる気がする・・・"
 
 	CASE 400
@@ -3119,7 +3119,7 @@ SELECTCASE ARG
 
 	CASE 1103
 	;마력저장
-		RETURNF "戦闘開始時にEXゲージが２つ溜まる/休憩時の回復量が少し低下"
+		RETURNF "戦闘開始時にEX 게이지が２つ溜まる/休憩時の回復量が少し低下"
 
 	CASE 1104
 	;고속회피
@@ -3191,11 +3191,11 @@ SELECTCASE ARG
 
 	CASE 1210
 	;불굴
-		RETURNF "消耗しても行動成功率が低下しにくい/EXゲージが増加しにくい"
+		RETURNF "消耗しても行動成功率が低下しにくい/EX 게이지が増加しにくい"
 
 	CASE 1211
 	;스태미나
-		RETURNF "疲労しても回復量が低下しにくい/EXゲージが増加しにくい"
+		RETURNF "疲労しても回復量が低下しにくい/EX 게이지が増加しにくい"
 
 	CASE 1212
 	;불로장수
@@ -3207,7 +3207,7 @@ SELECTCASE ARG
 
 	CASE 1214
 	;사냥꾼의직감
-		RETURNF "先制率上昇,雑魚撃破時の探索度上昇量アップ/지성-5"
+		RETURNF "先制率上昇,雑魚撃破時の探索度상승량アップ/지성-5"
 
 	CASE 1215
 	;심안
@@ -4040,7 +4040,7 @@ IF LOCAL:1 == 1
 	SIF TALENT:축복 > 0
 		PRINT 粘液,波動ダメージ増大  
 	SIF TALENT:불굴 > 0 || TALENT:스태미나 > 0
-		PRINT EXゲージが上昇しにくい  
+		PRINT EX 게이지が上昇しにくい  
 	RESETCOLOR
 ELSE
 	PRINTL ─

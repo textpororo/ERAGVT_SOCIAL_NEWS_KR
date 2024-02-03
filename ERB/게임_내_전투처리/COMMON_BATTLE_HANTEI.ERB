@@ -581,7 +581,7 @@ ENDIF
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
-;＠中国版
+;＠중국판
 ;胸部重量ペナルティ
 IF ISFEMALE() 
 	IF TALENT:변신능력 == 1 && CFLAG:1 == 2
@@ -1061,7 +1061,7 @@ SIF TALENT:장신 == 1
 ;변신능력のあるキャラの補正
 LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 
-;＠中国版
+;＠중국판
 ;胸部重量ペナルティ
 IF ISFEMALE() 
 	IF TALENT:변신능력 == 1 && CFLAG:1 == 2
@@ -1155,7 +1155,7 @@ ENDIF
 ;변신능력のあるキャラの補正
 LOCAL:5 = CORRECTION_TRANS(LOCAL:5)
 
-;＠中国版
+;＠중국판
 ;유두피어싱공격ボーナス
 ;　★戯けた補正になってるけどこれ大丈夫なのか？
 ;　　(対応イベント実装時に調整)

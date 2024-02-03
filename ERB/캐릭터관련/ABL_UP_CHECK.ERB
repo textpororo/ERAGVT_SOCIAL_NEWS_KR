@@ -1,17 +1,17 @@
 ﻿;--------------------------------------------------
-;能力の上昇
-;本家eraとは違い、自動で能力が上昇するので BEGIN ABLUPは使っていません
-;ARG=1なら幽閉から呼ばれ、PALAMをJUELに変換する処理を行わない
-;ARG=2なら戦闘後処理から呼ばれ、JUELの変換のみ行い能力上昇の処理をスキップする
+;능력 상승
+;본가era와 달리, 자동으로 능력이 상승하기 때문에 BEGIN ABLUP은 사용하지 않았습니다.
+;ARG=1이라면 유폐에서 불려와, PALAM을 JUEL로 변환하는 처리를 하지 않는다
+;ARG=2라면 전투 후 처리에서 불려와, JUEL 변환만 하고 능력 상승 처리를 스킵한다
 @_ABLUP, ARG
 VARSET LOCAL
-;珠の取得　快部位の絶頂に関する処理はCOMMON_PALAM_CALで一緒に計算済み
+;구슬 취득, 쾌부위의 절정에 관한 처리는 COMMON_PALAM_CAL에서 함께 계산 완료
 LOCAL:0 = 0
 LOCAL:1 = 0
 IF ARG == 0 || ARG == 2
 	SETCOLOR 105,105,105
 		SIF FLAG:999 == 1
-			PRINTFORML  * DEGUG　珠の入手 *
+			PRINTFORML  * DEGUG　구슬의 입수 *
 	REPEAT 12
 		LOCAL:0 = COUNT
 		SIF COUNT > 3
@@ -42,16 +42,16 @@ IF ARG == 0 || ARG == 2
 			LOCAL:1 = 100000
 		ENDIF
 
-		;FEAT 효과에 따른珠の入手量増加
+		;FEAT 효과에 의한 구슬 입수량 증가
 		SIF TALENT:배덕의낙인 > 0
 			LOCAL:1 *= 135 / 100
 
 		JUEL:(LOCAL:0) += LOCAL:1
 
 		SIF FLAG:999 == 1
-			PRINTFORML 　　取得する%PALAMNAME:(LOCAL:0)%の珠 : {LOCAL:1}
+			PRINTFORML 　　취득한 %PALAMNAME:(LOCAL:0)%의 구슬 : {LOCAL:1}
 
-		;珠の取得量上限
+		;구슬의 취득량 상한
 		IF JUEL:(LOCAL:0) >= 999999 && LOCAL:0 >= 감각수
 			JUEL:(LOCAL:0) = 999999
 		ELSEIF JUEL:(LOCAL:0) >= 99999999
@@ -65,346 +65,346 @@ SIF FLAG:999 == 1
 SIF ARG == 2
 	RETURN
 
-;能力の上昇
-;上昇の条件が厳しいものから優先的に珠を消費する
-;最初のうちは条件を満たさないので上がらない
+;능력의 상승
+;상승 조건이 까다로운 것부터 우선적으로 구슬을 소비한다
+;처음에는 조건을 충족하지 못하기 때문에 오르지 않는다
 
-;촉수중독の上昇
+;촉수중독 상승
 LOCAL:0 = 0
 CALL ABL_UP_20
 LOCAL:0 = RESULT
 
-;자위중독の上昇
+;자위중독 상승
 LOCAL:12 = 0
 CALL ABL_UP_21
 LOCAL:12 = RESULT
 
-;정액중독の上昇
+;정액중독 상승
 LOCAL:1 = 0
 CALL ABL_UP_22
 LOCAL:1 = RESULT
 
-;사정중독の上昇
+;사정중독 상승
 LOCAL:13 = 0
 CALL ABL_UP_24
 LOCAL:13 = RESULT
 
-;모유중독の上昇
+;모유중독 상승
 LOCAL:14 = 0
 CALL ABL_UP_23
 LOCAL:14 = RESULT
 
-;마조끼の上昇
+;마조끼 상승
 LOCAL:2 = 0
 CALL ABL_UP_15
 LOCAL:2 = RESULT
 
-;봉사정신の上昇
+;봉사정신 상승
 LOCAL:3 = 0
 CALL ABL_UP_13
 LOCAL:3 = RESULT
 
-;노출벽の上昇
+;노출벽 상승
 LOCAL:4 = 0
 CALL ABL_UP_14
 LOCAL:4 = RESULT
 
-;순종の上昇
+;순종 상승
 LOCAL:5 = 0
 CALL ABL_UP_10
 LOCAL:5 = RESULT
 
-;욕망の上昇
+;욕망 상승
 LOCAL:6 = 0
 CALL ABL_UP_11
 LOCAL:6 = RESULT
 
-;기교の上昇
+;기교 상승
 LOCAL:7 = 0
 CALL ABL_UP_12
 LOCAL:7 = RESULT
 
-;C感覚の上昇
+;C감각 상승
 LOCAL:8 = 0
 CALL ABL_UP_0
 LOCAL:8 = RESULT
 
-;V感覚の上昇
+;V감각 상승
 LOCAL:9 = 0
 CALL ABL_UP_1
 LOCAL:9 = RESULT
 
-;A感覚の上昇
+;A감각 상승
 LOCAL:10 = 0
 CALL ABL_UP_2
 LOCAL:10 = RESULT
 
-;B感覚の上昇
+;B감각 상승
 LOCAL:11 = 0
 CALL ABL_UP_3
 LOCAL:11 = RESULT
 
-;能力上昇と表示
-;表示はABL.CSVの順なのでベタ書き
+;능력 상승과 표시
+;표시는 ABL.CSV 순이므로 ベタ書き, 마지막은 뭔 말인지 ㅁ?ㄹ
 ;C감각
 IF ABL:C감각 < LOCAL:8
 	ABL:C감각 = LOCAL:8
-	PRINTFORML %ABLNAME:0%が{LOCAL:8}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:0%이 {LOCAL:8}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		IF ISPENIS()
 			CSTR:45 = %MAKESEXUALPROFILE("P", LOCAL:8)%
 		ELSE
 			CSTR:45 = %MAKESEXUALPROFILE("C", LOCAL:8)%
 		ENDIF
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:0, 0, 10), 255 - 11 * LIMIT(ABL:0, 0, 10), 
 		PRINTFORM %CSTR:45%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;V감각
 IF ABL:V감각 < LOCAL:9
 	ABL:V감각 = LOCAL:9
-	PRINTFORML %ABLNAME:1%が{LOCAL:9}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:1%이 {LOCAL:9}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:46 = %MAKESEXUALPROFILE("V", LOCAL:9)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:1, 0, 10), 255 - 11 * LIMIT(ABL:1, 0, 10), 
 		PRINTFORM %CSTR:46%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;A감각
 IF ABL:A감각 < LOCAL:10
 	ABL:A감각 = LOCAL:10
-	PRINTFORML %ABLNAME:2%が{LOCAL:10}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:2%이 {LOCAL:10}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:47 = %MAKESEXUALPROFILE("A", LOCAL:10)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:2, 0, 10), 255 - 11 * LIMIT(ABL:2, 0, 10), 
 		PRINTFORM %CSTR:47%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;B감각
 IF ABL:B감각 < LOCAL:11
 	ABL:B감각 = LOCAL:11
-	PRINTFORML %ABLNAME:3%が{LOCAL:11}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:3%이 {LOCAL:11}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:48 = %MAKESEXUALPROFILE("B", LOCAL:11)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:3, 0, 10), 255 - 11 * LIMIT(ABL:3, 0, 10), 
 		PRINTFORM %CSTR:48%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;순종
 IF ABL:순종 < LOCAL:5
 	ABL:순종 = LOCAL:5
-	PRINTFORML %ABLNAME:10%が{LOCAL:5}に上がった
+	PRINTFORML %ABLNAME:10%이 {LOCAL:5}(으)로 올랐다.
 ENDIF
 ;욕망
 IF ABL:욕망 < LOCAL:6
 	ABL:욕망 = LOCAL:6
-	PRINTFORML %ABLNAME:11%が{LOCAL:6}に上がった
+	PRINTFORML %ABLNAME:11%이 {LOCAL:6}(으)로 올랐다.
 ENDIF
 ;기교
 IF ABL:기교 < LOCAL:7
 	ABL:기교 = LOCAL:7
-	PRINTFORML %ABLNAME:12%が{LOCAL:7}に上がった
+	PRINTFORML %ABLNAME:12%가 {LOCAL:7}(으)로 올랐다.
 ENDIF
 ;봉사정신
 IF ABL:봉사정신 < LOCAL:3
 	ABL:봉사정신 = LOCAL:3
-	PRINTFORML %ABLNAME:13%が{LOCAL:3}に上がった
+	PRINTFORML %ABLNAME:13%이 {LOCAL:3}(으)로 올랐다.
 ENDIF
 ;노출벽
 IF ABL:노출벽 < LOCAL:4
 	ABL:노출벽 = LOCAL:4
-	PRINTFORML %ABLNAME:14%が{LOCAL:4}に上がった
+	PRINTFORML %ABLNAME:14%이 {LOCAL:4}(으)로 올랐다.
 ENDIF
 ;마조끼
 IF ABL:마조끼 < LOCAL:2
 	ABL:마조끼 = LOCAL:2
-	PRINTFORML %ABLNAME:15%が{LOCAL:2}に上がった
+	PRINTFORML %ABLNAME:15%가 {LOCAL:2}(으)로 올랐다.
 ENDIF
 ;촉수중독
 IF ABL:촉수중독 < LOCAL:0
 	ABL:촉수중독 = LOCAL:0
-	PRINTFORML %ABLNAME:20%が{LOCAL:0}に上がった
+	PRINTFORML %ABLNAME:20%이 {LOCAL:0}(으)로 올랐다.
 ENDIF
 ;자위중독
 IF ABL:자위중독 < LOCAL:12
 	ABL:자위중독 = LOCAL:12
-	PRINTFORML %ABLNAME:21%が{LOCAL:12}に上がった
+	PRINTFORML %ABLNAME:21%이 {LOCAL:12}(으)로 올랐다.
 ENDIF
 ;정액중독
 IF ABL:정액중독 < LOCAL:1
 	ABL:정액중독 = LOCAL:1
-	PRINTFORML %ABLNAME:22%が{LOCAL:1}に上がった
+	PRINTFORML %ABLNAME:22%이 {LOCAL:1}(으)로 올랐다.
 ENDIF
 ;모유중독
 IF ABL:모유중독 < LOCAL:14
 	ABL:모유중독 = LOCAL:14
-	PRINTFORML %ABLNAME:23%が{LOCAL:14}に上がった
+	PRINTFORML %ABLNAME:23%이 {LOCAL:14}(으)로 올랐다.
 ENDIF
 ;사정중독
 IF ABL:사정중독 < LOCAL:13
 	ABL:사정중독 = LOCAL:13
-	PRINTFORML %ABLNAME:24%が{LOCAL:13}に上がった
+	PRINTFORML %ABLNAME:24%이 {LOCAL:13}(으)로 올랐다.
 ENDIF
 
-;各感覚
+;각 감각
 CALL ABL_UP_EX
 LOCAL:8 = RESULT:0
 LOCAL:9 = RESULT:1
 LOCAL:10 = RESULT:2
 LOCAL:11 = RESULT:3
 
-;C感覚
+;C감각
 IF ABL:C감각 < LOCAL:8
 	ABL:C감각 = LOCAL:8
-	PRINTFORML %ABLNAME:0%が{LOCAL:8}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:0%が{LOCAL:8}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		IF ISPENIS()
 			CSTR:45 = %MAKESEXUALPROFILE("P", LOCAL:8)%
 		ELSE
 			CSTR:45 = %MAKESEXUALPROFILE("C", LOCAL:8)%
 		ENDIF
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:0, 0, 10), 255 - 11 * LIMIT(ABL:0, 0, 10), 
 		PRINTFORM %CSTR:45%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;V감각
 IF ABL:V감각 < LOCAL:9
 	ABL:V감각 = LOCAL:9
-	PRINTFORML %ABLNAME:1%が{LOCAL:9}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:1%が{LOCAL:9}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:46 = %MAKESEXUALPROFILE("V", LOCAL:9)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:1, 0, 10), 255 - 11 * LIMIT(ABL:1, 0, 10), 
 		PRINTFORM %CSTR:46%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;A감각
 IF ABL:A감각 < LOCAL:10
 	ABL:A감각 = LOCAL:10
-	PRINTFORML %ABLNAME:2%が{LOCAL:10}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:2%が{LOCAL:10}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:47 = %MAKESEXUALPROFILE("A", LOCAL:10)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:2, 0, 10), 255 - 11 * LIMIT(ABL:2, 0, 10), 
 		PRINTFORM %CSTR:47%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 ;B감각
 IF ABL:B감각 < LOCAL:11
 	ABL:B감각 = LOCAL:11
-	PRINTFORML %ABLNAME:3%が{LOCAL:11}に上がった
-	;裏プロフィールの取得
+	PRINTFORML %ABLNAME:3%が{LOCAL:11}(으)로 올랐다.
+	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
 		CSTR:48 = %MAKESEXUALPROFILE("B", LOCAL:11)%
-		PRINTFORM 性癖：【
+		PRINTFORM 성벽：【
 		SETCOLOR 255, 255 - 23 * LIMIT(ABL:3, 0, 10), 255 - 11 * LIMIT(ABL:3, 0, 10), 
 		PRINTFORM %CSTR:48%
 		RESETCOLOR
-		PRINTFORML 】を得た
+		PRINTFORML 】을(를) 얻었다.
 	ENDIF
 ENDIF
 
-;状態系素質（음란など）の取得
-;음란または놀림받는체질
-;촉수중독以外の中毒の合計Lv7以上、かつ욕망Lv4以上、쾌락각인が4以上、절정경험이 100以上、이상경험1以上
+;상태계 소질(음란 등) 취득
+;음란 또는 희롱특화체질
+;촉수중독 이외의 중독의 합계 Lv6 이상인 동시에 욕망Lv4 이상, 쾌락각인 4 이상, 절정경험 100 이상, 이상경험 1 이상
 IF (ABL:자위중독 + ABL:정액중독 + ABL:모유중독 + ABL:사정중독) >= 6 && ABL:욕망 >= 4 && MARK:쾌락각인 >= 4 && EXP:절정경험 >= 100 && EXP:이상경험 >= 1
-	IF TALENT:초심 > 0 && TALENT:놀림받는체질 == 0
-		TALENT:놀림받는체질 = 1
-		;지문: 놀림받는체질取得予定地
+	IF TALENT:초심 > 0 && TALENT:희롱특화체질 == 0
+		TALENT:희롱특화체질 = 1
+		;지문: 희롱특화체질 취득 예정지
 		CALL MESSAGE_GETTALENT_NABURARE
 	ELSEIF TALENT:초심 == 0 && TALENT:음란 == 0
 		TALENT:음란 = 1
-		;지문: 음란取得
+		;지문: 음란 취득
 		CALL MESSAGE_GETTALENT_INRAN
 	ENDIF
 ENDIF
-;놀림받는체질はレイプ回数5回以上または監禁でも取得
-IF (CFLAG:70 > 0 || ((CFLAG:286 + CFLAG:320 + CFLAG:321) > 4)) && TALENT:놀림받는체질 == 0
-	TALENT:놀림받는체질 = 1
-	;지문: 놀림받는체질取得予定地
+;희롱특화체질은 강간 횟수 5회 이상 또는 감금으로도 취득
+IF (CFLAG:70 > 0 || ((CFLAG:286 + CFLAG:320 + CFLAG:321) > 4)) && TALENT:희롱특화체질 == 0
+	TALENT:희롱특화체질 = 1
+	;지문: 희롱특화체질 취득 예정지
 	CALL MESSAGE_GETTALENT_NABURARE
 ENDIF
 ;촉수의포로
-;条件１：순종と봉사정신の合計Lv6以上、かつ촉수중독Lv4以上、かつ굴복각인4以上、かつ공포각인と고통각인の合計が6以上
+;조건 １：순종과 봉사정신의 합계가 Lv6 이상인 동시에 촉수중독 Lv4 이상, 굴복각인 4 이상, (공포각인 + 고통각인 + 치욕각인) 합계가 6 이상
 IF TALENT:촉수의포로 == 0 && (ABL:순종 + ABL:봉사정신) >= 7 && ABL:촉수중독 >= 4 && MARK:굴복각인 >= 4 && (MARK:공포각인 + MARK:고통각인 + MARK:치욕각인) >= 6
 	TALENT:촉수의포로 = 1
-	;지문: 촉수의포로取得
+	;지문: 촉수의포로 취득
 	CALL MESSAGE_GETTALENT_TORIKO
-;条件２：음란かつ촉수중독Lv3以上、かつ유폐경험1以上
+;조건 ２：음란을 보유한 동시에 촉수중독 Lv3 이상, 유폐경험 1 이상
 ELSEIF TALENT:촉수의포로 == 0 && TALENT:음란 >= 1 && ABL:촉수중독 >= 3 && EXP:유폐경험 >= 1
 	TALENT:촉수의포로 = 1
-	;지문: 촉수의포로取得
+	;지문: 촉수의포로 취득
 	CALL MESSAGE_GETTALENT_TORIKO
 ENDIF
 ;음핵
-;C感覚が5で、戦闘中のC絶頂回数が50回以上
+;조건: C감각이 Lv5 이상이며, 전투 중의 C절정 횟수가 50회 이상
 IF TALENT:음핵 == 0 && ABL:C감각 >= 5 && EX:C절정 >= 50
 	TALENT:음핵 = 1
 	;지문: 음핵
 	CALL MESSAGE_GETTALENT_INKAKU
 ENDIF
 ;음호
-;V感覚が5、V経験が200以上で、戦闘中のV絶頂回数が25回以上
+;조건: V감각이 Lv5, V경험이 200 이상이며, 전투 중의 V절정 횟수가 25회 이상
 IF TALENT:음호 == 0 && ABL:V감각 >= 5 && EXP:V경험 >= 200 && EX:V절정 >= 25
 	TALENT:음호 = 1
 	;지문: 음호
 	CALL MESSAGE_GETTALENT_INTUBO
 ENDIF
 ;음고
-;A感覚が5、A経験が200以上で、戦闘中のA絶頂回数が25回以上
+;조건: A감각이 Lv5, A경험이 200 이상이며, 전투 중의 A절정 횟수가 25회 이상
 IF TALENT:음고 == 0 && ABL:A감각 >= 5 && EXP:A경험 >= 200 && EX:A절정 >= 25
 	TALENT:음고 = 1
 	;지문: 음고
 	CALL MESSAGE_GETTALENT_INJIRI
 ENDIF
 ;음유
-;B感覚が5で、戦闘中のB絶頂回数が50回以上
+;조건: B감각이 Lv5이며, 전투 중의 B절정 횟수가 50회 이상
 IF TALENT:음유 == 0 && ABL:B감각 >= 5 && EX:B절정 >= 50
 	TALENT:음유 = 1
 	;지문: 음유
 	CALL MESSAGE_GETTALENT_INNYUU
 ENDIF
-;청순파の消失
-;촉수의포로か음란獲得時、または욕망Lv+中毒Lvの合計が8以上で초심ではない
+;청순파의 소실
+;조건: 촉수의포로 또는 음란 획득 시, 또는 (욕망Lv + 모든 중독Lv) 합계가 8 이상으로 초심이 아니게 된다
 IF TALENT:초심 < 1 && TALENT:청순파 > 0 && (TALENT:촉수의포로 > 0 || TALENT:음란 > 0 || (ABL:욕망 + ABL:촉수중독 + ABL:자위중독 + ABL:정액중독 + ABL:모유중독 + ABL:사정중독) >= 8)
 	TALENT:청순파 = -1
-	;地の文
+	;지문
 	CALL MESSAGE_LOSETALENT_SEIJUNHA
 ENDIF
-;変身後후타나리の取得(天然후타나리または通常時남자の場合取得しない)
+;변신후후타나리 취득(천연 후타나리 또는 평상시 남자인 경우 취득 불가)
 ;IF CHARATALENT_F(TARGET,0,"후타나리") > 0 && CHARATALENT_F(TARGET,1,"후타나리") == 0 && CHARATALENT_F(TARGET,1,"남자") == 0 && TALENT:변신시후타나리 < 3 && TALENT:후타나리 < 3 && TALENT:변신능력 > 0 && ABL:사정중독 >= 3
 ;	TALENT:변신시후타나리 = 1
 ;	TALENT:후타나리 = 1
-;	;地の文
+;	;지문
 ;	CALL MESSAGE_GETTALENT_THUTANARI
 ;ENDIF
-;후타나리の定着
+;후타나리 정착
 IF (TALENT:후타나리 == 2 || TALENT:변신시후타나리 == 2) && ABL:사정중독 >= 5
 	CALL MESSAGE_GETTALENT_HUTANARI4
 	SIF TALENT:후타나리 == 2
@@ -412,7 +412,7 @@ IF (TALENT:후타나리 == 2 || TALENT:변신시후타나리 == 2) && ABL:사정
 	SIF TALENT:변신시후타나리 == 2
 		TALENT:변신시후타나리 = 4
 ENDIF
-;기생후타나리の消失
+;기생후타나리 소실
 IF (TALENT:후타나리 == 2 || TALENT:변신시후타나리 == 2) && EXP:사정경험 - CFLAG:39 >= 10
 	SIF TALENT:후타나리 == 2
 		TALENT:후타나리 = 0
@@ -421,7 +421,7 @@ IF (TALENT:후타나리 == 2 || TALENT:변신시후타나리 == 2) && EXP:사정
 	CALL MESSAGE_LOSETALENT_HUTANARI
 ENDIF
 	
-;VABCの感度が高くなる
+;VABC의 감도가 높아진다
 SIF TALENT:V둔감 == 1 && ABL:V감각 >= 3
 	TALENT:V둔감 = 0
 SIF TALENT:V민감 == 0 && ABL:V감각 >= 4
@@ -439,40 +439,40 @@ SIF TALENT:C둔감 == 1 && ABL:C감각 >= 3
 SIF TALENT:C민감 == 0 && ABL:C감각 >= 4
 	TALENT:C민감 = 1
 
-;여체수용（男性/여성기피があれば反転する）
-;前提条件:성별변화ありかつ元が男性のキャラが女体化した場合
+;여체수용（남성/여성기피가 있다면 반전한다）
+;전제조건: "성별변화" 가 있는 동시에 원래 남성인 캐릭터가 여체화된 경우
 IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신시TS > 0 && ISFEMALE() && CFLAG:1 > 0))
-	;여체수용を段階化する
+	;여체수용을 단계화한다
 	IF TALENT:여체수용 == 0
-		;条件1:촉수의포로獲得時
+		;조건 1: 촉수의포로 획득 시
 		IF TALENT:촉수의포로 > 0
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;지문: 촉수의포로獲得による여체수용
+			;지문: 촉수의포로 획득에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_TORIKO
-		;条件2:음란か음호の取得時、またはV감각Lv5以上かつ사정중독Lvが정액중독Lv+모유중독Lvより低いとき
+		;조건 2: 음란 혹은 음호 취득 시, 또는 V감각Lv5 이상이며 사정중독Lv이 (정액중독Lv + 모유중독Lv) 보다 낮을 때
 		ELSEIF TALENT:음란 > 0 || TALENT:음호 > 0 || (ABL:V감각 >= 5 && (ABL:정액중독 + ABL:모유중독 > ABL:사정중독))
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;지문: 음란化による여체수용
+			;지문: 음란화에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_INRAN
-		;条件3:出産した、または처녀を사랑하는사람に捧げた
+		;조건 3: 출산했을 시, 또는 처녀를 사랑하는 사람에게 바쳤을 시
 		ELSEIF (EXP:출산경험 > 0 && CFLAG:230 == 사랑하는사람) || (EXP:출산경험 > 0 && CFLAG:230 < -100 && LOVER_F(TARGET, CHARAID_F(CFLAG:230 * -1 - 100))) || CFLAG:206 == 5
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;지문: 女の喜びによる여체수용
+			;지문: 여자의 기쁨에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_FEMININE
-		;条件4:매료경험200以上
+		;조건 4: 매료경험 200 이상
 		ELSEIF EXP:매료경험 >= 200
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;지문: 女の魅力による여체수용
+			;지문: 여자의 매력에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_CHARM
-		;条件5:양도かつ음란または음호取得時、またはV감각Lv5以上のとき
+		;조건 5: 양도를 보유함과 동시에, 음란 혹은 음호 취득 시, 또는 V감각이 Lv5 이상일 때
 		ELSEIF TALENT:양도 > 0 && (TALENT:음란 > 0 || TALENT:음호 > 0 || ABL:V감각 >= 5)
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
-			;지문: 양도による여체수용
+			;지문: 양도에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_RYOUTOU
 		ENDIF
 	ENDIF
@@ -484,10 +484,10 @@ CALL GET_STATE_ABLUP,TARGET
 
 
 ;--------------------------------------------------
-;촉수중독の上昇
-;必要な珠：욕정、굴복
-;上昇条件１：굴복각인2が前提。
-;上昇条件２：Lv4以上は이상경험이 必要。
+;촉수중독 상승
+;필요한 구슬：욕정, 굴복
+;상승 조건 １：굴복각인 2 이상
+;상승 조건 ２：Lv4 이상부터는 이상경험이 필요.
 @ABL_UP_20
 LOCAL = ABL:촉수중독
 SIF MARK:굴복각인 < 2
@@ -533,10 +533,10 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;자위중독の上昇
-;必要な珠：욕정、치정
-;上昇条件１：치욕각인2が前提。
-;上昇条件２：Lv4以上は이상경험이 必要。
+;자위중독 상승
+;필요한 구슬：욕정, 치정
+;상승조건 １：치욕각인 2 이상
+;상승조건 ２：Lv4 이상부터는 이상경험이 필요.
 @ABL_UP_21
 LOCAL = ABL:자위중독
 SIF MARK:치욕각인 < 2
@@ -582,10 +582,10 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;정액중독の上昇
-;必要な珠：욕정、굴복
-;上昇条件１：쾌락각인2が前提。
-;上昇条件２：Lv4以上は이상경험이 必要。
+;정액중독 상승
+;필요한 구슬：욕정, 굴복
+;상승조건 １：쾌락각인 2 이상
+;상승조건 ２：Lv4 이상부터는 이상경험이 필요.
 @ABL_UP_22
 LOCAL = ABL:정액중독
 SIF MARK:쾌락각인 < 2
@@ -632,10 +632,10 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;사정중독の上昇
-;必要な珠：快C、욕정
-;上昇条件１：사정경험必要量　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
-;上昇条件２：Lv4以上は이상경험이 必要。
+;사정중독 상승
+;필요한 구슬：쾌C, 욕정
+;상승조건 １：사정경험 필요량　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
+;상승조건 ２：Lv4 이상부터는 이상경험이 필요.
 @ABL_UP_24
 LOCAL = ABL:사정중독
 
@@ -671,7 +671,7 @@ REPEAT 5
 			LOCAL = 5
 		ENDIF
 	ENDIF
-	;사정ゲージ 재계산
+	;사정 게이지 재계산
 	MAXBASE:사정 = CSVBASE_F(NO:TARGET, 20)
 	SIF MAXBASE:사정 < 1
 		MAXBASE:사정 = 10000
@@ -680,10 +680,10 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;모유중독の上昇
-;必要な珠：快B、욕정
-;上昇条件１：모유경험必要量　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
-;上昇条件２：Lv4以上は이상경험이 必要。
+;모유중독 상승
+;필요한 구슬：쾌B, 욕정
+;상승조건 １：모유경험 필요량　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
+;상승조건 ２：Lv4 이상부터는 이상경험이 필요
 @ABL_UP_23
 LOCAL = ABL:모유중독
 
@@ -719,7 +719,7 @@ REPEAT 5
 			LOCAL = 5
 		ENDIF
 	ENDIF
-	;모유ゲージ 재계산
+	;모유 게이지 재계산
 	MAXBASE:모유 = CSVBASE_F(NO:TARGET, 21)
 	SIF MAXBASE:모유 < 1
 		MAXBASE:모유 = 10000
@@ -729,8 +729,8 @@ RETURN LOCAL
 
 
 ;--------------------------------------------------
-;마조끼の上昇
-;必要な珠：고통
+;마조끼 상승
+;필요한 구슬：고통
 @ABL_UP_15
 LOCAL = ABL:마조끼
 
@@ -778,8 +778,8 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;봉사정신の上昇
-;必要な珠：공순
+;봉사정신 상승
+;필요한 구슬：공순
 @ABL_UP_13
 LOCAL = ABL:봉사정신
 
@@ -827,8 +827,8 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;노출벽の上昇
-;必要な珠：치정
+;노출벽 상승
+;필요한 구슬：치정
 @ABL_UP_14
 LOCAL = ABL:노출벽
 
@@ -876,8 +876,8 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;순종の上昇
-;必要な珠：굴복または공포
+;순종 상승
+;필요한 구슬：굴복 또는 공포
 @ABL_UP_10
 LOCAL = ABL:순종
 
@@ -933,8 +933,8 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;욕망の上昇
-;必要な珠：욕정
+;욕망 상승
+;필요한 구슬：욕정
 @ABL_UP_11
 LOCAL = ABL:욕망
 
@@ -975,8 +975,8 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;기교の上昇
-;必要な珠：습득
+;기교 상승
+;필요한 구슬：습득
 @ABL_UP_12
 LOCAL = ABL:기교
 
@@ -1016,13 +1016,13 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;C感覚の上昇
-;必要な珠：快C
+;C감각 상승
+;필요한 구슬：쾌C
 @ABL_UP_0
 LOCAL = ABL:C감각
 
 REPEAT 5
-	;C감각がLV5以上かつ全感覚LVの合計が35以上なら終了
+	;C감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
 	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:C감각 >= 5
 		BREAK
 	;LV0->1
@@ -1060,13 +1060,13 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;V感覚の上昇
-;必要な珠：快V
+;V감각 상승
+;필요한 구슬：쾌V
 @ABL_UP_1
 LOCAL = ABL:V감각
 
 REPEAT 5
-	;V감각がLV5以上かつ全感覚LVの合計が35以上なら終了
+	;V감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
 	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:V감각 >= 5
 		BREAK
 	;LV0->1
@@ -1104,13 +1104,13 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;A感覚の上昇
-;必要な珠：快A
+;A감각 상승
+;필요한 구슬：쾌A
 @ABL_UP_2
 LOCAL = ABL:A감각
 
 REPEAT 5
-	;A감각がLV5以上かつ全感覚LVの合計が35以上なら終了
+	;A감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
 	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:A감각 >= 5
 		BREAK
 	;LV0->1
@@ -1148,13 +1148,13 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;B感覚の上昇
-;必要な珠：快B
+;B감각 상승
+;필요한 구슬：쾌B
 @ABL_UP_3
 LOCAL = ABL:B감각
 
 REPEAT 5
-	;B감각がLV5以上かつ全感覚LVの合計が35以上なら終了
+	;B감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
 	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:B감각 >= 5
 		BREAK
 	;LV0->1
@@ -1197,21 +1197,21 @@ RETURN LOCAL
 #DIM CAL_VAR, 3
 #DIM LV_VAR, 감각수
 
-;感覚LVをローカル変数
+;감각LV을 지역(로컬)변수
 FOR LCOUNT:0, 0, 감각수
 	LV_VAR:(LCOUNT:0) = ABL:(LCOUNT:0)
 NEXT
 
 FOR LCOUNT:0, 0, 15
-	;全感覚LV5以上の合計が15以上なら終了
+	;모든 감각LV5 이상의 합계가 15 이상이라면 종료
 	SIF MAX(LV_VAR:0 - 5,0) + MAX(LV_VAR:1 - 5,0) + MAX(LV_VAR:2 - 5,0) + MAX(LV_VAR:3 - 5,0) >= 15
 		BREAK
 
-	;感覚を1레벨ずつ見ていく
+	;감각을 1레벨씩 살펴본다
 	FOR LCOUNT:1, 0, 감각수
-		;感覚LVが5未満なら無視
+		;감각LV이 5 미만이면 무시
 		IF ABL:(LCOUNT:1) >= 5
-			;레벨アップ条件の初期化
+			;레벨업 조건 초기화
 			CAL_VAR:0 = 20000
 
 			FOR LCOUNT:2, 0, MIN(LV_VAR:(LCOUNT:1) - 5, 5)
@@ -1220,10 +1220,10 @@ FOR LCOUNT:0, 0, 15
 			NEXT
 			CAL_VAR:0 = CAL_VAR:0 / 2 * 5
 
-			;全感覚LVの合計が35以上なら終了
+			;모든 감각LV의 합계가 35 이상이라면 종료
 			IF LV_VAR:0 + LV_VAR:1 + LV_VAR:2 + LV_VAR:3 >= 35
 				BREAK
-			;JUELが条件以上かつ感覚LVが20未満
+			;JUEL이 조건을 충족하는 동시에 감각LV이 20 미만
 			ELSEIF JUEL:(LCOUNT:1) >= CAL_VAR:0 && LV_VAR:(LCOUNT:1) < 20
 				JUEL:(LCOUNT:1) -= CAL_VAR:0
 				LV_VAR:(LCOUNT:1) += 1

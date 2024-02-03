@@ -214,7 +214,7 @@ IF TALENT:촉수의포로 == 1
 		CALL PRINT_DISTANCE
 		PRINTL 
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
-		;地の文 敵キャラの虜で体が竦む
+		;지문 敵キャラの虜で体が竦む
 		CALL MESSAGE_BATTLE_DISACTION_TORIKO
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの「촉수의포로で体が竦む」を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -243,7 +243,7 @@ IF TALENT:기생 == 1
 		CALL PRINT_DISTANCE
 		PRINTL 
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
-		;地の文 기생した촉수が暴れて体が竦む
+		;지문 기생した촉수が暴れて体が竦む
 		CALL MESSAGE_BATTLE_DISACTION_PARASITE
 		;지문: 세뇌/흑화 캐릭터가 操作キャラの「기생で体が竦む」を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -348,35 +348,35 @@ REPEAT 5
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
 			IF COUNT == 0
-				;地の文 快楽で体が竦む
+				;지문 快楽で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_KAIRAKU
 				;지문: 세뇌/흑화 캐릭터가 操作キャラの「快楽で体が竦む」を見た
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KAIRAKU
 					
 			ELSEIF COUNT == 1
-				;地の文 고통で体が竦む
+				;지문 고통で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_KUTUU
 				;지문: 세뇌/흑화 캐릭터가 操作キャラの「고통で体が竦む」を見た
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KUTUU
 					
 			ELSEIF COUNT == 2
-				;地の文 屈辱で体が竦む
+				;지문 屈辱で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_KUTUZYOKU
 				;지문: 세뇌/흑화 캐릭터가 操作キャラの「屈辱で体が竦む」を見た
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KUTUZYOKU
 
 			ELSEIF COUNT == 3
-				;地の文 공포で体が竦む
+				;지문 공포で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_KYOUHU
 				;지문: 세뇌/흑화 캐릭터가 操作キャラの「공포で体が竦む」を見た
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KYOUHU
 
 			ELSEIF COUNT == 4
-				;地の文 恥辱で体が竦む
+				;지문 恥辱で体が竦む
 				CALL MESSAGE_BATTLE_DISACTION_TIZYOKU
 				;지문: 세뇌/흑화 캐릭터가 操作キャラの「恥辱で体が竦む」を見た
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1

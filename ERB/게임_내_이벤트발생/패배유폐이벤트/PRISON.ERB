@@ -70,7 +70,7 @@ IF (CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") > 0
 	CALL MESSAGE_PRISON_PRISENTENCE_FIRST
 
 	;幽閉時のＴＳ処理は@MESSAGE_PRISON_PRISENTENCE_FIRST内で処理
-	;地の文の表示と選択肢表示のタイミングの兼ね合いのため。
+	;지문の表示と選択肢表示のタイミングの兼ね合いのため。
 
 ELSEIF CFLAG:31 == 0
 
@@ -107,9 +107,9 @@ SIF ISHOLE() == 0
 	GOTO SKIP
 
 ;幽閉コマンドの選択
-;子촉수を出産している場合
+;새끼 촉수を出産している場合
 IF CFLAG:220 > 0 && RAND:100 < 30
-	;子촉수に犯される
+	;새끼 촉수に犯される
 	CALL PRISON_COMABLE, 7
 ELSE
 	;専用ルーチン（幽閉）による処理
@@ -235,7 +235,7 @@ IF (TALENT:촉수의포로) && CONFIG_CHECK_MANIAC_F(6) == 1
 				PRINT 左乳房
 			PRINTL に、奇妙な紋様が浮かびつつある・・・
 		ENDIF
-	;すでに淫紋がある場合の地の文
+	;すでに淫紋がある場合の지문
 	ELSEIF 今回陥落するフラグ == 0
 		LOCAL:2 = 0
 		;複数箇所フラグチェック
@@ -329,10 +329,10 @@ ENDIF
 
 
 ;末路１　세뇌/흑화(前提：オプションON)
-;　・幽閉者が戦闘員で、[놀림받는체질]を持たない場合
-;　・「[非戦闘員][놀림받는체질]は세뇌/흑화にならないオプション」がOFFの場合
+;　・幽閉者が戦闘員で、[희롱특화체질]を持たない場合
+;　・「[非戦闘員][희롱특화체질]は세뇌/흑화にならないオプション」がOFFの場合
 ;　세뇌/흑화する
-IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_CHECK_PRISON_F(3) == 0 || (TALENT:변신능력 >= 0 && TALENT:놀림받는체질 < 1))
+IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_CHECK_PRISON_F(3) == 0 || (TALENT:변신능력 >= 0 && TALENT:희롱특화체질 < 1))
 
 	PRINTL 
 	DRAWLINE
@@ -352,7 +352,7 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 		;変身可能キャラなら겉옷が変更される
 		SIF TALENT:변신능력 == 1
 			CFLAG:41 = 401
-		;＠中国版　전락装備
+		;＠중국판　전락装備
 		IF TALENT:전락 == 1
 			;변신능력アリなら淫縛の鎖
 			IF TALENT:변신능력 == 1
@@ -402,10 +402,10 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 ;　・「세뇌/흑화」オプションがOFFの場合
 ;　・「세뇌/흑화」オプションがON、かつ以下のうちどちらかの素質を所持する
 ;　　　　　　　　　[묘상화](「ただし묘상화キャラは産む機械として取り込む」オプションON時)
-;　　　　　　　　　[놀림받는체질](「놀림받는체질キャラは흑화しない」オプションON時)
+;　　　　　　　　　[희롱특화체질](「희롱특화체질キャラは흑화しない」オプションON時)
 ;　촉수に取り込まれてロスト扱い(救出不能)になる
 ;　ただしゲームオーバーの無いサンドボックスモードでは取り込まれロストも発生しない
-ELSEIF CFLAG:0 == 1 && CFLAG:31 > 19 && (CONFIG_CHECK_PRISON_F(1) == 0 || (CONFIG_CHECK_PRISON_F(2) == 1 && TALENT:묘상화 > 0) || TALENT:놀림받는체질 >= 1) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0
+ELSEIF CFLAG:0 == 1 && CFLAG:31 > 19 && (CONFIG_CHECK_PRISON_F(1) == 0 || (CONFIG_CHECK_PRISON_F(2) == 1 && TALENT:묘상화 > 0) || TALENT:희롱특화체질 >= 1) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0
 	PRINTL 
 	DRAWLINE
 	CFLAG:0 = 9

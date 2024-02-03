@@ -57,7 +57,7 @@ SELECTCASE RAND:7
 			PRINTFORMDL %CALLNAME%은(는) 図書館で読書をしている。
 			PRINTL 「……ッ……ッッ！」
 			PRINTFORMDL しかし、%ITEMNAME:400%の刺激で本に集中できず、先ほどから一ページも読み進めていない。
-			;感覚の最大値で派生
+			;감각の最大値で派生
 			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 			IF RESULT < 3
 				PRINTFORMDL ……よく見れば、椅子の下まで\@ISMALE() ? 腸 # \@愛液が滴っている。
@@ -325,7 +325,7 @@ ELSE
 				PRINTFORMDL ……いい余暇の過ごし方が浮かばなかったようだ。
 			ENDIF
 		CASE 7
-			;マッサージ（感覚の最大値で派生）
+			;マッサージ（감각の最大値で派生）
 			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 			IF RESULT == 0
 				PRINTL 「…………んっ」
@@ -495,7 +495,7 @@ IF TALENT:보추
 	PRINTFORMDL 仕方なく、これも対촉수 생물の活動資金を稼ぐためだと、しぶしぶ着替えて接客に向かった。
 	PRINTL 
 ENDIF
-	;感覚の最大値で決める
+	;감각の最大値で決める
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 1
 	SELECTCASE RAND:3
@@ -910,7 +910,7 @@ RESETCOLOR
 @KOJO_1_SEISAN_HERO_chikan_22
 SETCOLOR 0xAEB4DE
 PRINTFORMDL
-;感覚の最大値で派生
+;감각の最大値で派生
 MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 IF RESULT == 0
 SELECTCASE RAND:2
@@ -1139,7 +1139,7 @@ SELECTCASE RAND:3
 		PRINTFORMDL 深く潜り込んだカメラに突然膣壁を抉られ、%CALLNAME%은(는) 甘い声を上げた。
 	CASE 2
 		PRINTL 「ひっ……ひっかいちゃ、だめぇ……」
-		PRINTFORMDL サンプル採取の為、冷たい器具が子宮の表面をこそぐ感覚に、%CALLNAME%은(는) 震えている。
+		PRINTFORMDL サンプル採取の為、冷たい器具が子宮の表面をこそぐ감각に、%CALLNAME%은(는) 震えている。
 ENDSELECT
 RESETCOLOR
 

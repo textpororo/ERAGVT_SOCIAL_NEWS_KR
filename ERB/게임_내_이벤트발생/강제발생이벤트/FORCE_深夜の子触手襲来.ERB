@@ -1,9 +1,9 @@
 ﻿
 ;**********************************************************
-;子촉수襲来の判定
+;새끼 촉수襲来の判定
 ;********************************************
 ;----------------------------
-;子촉수襲来判定
+;새끼 촉수襲来判定
 ;----------------------------
 @SMALL_TENTACLE_HANTEI
 #DIM CCOUNT
@@ -33,7 +33,7 @@ LOCAL = FLAG:44
 FOR CCOUNT, 0, CHARANUM
 	LOCAL -= CFLAG:CCOUNT:220
 NEXT
-;処理を変更、育児済みの子촉수が居れば襲来判定へ
+;処理を変更、育児済みの새끼 촉수が居れば襲来判定へ
 SIF LOCAL < 1
 	RETURN 0
 LOCAL:1 = TARGET
@@ -64,11 +64,11 @@ ELSE
 		FLAG:44 -= 1
 		DRAWLINE
 		IF FLAG:52 && (RAND:(FLAG:52) != 0 || LOCAL:2 != 0)
-			PRINTW 子촉수は防衛システムに引っかかって黒焦げにされた...
+			PRINTW 새끼 촉수は防衛システムに引っかかって黒焦げにされた...
 		ELSEIF RAND:2 == 0
-			PRINTW 子촉수は何かの動物に襲われた...
+			PRINTW 새끼 촉수は何かの動物に襲われた...
 		ELSE
-			PRINTW 子촉수は迷子になった...
+			PRINTW 새끼 촉수は迷子になった...
 		ENDIF
 	ENDIF
 ENDIF
@@ -76,7 +76,7 @@ ENDIF
 TARGET = LOCAL:1
 
 ;----------------------------
-;子촉수襲来 ターゲット選択
+;새끼 촉수襲来 ターゲット選択
 ;----------------------------
 @SMALL_TENTACLE_ATTACK
 LOCAL = RAND:100
@@ -91,7 +91,7 @@ ELSE
 	$LOOP
 	;決まらなかった場合は中断
 	IF LOCAL:1 >= 99
-		PRINTW 子촉수は迷子になった...
+		PRINTW 새끼 촉수は迷子になった...
 		FLAG:44 -= 1
 		DRAWLINE
 		RETURN
@@ -111,7 +111,7 @@ ENDIF
 
 
 ;**********************************************************
-;子촉수襲来の内容選択
+;새끼 촉수襲来の内容選択
 ;********************************************
 @SMALL_PRISON_EVENT
 ;襲う相手が居なければ中断
@@ -163,7 +163,7 @@ CALL SMALL_PRISON_COM,LOCAL:1
 PRINTW 
 
 ;********************************************
-;子촉수襲来
+;새끼 촉수襲来
 ;********************************************
 @SMALL_PRISON_COM,ARG
 #DIM CCOUNT
@@ -191,7 +191,7 @@ IF ARG == 0
 
 
 
-	;地の文
+	;지문
 	CALLFORM MESSAGE_SMALL_PRISON_COM_0
 
 	IF BASE:C결계내구력
@@ -231,7 +231,7 @@ ELSEIF ARG == 1
 
 
 
-	;地の文
+	;지문
 	CALLFORM MESSAGE_SMALL_PRISON_COM_1
 
 	IF BASE:V결계내구력
@@ -286,7 +286,7 @@ ELSEIF ARG == 2
 
 
 
-	;地の文
+	;지문
 	CALLFORM MESSAGE_SMALL_PRISON_COM_2
 
 	IF BASE:A결계내구력
@@ -321,7 +321,7 @@ ELSEIF ARG == 3
 
 
 
-	;地の文
+	;지문
 	CALLFORM MESSAGE_SMALL_PRISON_COM_3
 
 	IF BASE:B결계내구력
@@ -538,7 +538,7 @@ ELSEIF ARG == 6
 	;メイン部位絶頂見込みの予測
 	CALL PALAM_VABCestimate(LOCAL,-1)
 
-	;地の文
+	;지문
 	CALLFORM MESSAGE_SMALL_PRISON_COM_6
 ENDIF
 

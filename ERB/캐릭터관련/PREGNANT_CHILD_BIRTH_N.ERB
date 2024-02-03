@@ -1,12 +1,12 @@
 ﻿
 ;------------------------------
-;出産(正常…인간相手に임신していた場合)
+;출산(정상…인간 상대로 임신한 경우)
 ;------------------------------
-;임신日数のリセット、素質[임신]の削除
+;임신 일수 리셋, [임신] 소질 삭제
 @BIRTH_DAUGHTER_HUMAN_ORIGIN
 #DIM CCOUNT
 
-;出産するキャラは피로도가 蓄積する
+;출산하는 캐릭터는 피로도가 축적된다
 CFLAG:99 += 45 + PREGNANCY_BELLY_EXPAND(TARGET) / 20
 CFLAG:222 = 0
 CFLAG:227 = 0
@@ -15,40 +15,40 @@ TALENT:임신 = 0
 LOCAL:0 = 0
 DRAWLINE
 FONTBOLD
-PRINTFORML 出産（%PRINT_CALLNAME(TARGET,1)%）
+PRINTFORML 출산 (%PRINT_CALLNAME(TARGET,1)%)
 FONTREGULAR
-;幽閉中出産の場合
+;유폐 중에 출산한 경우
 IF CFLAG:0 != 10
 	CALL MESSAGE_BIRTH_DAUGHTER_HUMAN_ORIGIN_PRISON
 	IF CFLAG:230 == 사랑하는사람
-		;사랑하는사람の子供を産んだ回数(幽閉中出産でも一応カウントしておく)
+		;사랑하는사람의 아이를 낳은 횟수(유폐중 출산이라도 일단 카운트 해둔다)
 		CFLAG:219++
 	ENDIF
-;病院で出産できる
+;병원에서 출산할 수 있다
 ELSE
 	CALL MESSAGE_BIRTH_DAUGHTER_HUMAN_ORIGIN
 	CALL DOT_AFTER, 1
 	PRINTL 
-	PRINTFORML 数時間後、病室に戻された%PRINT_CALLNAME(TARGET)%は
-	PRINTFORML 自分の腕の中の小さな赤ん坊を見つめながら思案に暮れていた…
+	PRINTFORML 몇 시간 후, 병실로 돌아온 %PRINT_CALLNAME(TARGET)%은(는)
+	PRINTFORML 자신의 품에 안긴 작은 아기를 바라보며 생각에 잠겨 있었다……
 	PRINTW 
 
-	;생애 첫 출산が사랑하는사람以外との子供だった場合
+	;생애 첫 출산이 사랑하는사람 이외의 상대와의 아이였던 경우
 	LOCALS'=""
 	IF TALENT:교제상대 >0 && CFLAG:218 == 0 && EXP:출산경험 == 0
 		SELECTCASE TALENT:교제상대
 		CASE 1
-		LOCALS=짝사랑の相手
+			LOCALS=짝사랑하는 상대
 		CASE 2
-		LOCALS=大好きな연인
+			LOCALS=좋아하는 연인
 		CASE 3
-		LOCALS=将来を誓ったフィアンセ
+			LOCALS=장래를 맹세한 약혼자
 		CASE 4
-		LOCALS=愛する夫
+			LOCALS=사랑하는 남편
 		CASE 5
-		LOCALS=今は無き夫
+			LOCALS=지금은 없는 남편
 		CASEELSE
-		LOCALS=愛しい ”あの人” 
+			LOCALS=사랑하는 "그 사람" 
 		ENDSELECT
 	ENDIF
 
@@ -59,135 +59,135 @@ ELSE
 			SIF TARGET == CCOUNT
 				CONTINUE
 			IF CFLAG:CCOUNT:240 == CFLAG:230 * -1 - 100
-				PRINTFORML それは、%PRINT_CALLNAME(TARGET)%と%CALLNAME:CCOUNT%の子だった。
+				PRINTFORML 이 아이는 분명, %PRINT_CALLNAME(TARGET)%와(과) %CALLNAME:CCOUNT%의 아이였다.
 				IF LOCALS!=""
-					PRINTFORML %CALLNAME:CCOUNT%とは知らない仲でこそないが、%LOCALS%に対する%PRINT_CALLNAME(TARGET)%の裏切りである事は違いない。
+					PRINTFORML %CALLNAME:CCOUNT%와는 모르는 사이가 아니지만, %LOCALS%에 대한 %PRINT_CALLNAME(TARGET)%의 배신인 것은 틀림없다.
 					PRINTL
 				ENDIF
 				IF TALENT:800 == 2
-					PRINTFORML 付き合っている彼に本当のことは明かしていない。
-					PRINTFORML それに、この子をどうするべきかもまだ決めていなかった…
+					PRINTFORML 사귀고 있는 그이에게는 이 사실을 밝히지 않았다.
+					PRINTFORML 게다가, 이 아이를 어떻게 해야 할지도 아직 결정하지 못했다……
 				ELSEIF TALENT:800 == 3
-					PRINTFORML 약혼자の彼に本当のことは明かしていない。
-					PRINTFORML もちろん、相手の両親には彼との子だと説明はしてあるが、
-					PRINTFORML この子をどうするべきか、正直まだ迷っている…
+					PRINTFORML 약혼자인 그이에게는 이 사실을 밝히지 않았다.
+					PRINTFORML 물론, 상대방의 부모님께는 그와의 아이라고 설명을 했지만
+					PRINTFORML 솔직히 이 아이를 어떻게 해야 할지, 아직도 망설이고 있다……
 				ELSEIF TALENT:800 == 4
-					PRINTFORML 愛する夫に本当のことは明かしていない。
-					PRINTFORML 自分の子供だと信じて疑わない彼を前に、ついに真実を言い出せなかった。
-					PRINTFORML 夫は自分一人でも子供を育てるつもりだと言っているが…
+					PRINTFORML 사랑하는 남편에게 아직 이 사실은 밝히지 않았다.
+					PRINTFORML 자신의 아이라고 믿어 의심치 않는 그이를 앞에 두고, 끝내 진실을 말하지 못했다.
+					PRINTFORML 남편은 자기 혼자서라도 아이를 키울 생각이라고 하는데……
 				ELSEIF CFLAG:CCOUNT:0 == 0
-					PRINTFORML 見舞いに来た%CALLNAME:CCOUNT%は二人で一緒に育てようと言ってくれたが、
-					PRINTFORML どうするべきなのだろうか…
+					PRINTFORML 병문안을 온 %CALLNAME:CCOUNT%이(가) 둘이서 같이 키우자고 얘기하는데,
+					PRINTFORML 어떻게 해야 하는 걸까……
 				ELSE
-					PRINTFORML 촉수との戦いを続けながら子供を育てるのは困難だ。
-					PRINTFORML 危険を避けるためにも安全な場所に預けるべきなのではないだろうか…？
+					PRINTFORML 촉수로부터 도시를 지킴과 동시에 아이를 키우는 일은 무척 곤란하다.
+					PRINTFORML 위험을 피하기 위해서라도 아이를 안전한 곳에 맡겨야 하지 않을까…?
 				ENDIF
 			ENDIF
 		NEXT
 	ELSEIF CFLAG:230 == 쌩판남
 		IF LOCALS!=""
 			SETCOLOR 255, 96, 96
-			PRINTFORML %LOCALS%の子供を産む"初出産"の機会が永久に失われた事実を、%PRINT_CALLNAME(TARGET)%は嫌でも理解してしまう。
+			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %PRINT_CALLNAME(TARGET)%은(는) 싫어도 이해하게 된다.
 			RESETCOLOR
 			PRINTL
 		ENDIF
 		IF TALENT:800 == 2
-			PRINTFORML 付き合っている彼に本当のことは明かしていないが、それは行きずりの相手との子だった。
-			PRINTFORML 当然と言うべきか、彼には子供を育てる意志はまったく無いようで
-			PRINTFORML 話し合ってもなおこの子をどうするか決めかねている…
+			PRINTFORML 사귀고 있는 그이에게 사실을 밝히지 않았지만, 이 아이는 길에서 스친 상대와의 아이였다.
+			PRINTFORML 당연하다고나 할까, 그 상대는 아이를 키울 의지가 전혀 없는 듯 하다.
+			PRINTFORML 의논해 보아도 여전히 이 아이를 어떻게 할지 결정하지 못하고 있다……
 		ELSEIF TALENT:800 == 3
-			PRINTFORML 약혼자の彼に本当のことは明かしていないが、それは行きずりの相手との子だった。
-			PRINTFORML 相手の両親には何とかそれらしい説明をしたが、罪悪感が心に重くのしかかる。
-			PRINTFORML 話し合いの結果、子供は약혼자の元で預かってくれると言ってくれたが…
+			PRINTFORML 약혼자에게 이 사실은 밝히지 않았지만, 이 아이는 분명 길에서 스친 상대와의 아이였다.
+			PRINTFORML 상대방의 부모님께는 어떻게든 그럴듯한 설명을 했지만, 죄책감이 마음을 무겁게 짓누른다.
+			PRINTFORML 의논한 결과, 아이는 약혼자의 곁에서 맡아 주겠다고 했는데……
 		ELSEIF TALENT:800 == 4
-			PRINTFORML 愛する夫に本当のことは明かしていないが、それは行きずりの相手との子だった。
-			PRINTFORML 重く鈍い岩塊のような罪悪感に打ち明けて楽になりたい気持ちで一杯になったが
-			PRINTFORML 心の底から嬉しそうにしている夫の顔を見ると、どうしても言い出せなくなってしまう。
-			PRINTFORML 夫は自分一人でも子供を育てるつもりだと言っているが…
+			PRINTFORML 사랑하는 남편에게 이 사실은 밝히지 않았지만, 이 아이는 길에서 스친 상대와의 아이였다.
+			PRINTFORML 무겁고 둔탁한 바위덩어리 같은 죄책감에 전부 털어놓고 편안해지고 싶다는 마음이 굴뚝같았지만,
+			PRINTFORML 진심으로 기뻐하는 남편의 얼굴을 보자, 도저히 말을 꺼낼 수 없게 되어 버린다.
+			PRINTFORML 남편은 자기 혼자서도 아이를 키울 생각이라고 하는데……
 		ELSE
-			PRINTFORML それはどこの誰とも知れない、行きずりの相手との子だった。
-			PRINTFORML 子供に愛情を感じないわけではないが、촉수との戦いのことを考えると、
-			PRINTFORML この子を手放した方が良いのではないかという考えが浮かんでは消える…
+			PRINTFORML 이 아이는 누구인지도 모르는, 길에서 스쳐 지나가던 상대와의 아이였다.
+			PRINTFORML 아이에게 애정을 느끼지 못하는 것은 아니지만, 앞으로 촉수와의 싸움을 이어갈 것을 생각하자니
+			PRINTFORML 아이를 시설에 놓아주는 게 낫지 않을까 하는 생각이 들고는 했다……
 		ENDIF
 	ELSEIF CFLAG:230 == 근친상간
-		PRINTFORML だがそれは근친상간によって産まれた禁忌の子だった。
-		PRINTFORML このことは誰にも、子供本人にすら言えないという罪悪感を飲み込みながら、
-		PRINTFORML %CALLNAME%은(는) これから育児をどうするべきか悩み続けた…
+		PRINTFORML 하지만 그것은 근친상간에 의해 태어난 금기의 아이였다.
+		PRINTFORML 이 일은 누구에게도, 아이 본인에게조차 말할 수 없다는 죄책감을 삼키면서
+		PRINTFORML %CALLNAME%은(는) 앞으로 육아를 어떻게 해야 할지 계속 고민했다……
 	ELSEIF CFLAG:230 == 사랑하는사람
-		;사랑하는사람の子供を産んだ回数
+		;사랑하는사람의 아이를 낳은 횟수
 		CFLAG:219++
 		IF TALENT:800 == 2
-			PRINTFORML それは付き合っている彼との愛の結晶だった。
-			PRINTFORML しかし%PRINT_CALLNAME(TARGET)%が自分で育児するには不都合が大きく、何より危険だということで
-			PRINTFORML 話し合いの結果、子供は彼の実家で預かってくれると言うのだが…
+			PRINTFORML 이 아이는 사귀고 있는 그이와의 사랑의 결정체였다.
+			PRINTFORML 하지만 %PRINT_CALLNAME(TARGET)%이(가) 스스로 육아하기에는 불편함이 있었고, 무엇보다도 위험 부담이 컸다.
+			PRINTFORML 의논한 결과, 아이는 그의 친정에서 맡아준다는데……
 		ELSEIF TALENT:800 == 3
-			PRINTFORML それは약혼자の彼との愛の結晶だった。
-			PRINTFORML 未婚ながら子供が生まれたことを相手の両親は喜んでくれて、
-			PRINTFORML もし良ければ子供は彼の実家で預かってくれると言うのだが…
+			PRINTFORML 이 아이는 약혼자인 그이와의 사랑의 결정이었다.
+			PRINTFORML 미혼이지만 아이가 태어난 것을 상대의 부모님은 기뻐해주셨다.
+			PRINTFORML 만약 괜찮다면 아이는 그의 친정에서 맡아 준다고 하는데……
 		ELSEIF TALENT:800 == 4
-			PRINTFORML それは正真正銘、愛する夫との愛の結晶だった。
-			PRINTFORML %PRINT_CALLNAME(TARGET)%としても出来るだけ自分の手で子供を育てたい気持ちだが
-			PRINTFORML 夫は自分一人でも育てる覚悟だと%PRINT_CALLNAME(TARGET)%に言ってくれた。
-			PRINTFORML 家族三人で抱き合い、束の間の水入らずに心が温まる気持ちだ…
+			PRINTFORML 그것은 진정으로 사랑하는 남편과의 사랑의 결정이었다.
+			PRINTFORML %PRINT_CALLNAME(TARGET)%로서도 가능한 한 내 손으로 아이를 키우고 싶은 심정이었지만,
+			PRINTFORML 남편은 자기 혼자서라도 키울 각오라고 %PRINT_CALLNAME(TARGET)%에게 말해줬다.
+			PRINTFORML 가족 셋이서 부둥켜안아, 잠시 순수한 애정으로 마음이 따뜻해지는 기분을 느꼈다……
 		ENDIF
 	ELSEIF CFLAG:230 == 원치않은상대
-		PRINTFORML それは望まぬ性交を強要されて、無理やり孕まされた子だった。
+		PRINTFORML 이 아이는 원치 않는 성교를 강요당하여, 억지로 잉태된 아이였다.
 		IF LOCALS!=""
 			SETCOLOR 255, 96, 96
-			PRINTFORML %LOCALS%の子供を産む"初出産"の機会が永久に失われた事実を、%PRINT_CALLNAME(TARGET)%は嫌でも理解してしまう。
+			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %PRINT_CALLNAME(TARGET)%은(는) 싫어도 이해하게 된다.
 			RESETCOLOR
 			PRINTL
 		ENDIF
-		PRINTFORML 子供に罪はないが、正直なところ母親らしい愛情を抱けるか自信がない。
-		PRINTFORML ましてや使命のことを考えると、自分で育てるのは難しいように思える…
+		PRINTFORML 아이에게 죄는 없지만, 솔직하게 어머니다운 애정을 품을 수 있을지에 대해 자신이 없다.
+		PRINTFORML 하물며 자신의 사명을 생각하자니, 스스로 키우는 것조차 어려워 보인다……
 	ENDIF
 	PRINTW 
 	IF MONEY >= 10000 && CHARANUM < (등록최대인원 + 1)
-		PRINTFORML しばらくして新生児の遺伝子検査の結果が伝えられた。
-		PRINTFORML 幸か不幸か、この子には非常に高い潜在能力が秘められていることが分かったらしい。
-		PRINTFORML 政府に$10000を支払えば、人工的に成長を促進させて育児の負担を小さくすることができるが、
-		PRINTFORML その代わり、子供は%PRINT_CALLNAME(TARGET)%と同じく촉수と戦う道を歩むことになるだろう。
+		PRINTFORML 잠시 후 신생아 유전자 검사 결과가 전해졌다.
+		PRINTFORML 행인지 불행인지, 이 아이에게는 매우 높은 잠재력이 숨어 있는 것으로 밝혀진 모양이다.
+		PRINTFORML 정부에 10000$을 지불하면, 인공적으로 성장을 촉진시켜 육아의 부담을 줄일 수는 있지만
+		PRINTFORML 그 대신, 아이가 성장하면 %PRINT_CALLNAME(TARGET)%와(과) 마찬가지로 촉수와 싸우는 길을 걷게 될 것이다.
 		PRINTW 
-		PRINTFORML 我が子に過酷な運命を課してまで、手元に置いておくべきだろうか？
+		PRINTFORML 아이에게 가혹한 운명을 가하면서까지, %PRINT_CALLNAME(TARGET)%의 품에서 자라는 게 맞는 걸까?
 		PRINTL
 		PRINTFORML [0] 아니오
-		PRINTFORML [1] 네（소지금:${MONEY}）
+		PRINTFORML [1] 네（소지금: {MONEY}$）
 		$INPUT_CHILD_CRADLE
 		INPUT
 		IF RESULT == 1
 			MONEY -= 10000
-			PRINTL やはり、母親の居ない子供にしてしまうわけにはいかない。
+			PRINTL 역시, 엄마가 없는 아이로 만들어 버릴 수는 없다.
 			CALL MESSAGE_CHILD_CRADLE
 			CFLAG:0 = 11
 		ELSEIF RESULT == 0
 			IF CFLAG:230 == 원치않은상대
-				PRINTFORML 熟考の末、子供を施設に預けて忘れることにしました。
+				PRINTFORML 고심 끝에, 아이를 시설에 맡기고 그만 잊기로 했습니다.
 			ELSEIF (CFLAG:230 == 사랑하는사람 && TALENT:800 == 2) || (CFLAG:230 != 근친상간 && TALENT:800 == 3)
-				PRINTFORML 熟考の末、子供は彼の実家に預けることにしました。
+				PRINTFORML 고심 끝에, 아이는 그이의 친정에 맡기기로 했습니다.
 			ELSEIF TALENT:800 == 4
-				PRINTFORML 熟考の末、子供は夫が自宅で育てることになりました。
+				PRINTFORML 고심 끝에, 아이는 남편이 집에서 키우기로 했습니다.
 			ELSE
-				PRINTFORML 熟考の末、子供に別れを告げて施設に預けることにしました。
+				PRINTFORML 고심 끝에, 아이에게 작별을 고하고 시설에 맡기기로 했습니다.
 			ENDIF
 			CALL RECOVER_TO_PARTY,TARGET
 		ELSE
-			PRINTL 正しい数値を入力してください
+			PRINTL 올바른 수치를 입력해 주십시오.
 			GOTO INPUT_CHILD_CRADLE
 		ENDIF
 	ELSEIF MONEY < 10000 || CHARANUM >= (등록최대인원 + 1)
 		IF CHARANUM >= (등록최대인원 + 1)
-			PRINTL （これ以上仲間を増やせないので選択肢を省略します）
+			PRINTL  (더 이상 동료를 늘릴 수 없기 때문에 선택지를 생략합니다.)
 		ELSEIF MONEY < 10000
-			PRINTL （資金不足なので選択肢を省略します）
+			PRINTL  (소지금 10000$ 조건을 충족할 시 추가 선택지가 출현합니다.)
 		ENDIF
 		IF CFLAG:230 == 원치않은상대
-			PRINTFORML 熟考の末、子供を施設に預けて忘れることにしました。
+			PRINTFORML 고심 끝에, 아이를 시설에 맡기고 그만 잊기로 했습니다.
 		ELSEIF (CFLAG:230 == 사랑하는사람 && TALENT:800 == 2) || (CFLAG:230 != 근친상간 && TALENT:800 == 3)
-			PRINTFORML 熟考の末、子供は彼の実家に預けることにしました。
+			PRINTFORML 고심 끝에, 아이는 그이의 친정에 맡기기로 했습니다.
 		ELSEIF TALENT:800 == 4
-			PRINTFORML 熟考の末、子供は夫が自宅で育てることになりました。
+			PRINTFORML 고심 끝에, 아이는 남편이 집에서 키우기로 했습니다.
 		ELSE
-			PRINTFORML 熟考の末、子供に別れを告げて施設に預けることにしました。
+			PRINTFORML 고심 끝에, 아이에게 작별을 고하고 시설에 맡기기로 했습니다.
 		ENDIF
 		SIF CFLAG:0 == 10
 			CALL RECOVER_TO_PARTY,TARGET

@@ -64,7 +64,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && (MESSAGE_BRANCH_F(TARGET) & 절
 ELSE
 	コマンド部位１ = そこ
 ENDIF
-;責められている部位を地の文で使う際の設定
+;責められている部位を지문で使う際の設定
 IF ARGS == "C" && !TALENT:후타나리 > 0
 	コマンド部位２ = 클리토리스
 	SIF !RAND:2
@@ -3981,7 +3981,7 @@ FOR ループカウンターＡ,0,ループＭＡＸ
 		ENDIF
 	ENDIF
 	PRINTFORML 」
-	;흑화娘キャラやその他キャラ、お口공격サド공격は地の文除外
+	;흑화娘キャラやその他キャラ、お口공격サド공격は지문除外
 	IF (NAME:(FLAG:111) == "霧雨 魔理沙" || NAME:(FLAG:111) == "東風谷 早苗" || NAME:(FLAG:111) == "博麗 霊夢" || !FLAG:110) && (ARGS != "M" && ARGS != "MA")
 		SELECTCASE ループＭＡＸ
 			CASE 3

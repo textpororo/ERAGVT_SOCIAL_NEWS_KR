@@ -14,7 +14,7 @@ SIF (TCVARn:12 & 강구속)
 ;방어フラグ：봉사한다にする
 TCVARn:2 = 자세：봉사한다
 
-;油断度の上昇
+;油断度 상승
 TFLAG:3 += 25 + 5 * ABL:기교 * ABL:기교
 
 ;지문: 펠라공격
@@ -23,7 +23,7 @@ CALL MESSAGE_BATTLE_CHARA_SEX_ATTACK101
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK101
 
-;사정ゲージを記録
+;사정 게이지を記録
 LOCAL:1 = FLAG:15
 
 ;사정　基本値は小さい

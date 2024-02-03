@@ -1,15 +1,15 @@
 ﻿;------------------------------
-;育児判定(適当
+;육아 판정 (적당)
 ;------------------------------
 @GROW_HANTEI
 #DIM CCOUNT
 LOCAL = TARGET
 FOR CCOUNT, 0, CHARANUM
 	TARGET = CCOUNT
-	;育児中なら育児日数を増加
+	;육아 중이라면 육아일 증가
 	IF CFLAG:0 == 11 || CFLAG:22 > 0
 		CFLAG:224 += 1
-		;確率で育児終了　最短2日最長5日
+		;확률로 육아 종료　최단 2일, 최장 5일
 		SIF (CFLAG:224 >= 4 && RAND:2 == 0) || CFLAG:224 >= 10
 			CALL ADD_CHILD,TARGET
 	ENDIF
@@ -27,7 +27,7 @@ NEXT
 TARGET = LOCAL
 
 ;-------------------------
-;鍛錬変化時の表示
+;단련 변화 시의 표시
 ;-------------------------
 @TRAINING_HOSEI_CHILD,ARG
 LOCAL:4 = MARK:혈연보정
@@ -47,23 +47,23 @@ NEXT
 RETURN LOCAL:1
 
 ;------------------------------
-;出産(娘…촉수に孕まされていた場合)
+;출산(딸,娘…촉수에게 잉태된 경우)
 ;------------------------------
-;임신日数のリセット、素質[임신]の削除
+;임신 일수 초기화, [임신] 소질 삭제
 @BIRTH_DAUGHTER_TENTACLE_ORIGIN
 
-;出産するキャラは피로도가 蓄積する
+;출산하는 캐릭터는 피로도가 축적된다
 CFLAG:99 += 45 + PREGNANCY_BELLY_EXPAND(TARGET) / 20
 LOCAL:0 = 0
 DRAWLINE
 FONTBOLD
 PRINTFORML 出産（%PRINT_CALLNAME(TARGET,1)%）
 FONTREGULAR
-;@中国版より おそらく地の文矛盾を避けるための措置
+;@중국판 역수출, 아마도 지문 모순을 피하기 위한 조치
 IF TALENT:TARGET:번식자루
-	PRINTFORML %PRINT_CALLNAME(TARGET,1)%は何も知覚しないまま子供を産み落とした…。
+	PRINTFORML %PRINT_CALLNAME(TARGET,1)%은(는) 아무것도 지각하지 않은 채 아이를 낳았다……
 ELSEIF TALENT:TARGET:사지결손
-	PRINTFORML %PRINT_CALLNAME(TARGET,1)%は苦しみながら子供を産み落とした……
+	PRINTFORML %PRINT_CALLNAME(TARGET,1)%은(는) 괴로워하며 아이를 낳았다……
 ELSEIF CFLAG:0 != 10
 	CALL MESSAGE_BIRTH_DAUGHTER_TENTACLE_ORIGIN_PRISON
 ELSE
@@ -73,7 +73,7 @@ ENDIF
 CALL ABL_UP_BIRTH,1
 CALL _ABLUP,1
 
-;임신日数中だし回数のリセット、素質[임신]の削除
+;임신 일수 중이며 횟수 초기화, [임신] 소질 삭제
 CFLAG:221 = 0
 CFLAG:222 = 0
 CFLAG:227 = 0
@@ -82,27 +82,27 @@ CFLAG:232 = 0
 CFLAG:233 = 0
 TALENT:임신 = 0
 
-;●病院で出産
+;●병원에서 출산
 IF CFLAG:0 == 10
 	IF MONEY >= 5000 && CHARANUM < (등록최대인원 + 1) && GAME_OPTION_CHECK_F(OPTION_solo) == 0
 		DRAWLINE
-		PRINTFORML 娘が産まれた
-		PRINTFORML 娘を育てるためには養育費として$5000かかります
-		PRINTFORML 娘を育てますか？
+		PRINTFORML %PRINT_CALLNAME(TARGET)%의 아이가 태어났습니다.
+		PRINTFORML 아이를 키우려면 양육비로 5000$이 듭니다.
+		PRINTFORML %PRINT_CALLNAME(TARGET)%이(가) 아이를 직접 키우도록 하시겠습니까?
 		PRINTL
 		PRINTFORML [0] 아니오
-		PRINTFORML [1] 네（소지금:${MONEY}）
+		PRINTFORML [1] 네（소지금: {MONEY}$）
 		$INPUT_CHILD_CRADLE
 		INPUT
 	ELSE
 		IF GAME_OPTION_CHECK_F(OPTION_solo)
-			;ソロは育児機能無し
+			;SOLO 모드는 육아기능 없음
 		ELSEIF CHARANUM >= (등록최대인원 + 1)
-			PRINTL （これ以上仲間を増やせないので選択肢を省略します）
+			PRINTL （더 이상 동료를 늘릴 수 없기 때문에 선택지를 생략합니다.）
 		ELSEIF MONEY < 5000
-			PRINTL （資金不足なので選択肢を省略します）
+			PRINTL （소지금 5000$ 조건을 충족할 시 추가 선택지가 출현합니다.）
 		ELSEIF TALENT:TARGET:번식자루 || TALENT:TARGET:사지결손
-			PRINTL （子育て可能な状態ではないため選択肢を省略します）
+			PRINTL （육아가 가능한 상태가 아니기 때문에 선택지를 생략합니다.）
 		ENDIF
 		RESULT = 0
 	ENDIF
@@ -114,48 +114,47 @@ IF CFLAG:0 == 10
 		CALL MESSAGE_CHILD_ASLYM
 		CALL RECOVER_TO_PARTY,TARGET
 	ELSE
-		PRINTL 正しい数値を入力してください
+		PRINTL 올바른 수치를 입력해 주십시오.
 		GOTO INPUT_CHILD_CRADLE
 	ENDIF
 
-;●幽閉中or陥落済みで出産
+;●유폐 중 or 함락 완료인 상태에서 출산
 ELSEIF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3
 	IF CHARANUM < (등록최대인원 + 1) && CFLAG:22 == 0
 		DRAWLINE
-		PRINTL 娘が産まれた
+		PRINTL 아이가 태어났습니다.
 		IF CFLAG:0 == 1
 			IF CHECK_GAMEOVER_F() == 1 || GAME_OPTION_CHECK_F(OPTION_solo)
-				PRINTL いずれ助け出すチャンスは巡ってくるかもしれないが、촉수の脅威がある限りは難しいだろう。
-				PRINTFORML 我が子を救う以前に、唯一の希望たる%PRINT_CALLNAME(TARGET)%自身すら今は囚われの身なのだから……
+				PRINTL 언젠가 구해낼 기회가 돌아올지도 모르지만, 촉수의 위협이 있는 한은 어려울 것입니다.
+				PRINTFORML 우리 아이를 구하기 이전에, 유일한 희망인 %PRINT_CALLNAME(TARGET)% 자신조차 지금은 포로의 몸이니까……
 			ELSEIF !GAME_OPTION_CHECK_F(OPTION_solo) && CHARANUM_SAFE()
-				PRINTFORML 今の%PRINT_CALLNAME(TARGET)%にはどうすることもできないが、
-				PRINTL 仲間が娘を救出してくれるかもしれない。
+				PRINTFORML 지금의 %PRINT_CALLNAME(TARGET)%에게는 어쩔 수 없지만,
+				PRINTL 동료가 아이를 구출해 줄지도 모릅니다.
 			ELSE
-				PRINTFORML 今の%PRINT_CALLNAME(TARGET)%にはどうすることもできないが、
-				PRINTL いつか誰かが助けてくれるかもしれない。
+				PRINTFORML 지금의 %PRINT_CALLNAME(TARGET)%에게는 어쩔 수 없지만,
+				PRINTL 언젠가 누군가가 구해줄지도 모릅니다.
 			ENDIF
 		ELSEIF CFLAG:0 == 2
 			IF TALENT:주관시점 > 0
-				PRINTFORML %PRINT_CALLNAME(TARGET)%の胸の奥底にはまだ微かに我が子を思う心が残っている……
+				PRINTFORML %PRINT_CALLNAME(TARGET)%의 가슴속 깊은 곳에는 아직 희미하게 내 아이를 생각하는 마음이 남아 있다……
 			ELSE
-				PRINTFORML 虚ろな瞳のまま反応を示さないように見える%PRINT_CALLNAME(TARGET)%だが、
-				PRINTFORML その胸の奥底にはまだ微かに我が子を思う心が残っているようだ……
+				PRINTFORML 공허한 눈동자 그대로 반응이 없는 듯 보이는 %PRINT_CALLNAME(TARGET)%(이)지만, 
+				PRINTFORML 그 가슴속 깊은 곳에는 아직도 희미하게 내 아이를 생각하는 마음이 남아 있는 것 같다……
 			ENDIF
 		ELSEIF CFLAG:0 == 3
 			IF TALENT:주관시점 > 0
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は甘えるような声で촉수に"娘を育てたい"と懇願した……
+				PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 어리광을 부리는 투로 촉수에게 "아기를 키우고 싶다" 라고 간청했다……
 			ELSE
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は甘えるような声で촉수に"娘を育てたい"と懇願している。
-				PRINTFORML 闇に堕ちた身であっても我が子は愛しいようだ。
+				PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 어리광을 부리는 목소리로 촉수에게 "아기를 키우고 싶다" 라고 간청하고 있다.
+			PRINTFORML 어둠에 빠진 몸일지라도, 제눈에 비치는 자신의 아이는 사랑스럽게 보이는 것 같다……
 			ENDIF
 		ENDIF
 
-		;ソロまたはゲームオーバーなら幽閉コースで確定
+		;SOLO 모드 또는 게임 오버라면 유폐 코스로 확정
 		IF CHECK_GAMEOVER_F() == 1 || GAME_OPTION_CHECK_F(OPTION_solo)
-			;
-		;それ以外なら育児準備の選択
+		;그 외라면 육아 준비 선택
 		ELSE
-			PRINTL 無事を祈って名前を付けてあげますか？
+			PRINTL 아이가 무사하기를 빌며 이름을 지어드리겠습니까?
 			PRINTL
 			PRINTL [0] 아니오
 			PRINTL [1] 네
@@ -164,88 +163,107 @@ ELSEIF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3
 
 			IF RESULT == 1
 				$INPUT_CHILD_NAME_YN
-				PRINTL キャラの名前を自分で決めますか？
-				PRINTL [0] 아니오（ランダム生成）
-				PRINTL [1] 네（手動入力）
+				PRINTL 캐릭터 이름을 직접 정하시겠습니까?
+				PRINTL [0] 아니오（랜덤 생성）
+				PRINTL [1] 네（직접 입력）
 				INPUT
 				IF RESULT == 0
 					$INPUT_LOOP_CHILD_NAME_RANDOM
-					PRINTL [0]日本語で構成
-					PRINTL [1]英語で構成
-					PRINTL [2]フランス語で構成
-					PRINTL [3]ドイツ語で構成
-					PRINTL [4]イタリア語で構成
-					PRINTL [5]ロシア語で構成
-					PRINTL [99]完全ランダム
+					;조만간 한국어도 넣을 것이다... 아마도
+					PRINTL [0] 일본어로 구성
+					PRINTL [1] 영어로 구성
+					PRINTL [2] 프랑스어로 구성
+					PRINTL [3] 독일어로 구성
+					PRINTL [4] 이탈리아어로 구성
+					PRINTL [5] 러시아어로 구성
+					PRINTL [6] 중국어로 구성
+					PRINTL [99] 완전 랜덤
 					INPUT
 					LOCAL:99 = RESULT
 					$INPUT_LOOP_NAME_KOSEI
 					IF LOCAL:99  == 99
-						;名前
+						;완전 랜덤
 						LOCAL:1 = RAND:4000 + 12000
 						WHILE STR:(LOCAL:1) == ""
 							LOCAL:1 = RAND:4000 + 12000
 						WEND
 						LOCALS:1 = %STR:(LOCAL:1)%
 					ELSEIF LOCAL:99  == 0
-						;名前
+						;일본어
 						LOCAL = RAND:500 + 12000
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:500 + 12000
 						WEND
 						LOCALS:1 = %STR:LOCAL%
 					ELSEIF LOCAL:99  == 1
-						;名前
+						;영어
 						LOCAL = RAND:1000 + 12500
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:1000 + 12500
 						WEND
 						LOCALS:1 = %STR:LOCAL%
 					ELSEIF LOCAL:99  == 2
-						;名前
+						;프랑스어
 						LOCAL = RAND:500 + 13500
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:500 + 13500
 						WEND
 						LOCALS:1 = %STR:LOCAL%
 					ELSEIF LOCAL:99  == 3
-						;名前
+						;독일어
 						LOCAL = RAND:1000 + 14000
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:1000 + 14000
 						WEND
 						LOCALS:1 = %STR:LOCAL%
 					ELSEIF LOCAL:99  == 4
-						;名前
+						;이탈리아어
 						LOCAL = RAND:500 + 15000
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:500 + 15000
 						WEND
 						LOCALS:1 = %STR:LOCAL%
 					ELSEIF LOCAL:99  == 5
-						;名前
+						;러시아어
 						LOCAL = RAND:500 + 15500
 						WHILE STR:LOCAL == ""
 							LOCAL = RAND:500 + 15500
 						WEND
 						LOCALS:1 = %STR:LOCAL%
+					ELSEIF LOCAL:99 == 6
+						;중국어
+						LOCAL = RAND:500 + 16500
+						WHILE STR:LOCAL == ""
+							LOCAL = RAND:1000 + 16500
+						WEND
+						LOCALS:1 = %STR:LOCAL%
+						;중국어 두 번째 글자
+						IF RAND:2
+							LOCAL = RAND:500 + 16500
+							WHILE STR:LOCAL == ""
+								LOCAL = RAND:1000 + 16500
+							WEND
+							LOCALS:1 += STR:LOCAL
+						ENDIF
 					ELSE
+						PRINTL 올바른 값을 입력해 주십시오.
 						GOTO INPUT_LOOP_CHILD_NAME_RANDOM
 					ENDIF
 				ELSEIF RESULT == 1
 					$INPUT_CHILD_NAME_INPUT
-					PRINTL キャラの名前を入力してください
+					PRINTL 캐릭터의 이름을 입력해 주십시오.
 					INPUTS
 					IF RESULTS == ""
+						PRINTW 이름란을 공백으로 둘 수는 없습니다. 다시 입력해 주십시오.
 						GOTO INPUT_CHILD_NAME_INPUT
 					ELSE
 						LOCALS:1 = %RESULTS%
 					ENDIF
 				ELSE
-					PRINTL 正しい数値を入力してください
+					PRINTL 올바른 수치를 입력해 주십시오.
 					GOTO INPUT_CHILD_NAME_YN
 				ENDIF
-				PRINTFORML キャラの名前は 『%LOCALS:1%』 でよろしいですか？
+				PRINTFORML 캐릭터의 이름을『%LOCALS:1%』 로 결정하시겠습니까?
 				PRINTL [0] 아니오
 				PRINTL [1] 네
 				$INPUT_CHILD_NAME_YN_1
@@ -253,8 +271,16 @@ ELSEIF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3
 				IF RESULT == 0
 					GOTO INPUT_CHILD_NAME_YN
 				ELSEIF RESULT == 1
-					CSTR:11 = %LOCALS:1%
-					CFLAG:22 = CFLAG:21
+					PRINTFORML 확인차 묻겠습니다. 정말『%LOCALS:1%』이(가) 맞습니까?
+					PRINTL [0] 아니오
+					PRINTL [1] 네
+					INPUT
+					IF !RESULT
+						GOTO INPUT_CHILD_NAME_YN
+					ELSE
+						CSTR:11 = %LOCALS:1%
+						CFLAG:22 = CFLAG:21
+					ENDIF
 				ELSE
 					GOTO INPUT_CHILD_NAME_YN_1
 				ENDIF
@@ -262,7 +288,7 @@ ELSEIF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3
 			ELSEIF RESULT == 0
 				CALL MESSAGE_CHILD_GIVEUP
 			ELSE
-				PRINTL 正しい数値を入力してください
+				PRINTL 올바른 수치를 입력해 주십시오.
 				GOTO INPUT_CHILD_PRAYER
 			ENDIF
 		ENDIF
@@ -272,9 +298,9 @@ ELSEIF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3
 ENDIF
 
 ;------------------------
-;子供の能力決定
+;아이의 능력 결정
 ;------------------------
-;ARG = 母親のＩＤ
+;ARG = 친모의 ID
 @ADD_CHILD,ARG
 #DIM PAPA_POWER
 #DIM PAPA_CHARA
@@ -289,14 +315,14 @@ CHILD_SEX = ""
 PRINTL 
 PRINTL 
 IF CFLAG:ARG:0 == 11
-	PRINTFORML %PRINT_CALLNAME(ARG)%の子供が異常な速度で育ち、十分に闘えるようになりました。
+	PRINTFORML %PRINT_CALLNAME(ARG)%의 아이가 비정상적인 속도로 성장하여, 촉수와 싸울 수 있을 만큼 충분히 자랐습니다.
 ELSEIF CFLAG:ARG:22
 	CALL TENTACLE_BITVALUE, CFLAG:ARG:22
 	CALL TENTACLE_SURVIVE_CHECK, RESULT
 	IF RESULT > 0
-		PRINTFORML %PRINT_CALLNAME(ARG)%の子供が異常な速度で育ち、幼児期を終えました。
+		PRINTFORML %PRINT_CALLNAME(ARG)%의 아이가 비정상적인 속도로 성장하여, 유아기를 바로 마쳤습니다.
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(ARG)%と생이별한た子供は、ついに見つかりませんでした……。
+		PRINTFORML %PRINT_CALLNAME(ARG)%와(과) 생이별한 아이는 결국 찾을 수 없었습니다……
 		CSTR:ARG:11 = 
 		CFLAG:ARG:22 = 0
 		CFLAG:ARG:224 = 0
@@ -308,48 +334,48 @@ FLAG:8 ++
 CFLAG:(CHARANUM - 1):240 = FLAG:8
 TARGET = CHARANUM -1
 CFLAG:7 = CFLAG:ARG:240
-;子供の性別が남자の場合
+;아이의 성별이 남자인 경우
 IF CFLAG:ARG:226 > 0
 	TALENT:남자 = 1
 	CHILD_SEX = ♂
 ELSE
 	CHILD_SEX = ♀
 ENDIF
-;親が持つ子供の性別情報をリセット
+;부모가 가진 자녀의 성별 정보를 초기화
 CFLAG:ARG:226 = 0
 
-;名前関係-------------------------------------------------------------------------
+;이름 관련-------------------------------------------------------------------------
 IF CSTR:ARG:11 == ""
 	$INPUT_CHILD_NAME_YN
-	PRINTFORML キャラの名前を自分で決めますか？（性別：%CHILD_SEX%）
-	PRINTL [0] 아니오（ランダム生成）
-	PRINTL [1] 네（手動入力）
+	PRINTFORML 캐릭터의 이름을 직접 정하시겠습니까?（성별：%CHILD_SEX%）
+	PRINTL [0] 아니오（랜덤 생성）
+	PRINTL [1] 네（직접 입력）
 	INPUT
 	IF RESULT == 0
 		$INPUT_LOOP_CHILD_NAME_RANDOM
-		PRINTL [0]日本語で構成
-		PRINTL [1]英語で構成
-		PRINTL [2]フランス語で構成
-		PRINTL [3]ドイツ語で構成
-		PRINTL [4]イタリア語で構成
-		PRINTL [5]ロシア語で構成
-		PRINTL [6]中国語で構成
-		PRINTL [99]完全ランダム
+		PRINTL [0] 일본어로 구성
+		PRINTL [1] 영어로 구성
+		PRINTL [2] 프랑스어로 구성
+		PRINTL [3] 독일어로 구성
+		PRINTL [4] 이탈리아어로 구성
+		PRINTL [5] 러시아어로 구성
+		PRINTL [6] 중국어로 구성
+		PRINTL [99] 완전 랜덤
 		INPUT
 		LOCAL:99 = RESULT
 		$INPUT_LOOP_NAME_KOSEI
 		IF LOCAL:99  == 99
-			;名前
+			;완전 랜덤
 			LOCAL:1 = RAND:4000 + 12000
 			WHILE STR:(LOCAL:1) == ""
 				LOCAL:1 = RAND:4000 + 12000
 			WEND
 			LOCALS:1 = %STR:(LOCAL:1)%
 		ELSEIF LOCAL:99  == 0
-			;名前
+			;일본어
 			IF ISMALE()
-				;日本名のみ、♂は中性的ネームから付与
-				;(他言語についてはcsvに中性的リストが無く、おそらく今後の追加も見込めないため考慮無し)
+				;일본명만, ♂는 중성적 네임에서 부여
+				;(다른 언어에 대해서는 csv에 중성적 리스트가 없고, 아마도 향후의 추가도 전망할 수 없기 때문에 고려 없음)
 				LOCAL = RAND:500 + 18000
 				WHILE STR:LOCAL == ""
 					LOCAL = RAND:500 + 18000
@@ -363,48 +389,48 @@ IF CSTR:ARG:11 == ""
 				LOCALS:1 = %STR:LOCAL%
 			ENDIF
 		ELSEIF LOCAL:99  == 1
-			;名前
+			;영어
 			LOCAL = RAND:1000 + 12500
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:1000 + 12500
 			WEND
 			LOCALS:1 = %STR:LOCAL%
 		ELSEIF LOCAL:99  == 2
-			;名前
+			;프랑스어
 			LOCAL = RAND:500 + 13500
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:500 + 13500
 			WEND
 			LOCALS:1 = %STR:LOCAL%
 		ELSEIF LOCAL:99  == 3
-			;名前
+			;독일어
 			LOCAL = RAND:1000 + 14000
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:1000 + 14000
 			WEND
 			LOCALS:1 = %STR:LOCAL%
 		ELSEIF LOCAL:99  == 4
-			;名前
+			;이탈리아어
 			LOCAL = RAND:500 + 15000
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:500 + 15000
 			WEND
 			LOCALS:1 = %STR:LOCAL%
 		ELSEIF LOCAL:99  == 5
-			;名前
+			;러시아어
 			LOCAL = RAND:500 + 15500
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:500 + 15500
 			WEND
 			LOCALS:1 = %STR:LOCAL%
 		ELSEIF LOCAL:99 == 6
-			;名前
+			;중국어
 			LOCAL = RAND:500 + 16500
 			WHILE STR:LOCAL == ""
 				LOCAL = RAND:1000 + 16500
 			WEND
 			LOCALS:1 = %STR:LOCAL%
-			;中国語二文字目
+			;중국어 두 번째 글자
 			IF RAND:2
 				LOCAL = RAND:500 + 16500
 				WHILE STR:LOCAL == ""
@@ -418,21 +444,22 @@ IF CSTR:ARG:11 == ""
 		ENDIF
 	ELSEIF RESULT == 1
 		$INPUT_CHILD_NAME_INPUT
-		PRINTL キャラの名前を入力してください
+		PRINTL 캐릭터의 이름을 입력해 주십시오.
 		INPUTS
 		IF RESULTS == ""
+			PRINTW 이름란을 공백으로 둘 수는 없습니다. 다시 입력해 주십시오.
 			GOTO INPUT_CHILD_NAME_INPUT
 		ELSE
 			LOCALS:1 = %RESULTS%
 		ENDIF
 	ELSE
-		PRINTL 正しい数値を入力してください
+		PRINTL 올바른 수치를 입력해 주십시오.
 		GOTO INPUT_CHILD_NAME_YN
 	ENDIF
-	;親の苗字を引き継ぐ
+	;부모의 성을 이어받는다
 	LOCALS:2 = %CSTR:ARG:10%
 	LOCALS:3 = %CSTR:ARG:10%
-	;父親が仲間の場合
+	;아버지가 동료인 경우
 	IF CFLAG:ARG:230 <= -100
 		FOR CCOUNT, 0, CHARANUM
 			SIF CCOUNT == MASTER
@@ -441,7 +468,7 @@ IF CSTR:ARG:11 == ""
 				LOCALS:3 = %CSTR:CCOUNT:10%
 		NEXT
 	ENDIF
-	PRINTFORML キャラの名前は 『%LOCALS:1%』 でよろしいですか？
+	PRINTFORML 캐릭터의 이름을『%LOCALS:1%』(으)로 결정하시겠습니까?
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	$INPUT_CHILD_NAME_YN_1
@@ -450,20 +477,20 @@ IF CSTR:ARG:11 == ""
 		GOTO INPUT_CHILD_NAME_YN
 	ELSEIF RESULT ==1
 		IF LOCALS:2 != "" || LOCALS:3 != ""
-			PRINTFORML キャラのフルネームを決めてください。
+			PRINTFORML 캐릭터 풀네임을 정해 주십시오.
 			PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-			PRINTFORML [0]%LOCALS:1% (苗字なし)
+			PRINTFORML [0] %LOCALS:1% (성씨 없음)
 			IF LOCALS:2 != LOCALS:3
 				PRINTL
-				PRINTL 母姓
+				PRINTL 어머니의 성
 			ENDIF
-			PRINTFORML [1]%LOCALS:2% %LOCALS:1%
-			PRINTFORML [2]%LOCALS:1% %LOCALS:2%
+			PRINTFORML [1] %LOCALS:2% %LOCALS:1%
+			PRINTFORML [2] %LOCALS:1% %LOCALS:2%
 			IF LOCALS:2 != LOCALS:3
 				PRINTL
-				PRINTL 父姓
-				PRINTFORML [3]%LOCALS:3% %LOCALS:1%
-				PRINTFORML [4]%LOCALS:1% %LOCALS:3%
+				PRINTL 아버지의 성
+				PRINTFORML [3] %LOCALS:3% %LOCALS:1%
+				PRINTFORML [4] %LOCALS:1% %LOCALS:3%
 			ENDIF
 			$INPUT_LOOP_CHILD_NARABI
 			INPUT
@@ -483,6 +510,7 @@ IF CSTR:ARG:11 == ""
 				NAME = %LOCALS:1% %LOCALS:3%
 				CSTR:10 = %LOCALS:3%
 			ELSE
+				PRINTL 올바른 값을 입력하십시오.
 				GOTO INPUT_LOOP_CHILD_NARABI
 			ENDIF
 			CALLNAME = %LOCALS:1%
@@ -494,9 +522,9 @@ IF CSTR:ARG:11 == ""
 		GOTO INPUT_CHILD_NAME_YN_1
 	ENDIF
 
-;幽閉された娘の場合
+;유폐된 아이일 경우
 ELSE
-	;親の苗字を引き継ぐ
+	;부모의 성을 이어받는다
 	CSTR:10 = %CSTR:ARG:10%
 	NAME = %CSTR:ARG:11%
 	CALLNAME = %CSTR:ARG:11%
@@ -504,7 +532,7 @@ ELSE
 	CFLAG:21 = CFLAG:ARG:22
 ENDIF
 
-;一人称の設定
+;일인칭 설정
 IF RAND:20 == 0 || ISMALE()
 	IF RAND:2 == 0
 		CFLAG:8 = 25 + RAND:3
@@ -517,14 +545,14 @@ CALL FIRSTSETTING_CHARA_SELFCALL, TARGET
 
 
 ;---------------------------------------------------------------------------------
-;キャラメイク完了処理相当の記述
+;캐릭터 메이킹 완료 처리 해당 기술
 
-;種族の設定,親の種族を覚える
+;종족의 설정, 부모의 종족을 기억한다
 FOR LOCAL,201,250
 	SIF TALENT:ARG:LOCAL > 0
 		CFLAG:231 = LOCAL
 NEXT
-;母親依存の種族になる
+;어머니 의존의 종족이 된다
 IF TALENTNAME:(CFLAG:231) == "인조인간"
 	TALENT:인간 = 1	
 ELSE
@@ -533,14 +561,14 @@ ENDIF
 ;FEAT 설정 시작
 CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",TARGET
 RACE = RESULT
-;種族の開始番号
+;종족의 시작 번호
 LOCAL:1 = 0
-;FEAT 개시 번호
+;FEAT의 시작 번호
 LOCAL:2 = 1000
 ;종족의 수
 LOCAL:3 = 11
-PRINTFORML %PRINT_CALLNAME(TARGET)%の種族は『%TALENTNAME:RACE%』です
-PRINTFORML フィートを設定しますか？
+PRINTFORML 현재 %PRINT_CALLNAME(TARGET)%의 종족은『%TALENTNAME:RACE%』입니다.
+PRINTFORML FEAT를 설정하시겠습니까?
 PRINTFORML [0] 네
 PRINTFORML [1] 아니오
 PRINTFORML [2] 랜덤으로 설정한다
@@ -555,7 +583,7 @@ IF RESULT == 0
 	NEXT
 	CALL LB
 	$MASTER_LOOP_1
-	;뱀파이어ならば밤악마의귀족を必ず取得
+	;뱀파이어라면「밤악마의귀족」을 반드시 취득
 	SIF RACE == 9
 		FEAT_SELECT:110 = 1
 	;FEAT의 수를 카운트
@@ -568,7 +596,7 @@ IF RESULT == 0
 	CALL SHORTLINE
 	CALL SYUZOKU_INFO, (RACE + LOCAL:1)
 	PRINTL 
-	PRINTL (取得可能フィート)          選択
+	PRINTL (취득 가능한 FEAT)          선택
 	FOR LOCAL, 100, 300
 		SIF FEAT_ABLE_F(RACE + LOCAL:1, LOCAL + LOCAL:2) == 0
 			CONTINUE
@@ -582,7 +610,7 @@ IF RESULT == 0
 			SETCOLOR 255,0,0
 			PRINT ◎
 			RESETCOLOR
-			PRINTPLAIN  固定取得
+			PRINTPLAIN  고정 취득
 		ELSEIF FEAT_SELECT:LOCAL > 0
 			SETCOLOR 255,128,0
 			PRINT ○
@@ -593,7 +621,7 @@ IF RESULT == 0
 		PRINTL 
 	NEXT
 	PRINTL 
-	PRINTFORML 選択したフィート({FEAT_NUM}/3)
+	PRINTFORML 선택한 FEAT ({FEAT_NUM}/3)
 	SIF FEAT_NUM > 3
 		SETCOLOR 128,128,128
 	PRINTL [0] 결정
@@ -633,7 +661,7 @@ ELSEIF RESULT == 2
 	CALL SET_FEAT_DEFAULT, TARGET, RACE
 	;프로필에 반영
 	CALL SET_PROFILE, TARGET
-	PRINTFORML ランダムにフィートを設定しました
+	PRINTFORML 랜덤으로 %PRINT_CALLNAME(TARGET)%의 FEAT를 설정했습니다.
 	PRINTW 
 ELSE
 	GOTO INPUT_LOOP_0
@@ -641,16 +669,16 @@ ENDIF
 ;---------------------------------------------------------------------------------
 
 IF CFLAG:ARG:22 > 0
-	;幽閉された娘は教育を受けていないので非戦闘員
+	;유폐된 아이는 교육을 받지 못했기 때문에 비전투원
 	TALENT:변신능력 = -1
-	;服は着ていない状態
+	;옷은 입지 않은 상태
 	CFLAG:40 = 0
 	CFLAG:42 = 0
 ELSE
-	;服を着せる
+	;옷을 입힌다
 	CFLAG:40 = 100
 	CFLAG:42 = 300
-	;변신능력の設定
+	;변신능력 설정
 	CFLAG:10 = CFLAG:ARG:10
 	CFLAG:11 = CFLAG:ARG:11
 	IF TALENT:ARG:인간 == 1
@@ -666,41 +694,41 @@ ELSE
 	ENDIF
 ENDIF
 IF TALENT:변신능력 == 1
-	PRINTFORML %PRINT_CALLNAME(TARGET)%には변신능력が付きました
-	;キャラの変身後名前の設定
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 변신 능력이 발현되었습니다.
+	;캐릭터의 변신 후 이름 설정
 	CALL FIRSTSETTING_CHARA_TRANSAFTERNAME, TARGET
 	
-	;キャラの変身後呼び名の設定
+	;캐릭터 변신 후 통칭 설정
 	IF CFLAG:2 == 1
-		;キャラの変身後呼び名플래그를 세운다
+		;캐릭터 변신 후 통칭 플래그를 세운다
 		CFLAG:3 = 1
 		CALL FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, TARGET
 	ENDIF
 	
-	;キャラの変身時のかけ声の設定
+	;캐릭터 변신 시 구호 설정
 	CALL FIRSTSETTING_CHARA_TRANSCALL, TARGET
 	
-	;キャラの名乗り구상の設定
+	;캐릭터의 자칭 구상을 설정
 	CALL FIRSTSETTING_CHARA_NANORI, TARGET
 ENDIF
 IF ISFEMALE()
 	;처녀
 	TALENT:처녀 = 1
 ENDIF
-;バイパン
+;백보지
 TALENT:백보지 = 1
 ;미성숙
 TALENT:미성숙 = 1
 
-;父親に見やった才能
-;生まれたてはそれ以外鈍感
+;부친에게 봤던 재능 (父親に見やった才能)
+;갓 태어났을 때는 그 이외는 둔감
 FOR LOCAL,0,4
 	TALENT:(101 + LOCAL * 2) = 1
 NEXT
-;父親ＩＤを記録
+;부친ID를 기록
 CFLAG:9 = CFLAG:ARG:230
 
-;C촉수
+;Ｃ촉수
 IF CFLAG:ARG:230 == 1
 	TALENT:C민감 = 1
 	TALENT:C둔감 = 0
@@ -739,25 +767,25 @@ ELSEIF CFLAG:ARG:230 == 7
 	ABL:봉사정신 = 3
 	PAPA_POWER = 10
 	SETBIT RELATION:TARGET:TARGET, Ｈ촉수
-;최종 보스系
+;최종 보스계
 ELSEIF CFLAG:ARG:230 >= 100 && CFLAG:ARG:230 < 200
-	;全部位敏感
+	;모든 부위 민감
 	TALENT:C민감 = 1
 	SIF ISFEMALE()
 		TALENT:V민감 = 1
 	TALENT:A민감 = 1
 	TALENT:B민감 = 1
-	;全部位から鈍感削除
+	;모든 부위에서 둔감 삭제
 	TALENT:C둔감 = 0
 	TALENT:V둔감 = 0
 	TALENT:A둔감 = 0
 	TALENT:B둔감 = 0
 	PAPA_POWER = 15
 	SETBIT RELATION:TARGET:TARGET, 혈통불명
-;잡몹적汎用
+;잡몹 범용
 ELSEIF CFLAG:ARG:230 >= 200
 	PAPA_POWER = 1
-;仲間キャラ
+;동료 캐릭터
 ELSEIF CFLAG:ARG:230 <= -100
 	PAPA_CHARA = 0
 	FOR CCOUNT, 0, CHARANUM
@@ -766,7 +794,7 @@ ELSEIF CFLAG:ARG:230 <= -100
 		SIF CFLAG:CCOUNT:240 == CFLAG:ARG:230 * -1 - 100
 			PAPA_CHARA = CCOUNT
 	NEXT
-	;父親になったキャラの변신능력で分岐
+	;아버지가 된 캐릭터의 변신능력으로 분기
 	IF TALENT:PAPA_CHARA:변신능력 == 1
 		PAPA_POWER = 6
 	ELSEIF TALENT:PAPA_CHARA:변신능력 == -1
@@ -774,15 +802,15 @@ ELSEIF CFLAG:ARG:230 <= -100
 	ELSE
 		PAPA_POWER = 4
 	ENDIF
-;一般人
+;일반인
 ELSEIF CFLAG:ARG:230 <= -1
 	PAPA_POWER = 0
 ELSE
-	PRINTL 父親不明!?
-	PRINTFORML 촉수番号{CFLAG:ARG:230}が父親です
+	PRINTL 아버지가…… 없으시다고요?!
+	PRINTFORML 그럼 촉수 번호{CFLAG:ARG:230}이(가) 아버지입니다.
 	
 ENDIF
-;男の場合、Ｖ関係の素質は付かない
+;남자일 경우, V관련 소질은 붙지 않는다
 IF ISMALE()
 	IF TALENT:V민감 > 0
 		TALENT:C민감 = 1
@@ -792,7 +820,7 @@ IF ISMALE()
 	TALENT:V둔감 = 0
 ENDIF
 
-;親の能力に応じて基礎値にボーナス
+;부모의 능력에 따라 기초값에 보너스
 IF PAPA_POWER > 0
 	BASE:TARGET:기초체력 = BASE:ARG:기초체력*6/10 + 15 * PAPA_POWER + RAND:(40 * PAPA_POWER)
 	BASE:TARGET:기초기력 = BASE:ARG:기초기력*6/10 + 15 * PAPA_POWER + RAND:(40 * PAPA_POWER)
@@ -824,7 +852,7 @@ MAXBASE:TARGET:체력 = BASE:기초체력
 MAXBASE:TARGET:기력 = BASE:기초기력
 MAXBASE:TARGET:성내성 = BASE:기초성내성
 
-;子供の基礎値を記録
+;아이의 기초치를 기록
 CFLAG:60 = MAXBASE:0 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 0, CSVBASE_F(NO:TARGET,0))
 CFLAG:61 = MAXBASE:1 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 1, CSVBASE_F(NO:TARGET,1))
 CFLAG:62 = MAXBASE:2 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 2, CSVBASE_F(NO:TARGET,2))
@@ -833,7 +861,7 @@ CFLAG:64 = BASE:11 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 11, CSVBASE_F(NO:T
 CFLAG:65 = BASE:12 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 12, CSVBASE_F(NO:TARGET,12))
 CFLAG:66 = BASE:13 - SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 13, CSVBASE_F(NO:TARGET,13))
 
-;一応baseを最大値に
+;일단 BASE를 최대치로
 BASE:체력 = MAXBASE:체력
 BASE:기력 = MAXBASE:기력
 BASE:성내성 = MAXBASE:성내성
@@ -845,7 +873,7 @@ MAXBASE:방어 = BASE:방어
 MAXBASE:민첩 = BASE:민첩
 MAXBASE:지성 = BASE:지성
 CALL LEVELSTATUS,TARGET
-;性格
+;성격
 IF CFLAG:ARG:230 == 5
 	IF RAND:4 == 0
 		TALENT:겁쟁이 = 1
@@ -865,7 +893,7 @@ ELSEIF CFLAG:ARG:230 == 6
 ELSE
 	TALENT:(RAND:18+10) = 1
 ENDIF
-;체력などのBASE値の計算
+;체력 등의 BASE값 계산
 LOCAL = SEIKAKU_CHECK_F(TARGET)
 LOCAL:1 = 0
 LOCAL:2 = 0
@@ -874,12 +902,12 @@ FOR LOCAL:3, 0, 7
 	SIF LOCAL:3 > 2
 		LOCAL:1 = LOCAL:3 + 7
 	LOCAL:2 = BASE:(LOCAL:1)
-	;性格補正
+	;성격 보정
 	BASE:(LOCAL:1) = SEIKAKU_HOSEI_F(LOCAL, LOCAL:1, LOCAL:2)
 	MAXBASE:(LOCAL:1) = BASE:(LOCAL:1)
 NEXT
 
-;임신 중の膣出回数によって정액중독が決まる
+;임신 중 질싸 횟수에 따라 정액중독이 결정된다
 IF CFLAG:ARG:221 == 0
 ELSEIF CFLAG:ARG:221 < 10
 	ABL:정액중독 = 1
@@ -892,36 +920,36 @@ ELSEIF CFLAG:ARG:221 < 200
 ELSE
 	ABL:정액중독 = 5
 ENDIF
-;その他の素質
+;기타 소질
 
 ;빈유
 SIF ISFEMALE()
 	TALENT:빈유 = 1
 ;젖기어려움
 TALENT:젖기어려움 = 1
-;回復はやい
+;회복빠름
 TALENT:회복빠름 = 1
 ;왜소함
 TALENT:왜소함 = 1
 
-;距離得意を決める
+;거리 특기를 정한다
 IF RAND:5 == 0
 	LOCAL:2 = RAND:3
 	TALENT:(180 + LOCAL:2 * 2) = 1
 ENDIF
-;距離不得意を決める
+;거리 서툼을 정한다
 IF RAND:5 == 0
 	LOCAL:2 = RAND:3
 	SIF TALENT:(180 + LOCAL:2 * 2) != 1
 		TALENT:(181 + LOCAL:2 * 2) = 1
 ENDIF
-;촉수の血族레벨
+;촉수의 혈연 레벨
 MARK:혈연보정 = MARK:ARG:혈연보정+1
-;成長日数
+;성장 일수
 CFLAG:225 = 1
 
-;プロフィールの設定
-;ヘアスタイルの設定
+;프로필 설정
+;헤어스타일 설정
 CSTR:12 = %STR:(30000 + RAND:9)%
 CSTR:13 = %STR:(30100 + RAND:15)%
 IF TALENT:변신능력 > 0
@@ -930,7 +958,7 @@ IF TALENT:변신능력 > 0
 		CSTR:14 = %STR:(30100 + RAND:15)%
 ENDIF
 
-;各種色を両親から継承
+;각종 색을 부모로부터 계승
 
 FOR LOCAL, 30, 38
 	IF CFLAG:ARG:34 > 0 || (PAPA_CHARA > 0 && CFLAG:PAPA_CHARA:34 > 0 && RAND:2 == 0)
@@ -944,36 +972,36 @@ FOR LOCAL, 30, 38
 	ENDIF
 NEXT
 
-;LOCAL:0	ループ変数
-;LOCAL:1	親と変わるかの判定
-;LOCAL:2	色A
-;LOCAL:3	色B
+;LOCAL:0	루프 변수
+;LOCAL:1	부모와 변할지의 판정 (親と変わるかの判定)
+;LOCAL:2	색A
+;LOCAL:3	색B
 FOR LOCAL, 30, 36
-	;通常時髪
+	;평상시 머리
 	IF LOCAL == 30
 		LOCAL:1 = RAND:4
 		LOCAL:2 = RAND:7
-	;変身時髪
+	;변신 시 머리
 	ELSEIF LOCAL == 31
 		IF LOCAL:1 == 0 && RAND:4 == 0
 			LOCAL:1 = RAND:4
 			LOCAL:2 = RAND:7
 		ENDIF
-	;通常時右目
+	;평상시 오른쪽 눈
 	ELSEIF LOCAL == 32
 		LOCAL:1 = RAND:4
 		LOCAL:2 = RAND:7
-	;通常時左目
+	;평상시 왼쪽 눈
 	ELSEIF LOCAL == 33
-		;右目が変化した
+		;오른쪽 눈이 변화했다
 		IF LOCAL:1 == 0
 			LOCAL:1 = (RAND:3 == 0)
-		;右目が変化していない
+		;오른쪽 눈이 변화하지 않는다
 		ELSE
 			LOCAL:1 = RAND:3
 			LOCAL:2 = RAND:7
 		ENDIF
-	;変身時右目
+	;변신 시 오른쪽 눈
 	ELSEIF LOCAL == 34
 		LOCAL:1 = RAND:4
 		IF CSTR:32 == CSTR:33
@@ -981,18 +1009,18 @@ FOR LOCAL, 30, 36
 				LOCAL:2 = RAND:7
 				LOCAL:3 = LOCAL:2
 			ENDIF
-		;元からオッドアイの場合
+		;원래부터 오드아이인 경우
 		ELSE
-			;変化なし
+			;변화 없음
 			LOCAL:1 = 9
 		ENDIF
-	;変身時左目
+	;변신 시 왼쪽 눈
 	ELSEIF LOCAL == 35
-		;元からオッドアイの場合
+		;원래부터 오드아이인 경우
 		IF LOCAL:1 == 9
-			;変化なし
+			;변화 없음
 			LOCAL:1 = 9
-		;変化ありの場合
+		;변화하는 경우
 		ELSEIF LOCAL:1 == 0
 			LOCAL:2 = LOCAL:3
 			SIF RAND:3 == 0
@@ -1005,47 +1033,47 @@ FOR LOCAL, 30, 36
 		LOCAL:1 = 0
 	IF LOCAL:1 == 0
 		IF LOCAL:2 == 0
-			CSTR:LOCAL = 赤
+			CSTR:LOCAL = 빨강
 		ELSEIF LOCAL:2 == 1
-			CSTR:LOCAL = 緑
+			CSTR:LOCAL = 초록
 		ELSEIF LOCAL:2 == 2
-			CSTR:LOCAL = 青
+			CSTR:LOCAL = 파랑
 		ELSEIF LOCAL:2 == 3
-			CSTR:LOCAL = 黄
+			CSTR:LOCAL = 노랑
 		ELSEIF LOCAL:2 == 4
-			CSTR:LOCAL = 紫
+			CSTR:LOCAL = 보라
 		ELSEIF LOCAL:2 == 5
-			CSTR:LOCAL = 橙
+			CSTR:LOCAL = 주황
 		ELSEIF LOCAL:2 == 6
-			CSTR:LOCAL = 桃
+			CSTR:LOCAL = 분홍
 		ENDIF
 	ENDIF
 NEXT
 
-;肌の色
+;피부색
 IF RAND:4 == 0 || CFLAG:ARG:34 == 0
 	IF RAND:4 == 0
-		CSTR:36 = 黒
-		CSTR:37 = 黒
+		CSTR:36 = 흑색
+		CSTR:37 = 흑색
 	ELSEIF RAND:3 == 0
-		CSTR:36 = 褐色
-		CSTR:37 = 褐色
+		CSTR:36 = 갈색
+		CSTR:37 = 갈색
 	ELSEIF RAND:2 == 0
-		CSTR:36 = 色白
-		CSTR:37 = 色白
+		CSTR:36 = 백색
+		CSTR:37 = 백색
 	ELSE
-		CSTR:36 = 肌色
-		CSTR:37 = 肌色
+		CSTR:36 = 살구색
+		CSTR:37 = 살구색
 	ENDIF
 ENDIF
 
 BASE:나이 = RAND:5 + 6
 MAXBASE:나이 = BASE:나이
-;スリーサイズ等設定
+;쓰리 사이즈 등 설정
 CALL CHARA_SIZE_DEFAULT, TARGET
 BASE:실제나이 = 0
 
-;パーソナリティのランダム設定
+;개성 랜덤 설정
 IF RAND:12 == 0
 	LOCAL = 1
 ELSEIF RAND:6 == 0
@@ -1072,17 +1100,17 @@ IF LOCAL > 2
 		GOTO PERSONALITY_2
 ENDIF
 
-;設定画面を１度呼び出す
+;설정 화면을 한 번 호출한다
 SIF CFLAG:34 == 0
 	CALL GENERATE_BODYLINE, TARGET
 CALL SIZE_SETTING, TARGET
 
 
 
-;処理終了
+;처리 종료
 IF CFLAG:ARG:0 == 11
-	PRINTFORML %PRINT_CALLNAME(ARG)%は育児を終了しました。通常状態に復帰します
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が組織に加入しました
+	PRINTFORML %PRINT_CALLNAME(ARG)%은(는) 육아를 마쳐 통상으로 복귀합니다.
+	PRINTFORML %PRINT_CALLNAME(TARGET)%이(가) 마법소녀 조직에 새로이 가입했습니다.
 	PRINTL 
 	CALL RECOVER_TO_PARTY,ARG
 	CFLAG:ARG:224 = 0
@@ -1091,14 +1119,14 @@ IF CFLAG:ARG:0 == 11
 	;상관관계 전체 탐색
 	CALL CHECK_ALL_RELATION
 ELSEIF CFLAG:ARG:22 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は種付けの対象として認識されたようです。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は幽閉されました・・・
+	PRINTFORML %PRINT_CALLNAME(TARGET)%이(가) 교배 대상으로 인식된 것 같습니다.
+	PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 유폐되었습니다・・・
 	PRINTW 
 	CFLAG:0 = 1
 	CSTR:ARG:11 = 
 	CFLAG:ARG:22 = 0
 	CFLAG:ARG:224 = 0
-	;救出されるまで구상は表示されない
+	;구출될 때까지 구상은 표시되지 않는다
 	CFLAG:6 = -1
 
 	;상관관계 전체 탐색
@@ -1108,36 +1136,36 @@ RETURN
 
 
 ;-----------------------------
-;一次性徴
+;1차 성징
 ;-----------------------------
 @CHILD_GROW_1
 PRINTL 
 FONTBOLD
-PRINTL 一次性徴
+PRINTL 1차 성징
 FONTREGULAR
-PRINTFORML %PRINT_CALLNAME(TARGET)%は成長して体質が変わった
-;미성숙を失う
+PRINTFORML %PRINT_CALLNAME(TARGET)%이(가) 성장하여 체질이 바뀌었다!
+;미성숙을 잃는다
 IF TALENT:미성숙 == 1
 	IF ISMALE()
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は사정できるようになった
+		PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 사정할 수 있게 됐다.
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は임신できるようになった
+		PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 임신이 가능해졌다.
 	ENDIF
 	TALENT:미성숙 = 0
 ENDIF
 PRINTW 
 
-;백보지？　25%で백보지でなくなる
+;백보지？　25% 확률로 백보지를 잃는다
 SIF RAND:4 == 0
 	TALENT:백보지 = 0
-;敏感、鈍感の設定 
-;一次性徴で8割の確率で鈍感が取れる
+;민감, 둔감의 설정 
+;1차 성징에서 80%의 확률로 둔감이 없어진다
 FOR LOCAL,0,4
 	SIF RAND:100 < 80
 		TALENT:(101 + 2 * LOCAL) = 0
 NEXT
 
-;身体の成長
+;신체의 성장
 LOCAL = RAND:5 + 1
 BASE:나이 = BASE:나이 + LOCAL
 MAXBASE:나이 = MAXBASE:나이 + LOCAL
@@ -1145,20 +1173,20 @@ CALL CHARA_SIZE_DEFAULT, TARGET
 DRAWLINE
 
 ;-----------------------------
-;二次性徴
+;2차 성징
 ;-----------------------------
 @CHILD_GROW_2
 PRINTL 
 FONTBOLD
-PRINTL 二次性徴
+PRINTL 2차 성징
 FONTREGULAR
 
-PRINTFORML %PRINT_CALLNAME(TARGET)%は成長して体質がさらに変わった
+PRINTFORML %PRINT_CALLNAME(TARGET)%%이(가) 성장하여 체질이 다시금 바뀌었다!
 PRINTW 
-;백보지？　75%で백보지でなくなる
+;백보지？　75% 확률로 백보지를 잃는다
 SIF RAND:4 != 0
 	TALENT:백보지 = 0
-;鈍感、敏感
+;둔감, 민감
 FOR LOCAL,0,4
 	IF (RAND:100 < 80) && (TALENT:(101 + 2 * LOCAL) == 1)
 			TALENT:(101 + 2 * LOCAL) = 0
@@ -1166,7 +1194,7 @@ FOR LOCAL,0,4
 			TALENT:(100 + 2 * LOCAL) = 1
 	ENDIF
 NEXT
-;胸膨らむか
+;가슴이 부풀어 오르는지
 IF ISFEMALE()
 	RESULT = RAND:100
 	IF (RESULT < 70) && (TALENT:빈유 > 0)
@@ -1174,7 +1202,7 @@ IF ISFEMALE()
 	ELSEIF (RESULT > 70) && (TALENT:빈유 == 0) && (TALENT:거유 < 5)
 		TALENT:거유 += 1
 	ENDIF
-	;젖기쉬움か
+	;젖기 쉬운지
 	RESULT = RAND:100
 	IF (RESULT < 70) && (TALENT:젖기어려움 == 1)
 		TALENT:젖기어려움 = 0
@@ -1182,14 +1210,14 @@ IF ISFEMALE()
 		TALENT:젖기쉬움 = 1
 	ENDIF
 ENDIF
-;回復変わるか
+;회복 속도가 변하는지
 RESULT = RAND:100
 IF (RESULT < 70) && (TALENT:회복빠름 == 1)
 	TALENT:회복빠름 = 0
 ELSEIF (RESULT > 70) && (TALENT:회복빠름 == 0)
 	TALENT:회복느림 = 1
 ENDIF
-;体の大きさ
+;몸집의 크기
 RESULT = RAND:100
 IF (RESULT < 70) && (TALENT:왜소함 > 0)
 	TALENT:왜소함 = 0
@@ -1197,7 +1225,7 @@ ELSEIF (RESULT > 70) && (TALENT:왜소함 == 0)
 	TALENT:장신 = 1
 ENDIF
 
-;身体の成長
+;신체의 성장
 LOCAL = RAND:5 + 1
 BASE:나이 = BASE:나이 + LOCAL
 MAXBASE:나이 = MAXBASE:나이 + LOCAL
@@ -1205,12 +1233,12 @@ CALL CHARA_SIZE_DEFAULT, TARGET
 DRAWLINE
 
 ;-------------------------------
-;娘の救出
+;아이의 구출
 ;-------------------------------
 @RESCUE_CHILD,ARG
 #DIM CCOUNT
 VARSET LOCAL
-;母親サーチ
+;어머니 서치
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
@@ -1218,13 +1246,14 @@ FOR CCOUNT, 0, CHARANUM
 		LOCAL = CCOUNT
 NEXT
 IF MONEY >= 5000 && CHARANUM < (등록최대인원 + 1)
+;게임에서 설정할 수 있는 최소 연령이 7세이므로, 아이가 촉수 성분으로 금방 자랐다는 설정이라면 설명이 되려나?
 	DRAWLINE
-	PRINTFORML 助け出されたまだ幼い少女が、
-	PRINTFORML カタコトで『%CALLNAME:ARG%』と名乗っている。
-	PRINTFORML どうやら%CALLNAME:LOCAL%の娘らしいが・・・
+	PRINTFORML 촉수로부터 구출된 아직 어린 나이의 아이가, 
+	PRINTFORML 떠듬거리는 목소리로『%CALLNAME:ARG%』(이)라는 이름을 대고 있다.
+	PRINTFORML 아무래도 %CALLNAME:LOCAL%의 자식인 것 같은데・・・
 	PRINTL 
-	PRINTL 仲間に加えるためには養育費として$5000かかります
-	PRINTL 仲間に加えますか？
+	PRINTL 　※동료로서 추가하기 위해서는 양육비로서 5000$이 필요합니다.
+	PRINTL 　  새로운 동료로 맞아들이겠습니까?
 	PRINTL
 	PRINTL [0] 아니오
 	PRINTL [1] 네
@@ -1232,18 +1261,21 @@ IF MONEY >= 5000 && CHARANUM < (등록최대인원 + 1)
 	INPUT
 	IF RESULT == 1
 		IF CFLAG:LOCAL:0 == 0
-			PRINTFORML 母と子の間に言葉は要らなかった。
-			PRINTFORML %PRINT_CALLNAME(LOCAL)%は何も言わずに%CALLNAME:ARG%を強く抱きしめ、
-			PRINTFORML %CALLNAME:ARG%もまた、そっと抱き返すのだった・・・
+			PRINTFORML 엄마와 아이 사이에 말은 필요 없었다.
+			PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) 아무 말도 않은 채 %CALLNAME:ARG%을(를) 꼭 껴안았고,
+			PRINTFORML %CALLNAME:ARG%도 마찬가지로, 살며시 자신의 어머니를 끌어안았다.
+			PRINTFORML 이내 자신의 품 속에서 조용히 흐느끼는 %CALLNAME:ARG%을(를) 토닥토닥 달래주었다・・・
 		ELSE
-			PRINTFORML 行く宛ても無い幼い少女を野に放り出すわけにもいかない。
-			PRINTFORML 共に闘う仲間として引き取ることにした・・・
+			PRINTFORML 갈 곳도 없는 어린 아이를 길거리에 내팽개칠 수도 없었기에,
+			PRINTFORML 함께 싸우는 동료로서 인수하기로 했다.
+			PRINTFORML 이에 대한 설명을 들은 %CALLNAME:ARG%은(는), 반응도 하지 않고 허공을 하염없이 바라보고 있었으나
+			PRINTFORML 끝내 자신의 운명을 수긍한 듯 순순히 동료들의 손에 이끌려 거점으로 향했다・・・
 		ENDIF
 		PRINTW 
 		IF CSTR:ARG:10 != ""
-			PRINTFORML キャラのフルネームを決めてください。
-			PRINTFORML [0]%CSTR:ARG:10% %CALLNAME:ARG%
-			PRINTFORML [1]%CALLNAME:ARG% %CSTR:ARG:10%
+			PRINTFORML 캐릭터의 풀네임을 정해 주십시오.
+			PRINTFORML [0] %CSTR:ARG:10% %CALLNAME:ARG%
+			PRINTFORML [1] %CALLNAME:ARG% %CSTR:ARG:10%
 			$INPUT_LOOP_CHILD_NARABI
 			INPUT
 			IF RESULT == 0
@@ -1254,45 +1286,75 @@ IF MONEY >= 5000 && CHARANUM < (등록최대인원 + 1)
 				GOTO INPUT_LOOP_CHILD_NARABI
 			ENDIF
 		ENDIF
-		PRINTFORML %CALLNAME:ARG%は驚異的な知能を発揮して短期間で言葉を覚えた！
+		PRINTFORML %CALLNAME:ARG%은(는) 경이로운 지능을 발휘하여 단기간에 교육을 마쳤다!
 		MONEY -= 5000
 		CALL RECOVER_TO_PARTY,ARG
 		CFLAG:ARG:6 = 0
 	ELSEIF RESULT == 0
 		IF CFLAG:LOCAL:0 == 0
-			PRINTFORML %PRINT_CALLNAME(LOCAL)%は%CALLNAME:ARG%が自分の娘だと知りながらも
-			PRINTFORML 戦いに巻き込むわけにはいかないと判断し、施設へと預けることにした・・・
+			PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) %CALLNAME:ARG%을(를) 보자마자 한눈에 자기 자식임을 알아 차렸지만
+			PRINTFORMW 적어도 자신의 아이는 이 험한 싸움에 휘말리게 할 수는 없다는 생각에, 보호 시설에 맡기기로 결정했다.
+			IF RAND:3 == 0
+				PRINTFORML 그러나, 자신으로부터 등을 돌려 다시 멀어져 가는 어머니를 %CALLNAME:ARG%이(가) 애타게 부르고 있었다.
+				PRINTFORML 자식의 서글픈 울음소리에 %PRINT_CALLNAME(LOCAL)%은(는)……
+				PRINTL [0] 마음을 바꿔 돌아섰다
+				PRINTL [1] 계속 걸어갔다
+				INPUT
+				IF !RESULT
+					PRINTFORML 방금 전까지의 매정한 모습은 어디로 간 걸까.
+					PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) 자신을 찾는 소리에 본능처럼 %CALLNAME:ARG%에게 달려가 껴안아 주었다.
+					PRINTFORML 수많은 생각이 스쳐 지나갔지만, 적어도 %CALLNAME:ARG%에게 있어 자신이 꼭 필요한 사람임을 온몸으로 느끼고 있었다・・・
+				ELSE
+					PRINTFORML %CALLNAME:ARG%이(가) 안전하게 살아가려면 이 방법 밖에는 없다고, 스스로에게 거듭 설득하며
+					PRINTFORML 자꾸만 뒤로 돌아가려는 발걸음을 힘겹게 옮겨나갔다・・・
+				ENDIF
+			ELSE
+				PRINTFORML 자신으로부터 등을 돌려 다시 멀어져 가는 어머니를, %CALLNAME:ARG%이(가) 애타게 불러 보았지만
+				PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) 마음을 다잡으며 매정히 그 자리를 떠나갔다・・・
+			ENDIF
 		ELSE
-			PRINTFORML 촉수との厳しい戦いにこんな子供を巻き込むわけにはいかない。
-			PRINTFORML %CALLNAME:ARG%と名乗る少女を施設へと預けることにした・・・
+			PRINTFORML 촉수와의 험한 싸움에 이런 어린 아이를 끌어들일 수는 없다.
+			PRINTFORML 더군다나 보호자가 아무도 없는 상황에서는 보호 조치가 필연적이었다.
+			PRINTL
+			PRINTFORML 아무리 기다려도 어머니가 오지 않자, 서러움이 북받치는 나머지
+			PRINTFORML 결국에는 울음을 터뜨리고 마는 %CALLNAME:ARG%을(를), 이윽고 안전 요원이 안고 가며 시설로 이송시켰다.
+			PRINTL
+			PRINTFORML 자신을 %CALLNAME:ARG%(이)라고 칭하는 아이를 시설에 맡기기로 했다・・・
 		ENDIF
 		DELCHARA ARG
-		;FOR CHARANUM内でDELする関係上、外部のCCOUNTを減らす
+		;FOR CHARANUM 내에서 DEL하는 관계상, 외부의 CCOUNT를 줄인다
 		LOCAL:99 --
 	ELSE
-		PRINTL 正しい数値を入力してください
+		PRINTL 올바른 수치를 입력해 주십시오.
 		GOTO INPUT_CHILD_CRADLE
 	ENDIF
 ELSEIF MONEY < 5000 || CHARANUM >= (등록최대인원 + 1)
 	DRAWLINE
-	PRINTFORML 助け出されたまだ幼い少女が、
-	PRINTFORML カタコトで『%CALLNAME:ARG%』と名乗っている。
-	PRINTFORML どうやら%CALLNAME:LOCAL%の娘らしいが・・・
+	PRINTFORML 촉수로부터 구출된 아직 어린 나이의 아이가,
+	PRINTFORML 떠듬거리는 목소리로『%CALLNAME:ARG%』(이)라는 이름을 대고 있다.
+	PRINTFORML 아무래도 %CALLNAME:LOCAL%의 자식인 것 같은데・・・
 	PRINTL 
 	IF CHARANUM >= (등록최대인원 + 1)
-		PRINTL （これ以上仲間を増やせないので選択肢を省略します）
+		PRINTL （더 이상 동료를 늘릴 수 없기 때문에 선택지를 생략합니다.）
 	ELSEIF MONEY < 5000
-		PRINTL （資金不足なので選択肢を省略します）
+		PRINTL （소지금 5000$ 조건을 충족할 시 추가 선택지가 출현합니다.）
 	ENDIF
 	IF CFLAG:LOCAL:0 == 0
-		PRINTFORML %PRINT_CALLNAME(LOCAL)%は%CALLNAME:ARG%が自分の娘だと知りながらも
-		PRINTFORML 戦いに巻き込むわけにはいかないと判断し、施設へと預けることにした・・・
+		PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) %CALLNAME:ARG%이(가) 자기 자식임을 알고 있었지만,
+		PRINTFORML 제 손으로 아이를 키울 여력이 되지 않음을 자각하여, 결국에는 시설 보호 조치에 수긍할 수밖에 없었다.
+		PRINTFORML 자신으로부터 등을 돌려 다시 멀어져 가는 어머니를 %CALLNAME:ARG%이(가) 애타게 불렀으나,
+		PRINTFORML %PRINT_CALLNAME(LOCAL)%은(는) 당장 뒤에서 들려오는 자식의 울음소리에도 이를 악물며 발걸음을 옮겨나갔다・・・
 	ELSE
-		PRINTFORML 촉수との厳しい戦いにこんな子供を巻き込むわけにはいかない。
-		PRINTFORML %CALLNAME:ARG%と名乗る少女を施設へと預けることにした・・・
+		PRINTFORML 촉수와의 험한 싸움에 이런 어린 아이를 끌어들일 수는 없다.
+		PRINTFORML 더군다나 보호자가 아무도 없는 상황에서는 보호 조치가 필연적이었다.
+		PRINTL
+		PRINTFORML 아무리 기다려도 어머니가 오지 않자, 서러움이 북받치는 나머지
+		PRINTFORML 결국에는 울음을 터뜨리고 마는 %CALLNAME:ARG%을(를), 이윽고 안전 요원이 안고 가며 시설로 이송시켰다.
+		PRINTL
+		PRINTFORML 자신을 %CALLNAME:ARG%(이)라고 칭하는 아이를 시설에 맡기기로 했다・・・
 	ENDIF
 	DELCHARA ARG
-	;FOR CHARANUM内でDELする関係上、外部のCCOUNTを減らす
+	;FOR CHARANUM 내에서 DEL하는 관계상, 외부의 CCOUNT를 줄인다
 	LOCAL:99 --
 ENDIF
 DRAWLINE

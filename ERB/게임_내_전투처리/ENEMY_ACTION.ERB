@@ -1060,7 +1060,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		;敵側の욕망が3以上ならSPコマンドも選択肢に入る
 		;남자の場合はC攻めに振り変える
 		IF ISMALE()
-			;敵キャラのC感覚が3以上ならSPコマンドも選択肢に入る
+			;敵キャラのC감각が3以上ならSPコマンドも選択肢に入る
 			IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
 				;C攻めSP
 				SELECT = 1000

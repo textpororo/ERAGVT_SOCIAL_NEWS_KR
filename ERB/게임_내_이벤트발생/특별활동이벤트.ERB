@@ -153,12 +153,12 @@ SELECTCASE ARG
 				LOCAL:2 = 0
 				IF RAND:2 == 0 && FLAG:44 <= 10
 					PRINTFORML 意を決して「気配」の元に飛び込む%PRINT_TRANSCALLNAME(TARGET)%。
-					PRINTFORML そこには、数体の子촉수が半裸の女性に群がっていた！
+					PRINTFORML そこには、数体の새끼 촉수が半裸の女性に群がっていた！
 					PRINTFORML
 					;구상
 					TRYCALLFORM KOJO_ROOT(CFLAG:6, "ENCOUNT_MOB")
 					PRINTFORML
-					PRINTFORMW 手早く子촉수を片付ける%PRINT_TRANSCALLNAME(TARGET)%。
+					PRINTFORMW 手早く새끼 촉수を片付ける%PRINT_TRANSCALLNAME(TARGET)%。
 					PRINTFORML
 					IF RAND:2 == 0
 						PRINTFORML 女性は%PRINT_TRANSCALLNAME(TARGET)%にお礼を言うと、身なりを整え
@@ -254,7 +254,7 @@ SELECTCASE ARG
 					ELSE
 						PRINTL 
 					ENDIF
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ性癖を植え付け、{PAYMENT}＄の給与を得ました。
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ성벽を植え付け、{PAYMENT}＄の給与を得ました。
 					;습득
 					JUEL:습득 += 125
 					;치정
@@ -277,7 +277,7 @@ SELECTCASE ARG
 					ELSE
 						PRINTL 
 					ENDIF
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ性癖を植え付け、{PAYMENT}＄の給与を得ました。
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ성벽を植え付け、{PAYMENT}＄の給与を得ました。
 				ENDIF
 				;FEAT 효과에 따른不幸防止
 			ELSEIF RAND:3 == 0 && TALENT:행운아 == 0
@@ -333,7 +333,7 @@ SELECTCASE ARG
 					ELSE
 						PRINTL 
 					ENDIF
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ性癖を植え付け、{PAYMENT}＄の給与を得ました。
+					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는){RESULT:0}人のちびっこに歪んだ성벽を植え付け、{PAYMENT}＄の給与を得ました。
 					;습득
 					JUEL:습득 += 50
 					;치정
@@ -471,7 +471,7 @@ SELECTCASE ARG
 				PRINTFORML
 				PRINTFORMW 身体の異常に戸惑う%PRINT_TRANSCALLNAME(TARGET)%。
 				PRINTFORML
-				PRINTFORML 実のところ、今感じている感覚には覚えがある。しかし
+				PRINTFORML 実のところ、今感じている감각には覚えがある。しかし
 				PRINTFORML （何故今ここで？）
 				PRINTFORMW 熱に浮かされた頭で考える。ここに촉수は居ない…はず
 				PRINTFORML
@@ -1590,7 +1590,7 @@ SELECTCASE ARG
 		;内容の分岐
 
 
-		;＠中国版より逆輸入
+		;＠중국판より逆輸入
 		IF ISFEMALE() && (((ABL:마조끼 > 4 && ABL:욕망 > 4) || TALENT:마조기질 > 0 || (TALENT:유두피어싱 + TALENT:클리피어싱 > 5) ) && EXP:전투경험 > 0 && RAND:5 < 1) || TALENT:전락 > 0
 			SELECTCASE EXP:전투경험
 			CASE 1 TO 15
@@ -1889,7 +1889,7 @@ SELECTCASE ARG
 			PRINTL
 
 			;AV出ている時点で開発が進んでいるので、そういう感じだけ想定して良い
-			;＠中国版より逆輸入、撮影内容に応じた分岐
+			;＠중국판より逆輸入、撮影内容に応じた分岐
 			SELECTCASE CFLAG:282
 			CASE 5 ;임신
 				PRINTFORM 画面の中で、%PRINT_TRANSCALLNAME(TARGET)%大きく膨らんだお腹を揺らして

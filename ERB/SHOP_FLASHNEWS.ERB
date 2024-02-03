@@ -97,7 +97,7 @@ IF FLAG:60 >= 10000
 		CASE 7
 			SELECTCASE LOCAL
 			CASE 1
-				LOCALS = 街中のモニタに突如魔法少女の敗北アクメ映像が公開。悪質なクラッキングか？
+				LOCALS = 街中のモニタに突如마법소녀の敗北アクメ映像が公開。悪質なクラッキングか？
 			CASE 2
 				LOCALS = 「敗北映像は女性に対し重度のサブリミナル作用含む」専門家ら警告も手遅れ
 			CASE 3
@@ -113,14 +113,14 @@ IF FLAG:60 >= 10000
 			CASE 8
 				LOCALS = 気になるあの娘も촉수의포로？　촉수による人類支配を女性ら受け入れへ
 			CASE 9
-				LOCALS = 街が全裸のボテ腹少女で溢れる。女性の大半が自ら촉수に隷属, おそらく魔法少女も既に…
+				LOCALS = 街が全裸のボテ腹少女で溢れる。女性の大半が自ら촉수に隷属, おそらく마법소녀も既に…
 			CASEELSE
 				IF 바이럴미디어플래그>=0
-					LOCALS=%FLASH_VIRALMEDIA("通常")%
+					LOCALS=%FLASH_VIRALMEDIA("통상")%
 					바이럴미디어플래그=1
 				ELSE
-					;生存者から誰かしら選ぶ
-					CALL FLASHNEWS_CHOOSEHEROINE("通常")
+					;생존자 중에서 아무나 선택한다
+					CALL FLASHNEWS_CHOOSEHEROINE("통상")
 					IF RESULT>0
 						IF RESULT:1==1
 							LOCALS=%PRINT_TRANSCALLNAME(RESULT:0)%
@@ -144,15 +144,15 @@ IF FLAG:60 >= 10000
 						DATAFORM %LOCALS%特典付き限定版を販売中！
 						ENDDATA
 					ELSE
-						LOCALS = 街は壊滅状態に。魔法少女はいったい何処へ…
+						LOCALS = 街は壊滅状態に。마법소녀はいったい何処へ…
 					ENDIF
 				ENDIF
 			ENDSELECT
 		CASEELSE
-			LOCALS = 街は壊滅状態に。魔法少女はいったい何処へ…
+			LOCALS = 街は壊滅状態に。마법소녀はいったい何処へ…
 		ENDSELECT
 
-	;히든 보스戦闘中
+	;히든 보스전闘中
 	CASE  10000
 		SELECTCASE FLAG:21
 		CASE 1
@@ -160,24 +160,24 @@ IF FLAG:60 >= 10000
 		CASE 2
 			LOCALS = 開花に至った"楽園の花", 花粉を浴びた若い女性の子宮に촉수が固着か
 		CASE 3
-			LOCALS = 国連軍決死の斉射も"타락の核"に通じず。残された希望は魔法少女のみ
+			LOCALS = 国連軍決死の斉射も"타락の核"に通じず。残された希望は마법소녀のみ
 		ENDSELECT
 	ENDSELECT
 ;固定ニュースがセットされている日数の場合, 昼パートは文面を固定する
 ELSEIF TIME == 0
 	SELECTCASE DAY
 	CASE 63
-		LOCALS = 某大臣が辞任。「魔法少女は촉수를 낳는 기계」発言は撤回せず
+		LOCALS = 某大臣が辞任。「마법소녀は촉수를 낳는 기계」発言は撤回せず
 	CASE 62
 		LOCALS = 財政難で特殊自警団への援助打ち切り。「公務員を減らせ」国会荒れる
 	CASE 51
-		LOCALS = 「魔法少女」のアニメが打ち切り。過激すぎる描写でネットで炎上
+		LOCALS = 「마법소녀」のアニメが打ち切り。過激すぎる描写でネットで炎上
 	CASE 44
 		LOCALS = 医療品メーカーが촉수 생물から新薬を開発
 	CASE 41
 		LOCALS = 촉수 생물による経済へのダメージが深刻化。国防予算削減へ
 	CASE 30
-		LOCALS = 巷で噂の「魔法少女」がアニメ化, 一方では肖像権の侵害との声も
+		LOCALS = 巷で噂の「마법소녀」がアニメ化, 一方では肖像権の侵害との声も
 	CASE 23
 		LOCALS = 世界的規模で不況, 「촉수 생물による経済への悪影響無視できない」
 	CASE 20
@@ -185,11 +185,11 @@ ELSEIF TIME == 0
 	CASE 15
 		LOCALS = 촉수教団に破防法適用。最高裁「信仰の自由は守る。ご神体が本物だった」
 	CASE 6
-		LOCALS = 政府が一転「魔法少女」の実在を公に認め, 「特殊自警団」と位置づけ
+		LOCALS = 政府が一転「마법소녀」の実在を公に認め, 「特殊自警団」と位置づけ
 	CASE 3
 		LOCALS = 国防大臣が「촉수と戦う専門機関」の存在を否定, 反発の声も
 	CASE 1
-		LOCALS = 街の噂・촉수 생물と戦う「魔法少女」気になるその正体は…？
+		LOCALS = 街の噂・촉수 생물と戦う「마법소녀」気になるその正体は…？
 	ENDSELECT
 ENDIF
 IF LOCALS != ""
@@ -212,7 +212,7 @@ IF (치안 < 4000 && RAND:12 == 0) || (치안 < 1250 && RAND:3 == 0)
 
 	;●치안悪化時はアフィブログ構文の記事が台頭する(社会派要素/オプションデフォルトではOff)
 	IF 바이럴미디어플래그>=0 && RAND:2==0
-		LOCALS=%FLASH_VIRALMEDIA("通常")%
+		LOCALS=%FLASH_VIRALMEDIA("통상")%
 		바이럴미디어플래그=1
 
 	;●防衛低下時(特大)
@@ -243,17 +243,17 @@ IF (치안 < 4000 && RAND:12 == 0) || (치안 < 1250 && RAND:3 == 0)
 ;●アイドル関係ニュース		※固定表示ニュースが無いタイミング, かつデビュー済みヒロインがいたら中確率で専用ニュース表示
 ELSEIF 아이돌데뷔완료 && RAND:100 < 10	;ターゲットを決める　候補をクリア
 
-	CALL FLASHNEWS_CHOOSEIDOL("標的")
+	CALL FLASHNEWS_CHOOSEIDOL("표적")
 	LOCAL:2=RESULT
-	CALL FLASHNEWS_CHOOSEIDOL("内容",LOCAL:2)
+	CALL FLASHNEWS_CHOOSEIDOL("내용",LOCAL:2)
 	LOCAL:3=RESULT
 
 	;●치안悪化時はアフィブログ構文の記事が台頭する(社会派要素/オプションデフォルトではOff)
 	IF 바이럴미디어플래그>=0 && 치안 <= 5000 && RAND:2==0
 		IF TALENT:TARGET:변신능력 == 1
-			LOCALS=%FLASH_VIRALMEDIA("魔法少女",LOCAL:2,RESULT)%
+			LOCALS=%FLASH_VIRALMEDIA("마법소녀",LOCAL:2,RESULT)%
 		ELSE
-			LOCALS=%FLASH_VIRALMEDIA("アイドル",LOCAL:2,RESULT)%
+			LOCALS=%FLASH_VIRALMEDIA("아이돌",LOCAL:2,RESULT)%
 		ENDIF
 		바이럴미디어플래그=1
 	;베개 영업
@@ -274,15 +274,15 @@ ELSEIF 아이돌데뷔완료 && RAND:100 < 10	;ターゲットを決める　候
 		IF EXP:(LOCAL:2):매료경험 >= 200
 			STRDATA LOCALS
 			DATAFORM 異例の判決　人気アイドル『%CALLNAME:(LOCAL:2)%』の凌辱動画流出で大手動画配信サイト閉鎖
-			DATAFORM やはり『%CALLNAME:(LOCAL:2)%』は魔法少女か？陵辱動画に映る特徴が完全に一致
+			DATAFORM やはり『%CALLNAME:(LOCAL:2)%』は마법소녀か？陵辱動画に映る特徴が完全に一致
 			DATAFORM 人気アイドル『%CALLNAME:(LOCAL:2)%』は公衆便女だった？陵辱動画流出疑惑に揺れる業界
 			DATAFORM アイドル『%CALLNAME:(LOCAL:2)%』は촉수의포로？衝撃の陵辱動画が流出か
 			DATAFORM 穢された천사　人気アイドル『%CALLNAME:(LOCAL:2)%』に凌辱被害流出の過去？
 			ENDDATA
 		ELSE
 			STRDATA LOCALS
-			DATAFORM 『%NAME:(LOCAL:2)%』＝魔法少女説は本当か？関係者に突撃取材
-			DATAFORM 新人アイドル『%NAME:(LOCAL:2)%』激似の魔法少女動画が流出, 所属事務所は関連性を否定
+			DATAFORM 『%NAME:(LOCAL:2)%』＝마법소녀説は本当か？関係者に突撃取材
+			DATAFORM 新人アイドル『%NAME:(LOCAL:2)%』激似の마법소녀動画が流出, 所属事務所は関連性を否定
 			DATAFORM 촉수に犯され大股開きで喘ぐ『%NAME:(LOCAL:2)%』…新人アイドルがフェイクポルノ被害に？
 			ENDDATA
 		ENDIF
@@ -290,7 +290,7 @@ ELSEIF 아이돌데뷔완료 && RAND:100 < 10	;ターゲットを決める　候
 	ELSE
 		IF EXP:(LOCAL:2):매료경험 >= 200
 			STRDATA LOCALS
-			DATAFORM 激白！「%CALLNAME:(LOCAL:2)%は魔法少女だ」首になった某アイドル元マネージャーが語る
+			DATAFORM 激白！「%CALLNAME:(LOCAL:2)%は마법소녀だ」首になった某アイドル元マネージャーが語る
 			DATAFORM 巷で話題のあの人に直撃！　人気アイドル『%NAME:(LOCAL:2)%』の快進撃
 			DATAFORM 新作映画が異例の大ヒット！　主演は人気アイドル『%NAME:(LOCAL:2)%』
 			DATAFORM 人気アイドル『%NAME:(LOCAL:2)%』に密着！２４時
@@ -315,11 +315,11 @@ ELSEIF 아이돌데뷔완료 && RAND:100 < 10	;ターゲットを決める　候
 ELSEIF RAND:100<2*노출붐침투
 	SELECTCASE 노출붐침투
 	CASE IS<=4
-		LOCALS = 服が破けても戦い続ける魔法少女をPTAが批難。「娘が裸族になった」
+		LOCALS = 服が破けても戦い続ける마법소녀をPTAが批難。「娘が裸族になった」
 	CASEELSE
 		STRDATA LOCALS
 		DATAFORM 裸ニーソ少女が촉수おとり捜査？「迷惑防止条例違反では」議論呼ぶ
-		DATAFORM 10代少女の間で野外露出がブーム？ 有名魔法少女の노출벽が影響か
+		DATAFORM 10代少女の間で野外露出がブーム？ 有名마법소녀の노출벽が影響か
 		DATAFORM 全裸同然の服装で街を歩く女性急増。「強姦被害者と区別が付かない」警察幹部苦言
 		DATAFORM 未成年女性の野外露出が今国会で合法化？「女性が輝く安心安全な社会へ」政権幹部語る
 		DATAFORM 「ご주인様に飼われたい❤」10代女子の間で首輪×全裸露出がトレンド化？
@@ -372,7 +372,7 @@ ELSEIF DAY < 20 && 치안 >= 5000 && RAND:100 < 6
 		;才能の芽
 		DATAFORM 「将来は不幸な人を救いたい」全国模試１位常連の天才少女語る
 		;姉妹愛
-		DATAFORM 子촉수に攫われかけた双子の姉を女子中학생が救出「お姉ちゃんは私が守ります」
+		DATAFORM 새끼 촉수に攫われかけた双子の姉を女子中학생が救出「お姉ちゃんは私が守ります」
 		;夢と希望
 		DATAFORM 新人アイドルオーディションは例年通り開催へ「人々に夢と希望を届ける」
 		ENDDATA
@@ -478,44 +478,44 @@ ELSEIF DAY > 21 && 치안 > 2500 && RAND:100 == 0
 		DATAFORM 「消毒薬で촉수を撃退」某知事が事実に反する宣伝, 支持団体へ利益誘導か
 		DATAFORM 「殲滅は非現実的, 촉수と共存を」某知事発言に反発広がる
 		DATAFORM 某大臣が提案「子宮にGPSを埋め込めば…」女性らの反発は必至か
-		DATAFORM 「魔法少女が美少女で嬉しい」某議員の失言に非難が集中
+		DATAFORM 「마법소녀が美少女で嬉しい」某議員の失言に非難が集中
 		DATAFORM 「攫われた女性が無事とは誰も思っていない, どうせレイプ済み」某議員の失言に非難集中
-		DATAFORM 「戦士のコスプレをした娼婦」魔法少女蔑視発言に国会一時騒然
+		DATAFORM 「戦士のコスプレをした娼婦」마법소녀蔑視発言に国会一時騒然
 		DATAFORM 「いっそ촉수に媚びを売る作法でも女性に教えては」某大臣失言に議会大荒れ
 		DATAFORM 凌辱AV発禁議論で某規制派議員が失言「촉수レイプは現実に溢れている」反発強まる
 		ENDDATA
-;＠中国版より
+;＠중국판より
 ;인기도가 極端に低下時
 ELSEIF 인기도 < -10 && RAND(30) == 0
 	STRDATA LOCALS
-	DATAFORM 「存在価値はあるのか？」魔法少女に対する国民の不満
-	DATAFORM 何もしていない！　魔法少女は単なる反面教師か？
-	DATAFORM 魔法少女は촉수の共犯者？ 独占特別レポート！
-	DATAFORM 戦士, それとも苗床？ 情報源が魔法少女の実態を明らかに…
-	DATAFORM 「ただの肉便器」インフルエンサーが魔法少女を激しく糾弾
-	DATAFORM 촉수カルト教団がパレード「魔法少女を滅ぼせ, 世界は촉수のもの」
+	DATAFORM 「存在価値はあるのか？」마법소녀に対する国民の不満
+	DATAFORM 何もしていない！　마법소녀は単なる反面教師か？
+	DATAFORM 마법소녀は촉수の共犯者？ 独占特別レポート！
+	DATAFORM 戦士, それとも苗床？ 情報源が마법소녀の実態を明らかに…
+	DATAFORM 「ただの肉便器」インフルエンサーが마법소녀を激しく糾弾
+	DATAFORM 촉수カルト教団がパレード「마법소녀を滅ぼせ, 世界は촉수のもの」
 	DATAFORM 「“촉수の娼婦”への義援金やめよう」有識者ら呼びかけ
-	DATAFORM 戦士のコスプレをした娼婦！ 衝撃の魔法少女抜き打ち取材
-	DATAFORM 魔法少女支援組織の衝撃リーク：辱められるためにわざと敗北！？
+	DATAFORM 戦士のコスプレをした娼婦！ 衝撃の마법소녀抜き打ち取材
+	DATAFORM 마법소녀支援組織の衝撃リーク：辱められるためにわざと敗北！？
 	ENDDATA
 ELSEIF 인기도 < -50 && RAND(20) == 0
 	STRDATA LOCALS
-	DATAFORM 「あんなもの촉수に犯されて当然」魔法少女のイメージが氷点まで下落
-	DATAFORM 暴力団幹部が魔法少女に呼び掛け「犯されたいなら촉수より見知らぬ男を勧める」
+	DATAFORM 「あんなもの촉수に犯されて当然」마법소녀のイメージが氷点まで下落
+	DATAFORM 暴力団幹部が마법소녀に呼び掛け「犯されたいなら촉수より見知らぬ男を勧める」
 	;＠対応イベント未移植
-	;DATAFORM 魔法少女もどきが幸明公園に行き, 自主処刑？
-	DATAFORM 魔法少女, 即ち戦士に扮した肉便器！ 容赦の無い新語辞典が話題に
-	DATAFORM 촉수カルト教団が総会で演説「魔法少女は産まれながらに노예である」
-	DATAFORM “世界の悪”を許してはならない！ 魔法少女支援の禁止を求めるオピニオンリーダー達
+	;DATAFORM 마법소녀もどきが幸明公園に行き, 自主処刑？
+	DATAFORM 마법소녀, 即ち戦士に扮した肉便器！ 容赦の無い新語辞典が話題に
+	DATAFORM 촉수カルト教団が総会で演説「마법소녀は産まれながらに노예である」
+	DATAFORM “世界の悪”を許してはならない！ 마법소녀支援の禁止を求めるオピニオンリーダー達
 	ENDDATA
 ELSEIF 인기도 < -90 && RAND(10) == 0
 	STRDATA LOCALS
-	DATAFORM 魔法少女支援本部前で市民が大規模デモ。「役立たずの売春宿」
-	DATAFORM 性노예に最適？ 闇市場で魔法少女が人気との情報
+	DATAFORM 마법소녀支援本部前で市民が大規模デモ。「役立たずの売春宿」
+	DATAFORM 性노예に最適？ 闇市場で마법소녀が人気との情報
 	DATAFORM 国会議員が「正体不明の女性暴力団体」の閉鎖を訴える
-	DATAFORM 「人類の裏切り者」魔法少女は, いかにして社会秩序を乱すのか？ 専門家語る
-	DATAFORM 「촉수の手下」魔法少女は, いかにして悪を助けるのか？ 専門家語る
-	DATAFORM 「精液を味わせてやれ！」デモ隊の希望は魔法少女組織の陥落
+	DATAFORM 「人類の裏切り者」마법소녀は, いかにして社会秩序を乱すのか？ 専門家語る
+	DATAFORM 「촉수の手下」마법소녀は, いかにして悪を助けるのか？ 専門家語る
+	DATAFORM 「精液を味わせてやれ！」デモ隊の希望は마법소녀組織の陥落
 	ENDDATA
 
 ;●優先ニュースが無い日はランダムにニュースを探す
@@ -543,31 +543,31 @@ ELSE
 			ENDDATA
 		ENDIF
 
-	;●魔法少女の活躍／피간경험による市民の態度変動
+	;●마법소녀の活躍／피간경험による市民の態度変動
 	ELSEIF LOCAL<18
 		;・社会まで変な事に
 		IF 피간도 > 300
 			STRDATA LOCALS
 			DATAFORM アンケート結果  また犯されたい 70％  孕まされたい 55％
 			DATAFORM アンケート結果  自宅で飼いたい 95％  毎日使っている 90％
-			DATAFORM フェミニズム団体が魔法少女を絶賛「촉수様に服従する理想の女性像」
+			DATAFORM フェミニズム団体が마법소녀を絶賛「촉수様に服従する理想の女性像」
 			DATAFORM フェミニズム団体が촉수の保護を要請「苗床になる権利を」
-			DATAFORM 魔法少女の影響でAV売り上げが急落か「本物で抜いた方が早い」
-			DATAFORM 新発売の魔法少女ラブドール, 瞬く間に完売「本物並みに気持ち良い」
-			DATAFORM 魔法少女に憧れる少女が急増「私もあんな風に犯されたい」
-			DATAFORM 魔法少女が凌辱される姿の目撃件数増大「もはや魔法娼女」
+			DATAFORM 마법소녀の影響でAV売り上げが急落か「本物で抜いた方が早い」
+			DATAFORM 新発売の마법소녀ラブドール, 瞬く間に完売「本物並みに気持ち良い」
+			DATAFORM 마법소녀に憧れる少女が急増「私もあんな風に犯されたい」
+			DATAFORM 마법소녀が凌辱される姿の目撃件数増大「もはや魔法娼女」
 			ENDDATA
 		;・ボロ負け
 		ELSEIF 피간도 > 60
 			STRDATA LOCALS
 			DATAFORM アンケート結果  抜いた 40％  犯したい 20％  応援している 5％
 			DATAFORM アンケート結果  気持ち良かった 90％  また使いたい 85％
-			DATAFORM 敗北続きの魔法少女に市民の冷ややかな視線「あれでは歩くオナホールだ」
-			DATAFORM 魔法少女のファンアート, ９割超が촉수陵辱イラストに
-			DATAFORM 魔法少女モノAVが急増。無様に촉수堕ちするヒロインの需要が増加中？
-			DATAFORM フェミニズム団体が魔法少女を非難「都合の良い男根の노예」
-			DATAFORM フェミニズム団体が魔法少女の衣装を非難「性的搾取を肯定している」
-			DATAFORM 新発売のオナホール, パッケージイラストと魔法少女の類似性が波紋呼ぶ
+			DATAFORM 敗北続きの마법소녀に市民の冷ややかな視線「あれでは歩くオナホールだ」
+			DATAFORM 마법소녀のファンアート, ９割超が촉수陵辱イラストに
+			DATAFORM 마법소녀モノAVが急増。無様に촉수堕ちするヒロインの需要が増加中？
+			DATAFORM フェミニズム団体が마법소녀を非難「都合の良い男根の노예」
+			DATAFORM フェミニズム団体が마법소녀の衣装を非難「性的搾取を肯定している」
+			DATAFORM 新発売のオナホール, パッケージイラストと마법소녀の類似性が波紋呼ぶ
 			ENDDATA
 		;・戦えてる
 		ELSE
@@ -607,42 +607,42 @@ ELSE
 				;世間も凌辱を認知
 				CASE 2
 					STRDATA LOCALS
-					DATAFORM 魔法少女が촉수 생물に凌辱される様子が全国ネットに流出。社会問題に
-					DATAFORM 公衆の面前で凌辱される魔法少女「子供に見せられない」ＰＴＡが抗議
-					DATAFORM 魔法少女のピンチを見て見ぬふり「野次馬オナニー」一般男性逮捕
+					DATAFORM 마법소녀が촉수 생물に凌辱される様子が全国ネットに流出。社会問題に
+					DATAFORM 公衆の面前で凌辱される마법소녀「子供に見せられない」ＰＴＡが抗議
+					DATAFORM 마법소녀のピンチを見て見ぬふり「野次馬オナニー」一般男性逮捕
 					ENDDATA
 				;大きなお友達の間では被姦が公然の秘密
 				CASE 3
 					STRDATA LOCALS
 					DATAFORM アンケート結果 応援している 50％ 頑張ってほしい 30％ 抜いた 10％
-					DATAFORM 魔法少女が촉수 생물に強姦されたという噂が。安否を気遣う声多数
+					DATAFORM 마법소녀が촉수 생물に強姦されたという噂が。安否を気遣う声多数
 					ENDDATA
 				;大きなお友達が被姦に気付く
 				CASE 4
 					STRDATA LOCALS
-					DATAFORM 촉수 생물と戦う魔法少女のファンが急増中
-					DATAFORM 「可憐な少女を汚すな！」半裸の魔法少女を描くイラストに非難が集中
-					DATAFORM 魔法少女のファンアートがSNS上で激増, 過激な構図に非難の声も
+					DATAFORM 촉수 생물と戦う마법소녀のファンが急増中
+					DATAFORM 「可憐な少女を汚すな！」半裸の마법소녀を描くイラストに非難が集中
+					DATAFORM 마법소녀のファンアートがSNS上で激増, 過激な構図に非難の声も
 					ENDDATA
 				;大活躍＆清純
 				CASE 5
-					LOCALS = アンケート結果  魔法少女を応援している 60％  頑張ってほしい 20％
+					LOCALS = アンケート結果  마법소녀を応援している 60％  頑張ってほしい 20％
 				;認知＆清純
 				CASE 6
 					STRDATA LOCALS
-					DATAFORM 魔法少女が촉수 생물を華麗に撃退。応援の声が寄せられる
-					DATAFORM 魔法少女に憧れる少女が急増「小さな希望を広げたい」
+					DATAFORM 마법소녀が촉수 생물を華麗に撃退。応援の声が寄せられる
+					DATAFORM 마법소녀に憧れる少女が急増「小さな希望を広げたい」
 					ENDDATA
 
 				;無双中
 				CASE 7
 					STRDATA LOCALS
-					DATAFORM フェミニズム団体が魔法少女を称賛「強い女性の規範示している」
-					DATAFORM 魔法少女は無敵のヒロイン？ 多数の촉수薙ぎ倒し人類に貢献
+					DATAFORM フェミニズム団体が마법소녀を称賛「強い女性の規範示している」
+					DATAFORM 마법소녀は無敵のヒロイン？ 多数の촉수薙ぎ倒し人類に貢献
 					ENDDATA
 				;認知
 				CASE 99
-					LOCALS = 危機一髪のところを魔法少女に救われ, 一般女性から感謝の声
+					LOCALS = 危機一髪のところを마법소녀に救われ, 一般女性から感謝の声
 				ENDSELECT
 			ENDIF
 		ENDIF
@@ -650,7 +650,7 @@ ELSE
 	;●人類側優勢
 	ELSEIF LOCAL<26 && 치안 >= 5000
 		STRDATA LOCALS
-		DATAFORM 頑張れ魔法少女！　街からは感謝と応援の声
+		DATAFORM 頑張れ마법소녀！　街からは感謝と応援の声
 		DATAFORM 小学校で男子児童が小型촉수を退治, 一躍ヒーローに
 		DATAFORM ５０代男性, 娘を襲おうとした촉수を猟銃で撃退
 		DATAFORM 「駆逐してやる…　一匹残らず！」촉수に연인を攫われた男性, 決意語る
@@ -663,7 +663,7 @@ ELSE
 		STRDATA LOCALS
 		;ほのぼの…ほのぼのかな？
 		DATAFORM 繊毛1本まで高精細に撮れる。超高速ズーム搭載 TENTAX SK 新発売
-		DATAFORM 各地で人語を話す白い獣の目撃例相次ぐ。魔法少女への勧誘も
+		DATAFORM 各地で人語を話す白い獣の目撃例相次ぐ。마법소녀への勧誘も
 		DATAFORM 世界を一変させる官能的な装着感　%ITEMNAME:399%新発売
 		DATAFORM 抜かずの10発なんのその, 強力精力剤10-TACKLE あおひげ薬局より新発売
 		DATAFORM お堅い淑女も1滴で쓰러짐, T-L Potion あおひげ薬局より新発売
@@ -674,7 +674,7 @@ ELSE
 		DATAFORM 私立中学で촉수 생물の飼育が発覚。理事長は「生徒が喜んでいたので」と供述
 		DATAFORM セクシー女優が촉수を撃退「男優搾るより楽だった」
 		DATAFORM 空飛ぶスパゲッティーモンスター教団, 촉수 생물との関係を否定
-		DATAFORM 촉수のキグルミ男を逮捕。「魔法少女に踏まれたかった」
+		DATAFORM 촉수のキグルミ男を逮捕。「마법소녀に踏まれたかった」
 		DATAFORM 自衛官募集が迷走。보추枠新設へ
 		DATAFORM 擬態型촉수の被害相次ぐ。下着, 性玩具, 自転車のサドル等に注意
 		DATAFORM ツノムシ化学が服だけ溶かす溶解液の合成に成功。防護服開発に期待
@@ -744,20 +744,20 @@ ENDIF
 
 
 
-;バイラルメディア(アフィブログ構文)的な記事　「ニュース」ではないためここに
+;바이럴 미디어(제휴마케팅 구문)적인 기사　「뉴스」가 아니기 때문에 여기에
 @FLASH_VIRALMEDIA(mode,num,genre)
 #FUNCTIONS
 #DIMS mode,1
 #DIM num,1
 #DIM genre,1
 
-IF mode=="魔法少女"
-	;魔法少女としてのヒロインが被害に
-	;＠中国版
+IF mode=="마법소녀"
+	;마법소녀としてのヒロインが被害に
+	;＠중국판
 	;　だいたい↓のアイドルをベースにした拡張っぽい。元々未実装で棚上げしていたのでありがたく使わせてもらう
 	;作為偶像的女主角受害了
 
-	LOCALS'=EXP:(num):매료경험 >= 200 ? "人気魔法少女の" # "新人魔法少女の"
+	LOCALS'=EXP:(num):매료경험 >= 200 ? "人気마법소녀の" # "新人마법소녀の"
 
 	;強気っぽい性格なら「〇〇さん」, 違ったら「〇〇ちゃん」
 	IF TALENT:TARGET:오기 || TALENT:TARGET:진지함 || TALENT:TARGET:츤데레 || TALENT:TARGET:얀데레 || TALENT:TARGET:수다쟁이 || TALENT:TARGET:고풍적 || TALENT:TARGET:고집쟁이 || TALENT:TARGET:사나움
@@ -765,7 +765,7 @@ IF mode=="魔法少女"
 	ELSE
 		LOCALS:1'="ちゃん"
 	ENDIF
-	;「新人魔法少女の〇〇さん」
+	;「新人마법소녀の〇〇さん」
 	LOCALS:2=%LOCALS%%NAME:(num)%%LOCALS:1%
 	;「〇〇さん」
 	LOCALS:3=%LOCALS%%NAME:(num)%%LOCALS:1%
@@ -799,11 +799,11 @@ IF mode=="魔法少女"
 		ENDDATA
 	ENDIF
 
-ELSEIF mode=="アイドル"
+ELSEIF mode=="아이돌"
 	;アイドルとしてのヒロインが被害に
 
 
-	LOCALS'=EXP:(num):매료경험 >= 200 ? "人気アイドルの" # "新人アイドルの"
+	LOCALS'=EXP:(num):매료경험 >= 200 ? "인기 아이돌 " # "신인 아이돌 "
 
 	;強気っぽい性格なら「〇〇さん」, 違ったら「〇〇ちゃん」
 	IF TALENT:TARGET:오기 || TALENT:TARGET:진지함 || TALENT:TARGET:츤데레 || TALENT:TARGET:얀데레 || TALENT:TARGET:수다쟁이 || TALENT:TARGET:고풍적 || TALENT:TARGET:고집쟁이 || TALENT:TARGET:사나움
@@ -847,7 +847,7 @@ ELSEIF mode=="アイドル"
 	ENDIF
 
 
-ELSEIF mode=="通常"
+ELSEIF mode=="통상"
 	;一般女性が被害に
 		STRDATA LOCALS
 		DATAFORM 【悲報】촉수にレイプされた女さん, 연인の前で盛大にイキまくってしまう
@@ -876,27 +876,27 @@ ENDIF
 RETURNF LOCALS
 
 
-;ヒロインからランダムにターゲットを決める
-;生存中なら候補に
-;RESULT=ヒロイン番号,RESULT:1=変身後名フラグ
+;히로인으로부터 랜덤으로 타겟을 정한다
+;생존 중이라면 후보로
+;RESULT=히로인 번호, RESULT:1=변신 후 이름 플래그
 @FLASHNEWS_CHOOSEHEROINE(mode)
 #DIMS mode,1
 CALL CLEARRANDCHOOSE
 FOR LOCAL,0,CHARANUM
 	IF CFLAG:LOCAL:0 != 0
-		;女性なら
+		;여성이다
 		IF ISFEMALE(LOCAL)
-			;変身前の姿が対象
-			SIF mode!="変身後"
+			;변신 전 모습이 대상
+			SIF mode!="변신 후"
 				CALL ADDRANDCHOOSE,LOCAL*10
-			;変身時にＴＳしないなら変身後の姿も対象
-			IF mode!="変身前" && TALENT:LOCAL:변신시TS == 0
+			;변신 시 TS를 하지 않는다면 변신 후 모습도 대상
+			IF mode!="변신 전" && TALENT:LOCAL:변신시TS == 0
 				CALL ADDRANDCHOOSE,LOCAL*10+1
 			ENDIF
-		;男性なら
+		;남성이다
 		ELSE
-			;変身時にＴＳするなら変身後の姿が対象
-			IF mode!="変身前" && TALENT:LOCAL:변신시TS == 1
+			;변신 시 TS를 한다면 변신 후 모습이 대상
+			IF mode!="변신 전" && TALENT:LOCAL:변신시TS == 1
 				CALL ADDRANDCHOOSE,LOCAL*10+1
 			ENDIF
 		ENDIF
@@ -921,7 +921,7 @@ ENDIF
 @FLASHNEWS_CHOOSEIDOL(mode,num)
 #DIMS mode,1
 #DIM num,1
-	IF mode=="標的"
+	IF mode=="표적"
 		CALL CLEARRANDCHOOSE
 		;候補を追加
 		FOR LOCAL,0,CHARANUM
@@ -946,7 +946,7 @@ ENDIF
 		;RANDCHOOSE実行
 		LOCAL = RANDCHOOSE_F()
 
-	ELSEIF mode=="内容"
+	ELSEIF mode=="내용"
 		;베개 영업や動画流出回数が高いほどスキャンダルが出回りやすい
 		CALL CLEARRANDCHOOSE
 		;普通の広告
@@ -975,7 +975,7 @@ ENDIF
 				CALL ADDRANDCHOOSE,2
 			REND
 		ENDIF
-		;＠中国版
+		;＠중국판
 		;　特別調教動画がダークウェブに流出(対応イベント未実装)
 		IF CFLAG:num:287
 			RESULT:1 = POWER(CFLAG:num:287 / 4 + 1, 2) + 30

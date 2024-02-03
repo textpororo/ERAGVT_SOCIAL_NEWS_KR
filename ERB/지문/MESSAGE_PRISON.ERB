@@ -1,5 +1,5 @@
 ﻿;**********************************************************
-;幽閉中の地の文
+;幽閉中の지문
 
 
 ;------------------------------------------------
@@ -26,7 +26,7 @@ IF CFLAG:6 == -1
 		PRINTFORML 不安げに촉수を見上げると、今度は小さなワレメをくちゅくちゅと愛撫されて悶絶する。
 		PRINTFORML "なにこれ、気持ちいい"――
 		PRINTW 
-		PRINTFORML 全身を愛撫される未知の感覚に頬を染めながら、
+		PRINTFORML 全身を愛撫される未知の감각に頬を染めながら、
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)目の前に差し出された촉수を知らずに口に咥えていた。
 		PRINTFORML "私も気持ちよくしてあげたい"
 		PRINTFORML ちゅぱちゅぱと幼稚なフェラをする%PRINT_TRANSCALLNAME(TARGET)%に無数の촉수が集まり、
@@ -70,7 +70,7 @@ ELSEIF CHARATALENT_F(TARGET,0,"남자") > 0 && CONFIG_CHECK_PRISON_F(0) > 0
 	PRINTFORML 晒しものにされるような姿勢で身動きできず、%PRINT_TRANSCALLNAME(TARGET)%은(는)歯噛みする。
 	PRINTL 
 	PRINTFORML と、そこで一本の촉수が無造作に%PRINT_TRANSCALLNAME(TARGET)%의 身体に針を突き立てた。
-	PRINTFORML 予想していたよりも遥かに軽い、チクリという刺すような感覚が走ったかと思うと、
+	PRINTFORML 予想していたよりも遥かに軽い、チクリという刺すような감각が走ったかと思うと、
 	IF TALENT:주관시점 > 0
 		PRINTFORML 全身にあり得ないほどの快楽が走り抜け、%PRINT_TRANSCALLNAME(TARGET)%은(는)絶叫する。
 	ELSE
@@ -391,8 +391,8 @@ FONTREGULAR
 PRINTFORML ───
 PRINTFORML ──────ゥ・・・ン・・・ぁ・・・
 PRINTFORML 光届かぬ深遠───
-;@中国版の追加分岐翻訳
-IF TALENT:촉수의포로 > 0 || TALENT:놀림받는체질 > 0
+;@중국판の追加分岐翻訳
+IF TALENT:촉수의포로 > 0 || TALENT:희롱특화체질 > 0
 	PRINTFORMW 在촉수大人的巢穴中度过的每一日，都是%PRINT_TRANSCALLNAME(TARGET)%的极乐时光。
 	PRINTFORML 弄ばれ、辱められ、犯され、壊造され、何度も官能の渦に送り込まれ、
 	PRINTFORML 満身創痍の身体は촉수「様」からのご褒美まみれになっている。
@@ -439,7 +439,7 @@ ENDIF
 PRINTW 
 ;구상
 TRYCCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_DEAD")
-;無いキャラのフォールバック(中国版より)
+;無いキャラのフォールバック(중국판より)
 CATCH
 	SELECTCASE RAND(4)
 	CASE 0
@@ -465,7 +465,7 @@ ELSE
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)待ち受けるのは、魔法少女たちに宿命付けられた運命であり、最も悲劇的な結末でもあった……
 ENDIF
 PRINTFORML 
-SIF TALENT:촉수의포로 > 0 || TALENT:놀림받는체질 > 0
+SIF TALENT:촉수의포로 > 0 || TALENT:희롱특화체질 > 0
 	PRINTFORMW ……とはいえ、至高の촉수様に全てを捧げる末路は、もしかしたら%PRINT_TRANSCALLNAME(TARGET)%이(가)胸に秘めた長年の願いであったのかもしれない。
 PRINTFORMW 
 
@@ -1282,13 +1282,13 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_COM_6")
 PRINTL 
 
 ;-----------------------------------------------
-;子촉수に犯される
+;새끼 촉수に犯される
 @MESSAGE_PRISON_COM_7
 FONTBOLD
-PRINTL 子촉수に犯される
+PRINTL 새끼 촉수に犯される
 FONTREGULAR
 IF EXP:근친교배경험 == 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)産んだ子촉수
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가)産んだ새끼 촉수
 	SIF CFLAG:220 >= 2
 		PRINT たち
 	PRINTFORML は成長して大きくなったにも関わらず、
@@ -1297,12 +1297,12 @@ IF EXP:근친교배경험 == 0
 	IF CFLAG:220 >= 2
 		PRINT そのうちの一匹が
 	ELSE
-		PRINT 、先ほどまで穏やかだった子촉수が
+		PRINT 、先ほどまで穏やかだった새끼 촉수が
 	ENDIF
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)押し倒し、
 	PRINTFORML 陰茎のようになっている部分の先端を股間に擦りつけ始めた。
 ELSE
-	PRINTFORM 子촉수
+	PRINTFORM 새끼 촉수
 	SIF CFLAG:220 >= 2
 		PRINT たち
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
@@ -1344,7 +1344,7 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	PRINTFORML 皮を被った미성숙な息子を愛撫して剥いてやりながら、
 	PRINTFORML 優しく膣圧で受け入れていく・・・
 	IF CFLAG:220 >= 2 && EXP:근친교배경험 == 0
-		PRINTFORML それを見た他の子촉수たちにも興奮が伝播したのか、
+		PRINTFORML それを見た他の새끼 촉수たちにも興奮が伝播したのか、
 		IF TALENT:주관시점 > 0
 			PRINTFORML 我先にと一斉に%PRINT_TRANSCALLNAME(TARGET)%의 身体に群がってきた。
 		ELSE
@@ -1356,7 +1356,7 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	ENDIF
 	PRINTW 
 	IF EXP:근친교배경험 == 0
-		PRINTFORML 最も身近なメスである己の母親を初めての交尾相手に選んだ子촉수は
+		PRINTFORML 最も身近なメスである己の母親を初めての交尾相手に選んだ새끼 촉수は
 		PRINTFORML 幼体とは思えないほど強いストロークを繰り返し、욕정のボルテージを上げていく。
 	ELSEIF EXP:근친교배경험 < 20
 		PRINTFORM 深い愛情をもって母親としての顔を崩さない%PRINT_TRANSCALLNAME(TARGET)%은(는)
@@ -1374,12 +1374,12 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		ENDIF
 	ELSE
 		PRINTFORML すでに母親ではなく孕まされるメスの顔になっている%PRINT_TRANSCALLNAME(TARGET)%은(는)、
-		PRINTFORML 快楽を貪るのに夢中になっている子촉수に脚を搦めて引き寄せると、
+		PRINTFORML 快楽を貪るのに夢中になっている새끼 촉수に脚を搦めて引き寄せると、
 		PRINTFORML 연인にするようなディープキスを交わした。
 	ENDIF
 	PRINTW 
-	PRINTFORML やがて限界に達した子촉수が痙攣し、最後の一滴まで実母の膣奥に精を放つと、
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)脱力した子촉수を誇らしげに撫で
+	PRINTFORML やがて限界に達した새끼 촉수が痙攣し、最後の一滴まで実母の膣奥に精を放つと、
+	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)脱力した새끼 촉수を誇らしげに撫で
 	IF CFLAG:220 >= 2
 		PRINTFORML ながら、
 		PRINTFORML 次の息子を받아들인다べく白濁液の滴る秘部を広げて見せた・・・
@@ -1392,7 +1392,7 @@ ELSE
 		PRINTFORML 曲がりなりにも母性を発揮して油断していた%PRINT_TRANSCALLNAME(TARGET)%은(는)
 		PRINTFORML ろくな抵抗もできず、我が子の挿入を受け入れてしまう。
 		IF CFLAG:220 >= 2
-			PRINTFORML それを見た他の子촉수たちにも興奮が伝播したのか、
+			PRINTFORML それを見た他の새끼 촉수たちにも興奮が伝播したのか、
 			PRINTFORML 一斉に%PRINT_TRANSCALLNAME(TARGET)%의 身体に群がった。
 			PRINTL 
 		ELSE
@@ -1406,7 +1406,7 @@ ELSE
 		ELSE
 			PRINTFORML それだけは駄目と拒絶する%PRINT_TRANSCALLNAME(TARGET)%을(를)無理やり押さえつけ、
 		ENDIF
-		PRINTFORM 興奮しきった子촉수
+		PRINTFORM 興奮しきった새끼 촉수
 		IF CFLAG:220 >= 2
 			PRINTFORML たちが%PRINT_TRANSCALLNAME(TARGET)%의 身体に群がると、
 		ELSE
@@ -1423,7 +1423,7 @@ ELSE
 	PRINTW
 	IF EXP:근친교배경험 == 0
 		PRINTFORML 必死に止めるように言って聞かせる%PRINT_TRANSCALLNAME(TARGET)%だが、
-		PRINTFORM 最も身近なメスである己の母親を初めての交尾相手に選んだ子촉수
+		PRINTFORM 最も身近なメスである己の母親を初めての交尾相手に選んだ새끼 촉수
 		SIF CFLAG:220 >= 2
 			PRINT たち
 		PRINTFORML の力は強く、
@@ -1439,10 +1439,10 @@ ELSE
 		PRINTW 
 	ENDIF
 	PRINTFORML 我が子に膣肉を抉られる背徳的な悦楽が%PRINT_TRANSCALLNAME(TARGET)%의 理性を마비させていき、
-	PRINTFORML やがてピストンがボルテージの限界に達した子촉수が痙攣し、사정の瞬間を迎えた。
+	PRINTFORML やがてピストンがボルテージの限界に達した새끼 촉수が痙攣し、사정の瞬間を迎えた。
 	PRINTFORM 最後の一滴まで実母の膣奥に精を放つと
 	IF CFLAG:220 >= 2
-		PRINTFORML 次の子촉수が場所を代わり、
+		PRINTFORML 次の새끼 촉수が場所を代わり、
 		PRINTFORML すぐさま再び交尾を開始するのだった。
 	ELSE
 		PRINTFORML 、まだ興奮が覚めやらないのか
@@ -1475,7 +1475,7 @@ ELSE
 			PRINTFORML 自分の子を満足させてあげられた充実感を感じながら
 			PRINTFORML 種付けされた下腹部を静かに撫でた・・・
 		ELSEIF TALENT:감정결여 > 0
-			PRINTFORML 静かに起き上がり、擦り寄ってくる子촉수に再び乳を与え始めた・・・
+			PRINTFORML 静かに起き上がり、擦り寄ってくる새끼 촉수に再び乳を与え始めた・・・
 		ELSE
 			PRINTFORML 白濁液を垂れ流す自身の股間を力なく見つめながら、
 			PRINTFORML 静かに嗚咽した・・・
@@ -1604,7 +1604,7 @@ IF EXP:A확장경험 >= 10
 		PRINTL 
 		PRINTFORML 촉수が前後に動きはじめるとピストンのたびに腸壁が激しく変形し、
 		PRINTFORML 肺からは空気が押し出されてしまって呼吸することもままならない。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)脳髄を貫き続ける強烈な感覚に悶絶しながら、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)脳髄を貫き続ける強烈な감각に悶絶しながら、
 		PRINTFORML 촉수が満足するまで玩具にされ続けた・・・
 	ENDIF
 ELSE
@@ -1897,9 +1897,9 @@ ELSE
 	PRINTW 
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) == 0
 		IF TALENT:주관시점 > 0
-			PRINTFORML 内臓をまさぐられる感覚に%PRINT_TRANSCALLNAME(TARGET)%의 全身から冷や汗が噴き出す。
+			PRINTFORML 内臓をまさぐられる감각に%PRINT_TRANSCALLNAME(TARGET)%의 全身から冷や汗が噴き出す。
 		ELSE
-			PRINTFORML 内臓をまさぐられる感覚に%PRINT_TRANSCALLNAME(TARGET)%은(는)錯乱して泣き叫ぶ。
+			PRINTFORML 内臓をまさぐられる감각に%PRINT_TRANSCALLNAME(TARGET)%은(는)錯乱して泣き叫ぶ。
 		ENDIF
 		PRINTFORML 痛みはなく、ただただ壮絶な違和感が意識を押し潰していく中、
 		PRINTFORML 暫くして촉수が引き抜かれるが、違和感が消えることはない。

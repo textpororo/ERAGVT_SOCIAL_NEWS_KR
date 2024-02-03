@@ -16,7 +16,7 @@ CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111
 
 ;丸飲み準備
 IF TFLAG:23 == 0
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 0
 
 	;지문: SPCOM13_PRE
@@ -66,7 +66,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	TFLAG:4 = TFLAG:4 | 입
 	INSERT = INSERT | 애널
 
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 0
 
 	;사정値 1000
@@ -90,7 +90,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		ENDIF
 	ENDIF
 
-	;快A　感覚が低いうちは少なめ
+	;快A　감각が低いうちは少なめ
 	IF CONFIG_CHECK_BALANCE_F(7) == 0
 		IF ABL:A감각 == 0
 			LOCAL:2 = 80
@@ -246,7 +246,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	BASE:체력 = 0
 	BASE:기력 = 0
 ELSE
-	;油断度の上昇
+	;油断度 상승
 	TFLAG:3 += 200
 
 	;지문: SPCOM13_MISS

@@ -127,7 +127,7 @@ NEXT
 ;PALAM補正をリセットする
 VARSET COMMON_PALAM
 
-;能力の上昇へ
+;能力 상승へ
 IF CFLAG:0 != 1 && CFLAG:0 != 4
 	;通常の能力上昇
 	CALL _ABLUP, 0
@@ -146,7 +146,7 @@ IF TFLAG:98 == 0
 	LOCAL = 100 - PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + MAXBASE:성내성 * 10)
 	CALL TENTACLE_LEVEL
 	LOCAL = (RESULT - 2) / ABL:레벨 * LOCAL / 2 + RAND:10
-	;공중 촬영 드론による上昇
+	;공중 촬영 드론에 의한 상승
 	SIF CFLAG:TARGET:43 == 505
 		LOCAL = LOCAL * 5 / 4
 	CALL GET_EXP,min(LOCAL,150)
@@ -475,7 +475,7 @@ ENDIF
 ;戦闘終了後のサブイベントへ
 CALL SUBEVENT_BATTLEEND
 
-;사정ゲージ、모유ゲージのリセット
+;사정 게이지、모유 게이지のリセット
 BASE:사정 = 0
 BASE:모유 = 0
 

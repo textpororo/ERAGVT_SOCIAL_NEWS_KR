@@ -1,10 +1,10 @@
 ﻿;-------------------------------------------------------------
-;ランダム抽選に候補ARGを加える
+;랜덤 추첨에 후보 ARG를 추가한다
 @ADDRANDCHOOSE(ARG)
 #DIM HOGE
-;負の数は候補にできない
+;음수는 후보로 삼을 수 없다
 IF ARG < 0
-	PRINTW ERROR 候補に負の数を指定することはできません
+	PRINTW ERROR 후보로 음수를 지정할 수 없습니다.
 	RETURN
 ENDIF
 RANDCHOOSE_NUM:0 += 1
@@ -16,13 +16,13 @@ ELSEIF HOGE < RANDCHOOSE_MAX
 	HOGE ++
 	GOTO LOOP
 ELSE
-	PRINTW ERROR ADDRANDCHOOSE の候補が多すぎます
+	PRINTW ERROR ADDRANDCHOOSE 의 후보가 너무 많습니다.
 ENDIF
 RANDCHOOSE_NUM:0 = HOGE
 
 
 ;-------------------------------------------------------------
-;ランダム抽選の結果をRESULTに返す
+;랜덤 추첨 결과를 RESULT에 돌려준다
 @RANDCHOOSE
 LOCAL = RAND:(RANDCHOOSE_NUM:0)
 LOCAL += 1
@@ -31,7 +31,7 @@ RETURN RESULT
 
 
 ;-------------------------------------------------------------
-;ランダム抽選の結果を返す式中関数
+;랜덤 추첨 결과를 반환하는 식중 함수
 @RANDCHOOSE_F()
 #FUNCTION
 LOCAL = RAND:(RANDCHOOSE_NUM:0)
@@ -41,7 +41,7 @@ RETURNF LOCAL:1
 
 
 ;-------------------------------------------------------------
-;指定した候補をクリア（ARG = 0で全てクリア）
+;지정한 후보를 클리어  (ARG = 0으로 모두 클리어)
 @CLEARRANDCHOOSE(ARG = 0)
 IF ARG <= -1
 	ARRAYSHIFT RANDCHOOSE_NUM,-1,0,RANDCHOOSE_NUM:0
@@ -54,7 +54,7 @@ ELSEIF ARG != 0 && ARG <= RANDCHOOSE_MAX - 1
 ENDIF
 
 ;-------------------------------------------------------------
-;特定の値を持つ候補を全てクリア
+;특정 값을 가진 후보를 모두 클리어
 @CLEARSPECIFICCHOOSE(ARG)
 LOCAL:1 = 0
 FOR LOCAL,1,RANDCHOOSE_NUM:0 + 1
@@ -67,7 +67,7 @@ NEXT
 RANDCHOOSE_NUM:0 -= LOCAL:1
 
 ;-------------------------------------------------------------
-;候補の数を返す式中関数
+;후보의 수를 반환하는 식중 함수
 @CHOICECOUNT_F()
 #FUNCTION
 LOCAL = RANDCHOOSE_NUM:0
