@@ -363,39 +363,39 @@ IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
 	PRINTL 
 	IF !GAME_OPTION_CHECK_F(OPTION_solo)
 		SETCOLOR 255, 170, 255
-		PRINTFORM [105] 거점 방위　　　 
+		PRINTFORM [105] 거점 방위　　　
 	ELSE
 		SETCOLOR 105,105,105
-		PRINTPLAIN [105] 거점 방위　　　 
+		PRINTPLAIN [105] 거점 방위　　　
 	ENDIF
 	IF CHARANUM >= 3
 		SETCOLOR 170, 255, 170
-		PRINTFORM [106] 전투 지원　　　 
+		PRINTFORM [106] 전투 지원　　　
 	ELSE
 		SETCOLOR 105,105,105
-		PRINTPLAIN [106] 전투 지원　　　 
+		PRINTPLAIN [106] 전투 지원　　　
 	ENDIF
 	SETCOLOR 255, 200, 50
-	PRINTFORM [107] 정보 수집　　　 
+	PRINTFORM [107] 정보 수집　　　
 	SETCOLOR 50, 200, 255
 	PRINTFORM [108] 자유 행동
 	PRINTL 
 ENDIF
 RESETCOLOR
 PRINTL 
-PRINT [110] 스테이터스 표시 
+PRINT [110] 스테이터스 표시　
 IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
-	PRINT [111] 캐릭터 강화   
-	PRINT [112] 의상 설정　　 
+	PRINT [111] 캐릭터 강화    
+	PRINT [112] 의상 설정　　　
 	PRINTL [113] 메디컬 룸
 	PRINTL [114] 커스터마이즈 
-	PRINT [120] 의상 구입　　 
+	PRINT [120] 의상 구입　　　
 ENDIF
 SIF FLAG:63 == 0
-	PRINT [130] 상황 확인　　 
+	PRINT [130] 상황 확인　　　
 
 IF CHECK_GAMEOVER_F() == 0 && FLAG:63 == 0
-	PRINT [150] 시설 확장　　 
+	PRINT [150] 시설 확장　　　
 	;안 될 경우
 	IF CFLAG:TARGET:0 != 상태_건강 || TARGET == MASTER || FLAG:9 != 0
 		SETCOLOR 70,70,70
@@ -415,8 +415,8 @@ IF FLAG:63 == 0 && GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
 ENDIF
 
 
-PRINT [200] 세이브　　　　
-PRINT [300] 로드          
+PRINT [200] 세이브　　　　 
+PRINT [300] 로드　　　　　
 PRINT [700] 컨피그　　　　
 PRINT [800] 트로피 확인　 
 

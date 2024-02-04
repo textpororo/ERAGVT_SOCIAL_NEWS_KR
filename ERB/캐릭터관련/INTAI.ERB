@@ -4,14 +4,14 @@ IF RESULT == 999
 	RETURN
 ELSE
 TARGET = RESULT
-	PRINTFORML 引退者{FLAG:252}人 支援転向者{FLAG:253}人 被治療者数{FLAG:254} 抹消済み行方不明者数{FLAG:255}人
-	PRINTFORML 引退者総数{FLAG:251}人
-	PRINTFORML %CALLNAME%を引退させます。一度引退したキャラは二度と現場復帰できません。本当によろしいですか？
+	PRINTFORML 은퇴자 {FLAG:252}명, 지원 전향자 {FLAG:253}명, 피치료자 수 {FLAG:254}명, 말소 완료 행방 불명자 수 {FLAG:255}명
+	PRINTFORML 은퇴자 총수 {FLAG:251}명
+	PRINTFORML %CALLNAME%을(를) 은퇴시킵니다. 한 번 은퇴한 캐릭터는 다시는 현장 복귀할 수 없습니다. 정말로 진행하시겠습니까?
 	PRINTL [0] 네
 	PRINTL [1] 아니오
 	CALL INPUT_ROOP,2
 	IF RESULT == 0
-		PRINTFORML 本当の本当に%CALLNAME%を引退させてもよろしいですか？
+		PRINTFORML 진짜진짜 정말로 %CALLNAME%을(를) 은퇴해도 괜찮겠습니까?
 		PRINTL [0] 아니오
 		PRINTL [1] 네
 		CALL INPUT_ROOP,2
@@ -24,19 +24,19 @@ ENDIF
 
 @OLD_GIRL
 
-;価値基準
+;가치 기준
 ;LOCAL:0=((BASE:기초체력+BASE:기초기력)/10+(+BASE:기초성내성+BASE:공격+BASE:방어+BASE:민첩))*ABL:레벨
-;방위력に追加
+;방위력에 추가
 ;CFLAG:852 += LOCAL:0
-;現状방위력の存在価値が低いのでボーナス
+;현상 방위력의 존재가치가 낮으므로 보너스
 ;MONEY += LOCAL:0 *15
  CALL MASSAGE_INTAI
 FLAG:251 += 1
 DELCHARA TARGET
-;TARGETが範囲外を指定しない様に
+;TARGET이 범위 외를 지정하지 않도록
 TARGET = 0
-;PRINTFORML 방위력이 {LOCAL:0}上がった！！
-;PRINTFORML 資金{LOCAL:0*15}を得た！！
+;PRINTFORML 방위력이 {LOCAL:0} 올랐다！！
+;PRINTFORML 자금 {LOCAL:0*15}을 얻었다！！
 
 @INPUT_ROOP,ARG
 $INPUT_LOOP_FUNC
@@ -49,168 +49,168 @@ ENDIF
 
 
 @MASSAGE_INTAI
-;フラグ用
+;플래그용
 LOCAL:0 = 1
-;筋力>他二つ
+;근력 > 나머지 두 개
 ;IF BASE:공격 > MAX(BASE:방어,BASE:민첩)
-;	PRINTFORM 공격力に優れ
-;방어>他二つ
+;	PRINTFORM 공격력이 뛰어나고 
+;방어 > 나머지 두 개
 ;ELSEIF BASE:방어 > MAX(BASE:공격,BASE:민첩)
-;	PRINTFORM 방어力に優れ
-;민첩>他二つ
+;	PRINTFORM 방어력이 뛰어나고 
+;민첩 > 나머지 두 개
 ;ELSEIF BASE:민첩 > MAX(BASE:공격,BASE:방어)
-;	PRINTFORM 민첩性に優れ
+;	PRINTFORM 민첩성이 뛰어나고 
 ;ENDIF
 IF TALENT:근거리특기 || TALENT:중거리특기 || TALENT:원거리특기
 	IF TALENT:근거리특기
-		PRINT 近接戦闘を得意とし
+		PRINT 강력한 근접 전투가 특기였
 	ELSEIF TALENT:중거리특기
-		PRINT 付かず離れずの戦闘を得意とし
+		PRINT 적과의 거리 조절을 통해 우위를 챙기는 전투가 특기였
 	ELSEIF TALENT:원거리특기
-		PRINT 一方的な狙撃を得意とし
+		PRINT 일방적인 저격이 특기였
 	ENDIF
-	PRINTFORM た%CALLNAME%であったが
+	PRINTFORM 던 %CALLNAME%였지만 
 ELSE
 	PRINTFORM %CALLNAME%은(는) 
 ENDIF
 
-;消耗度合い判定
-;基礎値のポイント換算での合計は 初期最小580点 初期標準720点 初期最大745点分
-;初期値最大よりも高いかどうか
+;소모 정도 판정
+;기초값의 포인트 환산에서의 합계는 초기 최소 580점, 초기 표준 720점, 초기 최대 745점분
+;초기값 최대보다 높은지의 여부
 LOCAL:1 = 0
 SIF TALENT:번식자루
-	PRINTFORML 촉수の残虐な責めに破壊され、
+	PRINTFORML 촉수의 잔학한 고문에 파괴되고, 
 SIF TALENT:사지결손
-	PRINTFORML 運動能力を失い廃人にされたことで
+	PRINTFORML 운동능력을 상실하고 폐인이 됨으로써 
 IF TALENT:번식자루 || TALENT:사지결손
-	PRINTFORML ヒトとは呼び難い状態になり
+	PRINTFORML 사람이라고 부르기 어려운 상태가 되어
 ELSEIF 746 < (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML 能力こそ十全に思えるが
-;初期最小よりも高いかどうか
+	PRINTFORML 능력이야말로 충분하다고 생각되지만
+;초기 최소보다 높은지의 여부
 ELSEIF 580 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML 消耗こそ感じられないながら
+	PRINTFORML 소모가 전혀 느껴지지 않으면서
 	LOCAL:1 += 1
 ELSEIF 480 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML いくらか消耗し
+	PRINTFORML 조금 소모되어
 	LOCAL:1 += 2
 ELSEIF 380 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML それなりに消耗し
+	PRINTFORML 그런대로 소모되어
 	LOCAL:1 += 3
 ELSEIF 280 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML すっかり消耗し
+	PRINTFORML 완전히 소모되어
 	LOCAL:1 += 4
 ELSEIF 180 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML もはやボロボロになり
+	PRINTFORML 이미 만신창이가 되어
 	LOCAL:1 += 5
 ELSEIF 80 <= (BASE:기초체력 + BASE:기초기력) / 10 + (BASE:기초성내성 + BASE:공격 + BASE:방어 + BASE:민첩 + BASE:지성)
-	PRINTFORML 心身が限界を迎えた状態で
+	PRINTFORML 심신이 한계를 맞이한 상태로
 	LOCAL:1 += 5
 ELSE
-	PRINTFORML 意地だけで戦うも
+	PRINTFORML 오기만으로 싸우는 것도
 	LOCAL:1 += 6
 ENDIF
 
 SIF BASE:기초체력 <= 0
-	PRINTFORML 체력は完全に破壊され、ちょっとした運動で息が切れてしまう。
+	PRINTFORML 체력은 완전히 파괴되어, 약간의 운동만으로 숨이 차 버린다.
 SIF BASE:기초기력 <= 0
-	PRINTFORML もはや困難に立ち向かう기력などなく、
+	PRINTFORML 더이상 어려움에 맞설 기력 따위는 없고,
 SIF BASE:기초성내성 <= 0
-	PRINTFORML 快楽に耐えられず、あっさりと性的刺激に屈してしまう。
+	PRINTFORML 쾌락을 견디지 못해, 아주 약간의 성적 자극에도 간단히 굴복하고 만다.
 PRINTL
 SIF BASE:공격 <= 0
-	PRINTFORML 弱りきった力では敵の外皮を傷つけることさえできない。
+	PRINTFORML 허약한 힘으로는 적의 외피를 손상시킬 수조차 없다.
 SIF BASE:방어 <= 0
-	PRINTFORML 今や最弱の촉수にすら叩き落とされる。
+	PRINTFORML 이제 최약체인 촉수에게마저 때려 눕혀진다.
 SIF BASE:민첩 <= 0
-	PRINTFORML 身のこなしは石と化したかのように重い。
+	PRINTFORML 몸놀림은 돌이 된 것처럼 무겁다.
 SIF BASE:지성 <= 0
-	PRINTFORML 鈍り切った思考では何も有効な策を考えられない。
+	PRINTFORML 무뎌진 사고로는 그 어떤 유효한 계책도 고안할 수 없다.
 PRINTW
 
-;えちぃ
+;엣치
 IF TALENT:전락
-	PRINTFORML %STR:2500%が与える快楽に身も心も侵食され尽くした
-;完全開発済み
+	PRINTFORML %STR:2500%가 주는 쾌락에 몸도 마음도 침식당한
+;완전 개발 완료
 ELSEIF MIN(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
-	PRINTFORML この世の快楽全てを%STR:2500%によって刻み込まれた
-;全身開発済み
+	PRINTFORML 이 세상의 모든 쾌락을 %STR:2500%에 의해 새겨졌기
+;전신 개발 완료
 ELSEIF ABL:C감각 + ABL:V감각 + ABL:A감각 + ABL:B감각 > 14
-	PRINTFORML %STR:2500%に執拗に嬲られ、全身が敏感極まりない性感帯にされた
-;一部位MAX
+	PRINTFORML %STR:2500%에게 집요하게 희롱당해, 온몸이 민감하기 짝이 없는 성감대가 되었기
+;한 부위 MAX
 ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
-	PRINTFORM %STR:2500%による度重なる凌辱により
+	PRINTFORM %STR:2500%에 의한 거듭되는 능욕으로 
 	IF ABL:A감각 == 5
-		PRINTFORML %CALLNAME%の菊門は性器以上に敏感に作り替えられた
+		PRINTFORML %CALLNAME%의 항문은 성기 이상으로 민감하게 바뀌었기
 	ELSEIF ABL:V감각 == 5
-		PRINTFORML %CALLNAME%은(는) 雌穴に挿入される度、イキ狂うようになった
+		PRINTFORML %CALLNAME%은(는) 암구멍에 삽입될 때마다, 미치도록 가 버리기
 	ELSEIF ABL:B감각 == 5
-		PRINTL 乳首は収まることなく屹立し続ける
+		PRINTL 꼭지는 수그러들지 않고 계속 단단하게 서 있었기
 	ELSEIF ABL:C감각 == 5
-		PRINTL 陰核を絶頂スイッチに改造された
+		PRINTL 음핵을 절정 스위치로 개조되었기
 	ENDIF
 ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) > 2
-	PRINTFORM %STR:2500%に玩具にされた結果、
+	PRINTFORM %STR:2500%에게 노리개 삼아진 결과,
 	IF ABL:A감각 > 2
-		PRINTL 애널絶頂の味を覚えさせられた
+		PRINTL 애널 절정의 맛을 배우게 되었기
 	ELSEIF ABL:V감각 > 2
-		PRINTL 雌穴が촉수壺と呼べるほどに蹂躙された
+		PRINTL 암구멍이 촉수 단지라고 부를 수 있을 정도로 유린되었기
 	ELSEIF ABL:B감각 > 2
-		PRINTFORML 常に%CALLNAME%の乳房は快楽を貪るようになった
+		PRINTFORML 항상 %CALLNAME%의 유방은 쾌락을 탐내게 되었기
 	ELSEIF ABL:C감각 > 2
-		PRINTL 陰核を발정スイッチに改造された
+		PRINTL 음핵을 발정 스위치로 개조되었기
 	ENDIF
 ELSE
 	LOCAL:0 += 1
 ENDIF
 
 IF LOCAL:0 == 0
-	PRINT ために、もはや
+	PRINT  때문에, 더이상
 ELSEIF TALENT:전락
-	PRINTFORM 今や%STR:2500%の都合の良い繁殖노예に過ぎず、
+	PRINTFORM  지금은 %STR:2500%의 형편 좋은 번식 노예에 불과했고, 
 ELSEIF MAX(ABL:순종,ABL:욕망,ABL:봉사정신,ABL:마조끼) > 3
-	PRINTFORM %STR:2500%と相対するうちに、やがて
+	PRINTFORM %STR:2500%와 상대하는 사이에, 이윽고 
 ENDIF
-;各種属性
+;각종 속성
 IF ABL:순종 > 3
-	PRINTFORM %STR:2500%に逆らえなくなってしまった
+	PRINTFORM %STR:2500%에게 거역할 수 없게 되어
 ELSEIF ABL:욕망 > 3
-	PRINTFORM %STR:2500%を見るだけで발정し始めるようになってしまった
+	PRINTFORM %STR:2500%를 보는 것만으로 발정하기 시작하게 되어
 ;ELSEIF ABL:기교 > 3
 ELSEIF ABL:봉사정신 > 3
-	PRINTFORM %STR:2500%に逆らえなくなってしまった
+	PRINTFORM %STR:2500%에게 거스를 수 없게 되어
 ;ELSEIF ABL:노출벽 > 3
 	
 ELSEIF ABL:마조끼 > 3
-	PRINTFORM あらゆる%STR:2500%の責めに喜びを覚えるようになってしまった
+	PRINTFORM 모든 %STR:2500%의 고문에 기쁨을 느끼게 되어
 ELSE
 	LOCAL:0 += 2
 ENDIF
 
 
-;감각もその他も3以下で中毒持ちってあるのかな
+;감각도 그 이외도 3 이하로 중독 가지고 있으려나
 IF LOCAL:0 >= 3 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORM もともとの素質が음란だったのか、%CALLNAME%은(는) 
+	PRINTFORM 원래부터 소질이 음란한 것이었을까, %CALLNAME%은(는) 
 ELSEIF LOCAL:0 == 2 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORM 結果、
+	PRINTFORM 결과, 
 ELSEIF LOCAL:0 == 1 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORM ると同時に
+	PRINTFORM 버림과 동시에, 
 ELSEIF (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORML てしまうようになった。
-	PRINTFORML さんざん開発された%CALLNAME%은(는) 
+	PRINTFORML  버리고 말았다.
+	PRINTFORML 몹시 심하게 개발당한 %CALLNAME%은(는) 
 ELSE
-
+	PRINTFORML  버렸다.
 ENDIF
-;各種中毒
+;각종 중독
 IF ABL:촉수중독
-	PRINTFORM ついに촉수のことしか考えられなくなってしまい
+	PRINTFORM 결국 촉수 밖에는 생각할 수 없게 되어 버려
 ELSEIF ABL:자위중독
-	PRINTFORM ついに自慰のことしか考えられなくなってしまい
+	PRINTFORM 결국 자위 밖에는 생각할 수 없게 되어 버려
 ELSEIF ABL:정액중독
-	PRINTFORM ついにザーメンのことしか考えられなくなってしまい
+	PRINTFORM 결국 정액 밖에는 생각할 수 없게 되어 버려
 ELSEIF ABL:모유중독
-	PRINTFORM ついに乳汁を出すことしか考えられなくなってしまい
+	PRINTFORM 결국 모유를 내는 것 밖에는 생각할 수 없게 되어 버려
 ELSEIF ABL:사정중독
-	PRINTFORM つい에 사정のことしか考えられなくなってしまい
+	PRINTFORM 결국 사정하는 것 밖에는 생각할 수 없게 되어 버려
 ELSE
 	LOCAL:0 += 4
 ENDIF
@@ -218,123 +218,123 @@ ENDIF
 PRINTL ……
 CALL DOT_AFTER(2)
 
-;被囚禁、綁架、吸収的情況下被視為失蹤
+;구금, 납치, 흡입収의 경우 실종으로 간주(被囚禁、綁架、吸収的情況下被視為失蹤)
 IF CFLAG:0 == 상태_사망
 	IF TALENT:괴멸카운트 == -10
-		PRINTFORML 戦闘中に손발を失った%CALLNAME%
+		PRINTFORML 전투 중에 손발을 잃은 %CALLNAME%.
 		PRINTL
-		PRINTFORML 「自ら望んで」淫虐な処刑ショーの犠牲者となり、
+		PRINTFORML 「스스로 원하여」음학한 처형쇼의 희생자가 되었고,
 		PRINTL
-		PRINTFORML その暗い痕跡を世界に残すこともなく、全てのプロファイルデータは削除されてしまった……
-		LOCALS = 生贄虐殺
-		LOCALS:1 = 死亡
+		PRINTFORML 그 어두운 흔적을 세상에 남기지도 않고, 모든 프로필 데이터는 삭제되어 버렸다……
+		LOCALS = 제물 학살
+		LOCALS:1 = 사망
 	ELSEIF TALENT:괴멸카운트 == -11
-		PRINTFORML ダークウェブ上の情報によると、%CALLNAME%은(는) 既に裏社会の組織に処刑されたようだ。
+		PRINTFORML 다크웹상의 정보에 의하면, %CALLNAME%은(는) 이미 뒷사회 조직에 의해 처형된 것 같다.
 		PRINTL
-		PRINTFORM その死が濃厚であるため、データベースからプロファイルが抹消された……
+		PRINTFORM 그 죽음이 농후했기 때문에, 데이터베이스에서 프로필이 말소되었다……
 		PRINTL
-		LOCALS = 残虐処刑
-		LOCALS:1 = 死亡
+		LOCALS = 잔학 처형
+		LOCALS:1 = 사망
 	ELSEIF TALENT:묘상화
-		PRINTFORML %CALLNAME%은(는) 徹底的に吸収され、
+		PRINTFORML %CALLNAME%은(는) 철저하게 흡수되어,
 		PRINTL
-		PRINTFORML %STR:2500%の幼体を出産する孕み袋になった
+		PRINTFORML %STR:2500%의 유체를 출산하는 잉태 주머니가 되었다.
 		PRINTL
-		PRINTFORML 肉体は欠損して理性を失い、救助の可能性もなく、
+		PRINTFORML 육체는 결손되어 이성을 잃고, 구조의 가능성도 없으며,
 		PRINTL
-		PRINTFORM 死よりも恐ろしい状況に置かれたまま、データベースからプロファイルが抹消された……
-		LOCALS = 촉수吸収
-		LOCALS:1 = 苗床
+		PRINTFORM 죽음보다 더 무서운 상황에 놓인 채, 데이터베이스에서 프로필이 말소되었다……
+		LOCALS = 촉수 흡수
+		LOCALS:1 = 모판
 	ELSE
-		PRINTFORML %CALLNAME%が幽閉されてから何日も経過している
+		PRINTFORML %CALLNAME%이(가) 유폐된 지 며칠이나 경과하고 있었다.
 		PRINTL
-		PRINTFORML そして%STR:2500%幼体を出産する孕み袋になってもいない
+		PRINTFORML 그리고 %STR:2500%의 유체를 출산하는 잉태 주머니도 되지 않았다.
 		PRINTL
-		PRINTFORML 唯一可能性があるのは、%STR:2500%の食料として食らい尽くされた末路だ
+		PRINTFORML 유일하게 가능성이 있는 것은, %STR:2500%의 식량으로서 완전히 먹힌 말로이다.
 		PRINTL
-		PRINTFORM 痛ましい死を遂げた可能性が濃厚であり，データベースからプロファイルも抹消された……
-		LOCALS = 촉수喰食
-		LOCALS:1 = 死亡
+		PRINTFORM 안타까운 죽음을 당했을 가능성이 농후하여, 데이터베이스에서 프로필도 말소되었다……
+		LOCALS = 촉수 소화
+		LOCALS:1 = 사망
 	ENDIF
 	FLAG:255 += 1
 ELSEIF CFLAG:0 == 상태_유폐 
-	PRINTFORML 行方不明になってから{CFLAG:31 / 2}日が経過した
+	PRINTFORML %CALLNAME%이(가)행방불명이 된지 {CFLAG:31 / 2}일이 경과했다.
 	PRINTL
-	PRINTFORML 촉수に敗北し捕らえられたという目撃報告がある
+	PRINTFORML 촉수에게 패배하고 사로잡혔다는 목격 보고가 있었다.
 	PRINTL
-	PRINTFORML 追跡は困難を極め、それ以上の犠牲者を出さないために救出計画は中止された
+	PRINTFORML 추적이 너무 어려워, 더 이상의 희생자를 내지 않기 위해 구출 계획은 중지되었다.
 	PRINTL
-	PRINTFORM 作戦中の死亡と認定され、データベースからプロファイルも抹消された……
+	PRINTFORM 작전 중 사망으로 인정되어, 데이터베이스에서 프로필도 말소되었다……
 	PRINTL
-	LOCALS = 敗北幽閉
-	LOCALS:1 = 推定死亡
+	LOCALS = 패배 유폐
+	LOCALS:1 = 사망 추정
 	FLAG:255 += 1
 ELSEIF CFLAG:0 == 상태_악질감금 
 	IF TALENT:사지결손
-		PRINTFORML 行方不明になってから{CFLAG:70 / 2}日が経過した
+		PRINTFORML %CALLNAME%이(가) 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
 		PRINTL
-		PRINTFORML 裏社会に囚われ、極めて残酷な仕打ちを受けていた
+		PRINTFORML %CALLNAME%은(는) 뒷사회에 붙잡혀, 극히 잔혹한 처사를 받고 있었다.
 		PRINTL
-		PRINTFORML 人型の生オナホールへと造り替えられ、いつ拷問されて死ぬかも分からない。
+		PRINTFORML 인간형 생오나홀로 바뀌어, 언제 고문당해 죽을지도 모른다.
 		PRINTL
-		PRINTFORM 救出可能性が限りなくゼロに近いため、データベースのプロファイルも抹消された……
+		PRINTFORM 구출 가능성이 한없이 0에 가깝기 때문에, 데이터베이스의 프로필도 말소되었다……
 		PRINTL
-		LOCALS = 残虐拷問
-		LOCALS:1 = 推定死亡
+		LOCALS = 잔학 고문
+		LOCALS:1 = 사망 추정
 	ELSE
-		PRINTFORML 行方不明になってから{CFLAG:70 / 2}日が経過した
+		PRINTFORML %CALLNAME%이(가) 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
 		PRINTL
-		PRINTFORML 裏社会の犯罪組織に捕まった可能性もある
+		PRINTFORML 뒷사회의 범죄 조직에 붙잡혔을 가능성도 있다.
 		PRINTL
-		PRINTFORML 救助に必要な予算が降りず、捜索計画を断念せざるを得なかった
+		PRINTFORML 조에 필요한 예산이 내려가지 않아, 수색 계획을 포기할 수밖에 없었다.
 		PRINTL
-		PRINTFORM その生死を確認できないまま、データベースからプロファイルが消去された……
+		PRINTFORM 그 생사를 확인하지 못한 채, 데이터베이스에서 프로필이 삭제되었다……
 		PRINTL
-		LOCALS = 拉致監禁
-		LOCALS:1 = 失踪
+		LOCALS = 납치 감금
+		LOCALS:1 = 실종
 	ENDIF
 	FLAG:255 += 1
 	PRINTW
-;＠対応イベント移植までコメントアウト
+;＠대응 이벤트 이식까지 코멘트 아웃
 ;;在전락的情況下，処刑
 ;ELSEIF TALENT:전락
 ;	PRINTL 
-;	PRINTFORMW 촉수の手先になった疑惑があるため、簡単に「引退」することはできない。
-;	PRINTFORMW %CALLNAME%은(는) 秘密裏に拘束され、基地の奥深くで秘密裏に処刑される事になった……
+;	PRINTFORMW 촉수의 앞잡이가 된 의혹이 있기 때문에, 간단히「은퇴」할 수는 없다.
+;	PRINTFORMW %CALLNAME%은(는) 비밀리에 구속되어, 기지 깊숙한 곳에서 비밀리에 처형당하게 되었다……
 ;	PRINTW
 ;	FLAG:252 += 1
-;	LOCALS = 秘密処刑
-;	LOCALS:1 = 死亡
+;	LOCALS = 비밀 처형
+;	LOCALS:1 = 사망
 ;	CALL INTAI_SNUFF
 ELSEIF TALENT:사지결손 > 0 && TALENT:번식자루 < 1
-	PRINTFORM 残酷な淫虐によって身体が欠損し、戦うことができなくなって引退を余儀なくされた。
-	LOCALS = 廃品除隊
-	LOCALS:1 = 存命
+	PRINTFORM 잔혹한 음학에 의해 몸이 결손되어, 싸울 수 없게 되었기 때문에 은퇴할 수밖에 없었다.
+	LOCALS = 폐품 제대
+	LOCALS:1 = 생존
 ELSEIF TALENT:번식자루
-	PRINTFORM もう戦えないため除隊され、集中治療室に送られて残りの人生を何も知らずに過ごすことになった……
+	PRINTFORM 더 이상 싸울 수 없어 제대하였고, 중환자실에 보내져 남은 인생을 아무것도 모르고 보내게 되었다……
 	FLAG:254 += 1
-	LOCALS = 人格破滅
-	LOCALS:1 = 存命
+	LOCALS = 인격 파멸
+	LOCALS:1 = 생존
 ELSEIF LOCAL:0 > 6 && LOCAL:1 < 3
-	PRINTFORM 自分が戦闘には向かないのではないかと思うようになり引退を決意した
+	PRINTFORM 자신은 더이상 전투에 참여하지 않을 것이라는 생각이 들어 은퇴를 결심했다.
 	FLAG:252 += 1
-	LOCALS = 自主除隊
-	LOCALS:1 = 存命
+	LOCALS = 자주 제대
+	LOCALS:1 = 생존
 ELSEIF LOCAL:0 > 3 || LOCAL:1 < 5 
-	PRINTFORM %STR:2500%との戦闘は困難と判断され後方支援へと回された
+	PRINTFORM %STR:2500%와의 전투는 이 이상 어렵다고 판단되어 후방 지원으로 돌려졌다.
 	FLAG:253 += 1
-	LOCALS = 後勤引退
-	LOCALS:1 = 存命
+	LOCALS = 후방 은퇴
+	LOCALS:1 = 생존
 ELSE
-	PRINTFORM 後方に下がり治療を受けることになった
+	PRINTFORM 후방으로 내려가 치료를 받게 되었다.
 	FLAG:254 += 1
-	LOCALS = 長期療養
-	LOCALS:1 = 存命
+	LOCALS = 장기 요양
+	LOCALS:1 = 생존
 ENDIF
 LOCALS = 　　%NAME:TARGET, 30, LEFT% %LOCALS, 8, RIGHT% %LOCALS:1, 20, RIGHT% <br> <br>
 PRINTFORMW 
 DRAWLINE
-PRINTFORML 　　姓名　　　　　　　　　　　　　　引退理由　　　　　　　　　現状
+PRINTFORML 　　성명　　　　　　　　　　　　　　은퇴 사유　　　　　　　　　현상
 PRINTL 
 HTML_PRINT LOCALS
 DRAWLINE
@@ -344,23 +344,23 @@ PRINTFORMW
 @CHAR_INTAI_LIST
 CALL LB
 IF SAVESTR:50 == ""
-	PRINTFORML 現在記録はありません！
+	PRINTFORML 현재 기록은 없습니다!
 	PRINTW
 	CALL LB
 ELSE
-PRINTL 　　　　　　　　　　　　　　【 引 退 名 簿 】　　　　　　　　　　　　　　　　　　
+PRINTL 　　　　　　　　　　　　　　【 은 퇴 명 부 】　　　　　　　　　　　　　　　　　　
 DRAWLINE
-PRINTFORML 　　姓名　　　　　　　　　　　　　　引退理由　　　　　　　　　現状
+PRINTFORML 　　성명　　　　　　　　　　　　　　은퇴 사유　　　　　　　　　현상
 DRAWLINE
 PRINTFORML 
 HTML_PRINT SAVESTR:50
 PRINTL
 DRAWLINE
-PRINTL 　　　　　　　　引退した魔法少女たちの結末を記録しています
+PRINTL 　　　　　　　　은퇴한 마법소녀들의 결말을 기록하고 있습니다.
 PRINTW
 ENDIF
 
-;幽閉・誘拐・取り込まれの場合は行方不明扱い
-;F CFLAG:0 == 1 || CFLAG:0 == 4 || CFLAG:0 == 9
-;	PRINTFORM 行方知れずのまま、登録抹消される事となった……
+;유폐・유괴・거두어진 경우 행방불명 처리
+;IF CFLAG:0 == 1 || CFLAG:0 == 4 || CFLAG:0 == 9
+;	PRINTFORM 행방불명된 채로 등록 말소되기로 결정됐다……
 ;	FLAG:255 += 1
