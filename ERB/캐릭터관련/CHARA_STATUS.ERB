@@ -632,7 +632,7 @@ CASE 5
 		ELSE
 			PRINTL 
 		ENDIF
-		PRINT 　　　髪の色：　[
+		PRINT 　　　머리색：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:31
 		PRINT ■
 		RESETCOLOR
@@ -713,7 +713,7 @@ CASE 5
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
-		PRINTFORML \@ TALENT:ARG:변신시외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:변신시외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:변신시외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:변신시외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:변신시외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:변신시외관 == 6 ? [爆尻] #  \@
+		PRINTFORML \@ TALENT:ARG:변신시외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:변신시외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:변신시외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:변신시외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:변신시외관 == 5 ? [빵뎅이] #  \@\@ TALENT:ARG:변신시외관 == 6 ? [왕뎅이] #  \@
 
 		PRINT 　　　肌の色：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:37
@@ -744,7 +744,7 @@ CASE 5
 			PRINTL 
 		ENDIF
 
-		PRINT 　　　髪の色：　[
+		PRINT 　　　머리색：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:30
 		PRINT ■
 		RESETCOLOR
@@ -821,7 +821,7 @@ CASE 5
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
-		PRINTFORML \@ TALENT:ARG:외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:외관 == 5 ? [巨尻] #  \@\@ TALENT:ARG:외관 == 6 ? [爆尻] #  \@
+		PRINTFORML \@ TALENT:ARG:외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:외관 == 5 ? [빵뎅이] #  \@\@ TALENT:ARG:외관 == 6 ? [왕뎅이] #  \@
 
 		PRINT 　　　肌の色：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:36
@@ -2125,9 +2125,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			ELSEIF TALENT:ARG:변신시외관 == 4
 				LOCALS += @"[날씬함]"
 			ELSEIF TALENT:ARG:변신시외관 == 5
-				LOCALS += @"[巨尻]"
+				LOCALS += @"[빵뎅이]"
 			ELSEIF TALENT:ARG:변신시외관 == 6
-				LOCALS += @"[爆尻]"
+				LOCALS += @"[왕뎅이]"
 			ENDIF
 		ELSE
 			IF TALENT:ARG:외관 == 1
@@ -2139,9 +2139,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			ELSEIF TALENT:ARG:외관 == 4
 				LOCALS += @"[날씬함]"
 			ELSEIF TALENT:ARG:외관 == 5
-				LOCALS += @"[巨尻]"
+				LOCALS += @"[빵뎅이]"
 			ELSEIF TALENT:ARG:외관 == 6
-				LOCALS += @"[爆尻]"
+				LOCALS += @"[왕뎅이]"
 			ENDIF
 		ENDIF
 		IF ARG:2
@@ -2665,9 +2665,9 @@ ELSEIF TALENT_VAR == 812
 	ELSEIF SUB_TALENT == 4
 		SUB_STR:0 = 날씬함
 	ELSEIF SUB_TALENT == 5
-		SUB_STR:0 = 巨尻
+		SUB_STR:0 = 빵뎅이
 	ELSEIF SUB_TALENT == 6
-		SUB_STR:0 = 爆尻
+		SUB_STR:0 = 왕뎅이
 	ENDIF
 ;성별변화＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾
 ELSEIF TALENT_VAR == 900
@@ -3438,7 +3438,7 @@ PRINTL
 ;--------------------------------------------------
 ;髪色の表示
 @SHOW_HAIRCOLOR, ARG
-PRINT 　　　　髪の色：[
+PRINT 　　　　머리색：[
 IF CSTR:ARG:30 == ""
 	PRINT 設定なし
 ELSE

@@ -12,7 +12,7 @@ PRINTL
 PRINTL [10]ヘアスタイルの設定
 CALL SHOW_HAIRSTYLE, ARG
 PRINTL 
-PRINT [11]髪の色の設定
+PRINT [11]머리색の設定
 PRINTPLAIN  
 CALL SHOW_HAIRCOLOR, ARG
 PRINTL 
@@ -133,16 +133,16 @@ ENDIF
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;髪の色の設定
+;머리색の設定
 @SET_HAIRCOLOR, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 『%CALLNAME:ARG%』 の髪の色を設定してください
+PRINTFORML 『%CALLNAME:ARG%』 の머리색を設定してください
 CALL SHOW_HAIRCOLOR, ARG
 PRINTL 
-PRINTL [1]髪の色（パレットから選ぶ）
+PRINTL [1]머리색（パレットから選ぶ）
 PRINT 　プリセット：　　[
 CALL SETCOLOR_BY_STR, "赤"
 PRINTBUTTON "■",10
@@ -229,7 +229,7 @@ IF TALENT:ARG:변신능력 > 0
 	RESETCOLOR
 	PRINTL ]
 	PRINTL 
-	PRINTL [3]変身中の髪の色を変身前に合わせる
+	PRINTL [3]変身中の머리색を変身前に合わせる
 ENDIF
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL [100] 결정

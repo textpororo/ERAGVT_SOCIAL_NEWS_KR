@@ -1,30 +1,30 @@
 ﻿;*******************************************************************************************************
-;裏プロフィール文字列の作成
-;感度
-;5		[Adj:1][部位]を[動詞]のが好き 淫語ON
-;6		[Adj:1][部位]を[動詞]のが好き
-;7		[Adj:1][部位]を[Adv:0][動詞]のが好き
-;8		[Adj:1][Adj:0][部位]を[Adv:0][動詞]のが好き
-;9		[Adj:1][Adj:0][部位]を[Adv:1][動詞]のが好き
-;10		[Adj:2][Adj:1][Adj:0][部位]を[Adv:1][動詞]のが好き
-;11		[Adj:3] [Adj:2] [Adj:1] [Adj:0] [部位] を [Adv:1]  [動詞] のが好き
+;뒷 프로필 문자열 생성
+;감도
+;5		[Adj:1][부위]을(를) [동사] 게 좋아 음어ON
+;6		[Adj:1][부위]을(를) [동사] 게 좋아
+;7		[Adj:1][부위]을(를) [Adv:0][동사] 게 좋아
+;8		[Adj:1][Adj:0][부위]을(를) [Adv:0][동사] 게 좋아
+;9		[Adj:1][Adj:0][부위]을(를) [Adv:1][동사] 게 좋아
+;10		[Adj:2][Adj:1][Adj:0][부위]을(를) [Adv:1][동사] 게 좋아
+;11		[Adj:3] [Adj:2] [Adj:1] [Adj:0] [부위] 를 [Adv:1]  [동사]  게 좋아
 ;*******************************************************************************************************
-@MAKESEXUALPROFILE, 対象, Lv
+@MAKESEXUALPROFILE, 대상, Lv
 #FUNCTIONS
 
-#DIMS 対象
+#DIMS 대상
 #DIM Lv
 
 #DIMS Adj, 4
-#DIMS 部位
+#DIMS 부위
 #DIMS Adv, 2
-#DIMS 動詞
+#DIMS 동사
 
 VARSET Adj, ""
 VARSET Adv, ""
 
-IF 対象 == "B" || 対象 == "C"|| 対象 == "P"
-;BかCの形容詞をつくる
+IF 대상 == "B" || 대상 == "C"|| 대상 == "P"
+;B 또는 C(P)의 형용사를 만든다
 	SIF Lv < 11
 		Adj:1 = %MAKE_ADJ_BC(Lv)%
 	SIF Lv >= 8
@@ -35,8 +35,8 @@ IF 対象 == "B" || 対象 == "C"|| 対象 == "P"
 			Adj:2 = %MAKE_ADJ_BC(Lv)%
 		WEND
 	ENDIF
-ELSEIF 対象 == "V" || 対象 == "A"
-;VかAの形容詞をつくる
+ELSEIF 대상 == "V" || 대상 == "A"
+;V 또는 A의 형용사를 만든다
 	SIF Lv < 11
 		Adj:1 = %MAKE_ADJ_VA(Lv)%
 	SIF Lv >= 8
@@ -52,35 +52,35 @@ ENDIF
 SIF Lv >= 11
 	Adj:3 = %MAKE_BAD_REPUTATION()%
 
-IF 対象 == "B"
-	;思いつかなかった
-	部位 = 乳首
-ELSEIF 対象 == "C"
+IF 대상 == "B"
+	;생각나지 않았다
+	부위 = 유두
+ELSEIF 대상 == "C"
 	IF Lv >= 5
-		部位 = %MAKE_C_NAME("淫語")%
+		부위 = %MAKE_C_NAME("음어")%
 	ELSE
-		部位 = %MAKE_C_NAME()%
+		부위 = %MAKE_C_NAME()%
 	ENDIF
-ELSEIF 対象 == "P"
+ELSEIF 대상 == "P"
 	IF Lv >= 5
-		部位 = %MAKE_P_NAME("淫語")%
+		부위 = %MAKE_P_NAME("음어")%
 	ELSE
-		部位 = %MAKE_P_NAME()%
+		부위 = %MAKE_P_NAME()%
 	ENDIF
-ELSEIF 対象 == "V"
+ELSEIF 대상 == "V"
 	IF Lv >= 5
-		部位 = %MAKE_V_NAME("淫語")%
+		부위 = %MAKE_V_NAME("음어")%
 	ELSE
-		部位 = %MAKE_V_NAME()%
+		부위 = %MAKE_V_NAME()%
 	ENDIF
-ELSEIF 対象 == "A"
+ELSEIF 대상 == "A"
 	IF Lv >= 5
-		部位 = %MAKE_A_NAME("淫語")%
+		부위 = %MAKE_A_NAME("음어")%
 	ELSE
-		部位 = %MAKE_A_NAME()%
+		부위 = %MAKE_A_NAME()%
 	ENDIF
 ELSE
-	部位 = "エラー"
+	부위 = "ERROR"
 ENDIF
 
 SIF LV >= 7 && LV < 9
@@ -88,28 +88,28 @@ SIF LV >= 7 && LV < 9
 SIF LV >= 9
 	Adv:1 = %MAKE_ADV_2()%
 	
-IF 対象 == "B" || 対象 == "C" || 対象 == "P"
-	動詞 = %MAKE_VERB_BC()%
-ELSEIF 対象 == "V"
+IF 대상 == "B" || 대상 == "C" || 대상 == "P"
+	동사 = %MAKE_VERB_BC()%
+ELSEIF 대상 == "V"
 	IF Lv >= 5
-		動詞 = %MAKE_VERB_V("淫語")%
+		동사 = %MAKE_VERB_V("음어")%
 	ELSE
-		動詞 = %MAKE_VERB_V()%
+		동사 = %MAKE_VERB_V()%
 	ENDIF
-ELSEIF 対象 == "A"
+ELSEIF 대상 == "A"
 	IF Lv >= 5
-		動詞 = %MAKE_VERB_A("淫語")%
+		동사 = %MAKE_VERB_A("음어")%
 	ELSE
-		動詞 = %MAKE_VERB_A()%
+		동사 = %MAKE_VERB_A()%
 	ENDIF
 ELSE
-	動詞 = "エラー"
+	동사 = "ERROR"
 ENDIF
-RETURNF Adj:3+Adj:2+Adj:1+Adj:0+部位+"を"+Adv:1+Adv:0+動詞+"のが好き"
+RETURNF Adj:3+Adj:2+Adj:1+Adj:0+부위+"을(를) "+Adv:1+Adv:0+동사+" 게 좋아"
 
 ;*******************************************************************************************************
-;酷い形容詞を返す関数
-;BC兼用
+;심한 형용사를 반환하는 함수
+;BC겸용
 ;*******************************************************************************************************
 @MAKE_ADJ_BC, ARG
 #FUNCTIONS
@@ -117,49 +117,53 @@ RETURNF Adj:3+Adj:2+Adj:1+Adj:0+部位+"を"+Adv:1+Adv:0+動詞+"のが好き"
 $LOOP
 IF ARG >= 5
 	STRDATA ADJ
-		DATA 万年발정
-		DATA 常時勃起
-		DATA オナニー狂いの
-		DATA 肥大化した
-		DATA 感度3000倍の
-		DATA クソザコ
-		DATA 굴복した
-		DATA 即落ち
+		DATA 만년 발정
+		DATA 상시 발기
+		DATA 자위에 미친
+		DATA 비대화된
+		DATA 감도 3000배
+		DATA 허접 졸개
+		DATA 완전 굴복
+		DATA 즉각 함락
 		DATA 음란
-		DATA 強欲な
-		DATA 欲求不満
-		DATA 風が吹けば絶頂する
-		DATA 衣擦れで絶頂する
-		DATA 変態
-		DATA メス犬の
-		DATA 黒ずんだ
-		DATA よくばり
-		DATA ほしがり
-		DATA 인간失格
-		DATA ゆるふわ
-		DATA メスガキ
-		DATA 청순파（自称）
-		DATA 【冠名】
+		DATA 탐욕스러운
+		DATA 욕구 불만
+		DATA 바람이 불면 절정하는
+		DATA 옷에 스치면 절정하는
+		DATA 변태
+		DATA 암컷
+		DATA 거뭇한
+		DATA 욕심쟁이
+		;원문은 ほしがり인데, 사실 번역하기 애매해서 다른 말로 떼웠음
+		DATA 보란듯이 애원하는
+		DATA 인간실격
+		;원문은 ゆるふわ
+		DATA 탱글탱글한
+		DATA 메스가키
+		DATA 청순파(자칭)
+		DATA 【관명】
 	ENDDATA
 ELSEIF ARG >= 3
 	STRDATA ADJ
 		DATA 발정
-		DATA 勃起
-		DATA 開発済みの
-		DATA 感じやすい
+		DATA 발기
+		DATA 개발 완료
+		DATA 느끼기 쉬운
 	ENDDATA
 ELSE
 	STRDATA ADJ
-		DATA 未開発の
-		DATA ピンク色の
-		DATA 初心な
-		DATA かわいらしい
+		DATA 미개발
+		DATA 핑크색
+		DATA 숫된
+		DATA 사랑스러운
 	ENDDATA
 ENDIF
 
-IF ADJ == "【冠名】"
+ADJ = %ADJ% 
+
+IF ADJ == "【관명】"
 	IF FLAG:6 == 1
-		ADJ = %SAVESTR:11%(笑)
+		ADJ = %SAVESTR:11%(웃음) 
 	ELSE
 		GOTO LOOP
 	ENDIF
@@ -167,8 +171,8 @@ ENDIF
 
 RETURNF ADJ
 ;*******************************************************************************************************
-;酷い形容詞を返す関数
-;VA兼用
+;심한 형용사를 반환하는 함수
+;VA겸용
 ;*******************************************************************************************************
 @MAKE_ADJ_VA, ARG
 #FUNCTIONS
@@ -176,55 +180,58 @@ RETURNF ADJ
 $LOOP
 IF ARG >= 5
 	STRDATA ADJ
-		DATA 万年발정
-		DATA 常時배란
-		DATA 感度3000倍の
-		DATA 開きっぱなしの
-		DATA 誰にでも股を開く
-		DATA 棒なら何でも良い
-		DATA チ〇ポ中毒の
-		DATA 粘液を垂れ流す
-		DATA 恥知らずの
-		DATA ぽっかり開いた
-		DATA クソザコ
-		DATA 強欲な
-		DATA 欲求不満の
-		DATA イキっぱなし
-		DATA 굴복した
-		DATA 変態
-		DATA 即落ち
+		DATA 만년발정
+		DATA 상시배란
+		DATA 감도 3000배
+		DATA 활짝 열린
+		DATA 누구에게나 가랑이를 벌려주는
+		DATA 봉이라면 뭐든 좋은
+		DATA 자〇지 중독
+		DATA 점액 범벅
+		DATA 부끄럼 없는
+		DATA 뻥 뚫린
+		DATA 허접 졸개
+		DATA 탐욕스러운
+		DATA 욕구 불만
+		DATA 계속 가 버리는
+		DATA 완전 굴복
+		DATA 변태
+		DATA 즉각 함락
 		DATA 음란
 		DATA 묘상화
-		DATA メス豚の
-		DATA 黒ずんだ
-		DATA よくばり
-		DATA ほしがり
-		DATA 인간失格の
-		DATA ゆるふわ
-		DATA メスガキ
-		DATA 청순파（自称）
-		DATA 【冠名】
+		DATA 암퇘지
+		DATA 거뭇한
+		DATA 욕심쟁이
+		DATA 교미가 고픈
+		DATA 인간실격
+		;원문은 ゆるふわ
+		DATA 조여오는
+		DATA 메스가키
+		DATA 청순파(자칭)
+		DATA 【관명】
 	ENDDATA
 ELSEIF ARG >= 3
 	STRDATA ADJ
 		DATA 발정
 		DATA 욕정
-		DATA 目覚めた
-		DATA 開発済みの
-		DATA 感じやすい
+		DATA 눈떠진
+		DATA 개발 완료
+		DATA 느끼기 쉬운
 	ENDDATA
 ELSE
 	STRDATA ADJ
-		DATA 未開発の
-		DATA ぴっちり閉じた
-		DATA ピンク色の
-		DATA かわいらしい
+		DATA 미개발
+		DATA 꽉 다문
+		DATA 핑크색
+		DATA 사랑스러운
 	ENDDATA
 ENDIF
 
-IF ADJ == "【冠名】"
+ADJ = %ADJ% 
+
+IF ADJ == "【관명】"
 	IF FLAG:6 == 1
-		ADJ = %SAVESTR:11%(笑)
+		ADJ = %SAVESTR:11%(웃음) 
 	ELSE
 		GOTO LOOP
 	ENDIF
@@ -232,139 +239,153 @@ ENDIF
 
 RETURNF ADJ
 ;*******************************************************************************************************
-;酷い副詞を返す関数1
+;심한 부사를 반환하는 함수 1
 ;*******************************************************************************************************
 @MAKE_ADV_1
 #FUNCTIONS
 #DIMS ADV
 STRDATA ADV
-	DATA 激しく
-	DATA 野性的に
-	DATA 情熱的に
-	DATA ゆっくりと
-	DATA じっくりと
-	DATA ねっとりと
-	DATA よってたかって
-	DATA 集団で
-	DATA 인간扱いされずに
-	DATA いやらしく
-	DATA 焦らされつつ
-	DATA キスしながら
-	DATA 拘束されて
-	DATA 奉仕しながら
-	DATA 粘液まみれで
-	DATA 媚薬漬けで
-	DATA わからせ
-	DATA 穴という穴を
-	DATA 無様に
-	DATA 動物のように
+	DATA 격렬하게
+	DATA 야성적으로
+	DATA 정열적으로
+	DATA 천천히
+	DATA 차분히
+	DATA 끈적끈적하게
+	DATA 여럿이서
+	DATA 집단으로
+	DATA 인간 취급 받지 않고
+	DATA 추잡하게
+	DATA 애태우며
+	DATA 키스하면서
+	DATA 구속돼서
+	DATA 봉사하면서
+	DATA 점액 투성이로
+	DATA 미약 절임으로
+	DATA 참교육 당하면서
+	DATA 구멍이란 구멍을
+	DATA 꼴사납게
+	DATA 짐승처럼
 ENDDATA
+
+ADV = %ADV% 
+
 RETURNF ADV
 ;*******************************************************************************************************
-;酷い副詞を返す関数2
+;심한 부사를 반환하는 함수 2
 ;*******************************************************************************************************
 @MAKE_ADV_2
 #FUNCTIONS
 #DIMS ADV
 STRDATA ADV
-	DATA 一晩中
-	DATA 朝まで
-	DATA 三日三晩
-	DATA 24時間耐久で
-	DATA 気を失うまで
-	DATA 壊れるまで
-	DATA 公衆の面前で
-	DATA 拘束されて
-	DATA 生中継されながら
-	DATA 動画配信しながら
-	DATA 肉と肉がとろけあうまで
-	DATA 全身精液まみれになるまで
-	DATA 精臭がしみつくまで
-	DATA 目がハートになるまで
+	DATA 밤새도록
+	DATA 해 뜨도록
+	;원문은 三日三晩 3박3일?
+	DATA 연중무휴로
+	DATA 24시간 내구로
+	DATA 기절할 때까지
+	DATA 부서질 때까지
+	DATA 모두의 면전에서
+	DATA 구속돼서
+	DATA 생중계되면서
+	DATA 영상으로 찍히면서
+	DATA 살과 살이 서로 녹을 때까지
+	DATA 전신 정액 범벅이 될 때까지
+	DATA 정액 냄새가 스며들 때까지
+	DATA 하트눈이 될 때까지
 ENDDATA
+
+ADV = %ADV% 
+
 RETURNF ADV
 ;*******************************************************************************************************
-;酷い動詞を返す関数BC用
+;심한 동사를 반환하는 함수 BC용
 ;*******************************************************************************************************
 @MAKE_VERB_BC
 #FUNCTIONS
 #DIMS VERB
 STRDATA VERB
-	DATA ねぶられる
-	DATA 愛撫される
-	DATA 吸われる
-	DATA 扱かれる
-	DATA 虐められる
-	DATA 開発される
-	DATA しゃぶられる
-	DATA 犯される
+	DATA 빨리는
+	DATA 애무되는
+	DATA 들이마셔지는
+	DATA 훑어지는
+	DATA 괴롭혀지는
+	DATA 개발되는
+	DATA 핥아지는
+	DATA 범해지는
 ENDDATA
+
+VERB = %VERB% 
+
 RETURNF VERB
 ;*******************************************************************************************************
-;酷い動詞を返す関数VA用
-;ひどすぎたので選択可能に
+;심한 동사를 반환하는 함수 VA용
+;너무 심하기 때문에 선택 가능하도록
 ;*******************************************************************************************************
 @MAKE_VERB_V, ARGS = ""
 #FUNCTIONS
 #DIMS VERB
 $LOOP
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA VERB
-		DATA レ〇プされる
-		DATA 高速ピストンされる
-		DATA 本気ピストンされる
-		DATA 本気種付けされる
-		DATA 強制子作りセックスされる
-		DATA 受精確定交尾される
-		DATA 強制배란性交される
-		DATA ボテ腹不可避交尾される
-		DATA 遺伝子まぜくりされる
-		DATA ほじくり返しされる
-		DATA 両穴犯される
-		DATA 両穴交互挿入される
-		DATA ハメられる
-		DATA ファックされる
-		DATA ハメ倒される
-		DATA ハメハメされる
-		DATA ラブラブえっちされる
-		DATA ラブラブレ〇プされる
-		DATA 合意和姦される
-		DATA ずぽずぽされる
-		DATA ズボズボされる
-		DATA パコられる
-		DATA パコパコされる
-		DATA 交尾される
-		DATA 虐められる
-		DATA 辱められる
-		DATA 肉便器にされる
-		DATA 開発される
-		DATA 輪姦される
-		DATA 獣欲交尾される
-		DATA ケダモノ性交される
-		DATA 濃厚接触される
-		DATA 【かけ声】
+		DATA 레〇프당하는
+		DATA 고속 피스톤질당하는
+		DATA 진심 피스톤질당하는
+		DATA 진심 교배당하는
+		DATA 강제 아이 만들기 섹스당하는
+		DATA 수정 확정 교미당하는
+		DATA 강제 배란 성교당하는
+		DATA 보태배 불가피 교미당하는
+		DATA 유전자가 섞여지는
+		DATA 들쑤셔지는
+		DATA 양 구멍 범해지는
+		DATA 양 구멍 교대 삽입되는
+		DATA 앙앙 박히는
+		DATA FUCK 당하는
+		DATA 짓눌리며 박히는
+		DATA 퍽퍽 박히는
+		DATA 러브러브 엣치당하는
+		DATA 러브러브 레〇프당하는
+		DATA 합의 화간되는
+		DATA 수컹수컹당하는
+		DATA 질푹질푹당하는
+		;원래 원문은 パコられる, パコパコられる 두개가 있었는데 아무래도 팡팡을 두개로 쓰기에는 무리일 것 같아서 하나를 새로 만듬
+		DATA 찌걱찌걱당하는
+		DATA 팡팡당하는
+		DATA 교미당하는
+		DATA 괴롭혀지는
+		DATA 능욕당하는
+		DATA 육변기로 쓰이는
+		DATA 개발되는
+		DATA 윤간당하는
+		DATA 발정 교미당하는
+		DATA 짐승 성교당하는
+		DATA 농후하게 맞닿는
+		DATA 【구호】
 	ENDDATA
 ELSE
 	STRDATA VERB
-		DATA 犯される
-		DATA レ〇プされる
-		DATA ピストンされる
-		DATA 種付けされる
-		DATA ハメられる
-		DATA ハメハメされる
-		DATA ずぽずぽされる
-		DATA パコられる
-		DATA パコパコされる
-		DATA 交尾される
-		DATA 虐められる
-		DATA 開発される
-		DATA 輪姦される
+		DATA 범해지는
+		DATA 레〇프당하는
+		DATA 피스톤질당하는
+		DATA 교배당하는
+		DATA 퍽퍽 박히는
+		DATA 찌걱찌걱당하는
+		DATA 수컹수컹당하는
+		;원래 원문은 パコられる, パコパコられる 두개가 있었는데 아무래도 팡팡을 두개로 쓰기에는 무리일 것 같아서 하나를 새로 만듬
+		DATA 찌걱찌걱당하는
+		DATA 팡팡당하는
+		DATA 교미당하는
+		DATA 괴롭혀지는
+		DATA 개발되는
+		DATA 윤간당하는
 	ENDDATA
 ENDIF
 
-IF VERB == "【かけ声】"
+VERB = %VERB% 
+
+IF VERB == "【구호】"
 	IF FLAG:7 == 1
-		VERB = %SAVESTR:12%(意味深)される
+		VERB = %SAVESTR:12%(의미심장)당하는 
 	ELSE
 		GOTO LOOP
 	ENDIF
@@ -373,63 +394,66 @@ ENDIF
 RETURNF VERB
 
 ;*******************************************************************************************************
-;酷い動詞を返す関数A用
-;ひどすぎたので選択可能に
+;심한 동사를 반환하는 함수 A용
+;너무 심하기 때문에 선택 가능하도록
 ;*******************************************************************************************************
 @MAKE_VERB_A, ARGS = ""
 #FUNCTIONS
 #DIMS VERB
 $LOOP
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA VERB
-		DATA レ〇プされる
-		DATA 高速ピストンされる
-		DATA 本気ピストンされる
-		DATA ほじくり返しされる
-		DATA 両穴犯される
-		DATA 両穴交互挿入される
-		DATA ファックされる
-		DATA ハメられる
-		DATA ハメ倒される
-		DATA ハメハメされる
-		DATA ラブラブえっちされる
-		DATA ラブラブレ〇プされる
-		DATA 合意和姦される
-		DATA ずぽずぽされる
-		DATA パコられる
-		DATA パコパコされる
-		DATA 交尾される
-		DATA 虐められる
-		DATA 肉便器にされる
-		DATA 開発される
-		DATA 輪姦される
-		DATA 獣欲交尾される
-		DATA ケダモノ性交される
-		DATA ケツ穴性器化調教される
-		DATA 拡張工事される
-		DATA 濃厚接触される
-		DATA 【かけ声】
+		DATA 레〇프당하는
+		DATA 고속 피스톤질당하는
+		DATA 진심 피스톤질당하는
+		DATA 들쑤셔지는
+		DATA 양 구멍 범해지는
+		DATA 양 구멍 교대 삽입되는
+		DATA FUCK 당하는
+		DATA 앙앙 박히는
+		DATA 짓눌리며 박히는
+		DATA 퍽퍽 박히는
+		DATA 러브러브 엣치당하는
+		DATA 러브러브 레〇프당하는
+		DATA 합의 화간되는
+		DATA 수컹수컹당하는
+		DATA 찌걱찌걱당하는
+		DATA 팡팡당하는
+		DATA 교미당하는
+		DATA 괴롭혀지는
+		DATA 육변기로 쓰이는
+		DATA 개발되는
+		DATA 윤간당하는
+		DATA 발정 교미당하는
+		DATA 짐승 성교당하는
+		DATA 엉덩이 구멍 보지화 조교되는
+		DATA 확장 공사당하는
+		DATA 농후하게 맞닿는
+		DATA 【구호】
 	ENDDATA
 ELSE
 	STRDATA VERB
-		DATA 犯される
-		DATA レ〇プされる
-		DATA ピストンされる
-		DATA ハメられる
-		DATA ハメハメされる
-		DATA ずぽずぽされる
-		DATA パコられる
-		DATA パコパコされる
-		DATA 交尾される
-		DATA 虐められる
-		DATA 開発される
-		DATA 輪姦される
+		DATA 범해지는
+		DATA 레〇프당하는
+		DATA 피스톤질당하는
+		DATA 퍽퍽 박히는
+		DATA 떡치기당하는
+		DATA 수컹수컹당하는
+		;원래 원문은 パコられる, パコパコられる 두개가 있었는데 아무래도 팡팡을 두개로 쓰기에는 무리일 것 같아서 하나를 새로 만듬
+		DATA 찌걱찌걱당하는
+		DATA 팡팡당하는
+		DATA 교미당하는
+		DATA 괴롭혀지는
+		DATA 개발되는
+		DATA 윤간당하는
 	ENDDATA
 ENDIF
 
-IF VERB == "【かけ声】"
+VERB = %VERB% 
+
+IF VERB == "【구호】"
 	IF FLAG:7 == 1
-		VERB = %SAVESTR:12%(意味深)される
+		VERB = %SAVESTR:12%(의미심장)당하는 
 	ELSE
 		GOTO LOOP
 	ENDIF
@@ -438,68 +462,68 @@ ENDIF
 RETURNF VERB
 
 ;*******************************************************************************************************
-;酷いオノマトペを返す関数
-;BC兼用
+;심한 의성어를 반환하는 함수
+;BC겸용
 ;*******************************************************************************************************
 @MAKE_ONOMATOPE_BC
 #FUNCTIONS
 #DIMS ADJ
 STRDATA ADJ
-	DATA よわよわ
-	DATA ビンビン
-	DATA ギンギン
-	DATA ドロドロ
-	DATA ぬるぬる
+	DATA 흐물흐물
+	DATA 빨딱빨딱
+	DATA 딩딩
+	DATA 질척질척
+	DATA 미끈미끈
 	DATA ざこざこ
-	DATA むらむら
-	DATA ぬらぬら
+	DATA 두근두근
+	DATA 미끌미끌
 ENDDATA
 RETURNF ADJ
 ;*******************************************************************************************************
-;酷いオノマトペを返す関数
-;VA兼用
+;심한 의성어를 반환하는 함수
+;VA겸용
 ;*******************************************************************************************************
 @MAKE_ONOMATOPE_VA
 #FUNCTIONS
 #DIMS ADJ
 STRDATA ADJ
-	DATA よわよわ
-	DATA ドロドロ
-	DATA ぬるぬる
+	DATA 흐물흐물
+	DATA 질척질척
+	DATA 미끈미끈
 	DATA ざこざこ
-	DATA ガバガバ
-	DATA ひくひく
-	DATA ゆるゆる
-	DATA ふわふわ
-	DATA とろとろ
-	DATA むらむら
-	DATA ぬらぬら
-	DATA ぐちょぐちょ
-	DATA びしょびしょ
+	DATA 쑤욱쑤욱
+	DATA 움찔움찔
+	DATA 헐렁헐렁
+	DATA 둥실둥실
+	DATA 지르르
+	DATA 두근두근
+	DATA 미끌미끌
+	DATA 끈적끈적
+	DATA 질퍽질퍽
 ENDDATA
 RETURNF ADJ
 ;*******************************************************************************************************
-;こんな関数他に何に使うの・・・？(自問自答）
+;이런 함수 또 뭐에 쓰는거야・・・？(자문자답）
 ;*******************************************************************************************************
 @MAKE_C_NAME, ARGS = ""
 #FUNCTIONS
 #DIMS BCVA
 
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA BCVA
-		DATA クリちゃん
-		DATA クリ
+		DATA 클리쨩
+		DATA 클리
 		DATA 음핵
-		DATA お豆
-		DATA メスチ〇ポ
+		DATA 콩알
+		DATA 암컷자〇지
 	ENDDATA
 ELSE
 	STRDATA BCVA
 		DATA 클리토리스
-		DATA 陰核
-		DATA お豆
-		DATA 秘部
-		DATA アソコ
+		DATA 음핵
+		DATA 콩알
+		DATA 음부
+		DATA 거기
 	ENDDATA
 ENDIF
 RETURNF BCVA
@@ -510,17 +534,17 @@ RETURNF BCVA
 #FUNCTIONS
 #DIMS BCVA
 
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA BCVA
-		DATA チ〇ポ
-		DATA おチ〇ポ
-		DATA 肉棒
+		DATA 자〇지
+		DATA 쥬지
+		DATA 육봉
 	ENDDATA
 ELSE
 	STRDATA BCVA
-		DATA ペニス
-		DATA おちんちん
-		DATA 男性器
+		DATA 페니스
+		DATA 꼬추
+		DATA 남성기
 	ENDDATA
 ENDIF
 RETURNF BCVA
@@ -531,31 +555,32 @@ RETURNF BCVA
 #FUNCTIONS
 #DIMS BCVA
 
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA BCVA
-		DATA おま〇こ
-		DATA オマ〇コ
-		DATA メス穴
-		DATA 孕み穴
-		DATA ハメ穴
-		DATA コキ穴
-		DATA とろ穴
-		DATA 活オナホ
-		DATA 生オナホ
-		DATA ぷに穴
-		DATA チ〇ポ穴
-		DATA チ〇ポケース
-		DATA 穴
-		DATA ゆる穴
-		DATA ガバ穴
-		DATA 처녀穴（自称）
+		DATA 보〇지
+		DATA 뷰지
+		DATA 암컷 구멍
+		DATA 아기 구멍
+		DATA 교미 구멍
+		DATA 봉사 구멍
+		DATA 정액 구멍
+		DATA 중고 오나홀
+		DATA 생 오나홀
+		DATA 페도 구멍
+		DATA 노오옹 구멍
+		DATA 자〇지 구멍
+		DATA 자〇지 케이스
+		DATA 구멍
+		DATA 헐렁 구멍
+		DATA 허벌 구멍
+		DATA 처녀 구멍(자칭)
 	ENDDATA
 ELSE
 	STRDATA BCVA
-		DATA ヴァギナ
-		DATA 女性器
-		DATA 秘部
-		DATA アソコ
+		DATA 바기나
+		DATA 여성기
+		DATA 음부
+		DATA 거기
 	ENDDATA
 ENDIF
 RETURNF BCVA
@@ -566,30 +591,30 @@ RETURNF BCVA
 #FUNCTIONS
 #DIMS BCVA
 
-IF ARGS == "淫語"
+IF ARGS == "음어"
 	STRDATA BCVA
-		DATA ケツま〇こ
-		DATA ケツマ〇コ
-		DATA ケツ穴
-		DATA ガバケツ
-		DATA ゆるケツ
-		DATA 縦割れ애널
-		DATA 穴
+		DATA 엉덩이 보〇지
+		DATA 엉덩이 뷰〇지
+		DATA 엉덩이 구멍
+		DATA 헐렁 똥구멍
+		DATA 허벌 똥구멍
+		DATA 일자 애널
+		DATA 구멍
 		DATA 애널
-		DATA チ〇ポ穴
-		DATA チ〇ポケース
-		DATA うしろおま〇こ
-		DATA セカンドおま〇こ
-		DATA うしろ穴
-		DATA おま〇こ化애널
+		DATA 자〇지 구멍
+		DATA 자〇지 케이스
+		DATA 뒷보〇지
+		DATA 세컨드 보〇지
+		DATA 뒷구멍
+		DATA 보〇지화 애널
 	ENDDATA
 ELSE
 	STRDATA BCVA
-		DATA おしり
+		DATA 엉덩이
 		DATA 애널
-		DATA アヌス
-		DATA お尻の穴
-		DATA 菊門
+		DATA 아누스
+		DATA 엉덩이 구멍
+		DATA 항문
 	ENDDATA
 ENDIF
 RETURNF BCVA
@@ -600,31 +625,37 @@ RETURNF BCVA
 #FUNCTIONS
 #DIMS ADJ
 STRDATA ADJ
-	DATA お嫁にいけない
-	DATA ご先祖様に顔向けできない
-	DATA 親の顔が見てみたい
-	DATA 末代までの恥と言われた
-	DATA ご近所の視線が痛い
-	DATA 白い目で見られる
-	DATA 現代医学ではどうにもできない
-	DATA 現代科学では解明できない
-	DATA 人類の限界を超えた
-	DATA 健康保険適用外の
-	DATA 労災がおりない
-	DATA 要介護認定された
-	DATA 保険に入れない
-	DATA 国辱的な
-	DATA 子どもに見せられない
-	DATA 放送コードを踏みにじる
-	DATA 教育に悪い
-	DATA PTAから目の敵にされる
-	DATA 保護者団体からクレームを受けた
-	DATA Nyorotterで拡散中の
-	DATA Tenstagramで炎上中の
-	DATA Tentubeに流出した
-	DATA ニョロニョロ動画で殿堂入りした
-	DATA 新聞の一面を飾った
-	DATA ワイドショーで叩かれ続ける
+	DATA 시집 못 가는
+	DATA 조상님께 얼굴 못 드는
+	DATA 부모의 얼굴이 보고픈
+	DATA 3대의 수치라는 말을 듣는
+	DATA 이웃의 시선이 따가운
+	DATA 백안시당하는
+	DATA 현대 의학으로는 어쩔 도리 없는
+	DATA 현대 과학으로는 해명할 수 없는
+	DATA 인류의 한계를 넘은
+	DATA 건강보험 적용을 받지 않는
+	DATA 산재가 없는
+	;원문은 要介護認定された 간호 필요? 인정된
+	DATA 기네스북에 오른
+	DATA 건강보험에 들지 않는
+	DATA 나라의 수치인
+	DATA 아이에게 보여줄 수 없는
+	DATA 방송 코드를 짓밟는
+	DATA 교육에 좋지 않은
+	DATA 학부모회로부터 눈엣가시로 취급받는
+	DATA 학부모 단체의 클레임을 받은
+	;원문은 Nyorotterで拡散中の 뇨의터에서 확산 중인 ㄷㄷ
+	DATA "Z" 에서 확산 중인
+	DATA Tenstagram에서 화제인
+	DATA Tentube에 유출된
+	;원문은 ニョロニョロ動画で殿堂入りした 
+	DATA 뇨로뇨로 동화에서 전당에 입성한
+	DATA 신문의 한 면을 장식한
+	DATA 와이드 쇼에서 계속 언급되는
 ENDDATA
+
+ADJ = %ADJ% 
+
 RETURNF ADJ
 ;*******************************************************************************************************

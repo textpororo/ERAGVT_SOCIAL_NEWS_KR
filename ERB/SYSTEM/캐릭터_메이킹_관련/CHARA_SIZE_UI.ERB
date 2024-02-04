@@ -410,10 +410,10 @@ DO
 		LOCALS = [유아배]
 	SIF CHARATALENT_F(ARG,0,"날씬함")
 		LOCALS = [날씬함]
-	SIF CHARATALENT_F(ARG,0,"巨尻")
-		LOCALS = [巨尻]
-	SIF CHARATALENT_F(ARG,0,"爆尻")
-		LOCALS = [爆尻]
+	SIF CHARATALENT_F(ARG,0,"빵뎅이")
+		LOCALS = [빵뎅이]
+	SIF CHARATALENT_F(ARG,0,"왕뎅이")
+		LOCALS = [왕뎅이]
 	PRINTFORM \@골반둘레値:0 > 0 ? {골반둘레値:0 / 10, 5}.{골반둘레値:0 % 10} # 　 　―\@ cm
 	PRINTPLAIN 　
 	LOCALS = [ ― ]
@@ -425,10 +425,10 @@ DO
 		LOCALS = [유아배]
 	SIF CHARATALENT_F(ARG,0,"날씬함")
 		LOCALS = [날씬함]
-	SIF CHARATALENT_F(ARG,0,"巨尻")
-		LOCALS = [巨尻]
-	SIF CHARATALENT_F(ARG,0,"爆尻")
-		LOCALS = [爆尻]
+	SIF CHARATALENT_F(ARG,0,"빵뎅이")
+		LOCALS = [빵뎅이]
+	SIF CHARATALENT_F(ARG,0,"왕뎅이")
+		LOCALS = [왕뎅이]
 	SIF NO:ARG != 0
 		SETCOLOR 105,105,105
 	IF INPUT_MODE % 10 != 0 && INPUT_MODE != 2 && NO:ARG == 0
@@ -452,10 +452,10 @@ DO
 			LOCALS = [유아배]
 		SIF CHARATALENT_F(ARG,1,"날씬함")
 			LOCALS = [날씬함]
-		SIF CHARATALENT_F(ARG,1,"巨尻")
-			LOCALS = [巨尻]
-		SIF CHARATALENT_F(ARG,1,"爆尻")
-			LOCALS = [爆尻]
+		SIF CHARATALENT_F(ARG,1,"빵뎅이")
+			LOCALS = [빵뎅이]
+		SIF CHARATALENT_F(ARG,1,"왕뎅이")
+			LOCALS = [왕뎅이]
 		SIF NO:ARG != 0
 			SETCOLOR 105,105,105
 		IF INPUT_MODE % 10 != 0 && INPUT_MODE != 2 && NO:ARG == 0
@@ -831,8 +831,8 @@ DO
 	PRINTL
 
 
-;髪の色
-	PRINTPLAIN 　 髪の色　　　　　　 
+;머리색
+	PRINTPLAIN 　 머리색　　　　　　 
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	PRINT 　[
@@ -845,7 +845,7 @@ DO
 	ELSE
 		PRINTPLAIN ]　[ 6]
 	ENDIF
-;変身時の髪の色
+;変身時の머리색
 	IF 나이値:1 >= 0
 		PRINTPLAIN 　　　　　　　　　　　
 		SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
@@ -1051,7 +1051,7 @@ DO
 	ELSEIF INPUT_MODE % 10 >= 6 && INPUT_MODE % 10 < 9
 		FONTBOLD
 		IF INPUT_MODE % 10 == 6
-			PRINTL 　　髪の色の設定
+			PRINTL 　　머리색の設定
 			FONTREGULAR
 
 			SETCOLOR 240, 255, 255

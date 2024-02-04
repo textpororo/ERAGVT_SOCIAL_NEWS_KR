@@ -1,5 +1,5 @@
 ﻿
-;♂→♀변신시TSキャラが女体化すると남자に戻れなくなる
+;♂→♀변신시TS캐릭터가 여체화하면 남자로 돌아올 수 없게 된다
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------------
 @TS_MtoF, ARG
 #DIM KEEP
@@ -13,19 +13,19 @@ ELSE
 	TRANS = 0
 ENDIF
 
-;変身してなければ強制変身させる
+;변신하지 않았다면 강제 변신시킨다
 SIF CFLAG:1 < 1
 	CALL TRANSFORM, 1
-;素質変動を消去して変身を解除する
+;소질 변동을 삭제하여 변신을 해제한다
 TALENT:변신시체격변동 = 0
 TALENT:변신시가슴사이즈변동 = 0
 BASE:나이 = MAXBASE:나이
 
-;変身前の空中性能強化
+;변신 전의 공중 성능 강화
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 AIRPLUS = RESULT
 
-;空中性能強化の変動
+;공중 성능 강화의 변동
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 IF AIRPLUS == 0 && RESULT > 0
 	MAXBASE:공중대시 += 1
@@ -39,7 +39,7 @@ ELSEIF AIRPLUS == 1 && RESULT == 0
 		BASE:공중대시 = 0
 ENDIF
 
-;変身のみ解除処理
+;변신만 해제 처리
 CFLAG:1 = 0
 
 TALENT:성별변화 = 1
@@ -75,15 +75,15 @@ IF CFLAG:34 > 0
 ENDIF
 PRINTL 
 
-;髪瞳肌の色を上書きする
+;머리, 눈, 피부색을 덮어쓴다
 IF CSTR:ARG:13 != CSTR:ARG:14
-	PRINTL 【通常時】　ヘアスタイル　を選択してください
-	PRINT [0] 変身後のヘアスタイル [
+	PRINTL 【평상시】　헤어 스타일　을 선택해 주십시오.
+	PRINT [0] 변신 후 헤어 스타일 [
 	PRINTS CSTR:ARG:14
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時のヘアスタイル [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시 헤어 스타일 [
 	PRINTS CSTR:ARG:13
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_0
 	INPUT
 	IF RESULT == 0
@@ -94,17 +94,17 @@ IF CSTR:ARG:13 != CSTR:ARG:14
 	PRINTL 
 ENDIF
 IF CSTR:ARG:30 != CSTR:ARG:31
-	PRINTL 【通常時】　髪の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　머리색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:31
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:30
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_1
 	INPUT
 	IF RESULT == 0
@@ -115,8 +115,8 @@ IF CSTR:ARG:30 != CSTR:ARG:31
 	PRINTL 
 ENDIF
 IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
-	PRINTL 【通常時】　瞳の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　눈동자 색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:34
 	PRINT ■
 	RESETCOLOR
@@ -124,8 +124,8 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:35
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:32
 	PRINT ■
 	RESETCOLOR
@@ -133,7 +133,7 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:33
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_2
 	INPUT
 	IF RESULT == 0
@@ -145,17 +145,17 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	PRINTL 
 ENDIF
 IF CSTR:ARG:36 != CSTR:ARG:37
-	PRINTL 【通常時】　肌の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　피부색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:37
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:36
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_3
 	INPUT
 	IF RESULT == 0
@@ -174,7 +174,7 @@ RETURN 1
 
 
 
-;♀→♂변신시TSキャラが女体化すると남자に変身できなくなくなる
+;♀→♂변신시TS 캐릭터가 여체화하면 남자로 변신할 수 없게 된다
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------------
 @TS_FtoM, ARG
 #DIM KEEP
@@ -187,7 +187,7 @@ ELSE
 	TRANS = 0
 ENDIF
 
-;変身してなければ強制変身させる
+;변신하지 않았다면 강제 변신시킨다
 SIF CFLAG:1 < 1
 	CALL TRANSFORM, 1
 
@@ -199,7 +199,7 @@ SIF TALENT:처녀 < -2
 	TALENT:처녀 += 5
 MAXBASE:나이 = BASE:나이
 
-;胸サイズ、体格を通常時に合わせる
+;가슴 사이즈, 체격을 평상시에 맞춘다
 IF CHARATALENT_F(TARGET,0,"절벽") > 0
 	TALENT:빈유 = 2
 	TALENT:거유 = 0
@@ -234,7 +234,7 @@ TALENT:변신시가슴사이즈변동 = 0
 TALENT:변신시외관 = TALENT:외관
 TALENT:변신시후타나리 = TALENT:후타나리
 
-;変身のみ解除処理
+;변신만 해제 처리
 CFLAG:1 = 0
 
 IF CFLAG:34 > 0
@@ -248,15 +248,15 @@ IF CFLAG:34 > 0
 ENDIF
 PRINTL 
 
-;髪瞳肌の色を上書きする
+;머리, 눈, 피부색을 덮어쓴다
 IF CSTR:ARG:13 != CSTR:ARG:14
-	PRINTL 【通常時】　ヘアスタイル　を選択してください
-	PRINT [0] 変身後のヘアスタイル [
+	PRINTL 【평상시】　헤어 스타일　을 선택해 주십시오.
+	PRINT [0] 변신 후 헤어 스타일 [
 	PRINTS CSTR:ARG:14
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時のヘアスタイル [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시 헤어 스타일 [
 	PRINTS CSTR:ARG:13
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_0
 	INPUT
 	IF RESULT == 0
@@ -267,17 +267,17 @@ IF CSTR:ARG:13 != CSTR:ARG:14
 	PRINTL 
 ENDIF
 IF CSTR:ARG:31 != CSTR:ARG:30
-	PRINTL 【変身後】　髪の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【변신 후】　머리색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:31
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:30
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_1
 	INPUT
 	IF RESULT == 1
@@ -288,8 +288,8 @@ IF CSTR:ARG:31 != CSTR:ARG:30
 	PRINTL 
 ENDIF
 IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
-	PRINTL 【変身後】　瞳の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【변신 후】　눈동자 색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:34
 	PRINT ■
 	RESETCOLOR
@@ -297,8 +297,8 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:35
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:32
 	PRINT ■
 	RESETCOLOR
@@ -306,7 +306,7 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:33
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_2
 	INPUT
 	IF RESULT == 1
@@ -318,17 +318,17 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	PRINTL 
 ENDIF
 IF CSTR:ARG:36 != CSTR:ARG:37
-	PRINTL 【変身後】　肌の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【변신 후】　피부색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:37
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:36
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_3
 	INPUT
 	IF RESULT == 1
@@ -347,7 +347,7 @@ RETURN 1
 
 
 
-;通常の女体化処理
+;통상의 여체화 처리
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------------
 @TS_NORMAL, ARG
 #DIM KEEP
@@ -358,8 +358,7 @@ KEEP = TARGET
 TARGET = ARG
 
 IF CHARATALENT_F(TARGET,0,"남자") == 0
-	PRINTFORMW 　! ERROR ! 通常時の性別が女性なのに通常の女体化シーケンスが呼び出されました
-	RETURN 0
+	PRINTFORMW 　! ERROR ! 평상시의 성별이 여성인데도 통상적인 여체화 시퀀스가 호출되었습니다!
 ENDIF
 
 IF CFLAG:1 > 0
@@ -368,12 +367,12 @@ ELSE
 	TRANS = 0
 ENDIF
 
-;まずは変身を解除する
+;우선은 변신을 해제한다
 CALL TRANSFORM, 0
 
-PRINTL 【通常時】　胸サイズ　を選択してください
+PRINTL 【평상시】　가슴 사이즈　를 선택해 주십시오.
 IF TALENT:변신시TS > 0
-	PRINT [0] 変身後 [
+	PRINT [0] 변신 후 [
 	IF CHARATALENT_F(TARGET,1,"절벽") > 0
 		PRINT 절벽
 		BREAST = -2
@@ -396,17 +395,17 @@ IF TALENT:변신시TS > 0
 		PRINT 거유
 		BREAST = 1
 	ELSE
-		PRINT 普通
+		PRINT 보통
 		BREAST = 0
 	ENDIF
-	PRINTL ] に合わせる
+	PRINTL ] 에 맞춘다
 ENDIF
-PRINTL [1] 절벽　　[2] 빈유　　[3] 普通　　
+PRINTL [1] 절벽　　[2] 빈유　　[3] 보통　　
 PRINTL [4] 거유　　[5] 폭유　　[6] 초유　　[7] 마유　　[8] 기유　　
 $INPUT_LOOP_1
 INPUT
 IF RESULT == 0 && TALENT:변신시TS > 0
-	;胸サイズを変身後に合わせる
+	;가슴 사이즈를 변신 후에 맞춘다
 	IF CHARATALENT_F(TARGET,1,"절벽") > 0
 		TALENT:빈유 = 2
 		TALENT:거유 = 0
@@ -456,12 +455,12 @@ ELSEIF RESULT == 8
 ELSE
 	GOTO INPUT_LOOP_1
 ENDIF
-;변신시가슴사이즈변동の調整
+;변신시가슴사이즈변동 조정
 SIF TALENT:변신시TS > 0
 	TALENT:변신시가슴사이즈변동 = BREAST - TALENT:거유 + TALENT:빈유
 PRINTL 
 
-PRINTL 【通常時】　体格　を選択してください
+PRINTL 【평상시】　체격　을 선택해 주십시오.
 IF TALENT:변신능력 > 0
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		BODY = -1
@@ -472,32 +471,32 @@ IF TALENT:변신능력 > 0
 	ENDIF
 ENDIF
 IF TALENT:변신시TS > 0
-	PRINT [0] 変身後 [
+	PRINT [0] 변신 후 [
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		PRINT 왜소함
 	ELSEIF CHARATALENT_F(TARGET,1,"장신") > 0
 		PRINT 장신
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] に合わせる
+	PRINTL ] 에 맞춘다
 ENDIF
-PRINT [1] 通常時 [
+PRINT [1] 평상시 [
 IF CHARATALENT_F(TARGET,0,"왜소함") > 0
 	PRINT 왜소함
 ELSEIF CHARATALENT_F(TARGET,0,"장신") > 0
 	PRINT 장신
 ELSE
-	PRINT 普通
+	PRINT 보통
 ENDIF
-PRINTL ] のままにする
+PRINTL ] 인 채로 한다
 PRINTL [2] 왜소함　　
-PRINTL [3] 普通　　
-PRINTL [4] 장신　　
+PRINTL [3] 보통　　　
+PRINTL [4] 장신　　　
 $INPUT_LOOP_2
 INPUT
 IF RESULT == 0 && TALENT:변신시TS > 0
-	;体格を変身後に合わせる
+	;체격을 변신 후에 맞춘다
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		TALENT:왜소함 = 1
 		TALENT:장신 = 0
@@ -506,7 +505,7 @@ IF RESULT == 0 && TALENT:변신시TS > 0
 		TALENT:장신 = 1
 	ENDIF
 ELSEIF RESULT == 1
-	;特になにも処理しない
+	;특별히 아무것도 처리하지 않는다
 ELSEIF RESULT == 2
 	TALENT:왜소함 = 1
 	TALENT:장신 = 0
@@ -519,14 +518,14 @@ ELSEIF RESULT == 4
 ELSE
 	GOTO INPUT_LOOP_2
 ENDIF
-;변신시가슴사이즈변동の調整
+;변신시가슴사이즈변동 조정
 SIF TALENT:변신능력 > 0
 	TALENT:변신시체격변동 = BODY - TALENT:장신 + TALENT:왜소함
 PRINTL 
 
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
-	PRINTL 【変身後】　胸サイズ　を選択してください
-	PRINT [0] 通常時 [
+	PRINTL 【변신 후】　가슴 사이즈　를 선택해 주십시오.
+	PRINT [0] 평상시 [
 	IF CHARATALENT_F(TARGET,0,"절벽") > 0
 		PRINT 절벽
 	ELSEIF CHARATALENT_F(TARGET,0,"빈유") > 0
@@ -542,15 +541,15 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	ELSEIF CHARATALENT_F(TARGET,0,"거유") > 0
 		PRINT 거유
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] に合わせる
-	PRINTL [1] 절벽　　[2] 빈유　　[3] 普通　　
+	PRINTL ] 에 맞춘다
+	PRINTL [1] 절벽　　[2] 빈유　　[3] 보통　　
 	PRINTL [4] 거유　　[5] 폭유　　[6] 초유　　[7] 마유　　[8] 기유　　
 	$INPUT_LOOP_3
 	INPUT
 	IF RESULT == 0
-		;胸サイズを通常時に合わせる
+		;가슴 사이즈를 평상시에 맞춘다
 		TALENT:변신시가슴사이즈변동 = 0
 	ELSEIF RESULT == 1
 		TALENT:변신시가슴사이즈변동 = TALENT:빈유 + TALENT:거유 - 2
@@ -573,32 +572,32 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	ENDIF
 	PRINTL 
 
-	PRINTL 【変身後】　体格　を選択してください
-	PRINT [0] 通常時 [
+	PRINTL 【변신 후】　체격　을 선택해 주십시오.
+	PRINT [0] 평상시 [
 	IF CHARATALENT_F(TARGET,0,"왜소함") > 0
 		PRINT 왜소함
 	ELSEIF CHARATALENT_F(TARGET,0,"장신") > 0
 		PRINT 장신
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] に合わせる
-	PRINT [1] 変身後 [
+	PRINTL ] 에 맞춘다
+	PRINT [1] 변신 후 [
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		PRINT 왜소함
 	ELSEIF CHARATALENT_F(TARGET,1,"장신") > 0
 		PRINT 장신
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] のままにする
+	PRINTL ] 인 채로 한다
 	PRINTL [2] 왜소함　　
-	PRINTL [3] 普通　　
-	PRINTL [4] 장신　　
+	PRINTL [3] 보통　　　
+	PRINTL [4] 장신　　　
 	$INPUT_LOOP_4
 	INPUT
 	IF RESULT == 0
-		;体格を通常時に合わせる
+		;체격을 평상시에 맞춘다
 		TALENT:변신시체격변동 = 0
 	ELSEIF RESULT == 1
 		TALENT:변신시체격변동 = TALENT:변신시체격변동
@@ -614,9 +613,9 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	PRINTL 
 ENDIF
 
-PRINTL 【通常時】　외관的特徴　を選択してください
+PRINTL 【평상시】　외관적 특징　을 선택해 주십시오.
 IF TALENT:변신시TS > 0
-	PRINT [0] 変身後 [
+	PRINT [0] 변신 후 [
 	IF TALENT:변신시외관 == 1
 		PRINT 순산형
 	ELSEIF TALENT:변신시외관 == 2
@@ -626,25 +625,25 @@ IF TALENT:변신시TS > 0
 	ELSEIF TALENT:변신시외관 == 4
 		PRINT 날씬함
 	ELSEIF TALENT:변신시외관 == 5
-		PRINT 巨尻
+		PRINT 빵뎅이
 	ELSEIF TALENT:변신시외관 == 6
-		PRINT 爆尻
+		PRINT 왕뎅이
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] に合わせる
+	PRINTL ] 에 맞춘다
 ENDIF
 PRINTL [1] 순산형　　
 PRINTL [2] 포동포동　
 PRINTL [3] 유아배　　
-PRINTL [4] 날씬함
-PRINTL [5] 巨尻　　　
-PRINTL [6] 爆尻　　　
-PRINTL [7] 普通　　　
+PRINTL [4] 날씬함　　
+PRINTL [5] 빵뎅이　　
+PRINTL [6] 왕뎅이　　
+PRINTL [7] 보통　　　
 $INPUT_LOOP_5
 INPUT
 IF RESULT == 0 && TALENT:변신시TS > 0
-	;외관を変身後に合わせる
+	;외관을 변신 후에 맞춘다
 	TALENT:외관 = TALENT:변신시외관
 ELSEIF RESULT >= 1 && RESULT <= 6
 	TALENT:외관 = RESULT
@@ -656,8 +655,8 @@ ENDIF
 PRINTL 
 
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
-	PRINTL 【変身後】　외관的特徴　を選択してください
-	PRINT [0] 通常時 [
+	PRINTL 【변신 후】　외관적 특징　을 선택해 주십시오.
+	PRINT [0] 평상시 [
 	IF TALENT:외관 == 1
 		PRINT 순산형
 	ELSEIF TALENT:외관 == 2
@@ -667,24 +666,24 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	ELSEIF TALENT:외관 == 4
 		PRINT 날씬함
 	ELSEIF TALENT:외관 == 5
-		PRINT 巨尻
+		PRINT 빵뎅이
 	ELSEIF TALENT:외관 == 6
-		PRINT 爆尻
+		PRINT 왕뎅이
 	ELSE
-		PRINT 普通
+		PRINT 보통
 	ENDIF
-	PRINTL ] に合わせる
+	PRINTL ] 에 맞춘다
 	PRINTL [1] 순산형　　
 	PRINTL [2] 포동포동　
 	PRINTL [3] 유아배　　
-	PRINTL [4] 날씬함
-	PRINTL [5] 巨尻　　　
-	PRINTL [6] 爆尻
-	PRINTL [7] 普通　　　
+	PRINTL [4] 날씬함　　
+	PRINTL [5] 빵뎅이　　
+	PRINTL [6] 왕뎅이　　
+	PRINTL [7] 보통　　　
 	$INPUT_LOOP_6
 	INPUT
 	IF RESULT == 0
-		;외관を通常時に合わせる
+		;외관을 평상시에 맞춘다
 		TALENT:변신시외관 = TALENT:외관
 	ELSEIF RESULT >= 1 && RESULT <= 6
 		TALENT:변신시외관 = RESULT
@@ -707,7 +706,7 @@ ELSEIF TALENT:변신시V감각변동 < 0
 	TALENT:V둔감 = 1
 ENDIF
 
-;実際の성별변화の処理
+;실제 성별변화 처리
 IF TALENT:변신시TS > 0
 	TALENT:성별변화 = 1
 	TALENT:후타나리 = TALENT:변신시후타나리
@@ -749,15 +748,15 @@ IF CFLAG:34 > 0
 	BASE:가슴무게 = RESULT:7
 ENDIF
 
-;髪瞳肌の色を上書きする
+;머리, 눈, 피부색을 덮어쓴다
 IF CSTR:ARG:13 != CSTR:ARG:14
-	PRINTL 【通常時】　ヘアスタイル　を選択してください
-	PRINT [0] 変身後のヘアスタイル [
+	PRINTL 【평상시】　헤어 스타일　을 선택해 주십시오.
+	PRINT [0] 변신 후 헤어 스타일 [
 	PRINTS CSTR:ARG:14
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時のヘアスタイル [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시 헤어 스타일 [
 	PRINTS CSTR:ARG:13
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_0
 	INPUT
 	IF RESULT == 0
@@ -768,17 +767,17 @@ IF CSTR:ARG:13 != CSTR:ARG:14
 	PRINTL 
 ENDIF
 IF CSTR:ARG:30 != CSTR:ARG:31
-	PRINTL 【通常時】　髪の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　머리색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:31
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:30
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_7
 	INPUT
 	IF RESULT == 0
@@ -790,17 +789,17 @@ IF CSTR:ARG:30 != CSTR:ARG:31
 ENDIF
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	IF CSTR:ARG:31 != CSTR:ARG:30
-		PRINTL 【変身後】　髪の色　を選択してください
-		PRINT [0] 変身後の色 [
+		PRINTL 【변신 후】　머리색　을 선택해 주십시오.
+		PRINT [0] 변신 후의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:31
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
-		PRINT [1] 通常時の色 [
+		PRINTL ] 을 인계한다
+		PRINT [1] 평상시의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:30
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
+		PRINTL ] 을 인계한다
 		$INPUT_LOOP_8
 		INPUT
 		IF RESULT == 1
@@ -812,8 +811,8 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	ENDIF
 ENDIF
 IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
-	PRINTL 【通常時】　瞳の色選択　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　눈동자 색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:34
 	PRINT ■
 	RESETCOLOR
@@ -821,8 +820,8 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:35
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:32
 	PRINT ■
 	RESETCOLOR
@@ -830,7 +829,7 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	CALL SETCOLOR_BY_STR, CSTR:ARG:33
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_9
 	INPUT
 	IF RESULT == 0
@@ -843,8 +842,8 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 ENDIF
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
-		PRINTL 【変身後】　瞳の色　を選択してください
-		PRINT [0] 変身後の色 [
+		PRINTL 【변신 후】　눈동자 색　을 선택해 주십시오.
+		PRINT [0] 변신 후의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:34
 		PRINT ■
 		RESETCOLOR
@@ -852,8 +851,8 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 		CALL SETCOLOR_BY_STR, CSTR:ARG:35
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
-		PRINT [1] 通常時の色 [
+		PRINTL ] 을 인계한다
+		PRINT [1] 평상시의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:32
 		PRINT ■
 		RESETCOLOR
@@ -861,7 +860,7 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 		CALL SETCOLOR_BY_STR, CSTR:ARG:33
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
+		PRINTL ] 을 인계한다
 		$INPUT_LOOP_10
 		INPUT
 		IF RESULT == 1
@@ -874,17 +873,17 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	ENDIF
 ENDIF
 IF CSTR:ARG:36 != CSTR:ARG:37
-	PRINTL 【通常時】　肌の色　を選択してください
-	PRINT [0] 変身後の色 [
+	PRINTL 【평상시】　피부색　을 선택해 주십시오.
+	PRINT [0] 변신 후의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:37
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
-	PRINT [1] 通常時の色 [
+	PRINTL ] 을 인계한다
+	PRINT [1] 평상시의 색 [
 	CALL SETCOLOR_BY_STR, CSTR:ARG:36
 	PRINT ■
 	RESETCOLOR
-	PRINTL ] を引き継ぐ
+	PRINTL ] 을 인계한다
 	$INPUT_LOOP_11
 	INPUT
 	IF RESULT == 0
@@ -896,17 +895,17 @@ IF CSTR:ARG:36 != CSTR:ARG:37
 ENDIF
 IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 	IF CSTR:ARG:36 != CSTR:ARG:37
-		PRINTL 【変身後】　肌の色　を選択してください
-		PRINT [0] 変身後の色 [
+		PRINTL 【변신 후】　피부색　을 선택해 주십시오.
+		PRINT [0] 변신 후의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:37
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
-		PRINT [1] 通常時の色 [
+		PRINTL ] 을 인계한다
+		PRINT [1] 평상시의 색 [
 		CALL SETCOLOR_BY_STR, CSTR:ARG:36
 		PRINT ■
 		RESETCOLOR
-		PRINTL ] を引き継ぐ
+		PRINTL ] 을 인계한다
 		$INPUT_LOOP_12
 		INPUT
 		IF RESULT == 1
