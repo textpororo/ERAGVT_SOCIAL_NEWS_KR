@@ -14,7 +14,7 @@ IF CFLAG:CCOUNT:0 == 0 && TALENT:CCOUNT:사지결손 > 0 && TALENT:CCOUNT:理性
 	PRINTL 
 ENDIF
 NEXT
-PRINTFORML [999]選択を解除して戻る
+PRINTFORML [999]選択を解除して돌아간다
 $INPUT_LOOP_CHARA_LIST
 INPUT
 IF RESULT == 999
@@ -27,7 +27,7 @@ ELSE
 	PRINTFORML %CALLNAME:RESULT%をどのように「処理」しますか？
 	PRINTL [0] 裏組織に売却する（大金を受け取る）
 	PRINTL [1] 地下処刑ショーを手配する（大量の人気、資金、촉수의 조각を収穫する）
-	PRINTL [999] キャラクター選択に戻る
+	PRINTL [999] キャラクター選択に돌아간다
 	INPUT
 	$INPUT_AMPUTEE
 	IF RESULT == 0

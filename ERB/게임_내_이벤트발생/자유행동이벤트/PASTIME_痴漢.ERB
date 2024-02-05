@@ -47,16 +47,16 @@ IF ARG == 1
 	目的地 = 遠出
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)少しばかり멀리나간다為に電車に乗っている。
 ELSEIF ARG == 3
-	;小학생の場合
+	;초등학생の場合
 	IF TALENT:801 == 1
 		目的地 = 小学校
-		;中학생の場合
+		;중학생の場合
 	ELSEIF TALENT:801 == 2
 		目的地 = 中学校
-		;高校生の場合
+		;고등학생の場合
 	ELSEIF TALENT:801 == 3
 		目的地 = 高校
-		;大학생の場合
+		;대학생の場合
 	ELSEIF TALENT:801 == 4
 		目的地 = 大学
 	ENDIF

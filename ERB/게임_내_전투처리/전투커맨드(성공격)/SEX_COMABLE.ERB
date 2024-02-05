@@ -73,7 +73,7 @@ SELECTCASE ARG
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;聖처녀はＢ攻めにしたい(今はV攻め弱に振ってる)
+			;성처녀はＢ攻めにしたい(今はV攻め弱に振ってる)
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 			;	CALL SEX_COM7, FLAG:11, LOCAL
 				TFLAG:10 = 2
@@ -195,7 +195,7 @@ SELECTCASE ARG
 				TCVARn:12 -= 강구속
 			TFLAG:10 = 1
 			CALL SEX_COM1, FLAG:11, LOCAL
-		;聖처녀はAピストンに振る予定(現状はC強攻め)
+		;성처녀はAピストンに振る予定(現状はC強攻め)
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 		;	CALL SEX_COM17, FLAG:11, LOCAL
 			;강구속を消す
@@ -222,7 +222,7 @@ SELECTCASE ARG
 				TCVARn:12 -= 강구속
 			TFLAG:10 = 1
 			CALL SEX_COM1, FLAG:11, LOCAL
-		;聖처녀はAフィニッシュに振る予定(現状はC強攻め)
+		;성처녀はAフィニッシュに振る予定(現状はC強攻め)
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 		;	CALL SEX_COM18, FLAG:11, LOCAL
 			;강구속を消す
@@ -274,7 +274,7 @@ SELECTCASE ARG
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
 			ENDIF
-		;聖처녀はAピストン
+		;성처녀はAピストン
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 			TFLAG:10 = 17
 			CALL SEX_COM17, FLAG:11, LOCAL
@@ -298,7 +298,7 @@ SELECTCASE ARG
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
 			ENDIF
-		;聖처녀はAフィニッシュ
+		;성처녀はAフィニッシュ
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 			TFLAG:10 = 18
 			CALL SEX_COM18, FLAG:11, LOCAL
@@ -329,7 +329,7 @@ SELECTCASE ARG
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;聖처녀はC攻めSPに振る予定(現状はC強攻め)
+			;성처녀はC攻めSPに振る予定(現状はC強攻め)
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 			;	CALL SEX_SPCOM0
 				TFLAG:10 = 1
@@ -435,7 +435,7 @@ SELECTCASE ARG
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;聖처녀はイマラチオに振る予定(現状はC強攻め)
+			;성처녀はイマラチオに振る予定(現状はC強攻め)
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 			;	CALL SEX_COM12, FLAG:11, LOCAL
 				TFLAG:10 = 1
@@ -443,7 +443,7 @@ SELECTCASE ARG
 			ELSEIF BASE:V결계내구력 > 0 || TFLAG:20 < 0
 				TFLAG:10 = 1001
 				CALL SEX_SPCOM1
-			;聖처녀はA拡張
+			;성처녀はA拡張
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 				TFLAG:10 = 12
 				CALL SEX_COM12, FLAG:11, LOCAL
@@ -547,7 +547,7 @@ SELECTCASE ARG
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;聖처녀の場合もC攻め強に振り替える
+			;성처녀の場合もC攻め強に振り替える
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL

@@ -32,7 +32,7 @@ FOR LOCAL, 0, CHARANUM
 	SIF (ISHOLE() == 0) || (ISMALE() && ABL:A감각 < 2)
 		CONTINUE
 
-	;聖처녀の場合は奉仕+정액중독+A感度が2以上の場合のみ
+	;성처녀の場合は奉仕+정액중독+A感度が2以上の場合のみ
 	SIF CHECK_HOLYVIRGIN_F()==1 && ABL:봉사정신 + ABL:정액중독 + ABL:A감각 < 3
 		CONTINUE
 		

@@ -94,7 +94,7 @@ IF (FLAG:6 == 0 && (RESULT < 0 || RESULT > 4)) || (FLAG:6 == 1 && (RESULT < 0 ||
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 0
 	CFLAG:ARG:2 = 0
-	;変身後呼び名も削除
+	;변신 후 통칭も削除
 	CFLAG:ARG:3 = 0
 	CSTR:ARG:1 = %STRCLEAR()%
 	PRINTFORML 変身後名を設定しませんでした
@@ -224,7 +224,7 @@ PRINTL
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ;캐릭터 변신 후 통칭 설정
 @FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, ARG
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の変身後呼び名を設定してください
+PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の변신 후 통칭を設定してください
 PRINTL （※ 変身中に通常の지문などで表示されるキャラ名です）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
@@ -232,13 +232,13 @@ PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・�
 IF CSTR:ARG:201 == "" && CSTR:ARG:202 == ""
 	PRINTL [0]自分で設定
 	PRINTFORML [1]変身後名と同じに設定（変身後名：『%CSTR:ARG:0%』）
-	PRINTFORML [2]変身前の呼び名をそのまま使う
+	PRINTFORML [2]変身前の통칭をそのまま使う
 	$INPUT_LOOP_1_1
 	INPUT
 	IF RESULT < 0 || RESULT > 2
 		GOTO INPUT_LOOP_1_1
 	ELSEIF RESULT == 0
-		PRINTL 変身後呼び名を入力してください
+		PRINTL 변신 후 통칭を入力してください
 		SIF CSTR:ARG:1 != ""
 			PRINTFORML [999]変更しない（%CSTR:ARG:1%）
 		$INPUT_LOOP_1_2
@@ -254,15 +254,15 @@ IF CSTR:ARG:201 == "" && CSTR:ARG:202 == ""
 	ELSEIF RESULT == 2
 		CSTR:ARG:1 = %CALLNAME:ARG%
 	ENDIF
-	PRINTFORML 変身後呼び名を 『%CSTR:ARG:1%』 に設定しました
+	PRINTFORML 변신 후 통칭を 『%CSTR:ARG:1%』 に設定しました
 
 ;両方設定されている場合
 ELSE
-	PRINTFORML [0]変身後呼び名を 『%CSTR:ARG:201%』 に設定
-	PRINTFORML [1]変身後呼び名を 『%CSTR:ARG:202%』 に設定
+	PRINTFORML [0]변신 후 통칭を 『%CSTR:ARG:201%』 に設定
+	PRINTFORML [1]변신 후 통칭を 『%CSTR:ARG:202%』 に設定
 	PRINTL [2]自分で設定
 	PRINTFORML [3]変身後名と同じに設定（変身後名：『%CSTR:ARG:0%』）
-	PRINTFORML [4]変身前の呼び名をそのまま使う
+	PRINTFORML [4]変身前の통칭をそのまま使う
 	$INPUT_LOOP_4
 	INPUT
 	IF RESULT < 0 || RESULT > 4
@@ -272,7 +272,7 @@ ELSE
 	ELSEIF RESULT == 1
 		CSTR:ARG:1 = %CSTR:ARG:202%
 	ELSEIF RESULT == 2
-		PRINTL 変身後呼び名を入力してください
+		PRINTL 변신 후 통칭を入力してください
 		SIF CSTR:ARG:1 != ""
 			PRINTFORML [999]変更しない（%CSTR:ARG:1%）
 		$INPUT_LOOP_4_1
@@ -288,7 +288,7 @@ ELSE
 	ELSEIF RESULT == 4
 		CSTR:ARG:1 = %CALLNAME:ARG%
 	ENDIF
-	PRINTFORML 変身後呼び名を 『%CSTR:ARG:1%』 に設定しました
+	PRINTFORML 변신 후 통칭を 『%CSTR:ARG:1%』 に設定しました
 ENDIF
 PRINTL 
 PRINTL 

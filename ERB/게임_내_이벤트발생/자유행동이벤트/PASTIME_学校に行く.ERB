@@ -9,16 +9,16 @@
 SIF (CFLAG:40 == 101 || CFLAG:40 == 102) && CFLAG:1 < 1
 	改造制服 = 1
 
-;小학생の場合
+;초등학생の場合
 IF TALENT:학생 == 1
 	目的地 = 小学校
-;中학생の場合
+;중학생の場合
 ELSEIF TALENT:학생 == 2
 	目的地 = 中学校
-;高校生の場合
+;고등학생の場合
 ELSEIF TALENT:학생 == 3
 	目的地 = 高校
-;大학생の場合
+;대학생の場合
 ELSEIF TALENT:학생 == 4
 	目的地 = 大学
 ENDIF
@@ -129,7 +129,7 @@ IF RESULT == 0
 			PRINTFORML 変身した姿で大学へと訪れた%PRINT_TRANSCALLNAME(TARGET)%だったが、案の定というべきか
 			PRINTFORML 部外者も多数訪れる大学では見慣れない顔が一つ増えた程度では気にも留められないようだ。
 			PRINTL 
-			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の大학생活が始まったのだった…
+			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の대학생活が始まったのだった…
 			PRINTW 
 		;　小中高は大騒ぎ
 		ELSE
@@ -185,7 +185,7 @@ IF RESULT == 0
 			PRINTFORML あらためて自己紹介するまで案の定というべきか、친구や顔見知りの학생たちに気付かれなかった。
 			PRINTFORML 自己紹介した後ですら散々疑われたが、当人以外知り得ない思い出話などでようやく納得された始末だ。
 			PRINTL 
-			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の大학생活が始まったのだった…
+			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の대학생活が始まったのだった…
 			PRINTW 
 		;　小中高
 		ELSE
@@ -232,7 +232,7 @@ IF RESULT == 0
 			PRINTFORML 新たに編入した大学を訪れた%PRINT_TRANSCALLNAME(TARGET)%だったが、案の定というべきか
 			PRINTFORML 部外者も多数訪れる大学では見慣れない顔が一つ増えた程度では気にも留められないようだ。
 			PRINTL 
-			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の大학생活が始まったのだった…
+			PRINTFORML かくして、%PRINT_TRANSCALLNAME(TARGET)%의 第二の대학생活が始まったのだった…
 			PRINTW 
 		;　小中高は大騒ぎ
 		ELSE
@@ -345,7 +345,7 @@ IF RESULT == 0
 		PRINTW 
 	ENDIF
 	
-	;大학생なら合コンの可能性
+	;대학생なら合コンの可能性
 	IF TALENT:학생 == 4
 		CALL PASTIME_SAKE_NANPA
 		IF RESULT > 0
@@ -367,7 +367,7 @@ ENDIF
 ;授業メッセージ
 @Message_School_Classwork
 IF TALENT:학생 == 4
-	;大학생
+	;대학생
 	IF RAND:5 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)講義を受講している教授の元に赴き
 		PRINTFORML 以前受けた講義の内容についての疑問点などを尋ねたようだ。
@@ -379,7 +379,7 @@ IF TALENT:학생 == 4
 		CALL Message_School_Classwork_CL
 	ENDIF
 ELSEIF TALENT:학생 == 1
-	;小학생
+	;초등학생
 	IF RAND:6 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)体育の授業を受けるようだ。
 		CALL Message_School_Classwork_PE
@@ -400,7 +400,7 @@ ELSEIF TALENT:학생 == 1
 		CALL Message_School_Classwork_CL
 	ENDIF
 ELSE
-	;中・高校生
+	;中・고등학생
 	IF RAND:6 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)体育の授業を受けるようだ。
 		CALL Message_School_Classwork_PE
@@ -467,10 +467,10 @@ SIF ABL:자위중독 > 0
 PRINTL 
 PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
 	IF TALENT:학생 == 4
-	;大학생
+	;대학생
 		PRINTFORML 講義を受けている・・・
 	ELSE
-	;大학생以外
+	;대학생以外
 		PRINTFORML 授業を受けている・・・
 	ENDIF
 IF RAND:100 < LOCAL && ABL:욕망 > 0
@@ -533,10 +533,10 @@ IF RAND:100 < LOCAL && ABL:욕망 > 0
 		PRINTFORML 事実その通りであり、%PRINT_CALLNAME(TARGET)%のオナニーは
 		PRINTFORM その日のうちに
 		IF TALENT:학생 == 4
-		;大학생
+		;대학생
 			PRINTFORML 受講者中の噂になっていたが、
 		ELSE
-		;大학생以外
+		;대학생以外
 			PRINTFORML クラス中の噂になっていたが、
 		ENDIF
 		PRINTFORML 幸か不幸か%PRINT_CALLNAME(TARGET)%本人にその話題を振るものはいなかった……
@@ -659,7 +659,7 @@ ENDIF
 ;PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)授業を受けている・・・
 PRINTFORM どうやら%PRINT_TRANSCALLNAME(TARGET)%은(는)
 IF RAND:5 == 0 && ISFEMALE()
-	;護身術(聖처녀ならば護身術一択で避妊具には分岐しない)
+	;護身術(성처녀ならば護身術一択で避妊具には分岐しない)
  	IF RAND:2 == 0 || CHECK_HOLYVIRGIN_F()==1
 		PRINTFORML 柔道をする様だ。
 		PRINTFORML 近頃、淫気にあてられた人や촉수が女性を襲う事件が増えており
@@ -676,7 +676,7 @@ IF RAND:5 == 0 && ISFEMALE()
 			PRINTFORML 
 			PRINTFORML 体育教師は大きな手で%PRINT_TRANSCALLNAME(TARGET)%의 両手首を抑え込み、両脚はＭ字型になるよう膝で固定した。
 			PRINTFORML 残った片手が%PRINT_TRANSCALLNAME(TARGET)%의 胸や股間を弄り回し、舌が顔やはだけた胸を蹂躙する。
-			;聖처녀は挿入されない
+			;성처녀は挿入されない
 			IF CHECK_HOLYVIRGIN_F()==1
 				PRINTFORML なんとか拘束から逃れようとしている%PRINT_TRANSCALLNAME(TARGET)%によって、
 				PRINTFORML 教師は挿入するのに手間取っている
@@ -696,7 +696,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に戻るようにと必死に説得している
+					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -812,7 +812,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に戻るようにと必死に説得している
+					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -860,7 +860,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				PRINTFORML 抵抗すれば인간離れした体育教師の暴力で無理矢理従わされた。
 			ENDIF
 			IF TALENT:교제상대 > 0 || TALENT:청순파 > 0 || TALENT:초심 > 0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄と知りながら皆に正気に戻るように最後まで説得を続けた…
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄と知りながら皆に正気に돌아간다ように最後まで説得を続けた…
 				PRINTFORML 教師が%PRINT_TRANSCALLNAME(TARGET)%에 사정し、男子生徒が列に並んで順番に犯し続けている間も
 				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)壊れた機械人形のようにくりかえし説得の言葉を力なく呟き続けていた…
 			ENDIF
@@ -925,7 +925,7 @@ ELSEIF RAND:5 == 0 && TALENT:보추 > 0
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に戻るようにと必死に説得している
+					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -1020,7 +1020,7 @@ ELSEIF RAND:5 == 0 && TALENT:보추 > 0
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に戻るようにと必死に説得している
+					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -1071,7 +1071,7 @@ ELSEIF RAND:5 == 0 && TALENT:보추 > 0
 				PRINTFORML 抵抗すれば인간離れした体育教師の暴力で無理矢理従わされた。
 			ENDIF
 			IF TALENT:교제상대 > 0 || TALENT:청순파 > 0 || TALENT:초심 > 0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄と知りながら皆に正気に戻るように最後まで説得を続けた…
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無駄と知りながら皆に正気に돌아간다ように最後まで説得を続けた…
 				PRINTFORML 教師が%PRINT_TRANSCALLNAME(TARGET)%에 사정し、男子生徒が列に並んで順番に犯し続けている間も
 				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)壊れた機械人形のようにくりかえし説得の言葉を力なく呟き続けていた…
 			ENDIF
@@ -1284,7 +1284,7 @@ IF RAND:10 == 0 && ((((CFLAG:40 == 101 && FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 1 |
 		CASE 2
 		PRINT 屋上でたそがれていると
 	ENDSELECT
-	;小학생ならスカートめくりも起こる
+	;초등학생ならスカートめくりも起こる
 	IF TALENT:학생 == 1 && RAND:2 == 0
 		PRINTL 男子がスカートめくりを仕掛けてきた！
 	ELSE

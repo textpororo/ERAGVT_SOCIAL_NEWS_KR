@@ -79,11 +79,11 @@ PRINTFORML 呼び名,%CALLNAME:TARGET%,
 ;苗字
 SIF CSTR:10 != ""
 	PRINTFORML CSTR,10,%CSTR:10%,;　苗字
-;一人称
+;일인칭
 SIF CSTR:4 != ""
-	PRINTFORML CSTR,4,%CSTR:4%,;　一人称
+	PRINTFORML CSTR,4,%CSTR:4%,;　일인칭
 SIF CFLAG:8 > 0
-	PRINTFORML フラグ,8,{CFLAG:8},;　一人称設定
+	PRINTFORML フラグ,8,{CFLAG:8},;　일인칭設定
 PRINTL
 IF CSTR:204 != "" || CSTR:205 != "" || CSTR:206 != ""
 	PRINTL ;-------나이指定----------------
@@ -145,13 +145,13 @@ REPEAT 1000
 			ENDIF
 		ELSEIF COUNT == 801
 			IF TALENT:801 == 1
-				PRINT ;　小학생
+				PRINT ;　초등학생
 			ELSEIF TALENT:801 == 2
-				PRINT ;　中학생
+				PRINT ;　중학생
 			ELSEIF TALENT:801 == 3
-				PRINT ;　高校生
+				PRINT ;　고등학생
 			ELSEIF TALENT:801 == 4
-				PRINT ;　大학생
+				PRINT ;　대학생
 			ENDIF
 		ELSEIF COUNT == 810
 			IF TALENT:810 == 1
@@ -367,7 +367,7 @@ IF TALENT:변신능력 == 1
 	ENDIF
 	IF CFLAG:3 > 0
 		PRINTL
-		PRINTL ;変身後の呼び名
+		PRINTL ;変身後の통칭
 		PRINTFORML CSTR,1,%CSTR:1%,
 		PRINTFORML フラグ,3,1,
 	ENDIF

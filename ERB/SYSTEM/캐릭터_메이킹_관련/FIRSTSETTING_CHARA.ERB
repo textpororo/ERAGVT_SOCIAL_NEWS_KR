@@ -38,9 +38,9 @@ CALL LB
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTFORML 【プロフィールの設定　キャラクター {ARG:0}】
 
-PRINTFORML ◆[ 1]氏名　　：『%NAME:ARG%』
-PRINTFORML ◆[ 2]呼び名　：『%CALLNAME:ARG%』
-PRINTFORML ◆[ 3]一人称　：『%SELF_CALL(0, 0, ARG)% <%SELF_CALL(7, 0, ARG)%>』
+PRINTFORML ◆[ 1]이름　　：『%NAME:ARG%』
+PRINTFORML ◆[ 2]통칭　：『%CALLNAME:ARG%』
+PRINTFORML ◆[ 3]일인칭　：『%SELF_CALL(0, 0, ARG)% <%SELF_CALL(7, 0, ARG)%>』
 SIF TALENT:ARG:고유캐릭터 != 0 || (ARG:2) > 0
 	SETCOLOR 128,128,128
 PRINTFORM ◆[ 4]種族　　：『
@@ -153,9 +153,9 @@ ENDIF
 RESETCOLOR
 IF TALENT:ARG:변신능력 == 1
 	PRINTFORML 　[11]┣変身後名・・・・・・\@(CFLAG:ARG:2 == 1) ?・『%CSTR:ARG:0%』#・ なし\@
-	PRINTFORML 　[12]┣変身後呼び名・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ なし\@
-	PRINTFORML 　[13]┣変身時かけ声・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ なし\@
-	PRINTFORML 　[14]┗変身後名乗り구상・・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ なし\@
+	PRINTFORML 　[12]┣변신 후 통칭・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ なし\@
+	PRINTFORML 　[13]┣변신 시 구호・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ なし\@
+	PRINTFORML 　[14]┗변신 후 자칭구상・・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ なし\@
 ENDIF
 PRINTL ◆コスチュームの編集
 PRINT 　[16]┣アウター　　　　　　：
@@ -234,15 +234,15 @@ IF RESULT == 0 && TALENT:ARG:고유캐릭터 == 0
 	CALL FIRSTSETTING_CHARA_SEX, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 1
-	;キャラの氏名の設定
+	;キャラの이름の設定
 	CALL FIRSTSETTING_CHARA_NAME, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 2
-	;キャラの呼び名の設定
+	;キャラの통칭の設定
 	CALL FIRSTSETTING_CHARA_CALLNAME, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 3
-	;キャラの一人称の設定
+	;キャラの일인칭の設定
 	CALL FIRSTSETTING_CHARA_SELFCALL, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 4 && TALENT:ARG:고유캐릭터 == 0 && (ARG:2) == 0
@@ -492,7 +492,7 @@ ELSE
 ENDIF
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの氏名設定
+;キャラの이름設定
 @FIRSTSETTING_CHARA_NAME, ARG
 #DIM LCOUNT
 #DIMS DEFAULT_NAME
@@ -505,8 +505,8 @@ DEFAULT_FAMILYNAME = %CSVCSTR(NO:ARG,10)%
 
 LCOUNT = LINECOUNT
 $LOOP_FIRST
-PRINTFORML {ARG:0}人目のキャラの氏名を設定してください
-PRINTL （※ 通常の지문などで表示される呼び名ではなく本名を設定してください。
+PRINTFORML {ARG:0}人目のキャラの이름を設定してください
+PRINTL （※ 通常の지문などで表示される통칭ではなく本名を設定してください。
 PRINTL 　　 一部の지문や스테이터스 표시などに使用されます）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL [0]ランダムに設定
@@ -526,7 +526,7 @@ IF RESULT == 0
 	LOCAL:0 = RESULT:0
 	LOCAL:1 = RESULT:1
 	$INPUT_LOOP_CHILD_1_1
-	PRINTFORML キャラの氏名を 『%RESULTS:0%』 とします。よろしいですか？
+	PRINTFORML キャラの이름を 『%RESULTS:0%』 とします。よろしいですか？
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	SIF CALLNAME:ARG != "범용 캐릭터"
@@ -539,7 +539,7 @@ IF RESULT == 0
 		NAME:ARG = %RESULTS:0%
 		CSTR:ARG:200 = %RESULTS:1%
 		CSTR:ARG:10 = %RESULTS:2%
-		PRINTFORML キャラの氏名を 『%NAME:ARG%』 に設定しました
+		PRINTFORML キャラの이름を 『%NAME:ARG%』 に設定しました
 	ELSEIF RESULT == 2
 		CSTR:ARG:200 = %CALLNAME:ARG%
 	ELSE
@@ -605,13 +605,13 @@ ELSEIF RESULT == 1
 		LOCALS:2 = %LOCALS:0%%LOCALS:1%
 	ENDIF
 	NAME:ARG = %LOCALS:2%
-	PRINTFORML キャラの氏名を 『%NAME:ARG%』 に設定しました
+	PRINTFORML キャラの이름を 『%NAME:ARG%』 に設定しました
 ELSEIF RESULT == 2 && DEFAULT_CALLNAME != "범용 캐릭터"
 	NAME:ARG = %DEFAULT_NAME%
 	CALLNAME:ARG = %DEFAULT_CALLNAME%
 	CSTR:ARG:10 = %DEFAULT_FAMILYNAME%
 	CSTR:ARG:200 = %DEFAULT_CALLNAME%
-	PRINTFORML キャラの氏名を 『%DEFAULT_NAME%』 に設定しました
+	PRINTFORML キャラの이름を 『%DEFAULT_NAME%』 に設定しました
 ELSEIF RESULT == 3
 	PRINT [0]苗字　→　名前の順番にする
 	PRINTPLAINFORM 　『%CSTR:ARG:10%%CALLNAME:ARG%』
@@ -676,7 +676,7 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 IF CSTR:ARG:200 != ""
-	;変身後呼び名＝呼び名に設定してあったら一緒に変更する
+	;변신 후 통칭＝통칭に設定してあったら一緒に変更する
 	IF CALLNAME:ARG==CSTR:ARG:1
 		CSTR:ARG:1 = %CSTR:ARG:200%
 	ENDIF
@@ -686,7 +686,7 @@ PRINTL
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの氏名のランダム設定
+;キャラの이름のランダム設定
 @FIRSTSETTING_CHARA_NAME_RANDOM, ARG
 LOCAL:0 = 2
 LOCAL:1 = 0
@@ -1010,7 +1010,7 @@ RETURN LOCAL:1, LOCAL:2
 	PRINTL [ 5]イタリア語
 	PRINTL [ 6]ロシア語
 	PRINTL [ 7]中国語
-	PRINTFORML [99]変更せずに戻る%FLAG:821>0 ? "（"+namelang:(flag:821-1)+"）" # "（ランダム）"%
+	PRINTFORML [99]変更せずに돌아간다%FLAG:821>0 ? "（"+namelang:(flag:821-1)+"）" # "（ランダム）"%
 	INPUT	
 	IF INRANGE(RESULT,0,7)
 		FLAG:821=RESULT
@@ -1031,7 +1031,7 @@ RETURN LOCAL:1, LOCAL:2
 	PRINTL [ 6]ロシア語
 	PRINTL [ 7]中国語
 	PRINTL [ 8]일본어(중성적)
-	PRINTFORML [99]変更せずに戻る%FLAG:822>0 ? "（"+namelang:(flag:822-1)+"）" # "（ランダム）"%
+	PRINTFORML [99]変更せずに돌아간다%FLAG:822>0 ? "（"+namelang:(flag:822-1)+"）" # "（ランダム）"%
 	INPUT	
 	IF INRANGE(RESULT,0,8)
 		FLAG:822=RESULT
@@ -1044,13 +1044,13 @@ RETURN LOCAL:1, LOCAL:2
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラ呼び名の設定
+;キャラ통칭の設定
 @FIRSTSETTING_CHARA_CALLNAME, ARG
-PRINTFORML {ARG:0}人目のキャラの呼び名を設定してください
+PRINTFORML {ARG:0}人目のキャラの통칭を設定してください
 PRINTL （※ 通常の지문などで表示されるキャラ名です）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 SIF CSTR:ARG:200 != ""
-	PRINTFORML [0]名前を呼び名に設定（名前：%CSTR:ARG:200%）
+	PRINTFORML [0]名前を통칭に設定（名前：%CSTR:ARG:200%）
 PRINTL [1]自分で設定
 PRINTL [99]もどる
 $INPUT_LOOP
@@ -1059,16 +1059,16 @@ IF RESULT == 0
 	SIF CSTR:ARG:200 == ""
 		GOTO INPUT_LOOP
 	CALLNAME:ARG = %CSTR:ARG:200%
-	PRINTFORML キャラの呼び名を 『%CALLNAME:ARG%』 に設定しました
+	PRINTFORML キャラの통칭を 『%CALLNAME:ARG%』 に設定しました
 ELSEIF RESULT == 1
-	PRINTL キャラの呼び名を入力してください。
+	PRINTL キャラの통칭を入力してください。
 	$INPUT_LOOP_CHILD_1
 	INPUTS
 	IF RESULTS == ""
 		GOTO INPUT_LOOP_CHILD_1
 	ELSE
 		CALLNAME:ARG = %RESULTS%
-		PRINTFORML キャラの呼び名を 『%CALLNAME:ARG%』 に設定しました
+		PRINTFORML キャラの통칭を 『%CALLNAME:ARG%』 に設定しました
 	ENDIF
 ELSEIF RESULT == 99
 	RETURN 99
@@ -1175,7 +1175,7 @@ PRINTL
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの一人称設定
+;キャラの일인칭設定
 @FIRSTSETTING_CHARA_SELFCALL, ARG
 #DIM LCOUNT
 #DIM CALL_VAR, 2
@@ -1197,7 +1197,7 @@ CALL_STR:1 = %SELF_CALL(0, 0, ARG)%
 
 $SETTING_TOP
 PRINTL 
-PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の一人称を設定してください
+PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の일인칭を設定してください
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
 LOCAL = 0
@@ -1237,7 +1237,7 @@ SIF CALL_VAR:0 == 일인칭_최대+2
 	SETCOLOR 120,255,0
 PRINTFORML 　[{일인칭_최대+2}] その他（手入力）
 RESETCOLOR
-PRINT 　[50] 性格によるデフォルト一人称：
+PRINT 　[50] 性格によるデフォルト일인칭：
 	IF TALENT:ARG:남자
 		IF TALENT:ARG:사나움
 			PRINTL 俺（おれ）

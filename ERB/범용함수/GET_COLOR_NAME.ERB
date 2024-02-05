@@ -27,17 +27,17 @@ ENDIF
 ;目の色を返す式中間数
 ;第2引数で左右を指定
 ;*******************************************************************************************************
-@PRINT_EYECOLORNAME, ARG, ARGS = "右"
+@PRINT_EYECOLORNAME, ARG, ARGS = "오른쪽"
 #FUNCTIONS
 ;変身中または、悪落ち中かつ변신능력がある場合は変身後の目色を返す
 IF CFLAG:ARG:1 == 1 || (TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 == 3)
-	IF ARGS == "右" || ARGS == "RIGHT"
+	IF ARGS == "오른쪽" || ARGS == "RIGHT"
 		RETURNF GETCOLORNAME(CSTR:ARG:34)
 	ELSE
 		RETURNF GETCOLORNAME(CSTR:ARG:35)
 	ENDIF
 ELSE
-	IF ARGS == "右" || ARGS == "RIGHT"
+	IF ARGS == "오른쪽" || ARGS == "RIGHT"
 		RETURNF GETCOLORNAME(CSTR:ARG:32)
 	ELSE
 		RETURNF GETCOLORNAME(CSTR:ARG:33)
@@ -71,34 +71,34 @@ ENDIF
 SIF STRCOUNT(ARGS, "/") ==4
 	RETURNF GETCOLORNAMESTR(ARGS)
 
-IF ARGS == "赤" || ARGS == "レッド"
-	RETURNF "赤色"
-ELSEIF ARGS == "緑" || ARGS == "グリーン"
-	RETURNF "緑色"
-ELSEIF ARGS == "青" || ARGS == "ブルー"
-	RETURNF "青色"
-ELSEIF ARGS == "黄" || ARGS == "イエロー"
-	RETURNF "黄色"
-ELSEIF ARGS == "金" || ARGS == "ブロンド" || ARGS == "ゴールド"
-	RETURNF "金色"
-ELSEIF ARGS == "紫" || ARGS == "パープル"
-	RETURNF "紫色"
-ELSEIF ARGS == "橙" || ARGS == "オレンジ"
-	RETURNF "橙色"
-ELSEIF ARGS == "桃" || ARGS == "ピンク"
-	RETURNF "桃色"
-ELSEIF ARGS == "銀" || ARGS == "シルバー"
-	RETURNF "銀色"
-ELSEIF ARGS == "茶" || ARGS == "ブラウン" || ARGS == "ブルネット"
-	RETURNF "茶色"
-ELSEIF ARGS == "黒" || ARGS == "ブラック"
-	RETURNF "黒色"
-ELSEIF ARGS == "肌色"
-	RETURNF "肌色"
-ELSEIF ARGS == "褐色"
-	RETURNF "褐色"
-ELSEIF ARGS == "色白"
-	RETURNF "色白"
+IF ARGS == "빨강" || ARGS == "레드"
+	RETURNF "빨간색"
+ELSEIF ARGS == "초록" || ARGS == "그린"
+	RETURNF "초록색"
+ELSEIF ARGS == "파랑" || ARGS == "블루"
+	RETURNF "파란색"
+ELSEIF ARGS == "노랑" || ARGS == "옐로우"
+	RETURNF "노란색"
+ELSEIF ARGS == "금색" || ARGS == "블론드" || ARGS == "골드"
+	RETURNF "금색"
+ELSEIF ARGS == "보라" || ARGS == "퍼플"
+	RETURNF "보라색"
+ELSEIF ARGS == "주황" || ARGS == "오렌지"
+	RETURNF "주황색"
+ELSEIF ARGS == "분홍" || ARGS == "핑크"
+	RETURNF "분홍색"
+ELSEIF ARGS == "은색" || ARGS == "실버"
+	RETURNF "은색"
+ELSEIF ARGS == "다색" || ARGS == "브라운" || ARGS == "브루넷"
+	RETURNF "다색"
+ELSEIF ARGS == "검정" || ARGS == "블랙"
+	RETURNF "검은색"
+ELSEIF ARGS == "살구색"
+	RETURNF "살구색"
+ELSEIF ARGS == "갈색"
+	RETURNF "갈색"
+ELSEIF ARGS == "백색"
+	RETURNF "백색"
 ELSE
 	RETURNF ARGS
 ENDIF
@@ -125,11 +125,11 @@ ColorDiff = 999
 ColorNameOffset = 1000
 
 SIF ARGS == ""
-	RETURNF "未定義"
+	RETURNF "미정의"
 
 ;ガバガバエラー処理
 SIF STRCOUNT(ARGS, "/") !=4
-	RETURNF "引数がR//G//B形式ではありません"
+	RETURNF "인수가 R//G//B 형식이 아닙니다."
 
 ;RGB値が一致すれば色名を返す
 FOR COUNT, RGBStart, RGBStart + NumberOfColor

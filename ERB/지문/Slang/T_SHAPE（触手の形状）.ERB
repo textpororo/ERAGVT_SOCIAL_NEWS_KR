@@ -39,16 +39,16 @@ SIF RESULT:0 == -1
 SELECTCASE ARGS:0
 	CASE "透明"
 		TWORD=透き通った
-	CASE "赤"
+	CASE "빨강"
 		TWORD=真っ赤な
-	CASE "桜","桜色"
-		TWORD=淡い桜色の
-	CASE "桃","桃色"
+	CASE "담홍","담홍색"
+		TWORD=淡い담홍색の
+	CASE "분홍","桃色"
 		TWORD=艶やかな桃色の
-	CASE "ピンク","ピンク色"
+	CASE "핑크","ピンク色"
 		TWORD=艶やかなピンク色の
-	CASE "サーモンピンク"
-		TWORD=鮮やかなサーモンピンクの
+	CASE "살몬 핑크"
+		TWORD=鮮やかな살몬 핑크の
 	CASEELSE
 	TWORD=%ARGS:0%
 ENDSELECT
@@ -142,9 +142,9 @@ IF (FLAG:13 > FLAG:12 *3/4)
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
 		T_COLOR_SET=ピンク
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
-		T_COLOR_SET=桜色
+		T_COLOR_SET=담홍색
 	ELSE
-		T_COLOR_SET=サーモンピンク
+		T_COLOR_SET=살몬 핑크
 	ENDIF
 ELSEIF (FLAG:13 > FLAG:12 *2/4)
 	IF (FLAG:15 > FLAG:14 *3/4)

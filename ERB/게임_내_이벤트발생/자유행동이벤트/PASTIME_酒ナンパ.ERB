@@ -119,7 +119,7 @@ ELSEIF TALENT:학생 == 1
 		PRINTFORML 甘酒の試飲をしませんかと誘われいるところを見ると、
 	ENDIF
 	誘い文句 = 試飲をする
-	;中학생と高校生はまとめる
+	;중학생と고등학생はまとめる
 ELSEIF TALENT:학생 == 2 || TALENT:학생 == 3
 	IF ＴＳキャラ == 1 || TALENT:보추 > 0
 		PRINTFORML 一緒にカラオケに行かないかと誘われてしまった。
@@ -169,12 +169,12 @@ ELSE
 ENDIF
 PRINTW 
 
-;小학생の相手は固定
+;초등학생の相手は固定
 IF TALENT:학생 == 1 && BASE:실제나이 < 20 && CFLAG:1 == 0
 	誘ってきた相手 = 営業マン
 	PRINTFORML 試飲を誘ってきた男は飲料メーカーの%誘ってきた相手%だと名乗っている。
 	PRINTFORML 甘酒は美容と健康に良く、夏は疲労回復効果もあると営業トークを繰り広げている。
-	;大학생の相手は固定
+	;대학생の相手は固定
 ELSEIF TALENT:학생 == 4
 	誘ってきた相手 = 학생
 	PRINTFORML 合コンを誘ってきた男は%PRINT_TRANSCALLNAME(TARGET)%と同じ大学の%誘ってきた相手%だと名乗っている。
@@ -297,7 +297,7 @@ IF TALENT:학생 == 1
 
 ELSEIF TALENT:학생 == 4
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%誘ってきた相手%について行くと
-	PRINTFORML 大학생におなじみの居酒屋チェーン店に案内された。
+	PRINTFORML 대학생におなじみの居酒屋チェーン店に案内された。
 	PRINTL 
 	PRINTFORML ふすまで仕切られた座敷席には１０人前後の학생がいて、中には%PRINT_TRANSCALLNAME(TARGET)%의 ゼミ仲間もいた。
 	IF CFLAG:1 > 0

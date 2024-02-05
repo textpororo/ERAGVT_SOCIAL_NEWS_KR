@@ -1,7 +1,7 @@
-﻿;ページ遷移のたびにスタックが積みあがってしまっている…
+﻿;페이지 전이 때마다 스택이 쌓여 버려…
 
 ;--------------------------------------------------
-;스테이터스 표시のベース
+;스테이터스 표시 베이스
 @SHOW_STATUS_CHARA_SELECT ,ARG
 #DIM LCOUNT
 #DIM PAGE=1
@@ -21,9 +21,9 @@ $REPRINT
 	DRAWLINE
 SELECTCASE PAGE
 CASE 1
-	PRINTL 　　　　　　　　　　　　　　　　　基本스테이터스情報　　　　　　　　　　　　　　PAGE(1/5)
+	PRINTL 　　　　　　　　　　　　　　　　　기본 스테이터스 정보　　　　　　　　　　　　　PAGE(1/5)
 	DRAWLINE
-	;通常の스테이터스 표시
+	;통상 스테이터스 표시
 	CALL SHOW_STATUS_BASE_DISPSTATUS, ARG
 	CALL SHORTLINE
 	CALL SHOW_STATUS_BASE_STATUSINFO, ARG
@@ -43,15 +43,15 @@ CASE 1
 	CALL SHOW_STATUS_CLOTH, ARG
 	DRAWLINE
 	PRINTL
-	PRINT  [1][前ページ]　　
+	PRINT  [1]  [앞 페이지]　　
 	SETCOLORBYNAME CYAN
-	PRINT [1000]戦闘　
+	PRINT [1000] 전투　
 	RESETCOLOR
-	PRINT [2000]素質　
-	PRINT [3000]武器　
-	PRINT [4000]相関　
-	PRINT [5000]個人　
-	PRINTL 　[2][次ページ]
+	PRINT [2000] 소질　
+	PRINT [3000] 무기　
+	PRINT [4000] 상관　
+	PRINT [5000] 개인　
+	PRINTL 　[2]  [뒷 페이지]
 
 	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
@@ -91,28 +91,28 @@ CASE 1
 		GOTO REPRINT
 	ELSEIF RESULT == 10
 		IF TALENT:ARG:주관시점 == 1
-			PRINTL 現在『主観モード』を使用中です
-			PRINTL [0]変更しない
-			PRINTL [1]主観モードを終了する
+			PRINTL 현재『주관 모드』를 사용 중입니다.
+			PRINTL [0] 변경하지 않는다
+			PRINTL [1] 주관 모드를 종료한다
 			INPUT
 			IF RESULT == 1
 				TALENT:ARG:주관시점 = 0
-				PRINTW 지문を変更しました
+				PRINTW 주관 모드를 해제했습니다.
 			ENDIF
 		ELSE
-			PRINTL ※지문をより主観的な描写に変更します
-			PRINTL 　この設定は個別に適用されます
-			PRINTL [0]使用しない
-			PRINTL [1]使用する
+			PRINTL ※지문을 보다 주관적인 묘사로 변경합니다.
+			PRINTL 　이 설정은 개별적으로 적용됩니다.
+			PRINTL [0] 사용하지 않는다
+			PRINTL [1] 사용한다
 			INPUT
 			IF RESULT == 1
 				TALENT:ARG:주관시점 = 1
-				PRINTW 지문を変更しました
+				PRINTW 지문에 대해『주관 모드』를 활성화합니다.
 			ENDIF
 		ENDIF
 		GOTO REPRINT
 	ELSEIF RESULT == 11 && FLAG:700 == 0
-		;キャラの呼び名の設定
+		;캐릭터의 호칭 설정
 		CALL FIRSTSETTING_CHARA_CALLNAME, ARG
 		GOTO REPRINT
 	ELSEIF RESULT == 12 && FLAG:700 == 0
@@ -121,14 +121,14 @@ CASE 1
 	ELSEIF RESULT == 13 && TALENT:ARG:변신능력 == 1 && FLAG:700 == 0
 		LCOUNT = LINECOUNT
 		$LOOP_12
-		PRINTFORML 変更する項目を選択してください
+		PRINTFORML 변경할 항목을 선택해 주십시오.
 		CALL SHORTLINE
-		PRINTFORML [0]　変身後名・・・・・・\@(CFLAG:ARG:2 == 1) ?・『%CSTR:ARG:0%』#・ なし\@
-		PRINTFORML [1]　変身後呼び名・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ なし\@
-		PRINTFORML [2]　変身時かけ声・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ なし\@
-		PRINTFORML [3]　変身後名乗り구상・・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ なし\@
+		PRINTFORML [0]　변신 후 이름・・・・・\@(CFLAG:ARG:2 == 1) ?・『%CSTR:ARG:0%』#・ 없음\@
+		PRINTFORML [1]　변신 후 통칭・・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ 없음\@
+		PRINTFORML [2]　변신 시 구호・・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ 없음\@
+		PRINTFORML [3]　변신 후 자칭 구상・・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ 없음\@
 		PRINTL 
-		PRINTFORML [99] 戻る
+		PRINTFORML [99] 돌아간다
 		$INPUT_LOOP_12
 		INPUT
 		IF RESULT == 0
@@ -173,13 +173,13 @@ CASE 1
 
 CASE 2
 	;--------------------------------------------------
-	;스테이터스 표시のベース（2ページ目）
-	PRINTL 　　　　　　　　　　　　　　　　　　素質・性成長　　　　　　　　　　　　　　　　PAGE(2/5)
+	;스테이터스 표시 베이스（2페이지 째）
+	PRINTL 　　　　　　　　　　　　　　　　　　소질・성(性)성장　　　　　　　　　　　　　　　　PAGE(2/5)
 	DRAWLINE
-	PRINTFORML 氏名　：%NAME:(ARG:0)%
-	PRINTFORML 呼び名：%CALLNAME:(ARG:0)%
-	PRINTFORML 一人称：%SELF_CALL(0, 0, ARG:0)%
-	PRINTFORML 레벨：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
+	PRINTFORML 이름　：%NAME:(ARG:0)%
+	PRINTFORML 통칭　：%CALLNAME:(ARG:0)%
+	PRINTFORML 일인칭：%SELF_CALL(0, 0, ARG:0)%
+	PRINTFORML 레벨　：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
 	CALL SHORTLINE
 	CALL SHOW_STATUS_TALENT, ARG, 0, 1
 	CALL SHORTLINE
@@ -190,7 +190,7 @@ CASE 2
 	PRINTL 
 	CALL SHORTLINE
 	CALL SHOW_STATUS_EXP, ARG
-	;珠の表示はデバッグ用
+	;구슬 표시는 디버그용
 	IF FLAG:999 == 1
 		PRINTL 
 		CALL SHORTLINE
@@ -199,16 +199,16 @@ CASE 2
 	PRINTL 
 	DRAWLINE
 	PRINTPLAIN 　
-	PRINTKL [0]キャラクターデータの書き出し　　
-	PRINT  [1][前ページ]　　
-	PRINT [1000]戦闘　
+	PRINTL [0] 캐릭터 데이터의 서두　　
+	PRINT  [1] [앞 페이지]　　
+	PRINT [1000] 전투　
 	SETCOLORBYNAME CYAN
-	PRINT [2000]素質　
+	PRINT [2000] 소질　
 	RESETCOLOR
-	PRINT [3000]武器　
-	PRINT [4000]相関　
-	PRINT [5000]個人　
-	PRINTL 　[2][次ページ]
+	PRINT [3000] 무기　
+	PRINT [4000] 상관　
+	PRINT [5000] 개인　
+	PRINTL 　[2] [뒷 페이지]
 
 	PRINT  [999] 돌아간다　　　　　
 	SIF FLAG:700 > 0
@@ -247,14 +247,14 @@ CASE 2
 	ENDIF
 
 	;--------------------------------------------------
-	;스테이터스 표시のベース（3ページ目）
+	;스테이터스 표시의 베이스 (3페이지 째)
 CASE 3
-	PRINTL 　　　　　　　　　　　　　　　　　武器カスタマイズ　　　　　　　　　　　　　　　PAGE(3/5)
+	PRINTL 　　　　　　　　　　　　　　　　　 무기 커스터마이즈　　　　　　　　　　　　　　 PAGE(3/5)
 	DRAWLINE
-	PRINTFORML 氏名　：%NAME:(ARG:0)%
-	PRINTFORML 呼び名：%CALLNAME:(ARG:0)%
-	PRINTFORML 一人称：%SELF_CALL(0, 0, ARG:0)%
-	PRINTFORML 레벨：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
+	PRINTFORML 이름　：%NAME:(ARG:0)%
+	PRINTFORML 통칭　：%CALLNAME:(ARG:0)%
+	PRINTFORML 일인칭：%SELF_CALL(0, 0, ARG:0)%
+	PRINTFORML 레벨　：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
 	CALL SHORTLINE
 	CALL SHOW_WEAPON_EDIT,ARG,1
 	CALL SHORTLINE
@@ -265,21 +265,21 @@ CASE 3
 	DRAWLINE
 	IF CFLAG:ARG:0 != 상태_건강 || FLAG:700
 		SETCOLOR 105,105,105
-		PRINTPLAIN [0]武器カスタマイズ画面に移動　　　
+		PRINTPLAIN [0] 무기 커스터마이즈 화면으로 이동　　　
 		RESETCOLOR
 	ELSE
-		PRINT [0]武器カスタマイズ画面に移動　　　
+		PRINT [0] 무기 커스터마이즈 화면으로 이동　　　
 	ENDIF
 	PRINTL
-	PRINT  [1][前ページ]　　
-	PRINT [1000]戦闘　
-	PRINT [2000]素質　
+	PRINT  [1] [앞 페이지]　　
+	PRINT [1000] 전투　
+	PRINT [2000] 소질　
 	SETCOLORBYNAME CYAN
-	PRINT [3000]武器　
+	PRINT [3000] 무기　
 	RESETCOLOR
-	PRINT [4000]相関　
-	PRINT [5000]個人　
-	PRINTL 　[2][次ページ]
+	PRINT [4000] 상관　
+	PRINT [5000] 개인　
+	PRINTL 　[2] [뒷 페이지]
 	PRINT  [999] 돌아간다　　　　　　
 
 	SIF FLAG:700 > 0
@@ -318,16 +318,16 @@ CASE 3
 	ENDIF
 
 	;--------------------------------------------------
-	;스테이터스 표시のベース（4ページ目）
+	;스테이터스 표시 베이스 (4페이지 째)
 CASE 4
-	PRINTL 　　　　　　　　　　　　　　　　　キャラクター相関　　　　　　　　　　　　　　　PAGE(4/5)
+	PRINTL 　　　　　　　　　　　　　　　　　캐릭터  상관　　　　　　　　　　　　　　　　  PAGE(4/5)
 	DRAWLINE
-	PRINTFORML 氏名　：%NAME:(ARG:0)%
-	PRINTFORML 呼び名：%CALLNAME:(ARG:0)%
-	PRINTFORML 一人称：%SELF_CALL(0, 0, ARG:0)%
-	PRINTFORML 레벨：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
-	LOCALS = \@ISMALE(ARG:0) ? 男 # 女\@
-	PRINTFORML 性別　：%LOCALS%
+	PRINTFORML 이름　：%NAME:(ARG:0)%
+	PRINTFORML 통칭　：%CALLNAME:(ARG:0)%
+	PRINTFORML 일인칭：%SELF_CALL(0, 0, ARG:0)%
+	PRINTFORML 레벨　：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
+	LOCALS = \@ISMALE(ARG:0) ? 남 # 여\@
+	PRINTFORML 성별　：%LOCALS%
 	CALL SHORTLINE
 	LCOUNT = 0
 	FOR LOCAL, 0, CHARANUM
@@ -342,48 +342,48 @@ CASE 4
 		ENDIF
 	NEXT
 	IF LCOUNT == 0
-		PRINTL 　　　相関関係のあるキャラ：なし
+		PRINTL 　　  상관관계가 있는 캐릭터：없음
 		LCOUNT ++
 	ENDIF
 	IF CFLAG:(ARG:0):120 > 0 || CFLAG:(ARG:0):121 > 0 || CFLAG:(ARG:0):122 > 0
 		PRINTL 
-		PRINTL 　　　コネクション：
+		PRINTL 　　　　　　　인맥：
 		LCOUNT += 2
 	ENDIF
-	;コネクション関係
+	;인맥 관계
 	IF CFLAG:(ARG:0):120 == 1
-		PRINTL 　　　　　　噂好きな친구
+		PRINTL 　　　　　　소문을 좋아하는 친구
 		LCOUNT ++
 	ENDIF
 	IF CFLAG:(ARG:0):121 == 1
-		PRINTL 　　　　　　경찰관계자
+		PRINTL 　　　　　　경찰 관계자
 		LCOUNT ++
 	ELSEIF CFLAG:(ARG:0):121 == 2
-		PRINTL 　　　　　　警察上層部
+		PRINTL 　　　　　　경찰 상층부
 		LCOUNT ++
 	ENDIF
 	IF CFLAG:(ARG:0):122 > 0
 		PRINT 　　　　　　정보원(
 		IF GETBIT(CFLAG:(ARG:0):122, 2) && GETBIT(CFLAG:(ARG:0):122, 3)
-			PRINT 無法者
+			PRINT 무법자
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 2) && GETBIT(CFLAG:(ARG:0):122, 4)
-			PRINT お調子者な男
+			PRINT 경박한 남자
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 3) && GETBIT(CFLAG:(ARG:0):122, 4)
-			PRINT 老紳士
+			PRINT 노신사
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 2)
 			PRINT 천박한 남자
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 3)
-			PRINT 고상함な男
+			PRINT 점잖은 남자
 		ELSEIF GETBIT(CFLAG:(ARG:0):122, 4)
-			PRINT 探偵風の男
+			PRINT 탐정풍의 남자
 		ELSE
-			PRINT 特徴の無い男
+			PRINT 평범한 남자
 		ENDIF
 		PRINTL )
 		LCOUNT ++
 	ENDIF
 	IF CFLAG:(ARG:0):123 == 1
-		PRINTL 　　　　　　유복한친정
+		PRINTL 　　　　　　유복한 친정
 		LCOUNT ++
 	ENDIF
 
@@ -392,7 +392,7 @@ CASE 4
 	NEXT
 	IF RELATION:(ARG:0):(ARG:0) > 0
 		CALL SHORTLINE
-		PRINT 　血統　(
+		PRINT 　혈통　(
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), 혈통불명)
 			PRINT 　？？？
 		SIF GETBIT(RELATION:(ARG:0):(ARG:0), Ｃ촉수)
@@ -441,44 +441,52 @@ CASE 4
 		NEXT
 	ENDIF
 	IF PAPA > 0
-		PRINTFORM 　実父　:　%NAME:PAPA% 
+		PRINTFORM 　친부　:　%NAME:PAPA% 
 		SIF CFLAG:PAPA:34 > 0
 			PRINTFORM ({BASE:PAPA:실제나이})
 		IF GETBIT(RELATION:PAPA:MAMA,부모자식) || GETBIT(RELATION:PAPA:MAMA,형제자매) || GETBIT(RELATION:PAPA:MAMA,조부모손주) || GETBIT(RELATION:PAPA:MAMA,아저씨아줌마) || GETBIT(RELATION:PAPA:MAMA,조카조카딸)
 			PRINT 　　(
 			IF GETBIT(RELATION:PAPA:MAMA,부모자식)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 娘
+					;娘
+					PRINT 딸
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 母
+					;母
+					PRINT 엄마
 				ENDIF
 				SIF GETBIT(RELATION:PAPA:MAMA,형제자매) || GETBIT(RELATION:PAPA:MAMA,조부모손주) || GETBIT(RELATION:PAPA:MAMA,아저씨아줌마) || GETBIT(RELATION:PAPA:MAMA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:PAPA:MAMA,형제자매)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 妹
+					;妹
+					PRINT 여동생
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 姉
+					;姉
+					PRINT 누나
 				ENDIF
 				SIF GETBIT(RELATION:PAPA:MAMA,조부모손주) || GETBIT(RELATION:PAPA:MAMA,아저씨아줌마) || GETBIT(RELATION:PAPA:MAMA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:PAPA:MAMA,조부모손주)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 孫
+					;孫, 손자 혹은 손녀
+					PRINT 손녀
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 祖母
+					;祖母 꺄아아아악
+					PRINT 할머니
 				ENDIF
 				SIF GETBIT(RELATION:PAPA:MAMA,아저씨아줌마) || GETBIT(RELATION:PAPA:MAMA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:PAPA:MAMA,아저씨아줌마)
-					PRINT おば
+					;おば
+					PRINT 아줌마
 			ELSEIF GETBIT(RELATION:PAPA:MAMA,조카조카딸)
-					PRINT 姪
+					;姪
+					PRINT 조카딸
 			ENDIF
-			PRINT との근친상간)
+			PRINT 와(과)의 근친상간)
 		ENDIF
 	ELSEIF CFLAG:(ARG:0):9 > 0
 		IF CFLAG:(ARG:0):9 < 100
@@ -486,67 +494,75 @@ CASE 4
 		ELSEIF CFLAG:(ARG:0):9 < 200
 				TRYCALLFORM TENTACLE_LASTBOSS_{CFLAG:(ARG:0):9 - 100}_GETNAME
 		ELSEIF CFLAG:(ARG:0):9 == 200
-				RESULTS = 雑魚촉수
+				RESULTS = 잡몹 촉수
 		ELSE
 				TRYCALLFORM TENTACLE_MOB_{CFLAG:(ARG:0):9 - 200}_GETNAME
 		ENDIF
-		PRINTFORM 　実父　:　%RESULTS%
+		PRINTFORM 　친부　:　%RESULTS%
 	ELSEIF CFLAG:(ARG:0):9 == -100
-		PRINTFORM 　実父　:　쌩판남
+		PRINTFORM 　친부　:　쌩판 남
 	ENDIF
 	PRINTL 
 	IF MAMA > 0
-		PRINTFORM 　実母　:　%NAME:MAMA% 
+		PRINTFORM 　친모　:　%NAME:MAMA% 
 		SIF CFLAG:MAMA:34 > 0
 			PRINTFORM ({BASE:MAMA:실제나이})
 		IF GETBIT(RELATION:MAMA:PAPA,부모자식) || GETBIT(RELATION:MAMA:PAPA,형제자매) || GETBIT(RELATION:MAMA:PAPA,조부모손주) || GETBIT(RELATION:MAMA:PAPA,아저씨아줌마) || GETBIT(RELATION:MAMA:PAPA,조카조카딸)
 			PRINT 　　(
 			IF GETBIT(RELATION:MAMA:PAPA,부모자식)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 息子
+					;息子
+					PRINT 아들
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 父
+					;父
+					PRINT 아빠
 				ENDIF
 				SIF GETBIT(RELATION:MAMA:PAPA,형제자매) || GETBIT(RELATION:MAMA:PAPA,조부모손주) || GETBIT(RELATION:MAMA:PAPA,아저씨아줌마) || GETBIT(RELATION:MAMA:PAPA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:MAMA:PAPA,형제자매)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 弟
+					;弟
+					PRINT 남동생
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 兄
+					;兄
+					PRINT 오빠
 				ENDIF
 				SIF GETBIT(RELATION:MAMA:PAPA,조부모손주) || GETBIT(RELATION:MAMA:PAPA,아저씨아줌마) || GETBIT(RELATION:MAMA:PAPA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:MAMA:PAPA,조부모손주)
 				IF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 > CFLAG:MAMA:240) || BASE:PAPA:실제나이 < BASE:MAMA:실제나이
-					PRINT 孫
+					;孫, 손자 혹은 손녀
+					PRINT 손자
 				ELSEIF (BASE:PAPA:실제나이 == BASE:MAMA:실제나이 && CFLAG:PAPA:240 < CFLAG:MAMA:240) || BASE:PAPA:실제나이 > BASE:MAMA:실제나이
-					PRINT 祖父
+					;祖父
+					PRINT 할아버지
 				ENDIF
 				SIF GETBIT(RELATION:MAMA:PAPA,아저씨아줌마) || GETBIT(RELATION:MAMA:PAPA,조카조카딸)
 					PRINT /
 			ENDIF
 			IF GETBIT(RELATION:MAMA:PAPA,아저씨아줌마)
-					PRINT おじ
+					;おじ
+					PRINT 아저씨
 			ELSEIF GETBIT(RELATION:MAMA:PAPA,조카조카딸)
-					PRINT 甥
+					;甥
+					PRINT 조카
 			ENDIF
-			PRINT との근친상간)
+			PRINT 와(과)의 근친상간)
 		ENDIF
 	ENDIF
 	PRINTL 
 	DRAWLINE
-	PRINT  [1][前ページ]　　
-	PRINT [1000]戦闘　
-	PRINT [2000]素質　
-	PRINT [3000]武器　
+	PRINT  [1] [앞 페이지]　　
+	PRINT [1000] 전투　
+	PRINT [2000] 소질　
+	PRINT [3000] 무기　
 	SETCOLORBYNAME CYAN
-	PRINT [4000]相関　
+	PRINT [4000] 상관　
 	RESETCOLOR
-	PRINT [5000]個人　
-	PRINTL 　[2][次ページ]
+	PRINT [5000] 개인　
+	PRINTL 　[2] [뒷 페이지]
 	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
@@ -584,28 +600,28 @@ CASE 4
 	ENDIF
 
 	;--------------------------------------------------
-	;스테이터스 표시のベース（5ページ目）
+	;스테이터스 표시 베이스(5페이지 째)
 CASE 5
 
 	SIF CFLAG:1
 		LOCAL = 1
 	CALL CONVERT_COLORCSTR, ARG
 	CALL CONVERT_AGE, ARG
-	PRINTL 　　　　　　　　　　　　　　キャラクタープロフィール　　　　　　　　　　　　　　PAGE(5/5)
+	PRINTL 　　　　　　　　　　　　　　캐릭터 프로필　　　　　　　　　　　　　　　　　　　 PAGE(5/5)
 	DRAWLINE
-	PRINTFORML 氏名　：%NAME:(ARG:0)%
-	PRINTFORML 呼び名：%CALLNAME:(ARG:0)%
-	PRINTFORML 一人称：%SELF_CALL(0, 0, ARG:0)%
-	PRINTFORML 레벨：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
-	LOCALS = \@ISMALE(ARG:0) ? 男 # 女\@
-	PRINTFORML 性別　：%LOCALS%
+	PRINTFORML 이름　：%NAME:(ARG:0)%
+	PRINTFORML 통칭　：%CALLNAME:(ARG:0)%
+	PRINTFORML 일인칭：%SELF_CALL(0, 0, ARG:0)%
+	PRINTFORML 레벨　：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
+	LOCALS = \@ISMALE(ARG:0) ? 남 # 여\@
+	PRINTFORML 성별　：%LOCALS%
 	CALL SHORTLINE
 	IF CFLAG:ARG:34 == 0
-		PRINT 　　　　　　　　　プロフィール未設定
+		PRINT 　　　　　　　　　프로필 미설정
 		FOR LOCAL:1, 0, 12
 			PRINTL
 		NEXT
-		;拡張度컨피그フラグチェック
+		;확장도 컨피그 플래그 체크
 		IF CONFIG_CHECK_MANIAC_F(16) == 0
 			FOR LOCAL:1, 0, 4
 				PRINTL
@@ -613,22 +629,22 @@ CASE 5
 		ENDIF
 		SIF FLAG:700 > 0
 			SETCOLOR 128,128,128
-		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　設定
+		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　설정
 		RESETCOLOR
 	ELSEIF LOCAL:0 == 1
-		PRINTL 　　　　　　　　　　　＜＜変身時＞＞
-		PRINT 　ヘアスタイル　　　　　　　　　　　
-		PRINTFORML %MAXBASE:ARG:나이 != BASE:ARG:실제나이 ? "実" # "　"%나이：{BASE:ARG:실제나이, 7} 歳
+		PRINTL 　　　　　　　　　　　＜＜변신 시＞＞
+		PRINT 　헤어 스타일　　　　　　　　　　　 
+		PRINTFORML %MAXBASE:ARG:나이 != BASE:ARG:실제나이 ? "실" # "　"%나이：{BASE:ARG:실제나이, 7} 세
 		LOCALS = 『%CSTR:ARG:12%』
-		PRINTFORM 　　　　前髪：%LOCALS, 18, LEFT%
+		PRINTFORM 　　　앞머리：%LOCALS, 18, LEFT%
 		SIF MAXBASE:ARG:나이 != BASE:ARG:실제나이
-			PRINTFORM 　　　외관：{MAXBASE:ARG:나이, 7} 歳
+			PRINTFORM 　　　외관：{MAXBASE:ARG:나이, 7} 세
 		PRINTL 
 		LOCALS = 『%CSTR:ARG:14%』
-		PRINTFORML 　　　　後髪：%LOCALS, 20, LEFT%　　신장：{MAXBASE:ARG:신장 / 10, 5}.{MAXBASE:ARG:신장 % 10} cm
+		PRINTFORML 　　　뒷머리：%LOCALS, 20, LEFT%　　신장：{MAXBASE:ARG:신장 / 10, 5}.{MAXBASE:ARG:신장 % 10} cm
 		PRINTFORM 　　　　　　　　　　　　　　　　　　　체중：{MAXBASE:ARG:체중 / 10, 5}.{MAXBASE:ARG:체중 % 10} kg
 		IF CHARATALENT_F(ARG,0,"남자")== 0
-			PRINTFORML (胸{MAXBASE:ARG:가슴무게 / 10}.{MAXBASE:ARG:가슴무게 % 10} kg)
+			PRINTFORML (가슴 {MAXBASE:ARG:가슴무게 / 10}.{MAXBASE:ARG:가슴무게 % 10} kg)
 		ELSE
 			PRINTL 
 		ENDIF
@@ -651,7 +667,7 @@ CASE 5
 		ENDIF
 
 		LOCALS = 『%CSTR:ARG:18%』
-		PRINTFORM 　　　目つき：%LOCALS, 20, LEFT%
+		PRINTFORM 　　　　눈매：%LOCALS, 20, LEFT%
 		IF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"보추") == 0
 			PRINTFORML 　　 Ｗ ：　（―）
 		ELSE
@@ -661,7 +677,7 @@ CASE 5
 				PRINTFORM (+{PREGNANCY_BELLY_EXPAND(ARG) / 10}.{PREGNANCY_BELLY_EXPAND(ARG) % 10} cm) 
 			PRINTL 
 		ENDIF
-		PRINT 　　　　右目：　[
+		PRINT 　 오른쪽 눈：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:34
 		PRINT ■
 		RESETCOLOR
@@ -673,7 +689,7 @@ CASE 5
 			H_SIZE = MAXBASE:ARG:골반둘레
 			PRINTFORML 　　　　　　　　　 Ｈ ：{H_SIZE / 10, 5}.{H_SIZE % 10} cm
 		ENDIF
-		PRINT 　　　　左目：　[
+		PRINT 　　 왼쪽 눈：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:35
 		PRINT ■
 		RESETCOLOR
@@ -701,45 +717,45 @@ CASE 5
 		SIF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,0,"남자") > 0
 			PRINT [남자]
 		SIF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,0,"남자") == 0
-			PRINT [男性化]
+			PRINT [남성화]
 		SIF CHARATALENT_F(ARG,1,"남자") == 0 && CHARATALENT_F(ARG,0,"남자") > 0
-			PRINT [女体化]
+			PRINT [여체화]
 		SIF CHARATALENT_F(ARG,1,"보추") > 0
 			PRINT [보추]
 		SIF CHARATALENT_F(ARG,1,"후타나리") > 0
 			PRINT [후타나리]
 		IF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
-			PRINT [着床]
+			PRINT [착상]
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
 		PRINTFORML \@ TALENT:ARG:변신시외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:변신시외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:변신시외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:변신시외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:변신시외관 == 5 ? [빵뎅이] #  \@\@ TALENT:ARG:변신시외관 == 6 ? [왕뎅이] #  \@
 
-		PRINT 　　　肌の色：　[
+		PRINT 　　　피부색：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:37
 		PRINT ■
 		RESETCOLOR
 		PRINT ]
 		PRINTL 
-		PRINTL 　　　　　　　　　　　　　　　　　　　　　[10]　通常時
+		PRINTL 　　　　　　　　　　　　　　　　　　　　　[10]　평상시
 		SIF FLAG:700 > 0
 			SETCOLOR 128,128,128
-		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　再設定
+		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　재설정
 
 	ELSE
-		PRINTL 　　　　　　　　　　　＜＜通常時＞＞
-		PRINT 　ヘアスタイル　　　　　　　　　　　
-		PRINTFORML %MAXBASE:ARG:나이 != BASE:ARG:실제나이 ? "実" # "　"%나이：{BASE:ARG:실제나이, 7} 歳
+		PRINTL 　　　　　　　　　　　＜＜평상시＞＞
+		PRINT 　헤어 스타일　　　　　　　　　　　 
+		PRINTFORML %MAXBASE:ARG:나이 != BASE:ARG:실제나이 ? "실" # "　"%나이：{BASE:ARG:실제나이, 7} 세
 		LOCALS = 『%CSTR:ARG:12%』
-		PRINTFORM 　　　　前髪：%LOCALS, 18, LEFT%
+		PRINTFORM 　　　앞머리：%LOCALS, 18, LEFT%
 		SIF BASE:ARG:나이 != BASE:ARG:실제나이
-			PRINTFORM 　　　외관：{BASE:ARG:나이, 7} 歳
+			PRINTFORM 　　　외관：{BASE:ARG:나이, 7} 세
 		PRINTL
 		LOCALS = 『%CSTR:ARG:13%』
-		PRINTFORML 　　　　後髪：%LOCALS, 20, LEFT%　　신장：{BASE:ARG:신장 / 10, 5}.{BASE:ARG:신장 % 10} cm
+		PRINTFORML 　　　뒷머리：%LOCALS, 20, LEFT%　　신장：{BASE:ARG:신장 / 10, 5}.{BASE:ARG:신장 % 10} cm
 		PRINTFORM 　　　　　　　　　　　　　　　　　　　체중：{BASE:ARG:체중 / 10, 5}.{BASE:ARG:체중 % 10} kg
 		IF CHARATALENT_F(ARG,0,"남자")== 0
-			PRINTFORML (胸{BASE:ARG:가슴무게 / 10}.{BASE:ARG:가슴무게 % 10} kg)
+			PRINTFORML (가슴 {BASE:ARG:가슴무게 / 10}.{BASE:ARG:가슴무게 % 10} kg)
 		ELSE
 			PRINTL 
 		ENDIF
@@ -763,7 +779,7 @@ CASE 5
 		ENDIF
 
 		LOCALS = 『%CSTR:ARG:18%』
-		PRINTFORM 　　　目つき：%LOCALS, 20, LEFT%
+		PRINTFORM 　　　　눈매：%LOCALS, 20, LEFT%
 		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"보추") == 0
 			PRINTFORML 　　 Ｗ ：　（―）
 		ELSE
@@ -773,7 +789,7 @@ CASE 5
 				PRINTFORM (+{PREGNANCY_BELLY_EXPAND(ARG) / 10}.{PREGNANCY_BELLY_EXPAND(ARG) % 10} cm) 
 			PRINTL 
 		ENDIF
-		PRINT 　　　　右目：　[
+		PRINT 　 오른쪽 눈：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:32
 		PRINT ■
 		RESETCOLOR
@@ -785,7 +801,7 @@ CASE 5
 			H_SIZE = BASE:ARG:골반둘레
 			PRINTFORML 　　　　　　　　　 Ｈ ：{H_SIZE / 10, 5}.{H_SIZE % 10} cm
 		ENDIF
-		PRINT 　　　　左目：　[
+		PRINT 　　 왼쪽 눈：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:33
 		PRINT ■
 		RESETCOLOR
@@ -817,26 +833,26 @@ CASE 5
 		SIF CHARATALENT_F(ARG,0,"후타나리") > 0
 			PRINT [후타나리]
 		IF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
-			PRINT [着床]
+			PRINT [착상]
 		ELSEIF TALENT:ARG:임신 == 1 || TALENT:ARG:임신 == 3 || TALENT:ARG:임신 == 5
 			PRINT [임신]
 		ENDIF
 		PRINTFORML \@ TALENT:ARG:외관 == 1 ? [순산형] #  \@\@ TALENT:ARG:외관 == 2 ? [포동포동] #  \@\@ TALENT:ARG:외관 == 3 ? [유아배] #  \@\@ TALENT:ARG:외관 == 4 ? [날씬함] #  \@\@ TALENT:ARG:외관 == 5 ? [빵뎅이] #  \@\@ TALENT:ARG:외관 == 6 ? [왕뎅이] #  \@
 
-		PRINT 　　　肌の色：　[
+		PRINT 　　　피부색：　[
 		CALL SETCOLOR_BY_STR, CSTR:ARG:36
 		PRINT ■
 		RESETCOLOR
 		PRINTPLAIN ]
 		SIF FLAG:999 == 1
-			PRINT 　　　　　　　　　　　[20]　再設定
+			PRINT 　　　　　　　　　　　[20]　재설정
 		PRINTL 
 		SIF TALENT:ARG:변신능력 > 0
-		PRINT 　　　　　　　　　　　　　　　　　　　　　[10]　変身時
+		PRINT 　　　　　　　　　　　　　　　　　　　　　[10]　변신 시
 		PRINTL 
 		SIF FLAG:700 > 0
 			SETCOLOR 128,128,128
-		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　再設定
+		PRINTL 　　　　　　　　　　　　　　　　　　　　　[20]　재설정
 	ENDIF
 
 	IF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:ARG:34 > 0
@@ -846,7 +862,7 @@ CASE 5
 
 	CALL SHORTLINE
 	IF CSTR:ARG:40 != "" || CSTR:ARG:41 != "" || CSTR:ARG:42 != ""
-		PRINTL 　＊＊＊　パーソナリティ ＊＊＊
+		PRINTL 　＊＊＊　　　 개성 　　 ＊＊＊
 	ELSE
 		PRINTL 
 	ENDIF
@@ -862,11 +878,11 @@ CASE 5
 
 	IF CONFIG_CHECK_OTHER_F(6) == 1 && (CSTR:ARG:45 != "" || CSTR:ARG:46 != "" || CSTR:ARG:47 != "" || CSTR:ARG:48 != "")
 		CALL SHORTLINE
-		PRINTL 　＊＊＊　裏パーソナリティ ＊＊＊
+		PRINTL 　＊＊＊　　 비밀 개성 　 ＊＊＊
 		LOCAL=0
 		REPEAT 4
 			IF CSTR:ARG:(45 + COUNT) != ""
-				;감각に応じて10段階で白からショッキングピンクに色変え
+				;감각에 따라 10단계로 흰색부터 쇼킹 핑크까지 색이 점점 바뀐다
 				SETCOLOR 255, 255 - 23 * LIMIT(ABL:ARG:(0 + COUNT), 0, 10), 255 - 11 * LIMIT(ABL:ARG:(0 + COUNT), 0, 10), 
 				PRINTFORM 　　『%CSTR:ARG:(45 + COUNT)%
 				PRINTFORML %UNICODE(0x2665)*LIMIT(ABL:ARG:(0 + COUNT)/2, 0, 5)%』
@@ -887,15 +903,15 @@ CASE 5
 		PRINTL 
 	REND
 	DRAWLINE
-	PRINT  [1][前ページ]　　
-	PRINT [1000]戦闘　
-	PRINT [2000]素質　
-	PRINT [3000]武器　
-	PRINT [4000]相関　
+	PRINT  [1] [앞 페이지]　　
+	PRINT [1000] 전투　
+	PRINT [2000] 소질　
+	PRINT [3000] 무기　
+	PRINT [4000] 상관　
 	SETCOLORBYNAME CYAN
-	PRINT [5000]個人　
+	PRINT [5000] 개인　
 	RESETCOLOR
-	PRINTL 　[2][次ページ]
+	PRINTL 　[2] [뒷 페이지]
 	PRINT  [999] 돌아간다　　　　　　
 	SIF FLAG:700 > 0
 		SETCOLOR 128,128,128
@@ -956,22 +972,22 @@ GOTO REPRINT
 
 
 ;--------------------------------------------------
-;基礎情報表示
+;기초 정보 표시
 
-;ショップ画面から呼んだ
+;SHOP 화면에서 불렀다
 @SHOW_STATUS_BASE_SHOP
 CALL SHOW_STATUS_BASE_DETAIL, TARGET, 0
 
-;バトル画面から呼んだ
+;전투 화면에서 불렀다
 @SHOW_STATUS_BASE_DISPBATTLE, ARG
 DRAWLINE
 CALL SHOW_STATUS_BASE_DETAIL, ARG, 1
 
-;스테이터스画面から呼んだ
+;스테이터스 화면에서 불렀다
 @SHOW_STATUS_BASE_DISPSTATUS, ARG
 CALL SHOW_STATUS_BASE_DETAIL, ARG, 2
 
-;トレーニング画面から呼んだ
+;단련 화면에서 불렀다
 @SHOW_STATUS_BASE_TRAINING, ARG
 CALL SHOW_STATUS_BASE_DETAIL, ARG, 3
 
@@ -979,9 +995,9 @@ CALL SHOW_STATUS_BASE_DETAIL, ARG, 3
 @SHOW_STATUS_BASE_DETAIL, ARG:0, ARG:1
 #DIM CCOUNT
 VARSET LOCAL, 0
-;ショップ画面
+;SHOP화면
 IF ARG:1 == 0
-	;操作可能なキャラのうち、各項目の文字数が最大になるキャラを調べる
+	;조작 가능한 캐릭터 중, 각 항목의 글자 수가 최대가 되는 캐릭터를 찾는다
 	LOCAL:10 = CHARANUM
 	FOR CCOUNT, 0, LOCAL:10
 		SIF CCOUNT == MASTER
@@ -990,7 +1006,7 @@ IF ARG:1 == 0
 			CONTINUE
 
 		IF CFLAG:CCOUNT:0 == 상태_건강
-			;LOCAL:0 キャラ名
+			;LOCAL:0 캐릭터명
 			LOCALS = %NAME:CCOUNT%
 			LOCAL:1 = STRLENS(LOCALS)
 			SIF LOCAL:0 < LOCAL:1
@@ -1015,7 +1031,7 @@ IF ARG:1 == 0
 	NEXT
 	
 	LOCALS = %STRCLEAR()%
-	;最後にTARGETしたキャラの詳細表示欄
+	;마지막으로 TARGET한 캐릭터 상세 표시란
 	FOR CCOUNT, 0, LOCAL:10
 		SIF FLAG:63
 			BREAK
@@ -1024,9 +1040,9 @@ IF ARG:1 == 0
 		SIF CFLAG:CCOUNT:999 == 0 && FLAG:61 == 0
 			CONTINUE
 		IF CFLAG:CCOUNT:0 == 상태_건강
-			;操作対象のキャラかどうか
+			;조작 대상 캐릭터인지 아닌지
 			IF CCOUNT == ARG:0
-				;操作キャラは大きく表示
+				;조작 캐릭터는 크게 표시
 				DRAWLINE
 				PRINTFORM ◆%NAME%(%ISFEMALE(CCOUNT)?"♀"#"♂"%)
 				
@@ -1042,15 +1058,15 @@ IF ARG:1 == 0
 				ELSE
 					SETCOLOR 30, 102, 36
 				ENDIF
-				;月経サイクル
+				;월경 사이클
 				CALL PRINT_ESTRUS_CYCLE(CCOUNT)
 				SIF CFLAG:15 > 0
-					PRINTFORM [憂鬱]
+					PRINTFORM [우울]
 				SIF CFLAG:99
-					PRINTFORM [疲労 {CFLAG:CCOUNT:99}]
+					PRINTFORM [피로 {CFLAG:CCOUNT:99}]
 				SETCOLOR 255,60,255
 				SIF CFLAG:241
-					PRINTFORM [避妊 {CFLAG:CCOUNT:241}]
+					PRINTFORM [피임 {CFLAG:CCOUNT:241}]
 				SETCOLOR 205,60,60
 				SIF CHECK_PREGNANT_F(CCOUNT) > 0
 					PRINTFORM [임신]
@@ -1069,17 +1085,17 @@ IF ARG:1 == 0
 				CALLFORM COLORSENTENCE_BAR(BASENAME:2, 6, BASE:CCOUNT:성내성, MAXBASE:CCOUNT:성내성, 20)
 				PRINTL 
 				IF GAME_OPTION_CHECK_F(OPTION_solo) || CHARANUM_ACTIVE() == 1
-					;ソロなら行動予定も併記
-					PRINTFORML 行動予定：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, 예정_없음)%
+					;SOLO 모드라면 행동 예정도 함께 기록
+					PRINTFORML 행동 예정：%PRINT_SHOPACTION(CFLAG:CCOUNT:100, 예정_없음)%
 					;RESETCOLOR
 				ENDIF
 				CALL SHORTLINE
 			ENDIF
 		ENDIF
 	NEXT
-	;ソロモード以外では仲間一覧をリスト表示
+	;SOLO 모드 이외에서는 동료 일람을 리스트 표시
 	IF (!GAME_OPTION_CHECK_F(OPTION_solo) && CHARANUM_PLAYABLE()>=2) || FLAG:63
-		;パーティキャラ一覧の表示
+		;파티 캐릭터 일람 표시
 		FOR CCOUNT, 0, LOCAL:10
 			SIF CCOUNT == MASTER
 				CONTINUE
@@ -1090,15 +1106,15 @@ IF ARG:1 == 0
 				IF LOCAL:999 == 0
 					LOCAL:999 += 1
 					PRINTL 
-					PRINT << 仲間 >>                                               
+					PRINT << 동료 >>                                               
 					IF FLAG:63
-						PRINTFORML パーティ人数( {CHARANUM_PARTYCHECK(1)} / {파티인원최대치} )
+						PRINTFORML 파티 인원 수 ( {CHARANUM_PARTYCHECK(1)} / {파티인원최대치} )
 					ELSE
 						PRINTL
 					ENDIF
 				ENDIF
 			
-				;기력以降の表示位置を調整する
+				;기력 이후의 표시 위치를 조정한다
 				LOCAL:101 = INTLEN(BASE:CCOUNT:체력)
 				LOCAL:102 = INTLEN(MAXBASE:CCOUNT:체력)
 				LOCAL:100 = LOCAL:2 * 2 - LOCAL:101 - LOCAL:102
@@ -1109,7 +1125,7 @@ IF ARG:1 == 0
 				LOCAL:122 = INTLEN(MAXBASE:CCOUNT:성내성)
 				LOCAL:120 = LOCAL:6 * 2 - LOCAL:121 - LOCAL:122
 				
-				;非操作キャラは並べて表示
+				;비조작 캐릭터는 나란히 표시
 				IF CCOUNT == TARGET && FLAG:63 && FLAG:9 == 0
 					SETCOLOR 250, 180, 50
 					PRINT ◆
@@ -1141,15 +1157,15 @@ IF ARG:1 == 0
 				ELSE
 					SETCOLOR 30, 102, 36
 				ENDIF
-				;月経サイクル
+				;월경 사이클
 				CALL PRINT_ESTRUS_CYCLE(CCOUNT)
 				SIF CFLAG:15 > 0
-					PRINTFORM [憂鬱]
+					PRINTFORM [우울]
 				SIF CFLAG:CCOUNT:99
-					PRINTFORM [疲労 {CFLAG:CCOUNT:99}]
+					PRINTFORM [피로 {CFLAG:CCOUNT:99}]
 				SETCOLOR 255,60,255
 				SIF CFLAG:CCOUNT:241
-					PRINTFORM [避妊 {CFLAG:CCOUNT:241}]
+					PRINTFORM [피임 {CFLAG:CCOUNT:241}]
 				SETCOLOR 205,60,60
 				SIF CHECK_PREGNANT_F(CCOUNT) > 0
 					PRINTFORM [임신]
@@ -1164,7 +1180,7 @@ IF ARG:1 == 0
 			ENDIF
 		NEXT
 		LOCAL:999 = 0
-		;控えメンバーの表示
+		;대기 멤버 표시
 		FOR CCOUNT, 0, LOCAL:10
 			SIF CCOUNT == MASTER
 				CONTINUE
@@ -1177,10 +1193,10 @@ IF ARG:1 == 0
 				IF LOCAL:999 == 0
 					LOCAL:999 += 1
 					PRINTL 
-					PRINTL << 控えメンバー >>
+					PRINTL <<  대기 멤버  >>
 				ENDIF
 			
-				;기력以降の表示位置を調整する
+				;기력 이후의 표시 위치를 조정한다
 				LOCAL:101 = INTLEN(BASE:CCOUNT:체력)
 				LOCAL:102 = INTLEN(MAXBASE:CCOUNT:체력)
 				LOCAL:100 = LOCAL:2 * 2 - LOCAL:101 - LOCAL:102
@@ -1188,7 +1204,7 @@ IF ARG:1 == 0
 				LOCAL:112 = INTLEN(MAXBASE:CCOUNT:기력)
 				LOCAL:110 = LOCAL:4 * 2 - LOCAL:111 - LOCAL:112
 				
-				;非操作キャラは並べて表示
+				;비조작 캐릭터는 나란히 표시
 				IF CCOUNT == TARGET && FLAG:63 && FLAG:9 == 0
 					SETCOLOR 250, 180, 50
 					PRINT ◆
@@ -1199,7 +1215,7 @@ IF ARG:1 == 0
 					PRINT ◇
 				ENDIF
 
-				PRINTFORM [{CCOUNT,2,RIGHT}]%CALLNAME:CCOUNT, LOCAL:0, LEFT% 
+				PRINTFORM [{CCOUNT,2,RIGHT}] %CALLNAME:CCOUNT, LOCAL:0, LEFT% 
 
 				PRINTFORM 　%PRINT_SHOPACTION(CFLAG:CCOUNT:100, 예정_없음)% 　
 				RESETCOLOR
@@ -1215,15 +1231,15 @@ IF ARG:1 == 0
 				ELSE
 					SETCOLOR 30, 102, 36
 				ENDIF
-				;月経サイクル
+				;월경 사이클
 				CALL PRINT_ESTRUS_CYCLE(CCOUNT)
 				SIF CFLAG:15 > 0
-					PRINTFORM [憂鬱]
+					PRINTFORM [우울]
 				SIF CFLAG:CCOUNT:99
-					PRINTFORM [疲労 {CFLAG:CCOUNT:99}]
+					PRINTFORM [피로 {CFLAG:CCOUNT:99}]
 				SETCOLOR 255,60,255
 				SIF CFLAG:CCOUNT:241
-					PRINTFORM [避妊 {CFLAG:CCOUNT:241}]
+					PRINTFORM [피임 {CFLAG:CCOUNT:241}]
 				SETCOLOR 205,60,60
 				SIF CHECK_PREGNANT_F(CCOUNT) > 0
 					PRINTFORM [임신]
@@ -1239,21 +1255,21 @@ IF ARG:1 == 0
 		NEXT
 	ENDIF
 
-;バトル画面
+;전투 화면
 ELSEIF ARG:1 == 1
 	PRINTL 
 	LOCALS = %CFLAG:ARG:1==0 ? NAME:ARG # PRINT_TRANSNAME(ARG:0)% Lv.{ABL:(ARG:0):레벨,4,LEFT}
 	STRLENS LOCALS
 	LOCAL=RESULT
 
-	LOCALS+= "性別："+(ISMALE(ARG:0) ? "男性" # (TALENT:(ARG:0):촉수의포로 ? "❤" # "女性"))+" "
+	LOCALS+= "성별："+(ISMALE(ARG:0) ? "남성" # (TALENT:(ARG:0):촉수의포로 ? "❤" # "여성"))+" "
 
-	IF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && (TALENT:(ARG:0):변신시TS < 1 || GETBATTLESITUATION("奇襲") == 0)
-		LOCALS += "　<<未変身>>"
-	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("奇襲") && TFLAG:0 < 5
-		LOCALS += "　<<未変身・準備中>>"
-	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("奇襲") && TFLAG:0 >= 5
-		LOCALS += "　<<未変身・準備完了>>"
+	IF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && (TALENT:(ARG:0):변신시TS < 1 || GETBATTLESITUATION("기습") == 0)
+		LOCALS += "　<<미변신>>"
+	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("기습") && TFLAG:0 < 5
+		LOCALS += "　<<미변신・준비 중>>"
+	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("기습") && TFLAG:0 >= 5
+		LOCALS += "　<<미변신・준비 완료>>"
 	ENDIF
 	PRINTFORML %LOCALS, 46,LEFT%
 
@@ -1261,13 +1277,13 @@ ELSEIF ARG:1 == 1
 	CALL STATUS_PRINT_FEAT
 
 	;--------------------------------------------------
-	;キャラの性스테이터스
-	CALL SHOW_TRAIN_PALAM_STATUS("上部")
+	;캐릭터의 성 스테이터스
+	CALL SHOW_TRAIN_PALAM_STATUS("상단부")
 
 
 	PRINTL
 
-	PRINTFORM %"　", 46,LEFT%　距離適性：
+	PRINTFORM %"　", 46,LEFT% 거리 적성：
 	LOCAL:1 = TALENT:근거리특기 * 2 - TALENT:근거리서툼 * 2 - TALENT:중거리특기 - TALENT:원거리특기
 	LOCAL:2 = TALENT:중거리특기 * 2 - TALENT:중거리서툼 * 2 - TALENT:근거리특기 - TALENT:원거리특기
 	LOCAL:3 = TALENT:원거리특기 * 2 - TALENT:원거리서툼 * 2 - TALENT:근거리특기 - TALENT:중거리특기
@@ -1285,14 +1301,14 @@ ELSEIF ARG:1 == 1
 	PRINTFORM [근거리%LOCALS:1%] [중거리%LOCALS:2%] [원거리%LOCALS:3%]
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:0, 6, BASE:(ARG:0):체력, MAXBASE:(ARG:0):체력, 20)
-	PRINTPLAIN  スタイル：
+	PRINTPLAIN  　스타일：
 	FOR LOCAL,1,4
 		PRINTFORM << %FSTYLE_NAME_F(TARGET,LOCAL)% >> 
 	NEXT
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:1, 6, BASE:(ARG:0):기력, MAXBASE:(ARG:0):기력, 20)
 	
-	;전투 지원による補正率
+	;전투 지원에 따른 보정률
 	CALL CALC_CHISEI_SHIEN(0)
 	LOCAL:0 = RESULT
 	IF ENEMY_TYPE_CHECK_F("AKUOTI")
@@ -1304,16 +1320,16 @@ ELSEIF ARG:1 == 1
 	LOCAL:0 = 100 * LOCAL:0 / LOCAL:1
 	IF GETBATTLESITUATION("지원 무효")
 		SETCOLORBYNAME RED
-		PRINTFORM  전투 지원効果：支援不可
+		PRINTFORM  전투 지원 효과：지원 불가
 		RESETCOLOR
 	ELSEIF FLAG:43
-		PRINTFORM  전투 지원効果：(+ {LOCAL:0}％)
+		PRINTFORM  전투 지원 효과：(+ {LOCAL:0}％)
 	ENDIF
 
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 6, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
 	PRINTL
-	;追加ゲージ
+	;추가 게이지
 	LOCAL=0
 	IF TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1)
 		CALLFORM COLORSENTENCE_BAR(BASENAME:20, 6, BASE:(ARG:0):사정, MAXBASE:(ARG:0):사정, 10)
@@ -1325,7 +1341,7 @@ ELSEIF ARG:1 == 1
 	ENDIF
 
 
-	;衣装の耐久度表示
+	;의상 내구도 표시
 	CALL CLOTH_BATTLE_DISPHP
 	RESETCOLOR
 
@@ -1342,8 +1358,8 @@ ELSEIF ARG:1 == 1
 		CALL COLOR_BAR(TCVARn:5, 500, 20, 128, 128, 180, -100, LOCAL:0, LOCAL:0, LOCAL:1, 1, UNICODE(0x25AE), UNICODE(0x25AE))
 		PRINTFORM %UNICODE(0x208E)%　
 	ELSE
-		;EX 게이지破壊済みの場合
-		IF GETBATTLESITUATION("EX不可")==1
+		;EX 게이지가 완전히 파괴된 경우
+		IF GETBATTLESITUATION("EX 불가")==1
 			PRINTFORM E.X.　
 			CALL STATUS_PRINT_EX(2)
 			PRINTFORM 　%UNICODE(0x208D)%
@@ -1398,7 +1414,7 @@ ELSEIF ARG:1 == 1
 		PRINT X
 		FONTITALIC
 		SETCOLOR 255,60,60
-		PRINT 攻　
+		PRINT 공　
 		RESETCOLOR
 		FONTREGULAR
 	ENDIF
@@ -1410,12 +1426,12 @@ ELSEIF ARG:1 == 1
 		PRINT X
 		FONTITALIC
 		SETCOLOR 60,60,255
-		PRINT 防　
+		PRINT 방　
 		RESETCOLOR
 		FONTREGULAR
 	ENDIF
 	IF CFLAG:1 == 2 && (GETBIT(TCVARn:3, 0) || GETBIT(TCVARn:3, 1))
-		PRINT SP변신時間
+		PRINT SP변신 시간
 		SIF GETBIT(TCVARn:3, 0)
 			PRINT ↓
 		SIF GETBIT(TCVARn:3, 1)
@@ -1427,53 +1443,53 @@ ELSEIF ARG:1 == 1
 
 	CALL STATUS_PRINT_AIRGAGE
 
-;스테이터스画面
+;스테이터스 화면
 ELSEIF ARG:1 == 2
-	PRINTFORM 氏名　：%NAME:(ARG:0), 28, LEFT%
+	PRINTFORM 이름　：%NAME:(ARG:0), 28, LEFT%
 	PRINTPLAIN 　
-	PRINT [10]主観モードの変更：
-	PRINTFORM \@TALENT:ARG:주관시점 > 0 ? 使用する # 使用しない \@
+	PRINT [10] 주관 모드 변경：
+	PRINTFORM \@TALENT:ARG:주관시점 > 0 ? 사용한다 # 사용하지 않는다 \@
 	PRINTL
 
-	PRINTFORM 呼び名：%CALLNAME:(ARG:0), 28, LEFT%
+	PRINTFORM 통칭　：%CALLNAME:(ARG:0), 28, LEFT%
 	PRINTPLAIN 　
 	SIF FLAG:700 > 0
 		SETCOLOR 105,105,105
-	PRINT [11]呼び名の変更
+	PRINT [11] 통칭 변경
 	RESETCOLOR
 	PRINTL 
 
 	LOCALS = %SELF_CALL(0, 0, ARG:0)%
-	PRINTFORM 一人称：%LOCALS, 28, LEFT%
+	PRINTFORM 일인칭：%LOCALS, 28, LEFT%
 	PRINTPLAIN 　
 	SIF FLAG:700 > 0
 		SETCOLOR 105,105,105
-	PRINT [12]一人称の変更
+	PRINT [12] 일인칭 변경
 	RESETCOLOR
 	PRINTL 
 
-	LOCALS = \@ISMALE(ARG:0) ? 男 # 女\@
-	PRINTFORM 性別　：%LOCALS, 28, LEFT%
+	LOCALS = \@ISMALE(ARG:0) ? 남 # 여\@
+	PRINTFORM 성별　：%LOCALS, 28, LEFT%
 	PRINTPLAIN 　
 	IF CFLAG:ARG:6 == -2
-		PRINT [0] 구상설정（現在：非表示）　　　　
+		PRINT [0] 구상 설정（현재：비표시）　　　　
 	ELSEIF CFLAG:ARG:6 == -1
-		PRINT [0] 구상설정（未教育）　　　　　　　
+		PRINT [0] 구상 설정（미교육）　　　　　　　
 	ELSEIF CFLAG:ARG:6 == 0
-		PRINT [0] 구상설정（現在：女性汎用）　　　
+		PRINT [0] 구상 설정（현재：여성 범용）　　　
 	ELSEIF CFLAG:ARG:6 == 1
-		PRINT [0] 구상설정（現在：남자汎用）　　
+		PRINT [0] 구상 설정（현재：남자 범용）　　
 	ELSEIF CFLAG:ARG:6 == 2
-		PRINT [0] 구상설정（現在：ロボ風）　　　　
+		PRINT [0] 구상 설정（현재：로봇풍）　　　　
 	ELSEIF CFLAG:ARG:6 == 3
-		PRINT [0] 구상설정（現在：あなた）　　　　
+		PRINT [0] 구상 설정（현재：당신）　　　　
 	ELSEIF CFLAG:ARG:6 == 4
-		PRINT [0] 구상설정（現在：汎用豹変）　　　
+		PRINT [0] 구상 설정（현재：범용 표변）　　　
 	ELSEIF NO:ARG != 0
-		PRINT [0] 구상설정（現在：専用）　　　　　
+		PRINT [0] 구상 설정（현재：전용）　　　　　
 	ELSE
 		SETCOLOR 105,105,105
-		PRINTPLAIN [0]구상설정（現在：汎用）　　　　　
+		PRINTPLAIN [0] 구상 설정（현재：범용）　　　　　
 		RESETCOLOR
 	ENDIF
 	PRINTL
@@ -1485,17 +1501,17 @@ ELSEIF ARG:1 == 2
 
 	IF TALENT:(ARG:0):변신능력 == 1
 		CALL SHORTLINE
-		PRINTFORM 【변신능력あり】
+		PRINTFORM 【변신 능력 있음】
 		PRINTPLAIN 　　　　　　　　　　　
 		IF TALENT:(ARG:0):변신능력 == 1
 			SIF FLAG:700 > 0
 				SETCOLOR 105,105,105
-			PRINT [13]変身後名/掛け声の設定
+			PRINT [13] 변신 후 이름/구호 설정
 			RESETCOLOR
 		ENDIF
 		PRINTL 
 		SIF CFLAG:(ARG:0):2 == 1 || CFLAG:(ARG:0):3 == 1
-			PRINTFORM 　変身後名　　：
+			PRINTFORM 　변신 후 이름：
 		SIF CFLAG:(ARG:0):2 == 1
 			PRINTFORM %CSTR:(ARG:0):0%
 		SIF CFLAG:(ARG:0):3 == 1 && CSTR:(ARG:0):0 != CSTR:(ARG:0):1
@@ -1503,16 +1519,16 @@ ELSEIF ARG:1 == 2
 		SIF CFLAG:(ARG:0):2 == 1 || CFLAG:(ARG:0):3 == 1
 			PRINTL 
 		SIF CFLAG:(ARG:0):4 == 1
-			PRINTFORML 　変身時かけ声：%CSTR:(ARG:0):2%
+			PRINTFORML 　변신 시 구호：%CSTR:(ARG:0):2%
 	ELSEIF TALENT:(ARG:0):변신능력 == -1
 		CALL SHORTLINE
-		PRINTFORML 【非戦闘員】
+		PRINTFORML 【비전투원】
 	ENDIF
 
 
 	CALL SHORTLINE
 	PRINTFORM 레벨：Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
-	;수련P表示
+	;수련P 표시
 	PRINTFORML 　%PALAMNAME:20%：{JUEL:ARG:수련P}P
 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:0, 6, BASE:(ARG:0):체력, MAXBASE:(ARG:0):체력, 20)
@@ -1527,7 +1543,7 @@ ELSEIF ARG:1 == 2
 	LOCAL:1 = 0
 	LOCAL:2 = 0
 	IF TALENT:ARG:변신능력 == 0
-		PRINT 戦闘力　　
+		PRINT 전투력　　
 		LOCALS = %BASENAME:10%：{MAXBASE:ARG:공격,4, RIGHT}  %BASENAME:11%：{MAXBASE:ARG:방어,4, RIGHT}  %BASENAME:12%：{MAXBASE:ARG:민첩,4, RIGHT}  %BASENAME:13%：{MAXBASE:ARG:지성,4, RIGHT}
 		PRINTFORM %LOCALS,46,LEFT%　　
 	ELSEIF TALENT:ARG:변신능력 == 1
@@ -1535,11 +1551,11 @@ ELSEIF ARG:1 == 2
 		LOCAL:1 = MAXBASE:ARG:방어 * CFLAG:ARG:10 / 100
 		LOCAL:2 = MAXBASE:ARG:민첩 * CFLAG:ARG:10 / 100
 		LOCAL:3 = MAXBASE:ARG:지성 * CFLAG:ARG:10 / 100
-		PRINT 変身前　　
+		PRINT 변신 전　 
 		LOCALS = %BASENAME:10%：{LOCAL:0,4, RIGHT}  %BASENAME:11%：{LOCAL:1,4, RIGHT}  %BASENAME:12%：{LOCAL:2,4, RIGHT}  %BASENAME:13%：{MAXBASE:ARG:지성,4, RIGHT}
 		PRINTFORM %LOCALS,46,LEFT%　　
 		PRINTL 
-		PRINT 変身後　　
+		PRINT 변신 후　 
 		LOCALS = %BASENAME:10%：{MAXBASE:ARG:공격,4, RIGHT}  %BASENAME:11%：{MAXBASE:ARG:방어,4, RIGHT}  %BASENAME:12%：{MAXBASE:ARG:민첩,4, RIGHT}  %BASENAME:13%：{MAXBASE:ARG:지성,4, RIGHT}
 		PRINTFORM %LOCALS,46,LEFT%　　
 	ELSEIF TALENT:ARG:변신능력 == -1
@@ -1547,13 +1563,13 @@ ELSEIF ARG:1 == 2
 		LOCAL:1 = MAXBASE:ARG:방어 * CFLAG:ARG:10 / 100
 		LOCAL:2 = MAXBASE:ARG:민첩 * CFLAG:ARG:10 / 100
 		LOCAL:3 = MAXBASE:ARG:지성 * CFLAG:ARG:10 / 100
-		PRINTFORM 戦闘力　　
+		PRINTFORM 전투력　　
 		LOCALS = %BASENAME:10%：{LOCAL:0,4, RIGHT}  %BASENAME:11%：{LOCAL:1,4, RIGHT}  %BASENAME:12%：{LOCAL:2,4, RIGHT}  %BASENAME:13%：{MAXBASE:ARG:지성,4, RIGHT}
 		PRINTFORM %LOCALS,46,LEFT%　　
 	ENDIF
 	PRINTL 
 
-;トレーニング画面
+;단련 화면
 ELSEIF ARG:1 == 3
 	PRINTL 
 	PRINTFORML %CALLNAME:(ARG:0)% Lv.{ABL:(ARG:0):레벨} （{JUEL:(ARG:0):경험치}％）
@@ -1563,27 +1579,27 @@ ELSEIF ARG:1 == 3
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 6, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
 	PRINTL 
-	PRINTFORML 戦闘力　　%BASENAME:10%：{MAXBASE:ARG:공격}  %BASENAME:11%：{MAXBASE:ARG:방어}  %BASENAME:12%：{MAXBASE:ARG:민첩}  %BASENAME:13%：{MAXBASE:ARG:지성}
+	PRINTFORML 전투력　　%BASENAME:10%：{MAXBASE:ARG:공격}  %BASENAME:11%：{MAXBASE:ARG:방어}  %BASENAME:12%：{MAXBASE:ARG:민첩}  %BASENAME:13%：{MAXBASE:ARG:지성}
 	CALL SHOW_STATUS_SEIKAKU, TARGET, 1
 	PRINTFORML 수련P　 　{JUEL:수련P}P
 	CALL SHOW_STATUS_TALENT, TARGET, 1, 1
 	CALL SHORTLINE
-	PRINTFORMLC %BASENAME:0%基礎：{BASE:기초체력}
-	PRINTFORMLC %BASENAME:1%基礎：{BASE:기초기력}
-	PRINTFORMLC %BASENAME:2%基礎：{BASE:기초성내성}
+	PRINTFORMLC 기초 %BASENAME:0%：{BASE:기초체력}
+	PRINTFORMLC 기초 %BASENAME:1%：{BASE:기초기력}
+	PRINTFORMLC 기초 %BASENAME:2%：{BASE:기초성내성}
 	PRINTL 
-	PRINTFORMLC %BASENAME:10%基礎：{BASE:공격}
-	PRINTFORMLC %BASENAME:11%基礎：{BASE:방어}
-	PRINTFORMLC %BASENAME:12%基礎：{BASE:민첩}
+	PRINTFORMLC 기초 %BASENAME:10%：{BASE:공격}
+	PRINTFORMLC 기초 %BASENAME:11%：{BASE:방어}
+	PRINTFORMLC 기초 %BASENAME:12%：{BASE:민첩}
 	PRINTL 
-	PRINTFORMLC %BASENAME:13%基礎：{BASE:지성}
+	PRINTFORMLC 기초 %BASENAME:13%：{BASE:지성}
 	PRINTL 
 	IF TALENT:변신능력 != -1
-		PRINTFORMLC 근거리戦技：LV.{ABL:근거리}
-		PRINTFORMLC 중거리戦技：LV.{ABL:중거리}
-		PRINTFORMLC 원거리戦技：LV.{ABL:원거리}
+		PRINTFORMLC 근거리 전투기술：LV.{ABL:근거리}
+		PRINTFORMLC 중거리 전투기술：LV.{ABL:중거리}
+		PRINTFORMLC 원거리 전투기술：LV.{ABL:원거리}
 	ELSE
-		PRINTFORMLC 基本戦闘技能：LV.{ABL:기초전투}
+		PRINTFORMLC 기초 전투기술：LV.{ABL:기초전투}
 	ENDIF
 	PRINTL 
 	CALL SHORTLINE
@@ -1591,39 +1607,39 @@ ENDIF
 
 
 ;--------------------------------------------------
-;種族表示
+;종족 표시
 @SHOW_STATUS_SYUZOKU, ARG
-PRINT 種族　：
+PRINT 종족　：
 CALL SYUZOKU_CHECK, "STRING", ARG
 PRINTFORM %RESULTS, 46, LEFT%
 
 ;--------------------------------------------------
-;性格表示
-;ARG:1は見た目調整用 1=鍛錬,2=ステ画面
+;성격 표시
+;ARG:1은 외형 조정용 (1=단련, 2=스테이터스 화면)
 @SHOW_STATUS_SEIKAKU, ARG, ARG:1
 LOCALS = 
 IF ARG:1 == 0
 	PRINTL 
-	PRINT ◆性格　　
+	PRINT ◆성격　　
 	CALL SEIKAKU_CHECK, "PRINT", ARG
 	PRINTL 
 ELSEIF ARG:1 == 1
-	PRINT 性格    　
+	PRINT 성격    　
 	CALL SEIKAKU_CHECK, "PRINT", ARG
 	PRINTL 
 ELSEIF ARG:1 == 2
 	PRINTL 
-	LOCALS += @"<nobr><nonbutton title='%TALENT_INFO(SEIKAKU_CHECK_F(ARG))%'>性格　：%TALENTNAME:(SEIKAKU_CHECK_F(ARG)),46,LEFT%</nonbutton></nobr>"
+	LOCALS += @"<nobr><nonbutton title='%TALENT_INFO(SEIKAKU_CHECK_F(ARG))%'>성격　：%TALENTNAME:(SEIKAKU_CHECK_F(ARG)),46,LEFT%</nonbutton></nobr>"
 	HTML_PRINT LOCALS
 ELSEIF ARG:1 == 3
-	LOCALS += @"<nobr><nonbutton title='%TALENT_INFO(SEIKAKU_CHECK_F(ARG))%'>性格    %TALENTNAME:(SEIKAKU_CHECK_F(ARG))%</nonbutton></nobr>"
+	LOCALS += @"<nobr><nonbutton title='%TALENT_INFO(SEIKAKU_CHECK_F(ARG))%'>성격    %TALENTNAME:(SEIKAKU_CHECK_F(ARG))%</nonbutton></nobr>"
 	HTML_PRINT LOCALS
 ENDIF
 
 ;--------------------------------------------------
-;基礎値表示
+;기초치(체력 기력 성내성) 표시
 @SHOW_STATUS_BASE_STATUSINFO, ARG
-PRINT ◆基礎値  
+PRINT ◆기초치  
 LOCALS = %BASENAME:0%：{BASE:ARG:기초체력+FEAT_BONUS_F(ARG,0)}  %BASENAME:1%：{BASE:ARG:기초기력+FEAT_BONUS_F(ARG,1)}  %BASENAME:2%：{BASE:ARG:기초성내성+FEAT_BONUS_F(ARG,2)} 
 PRINTFORM %LOCALS,46,LEFT%
 PRINTL 
@@ -1633,7 +1649,7 @@ PRINTFORM %LOCALS,46,LEFT%
 PRINTL 
 
 ;--------------------------------------------------
-;수련P表示
+;수련P 표시
 @SHOW_STATUS_KEIKENP, ARG
 PRINTFORM ◆%PALAMNAME:20%　 
 LOCALS = {JUEL:ARG:수련P}P
@@ -1641,9 +1657,9 @@ PRINTFORM %LOCALS,46,LEFT%
 PRINTL 
 
 ;--------------------------------------------------
-;戦技表示
+;전투기술 표시
 @SHOW_STATUS_SENGI, ARG
-PRINTFORM ◆戦技Lv  
+PRINTFORM ◆전투기술 Lv  
 IF TALENT:ARG:변신능력 != -1
 	REPEAT 3
 		LOCAL = COUNT + 30
@@ -1652,13 +1668,13 @@ IF TALENT:ARG:변신능력 != -1
 ELSE
 	PRINTFORM %ABLNAME:33%Lv.{ABL:ARG:33}  
 ENDIF
-PRINTFORM 空中Lv：{MAXBASE:ARG:공중대시}
+PRINTFORM 공중 성능：Lv.{MAXBASE:ARG:공중대시}
 
 ;--------------------------------------------------
-;部位結界表示
+;부위 결계 표시
 @SHOW_STATUS_SHIELD, ARG
 #DIM LCOUNT
-LOCALS = ◆結界　　
+LOCALS = ◆결계　　
 IF TALENT:ARG:C결계 + TALENT:ARG:V결계 + TALENT:ARG:A결계 + TALENT:ARG:B결계
 	FOR LCOUNT, 0, 감각수
 		IF TALENT:ARG:(LCOUNT + 190)
@@ -1695,11 +1711,11 @@ IF TALENT:ARG:C결계 + TALENT:ARG:V결계 + TALENT:ARG:A결계 + TALENT:ARG:B�
 		PRINTL 
 ENDIF
 IF TALENT:ARG:피임결계 > 0
-	PRINTL 　　　　　피임결계
+	PRINTL 　　　　　피임 결계
 ENDIF
 
 ;--------------------------------------------------
-;淫紋表示
+;음문 표시
 @SHOW_STATUS_TATTOO, ARG
 LOCAL:1 = TARGET
 TARGET = ARG
@@ -1707,21 +1723,21 @@ TARGET = ARG
 CALL TATTOO_ACCESS, "POSITION_BIT"
 LOCAL:2 = RESULT
 IF LOCAL:2 > 0
-	LOCALS = ◆淫紋
+	LOCALS = ◆음문
 	FOR LOCAL, 0, 감각수
 		IF GETBIT(LOCAL:2, LOCAL)
-			SIF LOCALS != "◆淫紋"
+			SIF LOCALS != "◆음문"
 				PRINTL 
-			PRINTFORM %LOCALS%　　位置：
+			PRINTFORM %LOCALS%　　위치：
 			SIF LOCAL == 0
-				PRINT 下腹部
+				PRINT 하복부　　　 
 			SIF LOCAL == 1
-				PRINT 腹部　
+				PRINT 복부　　　　 
 			SIF LOCAL == 2
-				PRINT 右臀部
+				PRINT 오른쪽 엉덩이
 			SIF LOCAL == 3
-				PRINT 左乳房
-			PRINT 　　状態：
+				PRINT 왼쪽 가슴　　
+			PRINT 　　상태：
 			LOCALS = 　　　
 			CALL PRINT_TATTOO, LOCAL
 		ENDIF
@@ -1732,22 +1748,22 @@ IF LOCAL:2 > 0
 	FOR LOCAL, 0, 8
 		IF GETBIT(LOCAL:2, LOCAL)
 			PRINTL 
-			PRINTFORM 　　　　　位置：
+			PRINTFORM 　　　　　위치：
 			SIF LOCAL == 0
-				PRINT 額　　
+				PRINT 이마　　　　 
 			SIF LOCAL == 1
-				PRINT 喉下部
+				PRINT 목구멍　　　 
 			SIF LOCAL == 2
-				PRINT 背中　
+				PRINT 등　　　　　 
 			SIF LOCAL == 3
-				PRINT 右頬　
+				PRINT 오른쪽 뺨　　
 			SIF LOCAL == 4
-				PRINT 左頬　
+				PRINT 왼쪽 뺨　　　
 			SIF LOCAL == 5
-				PRINT 右内股
+				PRINT 오른쪽 허벅지
 			SIF LOCAL == 6
-				PRINT 左内股
-			PRINT 　　状態：
+				PRINT 왼쪽 허벅지　
+			PRINT 　　상태：
 			CALL PRINT_TATTOO, 7, LOCAL
 		ENDIF
 	NEXT
@@ -1755,59 +1771,59 @@ ENDIF
 TARGET = LOCAL:1
 
 ;--------------------------------------------------
-;装備中の의상 표시
+;현재 장비 중인 의상 표시
 @SHOW_STATUS_CLOTH, ARG
-PRINTL ◆衣装設定
+PRINTL ◆의상 설정
 IF TALENT:ARG:변신능력 == 1
-	PRINT 【アウター】
+	PRINT 【　외투　】
 	IF CFLAG:ARG:40 == 0
-		PRINTFORML ┏なし
+		PRINTFORML ┏없음
 	ELSE
 		PRINTFORML ┏%COSTUME_NAME(ARG,0)%
 	ENDIF
 	IF CFLAG:ARG:41 == 0
-		PRINTFORML 　　　　　　┗なし
+		PRINTFORML 　　　　　　┗없음
 	ELSE
 		PRINTFORML 　　　　　　┗%COSTUME_NAME(ARG,1)%
 	ENDIF
 ELSE
-	PRINT 【アウター】
+	PRINT 【　외투　】
 	IF CFLAG:ARG:40 == 0
-		PRINTFORML なし
+		PRINTFORML 없음
 	ELSE
 		PRINTFORML %COSTUME_NAME(ARG,0)%
 	ENDIF
 
 ENDIF
-PRINT 【インナー】
+PRINT 【　속옷　】
 IF CFLAG:ARG:42 == 0
-	PRINTFORML なし
+	PRINTFORML 없음
 ELSE
 	PRINTFORML %INNER_NAME(ARG)%
 ENDIF
-PRINT 【その他　】
+PRINT 【　기타　】
 IF CFLAG:ARG:43 == 0
-	PRINTFORML なし
+	PRINTFORML 없음
 ELSE
 	PRINTFORML %ITEMNAME:(CFLAG:ARG:43)%
 ENDIF
 
 ;--------------------------------------------------
-;素質表示 性格、변신능력、種族は省く
-;ARG:1は見た目調整用 0=ステ画面, 1=鍛錬, 2=キャラメイク
-;ARG:2が0でない場合はHTMLのtitleタグによってコメントが表示される
-;HTML_PRINTによる解説を追加
+;소질 표시 (성격, 변신능력, 종족은 생략)
+;ARG:1은 외형 조정용 (0=스테이터스 화면, 1=단련, 2=캐릭터 메이킹)
+;ARG:2가 0이 아닌 경우는 HTML의 title태그에 의해 코멘트가 표시된다
+;HTML_PRINT에 따른 해설 추가
 @SHOW_STATUS_TALENT, ARG, ARG:1 = 0, ARG:2 = 0
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #DIM LCOUNT, 2
 IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 	IF ARG:1 == 0
-		LOCALS = ◆素質
+		LOCALS = ◆ 소질
 	ELSEIF ARG:1 == 2
-		LOCALS = 　　所持素質：
+		LOCALS = 　 소지 소질：
 	ELSE
-		LOCALS = 素質    
+		LOCALS =  소질    
 	ENDIF
 	IF ARG:2
 		LOCALS += @"<br>"
@@ -1823,9 +1839,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 
 	IF CFLAG:ARG:0 == 상태_유폐
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-1)%'>[幽閉中]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-1)%'>[유폐중]</nonbutton>"
 		ELSE
-			PRINTFORM [幽閉中]
+			PRINTFORM [유폐중]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_세뇌
 		IF ARG:2
@@ -1841,33 +1857,33 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_악질감금
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-4)%'>[誘拐中]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-4)%'>[유괴중]</nonbutton>"
 		ELSE
-			PRINTFORM [誘拐監禁中]
+			PRINTFORM [유괴감금중]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 5
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-5)%'>[憂鬱中]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-5)%'>[우울함]</nonbutton>"
 		ELSE
-			PRINTFORM [憂鬱中]
+			PRINTFORM [우울함]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_사망
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-9)%'>[死亡]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-9)%'>[사망]</nonbutton>"
 		ELSE
-			PRINTFORM [死亡]
+			PRINTFORM [사망]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_출산직전
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-10)%'>[入院中]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-10)%'>[입원중]</nonbutton>"
 		ELSE
-			PRINTFORM [入院中]
+			PRINTFORM [입원중]
 		ENDIF
 	ELSEIF CFLAG:ARG:0 == 상태_육아중
 		IF ARG:2
-			LOCALS += @"<nonbutton title='%TALENT_INFO(-10)%'>[育児中]</nonbutton>"
+			LOCALS += @"<nonbutton title='%TALENT_INFO(-10)%'>[육아중]</nonbutton>"
 		ELSE
-			PRINTFORM [育児中]
+			PRINTFORM [육아중]
 		ENDIF
 	ENDIF
 	REPEAT 1000
@@ -1875,22 +1891,22 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 			IF (COUNT >= 10 && COUNT <= 27) || (COUNT >= 200 && COUNT <= 206) || (COUNT >= 250 && COUNT <= 299) || COUNT == 400 || (COUNT >= 600 && COUNT <= 799) || (COUNT >= 800 && COUNT <= 899) || COUNT >= 900
 			ELSEIF COUNT == 3 && ISMALE(ARG)
 				IF ARG:2
-					LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[生えてない]</nonbutton>"
+					LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[음모없음]</nonbutton>"
 				ELSE
-					PRINTFORM [生えてない]
+					PRINTFORM [음모없음]
 				ENDIF
 			ELSEIF COUNT == 4
 				IF TALENT:ARG:미성숙 == 1
 					IF TALENT:ARG:인조인간 > 0 && ISFEMALE(ARG)
 						IF ARG:2
-							LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[人工子宮]</nonbutton>"
+							LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[인공자궁]</nonbutton>"
 						ELSE
-							PRINTFORM [人工子宮]
+							PRINTFORM [인공자궁]
 						ENDIF
 					ENDIF
 					IF ARG:2
 						IF ISMALE(ARG)
-							LOCALS += @"<nonbutton title='사정できない'>[미성숙]</nonbutton>"
+							LOCALS += @"<nonbutton title='사정불가능'>[미성숙]</nonbutton>"
 						ELSE
 							LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[미성숙]</nonbutton>"
 						ENDIF
@@ -1899,9 +1915,9 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 					ENDIF
 				ELSEIF TALENT:ARG:미성숙 == 2
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[不妊]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[불임]</nonbutton>"
 					ELSE
-						PRINTFORM [不妊]
+						PRINTFORM [불임]
 					ENDIF
 				ENDIF
 			ELSEIF COUNT == 110
@@ -1959,17 +1975,17 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 					ENDIF
 				ELSEIF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[着床]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[착상]</nonbutton>"
 					ELSE
-						PRINTFORM [着床]
+						PRINTFORM [착상]
 					ENDIF
 				ENDIF
 			ELSEIF COUNT == 300
 				IF TALENT:ARG:후타나리 == 3
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[天然후타나리]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[천연후타나리]</nonbutton>"
 					ELSE
-						PRINTFORM [天然후타나리]
+						PRINTFORM [천연후타나리]
 					ENDIF
 				ELSEIF TALENT:ARG:후타나리 == 2
 					IF ARG:2
@@ -1994,27 +2010,27 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 		ELSEIF COUNT == 4
 			IF TALENT:ARG:COUNT == 0 && TALENT:ARG:인조인간 > 0 && ISFEMALE(ARG)
 				IF ARG:2
-					LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[人工子宮]</nonbutton>"
+					LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[인공자궁]</nonbutton>"
 				ELSE
-					PRINTFORM [人工子宮]
+					PRINTFORM [인공자궁]
 				ENDIF
 			ENDIF
 			IF TALENT:ARG:미성숙 == -1 && CONFIG_CHECK_SCREEN_F(4) > 0
 				IF TALENT:ARG:인조인간 > 0 && ISFEMALE(ARG)
 					IF ARG:2
-						LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[人工子宮]</nonbutton>"
+						LOCALS += @"<nonbutton title='%TALENT_INFO(-999)%'>[인공자궁]</nonbutton>"
 					ELSE
-						PRINTFORM [人工子宮]
+						PRINTFORM [인공자궁]
 					ENDIF
 				ENDIF
 				IF ARG:2
 					IF ISMALE(ARG)
-						LOCALS += @"<nonbutton title='薬品によって精通を迎えた'>[性徴促進]</nonbutton>"
+						LOCALS += @"<nonbutton title='약품을 통해 정통을 맞이했다'>[성징촉진]</nonbutton>"
 					ELSE
-						LOCALS += @"<nonbutton title='薬品によって初潮を迎えた'>[性徴促進]</nonbutton>"
+						LOCALS += @"<nonbutton title='약품을 통해 초경을 맞이했다'>[성징촉진]</nonbutton>"
 					ENDIF
 				ELSE
-					PRINTFORM [性徴促進]
+					PRINTFORM [성징촉진]
 				ENDIF
 			ENDIF
 		ENDIF
@@ -2066,52 +2082,52 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 		IF TALENT:ARG:교제상대 == 1
 			LOCALS += @"[짝사랑]"
 		ELSEIF TALENT:ARG:교제상대 == 2
-			LOCALS += @"[彼氏持ち]"
+			LOCALS += @"[남친있음]"
 		ELSEIF TALENT:ARG:교제상대 == 3
-			LOCALS += @"[婚約]"
+			LOCALS += @"[약혼]"
 		ELSEIF TALENT:ARG:교제상대 == 4
-			LOCALS += @"[人妻]"
+			LOCALS += @"[유부녀]"
 		ELSEIF TALENT:ARG:교제상대 == 5
-			LOCALS += @"[未亡人]"
+			LOCALS += @"[과부]"
 		ENDIF
 		SIF ARG:2
 			LOCALS += @"</nonbutton><nonbutton title='%TALENT_INFO(801)%'>"
 		IF TALENT:ARG:학생 == 1
-			LOCALS += @"[小학생]"
+			LOCALS += @"[초등학생]"
 		ELSEIF TALENT:ARG:학생 == 2
-			LOCALS += @"[中학생]"
+			LOCALS += @"[중학생]"
 		ELSEIF TALENT:ARG:학생 == 3
-			LOCALS += @"[高校生]"
+			LOCALS += @"[고등학생]"
 		ELSEIF TALENT:ARG:학생 == 4
-			LOCALS += @"[大학생]"
+			LOCALS += @"[대학생]"
 		ENDIF
 		SIF ARG:2
 			LOCALS += @"</nonbutton><nonbutton title='%TALENT_INFO(810)%'>"
 		IF TALENT:ARG:가족관계 == 1
-			LOCALS += @"[弟持ち]"
+			LOCALS += @"[남동생o]"
 		ELSEIF TALENT:ARG:가족관계 == 2
-			LOCALS += @"[妹持ち]"
+			LOCALS += @"[여동생o]"
 		ELSEIF TALENT:ARG:가족관계 == 3
-			LOCALS += @"[兄持ち]"
+			LOCALS += @"[오빠/형o]"
 		ELSEIF TALENT:ARG:가족관계 == 4
-			LOCALS += @"[姉持ち]"
+			LOCALS += @"[언니/누나o]"
 		ELSEIF TALENT:ARG:가족관계 == 5
-			LOCALS += @"[幼い息子]"
+			LOCALS += @"[어린아들o]"
 		ELSEIF TALENT:ARG:가족관계 == 6
-			LOCALS += @"[幼い娘]"
+			LOCALS += @"[어린딸o]"
 		ELSEIF TALENT:ARG:가족관계 == 7
-			LOCALS += @"[年頃の息子]"
+			LOCALS += @"[성인아들o]"
 		ELSEIF TALENT:ARG:가족관계 == 8
-			LOCALS += @"[年頃の娘]"
+			LOCALS += @"[성인딸o]"
 		ENDIF
 		SIF ARG:2
 			LOCALS += @"</nonbutton><nonbutton title='%TALENT_INFO(811)%'>"
 		IF TALENT:ARG:악세서리 == 1
-			LOCALS += @"[メガネっ娘]"
+			LOCALS += @"[안경녀]"
 		ELSEIF TALENT:ARG:악세서리 == 2
-			LOCALS += @"[アホ毛]"
+			LOCALS += @"[바보털]"
 		ELSEIF TALENT:ARG:악세서리 == 3
-			LOCALS += @"[お嬢様]"
+			LOCALS += @"[아가씨]"
 		ENDIF
 		SIF ARG:2
 			LOCALS += @"</nonbutton><nonbutton title='%TALENT_INFO(812)%'>"
@@ -2191,37 +2207,37 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 ELSE
 
 	IF ARG:1 == 0
-		PRINTL ◆素質
+		PRINTL ◆ 소질
 	ELSE
-		PRINTL 素質
+		PRINTL  소질
 	ENDIF
 
-	;----------------	　基本　	----------------
+	;----------------	　기본　	----------------
 	;0,처녀,
 	;300,후타나리,
 	;400,남자,
 	;401,변신시TS,
-	;201-249種族
+	;201-249,종족
 
-	LOCALS = \@ARG:1?#　\@基本：
+	LOCALS = \@ARG:1?#　\@기본：
 
 	IF ISMALE(ARG)
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(400)%'>[남자]</nonbutton>
 	ELSEIF TALENT:ARG:후타나리 == 3
-		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(300)%'>[天然후타나리]</nonbutton>
+		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(300)%'>[천연후타나리]</nonbutton>
 	ELSEIF TALENT:ARG:후타나리 == 2
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(300)%'>[기생후타나리]</nonbutton>
 	ELSEIF TALENT:ARG:후타나리 == 1
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(300)%'>[후타나리]</nonbutton>
 	ELSE
-		LOCALS = %LOCALS%<nonbutton title='女性であることを示す素質'>[女]</nonbutton>
+		LOCALS = %LOCALS%<nonbutton title='여성임을 나타내는 소질'>[여자]</nonbutton>
 	ENDIF
 
 	SIF TALENT:ARG:보추 == 1
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(405)%'>[보추]</nonbutton>
 
 	IF TALENT:ARG:처녀 == 2 && ISFEMALE(ARG)
-		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(0)%'>[聖처녀]</nonbutton>
+		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(0)%'>[성처녀]</nonbutton>
 	ELSEIF TALENT:ARG:처녀 == 1 && ISFEMALE(ARG)
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(0)%'>[처녀]</nonbutton>
 	ENDIF
@@ -2236,7 +2252,7 @@ ELSE
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(403)%'>[여체수용]</nonbutton>
 	SIF TALENT:ARG:변신시보추 == 1
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(406)%'>[변신시보추]</nonbutton>
-	;種族
+	;종족
 	FOR COUNT, 201, 250
 		SIF TALENT:ARG:COUNT > 0
 			LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(COUNT)%'>[%TALENTNAME:COUNT%]</nonbutton>
@@ -2249,10 +2265,10 @@ ELSE
 
 	HTML_PRINT LOCALS
 
-	;----------------	　精神　	----------------
+	;----------------	　정신　	----------------
 	;301,청순파,
 	SIF TALENT:ARG:청순파 == 1
-		CALL PRINT_TALENT_CATEGORY, "精神", ARG:1, ARG:2, 301
+		CALL PRINT_TALENT_CATEGORY, "정신", ARG:1, ARG:2, 301
 
 	;600,내성적,
 	;601,사교적,
@@ -2272,8 +2288,8 @@ ELSE
 	;615,배짱,
 	;616,인간불신,
 	;617,양도,
-	;618,同性苦手,
-	;619,異性苦手,
+	;618,남성기피(남성기피), 원문은 同性苦手
+	;619,여성기피(여성기피), 원문은 異性苦手
 	;620,모성적,
 	;621,소악마,
 	;622,눈에띄고싶어함,
@@ -2281,38 +2297,38 @@ ELSE
 	;624,울보,
 	FOR LOCAL, 600, 650
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "精神", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "정신", ARG:1, ARG:2, LOCAL
 	NEXT
 
-	;----------------	　肉体　	----------------
+	;----------------	　육체　	----------------
 	;1,모유체질,
 	;2,오줌싸개버릇,
 	;3,백보지,
 	FOR LOCAL, 1, 4
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;4,미성숙,
 	SIF TALENT:ARG:인조인간 > 0 && TALENT:ARG:미성숙 != 2 && ISFEMALE(ARG)
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, -999
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, -999
 	IF TALENT:ARG:미성숙 > 0
 		IF ISMALE(ARG)
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 4, 2
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 4, 2
 		ELSE
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 4, TALENT:ARG:미성숙 - 1
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 4, TALENT:ARG:미성숙 - 1
 		ENDIF
 	ELSEIF TALENT:ARG:미성숙 == -1
 		IF ISMALE(ARG)
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 4, -2
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 4, -2
 		ELSE
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 4, -1
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 4, -1
 		ENDIF
 	ENDIF
 	
-	;304희롱특화체질
+	;304,희롱특화체질
 	SIF TALENT:ARG:희롱특화체질 > 0 && (ISGIRLY(ARG))
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 304
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 304
 
 	;112,젖기쉬움,
 	;113,젖기어려움,
@@ -2320,36 +2336,36 @@ ELSE
 	;115,회복느림,
 	FOR LOCAL, 112, 116
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, LOCAL
 	NEXT
 	SIF TALENT:ARG:악세서리 == 1 || TALENT:ARG:악세서리 == 2
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 811, TALENT:ARG:악세서리
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 811, TALENT:ARG:악세서리
 
 	;110,빈유,
 	;111,거유,
 	FOR LOCAL, 110, 112
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, LOCAL, TALENT:ARG:LOCAL
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, LOCAL, TALENT:ARG:LOCAL
 	NEXT
 
 	;116,왜소함
 	;117,장신
 	FOR LOCAL, 116, 118
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;812,외관
 	;813,변신시외관
 	IF CFLAG:ARG:1 > 0 && TALENT:ARG:변신시외관 > 0
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 812, TALENT:ARG:변신시외관
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 812, TALENT:ARG:변신시외관
 	ELSEIF TALENT:ARG:외관 > 0
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 812, TALENT:ARG:외관
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 812, TALENT:ARG:외관
 	ENDIF
 	
 	;900,성별변화＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾
 	SIF TALENT:ARG:성별변화 == 1 || TALENT:ARG:성별변화 == 10 || TALENT:ARG:성별변화 == 11
-		CALL PRINT_TALENT_CATEGORY, "肉体", ARG:1, ARG:2, 900, TALENT:ARG:성별변화
+		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 900, TALENT:ARG:성별변화
 
 	;----------------	　성벽　	----------------
 	;100,C민감,
@@ -2377,7 +2393,7 @@ ELSE
 			CALL PRINT_TALENT_CATEGORY, "성벽", ARG:1, ARG:2, LOCAL
 	NEXT
 
-	;----------------	　戦闘　	----------------
+	;----------------	　전투　	----------------
 	;180,근거리특기,
 	;181,근거리서툼,
 	;182,중거리특기,
@@ -2393,60 +2409,60 @@ ELSE
 	;303,피임결계,
 	FOR LOCAL, 180, 200
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "戦闘", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "전투", ARG:1, ARG:2, LOCAL
 	NEXT
 	SIF TALENT:ARG:피임결계 > 0
-		CALL PRINT_TALENT_CATEGORY, "戦闘", ARG:1, ARG:2, 303
+		CALL PRINT_TALENT_CATEGORY, "전투", ARG:1, ARG:2, 303
 
-	;----------------	　状態　	----------------
+	;----------------	　상태　	----------------
 
-	;※CFLAG管理だ(TALENT管理ではない)がまとめて載せている
-	;幽閉中
+	;※CFLAG 관리이다만(TALENT 관리가 아님) 정리해서 올리고 있다
+	;유폐중
 	;세뇌
 	;흑화
-	;死亡
-	;入院中
-	;育児中
-		CALL PRINT_TALENT_CATEGORY, "状態", ARG:1, ARG:2, -998,CFLAG:ARG:0
+	;사망
+	;입원중
+	;육아중
+		CALL PRINT_TALENT_CATEGORY, "상태", ARG:1, ARG:2, -998,CFLAG:ARG:0
 
 	;159,임신,
 	IF CHECK_PREGNANT_F(ARG) > 0
-		CALL PRINT_TALENT_CATEGORY, "状態", ARG:1, ARG:2, 159, 0
+		CALL PRINT_TALENT_CATEGORY, "상태", ARG:1, ARG:2, 159, 0
 	ELSEIF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
-		CALL PRINT_TALENT_CATEGORY, "状態", ARG:1, ARG:2, 159, 1
+		CALL PRINT_TALENT_CATEGORY, "상태", ARG:1, ARG:2, 159, 1
 	ENDIF
 
 	;160,기생,
 	;161,묘상화,
 	FOR LOCAL, 160, 180
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "状態", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "상태", ARG:1, ARG:2, LOCAL
 	NEXT
 
-	;----------------	　社交　	----------------
+	;----------------	　사교　	----------------
 	;350,소문을좋아하는친구,
 	;351,경찰관계자,
 	;352,정보원,
 	;353,유복한친정,
 	FOR LOCAL, 350, 400
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "社交", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "사교", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;800,교제상대,
 	SIF TALENT:ARG:교제상대 > 0
-		CALL PRINT_TALENT_CATEGORY, "社交", ARG:1, ARG:2, 800, TALENT:ARG:교제상대
+		CALL PRINT_TALENT_CATEGORY, "사교", ARG:1, ARG:2, 800, TALENT:ARG:교제상대
 	;801,학생,
 	SIF TALENT:ARG:학생 > 0
-		CALL PRINT_TALENT_CATEGORY, "社交", ARG:1, ARG:2, 801, TALENT:ARG:학생
+		CALL PRINT_TALENT_CATEGORY, "사교", ARG:1, ARG:2, 801, TALENT:ARG:학생
 	;810,가족관계,
 	SIF TALENT:ARG:가족관계 > 0
-		CALL PRINT_TALENT_CATEGORY, "社交", ARG:1, ARG:2, 810, TALENT:ARG:가족관계
+		CALL PRINT_TALENT_CATEGORY, "사교", ARG:1, ARG:2, 810, TALENT:ARG:가족관계
 	;811,악세서리,
 	SIF TALENT:ARG:악세서리 == 3
-		CALL PRINT_TALENT_CATEGORY, "社交", ARG:1, ARG:2, 811, 3
+		CALL PRINT_TALENT_CATEGORY, "사교", ARG:1, ARG:2, 811, 3
 
-	;----------------	　負傷　	----------------
+	;----------------	　부상　	----------------
 	;500,멍든자국,
 	;501,출혈,
 	;502,화상,
@@ -2458,7 +2474,7 @@ ELSE
 	;508,번식자루,
 	FOR LOCAL, 500, 550
 		SIF TALENT:ARG:LOCAL > 0
-			CALL PRINT_TALENT_CATEGORY, "負傷", ARG:1, ARG:2, LOCAL
+			CALL PRINT_TALENT_CATEGORY, "부상", ARG:1, ARG:2, LOCAL
 	NEXT
 
 	;----------------	　FEAT　	----------------
@@ -2497,23 +2513,23 @@ ELSE
 			CALL PRINT_TALENT_CATEGORY, "FEAT", ARG:1, ARG:2, LOCAL
 	NEXT
 
-	;----------------	終了処理	----------------
+	;----------------	종료 처리	----------------
 	CALL PRINT_TALENT_CATEGORY, "", ARG:1, ARG:2
 ENDIF
 
 
 
 ;--------------------------------------------------
-;TALENT番号を受け取り、カテゴリを確認し表示
-;CATEGORY_STR	カテゴリ名　空で終了処理
-;INDENT_VAR	表示元によるインデントの有無　0：あり　1：なし
-;POPUP_VAR	HTML_PRINTによるポップアップの有無　0：あり　1；なし
-;TALENT_VAR	表示する素質番号
-;SUB_TALENT	1以外など、同素質でいくつかの種類を分ける場合のための補助変数
+;TALENT번호를 받아, 카테고리를 확인하고 표시
+;CATEGORY_STR	카테고리명　공란으로 종료 처리
+;INDENT_VAR	표시원에 의한 들여쓰기(indent) 유무　0：있음　1：없음
+;POPUP_VAR	HTML_PRINT에 따른 팝업 유무　0：있음　1；없음
+;TALENT_VAR	표시할 소질 번호
+;SUB_TALENT	1 이외 등, 같은 소질에서 여러 종류를 나눌 경우를 위한 보조 변수 (예: 거유→거유,폭유,마유,기유)
 
-;PRINT_STR	表示用文字列
-;SUB_STR	文字表示補助
-;COUNT_VAR	その行で表示した素質数をカウント
+;PRINT_STR	표시용 문자열
+;SUB_STR	문자 표시 보조
+;COUNT_VAR	그 행에서 표시한 소질 수를 카운트
 @PRINT_TALENT_CATEGORY, CATEGORY_STR, INDENT_VAR, POPUP_VAR, TALENT_VAR, SUB_TALENT
 #DIMS PRINT_STR
 #DIMS SUB_STR, 2
@@ -2524,7 +2540,7 @@ ENDIF
 #DIM SUB_TALENT
 #DIM COUNT_VAR
 
-;前回呼び出されたときとカテゴリ名が違う場合、素質カウントが1以上なら表示してからリセット
+;지난번 호출되었을 때와 카테고리명이 다른 경우, 소질 카운트가 1 이상이라면 표시하고나서 리셋
 IF CATEGORY_STR != CATEGORY_STR:1
 	IF COUNT_VAR > 0
 		IF POPUP_VAR
@@ -2538,7 +2554,7 @@ IF CATEGORY_STR != CATEGORY_STR:1
 	CATEGORY_STR:1 = %CATEGORY_STR%
 ENDIF
 
-;終了処理用にカテゴリ名を空にした際ここで終了
+;종료 처리용으로 카테고리명을 비웠을 때 여기서 종료
 IF CATEGORY_STR == ""
 	VARSET CATEGORY_STR
 	RETURN 0
@@ -2546,43 +2562,43 @@ ENDIF
 
 SUB_STR:1 = %TALENT_INFO(TALENT_VAR)%
 
-;値などによって通常の素質名を使用しない場合は個別に設定(負の値を用いる)
+;값 등에 따라 통상의 소질명을 사용하지 않을 경우 개별적으로 설정(음수를 사용)
 IF TALENT_VAR == -998
 	SELECTCASE SUB_TALENT
 	CASE 1
-		SUB_STR:0 = 幽閉中
+		SUB_STR:0 = 유폐중
 	CASE 2
 	SUB_STR:0 = 세뇌
 	CASE 3
 	SUB_STR:0 = 흑화
 	CASE 4
-	SUB_STR:0 = 誘拐中
+	SUB_STR:0 = 유괴중
 	CASE 9
-	SUB_STR:0 = 死亡
+	SUB_STR:0 = 사망
 	CASE 10
-	SUB_STR:0 = 入院中
+	SUB_STR:0 = 입원중
 	CASE 11
-	SUB_STR:0 = 育児中
+	SUB_STR:0 = 육아중
 	CASE 0
 		SUB_STR:0 '="" 
 		RETURN 0
 	ENDSELECT
 ELSEIF TALENT_VAR == -999
-	SUB_STR:0 = 人工子宮
+	SUB_STR:0 = 인공자궁
 
 ;미성숙
-;SUB_TALENT　0：미성숙　1：不妊　2：남자による説明変更
+;SUB_TALENT　(0：미성숙　1：불임　2：남자) 에 따라 설명 변경
 ELSEIF TALENT_VAR == 4 && SUB_TALENT == 1
-	SUB_STR:0 = 不妊
+	SUB_STR:0 = 불임
 ELSEIF TALENT_VAR == 4 && SUB_TALENT == 2
 	SUB_STR:0 = %TALENTNAME:TALENT_VAR%
-	SUB_STR:1 = 사정できない
+	SUB_STR:1 = 아직 성징을 제대로 거치지 않아 사정할 수 없다.
 ELSEIF TALENT_VAR == 4 && SUB_TALENT == -1 && CONFIG_CHECK_SCREEN_F(4) > 0
-	SUB_STR:0 = 性徴促進
-	SUB_STR:1 = 薬品によって初潮を迎えた
+	SUB_STR:0 = 성징촉진
+	SUB_STR:1 = 약품을 통해 초경을 맞아 임신이 가능해진 상태.
 ELSEIF TALENT_VAR == 4 && SUB_TALENT == -2 && CONFIG_CHECK_SCREEN_F(4) > 0
-	SUB_STR:0 = 性徴促進
-	SUB_STR:1 = 薬品によって精通を迎えた
+	SUB_STR:0 = 성징촉진
+	SUB_STR:1 = 약품을 통해 정통을 맞아 사정이 가능해진 상태.
 ;빈유
 ELSEIF TALENT_VAR == 110 && SUB_TALENT == 2
 	SUB_STR:0 = 절벽
@@ -2601,58 +2617,58 @@ ELSEIF TALENT_VAR == 111 && SUB_TALENT == 1
 	SUB_STR:0 = 거유
 ;임신
 ELSEIF TALENT_VAR == 159 && SUB_TALENT == 1
-	SUB_STR:0 = 着床
+	SUB_STR:0 = 착상
 ;교제상대
 ELSEIF TALENT_VAR == 800
 	IF SUB_TALENT == 1
 		SUB_STR:0 = 짝사랑
 	ELSEIF SUB_TALENT == 2
-		SUB_STR:0 = 彼氏持ち
+		SUB_STR:0 = 남친있음
 	ELSEIF SUB_TALENT == 3
-		SUB_STR:0 = 婚約
+		SUB_STR:0 = 약혼
 	ELSEIF SUB_TALENT == 4
-		SUB_STR:0 = 人妻
+		SUB_STR:0 = 유부녀
 	ELSEIF SUB_TALENT == 5
-		SUB_STR:0 = 未亡人
+		SUB_STR:0 = 과부
 	ENDIF
 ;학생
 ELSEIF TALENT_VAR == 801
 	IF SUB_TALENT == 1
-		SUB_STR:0 = 小학생
+		SUB_STR:0 = 초등학생
 	ELSEIF SUB_TALENT == 2
-		SUB_STR:0 = 中학생
+		SUB_STR:0 = 중학생
 	ELSEIF SUB_TALENT == 3
-		SUB_STR:0 = 高校生
+		SUB_STR:0 = 고등학생
 	ELSEIF SUB_TALENT == 4
-		SUB_STR:0 = 大학생
+		SUB_STR:0 = 대학생
 	ENDIF
 ;가족관계
 ELSEIF TALENT_VAR == 810
 	IF SUB_TALENT == 1
-		SUB_STR:0 = 弟持ち
+		SUB_STR:0 = 남동생o
 	ELSEIF SUB_TALENT == 2
-		SUB_STR:0 = 妹持ち
+		SUB_STR:0 = 여동생o
 	ELSEIF SUB_TALENT == 3
-		SUB_STR:0 = 兄持ち
+		SUB_STR:0 = 오빠/형o
 	ELSEIF SUB_TALENT == 4
-		SUB_STR:0 = 姉持ち
+		SUB_STR:0 = 언니/누나o
 	ELSEIF SUB_TALENT == 5
-		SUB_STR:0 = 幼い息子
+		SUB_STR:0 = 어린아들o
 	ELSEIF SUB_TALENT == 6
-		SUB_STR:0 = 幼い娘
+		SUB_STR:0 = 어린딸o
 	ELSEIF SUB_TALENT == 7
-		SUB_STR:0 = 年頃の息子
+		SUB_STR:0 = 성인아들o
 	ELSEIF SUB_TALENT == 8
-		SUB_STR:0 = 年頃の娘
+		SUB_STR:0 = 성인딸o
 	ENDIF
 ;악세서리
 ELSEIF TALENT_VAR == 811
 	IF SUB_TALENT == 1
-		SUB_STR:0 = メガネっ娘
+		SUB_STR:0 = 안경녀
 	ELSEIF SUB_TALENT == 2
-		SUB_STR:0 = アホ毛
+		SUB_STR:0 = 바보털
 	ELSEIF SUB_TALENT == 3
-		SUB_STR:0 = お嬢様
+		SUB_STR:0 = 아가씨
 	ENDIF
 ;외관
 ELSEIF TALENT_VAR == 812
@@ -2672,11 +2688,11 @@ ELSEIF TALENT_VAR == 812
 ;성별변화＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾＾
 ELSEIF TALENT_VAR == 900
 	IF SUB_TALENT == 1
-		SUB_STR:0 = 完全女体化
+		SUB_STR:0 = 완전여체화
 	ELSEIF SUB_TALENT == 10
-		SUB_STR:0 = 封印男体化
+		SUB_STR:0 = 남체화봉인
 	ELSEIF SUB_TALENT == 11
-		SUB_STR:0 = 強制女体化
+		SUB_STR:0 = 강제여체화
 	ENDIF
 ELSE
 	SUB_STR:0 = %TALENTNAME:TALENT_VAR%
@@ -2701,537 +2717,538 @@ ENDIF
 
 
 ;--------------------------------------------------
-;ARGはタレント番号に対応
-;大部分の説明文はTALENT.CSVのそれを持ってきています
-;ARGの番号の素質の説明を返す
+;ARG의 번호의 소질에 대한 설명을 반환한다
+;ARG는 TALENT 번호에 대응
+;대부분의 설명문은 TALENT.CSV 로부터 인용됐으므로, 자세한 사항은 해당 파일에서 참고하기를
 @TALENT_INFO(ARG)
 #LOCALSIZE 1
 #LOCALSSIZE 1
 #FUNCTIONS
 SELECTCASE ARG
 	CASE -999
-	;人工子宮
-		RETURNF "人工的な子宮を持っている"
+	;인공자궁
+		RETURNF "인공 자궁이 탑재되어 임신이 가능해진 상태."
 	CASE -11
-	;育児中
-		RETURNF "子育てを行っている。束の間の休息"
+	;육아중
+		RETURNF "육아를 위해 잠시 임무를 쉬어야 하는 상태."
 	CASE -10
-	;入院中
-		RETURNF "出産に備えて入院中"
+	;입원중
+		RETURNF "출산에 대비하여 특수병동에 입원 중인 상태."
 	CASE -9
-	;死亡
-		RETURNF "生還が절망視されるため、ＫＩＡ扱いとなった"
+	;사망
+		RETURNF "생환 가능성이 극히 희박하여 ＫＩＡ 처리된 상태."
 	CASE -5
-	;憂鬱中
-		RETURNF "メンタルダウンして自室に引きこもっている"
+	;우울함
+		RETURNF "멘탈이 다운되어 자기 방에 틀어박힌 상태."
 	CASE -4
-	;誘拐中
-		RETURNF "악질 시민に誘拐されて行方不明中"
+	;유괴중
+		RETURNF "악질 시민에게 유괴되어 행방불명된 상태."
 	CASE -3
 	;흑화
-		RETURNF "敵に心酔し寝返っている"
+		RETURNF "적에게 심취하여, 아군을 배반하고 적의 첨병이 된 상태."
 	CASE -2
 	;세뇌
-		RETURNF "敵に操られている"
+		RETURNF "적에게 자아를 빼앗겨 조종당하고 있는 상태."
 	CASE -1
-	;幽閉中
-		RETURNF "敵に捕まって行方不明、いわゆるＭＩＡ"
+	;유폐중
+		RETURNF "적에게 붙잡혀 행방불명인 상태, 이른바 ＭＩＡ."
 	CASE 0
 	;처녀
-		RETURNF "乙女の証。清純度が好評価になるが、失った場合は고통が伴う"
+		RETURNF "처녀의 증표. 순결도에서 좋은 평가를 얻지만, 잃을 경우에는 고통이 따른다."
 	CASE 1
 	;모유체질
-		RETURNF "母乳を分泌する体質"
+		RETURNF "모유가 분비되는 체질."
 	CASE 2
-	;おもらし癖
-		RETURNF "失禁してしまいやすい"
+	;오줌싸개버릇
+		RETURNF "실금해 버리기 쉬운 상태."
 	CASE 3
 	;백보지
-		RETURNF "恥辱が溜まりやすい"
+		RETURNF "음모가 나지 않은 뽀얗고 예쁜 성기. 치욕이 쌓이기가 쉽다."
 	CASE 4
 	;미성숙
-		RETURNF "임신できない"
+		RETURNF "아직 초경도 오지 않아 임신할 수 없는 상태."
 	CASE 5
 	;초심
-		RETURNF "エッチなことに耐性ができない"
+		RETURNF "야한 것에 내성이 전혀 없는 상태."
 	CASE 10
 	;겁쟁이
-		RETURNF "後方支援もできる万能型だが공포に弱い。기력△、민첩○、지성◎。倒錯しにくい"
+		RETURNF "「기력△ 민첩○ 지성◎」후방 지원도 가능한 만능형이지만, 공포에 약하다. 전투 도중『도착(倒錯)』상태로 잘 변하지 않는다."
 	CASE 11
 	;부끄럼쟁이
-		RETURNF "人一倍シャイなタイプ。最も민첩が伸びやすい高機動型。性耐△、방어○、민첩◎。倒錯しにくい"
+		RETURNF "「성내성△ 방어○ 민첩◎」남달리 부끄러움을 많이 탄다. 민첩이 가장 높은 기동 특화형. 전투 도중『도착(倒錯)』상태로 잘 변하지 않는다."
 	CASE 12
 	;오기
-		RETURNF "공포にも고통にも屈さないアタッカーだが、前のめりでガードが甘い。공격◎、방어×。怒りやすい"
+		RETURNF "「공격◎ 방어×」그 어떤 공포나 고통에도 굴하지 않지만, 워낙 성급한 탓에 가드가 허술한 호전적인 공격형. 전투 도중『분노』상태가 되기 쉽다."
 	CASE 13
 	;활발함
-		RETURNF "체력に優れるぶん、休憩回数が少なくて済む。作戦を考えるのは苦手。체력◎、지성×。諦観しにくい"
+		RETURNF "「체력◎ 지성×」체력이 뛰어난 만큼, 덜 쉬더라도 오래 버틴다. 작전 계획 등 지능적인 분야에는 영 꽝이다. 전투 도중『체념』상태가 잘 되지 않는다."
 	CASE 14
 	;대범함
-		RETURNF "後方支援もこなせる방어型。多少のことでは動じない。방어◎、민첩性×、지성◎。消沈しにくい"
+		RETURNF "「방어◎ 민첩× 지성◎」후방 지원도 곧잘 해내는 방어형. 웬만한 일로는 동요하지도 않는다. 전투 도중『소침』상태가 잘 되지 않는다."
 	CASE 15
 	;게으름
-		RETURNF "何事もそつなくこなす。足りないのは根性。체력△、기력△、공격○、방어○、민첩○、지성△。動揺しにくい"
+		RETURNF "「체력△ 기력△ 공격○ 방어○ 민첩○ 지성△」무슨 일이든지 빈틈없이 해치운다……만, 그게 작심삼일인 점이 함정. 전투 도중『동요』상태가 잘 되지 않는다."
 	CASE 16
 	;진지함
-		RETURNF "最後まで諦めない耐久型だが、エッチなことには弱い。기력◎、性耐×、지성○。冷静になりやすい"
+		RETURNF "「기력◎ 성내성× 지성○」끝까지 포기하지 않는 내구형이지만, 야한 짓에는 금방 무너진다. 전투 도중『냉정』상태가 되기 쉽다."
 	CASE 17
 	;낙천적
-		RETURNF "エッチなことに対する耐性が非常に高い。性耐◎、공격△。消沈しにくい。刻印で怯みにくい"
+		RETURNF "「성내성◎ 공격△」야한 짓에 대한 내성이 매우 높다. 전투 도중『소침』상태가 잘 되지 않으며, 각인에 의한 기죽음이 덜 발생한다."
 	CASE 18
 	;비관적
-		RETURNF "能力や耐性は悪くないが、すぐに諦めるのが珠にキズ。체력○、기력×、방어○、지성○。倒錯しにくい"
+		RETURNF "「체력○ 기력× 방어○ 지성○」능력치나 내성은 준수하지만, 금방 포기하는 성격이 옥에 티. 전투 도중『도착(倒錯)』상태로 잘 변하지 않는다."
 	CASE 19
 	;순종적
-		RETURNF "扱いやすい性能をしているが、지성は伸びにくい。체력○、기력○、性耐○、지성△。高揚しやすい"
+		RETURNF "「체력○ 기력○ 성내성○ 지성△」다루기 쉬운 성능이지만, 지성은 올리기가 어렵다. 전투 도중『고양』상태가 되기 쉽다."
 	CASE 20
 	;츤데레
-		RETURNF "고통に対して非常に高い耐性を持つが、羞恥心は強い。기력○、性耐△。怒りやすい"
+		RETURNF "「기력○ 성내성△」고통에 대한 내성은 매우 높지만, 수치심이 강하다. 전투 도중『분노』상태가 되기 쉽다."
 	CASE 21
 	;얀데레
-		RETURNF "弱点がなく、精神面が非常にタフで随一の耐性を持つ。能力補正なし。諦観しにくい"
+		RETURNF "「능력치 보정 없음」약점이 없고, 정신적으로 매우 터프한 데다가 내성도 제일 높다. 전투 도중『체념』상태가 잘 되지 않는다."
 	CASE 22
 	;과묵함
-		RETURNF "耐久力と지성を両立しており고통に強い。기력○、性耐○、방어△、지성○。冷静になりやすい"
+		RETURNF "「기력○ 성내성○ 방어△ 지성○」내구성과 지성을 동시에 갖추고 있으며, 고통에 강하다. 전투 도중『냉정』상태가 되기 쉽다."
 	CASE 23
 	;수다쟁이
-		RETURNF "민첩が伸びるので便利だが、普段の余裕の態度は実は強がり。체력○、민첩○。高揚しやすい"
+		RETURNF "「체력○ 민첩○」민첩이 오르므로 편리하지만, 평소의 여유로운 태도는 사실 허풍. 전투 도중『고양』상태가 되기 쉽다."
 	CASE 24
 	;고풍적
-		RETURNF "正面からぶつかって相手を捩じ伏せるアタッカー。性耐×、공격○、방어○。動揺しにくい"
+		RETURNF "「성내성× 공격○ 방어○」정면으로 부딪쳐 상대를 찍어 누르는 공격형. 전투 도중『동요』상태가 잘 되지 않는다."
 	CASE 25
 	;경박함
-		RETURNF "アタッカーとして優秀だが耐久力の低さがネック。체력×、기력△、性耐○、공격○、민첩○。高揚しやすい"
+		RETURNF "「체력× 기력△ 성내성○ 공격○ 민첩○」기민함까지 갖춘 우수한 공격형이지만, 낮은 내구성이 걸림돌. 전투 도중『고양』상태가 되기 쉽다."
 	CASE 26
 	;고집쟁이
-		RETURNF "根性は十分。エッチなことにも強いが、実は고통に最も弱い。기력○、性耐○。諦観しにくい"
+		RETURNF "「기력○ 성내성○」근성은 이미 충분하다. 야한 짓에도 강하지만, 역으로 고통에 가장 약하다. 전투 도중『체념』상태가 잘 되지 않는다."
 	CASE 27
 	;사나움
-		RETURNF "非常に高い공격補正を持つが、心の内に弱さを抱えている。체력○、공격◎、민첩△、지성△。怒りやすい"
+		RETURNF "「체력○ 공격◎ 민첩△ 지성△」공격 보정이 매우 높지만, 내면에 자신의 나약함을 품고 있다. 전투 도중『분노』상태가 되기 쉽다."
 	CASE 100
 	;C민감
-		RETURNF "PALAM:쾌Cが上がりやすい"
+		RETURNF "PALAM:쾌C가 오르기 쉽다."
 	CASE 101
 	;C둔감
-		RETURNF "PALAM:쾌Cが上がりにくい"
+		RETURNF "PALAM:쾌C가 잘 오르지 않는다."
 	CASE 102
 	;V민감
-		RETURNF "PALAM:쾌Vが上がりやすい"
+		RETURNF "PALAM:쾌V가 오르기 쉽다."
 	CASE 103
 	;V둔감
-		RETURNF "PALAM:쾌Vが上がりにくい"
+		RETURNF "PALAM:쾌V가 잘 오르지 않는다."
 	CASE 104
 	;A민감
-		RETURNF "PALAM:쾌Aが上がりやすい"
+		RETURNF "PALAM:쾌A가 오르기 쉽다."
 	CASE 105
 	;A둔감
-		RETURNF "PALAM:쾌Aが上がりにくい"
+		RETURNF "PALAM:쾌A가 잘 오르지 않는다."
 	CASE 106
 	;B민감
-		RETURNF "PALAM:쾌Bが上がりやすい"
+		RETURNF "PALAM:쾌B가 오르기 쉽다."
 	CASE 107
 	;B둔감
-		RETURNF "PALAM:쾌Bが上がりにくい"
+		RETURNF "PALAM:쾌B가 잘 오르지 않는다."
 
 	CASE 110
 	;빈유
-		RETURNF "胸で与える快感が少ないが、쾌Bが上がりにくい"
+		RETURNF "가슴으로 받는 쾌감이 덜하지만, 쾌B가 잘 오르지 않는다."
 	CASE 111
 	;거유
-		RETURNF "胸で与える快感が多いが、쾌Bが上がりやすい"
+		RETURNF "가슴으로 받는 쾌감을 더 잘 느끼지만, 쾌B가 오르기 쉽다."
 	CASE 112
-	;젖기쉬움,
-		RETURNF "PALAM:윤활が上がりやすい"
+	;젖기쉬움
+		RETURNF "PALAM:윤활이 오르기가 쉽다."
 	CASE 113
-	;젖기어려움,
-		RETURNF "PALAM:윤활が上がりにくい"
+	;젖기어려움
+		RETURNF "PALAM:윤활이 잘 오르지 않는다."
 	CASE 114
-	;회복빠름,
-		RETURNF "回復量が増えるが、鍛錬効率が少し落ちる"
+	;회복빠름
+		RETURNF "회복량이 늘어나지만, 단련 효율이 조금 떨어진다."
 	CASE 115
-	;회복느림,
-		RETURNF "回復量が減るが、鍛錬効率が少し上昇する"
+	;회복느림
+		RETURNF "회복량이 줄어들지만, 단련 효율이 조금 더 상승한다."
 	CASE 116
 	;왜소함
-		RETURNF "민첩にプラス補正。공격と振りほどきにマイナス補正"
+		RETURNF "민첩에 플러스 보정을 받지만, 공격과「풀어낸다」커맨드에는 마이너스 보정을 받는다."
 	CASE 117
 	;장신
-		RETURNF "공격にプラス補正。민첩と振りほどきにマイナス補正"
+		RETURNF "공격에 플러스 보정을 받지만, 민첩과「풀어낸다」커맨드에는 마이너스 보정을 받는다."
 	CASE 150
 	;촉수의포로
-		RETURNF "공순、욕정、굴복に補正。戦闘中に体が竦んで行動できなくなることがある"
+		RETURNF "공순, 욕정, 굴복에 보정이 추가된다. 또한, 전투 중에 몸이 움츠러들어 행동하지 못할 가능성이 생긴다."
 	CASE 151
 	;음란
-		RETURNF "윤활、욕정、치정に補正"
+		RETURNF "윤활, 욕정, 치정에 보정이 추가된다."
 	CASE 152
 	;붕괴
-		RETURNF "（未実装）"
+		RETURNF "（미구현）"
 	CASE 153
-	;음핵,
-		RETURNF "PALAM:쾌Cが上がりやすい。夜這いイベントが発生するようになる"
+	;음핵
+		RETURNF "PALAM:쾌C가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 154
-	;음호,
-		RETURNF "PALAM:쾌Vが上がりやすい。夜這いイベントが発生するようになる"
+	;음호
+		RETURNF "PALAM:쾌V가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 155
-	;음고,
-		RETURNF "PALAM:쾌Aが上がりやすい。夜這いイベントが発生するようになる"
+	;음고
+		RETURNF "PALAM:쾌A가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 156
-	;음유,
-		RETURNF "PALAM:쾌Bが上がりやすい。夜這いイベントが発生するようになる"
+	;음유
+		RETURNF "PALAM:쾌B가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 159
-	;임신,
-		RETURNF "임신している。胎児が大きくなると出撃が出来なくなる"
+	;임신
+		RETURNF "임신하고 있는 상태. 태아가 커지면 출격할 수 없게 된다."
 	CASE 160
-	;기생,
-		RETURNF "촉수に기생された状態。戦闘中に体が竦んで行動できなくなることがある"
+	;기생
+		RETURNF "체내에 촉수가 기생하고 있는 상태. 전투 중에 몸이 움츠러들어 행동하지 못할 수도 있다."
 	CASE 161
-	;묘상화,
-		RETURNF "촉수の苗床と化した状態。出産しやすくなり、産む촉수の数も増える"
+	;묘상화
+		RETURNF "촉수의 묘상으로 변한 상태. 출산하기가 쉬워지며, 낳는 촉수의 수도 늘어난다."
 	CASE 162
 	;전락
-		RETURNF "身も心も촉수に굴복した状態。敗北すると即座に寝返る"
+		RETURNF "몸도 마음도 촉수에게 완전히 굴복한 상태. 패배할 시 바로 적의 편에 붙는다."
 	CASE 180
 	;근거리특기
-		RETURNF "근거리での戦闘力が上昇し、근거리技能が成長しやすくなる。근거리以外が若干苦手になる"
+		RETURNF "근거리 전투력이 상승하고, 근거리 전투기술이 오르기 쉽다. 그러나 근거리 이외의 포지션에는 약간 미숙해진다."
 	CASE 181
 	;근거리서툼
-		RETURNF "근거리での戦闘力が低下し、근거리技能が成長しにくくなる。근거리以外が若干得意になる"
+		RETURNF "근거리 전투력이 저하되며 근거리 전투기술이 오르기가 어렵지만, 근거리 이외의 포지션에 약간 특출나게 된다."
 	CASE 182
 	;중거리특기
-		RETURNF "중거리での戦闘力が上昇し、중거리技能が成長しやすくなる。중거리以外が若干苦手になる"
+		RETURNF "중거리 전투력이 상승하고, 중거리 전투기술이 오르기 쉽다. 그러나 중거리 이외의 포지션에는 약간 미숙해진다."
 	CASE 183
 	;중거리서툼
-		RETURNF "중거리での戦闘力が低下し、중거리技能が成長しにくくなる。중거리以外が若干得意になる"
+		RETURNF "중거리 전투력이 저하되며 중거리 전투기술을 오르기가 어렵지만, 중거리 이외의 포지션에 약간 특출나게 된다."
 	CASE 184
 	;원거리특기
-		RETURNF "원거리での戦闘力が上昇し、원거리技能が成長しやすくなる。원거리以外が若干苦手になる"
+		RETURNF "원거리 전투력이 상승하고, 원거리 전투기술이 오르기 쉽다. 그러나 원거리 이외의 포지션에는 약간 미숙해진다."
 	CASE 185
 	;원거리서툼
-		RETURNF "원거리での戦闘力が低下し、원거리技能が成長しにくくなる。원거리以外が若干得意になる"
+		RETURNF "원거리 전투력이 저하되며 원거리 전투기술이 오르기가 어렵지만, 원거리 이외의 포지션에 약간 특출나게 된다."
 	CASE 186
 	;공중전특기
-		RETURNF "エアストライク使用時に공격の直撃率がアップし、空中戦技Lvも一段階上昇する"
+		RETURNF "에어 스트라이크를 사용할 때 공격 직격률이 증가하며, 공중 성능 LV도 한 단계 상승한다."
 	CASE 187
 	;공중전서툼
-		RETURNF "エアストライク使用時に공격の直撃率がダウンし、空中戦技Lvも一段階低下してしまう"
+		RETURNF "에어 스트라이크를 사용할 때 공격 직격률이 감소하며, 공중 성능 LV도 한 단계 저하한다."
 
 	CASE 190 TO 193
-	;C결계,ＶＡＢ
-		RETURNF "対応する部位への性的な接触を防ぐ結界"
+	;C,Ｖ,Ａ,Ｂ 결계
+		RETURNF "해당 부위와의 성적인 접촉을 막는 결계가 있는 상태."
 
 	CASE 200
 	;변신능력
-		RETURNF "변신능력があるかどうか"
+		RETURNF "변신하여 싸울 수 있는 능력을 지닌 자."
 
 	CASE 201 TO 249
-	;種族
-		RETURNF "キャラの種族を示す素質"
+	;종족
+		RETURNF "캐릭터의 종족을 표시하는 소질."
 
 	CASE 300
 	;후타나리
-		RETURNF "女性なのにペニスが生えている"
+		RETURNF "여성임에도 페니스가 자라 있는 상태."
 
 	CASE 301
 	;청순파
-		RETURNF "正義のヒロインの証！一部コマンドが使用不可になる代わりに인기도가 上がりやすくなる。純潔度評価もアップ"
+		RETURNF "정의의 히로인! 임을 나타내는 증표. 일부 커맨드를 사용할 수 없게 되는 대신, 인기도가 오르기 쉬워진다. 또한 순결도 평가도 좋아진다."
 
 	CASE 302
 	;성징정체
-		RETURNF "肉体が幼いまま性徴しない"
+		RETURNF "육체가 성숙하지 않은 채로 성징이 오지 않는 상태."
 
 	CASE 303
 	;피임결계
-		RETURNF "성내성が残っている限り촉수の精液による임신を防ぐ"
+		RETURNF "성내성이 남아있는 한 촉수의 정액에 의한 임신을 막을 수 있다."
 	CASE 304
 	;희롱특화체질
-		RETURNF "妙にエッチな目に合ってる気がする・・・"
+		RETURNF "묘하게 야한 눈에 맞는 것 같다・・・"
 
 	CASE 400
 	;남자
-		RETURNF "男性であることを示す素質"
+		RETURNF "남성이라는 것을 표시하는 소질."
 
 	CASE 401
 	;변신시TS
-		RETURNF "변신한다と性別が逆転する"
+		RETURNF "변신하면 성별이 역전되는 특성."
 
 	CASE 403
 	;여체수용
-		RETURNF "自分が女性であることを受け入れてしまった状態"
+		RETURNF "자신이 더이상 남성이 아닌 여성임을 받아들여 버린 상태."
 
 	CASE 404
 	;변신시후타나리
-		RETURNF "変身時に후타나리になる"
+		RETURNF "변신 시에 후타나리가 되는 특성."
 
 	CASE 405
 	;보추
-		RETURNF "남자でありながら女の子にしか見えない"
+		RETURNF "남자면서 여자아이로밖에 보이지 않는 아이."
 
 	CASE 406
 	;변신시보추
-		RETURNF "変身時に보추になる"
+		RETURNF "변신 시에 보추가 되는 특성."
 
 	CASE 507
 	;사지결손
-		RETURNF "手足のない人豚、ほとんどの行動を実行できない"
+		RETURNF "팔다리가 없는 사실상 살아있는 리얼돌, 대부분의 행동을 할 수 없다."
 
 	CASE 508
 	;번식자루
-		RETURNF "理性を失った植物状態、全ての行動を実行できない"
+		RETURNF "이성을 잃은 식물 상태, 모든 행동을 실행할 수 없다."
 
 	;내성적
 	CASE 600
-		RETURNF "경험치効率がアップ、정보 수집の効率がダウン"
+		RETURNF "경험치 효율이 증가하지만, 정보 수집 효율이 감소한다."
 
 	;사교적
 	CASE 601
-		RETURNF "정보 수집の効率がアップ、不審人物に狙われやすい"
+		RETURNF "정보 수집 효율이 증가하지만, 수상한 인물에게 노려지기 쉽다."
 
 	;제멋대로굼
 	CASE 602
-		RETURNF "경험치効率がアップ、전투 지원を受けたときの効果ダウン"
+		RETURNF "경험치 효율이 증가하지만, 전투 지원을 받았을 때의 효과가 감소한다."
 
 	;헌신적
 	CASE 603
-		RETURNF "전투 지원の効果アップ、전투 지원を行ったときの消費アップ"
+		RETURNF "전투 지원의 효과가 향상되지만, 전투 지원에 드는 자금 소비도 증가한다."
 
 	;소심함
 	CASE 604
-		RETURNF "굴복が上昇しやすいが、不審人物に狙われにくい"
+		RETURNF "고통이 오르기가 쉽지만, 수상한 인물에게 잘 노려지지 않는다."
 
 	;자존심높음
 	CASE 605
-		RETURNF "굴복が上昇しにくいが、굴복각인がLv3以上になると…"
+		RETURNF "굴복이 잘 오르지 않는다. 그러나, 굴복각인이 Lv3 이상이 된다면……"
 
 	;보수적
 	CASE 606
-		RETURNF "습득が上昇しにくいが、性行為で消耗しにくくなる"
+		RETURNF "습득이 잘 오르지 않지만, 성관계로 잘 지치지도 않게 된다."
 
 	;호기심
 	CASE 607
-		RETURNF "습득が上昇しやすいが、性行為で消耗しやすくなる"
+		RETURNF "습득이 오르기가 쉽지만, 성관계로 지치기도 쉬워진다."
 
 	;새드기질
 	CASE 608
-		RETURNF "공격を直撃させると기력が回復するが、同時に욕정も増加"
+		RETURNF "직격으로 피해를 입었을 시에 기력이 회복되지만, 동시에 욕정도 증가한다."
 
 	;마조기질
 	CASE 609
-		RETURNF "마조끼が成長しやすい"
+		RETURNF "마조끼가 성장하기 쉬워진다."
 
 	;쾌감에솔직
 	CASE 610
-		RETURNF "理性強度-2　고통が上昇しにくいが、공순が上昇しやすい"
+		RETURNF "「이성 강도-2」고통이 잘 오르지 않지만, 공순이 오르기가 쉽다."
 
 	;쾌감을부정
 	CASE 611
-		RETURNF "理性強度+2　굴복が上昇しやすいが、욕정が上昇しにくい"
+		RETURNF "「이성 강도+2」굴복이 오르기가 쉽지만, 욕정이 잘 오르지 않는다."
 
 	;전투거부
 	CASE 612
-		RETURNF "戦意強度-2　굴복が上昇しにくいが、공포が上昇しやすい"
+		RETURNF "「전의 강도-2」굴복이 잘 오르지 않지만, 공포가 오르기 쉽다."
 
 	;싸움꾼
 	CASE 613
-		RETURNF "戦意強度+2　공포が上昇しにくいが、욕정が上昇しやすい"
+		RETURNF "「전의 강도+2」공포가 잘 오르지 않지만, 욕정이 오르기가 쉽다."
 
 	;수줍음
 	CASE 614
-		RETURNF "공순が上昇しにくいが、치정が上昇しやすい"
+		RETURNF "공순이 잘 오르지 않지만, 치정이 오르기가 쉽다."
 
 	;배짱
 	CASE 615
-		RETURNF "치정が上昇しにくいが、욕정が上昇しやすい"
+		RETURNF "치정이 잘 오르지 않지만, 욕정이 오르기가 쉽다."
 
 	;인간불신
 	CASE 616
-		RETURNF "夜這いが発生しにくくなる"
+		RETURNF "사람과의 성적인 접촉 자체를 혐오하여, 요바이가 잘 발생하지 않게 된다."
 
 	;양도
 	CASE 617
-		RETURNF "男性が相手でも女性が相手でも平気で夜這いができる"
+		RETURNF "남성이든 여성이든 간에, 성별을 가리지 않고 요바이를 할 수 있다."
 
 	;남성기피
 	CASE 618
-		RETURNF "男性に対して夜這いが発生しにくくなる"
+		RETURNF "남성에 대한 요바이가 발생하기 어려워진다."
 
 	;여성기피
 	CASE 619
-		RETURNF "女性に対して夜這いが発生しにくくなる"
+		RETURNF "여성에 대한 요바이가 발생하기 어려워진다."
 
 	;모성적
 	CASE 620
-		RETURNF "인기도가 上昇しやすいが、공순も上昇しやすい"
+		RETURNF "인기도가 오르기 쉽지만, 공순도 오르기가 쉬워진다."
 
 	;소악마
 	CASE 621
-		RETURNF "인기도가 上昇しやすいが、굴복も上昇しやすい"
+		RETURNF "인기도가 오르기 쉽지만, 굴복도 오르기가 쉬워진다."
 
 	;눈에띄고싶어함
 	CASE 622
-		RETURNF "인기도가 上昇しやすいが、고통も上昇しやすい"
+		RETURNF "인기도가 오르기 쉽지만, 고통도 오르기가 쉬워진다."
 
 	;고상함
 	CASE 623
-		RETURNF "인기도가 上昇しやすいが、치정も上昇しやすい"
+		RETURNF "인기도가 오르기 쉽지만, 치정도 오르기가 쉬워진다."
 
 	;울보
 	CASE 624
-		RETURNF "인기도가 上昇しやすいが、공포も上昇しやすい"
+		RETURNF "인기도가 오르기 쉽지만, 공포도 오르기가 쉬워진다."
 	;결벽증
 	CASE 625
-		RETURNF "욕정、굴복が上昇しにくいが、치정と공포がとても上昇しやすい"
+		RETURNF "욕정, 굴복이 잘 오르지 않지만, 치정과 공포가 오르기 매우 쉬워진다."
 
 	CASE 800
 	;교제상대
-		RETURNF "交際している相手"
+		RETURNF "캐릭터와 교제하고 있는 상대."
 
 	CASE 801
 	;학생
-		RETURNF "学校に通う학생の身分"
+		RETURNF "학교를 다니는 학생 신분."
 	
 	CASE 810
 	;가족관계
-		RETURNF "キャラの가족관계"
+		RETURNF "캐릭터의 가족 관계."
 
 	CASE 811
 	;악세서리
-		RETURNF "キャラの細かい特徴"
+		RETURNF "캐릭터의 세세한 특징."
 
 	CASE 812
 	;외관
-		RETURNF "キャラの외관の特徴"
+		RETURNF "캐릭터의 외관 특징."
 
 	CASE 999
-	;原作キャラ
-		RETURNF "原作ありキャラの判定用"
+	;원문은 原作キャラ "원작 캐릭터" 이지만, CSV에서 번역된 대로 고유 캐릭터라고 씀
+	;고유캐릭터(고유캐릭터)
+		RETURNF "원작이 있는 고유 캐릭터 판정용"
 
 	CASE 1100
 	;평범
-		RETURNF "拘束された際に油断させやすい/매료경험이 上昇しにくい"
+		RETURNF "구속되었을 때 적을 방심시키기가 쉽지만, 매료 경험이 잘 오르지 않는다."
 
 	CASE 1101
 	;말려드는체질
-		RETURNF "出撃時に보스 촉수が出現しやすい/襲撃イベントのターゲットにされやすく、観衆が出現しやすい"
+		RETURNF "출격 시에 보스 촉수가 출현하기 쉽지만, 습격 이벤트의 타겟이 되거나 관중들과 조우하기가 쉽다."
 
 	CASE 1102
 	;공세구축
-		RETURNF "공격の直撃率が6%上昇/拘束された際に油断させにくい"
+		RETURNF "공격 직격률이 6% 상승하지만, 구속되었을 때 적을 방심시키기가 어렵다."
 
 	CASE 1103
 	;마력저장
-		RETURNF "戦闘開始時にEX 게이지が２つ溜まる/休憩時の回復量が少し低下"
+		RETURNF "전투 시작 시 EX 게이지가 2개 쌓이지만, 휴식 시의 회복량이 조금 저하한다."
 
 	CASE 1104
 	;고속회피
-		RETURNF "戦闘中に一度だけ絶対回避/공격-5"
+		RETURNF "전투 도중 딱 한 번만 적의 공격을 무조건 회피하지만, 공격 보너스가 -5 된다."
 
 	CASE 1105
 	;신기소유자
-		RETURNF "공격,방어,민첩+5/성내성-10,세뇌、흑화しやすくなる"
+		RETURNF "공격・방어・민첩 +5, 이성 강도 +1 / 성내성 -10, 세뇌 및 흑화되기 쉬움"
 
 	CASE 1106
 	;투쟁본능
-		RETURNF "공격+10/성내성-5,세뇌、흑화しやすくなる"
+		RETURNF "공격 +10, 전의 강도 +1, 전투 도중『황홀』상태 면역 / 성내성 -5, 세뇌 및 흑화되기 쉬움"
 
 	CASE 1107
 	;넘치는생명력
-		RETURNF "戦闘中と休憩時の回復量が上昇/지성-5"
+		RETURNF "전투 중과 휴식 시의 회복량이 상승하지만, 지성 보너스가 -5 된다."
 
 	CASE 1108
 	;정령교신
-		RETURNF "先制率上昇,지성+10/공격,방어,민첩-5"
+		RETURNF "선제율 상승, 지성 +10 / 공격・방어・민첩 -5, 전의 강도 -1"
 
 	CASE 1109
 	;야수의후손
-		RETURNF "クリティカル率+6%/지성-10,임신しやすい"
+		RETURNF "치명타율 +6%, 인기도가 오르기 쉬움 / 지성 -10, 이성 강도 -1, 임신하기 쉬움"
 
 	CASE 1110
 	;밤악마의귀족
-		RETURNF "全能力+10,昼間の回復量アップ/昼間に行動制限"
+		RETURNF "전능력 +10, 낮 휴식의 회복량 상승 / 낮에 (단련, 휴식, 전투 지원) 이외의 행동 제한"
 
 	CASE 1200
 	;숨겨진힘
-		RETURNF "ピンチで直撃率とクリティカル率+12%/공격,방어,민첩,지성ボーナス-5"
+		RETURNF "남은 체력・기력의 합계가 최대치의 25% 이하일 때 직격률과 치명타율 +12% / 모든 스탯 보너스 -10"
 
 	CASE 1201
 	;행운아
-		RETURNF "특별 활동と정보 수집の効率アップ/공격,방어,민첩,지성ボーナス-5"
+		RETURNF "특별 활동과 정보 수집의 효율성 향상 / 모든 스탯 보너스 -5"
 
 	CASE 1202
 	;타고난전사
-		RETURNF "クリティカル被弾防止,기절防止/특별 활동と전투 지원に参加不能"
+		RETURNF "치명타 피격 무효, 타격 기절 면역, 이성・전의 강도 +1 / 특별 활동 및 전투 지원 불가능"
 
 	CASE 1203
 	;근력강화
-		RETURNF "공격+5,「풀어낸다」の成功率アップ/「풀어낸다」使用時に疲労蓄積"
+		RETURNF "공격 +5,「풀어낸다」커맨드 성공률 증가 /「풀어낸다」사용 시 피로 축적"
 
 	CASE 1204
 	;날개
-		RETURNF "방어+5,공중대시ゲージが１つ増加/着地時に疲労蓄積"
+		RETURNF "방어 +5, 공중 대시 게이지 +1 / 착지 시 피로 축적"
 
 	CASE 1205
 	;공중부유
-		RETURNF "공중대시を使用しても疲労が蓄積しない/移動系コマンド実行時に疲労蓄積"
+		RETURNF "공중 대시 사용 시 피로가 축적되지 않지만, 이동계 커맨드 실행 시 피로가 추가로 축적된다."
 
 	CASE 1206
 	;소형체구
-		RETURNF "민첩+5,着地ペナルティ無効/「풀어낸다」の成功率ダウン"
+		RETURNF "민첩 +5, 착지 패널티 무효 /「풀어낸다」커맨드 성공률 감소"
 
 	CASE 1207
 	;핫스타트
-		RETURNF "常にバースト공격が使用可能/バースト공격使用時に追加で疲労蓄積"
+		RETURNF "상시 버스트 공격 사용 가능 / 버스트 공격 사용 시 추가로 피로 축적"
 
 	CASE 1208
 	;풀버스트
-		RETURNF "バースト공격の威力アップ/バースト공격使用時に追加で疲労蓄積"
+		RETURNF "버스트 공격의 위력 증가 / 버스트 공격 사용 시 추가로 피로 축적"
 
 	CASE 1209
 	;축복
-		RETURNF "状態異常耐性/粘液,波動ダメージ増大,임신しやすい"
+		RETURNF "상태이상 면역, 이성 강도 +1 / 점액・파동 공격으로 받는 피해량 증대, 임신하기 쉬움"
 
 	CASE 1210
 	;불굴
-		RETURNF "消耗しても行動成功率が低下しにくい/EX 게이지が増加しにくい"
+		RETURNF "체력・기력이 줄어도 행동 성공률이 잘 감소하지 않지만, EX 게이지가 증가하기 어려워진다."
 
 	CASE 1211
 	;스태미나
-		RETURNF "疲労しても回復量が低下しにくい/EX 게이지が増加しにくい"
+		RETURNF "피로가 쌓여도 회복량이 잘 저하되지 않지만, EX 게이지가 증가하기 어려워진다."
 
 	CASE 1212
 	;불로장수
-		RETURNF "時間経過で疲労回復/休憩時の回復量が少し低下,임신しにくい"
+		RETURNF "시간 경과로 피로 자동 회복 / 휴식 시의 회복량 소량 감소, 임신하기 어려움"
 
 	CASE 1213
 	;지혜의극치
-		RETURNF "지성+10/체력,기력,성내성-5"
+		RETURNF "지성 +10 / 체력・기력・성내성 -5"
 
 	CASE 1214
 	;사냥꾼의직감
-		RETURNF "先制率上昇,雑魚撃破時の探索度상승량アップ/지성-5"
+		RETURNF "선제율 상승, 잡몹 격파 시의 탐색도 상승량 증가 / 지성 -5"
 
 	CASE 1215
 	;심안
-		RETURNF "直撃率とクリティカル率+3%/방어,민첩-5"
+		RETURNF "직격률・치명타율 +3% / 방어・민첩 -5"
 
 	CASE 1216
 	;남다른미모
-		RETURNF "인기도と매료경험이 上昇しやすい/襲撃イベントのターゲットにされやすく、観衆が出現しやすい"
+		RETURNF "인기도와 매료경험이 오르기가 쉽지만, 습격 이벤트의 타겟이 되거나 관중들과 조우하기가 쉽다."
 
 	CASE 1217
 	;배덕의낙인
-		RETURNF "搾精공격で与えるダメージアップ/戦闘や幽閉時に獲得する珠の量が増加"
+		RETURNF "착정 공격으로 입히는 피해량이 증가하지만, 전투 또는 유폐 시에 획득하는 구슬의 양이 증가한다."
 
 	CASE 1218
 	;에어마스터
-		RETURNF "空中での回避率+25%/공중대시使用時に疲労蓄積"
+		RETURNF "공중에서의 회피율이 +25% 증가하지만, 공중 대시 사용 시 피로가 추가로 축적된다."
 
 ENDSELECT
 	
 
 ;--------------------------------------------------
-;能力表示
+;능력 표시
 @SHOW_STATUS_ABL, ARG
-PRINTL ◆開発
+PRINTL ◆개발
 LOCAL = 0
 REPEAT 99
 	IF ABLNAME:COUNT != ""
@@ -3279,7 +3296,7 @@ REND
 ;--------------------------------------------------
 ;각인 표시
 @SHOW_STATUS_MARK, ARG
-PRINTL ◆刻印
+PRINTL ◆각인
 REPEAT 5
 	SIF COUNT == 3
 		PRINTL 
@@ -3316,15 +3333,15 @@ REPEAT 5
 REND
 
 ;--------------------------------------------------
-;経験表示
+;경험 표시
 @SHOW_STATUS_EXP, ARG
-PRINTL ◆経験
+PRINTL ◆경험
 LOCAL = 0
 REPEAT 99
-	;함락경험は非表示
+	;함락경험은 비표시
 	SIF COUNT == 12
 		CONTINUE
-	;スカトロ描写offなら방뇨경험は非表示
+	;스캇 묘사 OFF라면 방뇨경험은 비표시
 	IF COUNT == 55 && CONFIG_CHECK_MANIAC_F(15) == 0
 		PRINTL 
 		CONTINUE
@@ -3373,9 +3390,9 @@ REPEAT 99
 REND
 
 ;--------------------------------------------------
-;珠表示
+;구슬 표시
 @SHOW_STATUS_JUEL, ARG
-PRINT ◆珠　
+PRINT ◆구슬　
 LOCAL:0 = 0
 REPEAT 12
 	LOCAL:0 = COUNT
@@ -3389,23 +3406,23 @@ REPEAT 12
 REND
 
 ;--------------------------------------------------
-;武器カスタマイズ表示
+;무기 커스터마이즈 표시
 @SHOW_WEAPON_EDIT, ARG,ARG:1
 IF ARG:1 == 1
-	PRINTFORM ◆근거리武器 
+	PRINTFORM ◆근거리 무기 
 ELSEIF ARG:1 == 2
-	PRINTFORM ◆중거리武器 
+	PRINTFORM ◆중거리 무기 
 ELSEIF ARG:1 == 3
-	PRINTFORM ◆원거리武器 
+	PRINTFORM ◆원거리 무기 
 ENDIF
 IF CSTR:ARG:(ARG:1 + 4) != ""
 	PRINTFORML 『%CSTR:ARG:(ARG:1 + 4)%』
 ELSE
-	PRINTL （武器名が設定されていません）
+	PRINTL （무기명이 설정되어 있지 않습니다.）
 ENDIF
 PRINTL │
 CALL FSTYLE_ATTACK,ARG,ARG:1
-PRINTFORML └◎전투스타일　<<%FSTYLE_NAME_F(ARG,ARG:1)%>>　　　　　　　　　威力：【{RESULT}】
+PRINTFORML └◎전투 스타일 　<<%FSTYLE_NAME_F(ARG,ARG:1)%>>　　　　　　　　　위력：【{RESULT}】
 CALL SET_FSTYLE_INFO,ARG,ARG:1
 PRINTFORML 　---> %RESULTS:0%
 PRINTFORML 　---> %RESULTS:1%
@@ -3414,33 +3431,33 @@ PRINTFORML 　---> %RESULTS:2%
 
 
 ;--------------------------------------------------
-;ヘアスタイルの表示
+;헤어스타일 표시
 @SHOW_HAIRSTYLE, ARG
 VARSET LOCALS
-LOCALS += "　　　　　前髪："
+LOCALS += "　　　　앞머리："
 LOCALS += @"『%CSTR:ARG:12%』"
 
 PRINTFORML %LOCALS,40,LEFT%
 
 LOCALS = 
-LOCALS += "　ヘアスタイル："
+LOCALS += "　 헤어 스타일："
 LOCALS += @"『%CSTR:ARG:13%』"
 
 PRINTFORM %LOCALS,40,LEFT%
 LOCALS = 
 IF TALENT:ARG:변신능력 == 1
-	LOCALS += "　　　　変身中："
+	LOCALS += "　　　 변신 중："
 	LOCALS += @"『%CSTR:ARG:14%』"
 	PRINTFORM %LOCALS%
 ENDIF
 PRINTL 
 
 ;--------------------------------------------------
-;髪色の表示
+;머리색 표시
 @SHOW_HAIRCOLOR, ARG
 PRINT 　　　　머리색：[
 IF CSTR:ARG:30 == ""
-	PRINT 設定なし
+	PRINT 설정 없음
 ELSE
 	CALL SETCOLOR_BY_STR, CSTR:ARG:30
 	PRINT ■
@@ -3448,9 +3465,9 @@ ENDIF
 RESETCOLOR
 PRINT ]　
 IF TALENT:ARG:변신능력 == 1
-	PRINT 変身中：[
+	PRINT 변신 중：[
 	IF CSTR:ARG:31 == ""
-		PRINT 設定なし
+		PRINT 설정 없음
 	ELSE
 		CALL SETCOLOR_BY_STR, CSTR:ARG:31
 		PRINT ■
@@ -3461,19 +3478,19 @@ ENDIF
 PRINTL 
 
 ;--------------------------------------------------
-;瞳色の表示
+;눈동자 색 표시
 @SHOW_EYESCOLOR, ARG
-PRINT 　　　　　右目：[
+PRINT 　　 오른쪽 눈：[
 IF CSTR:ARG:32 == ""
-	PRINT 設定なし
+	PRINT 설정 없음
 ELSE
 	CALL SETCOLOR_BY_STR, CSTR:ARG:32
 	PRINT ■
 ENDIF
 RESETCOLOR
-PRINT ]　　左目：[
+PRINT ] 왼쪽 눈：[
 IF CSTR:ARG:33 == ""
-	PRINT 設定なし
+	PRINT 설정 없음
 ELSE
 	CALL SETCOLOR_BY_STR, CSTR:ARG:33
 	PRINT ■
@@ -3483,11 +3500,11 @@ PRINT ]
 PRINTL 
 
 ;--------------------------------------------------
-;肌色の表示
+;피부색 표시
 @SHOW_SKINCOLOR, ARG
-PRINT 　　　　肌の色：[
+PRINT 　　　　피부색：[
 IF CSTR:ARG:34 == ""
-	PRINT 設定なし
+	PRINT 설정 없음
 ELSE
 	CALL SETCOLOR_BY_STR, CSTR:ARG:34
 	PRINT ■
@@ -3497,40 +3514,44 @@ PRINT ]
 PRINTL 
 
 ;--------------------------------------------------
-;文字列を色情報に解凍する
+;문자열을 색 정보로 해동한다
+;(원문) 文字列を色情報に解凍する
 @SETCOLOR_BY_STR,ARGS
 #DIMS SeparatorMajor
 #DIMS String
 
 SeparatorMajor = //
 String = %ARGS%
-IF String == "赤" || String == "レッド"
+IF String == "빨강" || String == "레드"
 	SETCOLOR 255,8,8
-ELSEIF String == "緑" || String == "グリーン"
+ELSEIF String == "초록" || String == "그린"
 	SETCOLOR 8,255,125
-ELSEIF String == "青" || String == "ブルー"
+ELSEIF String == "파랑" || String == "블루"
 	SETCOLOR 8,125,255
-ELSEIF String == "黄" || String == "イエロー"
+ELSEIF String == "노랑" || String == "옐로우"
 	SETCOLOR 245,245,125
-ELSEIF String == "金" || String == "ブロンド" || String == "ゴールド"
+ELSEIF String == "금색" || String == "블론드" || String == "골드"
 	SETCOLOR 255,255,8
-ELSEIF String == "紫" || String == "パープル"
+ELSEIF String == "보라" || String == "퍼플"
 	SETCOLOR 255,8,255
-ELSEIF String == "橙" || String == "オレンジ"
+ELSEIF String == "주황" || String == "오렌지"
 	SETCOLOR 255,125,8
-ELSEIF String == "桃" || String == "ピンク"
+ELSEIF String == "분홍" || String == "핑크"
 	SETCOLOR 255,8,125
-ELSEIF String == "銀" || String == "シルバー"
+ELSEIF String == "은색" || String == "실버"
 	SETCOLOR 200,200,255
-ELSEIF String == "茶" || String == "ブラウン" || String == "ブルネット"
+;원문은 茶
+ELSEIF String == "다색" || String == "브라운" || String == "브루넷"
 	SETCOLOR 88,8,8
-ELSEIF String == "黒" || String == "ブラック"
+ELSEIF String == "검정" || String == "블랙"
 	SETCOLOR 40,24,24
-ELSEIF String == "肌色"
+ELSEIF String == "살구색"
 	SETCOLOR 255,200,180
-ELSEIF String == "褐色"
+;;원문은 褐色
+ELSEIF String == "갈색"
 	SETCOLOR 183,86,17
-ELSEIF String == "色白"
+;원문은 色白
+ELSEIF String == "백색"
 	SETCOLOR 255,236,220
 ELSEIF ARGS == ""
 	RETURN -1
@@ -3728,9 +3749,9 @@ ENDIF
 	RESETCOLOR
 	FONTREGULAR
 
-;戦闘用、空中ゲージ表示
+;전투용, 공중 게이지 표시
 @STATUS_PRINT_AIRGAGE
-;ジャンプ性能
+;점프 성능
 FONTBOLD
 PRINT AIR. 
 FONTITALIC
@@ -3860,10 +3881,10 @@ FONTREGULAR
 
 
 @STATUS_PRINT_FEAT
-;種族とFEATの表示
+;종족과 FEAT 표시
 FOR LOCAL, 201, 250
 	SIF TALENT:LOCAL > 0
-		PRINTFORM  種族:%TALENTNAME:LOCAL%    
+		PRINTFORM  종족:%TALENTNAME:LOCAL%    
 NEXT
 PRINT FEAT:
 LOCAL:1 = 0
@@ -3880,14 +3901,14 @@ FOR LOCAL, 1100, 1300
 NEXT
 IF LOCAL:1 == 1
 	PRINTL 
-		;直撃率
+	;직격률
 	LOCAL:2 = 0
-	;CRT率
+	;치명타율
 	LOCAL:3 = 0
-	;バースト공격の피로도
+	;버스트 공격의 피로도
 	LOCAL:4 = 0
 
-	;メリット効果
+	;메리트 효과
 	PRINT    
 	SETCOLOR 200,255,200
 	IF TALENT:공세구축 > 0
@@ -3919,98 +3940,98 @@ IF LOCAL:1 == 1
 			LOCAL:1 = 2
 	ENDIF
 	IF LOCAL:2 > 0
-		PRINT 直撃率+
+		PRINT 직격률 +
 		PRINTFORM {LOCAL:2}
 		PRINT %  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF LOCAL:3 > 0
-		PRINT CRT率+
+		PRINT 치명타율 +
 		PRINTFORM {LOCAL:3}
 		PRINT %  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:고속회피 > 0 && TFLAG:80 == 0
-		PRINT 絶対回避  
+		PRINT 절대 회피  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:투쟁본능 > 0
-		PRINT 황홀耐性  
+		PRINT 황홀 내성  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:넘치는생명력 > 0
-		PRINT 回復量アップ  
+		PRINT 회복량 UP  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:타고난전사 > 0
-		PRINT 기절耐性  被CRT防止  
+		PRINT 기절 내성  CRT 피해 면역  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:근력강화 > 0
-		PRINT 振り解き率アップ  
+		PRINT 풀어내기 확률 UP  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:에어마스터 > 0
-		PRINT 空中性能強化  
+		PRINT 공중 성능 강화  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:날개 > 0
-		PRINT 공중대시ゲージ+1  
+		PRINT 공중 대시 게이지 +1  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:공중부유 > 0
-		PRINT 공중대시疲労軽減  
+		PRINT 공중 대시 피로 경감  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:소형체구 > 0
-		PRINT 着地ペナルティ無効  
+		PRINT 착지 패널티 무효  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:핫스타트 > 0
-		PRINT 常にバースト공격可能  
+		PRINT 상시 버스트 공격 가능  
 		LOCAL:4 += 1
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:풀버스트 > 0
-		PRINT バースト공격の威力アップ  
+		PRINT 버스트 공격의 위력 UP  
 		LOCAL:4 += 1
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:축복 > 0
-		PRINT 状態異常耐性  
+		PRINT 상태 이상 내성  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:불굴 > 0
-		PRINT 消耗ペナルティ軽減  
+		PRINT 빈사 패널티 경감  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:스태미나 > 0
-		PRINT 持久力アップ  
+		PRINT 피로도 회복 패널티 경감  
 		SIF LOCAL:1 < 3
 			LOCAL:1 = 3
 	ENDIF
 	IF TALENT:평범 > 0
-		PRINT 油断させやすい  
+		PRINT 구속 중 적의 방심도 상승 UP  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
 	IF TALENT:배덕의낙인 > 0
-		PRINT 搾精ダメージアップ  
+		PRINT 착정 피해량 UP  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
@@ -4018,29 +4039,29 @@ IF LOCAL:1 == 1
 	SIF LOCAL:1 > 2
 		PRINTL 
 
-	;デメリット効果
+	;디메리트 효과
 	PRINT    
 	SETCOLOR 255,200,255
 	SIF TALENT:공세구축 > 0
-		PRINT 油断させにくい  
+		PRINT 구속 중 적의 방심도 상승 DOWN  
 	SIF TALENT:근력강화 > 0
-		PRINT 풀어낸다と疲労+1  
+		PRINT 풀어낸다 피로 +1  
 	SIF TALENT:에어마스터 > 0
-		PRINT 공중대시で疲労+1  
+		PRINT 공중 대시 피로 +1  
 	SIF TALENT:날개 > 0
-		PRINT 着地時に疲労+1  
+		PRINT 착지 피로 +1  
 	SIF TALENT:공중부유 > 0
-		PRINT 移動系コマンドで疲労+1  
+		PRINT 이동계 커맨드 피로 +1  
 	SIF TALENT:소형체구 > 0
-		PRINT 振り解き率ダウン  
+		PRINT 풀어내기 확률 DOWN  
 	IF LOCAL:4 > 0
-		PRINT バースト공격の反動+
+		PRINT 버스트 공격 반동 +
 		PRINTFORM {LOCAL:4}  
 	ENDIF
 	SIF TALENT:축복 > 0
-		PRINT 粘液,波動ダメージ増大  
+		PRINT 점액, 파동 피해량 증대  
 	SIF TALENT:불굴 > 0 || TALENT:스태미나 > 0
-		PRINT EX 게이지が上昇しにくい  
+		PRINT EX 게이지 상승 DOWN  
 	RESETCOLOR
 ELSE
 	PRINTL ─
@@ -4051,31 +4072,31 @@ ENDIF
 
 
 @SHOW_TRAIN_PALAM_STATUS(ARGS)
-;表示状態　かつ上部に表示されている場合
-IF CONFIG_CHECK_SCREEN_F(5) == 1 && CONFIG_CHECK_SCREEN_F(6) == (ARGS=="上部" ? 0 # 1)
-	;位置が固定されている場合
+;표시 상태이면서 상단부에 표시되어 있는 경우
+IF CONFIG_CHECK_SCREEN_F(5) == 1 && CONFIG_CHECK_SCREEN_F(6) == (ARGS=="상단부" ? 0 # 1)
+	;위치가 고정되어 있는 경우
 	IF CONFIG_CHECK_SCREEN_F(7) == 0
 ;		PRINTL 
 		CALL SHOW_STATUS_PALAM
-	;位置が固定されていない場合
+	;위치가 고정되어 있지 않은 경우
 	ELSE
-		IF ARGS=="上部"
+		IF ARGS=="상단부"
 ;			PRINTL 
 			PRINT 　　　　　　　　　　　　　　　　　　　　　　　　
 		ENDIF
-		;閉じている場合
+		;닫혀있을 경우
 		IF CONFIG_CHECK_SCREEN_F(8) == 1
-			PRINTBUTTON "[898] 調教스테이터스を表示", 898
+			PRINTBUTTON "[898] 조교 스테이터스를 표시한다", 898
 			PRINTL 
-		;開いている場合
+		;열려있을 경우
 		ELSE
-			PRINTBUTTON "[898] 調教스테이터스を閉じる", 898
-			SIF ARGS=="上部"
-				PRINTBUTTON "[899] 下側に移動", 899
-			SIF ARGS=="下部"
-				PRINTBUTTON "[899] 上側に移動", 899
+			PRINTBUTTON "[898] 조교 스테이터스를 닫는다", 898
+			SIF ARGS=="상단부"
+				PRINTBUTTON "[899] 위쪽으로 이동", 899
+			SIF ARGS=="하단부"
+				PRINTBUTTON "[899] 아래쪽으로 이동", 899
 			PRINTL 
-			;表示状態なら描画
+			;표시 상태라면 묘화
 			CALL SHOW_STATUS_PALAM
 		ENDIF
 	ENDIF

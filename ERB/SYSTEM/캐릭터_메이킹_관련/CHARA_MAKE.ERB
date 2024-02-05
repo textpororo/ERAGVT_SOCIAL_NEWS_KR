@@ -117,7 +117,7 @@ PRINTL
 PRINTL
 PRINTL
 PRINTFORM [1000]★キャラメイクを完了する%\@ RESULT ? （未設定のキャラはおまかせ） #  \@,32,LEFT%
-PRINTFORML [999]モード選択に戻る
+PRINTFORML [999]モード選択に돌아간다
 
 
 $INPUT_LOOP_0
@@ -180,7 +180,7 @@ ELSEIF RESULT == 170
 	PRINTL 
 	PRINTL 【注意】共通設定のグローバルに上書きします。
 	PRINTL         元の状態に復元はできませんが、よろしいですか？
-	PRINTL     [0]上書き実行      [99]キャンセルして戻る
+	PRINTL     [0]上書き実行      [99]キャンセルして돌아간다
 	PRINTL 
 	$INPUT_LOOP_3_1
 	INPUT
@@ -258,7 +258,7 @@ ELSEIF RESULT==300 && (GLOBAL:100 + GLOBAL:101 + GLOBAL:102) > 0 && !GAME_OPTION
 		PRINTFORML [ 5] ５人で開始
 		PRINTFORML [ 6] ６人で開始
 		PRINTL 
-		PRINTFORML [99]変更せずに戻る
+		PRINTFORML [99]変更せずに돌아간다
 		$INPUT_LOOP_CHARA_NUM
 		INPUT
 		IF RESULT >= 2 && RESULT <= 6

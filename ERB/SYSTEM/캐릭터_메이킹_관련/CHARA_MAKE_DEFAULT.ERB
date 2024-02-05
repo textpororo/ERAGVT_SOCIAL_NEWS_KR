@@ -152,7 +152,7 @@
 			BASE:SELECT:(LOCAL:1) = SEIKAKU_HOSEI_F(LOCAL, LOCAL:1, LOCAL:2)
 			MAXBASE:SELECT:(LOCAL:1) = BASE:SELECT:(LOCAL:1)
 		NEXT
-		;性格による一人称の設定
+		;性格による일인칭の設定
 		;「私」以外に設定してある場合は変更しない
 		IF CFLAG:SELECT:8
 		ELSEIF TALENT:SELECT:고풍적
@@ -922,7 +922,7 @@ NEXT
 		ENDIF
 	ENDIF
 
-	;一人称を低確率で変更
+	;일인칭を低確率で変更
 	IF RAND:20 == 0 || ISMALE(SELECT)
 		IF RAND:2 == 0
 			CFLAG:SELECT:8 = 25 + RAND:3
@@ -1037,7 +1037,7 @@ LOCAL:5 = 1
 LOCAL:201 = 2
 LOCAL:202 = 2
 
-;나이6~12歳は小학생+50%
+;나이6~12歳は초등학생+50%
 IF BASE:ARG:나이 >= 6 && BASE:ARG:나이 <= 12
 	TALENT:ARG:학생 = 1
 ELSEIF BASE:ARG:나이 >= 13 && BASE:ARG:나이 <= 15
@@ -1049,24 +1049,24 @@ ELSEIF BASE:ARG:나이 >= 19 && BASE:ARG:나이 <= 22
 ENDIF
 
 
-;;나이6~12歳は小학생+50%
+;;나이6~12歳は초등학생+50%
 ;IF BASE:ARG:나이 >= 6 && BASE:ARG:나이 <= 12
 ;	LOCAL:101 += 50
 ;ENDIF
-;;나이13~15歳は中학생+35%
+;;나이13~15歳は중학생+35%
 ;IF BASE:ARG:나이 >= 13 && BASE:ARG:나이 <= 15
 ;	LOCAL:102 += 35
 ;ENDIF
-;;나이16~18歳は高校生+25%
+;;나이16~18歳は고등학생+25%
 ;IF BASE:ARG:나이 >= 16 && BASE:ARG:나이 <= 18
 ;	LOCAL:103 += 25
 ;ENDIF
-;;나이19~22歳は大학생+10%
+;;나이19~22歳は대학생+10%
 ;IF BASE:ARG:나이 >= 19 && BASE:ARG:나이 <= 22
 ;	LOCAL:104 += 10
 ;ENDIF
 ;
-;;처녀でないなら彼氏持ち+3%、人妻+10%、未亡人+5%、小학생-10%、中학생-5%、高校生+3%、大학생+10%
+;;처녀でないなら彼氏持ち+3%、人妻+10%、未亡人+5%、초등학생-10%、중학생-5%、고등학생+3%、대학생+10%
 ;IF TALENT:ARG:처녀 == 0
 ;	LOCAL:2 += 3
 ;	LOCAL:4 += 10
@@ -1076,22 +1076,22 @@ ENDIF
 ;	LOCAL:103 += 3
 ;	LOCAL:104 += 10
 ;ENDIF
-;;백보지なら人妻、未亡人、高校生、大학생の確率半減
+;;백보지なら人妻、未亡人、고등학생、대학생の確率半減
 ;IF TALENT:ARG:백보지 > 0
 ;	LOCAL:4 /= 2
 ;	LOCAL:5 /= 2
 ;	LOCAL:103 /= 2
 ;	LOCAL:104 /= 2
 ;ENDIF
-;;왜소함なら小학생+16%
+;;왜소함なら초등학생+16%
 ;IF TALENT:ARG:왜소함 > 0
 ;	LOCAL:101 += 16
 ;ENDIF
-;;장신なら小학생-8%
+;;장신なら초등학생-8%
 ;IF TALENT:ARG:장신 > 0
 ;	LOCAL:101 -= 8
 ;ENDIF
-;;빈유なら中학생以下+8%
+;;빈유なら중학생以下+8%
 ;IF TALENT:ARG:빈유 > 0
 ;	LOCAL:101 += 8
 ;	LOCAL:102 += 8
@@ -1110,17 +1110,17 @@ ELSEIF LOCAL < LOCAL:1 + LOCAL:2 + LOCAL:3 + LOCAL:4 && ISFEMALE(ARG)
 ELSEIF LOCAL <  LOCAL:1 + LOCAL:2 + LOCAL:3 + LOCAL:4 + LOCAL:5 && ISFEMALE(ARG)
 	TALENT:ARG:교제상대 = 5
 ENDIF
-;;婚約以上なら中학생以下の確率を０に
+;;婚約以上なら중학생以下の確率を０に
 ;IF TALENT:ARG:교제상대 >= 3
 ;	LOCAL:101 = 0
 ;	LOCAL:102 = 0
 ;ENDIF
-;;人妻なら高校生、大학생の確率を半分に
+;;人妻なら고등학생、대학생の確率を半分に
 ;IF TALENT:ARG:교제상대 == 4
 ;	LOCAL:103 /= 2
 ;	LOCAL:104 /= 2
 ;ENDIF
-;;未亡人なら高校生、大학생の確率を０に
+;;未亡人なら고등학생、대학생の確率を０に
 ;IF TALENT:ARG:교제상대 == 5
 ;	LOCAL:103 = 0
 ;	LOCAL:104 = 0
@@ -1175,7 +1175,7 @@ IF ISFEMALE(ARG)
 	ENDIF
 ENDIF
 
-;小학생なら12%の確率で유아배に、75%の確率で백보지に変更
+;초등학생なら12%の確率で유아배に、75%の確率で백보지に変更
 LOCAL = RAND:100
 ;장신なら유아배にはならない
 SIF TALENT:ARG:장신
@@ -1318,16 +1318,16 @@ ENDIF
 
 ;ここからは素質による나이範囲の自動設定
 AGE = BASE:ARG:나이
-;小학생なら나이幅6~12
+;초등학생なら나이幅6~12
 IF TALENT:ARG:학생 == 1
 	AGE = RAND:7 + 6
-;中학생なら나이幅12~16
+;중학생なら나이幅12~16
 ELSEIF TALENT:ARG:학생 == 2
 	AGE = RAND:5 + 12
-;高校生なら나이幅15~19
+;고등학생なら나이幅15~19
 ELSEIF TALENT:ARG:학생 == 3
 	AGE = RAND:5 + 15
-;大학생なら나이幅18~25
+;대학생なら나이幅18~25
 ELSEIF TALENT:ARG:학생 == 4
 	AGE = RAND:6 + 18
 	;SIF AGE >= 22 && RAND:10 == 0
@@ -1336,7 +1336,7 @@ ENDIF
 
 ;人妻か未亡人なら나이16歳以上
 IF TALENT:ARG:교제상대 >= 4 && AGE < 25
-	;高校生持ちの場合
+	;고등학생持ちの場合
 	IF TALENT:ARG:학생 == 3
 		AGE = 16 + RAND:3
 	ELSEIF TALENT:ARG:학생 == 4
@@ -1440,17 +1440,17 @@ ELSEIF ARGS == "中年"
 ;壮年　範囲35~60
 ELSEIF ARGS == "壮年"
 	LOCAL = RAND:26 + 35
-;小학생　範囲5~12
-ELSEIF ARGS == "小학생"
+;초등학생　範囲5~12
+ELSEIF ARGS == "초등학생"
 	LOCAL = RAND:8 + 5
-;中학생　範囲13~15
-ELSEIF ARGS == "中학생"
+;중학생　範囲13~15
+ELSEIF ARGS == "중학생"
 	LOCAL = RAND:4 + 13
-;高校生　範囲16~18
-ELSEIF ARGS == "高校生"
+;고등학생　範囲16~18
+ELSEIF ARGS == "고등학생"
 	LOCAL = RAND:3 + 16
-;大학생　範囲19~22
-ELSEIF ARGS == "大학생"
+;대학생　範囲19~22
+ELSEIF ARGS == "대학생"
 	LOCAL = RAND:4 + 19
 ELSE
 	;エラー表示の代わり
