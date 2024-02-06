@@ -1,14 +1,14 @@
 ﻿
 ;------------------------------------------------------------------------------------------------------------------
-;キャラメイク画面を開いた時点で設定される個別キャラの要素
+;캐릭터 메이킹 화면을 연 시점에서 설정되는 개별 캐릭터 요소
 ;------------------------------------------------------------------------------------------------------------------
 @CHARA_MAKE_INITIALIZE(SELECT=0)
 #DIM SELECT
 
-	;種族とフィートがランダムなら自動設定
+	;종족과 피트가 랜덤이라면 자동 설정
 	CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",SELECT
 	IF RESULT == 0
-		;種族の自動設定
+		;종족 자동 설정
 		IF FLAG:823 > 0
 			IF FLAG:823 == 1
 				TALENT:SELECT:인간 = 1
@@ -60,18 +60,18 @@
 				TALENT:SELECT:밤악마의귀족 = 1
 			ELSEIF LOCAL == 211
 				TALENT:SELECT:폴리니안 = 1
-			;인간が出やすいように
+			;인간이 잘 나오도록
 			ELSE
 				TALENT:SELECT:인간 = 1
 			ENDIF
 		ENDIF
-		;フィートの自動設定
+		;FEAT 자동 설정
 		CALL SYUZOKU_CHECK,"GET_SYUZOKU_VALUE",SELECT
 		SIF FLAG:824 == 1
 			CALL SET_FEAT_DEFAULT, SELECT, RESULT
 	ENDIF
 
-	;性格がランダムなら決定
+	;성격이 랜덤이라면 결정
 	IF SEIKAKU_CHECK_F(SELECT) == 0
 		local:1=1
 		WHILE local:1<=100
@@ -114,7 +114,7 @@
 			ELSEIF LOCAL == 27
 				TALENT:SELECT:사나움 = 1
 			ENDIF
-			;他キャラとの被りは避けようとする
+			;다른 캐릭터와의 중복은 피하고자 한다
 			FOR local:2,1,SELECT
 				IF SEIKAKU_CHECK_F(local:2) == SEIKAKU_CHECK_F(SELECT)
 					local:1++
@@ -122,23 +122,23 @@
 				ENDIF
 			NEXT
 
-			;구상無くてもいい場合
+			;구상이 없는 것까지 포함한 경우
 			IF FLAG:825 == 0
 				BREAK
 			ELSE
-				;구상あり限定の場合
+				;구상이 있는 것만 한정한 경우
 				TRYCCALLFORM KOJO_0_COLOR_{LOCAL}
-					;구상あった
+					;구상이 있다
 					RESETCOLOR
 					BREAK
 				CATCH
-					;구상なかった(ガチャ続行)
+					;구상이 없다(가챠 속행)
 					local:1++
 				ENDCATCH
 			ENDIF
 		WEND
 
-		;체력などのBASE値の計算
+		;체력 등의 BASE값 계산
 		CALL SEIKAKU_CHECK,"GET_TALENT_VALUE",SELECT
 		LOCAL = RESULT
 		LOCAL:1 = 0
@@ -148,30 +148,32 @@
 			SIF LOCAL:3 > 2
 				LOCAL:1 = LOCAL:3 + 7
 			LOCAL:2 = BASE:SELECT:(LOCAL:1)
-			;性格補正
+			;성격 보정
 			BASE:SELECT:(LOCAL:1) = SEIKAKU_HOSEI_F(LOCAL, LOCAL:1, LOCAL:2)
 			MAXBASE:SELECT:(LOCAL:1) = BASE:SELECT:(LOCAL:1)
 		NEXT
-		;性格による일인칭の設定
-		;「私」以外に設定してある場合は変更しない
+		;성격에 따른 일인칭 설정
+		;「저(私, わたし, わたくし)」이외로 설정되어 있는 경우에는 변경하지 않는다
 		IF CFLAG:SELECT:8
+		;고풍적:「이 몸(わらわ)」
 		ELSEIF TALENT:SELECT:고풍적
 			CFLAG:SELECT:8 = 20
+		;경박함:「나(あたし)」
 		ELSEIF TALENT:SELECT:경박함
 			CFLAG:SELECT:8 = 11
 		ELSE
 			CFLAG:SELECT:8 = 0
 		ENDIF
 	ENDIF
-	;身体データの生成
+	;신체 데이터 생성
 	CALL CHARA_MAKE_BASE_PROFILE(SELECT)
 
-	;共通設定からの変身名ロード　※범용 캐릭터以外への反映
+	;공통 설정에서 변신명 로드　※범용 캐릭터 이외에의 반영
 	IF CALLNAME:SELECT != "범용 캐릭터" && TALENT:SELECT:변신능력 == 1
 		IF CSTR:SELECT:0 == ""
-			;共通上の句
+			;공통 윗구 ("매지컬 나이트" 할 때 매지컬 부분)
 			LOCALS=%SAVESTR:11%
-			;下の句ジャンル
+			;아랫구 장르 ("매지컬 나이트" 할 때 나이트 부분)
 			LOCALS:1=%CALLNAME:SELECT%
 			LOCAL:10=0
 			$NAMEFROMGENRE
@@ -181,7 +183,7 @@
 			ENDIF
 			IF LOCALS+LOCALS:1!=""
 				CSTR:SELECT:0 = %LOCALS%%LOCALS:1%
-				;ジャンル指定からの生成なら他キャラとの丸被りは避けようとする
+				;장르 지정으로부터의 생성이라면 다른 캐릭터와의 중복은 피하고자 한다
 				IF FLAG:820>0
 					FOR LOCAL, 1, CHARANUM
 						SIF LOCAL==SELECT
@@ -215,34 +217,34 @@
 
 
 ;------------------------------------------------------------------------------------------------------------------
-;キャラメイク完了後に全キャラ共通で行う初期処理 ＋ 未設定項目を補う処理
+;캐릭터 메이킹 완료 후 모든 캐릭터 공통으로 진행하는 초기 처리 ＋ 미설정 항목을 보충하는 처리
 ;------------------------------------------------------------------------------------------------------------------
-;ARG 個別設定する場合
+;ARG 개별 설정하는 경우
 @CHARA_MAKE_FINALIZE, ARG = 0
 #DIM SELECT
 
-;キャラの素性をランダムに生成
+;캐릭터의 내력(素性)을 랜덤으로 설정
 FOR SELECT,1,CHARANUM
 
-	;キャラ指定がある場合、他をスキップする
+	;캐릭터 지정이 있는 경우, 다른 것은 스킵한다
 	SIF ARG != 0 && SELECT != ARG
 		CONTINUE
 
-	;未初期化項目(범용 캐릭터状態)の要素について補完
+	;미초기화 항목(범용 캐릭터 상태)의 요소에 대한 보완
 	CALL CHARA_MAKE_INITIALIZE(SELECT)
 
 
-	;CSVの記述ミス回避
+	;CSV 기술 오류 회피
 	SIF MAXBASE:SELECT:사정 < 1
 		MAXBASE:SELECT:사정 = 10000
 	SIF MAXBASE:SELECT:모유 < 1
 		MAXBASE:SELECT:모유 = 10000
 
-	;番号登録
+	;번호 등록
 	SIF CFLAG:SELECT:240 == 0
 		CFLAG:SELECT:240 = SELECT
 
-	;未使用のボーナス値を反映
+	;미사용 보너스치를 반영
 	IF JUEL:SELECT:수련P >= 10
 		FOR LOCAL,0,JUEL:SELECT:수련P / 10
 			CFLAG:SELECT:(50 + RAND:7) += 1
@@ -250,7 +252,7 @@ FOR SELECT,1,CHARANUM
 		NEXT
 	ENDIF
 
-	;ジャンプ性能
+	;점프 성능
 	IF TALENT:SELECT:변신능력 == -1
 		MAXBASE:SELECT:공중대시 = LIMIT(CSVBASE_F(NO:SELECT,22), 0, 8)
 	ELSE
@@ -262,8 +264,8 @@ FOR SELECT,1,CHARANUM
 	SIF TALENT:SELECT:공중전서툼
 		MAXBASE:SELECT:공중대시 = MAX(MAXBASE:SELECT:공중대시 - TALENT:SELECT:공중전서툼, 0)
 
-	;素質基本値の保存
-	;通常性別
+	;소질 기본값 보존
+	;통상 성별
 	IF CHARATALENT_F(SELECT, 0, "남자") > 0
 		IF CHARATALENT_F(SELECT, 0, "보추") > 0
 			BASE:SELECT:성별기본값 = 3
@@ -275,7 +277,7 @@ FOR SELECT,1,CHARANUM
 	ELSE
 		BASE:SELECT:성별기본값 = 0
 	ENDIF
-	;通常体格
+	;통상 체격
 	IF CHARATALENT_F(SELECT, 0, "왜소함") > 0
 		BASE:SELECT:체격기본값 = -1
 	ELSEIF CHARATALENT_F(SELECT, 0, "장신") > 0
@@ -283,7 +285,7 @@ FOR SELECT,1,CHARANUM
 	ELSE
 		BASE:SELECT:체격기본값 = 0
 	ENDIF
-	;通常胸サイズ
+	;통상 가슴 사이즈
 	IF CHARATALENT_F(SELECT, 0, "절벽") > 0
 		BASE:SELECT:가슴사이즈기본값 = -2
 	ELSEIF CHARATALENT_F(SELECT, 0, "빈유") > 0
@@ -301,7 +303,7 @@ FOR SELECT,1,CHARANUM
 	ELSE
 		BASE:SELECT:가슴사이즈기본값 = 0
 	ENDIF
-	;通常외관
+	;통상 외관
 	IF CHARATALENT_F(SELECT, 0, "순산형") > 0
 		BASE:SELECT:외관기본값 = 1
 	ELSEIF CHARATALENT_F(SELECT, 0, "포동포동") > 0
@@ -317,7 +319,7 @@ FOR SELECT,1,CHARANUM
 	ELSE
 		BASE:SELECT:외관기본값 = 0
 	ENDIF
-	;変身時性別
+	;변신 시 성별
 	IF CHARATALENT_F(SELECT, 1, "남자") > 0
 		IF CHARATALENT_F(SELECT, 1, "보추") > 0
 			MAXBASE:SELECT:성별기본값 = 3
@@ -329,11 +331,11 @@ FOR SELECT,1,CHARANUM
 	ELSE
 		MAXBASE:SELECT:성별기본값 = 0
 	ENDIF
-	;変身時体格
+	;변신 시 체격
 	MAXBASE:SELECT:체격기본값 = TALENT:SELECT:변신시체격변동
-	;変身時胸サイズ
+	;변신 시 가슴 사이즈
 	MAXBASE:SELECT:가슴사이즈기본값 = TALENT:SELECT:변신시가슴사이즈변동
-	;변신시외관
+	;변신 시 외관
 	IF CHARATALENT_F(SELECT, 1, "순산형") > 0
 		MAXBASE:SELECT:외관기본값 = 1
 	ELSEIF CHARATALENT_F(SELECT, 1, "포동포동") > 0
@@ -353,7 +355,7 @@ FOR SELECT,1,CHARANUM
 
 
 
-	;キャラのボーナス値を実스테이터스に反映
+	;캐릭터의 보너스치를 실스테이터스에 반영
 	BASE:SELECT:체력 += CFLAG:SELECT:50 * 10
 	BASE:SELECT:기력 += CFLAG:SELECT:51 * 10
 	BASE:SELECT:성내성 += CFLAG:SELECT:52
@@ -370,11 +372,11 @@ FOR SELECT,1,CHARANUM
 		MAXBASE:SELECT:(LOCAL:1) = BASE:SELECT:(LOCAL:1)
 	NEXT
 
-	;레벨１未満のキャラは初期레벨を１に
+	;1레벨 미만인 캐릭터는 초기 레벨을 1로
 	SIF ABL:SELECT:레벨 < 1
 		ABL:SELECT:레벨 = 1
 
-	;캐릭터의 스테이터스を레벨1の物に補正する
+	;캐릭터의 스테이터스를 1레벨 기준으로 보정한다
 	BASE:SELECT:기초체력 = BASE:SELECT:체력
 	BASE:SELECT:기초기력 = BASE:SELECT:기력
 	BASE:SELECT:기초성내성 = BASE:SELECT:성내성
@@ -384,18 +386,18 @@ FOR SELECT,1,CHARANUM
 	BASE:SELECT:기력 = MAXBASE:SELECT:기력
 	BASE:SELECT:성내성 = MAXBASE:SELECT:성내성
 
-	;衣装が未設定なら사복、-1(装備なし指定)なら0にしておく
+	;의상이 미설정이라면 사복, -1(장비 없음 지정)이라면 0으로 해 둔다
 	SIF CFLAG:SELECT:40 == 0
 		CFLAG:SELECT:40 = 100
 	SIF CFLAG:SELECT:40 == -1
 		CFLAG:SELECT:40 = 0
-	;변신능력があるとき、衣装が未設定なら오리지널 슈트
+	;변신능력이 있을 때, 의상이 미설정이라면 오리지널 슈트
 	SIF TALENT:SELECT:변신능력 == 1 && CFLAG:SELECT:41 == 0
 		CFLAG:SELECT:41 = 200
-	;無しと指定されていたら無し
+	;없음으로 지정되어 있으면 없음
 	SIF CFLAG:SELECT:41 == -1
 		CFLAG:SELECT:41 = 0
-	;衣装が未設定なら평범한 속옷、ただし겉옷が(변신능력があれば変身後겉옷も)속옷겸용なら追加しない
+	;의상이 미설정이라면 평범한 속옷, 하지만 겉옷이(변신능력이 있다면 변신 후 겉옷도)속옷겸용이라면 추가하지 않는다
 	IF CFLAG:SELECT:42 == 0
 		LOCAL = 0
 		CALL CLOTH_NO_INNER, SELECT
@@ -413,30 +415,30 @@ FOR SELECT,1,CHARANUM
 	ENDIF
 	SIF CFLAG:SELECT:42 == -1
 		CFLAG:SELECT:42 = 0
-	;間違えて設定した場合に備えてCFLAG:43も0に
+	;잘못 설정했을 경우에 대비하여 CFLAG:43도 0으로
 	SIF CFLAG:SELECT:43 == -1
 		CFLAG:SELECT:43 = 0
 
-	;変身前とSP変身後の能力
+	;변신 전과 SP변신 후의 능력
 	SIF CFLAG:SELECT:10 == 0
 		CFLAG:SELECT:10 = 25
 	SIF CFLAG:SELECT:11 == 0
 		CFLAG:SELECT:11 = 110
 
 
-	;圧縮武器データの解凍
+	;압축 무기 데이터 압축 해제
 	SIF CSTR:SELECT:15 != ""
 		CALL DECODE_WEAPON_DATA, SELECT, 1
 	SIF CSTR:SELECT:16 != ""
 		CALL DECODE_WEAPON_DATA, SELECT, 2
 	SIF CSTR:SELECT:17 != ""
 		CALL DECODE_WEAPON_DATA, SELECT, 3
-	;圧縮武器データのクリア
+	;압축 무기 데이터 클리어
 	CSTR:SELECT:15 =
 	CSTR:SELECT:16 =
 	CSTR:SELECT:17 =
 
-	;コネクションの反映
+	;인맥 반영
 	SIF TALENT:SELECT:소문을좋아하는친구
 		CFLAG:SELECT:120 = 1
 	SIF TALENT:SELECT:경찰관계자 == 1 && CFLAG:SELECT:121 < 2
@@ -446,24 +448,24 @@ FOR SELECT,1,CHARANUM
 	IF TALENT:SELECT:정보원 == 1 && CFLAG:SELECT:122 == 0
 		CFLAG:SELECT:122 = 1
 		CFLAG:SELECT:122 |= 2
-		;小太りの男
+		;조금 살이 찐 남자
 		IF RAND:7 == 0
 			SETBIT CFLAG:SELECT:122, 2
-		;고상함な男
+		;고상한 남자
 		ELSEIF RAND:6 == 0
 			SETBIT CFLAG:SELECT:122, 3
-		;探偵風の男
+		;탐정풍의 남자
 		ELSEIF RAND:5 == 0
 			SETBIT CFLAG:SELECT:122, 4
-		;ゲス野郎
+		;천박한 놈
 		ELSEIF RAND:4 == 0
 			SETBIT CFLAG:SELECT:122, 2
 			SETBIT CFLAG:SELECT:122, 3
-		;シティハンター的なあいつ
+		;시티헌터적인 녀석(경박한 남자)
 		ELSEIF RAND:3 == 0
 			SETBIT CFLAG:SELECT:122, 2
 			SETBIT CFLAG:SELECT:122, 4
-		;老人
+		;노인
 		ELSEIF RAND:2 == 0
 			SETBIT CFLAG:SELECT:122, 3
 			SETBIT CFLAG:SELECT:122, 4
@@ -477,7 +479,7 @@ FOR SELECT,1,CHARANUM
 
 
 
-	;最初から非처녀ならV경험이 入る
+	;처음부터 비처녀라면 V경험이 들어간다
 	IF EXP:SELECT:V경험 > 0
 	ELSEIF TALENT:SELECT:처녀 < 1 && ISFEMALE(SELECT)
 		EXP:SELECT:V경험 = 1+RAND:4
@@ -492,70 +494,70 @@ NEXT
 
 @CHARA_MAKE_BASE_PROFILE(SELECT)
 #DIM SELECT,1
-	;●csvキャラor設定画面を１度でも開いたキャラの場合
+	;●csv캐릭터 or 설정 화면을１번이라도 연 캐릭터일 경우
 	IF CALLNAME:SELECT != "범용 캐릭터"
-		;詳細プロフィール未設定の場合
+		;상세 프로필 미설정 시
 		IF CFLAG:SELECT:34 == 0 && NO:SELECT == 0
-			;나이や쓰리 사이즈 등 설정
+			;나이나 쓰리 사이즈 등 설정
 			CALL GENERATE_BODYLINE, SELECT
 			CALL CHARA_MAKE_AGE_SETTING, SELECT
 			CALL CHARA_SIZE_DEFAULT, SELECT
 		ENDIF
-		;ここから下の処理を飛ばす ------------------------------------------------------------------------------------------------------------------------
+		;여기서부터 아래의 처리를 날린다 ------------------------------------------------------------------------------------------------------------------------
 		RETURN
-	;●未初期化キャラの場合
+	;●미초기화 캐릭터일 경우
 	ELSE
-		;女性なら처녀の청순파持ちにする
+		;여성이라면 처녀와 청순파를 지니도록 한다
 		IF ISFEMALE(SELECT)
 			TALENT:SELECT:처녀 = 1
 			TALENT:SELECT:청순파 = 1
 		ENDIF
-		;とりあえず나이の設定
+		;우선 나이 설정
 		CALL GENERATE_BODYLINE, SELECT
 		CALL CHARA_MAKE_AGE_SETTING, SELECT
-			;나이設定に基づき素質決定
+			;나이 설정에 근거하여 소질 결정
 			CALL CHARA_MAKE_STATUS_TALENT, SELECT
 			CALL CHARA_MAKE_STATUS_TALENT_FLAVOR, SELECT
 		;쓰리 사이즈 등 설정
 		CALL CHARA_SIZE_DEFAULT, SELECT
 
-			;●初期化完了していないキャラ枠の場合、この場でキャラメイク相当のデータをランダム生成する
+			;●초기화 완료되지 않은 캐릭터 틀(キャラ枠)의 경우, 이 자리에서 캐릭터 메이킹에 상당하는 데이터를 랜덤 생성한다
 
-		;髪型の自動設定
+		;헤어 스타일 자동 설정
 		CSTR:SELECT:12 = %STR:(30000 + RAND:9)%
 		CSTR:SELECT:13 = %STR:(30100 + RAND:15)%
 		CSTR:SELECT:14 = %CSTR:SELECT:13%
 		SIF RAND:2 == 0
 			CSTR:SELECT:14 = %STR:(30100 + RAND:15)%
-		;변신능력の設定
-		;種族：인간には必ず変身を設定
-		;その他の種族については保留
+		;변신능력 설정
+		;종족：인간에는 반드시 변신을 설정
+		;기타 종족에 대해서는 보류
 		SIF TALENT:SELECT:인간 == 1
 			TALENT:SELECT:변신능력 = 1
 
 	ENDIF
 
 
-	;このタイミングで변신능력が設定された場合に備えてもう一度衣装の設定
-	;衣装が未設定なら오리지널 슈트
+	;이 타이밍에서 변신능력이 설정된 경우를 대비하여 다시 한 번 더 의상 설정
+	;의상이 미설정이라면 오리지널 슈트
 	SIF TALENT:SELECT:변신능력 == 1 && CFLAG:SELECT:41 == 0
 		CFLAG:SELECT:41 = 200
 
 
 
-	;キャラ名のランダム生成
-	;キャラメイキングの関数の処理と同じ
+	;캐릭터명 랜덤 생성
+	;캐릭터 메이킹의 함수 처리와 동일
 	LOCAL:0 = 0
 	LOCAL:1 = 0
-	;デフォルトでは３/４の確率で日本語苗字
+	;３/４ 확률로 일본어 성씨
 	IF FLAG:821==1 || (FLAG:821==0 && RAND:4 != 0)
-		;苗字
+		;성씨
 		LOCAL:0 = RAND:500 + 3000
 		WHILE STR:(LOCAL:0) == ""
 			LOCAL:0 = RAND:500 + 3000
 		WEND
 		LOCALS:0 = %STR:(LOCAL:0)%
-		;名前
+		;이름
 		LOCALS:1'=""
 		WHILE LOCALS:1 == ""
 			SELECTCASE FLAG:822
@@ -585,13 +587,13 @@ NEXT
 				LOCAL:1 = RAND:500 + 18000
 			;no setting=>Japanese
 			; *Random heroines who have JP family-name also have JP first name.
-			;  自動生成で言語を混ぜるとエロゲとして変な響きの名前になってしまいやすいため。
+			;  자동 생성으로 언어를 섞으면 에로겜으로서 이상한 음향의 이름이 되어 버리기 쉽기 때문.
 			CASEELSE
 				LOCAL:1 = RAND:500 + 12000
 			ENDSELECT
 			LOCALS:1'=STR:(LOCAL:1)
 
-			;中国語は単漢字組み合わせ(二文字目)の可能性がある
+			;중국어는 한자조합(두 번째 글자, 二文字目)일 가능성이 있다
 			IF FLAG:822 == 7 && RAND:2
 				LOCAL:1 = RAND:1000 + 16500
 				WHILE STR:(LOCAL:1) == ""
@@ -603,51 +605,51 @@ NEXT
 		WEND
 
 
-		;日本語名の場合、日本人風の외관
+		;일본어명일 경우, 일본인풍 외관
 		IF RAND:8 == 0
 			IF RAND:3 == 0
-				CSTR:SELECT:30 = 赤
-				CSTR:SELECT:31 = 赤
+				CSTR:SELECT:30 = 빨강
+				CSTR:SELECT:31 = 빨강
 			ELSEIF RAND:2 == 0
-				CSTR:SELECT:30 = 緑
-				CSTR:SELECT:31 = 緑
+				CSTR:SELECT:30 = 초록
+				CSTR:SELECT:31 = 초록
 			ELSE
-				CSTR:SELECT:30 = 青
-				CSTR:SELECT:31 = 青
+				CSTR:SELECT:30 = 파랑
+				CSTR:SELECT:31 = 파랑
 			ENDIF
 		ELSEIF RAND:3 != 0
-			CSTR:SELECT:30 = 茶
-			CSTR:SELECT:31 = 茶
+			CSTR:SELECT:30 = 다색
+			CSTR:SELECT:31 = 다색
 		ELSE
-			CSTR:SELECT:30 = 黒
-			CSTR:SELECT:31 = 黒
+			CSTR:SELECT:30 = 검정
+			CSTR:SELECT:31 = 검정
 		ENDIF
-		CSTR:SELECT:32 = 黒
-		CSTR:SELECT:33 = 黒
-		CSTR:SELECT:34 = 黒
-		CSTR:SELECT:35 = 黒
+		CSTR:SELECT:32 = 검정
+		CSTR:SELECT:33 = 검정
+		CSTR:SELECT:34 = 검정
+		CSTR:SELECT:35 = 검정
 		IF RAND:4 == 0
-			CSTR:SELECT:36 = 褐色
-			CSTR:SELECT:37 = 褐色
+			CSTR:SELECT:36 = 갈색
+			CSTR:SELECT:37 = 갈색
 		ELSE
-			CSTR:SELECT:36 = 肌色
-			CSTR:SELECT:37 = 肌色
+			CSTR:SELECT:36 = 살구색
+			CSTR:SELECT:37 = 살구색
 		ENDIF
-		;特殊외관
+		;특수 외관
 		IF RAND:15 == 0
-			;アルビノ
-			CSTR:SELECT:30 = 銀
-			CSTR:SELECT:31 = 銀
-			CSTR:SELECT:32 = 赤
-			CSTR:SELECT:33 = 赤
-			CSTR:SELECT:34 = 赤
-			CSTR:SELECT:35 = 赤
-			CSTR:SELECT:36 = 色白
-			CSTR:SELECT:37 = 色白
+			;알비노
+			CSTR:SELECT:30 = 은색
+			CSTR:SELECT:31 = 은색
+			CSTR:SELECT:32 = 빨강
+			CSTR:SELECT:33 = 빨강
+			CSTR:SELECT:34 = 빨강
+			CSTR:SELECT:35 = 빨강
+			CSTR:SELECT:36 = 백색
+			CSTR:SELECT:37 = 백색
 		ENDIF
-	;デフォルトでは１／４で外国苗字
+	;디폴트로는 １／４확률로 외국 성씨
 	ELSE
-		;苗字
+		;성씨
 		LOCALS:0'=""
 		WHILE LOCALS:0 == ""
 			SELECTCASE FLAG:821
@@ -675,7 +677,7 @@ NEXT
 			ENDSELECT
 			LOCALS:0'=STR:(LOCAL:0)
 		WEND
-		;名前
+		;이름
 		LOCALS:1'=""
 		WHILE LOCALS:1 == ""
 			SELECTCASE FLAG:822==0 ? FLAG:821 # FLAG:822
@@ -705,15 +707,15 @@ NEXT
 				LOCAL:1 = RAND:500 + 18000
 			;random(without Japanese)
 			; *In most case, [JP first name]+[Foreign family name] sounds so strange in Japan.
-			;  xenophobia? 排外性？
+			;  xenophobia? 배외성(排外性)？
 			;  this sense may change in some future...
-			;  でもここは役所や論文ではなくeraGVTなので下半身の導きに従うよ
+			;  하지만 여기는 관공서나 논문이 아니라 eraGVT이므로 하반신의 인도에 따를게
 			CASEELSE
 				LOCAL:1 = RAND:3500 + 12500
 			ENDSELECT
 			LOCALS:1'=STR:(LOCAL:1)
 
-			;中国語は単漢字組み合わせ(二文字目)の可能性がある
+			;중국어는 한자조합(두 번째 글자, 二文字目)일 가능성이 있다
 			IF FLAG:822 == 7 && RAND:2
 				LOCAL:1 = RAND:1000 + 16500
 				WHILE STR:(LOCAL:1) == ""
@@ -723,156 +725,156 @@ NEXT
 			ENDIF
 		WEND
 
-		;西洋名の場合、西洋風の외관
+		;서양 이름일 경우, 서양풍 외관
 		IF RAND:6 == 0
-			CSTR:SELECT:30 = 銀
-			CSTR:SELECT:31 = 銀
+			CSTR:SELECT:30 = 은색
+			CSTR:SELECT:31 = 은색
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:30 = 赤
-			CSTR:SELECT:31 = 赤
+			CSTR:SELECT:30 = 빨강
+			CSTR:SELECT:31 = 빨강
 		ELSEIF RAND:14 == 0
-			CSTR:SELECT:30 = 緑
-			CSTR:SELECT:31 = 緑
+			CSTR:SELECT:30 = 초록
+			CSTR:SELECT:31 = 초록
 		ELSEIF RAND:12 == 0
-			CSTR:SELECT:30 = 青
-			CSTR:SELECT:31 = 青
+			CSTR:SELECT:30 = 파랑
+			CSTR:SELECT:31 = 파랑
 		ELSEIF RAND:2 == 0
-			CSTR:SELECT:30 = 茶
-			CSTR:SELECT:31 = 茶
+			CSTR:SELECT:30 = 다색
+			CSTR:SELECT:31 = 다색
 		ELSE
-			CSTR:SELECT:30 = 金
-			CSTR:SELECT:31 = 金
+			CSTR:SELECT:30 = 금색
+			CSTR:SELECT:31 = 금색
 		ENDIF
 		IF RAND:12 == 0
-			CSTR:SELECT:32 = 赤
-			CSTR:SELECT:33 = 赤
-			CSTR:SELECT:34 = 赤
-			CSTR:SELECT:35 = 赤
+			CSTR:SELECT:32 = 빨강
+			CSTR:SELECT:33 = 빨강
+			CSTR:SELECT:34 = 빨강
+			CSTR:SELECT:35 = 빨강
 		ELSEIF RAND:8 == 0
-			CSTR:SELECT:32 = 紫
-			CSTR:SELECT:33 = 紫
-			CSTR:SELECT:34 = 紫
-			CSTR:SELECT:35 = 紫
+			CSTR:SELECT:32 = 보라
+			CSTR:SELECT:33 = 보라
+			CSTR:SELECT:34 = 보라
+			CSTR:SELECT:35 = 보라
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:32 = 青
-			CSTR:SELECT:33 = 青
-			CSTR:SELECT:34 = 青
-			CSTR:SELECT:35 = 青
+			CSTR:SELECT:32 = 파랑
+			CSTR:SELECT:33 = 파랑
+			CSTR:SELECT:34 = 파랑
+			CSTR:SELECT:35 = 파랑
 		ELSE
-			CSTR:SELECT:32 = 茶
-			CSTR:SELECT:33 = 茶
-			CSTR:SELECT:34 = 茶
-			CSTR:SELECT:35 = 茶
+			CSTR:SELECT:32 = 다색
+			CSTR:SELECT:33 = 다색
+			CSTR:SELECT:34 = 다색
+			CSTR:SELECT:35 = 다색
 		ENDIF
 		IF RAND:20 == 0
-			CSTR:SELECT:36 = 銀
-			CSTR:SELECT:37 = 銀
+			CSTR:SELECT:36 = 은색
+			CSTR:SELECT:37 = 은색
 		ELSEIF RAND:20 == 0
-			CSTR:SELECT:36 = 黒
-			CSTR:SELECT:37 = 黒
+			CSTR:SELECT:36 = 검정
+			CSTR:SELECT:37 = 검정
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:36 = 褐色
-			CSTR:SELECT:37 = 褐色
+			CSTR:SELECT:36 = 갈색
+			CSTR:SELECT:37 = 갈색
 		ELSEIF RAND:10 == 0
-			CSTR:SELECT:36 = 肌色
-			CSTR:SELECT:37 = 肌色
+			CSTR:SELECT:36 = 살구색
+			CSTR:SELECT:37 = 살구색
 		ELSE
-			CSTR:SELECT:36 = 色白
-			CSTR:SELECT:37 = 色白
+			CSTR:SELECT:36 = 백색
+			CSTR:SELECT:37 = 백색
 		ENDIF
 
-		;特殊외관
+		;특수 외관
 		IF RAND:6 == 0
-			;褐色娘
-			CSTR:SELECT:30 = 銀
-			CSTR:SELECT:31 = 銀
-			CSTR:SELECT:36 = 褐色
-			CSTR:SELECT:37 = 褐色
+			;갈색 소녀(茶色娘)
+			CSTR:SELECT:30 = 은색
+			CSTR:SELECT:31 = 은색
+			CSTR:SELECT:36 = 갈색
+			CSTR:SELECT:37 = 갈색
 		ELSEIF RAND:5 == 0
-			;金髪碧眼
-			CSTR:SELECT:30 = 金
-			CSTR:SELECT:31 = 金
-			CSTR:SELECT:32 = 青
-			CSTR:SELECT:33 = 青
-			CSTR:SELECT:34 = 青
-			CSTR:SELECT:35 = 青
+			;금발 벽안
+			CSTR:SELECT:30 = 금색
+			CSTR:SELECT:31 = 금색
+			CSTR:SELECT:32 = 파랑
+			CSTR:SELECT:33 = 파랑
+			CSTR:SELECT:34 = 파랑
+			CSTR:SELECT:35 = 파랑
 		ELSEIF RAND:10 == 0
-			;アルビノ
-			CSTR:SELECT:30 = 銀
-			CSTR:SELECT:31 = 銀
-			CSTR:SELECT:32 = 赤
-			CSTR:SELECT:33 = 赤
-			CSTR:SELECT:34 = 赤
-			CSTR:SELECT:35 = 赤
-			CSTR:SELECT:36 = 色白
-			CSTR:SELECT:37 = 色白
+			;알비노
+			CSTR:SELECT:30 = 은색
+			CSTR:SELECT:31 = 은색
+			CSTR:SELECT:32 = 빨강
+			CSTR:SELECT:33 = 빨강
+			CSTR:SELECT:34 = 빨강
+			CSTR:SELECT:35 = 빨강
+			CSTR:SELECT:36 = 백색
+			CSTR:SELECT:37 = 백색
 		ENDIF
 	ENDIF
 
-	;変身後の髪色をランダムで変える
+	;변신 후의 머리색을 랜덤으로 바꾼다
 	IF RAND:4 == 0
 		IF RAND:8 == 0
-			CSTR:SELECT:31 = 赤
+			CSTR:SELECT:31 = 빨강
 		ELSEIF RAND:7 == 0
-			CSTR:SELECT:31 = 緑
+			CSTR:SELECT:31 = 초록
 		ELSEIF RAND:6 == 0
-			CSTR:SELECT:31 = 青
+			CSTR:SELECT:31 = 파랑
 		ELSEIF RAND:5 == 0
-			CSTR:SELECT:31 = 黄
+			CSTR:SELECT:31 = 황색
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:31 = 紫
+			CSTR:SELECT:31 = 보라
 		ELSEIF RAND:3 == 0
-			CSTR:SELECT:31 = 橙
+			CSTR:SELECT:31 = 주황
 		ELSEIF RAND:2 == 0
-			CSTR:SELECT:31 = 桃
+			CSTR:SELECT:31 = 분홍
 		ENDIF
 	ENDIF
 
-	;変身後の瞳の色をランダムで変える
+	;변신 후의 눈동자 색을 랜덤으로 바꾼다
 	IF RAND:50 == 0
-		;オッドアイ
+		;오드아이
 		IF RAND:8 == 0
-			CSTR:SELECT:(34 + RAND:2) = 赤
+			CSTR:SELECT:(34 + RAND:2) = 빨강
 		ELSEIF RAND:7 == 0
-			CSTR:SELECT:(34 + RAND:2) = 緑
+			CSTR:SELECT:(34 + RAND:2) = 초록
 		ELSEIF RAND:6 == 0
-			CSTR:SELECT:(34 + RAND:2) = 青
+			CSTR:SELECT:(34 + RAND:2) = 파랑
 		ELSEIF RAND:5 == 0
-			CSTR:SELECT:(34 + RAND:2) = 黄
+			CSTR:SELECT:(34 + RAND:2) = 황색
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:(34 + RAND:2) = 紫
+			CSTR:SELECT:(34 + RAND:2) = 보라
 		ELSEIF RAND:3 == 0
-			CSTR:SELECT:(34 + RAND:2) = 橙
+			CSTR:SELECT:(34 + RAND:2) = 주황
 		ELSEIF RAND:2 == 0
-			CSTR:SELECT:(34 + RAND:2) = 桃
+			CSTR:SELECT:(34 + RAND:2) = 분홍
 		ENDIF
 	ELSEIF RAND:4 == 0
 		IF RAND:8 == 0
-			CSTR:SELECT:34 = 赤
-			CSTR:SELECT:35 = 赤
+			CSTR:SELECT:34 = 빨강
+			CSTR:SELECT:35 = 빨강
 		ELSEIF RAND:7 == 0
-			CSTR:SELECT:34 = 緑
-			CSTR:SELECT:35 = 緑
+			CSTR:SELECT:34 = 초록
+			CSTR:SELECT:35 = 초록
 		ELSEIF RAND:6 == 0
-			CSTR:SELECT:34 = 青
-			CSTR:SELECT:35 = 青
+			CSTR:SELECT:34 = 파랑
+			CSTR:SELECT:35 = 파랑
 		ELSEIF RAND:5 == 0
-			CSTR:SELECT:34 = 黄
-			CSTR:SELECT:35 = 黄
+			CSTR:SELECT:34 = 황색
+			CSTR:SELECT:35 = 황색
 		ELSEIF RAND:4 == 0
-			CSTR:SELECT:34 = 紫
-			CSTR:SELECT:35 = 紫
+			CSTR:SELECT:34 = 보라
+			CSTR:SELECT:35 = 보라
 		ELSEIF RAND:3 == 0
-			CSTR:SELECT:34 = 橙
-			CSTR:SELECT:35 = 橙
+			CSTR:SELECT:34 = 주황
+			CSTR:SELECT:35 = 주황
 		ELSEIF RAND:2 == 0
-			CSTR:SELECT:34 = 桃
-			CSTR:SELECT:35 = 桃
+			CSTR:SELECT:34 = 분홍
+			CSTR:SELECT:35 = 분홍
 		ENDIF
 	ENDIF
 
 
-	;日本or中国の場合
+	;일본 or 중국일 경우
 	IF LOCAL:0 < 3500 || (LOCAL:0 >= 16000 && LOCAL:0 < 16500)
 		LOCALS:2 = %LOCALS:0%%LOCALS:1%
 	ELSE
@@ -886,11 +888,11 @@ NEXT
 		CSTR:SELECT:200 = %CALLNAME:SELECT%
 
 
-	;共通設定からのロード、범용 캐릭터用
+	;공통 설정으로부터의 로드, 범용 캐릭터용
 	IF CSTR:SELECT:0 == "" && TALENT:SELECT:변신능력 == 1
-		;共通上の句
+		;공통 윗구 ("매지컬 나이트" 할 때 매지컬 부분)
 		LOCALS=%SAVESTR:11%
-		;下の句ジャンル
+		;아랫구 장르 ("매지컬 나이트" 할 때 나이트 부분)
 		LOCALS:1=%CALLNAME:SELECT%
 		LOCAL:10=0
 		$NAMEFROMGENRE_1
@@ -901,7 +903,7 @@ NEXT
 		IF LOCALS+LOCALS:1!=""
 			CSTR:SELECT:0 = %LOCALS%%LOCALS:1%
 
-			;ジャンル指定からの生成なら他キャラとの丸被りは避けようとする
+			;장르 지정으로부터의 생성이라면 다른 캐릭터와의 중복은 피하고자 한다
 			IF FLAG:820>0
 				FOR LOCAL, 1, CHARANUM
 					SIF LOCAL==SELECT
@@ -922,7 +924,7 @@ NEXT
 		ENDIF
 	ENDIF
 
-	;일인칭を低確率で変更
+	;일인칭을 낮은 확률로 변경
 	IF RAND:20 == 0 || ISMALE(SELECT)
 		IF RAND:2 == 0
 			CFLAG:SELECT:8 = 25 + RAND:3
@@ -943,10 +945,10 @@ NEXT
 	CFLAG:SELECT:34 = 1
 
 ;------------------------------------------------------------------------------------------------------------------
-;素質のランダム設定
+;소질 랜덤 설정
 ;------------------------------------------------------------------------------------------------------------------
 @CHARA_MAKE_STATUS_TALENT, ARG
-;처녀？ 80%で처녀
+;처녀？ 80% 확률로 처녀
 IF ISFEMALE(ARG) && EXP:ARG:V경험 == 0
 	LOCAL = RAND:100
 	IF LOCAL < 20
@@ -957,17 +959,17 @@ IF ISFEMALE(ARG) && EXP:ARG:V경험 == 0
 	ENDIF
 ENDIF
 
-;청순파？　通常20%、처녀なら確率+50%
+;청순파？　통상 20%, 처녀라면 확률 +50%
 LOCAL = RAND:100
 SIF LOCAL < 20 + TALENT:ARG:처녀 * 50
 	TALENT:ARG:청순파 = 1
 
-;백보지？　20%で백보지
+;백보지？　20% 확률로 백보지
 LOCAL = RAND:100
 SIF LOCAL < 20
 	TALENT:ARG:백보지 = 1
 
-;敏感、鈍感の設定 それぞれ3%でつく
+;민감, 둔감 설정　각각 3% 확률로 붙는다
 ;C
 LOCAL = RAND:100
 IF LOCAL < 3
@@ -997,22 +999,22 @@ ELSEIF LOCAL > 96
 	TALENT:ARG:B둔감 = 1
 ENDIF
 
-;身体的特徴　빈유거유왜소함장신は20%で、残りは5%で
-;乳
+;신체적 특징　빈유 거유 왜소함 장신은 20%확률로, 나머지는 5% 확률로
+;젖가슴
 LOCAL = RAND:100
 IF LOCAL < 20 && ISFEMALE(ARG)
 	TALENT:ARG:빈유 = 1
 ELSEIF LOCAL > 79 && ISFEMALE(ARG)
 	TALENT:ARG:거유 = 1
 ENDIF
-;体型
+;체형
 LOCAL = RAND:100
 IF LOCAL < 20
 	TALENT:ARG:왜소함 = 1
 ELSEIF LOCAL > 79
 	TALENT:ARG:장신 = 1
 ENDIF
-;濡れやすさ
+;젖기 쉬움/어려움
 LOCAL = RAND:100
 IF LOCAL < 10 && ISFEMALE(ARG)
 	TALENT:ARG:젖기쉬움 = 1
@@ -1021,10 +1023,10 @@ ELSEIF LOCAL > 89 && ISFEMALE(ARG)
 ENDIF
 
 ;------------------------------------------------------------------------------------------------------------------
-;フレーバー素質の設定
+;플레이버 소질 설정
 ;------------------------------------------------------------------------------------------------------------------
 @CHARA_MAKE_STATUS_TALENT_FLAVOR, ARG
-;基本確率
+;기본 확률
 LOCAL:1 = 4
 LOCAL:2 = 4
 LOCAL:3 = 2
@@ -1037,36 +1039,39 @@ LOCAL:5 = 1
 LOCAL:201 = 2
 LOCAL:202 = 2
 
-;나이6~12歳は초등학생+50%
+;나이 6~12세는 초등학생
 IF BASE:ARG:나이 >= 6 && BASE:ARG:나이 <= 12
 	TALENT:ARG:학생 = 1
+;나이 13~15세는 중학생
 ELSEIF BASE:ARG:나이 >= 13 && BASE:ARG:나이 <= 15
 	TALENT:ARG:학생 = 2
+;나이 16~18세는 고등학생
 ELSEIF BASE:ARG:나이 >= 16 && BASE:ARG:나이 <= 18
 	TALENT:ARG:학생 = 3
+;나이 19~22세는 대학생
 ELSEIF BASE:ARG:나이 >= 19 && BASE:ARG:나이 <= 22
 	TALENT:ARG:학생 = 4	
 ENDIF
 
 
-;;나이6~12歳は초등학생+50%
+;;나이 6~12세는 초등학생+50%
 ;IF BASE:ARG:나이 >= 6 && BASE:ARG:나이 <= 12
 ;	LOCAL:101 += 50
 ;ENDIF
-;;나이13~15歳は중학생+35%
+;;나이 13~15세는 중학생+35%
 ;IF BASE:ARG:나이 >= 13 && BASE:ARG:나이 <= 15
 ;	LOCAL:102 += 35
 ;ENDIF
-;;나이16~18歳は고등학생+25%
+;;나이 16~18세는 고등학생+25%
 ;IF BASE:ARG:나이 >= 16 && BASE:ARG:나이 <= 18
 ;	LOCAL:103 += 25
 ;ENDIF
-;;나이19~22歳は대학생+10%
+;;나이 19~22세는 대학생+10%
 ;IF BASE:ARG:나이 >= 19 && BASE:ARG:나이 <= 22
 ;	LOCAL:104 += 10
 ;ENDIF
 ;
-;;처녀でないなら彼氏持ち+3%、人妻+10%、未亡人+5%、초등학생-10%、중학생-5%、고등학생+3%、대학생+10%
+;;처녀가 아니라면 남친있음 +3%, 유부녀+10%, 과부+5%, 초등학생-10%, 중학생-5%, 고등학생+3%, 대학생+10%
 ;IF TALENT:ARG:처녀 == 0
 ;	LOCAL:2 += 3
 ;	LOCAL:4 += 10
@@ -1076,22 +1081,22 @@ ENDIF
 ;	LOCAL:103 += 3
 ;	LOCAL:104 += 10
 ;ENDIF
-;;백보지なら人妻、未亡人、고등학생、대학생の確率半減
+;;백보지라면 유부녀, 과부, 고등학생, 대학생의 확률 반감
 ;IF TALENT:ARG:백보지 > 0
 ;	LOCAL:4 /= 2
 ;	LOCAL:5 /= 2
 ;	LOCAL:103 /= 2
 ;	LOCAL:104 /= 2
 ;ENDIF
-;;왜소함なら초등학생+16%
+;;왜소함이라면 초등학생+16%
 ;IF TALENT:ARG:왜소함 > 0
 ;	LOCAL:101 += 16
 ;ENDIF
-;;장신なら초등학생-8%
+;;장신이라면 초등학생-8%
 ;IF TALENT:ARG:장신 > 0
 ;	LOCAL:101 -= 8
 ;ENDIF
-;;빈유なら중학생以下+8%
+;;빈유라면 중학생 이하 +8%
 ;IF TALENT:ARG:빈유 > 0
 ;	LOCAL:101 += 8
 ;	LOCAL:102 += 8
@@ -1110,17 +1115,17 @@ ELSEIF LOCAL < LOCAL:1 + LOCAL:2 + LOCAL:3 + LOCAL:4 && ISFEMALE(ARG)
 ELSEIF LOCAL <  LOCAL:1 + LOCAL:2 + LOCAL:3 + LOCAL:4 + LOCAL:5 && ISFEMALE(ARG)
 	TALENT:ARG:교제상대 = 5
 ENDIF
-;;婚約以上なら중학생以下の確率を０に
+;;약혼 이상이라면 중학생 이하의 확률을 0으로
 ;IF TALENT:ARG:교제상대 >= 3
 ;	LOCAL:101 = 0
 ;	LOCAL:102 = 0
 ;ENDIF
-;;人妻なら고등학생、대학생の確率を半分に
+;;유부녀라면 고등학생, 대학생의 확률을 절반으로
 ;IF TALENT:ARG:교제상대 == 4
 ;	LOCAL:103 /= 2
 ;	LOCAL:104 /= 2
 ;ENDIF
-;;未亡人なら고등학생、대학생の確率を０に
+;;과부라면 고등학생, 대학생의 확률을 0으로
 ;IF TALENT:ARG:교제상대 == 5
 ;	LOCAL:103 = 0
 ;	LOCAL:104 = 0
@@ -1175,12 +1180,12 @@ IF ISFEMALE(ARG)
 	ENDIF
 ENDIF
 
-;초등학생なら12%の確率で유아배に、75%の確率で백보지に変更
+;초등학생이라면 12% 확률로 유아배로, 75% 확률로 백보지로 변경
 LOCAL = RAND:100
-;장신なら유아배にはならない
+;장신이라면 유아배로는 되지 않는다
 SIF TALENT:ARG:장신
 	LOCAL += 12
-;왜소함なら確率2倍
+;왜소함이라면 확률 2배
 SIF TALENT:ARG:왜소함
 	LOCAL /= 2
 IF LOCAL < 12 && TALENT:ARG:학생 == 1 && ISFEMALE(ARG)
@@ -1193,10 +1198,10 @@ SIF LOCAL < 75 && TALENT:ARG:백보지 == 0
 
 
 ;------------------------------------------------------------------------------------------------------------------
-;精神素質のランダム設定
+;정신 소질의 랜덤 설정
 ;------------------------------------------------------------------------------------------------------------------
-;ARG   = キャラ番号
-;ARG:1 = 付与する素質の数
+;ARG   = 캐릭터 번호
+;ARG:1 = 부여할 소질의 수
 @CHARA_MAKE_STATUS_TALENT_SEIKAKU, ARG, ARG:1
 #DIM HAVE_TALENT
 #DIM SELECT
@@ -1282,7 +1287,7 @@ ENDIF
 $LOOP
 SELECT = RANDCHOOSE_F()
 TALENT:ARG:SELECT = 1
-;候補から選ばれた素質を除外
+;후보에서 뽑힌 소질을 제외
 CALL CLEARSPECIFICCHOOSE, SELECT
 
 HAVE_TALENT = 0
@@ -1294,20 +1299,20 @@ SIF HAVE_TALENT < ARG:1
 	GOTO LOOP
 
 ;------------------------------------------------------------------------------------------------------------------
-;나이の初期値を設定
+;나이의 초기값 설정
 ;------------------------------------------------------------------------------------------------------------------
 @CHARA_MAKE_AGE_SETTING, ARG
 #DIM AGE
 #DIM REAL_AGE
 #DIM SET_AGE, 3
 
-;나이の基本値はランダムで決定
+;나이의 기본값은 랜덤으로 결정
 BASE:ARG:나이 = RAND:11 + 10
 BASE:ARG:실제나이 = BASE:ARG:나이
-;변신한다と大人びるパターン
+;변신하면 어른스러워지는 패턴
 IF TALENT:ARG:변신능력 > 0 && MAXBASE:ARG:나이 <= 18 && RAND:4 == 0
 	MAXBASE:ARG:나이 = BASE:ARG:나이 + RAND:6
-;変身しても외관나이に影響しないパターン
+;변신해도 외관나이에 영향을 주지 않는 패턴
 ELSEIF TALENT:ARG:변신능력 > 0
 	MAXBASE:ARG:나이 = BASE:ARG:나이
 ENDIF
@@ -1316,29 +1321,30 @@ IF CALLNAME:ARG == "범용 캐릭터"
 	
 ENDIF
 
-;ここからは素質による나이範囲の自動設定
+;여기서부터는 소질에 따른 나이 범위 자동 설정
 AGE = BASE:ARG:나이
-;초등학생なら나이幅6~12
+;초등학생이라면 나이 폭 6~12
 IF TALENT:ARG:학생 == 1
 	AGE = RAND:7 + 6
-;중학생なら나이幅12~16
+;중학생이라면 나이 폭 12~16
 ELSEIF TALENT:ARG:학생 == 2
 	AGE = RAND:5 + 12
-;고등학생なら나이幅15~19
+;고등학생이라면 나이 폭 15~19
 ELSEIF TALENT:ARG:학생 == 3
 	AGE = RAND:5 + 15
-;대학생なら나이幅18~25
+;대학생이라면 나이 폭 18~25
 ELSEIF TALENT:ARG:학생 == 4
 	AGE = RAND:6 + 18
 	;SIF AGE >= 22 && RAND:10 == 0
 	;	AGE = AGE + RAND:5
 ENDIF
 
-;人妻か未亡人なら나이16歳以上
+;유부녀 또는 과부라면 나이 16세 이상
 IF TALENT:ARG:교제상대 >= 4 && AGE < 25
-	;고등학생持ちの場合
+	;고등학생일 경우
 	IF TALENT:ARG:학생 == 3
 		AGE = 16 + RAND:3
+	;대학생일 경우
 	ELSEIF TALENT:ARG:학생 == 4
 		AGE = 19 + RAND:4
 	ELSE
@@ -1346,19 +1352,19 @@ IF TALENT:ARG:교제상대 >= 4 && AGE < 25
 	ENDIF
 ENDIF
 
-;실제나이の処理
+;실제나이 처리
 REAL_AGE = AGE
 
-;인조인간なら실제나이0~5
+;인조인간이라면 실제나이 0~5
 SIF TALENT:ARG:인조인간 > 0
 	REAL_AGE = RAND:6
-;요정なら老齢に
+;요정이라면 노령으로
 SIF TALENT:ARG:요정 > 0
 	REAL_AGE += RAND:100
-;불로장수持ちなら老齢に
+;불로장수라면 노령으로
 SIF TALENT:ARG:불로장수 > 0
 	REAL_AGE += RAND:500
-;천사、마족、뱀파이어なら50%で老齢に、5%で超老齢に
+;천사, 마족, 뱀파이어라면 50% 확률로 노령, 5% 확률로 초노령
 SIF (TALENT:ARG:천사 > 0 || TALENT:ARG:마족 > 0 || TALENT:ARG:뱀파이어 > 0) && RAND:2 == 0
 	REAL_AGE += RAND:1000
 SIF (TALENT:ARG:천사 > 0 || TALENT:ARG:마족 > 0 || TALENT:ARG:뱀파이어 > 0) && RAND:10 == 0
@@ -1368,7 +1374,7 @@ BASE:ARG:나이 = AGE
 MAXBASE:ARG:나이 = AGE
 BASE:ARG:실제나이 = REAL_AGE
 
-;나이指定有り
+;나이 지정 있음
 IF CSTR:ARG:204 != ""
 	IF CSTR:ARG:204 == "0"
 		BASE:ARG:실제나이 = 0
@@ -1397,74 +1403,74 @@ IF CSTR:ARG:206 != ""
 	ENDIF
 ENDIF
 
-SIF CSTR:ARG:204 == "나이に合わせる"
+SIF CSTR:ARG:204 == "나이에 맞춘다"
 	BASE:ARG:실제나이 = BASE:ARG:나이
-SIF CSTR:ARG:205 == "실제나이に合わせる"
+SIF CSTR:ARG:205 == "실제 나이에 맞춘다"
 	BASE:ARG:나이 = BASE:ARG:실제나이
-SIF CSTR:ARG:206 == "나이に合わせる"
+SIF CSTR:ARG:206 == "나이에 맞춘다"
 	MAXBASE:ARG:나이 = BASE:ARG:나이
-SIF CSTR:ARG:206 == "실제나이に合わせる"
+SIF CSTR:ARG:206 == "실제 나이에 맞춘다"
 	MAXBASE:ARG:나이 = BASE:ARG:실제나이
 
 
-;나이指定で負の数が指定された場合はランダム範囲から値を返す
+;나이 지정에서 음수가 지정된 경우 랜덤 범위에서 값을 반환한다
 @RANDOM_AGE_F(ARGS)
 #FUNCTION
-;赤子　範囲0~3
-IF ARGS == "赤子"
+;아기　범위 0~3
+IF ARGS == "갓난아기"
 	LOCAL = RAND:4
-;幼い　範囲3~5
-ELSEIF ARGS == "幼児" || ARGS == "幼稚園児"
+;유아/유치원생　범위 3~5
+ELSEIF ARGS == "유아" || ARGS == "유치원생"
 	LOCAL = RAND:3 + 3
-;児童　範囲4~9
-ELSEIF ARGS == "児童" || ARGS == "幼女"
+;아동/유녀　범위 4~9
+ELSEIF ARGS == "아동" || ARGS == "유녀"
 	LOCAL = RAND:6 + 4
-;子供　範囲7~15
-ELSEIF ARGS == "子供" || ARGS == "少女" || ARGS == "少年"
+;아이/소녀/소년　범위 7~15
+ELSEIF ARGS == "아이" || ARGS == "소녀" || ARGS == "소년"
 	LOCAL = RAND:9 + 7
-;ティーン　範囲13~19
-ELSEIF ARGS == "ティーン"
+;청소년　범위 13~19
+ELSEIF ARGS == "청소년"
 	LOCAL = RAND:7 + 13
-;若者　範囲15~25
-ELSEIF ARGS == "若者"
+;젊은이　범위 15~25
+ELSEIF ARGS == "젊은이"
 	LOCAL = RAND:11 + 15
-;大人　範囲20~30
-ELSEIF ARGS == "大人" || ARGS == "青年"
+;어른/청년　범위 20~30
+ELSEIF ARGS == "어른" || ARGS == "청년"
 	LOCAL = RAND:11 + 20
-;妙齢　範囲25~35
-ELSEIF ARGS == "妙齢"
+;방년　범위 25~35
+ELSEIF ARGS == "방년"
 	LOCAL = RAND:11 + 25
-;中年　範囲30~45
-ELSEIF ARGS == "中年"
+;중년　범위 30~45
+ELSEIF ARGS == "중년"
 	LOCAL = RAND:16 + 30
-;壮年　範囲35~60
-ELSEIF ARGS == "壮年"
+;장년　범위 35~60
+ELSEIF ARGS == "장년"
 	LOCAL = RAND:26 + 35
-;초등학생　範囲5~12
+;초등학생　범위 5~12
 ELSEIF ARGS == "초등학생"
 	LOCAL = RAND:8 + 5
-;중학생　範囲13~15
+;중학생　범위 13~15
 ELSEIF ARGS == "중학생"
 	LOCAL = RAND:4 + 13
-;고등학생　範囲16~18
+;고등학생　범위 16~18
 ELSEIF ARGS == "고등학생"
 	LOCAL = RAND:3 + 16
-;대학생　範囲19~22
+;대학생　범위 19~22
 ELSEIF ARGS == "대학생"
 	LOCAL = RAND:4 + 19
 ELSE
-	;エラー表示の代わり
+	;오류 표시의 대신
 	LOCAL = -99
 ENDIF
 RETURNF LOCAL
 
 
-;ARG番目のキャラにARG:1種族のフィートをランダムで設定
+;ARG번째 캐릭터에게 ARG:1 종족의 FEAT를 랜덤으로 설정
 @SET_FEAT_DEFAULT, ARG, ARG:1
 #DIM RACE
 #DIM FEAT_NUM
 RACE = ARG:1
-;枠の数を決定
+;틀(枠)의 수를 결정
 IF RAND:8 == 0
 	FEAT_NUM = 1
 ELSEIF RAND:4 == 0
@@ -1472,86 +1478,87 @@ ELSEIF RAND:4 == 0
 ELSE
 	FEAT_NUM = 3
 ENDIF
+;뱀파이어는 고유 FEAT "밤악마의귀족" 이 있으므로 1개 제외
 SIF TALENTNAME:(ARG:1) == "뱀파이어"
 	FEAT_NUM -= 1
 
-;７５％の確率でプリセットから選択
+;７５％ 확률로 프리셋에서 선택
 IF RAND:4 != 0
 	IF TALENTNAME:RACE == "인간"
-		;固有フィートのみＡ
+		;고유 FEAT만 Ａ타입
 		IF RAND:4 == 0
 			TALENT:ARG:평범 = 1
 			FEAT_NUM -= 1
-		;固有フィートのみＢ
+		;고유 FEAT만 Ｂ타입
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:말려드는체질 = 1
 			FEAT_NUM -= 1
-		;숨겨진힘
+		;숨겨진 힘
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:숨겨진힘 = 1
 			TALENT:ARG:불굴 = 1
 			FEAT_NUM -= 2
-		;축복、불굴セット
+		;축복, 불굴 세트
 		ELSE
 			TALENT:ARG:축복 = 1
 			TALENT:ARG:불굴 = 1
 			FEAT_NUM -= 2
 		ENDIF
-		;フィートが多すぎると扱いにくくなるので確率で減らす
+		;FEAT가 너무 많으면 다루기 힘들어지므로 확률로 줄인다
 		SIF RAND:2 == 0
 			FEAT_NUM -= 1
 	ELSEIF TALENTNAME:RACE == "이능력자"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 == 0
 			TALENT:ARG:공세구축 = 1
 			FEAT_NUM -= 1
-		;숨겨진힘
+		;숨겨진 힘
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:숨겨진힘 = 1
 			TALENT:ARG:심안 = 1
 			FEAT_NUM -= 2
-		;孤高のハンター型
+		;고고한 헌터형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:타고난전사 = 1
 			TALENT:ARG:사냥꾼의직감 = 1
 			FEAT_NUM -= 2
-		;直撃率重視
+		;직격률 중시
 		ELSE
 			TALENT:ARG:공세구축 = 1
 			TALENT:ARG:심안 = 1
 			FEAT_NUM -= 2
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "마법사"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:5 == 0
 			TALENT:ARG:마력저장 = 1
 			FEAT_NUM -= 1
-		;불로장수のみ
+		;불로장수만
 		ELSEIF RAND:4 == 0
 			TALENT:ARG:불로장수 = 1
 			FEAT_NUM -= 1
-		;後方支援型
+		;후방지원형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:행운아 = 1
 			TALENT:ARG:지혜의극치 = 1
 			FEAT_NUM -= 2
-		;高火力型
+		;고화력형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:마력저장 = 1
 			TALENT:ARG:풀버스트 = 1
 			FEAT_NUM -= 2
-		;空中戦型
+		;공중전형
 		ELSE
 			TALENT:ARG:공중부유 = 1
 			TALENT:ARG:불로장수 = 1
 			FEAT_NUM -= 2
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "인조인간"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:2 == 0
 			TALENT:ARG:고속회피 = 1
 			FEAT_NUM -= 1
-		;스태미나軸
+		;스태미나 축(軸)
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:스태미나 = 1
 			IF RAND:3 == 0
@@ -1564,79 +1571,79 @@ IF RAND:4 != 0
 				TALENT:ARG:풀버스트 = 1
 			ENDIF
 			FEAT_NUM -= 2
-		;速攻火力型
+		;속공 화력형
 		ELSE
 			TALENT:ARG:핫스타트 = 1
 			TALENT:ARG:풀버스트 = 1
 			FEAT_NUM -= 2
 		ENDIF
-		;フィートが多すぎると扱いにくくなるので確率で減らす
+		;FEAT가 너무 많으면 다루기 힘들어지므로 확률로 줄인다
 		SIF RAND:3 == 0
 			FEAT_NUM -= 1
 	ELSEIF TALENTNAME:RACE == "천사"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 != 0
 			TALENT:ARG:신기소유자 = 1
 			FEAT_NUM -= 1
-		;後方支援型
+		;후방지원형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:축복 = 1
 			TALENT:ARG:지혜의극치 = 1
 			FEAT_NUM -= 2
-		;空中戦型
+		;공중전형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:날개 = 1
 			TALENT:ARG:공중부유 = 1
 			FEAT_NUM -= 2
-		;自由枠
+		;자유 틀(枠)
 		ELSE
 			FEAT_NUM = 3
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "마족"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 != 0
 			TALENT:ARG:투쟁본능 = 1
 			FEAT_NUM -= 1
-		;タンク型
+		;탱커형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:투쟁본능 = 1
 			TALENT:ARG:불굴 = 1
 			FEAT_NUM -= 2
-		;孤高のハンター型
+		;고고한 헌터형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:타고난전사 = 1
 			TALENT:ARG:사냥꾼의직감 = 1
 			FEAT_NUM -= 2
-		;自由枠
+		;자유 틀(枠)
 		ELSE
 			FEAT_NUM = 3
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "오니"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 != 0
 			TALENT:ARG:넘치는생명력 = 1
 			FEAT_NUM -= 1
-		;タンク型
+		;탱커형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:불굴 = 1
 			TALENT:ARG:스태미나 = 1
 			FEAT_NUM -= 2
-		;純粋パワー型
+		;순수 파워형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:타고난전사 = 1
 			TALENT:ARG:근력강화 = 1
 			FEAT_NUM -= 1
-		;불로장수のみ
+		;불로장수만
 		ELSE
 			TALENT:ARG:불로장수 = 1
 			FEAT_NUM -= 1
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "요정"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 != 0
 			TALENT:ARG:정령교신 = 1
 			FEAT_NUM -= 1
-		;フェアリー型
+		;페어리형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:소형체구 = 1
 			IF RAND:2 == 0
@@ -1645,7 +1652,7 @@ IF RAND:4 != 0
 				TALENT:ARG:에어마스터 = 1
 			ENDIF
 			FEAT_NUM -= 2
-		;エルフ型
+		;엘프형
 		ELSE
 			TALENT:ARG:지혜의극치 = 1
 			IF RAND:2 == 0
@@ -1656,46 +1663,46 @@ IF RAND:4 != 0
 			FEAT_NUM -= 2
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "짐승족"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:4 != 0
 			TALENT:ARG:야수의후손 = 1
 			FEAT_NUM -= 1
-		;空中戦型
+		;공중전형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:소형체구 = 1
 			TALENT:ARG:에어마스터 = 1
 			FEAT_NUM -= 2
-		;クリティカル型
+		;치명타형
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:야수의후손 = 1
 			TALENT:ARG:심안 = 1
 			FEAT_NUM -= 2
-		;스태미나のみ
+		;스태미나만
 		ELSE
 			TALENT:ARG:스태미나 = 1
 			FEAT_NUM -= 1
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "뱀파이어"
-		;パワー型
+		;파워형
 		IF RAND:4 == 0
 			TALENT:ARG:근력강화 = 1
 			TALENT:ARG:날개 = 1
 			FEAT_NUM -= 2
-		;籠絡型
+		;농락형
 		ELSEIF RAND:3 == 0
 			TALENT:ARG:남다른미모 = 1
 			TALENT:ARG:배덕의낙인 = 1
 			FEAT_NUM -= 2
-		;自由枠
+		;자유 틀(枠)
 		ELSE
 			FEAT_NUM = 2
 		ENDIF
 	ELSEIF TALENTNAME:RACE == "폴리니안"
-		;固有フィートのみ
+		;고유 FEAT만
 		IF RAND:2 == 0
 			TALENT:ARG:고속회피 = 1
 			FEAT_NUM -= 1
-		;스태미나軸
+		;스태미나 축(軸)
 		ELSEIF RAND:2 == 0
 			TALENT:ARG:스태미나 = 1
 			IF RAND:3 == 0
@@ -1708,22 +1715,22 @@ IF RAND:4 != 0
 				TALENT:ARG:풀버스트 = 1
 			ENDIF
 			FEAT_NUM -= 2
-		;速攻火力型
+		;속공 화력형
 		ELSE
 			TALENT:ARG:핫스타트 = 1
 			TALENT:ARG:풀버스트 = 1
 			FEAT_NUM -= 2
 		ENDIF
-		;フィートが多すぎると扱いにくくなるので確率で減らす
+		;FEAT가 너무 많으면 다루기 힘들어지므로 확률로 줄인다
 		SIF RAND:3 == 0
 			FEAT_NUM -= 1
 	ENDIF
 ENDIF
-;枠が余っていればランダム設定
+;틀(枠)이 남아 있으면 랜덤 설정
 IF FEAT_NUM > 0
 	CALL CLEARRANDCHOOSE
 	FOR LOCAL, 1100, 1300
-		;取得可能なフィートを候補に加える、ただし取得済みのものは除外する
+		;취득 가능한 FEAT를 후보에 추가한다, 다만 취득이 끝난 것은 제외한다
 		SIF FEAT_ABLE_F(RACE, LOCAL) > 0 && TALENT:ARG:LOCAL == 0
 			CALL ADDRANDCHOOSE, LOCAL
 	NEXT

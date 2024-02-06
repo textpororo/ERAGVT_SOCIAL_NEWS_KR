@@ -641,7 +641,7 @@ CASE 5
 			PRINTFORM 　　　외관：{MAXBASE:ARG:나이, 7} 세
 		PRINTL 
 		LOCALS = 『%CSTR:ARG:14%』
-		PRINTFORML 　　　뒷머리：%LOCALS, 20, LEFT%　　신장：{MAXBASE:ARG:신장 / 10, 5}.{MAXBASE:ARG:신장 % 10} cm
+		PRINTFORML 　　　뒷머리：%LOCALS, 20, LEFT%　신장：{MAXBASE:ARG:신장 / 10, 5}.{MAXBASE:ARG:신장 % 10} cm
 		PRINTFORM 　　　　　　　　　　　　　　　　　　　체중：{MAXBASE:ARG:체중 / 10, 5}.{MAXBASE:ARG:체중 % 10} kg
 		IF CHARATALENT_F(ARG,0,"남자")== 0
 			PRINTFORML (가슴 {MAXBASE:ARG:가슴무게 / 10}.{MAXBASE:ARG:가슴무게 % 10} kg)
@@ -3514,7 +3514,7 @@ PRINT ]
 PRINTL 
 
 ;--------------------------------------------------
-;문자열을 색 정보로 해동한다
+;문자열을 색 정보로 압축 해제한다
 ;(원문) 文字列を色情報に解凍する
 @SETCOLOR_BY_STR,ARGS
 #DIMS SeparatorMajor
