@@ -1287,7 +1287,7 @@ RETURN 1
 
 
 ;--------------------------------------------------
-;幽閉時の処理
+;유폐時の処理
 ;実際の拡張経験への加算処理は専用の関数で行うため、上昇値のみを返す
 ;対象はTARGET固定
 ;ARG:0		V経験上昇予定値
@@ -1297,10 +1297,10 @@ RETURN 1
 ;LOCAL:0～3 촉수サイズ？？？
 @PRISON_GAPING, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
 VARSET TENTACLE_SIZE
-;흑화に幽閉
+;흑화に유폐
 IF CFLAG:20 == 2
 	CALL SET_TENTACLE_SIZE, 0, 0, CFLAG:20, FLAG:111
-;촉수に幽閉
+;촉수に유폐
 ELSE
 	CALL SET_TENTACLE_SIZE, CFLAG:20, CFLAG:21, 0, 0,-TFLAG:10
 ENDIF

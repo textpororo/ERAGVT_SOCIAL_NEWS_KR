@@ -40,8 +40,8 @@
 ;7	A감각が低い時の쾌A増加
 ;8	敵が行動不能のヒロインを正確に狙う
 ;
-;幽閉・흑화オプション	FLAG:804	判定式：CONFIG_CHECK_PRISON_F(num)
-;0	남자の敗北幽閉時に女体化
+;유폐・흑화オプション	FLAG:804	判定式：CONFIG_CHECK_PRISON_F(num)
+;0	남자の敗北유폐時に女体化
 ;1	ヒロイン흑화機能を使用する
 ;2	┣ただし苗床取得キャラは産む機械に(묘상화取得後は흑화しにくい＝取り込まれ死亡コースに乗りやすい)
 ;3	┣非戦闘員持ちと희롱특화체질は흑화しない
@@ -50,7 +50,7 @@
 ;6	  ┣머리색の変更を許可する
 ;7	  ┣目の色の変更を許可する
 ;8	  ┗肌の色の変更を許可する
-;9	악질 시민による幽閉イベントを許可する
+;9	악질 시민による유폐イベントを許可する
 
 ;その他オプション	FLAG:805	判定式：CONFIG_CHECK_OTHER_F(num)
 ;0	娘育成(ONなら촉수に孕まされても娘を임신する場合がある)
@@ -268,7 +268,7 @@ ELSEIF PAGE == 1
 
 	PRINT 　●
 	SETCOLOR 60,255,120
-	PRINTFORML 幽閉・흑화関連オプション
+	PRINTFORML 유폐・흑화関連オプション
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(0) == 0
@@ -325,7 +325,7 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_PRISON_F(10) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[70]악질 시민による幽閉を許可する
+	PRINTFORML 　[70]악질 시민による유폐を許可する
 	RESETCOLOR
 	PRINTL 
 
@@ -363,7 +363,7 @@ ELSEIF PAGE == 1
 		SETCOLOR 105,105,105
 		;非イベントにおける필터、および性공격に伴う처녀 상실抑制
 		;「にくく」というかほぼ完全に抑制される
-		;　例外がＶ촉수幽閉中のＶ責め、Ｖ촉수だし意図的な例外だと思われる
+		;　例外がＶ촉수유폐中のＶ責め、Ｖ촉수だし意図的な例外だと思われる
 	PRINTFORML 　[76]ヒロインが常に성처녀となる（基本的に처녀を喪失しない）
 	RESETCOLOR
 
@@ -488,7 +488,7 @@ ELSEIF RESULT == 36
 ELSEIF RESULT >= 50 && RESULT <= 58
 	INVERTBIT FLAG:803, RESULT - 50
 	GOTO MASTER_LOOP
-;幽閉・흑화関係
+;유폐・흑화関係
 ELSEIF RESULT >= 60 && RESULT <= 70
 	INVERTBIT FLAG:804, RESULT - 60
 	GOTO MASTER_LOOP

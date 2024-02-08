@@ -1,11 +1,11 @@
 ﻿;**********************************************************
-;キャラクターメイキング処理
-;ARG = 修練Ｐの周回ボーナス値
+;캐릭터 메이킹 처리
+;ARG = 수련P 주회 보너스치
 ;----------------------------------------------------------
 @CHARA_MAKE_MAIN, ARG = 0
 #DIM CCOUNT
 
-;共通設定をグローバルから読んでおく(グローバルに設定するってことは頻繁に使いたいはずなので)
+;공통 설정을 글로벌에서 읽어둔다(글로벌로 설정한다는 것은 자주 사용하고 싶다는 것이므로)
 	LOADGLOBAL
 	FLAG:5 = GLOBAL:5
 	FLAG:6 = GLOBAL:6
@@ -20,7 +20,7 @@
 	SAVESTR:11 = %GLOBALS:16%
 	SAVESTR:12 = %GLOBALS:17%
 
-;設定選択
+;설정 선택
 VARSET LOCAL
 $LOOP_SETTING_START
 DRAWLINE
@@ -28,35 +28,35 @@ DRAWLINE
 
 FONTBOLD
 SETCOLORBYNAME CYAN
-PRINTL ◆デフォルト共通設定
+PRINTL ◆디폴트 공통 설정
 FONTREGULAR
 RESETCOLOR
-	PRINTFORML [1001]ユニットの主題・・・・・・\@(FLAG:5 == 1) ?『%SAVESTR:10%』#なし\@
-	PRINTFORML [1002]変身名（上の句）・・・・・\@(FLAG:6 == 1) ?『%SAVESTR:11%』#なし\@
-	PRINTFORML [1003]変身名（下の句）ジャンル・\@(FLAG:820 > 0) ?『%transnamegenre:(FLAG:820-1)%』#なし\@
-	PRINTFORML [1004]変身時のかけ声・・・・・・\@(FLAG:7 == 1) ?『%SAVESTR:12%』#なし\@
-	PRINTFORML [1005]苗字の言語・・・・・・・・\@(FLAG:821 > 0) ?%namelang:(FLAG:821-1)%#デフォルト\@
-	PRINTFORML [1006]名前の言語・・・・・・・・\@(FLAG:822 > 0) ?%namelang:(FLAG:822-1)%#デフォルト\@
-	PRINTFORML [1007]種族・・・・・・・・・・・\@(FLAG:823 > 0) ?%racegenre:(FLAG:823-1)%#ランダム\@
-	PRINTFORML [1008]フィート自動割り当て・・・\@(FLAG:824 == 1) ?あり#なし\@
-	PRINTFORML [1009]性格・・・・・・・・・・・\@(FLAG:825 == 1) ?구상有りのみ#完全ランダム\@
+	PRINTFORML [1001] 유닛의 주제 ・・・・・・\@(FLAG:5 == 1) ?『%SAVESTR:10%』#없음\@
+	PRINTFORML [1002] 변신명（윗구）・・・・・\@(FLAG:6 == 1) ?『%SAVESTR:11%』#없음\@
+	PRINTFORML [1003] 변신명（아랫구）장르・ \@(FLAG:820 > 0) ?『%transnamegenre:(FLAG:820-1)%』#없음\@
+	PRINTFORML [1004] 변신 시 구호・・・・・・\@(FLAG:7 == 1) ?『%SAVESTR:12%』#없음\@
+	PRINTFORML [1005] 성씨의 언어 ・・・・・・\@(FLAG:821 > 0) ?%namelang:(FLAG:821-1)%#디폴트\@
+	PRINTFORML [1006] 이름의 언어 ・・・・・・\@(FLAG:822 > 0) ?%namelang:(FLAG:822-1)%#디폴트\@
+	PRINTFORML [1007] 종족 ・・・・・・・・・・\@(FLAG:823 > 0) ?%racegenre:(FLAG:823-1)%#랜덤\@
+	PRINTFORML [1008] FEAT 자동 할당・・・・・\@(FLAG:824 == 1) ?있음#없음\@
+	PRINTFORML [1009] 성격 ・・・・・・・・・・\@(FLAG:825 == 1) ?구상 있음만#완전 랜덤\@
 
-	PRINTFORM [170]グローバルに保存　　　　　　
-	PRINTFORM [180]グローバルから読み込み　　　
-	PRINTFORML [190]初期化　　　
+	PRINTFORM [170] 글로벌에 보존　　　　　　　
+	PRINTFORM [180] 글로벌에서 불러오기　　　　
+	PRINTFORML [190] 초기화　　 
 	DRAWLINE
 PRINTL
 
 FONTBOLD
 SETCOLORBYNAME CYAN
-PRINTL ◆個別キャラメイキング
+PRINTL ◆개별 캐릭터 메이킹
 FONTREGULAR
 RESETCOLOR
 RESULT = 0
 FOR LOCAL, 0, CHARANUM
 	IF CALLNAME:LOCAL == "범용 캐릭터"
-		LOCALS = キャラプロフィール未設定　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-		PRINTFORM [{LOCAL}]%LOCALS, 90, LEFT%
+		LOCALS = 캐릭터 프로필 미설정　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+		PRINTFORM [{LOCAL}] %LOCALS, 90, LEFT%
 		PRINTPLAIN 　
 		PRINTFORM ♂[{LOCAL + 100}]
 		PRINTL 
@@ -64,35 +64,35 @@ FOR LOCAL, 0, CHARANUM
 		SIF LOCAL == MASTER
 			CONTINUE
 		LOCALS = %CALLNAME:LOCAL%
-		PRINTFORM [{LOCAL}]%LOCALS, 20, LEFT%
+		PRINTFORM [{LOCAL}] %LOCALS, 20, LEFT%
 		PRINTPLAIN 　
 		IF ISMALE(LOCAL)
-			PRINT 性別：♂ / 
+			PRINT 성별：♂ / 
 		ELSE
-			PRINT 性別：♀ / 
+			PRINT 성별：♀ / 
 		ENDIF
 		CALL SYUZOKU_CHECK, "STRING", LOCAL
-		LOCALS = 種族：%RESULTS%
+		LOCALS = 종족：%RESULTS%
 		PRINTFORM %LOCALS, 16, LEFT% / 
 		CALL SEIKAKU_CHECK, "STRING", LOCAL
-		LOCALS = 性格：%RESULTS%
+		LOCALS = 성격：%RESULTS%
 		PRINTFORM %LOCALS, 16, LEFT% / 
 		LOCALS = 
 		IF TALENT:LOCAL:변신능력 == -1
-			LOCALS += "非戦闘員"
+			LOCALS += "비전투원"
 		ELSEIF TALENT:LOCAL:변신능력 == 0
-			LOCALS += "変身なし"
+			LOCALS += "변신 없음"
 		ELSE
-			LOCALS += "変身あり"
+			LOCALS += "변신 있음"
 		ENDIF
 		IF CFLAG:LOCAL:0 == 1
-			LOCALS += " / 幽閉"
+			LOCALS += " / 유폐"
 		ELSEIF CFLAG:LOCAL:0 == 2
 			LOCALS += " / 세뇌"
 		ELSEIF CFLAG:LOCAL:0 == 3
 			LOCALS += " / 흑화"
 		ELSEIF CFLAG:LOCAL:0 == 9
-			LOCALS += " / 故人"
+			LOCALS += " / 사망"
 		ENDIF
 		PRINTFORM %LOCALS, 20, LEFT%
 		PRINTL 
@@ -100,7 +100,7 @@ FOR LOCAL, 0, CHARANUM
 NEXT
 
 PRINTL
-;プロフィール未設定人数の確認
+;프로필 미설정 인원 확인
 RESULT=0
 FOR CCOUNT, 0, CHARANUM
 	SIF CALLNAME:CCOUNT == "범용 캐릭터"
@@ -108,16 +108,16 @@ FOR CCOUNT, 0, CHARANUM
 NEXT
 
 	IF !GAME_OPTION_CHECK_F(OPTION_solo)
-		PRINTL [200]プリセットを読み込む　　　　
+		PRINTL [200] 프리셋을 불러온다　　　　　
 	ENDIF
 
 	SIF (GLOBAL:100 + GLOBAL:101 + GLOBAL:102) > 0 && !GAME_OPTION_CHECK_F(OPTION_solo)
-		PRINTL [300]人数を変更する
+		PRINTL [300] 인원수를 변경한다
 PRINTL
 PRINTL
 PRINTL
-PRINTFORM [1000]★キャラメイクを完了する%\@ RESULT ? （未設定のキャラはおまかせ） #  \@,32,LEFT%
-PRINTFORML [999]モード選択に돌아간다
+PRINTFORM [1000] ★캐릭터 메이킹을 완료한다%\@ RESULT ? （미설정인 캐릭터는 자동 설정） #  \@,32,LEFT%
+PRINTFORML [999] 모드 선택으로 돌아간다
 
 
 $INPUT_LOOP_0
@@ -131,10 +131,10 @@ ELSEIF RESULT > 0 && RESULT < CHARANUM
 	CALL FIRSTSETTING_CHARA_MAIN, RESULT, ARG
 	GOTO LOOP_SETTING_START
 
-;決定
+;결정
 ELSEIF RESULT == 1000
-	PRINTL キャラメイクを終了します
-	;キャラメイク完了処理(全員分まとめて)
+	PRINTL 캐릭터 메이킹을 종료합니다.
+	;캐릭터 메이킹 완료 처리(전원분 모아서)
 	CALL CHARA_MAKE_FINALIZE
 ELSEIF RESULT == 999
 	RETURN -1
@@ -167,20 +167,20 @@ ELSEIF RESULT == 1009
 	FLAG:825=!FLAG:825
 	GOTO LOOP_SETTING_START
 ELSEIF RESULT == 170
-	PRINTFORML 現在保存されているグローバル
-	PRINTFORML 　主題・・・・\@(GLOBAL:5 == 1) ?あり 『%GLOBALS:15%』#なし\@
-	PRINTFORML 　冠名・・・・\@(GLOBAL:6 == 1) ?あり 『%GLOBALS:16%』#なし\@
-	PRINTFORML 　変身名・・・\@(GLOBAL:8 > 0) ?あり 『%transnamegenre:(GLOBAL:8-1)%』#なし\@
-	PRINTFORML 　かけ声・・・\@(GLOBAL:7 == 1) ?あり 『%GLOBALS:17%』#なし\@
-	PRINTFORML 　苗字言語・・\@(GLOBAL:9 > 0) ?あり 『%namelang:(GLOBAL:9-1)%』#なし\@
-	PRINTFORML 　名前言語・・\@(GLOBAL:20 > 0) ?あり 『%namelang:(GLOBAL:20-1)%』#なし\@
-	PRINTFORML 　種族・・・・\@(GLOBAL:21 > 0) ?あり 『%racegenre:(GLOBAL:21-1)%』#なし\@
-	PRINTFORML 　フィート・・\@(GLOBAL:22 > 0) ?あり#なし\@
-	PRINTFORML 　性格・・\@(GLOBAL:23 > 0) ?구상有りのみ#完全ランダム\@
+	PRINTFORML 현재 보존되어 있는 글로벌
+	PRINTFORML 　주제・・・・\@(GLOBAL:5 == 1) ?있음 『%GLOBALS:15%』#없음\@
+	PRINTFORML 　관명・・・・\@(GLOBAL:6 == 1) ?있음 『%GLOBALS:16%』#없음\@
+	PRINTFORML 　변신명・・・\@(GLOBAL:8 > 0) ?있음 『%transnamegenre:(GLOBAL:8-1)%』#없음\@
+	PRINTFORML 　구호・・・・\@(GLOBAL:7 == 1) ?있음 『%GLOBALS:17%』#없음\@
+	PRINTFORML 　성씨 언어・\@(GLOBAL:9 > 0) ?있음 『%namelang:(GLOBAL:9-1)%』#없음\@
+	PRINTFORML 　이름 언어・\@(GLOBAL:20 > 0) ?있음 『%namelang:(GLOBAL:20-1)%』#없음\@
+	PRINTFORML 　종족・・・・\@(GLOBAL:21 > 0) ?있음 『%racegenre:(GLOBAL:21-1)%』#없음\@
+	PRINTFORML 　FEAT・・・・\@(GLOBAL:22 > 0) ?있음#없음\@
+	PRINTFORML 　성격・・\@(GLOBAL:23 > 0) ?구상 있음만#완전 랜덤\@
 	PRINTL 
-	PRINTL 【注意】共通設定のグローバルに上書きします。
-	PRINTL         元の状態に復元はできませんが、よろしいですか？
-	PRINTL     [0]上書き実行      [99]キャンセルして돌아간다
+	PRINTL 【주의】공통 설정의 글로벌에 덮어씁니다.
+	PRINTL         이전 상태로 복원할 수 없습니다만, 괜찮습니까?
+	PRINTL     [0] 덮어쓰기 실행      [99] 취소하고 돌아간다
 	PRINTL 
 	$INPUT_LOOP_3_1
 	INPUT
@@ -198,10 +198,10 @@ ELSEIF RESULT == 170
 		GLOBALS:16 = %SAVESTR:11%
 		GLOBALS:17 = %SAVESTR:12%
 		SAVEGLOBAL
-		PRINTW グローバルとして保存しました。
+		PRINTW 현재의 공통 설정을 글로벌에 보존했습니다.
 		GOTO LOOP_SETTING_START
 	ELSEIF RESULT == 99
-		;PRINTW 上書きをキャンセルしました。
+		;PRINTW 덮어쓰기를 취소했습니다.
 		GOTO LOOP_SETTING_START
 	ELSE
 		GOTO INPUT_LOOP_3_1
@@ -220,8 +220,8 @@ ELSEIF RESULT == 180
 	SAVESTR:10 = %GLOBALS:15%
 	SAVESTR:11 = %GLOBALS:16%
 	SAVESTR:12 = %GLOBALS:17%
-	;↓見れば分かるのでコメントアウト
-	;PRINTW グローバルから共通設定を読み込みました。
+	;↓보면 알 수 있기 때문에 코멘트 아웃
+	;PRINTW 글로벌에서 공통 설정을 불러왔습니다.
 	GOTO LOOP_SETTING_START
 ELSEIF RESULT == 190
 	FLAG:5 = 0
@@ -236,11 +236,11 @@ ELSEIF RESULT == 190
 	SAVESTR:10 = 
 	SAVESTR:11 = 
 	SAVESTR:12 = 
-	;↓見れば分かるのでコメントアウト
-	;PRINTW 共通設定を初期化しました。
+	;↓보면 알 수 있기 때문에 코멘트 아웃
+	;PRINTW 공통 설정을 초기화했습니다.
 	GOTO LOOP_SETTING_START
 
-;初期セット読み込み
+;초기 세트 불러오기
 ELSEIF RESULT == 200 && !GAME_OPTION_CHECK_F(OPTION_solo)
 	LOCAL=LINECOUNT
 	TRYCALL CHARA_MAKE_FINALIZE_KAI
@@ -250,20 +250,20 @@ ELSEIF RESULT == 200 && !GAME_OPTION_CHECK_F(OPTION_solo)
 	GOTO LOOP_SETTING_START
 ELSEIF RESULT==300 && (GLOBAL:100 + GLOBAL:101 + GLOBAL:102) > 0 && !GAME_OPTION_CHECK_F(OPTION_solo)
 		PRINTL 
-		PRINTFORML 周回クリアボーナス：
-		PRINTFORML ゲーム開始時の人数を増減できます
-		PRINTFORML [ 2] ２人で開始
-		PRINTFORML [ 3] ３人で開始(デフォルト)
-		PRINTFORML [ 4] ４人で開始
-		PRINTFORML [ 5] ５人で開始
-		PRINTFORML [ 6] ６人で開始
+		PRINTFORML 주회 클리어 보너스：
+		PRINTFORML 게임 시작 시의 인원수를 증감할 수 있습니다.
+		PRINTFORML [ 2] ２인으로 시작
+		PRINTFORML [ 3] ３인으로 시작(디폴트)
+		PRINTFORML [ 4] ４인으로 시작
+		PRINTFORML [ 5] ５인으로 시작
+		PRINTFORML [ 6] ６인으로 시작
 		PRINTL 
-		PRINTFORML [99]変更せずに돌아간다
+		PRINTFORML [99] 변경하지 않고 돌아간다
 		$INPUT_LOOP_CHARA_NUM
 		INPUT
 		IF RESULT >= 2 && RESULT <= 6
 			LOCAL = RESULT
-			PRINTFORML {LOCAL}人で開始します
+			PRINTFORML {LOCAL}인으로 시작합니다.
 			IF CHARANUM-1<LOCAL
 				REPEAT LOCAL-(CHARANUM-1)
 					ADDCHARA 0

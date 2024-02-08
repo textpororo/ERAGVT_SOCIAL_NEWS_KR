@@ -174,7 +174,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	PRINTFORM  Lv.{ABL:(FLAG:111):레벨} 
 ENDIF
 
-;幽閉・세뇌状況
+;유폐・세뇌状況
 LOCAL = 0
 LOCAL:1 = 0
 LOCALS'=""
@@ -186,7 +186,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
 		IF CFLAG:CCOUNT:0 == 상태_세뇌 && CFLAG:CCOUNT:21 == FLAG:11
 			LOCAL:1 += 1
 			LOCALS:1+="["+CALLNAME:CCOUNT+"]"
-		;誰かを幽閉している敵ならその犠牲者を表示
+		;誰かを유폐している敵ならその犠牲者を表示
 		ELSEIF CFLAG:CCOUNT:0 == 상태_유폐 && CFLAG:CCOUNT:21 == FLAG:11
 			LOCAL += 1
 			LOCALS+="["+CALLNAME:CCOUNT+"]"
@@ -201,7 +201,7 @@ ELSE
 		ELSEIF CFLAG:CCOUNT:0 == 상태_세뇌 && CFLAG:CCOUNT:21 == FLAG:111
 			LOCAL:1 += 1
 			LOCALS:1+="["+CALLNAME:CCOUNT+"]"
-		;誰かを幽閉している敵ならその犠牲者を表示
+		;誰かを유폐している敵ならその犠牲者を表示
 		ELSEIF CFLAG:CCOUNT:0 == 상태_유폐 && CFLAG:CCOUNT:21 == FLAG:111
 			LOCAL += 1
 			LOCALS+="["+CALLNAME:CCOUNT+"]"
@@ -209,7 +209,7 @@ ELSE
 	NEXT
 ENDIF
 SIF LOCAL
-	PRINTFORM 　幽閉中：%LOCALS%
+	PRINTFORM 　유폐中：%LOCALS%
 SIF LOCAL:1
 	PRINTFORM 　세뇌中：%LOCALS:1%
 ;SIF LOCAL || LOCAL:1

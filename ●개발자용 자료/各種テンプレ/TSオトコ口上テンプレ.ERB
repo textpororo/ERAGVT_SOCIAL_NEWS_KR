@@ -1042,7 +1042,7 @@ ENDIF
 ;SPCOM13：P촉수専用SP　丸飲み精液攻め
 ;--------------------------------------------------
 @KOJO_1_SEX_SPCOM13_###
-;受けると幽閉確定の즉사공격です。
+;受けると유폐確定の즉사공격です。
 ;ウツボカツラ型のＰ촉수に丸飲みされ、精液風呂で倒れるまで사정されます。
 
 ;SPCOM14：H촉수専用SP　催眠姦
@@ -1391,7 +1391,7 @@ ENDIF
 IF CFLAG:TARGET:206 == 1
 ;通常戦闘中（敵）
 ELSEIF CFLAG:TARGET:206 == 2
-;幽閉中（敵）
+;유폐中（敵）
 ELSEIF CFLAG:TARGET:206 == 3
 ;촉수 구속구/기생촉수
 ELSEIF CFLAG:TARGET:206 == 4
@@ -1684,13 +1684,13 @@ ENDIF
 
 
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
-;幽閉関係
+;유폐関係
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-;初めての幽閉
+;初めての유폐
 ;--------------------------------------------------
 @KOJO_1_PRISON_PRISENTENCE_FIRST_###
-;幽閉TSが発生した
+;유폐TSが発生した
 IF TALENT:남자 && CONFIG_CHECK_OTHER_F(1) > 0
 	;完全女体化(변신시TSキャラが変身前の体でTS)
 	IF TALENT:변신시TS > 0 && CFLAG:1 == 1
@@ -1703,7 +1703,7 @@ ELSE
 	
 ENDIF
 
-;二度目以降の幽閉後の初被姦
+;二度目以降の유폐後の初被姦
 ;--------------------------------------------------
 @KOJO_1_PRISON_PRISENTENCE_START_###
 ;타락/쾌락굴복/봉사정신LV3以上/촉수중독LV2以上
@@ -1714,7 +1714,7 @@ ELSE
 	
 ENDIF
 
-;幽閉後の被姦開始文
+;유폐後の被姦開始文
 ;--------------------------------------------------
 @KOJO_1_PRISON_PRISENTENCE_###
 ;세뇌
@@ -1726,7 +1726,7 @@ ELSEIF CFLAG:0 == 3 && GAME_MODE_CHECK_F() == MODE_GAMEOVER
 ;타락
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	
-;幽閉5日以下
+;유폐5日以下
 ELSEIF CFLAG:31 < 6 && GAME_MODE_CHECK_F() != MODE_GAMEOVER
 	;쾌락굴복（あっさりと快楽に屈した）
 	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
@@ -1738,7 +1738,7 @@ ELSEIF CFLAG:31 < 6 && GAME_MODE_CHECK_F() != MODE_GAMEOVER
 	ELSE
 		
 	ENDIF
-;幽閉6日以上11日以下
+;유폐6日以上11日以下
 ELSEIF CFLAG:31 < 12 && GAME_MODE_CHECK_F() != MODE_GAMEOVER
 	;쾌락굴복/절망（正常な思考を失いつつある）
 	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망)
@@ -1747,7 +1747,7 @@ ELSEIF CFLAG:31 < 12 && GAME_MODE_CHECK_F() != MODE_GAMEOVER
 	ELSE
 		
 	ENDIF
-;幽閉12日以上
+;유폐12日以上
 ELSE
 	;쾌락굴복（壊れたような笑み）
 	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)

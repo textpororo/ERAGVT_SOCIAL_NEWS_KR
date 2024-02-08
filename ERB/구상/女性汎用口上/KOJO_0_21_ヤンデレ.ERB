@@ -152,7 +152,7 @@ ELSE
 				PRINTFORML 「本物を探さなきゃ、本物の%CSTR:20%ちゃんはどこだ、どこで間違えた――」
 				PRINTFORML  %CALLNAME%은(는) 狂乱状態で部屋のゴミ袋を漁っている……。
 		ENDSELECT
-	;思い人が幽閉
+	;思い人が유폐
 	ELSEIF GROUPMATCH(CFLAG:(CFLAG:280):0, 상태_유폐, 상태_악질감금)
 		SELECTCASE RAND:5
 			CASE 0
@@ -319,7 +319,7 @@ ELSE
 				PRINTFORML 「%CSTR:20%ちゃんをぉぉおおッ、何処へやっタぁぁァァアアァァッッ！！」
 				PRINTFORML  溢れる激情の慟哭を上げ、%CALLNAME%은(는) 武器を振りかざしながら襲い掛かった……！
 		ENDSELECT
-	;思い人が幽閉
+	;思い人が유폐
 	ELSEIF CFLAG:(CFLAG:280):0 == 상태_유폐
 		PRINTFORML 「%CSTR:20%ちゃん、助けに来たよ――」
 		PRINTFORML  ポツリと囁かれる言葉、そしてカッと見開かれる%CALLNAME%の両目が、
@@ -429,7 +429,7 @@ ELSE
 				PRINTFORML 「%CSTR:20%ちゃんをぉぉおおッ、何処へやっタぁぁァァアアァァッッ！！」
 				PRINTFORML  溢れる激情の慟哭を上げ、%CALLNAME%은(는) 武器を振りかざしながら襲い掛かった……！
 		ENDSELECT
-	;思い人が幽閉
+	;思い人が유폐
 	ELSEIF CFLAG:(CFLAG:280):0 == 상태_유폐
 		PRINTFORML 「%CSTR:20%ちゃん、助けに来たよ――」
 		PRINTFORML  ポツリと囁かれる言葉、そしてカッと見開かれる%CALLNAME%の両目が、
@@ -580,7 +580,7 @@ ENDIF
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 ;@KOJO_0_BATTLE_CHARA_NANORI_21
 
-;SP変身時のかけ声
+;SP변신 시 구호
 @KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_21
 ;相手が思い人
 IF FLAG:111 == CFLAG:280 && ENEMY_TYPE_CHECK_F("AKUOTI")
@@ -2014,17 +2014,17 @@ ENDIF
 @KOJO_0_SELF_A_21
 
 
-;幽閉関係
+;유폐関係
 
-;初めての幽閉
+;初めての유폐
 ;--------------------------------------------------
 @KOJO_0_PRISON_PRISENTENCE_FIRST_21
 
-;二度目以降の幽閉後の初被姦
+;二度目以降の유폐後の初被姦
 ;--------------------------------------------------
 @KOJO_0_PRISON_PRISENTENCE_START_21
 
-;幽閉後の被姦開始文
+;유폐後の被姦開始文
 ;--------------------------------------------------
 @KOJO_0_PRISON_PRISENTENCE_21
 

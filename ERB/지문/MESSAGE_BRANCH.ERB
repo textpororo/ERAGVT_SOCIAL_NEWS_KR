@@ -338,7 +338,7 @@ IF FLAG:700 > 0
 	;발정状態
 	SIF (TCVARn:12 & 발정)
 		FAITH_S += -2
-;幽閉中のみ計算
+;유폐中のみ計算
 ELSEIF CFLAG:0 == 1
 	;経過日数に応じて理性強度が低下
 	IF CFLAG:ARG:31 < 3

@@ -43,9 +43,9 @@ SELECTCASE ARG
 	CASE K4자유행동_변신
 		PRINTFORML [{ARG}] 自由行動(変身)
 	CASE K4유폐
-		PRINTFORML [{ARG}] 幽閉　　　　　
+		PRINTFORML [{ARG}] 유폐　　　　　
 	CASE K4유폐_변신
-		PRINTFORML [{ARG}] 幽閉(変身)　　
+		PRINTFORML [{ARG}] 유폐(変身)　　
 	CASE K4세뇌
 		PRINTFORML [{ARG}] 세뇌　　　　　
 	CASE K4흑화
@@ -102,7 +102,7 @@ ENDIF
 TRYCALLFORM KOJO_{RESULT:0}_COLOR_{RESULT:1}
 TRYCALLFORM KOJO_{RESULT:0}_%ARGS%_{RESULT:1}
 
-;汎用豹変구상ルート処理_幽閉
+;汎用豹変구상ルート処理_유폐
 ;----------------------------------------------------------
 @KOJO_4_ROOT_PRISON(ARGS)
 IF CFLAG:1 > 0
@@ -113,7 +113,7 @@ ENDIF
 TRYCALLFORM KOJO_{RESULT:0}_COLOR_{RESULT:1}
 TRYCALLFORM KOJO_{RESULT:0}_PRISON_%ARGS%_{RESULT:1}
 
-;汎用豹変구상ルート処理_戦闘と幽閉両方で使用
+;汎用豹変구상ルート処理_戦闘と유폐両方で使用
 ;----------------------------------------------------------
 @KOJO_4_ROOT_BATTLE_TO_PRISON(ARGS)
 IF CFLAG:(FLAG:111):0 == 상태_유폐
@@ -849,17 +849,17 @@ CALL KOJO_4_ROOT_BATTLE("BATTLE_DISACTION_PARASITE")
 ;=================================================
 ;MESSAGE_PRISON.ERB
 ;=================================================
-;初めての幽閉
+;初めての유폐
 ;-------------------------------------------------
 @KOJO_4_PRISON_PRISENTENCE_FIRST
 CALL KOJO_4_ROOT_PRISON("PRISENTENCE_FIRST")
 
-;二度目以降の幽閉後の初被姦
+;二度目以降の유폐後の初被姦
 ;-------------------------------------------------
 @KOJO_4_PRISON_PRISENTENCE_START
 CALL KOJO_4_ROOT_PRISON("PRISENTENCE_START")
 
-;幽閉後の被姦開始
+;유폐後の被姦開始
 ;-------------------------------------------------
 @KOJO_4_PRISON_PRISENTENCE
 CALL KOJO_4_ROOT_PRISON("PRISENTENCE")
@@ -879,7 +879,7 @@ CALL KOJO_4_ROOT_PRISON("AKUOTI")
 @KOJO_4_SHOP_AKUOTI
 CALL KOJO_4_ROOT_SHOP("SHOP_AKUOTI")
 
-;自ら幽閉
+;自ら유폐
 ;-------------------------------------------------
 @KOJO_4_SHOP_PRISON
 CALL KOJO_4_ROOT_SHOP("SHOP_PRISON")

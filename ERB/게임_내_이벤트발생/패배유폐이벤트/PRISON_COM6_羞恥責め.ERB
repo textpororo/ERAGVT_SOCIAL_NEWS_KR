@@ -1,5 +1,5 @@
 ﻿;**********************************************************
-;幽閉コマンド
+;유폐コマンド
 ;PRISON_COM6
 ;羞恥な攻め
 ;**********************************************************
@@ -218,13 +218,13 @@ ELSEIF ABL:노출벽 >= 5
 	LOCAL:130 = 32
 ENDIF
 
-;지문: 흑화 캐릭터가 幽閉中の操作キャラに羞恥な攻めをした
+;지문: 흑화 캐릭터가 유폐中の操作キャラに羞恥な攻めをした
 SIF CFLAG:20 == 2
 	CALL MESSAGE_OTHER_PRISON_COM_6
 ;지문: 羞恥な攻め
 CALL MESSAGE_PRISON_COM_6
 
-;幽閉中パラメータ変動共通処理へ
+;유폐中パラメータ変動共通処理へ
 CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
 ;経験数の増加

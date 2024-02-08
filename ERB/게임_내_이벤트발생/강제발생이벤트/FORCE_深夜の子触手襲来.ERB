@@ -122,8 +122,8 @@ DRAWLINE
 CALL MESSAGE_SMALL_ATTACK
 CALL MESSAGE_SMALL_ATTACK_SUCCESS
 
-;幽閉コマンドの選択
-;汎用行動の種類　幽閉処理関連のフォルダ内のPRISON_COMX,ERBの数を記述
+;유폐コマンドの選択
+;汎用行動の種類　유폐処理関連のフォルダ内のPRISON_COMX,ERBの数を記述
 WHILE 1==1
 	LOCAL:1 = RAND:7
 	;フタナリならばＣ襲来の確率がアップ
@@ -542,7 +542,7 @@ ELSEIF ARG == 6
 	CALLFORM MESSAGE_SMALL_PRISON_COM_6
 ENDIF
 
-;幽閉中パラメータ変動共通処理へ
+;유폐中パラメータ変動共通処理へ
 CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
 ;経験数の増加

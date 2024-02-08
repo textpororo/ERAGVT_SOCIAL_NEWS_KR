@@ -1,14 +1,14 @@
 ﻿;**********************************************************
-;幽閉中の지문
+;유폐中の지문
 
 
 ;------------------------------------------------
-;初めての幽閉
+;初めての유폐
 @MESSAGE_PRISON_PRISENTENCE_FIRST
 
 CALL UNLOCK_ACHIEVEMENT(275,"여성의 숙명")
 
-;幽閉中に産まれて連れ去られた娘
+;유폐中に産まれて連れ去られた娘
 IF CFLAG:6 == -1
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)全身を這う촉수の感触にも嫌悪の表情を見せることがない。
 	PRINTFORML この場所で生まれ育った彼女にとっては촉수に囲まれているのが自然なことで、
@@ -186,7 +186,7 @@ ELSE
 ENDIF
 
 ;------------------------------------------------
-;二度目からの幽閉後の初被姦
+;二度目からの유폐後の初被姦
 @MESSAGE_PRISON_PRISENTENCE_START
 PRINTFORML 深い意識の遮断から目が覚めた%PRINT_TRANSCALLNAME(TARGET)%은(는)、
 PRINTFORM 肌を這い回る%STR:2500%の感触に
@@ -210,7 +210,7 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_PRISENTENCE_START")
 PRINTL 
 
 ;------------------------------------------------
-;幽閉後の被姦開始文
+;유폐後の被姦開始文
 @MESSAGE_PRISON_PRISENTENCE
 PRINTFORML 薄暗い闇の中───
 IF CFLAG:6 == -1 && (MESSAGE_BRANCH_F(TARGET) & 타락)
@@ -374,7 +374,7 @@ PRINTL
 
 @MESSAGE_SHOP_PRISON
 FONTBOLD
-PRINTL 幽閉　　　　　　
+PRINTL 유폐　　　　　　
 FONTREGULAR
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)侵蝕する淫紋に操られて姿を消し、どこかへ行ってしまいました
 PRINTW 

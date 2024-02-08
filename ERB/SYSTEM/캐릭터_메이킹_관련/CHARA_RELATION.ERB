@@ -1,65 +1,66 @@
 ﻿;--------------------------------------------------
-;キャラの相関関係に関する処理
+;캐릭터의 상관관계에 관한 처리
 ;--------------------------------------------------
-;固有番号ARGのキャラがARG:1のキャラをどう思っているか返す
+;고유 번호 ARG의 캐릭터가 ARG:1의 캐릭터를 어떻게 생각하는지를 반환한다
 @GET_RELATION, ARG:0, ARG:1
 LOCALS = 
 
-;印象系---------------------------------
+;인상계---------------------------------
 
 IF RELATION:(ARG:0):(ARG:1) < POWER(2, 20)
 	IF GETBIT(RELATION:(ARG:0):(ARG:1),소원한) && GETBIT(RELATION:(ARG:0):(ARG:1),친한)
-		LOCALS += "微妙な距離感の知人"
+		LOCALS += "미묘한 거리감의 지인"
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),친한)
-		LOCALS += "친한間柄"
+		LOCALS += "친한 사이"
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),소원한)
-		LOCALS += "顔見知り"
+		LOCALS += "아는 사이"
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),사랑하는) && GETBIT(RELATION:(ARG:0):(ARG:1),증오하는)
-		LOCALS += "複雑な関係"
+		LOCALS += "복잡한 관계"
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),사랑하는)
-		LOCALS += "大事な人"
+		LOCALS += "소중한 사람"
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),증오하는)
-		LOCALS += "仇敵"
+		;동료들의 원쑤!
+		LOCALS += "원수"
 	ENDIF
 ELSE
 	SIF GETBIT(RELATION:(ARG:0):(ARG:1),생이별한)
-		LOCALS += "生き別れの"
+		LOCALS += "생이별한 "
 	IF GETBIT(RELATION:(ARG:0):(ARG:1),소원한) && GETBIT(RELATION:(ARG:0):(ARG:1),친한)
-		LOCALS += "微妙な距離感の"
+		LOCALS += "미묘한 거리감의 "
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),친한) && GETBIT(RELATION:(ARG:0):(ARG:1),친구) == 0
-		LOCALS += "친한"
+		LOCALS += "친한 "
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),소원한)
-		LOCALS += "소원한"
+		LOCALS += "소원한 "
 	ENDIF
 	IF GETBIT(RELATION:(ARG:0):(ARG:1),사랑하는) && GETBIT(RELATION:(ARG:0):(ARG:1),증오하는)
-		LOCALS += "愛憎渦巻く"
+		LOCALS += "애증이 소용돌이치는 "
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),사랑하는)
-		LOCALS += "사랑하는"
+		LOCALS += "사랑하는 "
 	ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),증오하는)
-		LOCALS += "증오하는"
+		LOCALS += "증오하는 "
 	ENDIF
 	SIF GETBIT(RELATION:(ARG:0):(ARG:1),의리의)
-		LOCALS += "의리의"
+		LOCALS += "의리의 "
 ENDIF
 
-;関係---------------------------------
+;관계---------------------------------
 
 LOCAL = 0
 IF GETBIT(RELATION:(ARG:0):(ARG:1),부모자식)
 	IF TOSHIUE_F(ARG:0, ARG:1) > 0
 		IF ISMALE(ARG:1)
-			LOCALS += "息子"
+			LOCALS += "아들"
 			LOCAL ++
 		ELSE
-			LOCALS += "娘"
+			LOCALS += "딸"
 			LOCAL ++
 		ENDIF
 	ELSE
 		IF ISMALE(ARG:1)
-			LOCALS += "父親"
+			LOCALS += "친부"
 			LOCAL ++
 		ELSE
-			LOCALS += "母親"
+			LOCALS += "친모"
 			LOCAL ++
 		ENDIF
 	ENDIF
@@ -69,18 +70,18 @@ ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),형제자매)
 	IF TOSHIUE_F(ARG:0, ARG:1)
 		IF ISMALE(ARG:1)
-			LOCALS += "弟"
+			LOCALS += "남동생"
 			LOCAL ++
 		ELSE
-			LOCALS += "妹"
+			LOCALS += "여동생"
 			LOCAL ++
 		ENDIF
 	ELSE
 		IF ISMALE(ARG:1)
-			LOCALS += "兄"
+			LOCALS += "형/오빠"
 			LOCAL ++
 		ELSE
-			LOCALS += "姉"
+			LOCALS += "누나/언니"
 			LOCAL ++
 		ENDIF
 	ENDIF
@@ -89,14 +90,14 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),형제자매)
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),조부모손주)
 	IF TOSHIUE_F(ARG:0, ARG:1)
-		LOCALS += "孫"
+		LOCALS += "손주"
 		LOCAL ++
 	ELSE
 		IF ISMALE(ARG:1)
-			LOCALS += "祖父"
+			LOCALS += "할아버지"
 			LOCAL ++
 		ELSE
-			LOCALS += "祖母"
+			LOCALS += "할머니"
 			LOCAL ++
 		ENDIF
 	ENDIF
@@ -105,10 +106,10 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),조부모손주)
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),아저씨아줌마)
 	IF ISMALE(ARG:1)
-		LOCALS += "おじ"
+		LOCALS += "아저씨"
 		LOCAL ++
 	ELSE
-		LOCALS += "おば"
+		LOCALS += "아줌마"
 		LOCAL ++
 	ENDIF
 	SIF GETBIT(RELATION:(ARG:0):(ARG:1),사촌)
@@ -116,10 +117,10 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),아저씨아줌마)
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),조카조카딸)
 	IF ISMALE(ARG:1)
-		LOCALS += "甥"
+		LOCALS += "조카"
 		LOCAL ++
 	ELSE
-		LOCALS += "姪"
+		LOCALS += "조카딸"
 		LOCAL ++
 	ENDIF
 	SIF GETBIT(RELATION:(ARG:0):(ARG:1),사촌)
@@ -130,20 +131,20 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),사촌)
 	LOCAL ++
 ENDIF
 SIF LOCAL && (GETBIT(RELATION:(ARG:0):(ARG:1),친구) || GETBIT(RELATION:(ARG:0):(ARG:1),짝사랑) || GETBIT(RELATION:(ARG:0):(ARG:1),연인) || GETBIT(RELATION:(ARG:0):(ARG:1),약혼자) || GETBIT(RELATION:(ARG:0):(ARG:1),배우자))
-	LOCALS += "かつ"
+	LOCALS += "이며 "
 IF GETBIT(RELATION:(ARG:0):(ARG:1),친한) && GETBIT(RELATION:(ARG:0):(ARG:1),소원한) == 0 && GETBIT(RELATION:(ARG:0):(ARG:1),친구)
-	LOCALS += "親友"
+	LOCALS += "절친"
 	LOCAL ++
 	SIF LOCAL && (GETBIT(RELATION:(ARG:0):(ARG:1),짝사랑) || GETBIT(RELATION:(ARG:0):(ARG:1),연인) || GETBIT(RELATION:(ARG:0):(ARG:1),약혼자) || GETBIT(RELATION:(ARG:0):(ARG:1),배우자))
-		LOCALS += "で"
+		LOCALS += "이자 "
 ELSEIF GETBIT(RELATION:(ARG:0):(ARG:1),친구)
 	LOCALS += "친구"
 	LOCAL ++
 	SIF LOCAL && (GETBIT(RELATION:(ARG:0):(ARG:1),짝사랑) || GETBIT(RELATION:(ARG:0):(ARG:1),연인) || GETBIT(RELATION:(ARG:0):(ARG:1),약혼자) || GETBIT(RELATION:(ARG:0):(ARG:1),배우자))
-		LOCALS += "で"
+		LOCALS += "이자 "
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),짝사랑)
-	LOCALS += "짝사랑の相手"
+	LOCALS += "짝사랑하는 상대"
 	LOCAL ++
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),연인)
@@ -156,14 +157,14 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),약혼자)
 ENDIF
 IF GETBIT(RELATION:(ARG:0):(ARG:1),배우자)
 	IF ISMALE(ARG:1)
-		LOCALS += "夫"
+		LOCALS += "남편"
 	ELSE
-		LOCALS += "妻"
+		LOCALS += "아내"
 	ENDIF
 	LOCAL ++
 ENDIF
 SIF LOCAL && (GETBIT(RELATION:(ARG:0):(ARG:1),주인) || GETBIT(RELATION:(ARG:0):(ARG:1),종자) || GETBIT(RELATION:(ARG:0):(ARG:1),노예))
-	LOCALS += "かつ"
+	LOCALS += "임과 동시에 "
 IF GETBIT(RELATION:(ARG:0):(ARG:1),주인)
 	LOCALS += "주인"
 	LOCAL ++
@@ -177,15 +178,15 @@ IF GETBIT(RELATION:(ARG:0):(ARG:1),노예)
 	LOCAL ++
 ENDIF
 
-;文字列を返す
+;문자열을 반환한다
 RESULTS = %LOCALS%
 
 
 ;--------------------------------------------------
-;キャラの相関関係の付与
+;캐릭터 상관관계 부여
 ;--------------------------------------------------
-;固有番号ARG:0のキャラに対するARG:1の関係を設定する
-;一部の関係は双方向処理
+;고유 번호 ARG:0의 캐릭터에 대한 ARG:1의 관계를 설정한다
+;일부 관계는 양방향 처리
 @SET_RELATION, ARG:0, ARG:1
 #DIM LCOUNT
 #DIM SELECT, 64
@@ -201,13 +202,13 @@ NEXT
 LCOUNT = LINECOUNT
 $INPUT_LOOP
 CALL LB
-PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:(ARG:0)%』と{ARG:1}人目のキャラ『%CALLNAME:(ARG:1)%』の関係を設定してください
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:(ARG:0)%』와(과) {ARG:1}번째 캐릭터『%CALLNAME:(ARG:1)%』의 관계를 설정해 주십시오.
 DRAWLINE
 LOCAL = 0
-PRINTL 　印象
+PRINTL 　인상
 SIF SELECT:생이별한 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{생이별한}]　生き別れ
+PRINTFORML 　　[{생이별한}]　생이별한
 RESETCOLOR
 SIF SELECT:친한 > 0
 	SETCOLOR 255,60,220
@@ -230,26 +231,26 @@ SIF SELECT:의리의 > 0
 PRINTFORML 　　[{의리의}]　의리의
 RESETCOLOR
 DRAWLINE
-PRINTL 　関係
+PRINTL 　관계
 SIF SELECT:부모자식 > 0
 	SETCOLOR 255,60,220
 PRINTFORML 　　[{부모자식}] 부모자식
 RESETCOLOR
 SIF SELECT:형제자매 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{형제자매}] 兄/弟/姉/妹
+PRINTFORML 　　[{형제자매}] 형/오빠/남동생/누나/언니/여동생
 RESETCOLOR
 SIF SELECT:조부모손주 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{조부모손주}] 祖父/祖母/孫
+PRINTFORML 　　[{조부모손주}] 할아버지/할머니/손주
 RESETCOLOR
 SIF SELECT:아저씨아줌마 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{아저씨아줌마}] おじ/おば
+PRINTFORML 　　[{아저씨아줌마}] 아저씨/아줌마
 RESETCOLOR
 SIF SELECT:조카조카딸 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{조카조카딸}] 甥/姪
+PRINTFORML 　　[{조카조카딸}] 조카/조카딸
 RESETCOLOR
 SIF SELECT:친구 > 0
 	SETCOLOR 255,60,220
@@ -257,7 +258,7 @@ PRINTFORML 　　[{친구}] 친구
 RESETCOLOR
 SIF SELECT:짝사랑 > 0
 	SETCOLOR 255,60,220
-PRINTFORML 　　[{짝사랑}] 짝사랑の相手
+PRINTFORML 　　[{짝사랑}] 짝사랑하는 상대
 RESETCOLOR
 SIF SELECT:연인 > 0
 	SETCOLOR 255,60,220
@@ -289,27 +290,27 @@ LOSE_VIRGIN:0 = 0
 LOSE_VIRGIN:1 = 0
 IF SELECT:부모자식 == 0 && SELECT:형제자매 == 0 && SELECT:조부모손주 == 0 && SELECT:아저씨아줌마 == 0 && SELECT:조카조카딸 == 0 && SELECT:사촌 == 0
 	IF SELECT:생이별한 > 0
-		PRINTL  가족관계が無いキャラクターに「生き別れ」は付けられません
+		PRINTL  가족관계가 없는 캐릭터에게「생이별한」은 추가할 수 없습니다.
 		CHECK = 1
 	ENDIF
 	IF SELECT:의리의 > 0
-		PRINTL  가족관계が無いキャラクターに「의리의」は付けられません
+		PRINTL  가족관계가 없는 캐릭터에게「의리의」는 추가할 수 없습니다.
 		CHECK = 1
 	ENDIF
 ENDIF
 IF SELECT:부모자식 > 0 && SELECT:의리의 == 0
 	IF TOSHIUE_F(ARG:0, ARG:1) > 0 && TALENT:(ARG:0):처녀 > 0 && ISFEMALE(ARG:0)
-		PRINTFORML  %CALLNAME:(ARG:0)%の方が年上ですが처녀なので実の母親にはなれません
+		PRINTFORML  %CALLNAME:(ARG:0)% 쪽이 연상이지만 처녀이기 때문에 친모가 될 수 없습니다.
 		IF TALENT:(ARG:0):고유캐릭터 == 0
-			PRINTFORML  決定した場合は%CALLNAME:(ARG:0)%の처녀を消去します
+			PRINTFORML  결정됐을 경우에는 %CALLNAME:(ARG:0)%의 처녀를 소거합니다.
 		ELSE
 			CHECK = 1
 		ENDIF
 		LOSE_VIRGIN:0 = 1
 	ELSEIF TOSHIUE_F(ARG:1, ARG:0) > 0 && TALENT:(ARG:1):처녀 > 0 && ISFEMALE(ARG:1)
-		PRINTFORML  %CALLNAME:(ARG:1)%の方が年上ですが처녀なので実の母親にはなれません
+		PRINTFORML  %CALLNAME:(ARG:1)% 쪽이 연상이지만 처녀이기 때문에 친모가 될 수 없습니다.
 		IF TALENT:(ARG:1):고유캐릭터 == 0
-			PRINTFORML  決定した場合は%CALLNAME:(ARG:1)%の처녀を消去します
+			PRINTFORML  결정됐을 경우에는 %CALLNAME:(ARG:1)%의 처녀를 소거합니다.
 		ELSE
 			CHECK = 1
 		ENDIF
@@ -318,17 +319,17 @@ IF SELECT:부모자식 > 0 && SELECT:의리의 == 0
 ENDIF
 IF SELECT:조부모손주 > 0 && SELECT:의리의 == 0
 	IF TOSHIUE_F(ARG:0, ARG:1) > 0 && TALENT:(ARG:0):처녀 > 0 && ISFEMALE(ARG:0)
-		PRINTFORML  %CALLNAME:(ARG:0)%の方が年上ですが처녀なので実の祖母にはなれません
+		PRINTFORML  %CALLNAME:(ARG:0)% 쪽이 연상이지만 처녀이기 때문에 조모가 될 수 없습니다.
 		IF TALENT:(ARG:0):고유캐릭터 == 0
-			PRINTFORML  決定した場合は%CALLNAME:(ARG:0)%の처녀を消去します
+			PRINTFORML  결정됐을 경우에는 %CALLNAME:(ARG:0)%의 처녀를 소거합니다.
 		ELSE
 			CHECK = 1
 		ENDIF
 		LOSE_VIRGIN:0 = 1
 	ELSEIF TOSHIUE_F(ARG:1, ARG:0) > 0 && TALENT:(ARG:1):처녀 > 0 && ISFEMALE(ARG:1)
-		PRINTFORML  %CALLNAME:(ARG:1)%の方が年上ですが처녀なので実の祖母にはなれません
+		PRINTFORML  %CALLNAME:(ARG:1)% 쪽이 연상이지만 처녀이기 때문에 조모가 될 수 없습니다.
 		IF TALENT:(ARG:1):고유캐릭터 == 0
-			PRINTFORML  決定した場合は%CALLNAME:(ARG:1)%の처녀を消去します
+			PRINTFORML  결정됐을 경우에는 %CALLNAME:(ARG:1)%의 처녀를 소거합니다.
 		ELSE
 			CHECK = 1
 		ENDIF
@@ -339,7 +340,7 @@ SIF CHECK > 0
 	SETCOLOR 105,105,105
 PRINTL 　[200] 결정
 RESETCOLOR
-PRINTL 　[999]キャンセル
+PRINTL 　[999] 취소
 INPUT 
 SIF RESULT != 200
 	CLEARLINE LINECOUNT - LCOUNT
@@ -349,7 +350,7 @@ IF RESULT == 200 && CHECK == 0
 		SIF SELECT:LOCAL > 0
 			SETBIT RELATION:(ARG:0):(ARG:1), LOCAL
 	NEXT
-	;처녀を消す処理
+	;처녀를 지우는 처리
 	SIF LOSE_VIRGIN:0 > 0
 		TALENT:(ARG:0):처녀 = 0
 	SIF LOSE_VIRGIN:1 > 0
@@ -357,7 +358,7 @@ IF RESULT == 200 && CHECK == 0
 
 	WAITFLAG = 0
 
-	;関係の双方向化
+	;관계의 양방향화
 	IF GETBIT(RELATION:(ARG:0):(ARG:1), 생이별한) > 0
 		SIF GETBIT(RELATION:(ARG:1):(ARG:0), 생이별한) == 0
 			WAITFLAG ++
@@ -460,7 +461,7 @@ IF RESULT == 200 && CHECK == 0
 	IF GETBIT(RELATION:(ARG:0):(ARG:1), 주인) > 0
 		IF GETBIT(RELATION:(ARG:1):(ARG:0), 종자) == 0 || GETBIT(RELATION:(ARG:1):(ARG:0), 노예) == 0
 			WAITFLAG ++
-			PRINTFORML 『%CALLNAME:(ARG:1)%』にとって『%CALLNAME:(ARG:0)%』は
+			PRINTFORML 『%CALLNAME:(ARG:1)%』에게 있어『%CALLNAME:(ARG:0)%』은(는)
 			PRINTFORML 　　[{종자}] 종자
 			PRINTFORML 　　[{노예}] 노예
 			$INPUT_LOOP주인
@@ -491,16 +492,16 @@ IF RESULT == 200 && CHECK == 0
 
 	IF RELATION:(ARG:0):(ARG:1) > 0
 		CALL GET_RELATION, ARG:0, ARG:1
-		PRINTFORML 『%CALLNAME:(ARG:0)%』にとって『%CALLNAME:(ARG:1)%』は【%RESULTS%】です。
+		PRINTFORML 『%CALLNAME:(ARG:0)%』에게 있어『%CALLNAME:(ARG:1)%』은(는)【%RESULTS%】입니다.
 	ELSE
-		PRINTFORML 『%CALLNAME:(ARG:0)%』と『%CALLNAME:(ARG:1)%』の間に相関関係はありません。
+		PRINTFORML 『%CALLNAME:(ARG:0)%』와『%CALLNAME:(ARG:1)%』사이에 상관관계는 없습니다.
 	ENDIF
-	;相手との関係に変動があった場合、メッセージ表示
+	;상대와의 관계에 변동이 있는 경우, 메시지 표시
 	IF RELATION:(ARG:1):(ARG:0) > 0 && WAITFLAG > 0
 		CALL GET_RELATION, (ARG:1), (ARG:0)
-		PRINTFORML 『%CALLNAME:(ARG:1)%』にとって『%CALLNAME:(ARG:0)%』は【%RESULTS%】になりました。
+		PRINTFORML 『%CALLNAME:(ARG:1)%』에게 있어『%CALLNAME:(ARG:0)%』은(는)【%RESULTS%】이(가) 됐습니다.
 	ELSEIF WAITFLAG > 0
-		PRINTFORML 『%CALLNAME:(ARG:1)%』と『%CALLNAME:(ARG:0)%』の相関関係は無くなりました。
+		PRINTFORML 『%CALLNAME:(ARG:1)%』와『%CALLNAME:(ARG:0)%』의 상관관계는 없어졌습니다.
 	ENDIF
 	PRINTW 
 
@@ -557,22 +558,22 @@ GOTO INPUT_LOOP
 
 
 ;--------------------------------------------------
-;相関関係の全キャラ探索
+;상관관계의 모든 캐릭터 탐색
 ;--------------------------------------------------
 @CHECK_ALL_RELATION
 #DIM CHARA
 #DIM SELECT
 #DIM RELATE
 #DIM WAITFLAG, 2
-;キャラ２人未満なら中断
-SIF CHARANUM < 3
+;캐릭터 2명 미만이면 중단
+SIF CHARANUM < 2
 	RETURN
-;自キャラの全探索
+;자기 캐릭터의 전체 탐색
 FOR CHARA, 0, CHARANUM
 	SIF CHARA == MASTER
 		CONTINUE
 
-	;両親が仲間に居る場合
+	;양친이 동료로 있을 경우
 	IF CFLAG:CHARA:9 <= -100 || CFLAG:CHARA:7 > 0
 		FOR SELECT, 0, CHARANUM
 			SIF SELECT == MASTER
@@ -587,7 +588,7 @@ FOR CHARA, 0, CHARANUM
 		NEXT
 	ENDIF
 
-	;相手キャラの探索
+	;상대 캐릭터 탐색
 	FOR SELECT, 0, CHARANUM
 		SIF SELECT == MASTER
 			CONTINUE
@@ -596,16 +597,16 @@ FOR CHARA, 0, CHARANUM
 		WAITFLAG:0 = 0
 		WAITFLAG:1 = 0
 
-		;自分に親か子が居る場合
+		;자신에게 부모나 자녀가 있을 경우
 		FOR RELATE, 0, CHARANUM
 			SIF RELATE == MASTER
 				CONTINUE
 			SIF RELATE == CHARA
 				CONTINUE
-			;親が居る場合
+			;부모가 있을 경우
 			IF GETBIT(RELATION:CHARA:RELATE, 부모자식) && TOSHIUE_F(RELATE, CHARA) > 0
 				PRINTL 
-				;同じ親を持つ相手なら형제자매
+				;같은 부모를 둔 상대라면 형제자매
 				IF GETBIT(RELATION:SELECT:RELATE, 부모자식) && TOSHIUE_F(RELATE, SELECT) > 0
 					SIF GETBIT(RELATION:CHARA:SELECT, 형제자매) == 0
 						WAITFLAG:0 ++
@@ -613,13 +614,13 @@ FOR CHARA, 0, CHARANUM
 					SIF GETBIT(RELATION:SELECT:CHARA, 형제자매) == 0
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 형제자매
-					;의리의場合
+					;의리의 경우
 					IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 						SETBIT RELATION:CHARA:SELECT, 의리의
 						SETBIT RELATION:SELECT:CHARA, 의리의
 					ENDIF
 				ENDIF
-				;親の親で年上なら祖父母
+				;부모의 부모이고 연상이면 조부모
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(SELECT, RELATE) > 0
 					IF TOSHIUE_F(SELECT, CHARA) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 조부모손주) == 0
@@ -628,14 +629,14 @@ FOR CHARA, 0, CHARANUM
 						SIF GETBIT(RELATION:SELECT:CHARA, 조부모손주) == 0
 							WAITFLAG:1 ++
 						SETBIT RELATION:SELECT:CHARA, 조부모손주
-						;의리의場合
+						;의리의 경우
 						IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 							SETBIT RELATION:CHARA:SELECT, 의리의
 							SETBIT RELATION:SELECT:CHARA, 의리의
 						ENDIF
 					ENDIF
 				ENDIF
-				;親の형제자매なら아저씨아줌마
+				;부모의 형제자매라면 아저씨아줌마
 				IF GETBIT(RELATION:RELATE:SELECT, 형제자매)
 					SIF GETBIT(RELATION:CHARA:SELECT, 아저씨아줌마) == 0
 						WAITFLAG:0 ++
@@ -643,16 +644,16 @@ FOR CHARA, 0, CHARANUM
 					SIF GETBIT(RELATION:SELECT:CHARA, 조카조카딸) == 0
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 조카조카딸
-					;의리의場合
+					;의리의 경우
 					IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 						SETBIT RELATION:CHARA:SELECT, 의리의
 						SETBIT RELATION:SELECT:CHARA, 의리의
 					ENDIF
 				ENDIF
 			ENDIF
-			;子が居る場合
+			;자녀가 있을 경우
 			IF GETBIT(RELATION:CHARA:RELATE, 부모자식) && TOSHIUE_F(CHARA, RELATE) > 0
-				;子の子で年下なら孫
+				;자녀의 자식이고 연하면 손주
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(RELATE, SELECT) > 0
 					IF TOSHIUE_F(CHARA, SELECT) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 조부모손주) == 0
@@ -661,14 +662,14 @@ FOR CHARA, 0, CHARANUM
 						SIF GETBIT(RELATION:SELECT:CHARA, 조부모손주) == 0
 							WAITFLAG:1 ++
 						SETBIT RELATION:SELECT:CHARA, 조부모손주
-						;의리의場合
+						;의리의 경우
 						IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 							SETBIT RELATION:CHARA:SELECT, 의리의
 							SETBIT RELATION:SELECT:CHARA, 의리의
 						ENDIF
 					ENDIF
 				ENDIF
-				;子の祖父母で相手が年上なら親
+				;자녀의 조부모이고 상대가 연상이면 부모
 				IF GETBIT(RELATION:RELATE:SELECT, 조부모손주) && TOSHIUE_F(SELECT, RELATE) > 0
 					IF TOSHIUE_F(SELECT, CHARA) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 부모자식) == 0
@@ -677,7 +678,7 @@ FOR CHARA, 0, CHARANUM
 						SIF GETBIT(RELATION:SELECT:CHARA, 부모자식) == 0
 							WAITFLAG:1 ++
 						SETBIT RELATION:SELECT:CHARA, 부모자식
-						;의리의場合
+						;의리의 경우
 						IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 							SETBIT RELATION:CHARA:SELECT, 의리의
 							SETBIT RELATION:SELECT:CHARA, 의리의
@@ -686,14 +687,15 @@ FOR CHARA, 0, CHARANUM
 				ENDIF
 			ENDIF
 		NEXT
-		;自分に형제자매が居る場合
+		;자신에게 형제자매가 있을 경우
 		FOR RELATE, 0, CHARANUM
 			SIF RELATE == MASTER
 				CONTINUE
 			SIF RELATE == CHARA
 				CONTINUE
 			IF GETBIT(RELATION:CHARA:RELATE, 형제자매)
-				;형제자매の형제자매は형제자매
+				;형제자매의 형제자매는 형제자매
+				;왜냐하면, 그것이 형제자매니까...
 				IF GETBIT(RELATION:RELATE:SELECT, 형제자매)
 					SIF GETBIT(RELATION:CHARA:SELECT, 형제자매) == 0
 						WAITFLAG:0 ++
@@ -702,7 +704,7 @@ FOR CHARA, 0, CHARANUM
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 형제자매
 				ENDIF
-				;형제자매の親で年上なら親
+				;형제자매의 부모이고 연상이면 부모
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(SELECT, RELATE) > 0
 					IF TOSHIUE_F(SELECT, CHARA) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 부모자식) == 0
@@ -713,7 +715,7 @@ FOR CHARA, 0, CHARANUM
 						SETBIT RELATION:SELECT:CHARA, 부모자식
 					ENDIF
 				ENDIF
-				;형제자매の祖父母で年上なら祖父母
+				;형제자매의 조부모이고 연상이면 조부모
 				IF GETBIT(RELATION:RELATE:SELECT, 조부모손주) && TOSHIUE_F(SELECT, RELATE) > 0
 					IF TOSHIUE_F(SELECT, CHARA) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 조부모손주) == 0
@@ -724,7 +726,7 @@ FOR CHARA, 0, CHARANUM
 						SETBIT RELATION:SELECT:CHARA, 조부모손주
 					ENDIF
 				ENDIF
-				;형제자매の子は조카조카딸
+				;형제자매의 자녀는 조카조카딸
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(RELATE, SELECT) > 0
 					SIF GETBIT(RELATION:CHARA:SELECT, 조카조카딸) == 0
 						WAITFLAG:0 ++
@@ -735,15 +737,15 @@ FOR CHARA, 0, CHARANUM
 				ENDIF
 			ENDIF
 		NEXT
-		;自分に祖父母か孫が居る場合
+		;자신에게 조부모나 손주가 있을 경우
 		FOR RELATE, 0, CHARANUM
 			SIF RELATE == MASTER
 				CONTINUE
 			SIF RELATE == CHARA
 				CONTINUE
-			;祖父母が居る場合
+			;조부모가 있을 경우
 			IF GETBIT(RELATION:CHARA:RELATE, 조부모손주) && TOSHIUE_F(RELATE, CHARA) > 0
-				;親ではない祖父母の子は아저씨아줌마
+				;부모가 아닌 조부모의 자녀는 아저씨아줌마
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(RELATE, SELECT) > 0 && GETBIT(RELATION:CHARA:SELECT, 부모자식) == 0
 					SIF GETBIT(RELATION:CHARA:SELECT, 아저씨아줌마) == 0
 						WAITFLAG:0 ++
@@ -751,16 +753,16 @@ FOR CHARA, 0, CHARANUM
 					SIF GETBIT(RELATION:SELECT:CHARA, 조카조카딸) == 0
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 조카조카딸
-					;의리의場合
+					;의리의 경우
 					IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 						SETBIT RELATION:CHARA:SELECT, 의리의
 						SETBIT RELATION:SELECT:CHARA, 의리의
 					ENDIF
 				ENDIF
 			ENDIF
-			;孫が居る場合
+			;손주가 있을 경우
 			IF GETBIT(RELATION:CHARA:RELATE, 조부모손주) && TOSHIUE_F(CHARA, RELATE) > 0
-				;孫の親が年下なら子
+				;손주의 부모가 연하면 자녀
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(SELECT, RELATE) > 0
 					IF TOSHIUE_F(CHARA, SELECT) > 0
 						SIF GETBIT(RELATION:CHARA:SELECT, 부모자식) == 0
@@ -773,14 +775,14 @@ FOR CHARA, 0, CHARANUM
 				ENDIF
 			ENDIF
 		NEXT
-		;自分に아저씨아줌마が居る場合
+		;자신에게 아저씨아줌마가 있을 경우
 		FOR RELATE, 0, CHARANUM
 			SIF RELATE == MASTER
 				CONTINUE
 			SIF RELATE == CHARA
 				CONTINUE
 			IF GETBIT(RELATION:CHARA:RELATE, 아저씨아줌마)
-				;아저씨아줌마の子は사촌
+				;아저씨아줌마의 자녀는 사촌
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(RELATE, SELECT) > 0
 					SIF GETBIT(RELATION:CHARA:SELECT, 사촌) == 0
 						WAITFLAG:0 ++
@@ -788,7 +790,7 @@ FOR CHARA, 0, CHARANUM
 					SIF GETBIT(RELATION:SELECT:CHARA, 사촌) == 0
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 사촌
-					;의리의場合
+					;의리의 경우
 					IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 						SETBIT RELATION:CHARA:SELECT, 의리의
 						SETBIT RELATION:SELECT:CHARA, 의리의
@@ -796,14 +798,14 @@ FOR CHARA, 0, CHARANUM
 				ENDIF
 			ENDIF
 		NEXT
-		;自分に사촌が居る場合
+		;자신에게 사촌이 있을 경우
 		FOR RELATE, 0, CHARANUM
 			SIF RELATE == MASTER
 				CONTINUE
 			SIF RELATE == CHARA
 				CONTINUE
 			IF GETBIT(RELATION:CHARA:RELATE, 사촌)
-				;사촌の親は아저씨아줌마
+				;사촌 부모는 아저씨아줌마
 				IF GETBIT(RELATION:RELATE:SELECT, 부모자식) && TOSHIUE_F(SELECT, RELATE) > 0
 					SIF GETBIT(RELATION:CHARA:SELECT, 아저씨아줌마) == 0
 						WAITFLAG:0 ++
@@ -811,7 +813,7 @@ FOR CHARA, 0, CHARANUM
 					SIF GETBIT(RELATION:SELECT:CHARA, 조카조카딸) == 0
 						WAITFLAG:1 ++
 					SETBIT RELATION:SELECT:CHARA, 조카조카딸
-					;의리의場合
+					;의리의 경우
 					IF GETBIT(RELATION:CHARA:RELATE, 의리의)
 						SETBIT RELATION:CHARA:SELECT, 의리의
 						SETBIT RELATION:SELECT:CHARA, 의리의
@@ -820,7 +822,7 @@ FOR CHARA, 0, CHARANUM
 			ENDIF
 		NEXT
 
-		;関係の双方向化
+		;관계의 양방향화
 		IF GETBIT(RELATION:CHARA:SELECT, 생이별한) > 0
 			SIF GETBIT(RELATION:SELECT:CHARA, 생이별한) == 0
 				WAITFLAG:1 ++
@@ -926,44 +928,44 @@ FOR CHARA, 0, CHARANUM
 			CLEARBIT RELATION:SELECT:CHARA, 생이별한
 			CLEARBIT RELATION:SELECT:CHARA, 의리의
 		ENDIF
-		;相手との関係に変動があった場合、メッセージ表示
+		;상대와의 관계에 변동이 있는 경우, 메시지 표시
 		IF RELATION:CHARA:SELECT > 0 && WAITFLAG:0 > 0
 			CALL GET_RELATION, CHARA, SELECT
-			PRINTFORML 『%CALLNAME:CHARA%』にとって『%CALLNAME:SELECT%』は【%RESULTS%】になりました。
+			PRINTFORML 『%CALLNAME:CHARA%』에게 있어『%CALLNAME:SELECT%』은(는)【%RESULTS%】이(가) 됐습니다.
 		ELSEIF WAITFLAG:0 > 0
-			PRINTFORML 『%CALLNAME:CHARA%』と『%CALLNAME:SELECT%』の相関関係は無くなりました。
+			PRINTFORML 『%CALLNAME:CHARA%』와(과)『%CALLNAME:SELECT%』의 상관관계는 없어졌습니다.
 		ENDIF
 		IF RELATION:SELECT:CHARA > 0 && WAITFLAG:1 > 0
 			CALL GET_RELATION, SELECT, CHARA
-			PRINTFORML 『%CALLNAME:SELECT%』にとって『%CALLNAME:CHARA%』は【%RESULTS%】になりました。
+			PRINTFORML 『%CALLNAME:SELECT%』에게 있어『%CALLNAME:CHARA%』은(는)【%RESULTS%】이(가) 됐습니다.
 		ELSEIF WAITFLAG:1 > 0
-			PRINTFORML 『%CALLNAME:SELECT%』と『%CALLNAME:CHARA%』の相関関係は無くなりました。
+			PRINTFORML 『%CALLNAME:SELECT%』와(과)『%CALLNAME:CHARA%』의 상관관계는 없어졌습니다.
 		ENDIF
 		SIF WAITFLAG:0 || WAITFLAG:1
 			PRINTL 
-		;子供か孫を持つキャラは처녀を失う
+		;자식이나 손주를 둔 캐릭터는 처녀를 잃는다
 		IF GETBIT(RELATION:CHARA:SELECT, 의리의) == 0 && (GETBIT(RELATION:CHARA:SELECT, 부모자식) || GETBIT(RELATION:CHARA:SELECT, 조부모손주))
 			IF TOSHIUE_F(CHARA, SELECT) > 0
 				IF TALENT:CHARA:처녀 > 0
 					TALENT:CHARA:처녀 = 0
-					PRINTFORML 　　関係の変化により『%CALLNAME:CHARA%』の처녀を消去しました
+					PRINTFORML 　　관계의 변화에 따라『%CALLNAME:CHARA%』의 처녀를 소거했습니다.
 					PRINTL 
 				ENDIF
 			ENDIF
 		ENDIF
 	NEXT
 NEXT
-;両親ＩＤを設定
+;양친ＩＤ를 설정
 FOR CHARA, 0, CHARANUM
 	SIF CHARA == MASTER
 		CONTINUE
-	;父親の探索
+	;친부 탐색
 	FOR SELECT, 0, CHARANUM
 		SIF SELECT == MASTER
 			CONTINUE
 		SIF SELECT == CHARA
 			CONTINUE
-		;実の부모자식かつ男性か후타나리なら父親
+		;친부모와 자식의 관계임과 동시에 남성이거나 후타나리라면 친부
 		SIF GETBIT(RELATION:CHARA:SELECT, 부모자식) && GETBIT(RELATION:CHARA:SELECT, 의리의) == 0 && TOSHIUE_F(SELECT, CHARA) > 0 && (ISMALE(SELECT) || TALENT:SELECT:후타나리 > 0) && CFLAG:CHARA:7 != CFLAG:SELECT:240 && CFLAG:CHARA:9 == 0
 			CFLAG:CHARA:9 = CFLAG:SELECT:240 * -1 - 100
 	NEXT
@@ -972,7 +974,7 @@ FOR CHARA, 0, CHARANUM
 			CONTINUE
 		SIF SELECT == CHARA
 			CONTINUE
-		;実の부모자식かつ男性でないなら母親
+		;친부모와 자식의 관계임과 동시에 남성이 아니라면 친모
 		SIF GETBIT(RELATION:CHARA:SELECT, 부모자식) && GETBIT(RELATION:CHARA:SELECT, 의리의) == 0 && TOSHIUE_F(SELECT, CHARA) > 0 && ISFEMALE(SELECT) && CFLAG:CHARA:9 * -1 - 100 != CFLAG:SELECT:240 && CFLAG:CHARA:7 == 0
 			CFLAG:CHARA:7 = CFLAG:SELECT:240
 	NEXT
@@ -980,9 +982,9 @@ NEXT
 
 
 
-;年上判定
 ;-------------------------------------------------
-;ARG:0がARG:1より年上なら1を返す
+;연상 판정
+;ARG:0이 ARG:1보다 연상이라면 1을 반환한다
 @TOSHIUE_F(ARG:0, ARG:1)
 #FUNCTION
 IF BASE:(ARG:0):실제나이 > BASE:(ARG:1):실제나이
@@ -995,10 +997,10 @@ ENDIF
 RETURNF LOCAL
 
 
-;근친상간判定
 ;------------------------------------------------
-;ARG:0とARG:1が近親関係にあるなら1を返す
-;ARG:2が0なら仲間キャラ、1ならそれ以外
+;근친상간 판정
+;ARG:0과 ARG:1이 근친 관계에 있다면 1을 반환한다
+;ARG:2가 0이라면 동료 캐릭터, 1이라면 그 외 캐릭터
 @INCEST_F(ARG:0, ARG:1, ARG:2 = 0)
 #FUNCTION
 IF ARG:2 == 0
@@ -1018,8 +1020,8 @@ RETURNF 0
 
 
 ;--------------------------------------------------
-;恋愛判定
-;ARG:0にとってARG:1番目が사랑하는相手なら1を返す
+;연애 판정
+;(ARG:0)에게 있어 (ARG:1)번째가 사랑하는 상대라면 1을 반환한다
 @LOVER_F, ARG, ARG:1
 #FUNCTION
 SIF (GETBIT(RELATION:(ARG:0):(ARG:1),짝사랑) || GETBIT(RELATION:(ARG:0):(ARG:1),연인) || GETBIT(RELATION:(ARG:0):(ARG:1),약혼자) || GETBIT(RELATION:(ARG:0):(ARG:1),배우자))

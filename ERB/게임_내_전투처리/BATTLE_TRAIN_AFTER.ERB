@@ -393,7 +393,7 @@ ELSEIF TFLAG:98 == 2
 	CALL NINSIN_CHECK_AFTER
 
 	;ヒロインの変身解除処理
-	;　幽閉されている場合→オプションに準ずる
+	;　유폐されている場合→オプションに準ずる
 	IF CFLAG:0>0
 		;ＴＳするキャラは変身解除しない、악질 시민戦の場合も解除しない
 		IF (TALENT:변신시TS > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
@@ -402,7 +402,7 @@ ELSEIF TFLAG:98 == 2
 		ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0
 			CALL TRANSFORM, 0
 		ENDIF
-	;　幽閉されていない場合→解除して戦闘前に戻す
+	;　유폐されていない場合→解除して戦闘前に戻す
 	ELSE
 		CALL TRANSFORM, 0
 		;イベント衣装も解除する

@@ -1,12 +1,12 @@
 ﻿;**********************************************************
-;キャラの幽閉処理
+;キャラの유폐処理
 @PRISON
 LOCAL = 0
 IF FLAG:999 == -998
 	FLAG:999 = 0
 	RESETBGCOLOR
 ENDIF
-;キャラが幽閉中かどうか
+;キャラが유폐中かどうか
 FOR LOCAL:999, 0, CHARANUM
 	SIF LOCAL:999 == MASTER
 		CONTINUE
@@ -24,7 +24,7 @@ FOR LOCAL:999, 0, CHARANUM
 		ENDIF
 		LOCAL = 1
 		
-		;幽閉中のイベントへ
+		;유폐中のイベントへ
 		CALL PRISON_EVENT
 
 		LOCAL += 1
@@ -34,18 +34,18 @@ FOR LOCAL:999, 0, CHARANUM
 NEXT
 
 ;**********************************************************
-;幽閉中の処理
+;유폐中の処理
 @PRISON_EVENT
 #DIM LCOUNT
 #DIM CCOUNT
 #DIM 今回陥落するフラグ=0
 FONTBOLD
 CALL TENTACLE_ACCESS_PRISON, TARGET, "NAME" 
-PRINTFORML 幽閉：%PRINT_CALLNAME(TARGET,1)%
+PRINTFORML 유폐：%PRINT_CALLNAME(TARGET,1)%
 FONTREGULAR
 PRINTL 
 
-;幽閉に関する変数の初期化
+;유폐に関する変数の初期化
 IF CFLAG:20 < 2
 	FLAG:110 = 0
 	FLAG:111 = 0
@@ -59,17 +59,17 @@ ELSEIF CFLAG:20 == 2
 	NEXT
 ENDIF
 
-;幽閉されてから初の被姦かどうか
+;유폐されてから初の被姦かどうか
 ;ＴＳオプション
 IF (CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") > 0) && CONFIG_CHECK_PRISON_F(0) > 0
 
 	;今回の出産数플래그를初期化
 	CFLAG:220 = 0
 
-	;지문: 初めての幽閉
+	;지문: 初めての유폐
 	CALL MESSAGE_PRISON_PRISENTENCE_FIRST
 
-	;幽閉時のＴＳ処理は@MESSAGE_PRISON_PRISENTENCE_FIRST内で処理
+	;유폐時のＴＳ処理は@MESSAGE_PRISON_PRISENTENCE_FIRST内で処理
 	;지문の表示と選択肢表示のタイミングの兼ね合いのため。
 
 ELSEIF CFLAG:31 == 0
@@ -77,20 +77,20 @@ ELSEIF CFLAG:31 == 0
 	;今回の出産数플래그를初期化
 	CFLAG:220 = 0
 
-	;幽閉自体が初めてかどうか
+	;유폐自体が初めてかどうか
 	IF EXP:유폐경험 <= 1
-		;지문: 初めての幽閉
+		;지문: 初めての유폐
 		CALL MESSAGE_PRISON_PRISENTENCE_FIRST
 	ELSE
-		;地の分:二度目からの幽閉後の初被姦
+		;地の分:二度目からの유폐後の初被姦
 		CALL MESSAGE_PRISON_PRISENTENCE_START
 	ENDIF
 ELSE
-	;地の分:幽閉後の被姦開始文
+	;地の分:유폐後の被姦開始文
 	CALL MESSAGE_PRISON_PRISENTENCE
 ENDIF
 
-;지문: 흑화 캐릭터가 幽閉中の操作キャラに被姦開始した
+;지문: 흑화 캐릭터가 유폐中の操作キャラに被姦開始した
 SIF CFLAG:20 == 2
 	CALL MESSAGE_OTHER_PRISON_PRISENTENCE
 
@@ -106,19 +106,19 @@ NEXT
 SIF ISHOLE() == 0
 	GOTO SKIP
 
-;幽閉コマンドの選択
+;유폐コマンドの選択
 ;새끼 촉수を出産している場合
 IF CFLAG:220 > 0 && RAND:100 < 30
 	;새끼 촉수に犯される
 	CALL PRISON_COMABLE, 7
 ELSE
-	;専用ルーチン（幽閉）による処理
+	;専用ルーチン（유폐）による処理
 	CALL TENTACLE_ACCESS_PRISON, TARGET, "PRISON_ROUTINE"
 	LOCAL = RESULT
 
-	;汎用ルーチン（幽閉）による処理
+	;汎用ルーチン（유폐）による処理
 	IF LOCAL == 0
-		;汎用行動の種類　幽閉処理関連のフォルダ内のPRISON_COMX,ERBの数を記述
+		;汎用行動の種類　유폐処理関連のフォルダ内のPRISON_COMX,ERBの数を記述
 		LOCAL:1 = RAND:100
 			IF LOCAL:1 < 12
 			;C中心攻め
@@ -276,7 +276,7 @@ IF (TALENT:촉수의포로) && CONFIG_CHECK_MANIAC_F(6) == 1
 	PRINTL 
 ENDIF
 
-;幽閉中に変身したキャラは通常に돌아간다
+;유폐中に変身したキャラは通常に돌아간다
 ;★変身が強制解除されないオプションを参照しているが、これ意図通りか？
 SIF CONFIG_CHECK_BALANCE_F(6) == 0
 	CALL TRANSFORM, 0
@@ -289,9 +289,9 @@ IF GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 1 && CHARANUM_HOPE()==1
 	今回陥落するフラグ=0
 ENDIF
 
-;5日以上の幽閉時、ソロモードとサンドボックスモードは脱出判定を行う
+;5日以上の유폐時、ソロモードとサンドボックスモードは脱出判定を行う
 ;・ソロモードの場合、흑화相当まで汚染されている(このターンのゲームオーバーが確定している)場合はスキップ
-;・産まれた直後から幽閉されている娘キャラは対象外
+;・産まれた直後から유폐されている娘キャラは対象外
 IF CFLAG:31 > 10  && ((GAME_OPTION_CHECK_F(OPTION_solo) && 今回陥落するフラグ==0) || GAME_OPTION_CHECK_F(OPTION_게임오버없음)) && CFLAG:6 != -1 && RAND:4 == 0
 	PRINTL 　　　　　　
 	PRINTFORML そのとき、촉수の拘束が僅かに緩んだ！
@@ -329,7 +329,7 @@ ENDIF
 
 
 ;末路１　세뇌/흑화(前提：オプションON)
-;　・幽閉者が戦闘員で、[희롱특화체질]を持たない場合
+;　・유폐者が戦闘員で、[희롱특화체질]を持たない場合
 ;　・「[非戦闘員][희롱특화체질]は세뇌/흑화にならないオプション」がOFFの場合
 ;　세뇌/흑화する
 IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_CHECK_PRISON_F(3) == 0 || (TALENT:변신능력 >= 0 && TALENT:희롱특화체질 < 1))
@@ -341,7 +341,7 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 		CFLAG:0 = 2
 		;지문: 세뇌になった
 		CALL MESSAGE_PRISON_SENNOU
-		;지문: 흑화 캐릭터가 幽閉中の操作キャラを세뇌した
+		;지문: 흑화 캐릭터가 유폐中の操作キャラを세뇌した
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_PRISON_SENNOU
 
@@ -369,7 +369,7 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 		CALL MESSAGE_PRISON_AKUOTI
 		;容姿変更
 		CALL CORRUPT_CHANGE_LOOKS_MAIN, TARGET
-		;지문: 흑화 캐릭터가 幽閉中の操作キャラを흑화
+		;지문: 흑화 캐릭터가 유폐中の操作キャラを흑화
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_PRISON_AKUOTI
 	ENDIF
@@ -398,7 +398,7 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 	PRINTW 
 
 
-;末路２　取り込まれロスト(未陥落のまま10日以上幽閉=幽閉中被姦20回以上)
+;末路２　取り込まれロスト(未陥落のまま10日以上유폐=유폐中被姦20回以上)
 ;　・「세뇌/흑화」オプションがOFFの場合
 ;　・「세뇌/흑화」オプションがON、かつ以下のうちどちらかの素質を所持する
 ;　　　　　　　　　[묘상화](「ただし묘상화キャラは産む機械として取り込む」オプションON時)
@@ -421,7 +421,7 @@ ELSEIF CFLAG:0 == 1 && CFLAG:31 > 19 && (CONFIG_CHECK_PRISON_F(1) == 0 || (CONFI
 		TALENT:TARGET:번식자루 = 1
 	ENDIF
 
-	;지문: 흑화 캐릭터가 幽閉中の操作キャラを取り込んだ
+	;지문: 흑화 캐릭터가 유폐中の操作キャラを取り込んだ
 	SIF CFLAG:20 == 2
 		CALL MESSAGE_OTHER_PRISON_DEAD
 	;ソロモードだとゲームオーバー
