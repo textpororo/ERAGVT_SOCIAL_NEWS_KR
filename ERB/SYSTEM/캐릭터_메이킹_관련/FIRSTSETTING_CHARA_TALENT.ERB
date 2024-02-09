@@ -20,7 +20,7 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 
 
 ;;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;;キャラの素質の設定
+;;キャラの素質の설정
 ;;ARG   = 対象キャラ
 ;;ARG:1 = 1ならキャラメイク制限
 ;@FIRSTSETTING_CHARA_TALENT, ARG, ARG:1 = 0
@@ -29,7 +29,7 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;CALL LB
 ;LCOUNT = LINECOUNT
 ;$INPUT_LOOP
-;PRINTFORML {ARG}人目のキャラ 『%CALLNAME:ARG%』 の素質を設定してください
+;PRINTFORML {ARG}人目のキャラ 『%CALLNAME:ARG%』 の素質を설정してください
 ;DRAWLINE
 ;SETCOLOR 240, 255, 255
 ;IF CHARATALENT_F(ARG,0,"남자") == 0
@@ -68,8 +68,8 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;PRINTL [200] 결정
 ;SIF TALENT:ARG:고유캐릭터 != 0 || (ARG:1) > 0
 ;	SETCOLOR 105,105,105
-;PRINTL [300]現在の身体素質を元にフレーバー素質を設定
-;PRINTL [999]全てランダムに設定
+;PRINTL [300]現在の身体素質を元にフレーバー素質を설정
+;PRINTL [999]全てランダムに설정
 ;RESETCOLOR
 ;
 ;INPUT
@@ -92,7 +92,7 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;	GOTO INPUT_LOOP
 ;ELSEIF RESULT == 999 && TALENT:ARG:고유캐릭터 == 0 && (ARG:1) == 0
 ;	REPEAT 1000
-;		;性格、結界、変身と種族、性別、精神素質は除外
+;		;성격、結界、変身と種族、性別、精神素質は除外
 ;		IF (COUNT >= 10 && COUNT <= 28) || (COUNT >= 190 && COUNT <= 193) || (COUNT >= 200 && COUNT <= 206) || (COUNT >= 400 && COUNT <= 402) || (COUNT >= 600 && COUNT <= 699)
 ;		ELSE
 ;			TALENT:ARG:COUNT = 0

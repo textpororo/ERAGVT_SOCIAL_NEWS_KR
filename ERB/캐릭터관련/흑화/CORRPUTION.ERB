@@ -16,11 +16,11 @@
 ;*******************************************************************************************************
 @CORRUPT_CHANGE_LOOKS_MAIN, ARG
 
-;컨피그未設定なら実行しない
+;컨피그未설정なら実行しない
 SIF CONFIG_CHECK_PRISON_F(4) == 0
 	RETURN 1
 
-;プロフィール未設定なら実行しない
+;プロフィール未설정なら実行しない
 SIF CFLAG:ARG:34 == 0
 	RETURN 1
 
@@ -267,7 +267,7 @@ STRDATA DARK_NOUN
 	DATA ヘヴンブリンガー
 ENDDATA
 
-;(変身後名を未設定or自分で設定していた場合)
+;(変身後名を未설정or自分で설정していた場合)
 ;	＝CSTR201と202が空の場合は付け足しのみ　アポカリプス・〇〇　または　〇〇・アポカリプス　的な変化(ランダム)
 IF STR_UP == "" && STR_DOWN == ""
 	IF RAND:2 == 0
@@ -276,7 +276,7 @@ IF STR_UP == "" && STR_DOWN == ""
 		CSTR:ARG:55 = %DARK_NOUN%・%CSTR:ARG:0%
 	ENDIF
 
-;(共通設定の冠名を使用していた場合)
+;(共通설정の冠名を使用していた場合)
 ;	冠名じゃない方を変える　キュア〇〇→キュアリリス　的な変化
 ELSEIF FLAG:6 == 1 && SAVESTR:11 == STR_UP
 	CSTR:ARG:55 = %STR_UP%%DARK_NOUN%
@@ -386,7 +386,7 @@ ELSEIF CSTR:ARG:57 == ""
 ENDIF
 
 ;■髪型
-;CSVなどで設定済みなら終了
+;CSVなどで설정済みなら終了
 SIF CSTR:ARG:58 != ""
 	RETURN 0
 ;それっぽい形容詞をつくる

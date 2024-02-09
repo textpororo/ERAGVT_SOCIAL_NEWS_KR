@@ -19,7 +19,7 @@ IF FLAG:45==0
 	;雑魚戦15ターン、보스전50ターンが基本
 	턴상한=(FLAG:10 == 2 ? 15 # 50)
 ENDIF
-;戦闘開始時に戦闘距離を원거리に設定する
+;戦闘開始時に戦闘距離を원거리に설정する
 IF FLAG:73 > 0
 	TCVARn:0 = 0
 ELSE
@@ -89,7 +89,7 @@ ENDIF
 
 ;イベント戦以外なら衣装の初期化をここで行う
 IF FLAG:45==0
-	;衣装の耐久度を設定
+	;衣装の耐久度を설정
 	CALL CLOTH_BATTLE_SETHP
 	;衣装の情報を更新
 	CALL REFRESH_CLOTH_DATA

@@ -1221,7 +1221,7 @@ ELSEIF RESULT == 999
 						TALENT:CCOUNT:교제상대 = 0
 					TALENT:CCOUNT:악세서리 = 0
 					TALENT:CCOUNT:외관 = 0
-					;プロフィール再設定
+					;プロフィール再설정
 					CALL GENERATE_CHAR_SIZE, CCOUNT, 0
 					BASE:CCOUNT:신장 = RESULT:2
 					BASE:CCOUNT:체중 = RESULT:3
@@ -1232,7 +1232,7 @@ ELSEIF RESULT == 999
 				ENDIF
 				;＊/♂⇒＊/♀　変身時の性別が女体化している場合
 				IF TALENT:CCOUNT:성별변화 / 10 == 1
-					;プロフィール再設定
+					;プロフィール再설정
 					CALL GENERATE_CHAR_SIZE, CCOUNT, 1
 					MAXBASE:CCOUNT:신장 = RESULT:2
 					MAXBASE:CCOUNT:체중 = RESULT:3
@@ -1249,7 +1249,7 @@ ELSEIF RESULT == 999
 				SIF TALENT:CCOUNT:여체수용 > 0
 					SWAP TALENT:남성기피,TALENT:여성기피
 				TALENT:CCOUNT:여체수용 = 0
-				;初期経験の設定を許可する
+				;初期経験の설정を許可する
 				TALENT:CCOUNT:초기경험설정불가 = 0
 			ENDIF
 			;레벨引き継ぎしない
@@ -1471,7 +1471,7 @@ ELSEIF RESULT == 999
 	ENDIF
 	PRINTL 
 
-	;제한 일수の設定
+	;제한 일수の설정
 	CALL SET_LIMIT_DAY
 
 	;修練Ｐの処理
@@ -1535,7 +1535,7 @@ ELSEIF RESULT == 999
 		JUEL:CCOUNT:수련P += LOCAL:16 * 10
 	NEXT
 
-	;TARGETを存在するキャラに設定
+	;TARGETを存在するキャラに설정
 	FOR LOCAL,0,CHARANUM
 		SIF LOCAL == MASTER
 			CONTINUE
@@ -1546,7 +1546,7 @@ ELSEIF RESULT == 999
 	CALL CHARA_MAKE_MAIN, LOCAL:16
 	PRINTL 
 
-	;전용 구상の番号を設定、結界の耐久力を全快
+	;전용 구상の番号を설정、結界の耐久力を全快
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
@@ -1556,7 +1556,7 @@ ELSEIF RESULT == 999
 		CALL BASEUP_CAL_SHIELD, CCOUNT
 	NEXT
 
-	;구상の初期設定を호출など
+	;구상の初期설정を호출など
 	FOR LOCAL,0,CHARANUM
 		SIF LOCAL == MASTER
 			CONTINUE
@@ -1587,12 +1587,12 @@ ELSEIF RESULT == 999
 		NEXT
 	NEXT
 
-	;컨피그のプリセット設定
+	;컨피그のプリセット설정
 	CALL HEROINE_PRESET
 
 	;방위력減衰回避
 	FLAG:41 = 1
-	;探索ノルマを設定
+	;探索ノルマを설정
 	CALL RESEARCH_QUOTA
 
 	;フラッシュニュース用文字列をリセット

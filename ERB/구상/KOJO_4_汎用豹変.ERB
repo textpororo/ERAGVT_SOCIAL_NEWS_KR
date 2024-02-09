@@ -2,7 +2,7 @@
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------
 ;CFLAG:277 (仮)豹変するタイミング記憶用(bit)
-;CFLAG:278 (仮)豹変する性格記憶用(普段性格1～3桁、豹変時性格4～6桁)
+;CFLAG:278 (仮)豹変する성격記憶用(普段성격1～3桁、豹変時성격4～6桁)
 ;CFLAG:279 얀데레구상용
 ;CFLAG:280 얀데레구상용
 
@@ -53,12 +53,12 @@ SELECTCASE ARG
 ENDSELECT
 RESETCOLOR
 
-;その場面での性格を取得する
+;その場面での성격を取得する
 ;----------------------------------------------------------
 ;ARG	対象
 ;ARG:1	CFLAG:277のbit桁
 ;RESULT:0	性別の番号
-;RESULT:1	性格の番号
+;RESULT:1	성격の番号
 @GET_SEIKAKU_KOJO_4(ARG,ARG:1)
 ARG:1 = GETBIT(CFLAG:277,ARG:1)
 RETURN FIGURE_SPLIT(CFLAG:ARG:278,3+ARG:1*3), FIGURE_SPLIT(CFLAG:ARG:278,2+ARG:1*3)*10 + FIGURE_SPLIT(CFLAG:ARG:278,1+ARG:1*3)
@@ -170,10 +170,10 @@ ELSEIF CHARATALENT_F(TARGET,1,"후타나리") > 0
 ELSE
 	PRINT オンナ
 ENDIF
-PRINTL 」に設定されています。
+PRINTL 」に설정されています。
 IF PAGE == 0
-	PRINTFORML %CALLNAME%の通常時と豹変時の性格を選択してください。
-	PRINTL 末尾に☆が付いている性格が구상有りです。
+	PRINTFORML %CALLNAME%の通常時と豹変時の성격を選択してください。
+	PRINTL 末尾に☆が付いている성격が구상有りです。
 	PRINTL 　□　　通常時 　　　　　　　　　　豹変時
 	FOR LOCAL, 10, 50
 		SIF TALENTNAME:LOCAL == ""
@@ -211,7 +211,7 @@ IF PAGE == 0
 		SEIKAKU_COUNT ++
 	NEXT
 ELSE
-	PRINTFORML %CALLNAME%の性格が豹変する場面を選択してください。
+	PRINTFORML %CALLNAME%の성격が豹変する場面を選択してください。
 	FOR LOCAL, 0, 55
 		CALL GET_CFLAG277_CHOICE_KOJO_4(LOCAL)
 	NEXT
@@ -265,7 +265,7 @@ SIF FIGURE_SPLIT(CFLAG:278,3) == 0 && FIGURE_SPLIT(CFLAG:278,2)*10 + FIGURE_SPLI
 SIF FIGURE_SPLIT(CFLAG:278,6) == 0 && FIGURE_SPLIT(CFLAG:278,5)*10 + FIGURE_SPLIT(CFLAG:278,4) == 21
 	LOCAL = 1
 IF LOCAL > 0
-	PRINTW 얀데레(女)구상の初期設定に入ります
+	PRINTW 얀데레(女)구상の初期설정に入ります
 	CALL KOJO_0_FIRST_21
 ENDIF
 

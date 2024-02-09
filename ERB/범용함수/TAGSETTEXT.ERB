@@ -311,7 +311,7 @@
 				CONTINUE
 			CALL TAGSET_TEXT_SET_TAGINFO( strSplitBuf:nLoop, arrTagInfo )
 			; テキスト色,フォントなどを本関数実行前の状態に戻す
-			CALL PRINT_TAGSET_TEXT_MAIN( "", arrTagInfoDefault )		;MEMO : なにかタグが存在するごとに設定し直している。手抜き工事
+			CALL PRINT_TAGSET_TEXT_MAIN( "", arrTagInfoDefault )		;MEMO : なにかタグが存在するごとに설정し直している。手抜き工事
 		ENDIF
 	NEXT
 
@@ -418,7 +418,7 @@
 
 ;================================================================
 ;【内部処理用】
-; タグ指定テキストのタグ情報を設定する
+; タグ指定テキストのタグ情報を설정する
 ;--------------------------------
 ; 引数
 ;	strText		: タグ指定文字列
@@ -439,7 +439,7 @@
 		strTagType  = %SUBSTRINGU( strText, 1, -1 )%
 		strTagValue = 
 	ELSE
-		; タグ設定
+		; タグ설정
 		strTagType  = %SUBSTRINGU( strText, 0, 1 )%
 		strTagValue = %SUBSTRINGU( strText, 2, -1 )%
 	ENDIF

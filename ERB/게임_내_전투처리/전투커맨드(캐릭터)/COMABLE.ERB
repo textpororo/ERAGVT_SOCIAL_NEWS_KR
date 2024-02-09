@@ -540,8 +540,8 @@ SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
 ;타락フラグが立っていたらだめ
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	RETURN 0
-;相手が흑화 캐릭터の場合、強気な性格でないとだめ
-;相手が흑화 캐릭터でない場合、弱気な性格だとだめ
+;相手が흑화 캐릭터の場合、強気な성격でないとだめ
+;相手が흑화 캐릭터でない場合、弱気な성격だとだめ
 IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
 	SIF TALENT:오기 == 0 && TALENT:고풍적 == 0 && TALENT:사나움 == 0
 		RETURN 0
@@ -587,8 +587,8 @@ SIF PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 75
 ;타락フラグが立っていたらだめ
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	RETURN 0
-;相手が흑화 캐릭터の場合、強気な性格だとだめ
-;相手が흑화 캐릭터でない場合、弱気な性格か감정결여でないとだめ
+;相手が흑화 캐릭터の場合、強気な성격だとだめ
+;相手が흑화 캐릭터でない場合、弱気な성격か감정결여でないとだめ
 IF ENEMY_TYPE_CHECK_F("AKUOTI") > 0
 	SIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 		RETURN 0
@@ -977,7 +977,7 @@ SIF ABL:기교 < 2
 ;連続使用できない
 SIF PREVCOM == 103
 	RETURN 0
-;失敗時のカウンター行動が設定されていない相手には使用できない
+;失敗時のカウンター行動が설정されていない相手には使用できない
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCCALLFORM TENTACLE_MOB_{FLAG:11}_REACTION_REF, 2
 	CATCH

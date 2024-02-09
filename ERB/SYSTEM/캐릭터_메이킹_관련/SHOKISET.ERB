@@ -1,5 +1,5 @@
 ﻿;----------------------
-;初期メンバーの設定の改造
+;初期メンバーの설정の改造
 ;----------------------
 
 @CHARA_MAKE_FINALIZE_KAI
@@ -41,7 +41,7 @@ ELSE
 	GOTO INPUT_LOOP_0
 ENDIF
 
-;キャラクターCSV未定義値の一括設定処理
+;キャラクターCSV未定義値の一括설정処理
 CALL SHOKISET_CSVFIX
 
 
@@ -74,7 +74,7 @@ WHILE NUM <= 3
 		EXISTCSV LCOUNT
 		;1が帰ってきたらキャラが定義されているので決定
 		IF RESULT == 1
-			PRINTFORML {NUM}人目のキャラを「%CSVNAME(LCOUNT,0)%」に設定しました
+			PRINTFORML {NUM}人目のキャラを「%CSVNAME(LCOUNT,0)%」に설정しました
 			ADDCHARA LCOUNT
 			FLAG:8 ++
 			IF NO:NUM < 300
@@ -89,9 +89,9 @@ WHILE NUM <= 3
 WEND
 
 
-;キャラクターCSV未定義値の一括設定処理を行う関数
+;キャラクターCSV未定義値の一括설정処理を行う関数
 ;-------------------------------
-;キャラクターCSV未定義値の一括設定
+;キャラクターCSV未定義値の一括설정
 ;-------------------------------
 @SHOKISET_CSVFIX
 #DIM CCOUNT

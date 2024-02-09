@@ -1,6 +1,6 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの種族の設定
+;キャラの種族の설정
 @FIRSTSETTING_CHARA_SYUZOKU, ARG
 #DIM RACE
 #DIM FEAT_NUM
@@ -21,11 +21,11 @@ FOR LOCAL, 100, 300
 		FEAT_SELECT:LOCAL = 1
 NEXT
 CALL LB
-PRINTFORML ※種族ごとに取得可能なフィートが設定されており、
+PRINTFORML ※種族ごとに取得可能なフィートが설정されており、
 PRINTFORML 　合計で３つまで選択することができます。
 PRINTFORML 　フィート以外の基本性能は同等で種族間の優劣は存在しません。
 PRINTL 
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の種族を設定してください
+PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の種族を설정してください
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 FOR LOCAL, 0, LOCAL:3
 	SIF TALENT:ARG:(LOCAL + LOCAL:1) > 0
@@ -110,12 +110,12 @@ ELSE
 	ELSE
 		GOTO INPUT_LOOP_0
 	ENDIF
-	;種族の設定
+	;種族の설정
 	FOR LOCAL, LOCAL:1, LOCAL:1 + LOCAL:3
 		TALENT:ARG:LOCAL = 0
 	NEXT
 	TALENT:ARG:(RACE + LOCAL:1) = 1
-	PRINTFORML 種族を 『%TALENTNAME:(RACE + (LOCAL:1))%』 に設定しました
+	PRINTFORML 種族を 『%TALENTNAME:(RACE + (LOCAL:1))%』 に설정しました
 	;인조인간の場合
 	IF RACE == 3
 		IF ISFEMALE(ARG)
@@ -141,10 +141,10 @@ ELSE
 			$INPUT_LOOP_2
 			INPUT
 			IF RESULT == 0
-				PRINTFORML 구상をロボ風に設定しました
+				PRINTFORML 구상をロボ風に설정しました
 				TALENT:ARG:구상설정 = 1
 			ELSEIF RESULT == 1
-				PRINTFORML 設定を変更しません
+				PRINTFORML 설정を変更しません
 			ELSE
 				GOTO INPUT_LOOP_1
 			ENDIF
@@ -164,7 +164,7 @@ ENDIF
 PRINTL 
 PRINTL 
 
-;共通設定用
+;共通설정用
 @FIRSTSETTING_racegenre
 $loop
 FOR local,0,10

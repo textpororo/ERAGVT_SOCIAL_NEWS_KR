@@ -1,4 +1,4 @@
-﻿;겉옷の設定
+﻿;겉옷の설정
 @FIRSTSETTING_CLOTH_SETTING_OUTER, ARG
 $INPUT_LOOP
 PRINTL 
@@ -20,7 +20,7 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
-PRINTL [1]겉옷を設定しない
+PRINTL [1]겉옷を설정しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -28,7 +28,7 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:40 == 199
 		;	CFLAG:ARG:41 = -1
 		CFLAG:ARG:40 = -1
-		PRINTL 겉옷を設定しませんでした
+		PRINTL 겉옷を설정しませんでした
 		PRINTW 
 	CASE 100 TO 199
 		LOCAL = RESULT
@@ -96,7 +96,7 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;겉옷（変身後）の設定
+;겉옷（変身後）の설정
 @FIRSTSETTING_CLOTH_SETTING_OUTER2, ARG
 $INPUT_LOOP
 PRINTL 
@@ -119,7 +119,7 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
-PRINTL [1]겉옷（変身後）を設定しない
+PRINTL [1]겉옷（変身後）を설정しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -127,7 +127,7 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:41 == 199
 		;	CFLAG:ARG:40 = -1
 		CFLAG:ARG:41 = -1
-		PRINTL 겉옷（変身後）を設定しませんでした
+		PRINTL 겉옷（変身後）を설정しませんでした
 		PRINTW 
 	CASE 100 TO 299
 		IF ITEMNAME:RESULT == ""
@@ -176,7 +176,7 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;속옷の設定
+;속옷の설정
 @FIRSTSETTING_CLOTH_SETTING_INNER, ARG
 $INPUT_LOOP
 PRINTL 
@@ -198,13 +198,13 @@ NEXT
 PRINTL 
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
-PRINTL [1]속옷を設定しない
+PRINTL [1]속옷を설정しない
 INPUT
 SELECTCASE RESULT
 	CASE 0
 	CASE 1
 		CFLAG:ARG:42 = -1
-		PRINTL 속옷を設定しませんでした
+		PRINTL 속옷を설정しませんでした
 		PRINTW 
 	CASE 300 TO 398
 		IF ITEMNAME:RESULT == ""

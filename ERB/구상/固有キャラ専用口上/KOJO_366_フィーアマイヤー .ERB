@@ -270,11 +270,11 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_366_COLOR
 IF CFLAG:1 > 0
-	;変身時に性格を変更
+	;変身時に성격を変更
 	CALL KOJO_366_PERSONALITY_CHANGE_1
 	TRYCALLFORM KOJO_2_COLOR
 ELSE
-	;変身解除時に性格を変更
+	;変身解除時に성격を変更
 	CALL KOJO_366_PERSONALITY_CHANGE_2
 	TRYCALLFORM KOJO_2_COLOR
 ENDIF
@@ -283,7 +283,7 @@ ENDIF
 ;キャラ個別のオープニング
 ;--------------------------------------------------
 @KOJO_366_FIRST
-;ゲーム開始時に表示されるテキストを設定します
+;ゲーム開始時に表示されるテキストを설정します
 ;キャラが戦うに至った動機の説明など
 TRYCALLFORM KOJO_2_FIRST
 
@@ -435,7 +435,7 @@ PRINTFORML 「武装の生成を開始します」
 ;変身後の名乗り
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 @KOJO_366_BATTLE_CHARA_NANORI
-;変身時に性格を変更
+;変身時に성격を変更
 CALL KOJO_366_PERSONALITY_CHANGE_1
 TRYCALLFORM KOJO_2_COLOR
 
@@ -453,7 +453,7 @@ PRINTFORML 「武装の生成が完了しました」
 ;기력が尽きて変身が強制的に解けた
 ;--------------------------------------------------
 @KOJO_366_BATTLE_CHARA_TRANSRELEASE
-;変身解除時に性格を変更
+;変身解除時に성격を変更
 CALL KOJO_366_PERSONALITY_CHANGE_2
 TRYCALLFORM KOJO_2_COLOR
 

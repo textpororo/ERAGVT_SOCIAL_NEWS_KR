@@ -2,7 +2,7 @@
 ;戦闘中の衣装に関する処理
 
 ;----------------------------------------------------------
-;衣装の耐久度を設定
+;衣装の耐久度を설정
 @CLOTH_BATTLE_SETHP
 #DIM KEEP_CFLAG,1
 
@@ -490,7 +490,7 @@ CALL CLOTH_NO_INNER, TARGET
 IF RESULT > 0
 	CLOTH_INNER_PER = CLOTH_OUTER_PER
 	CLOTH_NO_INNER = 1
-	;挿入抵抗力の設定
+	;挿入抵抗力の설정
 	CALL CLOTH_HOSEI(TARGET,CFLAG:(CFLAG:1==0 ? 40 # 41),"DEF")
 	CLOTH_INNER_DEF = RESULT
 	;속옷の耐久力を겉옷に同期
@@ -499,7 +499,7 @@ IF RESULT > 0
 ;通常は속옷について処理
 ELSE
 	CLOTH_NO_INNER = 0
-	;挿入抵抗力の設定
+	;挿入抵抗力の설정
 	CALL CLOTH_HOSEI(TARGET,CFLAG:42,"DEF")
 	CLOTH_INNER_DEF = RESULT
 

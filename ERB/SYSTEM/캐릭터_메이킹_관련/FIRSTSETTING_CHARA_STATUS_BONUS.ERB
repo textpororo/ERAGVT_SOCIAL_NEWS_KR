@@ -473,7 +473,7 @@ PRINTL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINT [200] 決定　　　　　　　
 PRINTL [201] 全て振り直す
-PRINTL [999] ランダムに設定
+PRINTL [999] ランダムに설정
 INPUT
 
 OBJ_VAR = RESULT / 10
@@ -605,14 +605,14 @@ ELSEIF OBJ_VAR >= 0 && OBJ_VAR <= 6 && CNG_VAR >= 0 && CNG_VAR <= 3
 		CNG_VAR = 5
 	ENDIF
 
-	;上限設定
+	;上限설정
 	SIF CNG_VAR > JUEL:ARG:수련P / 10
 		CNG_VAR = JUEL:ARG:수련P / 10
 
 	SIF BNS_VAR:OBJ_VAR + CNG_VAR > 20
 		CNG_VAR = 20 - BNS_VAR:OBJ_VAR
 
-	;下限設定
+	;下限설정
 	SIF BNS_VAR:OBJ_VAR + CNG_VAR < -20
 		CNG_VAR = -20 - BNS_VAR:OBJ_VAR
 

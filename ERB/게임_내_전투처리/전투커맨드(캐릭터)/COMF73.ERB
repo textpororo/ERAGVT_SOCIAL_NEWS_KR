@@ -21,21 +21,21 @@ IF TCVARn:12 > 0
 ENDIF
 
 ;心境の変化
-;性格の成長補正と心境の스테이터스補正が近いもの
+;성격の成長補正と心境の스테이터스補正が近いもの
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 
 ;SP変身구상から続けて心境구상は不自然なので、지문を呼び出さずにここで直書きする
 PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 
 
-;「怒り」になる性格：게으름, 고풍적, 사나움
+;「怒り」になる성격：게으름, 고풍적, 사나움
 IF RESULT == 15 || RESULT == 24 || RESULT == 27
 	TCVARn:1 = 2
 	PRINT 怒り
-;「冷静」になる性格：겁쟁이, 부끄럼쟁이, 대범함, 낙천적, 비관적, 과묵함
+;「冷静」になる성격：겁쟁이, 부끄럼쟁이, 대범함, 낙천적, 비관적, 과묵함
 ELSEIF RESULT == 10 || RESULT == 11 || RESULT == 14 || RESULT == 17 || RESULT == 18 || RESULT == 22
 	TCVARn:1 = 4
 	PRINT 冷静
-;「高揚」になる性格：その他
+;「高揚」になる성격：その他
 ELSE
 	TCVARn:1 = 6
 	PRINT 高揚

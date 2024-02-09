@@ -41,7 +41,7 @@ FOR LOCAL:0, 0, 감각수
 		CALL PALAM_HOSEI_TALENT, LOCAL:0, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;性格に関する補正
+		;성격に関する補正
 		CALL PALAM_HOSEI_SEIKAKU, LOCAL:0, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
@@ -53,7 +53,7 @@ FOR LOCAL:0, 0, 감각수
 		CALL PALAM_HOSEI_RANDOM, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 		
-		;下限値の設定
+		;下限値の설정
 		SIF ARG:(LOCAL:0) <= 0
 			ARG:(LOCAL:0) = 1
 	ENDIF
@@ -262,7 +262,7 @@ FOR LOCAL:0, 감각수, PALAM수
 		CALL PALAM_HOSEI_TALENT, LOCAL:1, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;性格に関する補正
+		;성격に関する補正
 		CALL PALAM_HOSEI_SEIKAKU, LOCAL:1, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
@@ -280,7 +280,7 @@ FOR LOCAL:0, 감각수, PALAM수
 		CALL PALAM_HOSEI_RANDOM, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 		
-		;下限値の設定
+		;下限値の설정
 		SIF ARG:(LOCAL:0) <= 0
 			ARG:(LOCAL:0) = 1
 		
@@ -468,7 +468,7 @@ IF ARG:9 > 0
 	CALL PALAM_HOSEI_TALENT, 15, ARG:9
 	ARG:9 = RESULT
 
-	;性格に関する補正
+	;성격に関する補正
 	CALL PALAM_HOSEI_SEIKAKU, 15, ARG:9
 	ARG:9 = RESULT
 
@@ -480,7 +480,7 @@ IF ARG:9 > 0
 	CALL PALAM_HOSEI_RANDOM, ARG:9
 	ARG:9 = RESULT
 	
-	;下限値の設定
+	;下限値の설정
 	SIF ARG:9 < 1
 		ARG:9 = 1
 	
@@ -506,7 +506,7 @@ IF ARG:7 > 0
 	CALL PALAM_HOSEI_TALENT, 13, ARG:7
 	ARG:7 = RESULT
 
-	;性格に関する補正
+	;성격に関する補正
 	CALL PALAM_HOSEI_SEIKAKU, 13, ARG:7
 	ARG:7 = RESULT
 
@@ -518,7 +518,7 @@ IF ARG:7 > 0
 	CALL PALAM_HOSEI_RANDOM, ARG:7
 	ARG:7 = RESULT
 	
-	;下限値の設定
+	;下限値の설정
 	SIF ARG:7 < 1
 		ARG:7 = 1
 	
@@ -540,7 +540,7 @@ IF ARG:4 > 0
 	CALL PALAM_HOSEI_TALENT, 10, ARG:4
 	ARG:4 = RESULT
 
-	;性格に関する補正
+	;성격に関する補正
 	CALL PALAM_HOSEI_SEIKAKU, 10, ARG:4
 	ARG:4 = RESULT
 
@@ -552,7 +552,7 @@ IF ARG:4 > 0
 	CALL PALAM_HOSEI_RANDOM, ARG:4
 	ARG:4 = RESULT
 	
-	;下限値の設定
+	;下限値の설정
 	SIF ARG:4 < 1
 		ARG:4 = 1
 	
@@ -578,7 +578,7 @@ IF ARG:5 > 0
 	CALL PALAM_HOSEI_TALENT, 11, ARG:5
 	ARG:5 = RESULT
 
-	;性格に関する補正
+	;성격に関する補正
 	CALL PALAM_HOSEI_SEIKAKU, 11, ARG:5
 	ARG:5 = RESULT
 
@@ -590,7 +590,7 @@ IF ARG:5 > 0
 	CALL PALAM_HOSEI_RANDOM, ARG:5
 	ARG:5 = RESULT
 	
-	;下限値の設定
+	;下限値の설정
 	SIF ARG:5 < 1
 		ARG:5 = 1
 	
@@ -1410,7 +1410,7 @@ ENDSELECT
 RETURN ARG:1
 
 ;--------------------------------------------------
-;性格に関する補正
+;성격に関する補正
 @PALAM_HOSEI_SEIKAKU, ARG:0, ARG:1
 LOCAL = SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), ARG:0, ARG:1)
 RETURN LOCAL
@@ -2205,7 +2205,7 @@ FOR LOCAL,0,감각수
 		CALL PALAM_HOSEI_TALENT, 現在部位, 現在値
 		現在値 = RESULT
 
-		;性格に関する補正
+		;성격に関する補正
 		CALL PALAM_HOSEI_SEIKAKU, 現在部位, 現在値
 		現在値 = RESULT
 

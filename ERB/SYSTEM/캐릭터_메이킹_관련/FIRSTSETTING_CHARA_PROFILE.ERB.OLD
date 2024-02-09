@@ -1,26 +1,26 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラクタープロフィールの設定
+;キャラクタープロフィールの설정
 @SET_CHARA_PROFILE, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 CALL LB
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の외관・プロフィールを設定してください
+PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の외관・プロフィールを설정してください
 PRINTL 
-PRINTL [10]ヘアスタイルの設定
+PRINTL [10]ヘアスタイルの설정
 CALL SHOW_HAIRSTYLE, ARG
 PRINTL 
-PRINT [11]머리색の設定
+PRINT [11]머리색の설정
 PRINTPLAIN  
 CALL SHOW_HAIRCOLOR, ARG
 PRINTL 
-PRINT [12]瞳の色の設定
+PRINT [12]瞳の色の설정
 PRINTPLAIN  
 CALL SHOW_EYESCOLOR, ARG
 PRINTL 
-PRINT [13]肌の色の設定
+PRINT [13]肌の色の설정
 PRINTPLAIN  
 CALL SHOW_SKINCOLOR, ARG
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
@@ -48,13 +48,13 @@ ENDIF
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;ヘアスタイルの設定
+;ヘアスタイルの설정
 @SET_HAIRSTYLE, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 『%CALLNAME:ARG%』 のヘアスタイルを設定してください
+PRINTFORML 『%CALLNAME:ARG%』 のヘアスタイルを설정してください
 PRINTL 
 PRINTFORML [1]前髪　　　　　　　『%CSTR:ARG:12%』
 PRINTFORML [2]ヘアスタイル　　　『%CSTR:ARG:13%』
@@ -62,7 +62,7 @@ SIF TALENT:ARG:변신능력 == 1
 		PRINTFORML [3]変身中　　　　　　『%CSTR:ARG:14%』
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL [100] 결정
-PRINTL [200]ランダムに髪型を設定
+PRINTL [200]ランダムに髪型を설정
 INPUT
 IF RESULT == 100
 	CLEARLINE LINECOUNT - LOCAL
@@ -133,13 +133,13 @@ ENDIF
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;머리색の設定
+;머리색の설정
 @SET_HAIRCOLOR, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 『%CALLNAME:ARG%』 の머리색を設定してください
+PRINTFORML 『%CALLNAME:ARG%』 の머리색を설정してください
 CALL SHOW_HAIRCOLOR, ARG
 PRINTL 
 PRINTL [1]머리색（パレットから選ぶ）
@@ -346,13 +346,13 @@ ENDIF
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;瞳の色の設定
+;瞳の色の설정
 @SET_EYESCOLOR, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 『%CALLNAME:ARG%』 の瞳の色を設定してください
+PRINTFORML 『%CALLNAME:ARG%』 の瞳の色を설정してください
 CALL SHOW_EYESCOLOR, ARG
 PRINTL 
 PRINTL [1]右目の色（パレットから選ぶ）
@@ -441,7 +441,7 @@ PRINTBUTTON "■",29
 RESETCOLOR
 PRINTL ]
 PRINTL 
-PRINTL [3]両目の色を同時設定（パレットから選ぶ）
+PRINTL [3]両目の色を同時설정（パレットから選ぶ）
 PRINT 　プリセット：　　[
 CALL SETCOLOR_BY_STR, "빨강"
 PRINTBUTTON "■",30
@@ -663,13 +663,13 @@ ENDIF
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;肌の色の設定
+;肌の色の설정
 @SET_SKINCOLOR, ARG
 LOCAL = LINECOUNT
 $INPUT_LOOP
 CLEARLINE LINECOUNT - LOCAL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 『%CALLNAME:ARG%』 の肌の色を設定してください
+PRINTFORML 『%CALLNAME:ARG%』 の肌の色を설정してください
 CALL SHOW_SKINCOLOR, ARG
 PRINTL 
 PRINT 　プリセット：　　[

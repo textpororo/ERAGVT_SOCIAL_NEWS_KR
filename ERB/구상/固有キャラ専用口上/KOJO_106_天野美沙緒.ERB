@@ -37,7 +37,7 @@
 @KOJO_106_COLOR
 IF CFLAG:1 > 0
 	SETCOLOR 0xFFFF33
-	;変身時に性格を変更
+	;変身時に성격を変更
 	SIF TALENT:부끄럼쟁이 == 1
 		TALENT:부끄럼쟁이 = 0
 	SIF TALENT:오기 == 0
@@ -45,7 +45,7 @@ IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_0_COLOR_{SEIKAKU_CHECK_F(TARGET)}
 ELSE
 	SETCOLOR 0x000099
-	;変身解除時に性格を変更
+	;変身解除時に성격を変更
 	SIF TALENT:오기 == 1
 		TALENT:오기 = 0
 	SIF TALENT:부끄럼쟁이 == 0
@@ -58,7 +58,7 @@ ENDIF
 ;キャラ個別のオープニング
 ;--------------------------------------------------
 @KOJO_106_FIRST
-;ゲーム開始時に表示されるテキストを設定します
+;ゲーム開始時に表示されるテキストを설정します
 ;キャラが戦うに至った動機の説明など
 IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_0_FIRST_{SEIKAKU_CHECK_F(TARGET)}

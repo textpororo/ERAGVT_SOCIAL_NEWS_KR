@@ -110,11 +110,11 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_364_COLOR
 IF CFLAG:1 > 0
-	;変身時に性格を変更
+	;変身時に성격を変更
 	CALL KOJO_364_PERSONALITY_CHANGE_1
 	TRYCALLFORM KOJO_0_COLOR_{SEIKAKU_CHECK_F(TARGET)}
 ELSE
-	;変身解除時に性格を変更
+	;変身解除時に성격を変更
 	CALL KOJO_364_PERSONALITY_CHANGE_2
 	TRYCALLFORM KOJO_0_COLOR_{SEIKAKU_CHECK_F(TARGET)}
 ENDIF
@@ -123,7 +123,7 @@ ENDIF
 ;キャラ個別のオープニング
 ;--------------------------------------------------
 @KOJO_364_FIRST
-;ゲーム開始時に表示されるテキストを設定します
+;ゲーム開始時に表示されるテキストを설정します
 ;キャラが戦うに至った動機の説明など
 IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_0_FIRST_{SEIKAKU_CHECK_F(TARGET)}
@@ -365,7 +365,7 @@ ENDIF
 SIF CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") == 0 || TALENT:임신 == 0
 	CALL TRANSFORM, 1
 TRYCALL KOJO_0_COLOR
-;변신 시 구호設定
+;변신 시 구호설정
 IF CFLAG:(TARGET):4 == 1
 	PRINTFORML 「%CSTR:TARGET:2%」
 ELSE
@@ -382,13 +382,13 @@ ENDIF
 ;変身後の名乗り
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 @KOJO_364_BATTLE_CHARA_NANORI
-;変身時に性格を変更
+;変身時に성격を変更
 CALL KOJO_364_PERSONALITY_CHANGE_1
 TRYCALLFORM KOJO_0_COLOR_{SEIKAKU_CHECK_F(TARGET)}
 TRYCALLFORM KOJO_0_BATTLE_CHARA_NANORI_{SEIKAKU_CHECK_F(TARGET)}
 
 PRINTDL 
-PRINTDL 一時的に「性格：오기」になった！
+PRINTDL 一時的に「성격：오기」になった！
 PRINTDL 一時的に공격スタイルが変わった！
 PRINTFORMDL 
 PRINTFORMDL 　근거리『%CSTR:TARGET:5%』<<%FSTYLE_NAME_F(TARGET,1)%>>
@@ -400,13 +400,13 @@ CALL KOJO_364_PERSONALITY_CHANGE_RANDOM_1
 ;기력が尽きて変身が強制的に解けた
 ;--------------------------------------------------
 @KOJO_364_BATTLE_CHARA_TRANSRELEASE
-;変身解除時に性格を変更
+;変身解除時に성격を変更
 CALL KOJO_364_PERSONALITY_CHANGE_2
 TRYCALLFORM KOJO_0_COLOR_{SEIKAKU_CHECK_F(TARGET)}
 TRYCALLFORM KOJO_0_BATTLE_CHARA_TRANSRELEASE_{SEIKAKU_CHECK_F(TARGET)}
 
 PRINTDL 
-PRINTDL 「性格：겁쟁이」に戻った！
+PRINTDL 「성격：겁쟁이」に戻った！
 PRINTDL 공격スタイルが戻った！
 PRINTFORMDL 
 PRINTFORMDL 　근거리『%CSTR:TARGET:5%』<<%FSTYLE_NAME_F(TARGET,1)%>>

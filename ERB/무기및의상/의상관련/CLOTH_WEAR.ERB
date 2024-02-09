@@ -1,15 +1,15 @@
 ﻿;**********************************************************
-;衣装の設定
+;衣装の설정
 @CLOTH_WEAR
 #DIM CUSTOMIZE, 2
 #DIM CUSTOMIZE_INNER, 2
 $INPUT_LOOP_FUNCTIONSTART
 PRINTL 
 IF CHARANUM <= 2
-	PRINTL 【衣装の設定】
+	PRINTL 【衣装の설정】
 	RESULT = 1
 ELSE
-	PRINTFORML %"【衣装の設定】",21,LEFT%%"[変身前アウター]",21,LEFT%%"[変身後アウター]",21,LEFT%%"[インナー]",23,LEFT%[その他】
+	PRINTFORML %"【衣装の설정】",21,LEFT%%"[変身前アウター]",21,LEFT%%"[変身後アウター]",21,LEFT%%"[インナー]",23,LEFT%[その他】
 	FOR LOCAL,1,CHARANUM
 		PRINTFORM %NAME:LOCAL,21,LEFT%
 		IF CFLAG:LOCAL:40 == 0
@@ -81,7 +81,7 @@ ELSE
 	DRAWLINE
 	$INPUT_LOOP
 	CLEARLINE LINECOUNT - LOCAL:1
-	PRINTFORML ◆%NAME:LOCAL%の衣装設定
+	PRINTFORML ◆%NAME:LOCAL%の衣装설정
 	PRINT 【　외투　】
 	IF CFLAG:LOCAL:40 == 0
 		PRINTFORML なし
@@ -119,7 +119,7 @@ ELSE
 		PRINTFORML %ITEMNAME:(CFLAG:LOCAL:43)%
 	ENDIF
 	DRAWLINE
-	PRINTL どの衣装を設定しますか？
+	PRINTL どの衣装を설정しますか？
 	PRINT [1]겉옷　　　　　　　　　　
 	CALL CLOTH_HOSEI(LOCAL,CFLAG:LOCAL:40,"SLOT")
 	CUSTOMIZE:0 = RESULT
@@ -247,7 +247,7 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;겉옷の設定
+;겉옷の설정
 @CLOTH_SETTING_OUTER, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:40
@@ -282,7 +282,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
 PRINTL [1]変更する
-PRINTL [2]겉옷を設定しない
+PRINTL [2]겉옷を설정しない
 INPUT
 IF RESULT >= 100 && RESULT < 200 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -311,7 +311,7 @@ ELSEIF RESULT == 2
 	;SIF CFLAG:ARG:40 == 199
 	;	CFLAG:ARG:41 = 0
 	CFLAG:ARG:40 = 0
-	PRINTL 겉옷を設定しませんでした
+	PRINTL 겉옷を설정しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -322,7 +322,7 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;겉옷（変身後）の設定
+;겉옷（変身後）の설정
 @CLOTH_SETTING_OUTER2, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:41
@@ -370,7 +370,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
 PRINTL [1]変更する
-PRINTL [2]겉옷（変身後）を設定しない
+PRINTL [2]겉옷（変身後）を설정しない
 INPUT
 IF RESULT >= 100 && RESULT < 300 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -412,7 +412,7 @@ ELSEIF RESULT == 2
 	;SIF CFLAG:ARG:41 == 199
 	;	CFLAG:ARG:40 = 0
 	CFLAG:ARG:41 = 0
-	PRINTL 겉옷（変身後）を設定しませんでした
+	PRINTL 겉옷（変身後）を설정しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -421,7 +421,7 @@ ELSE
 ENDIF
 
 ;----------------------------------------------------------
-;속옷の設定
+;속옷の설정
 @CLOTH_SETTING_INNER, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:42
@@ -456,7 +456,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
 PRINTL [1]変更する
-PRINTL [2]속옷を設定しない
+PRINTL [2]속옷を설정しない
 INPUT
 IF RESULT >= 300 && RESULT < 400 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -567,7 +567,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	CFLAG:ARG:42 = 0
-	PRINTL 속옷を設定しませんでした
+	PRINTL 속옷を설정しませんでした
 	PRINTW 
 ELSE
 	PRINTL 
@@ -577,7 +577,7 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;その他装備品の設定
+;その他装備品の설정
 @CLOTH_SETTING_MISC, ARG
 #DIM CHECK
 CHECK = CFLAG:ARG:43
@@ -605,7 +605,7 @@ PRINTL
 DRAWLINE
 PRINTL [0]変更しないで돌아간다
 PRINTL [1]変更する
-PRINTL [2]その他装備品を設定しない
+PRINTL [2]その他装備品を설정しない
 INPUT
 IF RESULT >= 500 && RESULT < 600 && ITEM:RESULT == 1
 	CHECK = RESULT
@@ -623,7 +623,7 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	CFLAG:ARG:43 = 0
-	PRINTL その他装備品を設定しませんでした
+	PRINTL その他装備品を설정しませんでした
 	PRINTW 
 ELSE
 	PRINTL 

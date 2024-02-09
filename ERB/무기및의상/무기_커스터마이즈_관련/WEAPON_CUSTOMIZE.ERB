@@ -19,7 +19,7 @@ PRINTFORML ◆근거리武器
 IF CSTR:ARG:5 != ""
 	PRINTFORML ├[10]武器名 『%CSTR:ARG:5%』
 ELSE
-	PRINTFORML ├[10]武器名 （設定されていません）
+	PRINTFORML ├[10]武器名 （설정されていません）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,1,1
@@ -35,7 +35,7 @@ PRINTFORML ◆중거리武器
 IF CSTR:ARG:6 != ""
 	PRINTFORML ├[20]武器名 『%CSTR:ARG:6%』
 ELSE
-	PRINTFORML ├[20]武器名 （設定されていません）
+	PRINTFORML ├[20]武器名 （설정されていません）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,2,1
@@ -51,7 +51,7 @@ PRINTFORML ◆원거리武器
 IF CSTR:ARG:7 != ""
 	PRINTFORML ├[30]武器名 『%CSTR:ARG:7%』
 ELSE
-	PRINTFORML ├[30]武器名 （設定されていません）
+	PRINTFORML ├[30]武器名 （설정されていません）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,3,1
@@ -81,7 +81,7 @@ ENDIF
 
 
 
-;무기의 이름を設定
+;무기의 이름を설정
 @SETTING_WEAPON_NAME,ARG,ARG:1
 $REPRINT
 IF ARG:1 == 1
@@ -96,14 +96,14 @@ PRINT 現在の武器名：
 IF CSTR:ARG:(ARG:1 + 4) != ""
 	PRINTFORML 『%CSTR:ARG:(ARG:1 + 4)%』
 ELSE
-	PRINTFORML （武器名が設定されていません）
+	PRINTFORML （武器名が설정されていません）
 ENDIF
 PRINTL 
 PRINTL  [0]自分で入力する
 PRINTL  [1]ランダム生成機能を使う
 SIF CSTR:ARG:(ARG:1 + 4) == ""
 	SETCOLOR 96, 96, 96
-PRINTFORML  [\@CSTR:ARG:(ARG:1 + 4) == "" ? - # 2 \@]追加文字列の設定
+PRINTFORML  [\@CSTR:ARG:(ARG:1 + 4) == "" ? - # 2 \@]追加文字列の설정
 RESETCOLOR
 PRINTL  [3]消去する
 SIF CSTR:ARG:5 != "" && ARG:1 != 1
@@ -126,7 +126,7 @@ IF RESULT == 0
 	ELSEIF ARG:1 == 3
 		PRINT 원거리
 	ENDIF
-	PRINTL 武器に設定する名前を入力してください：
+	PRINTL 武器に설정する名前を入力してください：
 	INPUTS
 	IF ARG:1 == 1
 		CSTR:ARG:5 = %RESULTS%
@@ -205,7 +205,7 @@ ENDIF
 
 
 
-;전투스타일を設定
+;전투스타일を설정
 @SETTING_FSTYLE,ARG,ARG:1
 IF ARG:1 == 1
 	PRINT 근거리

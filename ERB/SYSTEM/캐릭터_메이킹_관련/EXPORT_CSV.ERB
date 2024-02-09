@@ -20,7 +20,7 @@ PRINTL （連続してキャラクターデータを作製している場合、C
 ;キャラクター番号で101〜300の間で空いている番号を探す
 REPEAT 200
 	LOCAL:1 = COUNT + 101
-	;EXISTCSVが1なら設定されていないのでBREAKして決定
+	;EXISTCSVが1なら설정されていないのでBREAKして決定
 	IF EXISTCSV(LOCAL:1,0) != 1
 		PRINTFORML キャラクター番号を「{LOCAL:1}」で出力します。
 		BREAK
@@ -37,7 +37,7 @@ PRINTL
 
 $INPUT_LOOP
 PRINTL [0] 実行する
-PRINT [1] 調教状況の保存範囲を変更する　現在の設定：
+PRINT [1] 調教状況の保存範囲を変更する　現在の설정：
 IF LOCAL:2 == 0
 	PRINTL 感度・経験なども0にしてリセット
 ELSEIF LOCAL:2 == 1
@@ -59,7 +59,7 @@ ELSEIF RESULT == 2
 	INPUT
 	LOCAL:1 = RESULT
 	IF EXISTCSV(LOCAL:1,0) == 1
-		PRINTW 注意：そのキャラクター番号のキャラはすでに設定されています
+		PRINTW 注意：そのキャラクター番号のキャラはすでに설정されています
 	ENDIF
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 0
@@ -83,7 +83,7 @@ SIF CSTR:10 != ""
 SIF CSTR:4 != ""
 	PRINTFORML CSTR,4,%CSTR:4%,;　일인칭
 SIF CFLAG:8 > 0
-	PRINTFORML フラグ,8,{CFLAG:8},;　일인칭設定
+	PRINTFORML フラグ,8,{CFLAG:8},;　일인칭설정
 PRINTL
 IF CSTR:204 != "" || CSTR:205 != "" || CSTR:206 != ""
 	PRINTL ;-------나이指定----------------

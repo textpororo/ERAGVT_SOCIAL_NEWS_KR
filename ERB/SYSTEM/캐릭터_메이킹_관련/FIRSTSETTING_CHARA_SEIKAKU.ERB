@@ -1,6 +1,6 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの性格の設定
+;キャラの성격の설정
 @FIRSTSETTING_CHARA_SEIKAKU, ARG
 #DIM LCOUNT
 #DIM HAVE_TALENT
@@ -19,7 +19,7 @@ FOR LOCAL:3, 0, 7
 	BASE:ARG:(LOCAL:1) = RESULT
 	MAXBASE:ARG:(LOCAL:1) = BASE:ARG:(LOCAL:1)
 NEXT
-;性格ランダムの場合
+;성격ランダムの場合
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", ARG
 IF RESULT == 0
 	LOCAL = SEIKAKU_START + RAND:(SEIKAKU_NUM)
@@ -36,7 +36,7 @@ FOR LOCAL, 600, 700
 	SIF TALENT:ARG:LOCAL > 0
 		HAVE_TALENT ++
 NEXT
-PRINTFORML {ARG:0}人目のキャラ 『%NAME:ARG%』 の性格を設定してください
+PRINTFORML {ARG:0}人目のキャラ 『%NAME:ARG%』 の성격を설정してください
 DRAWLINE
 PRINTL 　　　　　　　　　　　　　　　体　気　性　　攻　防　敏　知　　恭　欲　屈　恥　苦　恐　구상
 FOR LOCAL, 0, SEIKAKU_NUM
@@ -194,7 +194,7 @@ SIF HAVE_TALENT > 4
 PRINTL [200] 결정
 RESETCOLOR
 PRINTL [300]精神素質をリセット
-PRINTL [999]精神素質をランダムで設定
+PRINTL [999]精神素質をランダムで설정
 INPUT
 SIF RESULT != 200
 	CLEARLINE LINECOUNT - LCOUNT
@@ -207,7 +207,7 @@ ELSEIF RESULT == 98
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 99
 	FOR LOCAL, 0, SEIKAKU_NUM
-		;性格の初期化
+		;성격の初期化
 		TALENT:ARG:(LOCAL + SEIKAKU_START) = 0
 	NEXT
 	LOCAL = RAND:(SEIKAKU_NUM) + 10
@@ -231,7 +231,7 @@ ElSEIF RESULT == 999
 	GOTO INPUT_LOOP
 ELSEIF RESULT >= 0 && RESULT <= SEIKAKU_NUM - 1
 	FOR LOCAL, 0, SEIKAKU_NUM
-		;性格の初期化
+		;성격の初期化
 		TALENT:ARG:(LOCAL + SEIKAKU_START) = 0
 	NEXT
 	LOCAL = RESULT + SEIKAKU_START
@@ -453,7 +453,7 @@ CATCH
 	RESETCOLOR
 ENDCATCH
 
-;구상がある性格だけを選ぶ
+;구상がある성격だけを選ぶ
 @RAND_CHOOSE_KOJO_SEIKAKU(ARG,SEIKAKU_START,SEIKAKU_NUM)
 #DIM CO
 #DIM SEIKAKU_START

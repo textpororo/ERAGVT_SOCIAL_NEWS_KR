@@ -32,7 +32,7 @@ SIF FLAG:999 == 1
 SIF RAND:100 > LOCAL
 	RETURN
 
-;観戦人数の設定
+;観戦人数の설정
 FLAG:70 = MIN(FLAG:852 / 3000, 5)
 FLAG:70 += MIN(EXP:매료경험 / 100, 5)
 ;FEAT 효과에 따른観衆増加
@@ -1082,7 +1082,7 @@ PRINTW
 IF ISMALE() && (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:42 != 397)
 	; #region 
 	PRINTFORM 男が%PRINT_TRANSCALLNAME(TARGET)%의 服を乱暴に剥ぐと
-	;속옷設定なし　ノーパン　または前張り
+	;속옷설정なし　ノーパン　または前張り
 	IF CFLAG:42 == 0 || CFLAG:42 == 398
 		PRINTFORM 隠すもののないお尻
 		;カスタムなし下着3種　注釈ルクテンタショーツ399は촉수 구속구400へ自動的に変わる

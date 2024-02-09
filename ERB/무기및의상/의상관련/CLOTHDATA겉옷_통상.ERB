@@ -55,7 +55,7 @@
 ;	・効果欄の先頭に"!!"を記述すると、そのオプションは選択不能になります。
 ;	　あるカスタマイズが別のカスタマイズと排他的である場合に利用してください。
 ;		;三項演算で直接記述する例
-;		"레깅스@"+(CFLAG:ARG:42 != 308 ? "!!設定中の下着が레깅스でなければ選択不可" # "軽4晒4")
+;		"레깅스@"+(CFLAG:ARG:42 != 308 ? "!!설정中の下着が레깅스でなければ選択不可" # "軽4晒4")
 ;		
 ;		;引数に変数を用い、事前に分岐しておく例
 ;		IF CUSTOM:1 != 0 && CUSTOM:1 != 1
@@ -607,7 +607,7 @@ ELSEIF RESULT == 30
 	CLEARLINE 1
 	CALL SHORTLINE
 	PRINTL 下半身の着衣を選択してください
-	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ブルマ","ローレグブルマ@軽1","레깅스@"+(CFLAG:ARG:42 != 308 ? "!!設定中の下着が레깅스でなければ選択不可" # "軽4晒4"),"ハーフパンツ@重1","ジャージ下@重2護2","@@")
+	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ブルマ","ローレグブルマ@軽1","레깅스@"+(CFLAG:ARG:42 != 308 ? "!!설정中の下着が레깅스でなければ選択不可" # "軽4晒4"),"ハーフパンツ@重1","ジャージ下@重2護2","@@")
 	CUSTOM:3 = RESULT
 ELSEIF RESULT == 40
 	CLEARLINE 1
@@ -8645,7 +8645,7 @@ REND
 TRYCALLFORM CLOTH_CUSTOMIZE_OPTION_DRAW_{(CFLAG:ARG:1 == 0 ? 100 # 0)+ID}(CUSTOM,ID,ARG)
 DRAWLINE
 
-CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"基調色","頭部","上半身","袖"+(CUSTOM:2 == 3 ? "!!ビキニを設定中は変更できません" # ""),"下半身","ソックス","装飾品","@@")
+CALL CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,"基調色","頭部","上半身","袖"+(CUSTOM:2 == 3 ? "!!ビキニを설정中は変更できません" # ""),"下半身","ソックス","装飾品","@@")
 $INPUT_LOOP
 CALL CLOTH_CUSTOMIZE_OPTION_COMMON(-999)
 

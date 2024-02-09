@@ -1,5 +1,5 @@
 ﻿;----------------------------------------------------------
-;かけ声のランダム設定
+;구호 랜덤 설정
 ;변신 구호 및 Str.csv 번역을 도와주신 Dotline521님께 감사의 말씀 드립니다.
 @FIRSTSETTING_CHANGINGCALL_RANDOM
 #FUNCTIONS
@@ -25,15 +25,18 @@ DATAFORM 풀버스트！
 DATAFORM 클럭 업！
 DATAFORM 인게이지！
 DATAFORM 어나더 폼！
+DATAFORM 빛이여！
+DATAFORM 라이드 온！
+DATAFORM 트랜스포메이션！
 ENDDATA
 RETURNF LOCALS
 
 
 
 ;**********************************************************
-;キャラの変身後の名乗り구상の設定
-;ARG キャラ
-;ARG:1 性格
+;캐릭터 변신 후 자칭 구상 설정
+;ARG 캐릭터
+;ARG:1 성격
 @FIRSTSETTING_CHANGINGCALL_DETAIL, ARG:0, ARG:1
 #FUNCTIONS
 LOCAL:0 = ARG:1
@@ -42,95 +45,136 @@ LOCALS = %STRCLEAR()%
 
 PRINTFORML {ARG:1}
 
-;性格を大別する
+;성격을 크게 나눈다(大別する)
 
-;グループ2 弱気系　겁쟁이、부끄럼쟁이、비관적
+;参上 -> 도착, 찾아뵘 이라는 뜻이며 "등장" 이라고 자주 해석된다
+;見参 -> 등장, 대면(対面)의 높임말이라고 하며, 사무라이가 대결할 때 나오면서 見参！이라 했다고 한다
+;推参 -> 참전, 推して参る 상대가 원하지 않음에도 밀고 간다는 뜻이며, "각오해라" 라고 의역되기도 한다
+
+;그룹2 약기계(弱気系)　겁쟁이, 부끄럼쟁이, 비관적
 IF LOCAL:0 == 10 || LOCAL:0 == 11 || LOCAL:0 == 18
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
 	DATAFORM ……！
-	DATAFORM ……！
-	DATAFORM ……！
-	DATAFORM 。……っ！ 行きます！
-	DATAFORM 。やるしか……ないよね……！
+	DATAFORM . 후우……！ 간다！
+	DATAFORM . 후우……！ 갑니다！
+	DATAFORM . ……읏！ 간다！
+	DATAFORM . ……읏！ 갑니다！
+	DATAFORM . 어쩔 수……없는 거네……！
+	DATAFORM . 할 수밖에……없겠네요……！
+	DATAFORM . 이 이상은, 용납 못 해……！
+	DATAFORM . 이렇게 된 이상, 별 수 없겠죠……！
+	DATAFORM . 열심히, 해볼 게요……！
 	ENDDATA
-;グループ3 活発系　활발함、낙천적、순종적、수다쟁이、경박함
+;그룹3 활발계(活発系)　활발함, 낙천적, 순종적, 수다쟁이, 경박함
 ELSEIF LOCAL:0 == 13 || LOCAL:0 == 17 || LOCAL:0 == 19 || LOCAL:0 == 23 || LOCAL:0 == 25
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
 	DATAFORM ！
-	DATAFORM ！
-	DATAFORM っ！
-	DATAFORM ！ よーし行くぞぉ！
-	DATAFORM ！ 覚悟してねっ！
+	DATAFORM ！ 각오하라고！
+	DATAFORM ！ 각오하시죠！
+	DATAFORM ー！
+	DATAFORM ！ 좋ー아, 가즈아ー앗！
+	DATAFORM ！ 기합 넣고 가자！
+	DATAFORM ！ 반드시 이겨내 보일 테야！
+	DATAFORM ！ 끝을 내드리죠！
+	DATAFORM ！ 봐주기 없기다！
+	DATAFORM ！ 악행은 여기까지야！
+	DATAFORM ！ 악행도 여기까지입니다！
+	DATAFORM ！ 나한테 맡겨！
+	DATAFORM ！ 지지 않을 테다！
+	;DATAFORM ！ 화려하게 끝내 주겠어！
 	ENDDATA
-;グループ4 大人しい系　대범함、게으름
+;그룹4 얌전함계(大人しい系)　대범함, 게으름
 ELSEIF LOCAL:0 == 14 || LOCAL:0 == 15
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
 	DATAFORM …♪
-	DATAFORM ……用意はいいかしら？
-	DATAFORM ……さて、行きますよ
+	DATAFORM …… 준비는 됐겠지？
+	DATAFORM …… 준비는 됐겠죠？
+	DATAFORM …… 그럼, 간다.
+	DATAFORM …… 그럼, 갑니다.
+	DATAFORM …… 봐 주지 않을 거야.
+	DATAFORM …… 봐 주지 않는다고요？
+	DATAFORM …… 후딱 해치우자.
+	DATAFORM …… 얼른 해치워 버리죠.
+	DATAFORM …… 작전 개시.
 	ENDDATA
-;グループ5 物静か系　얀데레、과묵함、감정결여
-ELSEIF LOCAL:0 == 21 || LOCAL:0 == 22 || LOCAL:0 == 28
+;그룹5 차분함계(物静か系)　과묵함, 감정결여
+;본래 그룹5에는 얀데레 성격이 있었으나, 텐션 떨어지는 멘트는 안 어울릴 듯 하므로 그룹1로 옮겼다
+ELSEIF LOCAL:0 == 22 || LOCAL:0 == 28
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
-	DATAFORM 
-	DATAFORM 
-	DATAFORM 
-	DATAFORM 。行く……ッ
-	DATAFORM 。……殲滅開始
+	DATAFORM .
+	DATAFORM . ……맡겨 줘.
+	DATAFORM . ……갑니다.
+	DATAFORM . ……빨리 끝내자.
+	DATAFORM , 목표를 확인…… 전투 개시.
+	DATAFORM , 간다아ー앗……
+	DATAFORM . ……즉각 섬멸.
+	DATAFORM . ……방해돼.
 	ENDDATA
-;グループ6 고풍적
+;그룹6 고풍적
 ELSEIF LOCAL:0 == 24
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
-	DATAFORM 
-	DATAFORM 
-	DATAFORM 。さて、始めようぞ
-	DATAFORM 。始動じゃ、覚悟せい
+	DATAFORM .
+	DATAFORM . 격의 차이를 보여주겠노라！
+	DATAFORM . 그럼, 가보자꾸나！
+	DATAFORM . 시작하지, 각오하게나！
+	DATAFORM . 봐주지 않겠다…… 와라！
+	DATAFORM . 이 몸이 나설 차례로다！
+	DATAFORM . 이 몸만 믿거라！
 	ENDDATA
-;グループ1 強気系　오기、진지함、츤데레、고집쟁이、사나움　未設定(ランダム)時もここから引く
+;그룹1 강기계(強気系)　오기, 진지함, 츤데레, 고집쟁이, 사나움, 얀데레　미설정(랜덤) 시에도 여기에서 뽑는다
 ELSE
 	STRDATA LOCALS
-	DATAFORM 、参上
-	DATAFORM 、見参
-	DATAFORM 、推参
-	DATAFORM 、準備完了
+	DATAFORM , 도착
+	DATAFORM , 등장
+	DATAFORM , 참전
+	DATAFORM , 준비 완료
 	ENDDATA
 	STRDATA LOCALS:1
 	DATAFORM ！
-	DATAFORM ！
-	DATAFORM ！
-	DATAFORM …さあ、行くわよ！
-	DATAFORM …負けないわよ！
-	DATAFORM …覚悟しなさい！
+	DATAFORM ！ 자, 간다！
+	DATAFORM ！ 자, 갑니다！
+	DATAFORM ！ 여기까지다！
+	DATAFORM ！ 여기까지입니다！
+	DATAFORM … 덤벼보시지！
+	DATAFORM … 덤벼보시죠！
+	DATAFORM … 지지 않을 거야！
+	DATAFORM … 지지 않을 겁니다！
+	DATAFORM … 각오해라！
+	DATAFORM … 각오하시죠！
+	DATAFORM … 봐주지 않겠어！
+	DATAFORM … 봐 드리지 않습니다！
+	DATAFORM … 용서치 않겠어！
+	DATAFORM … 용서치 않겠습니다！
 	ENDDATA
 ENDIF
 LOCALS'=LOCALS+LOCALS:1

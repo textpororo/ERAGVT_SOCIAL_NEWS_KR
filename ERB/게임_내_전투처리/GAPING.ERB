@@ -311,7 +311,7 @@ ELSEIF ARG == 10
 	LOCAL = 265
 ELSEIF ARG == 11
 	LOCAL = 335
-;計算の都合上、ランクの1段階外側も設定
+;計算の都合上、ランクの1段階外側も설정
 ELSEIF ARG == -1
 	LOCAL = -5
 ELSEIF ARG == 12
@@ -797,7 +797,7 @@ SIF CON == -1
 
 ;拡張度컨피그フラグチェック
 IF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:TAR:34>0
-	;拡張度初期値設定
+	;拡張度初期値설정
 	IF CFLAG:TAR:35 == 0
 		CFLAG:TAR:35 = LIMIT((BASE:TAR:나이 - 10), 0, 15) / 3 - (TALENT:TAR:미성숙 > 0) * 3 + (TALENT:TAR:V민감 > 0) * 3 - (TALENT:TAR:V둔감 > 0) * 3 + 20
 		CALL V_GAPING, EXP:TAR:V확장경험 * 10, TAR
@@ -1280,7 +1280,7 @@ IF TENTACLE_POOL > 0
 	NEXT
 ENDIF
 
-;計算に使う実際の촉수サイズを設定
+;計算に使う実際の촉수サイズを설정
 CALL SET_TENTACLE_SIZE_R
 
 RETURN 1
@@ -1308,7 +1308,7 @@ ENDIF
 ;	TENTACLE_NUM:1:COUNT = TENTACLE_NUM:0:COUNT
 ;REND
 
-;計算に使う実際の촉수サイズを設定
+;計算に使う実際の촉수サイズを설정
 CALL SET_TENTACLE_SIZE_R
 
 ;各部位に使用される촉수サイズの表示
@@ -1337,7 +1337,7 @@ RETURN ARG:2, ARG:3
 
 
 ;--------------------------------------------------
-;計算に使う実際の촉수サイズを設定
+;計算に使う実際の촉수サイズを설정
 @SET_TENTACLE_SIZE_R
 REPEAT 감각수
 	IF TENTACLE_NUM:0:COUNT > 2
