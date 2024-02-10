@@ -1,12 +1,12 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの種族の설정
+;캐릭터의 종족 설정
 @FIRSTSETTING_CHARA_SYUZOKU, ARG
 #DIM RACE
 #DIM FEAT_NUM
 #DIM FEAT_SELECT, 300
 RACE = -1
-;種族の開始番号
+;종족의 개시 번호
 LOCAL:1 = 201
 ;FEAT 개시 번호
 LOCAL:2 = 1000
@@ -21,18 +21,18 @@ FOR LOCAL, 100, 300
 		FEAT_SELECT:LOCAL = 1
 NEXT
 CALL LB
-PRINTFORML ※種族ごとに取得可能なフィートが설정されており、
-PRINTFORML 　合計で３つまで選択することができます。
-PRINTFORML 　フィート以外の基本性能は同等で種族間の優劣は存在しません。
+PRINTL ※종족별로 취득 가능한 FEAT가 설정되어 있어,
+PRINTL 　총 3개까지 선택할 수가 있습니다.
+PRINTL 　FEAT 이외의 기본 성능은 동등하여 종족 간의 우열은 존재하지 않습니다.
 PRINTL 
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の種族を설정してください
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 종족을 설정해 주십시오.
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 FOR LOCAL, 0, LOCAL:3
 	SIF TALENT:ARG:(LOCAL + LOCAL:1) > 0
 		SETCOLOR 128,128,255
 	SIF LOCAL < 10
 		PRINT  
-	PRINTFORML [{LOCAL}]%TALENTNAME:(LOCAL + LOCAL:1)%
+	PRINTFORML [{LOCAL}] %TALENTNAME:(LOCAL + LOCAL:1)%
 	RESETCOLOR
 NEXT
 $INPUT_LOOP
@@ -47,7 +47,7 @@ ELSE
 	NEXT
 	CALL LB
 	$MASTER_LOOP_1
-	;뱀파이어ならば밤악마의귀족を必ず取得
+	;뱀파이어라면 밤악마의귀족을 반드시 취득
 	SIF RACE == 9
 		FEAT_SELECT:110 = 1
 	;FEAT의 수를 카운트
@@ -60,7 +60,7 @@ ELSE
 	CALL SHORTLINE
 	CALL SYUZOKU_INFO, (RACE + LOCAL:1)
 	PRINTL 
-	PRINTL (取得可能フィート)          選択
+	PRINTL  (취득 가능 FEAT)             선택
 	FOR LOCAL, 100, 300
 		SIF FEAT_ABLE_F(RACE + LOCAL:1, LOCAL + LOCAL:2) == 0
 			CONTINUE
@@ -69,12 +69,13 @@ ELSE
 		ELSE
 			PRINT 　☆
 		ENDIF
-		PRINTFORM %TALENTNAME:(LOCAL + LOCAL:2),22,LEFT%  [{LOCAL}]  
+		;글꼴을 굴림체로 바뀌어서 그런지 문자가 흐트러져서 글자수에 따라 공란을 줄이도록 수정
+		PRINTFORM %TALENTNAME:(LOCAL + LOCAL:2),24-STRLENSU(TALENTNAME:(LOCAL + LOCAL:2)),LEFT%  [{LOCAL}]  
 		IF LOCAL == 110 && FEAT_SELECT:LOCAL > 0
 			SETCOLOR 255,0,0
 			PRINT ◎
 			RESETCOLOR
-			PRINTPLAIN  固定取得
+			PRINTPLAIN  고정 취득
 		ELSEIF FEAT_SELECT:LOCAL > 0
 			SETCOLOR 255,128,0
 			PRINT ○
