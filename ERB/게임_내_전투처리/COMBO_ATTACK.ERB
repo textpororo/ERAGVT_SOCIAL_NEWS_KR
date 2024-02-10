@@ -7,10 +7,10 @@
 ;空中공격の計算
 @GET_AIR_STRIKE(ARG)
 #FUNCTION
-;回避率上昇
+;회피율上昇
 IF ARG == 1
 	LOCAL = MAX(50 - CFLAG:99 / 5 * 5, 25)
-	;FEATによる空中性能強化
+	;FEATによる공중 성능 강화
 	SIF TALENT:에어마스터 > 0
 		LOCAL += 25
 ;공중전특기による直撃率ボーナス
@@ -129,13 +129,13 @@ IF GETBIT(TCVARn:216, 1)
 	CALL CLOTH_BATTLE_HOSEI, "AIRPLUS", TARGET
 	LOCAL = MIN(TALENT:공중전특기 > 0, 1) * GET_AIR_STRIKE(2) + RESULT * 25 - MIN(TALENT:공중전서툼 > 0, 1) * GET_AIR_STRIKE(3)
 	IF LOCAL > 0
-		LOCALS:2 = 直撃率＋{LOCAL}％　回避率＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 直撃率＋{LOCAL}％　회피율＋{GET_AIR_STRIKE(1)}％
 	ELSEIF LOCAL < 0
 		;負の値を反転して表示
 		LOCAL *= -1
-		LOCALS:2 = 直撃率−{LOCAL}％　回避率＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 直撃率−{LOCAL}％　회피율＋{GET_AIR_STRIKE(1)}％
 	ELSE
-		LOCALS:2 = 回避率＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 회피율＋{GET_AIR_STRIKE(1)}％
 	ENDIF
 	IF TALENT:공중전특기 > 0
 		LOCALS:2 += @"（공중전특기）"
@@ -196,7 +196,7 @@ IF TFLAG:30 > 1 && FLAG:73 == 0
 	;拘束された場合、または移動するか距離を取るとリセットされる
 	LOCALS:0 = 　＋BRAVE HIT
 	LOCALS:1 = 同一距離連続実行({TFLAG:30 - 1})
-	LOCALS:2 = 直撃率＋{GET_BRAVE_HIT(TFLAG:30 - 1,"命中") - 3}％　回避率−{GET_BRAVE_HIT(TFLAG:30 - 1,"回避")}％
+	LOCALS:2 = 直撃率＋{GET_BRAVE_HIT(TFLAG:30 - 1,"命中") - 3}％　회피율−{GET_BRAVE_HIT(TFLAG:30 - 1,"回避")}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%

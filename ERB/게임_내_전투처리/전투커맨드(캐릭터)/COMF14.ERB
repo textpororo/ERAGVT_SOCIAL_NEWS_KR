@@ -10,7 +10,7 @@ SIF RESULT == 1
 CALL PRINT_DISTANCE
 PRINTL 
 
-;油断度 상승
+;방심도 상승
 TFLAG:3 += 5
 
 ;방어フラグ：Ｖ방어にする
@@ -18,7 +18,7 @@ TCVARn:2 = 자세：Ｖ방어
 
 ;지문: V삽입방어
 CALL MESSAGE_BATTLE_CHARA_ANTI_V
-;지문: 세뇌/흑화 캐릭터가 操作キャラのV삽입방어を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V삽입방어を見た
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_ANTI_V
 

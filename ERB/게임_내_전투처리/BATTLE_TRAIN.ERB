@@ -28,7 +28,7 @@ ENDIF
 FOR LCOUNT, 0, TCRLENGTH
 	TCREPORT:LCOUNT = 0
 NEXT
-;避妊効果中に受けた사정量をリセット
+;피임 효과中に受けた사정量をリセット
 TFLAG:6 = 0
 ;行動予約플래그를折る
 TFLAG:16 = -1
@@ -65,7 +65,7 @@ BASE:사정 = 0
 BASE:모유 = 0
 
 ;공중대시回数をリセット
-;衣装による空中性能強化
+;衣装による공중 성능 강화
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF RESULT > 0
 	MAXBASE:공중대시 += 1

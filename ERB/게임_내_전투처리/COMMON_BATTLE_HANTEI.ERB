@@ -31,7 +31,7 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の油断度による補正
+;敵の방심도による補正
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
@@ -59,7 +59,7 @@ IF ARGS == "HURIHODOKU"
 	ELSE
 		LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 	ENDIF
-	;衣装による補正
+	;의상에 따른 보정
 	CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 	LOCAL:2 = LOCAL:2 * RESULT / 100
 	CALL CLOTH_BATTLE_HOSEI, "CHISEI"
@@ -103,7 +103,7 @@ ELSE
 	;변신능력のあるキャラの補正
 	LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 
-	;衣装による補正
+	;의상에 따른 보정
 	CALL CLOTH_BATTLE_HOSEI, "BINSYOU"
 	LOCAL:2 = LOCAL:2 * RESULT / 100
 
@@ -351,7 +351,7 @@ SIF TFLAG:32 > 0 && ARGS != "HURIHODOKU"
 ;공중전특기による直撃ボーナス
 SIF GETBIT(TCVARn:216, 1) && TALENT:공중전특기 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_AIR_STRIKE(2)
-;空中性能強化による直撃ボーナス
+;공중 성능 강화による直撃ボーナス
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF GETBIT(TCVARn:216, 1) && RESULT > 0 && ARGS != "HURIHODOKU"
 	LOCAL:5 += 25
@@ -428,7 +428,7 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の油断度による補正
+;敵の방심도による補正
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
@@ -577,7 +577,7 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の油断度による補正
+;敵の방심도による補正
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
@@ -610,7 +610,7 @@ SIF TALENT:장신 == 1
 LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 LOCAL:6 = CORRECTION_TRANS(LOCAL:6)
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "BINSYOU"
 LOCAL:2 = LOCAL:2 * RESULT / 100
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
@@ -693,7 +693,7 @@ LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 ;衣装による回避補正
 CALL CLOTH_BATTLE_HOSEI, "AVOID"
 LOCAL:5 += RESULT
-;가속 장치による回避率上昇#####
+;가속 장치による회피율上昇#####
 SIF CFLAG:TARGET:43 == 502
 	LOCAL:5 += 5
 ;[重撃]スタイルの回避ペナルティ
@@ -736,7 +736,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 
@@ -751,7 +751,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 85
 				LOCAL:5 = 85
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
@@ -766,7 +766,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 90
 				LOCAL:5 = 90
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 		ENDIF
@@ -783,7 +783,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 		;중거리
@@ -796,7 +796,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
@@ -811,7 +811,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 		ENDIF
@@ -828,7 +828,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 85
 				LOCAL:5 = 85
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
@@ -843,7 +843,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 
@@ -858,7 +858,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 50
 
@@ -876,7 +876,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 
@@ -890,7 +890,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
@@ -905,7 +905,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 
@@ -923,7 +923,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 55
 
@@ -938,7 +938,7 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 60
 
@@ -953,23 +953,23 @@ SELECTCASE ARGS
 			SIF LOCAL:5 > 65
 				LOCAL:5 = 65
 
-			;EX防による回避率上昇効果
+			;EX防による회피율上昇効果
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 65
 
 		ENDIF
 ENDSELECT
 
-;対空공격に対して空中に居ると回避率ダウン
+;対空공격に対して空中に居ると회피율ダウン
 SIF GETBIT(TCVARn:216, 1) && (TFLAG:11 & 8) && RAND:100 < 25
 	LOCAL:5 = 0
 
-;着地中は回避率ゼロ（距離による空振りは発生する）
+;着地中は회피율ゼロ（距離による空振りは発生する）
 ;FEATによる着地ペナルティの回避
 SIF GETBIT(TCVARn:216, 2) && TALENT:소형체구 == 0
 	LOCAL:5 = 0
 
-;バースト공격による回避率修正
+;バースト공격による회피율修正
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "広範"
@@ -1045,7 +1045,7 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 140
 ENDIF
-;敵の油断度による補正
+;敵の방심도による補正
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16)) / 100
 
@@ -1071,7 +1071,7 @@ IF ISFEMALE()
 	ENDIF
 ENDIF
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "BINSYOU"
 LOCAL:2 = LOCAL:2 * RESULT / 100
 
@@ -1189,7 +1189,7 @@ SIF GETBIT(TCVARn:3, 1)
 ;변신능력のあるキャラの補正
 LOCAL:6 = CORRECTION_TRANS(LOCAL:6)
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:6 = LOCAL:6 * RESULT / 100
 
@@ -1242,7 +1242,7 @@ SELECTCASE ARGS
 			TIMES LOCAL:0, 1.16
 
 	CASE "ATTACK_RANGE_MIDDLE"
-		;距離による공격力補正（中） 2.25倍の補正が入る
+		;距離による공격力補正（중） 2.25倍の補正が入る
 		CALL SHINKYOU_CHECK, "KOUGEKI", LOCAL:5
 		LOCAL:0 = RESULT
 		TIMES LOCAL:0, 2.25

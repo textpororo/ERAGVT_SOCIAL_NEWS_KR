@@ -52,7 +52,7 @@ IF ARG:2 > 0
 	LOCAL:12 += CFLAG:ARG:55
 	LOCAL:13 += CFLAG:ARG:56
 ENDIF
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "KOUGEKI", ARG
 LOCAL:10 = LOCAL:10 * RESULT / 100
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO", ARG
@@ -132,8 +132,8 @@ SELECTCASE FSTYLE_NAME_F(ARG,ARG:1)
 		RESULTS:2 = BURST性能 ：クリティカルしやすくなる。공격後に관찰한다効果
 	CASE "設置"
 		RESULTS:0 = 威力影響度：공격*0.50 + 지성*0.30
-		RESULTS:1 = 追加効果　：直撃、カス当たり時に相手の油断度を増加
-		RESULTS:2 = BURST性能 ：油断度上昇効果２倍
+		RESULTS:1 = 追加効果　：直撃、カス当たり時に相手の방심도を増加
+		RESULTS:2 = BURST性能 ：방심도上昇効果２倍
 	CASE "使役"
 		RESULTS:0 = 威力影響度：공격*0.25 + 지성*0.20
 		RESULTS:1 = 追加効果　：공격が２回ヒットする

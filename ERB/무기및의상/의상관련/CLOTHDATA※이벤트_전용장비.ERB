@@ -22,18 +22,18 @@
 ;
 ;命中のみ上昇		@CLOTH_HOSEI_HIT_***
 ;回避のみ上昇		@CLOTH_HOSEI_AVOID_***
-;クリティカル補正	@CLOTH_HOSEI_CRITICAL_***
-;粘液ダメージ軽減	@CLOTH_HOSEI_LIQUID_***
-;邪気ダメージ軽減	@CLOTH_HOSEI_WAVE_***
+;치명타 보정	@CLOTH_HOSEI_CRITICAL_***
+;점액 피해량 경감	@CLOTH_HOSEI_LIQUID_***
+;사기(邪気) 피해량 경감	@CLOTH_HOSEI_WAVE_***
 ;羞恥軽減		@CLOTH_HOSEI_SHYNESS_***
-;Ｂ自動増加耐性		@CLOTH_HOSEI_ANTIBUP_***
-;Ｃ自動増加耐性		@CLOTH_HOSEI_ANTICUP_***
+;Ｂ자동 증가 내성		@CLOTH_HOSEI_ANTIBUP_***
+;Ｃ자동 증가 내성		@CLOTH_HOSEI_ANTICUP_***
 ;回復効果強化		@CLOTH_HOSEI_HEALUP_***
-;EX 게이지増幅		@CLOTH_HOSEI_EXBOOST_***
-;空中性能強化		@CLOTH_HOSEI_AIRPLUS_***
+;EX 게이지 증폭		@CLOTH_HOSEI_EXBOOST_***
+;공중 성능 강화		@CLOTH_HOSEI_AIRPLUS_***
 ;
-;耐久力			@CLOTH_HOSEI_HP_***
-;下着保護力		@CLOTH_HOSEI_DEF_***
+;내구력			@CLOTH_HOSEI_HP_***
+;속옷 보호力		@CLOTH_HOSEI_DEF_***
 ;속옷겸용		@CLOTH_HOSEI_NOINNER_***
 ;改造スロット		@CLOTH_HOSEI_SLOT_***	（-1で改造不可）
 
@@ -44,9 +44,9 @@
 ;	・効果欄には以下のキーワードと레벨の組み合わせを記述可能です。
 ;		軽	…軽装레벨　※1
 ;		重	…重装레벨　※1
-;		護	…下着保護＋　※2
-;		晒	…下着保護－　※2
-;		油	…油断度上昇　※3
+;		護	…속옷 보호＋　※2
+;		晒	…속옷 보호－　※2
+;		油	…방심도上昇　※3
 ;			※1： 1～6　両者は相殺される。両者のうち一方のみ記述する
 ;			※2：-6～6　両者は相殺される。両者のうち一方のみ記述する。主に下半身パーツ用？
 ;			※3：-6～6　原則として속옷用
@@ -143,7 +143,7 @@ PRINTL イベント専用装備のカスタマイズは呼ばれるべきでは�
 #DIM ID
 PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
 
-;露出度合い
+;노출 정도
 LOCAL = 0
 ;SIF CUSTOM:1 == 1
 ;	LOCAL -= 1
@@ -156,10 +156,10 @@ SIF LOCAL < 0
 ;重装
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
-;;下着保護ダウン
+;;속옷 보호ダウン
 ;SIF CUSTOM:3 == 2
 ;	EQUIP:ARG:ID += 2 * POWER(10, 11)
-;;下着保護アップ
+;;속옷 보호アップ
 ;SIF CUSTOM:3 == 1
 ;	EQUIP:ARG:ID += 2 * POWER(10, 12)
 

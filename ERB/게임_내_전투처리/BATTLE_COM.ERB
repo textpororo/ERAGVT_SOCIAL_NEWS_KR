@@ -584,7 +584,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			ELSE
 				;지문: 撤退失敗
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 세뇌/흑화 캐릭터가 操作キャラの撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 撤退を防いだ
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -602,7 +602,7 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 			ELSE
 				;지문: 撤退失敗
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 세뇌/흑화 캐릭터가 操作キャラの撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 撤退を防いだ
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -904,7 +904,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:20 < 100
 		PRINTL 敵の能力基礎値が判明した！
 	IF FLAG:20 < 100 && FLAG:20 + LOCAL >= 100
 		PRINTL 敵の行動補正値が判明した！
-		PRINTL 敵の油断度が判明した！
+		PRINTL 敵の방심도が判明した！
 		PRINTL 敵の解析が完了した！
 	ENDIF
 	FLAG:20 += LOCAL

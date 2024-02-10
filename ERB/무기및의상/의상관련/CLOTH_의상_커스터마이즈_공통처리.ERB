@@ -142,7 +142,7 @@ IF MODE=="HP"
 ELSEIF MODE=="HIT"
 	res *=-1
 	res += 1 * (FIGURE_SPLIT(EQUIP:LOCAL,10) - FIGURE_SPLIT(EQUIP:LOCAL,11))
-;下着保護・挿入抵抗
+;속옷 보호・삽입 저항
 ELSEIF MODE=="DEF"
 	res -= 5 * (FIGURE_SPLIT(EQUIP:LOCAL,13) - FIGURE_SPLIT(EQUIP:LOCAL,12))
 
@@ -271,8 +271,8 @@ PRINTL  [99] 돌아간다
 ;	「軽1」…耐久-5 命中+1	軽6まで可
 ;	「重1」…耐久+5 命中-1	重6まで可
 ;
-;	「護1」…下着保護+5	護6まで可
-;	「晒1」…下着保護-5	晒6まで可
+;	「護1」…속옷 보호+5	護6まで可
+;	「晒1」…속옷 보호-5	晒6まで可
 ;
 @CLOTH_CUSTOMIZE_OPTION_PRINT(now,ARGS:0,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9,ARGS:10)
 #dim maxnum,1
@@ -339,30 +339,30 @@ FOR LOCAL,0,11
 	replace 効果テキスト,"重6","耐久+30 命中-6 "
 	効果テキスト'=results
 
-	replace 効果テキスト,"護1","下着保護+5"
+	replace 効果テキスト,"護1","속옷 보호+5"
 	効果テキスト'=results
-	replace 効果テキスト,"護2","下着保護+10"
+	replace 効果テキスト,"護2","속옷 보호+10"
 	効果テキスト'=results
-	replace 効果テキスト,"護3","下着保護+15"
+	replace 効果テキスト,"護3","속옷 보호+15"
 	効果テキスト'=results
-	replace 効果テキスト,"護4","下着保護+20"
+	replace 効果テキスト,"護4","속옷 보호+20"
 	効果テキスト'=results
-	replace 効果テキスト,"護5","下着保護+25"
+	replace 効果テキスト,"護5","속옷 보호+25"
 	効果テキスト'=results
-	replace 効果テキスト,"護6","下着保護+30"
+	replace 効果テキスト,"護6","속옷 보호+30"
 	効果テキスト'=results
 
-	replace 効果テキスト,"晒1","下着保護-5"
+	replace 効果テキスト,"晒1","속옷 보호-5"
 	効果テキスト'=results
-	replace 効果テキスト,"晒2","下着保護-10"
+	replace 効果テキスト,"晒2","속옷 보호-10"
 	効果テキスト'=results
-	replace 効果テキスト,"晒3","下着保護-15"
+	replace 効果テキスト,"晒3","속옷 보호-15"
 	効果テキスト'=results
-	replace 効果テキスト,"晒4","下着保護-20"
+	replace 効果テキスト,"晒4","속옷 보호-20"
 	効果テキスト'=results
-	replace 効果テキスト,"晒5","下着保護-25"
+	replace 効果テキスト,"晒5","속옷 보호-25"
 	効果テキスト'=results
-	replace 効果テキスト,"晒6","下着保護-30"
+	replace 効果テキスト,"晒6","속옷 보호-30"
 	効果テキスト'=results
 
 
@@ -385,7 +385,7 @@ RETURN
 
 
 ;↑の속옷版
-;	「油1」…油断度　-6～6まで可
+;	「油1」…방심도　-6～6まで可
 @INNER_CUSTOMIZE_OPTION_PRINT(now,ARGS:0,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9,ARGS:10)
 #dim maxnum,1
 #dim now,1
@@ -447,55 +447,55 @@ FOR LOCAL,0,10
 	replace 効果テキスト,"重6","耐久+30 "
 	効果テキスト'=results
 
-	replace 効果テキスト,"油1","油断度+1 "
+	replace 効果テキスト,"油1","방심도+1 "
 	効果テキスト'=results
-	replace 効果テキスト,"油2","油断度+2 "
+	replace 効果テキスト,"油2","방심도+2 "
 	効果テキスト'=results
-	replace 効果テキスト,"油3","油断度+3 "
+	replace 効果テキスト,"油3","방심도+3 "
 	効果テキスト'=results
-	replace 効果テキスト,"油4","油断度+4 "
+	replace 効果テキスト,"油4","방심도+4 "
 	効果テキスト'=results
-	replace 効果テキスト,"油5","油断度+5 "
+	replace 効果テキスト,"油5","방심도+5 "
 	効果テキスト'=results
-	replace 効果テキスト,"油6","油断度+6 "
+	replace 効果テキスト,"油6","방심도+6 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-1","油断度-1 "
+	replace 効果テキスト,"油-1","방심도-1 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-2","油断度-2 "
+	replace 効果テキスト,"油-2","방심도-2 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-3","油断度-3 "
+	replace 効果テキスト,"油-3","방심도-3 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-4","油断度-4 "
+	replace 効果テキスト,"油-4","방심도-4 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-5","油断度-5 "
+	replace 効果テキスト,"油-5","방심도-5 "
 	効果テキスト'=results
-	replace 効果テキスト,"油-6","油断度-6 "
-	効果テキスト'=results
-
-	replace 効果テキスト,"護1","挿入抵抗+5"
-	効果テキスト'=results
-	replace 効果テキスト,"護2","挿入抵抗+10"
-	効果テキスト'=results
-	replace 効果テキスト,"護3","挿入抵抗+15"
-	効果テキスト'=results
-	replace 効果テキスト,"護4","挿入抵抗+20"
-	効果テキスト'=results
-	replace 効果テキスト,"護5","挿入抵抗+25"
-	効果テキスト'=results
-	replace 効果テキスト,"護6","挿入抵抗+30"
+	replace 効果テキスト,"油-6","방심도-6 "
 	効果テキスト'=results
 
-	replace 効果テキスト,"晒1","挿入抵抗-5"
+	replace 効果テキスト,"護1","삽입 저항+5"
 	効果テキスト'=results
-	replace 効果テキスト,"晒2","挿入抵抗-10"
+	replace 効果テキスト,"護2","삽입 저항+10"
 	効果テキスト'=results
-	replace 効果テキスト,"晒3","挿入抵抗-15"
+	replace 効果テキスト,"護3","삽입 저항+15"
 	効果テキスト'=results
-	replace 効果テキスト,"晒4","挿入抵抗-20"
+	replace 効果テキスト,"護4","삽입 저항+20"
 	効果テキスト'=results
-	replace 効果テキスト,"晒5","挿入抵抗-25"
+	replace 効果テキスト,"護5","삽입 저항+25"
 	効果テキスト'=results
-	replace 効果テキスト,"晒6","挿入抵抗-30"
+	replace 効果テキスト,"護6","삽입 저항+30"
+	効果テキスト'=results
+
+	replace 効果テキスト,"晒1","삽입 저항-5"
+	効果テキスト'=results
+	replace 効果テキスト,"晒2","삽입 저항-10"
+	効果テキスト'=results
+	replace 効果テキスト,"晒3","삽입 저항-15"
+	効果テキスト'=results
+	replace 効果テキスト,"晒4","삽입 저항-20"
+	効果テキスト'=results
+	replace 効果テキスト,"晒5","삽입 저항-25"
+	効果テキスト'=results
+	replace 効果テキスト,"晒6","삽입 저항-30"
 	効果テキスト'=results
 
 

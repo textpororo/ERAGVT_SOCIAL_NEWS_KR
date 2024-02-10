@@ -5,7 +5,7 @@ VARSET LOCAL
 
 ;戦闘中플래그를折る
 FLAG:700 = 0
-;避妊効果中に受けた사정量をリセット
+;피임 효과中に受けた사정量をリセット
 TFLAG:6 = 0
 
 ;戦闘終了後の刻印取得
@@ -442,7 +442,7 @@ ENDIF
 ;전투 지원効果で回復
 IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
 	LOCAL:1 = FLAG:43 * 8
-	;衣装による補正
+	;의상에 따른 보정
 	LOCAL = TARGET
 	FOR LOCAL:2,0,CHARANUM
 		SIF LOCAL:2 == MASTER || CFLAG:(LOCAL:2):999 == 0

@@ -247,12 +247,12 @@ ELSEIF RAND:5 == 0 || (RAND:2 == 0 && FLAG:852 <= 2500) || (RAND:3 == 0 && FLAG:
 ELSE
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%何度も精液を浴びながら、男の淫気が抜けきるまで処理をし続けた…
 	IF ISFEMALE()
-		;下着兼用겉옷の場合
+		;속옷겸용 겉옷일 경우
 		CALL CLOTH_NO_INNER, TARGET
 		IF 部位渡し == 3 && RESULT > 0
 			PRINTFORML 공포と本能に突き動かされ、男は%PRINT_TRANSCALLNAME(TARGET)%의 性器へ
 			PRINTFORML 肉棒をグリグリと%COSTUME_NAME(TARGET)%越しに押し付ける
-			;소프트 바디슈트(避妊効果)
+			;소프트 바디슈트(피임 효과)
 			IF CFLAG:41 == 299
 				PRINTFORML 精液がべっとりと張り付いたスーツの下腹部を見ながら、
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%임신はしないはずだと頭の中で繰り返して
@@ -304,7 +304,7 @@ ELSE
 			S_질내精液 += (2 + RAND:3)
 		ENDIF
 	ELSEIF TALENT:보추 > 0
-		;下着兼用겉옷の場合
+		;속옷겸용겉옷の場合
 		CALL CLOTH_NO_INNER, TARGET
 		IF 部位渡し == 3 && RESULT > 0
 			PRINTFORML 공포と本能に突き動かされ、男は%PRINT_TRANSCALLNAME(TARGET)%의 股間へ
@@ -314,7 +314,7 @@ ELSE
 			PRINTFORML 女の子にはないはずの膨らみに当たっているにも関わらず、
 			PRINTFORML それでもまだ%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%女の子だと思っているようだ
 			PRINTL 
-			;소프트 바디슈트(避妊効果)
+			;소프트 바디슈트(피임 효과)
 			IF CFLAG:41 == 299
 				PRINTFORML 精液がべっとりと張り付いたスーツの下腹部を見ながら、
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%直接触れてはいないからと頭の中で繰り返して

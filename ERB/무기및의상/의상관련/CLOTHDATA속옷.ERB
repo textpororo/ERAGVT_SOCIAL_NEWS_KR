@@ -11,18 +11,18 @@
 ;
 ;命中のみ上昇		@CLOTH_HOSEI_HIT_***
 ;回避のみ上昇		@CLOTH_HOSEI_AVOID_***
-;クリティカル補正	@CLOTH_HOSEI_CRITICAL_***
-;粘液ダメージ軽減	@CLOTH_HOSEI_LIQUID_***
-;邪気ダメージ軽減	@CLOTH_HOSEI_WAVE_***
+;치명타 보정	@CLOTH_HOSEI_CRITICAL_***
+;점액 피해량 경감	@CLOTH_HOSEI_LIQUID_***
+;사기(邪気) 피해량 경감	@CLOTH_HOSEI_WAVE_***
 ;羞恥軽減		@CLOTH_HOSEI_SHYNESS_***
-;Ｂ自動増加耐性		@CLOTH_HOSEI_ANTIBUP_***
-;Ｃ自動増加耐性		@CLOTH_HOSEI_ANTICUP_***
+;Ｂ자동 증가 내성		@CLOTH_HOSEI_ANTIBUP_***
+;Ｃ자동 증가 내성		@CLOTH_HOSEI_ANTICUP_***
 ;回復効果強化		@CLOTH_HOSEI_HEALUP_***
-;EX 게이지増幅		@CLOTH_HOSEI_EXBOOST_***
-;空中性能強化		@CLOTH_HOSEI_AIRPLUS_***
+;EX 게이지 증폭		@CLOTH_HOSEI_EXBOOST_***
+;공중 성능 강화		@CLOTH_HOSEI_AIRPLUS_***
 ;
-;耐久力			@CLOTH_HP_***
-;下着保護力		@CLOTH_DEF_***
+;내구력			@CLOTH_HP_***
+;속옷 보호力		@CLOTH_DEF_***
 ;속옷겸용		@CLOTH_NO_INNER_***
 ;改造スロット		@CLOTH_CUSTOMIZE_***
 
@@ -55,7 +55,7 @@ PRINTL 【耐久度】−
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_301
 PRINTL  パステル系の明るい色使いが可愛らしい下着。
-PRINTL 【 補正 】촉수の油断度の상승량1.1倍
+PRINTL 【 補正 】촉수의 방심도 상승량 1.1倍
 PRINTL 【耐久度】80
 @CLOTH_STATUS_301
 	SAVESTR:0'="HP80,YUDAN110,SEITAISEI95,"
@@ -201,11 +201,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 1
 	EQUIP:ARG:ID += 2 * POWER(10, 14)
 SIF CUSTOM:1 == 2
@@ -237,7 +237,7 @@ SIF CUSTOM:3 == 7
 SIF CUSTOM:4 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:3 == 4
@@ -247,7 +247,7 @@ SIF CUSTOM:3 == 6
 SIF CUSTOM:3 == 7
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 
@@ -259,7 +259,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_302
 PRINTL  シックな印象の大人びた下着。
-PRINTL 【 補正 】戦闘中の성내성の減少量0.9倍
+PRINTL 【 補正 】전투 중 성내성 감소량 0.9倍
 PRINTL 【耐久度】80
 @CLOTH_STATUS_302
 	SAVESTR:0'="HP80,SEITAISEI85,"
@@ -405,11 +405,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 1
 	EQUIP:ARG:ID += 2 * POWER(10, 14)
 SIF CUSTOM:1 == 2
@@ -441,7 +441,7 @@ SIF CUSTOM:3 == 7
 SIF CUSTOM:4 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:3 == 4
@@ -451,7 +451,7 @@ SIF CUSTOM:3 == 6
 SIF CUSTOM:3 == 7
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 
@@ -462,7 +462,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_303
 PRINTL  魅惑の魔力を秘めた一品。
-PRINTL 【 補正 】촉수の油断度の상승량1.1倍
+PRINTL 【 補正 】촉수의 방심도 상승량 1.1倍
 PRINTL 【耐久度】100
 @CLOTH_STATUS_303
 	SAVESTR:0'="HP100,YUDAN110,SEITAISEI95,"
@@ -628,11 +628,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:2 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 SIF CUSTOM:3 == 3
@@ -646,7 +646,7 @@ SIF CUSTOM:3 == 7
 SIF CUSTOM:4 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:3 == 4
@@ -656,7 +656,7 @@ SIF CUSTOM:3 == 6
 SIF CUSTOM:3 == 7
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 
@@ -667,7 +667,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_304
 PRINTL  スケスケ？紐パン？ご想像にお任せします。
-PRINTL 【 補正 】촉수の油断度の상승량1.2倍
+PRINTL 【 補正 】촉수의 방심도 상승량 1.2倍
 PRINTL 【耐久度】60
 @CLOTH_STATUS_304
 	SAVESTR:0'="HP60,YUDAN120,SEITAISEI95,"
@@ -816,11 +816,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 1
 	EQUIP:ARG:ID += 2 * POWER(10, 14)
 SIF CUSTOM:1 == 2
@@ -854,7 +854,7 @@ SIF CUSTOM:3 == 7
 SIF CUSTOM:4 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:3 == 4
@@ -864,7 +864,7 @@ SIF CUSTOM:3 == 6
 SIF CUSTOM:3 == 7
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 
@@ -875,7 +875,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_305
 PRINTL  パンツじゃないから。乙女の不思議。
-PRINTL 【 補正 】粘液ダメージ軽減（大）、露出軽減（小）
+PRINTL 【 補正 】점액 피해량 경감（대）、노출 경감（소）
 PRINTL 【耐久度】70
 @CLOTH_STATUS_305
 	SAVESTR:0'="HP70,LIQUID70,SHYNESS80,SEITAISEI95,"
@@ -1052,11 +1052,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:4 == 4
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 SIF CUSTOM:1 == 2
@@ -1090,7 +1090,7 @@ SIF CUSTOM:5 == 1
 SIF CUSTOM:5 == 2
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:4 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:4 == 5
@@ -1104,7 +1104,7 @@ SIF CUSTOM:4 == 8
 SIF CUSTOM:4 == 9
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:4 == 4
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 SIF CUSTOM:6 == 1
@@ -1117,7 +1117,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_306
 PRINTL  撥水性に優れ、実用的。色んな意味で。
-PRINTL 【 補正 】粘液ダメージ軽減（小）、露出軽減（大）
+PRINTL 【 補正 】점액 피해량 경감（소）、노출 경감（대）
 PRINTL 【耐久度】90
 @CLOTH_STATUS_306
 	SAVESTR:0'="HP90,LIQUID90,SHYNESS20,SEITAISEI95,"
@@ -1200,7 +1200,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_307
 PRINTL  가슴の揺れを抑えてクーパー靭帯を保護する、全ての戦う女性の味方。
-PRINTL 【 補正 】쾌B自動増加防止、クリティカル補正 +2%
+PRINTL 【 補正 】쾌B 자동 증가 방지、치명타 보정 +2%
 PRINTL 【耐久度】80
 @CLOTH_STATUS_307
 	SAVESTR:0'="SLOT-1,HP80,ANTIBUP20,CRITICAL2,SEITAISEI95,"
@@ -1211,7 +1211,7 @@ PRINTL 【耐久度】80
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_308
 PRINTL  活発なアナタの為の機能運動着。見られても恥ずかしくない！
-PRINTL 【 補正 】쾌C自動増加防止　露出軽減（中）
+PRINTL 【 補正 】쾌C 자동 증가 방지　노출 경감（중）
 PRINTL 【耐久度】120
 @CLOTH_STATUS_308
 	SAVESTR:0'="SLOT-1,HP120,ANTICUP10,SHYNESS60,SEITAISEI95,"
@@ -1222,7 +1222,7 @@ PRINTL 【耐久度】120
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_309
 PRINTL  黒猫をイメージしたキュートでクールな下着。
-PRINTL 【 補正 】クリティカル補正 +4%
+PRINTL 【 補正 】치명타 보정 +4%
 PRINTL 【耐久度】80
 @CLOTH_STATUS_309
 	SAVESTR:0'="HP80,CRITICAL4,SEITAISEI95,"
@@ -1293,7 +1293,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_310
 PRINTL  大人っぽさと可愛らしさを兼ね備えた勝負下着。ちょっと背伸びしたい貴女に。
-PRINTL 【 補正 】촉수の油断度の상승량1.1倍　戦闘中の성내성の減少量0.9倍
+PRINTL 【 補正 】촉수의 방심도 상승량 1.1倍　전투 중 성내성 감소량 0.9倍
 PRINTL 【耐久度】70
 @CLOTH_STATUS_310
 	SAVESTR:0'="HP70,YUDAN110,SEITAISEI85,"
@@ -1440,11 +1440,11 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 >= 1 && CUSTOM:1 <= 6
 	EQUIP:ARG:ID += 2 * POWER(10, 14)
 SIF CUSTOM:1 >= 7 && CUSTOM:1 <= 9
@@ -1462,7 +1462,7 @@ SIF CUSTOM:3 == 7
 SIF CUSTOM:4 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:3 == 4
@@ -1472,7 +1472,7 @@ SIF CUSTOM:3 == 6
 SIF CUSTOM:3 == 7
 	EQUIP:ARG:ID += 4 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 
@@ -1483,7 +1483,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_311
 PRINTL  가슴から腰まで覆うレディの下着。優雅で品のある高級ブランドの逸品。
-PRINTL 【 補正 】戦闘中の성내성の減少量0.9倍
+PRINTL 【 補正 】전투 중 성내성 감소량 0.9倍
 PRINTL 【耐久度】110
 @CLOTH_STATUS_311
 	SAVESTR:0'="SLOT-1,HP110,SEITAISEI85,"
@@ -1494,7 +1494,7 @@ PRINTL 【耐久度】110
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_312
 PRINTL  ジュニア向けの動きやすい下着。成長期を優しく見守ります。
-PRINTL 【 補正 】촉수の油断度の상승량1.05倍
+PRINTL 【 補正 】촉수의 방심도 상승량 1.05倍
 PRINTL 【耐久度】90
 @CLOTH_STATUS_312
 	SAVESTR:0'="HP90,YUDAN105,SEITAISEI95,"
@@ -1660,13 +1660,13 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:3 == 6
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 SIF CUSTOM:4 == 5
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 SIF CUSTOM:1 == 2
@@ -1700,13 +1700,13 @@ SIF CUSTOM:4 == 4
 SIF CUSTOM:5 == 1
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:4 == 3
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 SIF CUSTOM:4 == 4
 	EQUIP:ARG:ID += 2 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:4 == 2
 	EQUIP:ARG:ID += 1 * POWER(10, 12)
 SIF CUSTOM:4 == 5
@@ -1723,7 +1723,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_313
 PRINTL  スポーツ向けに動きやすさを最優先した下着。
-PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の상승량0.9倍　
+PRINTL 【 補正 】쾌C 자동 증가 방지　촉수의 방심도 상승량 0.9倍　
 PRINTL 【耐久度】120
 @CLOTH_STATUS_313
 	SAVESTR:0'="HP120,YUDAN90,ANTICUP10,SEITAISEI95,"
@@ -1853,7 +1853,7 @@ SIF LOCAL < 0
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
 
-;油断度ダウン
+;방심도ダウン
 SIF CUSTOM:2 == 1
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 SIF CUSTOM:3 == 3
@@ -1861,7 +1861,7 @@ SIF CUSTOM:3 == 3
 SIF CUSTOM:3 == 4
 	EQUIP:ARG:ID += 2 * POWER(10, 13)
 
-;油断度アップ
+;방심도アップ
 SIF CUSTOM:1 == 2
 	EQUIP:ARG:ID += 2 * POWER(10, 14)
 SIF CUSTOM:1 == 3
@@ -1875,11 +1875,11 @@ SIF CUSTOM:1 == 6
 SIF CUSTOM:3 == 2
 	EQUIP:ARG:ID += 1 * POWER(10, 14)
 
-;挿入抵抗ダウン
+;삽입 저항ダウン
 SIF CUSTOM:3 == 2
 	EQUIP:ARG:ID += 1 * POWER(10, 11)
 
-;挿入抵抗アップ
+;삽입 저항アップ
 SIF CUSTOM:3 == 3
 	EQUIP:ARG:ID += 2 * POWER(10, 12)
 SIF CUSTOM:3 == 4
@@ -1892,7 +1892,7 @@ RETURN -1
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_314
 PRINTL  男性用の下着。
-PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の상승량0.25倍　
+PRINTL 【 補正 】쾌C 자동 증가 방지　촉수의 방심도 상승량 0.25倍　
 PRINTL 【耐久度】120
 @CLOTH_STATUS_314
 	SAVESTR:0'="HP120,YUDAN25,ANTICUP10,SEITAISEI95,"
@@ -2006,7 +2006,7 @@ RETURN LOCAL
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_398
 PRINTL  性器に貼り付け、露出を抑えるためのもの。剥がされるスリルを楽しんでみる？
-PRINTL 【 補正 】쾌C自動増加防止　촉수の油断度の상승량1.5倍　Ｖ挿入完全抵抗
+PRINTL 【 補正 】쾌C 자동 증가 방지　촉수의 방심도 상승량 1.5倍　Ｖ挿入完全抵抗
 PRINTL 【耐久度】40
 @CLOTH_STATUS_398
 	SAVESTR:0'="SLOT-1,HP40,ANTICUP10,YUDAN150,SEITAISEI95,"

@@ -5,7 +5,7 @@
 CALL PRINT_DISTANCE
 PRINTL 
 
-;油断度 상승
+;방심도 상승
 TFLAG:3 += 80 + 20 * ABL:기교
 
 ;방어フラグ：쥐어짠다にする
@@ -13,7 +13,7 @@ TCVARn:2 = 자세：쥐어짠다
 
 ;지문: 쥐어짠다
 CALL MESSAGE_BATTLE_CHARA_SEX_ATTACK104
-;지문: 세뇌/흑화 캐릭터가 操作キャラの쥐어짠다を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 쥐어짠다を見た
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK104
 

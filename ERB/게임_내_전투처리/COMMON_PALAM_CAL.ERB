@@ -337,7 +337,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 		ARG:12 += 600
 		;지문；キャラが대량사정した
 		CALL MESSAGE_SEX_CHARA_SYASEI_HI
-		;지문: 세뇌/흑화 캐릭터가 操作キャラの대량사정を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 대량사정を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_SYASEI_HI
 		;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
@@ -359,7 +359,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 			ARG:12 += 300
 			;지문: キャラが사정した
 			CALL MESSAGE_SEX_CHARA_SYASEI
-			;지문: 세뇌/흑화 캐릭터가 操作キャラの사정を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 사정を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_SYASEI
 			;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
@@ -395,7 +395,7 @@ IF TALENT:모유체질 == 1
 		ARG:9 += 2000
 		;지문；キャラが大量모유した
 		CALL MESSAGE_SEX_CHARA_HUNNYU_HI
-		;지문: 세뇌/흑화 캐릭터가 操作キャラの大量모유を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 大量모유を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU_HI
 		IF CFLAG:201 == 0
@@ -414,7 +414,7 @@ IF TALENT:모유체질 == 1
 			ARG:9 += 1000
 			;지문: キャラが모유した
 			CALL MESSAGE_SEX_CHARA_HUNNYU
-			;지문: 세뇌/흑화 캐릭터가 操作キャラの모유を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 모유を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU
 			IF CFLAG:201 == 0
@@ -628,7 +628,7 @@ JUEL:쾌A += 1000 * NOWEX:A절정 * LOCAL
 EXP:절정경험 += NOWEX:B절정 * LOCAL
 JUEL:쾌B += 1000 * NOWEX:B절정 * LOCAL
 
-;絶頂回数に応じて油断度を上昇
+;絶頂回数に応じて방심도を上昇
 TFLAG:3 += 50 * LOCAL
 
 ;経験の加算
@@ -652,56 +652,56 @@ IF NOWEX:C절정 > 0
 	IF NOWEX:V절정 > 0 && NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: 四重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVAB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラの四重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 四重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVAB
 	ELSEIF NOWEX:V절정 > 0 && NOWEX:A절정 > 0
 		;지문: CVA三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVA
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCVA三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVA三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVA
 	ELSEIF NOWEX:V절정 > 0 && NOWEX:B절정 > 0
 		;지문: CVB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CVB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCVB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVB
 	ELSEIF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: CAB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CAB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CAB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CAB
 	ELSEIF NOWEX:V절정 > 0
 		;지문: CV二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CV
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCV二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CV二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CV
 	ELSEIF NOWEX:A절정 > 0
 		;지문: CA二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CA
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CA二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CA
 	ELSEIF NOWEX:B절정 > 0
 		;지문: CB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_CB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのCB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CB
 	ELSE
 		IF NOWEX:C절정 == 1
 			;지문: C絶頂
 			CALL MESSAGE_SEX_ECSTASY_C
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのC絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C
 		ELSEIF NOWEX:C절정 > 1
 			;지문: C強絶頂
 			CALL MESSAGE_SEX_ECSTASY_C_HI, NOWEX:C절정
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのC強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
 		ENDIF
@@ -710,32 +710,32 @@ ELSEIF NOWEX:V절정 > 0
 	IF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
 		;지문: VAB三重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VAB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのVAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VAB三重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VAB
 	ELSEIF NOWEX:A절정 > 0
 		;지문: VA二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VA
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのVA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VA二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VA
 	ELSEIF NOWEX:B절정 > 0
 		;지문: VB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_VB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのVB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VB
 	ELSE
 		IF NOWEX:V절정 == 1
 			;지문: V絶頂
 			CALL MESSAGE_SEX_ECSTASY_V
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのV絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V
 		ELSEIF NOWEX:V절정 > 1
 			;지문: V強絶頂
 			CALL MESSAGE_SEX_ECSTASY_V_HI, NOWEX:V절정
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのV強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
 		ENDIF
@@ -744,20 +744,20 @@ ELSEIF NOWEX:A절정 > 0
 	IF NOWEX:B절정 > 0
 		;지문: AB二重絶頂
 		CALL MESSAGE_SEX_MULTIECSTASY_AB
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのAB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 AB二重絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_AB
 	ELSE
 		IF NOWEX:A절정 == 1
 			;지문: A絶頂
 			CALL MESSAGE_SEX_ECSTASY_A
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのA絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A
 		ELSEIF NOWEX:A절정 > 1
 			;지문: A強絶頂
 			CALL MESSAGE_SEX_ECSTASY_A_HI, NOWEX:A절정
-			;지문: 세뇌/흑화 캐릭터가 操作キャラのA強絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A強絶頂を見た
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
 		ENDIF
@@ -766,13 +766,13 @@ ELSEIF NOWEX:B절정 > 0
 	IF NOWEX:B절정 == 1
 		;지문: B絶頂
 		CALL MESSAGE_SEX_ECSTASY_B
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのB絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B
 	ELSEIF NOWEX:B절정 > 1
 		;지문: B強絶頂
 		CALL MESSAGE_SEX_ECSTASY_B_HI, NOWEX:B절정
-		;지문: 세뇌/흑화 캐릭터가 操作キャラのB強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B強絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B_HI
 	ENDIF
@@ -1210,7 +1210,7 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 	LOCAL:1 = RESULT
 	SIF LOCAL:1 > 60
 		LOCAL:1 = 60
-	;油断度関係のFEAT効果
+	;방심도関係のFEAT効果
 	SIF TALENT:평범 > 0
 		LOCAL += 25
 	SIF TALENT:공세구축 > 0
@@ -1221,10 +1221,10 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 		;拘束中の場合、油断は毎ターン６％だけ増加する
 		IF TCVARn:0 == 0
 			FLAG:17 += FLAG:16 * 6 * LOCAL / 10000
-		;油断している場合、油断度が毎ターン１２％だけ減少する
+		;油断している場合、방심도が毎ターン１２％だけ減少する
 		ELSEIF TFLAG:2 > 0
 			FLAG:17 -= FLAG:16 * 12 / 100
-		;それ以外の場合、油断度が毎ターン１％だけ減少する
+		;それ以外の場合、방심도が毎ターン１％だけ減少する
 		ELSE
 			FLAG:17 -= FLAG:16 * 1 / 100
 		ENDIF
@@ -1234,7 +1234,7 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 		;デバッグ用
 		IF FLAG:999
 			SETCOLOR 105,105,105
-			PRINTFORM 油断度　補正＝{LOCAL}％ 油断度＝{FLAG:17}/{FLAG:16}
+			PRINTFORM 방심도　補正＝{LOCAL}％ 방심도＝{FLAG:17}/{FLAG:16}
 			SIF TCVARn:0 == 0
 				PRINTFORM  ＋ ターン経過{FLAG:16 * 12 * LOCAL / 10000}
 			SIF TFLAG:3
@@ -1244,7 +1244,7 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 			RESETCOLOR
 		ENDIF
 
-		;油断度상승량をリセット
+		;방심도상승량をリセット
 		TFLAG:3 = 0
 
 		;２ターン目までなら確実に油断が持続
@@ -1615,7 +1615,7 @@ ELSE
 		LOCAL += 50
 	ENDIF
 ENDIF
-;戦闘中なら衣装による補正がある
+;戦闘中なら의상에 따른 보정がある
 IF FLAG:700
 	;衣装
 	CALL CLOTH_BATTLE_HOSEI, "SHYNESS"
@@ -1906,7 +1906,7 @@ ELSEIF RESULT > 0
 	TIMES LOCAL,0.75
 ENDIF
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 LOCAL = LOCAL * RESULT / 100
 ;敵の레벨による補正
@@ -1992,7 +1992,7 @@ ELSEIF RESULT > 0
 	TIMES LOCAL,0.90
 ENDIF
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
 LOCAL = LOCAL * RESULT / 100
 ;敵の레벨による補正
@@ -2096,7 +2096,7 @@ ENDIF
 SIF TFLAG:20 == 15
 	TIMES LOCAL,0.35
 
-;衣装による補正
+;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "SEITAISEI"
 LOCAL = LOCAL * RESULT / 100
 ;방어による補正

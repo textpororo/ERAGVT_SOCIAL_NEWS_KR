@@ -9,7 +9,7 @@
 @CLOTH_DESCRIPTION_196
 ;----------------------------------------------------------
 PRINTL  霧のように薄く透明な花嫁衣裳、表面は촉수のような模様で覆われている……。
-PRINTL 【 補正 】공격5倍　촉수油断度상승량2倍　粘液ダメージ増加（極大）　속옷겸용
+PRINTL 【 補正 】공격5倍　촉수방심도상승량2倍　粘液ダメージ増加（極大）　속옷겸용
 PRINTL 【変身時】공격8倍　민첩30％
 PRINTL 【耐久度】35
 @CLOTH_STATUS_196
@@ -178,7 +178,7 @@ ELSE
 ENDIF
 CALL CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,CUSTOM)
 
-;露出度合い
+;노출 정도
 LOCAL = 0
 SIF CUSTOM:2 == 1
 	LOCAL += 1
@@ -204,7 +204,7 @@ SIF LOCAL < 0
 ;重装
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
-;下着保護アップ
+;속옷 보호アップ
 SIF CUSTOM:4 == 4
 	EQUIP:ARG:ID += 1 * POWER(10, 12)
 RETURN -1
@@ -225,7 +225,7 @@ PRINTL 【耐久度】90
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_198
 PRINTL  入浴時に使われるごく普通のタオルを身体に巻いただけ。当然ながら방어力は皆無。
-PRINTL 【 補正 】촉수の油断度上昇2.5倍　露出度が高い（大）
+PRINTL 【 補正 】촉수の방심도上昇2.5倍　노출도 높음（대）
 PRINTL 【耐久度】45
 @CLOTH_STATUS_198
 	SAVESTR:0'="SLOT-1,HP45,DEF70,YUDAN250,SHYNESS150,"

@@ -48,7 +48,7 @@ IF TCVARn:0 > 0
 					;지문: 세뇌/흑화 캐릭터가 공격を回避された
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_GRAZE
-					;衣装へのダメージ
+					;의상에의 피해
 					CALL CLOTH_BATTLE_DAMAGE, 8
 				ELSE
 					;지문: 敵キャラの공격を回避
@@ -100,7 +100,7 @@ IF TCVARn:0 > 0
 				CALL DAMAGE, "CHARA"
 				LOCAL:2 = RESULT * LOCAL:1 / 10
 				
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
@@ -154,7 +154,7 @@ IF TCVARn:0 > 0
 					LOCAL:2 = BASE:체력
 				BASE:체력 -= LOCAL:2
 				
-				;衣装へのダメージ
+				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 8 * (LOCAL:1 + LOCAL:10 / 2000) / 10
 
 				;被弾時の応援
@@ -229,7 +229,7 @@ IF TCVARn:0 > 0
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
 				
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
@@ -248,7 +248,7 @@ IF TCVARn:0 > 0
 					LOCAL:2 = 50
 				ENDIF
 				
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
@@ -266,7 +266,7 @@ IF TCVARn:0 > 0
 				RESETCOLOR
 				FONTREGULAR
 
-				;衣装へのダメージ
+				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 8
 				
 				;エネミー独自の追加効果
@@ -364,7 +364,7 @@ IF TCVARn:0 > 0
 					TIMES LOCAL:3, 0.80
 				ENDIF
 
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
@@ -413,7 +413,7 @@ IF TCVARn:0 > 0
 				IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 					BASE:TARGET:기초기력 -= LOCAL:3 / 2
 				ENDIF
-				;衣装へのダメージ
+				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 15
 
 				;エネミー独自の追加効果
@@ -470,7 +470,7 @@ IF TCVARn:0 > 0
 			ENDIF
 			PRINTFORML の체력が{LOCAL:3}回復した
 			
-			;油断度が最大値の25%回復する
+			;방심도が最大値の25%回復する
 			LOCAL:4 = FLAG:16
 			TIMES LOCAL:4, 0.25
 			FLAG:17 = LIMIT(FLAG:17 - LOCAL:4, 0 , FLAG:17)
@@ -552,7 +552,7 @@ IF TCVARn:0 > 0
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
 				
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
@@ -571,7 +571,7 @@ IF TCVARn:0 > 0
 					LOCAL:2 = 50
 				ENDIF
 				
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
@@ -589,7 +589,7 @@ IF TCVARn:0 > 0
 				RESETCOLOR
 				FONTREGULAR
 
-				;衣装へのダメージ
+				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 4
 				
 				;エネミー独自の追加効果
@@ -690,7 +690,7 @@ IF TCVARn:0 > 0
 					TIMES LOCAL:3, 0.80
 				ENDIF
 
-				;衣装による補正
+				;의상에 따른 보정
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
@@ -734,7 +734,7 @@ IF TCVARn:0 > 0
 					LOCAL:3 = BASE:기력
 				BASE:기력 -= LOCAL:3
 				
-				;衣装へのダメージ
+				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 6
 
 
