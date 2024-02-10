@@ -420,8 +420,8 @@ ELSEIF RESULT == 100 && CHARANUM <= 등록최대인원 - 1 && !GAME_OPTION_CHECK
 			CALL LB
 			CALL DOT_AFTER, 1
 			PRINTL 
-			PRINTFORML 『%CALLNAME%』을(를) {TARGET}번째 멤버로 영입했습니다.
-			PRINTFORML 『%CALLNAME%』은(는) 대기 멤버로 추가됩니다.
+			PRINTFORML 『%CALLNAME%』%조사만처리(CALLNAME,"를")% {TARGET}번째 멤버로 영입했습니다.
+			PRINTFORML 『%CALLNAME%』%조사만처리(CALLNAME,"는")% 대기 멤버로 추가됩니다.
 			;캐릭터 메이킹 완료 처리(개별)
 			CALL CHARA_MAKE_FINALIZE(TARGET)
 
@@ -830,7 +830,7 @@ ELSE
 			PRINTFORML 「%CALLNAME:RESULT%씨의 낙태 수술은 무사히 성공하였습니다.」
 			PRINTL 「수술을 하여 몸에 피로가 쌓이셨을 터이니, 어느 정도 휴식을 취할 것을 권합니다.」
 			IF CFLAG:RESULT:0 == 10
-				PRINTFORML %CALLNAME:RESULT%이(가) 전선에 복귀하였습니다.
+				PRINTFORML %조사처리(CALLNAME:RESULT,"가")% 전선에 복귀하였습니다.
 				CALL RECOVER_TO_PARTY,RESULT
 			ENDIF
 			;피로가 축적된다
@@ -981,7 +981,7 @@ ELSE
 			GOTO INPUT_LOOP_CHARA_LIST
 		ELSEIF CFLAG:RESULT:32 < 500000000000000000
 			PRINTFORML 「현재 상태로는 부작용이 너무 강해져, 독기 중화제를 투여할 수 없습니다.」
-			PRINTFORML 「얼마 이후에 증상이 심해지면 그 때에 다시 방문해주세요.」
+			PRINTFORML 「얼마 후에 증상이 심해지면 그 때에 다시 방문해주세요.」
 		ELSE
 			MONEY -= 1250
 			TIMES CFLAG:RESULT:30, 0.10

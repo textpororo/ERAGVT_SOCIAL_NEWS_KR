@@ -1,6 +1,6 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの성격の설정
+;캐릭터의 성격 설정
 @FIRSTSETTING_CHARA_SEIKAKU, ARG
 #DIM LCOUNT
 #DIM HAVE_TALENT
@@ -10,7 +10,7 @@ CALL LB
 LCOUNT = LINECOUNT
 $INPUT_LOOP
 VARSET LOCAL
-;성격 보정をリセット
+;성격 보정을 초기화
 FOR LOCAL:3, 0, 7
 	LOCAL:1 = LOCAL:3
 	SIF LOCAL:3 > 2
@@ -19,7 +19,7 @@ FOR LOCAL:3, 0, 7
 	BASE:ARG:(LOCAL:1) = RESULT
 	MAXBASE:ARG:(LOCAL:1) = BASE:ARG:(LOCAL:1)
 NEXT
-;성격ランダムの場合
+;성격 랜덤의 경우
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", ARG
 IF RESULT == 0
 	LOCAL = SEIKAKU_START + RAND:(SEIKAKU_NUM)
@@ -30,19 +30,23 @@ IF RESULT == 0
 		NEXT
 	ENDIF
 ENDIF
-;精神素質をリセット
+;정신 소질을 초기화
 HAVE_TALENT = 0
 FOR LOCAL, 600, 700
 	SIF TALENT:ARG:LOCAL > 0
 		HAVE_TALENT ++
 NEXT
-PRINTFORML {ARG:0}人目のキャラ 『%NAME:ARG%』 の성격を설정してください
+SIF FLAG:999
+	PRINTL 본 함수는 한자를 한글로 바꿈에 따라, 글자간의 간격에 조정이 필요한 FIRSTSETTING_CHARA_SEIKAKU.ERB 입니다.
+PRINTFORML {ARG:0}번째 캐릭터『%NAME:ARG%』의 성격을 선택해 주십시오.
+PRINTFORML ※순=공순, 공=공포(맨 오른쪽 공)
 DRAWLINE
-PRINTL 　　　　　　　　　　　　　　　体　気　性　　攻　防　敏　知　　恭　欲　屈　恥　苦　恐　구상
+;PRINTL 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　  (사용x)
+PRINTL 　　　　　　　　　　　　　　　체　기　성　　공　방　민　지　　순　욕　굴　치　고　공　구상
 FOR LOCAL, 0, SEIKAKU_NUM
 	SIF TALENT:ARG:(LOCAL + SEIKAKU_START) > 0
 		SETCOLOR 0,255,180
-	PRINTFORM 　　[{LOCAL, 2}]%TALENTNAME:(LOCAL + SEIKAKU_START),20,LEFT%
+	PRINTFORM 　　[{LOCAL, 2}] %TALENTNAME:(LOCAL + SEIKAKU_START),20,LEFT%
 	RESETCOLOR
 	PRINTPLAIN 　
 	CALL SHOW_SEIKAKUHOSEI, LOCAL + SEIKAKU_START
@@ -57,14 +61,14 @@ FOR LOCAL, 0, SEIKAKU_NUM
 	RESETCOLOR
 	PRINTL 
 NEXT
-PRINTL 　　[98]구상があれば何でもいい（ランダムに選択）
-PRINTL 　　[99]何でもいい（ランダムに選択）
+PRINTL 　　[98] 구상이 있으면 뭐든 좋아（랜덤으로 선택）
+PRINTL 　　[99] 뭐든지 좋아（완전 랜덤으로 선택）
 DRAWLINE
-PRINTFORML  精神素質({HAVE_TALENT}/4)　※素質名にマウスオーバーすると説明が表示されます
+PRINTFORML  정신 소질({HAVE_TALENT}/4)　※소질명에 마우스를 올려 놓으면 설명이 표시됩니다
 VARSET LOCALS
 SIF TALENT:ARG:감정결여 > 0
 	LOCALS += "<font color='#808080'>"
-LOCALS += "　　社交性　　　　　"
+LOCALS += "　　사교성　　　　　"
 IF TALENT:ARG:내성적 > 0
 	LOCALS += @"<button value='100' title='%TALENT_INFO(600)%'>[100]　　내성적　　　　</button>"
 ELSEIF TALENT:ARG:사교적 > 0
@@ -72,9 +76,9 @@ ELSEIF TALENT:ARG:사교적 > 0
 ELSE
 	LOCALS += @"<button value='100'>[100]　　─　　　　　　</button>"
 ENDIF
-LOCALS += "　　協調性　　　　　"
+LOCALS += "　　협조성　　　　　"
 IF TALENT:ARG:제멋대로굼 > 0
-	LOCALS += @"<button value='101' title='%TALENT_INFO(602)%'>[101]　　제멋대로굼　　　</button>"
+	LOCALS += @"<button value='101' title='%TALENT_INFO(602)%'>[101]　　제멋대로굼　　</button>"
 ELSEIF TALENT:ARG:헌신적 > 0
 	LOCALS += @"<button value='101' title='%TALENT_INFO(603)%'>[101]　　헌신적　　　　</button>"
 ELSE
@@ -87,15 +91,15 @@ HTML_PRINT LOCALS
 VARSET LOCALS
 SIF TALENT:ARG:감정결여 > 0
 	LOCALS += "<font color='#808080'>"
-LOCALS += "　　自尊心　　　　　"
+LOCALS += "　　자존심　　　　　"
 IF TALENT:ARG:소심함 > 0
 	LOCALS += @"<button value='102' title='%TALENT_INFO(604)%'>[102]　　소심함　　　　</button>"
 ELSEIF TALENT:ARG:자존심높음 > 0
-	LOCALS += @"<button value='102' title='%TALENT_INFO(605)%'>[102]　　자존심높음　</button>"
+	LOCALS += @"<button value='102' title='%TALENT_INFO(605)%'>[102]　　자존심높음　　</button>"
 ELSE
 	LOCALS += @"<button value='102'>[102]　　─　　　　　　</button>"
 ENDIF
-LOCALS += "　　性への関心　　　"
+LOCALS += "　　성에 대한 관심　"
 IF TALENT:ARG:보수적 > 0
 	LOCALS += @"<button value='103' title='%TALENT_INFO(606)%'>[103]　　보수적　　　　</button>"
 ELSEIF TALENT:ARG:호기심 > 0
@@ -118,7 +122,7 @@ ELSEIF TALENT:ARG:마조기질 > 0
 ELSE
 	LOCALS += @"<button value='104'>[104]　　─　　　　　　</button>"
 ENDIF
-LOCALS += "　　快楽応答　　　　"
+LOCALS += "　　쾌락 응답　　　 "
 IF TALENT:ARG:쾌감에솔직 > 0
 	LOCALS += @"<button value='105' title='%TALENT_INFO(610)%'>[105]　　쾌감에솔직　　</button>"
 ELSEIF TALENT:ARG:쾌감을부정 > 0
@@ -133,17 +137,17 @@ HTML_PRINT LOCALS
 VARSET LOCALS
 SIF TALENT:ARG:감정결여 > 0
 	LOCALS += "<font color='#808080'>"
-LOCALS += "　　闘争心　　　　　"
+LOCALS += "　　투쟁심　　　　　"
 IF TALENT:ARG:전투거부 > 0
-	LOCALS += @"<button value='106' title='%TALENT_INFO(612)%'>[106]　　전투거부</button>"
+	LOCALS += @"<button value='106' title='%TALENT_INFO(612)%'>[106]　　전투거부　　　</button>"
 ELSEIF TALENT:ARG:싸움꾼 > 0
-	LOCALS += @"<button value='106' title='%TALENT_INFO(613)%'>[106]　　싸움꾼　　　</button>"
+	LOCALS += @"<button value='106' title='%TALENT_INFO(613)%'>[106]　　싸움꾼　　　　</button>"
 ELSE
 	LOCALS += @"<button value='106'>[106]　　─　　　　　　</button>"
 ENDIF
-LOCALS += "　　羞恥心　　　　　"
+LOCALS += "　　수치심　　　　　"
 IF TALENT:ARG:수줍음 > 0
-	LOCALS += @"<button value='107' title='%TALENT_INFO(614)%'>[107]　　수줍음　　　</button>"
+	LOCALS += @"<button value='107' title='%TALENT_INFO(614)%'>[107]　　수줍음　　　　</button>"
 ELSEIF TALENT:ARG:배짱 > 0
 	LOCALS += @"<button value='107' title='%TALENT_INFO(615)%'>[107]　　배짱　　　　　</button>"
 ELSEIF TALENT:ARG:결벽증 > 0
@@ -158,7 +162,8 @@ HTML_PRINT LOCALS
 VARSET LOCALS
 SIF TALENT:ARG:감정결여 > 0
 	LOCALS += "<font color='#808080'>"
-LOCALS += "　　性の対象　　　　"
+;원문은 性の対象 성의 대상, ~~성애자 할 때 그 성애다
+LOCALS += "　　성애 대상　　　 "
 IF TALENT:ARG:인간불신 > 0
 	LOCALS += @"<button value='108' title='%TALENT_INFO(616)%'>[108]　　인간불신　　　</button>"
 ELSEIF TALENT:ARG:양도 > 0
@@ -170,17 +175,17 @@ ELSEIF TALENT:ARG:여성기피 > 0
 ELSE
 	LOCALS += @"<button value='108'>[108]　　─　　　　　　</button>"
 ENDIF
-LOCALS += "　　魅力　　　　　　"
+LOCALS += "　　매력　　　　　　"
 IF TALENT:ARG:모성적 > 0
 	LOCALS += @"<button value='109' title='%TALENT_INFO(620)%'>[109]　　모성적　　　　</button>"
 ELSEIF TALENT:ARG:소악마 > 0
 	LOCALS += @"<button value='109' title='%TALENT_INFO(621)%'>[109]　　소악마　　　　</button>"
 ELSEIF TALENT:ARG:눈에띄고싶어함 > 0
-	LOCALS += @"<button value='109' title='%TALENT_INFO(622)%'>[109]　　눈에띄고싶어함　</button>"
+	LOCALS += @"<button value='109' title='%TALENT_INFO(622)%'>[109]　　눈에띄고싶어함</button>"
 ELSEIF TALENT:ARG:고상함 > 0
-	LOCALS += @"<button value='109' title='%TALENT_INFO(623)%'>[109]　　고상함　　　　　</button>"
+	LOCALS += @"<button value='109' title='%TALENT_INFO(623)%'>[109]　　고상함　　　　</button>"
 ELSEIF TALENT:ARG:울보 > 0
-	LOCALS += @"<button value='109' title='%TALENT_INFO(624)%'>[109]　　울보　　　　</button>"
+	LOCALS += @"<button value='109' title='%TALENT_INFO(624)%'>[109]　　울보　　　　　</button>"
 ELSE
 	LOCALS += @"<button value='109'>[109]　　─　　　　　　</button>"
 ENDIF
@@ -193,8 +198,8 @@ SIF HAVE_TALENT > 4
 	SETCOLOR 105,105,105
 PRINTL [200] 결정
 RESETCOLOR
-PRINTL [300]精神素質をリセット
-PRINTL [999]精神素質をランダムで설정
+PRINTL [300] 정신 소질을 초기화한다
+PRINTL [999] 랜덤으로 정신 소질을 설정한다
 INPUT
 SIF RESULT != 200
 	CLEARLINE LINECOUNT - LCOUNT
@@ -207,7 +212,7 @@ ELSEIF RESULT == 98
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 99
 	FOR LOCAL, 0, SEIKAKU_NUM
-		;성격の初期化
+		;성격 초기화
 		TALENT:ARG:(LOCAL + SEIKAKU_START) = 0
 	NEXT
 	LOCAL = RAND:(SEIKAKU_NUM) + 10
@@ -231,7 +236,7 @@ ElSEIF RESULT == 999
 	GOTO INPUT_LOOP
 ELSEIF RESULT >= 0 && RESULT <= SEIKAKU_NUM - 1
 	FOR LOCAL, 0, SEIKAKU_NUM
-		;성격の初期化
+		;성격 초기화
 		TALENT:ARG:(LOCAL + SEIKAKU_START) = 0
 	NEXT
 	LOCAL = RESULT + SEIKAKU_START
@@ -416,7 +421,7 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 PRINTL 
-;체력などのBASE値の計算
+;체력 등의 BASE값 계산
 CALL SEIKAKU_CHECK,"GET_TALENT_VALUE",ARG
 LOCAL = RESULT
 LOCAL:1 = 0
@@ -432,9 +437,12 @@ FOR LOCAL:3, 0, 7
 NEXT
 
 ;성격에 따른 일인칭 설정
+;남자는 おれ, ぼく를 주로 사용할 테므로 제외
 IF CSTR:ARG:4 == ""
+	;고풍적이라면 "이 몸(わらわ)"
 	IF TALENT:ARG:고풍적 && ISFEMALE(ARG)
 		CFLAG:ARG:8 = 20
+	;경박함이라면 "나 (あたし)"
 	ELSEIF TALENT:ARG:경박함 && ISFEMALE(ARG)
 		CFLAG:ARG:8 = 11
 	ENDIF
@@ -446,14 +454,14 @@ CALL BASEUP_CAL_SHIELD, ARG
 @SHOW_KOJO_EXIST(ARG:0, ARG:1)
 TRYCCALLFORM KOJO_{ARG:1}_COLOR_{ARG:0}
 	RESETCOLOR
-	PRINTPLAIN 有
+	PRINTPLAIN 유
 CATCH
 	SETCOLOR 105,105,105
-	PRINTPLAIN 無
+	PRINTPLAIN 무
 	RESETCOLOR
 ENDCATCH
 
-;구상がある성격だけを選ぶ
+;구상이 있는 성격만 고른다
 @RAND_CHOOSE_KOJO_SEIKAKU(ARG,SEIKAKU_START,SEIKAKU_NUM)
 #DIM CO
 #DIM SEIKAKU_START

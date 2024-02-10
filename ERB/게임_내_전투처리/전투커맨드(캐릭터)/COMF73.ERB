@@ -25,7 +25,7 @@ ENDIF
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", TARGET
 
 ;SP変身구상から続けて心境구상は不自然なので、지문を呼び出さずにここで直書きする
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 
+PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 
 ;「怒り」になる성격：게으름, 고풍적, 사나움
 IF RESULT == 15 || RESULT == 24 || RESULT == 27

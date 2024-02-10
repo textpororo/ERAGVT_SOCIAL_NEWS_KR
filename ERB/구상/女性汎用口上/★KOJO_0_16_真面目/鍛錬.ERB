@@ -68,15 +68,15 @@ IF ABL:자위중독 >= 5
 			DATAFORM 「あ、熱い、%SELF_CALL()%の身体、どうなって……っ！？」
 		ENDDATA
 		PRINTDATAL
-			DATAFORM 瞑想を放り出し、%CALLNAME%은(는) 一人自慰にふけっている。
-			DATAFORM 修練の事も忘れ、%CALLNAME%은(는) 自慰に夢中になっている。
-			DATAFORM 身体の疼きを抑えられず、%CALLNAME%은(는) 自らの手で慰め始めた。
-			DATAFORM 身体の火照りを抑えられず、%CALLNAME%은(는) 猿のようにオナニーを始めてしまう……
-			DATAFORM 火照る身体を持て余し、%CALLNAME%은(는) そっと自慰を始めた。
+			DATAFORM 瞑想を放り出し、%타겟은% 一人自慰にふけっている。
+			DATAFORM 修練の事も忘れ、%타겟은% 自慰に夢中になっている。
+			DATAFORM 身体の疼きを抑えられず、%타겟은% 自らの手で慰め始めた。
+			DATAFORM 身体の火照りを抑えられず、%타겟은% 猿のようにオナニーを始めてしまう……
+			DATAFORM 火照る身体を持て余し、%타겟은% そっと自慰を始めた。
 		ENDDATA
 	ELSE
 		PRINTFORML (……集中しないといけないのは分かっているけれど)
-		PRINTFORML  %CALLNAME%은(는) 結跏趺坐でぼんやりと思考を巡らせている。
+		PRINTFORML  %타겟은% 結跏趺坐でぼんやりと思考を巡らせている。
 		SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML  ふと、半眼の視界に壁際の通風口が入った。
@@ -84,7 +84,7 @@ IF ABL:자위중독 >= 5
 			;촉수의포로/쾌락각인Lv3
 			IF TALENT:촉수의포로 || MARK:쾌락각인 >= 3
 				PRINTDATAL
-					DATAFORM 淫猥な雑念は瞬く間に正気を駆逐し、%CALLNAME%은(는) 結跏趺坐を組んだまま想像の中で촉수に犯され続けた……
+					DATAFORM 淫猥な雑念は瞬く間に正気を駆逐し、%타겟은% 結跏趺坐を組んだまま想像の中で촉수に犯され続けた……
 					DATAFORM 瞑想を終えた%CALLNAME%が立ったあとには、透明な汁溜まりが残っていた……
 				ENDDATA
 			ELSE
@@ -97,7 +97,7 @@ IF ABL:자위중독 >= 5
 			;촉수의포로/쾌락각인Lv3
 			IF TALENT:촉수의포로 || MARK:쾌락각인 >= 3
 				PRINTDATAL
-					DATAFORM 淫猥な雑念は瞬く間に正気を駆逐し、%CALLNAME%은(는) 結跏趺坐を組んだまま想像の中で身体を弄ばれ続けた……
+					DATAFORM 淫猥な雑念は瞬く間に正気を駆逐し、%타겟은% 結跏趺坐を組んだまま想像の中で身体を弄ばれ続けた……
 					DATAFORM 瞑想を終えた%CALLNAME%が立ったあとには、透明な汁溜まりが残っていた……
 				ENDDATA
 			ELSE
@@ -116,10 +116,10 @@ ELSEIF ABL:자위중독 >= 3
 		DATAFORM (か、体が、火照って……)
 	ENDDATA
 	PRINTDATAL
-		DATAFORM 瞑想中に%CALLNAME%은(는) 身体の疼きを覚え、集中を乱してしまった。
+		DATAFORM 瞑想中に%타겟은% 身体の疼きを覚え、集中を乱してしまった。
 		DATAFORM 修練に集中しようとする%CALLNAME%だが、その脳裏は自慰への願望でいっぱいになっていた。
-		DATAFORM 疼く体を必死で抑えながら、%CALLNAME%은(는) 瞑想しようと努力している。
-		DATAFORM 瞑想中に身体が火照り始め、%CALLNAME%은(는) 自慰をこらえるのに必死になっている。
+		DATAFORM 疼く体を必死で抑えながら、%타겟은% 瞑想しようと努力している。
+		DATAFORM 瞑想中に身体が火照り始め、%타겟은% 自慰をこらえるのに必死になっている。
 	ENDDATA
 ELSE
 	CFLAG:270 = 3
@@ -131,7 +131,7 @@ ELSE
 		DATAFORM 「………雑念を、捨てる…」
 		DATAFORM 「心を無に…うーん…」
 	ENDDATA
-	PRINTFORM 座禅を組み、%CALLNAME%은(는) 静かに瞑想している。
+	PRINTFORM 座禅を組み、%타겟은% 静かに瞑想している。
 ENDIF
 
 
@@ -143,7 +143,7 @@ ENDIF
 @KOJO_0_TRAINING_KINTORE_16
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 「うくっ、も、もう、限界……」
-	PRINTFORML  %CALLNAME%은(는) 半泣きで器具にしがみつく。
+	PRINTFORML  %타겟은% 半泣きで器具にしがみつく。
 	IF CHECK_BODY("촉수임신")
 		PRINTFORML  おぞましい生命を宿した体には普段の力が入らない。衣服の代わりに全身に無数の端子を貼り付けられ、
 		PRINTFORML  大股開きで足を踏ん張る痴態をカメラが捉え続けていた……
@@ -153,21 +153,21 @@ IF CHECK_PREGNANT_F(TARGET) > 0
 	ENDIF
 ELSEIF ABL:노출벽 >= 3
 	PRINTFORML 「はあっ、はぁっ、あは、限界……」
-	PRINTFORML  %CALLNAME%은(는) 艶めかしく器具にもたれかかる。
+	PRINTFORML  %타겟은% 艶めかしく器具にもたれかかる。
 	SELECTCASE RAND:2
 	CASE 1
-		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%CALLNAME%은(는) 、
+		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%타겟은% 、
 		PRINTFORML  大股開きになり、仲間達に胸の膨らみや股布に浮き出た割れ目を見せつける。
-		PRINTFORML  見られる快感の虜になった%CALLNAME%은(는) 向けられる視線を愉しんでしまっていた……
+		PRINTFORML  見られる快感の虜になった%타겟은% 向けられる視線を愉しんでしまっていた……
 	CASE 0
 	ENDSELECT
 ;★訓練の体でエロコスチューム着せられる
 ELSEIF EXP:매료경험>=100
 	PRINTFORML 「はあっ、はぁっ、はーっ……」
-	PRINTFORML  %CALLNAME%은(는) 無防備に器具にもたれかかる。
+	PRINTFORML  %타겟은% 無防備に器具にもたれかかる。
 	SELECTCASE RAND:1
 	CASE 0
-		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%CALLNAME%은(는) 、
+		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%타겟은% 、
 		PRINTFORML  足をピンと張り、肢体を伸ばして肩で呼吸をする。
 		PRINTFORML  가슴につんと浮いた膨らみも、股布に浮き出た割れ目に向けられる視線
 		SIF TALENT:후타나리 > 0
@@ -178,10 +178,10 @@ ELSEIF EXP:매료경험>=100
 ;周囲の視線
 ELSEIF RAND:3==0
 	PRINTFORML 「も、もう、さすがに、限界……」
-	PRINTFORML  %CALLNAME%은(는) 疲れ切った様子で器具に손발を투척出す。
+	PRINTFORML  %타겟은% 疲れ切った様子で器具に손발を투척出す。
 	SELECTCASE RAND:1
 	CASE 0
-		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%CALLNAME%은(는) 、
+		PRINTFORML  ぴっちりしたレオタード一枚で訓練を続ける%타겟은% 、
 		PRINTFORML  足をピンと張り、肢体を伸ばして肩で呼吸をする。
 		PRINTFORML  가슴につんと浮いた膨らみも、股布に浮き出た割れ目に向けられる視線も
 		SIF TALENT:후타나리 > 0
@@ -201,7 +201,7 @@ ELSE
 	;水泳で鍛える
 	CASE 2
 		PRINTDATAL
-		DATAFORM %CALLNAME%은(는) 室内プールの更衣室で수영복に着替えている。
+		DATAFORM %타겟은% 室内プールの更衣室で수영복に着替えている。
 		DATAFORM 수영복姿の%CALLNAME%が室内プールを泳いでいる。
 		DATAFORM 수영복姿の%CALLNAME%がプールサイドでストレッチに励んでいる。
 		ENDDATA
@@ -239,8 +239,8 @@ ELSE
 		DATAFORM 「97……98っ……」
 		ENDDATA
 		PRINTDATAL
-		DATAFORM %CALLNAME%은(는) 不慣れな腕立て伏せを続けている。
-		DATAFORM %CALLNAME%은(는) 不慣れな腹筋を続けている。
+		DATAFORM %타겟은% 不慣れな腕立て伏せを続けている。
+		DATAFORM %타겟은% 不慣れな腹筋を続けている。
 		ENDDATA
 		PRINTDATAL
 		DATAFORM 魔法の助けがあるにせよ、ただの少女には厳しい訓練だ……
@@ -256,7 +256,7 @@ ENDIF
 @KOJO_0_TRAINING_JIEI_16
 IF RAND:4==0
 	PRINTFORML  側面からの一撃に体を躱したところに背後から痛烈な一撃が叩きこまれる。
-	PRINTFORML  %CALLNAME%은(는) よろけた足を払われ、無様に転がった。
+	PRINTFORML  %타겟은% よろけた足を払われ、無様に転がった。
 	;★
 	PRINTFORML  解けた長い黒髪がふわりと広がる。
 	PRINTFORML 「待ってッ？！ ちょっ、ちょっと、これは、ひっ、おぶっ、ぎゃひっ、ぶぎぃ！」
@@ -264,7 +264,7 @@ IF RAND:4==0
 	PRINTFORML  伸ばした手は払われ、濁った絶叫とともに、乱れた髪の張り付いた泣き顔が고통に歪む。
 	;마조끼Lv3
 	IF ABL:마조끼 >= 3
-		PRINTFORML  もはやそれは組手ではなかったが、滅多打ちにされる%CALLNAME%은(는) 황홀の色を浮かべていた……
+		PRINTFORML  もはやそれは組手ではなかったが、滅多打ちにされる%타겟은% 황홀の色を浮かべていた……
 	ELSE
 		PRINTFORML  普段はクールな%CALLNAME%の情けない姿が更なる嗜虐心を煽ったか、手が止まる様子はない。
 		PRINTFORML  自衛訓練とは名ばかり、もはやそれは既に組手ですらなかった……
@@ -272,9 +272,9 @@ IF RAND:4==0
 	;임신
 	IF CHECK_PREGNANT_F(TARGET) > 0
 		PRINTFORML  …………
-		PRINTFORML  涙と涎と鼻水でぐちゃぐちゃになった顔を上げ、%CALLNAME%은(는) うっすらと目を開けた。
+		PRINTFORML  涙と涎と鼻水でぐちゃぐちゃになった顔を上げ、%타겟은% うっすらと目を開けた。
 		PRINTFORML  기절していた間に再び分娩台に拘束された体には無数の端子と唸りを上げる吸引器が取り付けられていた。
-		PRINTFORML  ボテ腹の一番奥で脈打つ감각に、%CALLNAME%은(는) 唇を噛み締めた……
+		PRINTFORML  ボテ腹の一番奥で脈打つ감각に、%타겟은% 唇を噛み締めた……
 	ENDIF
 ELSEIF ABL:B감각 >=4
 	CFLAG:270 = 5
@@ -290,7 +290,7 @@ ELSEIF ABL:B감각 >=4
 			PRINTFORML (乳首が、こんな……どうして…)
 	ENDSELECT
 	PRINTDATAL
-	DATAFORM 組手の最中だというのに、%CALLNAME%은(는) 胸が服に擦れる감각に翻弄されている。
+	DATAFORM 組手の最中だというのに、%타겟은% 胸が服に擦れる감각に翻弄されている。
 	DATAFORM 組手の最中、%CALLNAME%の乳首はシャツの上からわかるほど勃起していた。
 	DATAFORM 組手に集中しようとする%CALLNAME%を嘲笑うかのように、その乳首は鋭い性感を発し続けていた。
 	ENDDATA
@@ -307,9 +307,9 @@ ELSE
 	;★頭の中ではとっくに見切っている、単調なパターンにすら反応出来ない……
 
 	PRINTDATAL
-	DATAFORM %CALLNAME%은(는) 仲間たちの振り下ろす木剣を、紙一重で捌き続けた。
-	DATAFORM %CALLNAME%은(는) 仲間たちの투척る折り紙の手裏剣を、紙一重で捌き続けた。
-	DATAFORM %CALLNAME%은(는) 仲間たちの放つ吸盤付のおもちゃの矢を、紙一重で捌き続けた。
+	DATAFORM %타겟은% 仲間たちの振り下ろす木剣を、紙一重で捌き続けた。
+	DATAFORM %타겟은% 仲間たちの투척る折り紙の手裏剣を、紙一重で捌き続けた。
+	DATAFORM %타겟은% 仲間たちの放つ吸盤付のおもちゃの矢を、紙一重で捌き続けた。
 	ENDDATA
 ENDIF
 
@@ -347,7 +347,7 @@ ELSEIF ABL:B감각 >=4
 	ENDSELECT
 	PRINTDATAL
 	DATAFORM 走る最中にも、%CALLNAME%の開発された胸は微かな刺激にも敏感に反応している。
-	DATAFORM 走る振動に乳首が服に擦れ、%CALLNAME%은(는) 悩ましげな吐息を漏らした。
+	DATAFORM 走る振動に乳首が服に擦れ、%타겟은% 悩ましげな吐息を漏らした。
 	ENDDATA
 ELSE
 	CFLAG:270 = 6
@@ -358,7 +358,7 @@ ELSE
 	DATAFORM 「……問題ない、わっ」
 	DATAFORM 「このくらい、何とも、ないわっ！」
 	ENDDATA
-	PRINTFORML %CALLNAME%은(는) 短距離用のコースを走り抜けた。
+	PRINTFORML %타겟은% 短距離用のコースを走り抜けた。
 ENDIF
 
 
@@ -377,7 +377,7 @@ IF CHECK_PREGNANT_F(TARGET) > 0 || MARK:치욕각인 >= 3
 	;치욕각인Lv3
 	IF MARK:치욕각인 >= 3
 		PRINTFORML 「あー……ぁあ、あ……あぁぁぁ……ッ！」
-		PRINTFORML  %CALLNAME%은(는) 足を止め、仲間の目の前で悦楽に顔を歪めて放心している……
+		PRINTFORML  %타겟은% 足を止め、仲間の目の前で悦楽に顔を歪めて放心している……
 		PRINTFORML  床を汚さないようにと仲間に穿かされた紙おむつの中で弾ける水流とともに、%CALLNAME%の理性が流れ出ていく。
 	ELSE
 		PRINTFORML  床を汚さないようにと仲間に穿かされた紙おむつが、更に恥辱を掻き立てる……
@@ -391,7 +391,7 @@ ELSE
 	DATAFORM 「……見切ったっ！」
 	DATAFORM 「くっ、ふぅっ、あと何体っ！？！」
 	ENDDATA
-	PRINTFORML %CALLNAME%은(는) 現れ続ける標的相手に戦闘訓練を続ける。
+	PRINTFORML %타겟은% 現れ続ける標的相手に戦闘訓練を続ける。
 ENDIF
 
 ;중거리戦闘訓練
@@ -400,15 +400,15 @@ ENDIF
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML  全身に端子を貼りつけただけの%CALLNAME%が、泣きそうな面持ちで周囲の気配を伺っている。
-	PRINTFORML  壁のランプが点灯すると、コードを引きずり、無様なガニ股で必死に%CALLNAME%은(는) 身を翻した。
+	PRINTFORML  壁のランプが点灯すると、コードを引きずり、無様なガニ股で必死に%타겟은% 身を翻した。
 	PRINTFORML  醜く膨れ上がったボテ腹を抱えて鈍った動きでは間に合うはずもなく、模擬弾が%CALLNAME%を容赦なく打ち倒す。
 	PRINTFORML 「あが……かはっ！ ま、だ……ぎゃひィ！？」
 	PRINTFORML  %CALLNAME%が身体を起こすのを待たず、再び壁のランプが点灯し、模擬弾が無防備な身体を直撃した。
 	PRINTFORML  既に立ち上がることすらできない%CALLNAME%に、次々に模擬弾が撃ち込まれていく……
 	PRINTFORML  …………
-	PRINTFORML  涙と涎と鼻水でぐちゃぐちゃになった顔を上げ、%CALLNAME%은(는) うっすらと目を開けた。
+	PRINTFORML  涙と涎と鼻水でぐちゃぐちゃになった顔を上げ、%타겟은% うっすらと目を開けた。
 	PRINTFORML  기절していた間に再び分娩台に拘束された体には無数の端子と唸りを上げる吸引器が取り付けられていた。
-	PRINTFORML  ボテ腹の一番奥で脈打つ감각に、%CALLNAME%은(는) 唇を噛み締めた……
+	PRINTFORML  ボテ腹の一番奥で脈打つ감각に、%타겟은% 唇を噛み締めた……
 ELSEIF RAND:3==0
 	PRINTFORML  공격を大きく回避し、撃ち込んだ瞬間を狙い撃たれ、大きくよろめいた。
 	PRINTFORML  足の止まった%CALLNAME%に容赦無く火箭が集中する。
@@ -419,7 +419,7 @@ ELSEIF RAND:3==0
 	IF ABL:마조끼 >= 3
 		PRINTFORML  %CALLNAME%の고통に喘ぐ悲鳴はいつしか嬌声へと変わっていた……
 	ELSE
-		PRINTFORML  絶叫を伴奏に%CALLNAME%은(는) 고통の舞踏を舞い続ける……
+		PRINTFORML  絶叫を伴奏に%타겟은% 고통の舞踏を舞い続ける……
 	ENDIF
 ELSE
 	CFLAG:270 = 8
@@ -430,7 +430,7 @@ ELSE
 	DATAFORM 「……そこっ！」
 	DATAFORM 「甘いっ！」
 	ENDDATA
-	PRINTFORML %CALLNAME%은(는) 離れた標的に、的確な動きで공격を当てていく。
+	PRINTFORML %타겟은% 離れた標的に、的確な動きで공격を当てていく。
 ENDIF
 
 
@@ -440,9 +440,9 @@ ENDIF
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 「はぁ、あ……あ、っぐぅ……ぉ゛ぶ？！ げぼぉ！ が、あ゛ぇ゛ぁ゛がぁ゛あ゛あ゛……！」
-	PRINTFORML  狙いを定めていた%CALLNAME%은(는) 激しい嘔吐感に身体を折り、突っ伏した。
+	PRINTFORML  狙いを定めていた%타겟은% 激しい嘔吐感に身体を折り、突っ伏した。
 	PRINTFORML  狙うどころか견딘다ことすらできず、口から鼻から泥流が勢い良く迸る。
-	PRINTFORML  のたうち回る%CALLNAME%은(는) 回収され、再び機械に括りつけられてしまった。
+	PRINTFORML  のたうち回る%타겟은% 回収され、再び機械に括りつけられてしまった。
 	PRINTDATAL
 	DATAFORM (わ、私の身体……おなかの中、一体どうなって……っ)
 	DATAFORM (ま、またおなかの中で……っ)
@@ -457,12 +457,12 @@ ELSE
 	DATAFORM 「……そこっ！」
 	ENDDATA
 	PRINTFORML  柔らかくしなやかな体の線を余すところなく浮き上がらせる、
-	PRINTFORML  訓練用のボディスーツ一枚で、%CALLNAME%은(는) 撃っては走り、走っては撃つ。
+	PRINTFORML  訓練用のボディスーツ一枚で、%타겟은% 撃っては走り、走っては撃つ。
 	IF RAND:4==0
 		PRINTFORML 「本当に、このスーツは動きやすいわね」
 		IF ABL:노출벽 >= 4
 		PRINTFORML （そしてなにより……周囲の視線……っ！）
-		PRINTFORML  %CALLNAME%은(는) 淫靡に強調された肢体に突き刺さる仲間達の視線に溺れている……
+		PRINTFORML  %타겟은% 淫靡に強調された肢体に突き刺さる仲間達の視線に溺れている……
 		ELSE
 		PRINTFORML  走り、跳び、胸が、尻が、四肢がどれほど淫靡に強調されているかも知らず……
 		ENDIF
@@ -496,7 +496,7 @@ IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 僅かな刺激で情けないほど簡単に絶頂し、同時に思考が霧散する。今の%CALLNAME%にとって、考えを纏めることほど縁遠い行為もない。
 	PRINTFORML 　
 	PRINTFORML  そもそも、異形の子種を孕んだ%CALLNAME%に「戦う」術など見つかるはずはない。
-	PRINTFORML  今の%CALLNAME%은(는) 最下級の촉수にすら何一つ抵抗出来ないのだから……
+	PRINTFORML  今の%타겟은% 最下級の촉수にすら何一つ抵抗出来ないのだから……
 ;촉수의포로
 ELSEIF TALENT:촉수의포로
 	CFLAG:270 = 10
@@ -524,9 +524,9 @@ ELSEIF TALENT:촉수의포로
 	DATAFORM 「そうなった時は仕方ないわ。だって%SELF_CALL()%たちは所詮女の子だもの」
 	ENDDATA
 
-	PRINTFORML  テーブルを囲んで手にペンを持ち、%CALLNAME%은(는) 仲間と戦い方を相談している。
+	PRINTFORML  テーブルを囲んで手にペンを持ち、%타겟은% 仲間と戦い方を相談している。
 	PRINTFORML  ……%CALLNAME%の提案する内容はどこか不自然だ。
-	PRINTFORML  頬を紅潮させて妖しげな「戦術」を提案する%CALLNAME%은(는) 、
+	PRINTFORML  頬を紅潮させて妖しげな「戦術」を提案する%타겟은% 、
 	PRINTFORML  心配そうに見つめる仲間からの視線にも気付く様子がない。
 
 
@@ -616,14 +616,14 @@ ELSE
 	ENDDATA
 
 	PRINTFORML  表向きにはお茶会の体で集まった少女たち。
-	PRINTFORML  テーブルを囲んで手にペンを持ち、%CALLNAME%은(는) 仲間と戦い方を相談している。
+	PRINTFORML  テーブルを囲んで手にペンを持ち、%타겟은% 仲間と戦い方を相談している。
 
 ENDIF
 	;こっそり自慰してしまう(という分岐でどうか)
 	IF MARK:쾌락각인+ABL:자위중독>=6
 		CFLAG:270 = 99
 		PRINTFORML その顔は不自然に紅潮しており、目線もどこか定かでない。
-		PRINTFORM  体調を気遣う仲間の言葉を曖昧に誤魔化しながら、%CALLNAME%은(는) 
+		PRINTFORM  体調を気遣う仲間の言葉を曖昧に誤魔化しながら、%타겟은% 
 		PRINTDATAL
 		DATAFORM 股間のローターから来る快楽に全身を震わせた……
 		DATAFORM 乳首のローターがもたらす快感で思考を蕩けさせていた……
@@ -632,7 +632,7 @@ ENDIF
 	ELSEIF MARK:쾌락각인+ABL:자위중독>=2 && RAND:2==0
 		CFLAG:270 = 99
 		PRINTFORML その顔は不自然に紅潮しており、目線もどこか定かでない。
-		PRINTFORM  体調を気遣う仲間の言葉を曖昧に誤魔化し、%CALLNAME%은(는) 
+		PRINTFORM  体調を気遣う仲間の言葉を曖昧に誤魔化し、%타겟은% 
 		PRINTDATAL
 		DATAFORM 空いている方の手でこっそり股間を撫で回した…
 		DATAFORM 気付かれないように太ももを擦り寄せた…
@@ -663,41 +663,41 @@ ELSEIF CFLAG:270 == 3
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……心…頭、滅却、…っんん」
-		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%CALLNAME%은(는) 瞑想を続けた。
+		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 瞑想を続けた。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
-		PRINTFORML %CALLNAME%은(는) 瞑想するつもりが、%ITEMNAME:400%にイかされただけだった…
+		PRINTFORML %타겟은% 瞑想するつもりが、%ITEMNAME:400%にイかされただけだった…
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
 		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
 		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
-		PRINTFORMW %CALLNAME%은(는) 何度もイかされ続け、%ITEMNAME:400%に弄ばれただけだった…
+		PRINTFORMW %타겟은% 何度もイかされ続け、%ITEMNAME:400%に弄ばれただけだった…
 	ENDIF
 ;筋トレ
 ELSEIF CFLAG:270 == 4
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
-		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%CALLNAME%은(는) 鍛錬を続けたが
+		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 鍛錬を続けたが
 		PRINTFORML 全身に上手く力が入らず満足な結果が出せなかった。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
-		PRINTFORML %CALLNAME%은(는) 鍛錬中にイかされ、派手に突っ伏した。
+		PRINTFORML %타겟은% 鍛錬中にイかされ、派手に突っ伏した。
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
 		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
 		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、待って、待、ぁぁああああ！！？」
-		PRINTFORMW %CALLNAME%은(는) 何度もイかされ、途中から一回も鍛錬が出来なくなった…
+		PRINTFORMW %타겟은% 何度もイかされ、途中から一回も鍛錬が出来なくなった…
 	ENDIF
 ;自衛訓練
 ELSEIF CFLAG:270 == 5
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?…グゥ！」
-		PRINTFORML %CALLNAME%은(는) 断続的な刺激に気を取られ、防ぎきることができなかった。
+		PRINTFORML %타겟은% 断続的な刺激に気を取られ、防ぎきることができなかった。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…っんん、ぁあ！！駄、目、……ぅああ、ガッ！！」
-		PRINTFORML %CALLNAME%은(는) 組手中に絶頂すると同時に、直撃を受け기절した。
+		PRINTFORML %타겟은% 組手中に絶頂すると同時に、直撃を受け기절した。
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
 		PRINTFORML 「イ、ヤぁあああアぁああ！！」
@@ -711,15 +711,15 @@ ELSEIF CFLAG:270 == 6
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……動…くなぁ…ぁあ！」
-		PRINTFORML %CALLNAME%은(는) 与えられる刺激に脚をもつれさせた
+		PRINTFORML %타겟은% 与えられる刺激に脚をもつれさせた
 	ELSEIF RESULT < 5
 		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
-		PRINTFORML %CALLNAME%은(는) 全力疾走中にイッてしまい、盛大に転倒した…
+		PRINTFORML %타겟은% 全力疾走中にイッてしまい、盛大に転倒した…
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
 		PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
 		PRINTFORML 「　！！？　止まっ、てぇ、ダメ、また、またぁぁああああ！！？」
-		PRINTFORML %CALLNAME%은(는) 何度もイかされながら鍛錬を続けた…
+		PRINTFORML %타겟은% 何度もイかされながら鍛錬を続けた…
 		PRINTFORML しかし、絶頂の余韻に震える脚は力を失い、膝を折ってその場にうずくまるばかりであった…
 		PRINTFORMW 鍛錬の時間が終わる頃には、%CALLNAME%の足下には愛液の水溜りが出来上がっていた……
 	ENDIF
@@ -728,10 +728,10 @@ ELSEIF CFLAG:270 == 7
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
-		PRINTFORML %CALLNAME%은(는) 股座からこみあげる刺激に気を取られ、振るった木剣はむなしく空を切った。
+		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、振るった木剣はむなしく空を切った。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
-		PRINTFORML あまりの性感に膝を折った%CALLNAME%은(는) 、
+		PRINTFORML あまりの性感に膝を折った%타겟은% 、
 		PRINTFORML 頽れる刹那木剣に股間をこすり付け盛大にイってしまった…
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
@@ -745,10 +745,10 @@ ELSEIF CFLAG:270 == 8
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
-		PRINTFORML %CALLNAME%은(는) 股座からこみあげる刺激に気を取られ、放った矢はむなしく空を切った。
+		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、放った矢はむなしく空を切った。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
-		PRINTFORML あまりの性感に%CALLNAME%은(는) たまらず股座を押さえ、
+		PRINTFORML あまりの性感に%타겟은% たまらず股座を押さえ、
 		PRINTFORML その拍子に手にした針で陰核を刺激し、盛大にイってしまった…
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
@@ -762,10 +762,10 @@ ELSEIF CFLAG:270 == 9
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
-		PRINTFORML %CALLNAME%은(는) 股座からこみあげる刺激に気を取られ、放った弾丸はむなしく空を切った。
+		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、放った弾丸はむなしく空を切った。
 	ELSEIF RESULT < 5
 		PRINTFORML 「…駄…目……ぁぁあああ、イッ、くぅ……！！」
-		PRINTFORML あまりの性感に膝を折った%CALLNAME%은(는) 、
+		PRINTFORML あまりの性感に膝を折った%타겟은% 、
 		PRINTFORML 頽れる瞬間に武器へ股間をこすり付け盛大にイってしまった…
 	ELSE
 		PRINTFORML 「……ッ!?ぅあああああ！！？」
@@ -779,22 +779,22 @@ ELSEIF CFLAG:270 == 10
 	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
 	IF RESULT < 3
 		PRINTFORML 「……っぅん！？」
-		PRINTFORML 突如として%ITEMNAME:400%に全身を愛撫され、%CALLNAME%은(는) 思考を邪魔される。
-		PRINTFORML その後も%CALLNAME%은(는) 戦術研究を続けたが、断続的な刺激のせいでさっぱり集中出来ず、満足な結果を出せなかった。
+		PRINTFORML 突如として%ITEMNAME:400%に全身を愛撫され、%타겟은% 思考を邪魔される。
+		PRINTFORML その後も%타겟은% 戦術研究を続けたが、断続的な刺激のせいでさっぱり集中出来ず、満足な結果を出せなかった。
 	ELSEIF RESULT < 5
 		PRINTFORML 「……っひぅうん！？」
-		PRINTFORML 突然の刺激に対応できず、%CALLNAME%은(는) 思わず可愛らしい嬌声を漏らしてしまう。
+		PRINTFORML 突然の刺激に対応できず、%타겟은% 思わず可愛らしい嬌声を漏らしてしまう。
 		PRINTFORML 複雑な考え事を許さないかのように、%ITEMNAME:400%が%CALLNAME%の全身を襲い始めていた。
 		PRINTFORML 「んんっ…ぁあっ！！駄、目、イッ…くうぅぅっ！！？」
 		PRINTFORML %CALLNAME%の秘所がぷしゃ、と音を立て、上下の口で同時に絶頂を宣言する。
-		PRINTFORML あっさりイかされてしまった%CALLNAME%은(는) 派手に椅子から転げ落ち、軽く痙攣しながら床へ這いつくばった。
+		PRINTFORML あっさりイかされてしまった%타겟은% 派手に椅子から転げ落ち、軽く痙攣しながら床へ這いつくばった。
 	ELSE
 		PRINTFORML 「……ッ!?ひ、ぅ、あああぁあっ！！？」
 		PRINTFORML %CALLNAME%の身体を研究し尽くした%ITEMNAME:400%が的確に弱点を責め立てる。
 		PRINTFORML 「うぁっ、だ、ダメっ、イクっ、あ、ああっ、あアぁああ！！」
-		PRINTFORML %CALLNAME%은(는) もう%ITEMNAME:400%の玩具なのだと言わんばかりに全身を弄られ、少女はあっけなく絶頂に達する。
+		PRINTFORML %타겟은% もう%ITEMNAME:400%の玩具なのだと言わんばかりに全身を弄られ、少女はあっけなく絶頂に達する。
 		PRINTFORML 「%SELF_CALL_SINGLE()%、%SELF_CALL()%またっ、あっ、イかされ、あっ、あっああぁぁああ！！」
-		PRINTFORML 一度の絶頂で%ITEMNAME:400%の責めが止むはずもなく、%CALLNAME%은(는) 立て続けにイかされてしまう。
+		PRINTFORML 一度の絶頂で%ITEMNAME:400%の責めが止むはずもなく、%타겟은% 立て続けにイかされてしまう。
 		PRINTFORML 「　！！？　な、止まっ、ダメ、嘘、待って、待っぁぉおおおおっ！！？」
 		PRINTFORMW ガクガクと痙攣しながら悶える%CALLNAME%の頭にもはや戦術の二文字など残っておらず、
 		PRINTFORMW イくこと以外は何も研究できない完全な牝として出来上がってしまった……
@@ -812,11 +812,11 @@ ELSE
 		CASE 0
 			PRINTFORML 「ぉおぉ？！ ぉごぉーッ、ぉ゛おん゛っ！ ひぐっ、イ゛ぐぅぅ゛ーーッッ！！」
 			PRINTFORML  身体中の穴という穴から体液を垂れ流し、それを即座に촉수に貪られ、
-			PRINTFORML  %CALLNAME%은(는) 暴虐的な快楽に全身を漬け込まれていく……
+			PRINTFORML  %타겟은% 暴虐的な快楽に全身を漬け込まれていく……
 		CASEELSE
 			PRINTFORML 「んぶっ！？ ん゛ん゛ーッ、むぐっ……ん゛ーーッッ！！」
 			PRINTFORML  涙と鼻水でぐちゃぐちゃになった顔を上げた口を野太い촉수に塞がれ、
-			PRINTFORML  叫び声を上げることすら許されず、%CALLNAME%은(는) 陵辱に견딘다ことしかできない……
+			PRINTFORML  叫び声を上げることすら許されず、%타겟은% 陵辱に견딘다ことしかできない……
 	ENDSELECT
 
 ENDIF

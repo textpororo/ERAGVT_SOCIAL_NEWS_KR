@@ -1,7 +1,7 @@
 ﻿@PASTIME_SelectSchool
 ;もし小中高大学に通っていない場合、30の倍数日毎に編入する機会を与える
 ;IF DAY % 30 == 0 && TALENT:학생 == 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)休日をどう過ごすか考えていると、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%休日をどう過ごすか考えていると、
 	PRINTFORML 組織の인간が声をかけてきた。
 	IF RAND:5 == 0
 		PRINTFORML 曰く、学校のような閉鎖的社会で촉수 생물が活動する例もある。
@@ -25,7 +25,7 @@
 ;ENDIF
 	$INPUT_LOOP
 	INPUT
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	IF RESULT == 0
 		PRINTL どこにも編入しないことにした。
 	ELSEIF RESULT == 1

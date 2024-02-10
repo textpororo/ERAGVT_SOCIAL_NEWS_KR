@@ -50,9 +50,9 @@ ELSE
 	ENDDATA
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 절망したような表情で膣口を見つめている。
+		PRINTFORMW %타겟은% 절망したような表情で膣口を見つめている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -92,9 +92,9 @@ ELSE
 	ENDDATA
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 절망したような表情で精液の溢れる膣口を見つめている。
+		PRINTFORMW %타겟은% 절망したような表情で精液の溢れる膣口を見つめている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 	CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -118,9 +118,9 @@ ELSE
 	ENDDATA
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 嫌悪を感じながら菊座を食い締めている。
+		PRINTFORMW %타겟은% 嫌悪を感じながら菊座を食い締めている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -151,9 +151,9 @@ ELSE
 	ENDDATA
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 嫌悪の表情で、精液で膨れ上がったお腹を見つめている。
+		PRINTFORMW %타겟은% 嫌悪の表情で、精液で膨れ上がったお腹を見つめている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -166,14 +166,14 @@ ENDIF
 ;굴복각인Lv3
 IF MARK:굴복각인 >= 3
 	PRINTFORML 「%SELF_CALL_SINGLE()%、%SELF_CALL()%の手…ぬめぬめって……あぁ……」
-	PRINTFORMW %CALLNAME%은(는) 手に付着した精液を物欲しそうに見つめている。
+	PRINTFORMW %타겟은% 手に付着した精液を物欲しそうに見つめている。
 ELSE
 	PRINTFORML 「なっ、何なんだよ……汚らわしい……」
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 手に付着した精液を忌々しげに見つめている。
+		PRINTFORMW %타겟은% 手に付着した精液を忌々しげに見つめている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -194,14 +194,14 @@ ENDIF
 ;굴복각인Lv3
 IF MARK:굴복각인 >= 3
 	PRINTFORML 「%SELF_CALL_SINGLE()%、%SELF_CALL()%の手…どろどろに……ぁん……」
-	PRINTFORMW 精液をすくった手椀を%CALLNAME%은(는) 幸せそうに見つめている。
+	PRINTFORMW 精液をすくった手椀を%타겟은% 幸せそうに見つめている。
 ELSE
 	PRINTFORML 「ああぁあ……こんな……%SELF_CALL()%の手が……」
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 手に付着した精液を忌々しげに見つめている。
+		PRINTFORMW %타겟은% 手に付着した精液を忌々しげに見つめている。
 	CASE 1
-		PRINTFORM %CALLNAME%은(는) 
+		PRINTFORM %타겟은% 
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -217,24 +217,24 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 	DATAFORM 「こく、こく……んん、ぅん❤」
 	ENDDATA
 	PRINTDATAW
-	DATAFORM %CALLNAME%은(는) 嬉しそうに精液を飲み干している。
-	DATAFORM 精液を飲む%CALLNAME%은(는) この上なく幸せそうだ。
+	DATAFORM %타겟은% 嬉しそうに精液を飲み干している。
+	DATAFORM 精液を飲む%타겟은% この上なく幸せそうだ。
 	ENDDATA
 ELSE
 	SELECTCASE RAND:3
 	CASE 0
 		PRINTFORML 「んぐ！？　……げほっげほっ」
-		PRINTFORMW 吐き出された精液を反射的に飲んでしまい、%CALLNAME%은(는) むせている。
+		PRINTFORMW 吐き出された精液を反射的に飲んでしまい、%타겟은% むせている。
 	CASE 1
 		PRINTFORML 「ん！？　ん……こく」
-		PRINTFORMW 입をふさがれてしまい、%CALLNAME%은(는) 仕方なく精液を飲み干している。
+		PRINTFORMW 입をふさがれてしまい、%타겟은% 仕方なく精液を飲み干している。
 	CASE 2
 		IF ABL:정액중독
 		PRINTFORML 「ぅぶっ？！ げぶっ、おぶ……じゅるっ、じゅるるる……ッ！」
-		PRINTFORMW 입をふさがれたまま精液を吐き出され、%CALLNAME%은(는) 本能に踊らされ喉を鳴らして飲み干している。
+		PRINTFORMW 입をふさがれたまま精液を吐き出され、%타겟은% 本能に踊らされ喉を鳴らして飲み干している。
 		ELSE
 		PRINTFORML 「ぅぶっ？！ げぶっ、おぶ……っぐ、ぐげおぼごぼおごぉおおッ！」
-		PRINTFORMW 吐き出されたネバネバの精液を反射的に飲んでしまい、%CALLNAME%은(는) あられもない姿で苦しんでいる。
+		PRINTFORMW 吐き出されたネバネバの精液を反射的に飲んでしまい、%타겟은% あられもない姿で苦しんでいる。
 		ENDIF
 	ENDSELECT
 ENDIF
@@ -260,28 +260,28 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 	ENDDATA
 	SELECTCASE RAND:2
 	CASE 0
-		PRINTFORMW %CALLNAME%은(는) 嬉しそうに精液を飲み干している。
-		PRINTFORMW 飲みきれないほどの精液を与えられた%CALLNAME%은(는) とても幸せそうだ……
+		PRINTFORMW %타겟은% 嬉しそうに精液を飲み干している。
+		PRINTFORMW 飲みきれないほどの精液を与えられた%타겟은% とても幸せそうだ……
 	CASE 1
-		PRINTFORMW 喉を鳴らして精液を飲む%CALLNAME%은(는) この上なく幸せそうにしている。
-		PRINTFORMW 飲みきれないほどの精液を与えられた%CALLNAME%은(는) 口と顔を白濁まみれにされながらも嬉しそうだ……。
+		PRINTFORMW 喉を鳴らして精液を飲む%타겟은% この上なく幸せそうにしている。
+		PRINTFORMW 飲みきれないほどの精液を与えられた%타겟은% 口と顔を白濁まみれにされながらも嬉しそうだ……。
 	ENDSELECT
 
 ELSE
 	SELECTCASE RAND:3
 	CASE 0
 		PRINTFORML 「んぐ！？　……げほっげほっ」
-		PRINTFORMW 吐き出された精液を反射的に飲んでしまい、%CALLNAME%은(는) むせている。
+		PRINTFORMW 吐き出された精液を反射的に飲んでしまい、%타겟은% むせている。
 	CASE 1
 		PRINTFORML 「ん！？　ん……こくこくっ、ごくっ」
-		PRINTFORMW 입をふさがれてしまい、%CALLNAME%은(는) 仕方なく精液を飲み干している。
+		PRINTFORMW 입をふさがれてしまい、%타겟은% 仕方なく精液を飲み干している。
 	CASE 2
 		IF ABL:정액중독
 		PRINTFORML 「げぼっ、おぶ、っぐぶぉ゛……ごぎゅごぎゅっ、ぐ、っぐぶ……げぼぼ……！」
-		PRINTFORMW 입をふさがれたまま大量の精液を吐き出され、%CALLNAME%은(는) 本能のままに飲み込まされている。
+		PRINTFORMW 입をふさがれたまま大量の精液を吐き出され、%타겟은% 本能のままに飲み込まされている。
 		ELSE
 		PRINTFORML 「うぶぅっ！？ んぐっ、ごくごきゅっ！　ぶぷっ、げはっ、ごぼぉ…！？ ぶごぉごぼおげおぉぉ！」
-		PRINTFORMW 吐き出されたネバネバの精液を反射的に飲んでしまい、%CALLNAME%은(는) あられもない姿で苦しんでいる。
+		PRINTFORMW 吐き出されたネバネバの精液を反射的に飲んでしまい、%타겟은% あられもない姿で苦しんでいる。
 		ENDIF
 	ENDSELECT
 ENDIF
@@ -302,13 +302,13 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 	IF TALENT:빈유
 		SELECTCASE RAND:2
 			CASE 0
-				PRINTFORM %CALLNAME%은(는) 精液の付いた薄い胸を
+				PRINTFORM %타겟은% 精液の付いた薄い胸を
 				PRINTDATA
 				DATAFORM 嬉しそうに見下ろしている。
 				DATAFORM 少し残念そうに見下ろしている。
 				ENDDATA
 			CASE 1
-				PRINTFORM %CALLNAME%은(는) 嬉しそうに精液を
+				PRINTFORM %타겟은% 嬉しそうに精液を
 				PRINTDATAL
 				DATAFORM 舐めとろうとした。
 				DATAFORM 舐めとった
@@ -316,8 +316,8 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 		ENDSELECT
 	ELSE
 		PRINTDATA
-		DATAFORM %CALLNAME%은(는) 嬉しそうに精液を舐めとった。
-		DATAFORM %CALLNAME%은(는) 精液に濡れた胸\@ISMALE() ? 肌 # \@を嬉しそうに見つめている。
+		DATAFORM %타겟은% 嬉しそうに精液を舐めとった。
+		DATAFORM %타겟은% 精液に濡れた胸\@ISMALE() ? 肌 # \@を嬉しそうに見つめている。
 		ENDDATA
 	ENDIF
 ;굴복각인Lv3
@@ -339,18 +339,18 @@ ELSE
 		CASE 0
 			;ひん（ｒｙ
 			IF TALENT:빈유
-				PRINTFORMW %CALLNAME%은(는) 薄い胸に付着した精液を忌々しげに見下ろしている。
+				PRINTFORMW %타겟은% 薄い胸に付着した精液を忌々しげに見下ろしている。
 			ELSE
 				IF ISMALE()
 					;#region
-					PRINTFORMW %CALLNAME%은(는) 胸肌に付着した精液を忌々しげに見つめている。
+					PRINTFORMW %타겟은% 胸肌に付着した精液を忌々しげに見つめている。
 					;#endregion
 				ELSE 
-					PRINTFORMW %CALLNAME%은(는) 胸に付着した精液を忌々しげに見つめている。
+					PRINTFORMW %타겟은% 胸に付着した精液を忌々しげに見つめている。
 				ENDIF
 			ENDIF
 		CASE 1
-			PRINTFORM %CALLNAME%은(는) 
+			PRINTFORM %타겟은% 
 			CALL TENTACLE_ACCESS, "NAME"
 			PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT
@@ -378,13 +378,13 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 	IF TALENT:빈유
 		SELECTCASE RAND:2
 			CASE 0
-				PRINTFORM %CALLNAME%은(는) 精液に覆われた薄い胸を
+				PRINTFORM %타겟은% 精液に覆われた薄い胸を
 				PRINTDATA
 				DATAFORM 嬉しそうに見下ろしている。
 				DATAFORM 少し残念そうに見下ろしている。
 				ENDDATA
 			CASE 1
-				PRINTFORM %CALLNAME%은(는) 嬉しそうに精液を
+				PRINTFORM %타겟은% 嬉しそうに精液を
 				PRINTDATAL
 				DATAFORM 舐めとろうとした。
 				DATAFORM 舐めとった
@@ -392,8 +392,8 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3|| ABL:정액중독 > 3
 		ENDSELECT
 	ELSE
 		PRINTDATA
-		DATAFORM %CALLNAME%은(는) 嬉しそうに精液を舐めとった。
-		DATAFORM %CALLNAME%은(는) 精液に覆われた胸\@ISMALE() ? 肌 # \@を嬉しそうに見つめている。
+		DATAFORM %타겟은% 嬉しそうに精液を舐めとった。
+		DATAFORM %타겟은% 精液に覆われた胸\@ISMALE() ? 肌 # \@を嬉しそうに見つめている。
 		ENDDATA
 	ENDIF
 ;굴복각인Lv3
@@ -405,18 +405,18 @@ ELSE
 		CASE 0
 			;ひん（ｒｙ
 			IF TALENT:빈유
-				PRINTFORMW %CALLNAME%은(는) 薄い胸を覆う精液を忌々しげに見下ろしている。
+				PRINTFORMW %타겟은% 薄い胸を覆う精液を忌々しげに見下ろしている。
 			ELSE
 				IF ISMALE()
 					;#region
-					PRINTFORMW %CALLNAME%은(는) 胸肌に付着した精液を忌々しげに見つめている。
+					PRINTFORMW %타겟은% 胸肌に付着した精液を忌々しげに見つめている。
 					;#endregion
 				ELSE 
-					PRINTFORMW %CALLNAME%은(는) 胸に付着した精液を忌々しげに見つめている。
+					PRINTFORMW %타겟은% 胸に付着した精液を忌々しげに見つめている。
 				ENDIF
 			ENDIF
 		CASE 1
-			PRINTFORM %CALLNAME%은(는) 
+			PRINTFORM %타겟은% 
 			CALL TENTACLE_ACCESS, "NAME"
 			PRINTFORMW を鋭くにらみつけている。
 	ENDSELECT

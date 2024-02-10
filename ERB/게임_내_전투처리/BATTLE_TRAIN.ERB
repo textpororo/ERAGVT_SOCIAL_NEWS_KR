@@ -12,7 +12,7 @@ REDRAW 1
 
 
 
-;通常戦闘(イベント戦闘以外)ならTCVARを初期化しておく
+;通常戦闘(イベント戦闘以外)ならTCVARを초기화しておく
 IF FLAG:45==0
 	CALL INITBATTLESITUATION()
 	VARSET TCVARn
@@ -87,7 +87,7 @@ IF TALENT:마력저장 > 0
 	TCVARn:4 += 200
 ENDIF
 
-;イベント戦以外なら衣装の初期化をここで行う
+;イベント戦以外なら衣装の초기화をここで行う
 IF FLAG:45==0
 	;衣装の耐久度を설정
 	CALL CLOTH_BATTLE_SETHP
@@ -99,7 +99,7 @@ ENDIF
 ;　アイデアだけ書いてたsetbattlesituationに対応してくれた分
 IF GETBATTLESITUATION("강제 발정") == 1
 	TCVARn:12 |= 발정
-	PRINTFORMW %CALLNAME%은(는) 抑えきれないほど발정している……
+	PRINTFORMW %타겟은% 抑えきれないほど발정している……
 ENDIF
 IF GETBATTLESITUATION("강제 마비") == 1
 	TCVARn:12 |= 마비
@@ -112,11 +112,11 @@ IF GETBATTLESITUATION("強制全裸") == 1
 	SIF CFLAG:TARGET:42 != 400
 		CFLAG:TARGET:42 = 0
 	CFLAG:TARGET:43 = 0
-	PRINTFORMW %CALLNAME%은(는) 裸で敵と戦うしかない…
+	PRINTFORMW %타겟은% 裸で敵と戦うしかない…
 ENDIF
 IF GETBATTLESITUATION("強制拘束") == 1
 	TCVARn:0 = 0
-	PRINTFORMW %CALLNAME%은(는) 力ずくで戦闘に引きずり込まれた……
+	PRINTFORMW %타겟은% 力ずくで戦闘に引きずり込まれた……
 ENDIF
 IF GETBATTLESITUATION("強制挿入") == 1
 	TCVARn:0 = 0

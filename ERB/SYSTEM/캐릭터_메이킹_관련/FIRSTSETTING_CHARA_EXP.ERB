@@ -1,12 +1,12 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;初期経験の설정
+;초기 경험 설정
 @FIRSTSETTING_CHARA_EXP, ARG
 #DIM LCOUNT
 #DIM OPTION,4
 #DIM SEX_NUM
 
-#DIMS 特殊判定,1
+#DIMS 특수판정,1
 
 
 VARSET LOCAL
@@ -14,10 +14,10 @@ VARSET OPTION
 CALL LB
 LCOUNT = LINECOUNT
 $INPUT_LOOP
-PRINTFORML ●{ARG}人目のキャラ 『%NAME:ARG%』 の環境と初期経験を決定します
+PRINTFORML ●{ARG}번째 캐릭터『%NAME:ARG%』의 환경과 초기 경험을 결정합니다.
 DRAWLINE
 
-PRINTL 素質：
+PRINTL 소질：
 PRINT 　
 SIF TALENT:ARG:처녀 == 1
 	PRINT [처녀]
@@ -30,23 +30,23 @@ SIF ISMALE(ARG)
 SIF TALENT:ARG:후타나리 > 0
 	PRINT [후타나리]
 SIF TALENT:ARG:인조인간 > 0 && TALENT:ARG:미성숙 != 2
-	PRINT [人工子宮]
+	PRINT [인공자궁]
 SIF TALENT:ARG:청순파 > 0
 	PRINT [청순파]
 SIF TALENT:ARG:미성숙 == 1
 	PRINT [미성숙]
 SIF TALENT:ARG:미성숙 == 2
-	PRINT [不妊]
+	PRINT [불임]
 SIF TALENT:ARG:교제상대 == 1
 	PRINT [짝사랑]
 SIF TALENT:ARG:교제상대 == 2
-	PRINT [彼氏持ち]
+	PRINT [남친있음]
 SIF TALENT:ARG:교제상대 == 3
-	PRINT [婚約]
+	PRINT [약혼]
 SIF TALENT:ARG:교제상대 == 4
-	PRINT [人妻]
+	PRINT [유부녀]
 SIF TALENT:ARG:교제상대 == 5
-	PRINT [未亡人]
+	PRINT [과부]
 SIF TALENT:ARG:학생 == 1
 	PRINT [초등학생]
 SIF TALENT:ARG:학생 == 2
@@ -79,7 +79,7 @@ SIF TALENT:ARG:마조기질 > 0
 SIF TALENT:ARG:쾌감에솔직 > 0
 	PRINT [쾌감에솔직]
 SIF TALENT:ARG:쾌감을부정 > 0
-	PRINT [快楽に否定]
+	PRINT [쾌감을부정]
 SIF TALENT:ARG:전투거부 > 0
 	PRINT [전투거부]
 SIF TALENT:ARG:싸움꾼 > 0
@@ -119,11 +119,11 @@ PRINTL
 SETCOLOR 120,255,255
 SIF TALENT:ARG:청순파 != 1
 	SETCOLOR 105,105,105
-PRINT 　[0] あり　　　　　　
+PRINT 　[0] 있음　　　　　　
 SETCOLOR 120,255,255
 SIF TALENT:ARG:청순파 != 0
 	SETCOLOR 105,105,105
-PRINT 　[1] なし　　　　　　
+PRINT 　[1] 없음　　　　　　
 IF ISFEMALE(ARG)
 	RESETCOLOR
 	SETCOLOR 120,255,255
@@ -140,56 +140,57 @@ IF ISFEMALE(ARG)
 	SETCOLOR 120,255,255
 	SIF TALENT:ARG:처녀 != 0
 		SETCOLOR 105,105,105
-	PRINT 　[4] 非처녀　　　
+	PRINT 　[4] 비처녀　　　
 ENDIF
 RESETCOLOR
 PRINTL  
 PRINTL 
 
-PRINTL 通学状況:
+PRINTL 통학 상황:
 IF TALENT:ARG:학생 > 0
 	SETCOLOR 105,105,105
 	SIF CFLAG:ARG:358 == 0
 		SETCOLOR 120,255,255
-		PRINT 　[10]郊外の学校に　　
+		PRINT 　[10] 교외의 학교　　
 	RESETCOLOR
 	SETCOLOR 105,105,105
 	SIF CFLAG:ARG:358 == 1
 		SETCOLOR 120,255,255
-		PRINT 　[11]都心の学校に　　
+		PRINT 　[11] 도심의 학교　　
 	RESETCOLOR
 	SETCOLOR 105,105,105
 	SIF CFLAG:ARG:359 == 0
 		SETCOLOR 120,255,255
-		PRINT 　[12]通っている　　　
+		;원문은 通っている
+		PRINT 　[12] 재학 중　　　　
 	RESETCOLOR
 	SETCOLOR 105,105,105
 	SIF CFLAG:ARG:359 == 1
 		SETCOLOR 120,255,255
-		PRINT 　[13]転校してきた　
+		PRINT 　[13] 전학 왔다　　
 	RESETCOLOR
 ENDIF
 PRINTL 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:학생 == 1
 	SETCOLOR 120,255,255
-	PRINT 　[20]초등학생　　　　　
+	PRINT 　[20] 초등학생　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:학생 == 2
 	SETCOLOR 120,255,255
-	PRINT 　[21]중학생　　　　　
+	PRINT 　[21] 중학생　　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:학생 == 3
 	SETCOLOR 120,255,255
-	PRINT 　[22]고등학생　　　　　
+	PRINT 　[22] 고등학생　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:학생 == 4
 	SETCOLOR 120,255,255
-	PRINT 　[23]대학생　　　　　
+	PRINT 　[23] 대학생　　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:학생 <= 0 || TALENT:ARG:학생>=5
 	SETCOLOR 120,255,255
-	PRINT 　[24]なし
+	PRINT 　[24] 없음
 RESETCOLOR
 PRINTL
 PRINTL 
@@ -199,44 +200,44 @@ PRINTL 가족관계:
 SETCOLOR 105,105,105
 SIF TALENT:ARG:가족관계 == 1
 	SETCOLOR 120,255,255
-	PRINT 　[30]弟持ち　　　　　
+	PRINT 　[30] 남동생o　　　　
 SETCOLOR 105,105,105
 SIF TALENT:ARG:가족관계 == 2
 	SETCOLOR 120,255,255
-	PRINT 　[31]妹持ち　　　　　
+	PRINT 　[31] 여동생o　　　　
 SETCOLOR 105,105,105
 SIF TALENT:ARG:가족관계 == 3
 	SETCOLOR 120,255,255
-	PRINT 　[32]兄持ち　　　　　
+	PRINT 　[32] 형/오빠o　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:가족관계 == 4
 	SETCOLOR 120,255,255
-	PRINT 　[33]姉持ち　　　　　
+	PRINT 　[33] 누나/언니o　　 
 SETCOLOR 105,105,105
 PRINTL
 IF TALENT:ARG:처녀 == 0
 	SIF TALENT:ARG:가족관계 == 5
 		SETCOLOR 120,255,255
-		PRINT 　[34]幼い息子　　　　
+		PRINT 　[34] 어린 아들o　　 
 	SETCOLOR 105,105,105
 	SIF TALENT:ARG:가족관계 == 6
 		SETCOLOR 120,255,255
-		PRINT 　[35]幼い娘　　　　　
+		PRINT 　[35] 어린 딸o　　　 
 	SETCOLOR 105,105,105
 	SIF TALENT:ARG:가족관계 == 7
 		SETCOLOR 120,255,255
-		PRINT 　[36]年頃の息子　　　
+		PRINT 　[36] 성인 아들o　　 
 	SETCOLOR 105,105,105
 	SIF TALENT:ARG:가족관계 == 8
 		SETCOLOR 120,255,255
-		PRINT 　[37]年頃の娘　　　　
+		PRINT 　[37] 성인 딸o　　　 
 	SETCOLOR 105,105,105
 ELSE
 	PRINT 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ENDIF
 SIF TALENT:ARG:가족관계 == 0
 	SETCOLOR 120,255,255
-	PRINT 　[38]なし
+	PRINT 　[38] 없음
 RESETCOLOR
 PRINTL  
 PRINTL  
@@ -245,93 +246,93 @@ PRINTL 교제상대:
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 1
 	SETCOLOR 120,255,255
-	PRINT 　[40]짝사랑　　　　　
+	PRINT 　[40] 짝사랑　　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 2
 	SETCOLOR 120,255,255
-	PRINT 　[41]彼氏持ち　　　　
+	PRINT 　[41] 남친 있음　　　
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 3
 	SETCOLOR 120,255,255
-	PRINT 　[42]婚約　　　　　　
+	PRINT 　[42] 약혼　　　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 4
 	SETCOLOR 120,255,255
-	PRINT 　[43]人妻　　　　　　
+	PRINT 　[43] 유부녀　　　　 
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 5
 	SETCOLOR 120,255,255
-	PRINT 　[44]未亡人
+	PRINT 　[44] 과부
 PRINTL
 SETCOLOR 105,105,105
 SIF TALENT:ARG:교제상대 == 0
 	SETCOLOR 120,255,255
-	PRINT 　[45]なし
+	PRINT 　[45] 없음
 RESETCOLOR
 PRINTL  
 
 DRAWLINE
 
-PRINTL 性交渉の経験：
+PRINTL 성관계 경험：
 SETCOLOR 120,255,255
 SIF OPTION:0 != 0
 	SETCOLOR 105,105,105
-PRINT 　[50]なし　　　　　　
+PRINT 　[50] 없음　　　　　 
 SETCOLOR 120,255,255
 SIF OPTION:0 != 1
 	SETCOLOR 105,105,105
-PRINT 　[51]少ない　　　　　
+PRINT 　[51] 적음　　　　　 
 SETCOLOR 120,255,255
 SIF OPTION:0 != 2
 	SETCOLOR 105,105,105
-PRINT 　[52]やや少ない　　　
+PRINT 　[52] 약간 적음　　　
 IF TALENT:ARG:청순파 == 0
 	SETCOLOR 120,255,255
 	SIF OPTION:0 != 3
 		SETCOLOR 105,105,105
-	PRINT 　[53]多い　　　　　　
+	PRINT 　[53] 많음　　　　　 
 	SETCOLOR 120,255,255
 	SIF OPTION:0 != 4
 		SETCOLOR 105,105,105
-	PRINT 　[54]かなり多い
+	PRINT 　[54] 아주 많음
 ENDIF
 RESETCOLOR
 PRINTL  
 PRINTL 
 
-PRINTL 生活環境：
+PRINTL 생활 환경：
 SETCOLOR 120,255,255
 SIF OPTION:1 != 0
 	SETCOLOR 105,105,105
-PRINT 　[60]優遇　　　　　　
+PRINT 　[60] 우대　　　　　 
 SETCOLOR 120,255,255
 SIF OPTION:1 != 1
 	SETCOLOR 105,105,105
-PRINT 　[61]一般的　　　　　
+PRINT 　[61] 일반적　　　　 
 SETCOLOR 120,255,255
 SIF OPTION:1 != 2
 	SETCOLOR 105,105,105
-PRINT 　[62]劣悪　　　　　　
+PRINT 　[62] 열악　　　　　 
 IF TALENT:ARG:청순파 == 0
 	SETCOLOR 120,255,255
 	SIF OPTION:1 != 3
 		SETCOLOR 105,105,105
-	PRINT 　[63]悲惨
+	PRINT 　[63] 비참
 ENDIF
 RESETCOLOR
 PRINTL 
 PRINTL 
 
-PRINTL 売春経験：
+PRINTL 매춘 경험：
 SETCOLOR 120,255,255
 SIF OPTION:2 != 0
 	SETCOLOR 105,105,105
-PRINT 　[70]なし　　　　　　
+PRINT 　[70] 없음　　　　　 
 IF TALENT:ARG:청순파 == 0
 	SETCOLOR 120,255,255
 	SIF OPTION:2 != 1
 		SETCOLOR 105,105,105
-	PRINT 　[71]あり
+	PRINT 　[71] 있음
 ENDIF
 RESETCOLOR
 PRINTL 
@@ -342,17 +343,17 @@ IF ISFEMALE(ARG)
 	SETCOLOR 120,255,255
 	SIF OPTION:3 != 0
 		SETCOLOR 105,105,105
-	PRINT 　[80]なし　　　　　　
+	PRINT 　[80] 없음　　　　　 
 	IF TALENT:ARG:처녀 == 0 && TALENT:ARG:미성숙 == 0
 		SETCOLOR 120,255,255
 		SIF OPTION:3 != 1
 			SETCOLOR 105,105,105
-		PRINT 　[81]少ない　　　　　
+		PRINT 　[81] 적음　　　　　 
 		IF TALENT:ARG:청순파 == 0
 			SETCOLOR 120,255,255
 			SIF OPTION:3 != 2
 				SETCOLOR 105,105,105
-			PRINT 　[82]多い
+			PRINT 　[82] 많음
 		ENDIF
 	ENDIF
 	RESETCOLOR
@@ -364,20 +365,20 @@ ENDIF
 
 
 DRAWLINE
-PRINT 経験：　　
+PRINT 경험：　　
 CALL FIRSTSETTING_PRINT_EXP, ARG
 PRINTL 
 DRAWLINE
 
-IF 特殊判定!=""
-	PRINTFORML 特殊判定：　%特殊判定%
+IF 특수판정!=""
+	PRINTFORML 특수 판정：　%특수판정%
 ELSE
-	PRINTL 特殊判定：
+	PRINTL 특수 판정：
 ENDIF
 
 DRAWLINE
-PRINTL [100]上記の条件でリロール
-PRINTL [200]リセットする
+PRINTL [100] 위의 조건으로 리롤한다
+PRINTL [200] 초기화한다
 PRINTL [999] 결정
 INPUT
 IF RESULT == 0
@@ -401,10 +402,10 @@ ELSEIF RESULT == 1 && ISFEMALE(ARG)
 ELSEIF RESULT == 2 && ISFEMALE(ARG)
 	IF TALENT:ARG:처녀 == 0 || TALENT:ARG:처녀 == 2
 		TALENT:ARG:처녀 = 1
-		;처녀が出産済みなわけねえだろ필터
+		;처녀가 출산할 리가 없잖아 필터
 		SIF OPTION:3 > 0
 			OPTION:3 = 0
-		;처녀なら実子もいない(★養子は考慮されていない)
+		;처녀라면 친자도 없다(★양자는 고려하지 않았다)
 		SIF TALENT:ARG:가족관계 > 5
 			TALENT:ARG:가족관계 = 0
 	ENDIF
@@ -413,10 +414,10 @@ ELSEIF RESULT == 2 && ISFEMALE(ARG)
 ELSEIF RESULT == 3 && ISFEMALE(ARG)
 	IF TALENT:ARG:처녀 < 2
 		TALENT:ARG:처녀 = 2
-		;성처녀は当然出産してないよ필터
+		;성처녀는 당연히 출산하지 않았다고 필터
 		SIF OPTION:3 > 0
 			OPTION:3 = 0
-		;처녀なら実子もいない(★養子は考慮されていない)
+		;처녀라면 친자도 없다(★양자는 고려하지 않았다)
 		SIF TALENT:ARG:가족관계 > 5
 			TALENT:ARG:가족관계 = 0
 	ENDIF
@@ -446,7 +447,7 @@ ELSEIF RESULT >= 20 && RESULT <=29
 			CFLAG:ARG:358=RAND:2
 		SIF CFLAG:ARG:359==0
 			CFLAG:ARG:359=RAND:2
-		;倫理필터(婚姻制限)
+		;윤리 필터(혼인 제한)
 		;SIF TALENT:ARG:교제상대 > 3
 		;	TALENT:ARG:교제상대 = 0
 	ELSEIF RESULT == 21
@@ -455,7 +456,7 @@ ELSEIF RESULT >= 20 && RESULT <=29
 			CFLAG:ARG:358=RAND:2
 		SIF CFLAG:ARG:359==0
 			CFLAG:ARG:359=RAND:2
-		;倫理필터(婚姻制限)
+		;윤리 필터(혼인 제한)
 		;SIF TALENT:ARG:교제상대 > 3
 		;	TALENT:ARG:교제상대 = 0
 	ELSEIF RESULT == 22
@@ -481,7 +482,7 @@ ELSEIF RESULT >= 20 && RESULT <=29
 ELSEIF RESULT >= 30 && RESULT <= 39
 	IF RESULT >= 30 && RESULT <= 37
 		TALENT:ARG:가족관계 = RESULT-29
-		;子供がいるなら出産は経験済み　★養子は考慮されていない
+		;아이가 있다면 출산은 경험 완료　★양자는 고려하지 않았다
 		SIF TALENT:ARG:가족관계 >= 5
 			OPTION:3=MAX(OPTION:3,1)
 	ELSE
@@ -494,32 +495,32 @@ ELSEIF RESULT >= 40 && RESULT <= 49
 	IF RESULT==40
 		TALENT:ARG:교제상대 = 1
 	ELSEIF RESULT==41
-		;男は彼氏持ちにならない(とりあえず)
+		;남자는 남친있음이 되지 않는다(일단은...?)
 		IF ISMALE(ARG)
 			TALENT:ARG:교제상대 = 3
 		ELSE
 			TALENT:ARG:교제상대 = 2
 		ENDIF
-	;婚約
+	;약혼
 	ELSEIF RESULT==42
 		TALENT:ARG:교제상대 = 3
-	;人妻
+	;유부녀
 	ELSEIF RESULT==43
-		;男は人妻にならない(とりあえず)
+		;남자는 유부녀가 되지 않는다(일단은...?)
 		IF ISMALE(ARG)
 			TALENT:ARG:교제상대 = 0
 		ELSE
 			TALENT:ARG:교제상대 = 4
 		ENDIF
-	;未亡人
+	;과부
 	ELSEIF RESULT==44
 		TALENT:ARG:교제상대 = 5
-	;なし
+	;없음
 	ELSE
 		TALENT:ARG:교제상대 = 0
 	ENDIF
 
-	;倫理필터(小중학생の婚姻制限)
+	;윤리 필터(초등, 중학생 혼인 제한)
 	;IF TALENT:ARG:교제상대 >= 4 && (TALENT:ARG:학생 == 1 || TALENT:ARG:학생 == 2)
 	;	TALENT:ARG:학생 = 3
 	;ENDIF
@@ -549,7 +550,7 @@ ELSEIF RESULT >= 71 && RESULT < 72 && TALENT:ARG:청순파 == 0
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 80
 	OPTION:3 = RESULT % 10
-	;★養子は考慮されていない
+	;★양자는 고려하지 않았다
 	SIF TALENT:ARG:가족관계 >= 5
 		TALENT:ARG:가족관계 = 0
 	CLEARLINE LINECOUNT - LCOUNT
@@ -566,19 +567,22 @@ ELSEIF RESULT == 82 && TALENT:ARG:청순파 == 0 && ISFEMALE(ARG) && TALENT:ARG:
 		OPTION:0 = 1
 	CLEARLINE LINECOUNT - LCOUNT
 	GOTO INPUT_LOOP
-;リロール
+;리롤
 ELSEIF RESULT == 100
-	特殊判定=
-	;与えられた条件から初期経験を生成
+	특수판정=
+	;주어진 조건에서 초기 경험을 생성
 	SEX_NUM = 0
-	;経験を全てリセット
+	;경험을 모두 초기화
 	FOR LOCAL, 0, 99
 		EXP:ARG:LOCAL = 0
 	NEXT
 
 	;●자위경험
-	;性欲の強さをみる
+	;성욕의 강함을 본다
+	;역) 우대 환경은 너무 없는 것 같은데 자위 정도는 괜찮겠지
 	LOCAL = RAND:8
+	SIF OPTION:1 == 0 && TALENT:ARG:청순파 == 0
+		LOCAL += RAND:3
 	SIF BASE:ARG:실제나이 > 8
 		LOCAL += RAND:2
 	SIF BASE:ARG:실제나이 > 12
@@ -613,9 +617,9 @@ ELSEIF RESULT == 100
 	ENDIF
 	SEX_NUM = 0
 
-	;●촉수被害の経験
+	;●촉수 피해 경험
 	LOCAL = 0
-	;生活環境が悲惨だった場合
+	;생활 환경이 비참했을 경우
 	IF ISFEMALE(ARG) && OPTION:1 == 3
 		EXP:ARG:피간경험 += 1
 		SEX_NUM += 6 + RAND:8
@@ -631,10 +635,10 @@ ELSEIF RESULT == 100
 			EXP:ARG:유폐경험 += 1+RAND:3
 			SEX_NUM += +RAND:20
 		ENDIF
-	;劣悪ではなく처녀なら襲われている確率が低い
+	;열악하지 않고 처녀라면 습격당했을 확률이 낮다
 	ELSEIF OPTION:1 < 2 && TALENT:ARG:처녀 > 0 && RAND:2 == 0
-		;セーフ
-	;生活環境が劣悪だった場合
+		;세이프
+	;생활 환경이 열악했을 경우
 	ELSEIF ISFEMALE(ARG) && OPTION:1 == 2
 		EXP:ARG:피간경험 += 1
 		SEX_NUM += 3 + RAND:4
@@ -650,7 +654,7 @@ ELSEIF RESULT == 100
 			EXP:ARG:유폐경험 += 1
 			SEX_NUM += 3
 		ENDIF
-	;生活環境が普通だった場合
+	;생활 환경이 보통이었을 경우
 	ELSEIF ISFEMALE(ARG) && OPTION:1 == 1 && RAND:3 == 0
 		EXP:ARG:피간경험 += 1
 		SEX_NUM += 1
@@ -658,9 +662,9 @@ ELSEIF RESULT == 100
 			EXP:ARG:유폐경험 += 1
 			SEX_NUM += 3
 		ENDIF
-	;生活環境が優遇なら촉수被害は受けていない
+	;생활 환경이 우대라면 촉수 피해는 입지 않았다
 	ENDIF
-	;総じて촉수被害者だった場合はテキトーに経験を加算
+	;대체로 촉수 피해자였던 경우는 적당히 경험을 가산
 	IF SEX_NUM > 0
 		FOR LOCAL, 0, SEX_NUM+3*EXP:ARG:유폐경험
 			IF RAND:10 == 0 && TALENT:ARG:처녀 == 0
@@ -703,89 +707,89 @@ ELSEIF RESULT == 100
 		NEXT
 
 		IF EXP:ARG:유폐경험>1 && TALENT:ARG:처녀 == 0
-			特殊判定'=特殊判定+"촉수の苗床にされたことがある　"
+			특수판정'=특수판정+"촉수의 모판이 된 적이 있다　"
 		ELSEIF EXP:ARG:유폐경험>0
-			特殊判定'=特殊判定+"触巣に連れ去られたことがある　"
+			특수판정'=특수판정+"촉수 둥지에 끌려간 적이 있다　"
 		ELSE
-			特殊判定'=特殊判定+"촉수に襲われたことがある　"
+			특수판정'=특수판정+"촉수에게 습격당한 적이 있다　"
 		ENDIF
 	ENDIF
 	SEX_NUM = 0
 
-	;●私生活での性交渉
+	;●사생활에서의 성관계
 	LOCAL = 0
-	;経験回数が少ない
+	;경험 횟수가 적다
 	IF OPTION:0 == 1 && RAND:2 == 0
 		LOCAL = 1 + RAND:3
-		;売春経験が「あり」なら
+		;매춘 경험이「있음」일 시
 		SIF OPTION:2 == 1 && RAND:2 == 0
 			LOCAL += 1
-	;経験回数がやや少ない
+	;경험 횟수가 약간 적다
 	ELSEIF OPTION:0 == 2 && RAND:2 == 0
 		LOCAL = 2 + RAND:6
-		;売春経験が「あり」なら
+		;매춘 경험이「있음」일 시
 		SIF OPTION:2 == 1 && RAND:3 != 0
 			LOCAL += 2
-	;経験回数が多い
+	;경험 횟수가 많다
 	ELSEIF OPTION:0 == 3
 		LOCAL = 4 + RAND:12
-		;売春経験が「あり」なら
+		;매춘 경험이「있음」일 시
 		SIF OPTION:2 == 1 && RAND:4 != 0
 			LOCAL += 4
-	;経験回数がかなり多い
+	;경험 횟수가 아주 많다
 	ELSEIF OPTION:0 == 4
 		LOCAL = 8 + RAND:24
 		SIF RAND:10 == 0
 			LOCAL = LOCAL * 3 / 2
-		;売春経験が「あり」なら
+		;매춘 경험이「있음」일 시
 		SIF OPTION:2 == 1 && RAND:5 != 0
 			LOCAL += 8
 	ENDIF
-	;経験回数が「なし」以外なら経験補正値を決定
+	;경험 횟수가「없음」이외일 시 경험 보정치를 설정
 	IF OPTION:0 != 0
 		;교제상대
-		;彼氏
+		;남친
 		SIF TALENT:ARG:교제상대 == 2
 			LOCAL += RAND:3
 		;약혼자
 		SIF TALENT:ARG:교제상대 == 3
 			LOCAL += RAND:6
-		;人妻
+		;유부녀
 		SIF TALENT:ARG:교제상대 == 4 || TALENT:ARG:교제상대 == 5
 			LOCAL += RAND:12
-		;環境が劣悪ならレイプ被害を含む
+		;환경이 열악or비참했을 시 강간 피해를 포함한다
 		IF (OPTION:1 == 2 && RAND:4 == 0) || (OPTION:1 == 3 && RAND:2 == 0) 
-			;通常のレイプ
+			;통상 강간
 			IF RAND:4
 				LOCAL += 3 + RAND:6
-				特殊判定'=特殊判定+"レイプされたことがある　"
-			;もっと悲惨な経験
+				특수판정'=특수판정+"강간당한 적이 있다　"
+			;더욱 비참한 경험
 			ELSE
 				LOCAL += 12 + RAND:14
 				STRDATA LOCALS
-				DATAFORM 輪姦されたことがある
-				DATAFORM 誘拐されたことがある
-				DATAFORM 監禁されたことがある
-				DATAFORM ストーカーに襲われたことがある
-				DATAFORM ホームレスに犯されたことがある
+				DATAFORM 윤간당한 적이 있다
+				DATAFORM 유괴당한 적이 있다
+				DATAFORM 감금당한 적이 있다
+				DATAFORM 스토커에게 습격당한 적이 있다
+				DATAFORM 노숙자에게 범해진 적이 있다
 				ENDDATA
-				特殊判定'=特殊判定+LOCALS+"　"
+				특수판정'=특수판정+LOCALS+"　"
 			ENDIF
-		;「優遇」以外なら何かしらの性経験(フレーバー)を足す
+		;「우대」이외일 시 어떠한 성 경험(플레이버)을 더한다
 		ELSEIF OPTION:1 > 0 && RAND:6==0
 				LOCAL += 5 + RAND:7
 				STRDATA LOCALS
-				DATAFORM 痴漢被害に悩まされている
-				DATAFORM セクハラに悩まされている
+				DATAFORM 치한 피해에 시달리고 있다
+				DATAFORM 성희롱에 시달리고 있다
 				ENDDATA
-				特殊判定'=特殊判定+LOCALS+"　"
+				특수판정'=특수판정+LOCALS+"　"
 		ENDIF
 	ENDIF
 
-	;売春経験が「あり」なら追加の経験補正
+	;매춘 경험이「있음」일 시 추가 경험 보정
 	SIF OPTION:2 == 1 && RAND:5 != 0
 		LOCAL += 1 + RAND:3
-	;その他の補正
+	;기타 보정
 	SIF TALENT:ARG:보수적 > 0
 		LOCAL = LOCAL * 2 / 3
 	SIF TALENT:ARG:호기심 > 0
@@ -798,14 +802,14 @@ ELSEIF RESULT == 100
 		LOCAL = LOCAL / 2
 	SIF TALENT:ARG:학생 == 2
 		LOCAL = LOCAL * 2 / 3
-	;출산경험ありなら追加の経験補正
+	;출산 경험이 있을 시 추가 경험 보정
 	IF OPTION:3 == 1
 		LOCAL += 1 + RAND:6
 	ELSEIF OPTION:3 == 2
 		LOCAL += 2 + RAND:12
 	ENDIF
 
-	;総じて対人性交渉の経験ありだったらEXPをテキトーに加算
+	;대체로 대인 성관계 경험이 있다면 EXP를 적당히 가산
 	IF LOCAL > 0
 		SEX_NUM = LOCAL
 		FOR LOCAL, 0, SEX_NUM
@@ -817,7 +821,8 @@ ELSEIF RESULT == 100
 						EXP:ARG:사정경험 += 1
 				ENDIF
 			ELSE
-				IF OPTION:0 == 0 && OPTION:2 == 2
+				;경험 횟수가 없고 생활 환경이 열악하다면 펠라만
+				IF OPTION:0 == 0 && OPTION:1 == 2
 					EXP:ARG:펠라경험 += 1
 				ELSEIF OPTION:3 == 2 && EXP:ARG:V경험 == 0
 					EXP:ARG:V경험 += 2
@@ -869,7 +874,7 @@ ELSEIF RESULT == 100
 					EXP:ARG:봉사쾌락경험 += 1
 			ENDIF
 		NEXT
-		;출산경험
+		;출산 경험
 		IF OPTION:3 == 1 && EXP:ARG:V경험 > 0
 			EXP:ARG:출산경험 += 1
 			SIF RAND:10 == 0 && EXP:ARG:V경험 >= 3
@@ -887,11 +892,12 @@ ELSEIF RESULT == 100
 			SIF RAND:20 == 0 && EXP:ARG:V경험 >= 9
 				EXP:ARG:출산경험 += 1
 		ENDIF
-		;魅了
+		;매료
 		SIF OPTION:2 == 1 && RAND:4 == 0
 			EXP:ARG:매료경험 += 1 + RAND:3
 		;근친상간
 		LOCAL = 0
+		;매춘도 안 하고 사귀지도 않으면 집에서 따먹힌다
 		IF TALENT:ARG:교제상대 == 0 && OPTION:2 == 0
 			IF OPTION:1 == 2 && RAND:4 == 0
 				LOCAL = 1
@@ -904,11 +910,11 @@ ELSEIF RESULT == 100
 				LOCAL = 0
 		ENDIF
 		SIF LOCAL > 0
-			特殊判定'=特殊判定+"근친상간したことがある　"
+			특수판정'=특수판정+"근친상간을 한 적이 있다　"
 		IF LOCAL > 0
 			FOR LOCAL, 0, SEX_NUM
-				;★근친교배경험は産んだ새끼 촉수との交配回数にも使われている
-				;　ここ、本来は근친상간経験に分ける方が良い
+				;★근친교배경험은 낳은 새끼 촉수와의 교배 횟수에도 사용되고 있다
+				;　여기, 원래는 근친상간경험으로 나누는 것이 좋다
 				SIF RAND:4 != 0
 					EXP:ARG:근친교배경험 += 1
 			NEXT
@@ -918,17 +924,17 @@ ELSEIF RESULT == 100
 
 	CLEARLINE LINECOUNT - LCOUNT
 	GOTO INPUT_LOOP
-;初期化
+;초기화
 ELSEIF RESULT == 200
-	特殊判定=
-	;経験を全てリセット
+	특수판정=
+	;경험을 모두 초기화
 	FOR LOCAL, 0, 99
 		EXP:ARG:LOCAL = 0
 	NEXT
 
 	TALENT:ARG:가족관계=0
 	TALENT:ARG:교제상대=0
-	;学校は나이に応じた自然な値に
+	;학교는 나이에 따른 자연스러운 값으로
 	SELECTCASE BASE:ARG:나이
 	CASE 6 TO 12
 		TALENT:ARG:학생=1

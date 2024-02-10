@@ -14,9 +14,9 @@ IF TCVARn:1 == 0
 ELSEIF TCVARn:1 == 1
 	SELECTCASE ARGS
 		CASE "PRINT"
-			PRINT 도착(도착(倒錯))
+			PRINT 도착
 		CASE "PRINTSTATE"
-			PRINT 도착(도착(倒錯))（공・방・민 DOWN）
+			PRINT 도착(倒錯)（공・방・민 DOWN）
 		CASE "KOUGEKI"
 			TIMES ARG, 0.80
 		CASE "BOUGYO"
@@ -213,7 +213,7 @@ TCVARn:1 = 0
 PRINTL 
 PRINTFORM %PRINT_CALLNAME(TARGET,1)%의 심경이 
 CALL SHINKYOU_CHECK, "PRINT", 0
-PRINTL (으)로 변화하였다.
+PRINTL 으로 변화하였다.
 ;심경의 지속 턴 초기화
 TCVARn:11 = 0
 

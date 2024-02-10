@@ -328,7 +328,7 @@ IF RAND:2 == 0
 	IF (TCVARn:12 & 기절)
 		PRINTFORM 無防備に半開きになった唇を抉じ開けられ、口をオナホのように扱われている
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%PRINT_TRANSCALLNAME(TARGET)%은(는)我慢しきれず、
+		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%我慢しきれず、
 		PRINTFORM 半ば無意識に交尾器を口に含み、丁寧に舌を絡めて奉仕し初めた
 	ELSE
 		PRINTFORML その臭気に何とか顔を逸らそうとするが、
@@ -422,7 +422,7 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_3_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML に絡み付かれ、
 PRINTFORML 群れの中に取り込まれてしまった！

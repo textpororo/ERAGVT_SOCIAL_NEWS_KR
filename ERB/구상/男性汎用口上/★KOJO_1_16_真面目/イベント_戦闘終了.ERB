@@ -51,10 +51,10 @@ IF RAND:2
 		PRINTDATAL
 		DATAFORM 言葉とは裏腹に%CALLNAME%の体は火照り始めている。
 		DATAFORM そうつぶやく%CALLNAME%の\@ISMALE() ? 尻穴はしっとりと潤っ # 太ももは透明な汁に濡れ \@ていた。
-		DATAFORM %CALLNAME%은(는) 何かをこらえるように赤い顔でつぶやいた。
+		DATAFORM %타겟은% 何かをこらえるように赤い顔でつぶやいた。
 		ENDDATA
 	ELSE
-		PRINTFORML %CALLNAME%은(는) 苦々しげに吐き捨てた。
+		PRINTFORML %타겟은% 苦々しげに吐き捨てた。
 	ENDIF
 ;촉수의포로取得後
 ELSEIF TALENT:촉수의포로
@@ -63,7 +63,7 @@ ELSEIF TALENT:촉수의포로
 	DATAFORM 「はぁ、はぁ……少しは歯応えがあると思ったのに……」
 	DATAFORM 「なんだ……もう終わりなのか…？」
 	ENDDATA
-	PRINTFORML おぞましい体液を体中に塗りたくり、%CALLNAME%은(는) 蕩けた声を上げた。
+	PRINTFORML おぞましい体液を体中に塗りたくり、%타겟은% 蕩けた声を上げた。
 	PRINTFORML  動かなくなった촉수をそのままに、拭った体液の臭いを美味しそうに嗅ぎ取る。
 	PRINTFORML  その表情はどこか遠い何かを見ているようだった……
 ELSE
@@ -73,7 +73,7 @@ ELSE
 	DATAFORM まるで話にもならないな」
 	DATAFORM ふ、ふん、他愛もないな」
 	ENDDATA
-	PRINTFORML  %CALLNAME%은(는) 絡みつく촉수の残骸を引き剥がし、鼻を鳴らした。
+	PRINTFORML  %타겟은% 絡みつく촉수の残骸を引き剥がし、鼻を鳴らした。
 	PRINTFORML  おぞましい体液で透けた服は肢体にぴっちり張り付いている……
 ENDIF
 
@@ -92,10 +92,10 @@ IF EX:C절정 > 7 || EX:V절정 > 7 || EX:A절정 > 7 || EX:B절정 > 7
 	IF RESULT == 0 && EX:B절정 > 7
 		IF ISMALE()
 			;#region
-			PRINTFORML 数えきれないほど乳首でイかされた%CALLNAME%은(는) 、蕩けきった顔をしながら呟いた。
+			PRINTFORML 数えきれないほど乳首でイかされた%타겟은% 、蕩けきった顔をしながら呟いた。
 			;#endregion
 		ELSE 
-			PRINTFORML 数えきれないほど胸でイかされた%CALLNAME%은(는) 、蕩けきった顔をしながら呟いた。
+			PRINTFORML 数えきれないほど胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた。
 		ENDIF
 		LOCAL = 0
 	ELSEIF RESULT == 1 && EX:C절정 > 7
@@ -119,14 +119,14 @@ IF EX:C절정 > 7 || EX:V절정 > 7 || EX:A절정 > 7 || EX:B절정 > 7
 ;絶頂回数8回以上
 ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 7
 	PRINTFORML 「……………あっ、ンンんんん！！」
-	PRINTFORML 数えきれないほどイかされた%CALLNAME%은(는) 、地面に倒れ伏せ、ビクビクと痙攣している。
+	PRINTFORML 数えきれないほどイかされた%타겟은% 、地面に倒れ伏せ、ビクビクと痙攣している。
 ELSEIF PALAM:치정 > 80000
 	IF ABL:노출벽 > 3
 		PRINTFORML 「あはぁ……」
-		PRINTFORML 全てを曝け出した%CALLNAME%은(는) 満足そうに太ももを擦り合わせている……
+		PRINTFORML 全てを曝け出した%타겟은% 満足そうに太ももを擦り合わせている……
 	ELSE
 		PRINTFORML 「あ、ああ、ぁ…………」
-		PRINTFORML 全てを曝け出してしまった%CALLNAME%은(는) 蒼白になって절망している……
+		PRINTFORML 全てを曝け出してしまった%타겟은% 蒼白になって절망している……
 	ENDIF
 ;特定部位絶頂が2回以上
 ELSEIF EX:C절정 > 1 || EX:V절정 > 1 || EX:A절정 > 1 || EX:B절정 > 1
@@ -134,7 +134,7 @@ ELSEIF EX:C절정 > 1 || EX:V절정 > 1 || EX:A절정 > 1 || EX:B절정 > 1
 	WHILE LOCAL
 	RESULT = RAND:4
 	IF RESULT == 0 && EX:C절정 > 1
-		PRINTFORML  何度もイかされ、%CALLNAME%은(는) 歩くことも出来なさそうだ……
+		PRINTFORML  何度もイかされ、%타겟은% 歩くことも出来なさそうだ……
 		LOCAL = 0
 	ELSEIF RESULT == 1 && EX:V절정 > 1
 		PRINTFORML  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
@@ -145,10 +145,10 @@ ELSEIF EX:C절정 > 1 || EX:V절정 > 1 || EX:A절정 > 1 || EX:B절정 > 1
 	ELSEIF RESULT == 3 && EX:B절정 > 1
 		IF ISMALE()
 			;#region
-			PRINTFORML  何度も乳首でイかされた%CALLNAME%은(는) 、蕩けきった顔をしながら呟いた
+			PRINTFORML  何度も乳首でイかされた%타겟은% 、蕩けきった顔をしながら呟いた
 			;#endregion
 		ELSE 
-			PRINTFORML  何度も胸でイかされた%CALLNAME%은(는) 、蕩けきった顔をしながら呟いた
+			PRINTFORML  何度も胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた
 		ENDIF
 		LOCAL = 0
 	ENDIF
@@ -157,32 +157,32 @@ ELSEIF EX:C절정 > 1 || EX:V절정 > 1 || EX:A절정 > 1 || EX:B절정 > 1
 ELSEIF PALAM:치정 > 10000 && RAND:3==0
 	IF ABL:노출벽 > 3
 		PRINTFORML 「ふふ……」
-		PRINTFORML 野外で裸を披露した%CALLNAME%은(는) 満足そうに太ももを擦り合わせている……
+		PRINTFORML 野外で裸を披露した%타겟은% 満足そうに太ももを擦り合わせている……
 	ELSE
 		PRINTFORML 「あ、ああ、ぁ…………」
-		PRINTFORML 公衆に裸を見られた%CALLNAME%은(는) 真っ赤な顔を両手で覆い、急いで逃げ帰った……
+		PRINTFORML 公衆に裸を見られた%타겟은% 真っ赤な顔を両手で覆い、急いで逃げ帰った……
 	ENDIF
 ELSEIF PALAM:욕정 > 10000 && RAND:3==0
 	PRINTFORML 「……ん、ぁん、んん……%SELF_CALL()%の勝ち…だな……」
-	PRINTFORML %CALLNAME%은(는) 官能の炎に焼かれながら、勝利を宣言した。
+	PRINTFORML %타겟은% 官能の炎に焼かれながら、勝利を宣言した。
 ELSEIF PALAM:공포 > 10000 && RAND:3==0
 	PRINTFORML 「……%SELF_CALL_SINGLE()%、%SELF_CALL()%、勝て、たのか……？」
-	PRINTFORML %STR:2500%に与えられた공포から歯をカチカチ震わせている%CALLNAME%은(는) 
+	PRINTFORML %STR:2500%に与えられた공포から歯をカチカチ震わせている%타겟은% 
 	PRINTFORML まだ倒したことが信じられず、動かない%STR:2500%に怯えている……
 ELSE
 	PRINTFORML 「はあ、はぁ……%SELF_CALL()%の力、思い知ったか！？」
-	PRINTFORML  崩れていく촉수を前に、%CALLNAME%은(는) 肩を大きく上下させていた。
+	PRINTFORML  崩れていく촉수を前に、%타겟은% 肩を大きく上下させていた。
 	PRINTFORML  断末魔の痙攣と共に、無数の촉수がでたらめに体液を吐き散らす。
 	PRINTFORML  辺りを覆っていた異臭も次第に薄れてゆくようだ。
 	SELECTCASE RAND:2
 		CASE 0
-			PRINTFORML  %CALLNAME%은(는) もう一度油断なく武器を構え、危機が去ったことを確かめてから力を抜いた。
+			PRINTFORML  %타겟은% もう一度油断なく武器を構え、危機が去ったことを確かめてから力を抜いた。
 		CASE 1
-			PRINTFORML  %CALLNAME%은(는) 周囲の気配を改めて伺い、安全を確認すると力を抜いた。
+			PRINTFORML  %타겟은% 周囲の気配を改めて伺い、安全を確認すると力を抜いた。
 		CASE 2
-			PRINTFORML  %CALLNAME%은(는) 촉수の動きが止まったことを確認し、それからようやく力を抜いた。
+			PRINTFORML  %타겟은% 촉수の動きが止まったことを確認し、それからようやく力を抜いた。
 		CASE 3
-			PRINTFORML  ……息を切らしながら勝ち誇る%CALLNAME%은(는) 、気付いていない。
+			PRINTFORML  ……息を切らしながら勝ち誇る%타겟은% 、気付いていない。
 			PRINTFORML  おぞましい異臭が薄れたわけではなく、自分の身体が慣れていっているだけだと……
 			PRINTFORML  そして慣れれば慣れるほど、촉수の繁殖に適した身体となってゆく事実にも……
 	ENDSELECT
@@ -211,10 +211,10 @@ ENDIF
 SELECTCASE RAND:2
 	CASE 0
 		PRINTFORML 「生きてるか？ %SELF_CALL()%が分かるか？ ……仇は絶対、%SELF_CALL()%が取ってやるからな……」
-		PRINTFORML 倒れた仲間を助け起こしながら、%CALLNAME%은(는) 拳を握った。
+		PRINTFORML 倒れた仲間を助け起こしながら、%타겟은% 拳を握った。
 	CASEELSE
 		PRINTFORML 「なんて姿だ……でも、生きてまた会えて良かった……」
-		PRINTFORML 倒れた仲間を助け起こしながら、%CALLNAME%은(는) 安堵の溜め息をついた……
+		PRINTFORML 倒れた仲間を助け起こしながら、%타겟은% 安堵の溜め息をついた……
 ENDSELECT
 ;흑화 캐릭터に捕らわれていたキャラの救出
 ;--------------------------------------------------
@@ -241,22 +241,22 @@ ENDSELECT
 @KOJO_1_BATTLE_END_LASTBOSSAPPEAR_16
 IF MARK:굴복각인 >= 3|| MARK:공포각인 >= 3
 	PRINTFORML 「な、何なんだ……まだいたのか！？ しつこいな！」
-	PRINTFORML これまで%CALLNAME%은(는) 身も心も穢し、粉に変えながら戦ってきた。
+	PRINTFORML これまで%타겟은% 身も心も穢し、粉に変えながら戦ってきた。
 	PRINTFORML そうして倒してきた敵よりなお強力な敵がまだいたことを知って、心が根元から崩壊しそうになる。
 	PRINTFORML （……それでも……%SELF_CALL(7)%は）
 	IF TALENT:촉수의포로|| ABL:촉수중독 > 3
 		PRINTFORML 「あの…あんな大きな촉수と……」
-		PRINTFORMW 肉欲に突き動かされて、%CALLNAME%은(는) 次なる戦いを受け入れた。
+		PRINTFORMW 肉欲に突き動かされて、%타겟은% 次なる戦いを受け入れた。
 	ELSE
 		PRINTFORML 「戦わ、ないと……」
-		PRINTFORMW 공포を無理やりに呑み込んで、%CALLNAME%은(는) 次なる戦いを受け入れた。
+		PRINTFORMW 공포を無理やりに呑み込んで、%타겟은% 次なる戦いを受け入れた。
 	ENDIF
 ELSE
 	PRINTFORML 「嘘だろ…まだ……まだいたのか？」
-	PRINTFORML 目の前に転がる骸を放り、%CALLNAME%은(는) 彼方に現れた強大な敵を見やる。
+	PRINTFORML 目の前に転がる骸を放り、%타겟은% 彼方に現れた強大な敵を見やる。
 	PRINTFORML これまでの敵よりはるかに手強い存在がいると知って、しかし心は微塵も揺るがなかった。
 	PRINTFORML 「……問題、無い。いいぞ、何匹でも来い」
-	PRINTFORMW 小さく声をこぼして、次なる戦いに備えて%CALLNAME%은(는) その場を後にした……
+	PRINTFORMW 小さく声をこぼして、次なる戦いに備えて%타겟은% その場を後にした……
 	IF TALENT:촉수의포로|| ABL:촉수중독 > 3
 		IF ISMALE()
 			;#region
@@ -322,7 +322,7 @@ IF ISMALE()
 	PRINTFORML  \@TALENT:보추 ? 少女のような # \@彼本来の胸肌からは不釣り合いなほど肥大した乳暈と乳首の形に擬態した。
 	PRINTFORML  股間に吸い付く촉수はペニス全体を覆うと、鈴口から得体の知れない粘液を注ぎ込み、
 	PRINTFORML  牝にはこんなもの不必要だと言わんばかりにみるみるうちに睾丸ごと縮小させてしまった。
-	PRINTFORMW  촉수は包み込んだ乳首と牝化したペニスを小刻みに刺激しはじめ、%PRINT_TRANSCALLNAME(TARGET)%은(는)息を飲む。
+	PRINTFORMW  촉수は包み込んだ乳首と牝化したペニスを小刻みに刺激しはじめ、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%息を飲む。
 	PRINTFORML 
 	PRINTFORML 「ふざけるな、こんなもの…すぐっ………お゛ッほぉおぉぉおおおッ？！」
 	PRINTFORML  떼어낸다べく牝ペニスに伸ばした手が触れた瞬間、微細な촉수が鈴口から精巣にまで一気に侵入してきた。。
@@ -330,7 +330,7 @@ IF ISMALE()
 	PRINTFORML  ペニスを盾にされては떼어낸다ことなど出来そうにもなかった。
 	PRINTFORML 「……これから%SELF_CALL()%は、こんな情けない姿を晒して……くぅ……っ！」
 	PRINTFORML  解除する方法が見つかるまでは、醜く変容した身体で生活しなければならない……
-	PRINTFORML これからのことを考えると、%PRINT_TRANSCALLNAME(TARGET)%은(는)気が気ではなかった……
+	PRINTFORML これからのことを考えると、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気が気ではなかった……
 ELSE
 	PRINTFORML 「ひ、ひぃぃぃい？！ 何だ、何なんだよこれッ？！」
 	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%의 肢体を這いずりまわり、胸と秘部に凝縮された촉수の体液は
@@ -341,7 +341,7 @@ ELSE
 	PRINTFORML  彼女本来の乳房からは不釣り合いなほど肥大した乳暈と乳首の形に擬態した。
 	PRINTFORML  秘部に吸い付く촉수は包皮の隙間から음핵を覆い、親指大に膨れ上がって
 	PRINTFORML  常に突き出した음핵の形に擬態した。
-	PRINTFORMW  촉수は包み込んだ乳首と陰核を小刻みに刺激しはじめ、%PRINT_TRANSCALLNAME(TARGET)%은(는)息を飲む。
+	PRINTFORMW  촉수は包み込んだ乳首と陰核を小刻みに刺激しはじめ、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%息を飲む。
 	PRINTFORML 
 	PRINTFORML 「ふざけるな、こんなもの…すぐっ………お゛ッほぉおぉぉおおおッ？！」
 	PRINTFORML  떼어낸다べく秘部に伸ばした手が触れた瞬間、촉수は中に囲い込んだ陰核を一気に絞り上げた。
@@ -349,7 +349,7 @@ ELSE
 	PRINTFORML 陰核を盾にされては떼어낸다ことなど出来そうにもなかった。
 	PRINTFORML 「……これから%SELF_CALL()%は、こんな情けない姿を晒して……くぅ……っ！」
 	PRINTFORML  解除する方法が見つかるまでは、醜く変容した身体で生活しなければならない……
-	PRINTFORML これからのことを考えると、%PRINT_TRANSCALLNAME(TARGET)%은(는)気が気ではなかった……
+	PRINTFORML これからのことを考えると、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気が気ではなかった……
 ENDIF
 
 
@@ -376,7 +376,7 @@ CASE "丸呑み精液責め"
 CASEELSE
 	IF TALENT:촉수의포로
 		PRINTFORML 「あぁ……また…%SELF_CALL(7)%……❤」
-		PRINTFORMW 自らを飲み込もうとする촉수に、%CALLNAME%은(는) 小さく微笑んだ。
+		PRINTFORMW 自らを飲み込もうとする촉수に、%타겟은% 小さく微笑んだ。
 	ELSE
 		PRINTDATAL
 		DATAFORM 「ひッ、やめ……嫌だ、イヤだあぁぁ……」
@@ -400,7 +400,7 @@ ENDSELECT
 ;촉수의포로取得後
 IF TALENT:촉수의포로
 	PRINTFORML 「ふん……それで……%SELF_CALL()%を組み敷いてどうするつもりだ……？」
-	PRINTFORML  押し倒された%PRINT_TRANSCALLNAME(TARGET)%은(는)、ぞくぞくと背筋を走る욕망に口の端を吊り上げ、濁りきった目をした%PRINT_TRANSCALLNAME(FLAG:111)%の顔を見上げる。
+	PRINTFORML  押し倒された%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ぞくぞくと背筋を走る욕망に口の端を吊り上げ、濁りきった目をした%PRINT_TRANSCALLNAME(FLAG:111)%の顔を見上げる。
 	IF ISMALE()
 		;#region
 		PRINTFORML 「キス？ 逆レイプ？ それとも、男のでも生やして%SELF_CALL()%を貫く気か？」
@@ -410,7 +410,7 @@ IF TALENT:촉수의포로
 	ENDIF
 	PRINTFORML  虚勢を張りつつも喉を鳴らす%PRINT_TRANSCALLNAME(TARGET)%의 上で、%PRINT_TRANSCALLNAME(FLAG:111)%は突然身体を折り、苦悶の声を上げ始めた……
 	PRINTFORML 「なんだそれ…？ ど、どうしたんだ？」
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%이(가)見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
 	PRINTFORML  突き出した腹のおへそから大量の粘液が噴き出すと、臍孔をこじ開けて体内に기생していた無数の촉수が一斉に飛び出し、%PRINT_TRANSCALLNAME(TARGET)%의 肢体を絡めとっていく。
 	PRINTFORML 「な……？！ お、がぼ、ぉ゛っごぉ！」
 	PRINTFORML  声を上げる間もなく、白目を剥いて痙攣する%PRINT_TRANSCALLNAME(FLAG:111)%の口から鼻から、体内の촉수が溢れて%PRINT_TRANSCALLNAME(TARGET)%의 上半身を押し包み、口を、鼻を、耳を、粘液をぶちまけながら蹂躙していく。
@@ -426,7 +426,7 @@ ELSE
 	PRINTFORML  組み敷かれた%PRINT_TRANSCALLNAME(TARGET)%には、もはや%PRINT_TRANSCALLNAME(FLAG:111)%を押しのける力すら残っていない……
 	IF ISMALE()
 		;#region
-		PRINTFORML  唇を奪われ、乳首を捏ね回さ穴を掻き回され、%PRINT_TRANSCALLNAME(TARGET)%은(는)甘ったるい悲鳴を上げ続ける。
+		PRINTFORML  唇を奪われ、乳首を捏ね回さ穴を掻き回され、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%甘ったるい悲鳴を上げ続ける。
 		;#endregion
 	ENDIF
 	IF ISMALE()
@@ -437,9 +437,9 @@ ELSE
 		PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%が%PRINT_TRANSCALLNAME(TARGET)%의 足を取り、秘唇を重ねた瞬間、%PRINT_TRANSCALLNAME(FLAG:111)%の嬌声が絶叫に変わった！
 	ENDIF
 	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%は泡を吹きながら白目を剥き、汗にまみれた肢体を滅茶苦茶に暴れさせ始める……
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%이(가)呆然と見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%呆然と見上げる目の前で、%PRINT_TRANSCALLNAME(FLAG:111)%のなめらかな腹に無数の醜い畝が盛り上がり、ぼごぼごと膨れ上がっていく！
 	PRINTFORML 「な、何のつもりだ……ひっ」
-	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%のおへそをこじ開け、体内に기생していた촉수が%PRINT_TRANSCALLNAME(TARGET)%을(를)絡めとった。
+	PRINTFORML  %PRINT_TRANSCALLNAME(FLAG:111)%のおへそをこじ開け、体内に기생していた촉수が%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%絡めとった。
 	PRINTFORML  舌を突き出し、苦悶の声を上げる口からも体内の촉수が溢れ出し、%PRINT_TRANSCALLNAME(TARGET)%의 口に、鼻に這いずりこむ。
 	PRINTFORML  拡張されきった%PRINT_TRANSCALLNAME(FLAG:111)%の尻穴からのたくり出て行く大量の촉수が%PRINT_TRANSCALLNAME(TARGET)%의 下半身を押し包んでいく。
 	PRINTFORML 「な、あ゛がっ゛……か、は、や゛めっ、や゛めぇ゛……！」

@@ -30,7 +30,7 @@ SETCOLOR 60,250,120
 ;--------------------------------------------------
 ;@KOJO_0_TURNEND_16
 ;ターン終了時に呼び出されるキャラ専用の処理です
-;独自に使ってるフラグの初期化とかそういうの
+;独自に使ってるフラグの초기화とかそういうの
 	진지함_フラグ_シチュ=
 
 
@@ -58,7 +58,7 @@ IF BASE:체력 <= 강제휴식체력
 		DATAFORM 「……今日は一人にしておいてくれない？」
 		ENDDATA
 	ENDIF
-	PRINTFORML  %CALLNAME%은(는) 部屋に閉じこもって出てこない……
+	PRINTFORML  %타겟은% 部屋に閉じこもって出てこない……
 ;임신 중は非表示(仮)
 ELSEIF CHECK_PREGNANT_F(TARGET) > 0
 
@@ -69,103 +69,103 @@ ELSEIF EXP:매료경험 > 99 && (DAY % 7 == 0 || DAY % 7 == 6)
 		SELECTCASE RAND:9
 		CASE 0
 			PRINTFORML 「はい、%CALLNAME%ですが……え、ライブ公演……今からですか！？」
-			PRINTFORML  %CALLNAME%은(는) 電話口から告げられた突然の予定に戸惑っている。
+			PRINTFORML  %타겟은% 電話口から告げられた突然の予定に戸惑っている。
 		CASE 1
 			PRINTFORML 「週末……ライブ公演、か」
-			PRINTFORML  %CALLNAME%은(는) 複雑な面持ちでカレンダーとトレーニング器具を交互に眺めている。
+			PRINTFORML  %타겟은% 複雑な面持ちでカレンダーとトレーニング器具を交互に眺めている。
 		CASE 2
 			PRINTFORML 「あー……今日はどうしようかしら」
-			PRINTFORML  ライブ出演のオファーを聞かされた%CALLNAME%은(는) 困った顔をしている。
+			PRINTFORML  ライブ出演のオファーを聞かされた%타겟은% 困った顔をしている。
 			PRINTFORML  魔法少女兼アイドルも楽ではないようだ。
 		CASE 3
 			PRINTFORML 「活動資金は必要だけれども……アイドル、%SELF_CALL()%に向いてるのかなあ」
-			PRINTFORML  ライブ公演の告知を自室で眺めつつ、%CALLNAME%은(는) 誰ともなしに呟いた。
+			PRINTFORML  ライブ公演の告知を自室で眺めつつ、%타겟은% 誰ともなしに呟いた。
 			PRINTFORML  デビューを経てなお、きらびやかな衣装には当分慣れそうもない。
 		CASE 4
 			PRINTFORML 「%SELF_CALL()%のファン…か。希望を奪わないように頑張らなきゃ」
-			PRINTFORML  %CALLNAME%은(는) 鍛錬の傍らSNSを眺めている。
+			PRINTFORML  %타겟은% 鍛錬の傍らSNSを眺めている。
 		CASE 5
 			PRINTFORML 「週末ライブに割かれる時間の分だけ、もっと身体を鍛えないと」
-			PRINTFORML  %CALLNAME%은(는) 自室でストレッチを始めている。
+			PRINTFORML  %타겟은% 自室でストレッチを始めている。
 		CASE 6
 			PRINTFORML 「ライブの依頼……？ ああもう、出来ることなら今すぐ二人に分かれたいわ」
 			PRINTFORML  アイドルとしてのスケジュールに追われ、以前より鍛錬の時間が減っている%CALLNAME%。
 			PRINTFORML  力不足な自分にもどかしさを感じているようだ。
 		CASE 7
 			PRINTFORML 「ライブもデビューも活動資金のため……でも、人々に希望を持たせるのもアイドルの役割よね」
-			PRINTFORML  %CALLNAME%은(는) 並々ならぬ決意を心に秘めているようだ。
+			PRINTFORML  %타겟은% 並々ならぬ決意を心に秘めているようだ。
 		CASEELSE
 			PRINTFORML 「え、週末ライブに%SELF_CALL()%が出るんですか？」
 			PRINTFORML  出演を予定していたアイドルに緊急のトラブルがあったようだ。
-			PRINTFORML  詳細こそ教えてもらえなかったが、촉수絡みの事件らしい……%CALLNAME%은(는) 思わず眉をひそませた。
+			PRINTFORML  詳細こそ教えてもらえなかったが、촉수絡みの事件らしい……%타겟은% 思わず眉をひそませた。
 		ENDSELECT
 	;人気アイドル
 	ELSEIF EXP:매료경험 <=299
 		SELECTCASE RAND:9
 		CASE 0
 			PRINTFORML 「はい、%CALLNAME%ですが……公演ですか？ 予定は……空けてみます」
-			PRINTFORML  %CALLNAME%은(는) 急な週末ライブのオファーに対応している。
+			PRINTFORML  %타겟은% 急な週末ライブのオファーに対応している。
 		CASE 1
 			PRINTFORML 「週末……たぶんまた、ライブ公演ね」
-			PRINTFORML  %CALLNAME%은(는) 厳しい表情でトレーニング器具を眺めている。
+			PRINTFORML  %타겟은% 厳しい表情でトレーニング器具を眺めている。
 		CASE 2
 			PRINTFORML 「ライブしながらトレーニングすれば……きっと身体が持たないわね」
-			PRINTFORML  %CALLNAME%은(는) ライブ公演の準備をしながら困った顔をしている。
+			PRINTFORML  %타겟은% ライブ公演の準備をしながら困った顔をしている。
 			PRINTFORML  魔法少女兼アイドルも楽ではないようだ。
 		CASE 3
 			PRINTFORML 「%SELF_CALL()%に向いているかどうかは……きっと重要じゃないわ」
-			PRINTFORML  ライブ公演の告知を自室で眺めつつ、%CALLNAME%은(는) 誰ともなしに呟いた。
+			PRINTFORML  ライブ公演の告知を自室で眺めつつ、%타겟은% 誰ともなしに呟いた。
 			PRINTFORML  活動を重ね、アイドルとしての自分に慣れてきたようだ。
 		CASE 4
 			PRINTFORML 「……希望を持たせる役目って、そういう事じゃないと思うのだけれど」
-			PRINTFORML  %CALLNAME%은(는) 複雑な表情でSNSを眺めている。
+			PRINTFORML  %타겟은% 複雑な表情でSNSを眺めている。
 			PRINTFORML  自身に関する性的な呟きを偶然目にしてしまったようだ。
 		CASE 5
 			PRINTFORML 「いつ化け物が出るか分からないんだから、せめてストレッチくらいはやっておかなきゃ」
-			PRINTFORML  %CALLNAME%은(는) ライブの準備をしながら、器用に体操を始めた。
+			PRINTFORML  %타겟은% ライブの準備をしながら、器用に体操を始めた。
 		CASE 6
 			PRINTFORML 「目の前の問題に対処するのが一番……よね」
 			PRINTFORML  ライブと鍛錬を天秤に掛け、ため息をつく%CALLNAME%。
 			PRINTFORML  力不足な自分にもどかしさを感じているようだ。
 		CASE 7
 			PRINTFORML 「心に希望を持たせるのがアイドル、化け物を倒すのが%SELF_CALL()%。大丈夫、両方やれるわ、きっと」
-			PRINTFORML  %CALLNAME%은(는) 覚悟を決めたようだ。
+			PRINTFORML  %타겟은% 覚悟を決めたようだ。
 		CASEELSE
 			PRINTFORML 「週末ライブの準備……いえ、はい、調整してみます」
-			PRINTFORML  予定にないオファーを受け、%CALLNAME%은(는) 思わず眉をひそませた。
+			PRINTFORML  予定にないオファーを受け、%타겟은% 思わず眉をひそませた。
 		ENDSELECT
 	;国民的アイドルが魔法少女やってるなんて知られたら大変！
 	ELSE
 		SELECTCASE RAND:8
 		CASE 0
 			PRINTFORML 「%SELF_CALL()%を待っている人が大勢いるんだから、期待に応えてあげないと」
-			PRINTFORML  촉수と戦う正義の味方の正体を隠しつつ、%CALLNAME%은(는) 週末ライブのオファーに対応している。
+			PRINTFORML  촉수と戦う正義の味方の正体を隠しつつ、%타겟은% 週末ライブのオファーに対応している。
 			PRINTFORML  人気アイドルとしての生活も楽ではないようだ。
 		CASE 1
 			PRINTFORML 「人気アイドル%CALLNAME%のソロライブ……責任重大ね」
-			PRINTFORML  %CALLNAME%은(는) 部屋の隅のトレーニング器具を名残惜しそうに眺め、
+			PRINTFORML  %타겟은% 部屋の隅のトレーニング器具を名残惜しそうに眺め、
 			PRINTFORML  気持ちを切り替えるために公演の段取りを確認している。
 		CASE 2
 			PRINTFORML 「考えようによっては、ライブも立派なトレーニングになるわ」
-			PRINTFORML  専門の鍛錬には替えがたい。それでも、%CALLNAME%은(는) 自分に言い聞かせるように独り呟いた。
+			PRINTFORML  専門の鍛錬には替えがたい。それでも、%타겟은% 自分に言い聞かせるように独り呟いた。
 		CASE 3
 			PRINTFORML 「ライブだけは死んでも慣れそうにないわ、%SELF_CALL()%」
-			PRINTFORML  控室に入りつつ、%CALLNAME%은(는) 誰ともなしに呟いた。
+			PRINTFORML  控室に入りつつ、%타겟은% 誰ともなしに呟いた。
 			PRINTFORML  人気アイドルになってなお、観客の熱狂には違和感を覚えるらしい。
 		CASE 4
 			PRINTFORML 「……ライブに来てくれるのは嬉しいけど、さすがにこれは…」
-			PRINTFORML  %CALLNAME%은(는) 複雑な表情でSNSを眺めている。
+			PRINTFORML  %타겟은% 複雑な表情でSNSを眺めている。
 			PRINTFORML  自身に関する性的な呟きの多さに不快感を隠せないようだ。
 		CASE 5
 			PRINTFORML 「国民的アイドルが化け物と戦ってるなんて、ウソみたいな話よね」
-			PRINTFORML  %CALLNAME%은(는) 自室の姿見を眺め、自嘲気味に呟いた。
+			PRINTFORML  %타겟은% 自室の姿見を眺め、自嘲気味に呟いた。
 		CASE 6
 			PRINTFORML 「目の前の問題、か……山積みね」
 			PRINTFORML  戦う活動資金を得るために始めたつもりが、気付けば国民的アイドルになってしまった。
-			PRINTFORML  鍛錬が疎かになってはいないだろうか？ %CALLNAME%은(는) 自問自答している。
+			PRINTFORML  鍛錬が疎かになってはいないだろうか？ %타겟은% 自問自答している。
 		CASE 7
 			PRINTFORML 「心に希望を持たせるのがアイドル、か。%SELF_CALL()%が化け物を倒さないと、本当の希望は来ないのに」
-			PRINTFORML  촉수に関する犯罪がニュースで報道され、%CALLNAME%은(는) もどかしさに苛立ってしまう。
+			PRINTFORML  촉수に関する犯罪がニュースで報道され、%타겟은% もどかしさに苛立ってしまう。
 			PRINTFORML  人々のパニック防止に%CALLNAME%が貢献しているのは確たる事実だが……
 		CASEELSE
 
@@ -182,31 +182,31 @@ ELSE
 	SELECTCASE RAND:8
 		CASE 0
 			PRINTFORML 「気持ちだけでは駄目。適切な休憩も必要ね」
-			PRINTFORML  %CALLNAME%은(는) 壁に寄り掛かって休んでいる。
+			PRINTFORML  %타겟은% 壁に寄り掛かって休んでいる。
 		CASE 1
 			PRINTFORML 「化け物をぶっ飛ばすか、鍛錬か……困ったわね、どうしましょう」
-			PRINTFORML  そう言いつつ%CALLNAME%은(는) 準備運動を始めている。
+			PRINTFORML  そう言いつつ%타겟은% 準備運動を始めている。
 		CASE 2
 			PRINTFORML 「さて、今日はどうしようかしら」
-			PRINTFORML  %CALLNAME%은(는) 誰ともなしに呟いた。
+			PRINTFORML  %타겟은% 誰ともなしに呟いた。
 		CASE 3
 			PRINTFORML 「一匹たりともあいつらは残さないわ」
-			PRINTFORML  %CALLNAME%은(는) ひとり闘志を燃やしている。
+			PRINTFORML  %타겟은% ひとり闘志を燃やしている。
 		CASE 4
 			PRINTFORML 「あいつら何匹湧いてくるのかしら」
-			PRINTFORML  %CALLNAME%은(는) うんざりした表情で武器を手入れしている。
+			PRINTFORML  %타겟은% うんざりした表情で武器を手入れしている。
 		CASE 5
 			PRINTFORML 「ええ、そうね、化け物達は絶対に許さない」
-			PRINTFORML  %CALLNAME%은(는) 拳を固く握りしめている。
+			PRINTFORML  %타겟은% 拳を固く握りしめている。
 		CASE 6
 			PRINTFORML 「出来ることなら今すぐ駆除してやりたいわ」
-			PRINTFORML  %CALLNAME%은(는) 力不足な自分にもどかしさを感じている。
+			PRINTFORML  %타겟은% 力不足な自分にもどかしさを感じている。
 		CASE 7
 			PRINTFORML 「こうしている間にもあいつらは……」
-			PRINTFORML  %CALLNAME%은(는) 自分の力不足に苛立っているようだ。
+			PRINTFORML  %타겟은% 自分の力不足に苛立っているようだ。
 		CASEELSE
 			PRINTFORML 「%SELF_CALL()%に任せてよね。大船に乗った気でいなさい」
-			PRINTFORML  %CALLNAME%은(는) 自信たっぷりに胸を張っている。
+			PRINTFORML  %타겟은% 自信たっぷりに胸を張っている。
 	ENDSELECT
 ENDIF
 PRINTFORML 

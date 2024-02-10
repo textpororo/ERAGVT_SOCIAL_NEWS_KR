@@ -205,7 +205,7 @@ ELSE
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は構う事無く腰を激しく振っている。
 	PRINTFORML 
-	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
+	PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	IF TALENT:촉수의포로
 		PRINTFORM 肉棒のマッサージに幸福そうな表情を浮かべている
 	ELSEIF ABL:욕망 >= 3
@@ -252,7 +252,7 @@ IF (ARG & Ｖ) == 0
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は、開脚された%PRINT_TRANSCALLNAME(TARGET)%의 膣穴を貫こうとしたが、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)両手を使って挿入を防いだため、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%両手を使って挿入を防いだため、
 	PRINTFORM うまく行かなかったようだ
 
 ELSEIF TALENT:처녀 > 0
@@ -365,7 +365,7 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_601_KARAMITUKU_SUCCESS
-PRINTFORML 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)腰に抱き着かれて拘束されてしまった。
+PRINTFORML 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%腰に抱き着かれて拘束されてしまった。
 
 
 ;=====拘束された結果=====

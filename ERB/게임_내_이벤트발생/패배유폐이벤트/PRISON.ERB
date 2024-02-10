@@ -45,7 +45,7 @@ PRINTFORML 유폐：%PRINT_CALLNAME(TARGET,1)%
 FONTREGULAR
 PRINTL 
 
-;유폐に関する変数の初期化
+;유폐に関する変数の초기화
 IF CFLAG:20 < 2
 	FLAG:110 = 0
 	FLAG:111 = 0
@@ -63,7 +63,7 @@ ENDIF
 ;ＴＳオプション
 IF (CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") > 0) && CONFIG_CHECK_PRISON_F(0) > 0
 
-	;今回の出産数플래그를初期化
+	;今回の出産数플래그를초기화
 	CFLAG:220 = 0
 
 	;지문: 初めての유폐
@@ -74,7 +74,7 @@ IF (CHARATALENT_F(TARGET,0,"남자") > 0 || CHARATALENT_F(TARGET,1,"남자") > 0
 
 ELSEIF CFLAG:31 == 0
 
-	;今回の出産数플래그를初期化
+	;今回の出産数플래그를초기화
 	CFLAG:220 = 0
 
 	;유폐自体が初めてかどうか
@@ -173,7 +173,7 @@ SIF TALENT:투쟁본능 > 0
 
 ;搾精強化機能
 IF CONFIG_CHECK_BALANCE_F(3) > 0 && LOCAL:2 > 0
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)촉수の精液からエネルギーを吸収した！
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%촉수の精液からエネルギーを吸収した！
 	CALL GET_SYUREN, RAND:5 + RAND:5 + 6
 	PRINTL 
 ENDIF

@@ -39,7 +39,7 @@ IF TALENT:(FLAG:111):기생 > 0
 	PRINTFORML  기생されている%PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)人ごみの中で嫌な気配を察知し、
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%人ごみの中で嫌な気配を察知し、
 PRINTFORML 一般人の中に紛れた%PRINT_TRANSCALLNAME(FLAG:111)%の姿を見つけた。
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は笑みを浮かべながら、久しい친구のように挨拶をして近づいてくると、
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 手を掴んで小路の影へ強引に連れ込んだ。
@@ -49,7 +49,7 @@ PRINTFORML 戦うにしても出来るだけ人気のない方が都合が良い
 PRINTFORML 仕方なく%PRINT_TRANSCALLNAME(FLAG:111)%に手を引かれ入り組んだ小路の奥へ進んでいった。
 PRINTW 
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%曰く、欲求不満なので手頃な인간を捕まえて性欲処理をしようとしたが、
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)その相手をするなら今回は一般人には手出ししない、と。
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%その相手をするなら今回は一般人には手出ししない、と。
 PRINTFORML ──%PRINT_TRANSCALLNAME(FLAG:111)%が인간相手をどうしようと、最終的には連れ去られ
 PRINTFORML 男は촉수に、女は苗床にされるのがオチである──
 PRINTFORM それならば自分が囮になり、
@@ -58,7 +58,7 @@ IF RAND:2 == 0
 ELSE
 	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%の油断をついて反撃すれば…と
 ENDIF
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%PRINT_TRANSCALLNAME(FLAG:111)%の交換条件を飲んで性処理の相手をすることに決めた。
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%PRINT_TRANSCALLNAME(FLAG:111)%の交換条件を飲んで性処理の相手をすることに決めた。
 PRINTL 
 CALL DOT_AFTER, 1
 PRINTFORML 人目の届かない静かな裏小路に、熱い吐息と水音が響いている。
@@ -79,7 +79,7 @@ ELSE
 	SIF EXP:사정경험 > 100
 		PRINT 経験豊富な
 ENDIF
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 SIF ABL:순종 > 3
 	PRINT 思考停止して、
 SIF ABL:노출벽 > 3 && ISFEMALE()
@@ -101,7 +101,7 @@ SIF EXP:(FLAG:111):A경험 > 100 && TALENT:(FLAG:111):보추 > 0
 	PRINT 経験豊富な
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%をなんとかイカせようとしている。
 
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)%PRINT_TRANSCALLNAME(FLAG:111)%の
+PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%PRINT_TRANSCALLNAME(FLAG:111)%の
 ;敵が受け
 ;自が攻め	
 IF RAND:3 == 0 && ISHOLE(FLAG:111)
@@ -155,15 +155,15 @@ ELSE
 	PRINTL 奉仕を促す。
 ENDIF
 SIF ISPENIS()
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)사정を堪えて%PRINT_TRANSCALLNAME(FLAG:111)%の性器に舌を伸ばした。
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%사정を堪えて%PRINT_TRANSCALLNAME(FLAG:111)%の性器に舌を伸ばした。
 IF TALENT:기생 > 0
 	PRINTFORML 二人の淫蕩な闘いが%PRINT_TRANSCALLNAME(TARGET)%의 内に眠る기생촉수を呼び覚まし、自在に変幻した。
 	PRINTFORML 様々な촉수を誰構わず絡めつかせ、淫気をより濃くしようと本能のままに蠢く。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自身の촉수からも責め立てられ快感に溺れそうになるが、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自身の촉수からも責め立てられ快感に溺れそうになるが、
 	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%への攻め手が増える好機でもあった。
 ENDIF
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 懸命な愛撫で%PRINT_TRANSCALLNAME(FLAG:111)%はようやく一度目の絶頂を迎えるが、
-PRINTFORML その間に%PRINT_TRANSCALLNAME(TARGET)%은(는)何度目かの絶頂をさせられていた。
+PRINTFORML その間に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%何度目かの絶頂をさせられていた。
 PRINTFORML 촉수の巣窟で隅々まで開発された%PRINT_TRANSCALLNAME(FLAG:111)%がその程度で満足するはずもなく、
 ;敵が男・双・기생で自キャラが性別필터OKなら竿で攻めてくる
 ;흑화男は特に攻めてきやすい
@@ -216,13 +216,13 @@ ELSEIF RAND:2 == 0 && (ISHOLE(FLAG:111))
 		ELSE
 			PRINTFORML 肉棒にあてがって咥えこんだ。
 			PRINTFORML 熱くとろけるような快楽が激しく締め付けたり、優しく包み込んだり
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를)翻弄する。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%翻弄する。
 		ENDIF
 		;男珍
 	ELSEIF ISMALE(TARGET)
 		; #region 
 		PRINTFORML 肉棒にあてがって咥えこんだ。
-		PRINTFORML 熱くとろけるような快楽が激しく締め付けたり、優しく包み込んだりし%PRINT_TRANSCALLNAME(TARGET)%을(를)翻弄する。
+		PRINTFORML 熱くとろけるような快楽が激しく締め付けたり、優しく包み込んだりし%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%翻弄する。
 		; #endregion
 	ELSE
 		PRINTFORML 淫壺にあてがってぐりぐりと押し付けた。
@@ -252,7 +252,7 @@ ELSEIF ABL:순종 > 2 && TALENT:초심 < 1
 ELSE
 	PRINT 喘ぎ声を堪え、何度も許しを請いながら
 ENDIF
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%の気が済むまで犯され続けた…
 PRINTW 
 PRINTW 

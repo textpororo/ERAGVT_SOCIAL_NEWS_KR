@@ -4,7 +4,7 @@ PRINTFORML 【秘密画像】
 ;前段
 ;今の姿が男
 IF ISMANLY()
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)친한男子
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%친한男子
 	IF TALENT:학생 == 4
 	;대학생
 		PRINTFORM 학생
@@ -26,7 +26,7 @@ ELSE
 		PRINTFORM 生徒
 	ENDIF
 	PRINTFORML が、数人でスマホを囲んで談笑している。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)近くを通った時、さりげなく盗み見すると
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%近くを通った時、さりげなく盗み見すると
 	PRINTFORML その手に隠されたスマホが目に入った。
 ENDIF
 
@@ -111,7 +111,7 @@ ENDIF
 SIF 被害者名==CSTR:1
 	PRINTFORML 男子達は%被害者名%の痴態に興奮し、卑猥な言葉で賛美しながら食い入るように見ている。
 
-PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 
 ;今男なら
 IF ISMANLY()

@@ -14,17 +14,17 @@ FOR CCOUNT, 0, CHARANUM
 		IF RESULT > 0
 			LOCAL = 1
 			IF GETBIT(RESULT, 6)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는) 폐인화되어 있기 때문에, 휴식 이외의 행동을 할 수 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")% 폐인화되어 있기 때문에, 휴식 이외의 행동을 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 5)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는) 사지결손된 상태이기 때문에, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")% 사지결손된 상태이기 때문에, %조사처리(PRINT_SHOPACTION_NAME(CCOUNT),"를")% 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 4)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는) 임신 중이기 때문에, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")% 임신 중이기 때문에, %조사처리(PRINT_SHOPACTION_NAME(CCOUNT),"를")% 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 1)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는)「밤악마의귀족」의 효과로 인해, 낮에는 %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")%「밤악마의귀족」의 효과로 인해, 낮에는 %조사처리(PRINT_SHOPACTION_NAME(CCOUNT),"를")% 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 2)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는)「타고난전사」의 효과로 인해, %PRINT_SHOPACTION_NAME(CCOUNT)%을(를) 할 수 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")%「타고난전사」의 효과로 인해, %조사처리(PRINT_SHOPACTION_NAME(CCOUNT),"를")% 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 0)
-				PRINTFORML *%CALLNAME:CCOUNT%은(는) %PRINT_SHOPACTION_NAME(CCOUNT)%에 필요한 체력이 없습니다.
+				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")% %PRINT_SHOPACTION_NAME(CCOUNT)%에 필요한 체력이 없습니다.
 			ENDIF
 		ENDIF
 	ENDIF

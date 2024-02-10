@@ -113,7 +113,7 @@ SELECTCASE ARG
 
 		;커넥션『소문을 좋아하는 친구』
 		IF CFLAG:120 > 0 && RAND:2 == 0 && CFLAG:1 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 소문을 좋아하는 친구에게 눈에 띄는 이야기가 없는지 물어봤다.
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 소문을 좋아하는 친구에게 눈에 띄는 이야기가 없는지 물어봤다.
 			HANTEI += RAND:25 + RAND:25 + 25
 		;학생
 		ELSEIF RAND:4 != 0 && TALENT:학생 > 0 && TIME == 0 && CFLAG:1 == 0
@@ -130,13 +130,13 @@ SELECTCASE ARG
 			ELSEIF TALENT:학생 == 4
 				LOCALS = 대학
 			ENDIF
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 자신이 다니는 %LOCALS%에서 이상한 소문은 없었는지 묻고 다녔다.
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 자신이 다니는 %LOCALS%에서 이상한 소문은 없었는지 묻고 다녔다.
 		;일상 생활
 		ELSEIF RAND:2 == 0 && CFLAG:1 == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 일상생활 속에서 가능한 한 정보를 모았다.
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 일상생활 속에서 가능한 한 정보를 모았다.
 		;주위 사람들
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 주위 사람들로부터 은근슬쩍 정보를 모았다.
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 주위 사람들로부터 은근슬쩍 정보를 모았다.
 		ENDIF
 		;평화롭다면 소문이 줄어든다
 		HANTEI = HANTEI - SQRT(FLAG:852) / 10
@@ -176,7 +176,7 @@ SELECTCASE ARG
 		IF CFLAG:120 == 0 && HANTEI >= 50 && RAND:4 == 0 && CFLAG:1 == 0
 			PRINTL 
 			CALL DOT_AFTER, 2
-			PRINTFORML 빰 빠바밤! %PRINT_TRANSCALLNAME(TARGET)%은(는)『인맥：소문을 좋아하는 친구』와 친해졌다!
+			PRINTFORML 빰 빠바밤! %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%『인맥：소문을 좋아하는 친구』와 친해졌다!
 			CFLAG:120 = 1
 		;정보원과의 연줄 획득
 		ELSEIF CFLAG:122 == 0 && RAND:12 == 0
@@ -225,10 +225,10 @@ SELECTCASE ARG
 			$INPUT_LOOP_0_122
 			INPUT
 			IF RESULT == 0
-				PRINTFORML 빠밤 빠밤! %PRINT_TRANSCALLNAME(TARGET)%은(는)『인맥：정보원』과 거래할 수 있게 됐다!
+				PRINTFORML 빠밤 빠밤! %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%『인맥：정보원』과 거래할 수 있게 됐다!
 				CFLAG:122 = HANTEI
 			ELSEIF RESULT == 1
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 협력 제의를 거절했다・・・
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 협력 제의를 거절했다・・・
 			ELSE
 				GOTO INPUT_LOOP_0_122
 			ENDIF
@@ -249,7 +249,7 @@ SELECTCASE ARG
 		SIF TALENT:행운아 > 0
 			HANTEI += 10
 
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 		IF CFLAG:121 > 0
 			PRINT 본인의 연줄을 구사하여, 
 			HANTEI = HANTEI + CFLAG:121 * 20
@@ -278,7 +278,7 @@ SELECTCASE ARG
 			ELSE
 				PRINT 의 
 			ENDIF
-			PRINTFORM %LOCALS%이(가) 성적 피해를 당했다고 하는 
+			PRINTFORM %조사처리(LOCALS,"가")% 성적 피해를 당했다고 하는 
 			LOCALS = 
 		ELSEIF RAND:2 == 0
 			LOCAL = RAND:3 + 1
@@ -296,7 +296,7 @@ SELECTCASE ARG
 			ELSE
 				PRINTFORM 어떤 
 			ENDIF
-			PRINTFORM %LOCALS%이(가) 행방 불명이 됐다는 
+			PRINTFORM %조사처리(LOCALS,"가")% 행방 불명이 됐다는 
 			LOCALS = 수수께끼의 실종
 		ELSE
 			PRINTFORM {RAND:4 + 1}인의 사망자를 냈다고 하는 
@@ -364,18 +364,18 @@ SELECTCASE ARG
 			PRINTL ・
 			PRINTL ・・
 			PRINTL ・・・
-			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가) 
+			PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 
 			PRINTDATA
-			DATAFORM 인기척이 없는 폐건물
-			DATAFORM 어두컴컴한 뒷골목
-			DATAFORM 봉쇄된 지하도
-			DATAFORM 폐기된 하수도
-			DATAFORM 전망이 안 좋은 공원
+			DATAFORM 인기척이 없는 폐건물로
+			DATAFORM 어두컴컴한 뒷골목으로
+			DATAFORM 봉쇄된 지하도로
+			DATAFORM 폐기된 하수도로
+			DATAFORM 전망이 안 좋은 공원으로
 			ENDDATA
-			PRINTFORML  (으)로 조사하러 가자,
-			PRINTFORML 어디선가 꾀죄죄한 차림의 남자들이 나타나 %PRINT_TRANSCALLNAME(TARGET)%을(를) 둘러싸 왔다.
+			PRINTFORML  조사하러 가자,
+			PRINTFORML 어디선가 꾀죄죄한 차림의 남자들이 나타나 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 둘러싸 왔다.
 			PRINTFORML 남자들은「사냥감」을 찾았다고 판단한 듯, 히죽거리는 표정으로 거리낌 없이 %PRINT_TRANSCALLNAME(TARGET)%의 신체를 둘러본다.
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가) 항의하고자 입을 떼는 순간,
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 항의하고자 입을 떼는 순간,
 			;＠중국판 추가 분기
 			LOCALS'=""
 			LOCAL=RAND:3
@@ -414,7 +414,7 @@ SELECTCASE ARG
 
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 전신에서 금세 힘이 빠져 나간다……
 
-			PRINTFORMW ……아무래도 %PRINT_TRANSCALLNAME(TARGET)%은(는) 위험한 장소에 너무 많이 발을 들여놓은 것 같다.
+			PRINTFORMW ……아무래도 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 위험한 장소에 너무 많이 발을 들여놓은 것 같다.
 			;악질 시민 인카운트 이벤트 처리
 			CALL ENCOUNT_CITIZEN(6002,LOCALS)
 			SIF RAND:100 < 30
@@ -427,12 +427,12 @@ SELECTCASE ARG
 		IF CFLAG:121 == 0 && HANTEI >= 40 && RAND:(MAX(10 - HANTEI / 10, 2)) == 0
 			PRINTL 
 			CALL DOT_AFTER, 2
-			PRINTFORML 빰 빠바밤! %PRINT_TRANSCALLNAME(TARGET)%은(는)『인맥：경찰 관계자』와 연이 닿았다!
+			PRINTFORML 빰 빠바밤! %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%『인맥：경찰 관계자』와 연이 닿았다!
 			CFLAG:121 = 1
 		ELSEIF CFLAG:121 == 1 && HANTEI >= 70 && RAND:(MAX(10 - HANTEI / 12, 2)) == 0
 			PRINTL 
 			CALL DOT_AFTER, 2
-			PRINTFORML 빰 빠바밤! %PRINT_TRANSCALLNAME(TARGET)%은(는)『인맥：경찰 상층부』와 협력하게 됐다!
+			PRINTFORML 빰 빠바밤! %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%『인맥：경찰 상층부』와 협력하게 됐다!
 			CFLAG:121 = 2
 		;정보원とのコネ獲得
 		ELSEIF CFLAG:122 == 0 && RAND:6 == 0
@@ -481,10 +481,10 @@ SELECTCASE ARG
 			$INPUT_LOOP_1_122
 			INPUT
 			IF RESULT == 0
-				PRINTFORML 빠밤 빠밤! %PRINT_TRANSCALLNAME(TARGET)%은(는)『인맥：정보원』과 거래할 수 있게 됐다!
+				PRINTFORML 빠밤 빠밤! %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%『인맥：정보원』과 거래할 수 있게 됐다!
 				CFLAG:122 = HANTEI
 			ELSEIF RESULT == 1
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 협력 제의를 거절했다・・・
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 협력 제의를 거절했다・・・
 			ELSE
 				GOTO INPUT_LOOP_1_122
 			ENDIF
@@ -517,11 +517,11 @@ SELECTCASE ARG
 		ELSE
 			LOCAL:99 = 0
 		ENDIF
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 정보원(%LOCALS%)과 연락을 취했다
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 정보원(%LOCALS%)과 연락을 취했다
 		;안면 없음
 		IF LOCAL:99 == 0
 			PRINTFORML .【소지금：{MONEY}】
-			PRINTFORM ……%PRINT_TRANSCALLNAME(TARGET)%이(가) 변신
+			PRINTFORM ……%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 변신
 			IF CFLAG:1 > 0
 				PRINT 한
 			ELSE
@@ -612,7 +612,7 @@ SELECTCASE ARG
 			INPUT
 			GATHER = 0
 			IF RESULT == 0
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 눈을 치뜬 채 무릎을 꿇고, 남자에게 입으로 봉사하기 시작했다・・・
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 눈을 치뜬 채 무릎을 꿇고, 남자에게 입으로 봉사하기 시작했다・・・
 				IF CONFIG_CHECK_SCREEN_F(3) == 0
 					PRINTW 
 				ELSE
@@ -626,7 +626,7 @@ SELECTCASE ARG
 				PRINTFORML 자지를 입에 넣어, 혀로 자극을 주고 있다.
 				IF TALENT:음란 > 0 && TALENT:초심 < 1
 					PRINTFORML 적극적인 봉사에 남자가 참지 못해 사정하자,
-					PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 매혹적인 표정으로
+					PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 매혹적인 표정으로
 					IF RAND:2 == 0
 						PRINTFORML 입을 크게 벌려 혀에 고여있는 정자를 보여주고,
 						PRINTFORM 일부러 소리를 내며 우물거린 후 
@@ -635,7 +635,7 @@ SELECTCASE ARG
 					ENDIF
 					PRINTFORML 정액을 삼켜 보였다・・・
 				ELSE
-					PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 내려다보며 정보를 조금씩 내놓으면서,
+					PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 내려다보며 정보를 조금씩 내놓으면서,
 					PRINTFORML 중요한 것은 덮어 놓은 채 입 안에 사정하고 말았다・・・
 				ENDIF
 				IF RAND:2 == 0 && ABL:정액중독 > 2 && TALENT:초심 < 1
@@ -661,7 +661,7 @@ SELECTCASE ARG
 				EXP:펠라경험 += 1
 				EXP:정액경험 += 1
 			ELSEIF RESULT == 1
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 눈을 치뜬 채 무릎을 꿇고, 남자에게 가슴으로 봉사하기 시작했다・・・
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 눈을 치뜬 채 무릎을 꿇고, 남자에게 가슴으로 봉사하기 시작했다・・・
 				IF CONFIG_CHECK_SCREEN_F(3) == 0
 					PRINTW 
 				ELSE
@@ -682,10 +682,10 @@ SELECTCASE ARG
 				ENDIF
 				PRINTFORML 가슴으로 자극을 주어 간다.
 				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 가슴에 파묻히는 페니스를 보며, 남자는 우월감에 젖은 듯한 만족스러운 미소를 짓고 있다.
-				PRINTFORML 암컷의 본능일까 이성적인 책략일까, %PRINT_TRANSCALLNAME(TARGET)%은(는) 눈앞에 튀어나온 귀두에 혀로 자극을 주었다.			
+				PRINTFORML 암컷의 본능일까 이성적인 책략일까, %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 눈앞에 튀어나온 귀두에 혀로 자극을 주었다.			
 				IF TALENT:음란 > 0 && TALENT:초심 < 1
 					PRINTFORML 적극적인 봉사에 남자가 참지 못해 사정하자,
-					PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 매혹적인 표정으로
+					PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 매혹적인 표정으로
 					IF RAND:2 == 0
 						PRINTFORML 입을 크게 벌려 혀에 고여있는 정자를 보여주고,
 						PRINTFORM 일부러 소리를 내며 우물거린 후 
@@ -694,7 +694,7 @@ SELECTCASE ARG
 					ENDIF
 					PRINTFORML 정액을 삼켜 보였다・・・
 				ELSE
-					PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 내려다보며 정보를 조금씩 내놓으면서,
+					PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 내려다보며 정보를 조금씩 내놓으면서,
 					PRINTFORML 중요한 것은 덮어 놓은 채 입 안에 사정하고 말았다・・・
 				ENDIF
 				IF RAND:2 == 0 && ABL:정액중독 > 2 && TALENT:초심 < 1
@@ -716,27 +716,27 @@ SELECTCASE ARG
 			;스마타는 처녀가 유지될 수 있다
 			ELSEIF RESULT == 2
 				IF TALENT:보추 >0
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 가랑이를 닫아, 
+					PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가랑이를 닫아, 
 					PRINTFORML 자신의 것을 밀어낼 수 있도록, 고간의 역삼각형의 틈새로 페니스를 끼워 넣었다・・・
-					PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%이(가) 사실은 여자가 아님을 알고 있음에도, 전혀 신경 쓰지 않는다・・・
+					PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 사실은 여자가 아님을 알고 있음에도, 전혀 신경 쓰지 않는다・・・
 					IF CONFIG_CHECK_SCREEN_F(3) == 0
 						PRINTW 
 					ELSE
 						PRINTL 
 					ENDIF
 					IF LOCALS == "천박한 남자"
-						PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 벽에 밀어붙이는 듯한 자세로
+						PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 벽에 밀어붙이는 듯한 자세로
 						PRINTFORML 뚱뚱한 배를 흔들며 피스톤질하고 있다.
 					ELSE
-						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 기승위로 스스로 허리를 앞뒤로 밀며 봉사하고 있다.
+						PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 기승위로 스스로 허리를 앞뒤로 밀며 봉사하고 있다.
 					ENDIF
 					IF RAND:3 == 0 && TALENT:음란 > 0 && TALENT:초심 < 1
-						PRINTFORML 이윽고 남자가 한계에 다다르자 %PRINT_TRANSCALLNAME(TARGET)%은(는) 허리를 구부려뜨려, 애널에 페니스를 이끌었다.
+						PRINTFORML 이윽고 남자가 한계에 다다르자 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 허리를 구부려뜨려, 애널에 페니스를 이끌었다.
 						PRINTFORML 입을 맞추며 상대의 허리에 다리를 감아, 장내사정을 받아들였다.
 						NAKADASHI = 1
 					ELSEIF RAND:2 == 0
 						PRINTFORML 이윽고 남자가 한계에 다다르자 "장내에 싸게 해준다면 비장의 정보를 알려주마" 라고 말해왔다.
-						PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는) 한순간 주저했으나,
+						PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 한순간 주저했으나,
 						IF ABL:A감각 < 2
 							PRINTFORML 그것만은 용서해 달라며, 눈물을 흘리며 부탁했고,
 							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에서 머리를 내밀고 있는 즙 범벅인 귀두를 손바닥으로 어루만지며
@@ -755,32 +755,32 @@ SELECTCASE ARG
 							PRINTFORML 뜨거운 정액의 격류를 받아 들였다.
 						ELSE
 							PRINTFORML 순간의 해프닝에 가슴을 쓸어내린 것도 잠시, 똑같은 상황이 몇번이나 반복되어
-							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가) 눈치챘을 때에는 확실하게 안쪽까지 삽입되어 있었다.
+							PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 눈치챘을 때에는 확실하게 안쪽까지 삽입되어 있었다.
 							PRINTFORML 깨달았어도 멈출 수 없는 건지, 남자는 라스트 스퍼트에 들어갔고
 							PRINTFORML 쾌락에 휩쓸린 %PRINT_TRANSCALLNAME(TARGET)%도 그대로 눈치채지 못한척 장내사정을 받아들였다.
 							NAKADASHI = 1
 						ENDIF
 					ENDIF
 				ELSE
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 가랑이를 닫아, 고간의 역삼각형의 틈새로 페니스를 끼워 넣었다・・・
+					PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가랑이를 닫아, 고간의 역삼각형의 틈새로 페니스를 끼워 넣었다・・・
 					IF CONFIG_CHECK_SCREEN_F(3) == 0
 						PRINTW 
 					ELSE
 						PRINTL 
 					ENDIF
 					IF LOCALS == "천박한 남자"
-						PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 벽에 밀어붙이는 듯한 자세로
+						PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 벽에 밀어붙이는 듯한 자세로
 						PRINTFORML 뚱뚱한 배를 흔들며 피스톤질하고 있다.
 					ELSE
-						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 기승위로 스스로 허리를 앞뒤로 밀며 봉사하고 있다.
+						PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 기승위로 스스로 허리를 앞뒤로 밀며 봉사하고 있다.
 					ENDIF
 					IF RAND:3 == 0 && TALENT:음란 > 0 && TALENT:초심 < 1
-						PRINTFORML 이윽고 남자가 한계에 다다르자 %PRINT_TRANSCALLNAME(TARGET)%은(는) 허리를 구부려뜨려, 질내로 페니스를 이끌었다.
+						PRINTFORML 이윽고 남자가 한계에 다다르자 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 허리를 구부려뜨려, 질내로 페니스를 이끌었다.
 						PRINTFORML 입을 맞추며 상대의 허리에 다리를 감아, 질내사정을 받아들였다.
 						NAKADASHI = 1
 					ELSEIF RAND:2 == 0
 						PRINTFORML 이윽고 남자가 한계에 다다르자 "질내에 싸게 해준다면 비장의 정보를 알려주마" 라고 말해왔다.
-						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 한순간 주저했으나,
+						PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 한순간 주저했으나,
 						IF TALENT:처녀 > 0
 							PRINTFORML 그것만은 용서해 달라며, 눈물을 흘리며 부탁했고,
 							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에서 머리를 내밀고 있는 즙 범벅인 귀두를 손바닥으로 어루만지며
@@ -799,7 +799,7 @@ SELECTCASE ARG
 							PRINTFORML 뜨거운 정액의 격류를 받아 들였다.
 						ELSE
 							PRINTFORML 순간의 해프닝에 가슴을 쓸어내린 것도 잠시, 똑같은 상황이 몇번이나 반복되어
-							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가) 눈치챘을 때에는 확실하게 안쪽까지 삽입되어 있었다.
+							PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 눈치챘을 때에는 확실하게 안쪽까지 삽입되어 있었다.
 							PRINTFORML 깨달았어도 멈출 수 없는 건지, 남자는 라스트 스퍼트에 들어갔고
 							PRINTFORML 쾌락에 휩쓸린 %PRINT_TRANSCALLNAME(TARGET)%도 그대로 눈치채지 못한척 질내사정을 받아들였다.
 							NAKADASHI = 1
@@ -838,7 +838,7 @@ SELECTCASE ARG
 				HANTEI = 1
 				PRINTW 
 			ELSEIF RESULT == 3
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 가랑이를 벌려, 남자의 삽입을 받아들였다・・・
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가랑이를 벌려, 남자의 삽입을 받아들였다・・・
 				IF CONFIG_CHECK_SCREEN_F(3) == 0
 					PRINTW 
 				ELSE
@@ -852,13 +852,13 @@ SELECTCASE ARG
 					GATHER += 5
 				ENDIF
 				IF LOCALS == "천박한 남자"
-					PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 교배하는 듯한 체위로 둔 채
+					PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 교배하는 듯한 체위로 둔 채
 					PRINTFORML 뚱뚱한 배를 흔들며 피스톤질 하고 있다.
 				ELSE
-					PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 스스로 허리를 흔들며 남자에게 봉사하고 있다.
+					PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 스스로 허리를 흔들며 남자에게 봉사하고 있다.
 				ENDIF
 				IF TALENT:음란 > 0 && TALENT:초심 < 1
-					PRINTFORML 이윽고 남자가 한계에 가까워지자 %PRINT_TRANSCALLNAME(TARGET)%은(는) 무의식적으로 남자의 허리에 다리를 감아,
+					PRINTFORML 이윽고 남자가 한계에 가까워지자 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 무의식적으로 남자의 허리에 다리를 감아,
 					IF ISMALE()
 						;#region
 						PRINTFORML 입을 맞추며 장내사정을 받아들였다.
@@ -867,7 +867,7 @@ SELECTCASE ARG
 						PRINTFORML 입을 맞추며 질내사정을 받아들였다.
 					ENDIF
 				ELSE
-					PRINTFORML 이윽고 남자가 한계에 다다르자 %PRINT_TRANSCALLNAME(TARGET)%을(를) 짓눌러,
+					PRINTFORML 이윽고 남자가 한계에 다다르자 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 짓눌러,
 					IF ISMALE()
 						;#region
 						PRINTFORML 마치 당연하다는 듯이 장내에 정액을 쏟아 부었다.
@@ -909,10 +909,10 @@ SELECTCASE ARG
 				GOTO INPUT_2_2
 			ENDIF
 		ELSEIF RESULT == 99
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 정보를 사지 않고 떠났다・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 정보를 사지 않고 떠났다・・・
 			GATHER = 0
 		ELSEIF RESULT == -1
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 정보원(%LOCALS%)과 연을 끊고 떠났다・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 정보원(%LOCALS%)과 연을 끊고 떠났다・・・
 			GATHER = 0
 			CFLAG:122 = 0
 		ELSE
@@ -928,7 +928,7 @@ SELECTCASE ARG
 		IF HANTEI > 0 && GETBIT(CFLAG:122, 4) == 0 && GETBIT(CFLAG:122, 5) == 0 && RAND:4 != 0
 			PRINTL 
 			CALL DOT_AFTER, 2
-			PRINTFORML 남자는 %PRINT_TRANSCALLNAME(TARGET)%을(를) 상객이라고 판단한 눈치다.
+			PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 상객이라고 판단한 눈치다.
 			PRINTFORML 앞으로는 아낌없이 협력해 줄 것이다・・・
 			SETBIT CFLAG:122, 5
 		ENDIF
@@ -953,7 +953,7 @@ SELECTCASE ARG
 		PRINTFORML 행방을 찾고 싶은 상대를 골라주십시오.
 		CALL CHARA_LIST, 3, 1, 1
 		HANTEI = RESULT
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) %CALLNAME:HANTEI%의 행방에 대한 정보를 모았다.
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% %CALLNAME:HANTEI%의 행방에 대한 정보를 모았다.
 		;달성도를 판정
 		GATHER = RAND:30 + 1
 		;내성적
@@ -974,7 +974,7 @@ SELECTCASE ARG
 			IF GATHER < 5
 				PRINTFORML 하지만 그다지 정보가 모이지 않았다・・・
 			ELSE
-				PRINTFORML 그 결과, %CALLNAME:HANTEI%을(를) 유폐하고 있는 촉수의 거처에 대한 힌트를 얻을 수 있었다!
+				PRINTFORML 그 결과, %조사처리(CALLNAME:HANTEI,"를")% 유폐하고 있는 촉수의 거처에 대한 힌트를 얻을 수 있었다!
 				GATHER += 5
 			ENDIF
 			IF CONFIG_CHECK_SCREEN_F(3) == 0
@@ -993,7 +993,7 @@ SELECTCASE ARG
 
 				PRINTFORM 그 결과, 
 				PRINTDATAL
-				DATAFORM %CALLNAME:HANTEI%이(가) 행방불명된 날 밤의 목격 정보를 얻을 수 있었다!
+				DATAFORM %조사처리(CALLNAME:HANTEI,"가")% 행방불명된 날 밤의 목격 정보를 얻을 수 있었다!
 				DATAFORM %CALLNAME:HANTEI%같은 소녀가 끌려가는 순간을 목격했다는 증언을 얻을 수 있었다!
 				ENDDATA
 				GATHER += 5
@@ -1014,21 +1014,21 @@ SELECTCASE ARG
 			IF CFLAG:HANTEI:71>20 && LOCAL>0 && LOCAL<=20
 				CFLAG:HANTEI:71-=GATHER
 				PRINTL
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %CALLNAME:HANTEI%이(가) 마지막으로 목격된 장소가 판명되었다!
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %조사처리(CALLNAME:HANTEI,"가")% 마지막으로 목격된 장소가 판명되었다!
 			ELSEIF CFLAG:HANTEI:71>10 && LOCAL>0 && LOCAL<=10
 				CFLAG:HANTEI:71-=GATHER
 				PRINTL
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %CALLNAME:HANTEI%이(가) 누군가에 의해 감금되어 있는 사실이 판명되었다!
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %조사처리(CALLNAME:HANTEI,"가")% 누군가에 의해 감금되어 있는 사실이 판명되었다!
 			ELSEIF CFLAG:HANTEI:71>0 && LOCAL<=0
 				CFLAG:HANTEI:71-=GATHER
 				PRINTL
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %CALLNAME:HANTEI%이(가) 감금되어 있는 장소가 특정되었다!
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%에 의한 조사 결과, %조사처리(CALLNAME:HANTEI,"가")% 감금되어 있는 장소가 특정되었다!
 
 				;악질 시민 인카운트 처리
 				IF ISHOLE() 
 					PRINTL 
 					PRINTL ・・・
-					PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%이(가) 
+					PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 
 					PRINTDATA
 					DATAFORM 특정한 폐건물 부근
 					DATAFORM 폐건물과 인접한 뒷골목
@@ -1036,13 +1036,13 @@ SELECTCASE ARG
 					DATAFORM 폐건물 지하를 통과하는 하수도
 					ENDDATA
 					PRINTFORML 에 조사를 하러 향하자,
-					PRINTFORML 어디선가 꾀죄죄한 차림의 남자들이 나타나 %PRINT_TRANSCALLNAME(TARGET)%을(를) 둘러싸 왔다.
+					PRINTFORML 어디선가 꾀죄죄한 차림의 남자들이 나타나 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 둘러싸 왔다.
 					PRINTFORML 남자들은「새 사냥감」이 길을 헤맸다고 생각했는지, 히죽거리는 표정으로 거리낌 없이 %PRINT_TRANSCALLNAME(TARGET)%의 신체를 둘러본다.
-					PRINTFORML %CALLNAME:HANTEI%의 행방을 캐묻고자 %PRINT_TRANSCALLNAME(TARGET)%이(가) 입을 떼는 순간, 남자들은 재빨리 스프레이를 꺼내 뿌려댔다.
+					PRINTFORML %CALLNAME:HANTEI%의 행방을 캐묻고자 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 입을 떼는 순간, 남자들은 재빨리 스프레이를 꺼내 뿌려댔다.
 					PRINTFORML 순간적으로 반응하지 못하고 들이마시고 만 %PRINT_TRANSCALLNAME(TARGET)%……
 					PRINTFORML 분명 항의의 말을 냈어야 할 그 목구멍에서는, 코에 걸린 요염한 숨소리가 새어 나오고 만다.
 					PRINTFORML 뿜어져 나온 것은 촉수액이 함유된 미약이었는지, %PRINT_TRANSCALLNAME(TARGET)%의 전신에서 금세 힘이 빠져 나간다……
-					PRINTFORMW ……아무래도 %CALLNAME:HANTEI%을(를) 돕기 이전에, %PRINT_TRANSCALLNAME(TARGET)% 자기 자신부터 지켜야 할 것 같다.
+					PRINTFORMW ……아무래도 %조사처리(CALLNAME:HANTEI,"를")% 돕기 이전에, %PRINT_TRANSCALLNAME(TARGET)% 자기 자신부터 지켜야 할 것 같다.
 					CALL ADDBATTLESITUATION("강제 발정,")
 					CFLAG:HANTEI:71=-1
 					;악질 시민 인카운트 이벤트 처리

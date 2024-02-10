@@ -40,35 +40,35 @@ SETCOLOR 0xF08030
 IF BASE:체력 <= 강제휴식체력
 	IF RAND:2 == 0
 		PRINTFORML 「zzz……っ！？……zzz……」
-		PRINTFORMDL  %CALLNAME%은(는) 寝落ち寸前だ……
+		PRINTFORMDL  %타겟은% 寝落ち寸前だ……
 	ELSE
 		PRINTFORML （……）
-		PRINTFORMDL  %CALLNAME%은(는) ボーっとしている……
+		PRINTFORMDL  %타겟은% ボーっとしている……
 	ENDIF
 ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0 && RAND:2 == 0
 	PRINTFORML 「昼間だ\@ TALENT:악세서리==3 ? わ # な \@……」
-	PRINTFORMDL  %CALLNAME%은(는) 憎々し気な顔でカーテンの隙間から入る光を見ている……
+	PRINTFORMDL  %타겟은% 憎々し気な顔でカーテンの隙間から入る光を見ている……
 ELSEIF CFLAG:100 == 예정_출격
 	PRINTFORML 「今日の獲物は何\@ TALENT:악세서리==3 ? かしら # かね \@」
-	PRINTFORMDL  %CALLNAME%은(는) 期待に胸を膨らませている……
+	PRINTFORMDL  %타겟은% 期待に胸を膨らませている……
 ELSEIF CFLAG:100 == 예정_단련
 	PRINTFORML 「体を動か\@ TALENT:악세서리==3 ? そうかしら # すか \@」
-	PRINTFORMDL  %CALLNAME%은(는) 心を弾ませている……
+	PRINTFORMDL  %타겟은% 心を弾ませている……
 ELSEIF CFLAG:100 == 예정_휴식
 	PRINTFORML 「何をしようか\@ TALENT:악세서리==3 ? しら #  \@」
-	PRINTFORMDL  %CALLNAME%은(는) 暇つぶし方法を考えている……
+	PRINTFORMDL  %타겟은% 暇つぶし方法を考えている……
 ELSEIF CFLAG:100 == 예정_활동
 	PRINTFORML 「うぅん。 確かにお金は必要だけ\@ TALENT:악세서리==3 ? れ #  \@ど……」
-	PRINTFORMDL  %CALLNAME%은(는) 考え込んでいる……
+	PRINTFORMDL  %타겟은% 考え込んでいる……
 ELSEIF CFLAG:100 == 예정_방위
 	PRINTFORML 「何が起きるか\@ TALENT:악세서리==3 ? しら # な \@」
-	PRINTFORMDL  %CALLNAME%은(는) 期待に胸を膨らませている……
+	PRINTFORMDL  %타겟은% 期待に胸を膨らませている……
 ELSEIF CFLAG:100 == 예정_지원
 	PRINTFORML 「できれば%SELF_CALL()%が戦いたい\@ TALENT:악세서리==3 ? わ # んだけどな \@……」
-	PRINTFORMDL  %CALLNAME%은(는) 気が重そうだ……
+	PRINTFORMDL  %타겟은% 気が重そうだ……
 ELSEIF CFLAG:100 == 예정_정보
 	PRINTFORML 「別に%SELF_CALL()%がやらなくてもいいんじゃないか\@ TALENT:악세서리==3 ? しら # な \@……」
-	PRINTFORMDL  %CALLNAME%은(는) 気が重そうだ……
+	PRINTFORMDL  %타겟은% 気が重そうだ……
 ELSE
 	PRINTFORML 「今日は何をしようか\@ TALENT:악세서리==3 ? しら # な \@？」
 ENDIF
@@ -95,17 +95,17 @@ ENDIF
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 「はぁ、はぁ、げほっ……妊婦、舐めてた\@ TALENT:악세서리==3 ? わ #  \@……」
-	PRINTFORMDL  %CALLNAME%은(는) 普段よりのたのたと走りつつ、頻繁に休憩を入れている。
+	PRINTFORMDL  %타겟은% 普段よりのたのたと走りつつ、頻繁に休憩を入れている。
 ELSE
 	PRINTFORML 「ぜぇ、はぁ、ぜぇ、はぁ……ま、まだまだぁ……」
-	PRINTFORMDL  %CALLNAME%은(는) 最低限の休憩だけとって、ノルマ達成のためにまた走り始めた。
+	PRINTFORMDL  %타겟은% 最低限の休憩だけとって、ノルマ達成のためにまた走り始めた。
 ENDIF
 
 ;精神鍛錬
 ;-------------------------------------------------
 @KOJO_0_TRAINING_SEISHIN_27
 PRINTFORML 「……」
-PRINTFORMD  %CALLNAME%은(는) 真剣に
+PRINTFORMD  %타겟은% 真剣に
 IF TALENT:악세서리==3
 	IF RAND:2 == 0
 		PRINTFORMDL \@ BASE:TARGET:기력>=7000 ? セーター # マフラー \@を編んでいる……
@@ -137,14 +137,14 @@ ENDIF
 ;瞑想
 ;-------------------------------------------------
 @KOJO_0_TRAINING_MEISOU_27
-PRINTFORMDL  %CALLNAME%은(는) \@ TALENT:악세서리==3 ? 椅子に姿勢よく座り # 畳の上で座禅を組んで \@目を閉じている……
+PRINTFORMDL  %타겟은% \@ TALENT:악세서리==3 ? 椅子に姿勢よく座り # 畳の上で座禅を組んで \@目を閉じている……
 PRINTFORML 「すぅー……ふぅー……」
 PRINTFORML （無心……無心\@ TALENT:악세서리==3 ? よ # だ \@……）
 PRINTL 
 IF RAND:2 == 0
-	PRINTFORMDL  %CALLNAME%은(는) 無心というより、何も考えていないようだ……
+	PRINTFORMDL  %타겟은% 無心というより、何も考えていないようだ……
 ELSE
-	PRINTFORMDL  %CALLNAME%은(는) 考え事をしている……
+	PRINTFORMDL  %타겟은% 考え事をしている……
 ENDIF
 
 ;筋トレ
@@ -153,10 +153,10 @@ ENDIF
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML 「ふぐっ、うぅっ……」
-	PRINTFORMDL  %CALLNAME%은(는) 思い通りに動かない体にイラつき、大きくなった腹を思わず睨みつけた。
+	PRINTFORMDL  %타겟은% 思い通りに動かない体にイラつき、大きくなった腹を思わず睨みつけた。
 ELSE
 	PRINTFORML 「ふ\@ TALENT:악세서리==3 ? ふっ！ ふっ # ふんっ！ ふんっ \@……！」
-	PRINTFORMDL  %CALLNAME%은(는) 着実にノルマをこなしていく。
+	PRINTFORMDL  %타겟은% 着実にノルマをこなしていく。
 	PRINTFORML （もっと強く……！）
 ENDIF
 
@@ -164,9 +164,9 @@ ENDIF
 ;-------------------------------------------------
 @KOJO_0_TRAINING_JIEI_27
 PRINTFORML 「\@ TALENT:악세서리==3 ? えいやぁ # うらぁ \@！！」
-PRINTFORMDL  %CALLNAME%은(는) 過剰防衛気味の공격を対戦相手に叩き込む。
+PRINTFORMDL  %타겟은% 過剰防衛気味の공격を対戦相手に叩き込む。
 PRINTFORML 「やっぱり、인간相手じゃ物足りない\@ TALENT:악세서리==3 ? わねぇ # なぁ \@」
-PRINTFORMDL  倒れた対戦相手を足蹴にしつつ、%CALLNAME%은(는) 촉수に思いを馳せている……。
+PRINTFORMDL  倒れた対戦相手を足蹴にしつつ、%타겟은% 촉수に思いを馳せている……。
 
 ;ダッシュ
 ;-------------------------------------------------
@@ -174,10 +174,10 @@ PRINTFORMDL  倒れた対戦相手を足蹴にしつつ、%CALLNAME%은(는) 촉
 IF CHECK_PREGNANT_F(TARGET) > 0
 	PRINTFORML （もっと速く……っ！？）
 	PRINTFORML 「ふごぉっ！？」
-	PRINTFORMDL  %CALLNAME%은(는) 膨らんだ腹部のせいで、バランスを崩して転んだ……。
+	PRINTFORMDL  %타겟은% 膨らんだ腹部のせいで、バランスを崩して転んだ……。
 ELSE
 	PRINTFORML （もっと速く……！）
-	PRINTFORMDL  %CALLNAME%은(는) 진지함に走り込みをしている……。
+	PRINTFORMDL  %타겟은% 진지함に走り込みをしている……。
 ENDIF
 
 ;근거리戦闘訓練
@@ -186,7 +186,7 @@ ENDIF
 PRINTFORML 「\@ TALENT:악세서리==3 ? えい！ やあ！ はぁっ！ ……ふぅ、次 # うりゃ！ そいや！ でりゃっ！ ……ふぅ、次来いやぁ \@！」
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
-	PRINTFORMDL  腹部が大きくなっている%CALLNAME%은(는) 動きに精彩を欠いている。
+	PRINTFORMDL  腹部が大きくなっている%타겟은% 動きに精彩を欠いている。
 	PRINTFORML 「あっ！？\@ RAND:2==0 ? へぶっ # ぶふっ \@……。」
 	IF RAND:3 == 0
 		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
@@ -205,7 +205,7 @@ ENDIF
 PRINTFORML 「っ！ \@ TALENT:악세서리==3 ? えいやぁ！ ……ふっ # せいやっ！ ……チェストォ \@！」
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
-	PRINTFORMDL  腹部が大きくなっている%CALLNAME%은(는) 動きが鈍くなっている。
+	PRINTFORMDL  腹部が大きくなっている%타겟은% 動きが鈍くなっている。
 	PRINTFORML 「あっ！？\@ RAND:2==0 ? げふっ # ぐふっ \@……。」
 	IF RAND:3 == 0
 		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
@@ -224,7 +224,7 @@ ENDIF
 PRINTFORML 「次はっ！？ そこ\@ TALENT:악세서리==3 ? ねっ！ ……当たりっ # かっ！ ……やりぃ \@！」
 ;임신
 IF CHECK_PREGNANT_F(TARGET) > 0
-	PRINTFORMDL  腹部が大きくなっている%CALLNAME%은(는) 動きが鈍くなっている。
+	PRINTFORMDL  腹部が大きくなっている%타겟은% 動きが鈍くなっている。
 	PRINTFORML 「あっ！？\@ RAND:2==0 ? げふっ # ぐふっ \@……。」
 	IF RAND:3 == 0
 		PRINTFORMDL  飛んできたボールが顔にクリーンヒットした……
@@ -240,7 +240,7 @@ ENDIF
 ;기초전투訓練
 ;-------------------------------------------------
 @KOJO_0_TRAINING_BASIS_27
-PRINTFORMD  %CALLNAME%은(는) 
+PRINTFORMD  %타겟은% 
 IF TALENT:악세서리==3
 	SELECTCASE RAND:4
 		CASE 0
@@ -275,7 +275,7 @@ ELSE
 	PRINTFORML 「へえ、苦手な動きなんてあるの\@ TALENT:악세서리==3 ? ね # か \@……」
 ENDIF
 LOCAL:0 = RAND:2
-PRINTFORMDL  %CALLNAME%은(는) \@ LOCAL:0==0 ? 過去の映像 # 蓄積されたデータ \@を元に研究をしている。
+PRINTFORMDL  %타겟은% \@ LOCAL:0==0 ? 過去の映像 # 蓄積されたデータ \@を元に研究をしている。
 IF RAND:2 == 0 && LOCAL:0 == 0
 	PRINTFORML 「……あっ！」
 	PRINTFORMD  画面上で
@@ -286,21 +286,21 @@ IF RAND:2 == 0 && LOCAL:0 == 0
 	ENDIF
 	PRINTFORMDL 慮辱が始まったため、
 	IF TALENT:TARGET:촉수의포로 > 0
-		PRINTFORMDL  %CALLNAME%은(는) 我慢できずオナニーを初めてしまった……
+		PRINTFORMDL  %타겟은% 我慢できずオナニーを初めてしまった……
 	ELSE
-		PRINTFORMDL  %CALLNAME%은(는) 思わず電源を消してしまった……
+		PRINTFORMDL  %타겟은% 思わず電源を消してしまった……
 	ENDIF
 ELSEIF RAND:2 == 0 && LOCAL:0 == 1
 	PRINTFORML 「……あっ！」
 	PRINTFORMDL  資料には推定被害者数の項目もあり、その多さを見て、
 	IF TALENT:TARGET:촉수의포로 > 0
-		PRINTFORMDL  %CALLNAME%은(는) 自身の凌辱される様子を想像してオナニーを初めてしまった……
+		PRINTFORMDL  %타겟은% 自身の凌辱される様子を想像してオナニーを初めてしまった……
 	ELSE
-		PRINTFORMDL  %CALLNAME%은(는) 気炎を上げた……
+		PRINTFORMDL  %타겟은% 気炎を上げた……
 	ENDIF
 ELSE
 	PRINTFORML 「ふぅん……」
-	PRINTFORMDL  %CALLNAME%은(는) 大人しく研究をしている。
+	PRINTFORMDL  %타겟은% 大人しく研究をしている。
 ENDIF
 
 ;촉수 구속구가 단련을 방해한다
@@ -337,7 +337,7 @@ ENDIF
 ;-------------------------------------------------
 @KOJO_0_ENCOUNT_MOB_BATTLE_27
 PRINTFORML 「今回の獲物は\@ TALENT:악세서리==3 ? あれね # あいつか \@……」
-PRINTFORMDL %CALLNAME%은(는) 舌なめずりしている……
+PRINTFORMDL %타겟은% 舌なめずりしている……
 
 ;보스 촉수と戦闘
 ;-------------------------------------------------
@@ -365,12 +365,12 @@ ELSEIF MARK:공포각인 >= 3
 			PRINTFORML 「そこに居\@ TALENT:악세서리==3 ? なさい # ろよ \@！ %SELF_CALL()%が殺して\@ TALENT:악세서리==3 ? あげる # やる \@っ！」
 	ENDSELECT
 	RESETCOLOR
-	PRINTFORMD  %CALLNAME%은(는) 
+	PRINTFORMD  %타겟은% 
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORMDL の異様に委縮し、体の震えが止まらない。
 	CALL KOJO_0_COLOR_27
 	PRINTFORML 「\@ TALENT:악세서리==3 ? 行くわよ # スッゾコラー \@！」
-	PRINTFORMDL  %CALLNAME%은(는) 震えをごまかすために咆哮した……
+	PRINTFORMDL  %타겟은% 震えをごまかすために咆哮した……
 ELSE
 	SELECTCASE RAND:3
 		CASE 0
@@ -380,7 +380,7 @@ ELSE
 		CASE 2
 			PRINTFORML 「ふん、%SELF_CALL()%を倒せるとでも思ってるの\@ TALENT:악세서리==3 ? かしら、哀れね # か、クソが \@」
 	ENDSELECT
-	PRINTFORMDL  %CALLNAME%은(는) 肉食獣のような笑みを浮かべながら、\@ TALENT:악세서리==3 ? 優雅な # 喧嘩慣れした \@動作で戦闘態勢を取った……
+	PRINTFORMDL  %타겟은% 肉食獣のような笑みを浮かべながら、\@ TALENT:악세서리==3 ? 優雅な # 喧嘩慣れした \@動作で戦闘態勢を取った……
 ENDIF
 
 ;보스 촉수襲来
@@ -392,11 +392,11 @@ ENDIF
 @KOJO_0_ENCOUNT_LASTBOSS_27
 PRINTFORML 「これで、最後\@ TALENT:악세서리==3 ? ね # か \@……」
 IF TALENT:촉수의포로 > 0
-	PRINTFORMDL  %CALLNAME%은(는) 寂しさを感じつつも、戦意は鈍っていないようだ。
+	PRINTFORMDL  %타겟은% 寂しさを感じつつも、戦意は鈍っていないようだ。
 ELSEIF MARK:공포각인 >= 3
-	PRINTFORMDL  %CALLNAME%은(는) 震える体を抑えるために、頬を叩いて気合を入れている。
+	PRINTFORMDL  %타겟은% 震える体を抑えるために、頬を叩いて気合を入れている。
 ELSE
-	PRINTFORMDL  %CALLNAME%은(는) ウォーミングアップを終え、笑みを浮かべながら相対した。
+	PRINTFORMDL  %타겟은% ウォーミングアップを終え、笑みを浮かべながら相対した。
 ENDIF
 PRINTFORML 「行\@ TALENT:악세서리==3 ? きます # くぞ \@！」
 
@@ -408,34 +408,34 @@ PRINTFORML 「行\@ TALENT:악세서리==3 ? きます # くぞ \@！」
 ;-------------------------------------------------
 @KOJO_0_ENCOUNT_SENNOU_FIRST_27
 PRINTFORML 「\@ TALENT:악세서리==3 ? あら # お \@？ サンドバックになりに来\@ TALENT:악세서리==3 ? まし #  \@たか？」
-PRINTFORMDL  %CALLNAME%은(는) %PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
+PRINTFORMDL  %타겟은% %PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
 
 ;세뇌キャラと対峙
 ;-------------------------------------------------
 @KOJO_0_ENCOUNT_SENNOU_27
 IF TALENT:촉수의포로 > 0
 	PRINTFORML 「くっ、%SELF_CALL()%は、違う……！」
-	PRINTFORMDL  %CALLNAME%은(는) 、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
+	PRINTFORMDL  %타겟은% 、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
 ELSE
 	PRINTFORML 「\@ TALENT:악세서리==3 ? うふ、うふふふふ # はは、やってやろうじゃん \@！」
-	PRINTFORMDL  %CALLNAME%은(는) 인간を合法的にボコボコにできることに興奮して、嗜虐的な笑みを浮かべている……
+	PRINTFORMDL  %타겟은% 인간を合法的にボコボコにできることに興奮して、嗜虐的な笑みを浮かべている……
 ENDIF
 
 ;始めて흑화 캐릭터と対峙した
 ;-------------------------------------------------
 @KOJO_0_ENCOUNT_AKUOTI_FIRST_27
 PRINTFORML 「\@ TALENT:악세서리==3 ? 黙りなさい。 斜め45度で手刀を食らわせてあげるわよ。 # うるせぇ！ 黙って殴られとけ！ \@」
-PRINTFORMDL  %CALLNAME%은(는) %PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
+PRINTFORMDL  %타겟은% %PRINT_TRANSCALLNAME(FLAG:111)%を張り倒す気満々だ。
 
 ;흑화 캐릭터と対峙
 ;-------------------------------------------------
 @KOJO_0_ENCOUNT_AKUOTI_27
 IF TALENT:촉수의포로 > 0
 	PRINTFORML 「くっ、%SELF_CALL()%は、違う……！」
-	PRINTFORMDL  %CALLNAME%은(는) 、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
+	PRINTFORMDL  %타겟은% 、快楽に屈した%PRINT_TRANSCALLNAME(FLAG:111)%を見て羨ましそうにしながらも、\@ RAND:2==0 ? ギリギリと歯を噛み締めて # 爪が刺さるほど拳を握りしめて \@自制している。
 ELSE
 	PRINTFORML 「ごちゃごちゃうるさい\@ TALENT:악세서리==3 ? わね # な \@。 さっさと戦\@ TALENT:악세서리==3 ? いましょう？ # おうぜ \@」
-	PRINTFORMDL  %CALLNAME%은(는) 인간を合法的に殴り倒せることに興奮して、嗜虐的な笑みを浮かべている……
+	PRINTFORMDL  %타겟은% 인간を合法的に殴り倒せることに興奮して、嗜虐的な笑みを浮かべている……
 ENDIF
 
 
@@ -601,7 +601,7 @@ ENDSELECT
 @KOJO_0_BATTLE_CHARA_NOACTION_27
 PRINTFORML （……）
 PRINTFORML 「はっ！？」
-PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%은(는)ボーっとしていたようだ。
+PRINTFORMDL  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ボーっとしていたようだ。
 
 ;COMF8：풀어낸다開始
 ;-------------------------------------------------
@@ -995,7 +995,7 @@ ELSE
 	PRINTFORML 「……まだ殴り足りない\@ TALENT:악세서리==3 ? わ # な \@」
 ENDIF
 RESETCOLOR
-PRINTFORMD  %PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORMD  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORMDL の残骸を見て独り言ちた。
 CALL KOJO_0_COLOR_27
@@ -1009,7 +1009,7 @@ IF BASE:체력 < MAXBASE:체력 / 4
 ELSE
 	PRINTFORML 「……まだ殴り足りない\@ TALENT:악세서리==3 ? わ # な \@」
 ENDIF
-PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%은(는)倒れている%PRINT_TRANSCALLNAME(FLAG:111)%を見て独り言ちた。
+PRINTFORMDL  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%倒れている%PRINT_TRANSCALLNAME(FLAG:111)%を見て独り言ちた。
 PRINTFORML 「持って帰\@ TALENT:악세서리==3 ? りましょう # る \@か……」
 
 ;최종 보스 촉수出現
@@ -1239,7 +1239,7 @@ PRINTFORMDL  いつまでかは渇望していた外気に触れても、%PRINT_
 ;-------------------------------------------------
 @KOJO_0_PRISON_AKUOTI_27
 PRINTFORML 「ふっ、%SELF_CALL()%に任せてお\@ TALENT:악세서리==3 ? きなさい # け \@」
-PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%은(는)目を細め、唇をぬめる舌で濡らして微笑んだ。
+PRINTFORMDL  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を細め、唇をぬめる舌で濡らして微笑んだ。
 PRINTFORMDL  たおやかな指先に絡まる촉수を愛おしげに撫で、口付ける。
 PRINTFORML 「自由にできる肉人形は多い方がいい\@ TALENT:악세서리==3 ? もの # からな \@」
 
@@ -1247,9 +1247,9 @@ PRINTFORML 「自由にできる肉人形は多い方がいい\@ TALENT:악세�
 @KOJO_0_SHOP_AKUOTI_27
 ;-------------------------------------------------
 PRINTFORML 「やっぱり인간の方がいい\@ TALENT:악세서리==3 ? わ # な \@」
-PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%은(는)通りすがりの女性を\@ TALENT:TARGET:기생>0 ? 촉수で # 腕で \@締め上げながら呟く。
+PRINTFORMDL  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%通りすがりの女性を\@ TALENT:TARGET:기생>0 ? 촉수で # 腕で \@締め上げながら呟く。
 PRINTFORML 「촉수様、%SELF_CALL()%と一緒に인간と敵対し\@ TALENT:악세서리==3 ? ましょう # ようぜ \@」
-PRINTFORMDL  %PRINT_TRANSCALLNAME(TARGET)%은(는)声一つ上げられずに締め落とされた女性をそのままに、人知れず町の外へ消えていった……
+PRINTFORMDL  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%声一つ上げられずに締め落とされた女性をそのままに、人知れず町の外へ消えていった……
 
 ;自ら유폐
 @KOJO_0_SHOP_PRISON_27

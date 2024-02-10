@@ -108,7 +108,7 @@ ENDIF
 #DIM SELECT,12
 SIF CHARANUM_ACTIVE() == 0
 	RETURN
-;初期化
+;초기화
 VARSET LOCAL
 VARSET GFLAG
 ;現段階で対象者が居るかチェック
@@ -251,15 +251,15 @@ PRINTFORML %PRINT_CALLNAME(TARGET)%は眠れぬ夜を過ごしている・・・
 IF SELECT:0 + SELECT:1 == 0
 	IF TALENT:여체수용 > 0 || TALENT:변신시보추 > 0
 		IF TALENT:변신시보추 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で보추化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で보추化できます。変身した状態で夜這いを行いますか？
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で女体化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で女体化できます。変身した状態で夜這いを行いますか？
 		ENDIF
 		PRINTFORML  [0] 네　[1]夜這いを行わずに終了する
 		$INPUT_LOOP_0_0
 		INPUT
 		IF RESULT == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身した！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身した！
 			PRINTW 
 			CALL TRANSFORM, 1
 		ELSEIF RESULT == 1
@@ -278,19 +278,19 @@ IF SELECT:0 + SELECT:1 == 0
 ELSEIF SELECT:10 + SELECT:11 > 0
 	IF ((TALENT:변신시TS > 0 || TALENT:변신시후타나리 > 0) && (ISFEMALE() || TALENT:여체수용 > 0)) || TALENT:변신시보추 > 0
 		IF TALENT:변신시보추 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で보추化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で보추化できます。変身した状態で夜這いを行いますか？
 		ELSEIF ISMALE()
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で女体化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で女体化できます。変身した状態で夜這いを行いますか？
 		ELSEIF TALENT:변신시후타나리 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で후타나리化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で후타나리化できます。変身した状態で夜這いを行いますか？
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身で男性化できます。変身した状態で夜這いを行いますか？
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身で男性化できます。変身した状態で夜這いを行いますか？
 		ENDIF
 		PRINTFORML 　[0] 네　　[1] 아니오
 		$INPUT_LOOP_0_1
 		INPUT
 		IF RESULT == 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身した！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身した！
 			PRINTW 
 			CALL TRANSFORM, 1
 		ELSEIF RESULT == 1
@@ -1440,7 +1440,7 @@ SELECTCASE ARG
 				PRINTFORML 瞳を潤わせて%PRINT_CALLNAME(FLAG:799)%のペニスを丹念にしゃぶるとそれは猛々しく勃起し、
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は自らのワレメに%PRINT_CALLNAME(FLAG:799)%のペニスをあてがった。
 				PRINTFORML 痛くないようにゆっくりと亀頭を挿入し、ずぶずぶと飲み込んでいく。
-				;처녀人妻、음란かつ연인で浮気初夜セックス
+				;처녀 유부녀、음란かつ연인で浮気初夜セックス
 			ELSEIF TALENT:TARGET:800 == 4 && (TALENT:TARGET:음란 > 0 || LOVER_F(FLAG:799, TARGET) > 0)
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は瞳を潤わせて、「夫ではなく、%PRINT_CALLNAME(FLAG:799)%に初めてを捧げたい」と懇願する。
 				PRINTFORML 本当に良いのか、と問う%PRINT_CALLNAME(FLAG:799)%に%PRINT_CALLNAME(TARGET)%は頬を染めながら頷く、
@@ -1786,7 +1786,7 @@ SELECTCASE ARG
 				PRINTFORML 瞳を潤わせて%PRINT_CALLNAME(FLAG:799)%のペニスを丹念にしゃぶるとそれは猛々しく勃起し、
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は自らのアヌスに%PRINT_CALLNAME(FLAG:799)%のペニスをあてがった。
 				PRINTFORML 痛くないようにゆっくりと亀頭を挿入し、ずぶずぶと飲み込んでいく。
-				;A감각３以下人妻、음란かつ연인で浮気初夜セックス
+				;A감각３以下유부녀、음란かつ연인で浮気初夜セックス
 			ELSEIF TALENT:TARGET:800 == 4 && (TALENT:TARGET:음란 > 0 || LOVER_F(FLAG:799, TARGET) > 0)
 				PRINTFORML %PRINT_CALLNAME(TARGET)%は瞳を潤わせて、「夫ではなく、%PRINT_CALLNAME(FLAG:799)%に身体を捧げたい」と懇願する。
 				PRINTFORML 本当に良いのか、と問う%PRINT_CALLNAME(FLAG:799)%に%PRINT_CALLNAME(TARGET)%は頬を染めながら頷く、

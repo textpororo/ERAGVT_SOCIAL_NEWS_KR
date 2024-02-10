@@ -219,10 +219,10 @@ IF TFLAG:20 == 0 || TFLAG:20 == 2 || TFLAG:20 == 3
 	SIF TFLAG:20 == 3
 		PRINTFORML の責め苦に晒された体は、抗うことが出来なかった。
 ELSE
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)跨がっている
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%跨がっている
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML の刺激を腰を浮かせることで回避しようとした。
-	PRINTFORML しかし、にゅるりと촉수が伸びて%PRINT_TRANSCALLNAME(TARGET)%을(를)逃さない。
+	PRINTFORML しかし、にゅるりと촉수が伸びて%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%逃さない。
 ENDIF
 PRINTL 
 IF ISMALE()
@@ -233,9 +233,9 @@ ELSE
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 恥丘にピッタリと張り付いた繊毛状の촉수に、
 ENDIF
 IF ISMALE()
-	PRINTFORML 亀頭を磨かれた%PRINT_TRANSCALLNAME(TARGET)%은(는)、その身を悶えさせるのであった・・・
+	PRINTFORML 亀頭を磨かれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その身を悶えさせるのであった・・・
 ELSE
-	PRINTFORML 클리토리스を磨かれた%PRINT_TRANSCALLNAME(TARGET)%은(는)、その身を悶えさせるのであった・・・
+	PRINTFORML 클리토리스を磨かれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その身を悶えさせるのであった・・・
 ENDIF
 PRINTW 
 ;구상
@@ -272,10 +272,10 @@ IF (ARG & Ｖ) == 0
 	PRINTFORM しかし、촉수は結界に阻まれて直接触れることができなかった
 ELSE
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、%PRINT_TRANSCALLNAME(TARGET)%을(를)乗せたまま、
+	PRINTFORML は、%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%乗せたまま、
 	PRINTFORML ウネウネと촉수を動かしながら、体を揺らし始めた！
 	PRINTFORML 
-	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
+	PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	IF TALENT:촉수의포로
 		PRINTFORM 촉수のマッサージに幸福そうな表情を浮かべている
 	ELSEIF ABL:욕망 >= 3
@@ -327,7 +327,7 @@ ELSEIF TFLAG:20 == 2
 	PRINTL 
 ELSEIF TFLAG:20 == 3
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、太い촉수で%PRINT_TRANSCALLNAME(TARGET)%을(를)陵辱し続けている！
+	PRINTFORML は、太い촉수で%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%陵辱し続けている！
 	PRINTL 
 ENDIF
 
@@ -339,7 +339,7 @@ IF (ARG & Ｖ) == 0
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は、開脚された%PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナを貫こうとしたが、
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)両手を使って挿入を防いだため、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%両手を使って挿入を防いだため、
 	PRINTFORM うまく行かなかったようだ
 
 ELSEIF TALENT:처녀 > 0
@@ -352,16 +352,16 @@ ELSEIF TALENT:처녀 > 0
 	PRINTFORML 巨大な촉수ボールが動くたびに、%PRINT_TRANSCALLNAME(TARGET)%의 身体は無残にも蹂躙される。
 	PRINTL
 	PRINTW
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)、縦横無尽の揺さぶりに必死に抵抗を続けるうちに、
+	PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、縦横無尽の揺さぶりに必死に抵抗を続けるうちに、
 	PRINTFORML 身体は重心でバランスを取ることを覚えた。
 	PRINTFORML 下からうちつける촉수の塊を、まるで馬のように乗りこなす。
-	PRINTFORM いつの間にか、%PRINT_TRANSCALLNAME(TARGET)%은(는)そんなことを覚えてしまった。
+	PRINTFORM いつの間にか、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そんなことを覚えてしまった。
 	PRINTW
 ELSE
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣へ潜り込んで来た。
 	PRINTFORML 巨大な촉수ボールが動くたびに、%PRINT_TRANSCALLNAME(TARGET)%의 身体は犯される。
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)、縦横無尽の揺さぶり下からうちつける촉수の塊を、
+	PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、縦横無尽の揺さぶり下からうちつける촉수の塊を、
 	PRINTFORML まるで馬のように乗りこなす。
 	PRINTFORM しかし、そんな抵抗も虚しく
 	CALL TENTACLE_ACCESS, "NAME"
@@ -450,14 +450,14 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_101_KARAMITUKU_SUCCESS
-PRINTFORML 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)両足に絡みつかれて拘束されてしまった。
+PRINTFORML 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%両足に絡みつかれて拘束されてしまった。
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML はその体をみるみる膨らませて、拘束された%PRINT_TRANSCALLNAME(TARGET)%의 足をM字に広げてみせた。
 
 ;=====パンツを見せるor秘所を開帳するかなど=====
 ;촉수 구속구を装着していた場合
 IF CFLAG:42 == 400
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、蠢く촉수 구속구を衆目にさらされてしまった……
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、蠢く촉수 구속구を衆目にさらされてしまった……
 	IF ISMALE()
 		;#region
 		PRINTFORML 촉수 구속구は、恥辱に濡れる%PRINT_TRANSCALLNAME(TARGET)%의 先走り汁を啜って喜びに身を震わせている。
@@ -465,15 +465,15 @@ IF CFLAG:42 == 400
 	ELSE 
 		PRINTFORML 촉수 구속구は、恥辱に濡れる%PRINT_TRANSCALLNAME(TARGET)%의 愛液を啜って喜びに身を震わせている。
 	ENDIF
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、촉수 구속구による辱めに견딘다しかなかった……
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、촉수 구속구による辱めに견딘다しかなかった……
 ;속옷が破壊されきっていない場合		
 ELSEIF TCVARn:25 > 0
 	SIF TCVARn:25 == TCVARn:24
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、綺麗な%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、綺麗な%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
 	SIF TCVARn:25 < TCVARn:24
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、破かれた%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、破かれた%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
 ELSE
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)、
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 	SIF TALENT:백보지 == 1
 		PRINTFORM 毛も生えてない
 	PRINTFORML アソコを衆目にさらされてしまった…
@@ -482,7 +482,7 @@ ENDIF
 
 ;=====拘束された結果=====
 CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML が膨らみ終えると、%PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORML が膨らみ終えると、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 PRINTFORML 半透明の大玉に跨がったような形で両足を拘束されていた…
 PRINTL 
 

@@ -1025,7 +1025,7 @@ ELSEIF RESULT == 999
 	CALL MODE_SELECT(1, LOCAL:10)
 	SIF RESULT == 999
 		GOTO MASTER_LOOP
-	;フラグ初期化処理
+	;フラグ초기화処理
 	DAY = 0
 	DAY:1 = 0
 	TIME = 0
@@ -1113,7 +1113,7 @@ ELSEIF RESULT == 999
 				FOR LOCAL,200,239
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
 				NEXT
-				;구상용CFLAGは性経験に絡んでいることが多いのでここで初期化
+				;구상용CFLAGは性経験に絡んでいることが多いのでここで초기화
 				FOR LOCAL,250,999
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
 				NEXT
@@ -1295,9 +1295,9 @@ ELSEIF RESULT == 999
 				EXP:CCOUNT:58 = 100 + (EXP:CCOUNT:58 - 100) / 4
 			ENDIF
 
-			;必ず初期化する項目
+			;必ず초기화する項目
 			FOR LOCAL,0,53
-				;プロフィールは初期化しない
+				;プロフィールは초기화しない
 				SIF LOCAL >= 40 && LOCAL <48
 					CONTINUE
 				;모유と사정は性成長引継ぎの方で処理する
@@ -1371,7 +1371,7 @@ ELSEIF RESULT == 999
 					SWAP RELATION:(CCOUNT:2):(CCOUNT:1), RELATION:(CCOUNT:2):(CCOUNT:1 + 1)
 				NEXT
 			NEXT
-			;消去する予定のキャラのRELATIONを双方向とも初期化
+			;消去する予定のキャラのRELATIONを双方向とも초기화
 			FOR CCOUNT:1, 0, CHARANUM
 				SIF CCOUNT:1 == MASTER
 					CONTINUE

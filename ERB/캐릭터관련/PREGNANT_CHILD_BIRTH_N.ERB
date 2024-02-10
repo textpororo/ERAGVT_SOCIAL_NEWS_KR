@@ -29,7 +29,7 @@ ELSE
 	CALL MESSAGE_BIRTH_DAUGHTER_HUMAN_ORIGIN
 	CALL DOT_AFTER, 1
 	PRINTL 
-	PRINTFORML 몇 시간 후, 병실로 돌아온 %PRINT_CALLNAME(TARGET)%은(는)
+	PRINTFORML 몇 시간 후, 병실로 돌아온 %조사처리(PRINT_CALLNAME(TARGET),"는")%
 	PRINTFORML 자신의 품에 안긴 작은 아기를 바라보며 생각에 잠겨 있었다……
 	PRINTW 
 
@@ -59,7 +59,7 @@ ELSE
 			SIF TARGET == CCOUNT
 				CONTINUE
 			IF CFLAG:CCOUNT:240 == CFLAG:230 * -1 - 100
-				PRINTFORML 이 아이는 분명, %PRINT_CALLNAME(TARGET)%와(과) %CALLNAME:CCOUNT%의 아이였다.
+				PRINTFORML 이 아이는 분명, %조사처리(PRINT_CALLNAME(TARGET),"와")% %CALLNAME:CCOUNT%의 아이였다.
 				IF LOCALS!=""
 					PRINTFORML %CALLNAME:CCOUNT%와는 모르는 사이가 아니지만, %LOCALS%에 대한 %PRINT_CALLNAME(TARGET)%의 배신인 것은 틀림없다.
 					PRINTL
@@ -76,7 +76,7 @@ ELSE
 					PRINTFORML 자신의 아이라고 믿어 의심치 않는 그이를 앞에 두고, 끝내 진실을 말하지 못했다.
 					PRINTFORML 남편은 자기 혼자서라도 아이를 키울 생각이라고 하는데……
 				ELSEIF CFLAG:CCOUNT:0 == 0
-					PRINTFORML 병문안을 온 %CALLNAME:CCOUNT%이(가) 둘이서 같이 키우자고 얘기하는데,
+					PRINTFORML 병문안을 온 %조사처리(CALLNAME:CCOUNT,"가")% 둘이서 같이 키우자고 얘기하는데,
 					PRINTFORML 어떻게 해야 하는 걸까……
 				ELSE
 					PRINTFORML 촉수로부터 도시를 지킴과 동시에 아이를 키우는 일은 무척 곤란하다.
@@ -87,7 +87,7 @@ ELSE
 	ELSEIF CFLAG:230 == 쌩판남
 		IF LOCALS!=""
 			SETCOLOR 255, 96, 96
-			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %PRINT_CALLNAME(TARGET)%은(는) 싫어도 이해하게 된다.
+			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %조사처리(PRINT_CALLNAME(TARGET),"는")% 싫어도 이해하게 된다.
 			RESETCOLOR
 			PRINTL
 		ENDIF
@@ -112,13 +112,13 @@ ELSE
 	ELSEIF CFLAG:230 == 근친상간
 		PRINTFORML 하지만 그것은 근친상간에 의해 태어난 금기의 아이였다.
 		PRINTFORML 이 일은 누구에게도, 아이 본인에게조차 말할 수 없다는 죄책감을 삼키면서
-		PRINTFORML %CALLNAME%은(는) 앞으로 육아를 어떻게 해야 할지 계속 고민했다……
+		PRINTFORML %타겟은% 앞으로 육아를 어떻게 해야 할지 계속 고민했다……
 	ELSEIF CFLAG:230 == 사랑하는사람
 		;사랑하는사람의 아이를 낳은 횟수
 		CFLAG:219++
 		IF TALENT:800 == 2
 			PRINTFORML 이 아이는 사귀고 있는 그이와의 사랑의 결정체였다.
-			PRINTFORML 하지만 %PRINT_CALLNAME(TARGET)%이(가) 스스로 육아하기에는 불편함이 있었고, 무엇보다도 위험 부담이 컸다.
+			PRINTFORML 하지만 %조사처리(PRINT_CALLNAME(TARGET),"가")% 스스로 육아하기에는 불편함이 있었고, 무엇보다도 위험 부담이 컸다.
 			PRINTFORML 의논한 결과, 아이는 그의 친정에서 맡아준다는데……
 		ELSEIF TALENT:800 == 3
 			PRINTFORML 이 아이는 약혼자인 그이와의 사랑의 결정이었다.
@@ -134,7 +134,7 @@ ELSE
 		PRINTFORML 이 아이는 원치 않는 성교를 강요당하여, 억지로 잉태된 아이였다.
 		IF LOCALS!=""
 			SETCOLOR 255, 96, 96
-			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %PRINT_CALLNAME(TARGET)%은(는) 싫어도 이해하게 된다.
+			PRINTFORML %LOCALS%의 아이를 낳는"첫 출산" 의 기회가 영구히 사라졌다는 사실을, %조사처리(PRINT_CALLNAME(TARGET),"는")% 싫어도 이해하게 된다.
 			RESETCOLOR
 			PRINTL
 		ENDIF
@@ -146,7 +146,7 @@ ELSE
 		PRINTFORML 잠시 후 신생아 유전자 검사 결과가 전해졌다.
 		PRINTFORML 행인지 불행인지, 이 아이에게는 매우 높은 잠재력이 숨어 있는 것으로 밝혀진 모양이다.
 		PRINTFORML 정부에 10000$을 지불하면, 인공적으로 성장을 촉진시켜 육아의 부담을 줄일 수는 있지만
-		PRINTFORML 그 대신, 아이가 성장하면 %PRINT_CALLNAME(TARGET)%와(과) 마찬가지로 촉수와 싸우는 길을 걷게 될 것이다.
+		PRINTFORML 그 대신, 아이가 성장하면 %조사처리(PRINT_CALLNAME(TARGET),"와")% 마찬가지로 촉수와 싸우는 길을 걷게 될 것이다.
 		PRINTW 
 		PRINTFORML 아이에게 가혹한 운명을 가하면서까지, %PRINT_CALLNAME(TARGET)%의 품에서 자라는 게 맞는 걸까?
 		PRINTL

@@ -1,6 +1,6 @@
 ﻿@SUPART_BLOOD
 IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
-	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는)%STR:2500%の返り血を浴びてしまった！
+	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%STR:2500%の返り血を浴びてしまった！
 	IF CONFIG_CHECK_SCREEN_F(3) == 0
 		PRINTW ・・・
 		PRINTW ・・・・・・
@@ -15,7 +15,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 		;변신시TSキャラが女体化すると남자に戻れなくなる
 		IF FLAG:11 == 2 && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)しばらく身を震わせながら地面に横たわって何度も絶頂し、
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%しばらく身を震わせながら地面に横たわって何度も絶頂し、
 			PRINTFORML 戦闘後の気の緩みもあって完全に変身が解けてしまった。
 			PRINTFORML ところが、平らに돌아간다はずの胸は膨らんだままで、
 			PRINTFORML 丸みを帯びた肉付きや腰のラインも変化する様子がない――
@@ -24,12 +24,12 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			;변신시TSキャラが女体化すると남자に戻れなくなる
 			CALL TS_MtoF, TARGET
 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)女体化した姿のまま[남자]に戻れなくなった！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女体化した姿のまま[남자]に戻れなくなった！
 			PRINT さらに、
 		;元が女性の변신시TSキャラが女体化すると남자になれなくなる
 		ELSEIF FLAG:11 == 2 && ISMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 
-			PRINTFORML 思わず叫び声をあげてしまった%PRINT_TRANSCALLNAME(TARGET)%은(는)、
+			PRINTFORML 思わず叫び声をあげてしまった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
 			PRINTFORML 見れば胸は膨らみを取り戻し、肉付きや腰のラインも変化して柔らかくなっている。
 			PRINTFORML 変身は解けていないのに、普段の自分とそっくりの状態になってしまっていて――
@@ -38,12 +38,12 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			;변신시TSキャラが女体化すると남자に戻れなくなる
 			CALL TS_FtoM, TARGET
 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)変身しても[남자]になれなくなってしまった！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身しても[남자]になれなくなってしまった！
 			PRINT さらに、
 		;元が남자のキャラがV촉수を倒すと女体化させられる
 		ELSEIF FLAG:11 == 2 && ISMALE() && CHARATALENT_F(TARGET,0,"남자") > 0
 
-			PRINTFORML 思わず叫び声をあげてしまった%PRINT_TRANSCALLNAME(TARGET)%은(는)、
+			PRINTFORML 思わず叫び声をあげてしまった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
 			PRINTFORML 見れば胸は膨らみを増し、肉付きや腰のラインも変化して柔らかくなっている。
 			PRINTFORML 張りと瑞々しさを得た肌には健康的な色気が漂い、程よく髪も伸びたその姿は――
@@ -52,7 +52,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			;通常の女体化処理
 			CALL TS_NORMAL, TARGET
 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)[남자]を失い、完全に女性になってしまった！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[남자]を失い、完全に女性になってしまった！
 			PRINT さらに、
 		ENDIF
 		;CVAB촉수を倒すと、該当箇所が敏感になる
@@ -60,7 +60,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 		IF TALENT:(LOCAL:0) == 0
 			TALENT:(LOCAL:0+1) -= 10
 			TALENT:(LOCAL:0) += 10
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)[%TALENTNAME:(LOCAL:0)%]になってしまった！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[%TALENTNAME:(LOCAL:0)%]になってしまった！
 			PRINTW 
 		;既に敏感で감각がLV5未満だった場合、珠を大量に獲得する
 		ELSEIF ABL:(FLAG:11-1) < 5
@@ -93,7 +93,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 		ABL:마조끼 += 3
 		SIF ABL:마조끼 > 5
 			ABL:마조끼=5
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ABLNAME:15%が大幅に上がった。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:15%が大幅に上がった。
 		PRINTW 
 	ELSEIF FLAG:11 == 6
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 意識が촉수の臭気に満たされ蕩けてゆく・・・
@@ -102,7 +102,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 		ABL:촉수중독 += 2
 		SIF ABL:촉수중독 > 5
 			ABL:촉수중독=5
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ABLNAME:20%が大幅に上がった。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:20%が大幅に上がった。
 		PRINTW 
 	ELSEIF FLAG:11 == 7
 		PRINTFORML ありもしない淫らな記憶が%PRINT_TRANSCALLNAME(TARGET)%의 意識に刷り込まれてゆく・・・
@@ -114,7 +114,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			ABL:노출벽=5
 		SIF ABL:자위중독 > 5
 			ABL:자위중독=5
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)%ABLNAME:14%と%ABLNAME:21%が大幅に上がった。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:14%と%ABLNAME:21%が大幅に上がった。
 		PRINTW 
 	ENDIF
 

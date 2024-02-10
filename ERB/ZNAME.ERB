@@ -1,0 +1,503 @@
+﻿;Creat by 렌렌
+;
+;   【사용방법】
+;
+;      %CALLNAME:TARGET%は 를 번역할 때의 기존 방식 = %CALLNAME:TARGET%(은)는
+;      %CALLNAME:TARGET%は 를 번역할 때의 신규 방식 = %CALLNAME:TARGET%
+;          신규 방식을 사용하면 자동으로 은/는 처리를 해줌
+;
+;      함수 종류는 현재 (플레이어는/플레이어가/플레이어어와/플레이어를          타겟은/타겟이/타겟을/타겟과)
+;                       각각         CALLNAME:MASTER                                        CALLNAME:TARGET            에 대응
+;             (      일반적으로 %CALLNAME%은 %CALLNAME:TARGET%의 생략형임         )
+;
+;      이후 함수는 계속 추가 예정
+;      
+;      함수의 괄호안에 아무 값이나 넣으면 CALLNAME이 아니라 NAME을 참고
+;
+;
+;                            ----------사용 예시 정리-------------
+;
+;
+;                    %CALLNAME:MASTER%は = %플레이어는%
+;                    %CALLNAME:MASTER%が = %플레이어가%
+;                    %CALLNAME:MASTER%を = %플레이어를%
+;                    %CALLNAME:MASTER%と = %플레이어와%
+;
+;
+;                    %CALLNAME:MASTER%は = %마스터는%
+;                    %CALLNAME:MASTER%が = %마스터가%
+;                    %CALLNAME:MASTER%を = %마스터를%
+;                    %CALLNAME:MASTER%と = %마스터와%
+;
+;
+;                    %CALLNAME:TARGET%は = %타겟은%
+;                    %CALLNAME:TARGET%が = %타겟이%
+;                    %CALLNAME:TARGET%を = %타겟을%
+;                    %CALLNAME:TARGET%と = %타겟과%
+;
+;
+;                    %CALLNAME:PLAYER%は = %조교자는%
+;                    %CALLNAME:PLAYER%が = %조교자가%
+;                    %CALLNAME:PLAYER%を = %조교자를%
+;                    %CALLNAME:PLAYER%と = %조교자와%
+;
+;
+;                    %NAME:MASTER%は = %플레이어는(1)%
+;                    %NAME:MASTER%が = %플레이어가(1)%
+;                    %NAME:MASTER%を = %플레이어를(1)%
+;                    %NAME:MASTER%と = %플레이어와(1)%
+;
+;
+;                    %NAME:TARGET%は = %타겟은(1)%
+;                    %NAME:TARGET%が = %타겟이(1)%
+;                    %NAME:TARGET%を = %타겟을(1)%
+;                    %NAME:TARGET%と = %타겟과(1)%
+;                ---------------------------------------------------------------
+;
+;
+;
+;
+;        2012 / 07 / 13 업뎃              -함수 기반 변경 및 종류 추가
+;                         대응 인수 (대상)  = MASTER, TARGET, ASSI, ARG (4종)
+;                        조사 종류 = 은/는, 이/가, 을/를, 와/과, 로/으로, 랑/이랑, 라/이라, 며/이며, 고/이고 (9종)
+;
+;
+;        2012 / 07 / 14 업뎃              -함수 정리
+;            조사 종류 추가 (다/이다. 현재 10종)
+;                       기반 변경. CALLNAME, MASTER 등을 따로 넣지 않고 곧바로 대입 처리
+;            式中関数에 대응 가능
+;            기존 (개별) 함수는 그대로 사용 가능
+;            선언되어 있지 않은 타입의 인수를 받을때는 (플레이어/타겟/조수/ARG 외) 아래와 같이 사용
+;
+;
+;            PRINTFORMW %CALLNAME:(ARG:1)%が
+;            PRINTFORMW %조사처리(CALLNAME:(ARG:1),"가")%
+;
+;
+;                ※ 式中関数
+;            PRINTFORMW ――%CNAME()%を、調教する。
+;            PRINTFORMW ――%조사처리(CNAME(),"를")%、조교한다.
+;
+;
+;            '조사처리'대신 '조사만처리'를 사용하면 조사 부분만 가져올 수 있다
+;            도중에 끊겨있는 경우에 유용 (주로 」, 』 등을 사용하는 부분)
+;            
+;            PRINTFORMW 調教者を「%NAME:TARGET%」に設定します
+;            PRINTFORMW 조교자를 「%NAME:TARGET%」%조사만처리(NAME:TARGET,"로")% 설정합니다
+;
+;
+;    ...'조사만처리'를 간락화 할 수 있을 듯 하지만 플래그 겹침문제나 변수 리셋 관련으로 고민할 필요가 있을 듯
+;
+;
+;
+;
+;        2012 / 08 / 04 업뎃              -종류 추가. 범용화 처리. 치환의 간편화를 위해 정규식 srs 파일 업로드
+;            현재
+;
+;            대응 인수 (대상)  = MASTER, TARGET, ASSI (3종)
+;                        조사 종류 = 은/는, 이/가, 을/를, 와/과, 로/으로, 랑/이랑, 라/이라, 며/이며, 고/이고, 다/이다, 이었/였, 여/이여, 야/이야 (13종)
+;
+;
+;        2012 / 08 / 08 업뎃              -종류 추가. 정규식 추가 및 수정
+;                              -조사처리 이후 RESULT 사용시 문제 발생 없도록 대처
+;                        조사 종류 = 은/는, 이/가, 을/를, 와/과, 로/으로, 랑/이랑, 라/이라, 며/이며, 고/이고, 다/이다, 이었/였, 여/이여, 야/이야, 나/이나, 면/이면 (15종)
+;
+;
+;        2012 / 09 / 06 업뎃              -배리언트 변수 사이즈에 영향을 덜 받도록 수정
+;                              -조사처리에 마지막 치환 부분 추가 (나가->내가,저가->제가 등에 대응)
+;                        조사 종류 = 은/는, 이/가, 을/를, 와/과, 로/으로, 랑/이랑, 라/이라, 며/이며, 고/이고, 다/이다, 이었/였, 여/이여, 야/이야, 나/이나, 면/이면 (15종)
+;    
+;    
+;        2012 / 09 / 10 업뎃              -RESULT, RESULTS 양쪽 대응. 처리 방식 변경
+;    
+;        2014 / 02 / 15 업뎃              -조사 종류 추가.
+;                        조사 종류 = 은/는, 이/가, 을/를, 와/과, 로/으로, 랑/이랑, 라/이라, 며/이며, 고/이고, 다/이다, 이었/였, 여/이여, 야/이야, 나/이나, 면/이면, 겠/이겠, 셨/이셨, 잖/이잖 니/이니 (19종)
+;
+;        2014 / 05 / 07 업뎃              -오류 수정 및 CASELESS 추가
+;               %조사처리(CALLNAME:MASTER,"의")% 를 입력하면 [이름의]가 출력되도록 
+;                                                                            (기존 = [이름])
+;                '이지만' 이 제대로 처리되지 않는 문제 수정
+;        2023 / 08 /07 업데이트           -코드 최적화 및 ㄹ받침 ~으로 예외처리 (원저작자 아님)
+;                         ENCODETOUNI 사용을 통해 유니코드로 받침 유무를 처리함
+;                         바닷길으로 같은 문제가 생기지 않도록 처리
+;        2023 / 11/ 12 업데이트 ~이 조사처리 추가 및 구동방식 개선
+;                         조사처리 불필요 조사 우선처리 및 이외 조사 무조건 조사처리하도록 변경 (화이트리스트 기반 > 블랙리스트 기반)
+;---------------------------------------------------------------------------------------------------------------------
+
+
+;========================================
+;                        KR_NAME
+;  이름의 마지막 글자를 체크해 Type을 반환해준다
+;   2 = 받침 없음       1 = 받침 있음       3 = ㄹ받침 ~으로         (혹시 모를 오류 방지를 위해 0은 사용하지 않음)
+;========================================
+@KR_NAME(ARGS)
+#FUNCTION
+#LOCALSIZE 6
+#LOCALSSIZE 6
+
+LOCAL:5 = RESULT
+LOCALS:5 = %RESULTS%
+
+;이름을 가져온다
+LOCALS:1 = %ARGS%
+
+;이름 길이 체크
+STRLENSU LOCALS:1
+
+;체크한 값을 보존
+LOCAL:1 = RESULT - 1
+
+
+;이름의 마지막 글자를 보존한다
+IF LOCAL:1 > 0
+    SUBSTRINGU LOCALS:1, LOCAL:1, 1
+ELSE
+    SUBSTRINGU LOCALS:1, 0, 1
+ENDIF
+LOCALS:2 = %RESULTS%
+
+RESULT = LOCAL:5
+LOCAL:5 = 0
+RESULTS = %LOCALS:5%
+LOCALS:5 = 0
+
+;받침이 있는 글자와 없는 글자를 구분해 반환
+IF GROUPMATCH(LOCALS:2, "2","4","5","9")
+    RETURNF 2
+ELSEIF INRANGE(ENCODETOUNI(LOCALS:2), 0xAC00, 0xD7A3) ;한글일 때
+    IF (ENCODETOUNI(LOCALS:2) - 0xAC00) % 28 == 0 ;받침 없음. ㄴ/ㄹ
+        RETURNF 2
+    ELSEIF (ENCODETOUNI(LOCALS:2) - 0xAC00) % 28 == 8 ;ㄹ받침 ~으로 예외처리
+        RETURNF 3
+    ENDIF
+ELSE
+    RETURNF 1
+ENDIF
+
+
+
+
+;========================================
+;                        조사선택
+;
+;  모든 개별 함수의 BASE 함수
+;  입력받은 이름에 해당 조사를 붙여 되돌려준다
+;
+;    ex) CALLNAME:MASTER가 '당신'인 경우, 
+;        %조사선택(CALLNAME:MASTER,"는")%
+;         를 부르면 '당신은' 이 반환된다
+;
+;  종류 : 式中関数
+;  PRINTFORM 등의 출력 함수에서 부르면 내용이 전개되어 반환된다
+;========================================
+
+
+;========================================
+;                        조사선택 (ver.2)
+;
+;  입력받은 이름에 따라 조사를 처리하는 함수
+;
+;    ex) %조사선택(CALLNAME:TARGET,"이")%
+;
+;  式中関数 등에도 대응할 수 있다
+;
+;    ex) %조사선택(CNAME(),"를")%
+;
+;========================================
+
+@조사선택(ARGS, ARGS:2)
+#FUNCTIONS
+
+LOCALS = %ARGS%%조사만선택(ARGS, ARGS:2)%
+
+;====================================================
+;                        후치환
+;  조사를 붙인 후 추가 처리를 한다
+;====================================================
+IF LOCALS == "나가"
+    RETURNF "내가"
+ELSEIF LOCALS == "저가"
+    RETURNF "제가"
+ELSE
+    RETURNF LOCALS
+ENDIF
+
+
+;-------------------------------------------------------
+;조사만선택
+;입력받은 문자에 해당하는 조사'만'을 되돌려주는 함수
+;-------------------------------------------------------
+
+@조사만선택(ARGS, ARGS:2)
+#FUNCTIONS
+
+#DIMS 받침X, 6 = "는","가","를","와","로","였"
+#DIMS 받침O, 6 = "은","이","을","과","으로","이었"
+
+;ZNAME.ERH에 정의된 조사처리 불필요 조사 우선처리
+SIF GROUPMATCH(ARGS:2, "의","에게")
+    RETURNF ARGS:2
+
+;받침 판정 및 조사 선택
+LOCAL = KR_NAME(ARGS)
+LOCAL:1 = 0 ;반복문 카운트
+WHILE LOCAL:1 < 6
+    IF GROUPMATCH(ARGS:2, 받침X:(LOCAL:1), 받침O:(LOCAL:1))
+        IF LOCAL == 2 ;받침 없음. ㄴ/ㄹ
+            RETURNF 받침X:(LOCAL:1)
+        ELSEIF 받침X:(LOCAL:1) == "으로" && LOCAL == 3 ;ㄹ받침 ~으로 예외처리
+            RETURNF "로"
+        ELSE ;받침 있음. ㅇ
+            RETURNF 받침O:(LOCAL:1)
+        ENDIF
+    ENDIF
+    LOCAL:1 ++
+WEND
+;이하 들어오는 모든 조사는 받침유무 판별 및 이에 따른 "이"가 무조건 필요하다 가정.
+SIF SUBSTRINGU(ARGS:2, 0,1) == "이"
+    ARGS:2 = %REPLACE(ARGS:2, "이","")%
+
+IF LOCAL != 2 ;받침 있음
+    RETURNF "이" + ARGS:2
+ELSE
+    RETURNF ARGS:2
+ENDIF
+
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+;　　　↓↓↓　이하, 조사선택 함수를 이용한 개별 함수 부분　↓↓↓　　　
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+@조사만처리(ARGS, ARGS:2)
+#FUNCTIONS
+RETURNF 조사만선택(ARGS, ARGS:2)
+
+@조사처리(ARGS, ARGS:2)
+#FUNCTIONS
+RETURNF 조사선택(ARGS, ARGS:2)
+
+
+[SKIPSTART]
+;====================================================
+;             플레이어 (MASTER) 조사 결정 함수 부분
+;====================================================
+
+@플레이어는(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "는")
+RETURNF 조사선택(NAME:MASTER, "는")
+
+
+@플레이어가(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "가")
+RETURNF 조사선택(NAME:MASTER, "가")
+
+
+@플레이어를(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "를")
+RETURNF 조사선택(NAME:MASTER, "를")
+
+
+@플레이어와(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "와")
+RETURNF 조사선택(NAME:MASTER, "와")
+
+
+@플레이어로(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "로")
+RETURNF 조사선택(NAME:MASTER, "로")
+
+
+@플레이어랑(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "랑")
+RETURNF 조사선택(NAME:MASTER, "랑")
+
+
+@플레이어며(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "며")
+RETURNF 조사선택(NAME:MASTER, "며")
+
+
+@플레이어고(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "고")
+RETURNF 조사선택(NAME:MASTER, "고")
+
+
+@플레이어라(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "라")
+RETURNF 조사선택(NAME:MASTER, "라")
+
+
+@플레이어다(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "다")
+RETURNF 조사선택(NAME:MASTER, "다")
+
+
+@플레이어였(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "였")
+RETURNF 조사선택(NAME:MASTER, "였")
+
+
+@플레이어여(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "여")
+RETURNF 조사선택(NAME:MASTER, "여")
+
+
+@플레이어야(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "야")
+RETURNF 조사선택(NAME:MASTER, "야")
+
+
+@플레이어나(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "이나")
+RETURNF 조사선택(NAME:MASTER, "이나")
+
+
+@플레이어면(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:MASTER, "이면")
+RETURNF 조사선택(NAME:MASTER, "이면")
+
+
+
+;====================================================
+;             조수 (ASSI) 조사 결정 함수 부분
+;====================================================
+
+@조수는(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "는")
+RETURNF 조사선택(NAME:ASSI, "는")
+
+
+@조수가(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "가")
+RETURNF 조사선택(NAME:ASSI, "가")
+
+
+@조수를(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "를")
+RETURNF 조사선택(NAME:ASSI, "를")
+
+
+@조수와(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "와")
+RETURNF 조사선택(NAME:ASSI, "와")
+
+
+@조수로(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "로")
+RETURNF 조사선택(NAME:ASSI, "로")
+
+
+@조수랑(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "랑")
+RETURNF 조사선택(NAME:ASSI, "랑")
+
+
+@조수며(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "며")
+RETURNF 조사선택(NAME:ASSI, "며")
+
+
+@조수고(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "고")
+RETURNF 조사선택(NAME:ASSI, "고")
+
+
+@조수다(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "다")
+RETURNF 조사선택(NAME:ASSI, "다")
+
+
+@조수였(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "였")
+RETURNF 조사선택(NAME:ASSI, "였")
+
+
+@조수여(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "여")
+RETURNF 조사선택(NAME:ASSI, "여")
+
+
+@조수야(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "야")
+RETURNF 조사선택(NAME:ASSI, "야")
+
+
+@조수나(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "이나")
+RETURNF 조사선택(NAME:ASSI, "이나")
+
+
+@조수면(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "이면")
+RETURNF 조사선택(NAME:ASSI, "이면")
+
+
+@조수라(ARGS = "CALLNAME")
+#FUNCTIONS
+SIF ARGS == "CALLNAME"
+    RETURNF 조사선택(CALLNAME:ASSI, "라")
+RETURNF 조사선택(NAME:ASSI, "라")
+
+;------------------끝줄
+
+
+[SKIPEND]
+

@@ -153,10 +153,10 @@ IF RAND:1000 < (PREG_PER + 100 * (CFLAG:0 == 0)) && (TALENT:임신 == 0)
 			PRINTFORML H촉수가 펼친 박막의 모니터에는 %PRINT_TRANSCALLNAME(TARGET)%의 태내의 모습이 비춰져 보였으며,
 			PRINTFORML 성숙한 난자 주위에는 무수히 많은 촉수의 정자가 떼지어 있었다.
 			PRINTFORML 그 중 한 마리가 표피를 뚫고 비원을 달성하면서, 폭발적인 세포 증식이 시작됐다.
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 눈앞에서 이종간 수정이 이루어지는 순간을 무력히 지켜볼 수밖에 없었다・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 눈앞에서 이종간 수정이 이루어지는 순간을 무력히 지켜볼 수밖에 없었다・・・
 			PRINTW 
 			TALENT:임신 = 1
-			PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%은(는) [임신] 했다.
+			PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [임신] 했다.
 			CALL NINSIN_TS_FIX
 		ENDIF
 	ENDIF
@@ -250,7 +250,7 @@ IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && TALENT:임신 == 4
 	PRINTFORML %PRINT_CALLNAME(TARGET,1)%의 상태가 이상하다……
 	PRINTFORML 어째서인지 모르겠지만, 몸속 깊은 곳에 무언가 위화감이 느껴진다……
 	PRINTL 
-	PRINTFORML %PRINT_CALLNAME(TARGET,1)%은(는) [남자] 로 돌아갈 수 없게 됐다.
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET,1),"는")% [남자] 로 돌아갈 수 없게 됐다.
 	PRINTW 
 	;여체화 처리
 	CALL TS_MtoF, TARGET
@@ -307,7 +307,7 @@ FOR CCOUNT,0,CHARANUM
 				TALENT:모유체질 = 1
 				PRINTFORML %PRINT_CALLNAME(TARGET,1)%의 가슴이 부풀어 올랐다……
 				PRINTL
-				PRINTFORML %PRINT_CALLNAME(TARGET,1)%은(는) [%TALENTNAME:1%] 이 됐다……
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET,1),"는")% [%TALENTNAME:1%] 이 됐다……
 			ENDIF
 			;확률로 출산　최단 5일, 최장 7일 반　그러나 유폐 중에 묘상화되어 있다면 항상 1/2 확률로 즉시 출산
 			IF CFLAG:222 >= 30
@@ -338,14 +338,14 @@ FOR CCOUNT,0,CHARANUM
 			PRINTFORML 임신하고 있다는 사실은 이제 그 누가 봐도 알아챌 것이다……
 			IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 == 0
 				PRINTW 
-				PRINTFORML %PRINT_CALLNAME(TARGET)%은(는) 임신 중이므로, 변신할 수 없게 됩니다.
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")% 임신 중이므로, 변신할 수 없게 됩니다.
 			ENDIF
 			PRINTW 
 			TALENT:임신 = 5
 		ELSEIF CFLAG:222 == 12
 			PRINTFORML %PRINT_CALLNAME(TARGET,1)%의 복부가 부풀어 오른 것 같기도 하다……
 			IF CFLAG:21>0
-				PRINTFORML 유폐된 상태로 검사를 받을 수 있을 리도 없어, %PRINT_CALLNAME(TARGET,1)%은(는) 그저 불안하게 복부를 바라보고 있다……
+				PRINTFORML 유폐된 상태로 검사를 받을 수 있을 리도 없어, %조사처리(PRINT_CALLNAME(TARGET,1),"는")% 그저 불안하게 복부를 바라보고 있다……
 			ELSE
 				PRINTFORML 지금까지 미뤄왔지만, 제대로 한번 검사를 받아보는 편이 좋을 것이다……
 			ENDIF
@@ -677,7 +677,7 @@ FOR LOCAL, 0, CHARANUM
 		ENDIF
 		RESULT = NUM_CHILD_TENTACLE(LOCAL)
 		PRINTL 【묘상 출산】
-		PRINTFORM 　촉수에게 거두어진 %CALLNAME:LOCAL%은(는), 
+		PRINTFORM 　촉수에게 거두어진 %조사처리(CALLNAME:LOCAL,"는")%,
 		PRINTDATA
 		DATAFORM 출산 절정과 함께
 		DATAFORM 최음 양수와 함께
@@ -876,11 +876,11 @@ LCOUNT = LINECOUNT
 $INPUT_LOOP_0
 INPUT
 IF RESULT == 0
-	PRINTFORML %PRINT_CALLNAME(ARG)%은(는) 사후피임약을 복용하지 않기로 했다……
+	PRINTFORML %조사처리(PRINT_CALLNAME(ARG),"는")% 사후피임약을 복용하지 않기로 했다……
 ELSEIF RESULT == 1
 	IF MONEY >= 500
 		MONEY -= 500
-		PRINTFORML %PRINT_CALLNAME(ARG)%은(는) 다급히 사후피임약을 복용했다.
+		PRINTFORML %조사처리(PRINT_CALLNAME(ARG),"는")% 다급히 사후피임약을 복용했다.
 		PRINTFORML 신체에 피로도가 쌓이고 말았다……（＋１５）
 		CFLAG:ARG:99 += 15
 		IF RAND:100 < ARG:1

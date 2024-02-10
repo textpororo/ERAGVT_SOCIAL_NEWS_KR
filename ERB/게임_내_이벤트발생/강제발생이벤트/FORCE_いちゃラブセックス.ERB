@@ -40,7 +40,7 @@ FOR LOCAL, 0, CHARANUM
 	SIF ISMANLY() && TALENT:교제상대 == 1
 		CONTINUE
 
-	;연인セックス確率判定値を初期化
+	;연인セックス確率判定値を초기화
 	LOCAL:1 = 0
 	LOCAL:3 = 0
 	;처녀の場合、교제상대によっては日数で制限を受ける
@@ -161,7 +161,7 @@ ENDIF
 
 
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -341,7 +341,7 @@ ENDIF
 @SEX_A, ARG
 
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -456,7 +456,7 @@ LOCAL:0 = 0
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 			CONTINUE
-	;パーティの彼氏持ち、婚約、人妻を人数分追加
+	;パーティの남친있음、약혼、유부녀を人数分追加
 	SIF TALENT:CCOUNT:800 > 1 && TALENT:CCOUNT:800 < 5
 		LOCAL:0 += 1
 NEXT

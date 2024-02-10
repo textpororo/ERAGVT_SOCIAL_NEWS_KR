@@ -22,7 +22,7 @@ IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 ELSEIF TALENT:성별변화 % 10 == 1
 	PRINTFORML 少しずつ女のカラダに慣れていこうと考え、身綺麗にして거리로나간다ことにした。
 ELSE
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、身綺麗にして거리로나간다ことにした。
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして거리로나간다ことにした。
 ENDIF
 PRINTW 
 ;ビッチ
@@ -123,7 +123,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	;服選び・여체수용まで数段階。下着セットをノリノリで選ぶのは五段階目で良いのか？
 	;受容１その後
 	IF TALENT:여체수용 > 0 && RAND:4 == 0
-		PRINTFORML 近頃、%PRINT_TRANSCALLNAME(TARGET)%은(는)女の身体になれて良かったと、
+		PRINTFORML 近頃、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女の身体になれて良かったと、
 		PRINTFORML もう男になんて戻れなくて良いとさえ思っている。
 		PRINTW 
 		PRINTFORML 服選びもメイクも自信が持てるようになり、
@@ -139,7 +139,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	ELSEIF CCOUNT > 11
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 女の身体にとても慣れて、欲しい服がどんどん増えていく。
 		PRINTFORML 最近はすれ違う男たちの視線を集めるのが楽しい。
 		PRINTW
@@ -148,7 +148,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	ELSEIF CCOUNT > 9
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 女の身体にずいぶん慣れてきて、服選びに楽しめるようになってきた。
 		PRINTFORML ここ数日、초심者向けの簡単ナチュラルメイクを練習した成果を試す時がきた。
 		PRINTW
@@ -156,7 +156,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	ELSEIF CCOUNT > 7
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 女の身体に慣れてきて、次はどんな服を試そうか考えるのが楽しい。
 		PRINTFORML 最近は女友達とファッション誌の話題で盛り上がることが多い。
 		PRINTW
@@ -164,19 +164,19 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	ELSEIF CCOUNT > 5
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 女の身体にまあまあ慣れてきたし、服選びもなんとなく分かってきた。
 		PRINTW
 	ELSEIF CCOUNT > 3
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 女の身体に少し慣れてきたし、友達に可愛いと言われると嬉しい。
 		PRINTW
 	ELSEIF CCOUNT > 1
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML まだまだ女の身体に違和感がある。
 		PRINTFORML 先日、街でナンパされたのは少し嬉しかった。
 		PRINTW
@@ -184,7 +184,7 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	ELSE
 		SIF ＴＳキャラ == 1
 			PRINT 女性の姿に変身した
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自室の鏡の前で服を選んでいた。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自室の鏡の前で服を選んでいた。
 		PRINTFORML 가슴やお尻などに違和感を感じる。
 		PRINTFORML 女物の服選びもどうしたらいいのかさっぱりわからない。
 		PRINTW
@@ -310,15 +310,15 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 	;受容その後
 	IF TALENT:여체수용 > 0 && RAND:4 == 0
 		PRINTFORML 多少組み合わせがおかしくても堂々としていれば意外と見映えするものだ。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、鏡の前でポーズを変え笑顔を作って見せる。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、鏡の前でポーズを変え笑顔を作って見せる。
 		PRINTFORML なんとなく生まれた時から女だった気がする。もし生まれ変わってもまた女がいい。
 	ELSEIF TALENT:여체수용 > 0
 		PRINTFORML 多少組み合わせがおかしくても堂々としていれば意外と見映えするものだ。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、鏡の前でポーズを変え笑顔を作って見せる。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、鏡の前でポーズを変え笑顔を作って見せる。
 		PRINTFORML かわいい自分をもっと見て欲しい。もっと褒めてほしい。
  	ELSEIF CCOUNT > 11
 		PRINTFORML 服装もメイクもしっかり整えたつもりだ。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)、自分はかわいいという自信があった。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、自分はかわいいという自信があった。
 		PRINTFORML そのうち服に合わせたアクセでも見ようか、それとも帽子を探しに行こうか悩んでいる。
 	ELSEIF CCOUNT > 9
 		PRINTFORML ネットや雑誌を参考にメイクはしっかり整えたつもりだ。
@@ -329,11 +329,11 @@ ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변
 		PRINTFORML ファッション誌に載っていたメイクにも興味が湧いてきていた。
 	ELSEIF CCOUNT > 5
 		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)下着選びも気をつけようと考えている。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%下着選びも気をつけようと考えている。
 		PRINTFORML デザインはもちろんのこと、胸に合ったブラを選ぶことで形も見た目のスタイルも良くなる。
 	ELSEIF CCOUNT > 3
 		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
-		PRINTFORML ナンパされたことを考えると、女の%PRINT_TRANSCALLNAME(TARGET)%은(는)どうやら可愛いらしい。
+		PRINTFORML ナンパされたことを考えると、女の%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%どうやら可愛いらしい。
 	ELSEIF CCOUNT > 1
 		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだ。
 		PRINTFORML ナンパされたことを考えると、どうやら変な目では見られていないらしい。

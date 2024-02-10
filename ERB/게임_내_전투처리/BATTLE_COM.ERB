@@ -807,7 +807,7 @@ REPEAT 감각수
 	TFLAG:(COUNT + 105) = TENTACLE_NUM:1:COUNT
 REND
 TFLAG:109 = INSERT
-;촉수サイズを初期化
+;촉수サイズを초기화
 VARSET TENTACLE_SIZE
 
 ;絶頂による変身解除、성내성が少ないほど発生率が上がる
@@ -862,7 +862,7 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && LOCAL:2 > 0 && RAND:100
 	ENDIF
 ELSEIF CFLAG:1 == 1 && LOCAL:2 > 0 && RESULT < 50 && (TCVARn:12 & 기절) == 0
 	PRINTL 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)기력を振り絞り何とか変身を維持した！
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%기력を振り絞り何とか変身を維持した！
 ENDIF
 
 ;보스の解析度を지성の基礎値に応じて上昇させる（実数値ではない）

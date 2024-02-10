@@ -141,9 +141,9 @@
 		CALL LB
 		CALL DOT_AFTER, 1
 		PRINTL 
-		PRINTFORML 『%CALLNAME%』을(를) {TARGET}번째 멤버로 영입했습니다.
+		PRINTFORML 『%CALLNAME%』%조사만처리(CALLNAME,"를")% {TARGET}번째 멤버로 영입했습니다.
 		IF CHARANUM_SAFE_PARTYCHECK()>=6
-			PRINTFORML 『%CALLNAME%』은(는) 대기 멤버로 추가됩니다.
+			PRINTFORML 『%CALLNAME%』%조사만처리(CALLNAME,"는")% 대기 멤버로 추가됩니다.
 		ELSE
 			CFLAG:TARGET:999 = 1
 		ENDIF

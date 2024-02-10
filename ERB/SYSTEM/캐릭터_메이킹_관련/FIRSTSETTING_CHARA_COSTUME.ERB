@@ -1,8 +1,8 @@
-﻿;겉옷の설정
+﻿;겉옷 설정
 @FIRSTSETTING_CLOTH_SETTING_OUTER, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL 겉옷を選んでください
+PRINTL 겉옷을 선택해 주십시오.
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -13,14 +13,14 @@ FOR LOCAL, 100, 200
 		LOCAL:1 = 0
 		PRINTL 
 	ENDIF
-	LOCALS:0 = [{LOCAL}]%ITEMNAME:LOCAL%
+	LOCALS:0 = [{LOCAL}] %ITEMNAME:LOCAL%
 	PRINTFORM %LOCALS:0,LOCAL:2,LEFT%
 	LOCAL:1 += 1
 NEXT
 PRINTL 
 DRAWLINE
-PRINTL [0]変更しないで돌아간다
-PRINTL [1]겉옷を설정しない
+PRINTL [0] 변경하지 않고 돌아간다
+PRINTL [1] 겉옷을 설정하지 않는다
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -28,20 +28,20 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:40 == 199
 		;	CFLAG:ARG:41 = -1
 		CFLAG:ARG:40 = -1
-		PRINTL 겉옷を설정しませんでした
+		PRINTL 겉옷을 설정하지 않았습니다.
 		PRINTW 
 	CASE 100 TO 199
 		LOCAL = RESULT
-		;非戦闘員専用
+		;비전투원 전용
 		IF LOCAL == 197 && ITEM:LOCAL == 1 && TALENT:ARG:변신능력 != -1
 			PRINTL 
 			PRINTFORML %ITEMNAME:LOCAL%
 			CALLFORM CLOTH_DESCRIPTION_{LOCAL}
 			PRINTL 
 			DRAWLINE
-			PRINTL [0]変更しない
+			PRINTL [0] 변경하지 않는다
 			SETCOLOR 126,126,126
-			PRINTL [1]変更する
+			PRINTL [1] 변경한다
 			RESETCOLOR
 			$INPUT_LOOP2
 			INPUT
@@ -67,8 +67,8 @@ SELECTCASE RESULT
 			CALLFORM CLOTH_DESCRIPTION_{LOCAL}
 			PRINTL 
 			DRAWLINE
-			PRINTL [0]変更しない
-			PRINTL [1]変更する
+			PRINTL [0] 변경하지 않는다
+			PRINTL [1] 변경한다
 			$INPUT_LOOP3
 			INPUT
 			IF RESULT == 0
@@ -79,7 +79,7 @@ SELECTCASE RESULT
 				CFLAG:ARG:40 = LOCAL
 				;SIF CFLAG:ARG:40 == 199
 				;	CFLAG:ARG:41 = 199
-				PRINTFORML 겉옷を%ITEMNAME:LOCAL%に変更しました
+				PRINTFORML 겉옷을 %조사처리(ITEMNAME:LOCAL,"로")% 변경했습니다.
 				PRINTW 
 			ELSE
 				PRINTL 
@@ -96,11 +96,11 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;겉옷（変身後）の설정
+;겉옷(변신 후) 설정
 @FIRSTSETTING_CLOTH_SETTING_OUTER2, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL 겉옷を選んでください
+PRINTL 겉옷을 선택해 주십시오.
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -111,15 +111,15 @@ FOR LOCAL, 100, 300
 		LOCAL:1 = 0
 		PRINTL 
 	ENDIF
-	LOCALS:0 = [{LOCAL}]%ITEMNAME:LOCAL%
+	LOCALS:0 = [{LOCAL}] %ITEMNAME:LOCAL%
 	PRINTFORM %LOCALS:0,LOCAL:2,LEFT%
 	LOCAL:1 += 1
 NEXT
 
 PRINTL 
 DRAWLINE
-PRINTL [0]変更しないで돌아간다
-PRINTL [1]겉옷（変身後）を설정しない
+PRINTL [0] 변경하지 않고 돌아간다
+PRINTL [1] 겉옷(변신 후)을 설정하지 않는다
 INPUT
 SELECTCASE RESULT
 	CASE 0
@@ -127,7 +127,7 @@ SELECTCASE RESULT
 		;SIF CFLAG:ARG:41 == 199
 		;	CFLAG:ARG:40 = -1
 		CFLAG:ARG:41 = -1
-		PRINTL 겉옷（変身後）を설정しませんでした
+		PRINTL 겉옷(변신 후)을 설정하지 않았습니다.
 		PRINTW 
 	CASE 100 TO 299
 		IF ITEMNAME:RESULT == ""
@@ -142,8 +142,8 @@ SELECTCASE RESULT
 		CALLFORM CLOTH_DESCRIPTION_{LOCAL}
 		PRINTL 
 		DRAWLINE
-		PRINTL [0]変更しない
-		PRINTL [1]変更する
+		PRINTL [0] 변경하지 않는다
+		PRINTL [1] 변경한다
 		$INPUT_LOOP3
 		INPUT
 		IF RESULT == 0
@@ -151,7 +151,7 @@ SELECTCASE RESULT
 		ELSEIF RESULT == 1
 			;SIF CFLAG:ARG:41 == 199
 			;	CFLAG:ARG:40 = 0
-			;変身コスチュームのカスタマイズをリセット
+			;변신 코스튬 커스터마이즈를 초기화
 			IF CFLAG:ARG:41 != LOCAL
 				FOR LOCAL:1, 600, 700
 					EQUIP:ARG:(LOCAL:1) = 0
@@ -160,7 +160,7 @@ SELECTCASE RESULT
 			CFLAG:ARG:41 = LOCAL
 			;SIF CFLAG:ARG:41 == 199
 			;	CFLAG:ARG:40 = 199
-			PRINTFORML 겉옷（変身後）を%ITEMNAME:LOCAL%に変更しました
+			PRINTFORML 겉옷(변신 후)을 %조사처리(ITEMNAME:LOCAL,"로")% 변경했습니다.
 			PRINTW 
 		ELSE
 			PRINTL 
@@ -176,11 +176,11 @@ ENDSELECT
 
 
 ;----------------------------------------------------------
-;속옷の설정
+;속옷 설정
 @FIRSTSETTING_CLOTH_SETTING_INNER, ARG
 $INPUT_LOOP
 PRINTL 
-PRINTL 속옷を選んでください
+PRINTL 속옷을 선택해 주십시오.
 DRAWLINE
 LOCAL:1 = 0
 LOCAL:2 = 30
@@ -191,20 +191,20 @@ FOR LOCAL, 300, 399
 		LOCAL:1 = 0
 		PRINTL 
 	ENDIF
-	LOCALS:0 = [{LOCAL}]%ITEMNAME:LOCAL%
+	LOCALS:0 = [{LOCAL}] %ITEMNAME:LOCAL%
 	PRINTFORM %LOCALS:0,LOCAL:2,LEFT%
 	LOCAL:1 += 1
 NEXT
 PRINTL 
 DRAWLINE
-PRINTL [0]変更しないで돌아간다
-PRINTL [1]속옷を설정しない
+PRINTL [0] 변경하지 않고 돌아간다
+PRINTL [1] 속옷을 설정하지 않는다
 INPUT
 SELECTCASE RESULT
 	CASE 0
 	CASE 1
 		CFLAG:ARG:42 = -1
-		PRINTL 속옷を설정しませんでした
+		PRINTL 속옷을 설정하지 않았습니다.
 		PRINTW 
 	CASE 300 TO 398
 		IF ITEMNAME:RESULT == ""
@@ -219,18 +219,18 @@ SELECTCASE RESULT
 		CALLFORM CLOTH_DESCRIPTION_{LOCAL}
 		PRINTL 
 		DRAWLINE
-		PRINTL [0]変更しない
-		PRINTL [1]変更する
+		PRINTL [0] 변경하지 않는다
+		PRINTL [1] 변경한다
 		$INPUT_LOOP3
 		INPUT
 		IF RESULT == 0
 			GOTO INPUT_LOOP
 		ELSEIF RESULT == 1
 			CFLAG:ARG:42 = LOCAL
-			PRINTFORMW 속옷を%ITEMNAME:LOCAL%に変更しました
+			PRINTFORMW 속옷을 %조사처리(ITEMNAME:LOCAL,"로")% 변경했습니다.
 			IF CFLAG:ARG:42 != 308
 				IF FIGURE_SPLIT(EQUIP:ARG:103, 4) == 2
-					;露出度合い
+					;노출 정도
 					LOCAL = 0
 					SIF FIGURE_SPLIT(EQUIP:ARG:103, 2) == 1
 						LOCAL -= 1
@@ -252,17 +252,17 @@ SELECTCASE RESULT
 					SIF FIGURE_SPLIT(EQUIP:ARG:103, 5) == 4
 						LOCAL += 1
 
-					;補正効果
-					;軽装
+					;보정 효과
+					;경장
 					SIF LOCAL < 0
 						EQUIP:ARG:103 += LOCAL * POWER(10, 9)
-					;重装
+					;중장
 					SIF LOCAL > 0
 						EQUIP:ARG:103 -= LOCAL * POWER(10, 10)
-					;下着保護ダウン
+					;속옷 보호 DOWN
 					SIF FIGURE_SPLIT(EQUIP:ARG:103, 4) == 2
 						EQUIP:ARG:103 -= 4 * POWER(10, 11)
-					;下着保護アップ
+					;속옷 보호 UP
 					SIF FIGURE_SPLIT(EQUIP:ARG:103, 4) == 4
 						EQUIP:ARG:103 -= 2 * POWER(10, 12)
 					SIF FIGURE_SPLIT(EQUIP:ARG:103, 5) == 4
@@ -270,7 +270,7 @@ SELECTCASE RESULT
 					EQUIP:ARG:103 -= 2000
 				ENDIF
 				IF FIGURE_SPLIT(EQUIP:ARG:3, 4) == 2
-					;露出度合い
+					;노출 정도
 					LOCAL = 0
 					SIF FIGURE_SPLIT(EQUIP:ARG:3, 2) == 1
 						LOCAL -= 1
@@ -292,17 +292,17 @@ SELECTCASE RESULT
 					SIF FIGURE_SPLIT(EQUIP:ARG:3, 5) == 4
 						LOCAL += 1
 
-					;補正効果
-					;軽装
+					;보정 효과
+					;경장
 					SIF LOCAL < 0
 						EQUIP:ARG:3 += LOCAL * POWER(10, 9)
-					;重装
+					;중장
 					SIF LOCAL > 0
 						EQUIP:ARG:3 -= LOCAL * POWER(10, 10)
-					;下着保護ダウン
+					;속옷 보호 DOWN
 					SIF FIGURE_SPLIT(EQUIP:ARG:3, 4) == 2
 						EQUIP:ARG:3 -= 4 * POWER(10, 11)
-					;下着保護アップ
+					;속옷 보호 UP
 					SIF FIGURE_SPLIT(EQUIP:ARG:3, 4) == 4
 						EQUIP:ARG:3 -= 2 * POWER(10, 12)
 					SIF FIGURE_SPLIT(EQUIP:ARG:3, 5) == 4
@@ -322,13 +322,13 @@ SELECTCASE RESULT
 ENDSELECT
 
 @FIRSTSETTING_CHARA_COSTUME_PRE(ARG)
-;衣装の仮決定
+;의상 가결정(仮決定)
 CFLAG:ARG:45 = CFLAG:ARG:40
 CFLAG:ARG:46 = CFLAG:ARG:41
 CFLAG:ARG:47 = CFLAG:ARG:42
 
 @FIRSTSETTING_CHARA_COSTUME_LATE(ARG)
-;衣装の本決定
+;의상 본결정(本決定)
 CFLAG:ARG:40 = CFLAG:ARG:45
 CFLAG:ARG:41 = CFLAG:ARG:46
 CFLAG:ARG:42 = CFLAG:ARG:47

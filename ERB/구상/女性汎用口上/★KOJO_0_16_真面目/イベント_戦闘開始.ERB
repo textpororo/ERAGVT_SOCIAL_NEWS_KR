@@ -22,7 +22,7 @@ IF CFLAG:42 == 400
 	PRINTFORML  ペニス同然に異常成長した陰核は%ITEMNAME:(CFLAG:40)%を突き破らんばかりに醜く変容しはじめた。
 	PRINTFORML  %ITEMNAME:(CFLAG:40)%の下で、%ITEMNAME:(CFLAG:42)%からじくじくと滲み出た体液が、
 	PRINTFORML  %CALLNAME%の肢体を覆い尽くし、第二の皮膚のようにぴっちりと張り付いた。
-	PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%CALLNAME%은(는) 全身を粟立たせる……
+	PRINTFORML  生暖かくぬらつく体液が体中を舐め回す感触に、%타겟은% 全身を粟立たせる……
 	PRINTFORML
 ENDIF
 
@@ -44,7 +44,7 @@ ELSEIF ABL:정액중독 > 3 || (ABL:사정중독 > 3 && ISPENIS()) || ABL:모유
 		PRINTFORML  ――ゴクリッ
 		PRINTFORML %CALLNAME%の喉が大きく鳴った
 		PRINTFORML 倒すために出撃しているのか、精液を浴びるために出撃しているのか
-		PRINTFORML %CALLNAME%은(는) 次第にどちらでも良くなってきている……
+		PRINTFORML %타겟은% 次第にどちらでも良くなってきている……
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:모유중독 > 3
 		PRINTFORML 「また……いっぱい、絞られ……っ♪」
@@ -91,7 +91,7 @@ ELSEIF ABL:정액중독 > 1 || (ABL:사정중독 > 1 && ISPENIS()) || ABL:모유
 	WHILE LOCAL
 	RESULT = RAND:3
 	IF RESULT == 0 && ABL:정액중독 > 1
-		PRINTFORML 更なる精液を求め%CALLNAME%은(는) 발정していく……
+		PRINTFORML 更なる精液を求め%타겟은% 발정していく……
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:모유중독 > 1
 		PRINTFORML 更なる射乳を求め%CALLNAME%の乳首はゆっくりと勃ち上がっている…
@@ -109,7 +109,7 @@ ELSEIF ABL:욕망 == 5 || ABL:노출벽 == 5 || ABL:마조끼 == 5
 		LOCAL = 0
 	ELSEIF RESULT == 1 && ABL:노출벽 == 5
 		PRINTFORML 「また……見られちゃう……」
-		PRINTFORML 全裸で犯された記憶を思い出すと、%CALLNAME%은(는) 燃え上がるような官能に包まれた……
+		PRINTFORML 全裸で犯された記憶を思い出すと、%타겟은% 燃え上がるような官能に包まれた……
 		LOCAL = 0
 	ELSEIF RESULT == 2 && ABL:마조끼 == 5 
 		PRINTFORML 「ふふ……また……」
@@ -265,7 +265,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_ENCOUNT_AKUOTI_FIRST_16
 PRINTFORML 「なッ、何を言ってるのかわかってるの？！ ああもう、化け物なんかに狂わされちゃって！」
-PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)きっと柳眉を逆立てた。
+PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%きっと柳眉を逆立てた。
 
 
 
@@ -285,7 +285,7 @@ ELSE
 	PRINTFORML 「ああもう黙って！ 化け物に堕とされるなんて情けない！」
 	PRINTFORML (苗床にならないだけの強さはある……遠慮は不要、ね)
 ;	PRINTFORML  今なら「元」仲間と本気で戦い、存分に打ちのめしてもよい。
-;	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)湧き上がる衝動を、공격的な笑みを隠しすらしない……
+;	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%湧き上がる衝動を、공격的な笑みを隠しすらしない……
 
 ENDIF
 

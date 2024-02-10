@@ -15,7 +15,7 @@ RESULTS = 악질 시민
 @TENTACLE_MOB_1150_DEFENITION
 PRINTFORML （촉수が持つ발정効果により暴徒と化した市民）
 PRINTFORML （もとは一般市民なため）
-PRINTFORML （%PRINT_TRANSCALLNAME(TARGET)%은(는)全力で공격を行うことができない）
+PRINTFORML （%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%全力で공격を行うことができない）
 
 
 ;==================================================
@@ -264,7 +264,7 @@ IF ISPENIS()
 	ELSE
 		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスにオナホをかぶせると、
 		PRINTFORML 前後に動いてシゴき始めた。
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM オナホに与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -285,7 +285,7 @@ ELSE
 	ELSE
 		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら클리토리스に吸い付き、
 		PRINTFORML 입全体を使って激しく吸い上げ始めた。
-		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 淫豆に与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -332,7 +332,7 @@ IF (ARG & Ｖ) == 0
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML のうち一人が%PRINT_TRANSCALLNAME(TARGET)%に覆い被さろうとしたが
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)咄嗟に身を捻って抵抗したため、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%咄嗟に身を捻って抵抗したため、
 	PRINTFORM うまく行かなかったようだ
 ELSEIF TALENT:처녀 > 0
 	CALL TENTACLE_ACCESS, "NAME"
@@ -352,7 +352,7 @@ ELSEIF TALENT:처녀 > 0
 		PRINTFORML それに興奮した男は「初めてのオンナ」の질내の感触に身を震わせ、
 		PRINTFORM がむしゃらに욕망を叩き付け始めた
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
 		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に倒錯した喜びを感じてしまっている。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれる・・・
@@ -361,10 +361,10 @@ ELSEIF TALENT:처녀 > 0
 		PRINTW 
 		PRINTFORML ぎこちなく、そして激しく。
 		PRINTFORML 「正義のヒロイン」に夢中で욕망をぶつける男を見つめながら
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)形ばかりの抵抗の言葉を口にしつつ
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%形ばかりの抵抗の言葉を口にしつつ
 		PRINTFORM 頬を染めて満足げな吐息を洩らしている
 	ELSE
-		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%PRINT_TRANSCALLNAME(TARGET)%이(가)必死に抵抗するも、
+		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%必死に抵抗するも、
 		PRINTFORML 男たちに손발を拘束された状態では満足に振り払うことができない。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれてしまう・・・
@@ -375,12 +375,12 @@ ELSEIF TALENT:처녀 > 0
 		IF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 			PRINTFORML 悔しさに涙を浮かべながらも毅然とした表情を保つ%PRINT_TRANSCALLNAME(TARGET)%。
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)茫然自失となっている。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%茫然自失となっている。
 		ENDIF
 		PRINTFORM そんな様子にはお構いなしに、興奮した男は「正義のヒロイン」を犯すのに夢中になっている
 	ENDIF
 ELSEIF TFLAG:20 == 3
-	PRINTFORM 男は%PRINT_TRANSCALLNAME(TARGET)%을(를)組み敷いたまま、夢中でピストンを続けている
+	PRINTFORM 男は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま、夢中でピストンを続けている
 ELSE
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML のうち一人が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%に飛びかかり、
@@ -535,7 +535,7 @@ ELSE
 	ENDIF
 ENDIF
 IF (ARG & Ａ)
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)同時に애널を
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%同時に애널を
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORM のもう片方の手に撫でまわされ
 	IF (ARG & Ｂ)
@@ -547,7 +547,7 @@ IF (ARG & Ａ)
 		SIF TALENT:감정결여 > 0
 			PRINT るも
 		PRINTFORML 、
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 			IF TALENT:주관시점 > 0
 				PRINTFORML 愉悦に身を震わせてしまう・・・
@@ -581,22 +581,22 @@ IF (ARG & Ａ) == 0 && (ARG & Ｂ) && RAND:2 == 0
 		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 体は完全に人形のように扱われている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		IF TALENT:주관시점 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ビクビクと快楽に身を震わせてしまう・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせてしまう・・・
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ビクビクと快楽に身を震わせている・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
 		ENDIF
 	ELSEIF TCVARn:2 == 자세：받아들인다
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に翻弄されるしかない・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)快楽と恥辱に歯を食いしばっている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽と恥辱に歯を食いしばっている・・・
 	ELSEIF TALENT:감정결여 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)僅かに不快感に表情を歪めた・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%僅かに不快感に表情を歪めた・・・
 	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)あまりの羞恥心に顔を真っ赤にしている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔を真っ赤にしている・・・
 	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 		PRINTFORML さすがの%PRINT_TRANSCALLNAME(TARGET)%も悔しさに涙を浮かべるしかない・・・
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)嫌悪感と屈辱に歯を食いしばっている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%嫌悪感と屈辱に歯を食いしばっている・・・
 	ENDIF
 	PRINTW 
 ELSEIF (ARG & Ａ) == 0 && (ARG & Ｂ)
@@ -608,30 +608,30 @@ ELSEIF (ARG & Ａ) == 0 && (ARG & Ｂ)
 	ENDIF
 	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
 		PRINTFORML てしまっており、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)無抵抗のまま弄ばれている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無抵抗のまま弄ばれている・・・
 	ELSEIF (TCVARn:12 & 기절)
 		PRINTFORML てしまっており、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)기절したまま頬を染めている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%기절したまま頬を染めている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML てしまい、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ビクビクと快楽に身を震わせている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
 	ELSEIF TCVARn:2 == 자세：받아들인다
 		PRINTFORML ることを受け入れてしまっており、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に翻弄されるしかない・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && TALENT:주관시점 > 0
 		PRINTFORML てしまい、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に抗おうと歯を食いしばった・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に抗おうと歯を食いしばった・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 		PRINTFORML てしまい、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)快楽に抗おうと歯を食いしばっている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に抗おうと歯を食いしばっている・・・
 	ELSEIF TALENT:감정결여 > 0
 		PRINTFORML てしまっている・・・
 	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
 		PRINTFORML てしまい、
 		IF TALENT:주관시점 > 0
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)あまりの羞恥心に顔が真っ赤に染まっていく・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔が真っ赤に染まっていく・・・
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)あまりの羞恥心に顔を真っ赤にしている・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔を真っ赤にしている・・・
 		ENDIF
 	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 		PRINTFORML っては、
@@ -641,7 +641,7 @@ ELSEIF (ARG & Ａ) == 0 && (ARG & Ｂ)
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 表情が嫌悪感と屈辱に歪んでいく・・・
 	ELSE
 		PRINTFORML てしまい、
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)嫌悪感と屈辱に表情を歪めている・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%嫌悪感と屈辱に表情を歪めている・・・
 	ENDIF
 	PRINTW 
 ENDIF
@@ -743,7 +743,7 @@ IF RAND:2 == 0
 	IF (TCVARn:12 & 기절)
 		PRINTFORM 無防備に半開きになった唇を抉じ開けられ、口をオナホのように扱われている
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML ぐいぐい押しつけられる不潔なオスの臭気に%PRINT_TRANSCALLNAME(TARGET)%은(는)我慢しきれず、
+		PRINTFORML ぐいぐい押しつけられる不潔なオスの臭気に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%我慢しきれず、
 		PRINTFORM 半ば無意識にペニスを口に含み、丁寧に舌を絡めて奉仕し初めた
 	ELSE
 		PRINTFORML その臭気に何とか顔を逸らそうとするが、
@@ -788,7 +788,7 @@ IF RAND:2 == 0
 		PRINT 青い
 	ENDIF
 	PRINTFORML 液体の入った注射器を%PRINT_TRANSCALLNAME(TARGET)%に突き刺した。
-	PRINTFORM 得体のしれない薬品を注射された%PRINT_TRANSCALLNAME(TARGET)%은(는)
+	PRINTFORM 得体のしれない薬品を注射された%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 ENDIF
 PRINTFORML ・・・
 PRINTW 
@@ -870,9 +870,9 @@ ENDIF
 @MESSAGE_BATTLE_MOB_1150_KARAMITUKU
 PRINT 男たちは
 IF TFLAG:12 == 3
-	PRINTFORM 説得しようと近づいた%PRINT_TRANSCALLNAME(TARGET)%을(를)拘束しにとびかかってきた！
+	PRINTFORM 説得しようと近づいた%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%拘束しにとびかかってきた！
 ELSEIF RAND:2 == 0
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%을(를)転ばそうと足を引っかけた！
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%転ばそうと足を引っかけた！
 ELSE
 	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 背後に回り込んだ男の一人が飛びかかってきた！
 ENDIF
@@ -899,7 +899,7 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_1150_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML の腕に掴まれ、
 PRINTFORML 群衆の中に取り込まれてしまった！

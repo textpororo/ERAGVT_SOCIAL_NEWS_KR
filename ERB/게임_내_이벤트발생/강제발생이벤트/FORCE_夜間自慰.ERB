@@ -28,7 +28,7 @@ FOR LOCAL, 1, CHARANUM
 	;처녀でなく、かつ교제상대が居る場合は自慰しにくい
 	SIF TALENT:교제상대 >= 2 && TALENT:교제상대 <= 4 && TALENT:처녀 < 1 && RAND:4 != 0
 		CONTINUE
-	;自慰確率判定値を初期化
+	;自慰確率判定値を초기화
 	LOCAL:1 = 0
 	;욕망を見る
 	LOCAL:1 += ABL:욕망 * 5
@@ -251,7 +251,7 @@ ENDIF
 @SELF_N, ARG, ARG:1
 
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -409,7 +409,7 @@ CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, L
 ;胸自慰
 @SELF_B, ARG, ARG:1
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -529,7 +529,7 @@ CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, L
 @SELF_A, ARG, ARG:1
 
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -645,7 +645,7 @@ CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, L
 @SELF_V, ARG, ARG:1
 
 
-;ベース値の明示的初期化
+;ベース値の明示的초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND

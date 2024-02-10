@@ -6,12 +6,12 @@ ELSE
 TARGET = RESULT
 	PRINTFORML 은퇴자 {FLAG:252}명, 지원 전향자 {FLAG:253}명, 피치료자 수 {FLAG:254}명, 말소 완료 행방 불명자 수 {FLAG:255}명
 	PRINTFORML 은퇴자 총수 {FLAG:251}명
-	PRINTFORML %CALLNAME%을(를) 은퇴시킵니다. 한 번 은퇴한 캐릭터는 다시는 현장 복귀할 수 없습니다. 정말로 진행하시겠습니까?
+	PRINTFORML %타겟을% 은퇴시킵니다. 한 번 은퇴한 캐릭터는 다시는 현장 복귀할 수 없습니다. 정말로 진행하시겠습니까?
 	PRINTL [0] 네
 	PRINTL [1] 아니오
 	CALL INPUT_ROOP,2
 	IF RESULT == 0
-		PRINTFORML 진짜진짜 정말로 %CALLNAME%을(를) 은퇴해도 괜찮겠습니까?
+		PRINTFORML 진짜진짜 정말로 %타겟을% 은퇴해도 괜찮겠습니까?
 		PRINTL [0] 아니오
 		PRINTL [1] 네
 		CALL INPUT_ROOP,2
@@ -71,7 +71,7 @@ IF TALENT:근거리특기 || TALENT:중거리특기 || TALENT:원거리특기
 	ENDIF
 	PRINTFORM 던 %CALLNAME%였지만 
 ELSE
-	PRINTFORM %CALLNAME%은(는) 
+	PRINTFORM %타겟은% 
 ENDIF
 
 ;소모 정도 판정
@@ -142,7 +142,7 @@ ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
 	IF ABL:A감각 == 5
 		PRINTFORML %CALLNAME%의 항문은 성기 이상으로 민감하게 바뀌었기
 	ELSEIF ABL:V감각 == 5
-		PRINTFORML %CALLNAME%은(는) 암구멍에 삽입될 때마다, 미치도록 가 버리기
+		PRINTFORML %타겟은% 암구멍에 삽입될 때마다, 미치도록 가 버리기
 	ELSEIF ABL:B감각 == 5
 		PRINTL 꼭지는 수그러들지 않고 계속 단단하게 서 있었기
 	ELSEIF ABL:C감각 == 5
@@ -189,14 +189,14 @@ ENDIF
 
 ;감각도 그 이외도 3 이하로 중독 가지고 있으려나
 IF LOCAL:0 >= 3 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
-	PRINTFORM 원래부터 소질이 음란한 것이었을까, %CALLNAME%은(는) 
+	PRINTFORM 원래부터 소질이 음란한 것이었을까, %타겟은% 
 ELSEIF LOCAL:0 == 2 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORM 결과, 
 ELSEIF LOCAL:0 == 1 && (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORM 버림과 동시에, 
 ELSEIF (ABL:촉수중독 || ABL:자위중독 || ABL:정액중독)
 	PRINTFORML  버리고 말았다.
-	PRINTFORML 몹시 심하게 개발당한 %CALLNAME%은(는) 
+	PRINTFORML 몹시 심하게 개발당한 %타겟은% 
 ELSE
 	PRINTFORML  버렸다.
 ENDIF
@@ -229,14 +229,14 @@ IF CFLAG:0 == 상태_사망
 		LOCALS = 제물 학살
 		LOCALS:1 = 사망
 	ELSEIF TALENT:괴멸카운트 == -11
-		PRINTFORML 다크웹상의 정보에 의하면, %CALLNAME%은(는) 이미 뒷사회 조직에 의해 처형된 것 같다.
+		PRINTFORML 다크웹상의 정보에 의하면, %타겟은% 이미 뒷사회 조직에 의해 처형된 것 같다.
 		PRINTL
 		PRINTFORM 그 죽음이 농후했기 때문에, 데이터베이스에서 프로필이 말소되었다……
 		PRINTL
 		LOCALS = 잔학 처형
 		LOCALS:1 = 사망
 	ELSEIF TALENT:묘상화
-		PRINTFORML %CALLNAME%은(는) 철저하게 흡수되어,
+		PRINTFORML %타겟은% 철저하게 흡수되어,
 		PRINTL
 		PRINTFORML %STR:2500%의 유체를 출산하는 잉태 주머니가 되었다.
 		PRINTL
@@ -246,7 +246,7 @@ IF CFLAG:0 == 상태_사망
 		LOCALS = 촉수 흡수
 		LOCALS:1 = 모판
 	ELSE
-		PRINTFORML %CALLNAME%이(가) 유폐된 지 며칠이나 경과하고 있었다.
+		PRINTFORML %타겟이% 유폐된 지 며칠이나 경과하고 있었다.
 		PRINTL
 		PRINTFORML 그리고 %STR:2500%의 유체를 출산하는 잉태 주머니도 되지 않았다.
 		PRINTL
@@ -258,7 +258,7 @@ IF CFLAG:0 == 상태_사망
 	ENDIF
 	FLAG:255 += 1
 ELSEIF CFLAG:0 == 상태_유폐 
-	PRINTFORML %CALLNAME%이(가)행방불명이 된지 {CFLAG:31 / 2}일이 경과했다.
+	PRINTFORML %타겟이%행방불명이 된지 {CFLAG:31 / 2}일이 경과했다.
 	PRINTL
 	PRINTFORML 촉수에게 패배하고 사로잡혔다는 목격 보고가 있었다.
 	PRINTL
@@ -271,9 +271,9 @@ ELSEIF CFLAG:0 == 상태_유폐
 	FLAG:255 += 1
 ELSEIF CFLAG:0 == 상태_악질감금 
 	IF TALENT:사지결손
-		PRINTFORML %CALLNAME%이(가) 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
+		PRINTFORML %타겟이% 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
 		PRINTL
-		PRINTFORML %CALLNAME%은(는) 뒷사회에 붙잡혀, 극히 잔혹한 처사를 받고 있었다.
+		PRINTFORML %타겟은% 뒷사회에 붙잡혀, 극히 잔혹한 처사를 받고 있었다.
 		PRINTL
 		PRINTFORML 인간형 생오나홀로 바뀌어, 언제 고문당해 죽을지도 모른다.
 		PRINTL
@@ -282,7 +282,7 @@ ELSEIF CFLAG:0 == 상태_악질감금
 		LOCALS = 잔학 고문
 		LOCALS:1 = 사망 추정
 	ELSE
-		PRINTFORML %CALLNAME%이(가) 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
+		PRINTFORML %타겟이% 행방불명이 된지 {CFLAG:70 / 2}일이 경과했다.
 		PRINTL
 		PRINTFORML 뒷사회의 범죄 조직에 붙잡혔을 가능성도 있다.
 		PRINTL
@@ -300,7 +300,7 @@ ELSEIF CFLAG:0 == 상태_악질감금
 ;ELSEIF TALENT:전락
 ;	PRINTL 
 ;	PRINTFORMW 촉수의 앞잡이가 된 의혹이 있기 때문에, 간단히「은퇴」할 수는 없다.
-;	PRINTFORMW %CALLNAME%은(는) 비밀리에 구속되어, 기지 깊숙한 곳에서 비밀리에 처형당하게 되었다……
+;	PRINTFORMW %타겟은% 비밀리에 구속되어, 기지 깊숙한 곳에서 비밀리에 처형당하게 되었다……
 ;	PRINTW
 ;	FLAG:252 += 1
 ;	LOCALS = 비밀 처형

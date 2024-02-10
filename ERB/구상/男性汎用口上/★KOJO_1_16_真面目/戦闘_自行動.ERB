@@ -227,7 +227,7 @@ DATAFORM 「ふふ、覚悟しろ！」
 DATAFORM 「なるほど、そこが弱点なのか」
 DATAFORM 「ふーん、随分効いてるみたいだな？」
 ENDDATA
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)ちらっと唇に指を添えた。
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ちらっと唇に指を添えた。
 
 ;공격が通常ヒット
 ;--------------------------------------------------
@@ -260,16 +260,16 @@ ENDDATA
 SELECTCASE RAND:5
 	CASE 0
 		PRINTFORML 「ああもう、煩わしいな……！」
-		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)忌々しげに촉수を睨み付けている…
+		PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%忌々しげに촉수を睨み付けている…
 	CASE 1
 		PRINTFORML 「い、今のを避けるのか…！？」
-		PRINTFORML  渾身の一撃を躱された%PRINT_TRANSCALLNAME(TARGET)%은(는)狼狽えている！
+		PRINTFORML  渾身の一撃を躱された%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%狼狽えている！
 	CASE 2
 		PRINTFORML 「ああ忌々しいっ！」
-		PRINTFORML  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%은(는)隙だらけだ！
+		PRINTFORML  バランスを崩した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%隙だらけだ！
 	CASE 3
 		PRINTFORML 「くっ、こいつ急に素早く……っ」
-		PRINTFORML  バランスを崩した%PRINT_TRANSCALLNAME(TARGET)%은(는)隙だらけだ！
+		PRINTFORML  バランスを崩した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%隙だらけだ！
 	CASEELSE
 		PRINTFORML 「惜しいな」
 		PRINTFORML  平静を装う%PRINT_TRANSCALLNAME(TARGET)%だが、その動きは戸惑いを隠せない……
@@ -311,10 +311,10 @@ ELSE
 ENDIF
 
 PRINTDATAL
-DATAFORM %CALLNAME%은(는) 距離を取って体を休めている。
-DATAFORM %CALLNAME%은(는) 距離を取って体を落ち着けた。
-DATAFORM %CALLNAME%은(는) 身を翻して距離をとった…
-DATAFORM %CALLNAME%은(는) 建物の合間を縫うように距離をとった…
+DATAFORM %타겟은% 距離を取って体を休めている。
+DATAFORM %타겟은% 距離を取って体を落ち着けた。
+DATAFORM %타겟은% 身を翻して距離をとった…
+DATAFORM %타겟은% 建物の合間を縫うように距離をとった…
 ENDDATA
 
 
@@ -325,7 +325,7 @@ DATAFORM 「…………」
 DATAFORM 「……一旦、様子を見ないと」
 DATAFORM 「……さあ、どう、くるつもり、か、な……？」
 ENDDATA
-PRINTFORMW %CALLNAME%은(는) 平静を装いつつ敵の動きを窺っている。
+PRINTFORMW %타겟은% 平静を装いつつ敵の動きを窺っている。
 
 ;아무것도안한다　(→捕まる)
 ;--------------------------------------------------
@@ -339,13 +339,13 @@ ELSEIF BASE:체력<MAXBASE:체력/4
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「……はーっ、はーっ、さ、最悪だ……」
-			PRINTFORMW %CALLNAME%은(는) 肩で息をして、周囲を気にする余裕もない様子だ。
+			PRINTFORMW %타겟은% 肩で息をして、周囲を気にする余裕もない様子だ。
 		CASE 1
 			PRINTFORML 「…っ、体が、動かない……！？」
-			PRINTFORMW %CALLNAME%은(는) 疲労のせいで、満足に動けない様子だ。
+			PRINTFORMW %타겟은% 疲労のせいで、満足に動けない様子だ。
 		CASE 2
 			PRINTFORML 「っぁ…も、もう、動けない……」
-			PRINTFORMW 体を蝕む疲労と痛みに、%CALLNAME%은(는) 動きを止めてしまった。
+			PRINTFORMW 体を蝕む疲労と痛みに、%타겟은% 動きを止めてしまった。
 	ENDSELECT
 ELSEIF RAND:2
 	PRINTDATAL
@@ -354,7 +354,7 @@ ELSEIF RAND:2
 	DATAFORM 「動きが、止まった……？」
 	DATAFORM 「……様子がおかしい、何をする気だ……？」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 敵の異変に困惑して一瞬動きを止めてしまった。
+	PRINTFORMDW %타겟은% 敵の異変に困惑して一瞬動きを止めてしまった。
 ELSE
 	PRINTDATAL
 	DATAFORM 「な、急に動きが速く――」
@@ -362,7 +362,7 @@ ELSE
 	DATAFORM 「しまっ、%SELF_CALL()%追い詰められて――」
 	DATAFORM 「なっ、いつの間に背後に――」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 敵の動きに対応できず隙を作ってしまった。
+	PRINTFORMDW %타겟은% 敵の動きに対応できず隙を作ってしまった。
 ENDIF
 
 
@@ -393,22 +393,22 @@ ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
 ;체력0
 ELSEIF BASE:체력 == 0
 	PRINTFORML 「……う、あ、ぁ、あぁあ……」
-	PRINTFORML %CALLNAME%은(는) 最後の기력を振り絞って、命からがら逃げ出した……
+	PRINTFORML %타겟은% 最後の기력を振り絞って、命からがら逃げ出した……
 ;기력0=闘志がない状態
 ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
 	PRINTFORML 「……こ、こんなの無理だ…勝てるわけ…ないっ……」
-	PRINTFORMW 心の折れた%CALLNAME%은(는) 震えながら逃げ出した……
+	PRINTFORMW 心の折れた%타겟은% 震えながら逃げ出した……
 ;성내성0
 ELSEIF BASE:성내성 == 0
 	PRINTFORML 「……んっ…くうぅ……」
-	PRINTFORMW %CALLNAME%은(는) 발정し、既に戦える状態ではない……
+	PRINTFORMW %타겟은% 발정し、既に戦える状態ではない……
 ;対흑화
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")>0
 	PRINTDATAL
 	DATAFORM 「くっ…助け…られなかった……」
 	DATAFORM 「次は、次こそは正気に戻してやるからな……っ」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 無力感に歯噛みしながらその場を後にした。
+	PRINTFORMDW %타겟은% 無力感に歯噛みしながらその場を後にした。
 	PRINTFORML 
 ;不利な状況
 ELSEIF BASE:체력 < MAXBASE:체력 / 4
@@ -418,7 +418,7 @@ ELSEIF BASE:체력 < MAXBASE:체력 / 4
 	DATAFORM 「覚えてろよ……！」
 	DATAFORM 「くっ……今度こそ、は、か、必ず、倒す、からなっ……！」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 歯を食いしばりながらその場を後にした。
+	PRINTFORMDW %타겟은% 歯を食いしばりながらその場を後にした。
 ELSE
 	PRINTDATAL
 	DATAFORM 「……化け物……次は無いと思えよ！」
@@ -426,7 +426,7 @@ ELSE
 	DATAFORM 「きょ、今日はこれで許してやるよ」
 	DATAFORM 「……鍛錬不足か」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 悔しげにその場を後にした。
+	PRINTFORMDW %타겟은% 悔しげにその場を後にした。
 ENDIF
 
 
@@ -441,7 +441,7 @@ IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
 ;多数絶頂後
 ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
 	PRINTFORML 「……ンんっ、これ、以上、イっ、たら……」
-	PRINTFORMW 何度もイかされた%CALLNAME%은(는) 更なる凌辱の予感に공포を隠せない…… 
+	PRINTFORMW 何度もイかされた%타겟은% 更なる凌辱の予感に공포を隠せない…… 
 ;체력0
 ELSEIF BASE:체력 == 0
 	PRINTFORML 「ぐっ………」
@@ -452,11 +452,11 @@ ELSEIF BASE:기력 == 0 || MARK:굴복각인 > 2
 	DATAFORM 「あ、ああぁ…………」
 	DATAFORM 「うぁ、こ、来ないで……！」
 	ENDDATA 
-	PRINTFORML %CALLNAME%은(는) 공포と절망に青ざめている……
+	PRINTFORML %타겟은% 공포と절망に青ざめている……
 ;성내성0
 ELSEIF BASE:성내성 == 0
 	PRINTFORML 「……まだ、こいつら%SELF_CALL()%を……？」
-	PRINTFORMW %CALLNAME%은(는) 발정し、既に戦える状態ではない……
+	PRINTFORMW %타겟은% 발정し、既に戦える状態ではない……
 ;不利な状況
 ELSEIF BASE:체력 < MAXBASE:체력 / 4
 	PRINTDATAL
@@ -468,7 +468,7 @@ ELSEIF BASE:체력 < MAXBASE:체력 / 4
 	DATAFORM 「う、嘘、%SELF_CALL()%このままじゃ……っ」
 	DATAFORM 「ま、また回り込まれ、ぁあっ……」
 	ENDDATA 
-	PRINTFORMDW 退路を塞いで逃がさない%STR:2500%の姿に、%CALLNAME%은(는) 焦りを隠せない……
+	PRINTFORMDW 退路を塞いで逃がさない%STR:2500%の姿に、%타겟은% 焦りを隠せない……
 ELSEIF BASE:체력 < MAXBASE:체력 / 2
 	PRINTDATAL
 	DATAFORM 「いい加減諦めたらどうなんだ！？」
@@ -476,7 +476,7 @@ ELSEIF BASE:체력 < MAXBASE:체력 / 2
 	DATAFORM 「ああもう何なんだよ、そんなに逃がしたくないのか！？」
 	DATAFORM 「ああもう、しつこいぞ！」
 	ENDDATA 
-	PRINTFORMDW 退路を塞ぐ%STR:2500%の姿に、%CALLNAME%은(는) 小さく歯噛みした。
+	PRINTFORMDW 退路を塞ぐ%STR:2500%の姿に、%타겟은% 小さく歯噛みした。
 ELSE
 	PRINTDATAL
 	DATAFORM 「簡単に逃がしてはくれない、か」
@@ -486,7 +486,7 @@ ELSE
 	DATAFORM 「見逃してくれる気は無さそうだな」
 	DATAFORM 「回り込まれるなんて…油断は禁物か」
 	ENDDATA
-	PRINTFORMDW %CALLNAME%은(는) 退路を塞ぐ%STR:2500%に仕方なく向き直った。
+	PRINTFORMDW %타겟은% 退路を塞ぐ%STR:2500%に仕方なく向き直った。
 
 ENDIF
 

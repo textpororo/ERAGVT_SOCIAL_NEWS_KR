@@ -266,7 +266,7 @@ IF ISPENIS()
 	ELSE
 		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込み、
 		PRINTFORML 前後に動いてシゴき始めた。
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 촉수オナホに与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -287,7 +287,7 @@ ELSE
 	ELSE
 		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら클리토리스に吸い付き、
 		PRINTFORML 全身を使って激しく吸い上げ始めた。
-		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 淫豆に与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -333,7 +333,7 @@ IF (ARG & Ｖ) == 0
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML のうち一匹が%PRINT_TRANSCALLNAME(TARGET)%に覆い被さろうとしたが
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)咄嗟に身を捻って抵抗したため、
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%咄嗟に身を捻って抵抗したため、
 	PRINTFORM うまく行かなかったようだ
 ELSEIF TALENT:처녀 > 0
 	CALL TENTACLE_ACCESS, "NAME"
@@ -353,7 +353,7 @@ ELSEIF TALENT:처녀 > 0
 		PRINTFORML それを良いことに촉수幼体は「初めてのオンナ」の질내の感触に身を震わせ、
 		PRINTFORM がむしゃらに욕망を叩き付け始めた
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自分より遥かに力の劣る相手に組み敷かれていることに興奮し、
 		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に倒錯した喜びを感じてしまっている。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれる・・・
@@ -362,10 +362,10 @@ ELSEIF TALENT:처녀 > 0
 		PRINTW 
 		PRINTFORML ぎこちなく、そして激しく。
 		PRINTFORML 「初めてのオンナ」に夢中で욕망をぶつける촉수幼体を見つめながら
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)形ばかりの抵抗の言葉を口にしつつ
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%形ばかりの抵抗の言葉を口にしつつ
 		PRINTFORM 頬を染めて満足げな吐息を洩らしている
 	ELSE
-		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%PRINT_TRANSCALLNAME(TARGET)%이(가)必死に抵抗するも、
+		PRINTFORML ズブズブと先端が膣口に挿入されていく感触に%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%必死に抵抗するも、
 		PRINTFORML 無数の촉수たちに손발を絡め取られた状態では満足に振り払うことができない。
 		PRINTFORML 硬く生温かいモノが膣肉をゆっくり押し広げていき、
 		PRINTFORML 次の瞬間には微かな痛みと共に下腹部の奥まで貫かれてしまう・・・
@@ -376,12 +376,12 @@ ELSEIF TALENT:처녀 > 0
 		IF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
 			PRINTFORML 悔しさに涙を浮かべながらも毅然とした表情を保つ%PRINT_TRANSCALLNAME(TARGET)%。
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)茫然自失となっている。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%茫然自失となっている。
 		ENDIF
 		PRINTFORM そんな様子にはお構いなしに、촉수幼体は「初めてのオンナ」を犯すのに夢中になっている
 	ENDIF
 ELSEIF TFLAG:20 == 3
-	PRINTFORM 촉수幼体は%PRINT_TRANSCALLNAME(TARGET)%을(를)組み敷いたまま、夢中でピストンを続けている
+	PRINTFORM 촉수幼体は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま、夢中でピストンを続けている
 ELSE
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML のうち一匹が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%に飛びかかり、
@@ -468,7 +468,7 @@ IF RAND:2 == 0
 	IF (TCVARn:12 & 기절)
 		PRINTFORM 無防備に半開きになった唇を抉じ開けられ、口をオナホのように扱われている
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
-		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%PRINT_TRANSCALLNAME(TARGET)%은(는)我慢しきれず、
+		PRINTFORML ぐいぐい押しつけられる미성숙なオスの臭気に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%我慢しきれず、
 		PRINTFORM 半ば無意識に交尾器を口に含み、丁寧に舌を絡めて奉仕し初めた
 	ELSE
 		PRINTFORML その臭気に何とか顔を逸らそうとするが、
@@ -558,7 +558,7 @@ PRINTL ）
 ;【絡みつく成功】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_1_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%PRINT_TRANSCALLNAME(TARGET)%은(는)
+PRINTFORM 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML に絡み付かれ、
 PRINTFORML 群れの中に取り込まれてしまった！

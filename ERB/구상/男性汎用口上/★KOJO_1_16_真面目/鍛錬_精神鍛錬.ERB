@@ -32,7 +32,7 @@ ELSEIF CHECK_BODY("触装")
 	;◆촉수服＋精神トラウマ
 	ELSEIF MARK:굴복각인+MARK:공포각인 >= 5
 		IF 진지함_フラグ_シチュ==""
-			PRINTFORML %CALLNAME%은(는) 武器を構え、一人修練場で目の前に촉수の姿を描く。
+			PRINTFORML %타겟은% 武器を構え、一人修練場で目の前に촉수の姿を描く。
 			PRINTFORML （…っ、%SELF_CALL()%……また……）
 			PRINTFORM その姿を連想するだけで心は砕けそうになり、
 			;更に촉수의포로の場合
@@ -56,12 +56,12 @@ ELSEIF CHECK_BODY("触装")
 				PRINTFORML そんな努力を嘲笑うかのように%ITEMNAME:400%が蠢き、%CALLNAME%の膝が震え始めた。
 			ELSEIF RESULT < 5
 				PRINTFORML 「…や、やだ！　やめ……、イク、ぅ……っ！！」
-				PRINTFORML ついに%CALLNAME%은(는) 武器を取り落し、絶頂しながらその場にへたり込んでしまった。
+				PRINTFORML ついに%타겟은% 武器を取り落し、絶頂しながらその場にへたり込んでしまった。
 			ELSE
 				PRINTFORML 「……ッ!?ぅあああああ！！？」
 				PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
 				PRINTFORML 「　！！？　止まっ、れぇ、ダメ、また、またぁぁああああ！！？」
-				PRINTFORMW %CALLNAME%은(는) 何度もイかされ、촉수への反抗心を根こそぎ折られてしまった……
+				PRINTFORMW %타겟은% 何度もイかされ、촉수への反抗心を根こそぎ折られてしまった……
 			ENDIF
 			RETURN
 		ENDIF
@@ -78,12 +78,12 @@ ELSEIF CHECK_BODY("触装")
 				PRINTFORML しかし、%ITEMNAME:400%の刺激に指先が震え、崩してしまった。
 			ELSEIF RESULT < 5
 				PRINTFORML 「…っんん、ぁあ！！駄、目、……、イッ、くぅ……！！」
-				PRINTFORML %CALLNAME%은(는) 盛大に突っ伏し、組み立てていた物を散乱させてしまった。
+				PRINTFORML %타겟은% 盛大に突っ伏し、組み立てていた物を散乱させてしまった。
 			ELSE
 				PRINTFORML 「……ッ!?ぅあああああ！！？」
 				PRINTFORML 「あっダメ！イクっ、あああアぁああ！！」
 				PRINTFORML 「　！！？　止まっ、れぇ、ダメ、また、またぁぁああああ！！？」
-				PRINTFORMW %CALLNAME%은(는) 何度もイかされ、全く鍛錬を進めることができなかった……
+				PRINTFORMW %타겟은% 何度もイかされ、全く鍛錬を進めることができなかった……
 			ENDIF
 			진지함_フラグ_シチュ=
 			RETURN
@@ -108,7 +108,7 @@ ELSEIF ABL:노출벽+MARK:치욕각인 >= 5
 	PRINTFORML  くぐもったうめき声と、かすかな水音が続いていく……
 ;◆精神トラウマ
 ELSEIF MARK:굴복각인 >= 3|| MARK:공포각인 >= 3
-	PRINTFORML %CALLNAME%은(는) 武器を構え、一人修練場で目の前に촉수の姿を描く。
+	PRINTFORML %타겟은% 武器を構え、一人修練場で目の前に촉수の姿を描く。
 	PRINTFORML （…っ、%SELF_CALL()%……また……）
 	PRINTFORM その姿を連想するだけで心は砕けそうになり、
 	;更に촉수의포로の場合
@@ -140,7 +140,7 @@ ELSEIF GETBIT(CFLAG:271,1)==0
 		DATAFORM 「集中力の鍛え方、言うだけなら簡単だけど……悩むな」
 	ENDDATA
 	PRINTFORML 촉수との戦いでは、僅かな隙も命取りになりかねない。
-	PRINTFORML “精神力を鍛える”と決めこそしたものの、%CALLNAME%은(는) 具体的な手段が思い浮かばず困り果てていた。
+	PRINTFORML “精神力を鍛える”と決めこそしたものの、%타겟은% 具体的な手段が思い浮かばず困り果てていた。
 	PRINTFORML 「修行……うーん……座禅？　たぶん、申し込みが必要だよな」
 	PRINTFORM 「だったら、今日はとりあえず……
 
@@ -149,7 +149,7 @@ ELSEIF GETBIT(CFLAG:271,1)==0
 	DATAFORM ああもう、暗譜でもしてみようか」
 	DATAFORM ……反復作業、縄跳びとか？」
 	ENDDATA
-	PRINTFORMW まずは身近な範囲から。方針を定めた%CALLNAME%은(는) 、早速行動に移り始めていた。
+	PRINTFORMW まずは身近な範囲から。方針を定めた%타겟은% 、早速行動に移り始めていた。
 	PRINTL
 
 	PRINTFORML ……捕らえた獲物の精神があっさり壊れてしまえば、良質な母胎も作れない。
@@ -171,7 +171,7 @@ ELSE
 			DATAFORM 「…一度慌てればそれが命取り。だからこれは…必要な訓練だよな」
 			DATAFORM 「焦っちゃダメだって、分かってはいるんだけど……」
 		ENDDATA
-		PRINTFORM %CALLNAME%은(는) 精神力を鍛えるために
+		PRINTFORM %타겟은% 精神力を鍛えるために
 		PRINTDATAL
 			DATAFORM ドミノ牌をひたすら並べている。
 			DATAFORM ジェンガを積んでいる。
@@ -184,7 +184,7 @@ ELSE
 		ENDDATA
 		CFLAG:270 = 2
 	ELSE
-		PRINTFORML  %CALLNAME%은(는) 座禅を組み、退屈な修練に目を閉じて打ち込む。
+		PRINTFORML  %타겟은% 座禅を組み、退屈な修練に目を閉じて打ち込む。
 		PRINTDATA
 			DATAFORM 平常心を保つ訓練と論理では分かっているものの、身体を動かせないじれったさから
 			DATAFORM 無我の境地に至れというのも年頃の\@ISMALE() ? 少年 # 少女 \@には酷な話であり、
@@ -196,6 +196,6 @@ ELSE
 		ENDDATA
 
 		PRINTFORML  「ひきゃっ！？ お、思い切り叩くことないだろ！」
-		PRINTFORML  すかさず肩を打たれた%CALLNAME%은(는) 目に涙を浮かべながら、再び背筋を伸ばした。
+		PRINTFORML  すかさず肩を打たれた%타겟은% 目に涙を浮かべながら、再び背筋を伸ばした。
 	ENDIF
 ENDIF

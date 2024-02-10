@@ -11,17 +11,17 @@
 
 ;교제상대がいない場合、運動公園15回毎に告白の機会を得る
 IF ((TALENT:교제상대 == 0 && CFLAG:1 < 1 && CFLAG:330 % 15 == 0 && CFLAG:330 > 14) || (TALENT:교제상대 == 0 && CFLAG:1 > 0 && CFLAG:331 % 15 == 0 && CFLAG:331 > 14)) && ISHOLE() == 1
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)친한ランナーに、연인として付き合ってほしい、と告白された。
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%친한ランナーに、연인として付き合ってほしい、と告白された。
 	IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
 		IF TALENT:여체수용 > 0
-			PRINTFORML 女としての身体に馴染んだ%PRINT_TRANSCALLNAME(TARGET)%은(는)、ごく当たり前のように赤面している…。
+			PRINTFORML 女としての身体に馴染んだ%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ごく当たり前のように赤面している…。
 		ELSE
-			PRINTFORML 女体化した%PRINT_TRANSCALLNAME(TARGET)%은(는)男性から性的な視線を受けたことは何度もあったが、
+			PRINTFORML 女体化した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%男性から性的な視線を受けたことは何度もあったが、
 			PRINTFORML まさか告白されるほど魅力的に見えていたのかと言う、驚きと嬉しさと恥ずかしさとが困惑を生み、
 			PRINTFORML 耳まで真っ赤になっている…。
 		ENDIF
 	ELSEIF TALENT:보추 > 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)自分が남자には見えないことは嫌でも自覚させられていたし、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自分が남자には見えないことは嫌でも自覚させられていたし、
 		PRINTFORML 勝手に勘違いした男性から性的な視線を受けたことは何度もあったが、
 		PRINTFORML まさか告白されるほど魅力的に見えていたのかと言う、驚きと嬉しさと恥ずかしさとが困惑を生み、
 		PRINTFORML 耳まで真っ赤になっている…。
@@ -29,13 +29,13 @@ IF ((TALENT:교제상대 == 0 && CFLAG:1 < 1 && CFLAG:330 % 15 == 0 && CFLAG:330
 		PRINTFORML こんな見た目でも女ではなく남자だと言っても口だけではわかって貰えず、
 		PRINTFORML 思いきって股間の膨らみを見せるとようやく信じては貰えたが…。
 		PRINTFORML それでも構わない、彼女になって欲しい、と告白してきたランナーが諦める様子はない。
-		PRINTFORML ますます真っ赤になった%PRINT_TRANSCALLNAME(TARGET)%은(는)激しく鼓動する胸を抑えている…。
+		PRINTFORML ますます真っ赤になった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%激しく鼓動する胸を抑えている…。
 	ELSEIF ISMALE()
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)친한친구と思っていたランナーは随分積極的だったが、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%친한친구と思っていたランナーは随分積極的だったが、
 		PRINTFORML 남자同士なのだからこういう時が来るなどとはまったく予想はしていなかった。
 		PRINTFORML 返答はどうあれ、面と向かっての告白は%PRINT_TRANSCALLNAME(TARGET)%의 頬を赤く染めている…。
 	ELSE
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%이(가)친한친구と思っていたランナーは随分積極的だったので、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%친한친구と思っていたランナーは随分積極的だったので、
 		PRINTFORML 望むと望まざるに関わらずいつかこういう時が来るのではと微かに予想はしていたのだが、
 		PRINTFORML 返答はどうあれ、面と向かっての告白は%PRINT_TRANSCALLNAME(TARGET)%의 頬を赤く染めている…。
 	ENDIF
@@ -46,7 +46,7 @@ IF ((TALENT:교제상대 == 0 && CFLAG:1 < 1 && CFLAG:330 % 15 == 0 && CFLAG:330
 	$INPUT_LOOP
 	INPUT
 	IF RESULT == 0
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF EXP:정액경험 > 100
 			PRINTFORML 誰か一人に愛されるような綺麗なカラダではない、と自嘲気味に断った。
 		ELSEIF RAND:2 == 0
@@ -55,7 +55,7 @@ IF ((TALENT:교제상대 == 0 && CFLAG:1 < 1 && CFLAG:330 % 15 == 0 && CFLAG:330
 			PRINTFORML 自分には연인よりも大切な使命があるから、と悲しそうに断った。
 		ENDIF
 	ELSEIF RESULT == 1
-		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF TALENT:음란 > 0 && TALENT:초심 < 1
 			PRINTFORML 촉수や市民に犯され尽くし、時に使命を忘れ快楽に溺れる自分の本性を、
 			PRINTFORML この純な男性が知ったら一体どんな顔をするだろうと想像し興奮しながらＯＫした。

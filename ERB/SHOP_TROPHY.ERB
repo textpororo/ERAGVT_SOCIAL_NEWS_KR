@@ -12,7 +12,7 @@ SIF GAME_OPTION_CHECK_F(OPTION_실적엔드없음)
 	RETURN
 
 IF GLOBAL:num == 0
-	PRINTFORML 【실적：%achiname%】을(를) 달성했습니다!
+	PRINTFORML 【실적：%achiname%】%조사만처리(achiname,"를")% 달성했습니다!
 	PRINTW 
 	GLOBAL:num = 1
 	SAVEGLOBAL

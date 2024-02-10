@@ -511,17 +511,17 @@ ELSEIF RESULT == 예정_출격 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 		PRINTL 
 		;임신 중에는 출격할 수 없다
 		IF CHECK_PREGNANT_F(TARGET)
-			PRINTFORML %CALLNAME:TARGET%은(는) 임신 중이기에 출격할 수 없습니다.
+			PRINTFORML %타겟은% 임신 중이기에 출격할 수 없습니다.
 			PRINTL
 		;FEAT 효과로 인한 커맨드 제한
 		ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+			PRINTFORML %타겟은% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
 			CFLAG:100 = 예정_출격
-			PRINTFORML %CALLNAME:TARGET%은(는) 출격하기로 했습니다.
+			PRINTFORML %타겟은% 출격하기로 했습니다.
 		ENDIF
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
@@ -534,7 +534,7 @@ ELSEIF RESULT == 예정_출격 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 			PRINTL 
 			;임신 중에는 출격할 수 없다
 			IF CHECK_PREGNANT_F(CCOUNT) > 0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 임신 중이기에 출격할 수 없습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 임신 중이기에 출격할 수 없습니다.
 			;FEAT 효과로 인한 커맨드 제한
 			ELSEIF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
 				SETCOLOR 255,128,0
@@ -542,7 +542,7 @@ ELSEIF RESULT == 예정_출격 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_출격
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 출격하기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 출격하기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -552,7 +552,7 @@ ELSEIF RESULT == 예정_단련 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 	IF FLAG:9 == 0
 		PRINTL 
 		CFLAG:100 = 예정_단련
-		PRINTFORML %CALLNAME%은(는) 단련하기로 했습니다.
+		PRINTFORML %타겟은% 단련하기로 했습니다.
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
 			SIF CCOUNT == MASTER
@@ -563,7 +563,7 @@ ELSEIF RESULT == 예정_단련 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 				CONTINUE
 			PRINTL 
 			CFLAG:CCOUNT:100 = 예정_단련
-			PRINTFORML %CALLNAME:CCOUNT%은(는) 단련하기로 했습니다.
+			PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 단련하기로 했습니다.
 		NEXT
 	ENDIF
 	PRINTW 
@@ -572,7 +572,7 @@ ELSEIF RESULT == 예정_휴식 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 	IF FLAG:9 == 0
 		PRINTL 
 		CFLAG:100 = 예정_휴식
-		PRINTFORML %CALLNAME%은(는) 휴식하기로 했습니다.
+		PRINTFORML %타겟은% 휴식하기로 했습니다.
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
 			SIF CCOUNT == MASTER
@@ -583,7 +583,7 @@ ELSEIF RESULT == 예정_휴식 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 				CONTINUE
 			PRINTL 
 			CFLAG:CCOUNT:100 = 예정_휴식
-			PRINTFORML %CALLNAME:CCOUNT%은(는) 휴식하기로 했습니다.
+			PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 휴식하기로 했습니다.
 		NEXT
 	ENDIF
 	PRINTW 
@@ -593,18 +593,18 @@ ELSEIF RESULT == 예정_활동 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 		;FEAT 효과로 인한 커맨드 제한
 		IF TALENT:밤악마의귀족 > 0 && TIME == 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+			PRINTFORML %타겟은% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSEIF TALENT:타고난전사 > 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME%은(는) [타고난전사] 효과로 인해 특별 활동에 참여할 수 없습니다!
+			PRINTFORML %타겟은% [타고난전사] 효과로 인해 특별 활동에 참여할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
 			PRINTL 
 			CFLAG:100 = 예정_활동
-			PRINTFORML %CALLNAME%은(는) 자금을 벌기로 했습니다.
+			PRINTFORML %타겟은% 자금을 벌기로 했습니다.
 		ENDIF
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
@@ -618,15 +618,15 @@ ELSEIF RESULT == 예정_활동 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 			;FEAT 효과로 인한 커맨드 제한
 			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 				RESETCOLOR
 			ELSEIF TALENT:CCOUNT:타고난전사 > 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [타고난전사] 효과로 인해 특별 활동에 참여할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [타고난전사] 효과로 인해 특별 활동에 참여할 수 없습니다!
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_활동
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 자금을 벌기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 자금을 벌기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -636,16 +636,16 @@ ELSEIF RESULT == 예정_방위 && (!GAME_OPTION_CHECK_F(OPTION_solo) && CHECK_GA
 		PRINTL 
 		;임신 중에는 출격할 수 없다
 		IF CHECK_PREGNANT_F(TARGET) > 0
-			PRINTL %CALLNAME:TARGET%은(는) 임신 중이기에 방위에 참가할 수 없습니다.
+			PRINTL %타겟은% 임신 중이기에 방위에 참가할 수 없습니다.
 			PRINTL
 		;FEAT 효과로 인한 커맨드 제한
 		ELSEIF TALENT:밤악마의귀족 > 0 && TIME == 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+			PRINTFORML %타겟은% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
-			PRINTFORML %CALLNAME%은(는) 거점을 방위하기로 했습니다.
+			PRINTFORML %타겟은% 거점을 방위하기로 했습니다.
 			CFLAG:100 = 예정_방위
 		ENDIF
 	ELSE
@@ -659,15 +659,15 @@ ELSEIF RESULT == 예정_방위 && (!GAME_OPTION_CHECK_F(OPTION_solo) && CHECK_GA
 			PRINTL 
 			;임신 중에는 출격할 수 없다
 			IF CHECK_PREGNANT_F(CCOUNT) > 0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 임신 중이기에 방위에 참가할 수 없습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 임신 중이기에 방위에 참가할 수 없습니다.
 			;FEAT 효과로 인한 커맨드 제한
 			ELSEIF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_방위
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 거점을 방위하기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 거점을 방위하기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -677,14 +677,14 @@ ELSEIF RESULT == 예정_지원 && (CHARANUM >= 3 && CHECK_GAMEOVER_F() == 0 && T
 	IF FLAG:9 == 0
 		IF TALENT:타고난전사 > 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [타고난전사] 효과로 인해 전투 지원에 참여할 수 없습니다!
+			PRINTFORML %타겟은% [타고난전사] 효과로 인해 전투 지원에 참여할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
 			PRINTL 
 			CFLAG:100 = 예정_지원
 			;마지막 부분의 원문은 徹する(てっする), "다른 것은 하지 않고 그것에만 구애되다(関わる)"
-			PRINTFORML %CALLNAME:TARGET%은(는) 후방에서 전투 지원에 전념하기로 했습니다.
+			PRINTFORML %타겟은% 후방에서 전투 지원에 전념하기로 했습니다.
 		ENDIF
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
@@ -697,11 +697,11 @@ ELSEIF RESULT == 예정_지원 && (CHARANUM >= 3 && CHECK_GAMEOVER_F() == 0 && T
 			PRINTL 
 			IF TALENT:CCOUNT:타고난전사 > 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [타고난전사] 효과로 인해 전투 지원에 참여할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [타고난전사] 효과로 인해 전투 지원에 참여할 수 없습니다!
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_지원
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 후방에서 전투 지원에 전념하기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 후방에서 전투 지원에 전념하기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -712,13 +712,13 @@ ELSEIF RESULT == 예정_정보 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 		;FEAT 효과로 인한 커맨드 제한
 		IF TALENT:밤악마의귀족 > 0 && TIME == 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+			PRINTFORML %타겟은% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
 			PRINTL 
 			CFLAG:100 = 예정_정보
-			PRINTFORML %CALLNAME%은(는) 후방에서 정보 수집에 전념하기로 했습니다.
+			PRINTFORML %타겟은% 후방에서 정보 수집에 전념하기로 했습니다.
 		ENDIF
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
@@ -732,11 +732,11 @@ ELSEIF RESULT == 예정_정보 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 			;FEAT 효과로 인한 커맨드 제한
 			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_정보
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 후방에서 정보 수집에 전념하기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 후방에서 정보 수집에 전념하기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -747,13 +747,13 @@ ELSEIF RESULT == 예정_자유 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 		;FEAT 효과로 인한 커맨드 제한
 		IF TALENT:밤악마의귀족 > 0 && TIME == 0
 			SETCOLOR 255,128,0
-			PRINTFORML %CALLNAME:TARGET%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+			PRINTFORML %타겟은% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 			RESETCOLOR
 			PRINTL 
 		ELSE
 			PRINTL 
 			CFLAG:100 = 예정_자유
-			PRINTFORML %CALLNAME%은(는) 자유롭게 행동하기로 했습니다.
+			PRINTFORML %타겟은% 자유롭게 행동하기로 했습니다.
 		ENDIF
 	ELSE
 		FOR CCOUNT, 0, CHARANUM
@@ -767,11 +767,11 @@ ELSEIF RESULT == 예정_자유 && (CHECK_GAMEOVER_F() == 0 && TARGET != MASTER &
 			;FEAT 효과로 인한 커맨드 제한
 			IF TALENT:CCOUNT:밤악마의귀족 > 0 && TIME == 0
 				SETCOLOR 255,128,0
-				PRINTFORML %CALLNAME:CCOUNT%은(는) [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% [밤악마의귀족] 효과로 인해 낮에 외출할 수 없습니다!
 				RESETCOLOR
 			ELSE
 				CFLAG:CCOUNT:100 = 예정_자유
-				PRINTFORML %CALLNAME:CCOUNT%은(는) 자유롭게 행동하기로 했습니다.
+				PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 자유롭게 행동하기로 했습니다.
 			ENDIF
 		NEXT
 	ENDIF
@@ -946,7 +946,7 @@ ELSEIF (RESULT >= 1 && RESULT <= CHARANUM -1) && (CFLAG:RESULT:999 != 0 && FLAG:
 		IF CFLAG:RESULT:0 == 상태_건강
 			TARGET = RESULT
 			PRINTL 
-			PRINTFORML 조작 캐릭터를 %CALLNAME:TARGET%(으)로 변경했습니다.
+			PRINTFORML 조작 캐릭터를 %타겟으로% 변경했습니다.
 			PRINTL 
 		ENDIF
 	ENDIF
@@ -957,19 +957,19 @@ ELSEIF (RESULT >= 1 && RESULT <= CHARANUM -1) && FLAG:63
 	ELSEIF TARGET == RESULT
 		TARGET = 0
 	ELSEIF CFLAG:TARGET:0 == 상태_출산직전
-		PRINTFORML %CALLNAME:TARGET%은(는) 특별병동에 입원 중이기 때문에 교체할 수 없습니다.
+		PRINTFORML %타겟은% 특별병동에 입원 중이기 때문에 교체할 수 없습니다.
 		;PRINTW 
 		TARGET = 0
 	ELSEIF CFLAG:TARGET:0 == 상태_육아중
-		PRINTFORML %CALLNAME:TARGET%은(는) 특별병동에서 육아 중이므로 교체할 수 없습니다.
+		PRINTFORML %타겟은% 특별병동에서 육아 중이므로 교체할 수 없습니다.
 		;PRINTW 
 		TARGET = 0
 	ELSEIF CFLAG:RESULT:0 == 상태_출산직전
-		PRINTFORML %CALLNAME:RESULT%은(는) 특별병동에 입원 중이기 때문에 교체할 수 없습니다.
+		PRINTFORML %조사처리(CALLNAME:RESULT,"는")% 특별병동에 입원 중이기 때문에 교체할 수 없습니다.
 		;PRINTW 
 		TARGET = 0
 	ELSEIF CFLAG:RESULT:0 == 상태_육아중
-		PRINTFORML %CALLNAME:RESULT%은(는) 특별병동에서 육아 중이므로 교체할 수 없습니다.
+		PRINTFORML %조사처리(CALLNAME:RESULT,"는")% 특별병동에서 육아 중이므로 교체할 수 없습니다.
 		;PRINTW 
 		TARGET = 0
 	ELSE
@@ -1714,7 +1714,7 @@ CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
 
 PRINTL 
-PRINTFORML %CALLNAME%은(는) 치료를 받고 있습니다・・・
+PRINTFORML %타겟은% 치료를 받고 있습니다・・・
 CALL TRANSFORM, 0
 ;행동 예정을 리셋
 CFLAG:ARG:100 = 예정_휴식
@@ -1734,7 +1734,7 @@ SIF GETBIT(CFLAG:ARG:80, 2) == 1
 	CALL RECOVER_CORRUPTION, ARG
 
 IF CHECK_PREGNANT_F(ARG) > 0
-	PRINTFORML %CALLNAME:ARG%은(는) 임신했기 때문에, 긴급히 특별병동으로 옮겨졌습니다・・・
+	PRINTFORML %조사처리(CALLNAME:ARG,"는")% 임신했기 때문에, 긴급히 특별병동으로 옮겨졌습니다・・・
 	PRINTL 
 	CFLAG:ARG:0 = 상태_출산직전
 	CALL SET_PARTYMEMBER
@@ -1866,9 +1866,9 @@ IF CONFIG_CHECK_MANIAC_F(9) == 1
 				CALL MESSAGE_SHOP_PRISON
 				PRINTW 
 				;지문: 즉사
-				PRINTFORML ……그러나 남자였던 %PRINT_TRANSCALLNAME(TARGET)%은(는), 그대로 숨통이 끊겨 %STR:2500%에게 거두어져 버린 것 같다・・・
+				PRINTFORML ……그러나 남자였던 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 그대로 숨통이 끊겨 %STR:2500%에게 거두어져 버린 것 같다・・・
 				PRINTW 
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%을(를) 잃었습니다.
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 잃었습니다.
 				PRINTW 
 
 				;첫 유폐라면 이상경험을 붙인다
@@ -1927,11 +1927,11 @@ FOR CCOUNT, 0, CHARANUM
 	IF GAME_OPTION_CHECK_F(OPTION_solo)	|| CHECK_GAMEOVER_F() == 1
 		;솔로 모드라면 임신 중이어도 싸운다. 보테배 마법소녀ｃ！　게임 오버 모드에서는 일부러 표시하지 않는다
 	ELSEIF CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:100 == 예정_출격 && CFLAG:CCOUNT:0 < 1
-		PRINTFORML %CALLNAME:CCOUNT%은(는) 임신을 했기 때문에 출격할 수 없게 됐습니다.
+		PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 임신을 했기 때문에 출격할 수 없게 됐습니다.
 		PRINTW 
 		CFLAG:CCOUNT:100 = 예정_휴식
 	ELSEIF CHECK_PREGNANT_F(CCOUNT) > 0 && CFLAG:CCOUNT:100 == 예정_방위
-		PRINTFORML %CALLNAME:CCOUNT%은(는) 임신을 했기 때문에 방위를 할 수 없게 됐습니다.
+		PRINTFORML %조사처리(CALLNAME:CCOUNT,"는")% 임신을 했기 때문에 방위를 할 수 없게 됐습니다.
 		PRINTW 
 		CFLAG:CCOUNT:100 = 예정_휴식
 	ENDIF
@@ -1990,19 +1990,19 @@ IF CHARANUM_ACTIVE() < 파티인원최대치 && CFLAG:ARG:999 == 0
 	CFLAG:ARG:999 = 1
 	PRINTL 
 	IF TALENT:ARG:번식자루 == 1
-		PRINTFORML %CALLNAME:ARG%은(는) 생명 감시 기능이 있는 자신의 방으로 돌아왔습니다.
+		PRINTFORML %조사처리(CALLNAME:ARG,"는")% 생명 감시 기능이 있는 자신의 방으로 돌아왔습니다.
 		PRINTFORML 익숙한 환경이 이성을 되찾는 데 도움이 되었으면 좋겠다만...
 	ELSEIF TALENT:ARG:사지결손 == 1
-		PRINTFORML %CALLNAME:ARG%이(가) 파티 멤버에 추가되었습니다.
+		PRINTFORML %조사처리(CALLNAME:ARG,"가")% 파티 멤버에 추가되었습니다.
 		PRINTFORML 하지만, 지금의 %CALLNAME:ARG%에게 맡길 수 있는 일은 후방 지원 뿐입니다...
 	ELSE
-		PRINTFORML %CALLNAME:ARG%이(가) 파티 멤버에 추가되었습니다.
+		PRINTFORML %조사처리(CALLNAME:ARG,"가")% 파티 멤버에 추가되었습니다.
 	ENDIF
 
 	PRINTW 
 ELSE
 	PRINTL 
-	PRINTFORML %CALLNAME:ARG%이(가) 대기 멤버에 합류했습니다.
+	PRINTFORML %조사처리(CALLNAME:ARG,"가")% 대기 멤버에 합류했습니다.
 	PRINTW 
 ENDIF
 

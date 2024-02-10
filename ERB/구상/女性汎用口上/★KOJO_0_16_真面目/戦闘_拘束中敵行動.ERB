@@ -82,7 +82,7 @@ ELSE
 			DATAFORM んひああああぁぁあ――っっ！！」
 			DATAFORM ふあっ、くぅ、はぅうぅぅぅうっ！！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に昇り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に昇り詰めていく――
 	;★성저항・고전
 	ELSEIF LOCAL > 3 || EX:C절정 > 0
 		PRINTDATA
@@ -226,7 +226,7 @@ ELSE
 			DATAFORM 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
 			DATAFORM 「ぉほぉぉおおおッ？！ んおお、おぉおおおぉおお！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;開発完了
 	ELSEIF LOCAL >= 5 || EX:C절정 > 1
 		PRINTDATAL
@@ -338,7 +338,7 @@ ELSE
 			DATAFORM ！ っぎ、ぃいいぃぃッ！」
 			DATAFORM 、お゛ぎぃいいぃぃッ？！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;開発完了
 	ELSEIF LOCAL >= 5 || EX:C절정 > 1
 		PRINTDATAL
@@ -354,7 +354,7 @@ ELSE
 			DATAFORM きゃふぅううううっ！？」
 			DATAFORM イぃいいいいい！？」
 		ENDDATA
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)目を剥き、涎を垂らして震えている……
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を剥き、涎を垂らして震えている……
 	;敏感状態
 	ELSEIF LOCAL >= 3 || EX:C절정 > 0
 		PRINTDATAL
@@ -367,7 +367,7 @@ ELSE
 			DATAFORM ひぃぃいいぃんっ！？」
 			DATAFORM きゃふぅうんっ！？」
 		ENDDATA
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)目を剥き、涎を垂らして震えている……
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を剥き、涎を垂らして震えている……
 	;開発中
 	ELSEIF LOCAL > 1
 		PRINTDATA
@@ -438,9 +438,9 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락) & TALENT:음호
 		DATAFORM 「うぅぅ……これ、ああぁぁ、はやくぅぅぅ……」
 	ENDDATA
 	PRINTDATAL
-		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)촉수に媚びるように腰をくねらせている。
-		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)目を細め、無意識に身体をくねらせてしまう。
-		DATAFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)촉수を迎え入れるように腰をくねらせている。
+		DATAFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%촉수に媚びるように腰をくねらせている。
+		DATAFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を細め、無意識に身体をくねらせてしまう。
+		DATAFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%촉수を迎え入れるように腰をくねらせている。
 	ENDDATA
 ELSEIF CFLAG:253 == 0
 	;初めて
@@ -462,7 +462,7 @@ ELSE
 	;敏感または部位陥落持ちだけが来れる境地
 	IF LOCAL > 5 || EX:V절정 > 9
 		PRINTFORML 「そこに、触、る、なぁあああ！！」
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
 	ELSEIF LOCAL > 3 || EX:V절정 > 0
 		PRINTDATAL
@@ -472,7 +472,7 @@ ELSE
 			DATAFORM 「こ、こいつ、そんなところを…うぅんっ…！」
 			DATAFORM 「やめ、やめなさい…やめるのよ…っ！」
 		ENDDATA
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)びくっ、と腰を跳ねさせたが
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%びくっ、と腰を跳ねさせたが
 		PRINTFORML 即座に손발を絡めとる촉수に押さえ込まれてしまった。
 	ELSEIF LOCAL > 1
 		PRINTDATAL
@@ -523,7 +523,7 @@ ELSE
 			;巨大な芋虫の체중を跳ね除けることもできず
 			;あっさりと種付け交尾の体勢で固定されて
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
-			PRINTFORML ろくに抵抗もできずに覆い被さられた%PRINT_TRANSCALLNAME(TARGET)%은(는)
+			PRINTFORML ろくに抵抗もできずに覆い被さられた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 			PRINTFORML 巨大な芋虫そのものの외관のＣ촉수の체중を跳ね除けることもできずに
 			PRINTFORML あっさりと種付け交尾の体勢で固定されて
 		ELSE
@@ -604,13 +604,13 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락) & TALENT:음호
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「きた、ぎだぁぁぁっ！ これが欲しかったのおぉぉっ！」
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)질내を埋め尽くす감각に顔を醜く歪めて悦んでいる。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%질내を埋め尽くす감각に顔を醜く歪めて悦んでいる。
 		CASE 1
 			PRINTFORML 「んおぉおぉっ！ ぎっ、ひいいぃいぃっ！」
-			PRINTFORML 待ちかねた感触に、%PRINT_TRANSCALLNAME(TARGET)%은(는)喉を晒して絶叫を上げた。
+			PRINTFORML 待ちかねた感触に、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%喉を晒して絶叫を上げた。
 		CASEELSE
 			PRINTFORML 「もっとっ、もっとちょうだい！ もっとお、ぉぉ、ぁぉぉおっ！」
-			PRINTFORML 感極まったように泣き叫び、%PRINT_TRANSCALLNAME(TARGET)%은(는)촉수の蹂躙を受け入れている。
+			PRINTFORML 感極まったように泣き叫び、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%촉수の蹂躙を受け入れている。
 	ENDSELECT
 ;처녀
 ELSEIF TALENT:처녀 > 0
@@ -625,16 +625,16 @@ ELSE
 		SELECTCASE RAND:4
 			CASE 0
 				PRINTFORML 「はひゅぅ、ひぅぅ、っくぁ、ぁ゛ぇ゛ぇっ！」
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는)涙と涎と鼻水でぐちゃぐちゃの顔を必死に振っている。
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%涙と涎と鼻水でぐちゃぐちゃの顔を必死に振っている。
 			CASE 1
 				PRINTFORML 「はへっ、あっ、あがっ、あぅっ！」
 				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 目は涙に濡れ、唇からは意味を成さない鳴き声が漏れていた。
 			CASE 2
 				PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
-				PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+				PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 			CASEELSE
 				PRINTFORML 「んく、ぅう、っく、うぐっ！」
-				PRINTFORML 顔を歪め、%PRINT_TRANSCALLNAME(TARGET)%은(는)唇を噛む。
+				PRINTFORML 顔を歪め、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%唇を噛む。
 		ENDSELECT
 	;鈍感持ちだと来れない境地
 	ELSEIF LOCAL > 3 || EX:V절정 > 0
@@ -989,25 +989,25 @@ ELSE
 		SELECTCASE RAND:2
 			CASE 0
 				PRINTFORML  野太い촉수が無防備な%ESTRUS_TEXT_F(TARGET,"の")%子宮口を突き上げ、
-				PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)半ば白目を剥いて絶叫をあげた。
+				PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%半ば白目を剥いて絶叫をあげた。
 			CASEELSE
 				PRINTFORML  唇の端に泡を吹きながら、蹂躙されるだけの肉が哀願の声を上げる。
 				PRINTFORML  溢れ出る牝の汁を貪り、촉수は更にその動きを激しくしていく……
 		ENDSELECT
-		PRINTFORML そして%CALLNAME%은(는) 瞬く間に上り詰めてしまう――
+		PRINTFORML そして%타겟은% 瞬く間に上り詰めてしまう――
 	;鈍感持ちだと来れない境地
 	ELSEIF LOCAL > 3 || EX:V절정 > 0
 		PRINTDATAL
 		DATAFORM 「あっ、はぁっ！くるっ、くる、やぁああ！！」
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 突かれるがままに身体を跳ねさせる――
+		PRINTFORML %타겟은% 突かれるがままに身体を跳ねさせる――
 	ELSE
 		PRINTDATAL
 		DATAFORM 「っん、あっ、あっ」
 		DATAFORM 「…ぅ、く、くぅ…」
 		ENDDATA
-		PRINTFORML 最奥を突かれた%CALLNAME%은(는) 촉수のリズムに合わせて口から空気の塊を吐き出す――
+		PRINTFORML 最奥を突かれた%타겟은% 촉수のリズムに合わせて口から空気の塊を吐き出す――
 	ENDIF
 ENDIF
 
@@ -1082,7 +1082,7 @@ ELSE
 	;敏感または部位陥落持ちだけが来れる境地
 	IF  LOCAL > 5 || EX:A절정 > 9
 		PRINTFORML 「そ、こ、触、る、なぁあああ！！」
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
 	ELSEIF LOCAL > 3 || EX:A절정 > 0
 		PRINTDATAL
@@ -1126,13 +1126,13 @@ IF TALENT:음고
 	DATAFORM 「ぉっ、おぉぉーッ？！ おひり、ぃひぃいいっ、ぶぎぃぃぃ！」
 	DATAFORM 「んおぉおお？！ おひりっ、やめ゛ぇ゛ぇぇっ！ ぶひっ、ぶひぃぃぃっ！」
 	ENDDATA
-	PRINTFORML  不浄の穴をこじ開けられる감각に%PRINT_TRANSCALLNAME(TARGET)%은(는)絶叫しながら、
+	PRINTFORML  不浄の穴をこじ開けられる감각に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%絶叫しながら、
 	PRINTFORML  たっぷりと仕込まれたとおりに牝豚へとなり果てていく……
 ELSEIF CFLAG:257 == 0
 	;初めて
 	PRINTFORML ――ズンッ
 	PRINTFORML 「……な、に…を？」
-	PRINTFORML 突然の衝撃に%CALLNAME%은(는) 何が起こったか理解できない
+	PRINTFORML 突然の衝撃に%타겟은% 何が起こったか理解できない
 	PRINTFORML 「……え、お尻、えっ!?」
 	PRINTFORML しかし%CALLNAME%の애널に貫いた%STR:2500%は獲物の様子など、どうでも良いとばかりに動き始めた
 	PRINTFORML 「……嘘、そこ違、嫌、やめて、イヤァアア！！」
@@ -1158,7 +1158,7 @@ ELSE
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
 		DATAFORM 「そっ、そこはっ、ヤメッ――ふぁああああああ！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	ELSEIF LOCAL > 1
 		PRINTDATAL
 		DATAFORM 「っぐ、あっ、あっ」
@@ -1234,7 +1234,7 @@ ELSE
 		SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML  不浄の穴を蹂躙するぬめり、歪な肉の촉수は激しくのたくり
-			PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)涙と涎と鼻水で顔をぐちゃぐちゃにして泣き叫ぶ。
+			PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%涙と涎と鼻水で顔をぐちゃぐちゃにして泣き叫ぶ。
 		CASEELSE
 			PRINTFORML  おぞましい体液にまみれた촉수が%PRINT_TRANSCALLNAME(TARGET)%의 尻穴を深々と穿ち
 			PRINTFORML  スタイルの良いお腹に醜い畝がぼごぼごと浮き上がっていく……
@@ -1247,7 +1247,7 @@ ELSE
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
 		DATAFORM 「ふおおおおおおお！？」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 
 	ELSEIF LOCAL > 1
 		PRINTDATAL
@@ -1321,7 +1321,7 @@ ELSE
 		DATAFORM 「ンんぅぅううぅああ――っっ！！」
 		DATAFORM 「ふあっ！くぅ、はぅうっ！！」
 		ENDDATA
-		PRINTFORML %CALLNAME%은(는) 瞬く間に上り詰めていく――
+		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
 	ELSEIF LOCAL > 3 || EX:B절정 > 0
 		;거유
@@ -1478,9 +1478,9 @@ IF TALENT:음유
 	ENDDATA
 	;모유체질
 	IF TALENT:모유체질
-		PRINTFORML  牝牛になり果てた%PRINT_TRANSCALLNAME(TARGET)%은(는)母乳を垂れ流して絶叫している。
+		PRINTFORML  牝牛になり果てた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%母乳を垂れ流して絶叫している。
 	ELSE
-		PRINTFORML  痛みと快楽で%PRINT_TRANSCALLNAME(TARGET)%은(는)순종な牝牛へと躾けられていく……
+		PRINTFORML  痛みと快楽で%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%순종な牝牛へと躾けられていく……
 	ENDIF
 ELSE
 	;敏感、鈍感で多少変化
@@ -1512,7 +1512,7 @@ ELSE
 		IF TALENT:모유체질
 			PRINTFORML  珍妙な悲鳴を上げた%PRINT_TRANSCALLNAME(TARGET)%의 胸の先端から母乳が迸った。
 		ELSE
-			PRINTFORML  가슴の頂きを蹂躙された%PRINT_TRANSCALLNAME(TARGET)%은(는)珍妙な悲鳴を上げている。
+			PRINTFORML  가슴の頂きを蹂躙された%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%珍妙な悲鳴を上げている。
 		ENDIF
 	ELSEIF LOCAL > 1
 		PRINTDATAL
@@ -1570,8 +1570,8 @@ IF ABL:마조끼 >= 3
 	ENDDATA
 	PRINTDATAW
 	DATAFORM 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
-	DATAFORM 身体を叩かれながら、%CALLNAME%은(는) 上下の口から涎を垂らしていた。
-	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)打たれる度、どこか황홀とした表情を浮かべている……
+	DATAFORM 身体を叩かれながら、%타겟은% 上下の口から涎を垂らしていた。
+	DATAFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%打たれる度、どこか황홀とした表情を浮かべている……
 	ENDDATA
 ELSE
 	PRINTDATAL
@@ -1579,8 +1579,8 @@ ELSE
 	DATAFORM 「い゛っ、くひぃっ、う゛う゛っッ！」
 	ENDDATA
 	PRINTDATAW
-	DATAFORM 歯を食いしばりながら、%CALLNAME%은(는) 고통に耐えている。
-	DATAFORM %PRINT_TRANSCALLNAME(TARGET)%은(는)打たれる度、涙を、よだれを、鼻水まで飛ばして泣き叫んでいる……
+	DATAFORM 歯を食いしばりながら、%타겟은% 고통に耐えている。
+	DATAFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%打たれる度、涙を、よだれを、鼻水まで飛ばして泣き叫んでいる……
 	ENDDATA	
 ENDIF
 
@@ -1600,11 +1600,11 @@ IF ABL:마조끼 >= 3
 	ENDDATA
 	PRINTDATAW
 	DATAFORM 痛みにこらえながら、%CALLNAME%の顔は喜悦に歪んでいた。
-	DATAFORM 針の突き刺さる感触に、%CALLNAME%은(는) 上下の口から涎を垂らしていた。
+	DATAFORM 針の突き刺さる感触に、%타겟은% 上下の口から涎を垂らしていた。
 	ENDDATA
 ELSE
 	PRINTFORML 「いや、こんな……ひいぃん！」
-	PRINTFORMW 歯を食いしばりながら、%CALLNAME%은(는) 고통に耐えている。
+	PRINTFORMW 歯を食いしばりながら、%타겟은% 고통に耐えている。
 ENDIF
 
 
@@ -1625,7 +1625,7 @@ ENDDATA
 PRINTFORML (やだ……こんなの……やあぁぁ……)
 SELECTCASE RAND:2
 	CASE 0
-		PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%은(는)声にならない悲鳴を上げ、
+		PRINTFORM  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%声にならない悲鳴を上げ、
 		;マゾッ気Lv3
 		IF ABL:마조끼 >= 3
 			PRINTFORML 透明な潮を噴き上げた……
@@ -1636,11 +1636,11 @@ SELECTCASE RAND:2
 		IF ABL:마조끼 >= 3
 			PRINTFORML  白目を剥き、泡を吹く%PRINT_TRANSCALLNAME(TARGET)%의 손발が狂ったように痙攣している。
 			PRINTDATAW
-			DATAFORM %CALLNAME%은(는) 泣き叫びながらも、その顔は喜悦に歪んでいた――
-			DATAFORM 身体を走る電流の痛みに、%CALLNAME%은(는) 上下の口から涎を垂らしていた――
+			DATAFORM %타겟은% 泣き叫びながらも、その顔は喜悦に歪んでいた――
+			DATAFORM 身体を走る電流の痛みに、%타겟은% 上下の口から涎を垂らしていた――
 			ENDDATA
 		ELSE
-			PRINTFORMW %CALLNAME%은(는) 耐えている難い고통に泣き叫んでいる。
+			PRINTFORMW %타겟은% 耐えている難い고통に泣き叫んでいる。
 		ENDIF
 ENDSELECT
 
@@ -1861,7 +1861,7 @@ IF MARK:치욕각인 >= 3
 		DATAFORM 「%SELF_CALL()%は……最低の牝豚よ……誰か、見て、見てぇ……」
 		DATAFORM 「誰か……%SELF_CALL()%の無様な牝豚振り……見て、見てほしいの……」
 		ENDDATA
-		PRINTFORML  幻惑に理性を塗りつぶされた%PRINT_TRANSCALLNAME(TARGET)%은(는)自ら身体を弄び始めてしまう。
+		PRINTFORML  幻惑に理性を塗りつぶされた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自ら身体を弄び始めてしまう。
 	ENDIF
 ELSEIF MARK:치욕각인 == 2
 	PRINTDATAL
@@ -1871,7 +1871,7 @@ ELSEIF MARK:치욕각인 == 2
 	ENDDATA
 	PRINTDATAL
 	DATAFORM %CALLNAME%が顔を赤くして目をそらしても、淫らな鳴き声と水音が耳に届いた。
-	DATAFORM 視線をそらすことも許されず、%CALLNAME%은(는) 自らの痴態を鑑賞させられた。
+	DATAFORM 視線をそらすことも許されず、%타겟은% 自らの痴態を鑑賞させられた。
 	ENDDATA
 ELSE
 	PRINTDATAL
@@ -1879,7 +1879,7 @@ ELSE
 	DATAFORM 「や、やめぇぇぇ！ 見ないで、みんな見ないでっ！」
 	DATAFORM 「ぅうう……こっ、こんな、身体……見られ……」
 	ENDDATA
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)幻惑に狼狽え、羞恥に顔を染めながら反論している。
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%幻惑に狼狽え、羞恥に顔を染めながら反論している。
 ENDIF
 
 
@@ -1986,7 +1986,7 @@ ELSE
 	DATAFORM (こいつ……今に見てなさい……！)
 	DATAFORM (お、おぞましい……くっ……)
 	ENDDATA
-	PRINTFORMW %CALLNAME%은(는) 手に押し付けられた촉수を忌々しげに見つめている。
+	PRINTFORMW %타겟은% 手に押し付けられた촉수を忌々しげに見つめている。
 ENDIF
 
 
@@ -2055,7 +2055,7 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3
 	DATAFORM (あぁぁあ……頭の中までおかしくなる……)
 	DATAFORM (%SELF_CALL()%の口の中……喉まで犯されてる……)
 	ENDDATA
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)頬を窄め、ぢゅぼぢゅぼと音を立てて%촉수市民("촉수","ペニス")%を頬張っている。
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%頬を窄め、ぢゅぼぢゅぼと音を立てて%촉수市民("촉수","ペニス")%を頬張っている。
 ELSE
 	PRINTDATAL
 	DATAFORM 「ぐぶっ！？ ぉ゛げぇ゛っ、ごぷっ……」
@@ -2065,7 +2065,7 @@ ELSE
 	PRINTDATAL
 	DATAFORM (お、おぞましい…こいつ……絶対許さない……！)
 	ENDDATA
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)口腔を性具のように扱われている。
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%口腔を性具のように扱われている。
 	PRINTFORML  心では抵抗しつつも、生臭い異臭と吐き気を催す味は理性を腐らせていく……
 ENDIF
 
@@ -2150,7 +2150,7 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3
 	DATAFORM (あぁぁあ、あ……この臭い、頭の中、おかしく…❤)
 	DATAFORM (%SELF_CALL(7)%、口の中、喉まで犯されて、あぁ、あっ❤)
 	ENDDATA
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)無様に頬を窄め、ぢゅぼぢゅぼと音を立てて喉奥で%촉수市民("촉수","ペニス")%を頬張っている。
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無様に頬を窄め、ぢゅぼぢゅぼと音を立てて喉奥で%촉수市民("촉수","ペニス")%を頬張っている。
 ELSE
 	PRINTDATAL
 	DATAFORM 「んぶぅっ！？ ぉ゛げぇ゛っ、ごぷぅっ……」
@@ -2162,7 +2162,7 @@ ELSE
 	DATAFORM (こ、殺される、%SELF_CALL_SUBSTRING(0, SELF_CALL_LENGTH() - 2)%、%SELF_CALL(SELF_CALL_LENGTH() - 1)%、%촉수市民("촉수","おちんちん")%で、窒息、しちゃう……！)
 	DATAFORM (む、無理、こんなの無理……！)
 	ENDDATA
-	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%은(는)喉奥を性具同然に扱われている。
+	PRINTFORML  %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%喉奥を性具同然に扱われている。
 	PRINTFORML  心を折るほどの勢い、そして生臭い異臭と吐き気を催す味が%PRINT_TRANSCALLNAME(TARGET)%의 理性を腐らせていく……
 ENDIF
 
@@ -2234,17 +2234,17 @@ IF TALENT:촉수의포로|| ABL:촉수중독 > 3
 	;ひんぬー
 	IF TALENT:빈유
 		PRINTFORML 「ん……小さくてごめんなさい…でも、精一杯頑張るから……❤」
-		PRINTFORMW %CALLNAME%은(는) 薄い胸を健気に%촉수市民("촉수","ペニス")%に擦りつけている。
+		PRINTFORMW %타겟은% 薄い胸を健気に%촉수市民("촉수","ペニス")%に擦りつけている。
 	;きょぬー
 	ELSEIF TALENT:거유
 		PRINTFORML 「ピクピク、してる……❤」
 		PRINTFORML 「気持ち、いいかしら……？」
-		PRINTFORMW %CALLNAME%은(는) その大きな胸の谷間に%촉수市民("촉수","ペニス")%を埋もれさせ、乳圧でこすり上げている。
+		PRINTFORMW %타겟은% その大きな胸の谷間に%촉수市民("촉수","ペニス")%を埋もれさせ、乳圧でこすり上げている。
 	;なみちち
 	ELSE
 		PRINTFORML 「ん、ちゅ……❤」
 		PRINTFORML 「気持ち、いいかしら……？」
-		PRINTFORMW %CALLNAME%은(는) %촉수市民("촉수","ペニス")%を胸の谷間に挟み込み、口付けしながら奉仕している。
+		PRINTFORMW %타겟은% %촉수市民("촉수","ペニス")%を胸の谷間に挟み込み、口付けしながら奉仕している。
 	ENDIF
 	PRINTDATAL
 	DATAFORM 「ぁう……%SELF_CALL()%の胸、どろどろに……」
@@ -2261,7 +2261,7 @@ ELSE
 		ENDDATA
 		PRINTDATAW
 		DATAFORM （……あとで、絶対に切り落とす）
-		DATAFORM %CALLNAME%은(는) 薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
+		DATAFORM %타겟은% 薄い胸に擦りつく%촉수市民("촉수","ペニス")%を冷たい目で見ている。
 		ENDDATA
 	;きょぬー
 	ELSEIF TALENT:거유
@@ -2277,11 +2277,11 @@ ELSE
 			DATAFORM 「やめっ、この、無礼な……！」
 			ENDDATA
 		ENDIF
-		PRINTFORMW %CALLNAME%은(는) 胸の谷間に埋もれた%촉수市民("촉수","ペニス")%に、この上ない嫌悪感を抱いている。
+		PRINTFORMW %타겟은% 胸の谷間に埋もれた%촉수市民("촉수","ペニス")%に、この上ない嫌悪感を抱いている。
 	;なみちち
 	ELSE
 		PRINTFORML 「くっ、こんな事、無理やり……」
-		PRINTFORMW 가슴の谷間を通って口に近よる%촉수市民("촉수","ペニス")%から、%CALLNAME%은(는) 顔を背けた。
+		PRINTFORMW 가슴の谷間を通って口に近よる%촉수市民("촉수","ペニス")%から、%타겟은% 顔を背けた。
 	ENDIF
 
 ENDIF

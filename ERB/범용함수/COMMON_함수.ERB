@@ -512,7 +512,7 @@ IF RESULTS == ""
 	GOTO INPUT_LOOP_NAME_CHANGE
 ELSE
 	CALLNAME:ARG = %RESULTS%
-	PRINTFORML 「%RESULTS%」(으)로 변경하였습니다.
+	PRINTFORML 「%RESULTS%」%조사만처리(RESULTS,"로")% 변경하였습니다.
 ENDIF
 
 ;--------------------------------------------------
@@ -559,7 +559,7 @@ SIF TALENT:내성적 > 0
 SIF TALENT:제멋대로굼 > 0
 	TIMES ARG, 1.10
 JUEL:경험치 += ARG
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 경험치를 {ARG}％ 얻었다.
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 경험치를 {ARG}％ 얻었다.
 ;레벨업 여부를 확인
 CALL CHECK_LEVELUP
 
@@ -881,12 +881,12 @@ SIF TALENT:ARG:원거리서툼 == 1 && ARG:1 != 2
 ;레벨업 가능 여부
 IF EXP:ARG:(LOCAL:1) >= LOCAL:2 && ABL:ARG:(LOCAL:0) < 9
 	ABL:ARG:(LOCAL:0) += 1
-	PRINTFORML %PRINT_TRANSCALLNAME(ARG)%의 %ABLNAME:(LOCAL:0)%Lv이(가) 올랐다.
+	PRINTFORML %PRINT_TRANSCALLNAME(ARG)%의 %ABLNAME:(LOCAL:0)%Lv이 올랐다.
 
 	;전투 기초 Lv5로 변신 능력이 몸에 뱀
 	IF TALENT:ARG:변신능력 == -1 && ABL:ARG:(LOCAL:0) >= 5 && LOCAL:0 == 33
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(ARG)%은(는) 전투의 기초를 완전히 마스터했다!
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(ARG),"는")% 전투의 기초를 완전히 마스터했다!
 		IF TALENT:ARG:변신능력획득 > 0
 			PRINTW
 			RESULT = 1
@@ -1076,7 +1076,7 @@ WHILE JUEL:경험치 > 100 && ABL:레벨 < 998
 WEND
 IF LOCAL > 0
 	ABL:레벨 += LOCAL
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 레벨이 {LOCAL} 올랐다!
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 레벨이 {LOCAL} 올랐다!
 	CALL LEVELSTATUS,TARGET
 	;실적
 	CALL GET_STATE_TROPHY,TARGET
@@ -1138,15 +1138,15 @@ RETURN LOCAL
 @PRINT_NGACTION_F(ARG,ARG:1,ARGS)
 #FUNCTIONS
 IF GETBIT(ARG:1, 6)
-	RESULTS = %CALLNAME:ARG%은(는) 폐인화되어 있기 때문에, 휴식 이외에는 아무것도 할 수 없습니다.
+	RESULTS = %조사처리(CALLNAME:ARG,"는")% 폐인화되어 있기 때문에, 휴식 이외에는 아무것도 할 수 없습니다.
 ELSEIF GETBIT(ARG:1, 5)
-	RESULTS = %CALLNAME:ARG%은(는) 사지결손된 상태이기 때문에, %ARGS%할 수 없습니다.
+	RESULTS = %조사처리(CALLNAME:ARG,"는")% 사지결손된 상태이기 때문에, %ARGS%할 수 없습니다.
 ELSEIF GETBIT(ARG:1, 4)
-	RESULTS = %CALLNAME:ARG%은(는) 임신 중이기 때문에, 휴식을 취합니다.
+	RESULTS = %조사처리(CALLNAME:ARG,"는")% 임신 중이기 때문에, 휴식을 취합니다.
 ELSEIF GETBIT(ARG:1, 1)
-	RESULTS = %CALLNAME:ARG%은(는) %ARGS%하지 못\@GETBIT(RESULT, 0) ? 하고, 체력이 얼마 남지 않았기 # 하기 \@때문에, 휴식을 취합니다.
+	RESULTS = %조사처리(CALLNAME:ARG,"는")% %ARGS%하지 못\@GETBIT(RESULT, 0) ? 하고, 체력이 얼마 남지 않았기 # 하기 \@때문에, 휴식을 취합니다.
 ELSE
-	RESULTS = %CALLNAME:ARG%은(는) 체력이 얼마 남지 않았기 때문에, 휴식을 취합니다.
+	RESULTS = %조사처리(CALLNAME:ARG,"는")% 체력이 얼마 남지 않았기 때문에, 휴식을 취합니다.
 ENDIF
 RETURNF RESULTS
 

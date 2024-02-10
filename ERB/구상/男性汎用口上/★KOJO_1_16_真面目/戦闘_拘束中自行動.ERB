@@ -46,8 +46,8 @@ IF BASE:기력<MAXBASE:기력/4
 	DATAFORM 「ん゛うぅぅうッ！？ この！ このぉっ！」
 	ENDDATA
 	PRINTDATA
-	DATAFORM %CALLNAME%은(는) がむしゃらに暴れているが、
-	DATAFORM %CALLNAME%은(는) 必死に抵抗を試みているが、
+	DATAFORM %타겟은% がむしゃらに暴れているが、
+	DATAFORM %타겟은% 必死に抵抗を試みているが、
 	ENDDATA
 	PRINTDATAL
 	DATAFORM 心なしか動きが弱々しい……
@@ -63,8 +63,8 @@ ELSE
 	DATAFORM 「この……くっ、うぅっ！」
 	ENDDATA
 	PRINTDATAL
-	DATAFORM %CALLNAME%은(는) がむしゃらに暴れている…
-	DATAFORM %CALLNAME%은(는) 必死にもがき、抵抗を試みている…
+	DATAFORM %타겟은% がむしゃらに暴れている…
+	DATAFORM %타겟은% 必死にもがき、抵抗を試みている…
 	ENDDATA
 ENDIF
 
@@ -100,9 +100,9 @@ IF BASE:기력<MAXBASE:기력/4
 	DATAFORM 「す、好き放題してくれたな……ここからは、%SELF_CALL()%の공격を、味わわせてやるっ…」
 	ENDDATA
 	PRINTDATAL
-	DATAFORM 乱れた髪をうなじに貼り付け、%CALLNAME%은(는) 無理矢理余裕の笑みを浮かべた。
-	DATAFORM 息も絶え絶えといった様子で、%CALLNAME%은(는) 必死に虚勢を張った。
-	DATAFORM \@FLAG:73==0 ? 촉수から零れ落ちるように地面に降りた # 自身を取り囲むペニスから辛うじて逃れた \@%CALLNAME%은(는) 、粘液に塗れた武器を慌てて構え直した。
+	DATAFORM 乱れた髪をうなじに貼り付け、%타겟은% 無理矢理余裕の笑みを浮かべた。
+	DATAFORM 息も絶え絶えといった様子で、%타겟은% 必死に虚勢を張った。
+	DATAFORM \@FLAG:73==0 ? 촉수から零れ落ちるように地面に降りた # 自身を取り囲むペニスから辛うじて逃れた \@%타겟은% 、粘液に塗れた武器を慌てて構え直した。
 	ENDDATA
 
 ELSE
@@ -115,17 +115,17 @@ ELSE
 	ENDDATA
 	IF FLAG:73==0
 		PRINTDATAL
-		DATAFORM 一旦地面に降りた%CALLNAME%은(는) 、油断なく武器を構え直した。
-		DATAFORM 転げ落ちるように地面に降りた%CALLNAME%은(는) 、急いで武器を構え直した。
-		DATAFORM 촉수から逃れて地面に降りた%CALLNAME%은(는) 、回収した武器を力強く構え直した。
-		DATAFORM 拘束を解いた%CALLNAME%은(는) 、回収した武器を優雅に構え直した。
+		DATAFORM 一旦地面に降りた%타겟은% 、油断なく武器を構え直した。
+		DATAFORM 転げ落ちるように地面に降りた%타겟은% 、急いで武器を構え直した。
+		DATAFORM 촉수から逃れて地面に降りた%타겟은% 、回収した武器を力強く構え直した。
+		DATAFORM 拘束を解いた%타겟은% 、回収した武器を優雅に構え直した。
 		ENDDATA
 	ELSE
 		PRINTDATAL
-		DATAFORM 隙を突いて男たちを突き飛ばした%CALLNAME%은(는) 、油断なく武器を構え直した。
-		DATAFORM しなやかな動きで男たちの包囲から逃れた%CALLNAME%은(는) 、急いで武器を構え直した。
-		DATAFORM 自身を取り囲むペニスの包囲網を潜り抜けた%CALLNAME%은(는) 、回収した武器を力強く構え直した。
-		DATAFORM 男たちの腕を振り払った%CALLNAME%은(는) 、回収した武器を優雅に構え直した。
+		DATAFORM 隙を突いて男たちを突き飛ばした%타겟은% 、油断なく武器を構え直した。
+		DATAFORM しなやかな動きで男たちの包囲から逃れた%타겟은% 、急いで武器を構え直した。
+		DATAFORM 自身を取り囲むペニスの包囲網を潜り抜けた%타겟은% 、回収した武器を力強く構え直した。
+		DATAFORM 男たちの腕を振り払った%타겟은% 、回収した武器を優雅に構え直した。
 		ENDDATA
 	ENDIF
 ENDIF
@@ -215,9 +215,9 @@ IF TALENT:처녀 > 0
 	ENDDATA
 
 	PRINTDATAL
-	DATAFORM %CALLNAME%은(는) 必死に秘部を庇い、乙女の尊厳を守ろうと抵抗している…
-	DATAFORM %CALLNAME%은(는) 必死に秘部を庇い、처녀を守るために最後の抵抗を続けている…
-	DATAFORM %CALLNAME%은(는) 처녀性器への挿入を断固阻止しようとしている…
+	DATAFORM %타겟은% 必死に秘部を庇い、乙女の尊厳を守ろうと抵抗している…
+	DATAFORM %타겟은% 必死に秘部を庇い、처녀を守るために最後の抵抗を続けている…
+	DATAFORM %타겟은% 처녀性器への挿入を断固阻止しようとしている…
 	ENDDATA
 ELSE
 	PRINTDATAL
@@ -229,9 +229,9 @@ ELSE
 	;★촉수に侵された経験があるなら分岐？
 
 	PRINTDATAL
-	DATAFORM %CALLNAME%은(는) 必死に秘部を庇い、女性としての尊厳を守ろうと抵抗している…
-	DATAFORM %CALLNAME%은(는) 必死に秘部を庇い、最後の抵抗を続けている…
-	DATAFORM %CALLNAME%은(는) 性器への挿入を断固阻止しようとしている…
+	DATAFORM %타겟은% 必死に秘部を庇い、女性としての尊厳を守ろうと抵抗している…
+	DATAFORM %타겟은% 必死に秘部を庇い、最後の抵抗を続けている…
+	DATAFORM %타겟은% 性器への挿入を断固阻止しようとしている…
 	ENDDATA
 ENDIF
 
@@ -438,7 +438,7 @@ IF TALENT:촉수의포로
 	DATAFORM （あぁ……次はどう嬲られちゃうのかな……？）
 	ENDDATA
 ELSE
-	PRINTFORM  %CALLNAME%은(는) 薄目を開けて
+	PRINTFORM  %타겟은% 薄目を開けて
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML が油断する時を待っている
 ENDIF
@@ -454,7 +454,7 @@ ENDIF
 
 IF TALENT:촉수의포로 && RAND:4==0
 	PRINTFORML 「……ねえ…きて❤」
-	PRINTFORM 縛られたまま器用に体勢を変え、%CALLNAME%은(는) 媚びる牝の声で
+	PRINTFORM 縛られたまま器用に体勢を変え、%타겟은% 媚びる牝の声で
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORMW を誘った。
 ELSEIF ABL:촉수중독 > 3
@@ -474,27 +474,27 @@ ELSEIF ABL:촉수중독 > 3
 	ENDDATA
 	SIF ISMALE()
 		PRINTFORML （%SELF_CALL()%、남자、なのにぃ……牝にされて……牝にされちゃった、から、もう……）
-	PRINTFORMD 諦めたように全身の力を抜き、%CALLNAME%은(는) 無意識に腰を揺らしながら%STR:2500%
+	PRINTFORMD 諦めたように全身の力を抜き、%타겟은% 無意識に腰を揺らしながら%STR:2500%
 	PRINTFORMDW を誘った。
 ELSE
 	SELECTCASE RAND:4
 		CASE 0
 			PRINTFORML （ほんの少し、だけ……）
 			IF ABL:촉수중독 >= 1
-				PRINTFORMW \@FLAG:73==0 ? 촉수 # ペニス \@の快楽を忘れられず、%CALLNAME%은(는) 知らず身体を開いていた。
+				PRINTFORMW \@FLAG:73==0 ? 촉수 # ペニス \@の快楽を忘れられず、%타겟은% 知らず身体を開いていた。
 			ELSEIF  MARK:굴복각인 >= 3
-				PRINTFORMW 心の内で何度目かわからない言い訳をして、%CALLNAME%은(는) \@FLAG:73==0 ? 촉수 # ペニス \@に屈した。
+				PRINTFORMW 心の内で何度目かわからない言い訳をして、%타겟은% \@FLAG:73==0 ? 촉수 # ペニス \@に屈した。
 			ELSE
-				PRINTFORMW 仕方なくといった風に、%CALLNAME%은(는) 身体を差し出した。
+				PRINTFORMW 仕方なくといった風に、%타겟은% 身体を差し出した。
 			ENDIF
 		CASE 1
 			PRINTFORML （後で、絶対に殺す……っ）
 			IF ABL:촉수중독 >= 1
 				PRINTFORMW 心の内の戦意とは裏腹に、身体は\@FLAG:73==0 ? 촉수 # ペニス \@からの快感に期待している。
 			ELSEIF  MARK:굴복각인 >= 3
-				PRINTFORMW 戦意が挫けないよう、%CALLNAME%은(는) 心の中でだけ強く思おうとした。
+				PRINTFORMW 戦意が挫けないよう、%타겟은% 心の中でだけ強く思おうとした。
 			ELSE
-				PRINTFORM %CALLNAME%은(는) 昏い殺意を秘めながら、
+				PRINTFORM %타겟은% 昏い殺意を秘めながら、
 				CALL TENTACLE_ACCESS, "NAME"
 				PRINTFORMW に身体を開いた。
 			ENDIF
@@ -503,9 +503,9 @@ ELSE
 			IF ABL:촉수중독 >= 1
 				PRINTFORMW 開かれた%CALLNAME%の身体は淡い期待感に蕩けていた。
 			ELSEIF  MARK:굴복각인 >= 3
-				PRINTFORMW %CALLNAME%은(는) 全てを諦めたように身を差し出した。
+				PRINTFORMW %타겟은% 全てを諦めたように身を差し出した。
 			ELSE
-				PRINTFORMW %CALLNAME%은(는) 視線を逸らしながらつぶやいた。
+				PRINTFORMW %타겟은% 視線を逸らしながらつぶやいた。
 			ENDIF
 		CASE 3
 			PRINTFORML 「……ああもう、最悪だよ……」
@@ -518,9 +518,9 @@ ELSE
 					PRINTFORMW 苦々しげな表情とは裏腹に、%CALLNAME%の秘所は潤んでいる。
 				ENDIF
 			ELSEIF  MARK:굴복각인 >= 3
-				PRINTFORMW %CALLNAME%은(는) 全てを諦めたように身を差し出した。
+				PRINTFORMW %타겟은% 全てを諦めたように身を差し出した。
 			ELSE
-				PRINTFORMW %CALLNAME%은(는) 諦め顔で抵抗をやめた。
+				PRINTFORMW %타겟은% 諦め顔で抵抗をやめた。
 			ENDIF
 	ENDSELECT
 
