@@ -1,45 +1,45 @@
-﻿;グローバル　マニアックな性嗜好필터
-;※チェック関数は
-;　필터ーOff(×)なら1が、
-;　필터ーOn(○)なら0が返る仕組みになっている
-;	★混乱招くでしょこれ
-;	　オプションOff(×)なら0が、
-;	　オプションOn(○)なら1が返る仕組みにする
+﻿;GLOBAL　매니악한 성기호 필터
+;※체크 함수는
+;　필터ーOff(×)라면 1을,
+;　필터ーOn(○)라면 0을 반환하는 구조로 되어 있다
+;	★혼란 초래하잖아요 이거
+;	　옵션 Off(×)라면 0을,
+;	　옵션 On(○)라면 1을 반환하는 구조로 한다
 
 ;FLAG:850
-;使う플래그를減らすためにバイナリ表示で
+;사용하는 플래그를 줄이기 위해 이진 표시로
 ;1 후타나리		1
 ;2 모유체질		2
 ;3 기생			4
-;4 異形出産		8
-;5 男女平等		16
-;6 淫紋			32
-;7~12 淫紋サブ		64,128,256,512,1024,2048
-;13 흑화 캐릭터の촉수	4096 (※テキストの関係で完全な分岐には至っていない。촉수とちんこどっち突っ込むか分岐する箇所で使われる)
-;14 グロリョナ表現	8192
-;15 スカトロ表現	16384
-;16 拡張度表示		32768
-;17 極端な拡張	65536
-;18 팽유の取得		131072
-;19 極端な팽유	262144
-;20 極端な촉수の太さ	524288
+;4 이형 출산		8
+;5 양성평등		16
+;6 음문			32
+;7~12 음문 서브		64,128,256,512,1024,2048
+;13 흑화 캐릭터의 촉수	4096 (※텍스트 관계로 완전한 분기에는 이르지 못했다. 촉수와 자지 어느 쪽을 파고들거나 분기하는 곳에서 사용된다)
+;14 그로테스크 표현	8192
+;15 스카톨로지 표현	16384
+;16 확장도 표시		32768
+;17 극단적인 확장	65536
+;18 팽유 취득		131072
+;19 극단적인 팽유	262144
+;20 극단적인 촉수 굵기	524288
 
 ;---------------------------------------------
-;ARG番目のパッチがONになっているかチェック
-;※基本的にはこちらではなく式中関数版を利用してください
-;　このファイル内でしか使われていない
+;ARG번째 패치가 ON으로 되어 있는지 체크
+;※기본적으로는 이쪽이 아닌 식중함수판을 이용해 주세요
+;　이 파일 내에서만 사용되고 있다
 ;---------------------------------------------
 @CONFIG_CHECK_MANIAC,ARG
 LOCAL = GETBIT (FLAG:850,ARG)
-;　필터ーOff(×)なら1が、
-;　필터ーOn(○)なら0が格納されていて混乱を招く
-;通常のオプション同様の返り値とすべく結果を裏返す
+;　필터ーOff(×)라면 1이, 
+;　필터ーOn(○)라면 0이 격납되어 있어 혼란을 초래한다
+;통상 옵션, 같은 반환값으로 가급적 결과를 뒤집는다
 LOCAL=1-LOCAL
 RETURN LOCAL
 
-;式中関数版
-;※基本的にはこちらを使って判定します
-;　== 1 なら当該の要素が有効(○)、 == 0 なら無効(×)です
+;식중함수판
+;※기본적으로는 이쪽을 사용해서 판정합니다
+;　== 1 이라면 해당 요소가 유효(○)、 == 0 이라면 무효(×)입니다
 @CONFIG_CHECK_MANIAC_F(ARG)
 #FUNCTION
 LOCAL = GETBIT (FLAG:850,ARG)
@@ -47,121 +47,121 @@ LOCAL=1-LOCAL
 RETURNF LOCAL
 
 ;---------------------------------------------
-;필터の処理
+;필터 처리
 ;---------------------------------------------
 @CONFIG_F
 LOCAL = LINECOUNT
 $MASTER_LOOP
 PRINTL 
 DRAWLINE
-PRINTL 性嗜好필터　×にした要素はゲーム中に登場しなくなります
+PRINTL 성 기호 필터, ×로 설정된 요소는 게임 중에 등장하지 않게 됩니다.
 PRINTL
 CALL CONFIG_CHECK_MANIAC,1
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [11]후타나리の取得　　　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [11] 후타나리 취득　　　　　　　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,2
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [12]모유체질の取得　　　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [12] 모유체질 취득　　　　　　　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,3
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [13]기생の取得　　　　　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [13] 기생 취득　　　　　　　　　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,4
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [14]出産時の合いの子(異形)描写　　　【\@RESULT?○#×\@】
+PRINTFORML [14] 출산 시 혼혈아(이형) 묘사　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,5
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [15]男女平等(남자も犯される)　　　【\@RESULT?○#×\@】　※♀と보추は常に被姦対象です
+PRINTFORML [15] 양성평등(남자도 범해짐)　　　　【\@RESULT?○#×\@】　※♀과 보추는 항상 피간 대상입니다
 CALL CONFIG_CHECK_MANIAC,6
 SETCOLOR 120,255,255
 SIF RESULT == 0
 	SETCOLOR 105,105,105
-PRINTFORML [16]%RESULT==1 ? "▲" # "▼"%淫紋の取得　　　　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [16]%RESULT==1 ? "▲" # "▼"%음문 취득　　　　　　　　　　 【\@RESULT?○#×\@】
 IF RESULT == 1
 	CALL CONFIG_CHECK_MANIAC,7
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [17]┣複数個所の取得　　　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [17]┣음문：복수 부위 취득　　　　　【\@RESULT?○#×\@】
 	CALL CONFIG_CHECK_MANIAC,8
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
-		SETCOLOR 105,105,105
-	PRINTFORML [18]┣複雑化　　　　　　　　　　　　【\@RESULT?○#×\@】
+		SETCOLOR 105,105,105 
+	PRINTFORML [18]┣음문：복잡화　　　　　　　　　【\@RESULT?○#×\@】
 	CALL CONFIG_CHECK_MANIAC,9
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [19]┣救出後も浸食が進む　　　　　　【\@RESULT?○#×\@】　
+	PRINTFORML [19]┣음문：구출 후에도 침식 진행　 【\@RESULT?○#×\@】
 	CALL CONFIG_CHECK_MANIAC,10
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [20]┣進行が汚染度と連動する　　　　【\@RESULT?○#×\@】
-		;(汚染度…どれだけ陥落に近付いているか示す内部値)
+	PRINTFORML [20]┣음문：진행도와 오염도 연동　　【\@RESULT?○#×\@】
+		;(오염도…얼마나 함락에 가까워지고 있는지 보여주는 내부치)
 	CALL CONFIG_CHECK_MANIAC,11
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [21]┣対応フォントの使用　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [21]┣음문：대응 폰트 사용　　　　　【\@RESULT?○#×\@】
 	CALL CONFIG_CHECK_MANIAC,12
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [22]┗Wingdingsの使用　　 　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [22]┗음문：Wingdings 폰트 사용　　 【\@RESULT?○#×\@】
 ENDIF
 CALL CONFIG_CHECK_MANIAC,13
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [23]기생陥落キャラによる촉수責め　　【\@RESULT?○#×\@】
+PRINTFORML [23] 기생 함락 캐릭터에 의한 촉수 고문【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,14
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [24]残酷/ハードな描写 　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [24] 잔혹/하드한 묘사 　　　　　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,15
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [25]スカトロ系描写 　 　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [25] 스카톨로지 묘사 　 　　　　　　【\@RESULT?○#×\@】
 CALL CONFIG_CHECK_MANIAC,16
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [26]%RESULT==1 ? "▲" # "▼"%拡張度の表示　  　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [26]%RESULT==1 ? "▲" # "▼"%확장도 표시　  　　　　　　　 【\@RESULT?○#×\@】
 IF RESULT == 1
 	CALL CONFIG_CHECK_MANIAC,17
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [27]┣極端な拡張　　　　　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [27]┣확장：극단적인 확장　　　　　 【\@RESULT?○#×\@】
 	CALL CONFIG_CHECK_MANIAC,20
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [30]┗極端な太さの촉수　　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [30]┗확장：극단적인 굵기의 촉수　　【\@RESULT?○#×\@】
 ENDIF
 CALL CONFIG_CHECK_MANIAC,18
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-PRINTFORML [28]%RESULT==1 ? "▲" # "▼"%팽유の取得   　 　　　　　　　【\@RESULT?○#×\@】
+PRINTFORML [28]%RESULT==1 ? "▲" # "▼"%팽유 취득   　  　　　　　　　【\@RESULT?○#×\@】
 IF RESULT == 1
 	CALL CONFIG_CHECK_MANIAC,19
 	SETCOLOR 120,255,255
 	SIF RESULT == 0
 		SETCOLOR 105,105,105
-	PRINTFORML [29]┗極端な팽유　　　　　　　　　　【\@RESULT?○#×\@】
+	PRINTFORML [29]┗팽유：극단적인 팽유　　　　　 【\@RESULT?○#×\@】
 ENDIF
 
 RESETCOLOR
@@ -183,7 +183,7 @@ PRINTL
 		PRINTL
 	ENDIF
 
-PRINTL [200]変更を保存して돌아간다
+PRINTL [200] 변경 사항을 저장하고 돌아간다
 PRINTL 
 
 $INPUT_LOOP

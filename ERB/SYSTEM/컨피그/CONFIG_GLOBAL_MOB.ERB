@@ -1,7 +1,7 @@
-﻿;グローバル　잡몹적出現필터
-;フラグはERHで管理
+﻿;GLOBAL　잡몹적 출현 필터
+;플래그는 ERH에서 관리
 ;---------------------------------------------
-;필터の処理
+;필터 처리
 ;---------------------------------------------
 @CONFIG_M
 #DIM LCOUNT, 2
@@ -9,17 +9,17 @@
 #DIM PAGE
 #DIM SELECT
 
-#DIMS 種族,10
-種族:0=無形
-種族:1=スライム
-種族:2=植物
-種族:3=水棲系
-種族:4=---
-種族:5=ヒト型
-種族:6=動物系
-種族:7=虫
-種族:8=物質
-種族:9=천사・悪魔系
+#DIMS 종족,10
+종족:0=무형
+종족:1=슬라임
+종족:2=식물
+종족:3=수생계
+종족:4=---
+종족:5=인간형
+종족:6=동물계
+종족:7=곤충
+종족:8=물질
+종족:9=천사・악마계
 
 
 
@@ -27,8 +27,8 @@ LCOUNT:0 = LINECOUNT
 $MASTER_LOOP
 CALL LB
 DRAWLINE
-PRINTL 잡몹적出現필터　カテゴリを選択してください
-PRINTL ※全雑魚0%時は戦闘処理が省略されます
+PRINTL 잡몹 출현 필터　카테고리를 선택해 주십시오.
+PRINTL ※모든 잡몹 0% 시에는 전투 처리가 생략됩니다.
 PRINTL 
 FOR LOCAL,0,MOB_CATEGORY
 	LOCAL:2=0
@@ -44,13 +44,13 @@ FOR LOCAL,0,MOB_CATEGORY
 	IF LOCAL:2==0 || (LOCAL:3/LOCAL:2)==0
 		SETCOLORBYNAME Gray
 	ENDIF
-	PRINTFORML [{LOCAL}]%種族:LOCAL,16,LEFT%　[{LOCAL+10}]0％　[{LOCAL+20}]100％
+	PRINTFORML [{LOCAL}] %종족:LOCAL,16,LEFT%　[{LOCAL+10}] 0％　[{LOCAL+20}] 100％
 	RESETCOLOR
 NEXT
 PRINTL 
-PRINTL [101]全カテゴリの雑魚出現率を全て0％に설정する
-PRINTL [102]全カテゴリの雑魚出現率を全て100％に설정する
-PRINTL [200]変更を保存して돌아간다
+PRINTL [101] 모든 카테고리의 잡몹 출현율을 0％로 설정한다
+PRINTL [102] 모든 카테고리의 잡몹 출현율을 100％로 설정한다
+PRINTL [200] 변경 사항을 저장하고 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT >= 0 && RESULT <= 9 && RESULT != 4
@@ -59,7 +59,7 @@ IF RESULT >= 0 && RESULT <= 9 && RESULT != 4
 	LCOUNT:1 = LINECOUNT
 	$LOOP_0
 	DRAWLINE
-	PRINTFORML 잡몹적出現필터　PAGE({PAGE}/5)　　　　　　　　　　　　　　　　出現率
+	PRINTFORML 잡몹 출현 필터　　　PAGE({PAGE}/5)　　　　　　　　　　　　　　　　출현율
 	PRINTL 
 	FOR LOCAL,1,21
 		SELECT = (PAGE - 1) * 20 + LOCAL
@@ -72,22 +72,22 @@ IF RESULT >= 0 && RESULT <= 9 && RESULT != 4
 		PRINTL 
 	NEXT
 	PRINTL 
-	PRINT このカテゴリの全出現率を 
+	PRINT 이 카테고리의 전체 출현율을 
 	PRINTPLAIN 　　　
-	PRINT [101]0％にする 
+	PRINT [101] 0％로 한다 
 	PRINTPLAIN 　　　　
-	PRINT [102]100％にする
+	PRINT [102] 100％로 한다
 	PRINTL 
 	PRINT [200] 돌아간다　　　
 	PRINTPLAIN 　　　　　　　　
 	IF PAGE >= 2
-		PRINT [201]前のページ
+		PRINT [201] 앞 페이지
 	ELSE
 		PRINT 　　　　　　　 
 	ENDIF
 	PRINTPLAIN 　　　　
 	IF PAGE <= 4
-		PRINT [202]次のページ
+		PRINT [202] 뒷 페이지
 	ELSE
 		PRINT 　　　　　　　 
 	ENDIF
@@ -103,7 +103,7 @@ IF RESULT >= 0 && RESULT <= 9 && RESULT != 4
 	ENDIF
 	IF SELECT >= ((PAGE - 1) * 20 + 1) && SELECT <= ((PAGE - 1) * 20 + 20)
 		TRYCALLFORM TENTACLE_MOB_{CATEGORY * 100 + SELECT}_GETNAME
-		PRINTFORML %RESULTS%の出現率を入力してください （  0 - 100 ％）
+		PRINTFORML %RESULTS%의 출현률을 입력해 주십시오.（  0 - 100 ％）
 		$INPUT_LOOP_1
 		INPUT
 		IF RESULT >= 0 && RESULT <= 100

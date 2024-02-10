@@ -142,7 +142,7 @@ RESETCOLOR
 
 SIF TALENT:ARG:고유캐릭터 != 0
 	SETCOLOR 128,128,128
-PRINTFORM ◆[10] 전투 능력・・・・・・・・ 
+PRINTFORM ◆[10] 전투 능력・・・・・・・・
 IF TALENT:ARG:변신능력 == 1
 	PRINTL 변신 능력 있음
 ELSEIF TALENT:ARG:변신능력 == -1
@@ -1337,7 +1337,8 @@ ELSEIF RESULT == 일인칭_최대+1
 			PRINTL 　파(ファ) 피(フィ) 퓨(フュ) 페(フェ) 포(フォ)
 			PRINTL 　먀(ミャ) 뮤(ミュ) 묘(ミョ)
 			PRINTL 　랴(リャ) 류(リュ) 레(リェ) 료(リョ)
-			GOTO INPUT_PRN_0
+			WAIT
+			GOTO INPUT_PRN_TOP_0
 		ENDIF
 		CALL_STR:2 = %RESULTS%
 		CALL SELF_CALL_ANALYSIS, RESULTS
@@ -1416,7 +1417,8 @@ ELSEIF RESULT == 일인칭_최대+2
 			PRINTL 　파(ファ) 피(フィ) 퓨(フュ) 페(フェ) 포(フォ)
 			PRINTL 　먀(ミャ) 뮤(ミュ) 묘(ミョ)
 			PRINTL 　랴(リャ) 류(リュ) 레(リェ) 료(リョ)
-			GOTO INPUT_PRN_1
+			WAIT
+			GOTO INPUT_PRN_TOP_1
 		ENDIF
 		CALL_STR:2 = %RESULTS%
 		CALL SELF_CALL_ANALYSIS, RESULTS

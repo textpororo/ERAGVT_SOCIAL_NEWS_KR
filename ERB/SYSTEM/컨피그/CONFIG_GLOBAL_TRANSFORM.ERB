@@ -1,23 +1,23 @@
-﻿;グローバル　変身処理の選択
-;특별 활동時等を実行時の自動変身설정
-;ビット演算ではなく代入である点に注意
+﻿;GLOBAL　변신 처리 선택
+;특별 활동 등을 실행할 때의 자동 변신 설정
+;비트 연산이 아닌 대입이라는 점에 주의
 ;특별 활동
-;GLOBAL:51 通常変身の場合
-;GLOBAL:52 女体化変身の場合
-;GLOBAL:53 男性化変身の場合
+;GLOBAL:51 통상 변신일 경우
+;GLOBAL:52 여체화 변신일 경우
+;GLOBAL:53 남성화 변신일 경우
 ;정보 수집
-;GLOBAL:54 通常変身の場合
-;GLOBAL:55 女体化変身の場合
-;GLOBAL:56 男性化変身の場合
-;息抜き
-;GLOBAL:57 通常変身の場合
-;GLOBAL:58 女体化変身の場合
-;GLOBAL:59 男性化変身の場合
-;0 常に選択する
-;1 通常、변신한다
-;2 通常、変身しない
+;GLOBAL:54 통상 변신일 경우
+;GLOBAL:55 여체화 변신일 경우
+;GLOBAL:56 남성화 변신일 경우
+;여가 활동 (息抜き)
+;GLOBAL:57 통상 변신일 경우
+;GLOBAL:58 여체화 변신일 경우
+;GLOBAL:59 남성화 변신일 경우
+;0 항상 선택한다
+;1 통상, 변신한다
+;2 통상, 변신하지 않는다
 ;---------------------------------------------
-;필터の処理
+;필터 처리
 ;---------------------------------------------
 @CONFIG_T
 #DIM LCOUNT
@@ -29,99 +29,99 @@ NEXT
 $MASTER_LOOP
 PRINTL 
 DRAWLINE
-PRINTL ここで変身설정を指定しておくことで、변신한다かどうかの選択肢を省略することができます。
+PRINTL 여기서 변신 설정을 지정해 두면, 이후 변신 여부에 대한 선택지를 생략할 수 있습니다.
 PRINTL 
-PRINTL 특별 활동時の変身설정
+PRINTL 특별 활동 시의 변신 설정
 PRINTL
-PRINT 　[11]通常の変身の場合　　　　　　    【
+PRINT 　[11] 통상 변신의 경우　　　　　     【
 IF OPTION:1 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:1 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[12]変身時に女体化する場合          【
+PRINT 　[12] 변신 시 여체화하는 경우        【
 IF OPTION:2 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:2 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[13]変身時に男性化する場合          【
+PRINT 　[13] 변신 시 남성화하는 경우        【
 IF OPTION:3 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:3 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
 PRINTL 
-PRINTL 정보 수집時の変身설정
+PRINTL 정보 수집 시의 변신 설정
 PRINTL
-PRINT 　[14]通常の変身の場合　　　　　　    【
+PRINT 　[14] 통상 변신의 경우　　　　　     【
 IF OPTION:4 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:4 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[15]変身時に女体化する場合          【
+PRINT 　[15] 변신 시 여체화하는 경우        【
 IF OPTION:5 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:5 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[16]変身時に男性化する場合          【
+PRINT 　[16] 변신 시 남성화하는 경우        【
 IF OPTION:6 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:6 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
 PRINTL 
-PRINTL 息抜きの変身설정
+PRINTL 여가 활동 시의 설정
 PRINTL
-PRINT 　[17]通常の変身の場合　　　　　　    【
+PRINT 　[17] 통상 변신의 경우　　　　　     【
 IF OPTION:7 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:7 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[18]変身時に女体化する場合          【
+PRINT 　[18] 변신 시 여체화하는 경우        【
 IF OPTION:8 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:8 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
-PRINT 　[19]変身時に男性化する場合          【
+PRINT 　[19] 변신 시 남성화하는 경우        【
 IF OPTION:9 == 1
-	PRINT 常に변신한다
+	PRINT 항상 변신한다
 ELSEIF OPTION:9 == 2
-	PRINT 常に変身しない
+	PRINT 항상 변신하지 않는다
 ELSE
-	PRINT 選択肢を表示する
+	PRINT 선택지를 표시한다
 ENDIF
 PRINTL 】
 PRINTL 
-PRINTL [200]変更を保存して돌아간다
+PRINTL [200] 변경 사항을 저장하고 돌아간다
 PRINTL 
 $INPUT_LOOP
 INPUT
