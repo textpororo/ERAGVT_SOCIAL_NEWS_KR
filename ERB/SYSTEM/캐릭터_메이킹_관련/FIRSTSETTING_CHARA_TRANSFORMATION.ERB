@@ -1,12 +1,12 @@
 ﻿
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの변신능력の설정
+;캐릭터의 변신 능력 설정
 @FIRSTSETTING_CHARA_TRANSABILITY, ARG
-PRINTFORML {ARG}人目のキャラ 『%CALLNAME:ARG%』 の戦闘能力を설정してください
+PRINTFORML {ARG}번째 캐릭터『%CALLNAME:ARG%』의 전투 능력을 설정해 주십시오.
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML [0]변신능력あり
-PRINTFORML [1]변신능력なし、戦闘能力あり
-PRINTFORML [2]非戦闘員
+PRINTFORML [0] 변신 능력 있음
+PRINTFORML [1] 변신 능력 없음, 전투 능력 있음
+PRINTFORML [2] 비전투원
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
@@ -22,7 +22,7 @@ IF RESULT == 0
 	MAXBASE:ARG:골반둘레 = RESULT:6
 	MAXBASE:ARG:가슴무게 = RESULT:7
 
-	PRINTFORML 戦闘能力を 『변신능력あり』 に설정しました
+	PRINTFORML 전투 능력을『변신 능력 있음』으로 설정했습니다.
 ELSEIF RESULT == 1
 	TALENT:ARG:변신능력 = 0
 	MAXBASE:ARG:공중대시 = LIMIT(CSVBASE_F(NO:ARG,22), 0, 5)
@@ -37,7 +37,7 @@ ELSEIF RESULT == 1
 	MAXBASE:ARG:가슴무게 = RESULT:7
 
 	TALENT:ARG:변신시TS = 0
-	PRINTFORML 戦闘能力を 『변신능력なし、戦闘能力あり』 に설정しました
+	PRINTFORML 전투 능력을『변신 능력 없음, 전투 능력 있음』으로 설정했습니다.
 ELSEIF RESULT == 2
 	TALENT:ARG:변신능력 = -1
 	MAXBASE:ARG:공중대시 = LIMIT(CSVBASE_F(NO:ARG,22) - 1, 0, 5)
@@ -52,7 +52,7 @@ ELSEIF RESULT == 2
 	MAXBASE:ARG:가슴무게 = RESULT:7
 
 	TALENT:ARG:변신시TS = 0
-	PRINTFORML 戦闘能力を 『非戦闘員』 に설정しました
+	PRINTFORML 전투 능력을『비전투원』으로 설정했습니다.
 ELSE
 	GOTO INPUT_LOOP
 ENDIF
@@ -60,14 +60,14 @@ PRINTW
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの変身後名の설정
+;캐릭터의 변신 후 이름 설정
 @FIRSTSETTING_CHARA_TRANSAFTERNAME, ARG
 #DIMS STR_UP
 #DIMS STR_DOWN
 RESULTS = 
-;変身後名に関する설정値
+;변신 후 이름에 관한 설정값
 ;CSTR:ARG:0 = %STRCLEAR()%
-;上の句と下の句が既に保存されているなら記録しておく
+;윗구와 아랫구가 이미 보존되어 있다면 기록해 둔다
 STR_UP = %CSTR:ARG:201%
 STR_DOWN = %CSTR:ARG:202%
 ;초기화
@@ -75,17 +75,17 @@ CSTR:ARG:201 = %STRCLEAR()%
 CSTR:ARG:202 = %STRCLEAR()%
 LOCAL:0 = 0
 
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の変身後名を설정してください
-PRINTL （変身中の正式なキャラ名です。一部の지문や스테이터스 표시などに使用されます）
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 변신 후 이름을 설정해 주십시오.
+PRINTL   (변신 중의 정식 캐릭터명입니다. 일부 지문이나 스테이터스 표시 등에 사용됩니다.)
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [0]설정しない
-PRINTL [1]自分で설정
-PRINTL [2]ランダム にする
-PRINTFORML [3]『%CALLNAME:ARG%』とランダムの組み合わせにする
+PRINTL [0] 설정하지 않는다
+PRINTL [1] 직접 설정한다
+PRINTL [2] 랜덤으로 설정한다
+PRINTFORML [3]『%CALLNAME:ARG%』%조사만처리(CALLNAME:ARG,"와")% 무작위 조합으로 설정한다
 IF FLAG:6 == 1
-	PRINTFORML [4]『%SAVESTR:11%』とランダムの組み合わせにする
-	PRINTFORML [5]『%SAVESTR:11%%CALLNAME:ARG%』 にする
-	PRINTFORML [6]『%CALLNAME:ARG%%SAVESTR:11%』 にする
+	PRINTFORML [4]『%SAVESTR:11%』%조사만처리(SAVESTR:11,"와")% 무작위 조합으로 설정한다
+	PRINTFORML [5]『%SAVESTR:11% %CALLNAME:ARG%』%조사만처리(CALLNAME:ARG,"로")% 한다
+	PRINTFORML [6]『%CALLNAME:ARG% %SAVESTR:11%』%조사만처리(SAVESTR:11,"로")% 한다
 ENDIF
 $INPUT_LOOP
 INPUT
@@ -94,15 +94,15 @@ IF (FLAG:6 == 0 && (RESULT < 0 || RESULT > 4)) || (FLAG:6 == 1 && (RESULT < 0 ||
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 0
 	CFLAG:ARG:2 = 0
-	;변신 후 통칭も削除
+	;변신 후 통칭도 삭제
 	CFLAG:ARG:3 = 0
 	CSTR:ARG:1 = %STRCLEAR()%
-	PRINTFORML 変身後名を설정しませんでした
+	PRINTFORML 변신 후 이름을 설정하지 않았습니다.
 ELSEIF RESULT == 1
 	CFLAG:ARG:2 = 1
-	PRINTL 変身後名を入力してください
+	PRINTL 변신 후 이름을 입력해 주십시오.
 	SIF CSTR:ARG:0 != ""
-		PRINTFORML [999]変更しない（%CSTR:ARG:0%）
+		PRINTFORML [999] 변경하지 않는다（%CSTR:ARG:0%）
 	$INPUT_LOOP_1_2
 	INPUTS
 	IF RESULTS == ""
@@ -111,29 +111,29 @@ ELSEIF RESULT == 1
 	ELSE
 		CSTR:ARG:0 = %RESULTS%
 	ENDIF
-	PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
-	;変身後名も合わせる
+	PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』%조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
+	;변신 후 이름도 맞춘다
 	CSTR:ARG:1 = %CSTR:ARG:0%
 	CFLAG:ARG:3 = 1
 ELSEIF RESULT == 2
 	CALL FIRSTSETTING_RANDOMNAMING_ALL
 	IF RESULT == 99
-		PRINTFORML 変身後名を選ばずに戻ります
+		PRINTFORML 변신 후 이름을 고르지 않고 돌아갑니다.
 		RETURN
 	ENDIF
 	CFLAG:ARG:2 = 1
 	CSTR:ARG:0 = %STR:(DA:0:RESULT)%%STR:(DA:1:RESULT)%
-	PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
+	PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』%조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
 	CSTR:ARG:201 = %STR:(DA:0:RESULT)%
 	CSTR:ARG:202 = %STR:(DA:1:RESULT)%
-	;変身後名も合わせる
+	;변신 후 이름도 맞춘다
 	CSTR:ARG:1 = %CSTR:ARG:0%
 	CFLAG:ARG:3 = 1
 ELSEIF RESULT == 3
 	CFLAG:ARG:2 = 1
 	CSTR:ARG:201 = %CALLNAME:ARG%
 	PRINTL 
-	PRINT 組み合わせる単語の
+	PRINT 조합하는 단어의 
 	$INPUT_LOOP_CHILD_3_0
 	CALL FIRSTSETTING_RANDOMNAMING, 1, ARG, CALLNAME:ARG
 	PRINTL 
@@ -141,12 +141,12 @@ ELSEIF RESULT == 3
 		GOTO INPUT_LOOP_CHILD_3_0
 	LOCAL:99 = RESULT
 	$INPUT_LOOP_CHILD_3_1
-	PRINTFORML 変身後名を 『%RESULTS%』 に설정します。よろしいですか？
+	PRINTFORML 변신 후 이름을『%RESULTS%』%조사만처리(RESULTS,"로")% 설정합니다. 이대로 좋습니까?
 	PRINTL 
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	SIF CSTR:ARG:0 != ""
-		PRINTFORML [2]変更しない（%CSTR:ARG:0%）
+		PRINTFORML [2] 변경하지 않는다（%CSTR:ARG:0%）
 	$INPUT_LOOP_CHILD_3_2
 	INPUT
 	IF RESULT == 0
@@ -155,8 +155,8 @@ ELSEIF RESULT == 3
 		GOTO INPUT_LOOP_CHILD_3_0
 	ELSEIF RESULT == 1
 		CSTR:ARG:0 = %RESULTS%
-		PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
-		;変身後名も合わせる
+		PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』%조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
+		;변신 후 이름도 맞춘다
 		CSTR:ARG:1 = %CSTR:ARG:0%
 		CFLAG:ARG:3 = 1
 	ELSEIF RESULT == 2
@@ -167,7 +167,7 @@ ELSEIF RESULT == 4
 	CFLAG:ARG:2 = 1
 	CSTR:ARG:201 = %SAVESTR:11%
 	PRINTL 
-	PRINT 組み合わせる単語の
+	PRINT 조합하는 단어의 
 	$INPUT_LOOP_CHILD_5_0
 	CALL FIRSTSETTING_RANDOMNAMING, 1, ARG, SAVESTR:11
 	PRINTL 
@@ -175,12 +175,12 @@ ELSEIF RESULT == 4
 		GOTO INPUT_LOOP_CHILD_5_0
 	LOCAL:99 = RESULT
 	$INPUT_LOOP_CHILD_5_1
-	PRINTFORML 変身後名を 『%RESULTS%』 に설정します。よろしいですか？
+	PRINTFORML 변신 후 이름을『%RESULTS%』%조사만처리(RESULTS,"로")% 설정합니다. 이대로 좋습니까?
 	PRINTL 
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	SIF CSTR:ARG:0 != ""
-		PRINTFORML [2]変更しない（%CSTR:ARG:0%）
+		PRINTFORML [2] 변경하지 않는다（%CSTR:ARG:0%）
 	$INPUT_LOOP_CHILD_5_2
 	INPUT
 	IF RESULT == 0
@@ -189,8 +189,8 @@ ELSEIF RESULT == 4
 		GOTO INPUT_LOOP_CHILD_5_0
 	ELSEIF RESULT == 1
 		CSTR:ARG:0 = %RESULTS%
-		PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
-		;変身後名も合わせる
+		PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』 %조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
+		;변신 후 이름도 맞춘다
 		CSTR:ARG:1 = %CSTR:ARG:0%
 		CFLAG:ARG:3 = 1
 	ELSEIF RESULT == 2
@@ -203,8 +203,8 @@ ELSEIF RESULT == 5
 	CSTR:ARG:201 = %SAVESTR:11%
 	CSTR:ARG:202 = %CALLNAME:ARG%
 	CSTR:ARG:0 = %SAVESTR:11%%CALLNAME:ARG%
-	PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
-	;変身後名も合わせる
+	PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』%조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
+	;변신 후 이름도 맞춘다
 	CSTR:ARG:1 = %CSTR:ARG:0%
 	CFLAG:ARG:3 = 1
 ELSEIF RESULT == 6
@@ -212,8 +212,8 @@ ELSEIF RESULT == 6
 	CSTR:ARG:201 = %CALLNAME:ARG%
 	CSTR:ARG:202 = %SAVESTR:11%
 	CSTR:ARG:0 = %CALLNAME:ARG%%SAVESTR:11%
-	PRINTFORML 変身後名を 『%CSTR:ARG:0%』 に설정しました
-	;変身後名も合わせる
+	PRINTFORML 변신 후 이름을『%CSTR:ARG:0%』%조사만처리(CSTR:ARG:0,"로")% 설정했습니다.
+	;변신 후 이름도 맞춘다
 	CSTR:ARG:1 = %CSTR:ARG:0%
 	CFLAG:ARG:3 = 1
 ENDIF
@@ -224,23 +224,23 @@ PRINTL
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ;캐릭터 변신 후 통칭 설정
 @FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, ARG
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の변신 후 통칭を설정してください
-PRINTL （※ 変身中に通常の지문などで表示されるキャラ名です）
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 변신 후 통칭을 설정해 주십시오.
+PRINTL   (※ 변신 중에 일반적인 지문 등에서 표시되는 캐릭터 이름입니다.)
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
-;変身後名を自分で설정した場合
+;변신 후 이름을 직접 설정했을 경우
 IF CSTR:ARG:201 == "" && CSTR:ARG:202 == ""
-	PRINTL [0]自分で설정
-	PRINTFORML [1]変身後名と同じに설정（変身後名：『%CSTR:ARG:0%』）
-	PRINTFORML [2]変身前の통칭をそのまま使う
+	PRINTL [0] 직접 설정한다
+	PRINTFORML [1] 변신 후 이름과 똑같이 설정한다（변신 후 이름：『%CSTR:ARG:0%』）
+	PRINTFORML [2] 변신 전의 통칭을 그대로 사용한다
 	$INPUT_LOOP_1_1
 	INPUT
 	IF RESULT < 0 || RESULT > 2
 		GOTO INPUT_LOOP_1_1
 	ELSEIF RESULT == 0
-		PRINTL 변신 후 통칭を入力してください
+		PRINTL 변신 후 통칭을 입력해 주십시오.
 		SIF CSTR:ARG:1 != ""
-			PRINTFORML [999]変更しない（%CSTR:ARG:1%）
+			PRINTFORML [999] 변경하지 않는다（%CSTR:ARG:1%）
 		$INPUT_LOOP_1_2
 		INPUTS
 		IF RESULTS == ""
@@ -254,15 +254,15 @@ IF CSTR:ARG:201 == "" && CSTR:ARG:202 == ""
 	ELSEIF RESULT == 2
 		CSTR:ARG:1 = %CALLNAME:ARG%
 	ENDIF
-	PRINTFORML 변신 후 통칭を 『%CSTR:ARG:1%』 に설정しました
+	PRINTFORML 변신 후 통칭을『%CSTR:ARG:1%』%조사만처리(CSTR:ARG:1,"로")% 설정했습니다.
 
 ;両方설정されている場合
 ELSE
-	PRINTFORML [0]변신 후 통칭を 『%CSTR:ARG:201%』 に설정
-	PRINTFORML [1]변신 후 통칭を 『%CSTR:ARG:202%』 に설정
-	PRINTL [2]自分で설정
-	PRINTFORML [3]変身後名と同じに설정（変身後名：『%CSTR:ARG:0%』）
-	PRINTFORML [4]変身前の통칭をそのまま使う
+	PRINTFORML [0] 변신 후 통칭을『%CSTR:ARG:201%』%조사만처리(CSTR:ARG:201,"로")% 설정한다
+	PRINTFORML [1] 변신 후 통칭을『%CSTR:ARG:202%』%조사만처리(CSTR:ARG:202,"로")% 설정한다
+	PRINTL [2] 직접 설정한다
+	PRINTFORML [3] 변신 후 이름과 똑같이 설정한다（변신 후 이름：『%CSTR:ARG:0%』）
+	PRINTFORML [4] 변신 전의 통칭을 그대로 사용한다
 	$INPUT_LOOP_4
 	INPUT
 	IF RESULT < 0 || RESULT > 4
@@ -272,9 +272,9 @@ ELSE
 	ELSEIF RESULT == 1
 		CSTR:ARG:1 = %CSTR:ARG:202%
 	ELSEIF RESULT == 2
-		PRINTL 변신 후 통칭を入力してください
+		PRINTL 변신 후 통칭을 입력해 주십시오.
 		SIF CSTR:ARG:1 != ""
-			PRINTFORML [999]変更しない（%CSTR:ARG:1%）
+			PRINTFORML [999] 변경하지 않는다（%CSTR:ARG:1%）
 		$INPUT_LOOP_4_1
 		INPUTS
 		IF RESULTS == ""
@@ -288,7 +288,7 @@ ELSE
 	ELSEIF RESULT == 4
 		CSTR:ARG:1 = %CALLNAME:ARG%
 	ENDIF
-	PRINTFORML 변신 후 통칭を 『%CSTR:ARG:1%』 に설정しました
+	PRINTFORML 변신 후 통칭을『%CSTR:ARG:1%』%조사만처리(CSTR:ARG:1,"로")% 설정했습니다.
 ENDIF
 PRINTL 
 PRINTL 
@@ -296,27 +296,27 @@ PRINTL
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ;캐릭터 변신 시 구호 설정
 @FIRSTSETTING_CHARA_TRANSCALL, ARG
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の변신 시 구호を설정しますか？
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 변신 시 구호를 설정하시겠습니까?
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
 PRINTL [0] 아니오
-PRINTL [1]ランダムに설정
-PRINTL [2]自分で설정
+PRINTL [1] 랜덤으로 설정
+PRINTL [2] 직접 설정한다
 SIF FLAG:7 == 1
-	PRINTFORML [3]共通のかけ声に설정
+	PRINTFORML [3] 공통의 구호로 설정한다
 $INPUT_LOOP
 INPUT
 IF (FLAG:7 == 0 && (RESULT < 0 || RESULT > 2)) || (FLAG:7 == 1 && (RESULT < 0 || RESULT > 3))
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 0
 	CFLAG:ARG:4 = 0
-	PRINTL かけ声を설정しませんでした
+	PRINTL 구호를 설정하지 않았습니다.
 ELSEIF RESULT == 1
 	CFLAG:ARG:4 = 1
 	$INPUT_LOOP_CHILD_1_1
 	CSTR:ARG:2 = %FIRSTSETTING_CHANGINGCALL_RANDOM()%
-	PRINTFORML かけ声を 『%CSTR:ARG:2%』 とします。よろしいですか？
-	PRINTL [0]もう一度選びなおす
+	PRINTFORML 구호를『%CSTR:ARG:2%』%조사만처리(CSTR:ARG:2,"로")% 합니다. 이대로 좋습니까?
+	PRINTL [0] 다시 한 번 더 고른다
 	PRINTL [1] 네
 	$INPUT_LOOP_CHILD_1_2
 	INPUT
@@ -325,23 +325,23 @@ ELSEIF RESULT == 1
 	ELSEIF RESULT == 0
 		GOTO INPUT_LOOP_CHILD_1_1
 	ELSEIF RESULT == 1
-		PRINTFORML かけ声を 『%CSTR:ARG:2%』 に설정しました
+		PRINTFORML 구호를『%CSTR:ARG:2%』%조사만처리(CSTR:ARG:2,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 2
 	CFLAG:ARG:4 = 1
-	PRINTL かけ声を入力してください
+	PRINTL 구호를 입력해 주십시오.
 	$INPUT_LOOP_CHILD_2
 	INPUTS
 	IF RESULTS == ""
 		GOTO INPUT_LOOP_CHILD_2
 	ELSE
 		CSTR:ARG:2 = %RESULTS%
-		PRINTFORML かけ声を 『%CSTR:ARG:2%』 に설정しました
+		PRINTFORML 구호를『%CSTR:ARG:2%』%조사만처리(CSTR:ARG:2,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 3
 	CFLAG:ARG:4 = 1
 	CSTR:ARG:2 = %SAVESTR:12%
-	PRINTFORML かけ声を 『%CSTR:ARG:2%』 に설정しました
+	PRINTFORML 구호를『%CSTR:ARG:2%』%조사만처리(CSTR:ARG:2,"로")% 설정했습니다.
 
 ENDIF
 PRINTL 
@@ -349,59 +349,59 @@ PRINTL
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;캐릭터의 자칭 구상을 설정
+;캐릭터의 자칭 구상 설정
 @FIRSTSETTING_CHARA_NANORI, ARG
 
-;キャラの성격の素質番号を取得しておく
+;캐릭터의 성격의 소질 번호를 취득해 둔다
 CALL SEIKAKU_CHECK, "GET_TALENT_VALUE", ARG
 LOCAL = RESULT
 
-PRINTFORML {ARG:0}人目のキャラ 『%CALLNAME:ARG%』 の変身後の名乗り구상を설정しますか？
-PRINTL （※ 구상側で설정されている場合はそちらが優先されます）
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 변신 후 자칭 구상을 설정하시겠습니까?
+PRINTL （※ 구상 측에서 설정되어 있는 경우에는 구상이 우선시됩니다.）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
-;変身後名を설정していない場合
+;변신 후 이름을 설정하지 않았을 경우
 IF CFLAG:ARG:2 == 0
 	PRINTL [0] 아니오
-	PRINTL [1]自分で설정
+	PRINTL [1] 직접 설정한다
 	$INPUT_LOOP_A
 	INPUT
 	IF RESULT < 0 || RESULT > 1
 		GOTO INPUT_LOOP_A
 	ELSEIF RESULT == 0
 		CFLAG:ARG:5 = 0
-		PRINTL 名乗り구상を설정しませんでした
+		PRINTL 자칭 구상을 설정하지 않았습니다.
 	ELSEIF RESULT == 1
 		CFLAG:ARG:5 = 1
-		PRINTL 名乗り구상を入力してください
+		PRINTL 자칭 구상을 입력해 주십시오.
 		$INPUT_LOOP_CHILD_1
 		INPUTS
 		IF RESULTS == ""
 			GOTO INPUT_LOOP_CHILD_1
 		ELSE
 			CSTR:ARG:3 = %RESULTS%
-			PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 に설정しました
+			PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정했습니다.
 		ENDIF
 	ENDIF
-;変身後名を설정している場合
+;변신 후 이름을 설정했을 경우
 ELSEIF CFLAG:ARG:2 == 1
 	PRINTL [0] 아니오
-	PRINTL [1]主題 ＋ 変身後名 ＋ 一文 の構成で自動生成
-	PRINTL [2]変身後名 ＋ 一文 の構成で自動生成
-	PRINTL [3]自分で설정
+	PRINTL [1] 「주제 ＋ 변신 후 이름 ＋ 한마디」의 구성으로 자동 생성
+	PRINTL [2] 「변신 후 이름 ＋ 한마디」의 구성으로 자동 생성
+	PRINTL [3] 직접 설정한다
 	$INPUT_LOOP_B
 	INPUT
 	IF RESULT < 0 || RESULT > 3
 		GOTO INPUT_LOOP_B
 	ELSEIF RESULT == 0
 		CFLAG:ARG:5 = 0
-		PRINTL 名乗り구상を설정しませんでした
+		PRINTL 자칭 구상을 설정하지 않았습니다.
 	ELSEIF RESULT == 1
 		CFLAG:ARG:5 = 1
 		$INPUT_LOOP_1_1
 		CSTR:ARG:3 = %SAVESTR:10%%CSTR:ARG:0%%FIRSTSETTING_CHANGINGCALL_DETAIL(ARG:0, LOCAL)%
-		PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 とします。よろしいですか？
-		PRINTL [0]もう一度選びなおす
+		PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정합니다. 이대로 좋습니까?
+		PRINTL [0] 다시 한 번 더 고른다
 		PRINTL [1] 네
 		$INPUT_LOOP_1_2
 		INPUT
@@ -410,14 +410,14 @@ ELSEIF CFLAG:ARG:2 == 1
 		ELSEIF RESULT == 0
 			GOTO INPUT_LOOP_1_1
 		ELSEIF RESULT == 1
-			PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 に설정しました
+			PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정했습니다.
 		ENDIF
 	ELSEIF RESULT == 2
 		CFLAG:ARG:5 = 1
 		$INPUT_LOOP_2_1
 		CSTR:ARG:3 = %CSTR:ARG:0%%FIRSTSETTING_CHANGINGCALL_DETAIL(ARG:0, LOCAL)%
-		PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 とします。よろしいですか？
-		PRINTL [0]もう一度選びなおす
+		PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정합니다. 이대로 좋습니까?
+		PRINTL [0] 다시 한 번 더 고른다
 		PRINTL [1] 네
 		$INPUT_LOOP_2_2
 		INPUT
@@ -426,18 +426,18 @@ ELSEIF CFLAG:ARG:2 == 1
 		ELSEIF RESULT == 0
 			GOTO INPUT_LOOP_2_1
 		ELSEIF RESULT == 1
-			PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 に설정しました
+			PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정했습니다.
 		ENDIF
 	ELSEIF RESULT == 3
 		CFLAG:ARG:5 = 1
-		PRINTL 名乗り구상を入力してください
+		PRINTL 자칭 구상을 입력해 주십시오.
 		$INPUT_LOOP_3
 		INPUTS
 		IF RESULTS == ""
 			GOTO INPUT_LOOP_3
 		ELSE
 			CSTR:ARG:3 = %RESULTS%
-			PRINTFORML 名乗り구상を 『%CSTR:ARG:3%』 に설정しました
+			PRINTFORML 자칭 구상을『%CSTR:ARG:3%』%조사만처리(CSTR:ARG:3,"로")% 설정했습니다.
 		ENDIF
 	ENDIF
 ENDIF
@@ -449,25 +449,25 @@ PRINTL
 
 
 ;**********************************************************
-;かけ声の설정(共通)
+;구호 설정(공통)
 @FIRSTSETTING_TRANSCALL
-PRINTL 変身時の共通のかけ声を설정しますか？
+PRINTL 변신 시의 공통 구호를 설정하시겠습니까?
 DRAWLINE
-PRINTL [0]かけ声なし
-PRINTL [1]ランダムに설정
-PRINTL [2]自分で설정
-PRINTL [99]もどる
+PRINTL [0] 구호 없음
+PRINTL [1] 랜덤으로 설정한다
+PRINTL [2] 직접 설정한다 
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
 	FLAG:7 = 0
-	PRINTL かけ声を설정しませんでした
+	PRINTL 구호를 설정하지 않았습니다.
 ELSEIF RESULT == 1
 	FLAG:7 = 1
 	$INPUT_LOOP_CHILD_1_1
 	SAVESTR:12 = %FIRSTSETTING_CHANGINGCALL_RANDOM()%
-	PRINTFORML かけ声を 『%SAVESTR:12%』 とします。よろしいですか？
-	PRINTL [0]もう一度選びなおす
+	PRINTFORML 구호를『%SAVESTR:12%』%조사만처리(SAVESTR:12,"로")% 설정합니다. 이대로 좋습니까?
+	PRINTL [0] 다시 한 번 더 고른다
 	PRINTL [1] 네
 	$INPUT_LOOP_CHILD_1_2
 	INPUT
@@ -476,18 +476,18 @@ ELSEIF RESULT == 1
 	ELSEIF RESULT == 0
 		GOTO INPUT_LOOP_CHILD_1_1
 	ELSEIF RESULT == 1
-		PRINTFORML かけ声を 『%SAVESTR:12%』 に설정しました
+		PRINTFORML 구호를『%SAVESTR:12%』%조사만처리(SAVESTR:12,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 2
 	FLAG:7 = 1
-	PRINTL かけ声を入力してください
+	PRINTL 구호를 입력해 주십시오.
 	$INPUT_LOOP_CHILD_2
 	INPUTS
 	IF RESULTS == ""
 		GOTO INPUT_LOOP_CHILD_2
 	ELSE
 		SAVESTR:12 = %RESULTS%
-		PRINTFORML かけ声を 『%SAVESTR:12%』 に설정しました
+		PRINTFORML 구호를『%SAVESTR:12%』%조사만처리(SAVESTR:12,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 99
 	RETURN 99

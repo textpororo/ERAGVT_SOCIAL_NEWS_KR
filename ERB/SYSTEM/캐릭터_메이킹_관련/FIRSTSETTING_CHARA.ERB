@@ -1,11 +1,11 @@
 ﻿;**********************************************************
-;キャラ個別の설정ファイル
-;ARG   = 対象キャラ
-;ARG:1 = 周回で引き継いだボーナス値
-;ARG:2 = キャラメイク制限(勝手にプロフィールを生成されたくない場合は1)
+;캐릭터 개별 설정 파일
+;ARG   = 대상 캐릭터
+;ARG:1 = 주회차로 인계한 보너스치
+;ARG:2 = 캐릭터 메이킹 제한(멋대로 프로필을 생성하는 것을 원하지 않을 경우 1)
 @FIRSTSETTING_CHARA_MAIN, ARG, ARG:1 = 0, ARG:2 = 0
 #DIM ITEM_TEMP, 700
-;所持アイテムを退避して一時的にアイテム全所持状態にする
+;소지 아이템을 대피하고 일시적으로 모든 아이템 소지 상태로 한다
 FOR COUNT, 100, 700
 	IF ITEMNAME:COUNT !=""
 		ITEM_TEMP:COUNT = ITEM:COUNT
@@ -16,19 +16,19 @@ NEXT
 
 $MASTER_LOOP
 
-;共通설정を踏まえた基本データの初期生成
-;社会派版：初期キャラの生成処理を同一関数に統一
+;공통 설정을 바탕으로 한 기본 데이터의 초기 생성
+;사회파판：초기 캐릭터 생성 처리를 동일 함수로 통일
 SIF CFLAG:ARG:240 == 0
 	CALL CHARA_MAKE_INITIALIZE(ARG)
 
-;圧縮武器データの解凍
+;압축 무기 데이터 압축 해제
 SIF CSTR:ARG:15 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 1
 SIF CSTR:ARG:16 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 2
 SIF CSTR:ARG:17 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 3
-;圧縮武器データのクリア
+;압축 무기 데이터 클리어
 CSTR:ARG:15 =
 CSTR:ARG:16 =
 CSTR:ARG:17 =
@@ -36,43 +36,43 @@ CSTR:ARG:17 =
 $START_CHARA_SETTING
 CALL LB
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTFORML 【プロフィールの설정　キャラクター {ARG:0}】
+PRINTFORML 【프로필 설정　캐릭터 {ARG:0}】
 
-PRINTFORML ◆[ 1]이름　　：『%NAME:ARG%』
-PRINTFORML ◆[ 2]통칭　：『%CALLNAME:ARG%』
-PRINTFORML ◆[ 3]일인칭　：『%SELF_CALL(0, 0, ARG)% <%SELF_CALL(7, 0, ARG)%>』
+PRINTFORML ◆[ 1] 이름　　：『%NAME:ARG%』
+PRINTFORML ◆[ 2] 통칭　　：『%CALLNAME:ARG%』
+PRINTFORML ◆[ 3] 일인칭　：『%SELF_CALL(0, 0, ARG)% <%SELF_CALL(7, 0, ARG)%>』
 SIF TALENT:ARG:고유캐릭터 != 0 || (ARG:2) > 0
 	SETCOLOR 128,128,128
-PRINTFORM ◆[ 4]種族　　：『
+PRINTFORM ◆[ 4] 종족　　：『
 CALL SYUZOKU_CHECK, "PRINT", ARG
 PRINTL 』
 RESETCOLOR
-PRINTFORM ◆[ 5]구상설정：
+PRINTFORM ◆[ 5]구상 설정：
 IF TALENT:ARG:구상설정 < 0
-	PRINT 『非表示』
+	PRINT 『비표시』
 ELSEIF TALENT:ARG:구상설정 == 0
-	PRINT 『汎用』
+	PRINT 『범용』
 ELSEIF TALENT:ARG:구상설정 == 1
-	PRINT 『ロボ風』
+	PRINT 『로봇풍』
 ELSEIF TALENT:ARG:구상설정 == 2
-	PRINT 『あなた』
+	PRINT 『당신』
 ELSEIF TALENT:ARG:구상설정 == 3
-	PRINT 『汎用豹変』
+	PRINT 『범용 표변』
 ELSEIF NO:ARG != 0
-	PRINTFORM 『전용 구상({NO:ARG}番)』
+	PRINTFORM 『전용 구상({NO:ARG}번)』
 ENDIF
 SIF TALENT:ARG:주관시점 > 0
-	PRINT  + 『主観モード』
+	PRINT  + 『주관 모드』
 PRINTL 
 PRINTL 
-PRINTL ◆プロフィールの編集
-PRINTL 　[ 6]┣身体データ
+PRINTL ◆프로필 편집
+PRINTL 　[ 6]┣신체 데이터
 SIF TALENT:ARG:고유캐릭터 != 0
 	SETCOLOR 128,128,128
-PRINTL 　[ 7]┣성격と精神素質
+PRINTL 　[ 7]┣성격과 정신 소질
 SIF TALENT:ARG:고유캐릭터 > 0 || TALENT:ARG:초기경험설정불가 > 0
 	SETCOLOR 128,128,128
-PRINTL 　[ 8]┗経歴と初期経験
+PRINTL 　[ 8]┗경력과 초기 경험
 RESETCOLOR
 
 
@@ -81,38 +81,38 @@ DRAWLINE
 IF TALENT:ARG:후타나리 > 0
 	LOCALS = 후타나리
 	IF TALENT:ARG:변신시TS > 0
-		LOCALS:1 = (変身時:男)
+		LOCALS:1 = (변신 시: 남자)
 	ELSEIF TALENT:ARG:변신능력 > 0
-		LOCALS:1 = (変身時:女)
+		LOCALS:1 = (변신 시: 여자)
 	ELSE
 		LOCALS:1 =
 	ENDIF
 ELSEIF ISMALE(ARG)
-	LOCALS = 男
+	LOCALS = 남자
 	IF TALENT:ARG:변신시후타나리 > 0
-		LOCALS:1 = (変身時:후타나리)
+		LOCALS:1 = (변신 시: 후타나리)
 	ELSEIF TALENT:ARG:변신시TS > 0
-		LOCALS:1 = (変身時:女)
+		LOCALS:1 = (변신 시: 여자)
 	ELSE
 		LOCALS:1 =
 	ENDIF
 ELSE
-	LOCALS = 女
+	LOCALS = 여자
 	IF TALENT:ARG:변신시후타나리 > 0
-		LOCALS:1 = (変身時:후타나리)
+		LOCALS:1 = (변신 시: 후타나리)
 	ELSEIF TALENT:ARG:변신시TS > 0
-		LOCALS:1 = (変身時:男)
+		LOCALS:1 = (변신 시: 남자)
 	ELSE
 		LOCALS:1 =
 	ENDIF
 ENDIF
-PRINTFORML 　　性別　　：『%LOCALS%』　%LOCALS:1%
+PRINTFORML 　　성별　　：『%LOCALS%』　%LOCALS:1%
 
-PRINTFORML 　　나이　　：{BASE:ARG:나이}歳
+PRINTFORML 　　나이　　：{BASE:ARG:나이}세
 CALL GENERATE_CHAR_SIZE, ARG, 0
-PRINTFORM 　　身体　　：{RESULT:2/10}cm {RESULT:3/10}kg
+PRINTFORM 　　신체　　：{RESULT:2/10}cm {RESULT:3/10}kg
 SIF ISFEMALE(ARG)
-	PRINTFORM (胸{RESULT:7/10}.{RESULT:7 % 10}kg)
+	PRINTFORM (가슴 {RESULT:7/10}.{RESULT:7 % 10}kg)
 IF RESULT:4 > 0
 	LOCAL = RESULT:4
 	LOCAL:1 = RESULT:5
@@ -132,7 +132,7 @@ PRINTL
 
 CALL SHOW_STATUS_TALENT, ARG, 2
 RESETCOLOR
-PRINTL 　　初期経験： 
+PRINTL 　　초기 경험： 
 PRINT 　　　　　
 CALL FIRSTSETTING_PRINT_EXP, ARG
 PRINTL 
@@ -142,25 +142,25 @@ RESETCOLOR
 
 SIF TALENT:ARG:고유캐릭터 != 0
 	SETCOLOR 128,128,128
-PRINTFORM ◆[10]戦闘能力・・・・・・・・ 
+PRINTFORM ◆[10] 전투 능력・・・・・・・・ 
 IF TALENT:ARG:변신능력 == 1
-	PRINTL 변신능력あり
+	PRINTL 변신 능력 있음
 ELSEIF TALENT:ARG:변신능력 == -1
-	PRINTL 非戦闘員
+	PRINTL 비전투원
 ELSE
-	PRINTL 변신능력なし、戦闘能力あり
+	PRINTL 변신 능력 없음, 전투 능력 있음
 ENDIF
 RESETCOLOR
 IF TALENT:ARG:변신능력 == 1
-	PRINTFORML 　[11]┣変身後名・・・・・・\@(CFLAG:ARG:2 == 1) ?・『%CSTR:ARG:0%』#・ なし\@
-	PRINTFORML 　[12]┣변신 후 통칭・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ なし\@
-	PRINTFORML 　[13]┣변신 시 구호・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ なし\@
-	PRINTFORML 　[14]┗변신 후 자칭구상・・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ なし\@
+	PRINTFORML 　[11]┣변신 후 이름・・・・\@(CFLAG:ARG:2 == 1) ?・『%CSTR:ARG:0%』#・ 없음\@
+	PRINTFORML 　[12]┣변신 후 통칭・・・・\@(CFLAG:ARG:3 == 1) ?・『%CSTR:ARG:1%』#・ 없음\@
+	PRINTFORML 　[13]┣변신 시 구호・・・・\@(CFLAG:ARG:4 == 1) ?・『%CSTR:ARG:2%』#・ 없음\@
+	PRINTFORML 　[14]┗변신 후 자칭 구상・\@(CFLAG:ARG:5 == 1) ?・『%CSTR:ARG:3%』#・ 없음\@
 ENDIF
-PRINTL ◆コスチュームの編集
-PRINT 　[16]┣アウター　　　　　　：
+PRINTL ◆코스튬 편집
+PRINT 　[16]┣겉옷　　　　　　　　：
 IF CFLAG:ARG:40 <= 0
-	PRINTFORML なし
+	PRINTFORML 없음
 ELSE
 	IF CSTR:ARG:8 == ""
 		PRINTFORML %ITEMNAME:(CFLAG:ARG:40)%
@@ -169,9 +169,9 @@ ELSE
 	ENDIF
 ENDIF
 IF TALENT:ARG:변신능력 == 1
-	PRINT 　[17]┣アウター（変身後）　：
+	PRINT 　[17]┣겉옷(변신 후)　　 　：
 	IF CFLAG:ARG:41 <= 0
-		PRINTFORM なし
+		PRINTFORM 없음
 	ELSE
 		IF CSTR:ARG:9 == ""
 			PRINTFORM %ITEMNAME:(CFLAG:ARG:41)%
@@ -181,42 +181,42 @@ IF TALENT:ARG:변신능력 == 1
 	ENDIF
 	PRINTL
 ENDIF
-PRINTFORM 　[18]┗インナー　　　　　　：
+PRINTFORM 　[18]┗속옷　　　　　　　　：
 IF CFLAG:ARG:42 <= 0
-	PRINTFORM なし
+	PRINTFORM 없음
 ELSE
 	PRINTFORM %ITEMNAME:(CFLAG:ARG:42)%
 ENDIF
 PRINTL
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 IF TALENT:ARG:변신능력 != -1
-	PRINTL ◆[24]武器カスタマイズ
+	PRINTL ◆[24] 무기 커스터마이즈 설정
 	PRINTFORM 　　근거리　전투스타일：<<%FSTYLE_NAME_F(ARG,1)%>>
-	PRINT 　銘：
+	PRINT 　무기명：
 	IF CSTR:ARG:5 != ""
 		PRINTFORML %CSTR:ARG:5%　
 	ELSE
-		PRINTL 無　
+		PRINTL ×　
 	ENDIF
 
 	PRINTFORM 　　중거리　전투스타일：<<%FSTYLE_NAME_F(ARG,2)%>>
-	PRINT 　銘：
+	PRINT 　무기명：
 	IF CSTR:ARG:6 != ""
 		PRINTFORML %CSTR:ARG:6%　
 	ELSE
-		PRINTL 無　
+		PRINTL ×　
 	ENDIF
 
 	PRINTFORM 　　원거리　전투스타일：<<%FSTYLE_NAME_F(ARG,3)%>>
-	PRINT 　銘：
+	PRINT 　무기명：
 	IF CSTR:ARG:7 != ""
 		PRINTFORML %CSTR:ARG:7%　
 	ELSE
-		PRINTL 無　
+		PRINTL ×　
 	ENDIF
 ENDIF
-PRINT ◆[23]基礎値ボーナス	
-PRINTFORML （のこり +{(JUEL:ARG:수련P / 10)}pts）
+PRINT ◆[23] 기초치 보너스	
+PRINTFORML （나머지 +{(JUEL:ARG:수련P / 10)}pts）
 PRINTFORML 　　체력　：{BASE:ARG:체력 + CFLAG:ARG:50 * 10 + FEAT_BONUS_F(ARG,0),4}    기력　：{BASE:ARG:기력 + CFLAG:ARG:51 * 10 + FEAT_BONUS_F(ARG,1),4}    성내성：{BASE:ARG:성내성 + CFLAG:ARG:52 + FEAT_BONUS_F(ARG,2),4}
 PRINTFORML 　　공격　：{BASE:ARG:공격 + CFLAG:ARG:53 + FEAT_BONUS_F(ARG,3),4}    방어　：{BASE:ARG:방어 + CFLAG:ARG:54 + FEAT_BONUS_F(ARG,4),4}
 PRINTFORML 　　민첩　：{BASE:ARG:민첩 + CFLAG:ARG:55 + FEAT_BONUS_F(ARG,5),4}    지성　：{BASE:ARG:지성 + CFLAG:ARG:56 + FEAT_BONUS_F(ARG,6),4}
@@ -224,52 +224,51 @@ PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・�
 
 PRINTLC [99] 결정
 SIF (ARG:2) == 0
-	PRINTLC [999]CSVから読み込む
+	PRINTLC [999] CSV에서 불러온다
 PRINTL 
 
 $LOOP_CHARA_SETTING_0
 INPUT
 IF RESULT == 0 && TALENT:ARG:고유캐릭터 == 0
-	;キャラの性別の설정
+	;캐릭터의 성별 설정
 	CALL FIRSTSETTING_CHARA_SEX, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 1
-	;キャラの이름の설정
+	;캐릭터의 이름 설정
 	CALL FIRSTSETTING_CHARA_NAME, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 2
-	;キャラの통칭の설정
+	;캐릭터의 통칭 설정
 	CALL FIRSTSETTING_CHARA_CALLNAME, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 3
-	;キャラの일인칭の설정
+	;캐릭터의 일인칭 설정
 	CALL FIRSTSETTING_CHARA_SELFCALL, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 4 && TALENT:ARG:고유캐릭터 == 0 && (ARG:2) == 0
-	;キャラの種族の설정
+	;캐릭터의 종족 설정
 	CALL FIRSTSETTING_CHARA_SYUZOKU, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 5
-	;キャラの구상설정変更
+	;캐릭터의 구상 설정 변경
 	CALL FIRSTSETTING_CHARA_KOJO, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 6
-	;身体データ
+	;신체 데이터
 	SIF CFLAG:ARG:34 == 0
 		CALL GENERATE_BODYLINE, ARG
 	CALL SIZE_SETTING, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 7 && TALENT:ARG:고유캐릭터 == 0
-	;キャラの성격の설정
+	;캐릭터의 성격 설정
 	CALL FIRSTSETTING_CHARA_SEIKAKU, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 8 && TALENT:ARG:고유캐릭터 == 0 && TALENT:ARG:초기경험설정불가 == 0
-	;初期経験の설정
+	;초기 경험 설정
 	CALL FIRSTSETTING_CHARA_EXP, ARG
 	GOTO START_CHARA_SETTING
-
 ELSEIF RESULT == 10 && TALENT:ARG:고유캐릭터 == 0
-	;キャラの변신능력の설정
+	;캐릭터의 변신 능력 설정
 	CALL FIRSTSETTING_CHARA_TRANSABILITY, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 11 && TALENT:ARG:변신능력 == 1
@@ -277,42 +276,42 @@ ELSEIF RESULT == 11 && TALENT:ARG:변신능력 == 1
 	CALL FIRSTSETTING_CHARA_TRANSAFTERNAME, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 12 && TALENT:ARG:변신능력 == 1
-	;캐릭터 변신 후 통칭 설정
+	;캐릭터의 변신 후 통칭 설정
 	IF CFLAG:ARG:2 == 1
-		;캐릭터 변신 후 통칭 플래그를 세운다
+		;캐릭터의 변신 후 통칭 플래그를 세운다
 		CFLAG:ARG:3 = 1
 		CALL FIRSTSETTING_CHARA_TRANSAFTERCALLNAME, ARG
 	ENDIF
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 13 && TALENT:ARG:변신능력 == 1
-	;캐릭터 변신 시 구호 설정
+	;캐릭터의 변신 시 구호 설정
 	CALL FIRSTSETTING_CHARA_TRANSCALL, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 14 && TALENT:ARG:변신능력 == 1
-	;캐릭터의 자칭 구상을 설정
+	;캐릭터의 자칭 구상 설정
 	CALL FIRSTSETTING_CHARA_NANORI, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 16
-	;キャラの初期コスチュームを설정
+	;캐릭터의 초기 코스튬 설정
 ;	CALL FIRSTSETTING_CLOTH_SETTING_OUTER, ARG
 	CALL CLOTH_SETTING_OUTER, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 17 && TALENT:ARG:변신능력 == 1 && CFLAG:ARG:0 != 상태_흑화
-	;キャラの初期コスチュームを설정
+	;캐릭터의 초기 코스튬 설정
 ;	CALL FIRSTSETTING_CLOTH_SETTING_OUTER2, ARG
 	CALL CLOTH_SETTING_OUTER2, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 18
-	;キャラの初期コスチュームを설정
+	;캐릭터의 초기 코스튬 설정
 ;	CALL FIRSTSETTING_CLOTH_SETTING_INNER, ARG
 	CALL CLOTH_SETTING_INNER, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 23
-	;キャラの基礎値ボーナスの설정
+	;캐릭터의 기초치 보너스 설정
 	CALL FIRSTSETTING_STATUS_BONUS, ARG
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 24 && TALENT:ARG:변신능력 != -1
-	;武器カスタマイズの설정
+	;무기 커스터마이즈 설정
 	CALL WEAPON_CUSTOMIZE, ARG, 1
 	GOTO START_CHARA_SETTING
 ELSEIF RESULT == 99
@@ -320,13 +319,13 @@ ELSEIF RESULT == 99
 	CALL BASEUP_CAL_SHIELD, ARG
 ELSEIF RESULT == 999 && (ARG:2) == 0
 	CALL FIRSTSETTING_CHARA_LOADCSV, ARG
-	;修練Ｐボーナスを追加
+	;수련P 보너스를 추가
 	JUEL:ARG:수련P += (ARG:1) * 10
 	IF CALLNAME:ARG == "범용 캐릭터"
 		GOTO MASTER_LOOP
 	ELSE
 		IF CFLAG:ARG:34 == 0
-			;csv側で未설정ならデフォルトの쓰리 사이즈 등 설정
+			;csv 측에서 미설정이라면 디폴트 쓰리 사이즈 등 설정
 			CALL CHARA_MAKE_AGE_SETTING, ARG
 			CALL CHARA_SIZE_DEFAULT, ARG
 		ENDIF
@@ -337,36 +336,36 @@ ELSE
 	GOTO LOOP_CHARA_SETTING_0
 ENDIF
 
-;キャラの설정の確認
+;캐릭터의 설정 확인
 ;CALL FIRSTSETTING_CHARA_KAKUNIN, ARG
 ;DRAWLINE
 
-;名前や変身後名の一時保存の초기화
+;이름이나 변신 후 이름의 일시 보존의 초기화
 REPEAT 4
 	SAVESTR:(COUNT) = %STRCLEAR()%
 REND
-;退避した所持アイテムを戻す
+;대피한 소지 아이템을 되돌린다
 FOR COUNT, 100, 700
 	ITEM:COUNT = ITEM_TEMP:COUNT
 NEXT
 
 CLEARLINE LINECOUNT
 
-;衣装の本決定
+;의상 본결정
 ;CALL FIRSTSETTING_CHARA_COSTUME_LATE(ARG)
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの性別설정
+;캐릭터의 성별 설정
 @FIRSTSETTING_CHARA_SEX, ARG
 $INPUT_LOOP
-PRINTFORML {ARG:0}人目のキャラの性別を설정してください
+PRINTFORML {ARG:0}번째 캐릭터의 성별을 설정해 주십시오.
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [0]女性
+PRINTL [0] 여성
 SIF TALENT:ARG:변신능력 == 1
-	PRINTL [1]女性 ＆ 변신시TS
-PRINTL [2]男性
+	PRINTL [1] 여성 ＆ 변신시TS
+PRINTL [2] 남성
 SIF TALENT:ARG:변신능력 == 1
-	PRINTL [3]男性 ＆ 변신시TS
+	PRINTL [3] 남성 ＆ 변신시TS
 INPUT
 SIF TALENT:ARG:변신능력 == 1 && (RESULT == 0 || RESULT == 2)
 	TALENT:ARG:변신시TS = 0
@@ -374,13 +373,13 @@ SIF TALENT:ARG:변신능력 == 1 && (RESULT == 1 || RESULT == 3)
 	TALENT:ARG:변신시TS = 1
 IF RESULT == 0 || (RESULT == 1 && TALENT:ARG:변신능력 == 1)
 	IF TALENT:ARG:변신시TS > 0
-		LOCALS = 女/남자
+		LOCALS = 여자/남자
 	ELSEIF TALENT:ARG:변신능력 == 1
-		LOCALS = 女/女
+		LOCALS = 여자/여자
 	ELSE
-		LOCALS = 女
+		LOCALS = 여자
 	ENDIF
-	PRINTFORML キャラを %LOCALS% にします。よろしいですか？
+	PRINTFORML 성별을 %조사처리(LOCALS,"로")% 합니다. 이대로 좋습니까?
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	$INPUT_LOOP_1
@@ -393,14 +392,14 @@ IF RESULT == 0 || (RESULT == 1 && TALENT:ARG:변신능력 == 1)
 		TALENT:ARG:변신시보추 = 0
 		TALENT:ARG:후타나리 = 0
 		TALENT:ARG:변신시후타나리 = 0
-		PRINTFORML キャラを 女 に설정しました。
+		PRINTFORML 성별을「여자」로 설정했습니다.
 		IF TALENT:ARG:변신시TS > 0
 			TALENT:ARG:변신시가슴사이즈변동 = 0
 			TALENT:ARG:변신시외관 = 0
 		ENDIF
 		TALENT:ARG:변신시젖기쉬움변동 = 0
 		TALENT:ARG:변신시V감각변동 = 0
-		;結界をリセット
+		;결계를 초기화
 		FOR LOCAL,190,194
 			IF TALENT:ARG:LOCAL
 				TALENT:ARG:LOCAL = 0
@@ -411,7 +410,7 @@ IF RESULT == 0 || (RESULT == 1 && TALENT:ARG:변신능력 == 1)
 			TALENT:ARG:피임결계 = 0
 			JUEL:ARG:수련P += 50
 		ENDIF
-		;初期経験を설정可能な場合、사정경험をリセット
+		;초기 경험이 설정 가능한 경우, 사정경험을 초기화
 		SIF TALENT:ARG:고유캐릭터 == 0 && TALENT:ARG:초기경험설정불가 == 0
 			EXP:ARG:사정경험 = 0
 		;프로필에 반영
@@ -421,17 +420,17 @@ IF RESULT == 0 || (RESULT == 1 && TALENT:ARG:변신능력 == 1)
 	ENDIF
 ELSEIF RESULT == 2 || (RESULT == 3 && TALENT:ARG:변신능력 == 1)
 	IF TALENT:ARG:변신시TS > 0
-		LOCALS = 남자/女
+		LOCALS = 남자/여자
 	ELSEIF TALENT:ARG:변신능력 == 1
 		LOCALS = 남자/남자
 	ELSE
 		LOCALS = 남자
 	ENDIF
-	PRINTL ※同性愛や보추属性が苦手な方は注意！
-	PRINTL 　出撃した場合は性別に関わらず촉수による性行為の対象となります。
-	PRINTL 　（苦手な方向けに컨피그で男性と女性を区別するオプションを설정できます）
+	PRINTL ※동성애나 보추(오토코노코) 속성에 익숙치 않은 분들은 주의!
+	PRINTL 　캐릭터가 출격할 경우 성별에 관계없이 모두 촉수에 의한 성행위의 대상이 됩니다.
+	PRINTL 　（익숙치 않은 분들을 위해 컨피그로 남성과 여성을 구별하는 옵션을 설정할 수 있습니다.）
 	PRINTL 
-	PRINTFORML キャラを %LOCALS% にします。よろしいですか？
+	PRINTFORML 성별을 %조사처리(LOCALS,"로")% 합니다. 이대로 좋습니까?
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	$INPUT_LOOP_2
@@ -464,8 +463,8 @@ ELSEIF RESULT == 2 || (RESULT == 3 && TALENT:ARG:변신능력 == 1)
 			TALENT:ARG:변신시젖기쉬움변동 = 0
 			TALENT:ARG:변신시V감각변동 = 0
 		ENDIF
-		PRINTFORML キャラを 남자 に설정しました。
-		;結界をリセット
+		PRINTFORML 캐릭터를「남자」로 설정했습니다.
+		;결계를 초기화
 		FOR LOCAL,190,194
 			IF TALENT:ARG:LOCAL
 				TALENT:ARG:LOCAL = 0
@@ -476,7 +475,7 @@ ELSEIF RESULT == 2 || (RESULT == 3 && TALENT:ARG:변신능력 == 1)
 			TALENT:ARG:피임결계 = 0
 			JUEL:ARG:수련P += 50
 		ENDIF
-		;初期経験を설정可能な場合、V경험と출산경험をリセット
+		;초기 경험이 설정 가능한 경우, V경험과 출산경험을 초기화
 		IF TALENT:ARG:고유캐릭터 == 0 && TALENT:ARG:초기경험설정불가 == 0
 			EXP:ARG:V경험 = 0
 			EXP:ARG:출산경험 = 0
@@ -492,7 +491,7 @@ ELSE
 ENDIF
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの이름설정
+;캐릭터의 이름 설정
 @FIRSTSETTING_CHARA_NAME, ARG
 #DIM LCOUNT
 #DIMS DEFAULT_NAME
@@ -505,19 +504,19 @@ DEFAULT_FAMILYNAME = %CSVCSTR(NO:ARG,10)%
 
 LCOUNT = LINECOUNT
 $LOOP_FIRST
-PRINTFORML {ARG:0}人目のキャラの이름を설정してください
-PRINTL （※ 通常の지문などで表示される통칭ではなく本名を설정してください。
-PRINTL 　　 一部の지문や스테이터스 표시などに使用されます）
+PRINTFORML {ARG:0}번째 캐릭터의 이름을 설정해 주십시오.
+PRINTL （※ 통상의 지문 등으로 표시되는 통칭이 아닌 본명을 설정해 주세요.
+PRINTL 　　 일부 지문이나 스테이터스 표시 등에 사용됩니다.）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [0]ランダムに설정
-PRINTL [1]自分で설정
+PRINTL [0] 랜덤으로 설정한다
+PRINTL [1] 직접 설정한다
 SIF DEFAULT_CALLNAME != "범용 캐릭터"
-	PRINTFORML [2]デフォルト名を使う（%DEFAULT_NAME%）
+	PRINTFORML [2] 디폴트 이름을 쓴다（%DEFAULT_NAME%）
 SIF CSTR:ARG:10 != ""
-	PRINTL [3]名前と苗字の並びを変える
+	PRINTL [3] 이름과 성씨의 배치를 서로 바꾼다
 SIF CHARANUM >= 3
-	PRINTL [4]他のキャラの苗字に合わせる
-PRINTL [99]もどる
+	PRINTL [4] 다른 캐릭터의 성씨에 맞춘다
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
@@ -526,11 +525,11 @@ IF RESULT == 0
 	LOCAL:0 = RESULT:0
 	LOCAL:1 = RESULT:1
 	$INPUT_LOOP_CHILD_1_1
-	PRINTFORML キャラの이름を 『%RESULTS:0%』 とします。よろしいですか？
+	PRINTFORML 캐릭터의 이름을『%RESULTS:0%』%조사만처리(RESULTS:0,"로")% 합니다. 이대로 좋습니까?
 	PRINTL [0] 아니오
 	PRINTL [1] 네
 	SIF CALLNAME:ARG != "범용 캐릭터"
-		PRINTFORML [2]変更しない（%NAME:ARG%）
+		PRINTFORML [2] 변경하지 않는다（%NAME:ARG%）
 	$INPUT_LOOP_CHILD_1_2
 	INPUT
 	IF RESULT == 0
@@ -539,17 +538,17 @@ IF RESULT == 0
 		NAME:ARG = %RESULTS:0%
 		CSTR:ARG:200 = %RESULTS:1%
 		CSTR:ARG:10 = %RESULTS:2%
-		PRINTFORML キャラの이름を 『%NAME:ARG%』 に설정しました
+		PRINTFORML 캐릭터의 이름을『%NAME:ARG%』%조사만처리(NAME:ARG,"로")%설정했습니다.
 	ELSEIF RESULT == 2
 		CSTR:ARG:200 = %CALLNAME:ARG%
 	ELSE
 		GOTO INPUT_LOOP_CHILD_1_2
 	ENDIF
 ELSEIF RESULT == 1
-	;LOCALS:1	名前格納
-	;LOCALS:2	フルネーム格納
-	;LOCALS:3	苗字格納
-	PRINTL キャラの苗字を入力してください
+	;LOCALS:1	이름 격납
+	;LOCALS:2	풀네임 격납
+	;LOCALS:3	성씨 격납
+	PRINTL 캐릭터의 성씨를 입력해 주십시오.
 	IF CSTR:ARG:200 != ""
 		LOCALS:1 = %CSTR:ARG:200%
 	ELSE
@@ -568,28 +567,28 @@ ELSEIF RESULT == 1
 			SUBSTRING NAME:ARG, 0, LOCAL:0 - LOCAL:1 - 1
 		ENDIF
 		LOCALS:3 = %RESULTS%
-		PRINT [999]変更しない
+		PRINT [999] 변경하지 않는다
 		PRINTFORML （%LOCALS:3%）
 	ENDIF
 	$INPUT_LOOP_CHILD_2_1
 	INPUTS
 	IF RESULTS == ""
-		PRINTW 苗字なしに설정します
+		PRINTW 성씨 없음으로 설정합니다.
 	ELSEIF RESULTS == "999"
 		LOCALS:0 = %LOCALS:3%
 	ELSE
 		LOCALS:0 = %RESULTS%
 	ENDIF
 	PRINTL 
-	PRINTL キャラの名前を入力してください
+	PRINTL 캐릭터의 이름을 입력해 주십시오.
 	IF LOCALS:1 != ""
-		PRINT [999]変更しない
+		PRINT [999] 변경하지 않는다
 		PRINTFORML （%CALLNAME:ARG%）
 	ENDIF
 	$INPUT_LOOP_CHILD_2_2
 	INPUTS
 	IF RESULTS == ""
-		PRINTW 名前は必ず설정する必要があります
+		PRINTW 이름은 반드시 설정해야 합니다. 다시 시도해 주십시오.
 		CLEARLINE 1
 		GOTO INPUT_LOOP_CHILD_2_2
 	ELSEIF RESULTS == "999"
@@ -602,34 +601,34 @@ ELSEIF RESULT == 1
 	IF CSTR:ARG:10 == ""
 		LOCALS:2 = %LOCALS:1%
 	ELSE
-		LOCALS:2 = %LOCALS:0%%LOCALS:1%
+		LOCALS:2 = %LOCALS:0% %LOCALS:1%
 	ENDIF
 	NAME:ARG = %LOCALS:2%
-	PRINTFORML キャラの이름を 『%NAME:ARG%』 に설정しました
+	PRINTFORML 캐릭터의 이름을『%NAME:ARG%』%조사만처리(NAME:ARG,"로")% 설정했습니다.
 ELSEIF RESULT == 2 && DEFAULT_CALLNAME != "범용 캐릭터"
 	NAME:ARG = %DEFAULT_NAME%
 	CALLNAME:ARG = %DEFAULT_CALLNAME%
 	CSTR:ARG:10 = %DEFAULT_FAMILYNAME%
 	CSTR:ARG:200 = %DEFAULT_CALLNAME%
-	PRINTFORML キャラの이름を 『%DEFAULT_NAME%』 に설정しました
+	PRINTFORML 캐릭터의 이름을『%DEFAULT_NAME%』%조사만처리(DEFAULT_NAME,"로")% 설정했습니다.
 ELSEIF RESULT == 3
-	PRINT [0]苗字　→　名前の順番にする
-	PRINTPLAINFORM 　『%CSTR:ARG:10%%CALLNAME:ARG%』
+	PRINT [0] (성씨　→　이름) 순서로 한다
+	PRINTPLAINFORM 　『%CSTR:ARG:10% %CALLNAME:ARG%』
 	PRINTL 
-	PRINT [1]名前　→　苗字の順番にする
+	PRINT [1] (이름　→　성씨) 순서로 한다
 	PRINTPLAINFORM 　『%CALLNAME:ARG%・%CSTR:ARG:10%』
 	PRINTL 
-	PRINTL [99]選ばずにもどる
+	PRINTL [99] 고르지 않고 돌아간다
 	$INPUT_LOOP_CHILD_3_1
 	INPUT
 	IF RESULT == 0
-		NAME:ARG = %CSTR:ARG:10%%CALLNAME:ARG%
-		PRINTFORMW 『%CSTR:ARG:10%%CALLNAME:ARG%』に変更しました
+		NAME:ARG = %CSTR:ARG:10% %CALLNAME:ARG%
+		PRINTFORMW 『%CSTR:ARG:10% %CALLNAME:ARG%』%조사만처리(CALLNAME:ARG,"로")% 변경했습니다.
 	ELSEIF RESULT == 1
 		NAME:ARG = %CALLNAME:ARG%・%CSTR:ARG:10%
-		PRINTFORMW 『%CALLNAME:ARG%・%CSTR:ARG:10%』に変更しました
+		PRINTFORMW 『%CALLNAME:ARG%・%CSTR:ARG:10%』%조사만처리(CSTR:ARG:10,"로")% 변경했습니다.
 	ELSEIF RESULT == 99
-		PRINTW 変更せずに戻ります
+		PRINTW 배치를 변경하지 않고 돌아갑니다.
 	ELSE
 		GOTO INPUT_LOOP_CHILD_3_1
 	ENDIF
@@ -637,7 +636,7 @@ ELSEIF RESULT == 3
 	GOTO LOOP_FIRST
 ELSEIF RESULT == 4 && CHARANUM >= 3
 	DRAWLINE
-	PRINTL 苗字を選んでください
+	PRINTL 성씨를 선택해 주십시오.
 	PRINTL 
 	LOCAL:1 = 0
 	FOR LOCAL, 0, CHARANUM
@@ -646,25 +645,25 @@ ELSEIF RESULT == 4 && CHARANUM >= 3
 		SIF LOCAL == ARG
 			CONTINUE
 		IF CSTR:LOCAL:10 != "" && CSTR:LOCAL:10 != CSTR:ARG:10
-			PRINTFORML  [{LOCAL}]%CSTR:LOCAL:10%
+			PRINTFORML  [{LOCAL}] %CSTR:LOCAL:10%
 			LOCAL:1 = 0
 		ENDIF
 	NEXT
-	PRINTL [99]もどる
+	PRINTL [99] 돌아간다
 	$INPUT_LOOP_CHILD_4_1
 	INPUT
 	IF RESULT > 0 && RESULT <= CHARANUM && CSTR:RESULT:10 != "" && CSTR:RESULT:10 != CSTR:ARG:10
-		LOCALS = %CSTR:RESULT:10%%CALLNAME:RESULT%
+		LOCALS = %CSTR:RESULT:10% %CALLNAME:RESULT%
 		CSTR:ARG:10 = %CSTR:RESULT:10%
 		IF NAME:RESULT == LOCALS
-			NAME:ARG = %CSTR:RESULT:10%%CALLNAME:ARG%
+			NAME:ARG = %CSTR:RESULT:10% %CALLNAME:ARG%
 		ELSE
 			NAME:ARG = %CALLNAME:ARG%・%CSTR:RESULT:10%
 		ENDIF
-		PRINTFORML {ARG:0}人目のキャラの名前を%NAME:ARG%にしました
+		PRINTFORML {ARG:0}번째 캐릭터의 이름을 %조사처리(NAME:ARG,"로")% 했습니다.
 		PRINTW 
 	ELSEIF RESULT == 99
-		PRINTW 変更せずに戻ります
+		PRINTW 이름을 변경하지 않고 돌아갑니다.
 	ELSE
 		GOTO INPUT_LOOP_CHILD_4_1
 	ENDIF
@@ -676,7 +675,7 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 IF CSTR:ARG:200 != ""
-	;변신 후 통칭＝통칭に설정してあったら一緒に変更する
+	;변신 후 통칭＝통칭으로 설정되어 있으면 함께 변경한다
 	IF CALLNAME:ARG==CSTR:ARG:1
 		CSTR:ARG:1 = %CSTR:ARG:200%
 	ENDIF
@@ -686,7 +685,7 @@ PRINTL
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの이름のランダム설정
+;캐릭터의 이름 랜덤 설정
 @FIRSTSETTING_CHARA_NAME_RANDOM, ARG
 LOCAL:0 = 2
 LOCAL:1 = 0
@@ -701,94 +700,94 @@ WHILE LOCAL:0 > 0
 	FONTBOLD
 	SIF LOCAL:0 == 1
 		SETCOLOR 0,255,180
-	PRINT 　苗字：
+	PRINT 　성씨：
 	IF LOCAL:1 == 0
-		PRINTL 日本語
+		PRINTL 일본어
 	ELSEIF LOCAL:1 == 1
-		PRINTL 英語
+		PRINTL 영어
 	ELSEIF LOCAL:1 == 2
-		PRINTL フランス語
+		PRINTL 프랑스어
 	ELSEIF LOCAL:1 == 3
-		PRINTL ドイツ語
+		PRINTL 독일어
 	ELSEIF LOCAL:1 == 4
-		PRINTL イタリア語
+		PRINTL 이탈리아어
 	ELSEIF LOCAL:1 == 5
-		PRINTL ロシア語
+		PRINTL 러시아어
 	ELSEIF LOCAL:1 == 6
-		PRINTL 中国語
+		PRINTL 중국어
 	ELSE
-		PRINTL ランダム
+		PRINTL 랜덤
 	ENDIF
 	RESETCOLOR
 
 	SIF LOCAL:0 == 2
 		SETCOLOR 0,255,180
-	PRINT 　名前：
+	PRINT 　이름：
 	IF LOCAL:2 == 0
-		PRINTL 日本語(女性名)
+		PRINTL 일본어(여성 이름)
 	ELSEIF LOCAL:2 == 1
-		PRINTL 英語
+		PRINTL 영어
 	ELSEIF LOCAL:2 == 2
-		PRINTL フランス語
+		PRINTL 프랑스어
 	ELSEIF LOCAL:2 == 3
-		PRINTL ドイツ語
+		PRINTL 독일어
 	ELSEIF LOCAL:2 == 4
-		PRINTL イタリア語
+		PRINTL 이탈리아어
 	ELSEIF LOCAL:2 == 5
-		PRINTL ロシア語
+		PRINTL 러시아어
 	ELSEIF LOCAL:2 == 6
-		PRINTL 中国語
+		PRINTL 중국어
 	ELSEIF LOCAL:2 == 10
-		PRINTL 日本語(中性名)
+		PRINTL 일본어(중성 이름)
 	ELSE
-		PRINTL ランダム
+		PRINTL 랜덤
 	ENDIF
 	RESETCOLOR
 	FONTREGULAR
 
 	IF LOCAL:0 == 1
-		PRINT 苗字
+		PRINT 성씨
 	ELSE
-		PRINT 名前
+		PRINT 이름
 	ENDIF
-	PRINTL の言語を選択してください
-	PRINT [ 0]日本語
-	IF LOCAL:0 == 2
-		PRINT (女性)　　　　　 [10]日本語(中性)
-		;PRINT 　　[11]日本語(ひらがな)
-	ENDIF
+	PRINTL 의 언어를 선택해 주십시오.
+	PRINTL ※(역) 한국어 이름도 추가해 보겠습니다... 언젠가는?
+	PRINT [ 0]일본어
+	SIF LOCAL:0 == 2
+		PRINT (여성)　　　　　 [10] 일본어(중성)
+		;PRINT 　　[11]일본어(히라가나)
 	PRINTL 
-	PRINTL [ 1]英語
-	PRINTL [ 2]フランス語
-	PRINTL [ 3]ドイツ語
-	PRINTL [ 4]イタリア語
-	PRINTL [ 5]ロシア語
-	PRINTL [ 6]中国語
-	PRINTL [99]ランダム
+	PRINTL [ 1] 영어
+	PRINTL [ 2] 프랑스어
+	PRINTL [ 3] 독일어
+	PRINTL [ 4] 이탈리아어
+	PRINTL [ 5] 러시아어
+	PRINTL [ 6] 중국어
+	PRINTL [99] 랜덤
 	PRINTPLAIN 　　　　　　　　　　　　　 
 	PRINT [800] 
 	SIF LOCAL:3 == 0
 		FONTBOLD
-	PRINTL 順序を固定しない
+	PRINTL 순서를 고정하지 않는다
 	SIF LOCAL:3 == 0
 		FONTREGULAR
 	IF LOCAL:0 == 1
-		PRINT [100]名前
+		PRINT [100] 이름을
 	ELSE
-		PRINT [100]苗字
+		PRINT [100] 성씨를
 	ENDIF
-	PRINT を変更
+	PRINT  변경
 	PRINT 　　　　　　[801]
 	SIF LOCAL:3 == 1
 		FONTBOLD
-	PRINTL 「苗字 名前」の順に固定
+	PRINTL 「성씨 이름」순서로 고정한다
 	SIF LOCAL:3 == 1
 		FONTREGULAR
-	PRINT [200]生成
+	PRINT [200] 생성
 	PRINT 　　　　　　　　　[802]
 	SIF LOCAL:3 == 2
 		FONTBOLD
-	PRINTL 「名前 苗字」の順に固定
+	PRINTL 「이름 성씨」순서로 고정한다
 	SIF LOCAL:3 == 2
 		FONTREGULAR
 
@@ -851,8 +850,8 @@ WHILE LOCAL:0 > 0
 				LOCAL:(10 + COUNT) = RAND:1000 + 11000
 			WEND
 		ELSEIF LOCAL:1 == 6
-			;中文姓氏
-			;强制姓前名后
+			;중문 성씨
+			;강제「성씨 이름」순서 고정(强制姓前名后)
 			LOCAL:3 = 1
 			LOCAL:(10 + COUNT) = RAND:500 + 50000
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
@@ -896,15 +895,15 @@ WHILE LOCAL:0 > 0
 				LOCAL:(30 + COUNT) = RAND:500 + 15500
 			WEND
 		ELSEIF LOCAL:2 == 6
-			;中文名字
-			;强制姓前名后
+			;중문 성씨
+			;강제「성씨 이름」순서 고정(强制姓前名后)
 			LOCAL:3 = 1
-			;第一个字
+			;제1글자
 				LOCAL:(30 + COUNT) = RAND:1000 + 51000
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
 				LOCAL:(30 + COUNT) = RAND:1000 + 51000
 			WEND
-			;第二个字
+			;제2글자
 				LOCAL:(31 + COUNT) = RAND:1000 + 51000
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
 				LOCAL:(31 + COUNT) = RAND:1000 + 51000
@@ -926,35 +925,35 @@ WHILE LOCAL:0 > 0
 	PRINTL 
 	REPEAT 20
 		IF LOCAL:3 == 1
-			PRINTFORML [{COUNT, 2}]%STR:(LOCAL:(10 + COUNT))%%STR:(LOCAL:(30 + COUNT))%
+			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(10 + COUNT))%%STR:(LOCAL:(30 + COUNT))%
 		ELSEIF LOCAL:3 == 2
-			PRINTFORML [{COUNT, 2}]%STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
-		;日本or中国なら[姓名]
+			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
+		;일본or중국일 시[성명]
 		ELSEIF LOCAL:1 == 0 || LOCAL:1 == 6 || (LOCAL:1 == 99 && (LOCAL:(10 + COUNT) < 3500 || (LOCAL:(10 + COUNT) >= 16000 && LOCAL:(10 + COUNT) < 16500)))
-			PRINTFORML [{COUNT, 2}]%STR:(LOCAL:(10 + COUNT))%%STR:(LOCAL:(30 + COUNT))%
+			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(10 + COUNT))%%STR:(LOCAL:(30 + COUNT))%
 		ELSE
-			PRINTFORML [{COUNT, 2}]%STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
+			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
 		ENDIF
 	REND
 	PRINTPLAIN 　　　　　　　　　　　　　 
 	PRINT [800] 
 	SIF LOCAL:3 == 0
 		FONTBOLD
-	PRINTL 順序を固定しない
+	PRINTL 순서를 고정하지 않는다
 	SIF LOCAL:3 == 0
 		FONTREGULAR
-	PRINT [100]構成から選びなおす
+	PRINT [100] 구성에서 다시 고른다
 	PRINT 　　[801]
 	SIF LOCAL:3 == 1
 		FONTBOLD
-	PRINTL 「苗字 名前」の順に固定
+	PRINTL 「성씨 이름」순서로 고정한다
 	SIF LOCAL:3 == 1
 		FONTREGULAR
-	PRINT [200]再生成
+	PRINT [200] 재생성
 	PRINT 　　　　　　　　[802]
 	SIF LOCAL:3 == 2
 		FONTBOLD
-	PRINTL 「名前 苗字」の順に固定
+	PRINTL 「이름 성씨」순서로 고정한다
 	SIF LOCAL:3 == 2
 		FONTREGULAR
 
@@ -986,10 +985,10 @@ WHILE LOCAL:0 > 0
 	ENDIF
 WEND
 
-;日本　中国
+;일본　중국
 IF LOCAL:1 == 0 || LOCAL:1 == 6 || (LOCAL:1 == 99 && (LOCAL:(10 + COUNT) < 3500 || (LOCAL:(10 + COUNT) >= 16000 && LOCAL:(10 + COUNT) < 16500)))
 	RESULTS:0 = %STR:(LOCAL:(10 + RESULT))%%STR:(LOCAL:(30 + RESULT))%
-;その他海外
+;기타 해외
 ELSE
 	RESULTS:0 = %STR:(LOCAL:(30 + RESULT))%・%STR:(LOCAL:(10 + RESULT))%
 ENDIF
@@ -998,19 +997,19 @@ RESULTS:2 = %STR:(LOCAL:(10 + RESULT))%
 
 RETURN LOCAL:1, LOCAL:2
 
-;共通설정：キャラ名の言語統一オプション
+;공통 설정：캐릭터 이름의 언어 통일 옵션
 @FIRSTSETTING_familynamelang
 	$loop
-	PRINTL ヒロインの国籍＝苗字の言語を選択してください
-	PRINTL [ 0]デフォルト処理に任せる
-	PRINTL [ 1]日本語
-	PRINTL [ 2]英語
-	PRINTL [ 3]フランス語
-	PRINTL [ 4]ドイツ語
-	PRINTL [ 5]イタリア語
-	PRINTL [ 6]ロシア語
-	PRINTL [ 7]中国語
-	PRINTFORML [99]変更せずに돌아간다%FLAG:821>0 ? "（"+namelang:(flag:821-1)+"）" # "（ランダム）"%
+	PRINTL 캐릭터의 국적(＝성씨의 언어)를 선택해 주십시오.
+	PRINTL [ 0] 디폴트 처리에 맡긴다
+	PRINTL [ 1] 일본어
+	PRINTL [ 2] 영어
+	PRINTL [ 3] 프랑스어
+	PRINTL [ 4] 독일어
+	PRINTL [ 5] 이탈리아어
+	PRINTL [ 6] 러시아어
+	PRINTL [ 7] 중국어
+	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:821>0 ? "（"+namelang:(flag:821-1)+"）" # "（랜덤）"%
 	INPUT	
 	IF INRANGE(RESULT,0,7)
 		FLAG:821=RESULT
@@ -1021,17 +1020,17 @@ RETURN LOCAL:1, LOCAL:2
 	GOTO loop
 @FIRSTSETTING_namelang
 	$loop
-	PRINTL ヒロインの名前の言語を選択してください
-	PRINTL [ 0]デフォルト処理に任せる
-	PRINTL [ 1]日本語(女性名)
-	PRINTL [ 2]英語
-	PRINTL [ 3]フランス語
-	PRINTL [ 4]ドイツ語
-	PRINTL [ 5]イタリア語
-	PRINTL [ 6]ロシア語
-	PRINTL [ 7]中国語
-	PRINTL [ 8]일본어(중성적)
-	PRINTFORML [99]変更せずに돌아간다%FLAG:822>0 ? "（"+namelang:(flag:822-1)+"）" # "（ランダム）"%
+	PRINTL 캐릭터의 이름의 언어를 선택해 주십시오.
+	PRINTL [ 0] 디폴트 처리에 맡긴다
+	PRINTL [ 1] 일본어(여성 이름)
+	PRINTL [ 2] 영어
+	PRINTL [ 3] 프랑스어
+	PRINTL [ 4] 독일어
+	PRINTL [ 5] 이탈리아어
+	PRINTL [ 6] 러시아어
+	PRINTL [ 7] 중국어
+	PRINTL [ 8] 일본어(중성적)
+	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:822>0 ? "（"+namelang:(flag:822-1)+"）" # "（랜덤）"%
 	INPUT	
 	IF INRANGE(RESULT,0,8)
 		FLAG:822=RESULT
@@ -1044,31 +1043,31 @@ RETURN LOCAL:1, LOCAL:2
 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラ통칭の설정
+;캐릭터 통칭 설정
 @FIRSTSETTING_CHARA_CALLNAME, ARG
-PRINTFORML {ARG:0}人目のキャラの통칭を설정してください
-PRINTL （※ 通常の지문などで表示されるキャラ名です）
+PRINTFORML {ARG:0}번째 캐릭터의 통칭을 설정해 주십시오.
+PRINTL （※ 통상적인 지문 등에서 표시되는 캐릭터 이름입니다.）
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 SIF CSTR:ARG:200 != ""
-	PRINTFORML [0]名前を통칭に설정（名前：%CSTR:ARG:200%）
-PRINTL [1]自分で설정
-PRINTL [99]もどる
+	PRINTFORML [0] 이름을 통칭으로 설정한다（이름：%CSTR:ARG:200%）
+PRINTL [1] 직접 설정한다
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
 	SIF CSTR:ARG:200 == ""
 		GOTO INPUT_LOOP
 	CALLNAME:ARG = %CSTR:ARG:200%
-	PRINTFORML キャラの통칭を 『%CALLNAME:ARG%』 に설정しました
+	PRINTFORML 캐릭터의 통칭을『%CALLNAME:ARG%』%조사만처리(CALLNAME:ARG,"로")% 설정했습니다.
 ELSEIF RESULT == 1
-	PRINTL キャラの통칭を入力してください。
+	PRINTL 캐릭터의 통칭을 입력해 주십시오.
 	$INPUT_LOOP_CHILD_1
 	INPUTS
 	IF RESULTS == ""
 		GOTO INPUT_LOOP_CHILD_1
 	ELSE
 		CALLNAME:ARG = %RESULTS%
-		PRINTFORML キャラの통칭を 『%CALLNAME:ARG%』 に설정しました
+		PRINTFORML 캐릭터의 통칭을『%CALLNAME:ARG%』%조사만처리(CALLNAME:ARG,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 99
 	RETURN 99
@@ -1079,67 +1078,67 @@ PRINTL
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの구상설정
+;캐릭터의 구상 설정
 @FIRSTSETTING_CHARA_KOJO, ARG
-PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の구상설정を確認してください
-PRINT  現在の구상：
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 구상 설정을 확인해 주십시오.
+PRINT  현재 구상：
 IF TALENT:ARG:구상설정 == -2
-	PRINT 非表示
+	PRINT 비표시
 ELSEIF TALENT:ARG:구상설정 == 0
-	PRINT 汎用
+	PRINT 범용
 ELSEIF TALENT:ARG:구상설정 == 1
-	PRINT ロボ風
+	PRINT 로봇풍
 ELSEIF TALENT:ARG:구상설정 == 2
-	PRINT あなた
+	PRINT 당신
 ELSEIF TALENT:ARG:구상설정 == 3
-	PRINT 汎用豹変
+	PRINT 범용 표변
 ELSEIF NO:ARG != 0
-	PRINT 専用({NO:ARG}番)
+	PRINT 전용({NO:ARG}번)
 ENDIF
 PRINTL 
-PRINT  主観モード：
+PRINT  주관 모드：
 IF TALENT:ARG:주관시점 > 0
-	PRINT 使用する
+	PRINT 사용한다
 ELSE
-	PRINT 使用しない
+	PRINT 사용하지 않는다
 ENDIF
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTL [0]구상の選択
-PRINTL [1]主観モードの설정変更
-PRINTL [99]もどる
+PRINTL [0] 구상 선택
+PRINTL [1] 주관 모드 설정 변경
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
-	PRINTL 구상を選択してください。
-	PRINTL [0]汎用
-	PRINTL [1]ロボ風
-	PRINTL [2]あなた
-	PRINTL [3]汎用豹変
+	PRINTL 구상을 선택해 주십시오.
+	PRINTL [0] 범용
+	PRINTL [1] 로봇풍
+	PRINTL [2] 당신
+	PRINTL [3] 범용 표변
 	SIF NO:ARG != 0
-		PRINTL [90]キャラ전용 구상
-	PRINTL [99]구상なし
+		PRINTL [90] 캐릭터 전용 구상
+	PRINTL [99] 구상 없음
 	$INPUT_LOOP_CHILD_0
 	INPUT
 	IF RESULT == 0
-		PRINTFORML 구상を 『汎用』 に설정しました
+		PRINTFORML 구상을『범용』으로 설정했습니다.
 		TALENT:ARG:구상설정 = 0
 	ELSEIF RESULT == 1
-		PRINTFORML 구상を 『ロボ風』 に설정しました
+		PRINTFORML 구상을『로봇풍』으로 설정했습니다.
 		TALENT:ARG:구상설정 = 1
 	ELSEIF RESULT == 2
-		PRINTFORML 구상を 『あなた』 に설정しました
-		PRINTFORML 지문を主観モードに설정しました
+		PRINTFORML 구상을『당신』으로 설정했습니다.
+		PRINTFORML 지문을 주관 모드로 설정했습니다.
 		TALENT:ARG:구상설정 = 2
 		TALENT:ARG:주관시점 = 1
 	ELSEIF RESULT == 3
-		PRINTFORML 구상を 『汎用豹変』 に설정しました
+		PRINTFORML 구상을『범용 표변』으로 설정했습니다.
 		TALENT:ARG:구상설정 = 3
 	ELSEIF RESULT == 90 && NO:ARG != 0
-		PRINTFORML 구상を 『전용 구상({NO:ARG}番)』 に설정しました
+		PRINTFORML 구상을『전용 구상({NO:ARG}번)』으로 설정했습니다.
 		TALENT:ARG:구상설정 = NO:ARG
 	ELSEIF RESULT == 99
-		PRINTFORML 구상を 『非表示』 に설정しました	
+		PRINTFORML 구상을『비표시』로 설정했습니다.	
 		TALENT:ARG:구상설정 = -2	
 	ELSE
 		GOTO INPUT_LOOP_CHILD_0
@@ -1147,23 +1146,23 @@ IF RESULT == 0
 	PRINTW 
 ELSEIF RESULT == 1
 	IF TALENT:ARG:주관시점 == 1
-		PRINTL 現在『主観モード』を使用中です
-		PRINTL [0]変更しない
-		PRINTL [1]主観モードを終了する
+		PRINTL 현재『주관 모드』를 사용 중입니다.
+		PRINTL [0] 변경하지 않는다
+		PRINTL [1] 주관 모드를 종료한다
 		INPUT
 		IF RESULT == 1
 			TALENT:ARG:주관시점 = 0
-			PRINTW 지문を変更しました
+			PRINTW 지문을 변경했습니다.
 		ENDIF
 	ELSE
-		PRINTL ※지문をより主観的な描写に変更します
-		PRINTL 　この설정は個別に適用されます
-		PRINTL [0]使用しない
-		PRINTL [1]使用する
+		PRINTL ※지문을 보다 주관적인 묘사로 변경합다.
+		PRINTL 　이 설정은 개별로 적용됩니다.
+		PRINTL [0] 사용하지 않는다
+		PRINTL [1] 사용한다
 		INPUT
 		IF RESULT == 1
 			TALENT:ARG:주관시점 = 1
-			PRINTW 지문を変更しました
+			PRINTW 지문을 변경했습니다.
 		ENDIF
 	ENDIF
 ELSEIF RESULT == 99
@@ -1175,7 +1174,7 @@ PRINTL
 PRINTL 
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラの일인칭설정
+;캐릭터 일인칭 설정
 @FIRSTSETTING_CHARA_SELFCALL, ARG
 #DIM LCOUNT
 #DIM CALL_VAR, 2
@@ -1197,7 +1196,7 @@ CALL_STR:1 = %SELF_CALL(0, 0, ARG)%
 
 $SETTING_TOP
 PRINTL 
-PRINTFORML {ARG:0}人目のキャラ『%CALLNAME:ARG%』 の일인칭を설정してください
+PRINTFORML {ARG:0}번째 캐릭터『%CALLNAME:ARG%』의 일인칭을 설정해 주십시오.
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 
 LOCAL = 0
@@ -1231,37 +1230,37 @@ PRINTL
 PRINTL 
 SIF CALL_VAR:0 == 일인칭_최대+1
 	SETCOLOR 120,255,0
-PRINTFORML 　[{일인칭_최대+1}] キャラの名前（%CALLNAME:ARG%）
+PRINTFORML 　[{일인칭_최대+1}] 캐릭터 이름（%CALLNAME:ARG%）
 RESETCOLOR
 SIF CALL_VAR:0 == 일인칭_최대+2
 	SETCOLOR 120,255,0
-PRINTFORML 　[{일인칭_최대+2}] その他（手入力）
+PRINTFORML 　[{일인칭_최대+2}] 기타（직접 입력）
 RESETCOLOR
-PRINT 　[50] 성격によるデフォルト일인칭：
+PRINT 　[50] 성격에 따른 디폴트 일인칭：
 	IF TALENT:ARG:남자
 		IF TALENT:ARG:사나움
-			PRINTL 俺（おれ）
+			PRINTL 나（おれ）
 		ELSE
-			PRINTL 僕（ぼく）
+			PRINTL 나（ぼく）
 		ENDIF
 	ELSE
 		IF TALENT:ARG:고풍적
-			PRINTL 妾（わらわ）
+			PRINTL 이 몸（わらわ）
 		ELSEIF TALENT:ARG:경박함
-			PRINTL 私（あたし）
+			PRINTL 나（あたし）
 		ELSE
-			PRINTL 私（わたし）
+			PRINTL 저（わたし）
 		ENDIF
 	ENDIF
 PRINTL 
 PRINTL 
-PRINTFORML 読み：\@CALL_STR:0 == "" ? 　-　 # %CALL_STR:0%\@　表記：\@CALL_STR:1 == "" ? 　-　 # %CALL_STR:1%\@
+PRINTFORML 읽기：\@CALL_STR:0 == "" ? 　-　 # %CALL_STR:0%\@　표기：\@CALL_STR:1 == "" ? 　-　 # %CALL_STR:1%\@
 PRINTL 
 SIF CALL_STR:0 == "" || CALL_STR:1 == ""
 	SETCOLOR 128, 128, 128
 PRINT [99] 결정　　　　
 RESETCOLOR
-PRINTL [98]キャンセル
+PRINTL [98] 취소
 $INPUT_LOOP0
 INPUT
 IF INRANGE(RESULT, 0, 일인칭_최대) && CALL_LIST:RESULT:1 != ""
@@ -1305,55 +1304,61 @@ ELSEIF RESULT == 일인칭_최대+1
 		CALL_STR:0 = %CALL_STR:1%
 	ELSE
 		CALL_STR:0 = 
-;--------▼▼名前手入力▼▼--------
+;--------▼▼이름 직접 입력▼▼--------
 		$INPUT_PRN_TOP_0
-		PRINTL 読みを入力してください
+		PRINTL 읽기(발음)을 입력해 주십시오.
 		PRINTL 
-		PRINTL 読みは全て「ひらがなのみ、もしくはカタカナのみ」「ヴ」「ー」で、
-		PRINTFORML {PRN_MAX}音以内で入力してください
-		PRINTL （「きゃ」「ふぁ」「てぃ」等の拗音は1音にカウントされます）
-		PRINTFORML 表記：「%CALL_STR:1%」
-		PRINTL 　　　　　　　　　　　　　　　[99] キャンセル　[98] 拗音リスト
+		PRINTL 일본어 이름의 경우 읽기는 전부「히라가나만, 혹은 가타가나만」「부(ヴ)」「장음(ー)」으로, 
+		PRINTFORML {PRN_MAX}음 이내로 입력해 주십시오.
+		PRINTL （「캬(きゃ)」「파(ふぁ)」「티(てぃ)」등의 요음은 1음으로 카운트됩니다.）
+		PRINTFORML 표기：「%CALL_STR:1%」
+		PRINTL 　　　　　　　　　　　　　　　[99] 취소　[98] 요음 목록
 		$INPUT_PRN_0
 		INPUTS
 		IF RESULTS == "" || RESULTS == "99"
 			PRINTL 
-			PRINTL 変更しませんでした
+			PRINTL 일인칭을 변경하지 않고 돌아갑니다.
 			PRINTW 
 			GOTO SETTING_TOP
 		ELSEIF RESULTS == "98"
-			PRINTL 　イェ ウァ ウィ ウェ ウォ ヴァ ヴィ ヴェ ヴォ
-			PRINTL 　クァ グァ キャ キュ キョ ギャ ギュ ギョ
-			PRINTL 　シャ シュ シェ ショ ジャ ジュ ジェ ジョ スィ ズィ
-			PRINTL 　チャ チュ チェ チョ ヂャ ヂュ ヂェ ヂョ
-			PRINTL 　ツァ ツィ ツェ ツォ ヅァ ヅィ ヅェ ヅォ
-			PRINTL 　ティ テュ ディ デュ トゥ ドゥ
-			PRINTL 　ニャ ニュ ニョ
-			PRINTL 　ヒャ ヒュ ヒョ ビャ ビュ ビョ ピャ ピュ ピョ
-			PRINTL 　ファ フィ フュ フェ フォ
-			PRINTL 　ミャ ミュ ミョ リャ リュ リェ リョ
+			PRINTL 　예(イェ) 와(ウァ) 위(ウィ) 웨(ウェ) 워(ウォ)
+			PRINTL 　바(ヴァ) 비(ヴィ) 베(ヴェ) 보(ヴォ)
+			PRINTL 　콰(クァ) 과(グァ) 캬(キャ) 큐(キュ) 쿄(キョ) 갸(ギャ) 규(ギュ) 교(ギョ)
+			PRINTL 　샤(シャ) 슈(シュ) 셰(シェ) 쇼(ショ)
+			PRINTL 　쟈(ジャ、ヂャ) 쥬(ジュ、ヂュ) 졔(ジェ、ヂェ) 죠(ジョ、ヂョ)
+			PRINTL 　쉬(スィ) 쥐(ズィ)
+			PRINTL 　챠(チャ) 츄(チュ) 쳬(チェ) 쵸(チョ)
+			PRINTL 　차(ツァ) 치(ツィ) 체(ツェ) 초(ツォ)
+			PRINTL 　자(ヅァ) 지(ヅィ) 제(ヅェ) 조(ヅォ)
+			PRINTL 　티(ティ) 튜(テュ) 디(ディ)
+			PRINTL 　듀(デュ) 투(トゥ) 두(ドゥ)
+			PRINTL 　냐(ニャ) 뉴(ニュ) 뇨(ニョ)
+			PRINTL 　햐(ヒャ) 휴(ヒュ) 효(ヒョ) 뱌(ビャ) 뷰(ビュ) 뵤(ビョ) 퍄(ピャ) 퓨(ピュ) 표(ピョ)
+			PRINTL 　파(ファ) 피(フィ) 퓨(フュ) 페(フェ) 포(フォ)
+			PRINTL 　먀(ミャ) 뮤(ミュ) 묘(ミョ)
+			PRINTL 　랴(リャ) 류(リュ) 레(リェ) 료(リョ)
 			GOTO INPUT_PRN_0
 		ENDIF
 		CALL_STR:2 = %RESULTS%
 		CALL SELF_CALL_ANALYSIS, RESULTS
 		IF RESULT == -1
 			PRINTL 
-			PRINTL 規定外の文字があります
+			PRINTL 규정 외의 문자가 포함되어 있습니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_0
 		ELSEIF RESULT == -2
 			PRINTL 
-			PRINTL ひらがなとカタカナが混在しています
+			PRINTL 히라가나와 가타카나가 혼재되어 있습니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_0
 		ELSEIF RESULT == -3
 			PRINTL 
-			PRINTL 読みが多すぎます
+			PRINTL 읽기가 너무 깁니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_0
 		ENDIF
 		CALL_STR:0 = %CALL_STR:2%
-;--------▲▲名前手入力▲▲--------
+;--------▲▲이름 직접 입력▲▲--------
 	ENDIF
 	FOR LCOUNT, 0, PRN_MAX
 		PRN_VAR:(LCOUNT) = RESULT:(LCOUNT + 1)
@@ -1361,13 +1366,13 @@ ELSEIF RESULT == 일인칭_최대+1
 	CHR_VAR = RESULT
 	GOTO SETTING_TOP
 ELSEIF RESULT == 일인칭_최대+2
-;--------▼▼名前手入力▼▼--------
-	PRINTL 表記名を入力してください
-	PRINTL 　　　　　　　　　　　　　　　[99] キャンセル
+;--------▼▼이름 직접 입력▼▼--------
+	PRINTL 일인칭의 표기를 선택해 주십시오.
+	PRINTL 　　　　　　　　　　　　　　　[99] 취소
 	INPUTS
 	IF RESULTS == "" || RESULTS == "99"
 		PRINTL 
-		PRINTL 変更しませんでした
+		PRINTL 일인칭을 변경하지 않았습니다.
 		PRINTW 
 		GOTO SETTING_TOP
 	ENDIF
@@ -1380,48 +1385,54 @@ ELSEIF RESULT == 일인칭_최대+2
 	ELSE
 		CALL_STR:0 = 
 		$INPUT_PRN_TOP_1
-		PRINTL 読みを入力してください
+		PRINTL 읽기(발음)을 입력해 주십시오.
 		PRINTL 
-		PRINTL 読みは全て「ひらがなのみ、もしくはカタカナのみ」「ヴ」「ー」で、
-		PRINTFORML {PRN_MAX}音以内で入力してください
-		PRINTL （「きゃ」「ふぁ」「てぃ」等の拗音は1音にカウントされます）
-		PRINTFORML 表記：「%CALL_STR:1%」
-		PRINTL 　　　　　　　　　　　　　　　[99] キャンセル　[98] 拗音リスト
+		PRINTL 일본어 이름의 경우 읽기는 전부「히라가나만, 혹은 가타가나만」「부(ヴ)」「장음(ー)」으로, 
+		PRINTFORML {PRN_MAX}음 이내로 입력해 주십시오.
+		PRINTL （「캬(きゃ)」「파(ふぁ)」「티(てぃ)」등의 요음은 1음으로 카운트됩니다.）
+		PRINTFORML 표기：「%CALL_STR:1%」
+		PRINTL 　　　　　　　　　　　　　　　[99] 취소　[98] 요음 목록
 		$INPUT_PRN_1
 		INPUTS
 		IF RESULTS == "" || RESULTS == "99"
 			PRINTL 
-			PRINTL 変更しませんでした
+			PRINTL 읽기를 변경하지 않았습니다.
 			PRINTW 
 			GOTO SETTING_TOP
 		ELSEIF RESULTS == "98"
-			PRINTL 　イェ ウァ ウィ ウェ ウォ ヴァ ヴィ ヴェ ヴォ
-			PRINTL 　クァ グァ キャ キュ キョ ギャ ギュ ギョ
-			PRINTL 　シャ シュ シェ ショ ジャ ジュ ジェ ジョ スィ ズィ
-			PRINTL 　チャ チュ チェ チョ ヂャ ヂュ ヂェ ヂョ
-			PRINTL 　ツァ ツィ ツェ ツォ ヅァ ヅィ ヅェ ヅォ
-			PRINTL 　ティ テュ ディ デュ トゥ ドゥ
-			PRINTL 　ニャ ニュ ニョ
-			PRINTL 　ヒャ ヒュ ヒョ ビャ ビュ ビョ ピャ ピュ ピョ
-			PRINTL 　ファ フィ フュ フェ フォ
-			PRINTL 　ミャ ミュ ミョ リャ リュ リェ リョ
+			PRINTL 　예(イェ) 와(ウァ) 위(ウィ) 웨(ウェ) 워(ウォ)
+			PRINTL 　바(ヴァ) 비(ヴィ) 베(ヴェ) 보(ヴォ)
+			PRINTL 　콰(クァ) 과(グァ) 캬(キャ) 큐(キュ) 쿄(キョ) 갸(ギャ) 규(ギュ) 교(ギョ)
+			PRINTL 　샤(シャ) 슈(シュ) 셰(シェ) 쇼(ショ)
+			PRINTL 　쟈(ジャ、ヂャ) 쥬(ジュ、ヂュ) 졔(ジェ、ヂェ) 죠(ジョ、ヂョ)
+			PRINTL 　쉬(スィ) 쥐(ズィ)
+			PRINTL 　챠(チャ) 츄(チュ) 쳬(チェ) 쵸(チョ)
+			PRINTL 　차(ツァ) 치(ツィ) 체(ツェ) 초(ツォ)
+			PRINTL 　자(ヅァ) 지(ヅィ) 제(ヅェ) 조(ヅォ)
+			PRINTL 　티(ティ) 튜(テュ) 디(ディ)
+			PRINTL 　듀(デュ) 투(トゥ) 두(ドゥ)
+			PRINTL 　냐(ニャ) 뉴(ニュ) 뇨(ニョ)
+			PRINTL 　햐(ヒャ) 휴(ヒュ) 효(ヒョ) 뱌(ビャ) 뷰(ビュ) 뵤(ビョ) 퍄(ピャ) 퓨(ピュ) 표(ピョ)
+			PRINTL 　파(ファ) 피(フィ) 퓨(フュ) 페(フェ) 포(フォ)
+			PRINTL 　먀(ミャ) 뮤(ミュ) 묘(ミョ)
+			PRINTL 　랴(リャ) 류(リュ) 레(リェ) 료(リョ)
 			GOTO INPUT_PRN_1
 		ENDIF
 		CALL_STR:2 = %RESULTS%
 		CALL SELF_CALL_ANALYSIS, RESULTS
 		IF RESULT == -1
 			PRINTL 
-			PRINTL 規定外の文字があります
+			PRINTL 규정 외의 문자가 포함되어 있습니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_1
 		ELSEIF RESULT == -2
 			PRINTL 
-			PRINTL ひらがなとカタカナが混在しています
+			PRINTL 히라가나와 가타카나가 혼재되어 있습니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_1
 		ELSEIF RESULT == -3
 			PRINTL 
-			PRINTL 読みが多すぎます
+			PRINTL 읽기가 너무 깁니다.
 			PRINTW 
 			GOTO INPUT_PRN_TOP_1
 		ENDIF
@@ -1432,7 +1443,7 @@ ELSEIF RESULT == 일인칭_최대+2
 	NEXT
 	CHR_VAR = RESULT
 	GOTO SETTING_TOP
-;--------▲▲名前手入力▲▲--------
+;--------▲▲이름 직접 입력▲▲--------
 ELSEIF RESULT == 98
 	RETURN 98
 ELSEIF RESULT == 99
@@ -1468,59 +1479,59 @@ ENDIF
 GOTO SETTING_TOP
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;CSVからキャラデータをロードする
+;CSV에서 캐릭터 데이터를 로드한다
 @FIRSTSETTING_CHARA_LOADCSV, ARG
-;LOCALリスト
-;0	ループで使用
-;1	ページ数
-;2	CSVにデータのあるキャラの数を記録
-;3	入力数値の保存用
+;LOCAL리스트
+;0	루프로 사용
+;1	페이지 수
+;2	CSV에 데이터가 있는 캐릭터의 수를 기록
+;3	입력 수치 보존용
 VARSET LOCAL
 $INPUT_LOADCSV
 PRINTL 
-PRINTFORML {ARG:0}人目のキャラデータを選んでください
+PRINTFORML {ARG:0}번째 캐릭터 데이터를 골라 주십시오.
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 LOCAL:2 = 0
 FOR LOCAL:0, 0, 9999
-	;非定義のキャラの場合、次のキャラを探す
+	;정의되지 않은 캐릭터일 경우, 다음 캐릭터를 찾는다
 	SIF !EXISTCSV(LOCAL:0, 0) || LOCAL:0 == 999
 		CONTINUE
 	LOCAL:2 += 1
-	;30人ずつ表示する
+	;30명씩 표시한다
 	IF (LOCAL:2 > 30 * LOCAL:1) && (LOCAL:2 <= 30 * (LOCAL:1 + 1))
 		PRINTFORMLC [{LOCAL:0, 4}] %CSVNAME(LOCAL:0, 0), 32, LEFT%
-		;2人毎に改行
+		;2명마다 줄 바꿈
 		SIF LOCAL:2 % 2 == 0 && !(LOCAL:2 % 30 == 0)
 			PRINTL 
 	ENDIF
 NEXT
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-PRINTLC [-1] 前のページ
-;PRINTC間隔の真ん中になるまでスペース
+PRINTLC [-1] 앞 페이지
+;PRINTC간격의 한가운데가 될 때까지 스페이스
 PRINTFORMLC         Page({LOCAL:1}/{(LOCAL:2) / 30})
-PRINTC [-2] 次のページ
+PRINTC [-2] 뒷 페이지
 PRINTL 
-PRINTLC [99] もどる
+PRINTLC [99] 돌아간다
 INPUT
 IF RESULT == 99
 	RETURN
 ELSEIF RESULT == -1
-	;前ページへ
+	;앞 페이지로
 	LOCAL:1 -= 1
 	SIF LOCAL:1 < 0
 		LOCAL:1 = 0
 	GOTO INPUT_LOADCSV
 ELSEIF RESULT == -2
-	;次ページへ
+	;뒷 페이지로
 	LOCAL:1 += 1
 	SIF LOCAL:1 > (LOCAL:2 / 30)
 		LOCAL:1 = LOCAL:2 / 30
 	GOTO INPUT_LOADCSV
 ELSEIF (RESULT >= 0 && RESULT < 9999) && EXISTCSV(RESULT, 0) && RESULT != 999
-	;범용 캐릭터(男性)をロードした場合
+	;범용 캐릭터(남성)를 로드할 경우
 	IF RESULT == 1
-		;キャラの追加作業
+		;캐릭터의 추가 작업
 		LOCAL:3 = 0
 		ADDCHARA LOCAL:3
 		SWAPCHARA ARG, CHARANUM - 1
@@ -1528,26 +1539,26 @@ ELSEIF (RESULT >= 0 && RESULT < 9999) && EXISTCSV(RESULT, 0) && RESULT != 999
 		TALENT:ARG:남자 = 1
 		NAME:ARG = 범용 캐릭터(♂)
 	ELSE
-		;キャラの追加作業
+		;캐릭터의 추가 작업
 		LOCAL:3 = RESULT
 		ADDCHARA LOCAL:3
 		SWAPCHARA ARG, CHARANUM - 1
 		DELCHARA CHARANUM - 1
 	ENDIF
 
-	;名前や変身後名の一時保存の초기화
+	;이름이나 변신 후 이름의 일시 보존 초기화
 	REPEAT 4
 		SAVESTR:(COUNT) = %STRCLEAR()%
 	REND
-	PRINTFORMW {ARG:0}人目のキャラを%NAME:ARG%にしました
+	PRINTFORMW {ARG:0}번째 캐릭터를 %조사처리(NAME:ARG,"로")% 했습니다.
 
 	CALL FIRSTSETTING_CHARA_CSVFIX, ARG
 
-	;고유캐릭터判定
+	;고유 캐릭터 판정
 	SIF TALENT:ARG:고유캐릭터 == 0
 		NO:ARG = 0
 
-	;성격 보정をリセット
+	;성격 보정을 초기화
 	FOR LOCAL:3, 0, 7
 		LOCAL:1 = LOCAL:3
 		SIF LOCAL:3 > 2
@@ -1557,9 +1568,9 @@ ELSEIF (RESULT >= 0 && RESULT < 9999) && EXISTCSV(RESULT, 0) && RESULT != 999
 		MAXBASE:ARG:(LOCAL:1) = BASE:ARG:(LOCAL:1)
 	NEXT
 
-	;범용 캐릭터の場合、성격 보정を재계산
+	;범용 캐릭터일 경우, 성격 보정을 재계산
 	IF NO:ARG == 0
-		;체력などのBASE値の計算
+		;체력 등의 BASE값 계산
 		CALL SEIKAKU_CHECK,"GET_TALENT_VALUE",ARG
 		LOCAL = RESULT
 		LOCAL:1 = 0
@@ -1575,7 +1586,7 @@ ELSEIF (RESULT >= 0 && RESULT < 9999) && EXISTCSV(RESULT, 0) && RESULT != 999
 		NEXT
 	ENDIF
 
-	;遺伝ボーナスを加算
+	;유전 보너스를 가산
 	BASE:ARG:체력 += CFLAG:ARG:60
 	BASE:ARG:기력 += CFLAG:ARG:61
 	BASE:ARG:성내성 += CFLAG:ARG:62
@@ -1584,7 +1595,7 @@ ELSEIF (RESULT >= 0 && RESULT < 9999) && EXISTCSV(RESULT, 0) && RESULT != 999
 	BASE:ARG:민첩 += CFLAG:ARG:65
 	BASE:ARG:지성 += CFLAG:ARG:66
 
-	;겉옷に촉수 슈트を설정してた場合、もう片方の겉옷にも설정
+	;겉옷을 촉수 슈트로 설정한 경우, 다른 한쪽의 겉옷에도 설정
 	;SIF CFLAG:ARG:40 == 199
 	;	CFLAG:ARG:41 = 199
 	;SIF CFLAG:ARG:41 == 199
@@ -1596,15 +1607,15 @@ ELSE
 ENDIF
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;キャラクターCSV未定義値の설정処理を行う関数
+;캐릭터 CSV 미정의값의 설정 처리를 하는 함수
 @FIRSTSETTING_CHARA_CSVFIX, ARG
-;ARG:0	対象のCHARANUM
+;ARG:0	대상의 CHARANUM
 
-;레벨が1未満なら레벨1に설정
+;레벨이 1미만이라면 1레벨로 설정
 SIF ABL:ARG:레벨 < 1
 	ABL:ARG:레벨 = 1
 
-;CSV未定義の스테이터스を基本値に설정
+;CSV 미정의의 스테이터스를 기본값으로 설정
 LOCAL:3 = 0
 FOR LOCAL:3, 0, 7
 	LOCAL:1 = LOCAL:3
@@ -1620,26 +1631,26 @@ FOR LOCAL:3, 0, 7
 	ENDIF
 NEXT
 
-;別人改造版0.34α以前の初期セットキャラや@EXPORT_CSVで出力したCSVのカラー설정を現行仕様へとコンバート
-;該当するCSVはCSTR:36が空白のはず
+;별인개조판0.34α 이전의 초기 세트 캐릭터나 @EXPORT_CSV에서 출력한 CSV의 컬러 설정을 현행 사양으로 컨버트
+;해당하는 CSV는 CSTR:36이 공백일 것
 IF CSTR:ARG:36 == ""
-	;肌の色を移行
+	;피부색 이행
 	CSTR:ARG:36 = %CSTR:ARG:34%
-	;変身中の瞳の色をコピー
+	;변신 중의 눈동자 색 복사
 	CSTR:ARG:34 = %CSTR:ARG:32%
 	CSTR:ARG:35 = %CSTR:ARG:33%
-	;変身中の肌の色をコピー
+	;변신 중의 피부색 복사
 	CSTR:ARG:37 = %CSTR:ARG:36%
 ENDIF
 
-;圧縮武器データの解凍
+;압축 무기 데이터 압축 해제
 SIF CSTR:ARG:15 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 1
 SIF CSTR:ARG:16 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 2
 SIF CSTR:ARG:17 != ""
 	CALL DECODE_WEAPON_DATA, ARG, 3
-;圧縮武器データのクリア
+;압축 무기 데이터 클리어
 CSTR:ARG:15 =
 CSTR:ARG:16 =
 CSTR:ARG:17 =

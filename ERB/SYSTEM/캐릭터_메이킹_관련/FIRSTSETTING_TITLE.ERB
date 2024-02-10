@@ -1,32 +1,32 @@
 ﻿;**********************************************************
-;主題の설정
+;주제 설정
 @FIRSTSETTING_TITLE
-PRINTL 主題を설정しますか？
-PRINTL （『魔法少女』や『美少女戦隊』など、설정しておくと변신 후 자칭구상で使用されます）
+PRINTL 주제를 설정하시겠습니까?
+PRINTL （『마법소녀』나『미소녀 전대』등, 설정해 두면 변신 후 자칭 구상에서 사용됩니다.）
 DRAWLINE
-PRINTL [0]主題なし
-PRINTL [1]ランダムに설정
-PRINTL [2]自分で설정
-PRINTL [99]もどる
+PRINTL [0] 주제 없음
+PRINTL [1] 랜덤으로 설정한다
+PRINTL [2] 직접 설정한다
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 0
 	FLAG:5 = 0
-	PRINTL 主題を설정しませんでした
+	PRINTL 주제를 설정하지 않았습니다.
 ELSEIF RESULT == 1
 	FLAG:5 = 1
 	$INPUT_LOOP_CHILD_1_1
 	CALL FIRSTSETTING_TITLE_RANDOM
 	LOCAL = RESULT
 	IF RESULTS == ""
-		PRINTFORML 主題を설정しません。よろしいですか？
+		PRINTFORML 주제를 설정하지 않습니다. 이대로 진행하시겠습니까?
 	ELSE
-		PRINTFORML 主題を 『%RESULTS%』 とします。よろしいですか？
+		PRINTFORML 주제를『%RESULTS%』%조사만처리(RESULTS,"로")% 합니다. 이대로 좋습니까?
 	ENDIF
-	PRINTL [0]もう一度選びなおす
+	PRINTL [0] 다시 한 번 더 고른다
 	PRINTL [1] 네
 	SIF SAVESTR:10 != ""
-		PRINTFORML [2]変更しない（%SAVESTR:10%）
+		PRINTFORML [2] 변경하지 않는다（%SAVESTR:10%）
 	$INPUT_LOOP_CHILD_1_2
 	INPUT
 	IF RESULT == 0
@@ -35,10 +35,10 @@ ELSEIF RESULT == 1
 		SAVESTR:10 = %RESULTS%
 		IF RESULTS == ""
 			FLAG:5 = 0
-			PRINTFORML 主題を설정しませんでした
+			PRINTFORML 주제를 설정하지 않았습니다.
 			RESULTS = 
 		ELSE
-			PRINTFORML 主題を 『%SAVESTR:10%』 に설정しました
+			PRINTFORML 주제를『%SAVESTR:10%』%조사만처리(SAVESTR:10,"로")% 설정했습니다.
 		ENDIF
 	ELSEIF RESULT == 2 && SAVESTR:10 != ""
 	ELSE
@@ -46,9 +46,9 @@ ELSEIF RESULT == 1
 	ENDIF
 ELSEIF RESULT == 2
 	FLAG:5 = 1
-	PRINTL 主題を入力してください。
+	PRINTL 주제를 입력해 주십시오.
 	SIF SAVESTR:10 != ""
-		PRINTFORML [999]変更しない（%SAVESTR:10%）
+		PRINTFORML [999] 변경하지 않는다（%SAVESTR:10%）
 	$INPUT_LOOP_CHILD_2
 	INPUTS
 	IF RESULTS == ""
@@ -56,7 +56,7 @@ ELSEIF RESULT == 2
 	ELSEIF RESULTS == "999"
 	ELSE
 		SAVESTR:10 = %RESULTS%
-		PRINTFORML 主題を 『%SAVESTR:10%』 に설정しました
+		PRINTFORML 주제를『%SAVESTR:10%』%조사만처리(SAVESTR:10,"로")% 설정했습니다.
 	ENDIF
 ELSEIF RESULT == 99
 	RETURN 99
@@ -66,13 +66,13 @@ ENDIF
 PRINTL 
 
 ;----------------------------------------------------------
-;主題のランダム설정
+;주제 랜덤 설정
 @FIRSTSETTING_TITLE_RANDOM
 $REGENERATE_TITLE
-PRINTL [0]日本語の単語で構成
-PRINTL [1]外国語の単語で構成
-PRINTL [2]完全ランダム
-PRINTL [99]もどる
+PRINTL [0] 일본어 단어로 구성한다
+PRINTL [1] 외국어 단어로 구성한다
+PRINTL [2] 완전 랜덤
+PRINTL [99] 돌아간다
 $INPUT_LOOP
 INPUT
 IF RESULT == 99
@@ -103,7 +103,7 @@ WHILE RESULTS != ""
 			LOCAL:(LOCAL:1 + 10) = RESULT
 			CALL FIRSTSETTING_TITLE_RANDOM_BOTTOM, RAND:2
 			LOCAL:(LOCAL:1 + 30) = RESULT
-			;ラストにひらがながつく場合もある
+			;마지막에 히라가나가 붙는 경우도 있다
 			LOCAL:(LOCAL:1 + 50) = 0
 			IF RAND:2 == 0
 				CALL FIRSTSETTING_TITLE_RANDOM_LAST, 0
@@ -117,8 +117,8 @@ WHILE RESULTS != ""
 	REND
 
 	PRINTL 
-	PRINTL [100]構成から選びなおす
-	PRINTL [200]再生成
+	PRINTL [100] 구성에서 다시 고른다
+	PRINTL [200] 재생성
 
 	$INPUT_LOOP2
 	INPUT
@@ -136,7 +136,7 @@ WHILE RESULTS != ""
 WEND
 
 ;----------------------------------------------------------
-;上の句
+;윗구
 @FIRSTSETTING_TITLE_RANDOM_TOP, ARG:0
 IF ARG:0 == 0
 	LOCAL = RAND:100
@@ -155,7 +155,7 @@ RESULTS:1 = %LOCALS%
 RETURN LOCAL
 
 ;----------------------------------------------------------
-;下の句
+;아랫구
 @FIRSTSETTING_TITLE_RANDOM_BOTTOM, ARG:0
 IF ARG:0 == 0
 	LOCAL = RAND:100 + 200
@@ -174,7 +174,7 @@ RESULTS:2 = %LOCALS%
 RETURN LOCAL
 
 ;----------------------------------------------------------
-;ひらがな
+;히라가나
 @FIRSTSETTING_TITLE_RANDOM_LAST, ARG:0
 IF ARG:0 == 0
 	LOCAL = RAND:100 + 400

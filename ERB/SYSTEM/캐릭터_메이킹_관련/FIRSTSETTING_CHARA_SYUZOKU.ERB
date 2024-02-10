@@ -86,12 +86,12 @@ ELSE
 		PRINTL 
 	NEXT
 	PRINTL 
-	PRINTFORML 選択したフィート({FEAT_NUM}/3)
+	PRINTFORML 현재 선택한 FEAT({FEAT_NUM}/3)
 	SIF FEAT_NUM > 3
 		SETCOLOR 128,128,128
 	PRINTL [0] 결정
 	RESETCOLOR
-	PRINTL [1]キャンセル
+	PRINTL [1] 취소
 	$INPUT_LOOP_0
 	INPUT
 	IF RESULT == 0 && FEAT_NUM <= 3
@@ -111,41 +111,41 @@ ELSE
 	ELSE
 		GOTO INPUT_LOOP_0
 	ENDIF
-	;種族の설정
+	;종족 설정
 	FOR LOCAL, LOCAL:1, LOCAL:1 + LOCAL:3
 		TALENT:ARG:LOCAL = 0
 	NEXT
 	TALENT:ARG:(RACE + LOCAL:1) = 1
-	PRINTFORML 種族を 『%TALENTNAME:(RACE + (LOCAL:1))%』 に설정しました
-	;인조인간の場合
+	PRINTFORML 종족을『%TALENTNAME:(RACE + (LOCAL:1))%』%조사만처리(TALENTNAME:(RACE + (LOCAL:1)),"로")% 설정했습니다.
+	;인조인간일 경우
 	IF RACE == 3
 		IF ISFEMALE(ARG)
-			PRINTFORML 인공자궁を内蔵させることにより、%CALLNAME:ARG%を임신可能にすることができます
-			PRINTFORML [0]임신機能を付ける
-			PRINTFORML [1]임신機能を付けない（불임になります）
+			PRINTFORML 인공 자궁을 내장시킴으로써, %조사처리(CALLNAME:ARG,"를")% 임신이 가능하도록 할 수도 있습니다.
+			PRINTFORML [0] 임신 기능을 붙인다
+			PRINTFORML [1] 임신 기능을 붙이지 않는다 (불임이 되며, 추후 개조 가능)
 			$INPUT_LOOP_1
 			INPUT
 			IF RESULT == 0
-				PRINTFORML %CALLNAME:ARG%は임신可能になります
+				PRINTFORML %조사처리(CALLNAME:ARG,"는")% 임신할 수 있게 됐습니다.
 				TALENT:ARG:미성숙 = 0
 			ELSEIF RESULT == 1
-				PRINTFORML %CALLNAME:ARG%に임신機能を付けません
+				PRINTFORML %CALLNAME:ARG%에게 임신 기능을 붙이지 않았습니다.
 				TALENT:ARG:미성숙 = 2
 			ELSE
 				GOTO INPUT_LOOP_1
 			ENDIF
 		ENDIF
 		IF TALENT:ARG:구상설정 != 1
-			PRINTFORML 구상を『ロボ風』に変更しますか？
-			PRINTFORML [0]変更する
-			PRINTFORML [1]変更しない
+			PRINTFORML 구상을『로봇풍』으로 변경하시겠습니까?
+			PRINTFORML [0] 변경한다
+			PRINTFORML [1] 변경하지 않는다
 			$INPUT_LOOP_2
 			INPUT
 			IF RESULT == 0
-				PRINTFORML 구상をロボ風に설정しました
+				PRINTFORML 구상을 로봇풍으로 변경했습니다.
 				TALENT:ARG:구상설정 = 1
 			ELSEIF RESULT == 1
-				PRINTFORML 설정を変更しません
+				PRINTFORML 설정을 변경하지 않았습니다.
 			ELSE
 				GOTO INPUT_LOOP_1
 			ENDIF
@@ -165,19 +165,19 @@ ENDIF
 PRINTL 
 PRINTL 
 
-;共通설정用
+;공통 설정용
 @FIRSTSETTING_racegenre
-$loop
+$LOOP
 FOR local,0,10
-	PRINTFORML [{local}]%racegenre:local%
+	PRINTFORML [{local}] %racegenre:local%
 NEXT
-printl [99]ランダム
+PRINTL [99] 랜덤
 INPUT
 IF (INRANGE(RESULT,0,10))
 	FLAG:823=RESULT+1
 ELSEIF RESULT==99
 	FLAG:823=0
 ELSE
-	goto loop
+	GOTO LOOP
 ENDIF
 

@@ -1,19 +1,19 @@
 ﻿;**********************************************************
-;CSVのRELATIONを独自仕様に合わせてコンバート
+;CSV의 RELATION을 독자 사양에 맞춰 컨버트
 @CONVERT_RELATION
 #DIM CHARA
 #DIM SELECT
 #DIM RELATION_LIST, CHARACSV최대수
-;全キャラ分ループ
+;모든 캐릭터분 루프 (全キャラ分ループ)
 FOR CHARA, 0, CHARANUM
 	SIF CHARA == MASTER
 		CONTINUE
-	;全RELATIONのコンバート
-	;CSVの値をリストにコピー
+	;모든 RELATION의 컨버트
+	;CSV의 값을 리스트에 복사
 	FOR SELECT, 0, CHARACSV최대수
 		RELATION_LIST:SELECT = RELATION:CHARA:SELECT
 	NEXT
-	;リストに該当するキャラが存在するならその位置に更にコピー
+	;리스트에 해당하는 캐릭터가 존재한다면 그 위치에 또 복사
 	FOR SELECT, 0, CHARANUM
 		SIF SELECT == MASTER
 			CONTINUE
@@ -21,7 +21,7 @@ FOR CHARA, 0, CHARANUM
 			RELATION:CHARA:SELECT = RELATION_LIST:(NO:SELECT)
 	NEXT
 NEXT
-;コンバート終了
+;컨버트 종료
 
 
 

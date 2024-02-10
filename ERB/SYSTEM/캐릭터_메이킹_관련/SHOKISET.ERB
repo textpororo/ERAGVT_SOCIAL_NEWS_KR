@@ -1,22 +1,22 @@
 ﻿;----------------------
-;初期メンバーの설정の改造
+;초기 멤버의 설정 개조
 ;----------------------
 
 @CHARA_MAKE_FINALIZE_KAI
 #DIMS FSET_NAME
 PRINTL 
 $INPUT_LOOP_0
-PRINTL ロードする初期セットを選んでください
+PRINTL 로드할 초기 세트를 선택해 주십시오.
 FOR COUNT, 0, 99
 	TRYCALLFORM SHOKISET_NAME_{COUNT}
 NEXT
-PRINTL [99]読み込まずに돌아간다
+PRINTL [99] 불러오지 않고 돌아간다
 INPUT
 
 IF RESULT >= 0 && RESULT < 99
 	LOCAL:1 = RESULT
 	TRYCCALLFORM SHOKISET_SETUMEI_{LOCAL:1}
-		PRINTL よろしいですか？
+		PRINTL 이대로 진행하시겠습니까?
 		PRINTL [0] 아니오
 		PRINTL [1] 네
 		$INPUT_LOOP_1
@@ -41,25 +41,25 @@ ELSE
 	GOTO INPUT_LOOP_0
 ENDIF
 
-;キャラクターCSV未定義値の一括설정処理
+;캐릭터 CSV 미정의값의 일괄 설정 처리
 CALL SHOKISET_CSVFIX
 
 
 ;-------------------------------
-;グループの選択-CSV読み出し
+;그룹 선택 ー CSV 불러오기(読み出し)
 ;-------------------------------
 @GROUP_SELECT_CSV
 #DIM LCOUNT
 #DIM NUM
-LCOUNT = 0;RESULTの保存用
-NUM = 1;人数の記録用
+LCOUNT = 0;RESULT 보존용
+NUM = 1;인원수 기록용
 
-PRINTL 読み出したいキャラのCSV番号を入力してください
+PRINTL 불러오려는 캐릭터의 CSV 번호를 입력해 주십시오.
 
-;1人決定するごとにNUMに加算、NUMが3を超えたら終了
+;1명 결정할 때마다 NUM에 가산, NUM가 3을 넘으면 종료
 WHILE NUM <= 3
-	PRINTFORML {NUM}人目のキャラ番号を入力してください
-	PRINTL [999] CSV番号リスト
+	PRINTFORML {NUM}번째 캐릭터 번호를 입력해 주십시오.
+	PRINTL [999] CSV 번호 목록
 	INPUT
 	LCOUNT = RESULT
 	IF LCOUNT == 999
@@ -72,9 +72,9 @@ WHILE NUM <= 3
 		PRINTW
 	ELSE
 		EXISTCSV LCOUNT
-		;1が帰ってきたらキャラが定義されているので決定
+		;1이 돌아오면 캐릭터가 정의되어 있으므로 결정
 		IF RESULT == 1
-			PRINTFORML {NUM}人目のキャラを「%CSVNAME(LCOUNT,0)%」に설정しました
+			PRINTFORML {NUM}번째 캐릭터를「%CSVNAME(LCOUNT,0)%」%조사만처리(CSVNAME(LCOUNT,0),"로")% 설정했습니다.
 			ADDCHARA LCOUNT
 			FLAG:8 ++
 			IF NO:NUM < 300
@@ -83,15 +83,15 @@ WHILE NUM <= 3
 			NUM += 1
 			PRINTL
 		ELSE
-			PRINTFORML {LCOUNT}番のキャラは登録されていません
+			PRINTFORML {LCOUNT}번 캐릭터는 등록되어 있지 않습니다.
 		ENDIF
 	ENDIF
 WEND
 
 
-;キャラクターCSV未定義値の一括설정処理を行う関数
+;캐릭터 CSV 미정의값의 일괄 설정 처리를 하는 함수
 ;-------------------------------
-;キャラクターCSV未定義値の一括설정
+;캐릭터 CSV 미정의값 일괄 설정
 ;-------------------------------
 @SHOKISET_CSVFIX
 #DIM CCOUNT

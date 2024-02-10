@@ -1,5 +1,5 @@
 ﻿
-;変更を프로필에 반영
+;변경 사항을 프로필에 반영
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 @SET_PROFILE, ARG
 CALL GENERATE_CHAR_SIZE, ARG, 0
@@ -20,16 +20,18 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 
 
 ;;-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-;;キャラの素質の설정
-;;ARG   = 対象キャラ
-;;ARG:1 = 1ならキャラメイク制限
+;;캐릭터의 소질 설정
+;;ARG   = 대상 캐릭터
+;;ARG:1 = 1이라면 캐릭터 메이킹 제한
 ;@FIRSTSETTING_CHARA_TALENT, ARG, ARG:1 = 0
 ;#DIM LCOUNT
 ;
 ;CALL LB
 ;LCOUNT = LINECOUNT
 ;$INPUT_LOOP
-;PRINTFORML {ARG}人目のキャラ 『%CALLNAME:ARG%』 の素質を설정してください
+;SIF FLAG:999
+;	PRINTL 본 함수는 일본어를 한글로 바꿈에 따라, 글자간의 간격에 조정이 필요한 FIRSTSETTING_CHARA_TALENT.ERB 입니다.
+;PRINTFORML {ARG}번째 캐릭터『%CALLNAME:ARG%』의 소질을 설정해 주십시오.
 ;DRAWLINE
 ;SETCOLOR 240, 255, 255
 ;IF CHARATALENT_F(ARG,0,"남자") == 0
@@ -42,19 +44,19 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;ELSE
 ;	LOCALS:1 = ♂
 ;ENDIF
-;PRINTFORM 　　　　　　　　　　通常時(%LOCALS:0%)　　　　　　　
+;PRINTFORM 　　　　　　　　　　평상시(%LOCALS:0%)　　　　　　　
 ;IF TALENT:ARG:변신능력 == 1
 ;	SETCOLOR 255, 240, 255
-;	PRINTFORM 変身時(%LOCALS:1%)
+;	PRINTFORM 변신 시(%LOCALS:1%)
 ;ENDIF
 ;RESETCOLOR
 ;PRINTL 
-;PRINTL  一般素質
+;PRINTL  일반 소질
 ;
 ;
 ;
 ;
-;;特殊体質
+;;특수 체질
 ;
 ;
 ;
@@ -68,8 +70,8 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;PRINTL [200] 결정
 ;SIF TALENT:ARG:고유캐릭터 != 0 || (ARG:1) > 0
 ;	SETCOLOR 105,105,105
-;PRINTL [300]現在の身体素質を元にフレーバー素質を설정
-;PRINTL [999]全てランダムに설정
+;PRINTL [300] 현재의 소질을 바탕으로 플레이버 소질을 설정한다
+;PRINTL [999] 모두 랜덤으로 설정한다
 ;RESETCOLOR
 ;
 ;INPUT
@@ -92,7 +94,7 @@ MAXBASE:ARG:가슴무게 = RESULT:7
 ;	GOTO INPUT_LOOP
 ;ELSEIF RESULT == 999 && TALENT:ARG:고유캐릭터 == 0 && (ARG:1) == 0
 ;	REPEAT 1000
-;		;성격、結界、変身と種族、性別、精神素質は除外
+;		;성격, 결계, 변신과 종족, 성별, 정신 소질은 제외
 ;		IF (COUNT >= 10 && COUNT <= 28) || (COUNT >= 190 && COUNT <= 193) || (COUNT >= 200 && COUNT <= 206) || (COUNT >= 400 && COUNT <= 402) || (COUNT >= 600 && COUNT <= 699)
 ;		ELSE
 ;			TALENT:ARG:COUNT = 0
