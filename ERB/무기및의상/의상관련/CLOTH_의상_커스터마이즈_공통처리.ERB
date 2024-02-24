@@ -1,25 +1,25 @@
-﻿;衣装データベース(カスタマイズ)圧縮のための共通部切り出し
-;ARG:参照キャラ
-;ID:衣装ID
-;MODE:データベースから取得するパラメータ
+﻿;의상 데이터베이스(커스터마이즈) 압축을 위한 공통부 자르기
+;ARG:참조 캐릭터
+;ID:의상 ID
+;MODE:데이터베이스에서 취득하는 파라미터
 ;SHOPR:
-;	データ文字列から検索して数値切り出したいだけ(ふつうの言語におけるマッチ)だがERAではえらく回りくどい事になってしまっている
-;	これなら순종적にsplitしてループで回した方が分かりやすいかもしれないなあ
+;	데이터 문자열에서 검색하여 수치를 잘라내고 싶을 뿐(보통의 언어에 있어서의 매치)이지만 ERA에서는 매우 번거로운 일이 되어 버렸다
+;	여기서부터 순종적에 split해서 루프로 돌리는 편이 알기 쉬울지도 모르겠네
 @CLOTH_HOSEI(ARG,ID,MODE,SHOPR)
 #DIM ID,1
 #DIMS MODE,1
 #DIM SHOPR,1
-;発見位置
+;발견 위치
 	#DIM sp,1
 	#DIM ep,1
-	;区切り文字
+	;구분 문자
 	#DIM sep,1
-	;関数個別呼び必須フラグ(分岐条件が特殊な場合…袴の「겉옷無しなら回避上昇」など)
+	;함수 개별 호출 필수 플래그(분기 조건이 특수한 경우…하카마의「겉옷이 없으면 회피 상승」등)
 	#DIM needcall,1
-;結果
+;결과
 #DIM res,1
 
-;스테이터스補正文字列の取得
+;스테이터스 보정 문자열 획득
 TRYCCALLFORM CLOTH_STATUS_{ID}
 CATCH
 	SAVESTR:0'=""
@@ -36,27 +36,27 @@ sep=-1
 needcall=-1
 res=-99999
 
-;●通常時のデータを検索
+;●평상시의 데이터를 검색
 STRFIND LOCALS,MODE,0
 sp=RESULT
 
 IF sp>-1
-	;ポインタをキーワード直後(＝パラメータ記述位置)に移動
+	;포인터를 키워드 직후(=파라미터 기술 위치)로 이동
 	STRLENS ""+mode
 	sp+=RESULT
 
-	;個別に関数を呼ぶ必要がある(複雑な分岐条件を持つ)場合
+	;개별적으로 함수를 부를 필요가 있는(복잡한 분기 조건을 가진) 경우
 	STRFIND LOCALS,"!",sp
 	IF RESULT==sp
 		CALLFORM CLOTH_HOSEI_%MODE%_{ID}
 		res=RESULT
-	;通常の文字列データで指定されている場合
+	;통상의 문자열 데이터로 지정되어 있는 경우
 	ELSE
 
-		;変身後パラメータ変動する場合
+		;변신 후 파라미터 변동하는 경우
 		STRFIND LOCALS,"@",sp
 		ep=RESULT
-		;見つけた"@"が区切り文字より右にあったら別項目への誤爆なのでキャンセル
+		;발견한 "@"가 구분 문자보다 오른쪽에 있으면 다른 항목에 대한 오폭이므로 취소
 		STRFIND LOCALS,",",sp
 		sep=RESULT
 		SIF ep>sep
@@ -66,11 +66,11 @@ IF sp>-1
 		;PRINTL
 		;PRINTFORML %MODE%:%LOCALS%⇒{sp},{ep-sp}=★{res}
 
-		;変身後データありの場合
+		;변신 후 데이터가 있는 경우
 		IF ep>-1
 			SUBSTRING LOCALS,sp,ep-sp
 			res=toint(RESULTS)
-			;変身中
+			;변신 중
 			IF CFLAG:ARG:1>0
 				sp=ep+1
 				STRFIND LOCALS,",",sp
@@ -80,7 +80,7 @@ IF sp>-1
 				res=toint(RESULTS)
 
 			ENDIF
-		;変身後データなしの場合
+		;변신 후 데이터가 없는 경우
 		ELSE
 			STRFIND LOCALS,",",sp
 			ep=RESULT
@@ -96,7 +96,7 @@ IF sp>-1
 ENDIF
 
 
-;●補正発見できず→パラメータ毎のデフォルト値を返す
+;●보정을 발견할 수 없다 → 파라미터별 디폴트값을 반환한다
 IF res==-99999
 	SIF SHOPR == 1
 		RETURN res
@@ -111,31 +111,31 @@ IF res==-99999
 			res=DEFAULT_OUTER_DEF
 		ENDIF
 	ELSEIF MODE=="SLOT"
-		;正の値ならｎ個の汎用スロット、0なら固有カスタマイズ、-1なら完全にカスタマイズ無し
+		;양의 값이라면ｎ개의 범용 슬롯, 0이라면 고유 커스터마이즈, -1이라면 완전히 커스터마이즈 없음
 		res=0
 	ELSE
 		res=0
 	ENDIF
-;●補正発見時
+;●보정 발견 시
 ELSE
 	;
 ENDIF
 
 
 
-;●パラメータの種類に応じて補正を計算
-;　ただし「装備無し」の場合はEQUIPに衣装カスタマイズデータが存在しないため無条件でデフォルト値を返す
+;●파라미터의 종류에 따라 보정을 계산
+;　단「장비 없음」일 경우 EQUIP에 의상 커스터마이즈 데이터가 재하지 않기 때문에 무조건 디폴트값을 반환한다
 IF ID==0
 	RETURN res
 ENDIF
-;重装・軽装레벨
+;중장・경장 레벨
 IF CFLAG:1 == 0 && ID >= 100 && ID <= 199
 	LOCAL = ID - 100
 ELSE
 	LOCAL = ID
 ENDIF
 IF MODE=="HP"
-	;デフォルトで耐久を持たない衣装はノータッチ
+	;디폴트로 내구를 가지지않는 의상은 노터치
 	IF res!=-1
 		res += 5 * (FIGURE_SPLIT(EQUIP:LOCAL,11) - FIGURE_SPLIT(EQUIP:LOCAL,10))
 	ENDIF
@@ -183,20 +183,20 @@ ENDCATCH
 
 
 @CLOTH_CUSTOMIZE_OPTION_COMMON(ID,ARG,ARGS:0,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9)
-;装備ID(ただし-999ならループ内から呼び出された判定関数)
+;장비 ID(단 -999라면 루프 내에서 호출된 판정 함수)
 #DIM ID,1
 
-#DIM 項目数,1
-#DIM 選択不可フラグ,10
-#DIMS カテゴリ,1
-#DIMS 補足テキスト,1
+#DIM 항목수,1
+#DIM 선택불가플래그,10
+#DIMS 카테고리,1
+#DIMS 보충텍스트,1
 
-;ループから호출ている場合
+;루프에서 호출되는 경우
 IF ID==-999
-	;選択不可カテゴリの入力のみ切る
+	;선택 불가 카테고리의 입력만 끊는다
 	$LOOP
 	INPUT
-	IF (RESULT % 10 == 0) && RESULT>=0 && RESULT <=項目数*10 && 選択不可フラグ:(RESULT/10)==1
+	IF (RESULT % 10 == 0) && RESULT>=0 && RESULT <=항목수*10 && 선택불가플래그:(RESULT/10)==1
 		CLEARLINE 1
 		GOTO LOOP
 	ELSE
@@ -206,56 +206,56 @@ IF ID==-999
 	ENDIF
 ENDIF
 
-項目数=8
+항목수=8
 FOR LOCAL,0,10,1
 	IF ARGS:LOCAL=="@@"
-		項目数=LOCAL-1
+		항목수=LOCAL-1
 		BREAK
 	ENDIF
 
 	LOCALS'=ARGS:LOCAL
 	IF LOCALS==""
-		選択不可フラグ:LOCAL=1
+		선택불가플래그:LOCAL=1
 		PRINTL
 		CONTINUE
 	ENDIF
 
 	LOCAL:1=strfind(LOCALS,"!!")
 	IF strfind(LOCALS,"!!")>-1
-		選択不可フラグ:LOCAL=1
+		선택불가플래그:LOCAL=1
 		REPLACE LOCALS,"^(.+)!!.+$",""
-		カテゴリ'=SUBSTRING(LOCALS,0,LOCAL:1)
+		카테고리'=SUBSTRING(LOCALS,0,LOCAL:1)
 		REPLACE LOCALS,"^.+!!(.+)$",""
-		補足テキスト'=SUBSTRING(LOCALS,2+LOCAL:1)
+		보충텍스트'=SUBSTRING(LOCALS,2+LOCAL:1)
 		SETCOLOR 105,105,105
 	ELSE
-		選択不可フラグ:LOCAL=0
-		カテゴリ'=LOCALS
-		補足テキスト'=""
+		선택불가플래그:LOCAL=0
+		카테고리'=LOCALS
+		보충텍스트'=""
 		RESETCOLOR
 	ENDIF
 
-	PRINTFORML  [{LOCAL*10}]% "",LOCAL==0 ? 1 # 0%%カテゴリ,20,LEFT%%補足テキスト%
+	PRINTFORML  [{LOCAL*10}] % "",LOCAL==0 ? 1 # 0%%카테고리,20,LEFT%%보충텍스트%
 NEXT
 RESETCOLOR
 
 SIF ID>=0 && ID<=199 && CFLAG:ARG:1 > 0
-	PRINTFORML  [{(項目数+1)*10}]追加装備
+	PRINTFORML  [{(항목수+1)*10}] 추가 장비
 PRINTL 
 
-PRINTL  [90]초기화
+PRINTL  [90] 초기화
 
 IF (ID < 300 || ID > 400) && CFLAG:ARG:40 == CFLAG:ARG:41
 	IF CFLAG:ARG:1 > 0
 		SIF EQUIP:ARG:ID == EQUIP:ARG:(ID - 100)
 			SETCOLOR 105,105,105
-		PRINTFORML  [91]変身前%ITEMNAME:ID%のカスタマイズをコピー
-		PRINTFORML  [92]変身前%ITEMNAME:ID%のカスタマイズにペースト
+		PRINTFORML  [91] 변신 전 %ITEMNAME:ID%의 커스터마이즈를 복사한다
+		PRINTFORML  [92] 변신 전 %ITEMNAME:ID%의 커스터마이즈를 붙여넣는다
 	ELSE
 		SIF EQUIP:ARG:ID == EQUIP:ARG:(ID + 100)
 			SETCOLOR 105,105,105
-		PRINTFORML  [91]変身後%ITEMNAME:(ID+100)%のカスタマイズをコピー
-		PRINTFORML  [92]変身後%ITEMNAME:(ID+100)%のカスタマイズにペースト
+		PRINTFORML  [91] 변신 후 %ITEMNAME:(ID+100)%의 커스터마이즈를 복사한다
+		PRINTFORML  [92] 변신 후 %ITEMNAME:(ID+100)%의 커스터마이즈를 붙여넣는다
 	ENDIF
 	RESETCOLOR
 ENDIF
@@ -265,27 +265,27 @@ PRINTL  [99] 돌아간다
 
 
 
-;"フレーバー@効果テキスト"
-;効果欄が!!で始まっていたら選択不可フラグ
-;効果テキストには以下のキーワードを記述可能
-;	「軽1」…耐久-5 命中+1	軽6まで可
-;	「重1」…耐久+5 命中-1	重6まで可
+;"플레이버@효과텍스트"
+;효과란이 !!로 시작하고 있다면 선택불가플래그
+;효과텍스트에는 다음과 같은 키워드를 기술할 수 있습니다
+;	「경1」…내구-5 명중+1	경6까지 가능
+;	「중1」…내구+5 명중-1	중6까지 가능
 ;
-;	「護1」…속옷 보호+5	護6まで可
-;	「晒1」…속옷 보호-5	晒6まで可
+;	「보1」…속옷 보호+5		보6까지 가능
+;	「백1」…속옷 보호-5		백6까지 가능
 ;
 @CLOTH_CUSTOMIZE_OPTION_PRINT(now,ARGS:0,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9,ARGS:10)
 #dim maxnum,1
 #dim now,1
-#dim 選択不可フラグ,10
-#dims フレーバー,1
-#dims 効果テキスト,1
+#dim 선택불가플래그,10
+#dims 플레이버,1
+#dims 효과텍스트,1
 
 maxnum=8
 FOR LOCAL,0,11
 	locals'=args:local
 
-	;末尾目印発見時
+	;끝 표시 발견 시
 	IF locals=="@@"
 		maxnum=LOCAL-1
 		BREAK
@@ -294,18 +294,18 @@ FOR LOCAL,0,11
 
 
 
-	;圧縮していた스테이터스補正を分割
+	;압축되어 있었던 스테이터스 보정을 분할
 	replace locals,"^([^@]+)@?.*$","$1"
-	フレーバー'=results
+	플레이버'=results
 	replace locals,"^[^@]*@?(.*)$","$1"
-	効果テキスト'=results
+	효과텍스트'=results
 
-	IF strfind(効果テキスト,"!!")==0
-		選択不可フラグ:LOCAL=1
-		効果テキスト=%substring(効果テキスト,2)%
+	IF strfind(효과텍스트,"!!")==0
+		선택불가플래그:LOCAL=1
+		효과텍스트=%substring(효과텍스트,2)%
 		SETCOLOR 105,105,105
 	ELSE
-		選択不可フラグ:LOCAL=0
+		선택불가플래그:LOCAL=0
 		IF now == LOCAL
 			SETCOLOR 120,250,0
 		ELSE
@@ -313,67 +313,67 @@ FOR LOCAL,0,11
 		ENDIF
 	ENDIF
 
-	replace 効果テキスト,"軽1","耐久-5 命中+1 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽2","耐久-10 命中+2 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽3","耐久-15 命中+3 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽4","耐久-20 命中+4 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽5","耐久-25 命中+5 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽6","耐久-30 命中+6 "
-	効果テキスト'=results
+	replace 효과텍스트,"경1","내구-5 명중+1 "
+	효과텍스트'=results
+	replace 효과텍스트,"경2","내구-10 명중+2 "
+	효과텍스트'=results
+	replace 효과텍스트,"경3","내구-15 명중+3 "
+	효과텍스트'=results
+	replace 효과텍스트,"경4","내구-20 명중+4 "
+	효과텍스트'=results
+	replace 효과텍스트,"경5","내구-25 명중+5 "
+	효과텍스트'=results
+	replace 효과텍스트,"경6","내구-30 명중+6 "
+	효과텍스트'=results
 
-	replace 効果テキスト,"重1","耐久+5 命中-1 "
-	効果テキスト'=results
-	replace 効果テキスト,"重2","耐久+10 命中-2 "
-	効果テキスト'=results
-	replace 効果テキスト,"重3","耐久+15 命中-3 "
-	効果テキスト'=results
-	replace 効果テキスト,"重4","耐久+20 命中-4 "
-	効果テキスト'=results
-	replace 効果テキスト,"重5","耐久+25 命中-5 "
-	効果テキスト'=results
-	replace 効果テキスト,"重6","耐久+30 命中-6 "
-	効果テキスト'=results
+	replace 효과텍스트,"중1","내구+5 명중-1 "
+	효과텍스트'=results
+	replace 효과텍스트,"중2","내구+10 명중-2 "
+	효과텍스트'=results
+	replace 효과텍스트,"중3","내구+15 명중-3 "
+	효과텍스트'=results
+	replace 효과텍스트,"중4","내구+20 명중-4 "
+	효과텍스트'=results
+	replace 효과텍스트,"중5","내구+25 명중-5 "
+	효과텍스트'=results
+	replace 효과텍스트,"중6","내구+30 명중-6 "
+	효과텍스트'=results
 
-	replace 効果テキスト,"護1","속옷 보호+5"
-	効果テキスト'=results
-	replace 効果テキスト,"護2","속옷 보호+10"
-	効果テキスト'=results
-	replace 効果テキスト,"護3","속옷 보호+15"
-	効果テキスト'=results
-	replace 効果テキスト,"護4","속옷 보호+20"
-	効果テキスト'=results
-	replace 効果テキスト,"護5","속옷 보호+25"
-	効果テキスト'=results
-	replace 効果テキスト,"護6","속옷 보호+30"
-	効果テキスト'=results
+	replace 효과텍스트,"보1","속옷 보호+5"
+	효과텍스트'=results
+	replace 효과텍스트,"보2","속옷 보호+10"
+	효과텍스트'=results
+	replace 효과텍스트,"보3","속옷 보호+15"
+	효과텍스트'=results
+	replace 효과텍스트,"보4","속옷 보호+20"
+	효과텍스트'=results
+	replace 효과텍스트,"보5","속옷 보호+25"
+	효과텍스트'=results
+	replace 효과텍스트,"보6","속옷 보호+30"
+	효과텍스트'=results
 
-	replace 効果テキスト,"晒1","속옷 보호-5"
-	効果テキスト'=results
-	replace 効果テキスト,"晒2","속옷 보호-10"
-	効果テキスト'=results
-	replace 効果テキスト,"晒3","속옷 보호-15"
-	効果テキスト'=results
-	replace 効果テキスト,"晒4","속옷 보호-20"
-	効果テキスト'=results
-	replace 効果テキスト,"晒5","속옷 보호-25"
-	効果テキスト'=results
-	replace 効果テキスト,"晒6","속옷 보호-30"
-	効果テキスト'=results
+	replace 효과텍스트,"백1","속옷 보호-5"
+	효과텍스트'=results
+	replace 효과텍스트,"백2","속옷 보호-10"
+	효과텍스트'=results
+	replace 효과텍스트,"백3","속옷 보호-15"
+	효과텍스트'=results
+	replace 효과텍스트,"백4","속옷 보호-20"
+	효과텍스트'=results
+	replace 효과텍스트,"백5","속옷 보호-25"
+	효과텍스트'=results
+	replace 효과텍스트,"백6","속옷 보호-30"
+	효과텍스트'=results
 
 
 
-	PRINTFORML  [{LOCAL}]%フレーバー,28,LEFT%%効果テキスト,20,LEFT%
+	PRINTFORML  [{LOCAL}] %플레이버,28,LEFT%%효과텍스트,20,LEFT%
 	RESETCOLOR
 NEXT
 
 $INPUT_LOOP_0
 INPUT
-IF RESULT >= 0 && RESULT <= maxnum && 選択不可フラグ:RESULT==0
+IF RESULT >= 0 && RESULT <= maxnum && 선택불가플래그:RESULT==0
 	RETURN RESULT
 ELSE
 	CLEARLINE 1
@@ -384,20 +384,20 @@ RETURN
 
 
 
-;↑の속옷版
-;	「油1」…방심도　-6～6まで可
+;↑위 함수의 속옷 버전
+;	「방1」…방심도　-6～6까지 가능
 @INNER_CUSTOMIZE_OPTION_PRINT(now,ARGS:0,ARGS:1,ARGS:2,ARGS:3,ARGS:4,ARGS:5,ARGS:6,ARGS:7,ARGS:8,ARGS:9,ARGS:10)
 #dim maxnum,1
 #dim now,1
-#dim 選択不可フラグ,10
-#dims フレーバー,1
-#dims 効果テキスト,1
+#dim 선택불가플래그,10
+#dims 플레이버,1
+#dims 효과텍스트,1
 
 maxnum=9
 FOR LOCAL,0,10
 	locals'=args:local
 
-	;末尾目印発見時
+	;끝 표시 발견 시
 	IF locals=="@@"
 		maxnum=LOCAL-1
 		BREAK
@@ -407,106 +407,106 @@ FOR LOCAL,0,10
 	SIF now == LOCAL
 		SETCOLOR 120,250,0
 
-	;圧縮していた스테이터스補正を分割
+	;압축되어 있었던 스테이터스 보정을 분할
 	replace locals,"^([^@]+)@?.*$","$1"
-	フレーバー'=results
+	플레이버'=results
 	replace locals,"^[^@]*@?(.*)$","$1"
-	効果テキスト'=results
+	효과텍스트'=results
 
-	IF strfind(効果テキスト,"!!")==0
-		選択不可フラグ:LOCAL=1
-		効果テキスト=%substring(効果テキスト,2)%
+	IF strfind(효과텍스트,"!!")==0
+		선택불가플래그:LOCAL=1
+		효과텍스트=%substring(효과텍스트,2)%
 		SETCOLOR 105,105,105
 	ELSE
-		選択不可フラグ:LOCAL=0
+		선택불가플래그:LOCAL=0
 	ENDIF
 
-	replace 効果テキスト,"軽1","耐久-5 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽2","耐久-10 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽3","耐久-15 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽4","耐久-20 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽5","耐久-25 "
-	効果テキスト'=results
-	replace 効果テキスト,"軽6","耐久-30 "
-	効果テキスト'=results
+	replace 효과텍스트,"경1","내구-5 "
+	효과텍스트'=results
+	replace 효과텍스트,"경2","내구-10 "
+	효과텍스트'=results
+	replace 효과텍스트,"경3","내구-15 "
+	효과텍스트'=results
+	replace 효과텍스트,"경4","내구-20 "
+	효과텍스트'=results
+	replace 효과텍스트,"경5","내구-25 "
+	효과텍스트'=results
+	replace 효과텍스트,"경6","내구-30 "
+	효과텍스트'=results
 
-	replace 効果テキスト,"重1","耐久+5 "
-	効果テキスト'=results
-	replace 効果テキスト,"重2","耐久+10 "
-	効果テキスト'=results
-	replace 効果テキスト,"重3","耐久+15 "
-	効果テキスト'=results
-	replace 効果テキスト,"重4","耐久+20 "
-	効果テキスト'=results
-	replace 効果テキスト,"重5","耐久+25 "
-	効果テキスト'=results
-	replace 効果テキスト,"重6","耐久+30 "
-	効果テキスト'=results
+	replace 효과텍스트,"중1","내구+5 "
+	효과텍스트'=results
+	replace 효과텍스트,"중2","내구+10 "
+	효과텍스트'=results
+	replace 효과텍스트,"중3","내구+15 "
+	효과텍스트'=results
+	replace 효과텍스트,"중4","내구+20 "
+	효과텍스트'=results
+	replace 효과텍스트,"중5","내구+25 "
+	효과텍스트'=results
+	replace 효과텍스트,"중6","내구+30 "
+	효과텍스트'=results
 
-	replace 効果テキスト,"油1","방심도+1 "
-	効果テキスト'=results
-	replace 効果テキスト,"油2","방심도+2 "
-	効果テキスト'=results
-	replace 効果テキスト,"油3","방심도+3 "
-	効果テキスト'=results
-	replace 効果テキスト,"油4","방심도+4 "
-	効果テキスト'=results
-	replace 効果テキスト,"油5","방심도+5 "
-	効果テキスト'=results
-	replace 効果テキスト,"油6","방심도+6 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-1","방심도-1 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-2","방심도-2 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-3","방심도-3 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-4","방심도-4 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-5","방심도-5 "
-	効果テキスト'=results
-	replace 効果テキスト,"油-6","방심도-6 "
-	効果テキスト'=results
+	replace 효과텍스트,"방1","방심도+1 "
+	효과텍스트'=results
+	replace 효과텍스트,"방2","방심도+2 "
+	효과텍스트'=results
+	replace 효과텍스트,"방3","방심도+3 "
+	효과텍스트'=results
+	replace 효과텍스트,"방4","방심도+4 "
+	효과텍스트'=results
+	replace 효과텍스트,"방5","방심도+5 "
+	효과텍스트'=results
+	replace 효과텍스트,"방6","방심도+6 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-1","방심도-1 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-2","방심도-2 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-3","방심도-3 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-4","방심도-4 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-5","방심도-5 "
+	효과텍스트'=results
+	replace 효과텍스트,"방-6","방심도-6 "
+	효과텍스트'=results
 
-	replace 効果テキスト,"護1","삽입 저항+5"
-	効果テキスト'=results
-	replace 効果テキスト,"護2","삽입 저항+10"
-	効果テキスト'=results
-	replace 効果テキスト,"護3","삽입 저항+15"
-	効果テキスト'=results
-	replace 効果テキスト,"護4","삽입 저항+20"
-	効果テキスト'=results
-	replace 効果テキスト,"護5","삽입 저항+25"
-	効果テキスト'=results
-	replace 効果テキスト,"護6","삽입 저항+30"
-	効果テキスト'=results
+	replace 효과텍스트,"보1","삽입 저항+5"
+	효과텍스트'=results
+	replace 효과텍스트,"보2","삽입 저항+10"
+	효과텍스트'=results
+	replace 효과텍스트,"보3","삽입 저항+15"
+	효과텍스트'=results
+	replace 효과텍스트,"보4","삽입 저항+20"
+	효과텍스트'=results
+	replace 효과텍스트,"보5","삽입 저항+25"
+	효과텍스트'=results
+	replace 효과텍스트,"보6","삽입 저항+30"
+	효과텍스트'=results
 
-	replace 効果テキスト,"晒1","삽입 저항-5"
-	効果テキスト'=results
-	replace 効果テキスト,"晒2","삽입 저항-10"
-	効果テキスト'=results
-	replace 効果テキスト,"晒3","삽입 저항-15"
-	効果テキスト'=results
-	replace 効果テキスト,"晒4","삽입 저항-20"
-	効果テキスト'=results
-	replace 効果テキスト,"晒5","삽입 저항-25"
-	効果テキスト'=results
-	replace 効果テキスト,"晒6","삽입 저항-30"
-	効果テキスト'=results
+	replace 효과텍스트,"백1","삽입 저항-5"
+	효과텍스트'=results
+	replace 효과텍스트,"백2","삽입 저항-10"
+	효과텍스트'=results
+	replace 효과텍스트,"백3","삽입 저항-15"
+	효과텍스트'=results
+	replace 효과텍스트,"백4","삽입 저항-20"
+	효과텍스트'=results
+	replace 효과텍스트,"백5","삽입 저항-25"
+	효과텍스트'=results
+	replace 효과텍스트,"백6","삽입 저항-30"
+	효과텍스트'=results
 
 
 
-	PRINTFORML  [{LOCAL}]%フレーバー,28,LEFT%%効果テキスト,20,LEFT%
+	PRINTFORML  [{LOCAL}] %플레이버,28,LEFT%%효과텍스트,20,LEFT%
 	RESETCOLOR
 NEXT
 
 $INPUT_LOOP_0
 INPUT
-IF RESULT >= 0 && RESULT <= maxnum && 選択不可フラグ:RESULT==0
+IF RESULT >= 0 && RESULT <= maxnum && 선택불가플래그:RESULT==0
 	RETURN RESULT
 ELSE
 	CLEARLINE 1
@@ -517,7 +517,7 @@ RETURN
 
 
 
-;カスタマイズ초기화
+;커스터마이즈 초기화
 @CLOTH_CUSTOMIZE_OPTION_INITIALIZE(num,id,refcustom)
 #DIM num,1
 #DIM id,1
@@ -529,7 +529,7 @@ SIF CFLAG:num:1 > 0
 VARSET refcustom
 
 
-;カスタムコピー
+;커스터마이즈 복사
 @CLOTH_CUSTOMIZE_OPTION_COPY91(ARG,id,CUSTOM_NUM,refCUSTOM)
 #DIM id,1
 #DIM CUSTOM_NUM,1
@@ -538,26 +538,26 @@ VARSET refcustom
 		REPEAT CUSTOM_NUM
 			refCUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:(ID - 100), COUNT + 1)
 		REND
-		PRINTFORMW 変身前%ITEMNAME:ID%のカスタマイズをコピーしました
+		PRINTFORMW 변신 전 %ITEMNAME:ID%의 커스터마이즈를 복사했습니다.
 	ELSE
 		REPEAT CUSTOM_NUM
 			refCUSTOM:COUNT = FIGURE_SPLIT(EQUIP:ARG:(ID + 100), COUNT + 1)
 		REND
-		PRINTFORMW 変身後%ITEMNAME:(ID+100)%のカスタマイズをコピーしました
+		PRINTFORMW 변신 후 %ITEMNAME:(ID+100)%의 커스터마이즈를 복사했습니다.
 	ENDIF
 
-;カスタムペースト
+;커스터마이즈 붙여넣기
 @CLOTH_CUSTOMIZE_OPTION_COPY92(ARG,ID)
 #DIM ID,1
 IF CFLAG:ARG:1 > 0
 	EQUIP:ARG:(ID - 100) = EQUIP:ARG:ID
-	PRINTFORMW 変身前%ITEMNAME:ID%のカスタマイズにペーストしました
+	PRINTFORMW 변신 전 %ITEMNAME:ID%의 커스터마이즈를 붙여넣었습니다.
 ELSE
 	EQUIP:ARG:(ID + 100) = EQUIP:ARG:ID
-	PRINTFORMW 変身後%ITEMNAME:(ID+100)%のカスタマイズにペーストしました
+	PRINTFORMW 변신 후 %ITEMNAME:(ID+100)%의 커스터마이즈를 붙여넣었습니다.
 ENDIF
 
-;オプション記録
+;설정 기록
 @CLOTH_CUSTOMIZE_OPTION_SAVE(ARG,ID,CUSTOM_NUM,refCUSTOM)
 #DIM ID,1
 #DIM CUSTOM_NUM,1

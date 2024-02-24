@@ -1,104 +1,105 @@
 ﻿;----------------------------------------------------------
-;●衣装の스테이터스指定
+;●의상 스테이터스 지정
 ;@CLOTH_STATUS_***
-;	基本스테이터스は任意個の「キーワード」「補正値」「区切り文字カンマ」で記述します。
+;	기본 스테이터스는 임의 개체의「키워드」「보정치」「구분 문자 쉼표(区切り文字カンマ)」로 기술합니다.
 ;	@CLOTH_STATUS_***
-;		;(カスタマイズ不可、耐久100(変身時120))
+;		;(커스터마이즈 불가, 내구 100(변신 시 120))
 ;		SAVESTR:0'="SLOT-1,HP100@120,"
-;	省略された스테이터스にはCLOTH_衣装カスタマイズ共通処理内.ERBでデフォルト値が割り振られます。
+;	생략된 스테이터스에는 CLOTH_의상_커스터마이즈_공통처리.ERB에서 디폴트값이 할당됩니다.
 ;
-;●衣装の特殊な補正(複雑な分岐条件を持つ場合の個別判定)
-;		HP!DEF!のように、パラメータ部分に"!"を指定した場合は以下の関数を호출返り値をパラメータとします。
-;		「カスタマイズ次第で속옷겸용になる衣装」が中心ですが、
-;		「겉옷無しなら回避上昇」のようにユニークな基準も使用されています。
-;공격補正		@CLOTH_HOSEI_KOUGEKI_***
-;방어補正		@CLOTH_HOSEI_BOUGYO_***
-;민첩補正		@CLOTH_HOSEI_BINSYOU_***
-;지성補正		@CLOTH_HOSEI_CHISEI_***
-;체력減少量		@CLOTH_HOSEI_TAIRYOKU_***
-;기력減少量		@CLOTH_HOSEI_KIRYOKU_***
-;性耐減少量		@CLOTH_HOSEI_SEITAISEI_***
-;油断상승량		@CLOTH_HOSEI_YUDAN_***
+;●의상의 특수한 보정(복잡한 분기 조건을 가진 경우의 개별 판정)
+;		HP!DEF! 와 같이, 파라미터 부분에 "!" 를 지정한 경우에는 이하의 함수를 호출하여 반환값을 파라미터로 합니다.
+;		「커스터마이즈에 따라 속옷겸용이 되는 의상」이 중심입니다만,
+;		「겉옷이 없으면 회피 상승」처럼 유니크한 기준도 사용되고 있습니다.
+
+;공격 보정		@CLOTH_HOSEI_KOUGEKI_***
+;방어 보정		@CLOTH_HOSEI_BOUGYO_***
+;민첩 보정		@CLOTH_HOSEI_BINSYOU_***
+;지성 보정		@CLOTH_HOSEI_CHISEI_***
+;체력 감소량		@CLOTH_HOSEI_TAIRYOKU_***
+;기력 감소량		@CLOTH_HOSEI_KIRYOKU_***
+;성내성 감소량		@CLOTH_HOSEI_SEITAISEI_***
+;방심 감소량		@CLOTH_HOSEI_YUDAN_***
 ;
-;命中のみ上昇		@CLOTH_HOSEI_HIT_***
-;回避のみ上昇		@CLOTH_HOSEI_AVOID_***
+;명중만 상승		@CLOTH_HOSEI_HIT_***
+;회피만 상승		@CLOTH_HOSEI_AVOID_***
 ;치명타 보정	@CLOTH_HOSEI_CRITICAL_***
 ;점액 피해량 경감	@CLOTH_HOSEI_LIQUID_***
 ;사기(邪気) 피해량 경감	@CLOTH_HOSEI_WAVE_***
-;羞恥軽減		@CLOTH_HOSEI_SHYNESS_***
+;수치(羞恥) 경감		@CLOTH_HOSEI_SHYNESS_***
 ;Ｂ자동 증가 내성		@CLOTH_HOSEI_ANTIBUP_***
 ;Ｃ자동 증가 내성		@CLOTH_HOSEI_ANTICUP_***
-;回復効果強化		@CLOTH_HOSEI_HEALUP_***
+;회복 효과 강화		@CLOTH_HOSEI_HEALUP_***
 ;EX 게이지 증폭		@CLOTH_HOSEI_EXBOOST_***
 ;공중 성능 강화		@CLOTH_HOSEI_AIRPLUS_***
 ;
 ;내구력			@CLOTH_HOSEI_HP_***
-;속옷 보호力		@CLOTH_HOSEI_DEF_***
+;속옷 보호력		@CLOTH_HOSEI_DEF_***
 ;속옷겸용		@CLOTH_HOSEI_NOINNER_***
-;改造スロット		@CLOTH_HOSEI_SLOT_***	（-1で改造不可）
+;개조 슬롯		@CLOTH_HOSEI_SLOT_***	（-1로 개조 불가）
 
-;●カスタマイズのオプション記述例
-;	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"ミニスカート","ロングスカート@重2護2","お尻が見えそうな超ミニ@軽2晒2","スカートではなくブルマ@軽1晒1","@@")
-;		"オプション名@効果欄","オプション名@効果欄", ... ,"@@"
-;		可変引数を擬似的に扱っており、"@@"が末尾の目印です。カスタマイズあたりのオプションは最大10種類
-;	・効果欄には以下のキーワードと레벨の組み合わせを記述可能です。
-;		軽	…軽装레벨　※1
-;		重	…重装레벨　※1
-;		護	…속옷 보호＋　※2
-;		晒	…속옷 보호－　※2
-;		油	…방심도上昇　※3
-;			※1： 1～6　両者は相殺される。両者のうち一方のみ記述する
-;			※2：-6～6　両者は相殺される。両者のうち一方のみ記述する。主に下半身パーツ用？
-;			※3：-6～6　原則として속옷用
-;　　　　現在のところ、カスタマイズ全体で-9～9の範囲に収める必要があります。
+;●커스터마이즈 옵션 기술 예시
+;	CALL CLOTH_CUSTOMIZE_OPTION_PRINT(CUSTOM:3,"미니스커트","롱스커트@중2보2","엉덩이가 보일 듯한 초미니@경2백2","스커트가 아닌 부르마@경1백1","@@")
+;		"옵션명@효과란","옵션명@효과란", ... ,"@@"
+;		가변인수를 유사하게(擬似的に) 다루고 있으며, "@@" 끝의 표시입니다. 커스터마이즈당 옵션은 최대 10종류
+;	・효과란에는 이하의 키워드와 레벨의 조합을 기술할 수 있습니다.
+;		경	…경장 레벨(軽)　　※1
+;		중	…중장 레벨(重)　　※1
+;		보	…속옷 보호＋(護)　※2
+;		백	…속옷 보호－(晒)　※2
+;		방	…방심도 상승(油)　※3
+;			※1： 1～6　양측은 상쇄된다. 양측 중 한쪽만 기술한다
+;			※2：-6～6　양측은 상쇄된다. 양측 중 한쪽만 기술한다. 주로 하반신 파츠용?
+;			※3：-6～6　원칙적으로 속옷용
+;　　　　현재로서는, 커스터마이즈 전체에서 -9～9의 범위에 넣을 필요가 있습니다.
 ;
-;	・効果欄の先頭に"!!"を記述すると、そのオプションは選択不能になります。
-;	　あるカスタマイズが別のカスタマイズと排他的である場合に利用してください。
-;		;三項演算で直接記述する例
-;		"레깅스@"+(CFLAG:ARG:42 != 308 ? "!!설정中の下着が레깅스でなければ選択不可" # "軽4晒4")
+;	・효과란의 선두에 "!!" 를 기술할 시, 그 옵션은 선택 불능이 됩니다.
+;	　한 커스터마이즈가 다른 커스터마이즈와 배타적인 경우에 이용해 주세요.
+;		;3항 연산으로 직접 기술하는 예시
+;		"레깅스@"+(CFLAG:ARG:42 != 308 ? "!!설정 중인 속옷이 레깅스가 아니라면 선택 불가" # "경4백4")
 ;		
-;		;引数に変数を用い、事前に分岐しておく例
+;		;인수에 변수를 사용하여 사전에 분기해 두는 예시
 ;		IF CUSTOM:1 != 0 && CUSTOM:1 != 1
-;			LOCALS'="レオタード化@!!ワンピース型でないと選択できません"
+;			LOCALS'="레오타드화@!!원피스형이 아니면 선택할 수 없습니다."
 ;		ELSE
-;			LOCALS'="レオタード化@軽2 속옷겸용"
+;			LOCALS'="레오타드화@경2 속옷겸용"
 ;		ENDIF
-;	　後者の方が見やすいかもしれない
-;　実際の補正計算は現在のところカスタマイズ末尾にベタ書きされています。
-;　ちょっと大変ですが、増やした場合はそちらにも頑張って記述してね
+;	　후자 쪽이 보기 쉬울지도 모른다
+;　실제 보정 계산은 현재로서 커스터마이즈 말미에 베끼고 있습니다.
+;　조금 힘들겠지만, 늘린 경우에는 그쪽에도 열심히 기술해 주세요
 
 
 
-;CLOTH0 ※「装備なし」のデフォルト値を示す
+;CLOTH0 ※「장비 없음」의 디폴트값을 나타낸다
 @CLOTH_STATUS_991
 	SAVESTR:0'="SLOT-1,HP0,def0,"
 
 ;********************************************************************************************************************
-;CLOTH991 イベント専用겉옷
+;CLOTH991 이벤트 전용 겉옷
 ;----------------------------------------------------------
 @CLOTH_DESCRIPTION_990
-PRINTL  イベント専用겉옷です。このテキストが表示されるべきではありません
+PRINTL  이벤트 전용 겉옷입니다. 이 텍스트가 표시되어서는 안 됩니다.
 @CLOTH_STATUS_990
 	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","OUTER")
 	CATCH
 		SAVESTR:0'="SLOT-1,HP100,"
 	ENDCATCH
 @CLOTH_DESCRIPTION_991
-PRINTL  イベント専用겉옷(変身後)です。このテキストが表示されるべきではありません
+PRINTL  이벤트 전용 겉옷(변신 후)입니다. 이 텍스트가 표시되어서는 안 됩니다.
 @CLOTH_STATUS_991
 	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","OUTER_TRANS")
 	CATCH
 		SAVESTR:0'="SLOT-1,HP100,"
 	ENDCATCH
 @CLOTH_DESCRIPTION_992
-PRINTL  イベント専用속옷です。このテキストが表示されるべきではありません
+PRINTL  이벤트 전용 속옷입니다. 이 텍스트가 표시되어서는 안 됩니다.
 @CLOTH_STATUS_992
 	TRYCCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("info","INNER")
 	CATCH
 		SAVESTR:0'="SLOT-1,HP80,SEITAISEI95,"
 	ENDCATCH
 ;----------------------------------------------------------
-;固有カスタマイズ
+;고유 커스터마이즈
 @CLOTH_CUSTOMIZE_OPTION_DRAW_990(CUSTOM,ID,ARG)
 #DIM REF CUSTOM,0
 #DIM ID,1
@@ -119,29 +120,29 @@ RESULTS'=""
 TRYCALLFORM BATTLE_EVENT_CLOTH_STATUS_{FLAG:45}("option","INNER")
 PRINTFORML %RESULTS%
 ;SIF CUSTOM:0 == 0
-;	PRINT [カラー：白]
-;PRINT [세라복][スカーフ]
+;	PRINT [색：하양]
+;PRINT [세라복][스카프]
 ;SIF CUSTOM:1 == 2
-;	PRINT [下乳露出]
+;	PRINT [밑가슴 노출]
 ;SIF CFLAG:ARG:1 > 0 && CFLAG:ARG:(900 + ID) == 1
-;	PRINTL 　変身時追加：[豪華な装飾][軽装甲]
+;	PRINTL 　변신 시 추가：[호화로운 장식][경장갑]
 
 
 @CLOTH_CUSTOMIZE_OPTION_991,ARG
 #DIM CUSTOM, 5
 #DIM CUSTOM_NUM = 5
 #DIM ID
-PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+PRINTL 이벤트 전용 장비의 커스터마이즈는 불려서는 안 됩니다.
 @CLOTH_CUSTOMIZE_OPTION_991,ARG
 #DIM CUSTOM, 5
 #DIM CUSTOM_NUM = 5
 #DIM ID
-PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+PRINTL 이벤트 전용 장비의 커스터마이즈는 불려서는 안 됩니다.
 @CLOTH_CUSTOMIZE_OPTION_992,ARG
 #DIM CUSTOM, 5
 #DIM CUSTOM_NUM = 5
 #DIM ID
-PRINTL イベント専用装備のカスタマイズは呼ばれるべきではありません
+PRINTL 이벤트 전용 장비의 커스터마이즈는 불려서는 안 됩니다.
 
 ;노출 정도
 LOCAL = 0
@@ -149,17 +150,17 @@ LOCAL = 0
 ;	LOCAL -= 1
 ;SIF CUSTOM:4 == 4
 ;	LOCAL += 1
-;補正効果
-;軽装
+; 보정 효과
+;경장
 SIF LOCAL < 0
 	EQUIP:ARG:ID -= LOCAL * POWER(10, 9)
-;重装
+;중장
 SIF LOCAL > 0
 	EQUIP:ARG:ID += LOCAL * POWER(10, 10)
-;;속옷 보호ダウン
+;;속옷 보호 DOWN
 ;SIF CUSTOM:3 == 2
 ;	EQUIP:ARG:ID += 2 * POWER(10, 11)
-;;속옷 보호アップ
+;;속옷 보호 UP
 ;SIF CUSTOM:3 == 1
 ;	EQUIP:ARG:ID += 2 * POWER(10, 12)
 

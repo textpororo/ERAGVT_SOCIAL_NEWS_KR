@@ -225,7 +225,7 @@ ELSE
 			IF ABL:노출벽 == 3
 				PRINTL （ここなら、平気そう……）
 				PRINTFORMD %타겟은% 木陰で立ち止まり、スカートをたくし上げて
-					;履いてない
+					;하의 없음
 					IF CFLAG:42 == 0
 						PRINTFORMD むき出しになった
 					;生えてない
@@ -240,7 +240,7 @@ ELSE
 			ELSEIF ABL:노출벽 == 4
 				PRINTL （誰も、いない……よね？）
 				PRINTFORMDL %타겟은% 木陰で立ち止まると服を脱ぎ捨て、下着姿のまま歩き出した。
-					;履いてない（露出用に下着着用）
+					;하의 없음（露出用に下着着用）
 					IF CFLAG:42 == 0
 						PRINTFORMD ……履いている下着には、
 					ELSE
@@ -603,7 +603,7 @@ PRINTFORMDL
 			SELECTCASE RAND:2
 				CASE 0
 					PRINTFORMDL スカートをまくられ、
-					;履いてない
+					;하의 없음
 					IF CFLAG:42 == 0
 						PRINTFORMD むき出しになった
 					ELSE
@@ -831,7 +831,7 @@ SELECTCASE RAND:3
 	CASE 1
 		PRINTL 「……失敗、した」
 		PRINTFORMD %타겟은% 転んだことに落ち込んでいるが、
-		;履いてない
+		;하의 없음
 		IF CFLAG:42 == 0
 			;生えてない
 			SIF TALENT:백보지 == 1

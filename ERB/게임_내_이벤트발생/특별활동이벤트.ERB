@@ -283,7 +283,7 @@ SELECTCASE ARG
 			ELSEIF RAND:3 == 0 && TALENT:행운아 == 0
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%怪人にとどめを刺す肝心な場面で足を滑らせ派手にすっ転び、
 				IF ISHOLE() == 1
-					;履いてない
+					;하의 없음
 					IF CFLAG:42 == 0
 						PRINTFORM 下履きを履いていなかったばかりに、
 						;生えてない
@@ -345,7 +345,7 @@ SELECTCASE ARG
 					ENDIF
 				ELSE
 					PRINTFORML アクションシーンの途中で%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%怪人にスカートを捲られてしまい、
-					;履いてない
+					;하의 없음
 					IF CFLAG:42 == 0
 						PRINTFORM 下履きを履いていなかったばかりに、
 						;生えてない
@@ -808,7 +808,7 @@ SELECTCASE ARG
 				PRINTFORML 女性の姿に変身した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして街に繰り出していた。
 				PRINTW 
 				PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
-				PRINTFORML とどめに派手な色のサイハイソックスを身に付けた姿はいかにも腰の軽そうなギャル風だ。
+				PRINTFORML とどめに派手な色のサイハイ삭스を身に付けた姿はいかにも腰の軽そうなギャル風だ。
 				PRINTFORML ほどなくして声をかけられた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%肩を抱かれて街の人ごみの中へと消えていった…
 			ELSEIF TALENT:처녀 > 0
 				PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、
@@ -841,7 +841,7 @@ SELECTCASE ARG
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%街で遊んでくれそうな相手を探している…
 			PRINTW 
 			PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
-			PRINTFORML とどめに派手な色のサイハイソックスを身に付けた姿はいかにも腰の軽そうなギャル風だ。
+			PRINTFORML とどめに派手な色のサイハイ삭스を身に付けた姿はいかにも腰の軽そうなギャル風だ。
 			PRINTFORML ほどなくして声をかけられた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%肩を抱かれて街の人ごみの中へと消えていった…
 		ELSEIF TALENT:처녀 > 0
 			PRINTFORML 街で歩いていた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ふと知らない相手に声を掛けられた。
@@ -3269,7 +3269,7 @@ SELECTCASE ARG
 		ELSEIF TALENT:행운아 == 0 && RAND:(2 + (EXP:매료경험 / 20)) == 0
 			IF ISHOLE() == 1
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%最後の大舞台で足を滑らせ派手にすっ転び、
-				;履いてない
+				;하의 없음
 				IF CFLAG:42 == 0
 					PRINTFORM 下履きを履いていなかったばかりに、
 					;生えてない
