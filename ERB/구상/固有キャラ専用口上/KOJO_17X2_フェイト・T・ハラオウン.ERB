@@ -856,34 +856,34 @@ SIF CALLNAME:TARGET == "フェイト"
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	SELECTCASE RAND:2
 		CASE 0
-		CDFLAG:TARGET:근거리:전투스타일=2;装甲
-		CDFLAG:TARGET:중거리:전투스타일=2;装甲
-		CDFLAG:TARGET:원거리:전투스타일=2;装甲
+		CDFLAG:TARGET:근거리:전투스타일=2;장갑
+		CDFLAG:TARGET:중거리:전투스타일=2;장갑
+		CDFLAG:TARGET:원거리:전투스타일=2;장갑
 		CASE 2
-		CDFLAG:TARGET:근거리:전투스타일=8;設置
-		CDFLAG:TARGET:중거리:전투스타일=8;設置
-		CDFLAG:TARGET:원거리:전투스타일=8;設置
+		CDFLAG:TARGET:근거리:전투스타일=8;설치
+		CDFLAG:TARGET:중거리:전투스타일=8;설치
+		CDFLAG:TARGET:원거리:전투스타일=8;설치
 		CASEELSE
-		CDFLAG:TARGET:근거리:전투스타일=7;知略
-		CDFLAG:TARGET:중거리:전투스타일=7;知略
-		CDFLAG:TARGET:원거리:전투스타일=7;知略
+		CDFLAG:TARGET:근거리:전투스타일=7;지략
+		CDFLAG:TARGET:중거리:전투스타일=7;지략
+		CDFLAG:TARGET:원거리:전투스타일=7;지략
 	ENDSELECT
 ELSE
 	;敵のHPが1/30かつ3000以下
 	IF (FLAG:13 < FLAG:12 /30) && (FLAG:13 <3000)
-		CDFLAG:TARGET:근거리:전투스타일=6;全力
-		CDFLAG:TARGET:중거리:전투스타일=6;全力
-		CDFLAG:TARGET:원거리:전투스타일=6;全力
+		CDFLAG:TARGET:근거리:전투스타일=6;전력
+		CDFLAG:TARGET:중거리:전투스타일=6;전력
+		CDFLAG:TARGET:원거리:전투스타일=6;전력
 	;敵のHPが半分以上
 	ELSEIF (FLAG:13 > FLAG:12 /2)
-		CDFLAG:TARGET:근거리:전투스타일=1;連続
-		CDFLAG:TARGET:중거리:전투스타일=1;連続
-		CDFLAG:TARGET:원거리:전투스타일=1;連続
+		CDFLAG:TARGET:근거리:전투스타일=1;연속
+		CDFLAG:TARGET:중거리:전투스타일=1;연속
+		CDFLAG:TARGET:원거리:전투스타일=1;연속
 	;敵のHPが半分以上で、通常공격
 	ELSE
-		CDFLAG:TARGET:근거리:전투스타일=0;通常
-		CDFLAG:TARGET:중거리:전투스타일=0;通常
-		CDFLAG:TARGET:원거리:전투스타일=3;撹乱
+		CDFLAG:TARGET:근거리:전투스타일=0;통상
+		CDFLAG:TARGET:중거리:전투스타일=0;통상
+		CDFLAG:TARGET:원거리:전투스타일=3;교란
 	ENDIF
 ENDIF
 
@@ -902,23 +902,23 @@ SIF CALLNAME:TARGET == "フェイト"
 @KOJO_フェイト_BATTLE_CHARA_ATTACK_RANGE_SHORT
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:근거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM ジェットザンバー
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM ライオットザンバー・スティンガー
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM ディフェンサープラス
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM ブリッツアクション
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM プラズマスマッシャー
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM サンターブレイド
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORM ライオットザンバー・カラミティ
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM ハーケンセイバー
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM ライトニングバインド
 	CASEELSE
 		PRINTFORM 
@@ -940,23 +940,23 @@ SIF CALLNAME:TARGET == "フェイト"
 @KOJO_フェイト_BATTLE_CHARA_ATTACK_RANGE_MIDDLE
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:중거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM フォトンランサー
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM プラズマスマッシャー
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM ラウンドシールド
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM ディフェンサー
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM トライデントスマッシャー
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM サンダーレイジ
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORM 雷光一閃……プラズマザンバーブレイカー
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM アークセイバー
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM ライトニングバインド
 	CASEELSE
 		PRINTFORM 
@@ -979,28 +979,28 @@ SIF CALLNAME:TARGET == "フェイト"
 
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:원거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM フォトンランサー
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM フォトンランサー・マルチショット
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM ラウンドシールド
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM アークセイバー
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM サンダースマッシャー
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM サンダーレイジ
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORML アルカス・クルタス・エイギアス。
 		PRINTFORML 疾風なりし天神、今導きのもと撃ちかかれ。
 		PRINTFORML バルエル・ザルエル・ブラウゼル。
 
 		PRINTFORML フォトンランサー・ファランクスシフト
 		PRINTFORM 撃ち砕け、ファイアー
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM プラズマランサー
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM ライトニングバインド
 	CASEELSE
 		PRINTFORM 

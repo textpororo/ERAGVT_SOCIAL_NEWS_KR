@@ -190,14 +190,14 @@
 @MESSAGE_CITIZEN_TRAIN_DOG(ARG,ARGS,ARGS:1)
 	TARGET=ARG
 
-	IF ARGS:1=="監禁"
+	IF ARGS:1=="감금"
 		PRINTFORMW 廃ビル地下の調教室・・・
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%動物の耳を模した髪飾りをつけられ、%ARGS%の前で四つん這いになっていた。
 		PRINTFORML 首輪を嵌められ、鎖の一端を男に掴まれている%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、もはやただの雌犬にしか見えない...
 		PRINTFORML %ARGS%の前で「才能」を発揮するよう命じられた%PRINT_TRANSCALLNAME(TARGET)%には、
 		PRINTFORML 成功すればご褒美が、失敗すれば고통が与えられる。
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)% は、飴と鞭によって巧みに躾けられてゆくのだった。
-	ELSE	;IF ARGS:1=="痴漢" || ARGS:1=="ナンパ" || ARGS:1=="酒ナンパ" || ARGS:1=="특별 활동"
+	ELSE	;IF ARGS:1=="痴漢" || ARGS:1=="헌팅" || ARGS:1=="酒ナンパ" || ARGS:1=="특별 활동"
 		;호출元で場所描写済みのグループ
 		PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%動物の耳を模した髪飾りをつけられ、%ARGS%の前に四つん這いになっていた。
 		PRINTFORML 首輪から伸びたリードを男に握られた%PRINT_TRANSCALLNAME(TARGET)%의 今の身分は牝犬である…
@@ -340,7 +340,7 @@
 	;＠翻訳完了まで호출元デッドコード
 	;以下加筆：獸交-狗
 	PRINTW 
-	IF (ARGS:1=="監禁" && CONFIG_CHECK_MANIAC_F(15) == 1 && ABL:마조끼 > 4 || TALENT:희롱특화체질 > 0 ) && MARK:굴복각인 >= 3 && ISFEMALE()
+	IF (ARGS:1=="감금" && CONFIG_CHECK_MANIAC_F(15) == 1 && ABL:마조끼 > 4 || TALENT:희롱특화체질 > 0 ) && MARK:굴복각인 >= 3 && ISFEMALE()
 		PRINTW
 		PRINTL 
 		PRINTFORML %ARGS%は、完全に開発された %PRINT_TRANSCALLNAME(TARGET)% に特別な報酬を与えることにしたようだ。

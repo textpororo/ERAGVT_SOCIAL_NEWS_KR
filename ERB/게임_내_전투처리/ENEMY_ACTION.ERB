@@ -37,7 +37,7 @@ IF TCVARn:0 > 0
 			;敵キャラ側の공격成功率
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KOUGEKI"
 			IF RESULT == 1
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;カス当たり判定
@@ -63,7 +63,7 @@ IF TCVARn:0 > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;공격範囲外
@@ -73,12 +73,12 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;連続回避リセット
+				;연속回避リセット
 				TFLAG:33 = 0
 
 				;クリティカル判定
 				;FEAT 효과에 따른被クリティカル防止
-				IF RAND:100 < 5 && FSTYLE_NAME_F(TARGET,TCVARn:0) != "装甲" && TALENT:타고난전사 == 0
+				IF RAND:100 < 5 && FSTYLE_NAME_F(TARGET,TCVARn:0) != "장갑" && TALENT:타고난전사 == 0
 					LOCAL:1 = 15
 					;지문: 敵キャラの공격がクリティカルヒット
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
@@ -183,7 +183,7 @@ IF TCVARn:0 > 0
 			;敵キャラ側の絡みつく判定
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KARAMITUKU"
 			IF RESULT == 1
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;지문: 絡みつく自力回避
@@ -197,7 +197,7 @@ IF TCVARn:0 > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 	
 			ELSEIF RESULT == 2
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;공격範囲外
@@ -207,7 +207,7 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;連続回避リセット
+				;연속回避リセット
 				TFLAG:33 = 0
 
 				;ダメージ計算 通常食らうダメージの1/4
@@ -295,7 +295,7 @@ IF TCVARn:0 > 0
 			;敵キャラ側の体液を吐く成功率
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_TAIEKI"
 			IF RESULT == 1
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;지문: 敵キャラの体液を吐くを自力回避
@@ -309,7 +309,7 @@ IF TCVARn:0 > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;공격範囲外
@@ -319,7 +319,7 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;連続回避リセット
+				;연속回避リセット
 				TFLAG:33 = 0
 
 				;지문: 敵キャラの体液を吐くがヒット
@@ -378,17 +378,17 @@ IF TCVARn:0 > 0
 				LOCAL:10 += LOCAL:2 * 2
 				LOCAL:11 += LOCAL:2 / 2
 
-				;[撹乱]スタイルの被ダメージ増大
-				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱"
+				;[교란]スタイルの被ダメージ増大
+				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 					TIMES LOCAL:2, 1.15
 					TIMES LOCAL:3, 1.15
-				;[装甲]スタイルの被ダメージ軽減
-				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"
+				;[장갑]スタイルの被ダメージ軽減
+				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 					TIMES LOCAL:2, 0.85
 					TIMES LOCAL:3, 0.85
 				ENDIF
-				;[全力]バースト공격の被ダメージ増大
-				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "全力"
+				;[전력]バースト공격の被ダメージ増大
+				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 					TIMES LOCAL:2, 1.25
 					TIMES LOCAL:3, 1.25
 				ENDIF
@@ -506,7 +506,7 @@ IF TCVARn:0 > 0
 			;敵キャラ側の絡みつく判定
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_OSHITAOSU"
 			IF RESULT == 1
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;지문: 押し倒す自力回避
@@ -520,7 +520,7 @@ IF TCVARn:0 > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 				
 			ELSEIF RESULT == 2
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;공격範囲外
@@ -530,7 +530,7 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;連続回避
+				;연속回避
 				TFLAG:33 = 0
 
 				;ダメージ計算 通常食らうダメージの1/4
@@ -618,7 +618,7 @@ IF TCVARn:0 > 0
 			;敵キャラ側の邪悪な波動の成功率
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_HADOU"
 			IF RESULT == 1
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;지문: 敵キャラの邪悪な波動を自力回避
@@ -632,7 +632,7 @@ IF TCVARn:0 > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;連続回避
+				;연속回避
 				TFLAG:33 += 1
 
 				;공격範囲外
@@ -642,7 +642,7 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;連続回避リセット
+				;연속回避リセット
 				TFLAG:33 = 0
 
 				;지문: 敵キャラの邪悪な波動がヒット
@@ -704,17 +704,17 @@ IF TCVARn:0 > 0
 				LOCAL:10 += LOCAL:2 * 2
 				LOCAL:11 += LOCAL:2 / 2
 
-				;[撹乱]スタイルの被ダメージ増大
-				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱"
+				;[교란]スタイルの被ダメージ増大
+				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 					TIMES LOCAL:2, 1.15
 					TIMES LOCAL:3, 1.15
-				;[装甲]スタイルの被ダメージ軽減
-				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"
+				;[장갑]スタイルの被ダメージ軽減
+				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 					TIMES LOCAL:2, 0.85
 					TIMES LOCAL:3, 0.85
 				ENDIF
-				;[全力]バースト공격の被ダメージ増大
-				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "全力"
+				;[전력]バースト공격の被ダメージ増大
+				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 					TIMES LOCAL:2, 1.25
 					TIMES LOCAL:3, 1.25
 				ENDIF
@@ -815,7 +815,7 @@ ELSE
 		VARSET NOWEX
 		PRINTW 
 		FONTBOLD
-		PRINTL 連続行動！
+		PRINTL 연속行動！
 		FONTREGULAR
 		PRINTL 
 		GOTO ROUTINE_LOOP_1

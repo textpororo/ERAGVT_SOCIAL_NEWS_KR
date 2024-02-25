@@ -1,30 +1,30 @@
-﻿;戦闘コマンド実行後処理
+﻿;전투 커맨드 실행 후 처리
 @SOURCE_CHECK
 
-;강구속(ピストン)中と丸飲み準備中は敗北／時間切れ敗北が遅延される
-#DIM ターン内敗北キャンセル,1
-ターン内敗北キャンセル=0
+;강구속(피스톤) 중이거나 통째로 삼킬 준비 중에는 패배／시간 만료 패배가 지연된다
+#DIM 턴내패배취소,1
+턴내패배취소=0
 
 ;**********************************************************
-;プレイヤー行動直後の共通処理
+;플레이어 행동 직후의 공통 처리
 ;**********************************************************
-;SP변신終了までは疲労が蓄積しない
+;SP변신 종료까지는 피로가 축적되지 않는다
 IF CFLAG:1 == 2
 	TFLAG:99 += 1
-;それ以外なら行動の反動で疲労が蓄積する
+;그 이외라면 행동의 반동으로 피로가 축적된다
 ELSEIF TFLAG:99 > 0
 	CFLAG:99 += TFLAG:99
 	RESULTS = {TFLAG:99}
 	TOFULL RESULTS
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の身体の底に疲労が蓄積した……（＋%RESULTS%）
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 신체 밑바닥에 피로가 쌓였다……（＋%RESULTS%）
 	PRINTW 
 	TFLAG:99 = 0
 ENDIF
 
 ;**********************************************************
-;装備効果の発動
+;장비 효과의 발동
 ;**********************************************************
-;TK-ドローン
+;TK-드론
 SIF CFLAG:TARGET:43 == 506
 	CALL TK_DRONE
 ;우주 씰
@@ -35,87 +35,88 @@ SIF CFLAG:TARGET:43 == 509
 	CALL SERVANT
 	
 ;**********************************************************
-;히든 보스形態変化の処理
+;히든 보스 형태 변화 처리
 ;**********************************************************
 IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 2
 	CALL PERCENT_CAL, FLAG:13, FLAG:12
 	IF ENEMY_TYPE_CHECK_F("LASTBOSS") == 2 && RESULT <= 75
-		PRINTW …
-		PRINTW ……
+		PRINTL …
+		PRINTL ……
 		PRINTW ………
 		PRINTL 
-		PRINTW 分厚い甲殻を突き破り、ようやく内部に一撃が到達する……
-		PRINTW すると"천사の樹"の蕾が花開き、周囲に妖しげな香りが立ち込める……！！
-		PRINTW "천사の樹"は"楽園の花"に変化した……！！
+		PRINTL 두꺼운 갑각을 뚫고, 겨우겨우 내부에 일격이 도달한다……
+		PRINTL 그랬더니「천사의 나무」의 꽃봉오리가 활짝 피어, 주위에 요상한 향기가 자욱이 낀다……！！
+		PRINTW 「천사의 나무」는「낙원의 꽃」으로 변화했다……！！
 		PRINTL 
 		FLAG:21 = 2
 	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 3 && RESULT <= 37
-		PRINTW …
-		PRINTW ……
+		PRINTL …
+		PRINTL ……
 		PRINTW ………
 		PRINTL 
-		PRINTW 敵が苦しみ悶え、肉の花弁の色が褪せていく……
-		PRINTW 肉腫のような花が次々と枯れ落ちていき、敵の"核"が姿を現した……！！
-		PRINTW "楽園の花"は"타락の核"に変化した……！！
+		PRINTL 적이 고통에 몸부림치며, 살덩어리 속 꽃잎의 색깔이 바래 간다……
+	PRINTL 육종과도 같은 꽃이 차례차례로 시들어 가고, 적의「핵」이 모습을 드러냈다……！！
+		PRINTW 「낙원의 꽃」은「타락의 핵」으로 변화했다……！！
 		PRINTL 
 		FLAG:21 = 3
 	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 4 && RESULT <= 10
-		PRINTW …
-		PRINTW ……
+		PRINTL …
+		PRINTL ……
 		PRINTW ………
 		PRINTL 
-		PRINTW 張り巡らされた肉の根から栄養が吸い上げられると、
-		PRINTW 引き千切られ、朽ち果てた敵の촉수がみるみる再生していく……！！
+		PRINTL 둘러 쳐진 살덩이의 뿌리로부터 영양이 빨아 올려가자,
+	PRINTW 찢긴 채 썩어 문드러진 적의 촉수가 순식간에 재생되어 간다……！！
 		LOCAL = FLAG:12 * 70 / 100 - FLAG:13
-		PRINTFORMW "타락の核"の체력が{LOCAL}回復した……！！
+		PRINTFORMW 「타락의 핵」의 체력이 {LOCAL} 회복됐다……！！
 		PRINTL 
 		FLAG:13 += LOCAL
 		FLAG:21 = 4
 	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 5 && FLAG:13 <= 0
-		PRINTW …
-		PRINTW ……
+		PRINTL …
+		PRINTL ……
 		PRINTW ………
 		PRINTL 
-		PRINTW  ピキッ とヒビの入るような音が響き渡り、全てが制止した……
-		PRINTW 最後の一撃が水を打ったように異形の柱たちの動きを止め、
-		PRINTW 静かに"타락の核"がボロボロと風化し、地に落ちて砕け散った。
+		PRINTL  쩌저적, 하고 금가는 듯한 소리가 울려 퍼져, 모든 것이 제지됐다……
+		PRINTL 마지막 일격이 물을 끼얹은 듯이 이형 기둥들의 움직임을 멈췄고,
+		PRINTW 조용히「타락의 핵」이 너덜너덜하게 풍화되어, 땅에 떨어져 부서져 갔다.
 		PRINTL 
-		PRINTW 中枢を失った周囲の肉塊が生気を失って石のように固まり、
-		PRINTW はじめは遠い地響きと共に、やがて盛大な轟音となってガラガラと崩壊をはじめる……
+		PRINTL 중추를 잃은 주위의 육괴들이 생기를 잃어 돌처럼 굳었고,
+		PRINTW 처음에는 먼 땅울림과 함께, 이윽고 성대한 굉음이 되어 와르르 붕괴를 시작했다……
 		PRINTL 
-		PRINTW 全てが土煙りに包まれて、何も見えなくなった……
+		PRINTW 모든 것이 흙먼지에 휩싸여 아무것도 보이지 않게 됐다……
 		PRINTL 
-		PRINTW …
-		PRINTW ……
+		PRINTL …
+		PRINTL ……
 		PRINTW ………
-		PRINTW 地響きが収まったときには、もう何も残ってはいなかった。
-		PRINTW 辺りに広がるのは戦いで荒れ果てた廃墟と、虹色の砂となって散らばる촉수の残骸のみ。
-		PRINTW 探し回っても生存者の気配はなく、
-		PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無人の荒野に立ち尽くすしかない。
-		PRINTW "천사の樹"に取り込まれた者は、一緒に砂となって消えてしまったのだ。
-		PRINTW これでは、いったい何のために戦ったのか――
+		PRINTL 땅울림이 가라앉았을 때에는, 이미 아무것도 남아 있지 않았다.
+		PRINTW 주변에 펼쳐진 것은 싸움으로 황폐해진 폐허와, 무지개빛 모래가 되어 흩어지는 촉수의 잔해뿐.
+		PRINTL 찾아다녀도 생존자의 기척은 없어,
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 사람 하나 없는 황야에 홀로 서 있을 수밖에 없었다.
+		PRINTL 「천사의 나무」에게 거두어진 이들은, 함께 모래가 되어 사라져 버린 것이었다.
+		PRINTW 이래서야, 대체 무엇을 위해 싸운 것인가――
 		PRINTL 
-		PRINTW …
-		PRINTW ……
-		PRINTW ………
-		PRINTW ――いや、違う！　崩れ去った瓦礫に隠れるように、少女が倒れている！
-		PRINTW 必死に砂を掘り返し、裸のまま기절している少女を助け出して抱き締めると、
-		PRINTW 弱々しくも、しかし確かな鼓動の感触が胸を打った。
-		PRINTW 耳を澄ませば周囲からは声を掛け合い、救助活動に勤しむ人々の活気が伝わってくる。
-		PRINTW そう、人類を襲った脅威はもはや去ったのだ……
+		PRINTL …
+		PRINTL ……
+		PRINTL ………
+		PRINTW ――아니, 틀렸다！　무너져 내린 잔해에 숨어 있듯이 소녀가 쓰러져 있었다！
+		PRINTL 필사적으로 모래를 파헤쳐 벌거벗은 채 기절해 있던 소녀를 구해내어 껴안자,
+		PRINTW 약하디약하게도, 하지만 확실하게 느껴지는 고동의 감촉이 가슴을 울렸다.
+		PRINTL 또 저편에서 희미하게 들리는 소리에 귀를 기울이니,
+		PRINTL 주위에서는 서로 말을 걸며 구조 활동에 힘쓰는 사람들의 활기가 전해져 왔다.
+		PRINTW 그렇다, 인류를 덮친 위협은 이미 떠난 것이었다.
 		PRINTL 
-		PRINTFORMW 安堵のためか放心してその場に座り込む%PRINT_TRANSCALLNAME(TARGET)%의 頬を、
-		PRINTW 虹色の風が優しく撫でていった……
+		PRINTFORML 안도감 때문인지 안심하여 그 자리에 털썩 주저앉은 %PRINT_TRANSCALLNAME(TARGET)%의 뺨을,
+		PRINTW 무지갯빛 바람이 부드럽게 쓰다듬고 갔다.……
 		PRINTL 
 		FLAG:21 = 0
 	ENDIF
 ENDIF
 
 ;**********************************************************
-;戦闘終了処理１　勝利
+;전투 종료 처리１　승리
 ;**********************************************************
 IF FLAG:13 <= 0
-	;全ての보스 촉수のダメージ蓄積値が回復
+	;모든 보스 촉수의 피해 축적치가 회복
 	IF ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0
 		CALL GET_BOSS_ERB_NUM
 		FOR LOCAL,1,RESULT + 1
@@ -125,83 +126,83 @@ IF FLAG:13 <= 0
 		NEXT
 	ENDIF
 
-	;戦闘結果フラグ：勝利
+	;전투 결과 플래그：승리
 	TFLAG:98 = 1
 
-	;★現時点で악질 시민戦は勝利分岐に入らない
-	;　(拘束から脱出＝タイムアップ時分岐に派生)
-	;　악질 시민戦拡張に合わせて要改変
+	;★현시점에서 악질 시민전은 승리 분기로 들어가지 않는다
+	;　(구속에서 탈출＝타임 업 시 분기로 파생)
+	;　악질 시민전 확장에 맞추어 요개변
 
-	;보스 촉수に勝利
+	;보스 촉수에게 승리
 	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
 	
-		;지문: 戦闘勝利
+		;지문: 전투 승리
 		CALL MESSAGE_BATTLE_END_WIN
 	
 		;보스 촉수
 		IF ENEMY_TYPE_CHECK_F("BOSS") == 1
-			;索敵ターゲットを倒した場合は索敵をリセット
+			;색적 타겟을 쓰러뜨렸을 경우 색적을 초기화
 			SIF FLAG:18 == FLAG:11
 				FLAG:18 = 0
-			;倒した보스の蓄積ダメージをリセット
+			;쓰러뜨린 보스의 축적 피해를 초기화
 			FLAG:(FLAG:11 + 300) = 0
-			;エンドレスモードではビットを寝かせず보스 총 마릿수だけを増やす
+			;ENDLESS모드에서는 비트를 눕히지 않고 보스의 총수만을 늘린다
 			IF GAME_OPTION_CHECK_F(OPTION_endless) && FLAG:11 > 0
 				FLAG:3 += 1
-				;同じ보스と連続で遭遇しないようにする
+				;같은 보스와 연속으로 조우하지 않도록 한다
 				CALL TENTACLE_SURVIVE,"NUM"
 				$ENDLESS_TARGET_LOOP
 				FLAG:18 = RAND:RESULT
 				SIF FLAG:18 == FLAG:11
 					GOTO ENDLESS_TARGET_LOOP
-			;エンドレスモード以外では倒した보스 촉수のビットを寝かせる
+			;ENDLESS모드 이외에서는 쓰러뜨린 보스 촉수의 비트를 눕힌다
 			ELSEIF FLAG:11 > 0
 				CLEARBIT FLAG:100,FLAG:11 - 1
 			ENDIF
 
 
 
-			;返り血
+			;촉수혈
 			TRYCALL SUPART_BLOOD
-		;최종 보스（Ｋ）or히든 보스 촉수撃破時
+		;최종 보스（Ｋ）or 히든 보스 촉수 격파 시
 		ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 1 && GET_LASTBOSS_PHASE_F() >= 1
-			;索敵ターゲットを倒した場合は索敵をリセット
+			;색적 타겟을 쓰러뜨렸을 경우 색적을 초기화
 			SIF FLAG:18 == FLAG:11
 				FLAG:18 = 0
 
-			;倒した최종 보스の蓄積ダメージをリセット
+			;쓰러뜨린 최종 보스의 축적 피해를 초기화
 			FLAG:(FLAG:11 + 400) = 0
 
-			;周回後＆HARDCOREでＫ촉수を撃破した場合
+			;주회차＆HARDCORE에서 Ｋ촉수를 격파한 경우
 			IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && GET_LASTBOSS_PHASE_F() == 1
-				;히든 보스を登場させる準備
+				;히든 보스를 등장시킬 준비
 				FLAG:4 += 1
 				FLAG:1 += 5
 				FLAG:21 = 1
-			;히든 보스撃破
+			;히든 보스 격파
 			ELSEIF FLAG:21 > 0
-				;エンディング
+				;엔딩
 				FLAG:64 = -1
 				CALL UNLOCK_ACHIEVEMENT(270,"월등한 최강 대 최강")
 			ELSE
-				;エンディング
+				;엔딩
 				FLAG:64 = -1
 			ENDIF
 
-			;倒した최종 보스 촉수のビットを寝かせる
+			;쓰러뜨린 최종 보스 촉수의 비트를 눕힌다
 			SIF FLAG:11 > 0
 				CLEARBIT FLAG:101,FLAG:11 - 1
 
 		ENDIF
 		
-		;보스撃破時の共通処理
+		;보스 격파 시의 공통 처리
 		IF BASE:체력 == MAXBASE:체력 && BASE:기력 == MAXBASE:기력 && TFLAG:0 >= 10
 			CALL UNLOCK_ACHIEVEMENT(266,"퍼펙트 킬")
 		ENDIF
 
 		CALL AFTER_KILLED_BOSS
 
-		;보스に세뇌されていたキャラの救出
+		;보스에게 세뇌당한 캐릭터의 구출
 		LOCAL:1 = 0
 		FOR LOCAL, 0, CHARANUM
 			SIF LOCAL == MASTER
@@ -209,7 +210,7 @@ IF FLAG:13 <= 0
 			IF CFLAG:LOCAL:0 == 2 && CFLAG:LOCAL:20 == FLAG:10 && CFLAG:LOCAL:21 == FLAG:11
 				CALL UNLOCK_ACHIEVEMENT(273,"난 지금까지 무엇을…？")
 				IF LOCAL:1 == 0
-					;지문: 세뇌中キャラの救出
+					;지문: 세뇌 캐릭터의 구출
 					CALL MESSAGE_BATTLE_END_RESCUE_SENNOU
 				ENDIF
 				CFLAG:LOCAL:0 = -1
@@ -224,14 +225,14 @@ IF FLAG:13 <= 0
 				CFLAG:LOCAL:220 = 0
 				LOCAL:2 = TARGET
 				TARGET = LOCAL
-				;지문: 세뇌中キャラの救出された側
+				;지문: 세뇌 캐릭터의 구출된 쪽
 				CALL MESSAGE_OTHER_BATTLE_END_RESCUED_SENNOU
 				TARGET = LOCAL:2
 				LOCAL:1 = 1
 			ENDIF
 		NEXT
 	
-		;捕らわれキャラの救出
+		;사로잡힌 캐릭터의 구출
 		LOCAL:1 = 0
 		FOR LOCAL, 0, CHARANUM
 			SIF LOCAL == MASTER
@@ -240,7 +241,7 @@ IF FLAG:13 <= 0
 			IF CFLAG:LOCAL:0 == 1 && CFLAG:LOCAL:20 == FLAG:10 && CFLAG:LOCAL:21 == FLAG:11
 				CALL UNLOCK_ACHIEVEMENT(271,"얼른 도와줄게！")
 				IF LOCAL:1 == 0
-					;지문: 捕らわれキャラの救出
+					;지문: 사로잡힌 캐릭터의 구출
 					CALL MESSAGE_BATTLE_END_RESCUE
 				ENDIF
 				CFLAG:LOCAL:0 = -1
@@ -254,7 +255,7 @@ IF FLAG:13 <= 0
 				CFLAG:LOCAL:220 = 0
 				LOCAL:2 = TARGET
 				TARGET = LOCAL
-				;지문: 救出された側
+				;지문: 구출된 쪽
 				CALL MESSAGE_OTHER_BATTLE_END_RESCUED
 				TARGET = LOCAL:2
 				LOCAL:1 = 1
@@ -262,22 +263,22 @@ IF FLAG:13 <= 0
 		NEXT
 
 
-			;최종 보스が存在していない場合
+			;최종 보스가 존재하지 않는 경우
 			IF FLAG:100 == 0 && FLAG:101 == 0
-				;未出現なら
+				;미출현이라면
 				IF FLAG:64 != -1
-					;최종 보스撃破による히든 보스出現
+					;최종 보스 격파에 따른 히든 보스 출현
 					IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") == 1
 						FLAG:101 = 2
 						CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR_2
-					;최종 보스出現
+					;최종 보스 출현
 					ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 0
 						FLAG:101 = 1
 						CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR
 					ENDIF
-				;出現した上で최종 보스を倒したなら
+				;출현한 이후 최종 보스를 쓰러뜨렸다면
 				ELSE
-					;지문: 完全殲滅
+					;지문: 완전 섬멸
 					CALL MESSAGE_BATTLE_END_PERFECT
 					;실적
 					IF GAME_OPTION_CHECK_F(OPTION_solo) && TALENT:C민감 && TALENT:V민감 && TALENT:A민감 && TALENT:B민감
@@ -302,32 +303,32 @@ IF FLAG:13 <= 0
 					IF LOCAL:98 >= 3
 						CALL UNLOCK_ACHIEVEMENT(265,"NEXT GENERATION")
 					ENDIF
-					;エンディング플래그를 세운다
+					;엔딩플래그를 세운다
 					BEGIN TURNEND
 				ENDIF
 			ENDIF
 
 
 
-	;흑화 캐릭터に勝利
+	;흑화 캐릭터에게 승리했다
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		FLAG:110 = 0
 	
-		;지문: 敵キャラとの戦闘勝利
+		;지문: 적 캐릭터와의 전투 승리
 		CALL MESSAGE_BATTLE_END_WIN_ENEMY
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに敗北した
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 패배했다
 		CALL MESSAGE_OTHER_BATTLE_END_WIN_ENEMY
 
 		IF BASE:체력 == MAXBASE:체력 && BASE:기력 == MAXBASE:기력 && TFLAG:0 >= 10
 			CALL UNLOCK_ACHIEVEMENT(266,"퍼펙트 킬")
 		ENDIF
 
-		;敵キャラの救出
+		;적 캐릭터의 구출
 		CALL UNLOCK_ACHIEVEMENT(272,"정신 차리세요！")
-		;지문: 敵キャラの救出
+		;지문: 적 캐릭터의 구출
 		CALL MESSAGE_BATTLE_END_RESCUE_ENEMY
 		
-		;敵が세뇌だったか흑화だったか一時保存
+		;적이 세뇌였는지 흑화였는지 일시 보존
 		LOCAL:3 = CFLAG:(FLAG:111):0
 		
 		CFLAG:(FLAG:111):0 = -1
@@ -338,10 +339,10 @@ IF FLAG:13 <= 0
 		BASE:(FLAG:111):체력 = 1
 		BASE:(FLAG:111):기력 = 1
 		BASE:(FLAG:111):성내성 = 1
-		;지문: 세뇌/흑화状態で倒された側
+		;지문: 세뇌/흑화 상태로 쓰러진 쪽
 		CALL MESSAGE_OTHER_BATTLE_END_RESCUED_ENEMY
 		
-		;세뇌中キャラの救出
+		;세뇌 캐릭터의 구출
 		IF LOCAL:3 == 3
 			LOCAL:1 = 0
 			FOR LOCAL, 0, CHARANUM
@@ -351,7 +352,7 @@ IF FLAG:13 <= 0
 				IF FLAG:111 == CFLAG:LOCAL:21 && CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:0 == 2
 					CALL UNLOCK_ACHIEVEMENT(273,"난 지금까지 무엇을…？")
 					IF LOCAL:1 == 0
-						;지문: 세뇌中キャラの救出
+						;지문: 세뇌 캐릭터의 구출
 						CALL MESSAGE_BATTLE_END_RESCUE_SENNOU
 					ENDIF
 					CFLAG:LOCAL:0 = -1
@@ -366,7 +367,7 @@ IF FLAG:13 <= 0
 					CFLAG:LOCAL:220 = 0
 					LOCAL:2 = TARGET
 					TARGET = LOCAL
-					;지문: 세뇌中キャラの救出された側
+					;지문: 세뇌 캐릭터의 구출된 쪽
 					CALL MESSAGE_OTHER_BATTLE_END_RESCUED_SENNOU
 					TARGET = LOCAL:2
 					LOCAL:1 = 1
@@ -374,7 +375,7 @@ IF FLAG:13 <= 0
 			NEXT
 		ENDIF
 		
-		;捕らわれキャラの救出
+		;사로잡힌 캐릭터의 구출
 		IF LOCAL:3 == 3
 			LOCAL:1 = 0
 			FOR LOCAL, 0, CHARANUM
@@ -384,7 +385,7 @@ IF FLAG:13 <= 0
 				IF CFLAG:(FLAG:111):240 == CFLAG:LOCAL:21 && CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:0 == 1
 					CALL UNLOCK_ACHIEVEMENT(271,"얼른 도와줄게！")
 					IF LOCAL:1 == 0
-						;지문: 捕らわれキャラの救出
+						;지문: 사로잡힌 캐릭터의 구출
 						CALL MESSAGE_BATTLE_END_RESCUE_AKUOTI
 					ENDIF
 					CFLAG:LOCAL:0 = -1
@@ -399,7 +400,7 @@ IF FLAG:13 <= 0
 					CFLAG:LOCAL:220 = 0
 					LOCAL:2 = TARGET
 					TARGET = LOCAL
-					;지문: 救出された側
+					;지문: 구출된 쪽
 					CALL MESSAGE_OTHER_BATTLE_END_RESCUED
 					TARGET = LOCAL:2
 					LOCAL:1 = 1
@@ -407,19 +408,19 @@ IF FLAG:13 <= 0
 			NEXT
 		ENDIF
 	
-	;雑魚戦に勝利
+	;잡몹적에게 승리
 	ELSEIF ENEMY_TYPE_CHECK_F("MOB") == 1
-		;지문: 戦闘勝利
+		;지문: 전투 승리
 		CALL MESSAGE_BATTLE_END_WIN
 
-		;探索度上昇
+		;탐색도 상승
 		LOCAL = 8 + RAND:5
 		SIF CFLAG:100 != 101
 			LOCAL /= 2
-		;FEAT 효과에 따른探索度アップ
+		;FEAT 효과에 따른 탐색도 상승
 		SIF TALENT:사냥꾼의직감 > 0
 			LOCAL += 7
-		PRINTFORML 探索度が{LOCAL} 상승했다.
+		PRINTFORML 탐색도가 {LOCAL} 상승했다.
 		CALL RESEARCH_PROGRESS, LOCAL
 		PRINTL 
 
@@ -429,16 +430,16 @@ IF FLAG:13 <= 0
 	BEGIN AFTERTRAIN
 ENDIF
 
-;戦闘中フラグが折れていればこの先には進まない
+;전투 중 플래그가 접혀 있으면 이 앞으로 나아가지 않는다
 SIF FLAG:700 == 0
 	RETURN
 
-;前のターンの공격箇所を保持
+;이전 턴의 공격 장소를 유지
 TFLAG:13 = TFLAG:11
 
-;自分の行動によるPALAMの補正値の処理
+;자신의 행동에 따른 PALAM 보정값 처리
 ;--------------------------------------------------------------------------------------
-;壊れない衣装用の判定
+;부서지지 않는 의상용 판정
 LOCAL:1 = 0
 SIF (CFLAG:1 == 0 && TCVARn:20 == -1) || (CFLAG:1 == 1 && TCVARn:22 == -1)
 	LOCAL:1 |= 2
@@ -446,8 +447,8 @@ SIF TCVARn:24 == -1 || (CLOTH_NO_INNER > 0 && LOCAL:1 > 0)
 	LOCAL:1 |= 1
 SIF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
 	LOCAL:1 = 0
-;運動時に클리토리스/ペニスに快感が走る
-;快C
+;운동할 때 클리토리스/페니스에 쾌감이 쑤신다
+;쾌C
 IF ABL:C감각 <= 2
 	LOCAL = 0
 ELSEIF ABL:C감각 <= 4
@@ -469,7 +470,7 @@ CALL CLOTH_BATTLE_HOSEI, "ANTICUP"
 	LOCAL -= RESULT
 SIF RESULT
 	LOCAL /= 2
-;直前の行動
+;직전의 행동
 IF SELECTCOM == 8 || SELECTCOM == 9
 	LOCAL += 25
 ELSEIF SELECTCOM == 1 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
@@ -480,23 +481,23 @@ ELSE
 	LOCAL /= 8
 ENDIF
 IF ISPENIS()
-	;下着がなく、勃起していない
+	;속옷이 없고, 발기하지 않았다
 	IF (CLOTH_CHECK(TARGET) & 1) == 0 && (LOCAL:1 & 1) == 0 && PALAM:욕정 < 2000
 		LOCAL /= 2
-	;下着があり、勃起していない
+	;속옷이 있고, 발기하지 않았다
 	ELSEIF ((CLOTH_CHECK(TARGET) & 1) || (LOCAL:1 & 1)) && PALAM:욕정 < 2000
 		LOCAL *= 2
-	;フル勃起で丸出し状態だと振動で揺れてつらい
+	;풀 발기이며 모조리 드러난 상태라면 진동으로 흔들려서 괴롭다
 	ELSEIF (CLOTH_CHECK(TARGET) & 1) == 0 && (LOCAL:1 & 1) == 0
 		LOCAL *= 8
-	;下着がある状態でフル勃起だと擦れてつらい
+	;속옷이 있는 상태에서 풀 발기라면 쓸려서 괴롭다
 	ELSE
 		LOCAL *= 16
 	ENDIF
-;下着でクリちゃんが擦れてつらい
+;속옷으로 클리쨩이 쓸려서 괴롭다
 ELSEIF (CLOTH_CHECK(TARGET) & 1) || (LOCAL:1 & 1)
 	LOCAL *= 6
-;下着がなければ擦れない
+;속옷이 없으면 쓸리지 않는다
 ELSE
 	LOCAL *= 0
 ENDIF
@@ -506,8 +507,8 @@ SIF LOCAL < 100
 	LOCAL = 0
 COMMON_PALAM:0 += LOCAL
 
-;運動時におっぱいに快感が走る
-;快B
+;운동할 때 가슴에 쾌감이 쑤신다
+;쾌B
 IF ABL:B감각 <= 2
 	LOCAL = 0
 ELSEIF ABL:B감각 <= 4
@@ -529,7 +530,7 @@ CALL CLOTH_BATTLE_HOSEI, "ANTIBUP"
 	LOCAL -= RESULT
 SIF RESULT
 	LOCAL /= 2
-;直前の行動
+;직전의 행동
 IF SELECTCOM == 8 || SELECTCOM == 9
 	LOCAL += 25
 ELSEIF SELECTCOM == 1 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
@@ -539,15 +540,15 @@ ELSEIF SELECTCOM == 2 || SELECTCOM == 3
 ELSE
 	LOCAL /= 8
 ENDIF
-;ひんぬーは服を着ていると擦れてつらい
-;남자を追加
+;빈유는 옷을 입고 있으면 쓸려서 괴롭다
+;남자를 추가
 IF TALENT:빈유 > 0 || ISMALE()
 	IF (CLOTH_CHECK(TARGET) & 2) || (CLOTH_CHECK(TARGET) & 4) || (LOCAL:1 & 2)
 		LOCAL *= 8
 	ELSE
 		LOCAL = 0
 	ENDIF
-;きょぬーは服がなくなると揺れてつらい。女の子的に揺れはＮＧなんですよぉ＞＜
+;거유는 옷이 없어지면 흔들려서 괴롭다. 여자아이적으로 출렁임은 ＮＧ라고요＞＜
 ELSEIF TALENT:거유 > 0
 	IF (CLOTH_CHECK(TARGET) & 2) || (CLOTH_CHECK(TARGET) & 4) || (LOCAL:1 & 2)
 		LOCAL *= 4
@@ -558,7 +559,7 @@ ELSEIF TALENT:거유 > 0
 		LOCAL *= 2
 	SIF TALENT:거유 > 4
 		LOCAL *= 2
-;きょぬーでなくても服がないと揺れてつらい
+;거유가 아니더라도 옷이 없으면 흔들려서 괴롭다
 ELSE
 	IF (CLOTH_CHECK(TARGET) & 2) || (CLOTH_CHECK(TARGET) & 4) || (LOCAL:1 & 2)
 		LOCAL *= 3
@@ -577,91 +578,91 @@ SIF LOCAL < 100
 	LOCAL = 0
 COMMON_PALAM:3 += LOCAL
 
-;運動による影響の表示
+;운동에 의한 영향 표시
 IF COMMON_PALAM:0 || (COMMON_PALAM:3 && ISGIRLY())
 	PRINTL 
 ENDIF
 IF COMMON_PALAM:0 && BASE:C결계내구력 == 0
 	IF SELECTCOM == 8 || SELECTCOM == 9
-		PRINT 抵抗しようともがく
+		PRINT 저항하고자 몸부림치는
 	ELSEIF SELECTCOM == 1 || SELECTCOM == 2 || SELECTCOM == 3 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
-		PRINT 激しい運動で
+		PRINT 격렬한 운동으로
 	ELSE
-		PRINT ちょっとした動きでも
+		PRINT 사소한 움직임이라도
 	ENDIF
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%의 
 	SIF ABL:C감각 >= 6 || TALENT:음핵
-		PRINT 開発されきった
+		PRINT 완전히 개발된 
 	SIF ABL:C감각 >= 3 || TALENT:C민감
-		PRINT 敏感な
+		PRINT 민감한 
 	IF ISPENIS()
 		SIF PALAM:욕정 >= 2000
-			PRINT 勃起
-		PRINT ペニスが
+			PRINT 발기 
+		PRINT 페니스가 
 	ELSE
-		PRINT 클리토리스が
+		PRINT 클리토리스가 
 	ENDIF
 	IF (CLOTH_CHECK(TARGET) & 1)
-		PRINTL 下着で擦れてしまい、
+		PRINTL 속옷에 쓸려 버려서,
 	ELSE
-		PRINTL 揺れてしまい、
+		PRINTL 흔들려 버려서,
 	ENDIF
 
 	IF COMMON_PALAM:0 < 250
-		PRINT 微かに疼いている・・・
+		PRINT 조금씩 쑤시고 있다・・・
 	ELSEIF COMMON_PALAM:0 < 500
-		PRINT 감각を刺激されて疼いてしまう・・・
+		PRINT 감각을 자극받아 쑤셔 버리고 만다・・・
 	ELSEIF COMMON_PALAM:0 < 2000
-		PRINT 快楽を感じてしまっている・・・
+		PRINT 쾌락을 느껴 버리고 있다・・・
 	ELSE
-		PRINT 強い快楽を感じてしまっている・・・
+		PRINT 강한 쾌락을 느껴 버리고 있다・・・
 	ENDIF
 	PRINTL 
 ENDIF
 IF COMMON_PALAM:3 && ISGIRLY() && BASE:B결계내구력 == 0
 	IF SELECTCOM == 8 || SELECTCOM == 9
-		PRINT 抵抗しようともがく
+		PRINT 저항하고자 몸부림치는
 	ELSEIF SELECTCOM == 1 || SELECTCOM == 2 || SELECTCOM == 3 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
-		PRINT 激しい運動で
+		PRINT 격렬한 운동으로
 	ELSE
-		PRINT ちょっとした動きでも
+		PRINT 사소한 움직임이더라도
 	ENDIF
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%의 
 	SIF ABL:B감각 >= 6 || TALENT:음유
-		PRINT 開発されきった
+		PRINT 완전히 개발된 
 	IF TALENT:거유 > 0
-		PRINT 豊満
+		PRINT 풍만
 		IF ABL:B감각 >= 3 || TALENT:B민감
-			PRINT で
+			PRINT 하고 
 		ELSE
-			PRINT な
+			PRINT 한 
 		ENDIF
 	ENDIF
 	SIF ABL:B감각 >= 3 || TALENT:B민감
-		PRINT 敏感な
+		PRINT 민감한 
 	IF ISMALE()
 		;#region
-		PRINTFORM 乳首が
+		PRINTFORM 젖꼭지가 
 		;#endregion
 	ELSE 
-		PRINTFORM 가슴が
+		PRINTFORM 가슴이 
 	ENDIF
 	IF (CLOTH_CHECK(TARGET) & 2) || (CLOTH_CHECK(TARGET) & 4)
-		PRINTL 服で擦れてしまい、
+		PRINTL 옷에 쓸려 버려서,
 	ELSE
 		SIF TALENT:거유 > 0 && (SELECTCOM == 1 || SELECTCOM == 2 || SELECTCOM == 3 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 8 || SELECTCOM == 9 || SELECTCOM == 16 || SELECTCOM == 17)
-			PRINT 大きく
-		PRINTL 揺れてしまい、
+			PRINT 크게 
+		PRINTL 출렁이고 말아서,
 	ENDIF
 
 	IF COMMON_PALAM:3 < 250
-		PRINT 微かに疼いている……
+		PRINT 조금씩 쑤시고 있다……
 	ELSEIF COMMON_PALAM:3 < 500
-		PRINT 감각を刺激されて疼いてしまう……
+		PRINT 감각을 자극받아 쑤셔 버리고 만다……
 	ELSEIF COMMON_PALAM:3 < 2000
-		PRINT 快楽を感じてしまっている……
+		PRINT 쾌락을 느껴 버리고 있다……
 	ELSE
-		PRINT 強い快楽を感じてしまっている……
+		PRINT 강한 쾌락을 느껴 버리고 있다……
 	ENDIF
 	PRINTL 
 ENDIF
@@ -670,148 +671,154 @@ IF COMMON_PALAM:0 || (COMMON_PALAM:3 && ISGIRLY())
 ENDIF
 
 ;--------------------------------------------------------------------------------------
-;心境の自動変化
+;심경의 자동 변화
 SIF RAND:100 < (TCVARn:11 * TCVARn:11) && (TCVARn:12 & 기절) == 0
 	CALL SHINKYOU_CHANGE, "NORMAL"
 
 ;--------------------------------------------------------------------------------------
-;끈적끈적の持続判定
+;끈적끈적 지속 판정
 IF (TCVARn:12 & 끈적끈적) && (TCVARn:2 == 자세：방어 || TCVARn:2 == 자세：날뛴다방어 || TCVARn:2 == 자세：날뛴다실패 || TCVARn:2 == 자세：날뛴다치명타) && RAND:100 < MAX(75 - CFLAG:99 * 3, 25)
-	PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%纏わり付いた粘液を振り払った！
-	PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[끈적끈적]状態から回復した！
+	PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 달라붙은 점액을 털어냈다！
+	PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [끈적끈적] 상태로부터 회복했다！
 	PRINTW 
 	TCVARn:12 -= 끈적끈적
 ELSEIF (TCVARn:12 & 끈적끈적) && TCVARn:2 == 자세：방어
-	PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%纏わり付いた粘液を振り払うのに失敗した！
+	PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 달라붙은 점액을 털어내는 데에 실패했다！
 	PRINTW 
 ENDIF
 
-;サブイベント：촉수 구속구による被姦
+;서브 이벤트：촉수 구속구에 의한 피간
 CALL SUBEVENT_BATTLE_ACTTENTACLECLOTH
 
-;サブイベント：촉수服による被姦
+;서브 이벤트：촉수옷에 의한 피간
 CALL SUBEVENT_BATTLE_ACTTENTACLESUIT
 
-;拘束中でなければ촉수の行動記録を초기화
+;구속 중이 아니라면 촉수의 행동 기록을 초기화
 SIF TCVARn:0 != 0
 	TFLAG:20 = -999
 
-;衣装の情報を更新
+;의상의 정보를 갱신
 CALL REFRESH_CLOTH_DATA
 
 ;--------------------------------------------------------------------------------------
-;先制공격で촉수の体勢が崩れる
+;선제 공격으로 촉수의 자세가 흐트러진다
 SIF TFLAG:24 > 0
 	TFLAG:1 = 1
 
 ;**********************************************************
-;촉수/敵側の行動
+;촉수/적측의 행동
 ;**********************************************************
-;촉수/敵の体勢が崩れていると行動できない
+;촉수/적의 자세가 흐트러져 있으면 행동할 수 없다
 PRINTL 
 FONTBOLD
 SETCOLOR 150, 0, 255
-PRINTL ********** 敵の行動 **********
+PRINTL ********** 적의 행동 **********
 RESETCOLOR
 FONTREGULAR
 PRINTL 
-;滞空状態でなければ공격範囲から空を除外する
+;체공 상태가 아니라면 공격 범위에서 하늘을 제외한다
 SIF GETBIT(TCVARn:216, 1) == 0
 	CLEARBIT TFLAG:11, 3
 
-;날뛴다の関係の追加処理
-;날뛴다判定に成功した場合の処理
+;날뛴다의 관계의 추가 처리
+;날뛴다 판정에 성공한 경우의 처리
 IF TCVARn:2 == 자세：날뛴다방어
 	FONTBOLD
-	PRINTFORML 날뛴다抵抗判定：成功
+	PRINTFORML 날뛴다 저항 판정：성공
 	FONTREGULAR
-	PRINT 拘束を振り解けなかったものの、
+	PRINT 구속을 풀지는 못했지만, 
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-		CALL TENTACLE_ACCESS, "NAME"
+		;CALL TENTACLE_ACCESS, "NAME"
+		CALL TENTACLE_ACCESS, "GETNAME"
+		PRINTFORM %조사처리(RESULTS,"는")%
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-		PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")%
 	ENDIF
-	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 抵抗に虚を突かれ、体勢を崩している！
+	PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%의 저항에 허를 찔려 자세가 흐트러져 있다！
 	PRINTW 
 
-	;촉수の体勢が崩れる
+	;촉수의 자세가 흐트러진다
 	TFLAG:1 = 1
 ELSEIF TCVARn:2 == 자세：날뛴다실패
 	FONTBOLD
-	PRINTFORML 날뛴다抵抗判定：失敗
+	PRINTFORML 날뛴다 저항 판정：실패
 	FONTREGULAR
 
 	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") == 1
 		IF RAND:7 == 0
 			IF TALENT:주관시점 > 0
-				PRINTFORML ガッチリ巻き付いた촉수はびくともせず、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%己の無力を突き付けられた・・・
+				PRINTFORML 꽉 감긴 촉수는 꿈쩍도 않은 채, %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 있으나 마나한 힘을 들이받았다・・・
 			ELSE
-				PRINTFORML ガッチリ巻き付いた촉수はびくともせず、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%己の無力に唇を噛み占めた・・・
+				PRINTFORML 꽉 감긴 촉수는 꿈쩍도 하지 않아, %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 자신의 무력함에 입술을 씹었다・・・
 			ENDIF
 		ELSEIF RAND:6 == 0
-			PRINTFORML 촉수を引き離そうとする%PRINT_TRANSCALLNAME(TARGET)%だが、ギリギリのところで力負けしてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 촉수를 떼어내려 했지만, 아슬아슬하게 힘이 부족해 실패하고 말았다・・・
 		ELSEIF RAND:5 == 0
-			PRINTFORML 絡み付いた촉수を引き離そうとする%PRINT_TRANSCALLNAME(TARGET)%だが、数が多すぎてきりがない・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 휘감긴 촉수를 떼어내려 했지만, 수가 너무 많아서 끝이 없다・・・
 		ELSEIF RAND:4 == 0
-			PRINTFORML 抵抗するも、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%손발を抑え込まれて身動きできなくなってしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 촉수에 저항하려 했지만, 손발이 억눌려 꼼짝도 못 하게 돼 버렸다・・・
 		ELSEIF RAND:3 == 0
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%必死に抵抗するが、強引に組み伏せられてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 필사적으로 저항했지만, 억지로 깔려 눕혀지고 말았다・・・
 		ELSEIF RAND:2 == 0
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%強く締め上げられて、あまりの고통に思わず隙を晒してしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 세게 조여오는 심한 고통에, 무심코 틈을 드러내고 말았다・・・
 		ELSE
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%突然の愛撫に不意を突かれて、抵抗する力を弱めてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 갑작스런 애무에 허를 찔려, 저항할 힘을 미처 못 내고 말았다・・・
 		ENDIF
 	ELSE
 		IF RAND:4 == 0
-			PRINTFORML 抵抗するも、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%손발を抑え込まれて身動きできなくなってしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 촉수에 저항하려 했지만, 손발이 억눌려 꼼짝도 못 하게 돼 버렸다・・・
 		ELSEIF RAND:3 == 0
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%必死に抵抗するが、強引に組み伏せられてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 필사적으로 저항했지만, 억지로 깔려 눕혀지고 말았다・・・
 		ELSEIF RAND:2 == 0
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%強く締め上げられて、あまりの고통に思わず隙を晒してしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 세게 조여오는 심한 고통에, 무심코 틈을 드러내고 말았다・・・
 		ELSE
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%突然の愛撫に不意を突かれて、抵抗する力を弱めてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 갑작스런 애무에 허를 찔려, 저항할 힘을 미처 못 내고 말았다・・・
 		ENDIF
 	ENDIF
 	PRINTW 
 ELSEIF TCVARn:2 == 자세：날뛴다치명타
 	FONTBOLD
-	PRINTFORML 날뛴다抵抗判定：クリティカル
+	PRINTFORML 날뛴다 저항 판정：치명타
 	FONTREGULAR
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-		CALL TENTACLE_ACCESS, "NAME"
+		;CALL TENTACLE_ACCESS, "NAME"
+		CALL TENTACLE_ACCESS, "GETNAME"
+		PRINTFORM %조사처리(RESULTS,"가")%
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-		PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")%
 	ENDIF
-	PRINTFORML が思わぬ反撃に怯んだ隙に、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%拘束を抜け出した！
+	PRINTFORML  예상치 못한 반격에 기죽은 사이에, %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 구속을 벗어났다!
 	PRINTW 
 
-	;풀어낸다処理
+	;풀어낸다 처리
 	TCVARn:0 = 2
 	TFLAG:4 = 0
 
-	;촉수の体勢が崩れる
+	;촉수의 자세가 흐트러진다
 	TFLAG:1 = 1
-	;自動で戦闘メニューを選択する
+	;자동으로 전투 메뉴를 선택한다
 	TCVARn:8 = 1
 ENDIF
 
 
-
+;적의 자세가 흐트러져 있다
 IF TFLAG:1 == 1
-	;강구속を解く
+	;강구속을 푼다
 	SIF (TCVARn:12 & 강구속) > 0
 		TCVARn:12 -= 강구속
-	;フラグ類をリセット
+	;플래그류 초기화
 	TFLAG:1 = 0
 	TFLAG:16 = -1
 	TFLAG:17 = -1
 	TFLAG:20 = -1
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-		CALL TENTACLE_ACCESS, "NAME"
+		;CALL TENTACLE_ACCESS, "NAME"
+		CALL TENTACLE_ACCESS, "GETNAME"
+		PRINTFORM %조사처리(RESULTS,"는")%
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-		PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")%
 	ENDIF
-	PRINTL は体勢を立て直している・・・
+	PRINTL  자세를 가다듬고 있다・・・
 	PRINTL 
 	IF ENEMY_TYPE_CHECK_F("AKUOTI")
 		CALL SELECT_ENEMY_ACTION
@@ -819,41 +826,39 @@ IF TFLAG:1 == 1
 		CALL SELECT_TENTACLE_ACTION
 	ENDIF
 	
-	;衣服の損傷による치정の取得のためソースの計算へ
-	;実際の計算はCOMMON_PALAM_CALの内部で行っている
+	;의복의 손상에 의한 치정 취득을 위해 SOURCE의 계산으로
+	;실제 계산은 COMMON_PALAM_CAL 내부에서 행하고 있다
 	CALL PALAM_CAL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ELSE
 	CALL ENEMY_ACTION
 ENDIF
 
-;강구속or丸飲み準備中は敗北確定後も続ける
+;강구속or통째로 삼키기 준비 중에는 패배 확정 후에도 계속한다
 SIF (TCVARn:12 & 강구속) > 0
-	ターン内敗北キャンセル=1
-;강구속or丸飲み準備中は敗北確定後も続ける
+	턴내패배취소=1
+;강구속or통째로 삼키기 준비 중에는 패배 확정 후에도 계속한다
 SIF TFLAG:23 ==  100
-	ターン内敗北キャンセル=1
+	턴내패배취소=1
 
 
 ;**********************************************************
-;戦闘終了処理２　敗北
+;전투 종료 처리２　패배
 ;**********************************************************
-;악질 시민戦で監禁される場合
+;악질 시민전에서 감금되는 경우
 IF FLAG:73 > 0 && BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && TCVARn:0 == 0
-	;敗北扱い
+	;패배 취급
 	TFLAG:98 = 2
 	PRINTL
 	PRINTFORML ・・
 	PRINTFORML ・・・・
 	PRINTFORML ・・・・・・
-	PRINTFORM 男たちは抵抗が薄くなった%PRINT_TRANSCALLNAME(TARGET)%
-
-	PRINTFORML を押し倒し、使い飽きるまで好き放題身体を辱めた……
-	;★性経験テキトーに増やすべき
-	;サブイベント：악질 시민に敗北して犯される
+	PRINTFORM 남자들은 저항이 약해진 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 밀어 넘어뜨리곤, 질릴 때까지 좋을대로 몸을 능욕했다……
+	;★성경험 적당히 늘려야 할 테지
+	;서브 이벤트：악질 시민에게 패배하여 범해졌다
 	CALL SUBEVENT_BATTLE_RAPED_CITIZEN
 
 	IF CONFIG_CHECK_PRISON_F(10)
-		CALL CALC_GANGBANG("戦闘後",5,2)
+		CALL CALC_GANGBANG("전투 후",5,2)
 
 		PRINTFORM そして男たちはぴくりとも動かなくなった%PRINT_TRANSCALLNAME(TARGET)%
 		PRINTDATAL
@@ -892,7 +897,7 @@ IF FLAG:73 > 0 && BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 &&
 			RESETCOLOR
 			PRINTL 　
 			PRINTL 　
-			PRINTL 敗北・処刑
+			PRINTL 패배・처형
 			FONTREGULAR
 			FORCEWAIT 
 			PRINTL 　
@@ -901,7 +906,7 @@ IF FLAG:73 > 0 && BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 &&
 		ELSE
 			PRINTFORMW 近くの車に押し込み連れ去った。
 			PRINTL
-			CALL MESSAGE_CITIZEN_HIACED(TARGET,"男たち","脅迫")
+			CALL MESSAGE_CITIZEN_HIACED(TARGET,"남자들","협박")
 		ENDIF
 
 		RESETCOLOR
@@ -930,7 +935,7 @@ IF FLAG:73 > 0 && BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 &&
 		PRINTFORML に%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%抱えて투척捨てた。
 		PRINTFORML 男たちは精液に汚れた全裸の「廃品」など一顧だにせず意気揚々と「次の獲物」を探しに去ってゆき、
 		PRINTFORML 壊れたダッチワイフのように動かない%PRINT_TRANSCALLNAME(TARGET)%의 身体だけが闇の中に残されていた……
-		CALL CALC_GANGBANG("戦闘後",5,1)
+		CALL CALC_GANGBANG("전투 후",5,1)
 	ENDIF
 	PRINTL
 
@@ -947,48 +952,48 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 	;P촉수なら丸飲み準備플래그를立てておく
 	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && FLAG:11==6 && TFLAG:23>=0 && TFLAG:23<100
 		TFLAG:23=100
-		ターン内敗北キャンセル=1
+		턴내패배취소=1
 	ENDIF
 
 	;※강구속(挿入)中または丸飲み準備中に敗北状態になっていた場合は即座に戦闘終了せずフィニッシュまで見せる
-	IF ターン内敗北キャンセル>0
+	IF 턴내패배취소>0
 		;기절していなければ기절する
 		CALL STATE_CHANGE_KIZETU, 100
 
 	ELSE
-		;발정ダメージで敗北の場合もここに飛ぶ
+		;발정으로 힘이 다한 경우도 여기로 날아온다
 		$BATTLE_LOSE
 
 		PRINTW 
-		;戦闘結果フラグ：戦闘敗北
+		;전투 결과 플래그：전투 패배
 		TFLAG:98 = 2
 		
 		PRINTL 
-		PRINT 戦闘結果：敗北 - 
+		PRINT 전투 결과：패배 - 
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
 			CALL TENTACLE_ACCESS, "NAME"
-			PRINTL の殲滅失敗
+			PRINTL 의 섬멸 실패
 		ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%の解放失敗
+			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%의 해방 실패
 		ENDIF
 		PRINTL 
 		IF TALENT:주관시점 > 0
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%力尽きてしまった・・・
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 힘이 다하여 쓰러졌다・・・
 		ELSE
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%力尽きた
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 힘이 다하여 쓰러지고 말았다・・・
 		ENDIF
 		PRINTL 
 		
-		;キャラの유폐
-		;세뇌キャラに倒された場合は、そのキャラを세뇌させた촉수が代わりに유폐する
-		;흑화 캐릭터に倒された場合は、기생を持っているなら흑화 캐릭터가 유폐する
-		;기생を持っていない흑화 캐릭터に倒された場合は、犯しつくされてから解放される
+		;캐릭터의 유폐
+		;세뇌 캐릭터에게 패배한 경우에는, 그 캐릭터를 세뇌시킨 촉수가 대신 유폐한다
+		;흑화 캐릭터에게 패배한 경우에는, 기생을 가지고 있다면 흑화 캐릭터가 유폐한다
+		;기생이 없는 흑화 캐릭터에게 패배한 경우에는, 다 범해지고 나서 해방된다
 		
-		;ENDLESSモード以外でキャラが捕まると期限が延びる
+		;ENDLESS모드 이외에서 캐릭터가 잡히면 기한이 연장된다
 		SIF GAME_OPTION_CHECK_F(OPTION_endless) == 0
 			DAY:1 += ABL:레벨 / 2 + 7
 
-		;淫紋が残っているなら汚染度(どれだけ陥落に近付いているか示す内部値)が上昇する（最大75%）
+		;음문이 남아 있다면 오염도(얼마나 함락에 가까워지고 있는지 나타내는 내부치)가 상승한다 (최대 75%)
 		IF CONFIG_CHECK_MANIAC_F(10) == 1
 			CALL TATTOO_ACCESS, "PROGRESS_VAR"
 			IF RESULT
@@ -1000,17 +1005,17 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 				CFLAG:30 = 0
 		ENDIF
 
-		;ＴＳできない남자かつ男女平等オフなら即座に死亡
+		;ＴＳ 할 수 없는 남자임과 동시에 양성평등 OFF라면 즉시 사망
 		IF ISHOLE(TARGET) == 0 && TALENT:변신시TS < 1 && CONFIG_CHECK_PRISON_F(0) == 0
 			CFLAG:0 = 9
 			CFLAG:20 = FLAG:10
 			CFLAG:21 = FLAG:11
 
 			;지문: 즉사
-			PRINTFORML 남자である%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そのままトドメを刺され、
-			PRINTFORML %STR:2500%に取り込まれていってしまった・・・
+			PRINTFORML 남자인 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 그대로 숨통이 끊겨,
+			PRINTFORML %STR:2500%에게 거두어지고 말았다・・・
 			PRINTW 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ロストしました
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 로스트됐습니다.
 			PRINTW 
 
 			;첫 유폐라면 이상경험을 붙인다
@@ -1018,13 +1023,13 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 				EXP:이상경험 += 1
 
 			EXP:유폐경험 += 1
-		;촉수に敗北して유폐される
+		;촉수에게 패배하여 유폐된다
 		ELSEIF (FLAG:110 == 0)
 			CFLAG:0 = 1
 			CFLAG:20 = FLAG:10
 			CFLAG:21 = FLAG:11
 
-			;지문: 敗北
+			;지문: 패배
 			CALL MESSAGE_BATTLE_END_LOSS
 
 			;첫 유폐라면 이상경험을 붙인다
@@ -1033,15 +1038,15 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 
 			EXP:유폐경험 += 1
 		ELSEIF (FLAG:110 == 1)
-			;세뇌キャラに敗北して유폐される
+			;세뇌 캐릭터에게 패배하여 유폐된다
 			IF (CFLAG:(FLAG:111):0 == 2)
 				CFLAG:0 = 1
 				CFLAG:20 = CFLAG:(FLAG:111):20
 				CFLAG:21 = CFLAG:(FLAG:111):21
 				
-				;지문: 敗北
+				;지문: 패배
 				CALL MESSAGE_BATTLE_END_LOSS
-				;지문: 세뇌/흑화 캐릭터가 操作キャラに勝利した
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 승리했다
 				CALL MESSAGE_OTHER_BATTLE_END_LOSS
 				
 				;첫 유폐라면 이상경험을 붙인다
@@ -1050,18 +1055,18 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 				
 				EXP:유폐경험 += 1
 			
-			;흑화 캐릭터に敗北
+			;흑화 캐릭터에게 패배
 			ELSEIF (CFLAG:(FLAG:111):0 == 3)
 				
-				;흑화 캐릭터가 【기생】持ちで、흑화촉수アリなら유폐される
+				;흑화 캐릭터가【기생】을 보유하고 있다면,흑화 촉수 있음일 경우 유폐된다
 				IF (TALENT:(FLAG:111):기생 == 1) && CONFIG_CHECK_MANIAC_F(13) == 1
 					CFLAG:0 = 1
 					CFLAG:20 = 2
 					CFLAG:21 = CFLAG:(FLAG:111):240
 					
-					;지문: 敗北
+					;지문: 패배
 					CALL MESSAGE_BATTLE_END_LOSS
-					;지문: 세뇌/흑화 캐릭터가 操作キャラに勝利した
+					;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 승리했다
 					CALL MESSAGE_OTHER_BATTLE_END_LOSS
 					
 					;첫 유폐라면 이상경험을 붙인다
@@ -1069,15 +1074,15 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 						EXP:이상경험 += 1
 					
 					EXP:유폐경험 += 1
-				;違ったら犯される
+				;아니라면 범해진다
 				ELSE
-					;サブイベント：흑화 캐릭터に敗北して犯される
+					;서브 이벤트：흑화 캐릭터에게 패배하여 범해졌다
 					CALL SUBEVENT_BATTLE_RAPED_ENEMY
 				ENDIF
 			ENDIF
 		ENDIF
 
-		;유폐or死亡時は編成から外れる処理によりキャラ枠が手前に詰まるため、「現在行動中のキャラ」の플래그를１つ戻す
+		;유폐or사망 시에는 편성에서 벗어나는 처리로 캐릭터 범위가 앞에 막히기 때문에,현재 행동중인 캐릭터」의 플래그를１개 되돌린다
 		SIF CFLAG:0 == 1 || CFLAG:0 == 9 || CFLAG:0 == 4
 			FLAG:799 -= 1
 
@@ -1088,32 +1093,32 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 ENDIF
 
 ;**********************************************************
-;戦闘終了処理３　時間切れ
+;전투 종료 처리３　제한 시간 종료
 ;**********************************************************
-;※강구속(挿入)中に敗北状態になっていた場合は時間切れ終了にならず、必ずフィニッシュまで見せる
-IF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && ターン内敗北キャンセル>0
-	;기절していなければ기절する
+;※강구속(삽입) 중에 패배 상태가 된 경우에는 종료하지 않고 피니쉬까지 보여준다
+IF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && 턴내패배취소>0
+	;기절하지 않았다면 기절한다
 	CALL STATE_CHANGE_KIZETU, 100
-	;このターンは時間経過させない
+	;시간이 흐르지 않는다
 	TFLAG:0 -= 1
 
-;通常時の時間切れ判定
-;　通常戦闘…既定ターン経過で終了
-;　악질 시민…拘束から脱出していれば即時戦闘終了
+;통상적인 제한 시간 경과일 경우
+;　통상 전투…기정 턴 경과로 종료
+;　악질 시민…구속에서 탈출하면 즉시 전투 종료
 ELSEIF (턴상한!=-1 && TFLAG:0 >= 턴상한) || (FLAG:73 > 0 && TCVARn:0 != 0)
-	;救出機能
+	;구출 기능
 	TRYCALL KYUSHUTU_TIMEUP_HANTEI
-	;지문: 戦闘時間切れ
+	;지문: 전투 시간 종료
 	IF FLAG:73 > 0
 		CALL MESSAGE_BATTLE_END_CITIZEN_TIMEUP
 	ELSE
 		CALL MESSAGE_BATTLE_END_TIMEUP
 	ENDIF
-	;지문: 세뇌/흑화 캐릭터가 操作キャラと引き分けた
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터와 비겼다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_END_TIMEUP
 	
-	;サブイベント：촉수 구속구の強制装着
+	;서브 이벤트：촉수 구속구 강제 장착
 	SIF (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0)
 		CALL SUBEVENT_BATTLE_SETTENTACLECLOTH
 
@@ -1121,11 +1126,11 @@ ELSEIF (턴상한!=-1 && TFLAG:0 >= 턴상한) || (FLAG:73 > 0 && TCVARn:0 != 0)
 ENDIF
 
 ;--------------------------------------------------------------------------------------
-;ターン終了時のフラグ초기화
+;턴 종료 시의 플래그 초기화
 TFLAG:18 = 0
 
 ;--------------------------------------------------------------------------------------
-;オート振り解きの実行
+;자동 풀어내기 실행
 IF CONFIG_CHECK_BALANCE_F(2) > 0
 	CALL AUTO_UNTANGLE
 ELSE
@@ -1133,11 +1138,11 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------------------------------------------
-;발정による배란の発生判定
+;발정에 의한 배란 발생 판정
 CALL HATUJOU_TO_HAIRAN
 
 ;--------------------------------------------------------------------------------------
-;스마타애태우기による次ターン行動指定処理
+;【스마타애태우기】에 의한 다음 턴 행동 지정 처리
 IF SELECTCOM == 103 && TFLAG:17 < 0 && RAND:100 < 95
 	IF ENEMY_TYPE_CHECK_F("MOB") == 1
 		TRYCALLFORM TENTACLE_MOB_{FLAG:11}_REACTION_REF, 1
@@ -1151,23 +1156,23 @@ IF SELECTCOM == 103 && TFLAG:17 < 0 && RAND:100 < 95
 ENDIF
 
 ;--------------------------------------------------------------------------------------
-;ターン終了時の状態異常処理
+;턴 종료 시의 상태 이상 처리
 IF TCVARn:12 > 0 && TCVARn:12 != 배란
 	PRINTL 
 	FONTBOLD
-	PRINTL 状態異常
+	PRINTL 상태 이상
 	FONTREGULAR
 ENDIF
 
-;강구속の持続判定
+;강구속 지속 판정
 SIF (TCVARn:12 & 강구속)
-	PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%行動を制限されている…
-;발정の持続判定
+	PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 행동이 제한된 상태이다……
+;발정 지속 판정
 IF (TCVARn:12 & 발정) && (TCVARn:12 & 기절) == 0
 	IF TALENT:주관시점 > 0
-		PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 体は媚薬の効果で욕정してしまっている…
+		PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 몸은 미약의 효과로 욕정해 버린 상태이다……
 	ELSE
-		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%媚薬の効果で욕정している…
+		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 미약의 효과로 욕정해 버리고 있다……
 	ENDIF
 	FONTBOLD
 	IF BASE:성내성 > 0
@@ -1178,110 +1183,110 @@ IF (TCVARn:12 & 발정) && (TCVARn:12 & 기절) == 0
 		ELSE
 			LOCAL = RAND:4 + 1
 		ENDIF
-		PRINTFORML 　 성내성が{LOCAL}減少した！
+		PRINTFORML 　 성내성이 {LOCAL} 감소했다！
 		PRINTL 
 		BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
 	ELSE
 		IF BASE:체력 > 0
 			LOCAL = MAX(BASE:체력 / 40, 40) + RAND:30
-			PRINTFORML 　 체력が{LOCAL}減少した！
+			PRINTFORML 　 체력이 {LOCAL} 감소했다！
 			BASE:체력 = MAX(BASE:체력 - LOCAL, 0)
 		ENDIF
 		IF BASE:기력 > 0
 			LOCAL = MAX(BASE:기력 / 20, 80) + RAND:60
-			PRINTFORML 　 기력が{LOCAL}減少した！
+			PRINTFORML 　 기력이 {LOCAL} 감소했다！
 			BASE:기력 = MAX(BASE:기력 - LOCAL, 0)
 		ENDIF
 	ENDIF
 	FONTREGULAR
 	PALAM:욕정 += LOCAL * 125
 ENDIF
-;마비の持続判定
+;마비 지속 판정
 IF (TCVARn:12 & 마비)
 	IF (TCVARn:104 > 0 && RAND:(100 - 20 * (CFLAG:TARGET:43 == 508)) < MAX(25 - CFLAG:99 * 5 + TCVARn:104 * 5, 15)) || TCVARn:104 == -999
-		PRINTFORML ○ %PRINT_TRANSCALLNAME(TARGET)%의 마비が治った！
-		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[마비]状態から回復した！
+		PRINTFORML ○ %PRINT_TRANSCALLNAME(TARGET)%의 마비가 풀려났다！
+		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [마비] 상태로부터 회복했다！
 		TCVARn:12 -= 마비
 		TCVARn:104 = 0
 	ELSE
-		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%身体が마비して민첩性がダウンしている…
+		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 신체가 마비되어 민첩성이 떨어진 상태이다……
 		TCVARn:104 += 1
 	ENDIF
 ENDIF
-;끈적끈적の処理
+;끈적끈적 처리
 IF (TCVARn:12 & 끈적끈적)
-	PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%に粘液が纏わり付いて離れない…
+	PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 몸에 점액이 달라붙어 떨어지지 않는다……
 	IF CFLAG:1 > 0 && (TCVARn:23 > 0 || TCVARn:25 > 0)
-		PRINTFORML 　 %PRINT_TRANSCALLNAME(TARGET)%의 衣装が少しずつ溶かされていく！
+		PRINTFORML 　 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 조금씩 녹아 간다！
 		LOCAL = RAND:5 + 1
-		;의상에의 피해を反映
+		;의상에의 피해를 반영
 		FONTBOLD
-		PRINTFORML 　 衣装に{LOCAL}の損傷を受けた！
+		PRINTFORML 　 의상에 {LOCAL}의 손상을 받았다！
 		FONTREGULAR
 		PRINTL 
 		CALL CLOTH_BATTLE_DAMAGE, LOCAL, 1
 	ELSEIF TCVARn:21 > 0 || TCVARn:25 > 0
-		PRINTFORML 　 %PRINT_TRANSCALLNAME(TARGET)%의 衣装が少しずつ溶かされていく！
+		PRINTFORML 　 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 조금씩 녹아 간다！
 		LOCAL = RAND:5 + 1
-		;의상에의 피해を反映
+		;의상에의 피해를 반영
 		FONTBOLD
-		PRINTFORML 　 衣装に{LOCAL}の損傷を受けた！
+		PRINTFORML 　 의상에 {LOCAL}의 손상을 받았다！
 		FONTREGULAR
 		PRINTL 
 		CALL CLOTH_BATTLE_DAMAGE, LOCAL, 1
 	ENDIF
 ENDIF
-;쓰러짐の持続判定
+;쓰러짐 지속 판정
 IF (TCVARn:12 & 쓰러짐) && (TCVARn:12 & 기절) == 0
 	IF (TCVARn:106 > 1 && RAND:(100 - 20 * (CFLAG:TARGET:43 == 508)) < 60 + TCVARn:106 * 5) || TCVARn:106 == -999
-		PRINTFORML ○ %PRINT_TRANSCALLNAME(TARGET)%의 脚の震えが止まった！
-		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[쓰러짐]状態から回復した！
+		PRINTFORML ○ %PRINT_TRANSCALLNAME(TARGET)%의 다리 떨림이 멈췄다！
+		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [쓰러짐] 상태로부터 회복했다！
 		TCVARn:12 -= 쓰러짐
 		TCVARn:106 = 0
 	ELSE
-		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%脚が震えて思うように動けない…
+		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 다리가 떨려 마음대로 움직일 수가 없다……
 		TCVARn:106 += 1
 	ENDIF
 ENDIF
-;황홀の持続判定
+;황홀 지속 판정
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 IF (TCVARn:12 & 황홀) && (TCVARn:12 & 기절) == 0
 	IF (TCVARn:107 > 1 && RAND:(100 - 20 * (CFLAG:TARGET:43 == 508)) < RESULT / 4 + 35 + TCVARn:107 * 10) || TCVARn:107 == -999
-		PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気持ちを持ち直した！
-		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[황홀]状態から回復した！
+		PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 정신을 바로잡았다！
+		PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [황홀] 상태로부터 회복했다！
 		TCVARn:12 -= 황홀
 		TCVARn:107 = 0
 	ELSE
-		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%絶頂の余韻で力が入らない…
+		PRINTFORML × %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 절정의 여운으로 힘이 들어가지 않는다……
 		TCVARn:107 += 1
 	ENDIF
 ELSE
 	TCVARn:107 = 0
 ENDIF
-;기절の持続判定
+;기절 지속 판정
 IF (TCVARn:12 & 기절)
 	IF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0
 		IF TALENT:주관시점 > 0
-			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 意識は朦朧としている…
+			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 의식은 몽롱한 상태이다……
 		ELSE
-			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 意識が돌아간다気配はない…
+			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 의식이 돌아올 기미는 없어 보인다……
 		ENDIF
 		TCVARn:101 += 1
 	ELSEIF TCVARn:101 > 0 && RAND:(100 - 20 * (CFLAG:TARGET:43 == 508)) < MAX(35 - CFLAG:99 * 3 + TCVARn:101 * 10, 10) || TCVARn:101 == -999
 		IF TALENT:주관시점 > 0
-			PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%意識を持ち直した！
-			PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[朦朧]状態から回復した！	
+			PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 의식을 회복했다！
+			PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [몽롱] 상태로부터 회복했다！	
 		ELSE
-			PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%意識を取り戻した！
-			PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[기절]状態から回復した！
+			PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 의식을 되찾았다！
+			PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [기절] 상태로부터 회복했다！
 		ENDIF
 		TCVARn:12 -= 기절
 		TCVARn:101 = 0
 	ELSE
 		IF TALENT:주관시점 > 0
-			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 意識は朦朧としている…
+			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 의식은 몽롱한 상태이다……
 		ELSE
-			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 意識が돌아간다気配はない…
+			PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%의 의식이 돌아올 기미는 없어 보인다……
 		ENDIF
 		TCVARn:101 += 1
 	ENDIF
@@ -1289,25 +1294,25 @@ ELSE
 	TCVARn:101 = 0
 ENDIF
 
-;발정の効果で체력、기력、성내성が尽きたら敗北判定を行う
+;발정의 효과로 체력, 기력, 성내성이 다하면 패배 판정을 행한다
 IF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 0 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0)
-	IF ターン内敗北キャンセル==0
+	IF 턴내패배취소 == 0
 		GOTO BATTLE_LOSE
 	ELSE
-		;기절していなければ기절する
+		;기절하고 있지 않다면 기절한다
 		CALL STATE_CHANGE_KIZETU, 100
 	ENDIF
 ENDIF
 
-;先制공격中なら先制공격カウントが進む
+;선제 공격 중이라면 선제 공격 카운트가 진행된다
 IF TFLAG:24 > 0
 	TFLAG:24 -= 1
-;それ以外なら戦闘時間カウントが進む
+;그 외라면 전투 시간 카운트가 진행된다
 ELSE
 	TFLAG:0 += 1
 ENDIF
 
-;追加責め箇所のリセット
+;추가 고문 장소 초기화
 EX_COM = 0
 SH_COM = 0
 ;INSERT = 0

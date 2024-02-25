@@ -1,51 +1,51 @@
 ﻿;------------------------------------------------------------------------
-;전투스타일に関連する処理群
+;전투 스타일과 관련된 처리군
 
 
 
-;전투스타일の名前を返す式中関数
-;ARG=対象キャラNO、ARG:1=現在の距離
+;전투 스타일의 이름을 반환하는 식중 함수
+;ARG=대상 캐릭터의 번호, ARG:1=현재 거리
 @FSTYLE_NAME_F,ARG,ARG:1
 #FUNCTIONS
 VARSET LOCALS
 SELECTCASE CDFLAG:(ARG):(ARG:1):전투스타일
 	CASE 1
-		LOCALS = 連続
+		LOCALS = 연속
 	CASE 2
-		LOCALS = 装甲
+		LOCALS = 장갑
 	CASE 3
-		LOCALS = 撹乱
+		LOCALS = 교란
 	CASE 4
-		LOCALS = 重撃
+		LOCALS = 중격
 	CASE 5
-		LOCALS = 広範
+		LOCALS = 광역
 	CASE 6
-		LOCALS = 全力
+		LOCALS = 전력
 	CASE 7
-		LOCALS = 知略
+		LOCALS = 지략
 	CASE 8
-		LOCALS = 設置
+		LOCALS = 설치
 	CASE 9
-		LOCALS = 使役
+		LOCALS = 사역
 	CASEELSE
-		LOCALS = 通常
+		LOCALS = 통상
 ENDSELECT
 RETURNF LOCALS
 
 
-;전투스타일ごとの공격力の実数値を返す式中関数
-;ARG   = 対象キャラNO
-;ARG:1 = 現在の距離
-;ARG:2 = キャラメイク中なら1
+;전투 스타일별 공격력 실수치(実数値)를 반환하는 식중 함수
+;ARG   = 대상 캐릭터 번호
+;ARG:1 = 현재 거리
+;ARG:2 = 캐릭터 메이킹 중이라면 1
 @FSTYLE_ATTACK, ARG, ARG:1, ARG:2 = 0
 #DIM ATTACK
 VARSET LOCAL
-;対象キャラの各能力を取得
+;대상 캐릭터의 각 능력을 취득
 LOCAL:10 = MAXBASE:ARG:공격
 LOCAL:11 = MAXBASE:ARG:방어
 LOCAL:12 = MAXBASE:ARG:민첩
 LOCAL:13 = MAXBASE:ARG:지성
-;キャラメイク中なら未加算のボーナスを反映
+;캐릭터 메이킹 중이라면 미가산 보너스를 반영
 IF ARG:2 > 0
 	LOCAL:10 += CFLAG:ARG:53
 	LOCAL:11 += CFLAG:ARG:54
@@ -61,7 +61,7 @@ CALL CLOTH_BATTLE_HOSEI, "BINSYOU", ARG
 LOCAL:12 = LOCAL:12 * RESULT / 100
 CALL CLOTH_BATTLE_HOSEI, "CHISEI", ARG
 LOCAL:13 = LOCAL:13 * RESULT / 100
-;왜소함・장신なら補正
+;왜소함・장신이라면 보정
 IF TALENT:왜소함 == 1
 	TIMES LOCAL:10, 0.95
 	TIMES LOCAL:12, 1.05
@@ -70,27 +70,27 @@ IF TALENT:장신 == 1
 	TIMES LOCAL:10, 1.05
 	TIMES LOCAL:12, 0.95
 ENDIF
-;計算開始
+;계산 개시
 SELECTCASE FSTYLE_NAME_F(ARG,ARG:1)
-	CASE "連続"
+	CASE "연속"
 		ATTACK = LOCAL:10 * 25 /100 + LOCAL:12 * 20 /100
-	CASE "装甲"
+	CASE "장갑"
 		ATTACK = LOCAL:10 * 45 /100 + LOCAL:11 * 40 /100
-	CASE "撹乱"
+	CASE "교란"
 		ATTACK = LOCAL:10 * 75 /100 + LOCAL:12 * 35 /100
-	CASE "重撃"
+	CASE "중격"
 		ATTACK = LOCAL:10 * 90 /100 + LOCAL:11 * 30 /100
-	CASE "広範"
+	CASE "광역"
 		ATTACK = LOCAL:10 * 115 /100
-	CASE "全力"
+	CASE "전력"
 		ATTACK = LOCAL:10 * 150 /100
-	CASE "知略"
+	CASE "지략"
 		ATTACK = LOCAL:10 * 75 /100 + LOCAL:13 * 25 /100
-	CASE "設置"
+	CASE "설치"
 		ATTACK = LOCAL:10 * 50 /100 + LOCAL:13 * 30 /100
-	CASE "使役"
+	CASE "사역"
 		ATTACK = LOCAL:10 * 25 /100 + LOCAL:13 * 20 /100
-	CASE "通常"
+	CASE "통상"
 		ATTACK = LOCAL:10 * 100 /100
 ENDSELECT
 RETURN ATTACK
@@ -99,49 +99,51 @@ RETURN ATTACK
 
 
 
-;전투스타일情報を取得
+;전투 스타일 정보를 취득
 @SET_FSTYLE_INFO, ARG,ARG:1
 SELECTCASE FSTYLE_NAME_F(ARG,ARG:1)
-	CASE "連続"
-		RESULTS:0 = 威力影響度：공격*0.25 + 민첩*0.20
-		RESULTS:1 = 追加効果　：공격が２回ヒットする
-		RESULTS:2 = BURST性能 ：６ヒットする連続공격。全て直撃すれば高威力
-	CASE "装甲"
-		RESULTS:0 = 威力影響度：공격*0.45 + 방어*0.40
-		RESULTS:1 = 追加効果　：被ダメージ軽減　クリティカルされない
-		RESULTS:2 = BURST性能 ：直撃しやすくなる。공격後にオートガード
-	CASE "撹乱"
-		RESULTS:0 = 威力影響度：공격*0.75 + 민첩*0.35
-		RESULTS:1 = 追加効果　：クリティカル率ＵＰ　ただし방어力にペナルティ
-		RESULTS:2 = BURST性能 ：威力が上がる。確率で相手を怯ませる
-	CASE "重撃"
-		RESULTS:0 = 威力影響度：공격*0.90 + 방어*0.30
-		RESULTS:1 = 追加効果　：威力が高い　ただし回避率にペナルティ
-		RESULTS:2 = BURST性能 ：直撃しにくいが大振りな一撃
-	CASE "広範"
-		RESULTS:0 = 威力影響度：공격*1.15
-		RESULTS:1 = 追加効果　：カス当たりの威力が高い　ただし直撃しにくい
-		RESULTS:2 = BURST性能 ：絶対直撃する。ただし反動で回避できなくなる
-	CASE "全力"
-		RESULTS:0 = 威力影響度：공격*1.50
-		RESULTS:1 = 追加効果　：反動で疲労蓄積　피로도に応じて直撃率ダウン
-		RESULTS:2 = BURST性能 ：捨て身で放つ、強烈な一撃
-	CASE "知略"
-		RESULTS:0 = 威力影響度：공격*0.75 + 지성*0.25
-		RESULTS:1 = 追加効果　：지성に応じて直撃率が上昇
-		RESULTS:2 = BURST性能 ：クリティカルしやすくなる。공격後に관찰한다効果
-	CASE "設置"
-		RESULTS:0 = 威力影響度：공격*0.50 + 지성*0.30
-		RESULTS:1 = 追加効果　：直撃、カス当たり時に相手の방심도を増加
-		RESULTS:2 = BURST性能 ：방심도上昇効果２倍
-	CASE "使役"
-		RESULTS:0 = 威力影響度：공격*0.25 + 지성*0.20
-		RESULTS:1 = 追加効果　：공격が２回ヒットする
-		RESULTS:2 = BURST性能 ：直撃しにくいが大振りな一撃
-	CASE "通常"
-		RESULTS:0 = 威力影響度：공격*1.00
-		RESULTS:1 = 追加効果　：標準的な性能　直撃率が少し高い
-		RESULTS:2 = BURST性能 ：ダメージ効率の良い強공격
+	CASE "연속"
+		RESULTS:0 = 위력 영향도：공격*0.25 + 민첩*0.20
+		RESULTS:1 = 추가 효과　：매 공격마다 2회의 연속 피해를 입힌다
+		RESULTS:2 = BURST 성능 ：총 ６회의 연속 공격, 모두 직격하면 고위력의 피해를 입힌다
+	CASE "장갑"
+		RESULTS:0 = 위력 영향도：공격*0.45 + 방어*0.40
+		RESULTS:1 = 추가 효과　：받는 피해량 경감　치명타 피해를 입지 않는다
+		RESULTS:2 = BURST 성능 ：직격률이 상승하며, 공격 후 오토 가드
+	CASE "교란"
+		RESULTS:0 = 위력 영향도：공격*0.75 + 민첩*0.35
+		RESULTS:1 = 추가 효과　：치명타율 ＵＰ　그러나 방어력에 패널티
+		RESULTS:2 = BURST 성능 ：위력이 상승하며, 일정 확률로 상대를 기죽인다
+	CASE "중격"
+		RESULTS:0 = 위력 영향도：공격*0.90 + 방어*0.30
+		RESULTS:1 = 추가 효과　：위력이 높다　그러나 회피율에 패널티
+		RESULTS:2 = BURST 성능 ：위력이 더욱 상승하며, 명중률이 감소한다
+	CASE "광역"
+		RESULTS:0 = 위력 영향도：공격*1.15
+		;역) カス当たり를 "가드 대미지(공격이 가드될 시의 위력)"로 의역하였으며, 이보다 더 잘 어울리는 번역명을 추천해 주신다면 감사하겠습니다
+		;추가 효과 원문은 カス当たりの威力が高い　ただし直撃しにくい
+		RESULTS:1 = 추가 효과　：공격이 빗나갈 확률이 적다　그러나 직격률 감소 및 공격이 가드될 확률 증가
+		RESULTS:2 = BURST 성능 ：확정적으로 직격하며, 그 반동으로 회피할 수 없게 된다
+	CASE "전력"
+		RESULTS:0 = 위력 영향도：공격*1.50
+		RESULTS:1 = 추가 효과　：공격이 잘 가드되지 않는다　피로도에 따라 직격률 DOWN　반동으로 추가 피로 축적
+		RESULTS:2 = BURST 성능 ：필사의 각오로 쏘아붙이는 강렬한 일격
+	CASE "지략"
+		RESULTS:0 = 위력 영향도：공격*0.75 + 지성*0.25
+		RESULTS:1 = 추가 효과　：캐릭터의 지성에 비례하여 직격률 상승
+		RESULTS:2 = BURST 성능 ：치명타 확률 증가, 공격 후에【관찰한다】효과
+	CASE "설치"
+		RESULTS:0 = 위력 영향도：공격*0.50 + 지성*0.30
+		RESULTS:1 = 추가 효과　：직격하거나 공격이 가드될 시 상대방의 방심도가 증가
+		RESULTS:2 = BURST 성능 ：방심도 상승 효과 ２배
+	CASE "사역"
+		RESULTS:0 = 위력 영향도：공격*0.25 + 지성*0.20
+		RESULTS:1 = 추가 효과　：매 공격마다 2회의 연속 피해를 입힌다
+		RESULTS:2 = BURST 성능 ：위력이 더욱 상승하며, 명중률이 감소한다
+	CASE "통상"
+		RESULTS:0 = 위력 영향도：공격*1.00
+		RESULTS:1 = 추가 효과　：표준적인 성능　직격률이 상대적으로 조금 높다
+		RESULTS:2 = BURST 성능 ：대미지 효율이 좋은 강공격
 ENDSELECT
 RETURN
 

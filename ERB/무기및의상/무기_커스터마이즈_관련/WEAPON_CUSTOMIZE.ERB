@@ -1,10 +1,10 @@
-﻿;武器カスタマイズ機能に関する処理群
+﻿;무기 커스터마이즈 기능에 관한 처리군
 ;------------------------------------------------------------------------------------------------------------------------------
 
-;武器カスタマイズ画面
+;무기 커스터마이즈 화면
 ;-------------------------------------------------
-;ARG   = キャラ番号
-;ARG:1 = キャラメイク中なら1
+;ARG   = 캐릭터 번호
+;ARG:1 = 캐릭터 메이킹 중이라면 1
 @WEAPON_CUSTOMIZE, ARG, ARG:1 = 0
 #DIM CONST LENGTH = 60
 $REPRINT
@@ -13,50 +13,50 @@ VARSET LOCAL
 VARSET LOCALS
 PRINTL ---///　　　　ＷＥＡＰＯＮ　ＣＵＳＴＯＭＩＺＥ　　///----------------
 PRINTL 
-PRINTFORML %NAME:ARG%　の現在の装備
+PRINTFORML %NAME:ARG%　의 현재 장비
 CALL SHORTLINE
-PRINTFORML ◆근거리武器
+PRINTFORML ◆근거리 무기
 IF CSTR:ARG:5 != ""
-	PRINTFORML ├[10]武器名 『%CSTR:ARG:5%』
+	PRINTFORML ├[10] 무기명 『%CSTR:ARG:5%』
 ELSE
-	PRINTFORML ├[10]武器名 （설정されていません）
+	PRINTFORML ├[10] 무기명 （무기명이 설정되어 있지 않습니다.）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,1,1
-PRINTFORML └[12]전투스타일　<<%FSTYLE_NAME_F(ARG,1)%>>%"", LENGTH - 40, LEFT%
-PRINTFORM 　　　　　---> 威力　　　：【{RESULT}】
+PRINTFORML └[12] 전투 스타일　<<%FSTYLE_NAME_F(ARG,1)%>>%"", LENGTH - 40, LEFT%
+PRINTFORM 　　　　　---> 위력　　　：【{RESULT}】
 CALL SET_FSTYLE_INFO,ARG,1
 PRINTFORML （ %RESULTS:0% ）
 PRINTFORML 　　　　　---> %RESULTS:1%
 PRINTFORML 　　　　　---> %RESULTS:2%
 
 CALL SHORTLINE
-PRINTFORML ◆중거리武器
+PRINTFORML ◆중거리 무기
 IF CSTR:ARG:6 != ""
-	PRINTFORML ├[20]武器名 『%CSTR:ARG:6%』
+	PRINTFORML ├[20] 무기명 『%CSTR:ARG:6%』
 ELSE
-	PRINTFORML ├[20]武器名 （설정されていません）
+	PRINTFORML ├[20] 무기명 （무기명이 설정되어 있지 않습니다.）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,2,1
-PRINTFORML └[22]전투스타일　<<%FSTYLE_NAME_F(ARG,2)%>>%"", LENGTH - 40, LEFT%
-PRINTFORM 　　　　　---> 威力　　　：【{RESULT}】
+PRINTFORML └[22] 전투 스타일　<<%FSTYLE_NAME_F(ARG,2)%>>%"", LENGTH - 40, LEFT%
+PRINTFORM 　　　　　---> 위력　　　：【{RESULT}】
 CALL SET_FSTYLE_INFO,ARG,2
 PRINTFORML （ %RESULTS:0% ）
 PRINTFORML 　　　　　---> %RESULTS:1%
 PRINTFORML 　　　　　---> %RESULTS:2%
 
 CALL SHORTLINE
-PRINTFORML ◆원거리武器
+PRINTFORML ◆원거리 무기
 IF CSTR:ARG:7 != ""
-	PRINTFORML ├[30]武器名 『%CSTR:ARG:7%』
+	PRINTFORML ├[30] 무기명 『%CSTR:ARG:7%』
 ELSE
-	PRINTFORML ├[30]武器名 （설정されていません）
+	PRINTFORML ├[30] 무기명 （무기명이 설정되어 있지 않습니다.）
 ENDIF
 RESETCOLOR
 CALL FSTYLE_ATTACK,ARG,3,1
-PRINTFORML └[32]전투스타일　<<%FSTYLE_NAME_F(ARG,3)%>>%"", LENGTH - 40, LEFT%
-PRINTFORM 　　　　　---> 威力　　　：【{RESULT}】
+PRINTFORML └[32] 전투 스타일　<<%FSTYLE_NAME_F(ARG,3)%>>%"", LENGTH - 40, LEFT%
+PRINTFORM 　　　　　---> 위력　　　：【{RESULT}】
 CALL SET_FSTYLE_INFO,ARG,3
 PRINTFORML （ %RESULTS:0% ）
 PRINTFORML 　　　　　---> %RESULTS:1%
@@ -81,7 +81,7 @@ ENDIF
 
 
 
-;무기의 이름を설정
+;무기의 이름을 설정
 @SETTING_WEAPON_NAME,ARG,ARG:1
 $REPRINT
 IF ARG:1 == 1
@@ -91,27 +91,27 @@ ELSEIF ARG:1 == 2
 ELSEIF ARG:1 == 3
 	PRINT 원거리
 ENDIF
-PRINTL 무기의 이름を決めてください
-PRINT 現在の武器名：
+PRINTL  무기의 이름을 정해 주십시오.
+PRINT 현재 무기명 ：
 IF CSTR:ARG:(ARG:1 + 4) != ""
 	PRINTFORML 『%CSTR:ARG:(ARG:1 + 4)%』
 ELSE
-	PRINTFORML （武器名が설정されていません）
+	PRINTFORML （무기명이 설정되어 있지 않습니다.）
 ENDIF
 PRINTL 
-PRINTL  [0]自分で入力する
-PRINTL  [1]ランダム生成機能を使う
+PRINTL  [0] 직접 입력한다
+PRINTL  [1] 랜덤 생성 기능을 사용한다
 SIF CSTR:ARG:(ARG:1 + 4) == ""
 	SETCOLOR 96, 96, 96
-PRINTFORML  [\@CSTR:ARG:(ARG:1 + 4) == "" ? - # 2 \@]追加文字列の설정
+PRINTFORML  [\@CSTR:ARG:(ARG:1 + 4) == "" ? - # 2 \@] 추가 문자열 설정
 RESETCOLOR
-PRINTL  [3]消去する
+PRINTL  [3] 소거한다
 SIF CSTR:ARG:5 != "" && ARG:1 != 1
-	PRINTFORML  [4]근거리と同じ銘　『%CSTR:ARG:5%』
+	PRINTFORML  [4] 근거리와 같은 이름　『%CSTR:ARG:5%』
 SIF CSTR:ARG:6 != "" && ARG:1 != 2
-	PRINTFORML  [5]중거리と同じ銘　『%CSTR:ARG:6%』
+	PRINTFORML  [5] 중거리와 같은 이름　『%CSTR:ARG:6%』
 SIF CSTR:ARG:7 != "" && ARG:1 != 3
-	PRINTFORML  [6]원거리と同じ銘　『%CSTR:ARG:7%』
+	PRINTFORML  [6] 원거리와 같은 이름　『%CSTR:ARG:7%』
 PRINTL  [999] 돌아간다
 $INPUT_LOOP
 INPUT
@@ -126,7 +126,7 @@ IF RESULT == 0
 	ELSEIF ARG:1 == 3
 		PRINT 원거리
 	ENDIF
-	PRINTL 武器に설정する名前を入力してください：
+	PRINTL 무기에 설정할 이름을 입력해 주십시오：
 	INPUTS
 	IF ARG:1 == 1
 		CSTR:ARG:5 = %RESULTS%
@@ -167,7 +167,7 @@ ELSEIF RESULT == 3
 		CSTR:ARG:7 = 
 	ENDIF
 	CDFLAG:ARG:(ARG:1):무기명원위치 = 0
-	PRINTL 武器名を消去しました
+	PRINTL 무기명을 소거했습니다.
 	PRINTW 
 	GOTO REPRINT
 ELSEIF RESULT == 4 && CSTR:ARG:5 != "" && ARG:1 != 1
@@ -205,7 +205,7 @@ ENDIF
 
 
 
-;전투스타일を설정
+;전투 스타일을 설정
 @SETTING_FSTYLE,ARG,ARG:1
 IF ARG:1 == 1
 	PRINT 근거리
@@ -214,28 +214,28 @@ ELSEIF ARG:1 == 2
 ELSEIF ARG:1 == 3
 	PRINT 원거리
 ENDIF
-PRINTL 武器の전투스타일を選んでください
-PRINTFORML 現在のスタイル：<<%FSTYLE_NAME_F(ARG,ARG:1)%>>
+PRINTL 무기의 전투 스타일을 선택해 주십시오.
+PRINTFORML 현재 전투 스타일：<<%FSTYLE_NAME_F(ARG,ARG:1)%>>
 PRINTL 
-PRINTL  [0] <<通常>>　　通常のスタイル　　　　　クセがなく扱いやすい　バースト공격の反動が小さい
+PRINTL  [0] <<통상>>　　　통상적인 전투 스타일　　　　 어느 쪽에도 편향되지 않아 다루기가 쉬운 계열（+ 버스트 공격의 반동↓）
 PRINTL 
-PRINTL  [1] <<連続>>　　민첩の高いキャラ向け　　２回공격できるので命中率はダントツ
+PRINTL  [1] <<연속>>　　【민첩】이 높은 캐릭터 추천　　연속으로 ２회 공격이 가능하여 명중률은 단연 탑급
 PRINTL 
-PRINTL  [2] <<装甲>>　　방어の高いキャラ向け　　ガードが固くなるので苦手な距離のサポートに
+PRINTL  [2] <<장갑>>　　【방어】가 높은 캐릭터 추천　　가드가 단단해져 서툰 거리의 서포트에 능하다
 PRINTL 
-PRINTL  [3] <<撹乱>>　　민첩の高いキャラ向け　　クリティカル率と威力が高いがガードは脆い
+PRINTL  [3] <<교란>>　　【민첩】이 높은 캐릭터 추천　　치명타율과 위력이 높지만 가드가 약한 하이리스크 하이리턴형
 PRINTL 
-PRINTL  [4] <<重撃>>　　방어の高いキャラ向け　　威力が高いが回避は期待できない
+PRINTL  [4] <<중격>>　　【방어】가 높은 캐릭터 추천　　회피율이나 직격률은 뒤처지지만 위력이 높아 고점은 확실한 타입
 PRINTL 
-PRINTL  [5] <<広範>>　　공격の高いキャラ向け　　直撃しなくても威力が高い
+PRINTL  [5] <<광역>>　　【공격】이 높은 캐릭터 추천　　직격하지 않더라도 위력이 높아 지속적인 피해를 주기에 적합하다
 PRINTL 
-PRINTL  [6] <<全力>>　　공격の高いキャラ向け　　非常に威力が高いが反動も大きい
+PRINTL  [6] <<전력>>　　【공격】이 높은 캐릭터 추천　　위력이 매우 높지만 반동도 큰 필사의 일격을 가한다
 PRINTL 
-PRINTL  [7] <<知略>>　　지성の高いキャラ向け　　지성が高いほど直撃しやすい
+PRINTL  [7] <<지략>>　　【지성】이 높은 캐릭터 추천　　지성이 높을 수록 직격하기 쉬워진다
 PRINTL 
-PRINTL  [8] <<設置>>　　지성の高いキャラ向け　　威力は低いが、相手に隙を作る追加効果を持つ
+PRINTL  [8] <<설치>>　　【지성】이 높은 캐릭터 추천　　위력은 낮지만 상대방의 빈틈을 만드는 추가 효과를 가진다
 PRINTL 
-PRINTL  [9] <<使役>>　　지성の高いキャラ向け　　状況に応じた多彩な공격方法が可能
+PRINTL  [9] <<사역>>　　【지성】이 높은 캐릭터 추천　　상황에 따라 다채로운 공격을 펼칠 수 있다
 PRINTL 
 PRINTL  [999] 돌아간다
 $INPUT_LOOP

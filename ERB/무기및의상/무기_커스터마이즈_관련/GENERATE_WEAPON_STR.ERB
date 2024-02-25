@@ -2044,29 +2044,29 @@ DO
 		;同じなら削る
 		IF COM_STR:0 == COM_STR:1
 			COM_STR:1 = 
-		;「ン」と「ム」の連続なら「ン」にする
+		;「ン」と「ム」の연속なら「ン」にする
 		ELSEIF COM_STR:0 == "ン"&& COM_STR:1 == "ム"
 			COM_STR:0 = ン
 			COM_STR:1 = 
-		;「ッ」と「ン」の連続ならランダムにする
+		;「ッ」と「ン」の연속ならランダムにする
 		ELSEIF (COM_STR:0 == "ッ" || COM_STR:0 == "ン") && (COM_STR:1 == "ッ" || COM_STR:1 == "ン")
 			COM_STR:0 = ッ
 			SIF RAND:2
 				COM_STR:0 = ン
 			COM_STR:1 = 
-		;「ッ」と「ー」の連続ならランダムにする
+		;「ッ」と「ー」の연속ならランダムにする
 		ELSEIF (COM_STR:0 == "ッ" || COM_STR:0 == "ー") && (COM_STR:1 == "ッ" || COM_STR:1 == "ー")
 			COM_STR:0 = ッ
 			SIF RAND:2
 				COM_STR:0 = ー
 			COM_STR:1 = 
-		;「ン」と「ー」の連続ならランダムにする
+		;「ン」と「ー」の연속ならランダムにする
 		ELSEIF COM_STR:0 == "ン" && COM_STR:1 == "ー"
 			COM_STR:0 = ン
 			SIF RAND:2
 				COM_STR:0 = ー
 			COM_STR:1 = 
-		;母音と「ー」の連続ならランダムにする
+		;母音と「ー」の연속ならランダムにする
 		ELSEIF (COM_STR:0 == "ア" || COM_STR:0 == "イ" || COM_STR:0 == "ウ" || COM_STR:0 == "エ" || COM_STR:0 == "オ") && COM_STR:1 == "ー"
 			IF RAND:2
 				COM_STR:0 = 

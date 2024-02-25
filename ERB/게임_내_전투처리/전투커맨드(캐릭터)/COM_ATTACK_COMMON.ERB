@@ -11,14 +11,14 @@ HIT_FLAG = 0
 ;전투스타일チェンジスキーム
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "BATTLE_CHARA_BATTLE_STYLE_CHANGE")
 
-;[連続]スタイルによる공격回数アップ
-SIF FSTYLE_NAME_F(TARGET, TCVARn:0) == "連続"
+;[연속]スタイルによる공격回数アップ
+SIF FSTYLE_NAME_F(TARGET, TCVARn:0) == "연속"
 	ATTACK_NUM += 1
-;[連続]バーストによる공격回数アップ
-SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET, TCVARn:0) == "連続"
+;[연속]バーストによる공격回数アップ
+SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET, TCVARn:0) == "연속"
 	ATTACK_NUM += 4
-;[使役]スタイルによる공격回数アップ
-SIF GETBIT(TCVARn:217, 0) == 0 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "使役"
+;[사역]スタイルによる공격回数アップ
+SIF GETBIT(TCVARn:217, 0) == 0 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "사역"
 	ATTACK_NUM += 1
 
 ;距離表示
@@ -75,24 +75,24 @@ IF RESULT == 0
 		;ダメージ計算
 		IF TCVARn:0 == 1
 			CALL DAMAGE, "ATTACK_RANGE_SHORT"
-			;[広範]スタイルはカス当たりの威力が高い
-			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "広範"
+			;[광역]スタイルはカス当たりの威力が高い
+			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 100 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 20, 40) / 10000 + 100, RESULT) * (RAND:26 + 75) / 100
 			ELSE
 				LOCAL:1 = MIN(RESULT * 25 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 15, 30) / 10000 + 50, RESULT)
 			ENDIF
 		ELSEIF TCVARn:0 == 2
 			CALL DAMAGE, "ATTACK_RANGE_MIDDLE"
-			;[広範]スタイルはカス当たりの威力が高い
-			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "広範"
+			;[광역]スタイルはカス当たりの威力が高い
+			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 200 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 15, 30) / 10000 + 100, RESULT) * (RAND:51 + 50) / 100
 			ELSE
 				LOCAL:1 = MIN(RESULT * 100 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 10, 20) / 10000 + 50, RESULT)
 			ENDIF
 		ELSEIF TCVARn:0 == 3
 			CALL DAMAGE, "ATTACK_RANGE_LONG"
-			;[広範]スタイルはカス当たりの威力が高い
-			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "広範"
+			;[광역]スタイルはカス当たりの威力が高い
+			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 300 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 10, 20) / 10000 + 100, RESULT) * (RAND:76 + 25) / 100
 			ELSE
 				LOCAL:1 = MIN(RESULT * 300 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 5, 10) / 10000 + 50, RESULT)
@@ -130,10 +130,10 @@ IF RESULT == 0
 
 	;방심도上昇の追加効果
 	LOCAL:3 = 0
-	;[設置]スタイル
-	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "設置" && LOCAL:2
+	;[설치]スタイル
+	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "설치" && LOCAL:2
 		LOCAL:3 += 125
-		;[設置]バーストの効果
+		;[설치]バーストの効果
 		SIF GETBIT(TCVARn:217, 0)
 			LOCAL:3 += 125
 	ENDIF
@@ -149,8 +149,8 @@ IF RESULT == 0
 		PRINTW 
 		FLAG:17 += LOCAL:3
 	ENDIF
-	;[撹乱]バーストの怯み効果10％
-	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱" && RAND:10 == 0 && HIT_FLAG == -1
+	;[교란]バーストの怯み効果10％
+	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란" && RAND:10 == 0 && HIT_FLAG == -1
 		TFLAG:1 = 1
 		PRINTFORML うまく相手の体勢を崩した！
 	ENDIF
@@ -171,11 +171,11 @@ ELSE
 		RESULT += 3
 	SIF TALENT:공생 > 0
 		RESULT += 2
-	;[撹乱]スタイルの치명타 보정
-	SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱"
+	;[교란]スタイルの치명타 보정
+	SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 		RESULT += 5
-	;[知略]バーストの치명타율アップ
-	SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "知略"
+	;[지략]バーストの치명타율アップ
+	SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략"
 		RESULT += 5
 	;EVADERの치명타 보정
 	SIF TFLAG:33 > 1
@@ -253,10 +253,10 @@ ELSE
 
 	;방심도上昇の追加効果
 	LOCAL:3 = 0
-	;[設置]スタイル
-	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "設置"
+	;[설치]スタイル
+	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "설치"
 		LOCAL:3 += 300
-		;[設置]バーストの効果
+		;[설치]バーストの効果
 		SIF GETBIT(TCVARn:217, 0)
 			LOCAL:3 += 300
 	ENDIF
@@ -272,8 +272,8 @@ ELSE
 		PRINTW 
 		FLAG:17 += LOCAL:3
 	ENDIF
-	;[撹乱]バーストの怯み効果50％、クリティカルで100％
-	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱"
+	;[교란]バーストの怯み効果50％、クリティカルで100％
+	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 		IF HIT_FLAG == 2 || RAND:2 == 0
 			TFLAG:1 = 1
 			PRINTFORML うまく相手の体勢を崩した！
@@ -287,32 +287,32 @@ IF ATTACK_NUM
 	GOTO ATTACK_AGAIN
 ENDIF
 
-;[全力]スタイルの反動
-SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "全力"
+;[전력]スタイルの反動
+SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 	TFLAG:99 += 2
 
 ;バースト공격の反動
 IF GETBIT(TCVARn:217, 0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "連続"
+		CASE "연속"
 			TFLAG:99 += 2
-		CASE "装甲"
+		CASE "장갑"
 			TFLAG:99 += 2
-		CASE "撹乱"
+		CASE "교란"
 			TFLAG:99 += 2
-		CASE "重撃"
+		CASE "중격"
 			TFLAG:99 += 3
-		CASE "広範"
+		CASE "광역"
 			TFLAG:99 += 3
-		CASE "全力"
+		CASE "전력"
 			TFLAG:99 += 4
-		CASE "知略"
+		CASE "지략"
 			TFLAG:99 += 1
-		CASE "設置"
+		CASE "설치"
 			TFLAG:99 += 1
-		CASE "使役"
+		CASE "사역"
 			TFLAG:99 += 3
-		CASE "通常"
+		CASE "통상"
 			TFLAG:99 += 1
 	ENDSELECT
 	;FEAT 효과에 따른反動増加
@@ -321,13 +321,13 @@ IF GETBIT(TCVARn:217, 0)
 	SIF TALENT:풀버스트 > 0
 		TFLAG:99 += 1
 
-	;[装甲]バーストのオートガード効果
-	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"
+	;[장갑]バーストのオートガード効果
+	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 		TCVARn:2 = 자세：방어
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%방어態勢になった！
 	ENDIF
-	;[知略]バーストの관찰한다効果
-	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "知略"
+	;[지략]バーストの관찰한다効果
+	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략"
 		TFLAG:25 = 1
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%관찰한다状態になった！
 	ENDIF

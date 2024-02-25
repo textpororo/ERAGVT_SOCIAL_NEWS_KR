@@ -39,25 +39,25 @@ IF CSTR:TARGET:5 == "正拳突き"
 		LOCAL:0 ++
 	CDFLAG:TARGET:근거리:전투스타일 = LOCAL:0
 	SELECTCASE LOCAL:0
-		CASE 0;通常
+		CASE 0;통상
 			CSTR:TARGET:5 = ストレート
-		CASE 1;連続
+		CASE 1;연속
 			CSTR:TARGET:5 = ワンツーパンチ
-		CASE 2;装甲
+		CASE 2;장갑
 			CSTR:TARGET:5 = シールドチャージ
-		CASE 3;撹乱
+		CASE 3;교란
 			CSTR:TARGET:5 = スイングパンチ
-		CASE 4;重撃
+		CASE 4;중격
 			CSTR:TARGET:5 = 膝蹴り
-		CASE 5;広範
+		CASE 5;광역
 			CSTR:TARGET:5 = 旋風脚
-		CASE 6;全力
+		CASE 6;전력
 			CSTR:TARGET:5 = 突っ張り
-;		CASE 7;知略
+;		CASE 7;지략
 ;			CSTR:TARGET:5 = 裏拳打ち
-		CASE 8;設置
+		CASE 8;설치
 			CSTR:TARGET:5 = サマーソルトキック
-;		CASE 9;使役
+;		CASE 9;사역
 ;			CSTR:TARGET:5 = ミニミニゴーレムメイド
 	ENDSELECT
 
@@ -66,25 +66,25 @@ IF CSTR:TARGET:5 == "正拳突き"
 		LOCAL:1 ++
 	CDFLAG:TARGET:중거리:전투스타일 = LOCAL:1
 	SELECTCASE LOCAL:1
-		CASE 0;通常
+		CASE 0;통상
 			CSTR:TARGET:6 = 釘バット
-		CASE 1;連続
+		CASE 1;연속
 			CSTR:TARGET:6 = ヌンチャク
-		CASE 2;装甲
+		CASE 2;장갑
 			CSTR:TARGET:6 = シールドバッシュ
-		CASE 3;撹乱
+		CASE 3;교란
 			CSTR:TARGET:6 = 槍
-		CASE 4;重撃
+		CASE 4;중격
 			CSTR:TARGET:6 = 硬鞭
-		CASE 5;広範
+		CASE 5;광역
 			CSTR:TARGET:6 = バラ鞭
-		CASE 6;全力
+		CASE 6;전력
 			CSTR:TARGET:6 = フレイル
-;		CASE 7;知略
+;		CASE 7;지략
 ;			CSTR:TARGET:6 = 棒手裏剣
-		CASE 8;設置
+		CASE 8;설치
 			CSTR:TARGET:6 = ぴこぴこハンマー
-;		CASE 9;使役
+;		CASE 9;사역
 ;			CSTR:TARGET:6 = 地雷ゴーレム犬
 	ENDSELECT
 
@@ -93,25 +93,25 @@ IF CSTR:TARGET:5 == "正拳突き"
 		LOCAL:2 ++
 	CDFLAG:TARGET:원거리:전투스타일 = LOCAL:2
 	SELECTCASE LOCAL:2
-		CASE 0;通常
+		CASE 0;통상
 			CSTR:TARGET:7 = ライフル
-		CASE 1;連続
+		CASE 1;연속
 			CSTR:TARGET:7 = サブマシンガン
-		CASE 2;装甲
+		CASE 2;장갑
 			CSTR:TARGET:7 = ガンシールド
-		CASE 3;撹乱
+		CASE 3;교란
 			CSTR:TARGET:7 = スナイパーライフル
-		CASE 4;重撃
+		CASE 4;중격
 			CSTR:TARGET:7 = 火炎放射機
-		CASE 5;広範
+		CASE 5;광역
 			CSTR:TARGET:7 = クレイモア爆弾
-		CASE 6;全力
+		CASE 6;전력
 			CSTR:TARGET:7 = 対物ライフル
-;		CASE 7;知略
+;		CASE 7;지략
 ;			CSTR:TARGET:7 = 迫撃砲
-		CASE 8;設置
+		CASE 8;설치
 			CSTR:TARGET:7 = ネットランチャー
-;		CASE 9;使役
+;		CASE 9;사역
 ;			CSTR:TARGET:7 = 誘導ミサイル
 	ENDSELECT
 ENDIF
@@ -121,13 +121,13 @@ ENDIF
 IF CSTR:TARGET:5 != "正拳突き"
 	CSTR:TARGET:5 = 正拳突き
 	CDFLAG:TARGET:근거리:전투스타일 = 0
-	;正拳突き// //通常
+	;正拳突き// //통상
 	CSTR:TARGET:6 = バトン殴り
 	CDFLAG:TARGET:중거리:전투스타일 = 0
-	;バトン殴り// //通常
+	;バトン殴り// //통상
 	CSTR:TARGET:7 = 仕込み銃
 	CDFLAG:TARGET:원거리:전투스타일 = 0
-	;仕込み銃// //通常
+	;仕込み銃// //통상
 ENDIF
 
 
@@ -167,13 +167,13 @@ ENDIF
 ;ELSEIF CSTR:TARGET:5 == "ライダーキック"
 ;	CSTR:TARGET:5 = 突っ張り
 ;ENDIF
-;;「知略」はない
+;;「지략」はない
 ;IF CSTR:TARGET:5 == "サマーソルトキック"
 ;	CSTR:TARGET:5 = プレミアムサイン
 ;ELSEIF CSTR:TARGET:5 == "プレミアムサイン"
 ;	CSTR:TARGET:5 = サマーソルトキック
 ;ENDIF
-;;「使役」はない
+;;「사역」はない
 ;
 ;IF CSTR:TARGET:6 == "釘バット"
 ;	CSTR:TARGET:6 = 微細振動剣
@@ -211,13 +211,13 @@ ENDIF
 ;ELSEIF CSTR:TARGET:6 == "パイルバンカー"
 ;	CSTR:TARGET:6 = フレイル
 ;ENDIF
-;;「知略」はない
+;;「지략」はない
 ;IF CSTR:TARGET:6 == "ぴこぴこハンマー"
 ;	CSTR:TARGET:6 = 5tハンマー
 ;ELSEIF CSTR:TARGET:6 == "5tハンマー"
 ;	CSTR:TARGET:6 = ぴこぴこハンマー
 ;ENDIF
-;;「使役」はない
+;;「사역」はない
 ;
 ;ENDIF
 ;IF CSTR:TARGET: == "ライフル"
@@ -255,13 +255,13 @@ ENDIF
 ;ELSEIF CSTR:TARGET:7 == "パイルバンカー帯電式Ｈ型"
 ;	CSTR:TARGET:7 = 対物ライフル
 ;ENDIF
-;「知略」はない
+;「지략」はない
 ;IF CSTR:TARGET: == "ネットランチャー"
 ;	CSTR:TARGET:7 = パンジャンドラム
 ;ELSEIF CSTR:TARGET:7 == "パンジャンドラム"
 ;	CSTR:TARGET:7 = ネットランチャー
 ;ENDIF
-;;「使役」はない
+;;「사역」はない
 
 
 
@@ -1318,7 +1318,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_366_SEX_COM16
 ;種付けピストンでフィニッシュされる場合の구상です。
-;連続でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
+;연속でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
 IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_2_SEX_COM16
 ELSE
@@ -1344,7 +1344,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_366_SEX_COM18
 ;애널ピストンでフィニッシュされる場合の구상です。
-;連続でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
+;연속でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
 IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_2_SEX_COM18
 ELSE
@@ -1370,7 +1370,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_366_SEX_COM20
 ;両穴ピストンでフィニッシュされる場合の구상です。
-;連続でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
+;연속でハメられ続けているので通常よりも快楽を受けている描写にすると良いでしょう。
 IF CFLAG:1 > 0
 	TRYCALLFORM KOJO_2_SEX_COM20
 ELSE

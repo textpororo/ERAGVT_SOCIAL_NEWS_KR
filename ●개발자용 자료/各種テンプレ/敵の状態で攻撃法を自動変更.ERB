@@ -4,39 +4,39 @@
 IF FLAG:10 == 2
 	SELECTCASE RAND:2
 		CASE 0
-		CDFLAG:TARGET:근거리:전투스타일=2;装甲
-		CDFLAG:TARGET:중거리:전투스타일=2;装甲
-		CDFLAG:TARGET:원거리:전투스타일=2;装甲
+		CDFLAG:TARGET:근거리:전투스타일=2;장갑
+		CDFLAG:TARGET:중거리:전투스타일=2;장갑
+		CDFLAG:TARGET:원거리:전투스타일=2;장갑
 		CASE 2
-		CDFLAG:TARGET:근거리:전투스타일=8;設置
-		CDFLAG:TARGET:중거리:전투스타일=8;設置
-		CDFLAG:TARGET:원거리:전투스타일=8;設置
+		CDFLAG:TARGET:근거리:전투스타일=8;설치
+		CDFLAG:TARGET:중거리:전투스타일=8;설치
+		CDFLAG:TARGET:원거리:전투스타일=8;설치
 		CASEELSE
-		CDFLAG:TARGET:근거리:전투스타일=7;知略
-		CDFLAG:TARGET:중거리:전투스타일=7;知略
-		CDFLAG:TARGET:원거리:전투스타일=7;知略
+		CDFLAG:TARGET:근거리:전투스타일=7;지략
+		CDFLAG:TARGET:중거리:전투스타일=7;지략
+		CDFLAG:TARGET:원거리:전투스타일=7;지략
 			
 	ENDSELECT
 ELSE
 	;敵のHPが1/30かつ3000以下
 	IF (FLAG:13 < FLAG:12 /30) && (FLAG:13 <3000)
-		CDFLAG:TARGET:근거리:전투스타일=6;全力
-		CDFLAG:TARGET:중거리:전투스타일=6;全力
-		CDFLAG:TARGET:원거리:전투스타일=6;全力
+		CDFLAG:TARGET:근거리:전투스타일=6;전력
+		CDFLAG:TARGET:중거리:전투스타일=6;전력
+		CDFLAG:TARGET:원거리:전투스타일=6;전력
 
 
 	;敵のHPが半分以上
 	ELSEIF (FLAG:13 > FLAG:12 /2)
-		CDFLAG:TARGET:근거리:전투스타일=2;装甲
-		CDFLAG:TARGET:중거리:전투스타일=1;連続
-		CDFLAG:TARGET:원거리:전투스타일=5;広範
+		CDFLAG:TARGET:근거리:전투스타일=2;장갑
+		CDFLAG:TARGET:중거리:전투스타일=1;연속
+		CDFLAG:TARGET:원거리:전투스타일=5;광역
 
 
 	;敵のHPが半分以上で、通常공격
 	ELSE
-		CDFLAG:TARGET:근거리:전투스타일=8;設置
-		CDFLAG:TARGET:중거리:전투스타일=0;通常
-		CDFLAG:TARGET:원거리:전투스타일=0;通常
+		CDFLAG:TARGET:근거리:전투스타일=8;설치
+		CDFLAG:TARGET:중거리:전투스타일=0;통상
+		CDFLAG:TARGET:원거리:전투스타일=0;통상
 	ENDIF
 ENDIF
 
@@ -46,23 +46,23 @@ ENDIF
 @KOJO_0_BATTLE_CHARA_ATTACK_RANGE_SHORT
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:근거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM 
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM 
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM 
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM 
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM 
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM 
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORM 
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM 
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM 
 	CASEELSE
 		PRINTFORM 
@@ -75,23 +75,23 @@ PRINTFORML 」
 @KOJO_0_BATTLE_CHARA_ATTACK_RANGE_MIDDLE
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:중거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM 
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM 
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM 
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM 
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM 
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM 
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORM 
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM 
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM 
 	CASEELSE
 		PRINTFORM 
@@ -104,23 +104,23 @@ PRINTFORML 」
 @KOJO_0_BATTLE_CHARA_ATTACK_RANGE_LONG
 PRINTFORM 「
 SELECTCASE CDFLAG:TARGET:원거리:전투스타일
-	CASE 0;通常
+	CASE 0;통상
 		PRINTFORM 
-	CASE 1;連続
+	CASE 1;연속
 		PRINTFORM 
-	CASE 2;装甲
+	CASE 2;장갑
 		PRINTFORM 
-	CASE 3;撹乱
+	CASE 3;교란
 		PRINTFORM 
-	CASE 4;重撃
+	CASE 4;중격
 		PRINTFORM 
-	CASE 5;広範
+	CASE 5;광역
 		PRINTFORM 
-	CASE 6;全力
+	CASE 6;전력
 		PRINTFORM 
-	CASE 7;知略
+	CASE 7;지략
 		PRINTFORM 
-	CASE 8;設置
+	CASE 8;설치
 		PRINTFORM 
 	CASEELSE
 		PRINTFORM 
@@ -130,39 +130,39 @@ PRINTFORML 」
 
 
 ;=============== コピペ用 ================
-	CDFLAG:ARG:근거리:전투스타일=0;通常
-	CDFLAG:ARG:근거리:전투스타일=1;連続
-	CDFLAG:ARG:근거리:전투스타일=2;装甲
-	CDFLAG:ARG:근거리:전투스타일=3;撹乱
-	CDFLAG:ARG:근거리:전투스타일=4;重撃
-	CDFLAG:ARG:근거리:전투스타일=5;広範
-	CDFLAG:ARG:근거리:전투스타일=6;全力
-	CDFLAG:ARG:근거리:전투스타일=7;知略
-	CDFLAG:ARG:근거리:전투스타일=8;設置
+	CDFLAG:ARG:근거리:전투스타일=0;통상
+	CDFLAG:ARG:근거리:전투스타일=1;연속
+	CDFLAG:ARG:근거리:전투스타일=2;장갑
+	CDFLAG:ARG:근거리:전투스타일=3;교란
+	CDFLAG:ARG:근거리:전투스타일=4;중격
+	CDFLAG:ARG:근거리:전투스타일=5;광역
+	CDFLAG:ARG:근거리:전투스타일=6;전력
+	CDFLAG:ARG:근거리:전투스타일=7;지략
+	CDFLAG:ARG:근거리:전투스타일=8;설치
 
-	CDFLAG:ARG:중거리:전투스타일=0;通常
-	CDFLAG:ARG:중거리:전투스타일=1;連続
-	CDFLAG:ARG:중거리:전투스타일=2;装甲
-	CDFLAG:ARG:중거리:전투스타일=3;撹乱
-	CDFLAG:ARG:중거리:전투스타일=4;重撃
-	CDFLAG:ARG:중거리:전투스타일=5;広範
-	CDFLAG:ARG:중거리:전투스타일=6;全力
-	CDFLAG:ARG:중거리:전투스타일=7;知略
-	CDFLAG:ARG:중거리:전투스타일=8;設置
+	CDFLAG:ARG:중거리:전투스타일=0;통상
+	CDFLAG:ARG:중거리:전투스타일=1;연속
+	CDFLAG:ARG:중거리:전투스타일=2;장갑
+	CDFLAG:ARG:중거리:전투스타일=3;교란
+	CDFLAG:ARG:중거리:전투스타일=4;중격
+	CDFLAG:ARG:중거리:전투스타일=5;광역
+	CDFLAG:ARG:중거리:전투스타일=6;전력
+	CDFLAG:ARG:중거리:전투스타일=7;지략
+	CDFLAG:ARG:중거리:전투스타일=8;설치
 
-	CDFLAG:ARG:원거리:전투스타일=0;通常
-	CDFLAG:ARG:원거리:전투스타일=1;連続
-	CDFLAG:ARG:원거리:전투스타일=2;装甲
-	CDFLAG:ARG:원거리:전투스타일=3;撹乱
-	CDFLAG:ARG:원거리:전투스타일=4;重撃
-	CDFLAG:ARG:원거리:전투스타일=5;広範
-	CDFLAG:ARG:원거리:전투스타일=6;全力
-	CDFLAG:ARG:원거리:전투스타일=7;知略
-	CDFLAG:ARG:원거리:전투스타일=8;設置
+	CDFLAG:ARG:원거리:전투스타일=0;통상
+	CDFLAG:ARG:원거리:전투스타일=1;연속
+	CDFLAG:ARG:원거리:전투스타일=2;장갑
+	CDFLAG:ARG:원거리:전투스타일=3;교란
+	CDFLAG:ARG:원거리:전투스타일=4;중격
+	CDFLAG:ARG:원거리:전투스타일=5;광역
+	CDFLAG:ARG:원거리:전투스타일=6;전력
+	CDFLAG:ARG:원거리:전투스타일=7;지략
+	CDFLAG:ARG:원거리:전투스타일=8;설치
 
 ;=============== 技名 ================
 
 覇王断空拳
 覇王空破断
 旋衝破
-設置
+설치

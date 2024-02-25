@@ -416,7 +416,7 @@ IF FLAG:72
 		;#endregion
 	ELSEIF CLOTH_OUTER_PER > 50
 		PRINTFORML 敵の공격を回避するために%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%見せる大胆なアングルを狙って
-		PRINTFORML 野次馬のシャッター音が連続で響く。
+		PRINTFORML 野次馬のシャッター音が연속で響く。
 		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
 			PRINTFORML 鬱陶しく思いながらも、ローアングルから激写されることに微かな興奮を覚えてしまう・・・
 		ELSE
@@ -430,7 +430,7 @@ IF FLAG:72
 		ELSE
 			PRINT 下着姿のまま戦う
 		ENDIF
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が連続で響く。
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が연속で響く。
 		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
 			IF ISMALE()
 				; #region 
@@ -469,7 +469,7 @@ IF FLAG:72
 				PRINT ほとんど
 			PRINT 全裸
 		ENDIF
-		PRINTFORML で戦う%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が連続で響く。
+		PRINTFORML で戦う%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が연속で響く。
 		IF LOCAL:1 == 1
 			LOCALS = 蠢く촉수服に陵辱される姿
 		ELSEIF LOCAL:1 == 2 && ISFEMALE()
@@ -627,7 +627,7 @@ IF FLAG:72
 			PRINT 下着姿のまま戦う
 		ENDIF
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく
-		PRINTFORML 野次馬のシャッター音が連続で響く。
+		PRINTFORML 野次馬のシャッター音が연속で響く。
 		IF (TALENT:음란 || ABL:노출벽 >= 3) && TALENT:초심 < 1
 			IF ISMALE()
 				;#region
@@ -666,7 +666,7 @@ IF FLAG:72
 				PRINT ほとんど
 			PRINT 全裸
 		ENDIF
-		PRINTFORML で戦う%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が連続で響く。
+		PRINTFORML で戦う%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%撮影するべく野次馬のシャッター音が연속で響く。
 		IF LOCAL:1 == 1
 			LOCALS = 蠢く촉수服に陵辱される姿
 		ELSEIF LOCAL:1 == 2 && ISFEMALE()
@@ -1328,7 +1328,7 @@ ENDIF
 PRINTW 
 
 ;レイプの計算
-CALL CALC_GANGBANG("戦闘後",4,NAKADASHI)
+CALL CALC_GANGBANG("전투 후",4,NAKADASHI)
 
 RETURN 1
 

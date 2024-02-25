@@ -311,8 +311,8 @@ ENDSELECT
 ;[汎用]スタイルの直撃ボーナス
 IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "汎用" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 5
-;[知略]スタイルの直撃ボーナス
-ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "知略" && ARGS != "HURIHODOKU"
+;[지략]スタイルの直撃ボーナス
+ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략" && ARGS != "HURIHODOKU"
 	;キャラの지성を見る
 	LOCAL:6 = MAXBASE:지성
 	CALL CLOTH_BATTLE_HOSEI, "CHISEI"
@@ -320,11 +320,11 @@ ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "知略" && ARGS != "HURIHODOKU"
 	CALL SHINKYOU_CHECK, "CHISEI", LOCAL:6
 	LOCAL:6 = RESULT
 	LOCAL:5 += LIMIT(LOCAL:6 * LOCAL:6 / 4000, 0, 50)
-;[広範]スタイルの直撃ペナルティ
-ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "広範" && ARGS != "HURIHODOKU"
+;[광역]スタイルの直撃ペナルティ
+ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역" && ARGS != "HURIHODOKU"
 	TIMES LOCAL:5, 0.25
-;[全力]スタイルの直撃ペナルティ
-ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "全力" && ARGS != "HURIHODOKU"
+;[전력]スタイルの直撃ペナルティ
+ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력" && ARGS != "HURIHODOKU"
 	LOCAL:5 = MAX(LOCAL:5 - CFLAG:99 + 15,LOCAL:5 / 2 + 15)
 ENDIF
 ;衣装による直撃補正
@@ -342,7 +342,7 @@ SIF TALENT:공생 > 0
 ;슈퍼 스코프による上昇#####
 SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
 	LOCAL:5 += 10
-;BRAVE HIT(同一距離で連続공격)による直撃ボーナス
+;BRAVE HIT(同一距離で연속공격)による直撃ボーナス
 SIF TFLAG:30 > 1 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_BRAVE_HIT(TFLAG:30 - 1,"命中")
 ;COUNTER_ATTACKによる直撃ボーナス
@@ -361,17 +361,17 @@ SIF GETBIT(TCVARn:216, 1) && TALENT:공중전서툼 && ARGS != "HURIHODOKU"
 ;バースト공격による直撃率修正
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "装甲"
+		CASE "장갑"
 			LOCAL:5 = LOCAL:5 * 125 / 100 + 5
-		CASE "重撃"
+		CASE "중격"
 			LOCAL:5 = LOCAL:5 * 90 / 100 - 5
-		CASE "広範"
+		CASE "광역"
 			LOCAL:5 = 100
-		CASE "全力"
+		CASE "전력"
 			LOCAL:5 = LOCAL:5 + 10 - CFLAG:99
-		CASE "使役"
+		CASE "사역"
 			LOCAL:5 = LOCAL:5 * 90 / 100 - 5
-		CASE "通常"
+		CASE "통상"
 			LOCAL:5 = LOCAL:5 * 125 / 100 + 5
 	ENDSELECT
 ENDIF
@@ -512,11 +512,11 @@ SELECTCASE ARGS
 			
 ENDSELECT
 
-;[広範]スタイルのカス当たりボーナス
-SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "広範" && ARGS != "HURIHODOKU"
+;[광역]スタイルのカス当たりボーナス
+SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 35
-;[全力]スタイルのカス当たりペナルティ
-SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "全力" && ARGS != "HURIHODOKU"
+;[전력]スタイルのカス当たりペナルティ
+SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력" && ARGS != "HURIHODOKU"
 	TIMES LOCAL:5, 0.85
 ;슈퍼 스코프による減少#####
 SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
@@ -529,7 +529,7 @@ SIF GETBIT(TCVARn:3, 0)
 ;バースト공격によるカス当たり修正
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "全力"
+		CASE "전력"
 			LOCAL:5 = 0
 	ENDSELECT
 ENDIF
@@ -696,8 +696,8 @@ LOCAL:5 += RESULT
 ;가속 장치による회피율上昇#####
 SIF CFLAG:TARGET:43 == 502
 	LOCAL:5 += 5
-;[重撃]スタイルの回避ペナルティ
-SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "重撃"
+;[중격]スタイルの回避ペナルティ
+SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "중격"
 	TIMES LOCAL:5, 0.70
 ;BRAVE HITによる回避ペナルティ
 SIF TFLAG:30 > 1
@@ -972,9 +972,9 @@ SIF GETBIT(TCVARn:216, 2) && TALENT:소형체구 == 0
 ;バースト공격による회피율修正
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "広範"
+		CASE "광역"
 			LOCAL:5 = 0
-		CASE "全力"
+		CASE "전력"
 			LOCAL:5 = 0
 	ENDSELECT
 ENDIF
@@ -1193,11 +1193,11 @@ LOCAL:6 = CORRECTION_TRANS(LOCAL:6)
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:6 = LOCAL:6 * RESULT / 100
 
-;[撹乱]スタイルの방어ペナルティ
-IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "撹乱"
+;[교란]スタイルの방어ペナルティ
+IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 	TIMES LOCAL:6, 0.85
-;[装甲]スタイルの방어ボーナス
-ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "装甲"
+;[장갑]スタイルの방어ボーナス
+ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 	LOCAL:6 += 50
 	TIMES LOCAL:6, 1.15
 ENDIF
@@ -1416,17 +1416,17 @@ SIF ARGS == "CHARA"
 ;バースト공격による与ダメージ修正
 IF GETBIT(TCVARn:217,0) && ARGS != "CHARA"
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "連続"
+		CASE "연속"
 			LOCAL:3 = LOCAL:3 * 40 / 100
-		CASE "撹乱"
+		CASE "교란"
 			LOCAL:3 = LOCAL:3 * 110 / 100
-		CASE "重撃"
+		CASE "중격"
 			LOCAL:3 = LOCAL:3 * 150 / 100
-		CASE "全力"
+		CASE "전력"
 			LOCAL:3 = LOCAL:3 * 150 / 100
-		CASE "使役"
+		CASE "사역"
 			LOCAL:3 = LOCAL:3 * 300 / 100
-		CASE "通常"
+		CASE "통상"
 			LOCAL:3 = LOCAL:3 * 110 / 100
 	ENDSELECT
 	;FEAT 효과에 따른バースト威力上昇
@@ -1437,7 +1437,7 @@ ENDIF
 ;バースト공격による被ダメージ修正
 IF GETBIT(TCVARn:217,0) && ARGS == "CHARA"
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
-		CASE "全力"
+		CASE "전력"
 			LOCAL:3 = LOCAL:3 * 125 / 100
 	ENDSELECT
 ENDIF

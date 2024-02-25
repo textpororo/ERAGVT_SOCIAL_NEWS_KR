@@ -114,7 +114,7 @@ RETURN 1
 ;距離を取る
 @COM_ABLE5
 
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 5
 	RETURN 0
 ;拘束中はだめ
@@ -137,7 +137,7 @@ RETURN 1
 ;배후로돈다
 @COM_ABLE6
 
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 6
 	RETURN 0
 ;拘束中はだめ
@@ -160,7 +160,7 @@ RETURN 1
 ;관찰한다
 @COM_ABLE7
 
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 7
 	RETURN 0
 ;拘束中はだめ
@@ -487,7 +487,7 @@ SIF TFLAG:20 == 16
 ;強制自慰直後はだめ
 SIF TFLAG:20 == 1006
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 44
 	RETURN 0
 ;기력が尽きていたらだめ
@@ -531,7 +531,7 @@ SIF TFLAG:20 == 16
 ;強制自慰直後はだめ
 SIF TFLAG:20 == 1006
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 45
 	RETURN 0
 ;기력が75%以下でないならだめ
@@ -578,7 +578,7 @@ SIF TFLAG:20 == 16
 ;強制自慰直後はだめ
 SIF TFLAG:20 == 1006
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 46
 	RETURN 0
 ;기력が75%以下でないならだめ
@@ -628,7 +628,7 @@ SIF TFLAG:20 == 16
 ;強制自慰直後はだめ
 SIF TFLAG:20 == 1006
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 47
 	RETURN 0
 ;황홀中はだめ
@@ -876,7 +876,7 @@ SIF ISHOLE() == 0
 ;拘束中でないとだめ
 SIF TCVARn:0 >= 1
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 101
 	RETURN 0
 ;강구속中でなければ、フェラ系コマンドの直後しか使用できない
@@ -932,7 +932,7 @@ SIF TCVARn:0 >= 1
 ;기교Lv1以上必要
 SIF ABL:기교 < 1
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 102
 	RETURN 0
 ;마비中はだめ
@@ -974,7 +974,7 @@ SIF TCVARn:0 >= 1
 ;기교Lv2以上必要
 SIF ABL:기교 < 2
 	RETURN 0
-;連続使用できない
+;연속使用できない
 SIF PREVCOM == 103
 	RETURN 0
 ;失敗時のカウンター行動が설정されていない相手には使用できない

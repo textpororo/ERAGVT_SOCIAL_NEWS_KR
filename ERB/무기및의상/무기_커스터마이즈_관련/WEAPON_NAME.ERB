@@ -11,7 +11,7 @@
 ARG = LIMIT(ARG, 1, 50)
 LFLAG = 6
 
-PRINTL 　　　　　生成文字列　　　　　　　　　　　　　　キープ
+PRINTL 　　　　　생성 문자열　　　　　　　　　　　　　 보존
 DO
 	IF LFLAG & 2
 		FOR LCOUNT, 0, ARG
@@ -50,29 +50,29 @@ DO
 			IF KEEP_STR:LCOUNT == ""
 				PRINT [--]　―――　　　　　　
 			ELSE
-				PRINTFORM [{LCOUNT + 50}] %KEEP_STR:LCOUNT, 32, LEFT% [{LCOUNT + 60}] 削除
+				PRINTFORM [{LCOUNT + 50}] %KEEP_STR:LCOUNT, 32, LEFT% [{LCOUNT + 60}] 삭제
 			ENDIF
 		ELSE
 			PRINT 　　　　　　　　　　　　
 		ENDIF
 
 		IF LCOUNT == ARG - 3
-			PRINTFORM [110]カナ名　　\@GETBIT(LFLAG, 2)?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
+			PRINTFORM [110] 가타명　 \@GETBIT(LFLAG, 2)?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
 		ENDIF
 
 		IF LCOUNT == ARG - 2
-			PRINTFORM [120]和名　　　\@GETBIT(LFLAG, 3)?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
+			PRINTFORM [120] 일본명　 \@GETBIT(LFLAG, 3)?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
 		ENDIF
 
 		IF LCOUNT == ARG - 1
-			PRINTFORM [130]ランダム　\@GETBIT(LFLAG, 2) == 0 && GETBIT(LFLAG, 3) == 0?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
+			PRINTFORM [130] 랜덤　　 \@GETBIT(LFLAG, 2) == 0 && GETBIT(LFLAG, 3) == 0?%UNICODE(0x2611)%#%UNICODE(0x2610)%\@
 		ENDIF
 
 		PRINTL 
 	NEXT
 
 	PRINTL 
-	PRINTL  [100]再生成
+	PRINTL  [100] 재생성
 	DRAWLINE
 	PRINTL  [999] 돌아간다
 
@@ -142,11 +142,11 @@ RETURN LOCAL
 #DIM INS_VAR, 7
 #DIM ENT_VAR
 #DIM LFLAG
-;ループ変数
+;루프 변수
 #DIM LCOUNT, 2
 
 #DIM RES_VAR, 10
-;項目名
+;항목명
 #DIMS ENT_STR
 ;
 #DIMS INS_STR
@@ -164,72 +164,72 @@ ELSE
 ENDIF
 
 VARSET OR_STR
-;名前と読みを切り分け
+;이름과 읽기를 분리
 SPLIT LOCALS, " <", OR_STR
 SIF OR_STR:1 != ""
 	OR_STR:1 = %UNICODE(0x0020)%<%OR_STR:1%
 PRINTL 
 LFLAG = 1
 
-PRINTFORML 　　武器名：%OR_STR:0%%OR_STR:1%　　　　전투스타일：%FSTYLE_NAME_F(ARG,ARG:1)%
+PRINTFORML 　　무기명：%OR_STR:0%%OR_STR:1%　　　　전투 스타일：%FSTYLE_NAME_F(ARG,ARG:1)%
 DO
 	WHILE LCOUNT:0 < 7 && GETBIT(LFLAG, 0)
 		IF GETBIT(LFLAG, 2)
-;剣	斬　　　　
+;검	참　　　　
 			IF INS_VAR:5 == 1
 				INS_VAR:6 = 1
-;刀	斬　　　　
+;도	참　　　　
 			ELSEIF INS_VAR:5 == 2
 				INS_VAR:6 = 1
-;槍	　　突　　
+;창	　　돌　　
 			ELSEIF INS_VAR:5 == 3
 				INS_VAR:6 = 4
-;斧	斬打　　　
+;도끼	참타　　　
 			ELSEIF INS_VAR:5 == 4
 				INS_VAR:6 = 3
-;槌	　打　　　
+;망치	　타　　　
 			ELSEIF INS_VAR:5 == 5
 				INS_VAR:6 = 2
-;拳	　打突　　
+;권	　타돌　　
 			ELSEIF INS_VAR:5 == 6
 				INS_VAR:6 = 6
-;爪	斬打　　　
+;조	참타　　　
 			ELSEIF INS_VAR:5 == 7
 				INS_VAR:6 = 3
-;棍	　打　　　
+;곤	　타　　　
 			ELSEIF INS_VAR:5 == 8
 				INS_VAR:6 = 2
-;杖	　打　　術
+;장	　타　　술
 			ELSEIF INS_VAR:5 == 9
 				INS_VAR:6 = 18
-;鎌	斬　　　術
+;낫	참　　　술
 			ELSEIF INS_VAR:5 == 10
 				INS_VAR:6 = 17
-;鞭	　打　　　
+;채찍	　타　　　
 			ELSEIF INS_VAR:5 == 11
 				INS_VAR:6 = 2
-;鋼糸	斬　　　　
+;강사	참　　　　
 			ELSEIF INS_VAR:5 == 12
 				INS_VAR:6 = 1
-;鎖鋸	斬　　　　
+;체인톱	참　　　　
 			ELSEIF INS_VAR:5 == 13
 				INS_VAR:6 = 1
-;杭槍	　打突　　
+;말뚝창	　타돌　　
 			ELSEIF INS_VAR:5 == 14
 				INS_VAR:6 = 6
-;弓	　　　射　
+;궁	　　　사　
 			ELSEIF INS_VAR:5 == 15
 				INS_VAR:6 = 8
-;銃	　　　射　
+;총	　　　사　
 			ELSEIF INS_VAR:5 == 16
 				INS_VAR:6 = 8
-;砲	　打　射　
+;포	　타　사　
 			ELSEIF INS_VAR:5 == 17
 				INS_VAR:6 = 10
-;符	　　　　術
+;부	　　　　술
 			ELSEIF INS_VAR:5 == 18
 				INS_VAR:6 = 16
-;珠	　　　　術
+;주	　　　　술
 			ELSEIF INS_VAR:5 == 19
 				INS_VAR:6 = 16
 			ELSE
@@ -240,54 +240,54 @@ DO
 		ENT_STR = 
 		IF LCOUNT:0 == 0
 			ENT_VAR = 2
-			ENT_STR = <<読み>>
+			ENT_STR = <<읽기>>
 		ELSEIF LCOUNT:0 == 1
 			ENT_VAR = 3
-			ENT_STR = <<追加文字列>>
+			ENT_STR = <<추가 문자열>>
 		ELSEIF LCOUNT:0 == 2
 			ENT_VAR = 4
-			ENT_STR = <<区切り>>
+			ENT_STR = <<단락>>
 		ELSEIF LCOUNT:0 == 3
 			ENT_VAR = 3
-			ENT_STR = <<強調>>
+			ENT_STR = <<강조>>
 		ELSEIF LCOUNT:0 == 4
 			ENT_VAR = 10
-			ENT_STR = <<属性>>
+			ENT_STR = <<속성>>
 		ELSEIF LCOUNT:0 == 5
 			ENT_VAR = 21
-			ENT_STR = <<武器種>>
+			ENT_STR = <<무기종>>
 		ELSEIF LCOUNT:0 == 6
 			ENT_VAR = 5
-			ENT_STR = <<공격属性>>
+			ENT_STR = <<공격 속성>>
 		ENDIF
 		FOR LCOUNT:1, 0, ENT_VAR
 			IF LCOUNT:0 == 0
 				IF LCOUNT:1 == 0
-					INS_STR = あり
+					INS_STR = 있음
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = なし
+					INS_STR = 없음
 				ENDIF
 			ELSEIF LCOUNT:0 == 1
 				IF LCOUNT:1 == 0
-					INS_STR = なし
+					INS_STR = 없음
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = 接頭語
+					INS_STR = 접두사
 				ELSEIF LCOUNT:1 == 2
-					INS_STR = 接尾語
+					INS_STR = 접미사
 				ENDIF
 			ELSEIF LCOUNT:0 == 2
 				IF LCOUNT:1 == 0
-					INS_STR = なし
+					INS_STR = 없음
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = 半角( )
+					INS_STR = 반각( )
 				ELSEIF LCOUNT:1 == 2
-					INS_STR = 全角(　)
+					INS_STR = 전각(　)
 				ELSEIF LCOUNT:1 == 3
-					INS_STR = 中黒(・)
+					INS_STR = 중점(・)
 				ENDIF
 			ELSEIF LCOUNT:0 == 3
 				IF LCOUNT:1 == 0
-					INS_STR = なし
+					INS_STR = 없음
 				ELSEIF LCOUNT:1 == 1
 					INS_STR = ""
 				ELSEIF LCOUNT:1 == 2
@@ -295,81 +295,81 @@ DO
 				ENDIF
 			ELSEIF LCOUNT:0 == 4
 				IF LCOUNT:1 == 0
-					INS_STR = なし
+					INS_STR = 없음
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = 火
+					INS_STR = 화
 				ELSEIF LCOUNT:1 == 2
-					INS_STR = 氷
+					INS_STR = 빙
 				ELSEIF LCOUNT:1 == 3
-					INS_STR = 雷
+					INS_STR = 뇌
 				ELSEIF LCOUNT:1 == 4
-					INS_STR = 水
+					INS_STR = 수
 				ELSEIF LCOUNT:1 == 5
-					INS_STR = 風
+					INS_STR = 풍
 				ELSEIF LCOUNT:1 == 6
-					INS_STR = 地
+					INS_STR = 지
 				ELSEIF LCOUNT:1 == 7
-					INS_STR = 毒
+					INS_STR = 독
 				ELSEIF LCOUNT:1 == 8
-					INS_STR = 光
+					INS_STR = 광
 				ELSEIF LCOUNT:1 == 9
-					INS_STR = 闇
+					INS_STR = 암
 				ENDIF
 			ELSEIF LCOUNT:0 == 5
 				IF LCOUNT:1 == 0
-					INS_STR = なし
+					INS_STR = 없음
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = 剣
+					INS_STR = 검
 				ELSEIF LCOUNT:1 == 2
-					INS_STR = 刀
+					INS_STR = 도
 				ELSEIF LCOUNT:1 == 3
-					INS_STR = 槍
+					INS_STR = 창
 				ELSEIF LCOUNT:1 == 4
-					INS_STR = 斧
+					INS_STR = 도끼
 				ELSEIF LCOUNT:1 == 5
-					INS_STR = 槌
+					INS_STR = 망치
 				ELSEIF LCOUNT:1 == 6
-					INS_STR = 拳
+					INS_STR = 권
 				ELSEIF LCOUNT:1 == 7
-					INS_STR = 爪
+					INS_STR = 조
 				ELSEIF LCOUNT:1 == 8
-					INS_STR = 棍
+					INS_STR = 곤
 				ELSEIF LCOUNT:1 == 9
-					INS_STR = 杖
+					INS_STR = 장
 				ELSEIF LCOUNT:1 == 10
-					INS_STR = 鎌
+					INS_STR = 낫
 				ELSEIF LCOUNT:1 == 11
-					INS_STR = 鞭
+					INS_STR = 채찍
 				ELSEIF LCOUNT:1 == 12
-					INS_STR = 鋼糸
+					INS_STR = 강사
 				ELSEIF LCOUNT:1 == 13
-					INS_STR = 鎖鋸
+					INS_STR = 체인톱
 				ELSEIF LCOUNT:1 == 14
-					INS_STR = 杭槍
+					INS_STR = 말뚝창
 				ELSEIF LCOUNT:1 == 15
-					INS_STR = 弓
+					INS_STR = 궁
 				ELSEIF LCOUNT:1 == 16
-					INS_STR = 銃
+					INS_STR = 총
 				ELSEIF LCOUNT:1 == 17
-					INS_STR = 砲
+					INS_STR = 포
 				ELSEIF LCOUNT:1 == 18
-					INS_STR = 符
+					INS_STR = 부
 				ELSEIF LCOUNT:1 == 19
-					INS_STR = 珠
+					INS_STR = 주
 				ELSEIF LCOUNT:1 == 20
-					INS_STR = 自由入力
+					INS_STR = 자유 입력
 				ENDIF
 			ELSEIF LCOUNT:0 == 6
 				IF LCOUNT:1 == 0
-					INS_STR = 斬
+					INS_STR = 참
 				ELSEIF LCOUNT:1 == 1
-					INS_STR = 打
+					INS_STR = 타
 				ELSEIF LCOUNT:1 == 2
-					INS_STR = 突
+					INS_STR = 돌
 				ELSEIF LCOUNT:1 == 3
-					INS_STR = 射
+					INS_STR = 사
 				ELSEIF LCOUNT:1 == 4
-					INS_STR = 術
+					INS_STR = 술
 				ENDIF
 			ENDIF
 
@@ -385,17 +385,17 @@ DO
 			SIF GETBIT(INS_VAR:6, LCOUNT:1) && LCOUNT:0 == 6
 				SETCOLOR 128, 255, 128
 
-			;読みがない
+			;읽기가 없다
 			SIF LCOUNT:0 == 0 && OR_STR:1 == ""
 				SETCOLOR 128, 128, 128
-			;接頭語以外
+			;접두사 이외
 			SIF INS_VAR:1 != 1 && (LCOUNT:0 == 2 || LCOUNT:0 == 3)
 				SETCOLOR 128, 128, 128
-			;追加文字列なし
+			;추가 문자열 없음
 			SIF INS_VAR:1 == 0 && (LCOUNT:0 == 4 || LCOUNT:0 == 5 || LCOUNT:0 == 6)
 				SETCOLOR 128, 128, 128
 
-			PRINTFORM [{LCOUNT:0 * 10 + (LCOUNT:0 == 6) * 20 + LCOUNT:1, 2}]%INS_STR, 8, LEFT%
+			PRINTFORM [{LCOUNT:0 * 10 + (LCOUNT:0 == 6) * 20 + LCOUNT:1, 2}] %INS_STR, 8, LEFT%
 			IF LCOUNT:0 != 6
 				PRINTFORM \@INS_VAR:(LCOUNT:0) == LCOUNT:1 ? %UNICODE(0x2611)% # %UNICODE(0x2610)%\@
 			ELSE
@@ -413,14 +413,14 @@ DO
 	LCOUNT:0 = 0
 	IF GETBIT(LFLAG, 0)
 		PRINTL 
-		PRINTL 　　　　　　　　　　　　　　　　　　　　　　　　　　　[100]生成　　　　　[200]リセット　
+		PRINTL 　　　　　　　　　　　　　　　　　　　　　　　　　　　[100] 생성　　　　 [200]초기화　　
 		DRAWLINE
 		PRINTL  [999] 돌아간다
 		INPUT
 		IF RESULT < 0
 		ELSEIF RESULT == 70
 			INS_VAR:5 = 20
-			PRINTL 武器の種類を入力してください（１〜２文字程度のものにすることを推奨します）
+			PRINTL 무기의 종류를 입력해 주십시오.（１〜２글자 정도를 권장합니다）
 			INPUTS
 			SELF_CL = %RESULTS%
 			SIF SELF_CL == ""
@@ -481,7 +481,7 @@ DO
 			LOCALS:1 = 
 			LOCALS:2 = 
 			LOCALS:3 = 
-			LOCALS:4 = の%RESULTS%
+			LOCALS:4 = 의 %RESULTS%
 		ENDIF
 
 		LOCALS:5 = %LOCALS:0%%LOCALS:1%%LOCALS:2%
@@ -504,7 +504,7 @@ DO
 
 	IF GETBIT(LFLAG, 1)
 		PRINTL 
-		PRINTL  [100]再生成　　[200]설정変更
+		PRINTL  [100] 재생성　 [200] 설정 변경
 		DRAWLINE
 		PRINTL  [999] 돌아간다
 		LCOUNT:0 = 0
