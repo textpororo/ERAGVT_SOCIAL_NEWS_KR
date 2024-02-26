@@ -168,7 +168,7 @@ IF TCVARn:0 > 0
 				;状態異常：기절
 				CALL STATE_CHANGE_KIZETU_DAMAGE, LOCAL:2
 
-				;心境変化変化：怒りか諦観
+				;심경 변화変化：怒りか諦観
 				SIF (TCVARn:12 & 기절) == 0
 					CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 			ENDIF
@@ -273,7 +273,7 @@ IF TCVARn:0 > 0
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;心境変化：冷静か動揺
+				;심경 변화：冷静か動揺
 				CALL SHINKYOU_CHANGE, "REISEI_DOUYOU"
 				
 				;絡みつく成功直後、一回分犯す
@@ -431,7 +431,7 @@ IF TCVARn:0 > 0
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_HIT_HANTEI
 				
-				;心境変化変化：怒りか諦観
+				;심경 변화変化：怒りか諦観
 				CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 
 				;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
@@ -596,7 +596,7 @@ IF TCVARn:0 > 0
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;心境変化：冷静か動揺
+				;심경 변화：冷静か動揺
 				CALL SHINKYOU_CHANGE, "REISEI_DOUYOU"
 				
 				;絡みつく成功直後、一回分犯す
@@ -746,7 +746,7 @@ IF TCVARn:0 > 0
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;心境変化変化：怒りか諦観
+				;심경 변화変化：怒りか諦観
 				CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 
 				;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
@@ -776,7 +776,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
 
 	;피간경험を加算
 	EXP:피간경험 += 1
-	;心境変化：倒錯
+	;심경 변화：倒錯
 	CALL SHINKYOU_CHANGE, "TOUSAKU"
 
 ;●촉수の拘束中性コマンド
@@ -821,7 +821,7 @@ ELSE
 		GOTO ROUTINE_LOOP_1
 	ENDIF
 
-	;心境変化：倒錯
+	;심경 변화：倒錯
 	CALL SHINKYOU_CHANGE, "TOUSAKU"
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI")

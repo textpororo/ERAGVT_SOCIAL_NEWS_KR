@@ -1,15 +1,15 @@
-﻿;戦闘コマンドの表示と処理
+﻿;전투 커맨드 표시 및 처리
 
-;コマンド表示
+;커맨드 표시
 @SHOW_USERCOM
 RESETCOLOR
 PRINTL 
-;カテゴリ分けする場合
+;카테고리로 분류하는 경우
 IF CONFIG_CHECK_SCREEN_F(2) > 0
 	PRINTFORML 　┌──────\@TCVARn:8 == 0 ? ─ # ┬ \@─────────────────────────────────────┐
 	PRINTPLAIN 　│
-	PRINT  [810] 特殊 
-	;特殊コマンド選択中(拘束時)
+	PRINT  [810] 특수 
+	;특수 커맨드 선택 중(구속 시)
 	IF TCVARn:8 == 0 && TCVARn:0 == 0
 		TCVARn:8 += 10
 		PRINTPLAIN 　
@@ -32,7 +32,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -56,20 +56,20 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN │
 		TCVARn:8 -= 10
-	;特殊コマンド選択中
+	;특수 커맨드 선택 중
 	ELSEIF TCVARn:8 == 0
 		TCVARn:8 += 10
 		PRINTPLAIN 　
 		RESULT = 0
 		TRYCALLFORM COM_ABLE{0}
 		IF RESULT
-			;距離指定変身
+			;거리 지정 변신
 			TRYCALLFORM COM_ABLE{201}
 			IF RESULT
 				CALL PRINT_COMNAME, 201
@@ -77,12 +77,12 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 				CALL PRINT_COMNAME, 202
 				PRINTPLAIN 　 
 				CALL PRINT_COMNAME, 203
-			;通常変身
+			;통상 변신
 			ELSE
 				CALL PRINT_COMNAME, 0
 			ENDIF
 		ELSE
-			;SP変身
+			;SP 변신
 			TRYCALLFORM COM_ABLE{11}
 			SIF RESULT
 				CALL PRINT_COMNAME, 11
@@ -101,7 +101,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -125,13 +125,13 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN │
 		TCVARn:8 -= 10
-	;性技コマンド選択中(＝拘束時)
+	;성기 커맨드 선택 중(＝구속 시)
 	ELSEIF  TCVARn:8 == 1 && TCVARn:0 == 0
 		TCVARn:8 += 10
 		PRINTPLAIN │
@@ -154,7 +154,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -178,13 +178,13 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN │
 		TCVARn:8 -= 10
-	;공격コマンド選択中
+	;공격 커맨드 선택 중
 	ELSEIF  TCVARn:8 == 1
 		TCVARn:8 += 10
 		PRINTPLAIN │
@@ -207,7 +207,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -231,13 +231,13 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN │
 		TCVARn:8 -= 10
-	;補助コマンド選択中(拘束時)
+	;보조 커맨드 선택 중(구속 시)
 	ELSEIF  TCVARn:8 == 2 && TCVARn:0 == 0
 		TCVARn:8 += 10
 		PRINTPLAIN │
@@ -264,7 +264,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -288,13 +288,13 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN 　
 		TCVARn:8 -= 10
-	;補助コマンド選択中
+	;보조 커맨드 선택 중
 	ELSEIF  TCVARn:8 == 2
 		TCVARn:8 += 10
 		PRINTPLAIN │
@@ -317,7 +317,7 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [820] 性技 
+			PRINT  [820] 성기 
 		ELSE
 			PRINT  [820] 공격 
 		ENDIF
@@ -341,31 +341,31 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 
 		PRINTPLAIN 　│
 		IF TCVARn:0 == 0
-			PRINT  [830] 拘束 
+			PRINT  [830] 구속 
 		ELSE
-			PRINT  [830] 補助 
+			PRINT  [830] 보조 
 		ENDIF
 		PRINTPLAIN 　
 		TCVARn:8 -= 10
 	ENDIF
 	PRINTPLAIN 　　　　　　　　　　　　　　
-	PRINT 스테이터스 표시[800]
+	PRINT 스테이터스 표시 [800]
 	PRINTPLAIN  　　　　　　　 
 	LOCALS = 
 	SIF CHECK_CAN_RETREAT_F() == 0
 		SETCOLOR 128,128,128
-	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
-		LOCALS = 撤退[999]
+	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("철수 불가") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
+		LOCALS = 철수 [999]
 
 	PRINTFORM %LOCALS, 9%
 	RESETCOLOR
 	PRINTPLAIN 　│
 	PRINTL 
 	PRINTFORML 　└──────\@TCVARn:8 == 2 ? ─ # ┴ \@─────────────────────────────────────┘
-;纏めて表示する場合
+;모아서 표시하는 경우
 ELSE
 	TCVARn:8 += 10
-	;拘束されている最中のコマンド
+	;구속되어 있는 중의 커맨드
 	IF TCVARn:0 == 0
 		CALL PRINT_COMNAME, 11
 		PRINTL 
@@ -427,24 +427,24 @@ ELSE
 		CALL PRINT_COMNAME, -1
 		PRINTL 
 
-	;通常時のコマンド
+	;통상시의 커맨드
 	ELSE
 		RESULT = 0
 		TRYCALLFORM COM_ABLE{0}
-		;変身コマンドが表示される状態
+		;변신 커맨드가 표시되는 상태
 		IF RESULT
-			;距離指定変身
+			;거리 지정 변신
 			TRYCALLFORM COM_ABLE{201}
 			IF RESULT
 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:30,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:30>=0 ? TOSTR(TCVARn:30) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:30>=0 ? TOSTR(TCVARn:30) # "??")+"%》", 22%
 				PRINTPLAIN 　 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:31,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:31>=0 ? TOSTR(TCVARn:31) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:31>=0 ? TOSTR(TCVARn:31) # "??")+"%》", 22%
 				PRINTPLAIN 　 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:32,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:32>=0 ? TOSTR(TCVARn:32) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:32>=0 ? TOSTR(TCVARn:32) # "??")+"%》", 22%
 				RESETCOLOR
 				PRINTL
 				CALL PRINT_COMNAME, 201
@@ -456,12 +456,12 @@ ELSE
 				PRINTFORM 　　　         ----------------------------------------------
 
 
-			;通常変身
+			;통상 변신
 			ELSE
 				CALL PRINT_COMNAME, 0
 			ENDIF
 			PRINTL
-		;変身コマンドが表示されない状態(通常変身済みor変身不可)
+		;변신 커맨드가 표시되지 않는 상태(통상 변신 완료or변신 불가)
 		ELSE
 			;가만히있는다
 			TRYCALLFORM COM_ABLE{11}
@@ -471,13 +471,13 @@ ELSE
 			ELSE
 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:30,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:30>=0 ? TOSTR(TCVARn:30) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:30>=0 ? TOSTR(TCVARn:30) # "??")+"%》", 22%
 				PRINTPLAIN 　 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:31,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:31>=0 ? TOSTR(TCVARn:31) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:31>=0 ? TOSTR(TCVARn:31) # "??")+"%》", 22%
 				PRINTPLAIN 　 
 				CALL FORECAST_OUTPUT_SETCOLOR(TCVARn:32,"COM")
-				PRINTFORM %"《危険度:"+(TCVARn:32>=0 ? TOSTR(TCVARn:32) # "??")+"%》", 22%
+				PRINTFORM %"《위험도:"+(TCVARn:32>=0 ? TOSTR(TCVARn:32) # "??")+"%》", 22%
 				RESETCOLOR
 				PRINTL
 
@@ -497,7 +497,7 @@ ELSE
 		PRINTPLAIN 　 
 		CALL PRINT_COMNAME, 5
 		PRINTL
-		;↑ここまで距離依存コマンド
+		;↑여기까지 거리 의존 커맨드
 		PRINTL
 
 		CALL PRINT_COMNAME, 4
@@ -509,10 +509,10 @@ ELSE
 		PRINTL 
 
 		TRYCALLFORM COM_ABLE{73}
-		;SP変身
+		;SP 변신
 		IF RESULT
 			CALL PRINT_COMNAME, 73
-		;SPバースト
+		;SP 버스트
 		ELSE
 			CALL PRINT_COMNAME, 70
 		ENDIF
@@ -540,12 +540,12 @@ ELSE
 
 	TCVARn:8 -= 10
 
-	PRINT 　 스테이터스 표시[800]
+	PRINT 　 스테이터스 표시 [800]
 
 	SIF CHECK_CAN_RETREAT_F() == 0
 		SETCOLOR 128,128,128
-	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
-		PRINT 　　　　　　　　撤退[999]
+	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("철수 불가") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
+		PRINT 　　　　　　　　철수 [999]
 	RESETCOLOR
 
 	TCVARn:8 += 10
@@ -555,36 +555,36 @@ ELSE
 ENDIF
 
 
-;コマンド処理
+;커맨드 처리
 @USERCOM
-IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1)
+IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("철수 불가") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1)
 	IF CHECK_CAN_RETREAT_F()
 		PRINTL 
 		FONTBOLD
 		SETCOLOR 0, 255, 150
-		PRINTL ********** 自分の行動 **********
+		PRINTL ********** 아군의 행동 **********
 		RESETCOLOR
 		FONTREGULAR
 		PRINTL 
 
-		;撤退
+		;철수
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
 			CALL ACT_HANTEI_TETTAI_TENTACLE
 			IF RESULT == 1
-				;지문: 撤退成功
+				;지문: 철수 성공
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_SUCCESS
-				;지문: 세뇌/흑화 캐릭터가 操作キャラに撤退されてしまった
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 철수를 막지 못했다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 
 				TRYCALL KYUSHUTU_SUCCESS_HANTEI
-				;최종 보스強化
+				;최종 보스 강화
 				;TRYCALLFORM LASTBOSS_KYOUKA_{FLAG:11}_BATTLEEND,0
 				BEGIN AFTERTRAIN
 			ELSE
-				;지문: 撤退失敗
+				;지문: 철수 실패
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 철수를 막았다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -592,17 +592,17 @@ IF RESULT == 999 && ((TCVARn:0 > 0 && GETBATTLESITUATION("撤退不可") == 0 &&
 		ELSE
 			CALL ACT_HANTEI_TETTAI_TENTACLE
 			IF RESULT == 1
-				;지문: 撤退成功
+				;지문: 철수 성공
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_SUCCESS
-				;지문: 세뇌/흑화 캐릭터가 操作キャラに撤退されてしまった
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 철수를 막지 못했다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
 				
 				BEGIN AFTERTRAIN
 			ELSE
-				;지문: 撤退失敗
+				;지문: 철수 실패
 				CALL MESSAGE_BATTLE_CHARA_TETTAI_FALSE
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 撤退を防いだ
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 철수를 막았다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_CHARA_TETTAI_FALSE
 				JUMP SOURCE_CHECK
@@ -619,12 +619,12 @@ ELSEIF RESULT == 820
 	TCVARn:8 = 1
 ELSEIF RESULT == 830
 	TCVARn:8 = 2
-;調教스테이터스 표시설정
+;조교 스테이터스 표시설정
 ELSEIF RESULT == 898
 	INVERTBIT FLAG:801, 8
 ELSEIF RESULT == 899
 	INVERTBIT FLAG:801, 6
-;デバッグモード切替(隠しコマンド)
+;디버그 모드 전환(숨김 커맨드)
 ELSEIF RESULT == 400
 	;DEBUG
 	IF FLAG:999 == 0
@@ -651,20 +651,20 @@ ELSEIF RESULT < 400
 ENDIF
 
 @EVENTCOM
-;EX系は表示しない
+;EX계는 표시하지 않는다
 SIF SELECTCOM == 16 || SELECTCOM == 17 || SELECTCOM == 71 || SELECTCOM == 72
 	RETURN 0
-;사정部位플래그를0に
+;사정 부위 플래그를 0으로
 TFLAG:4 = 0
-;방어플래그를消す
+;방어 플래그를 지운다
 TCVARn:2 = 자세：통상
-;受け渡し用PALAMリセット
+;주고받기용 PALAM 초기화
 VARSET COMMON_PALAM
 
 PRINTL 
 FONTBOLD
 SETCOLOR 0, 255, 150
-PRINTL ********** 自分の行動 **********
+PRINTL ********** 아군의 행동 **********
 RESETCOLOR
 FONTREGULAR
 PRINTL 
@@ -672,61 +672,61 @@ PRINTL
 @EVENTCOMEND
 #DIM LCOUNT
 #DIM CCOUNT
-;計算用
+;계산용
 #DIM CHISEI_CAL
-;PALAM減衰率
+;PALAM 감쇠율(減衰率)
 #DIM AT_VAR
 CALL BATTLE_REPORT
-;心境の持続ターンをカウント
+;심경의 지속 턴을 카운트
 SIF TCVARn:1 > 0
 	TCVARn:11 += 1
 
-;着地中または拘束中なら空中플래그를リセット
+;착지 중이거나 구속 중이라면 공중 플래그를 초기화
 IF GETBIT(TCVARn:216, 2) || TCVARn:0 == 0
 	TCVARn:216 = 0
 	BASE:공중대시 = MAXBASE:공중대시
 	SIF BASE:공중대시>= 8
 		BASE:공중대시 = 8
-;滞空状態で続けて공중대시を使用しないなら着地状態になる
+;체공 상태로 계속해서 공중대시를 사용하지 않는다면 착지 상태가 된다
 ELSEIF GETBIT(TCVARn:216, 1) && GETBIT(TCVARn:216, 0) == 0
 	SETBIT TCVARn:216,2
 	SIF GETBIT(TCVARn:216, 1)
 		TCVARn:216 -= 2
 ENDIF
 
-;공중대시ゲージが切れていたら空中공격플래그를リセット
+;공중대시 게이지가 다 떨어지면 공중 공격 플래그를 초기화
 SIF GETBIT (TCVARn:216, 0) && BASE:공중대시 == 0
 	TCVARn:216 -= 1
 
-;バースト공격フラグは常にリセット
+;버스트 공격 플래그는 항상 초기화
 TCVARn:217 = 0
 
-;拘束中でなければ丸飲み플래그를解除
+;구속 중이 아니라면 (통째로)삼키기 플래그를 해제
 SIF TCVARn:0 != 0
 	TFLAG:23 = 0
 
-;拘束中なら同一距離플래그를解除
+;구속 중이라면 동일 거리 플래그를 해제
 SIF TCVARn:0 == 0
 	TFLAG:30 = 0
-;拘束中ならチェインリセット
+;구속 중이라면 체인을 초기화
 SIF TCVARn:0 == 0
 	TFLAG:31 = 0
-;방어コマンドを使用した次のターンはカウンターアタック
+;방어 커맨드를 사용한 다음 턴은 카운터 어택
 IF SELECTCOM == 4 && FLAG:73 == 0
 	TFLAG:32 = 1
 ELSE
 	TFLAG:32 = 0
 ENDIF
 
-;衣装の情報を更新
+;의상 정보를 갱신
 CALL REFRESH_CLOTH_DATA
 
-;ゲージ増減関連
+;게이지 증감 관련
 IF CFLAG:1 == 2
 	TCVARn:6 += -17
 ELSE
 	TCVARn:6 += 12
-	;状態異常の場合、ゲージ増加量が上昇
+	;상태 이상의 경우, 게이지 증가량 상승
 	SIF (TCVARn:12 & 기절)
 		TCVARn:6 += 23
 	SIF (TCVARn:12 & 배란)
@@ -743,21 +743,21 @@ ELSE
 		TCVARn:6 += 5
 	SIF (TCVARn:12 & 강구속)
 		TCVARn:6 += 2
-	;増加量アップ系の補正
+	;증가량 UP계 보정
 	IF TCVARn:6 > 0
 		LOCAL = 0
-		;変身可能キャラで変身前なら増加量2倍
+		;변신 가능 캐릭터로 변신 전이라면 증가량 2배
 		SIF TALENT:변신능력 > 0 && CFLAG:1 == 0
 			LOCAL += 100
 		;의욕 스위치#####
 		SIF CFLAG:43 == 503
 			LOCAL += 30
-		;FEAT 효과에 따른ゲージ増加量低下
+		;FEAT 효과에 의한 게이지 증가량 저하
 		SIF TALENT:불굴 > 0
 			LOCAL -= 15
 		SIF TALENT:스태미나 > 0
 			LOCAL -= 15
-		;衣装によるゲージ増幅効果
+		;의상에 의한 게이지 증폭 효과
 		CALL CLOTH_BATTLE_HOSEI, "EXBOOST"
 		LOCAL += RESULT
 		SIF LOCAL < -100
@@ -773,7 +773,7 @@ ELSE
 	TCVARn:4 = LIMIT(TCVARn:4 + TCVARn:7, -100, 500)
 ENDIF
 
-;SP変身解除
+;SP 변신 해제
 IF TCVARn:5 <= 0 && CFLAG:1 == 2
 	IF TALENT:변신능력
 		CALL TRANSFORM, 1
@@ -782,35 +782,35 @@ IF TCVARn:5 <= 0 && CFLAG:1 == 2
 	ENDIF
 	PRINTL 
 	FONTBOLD
-	;지문: SP변신解除
-	PRINTFORML SP변신の効果時間が終了した！
+	;지문: SP 변신 해제, 그딴 건 없었다 ㅅㄱ
+	PRINTFORML SP변신의 효과 시간이 종료됐다！
 	FONTREGULAR
 	TCVARn:4 = -1
-	;行動の反動で疲労が蓄積する
+	;행동의 반동으로 피로가 축적된다
 	CFLAG:99 += TFLAG:99
 	RESULTS = {TFLAG:99}
 	TOFULL RESULTS
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の身体の底に疲労が蓄積した……（＋%RESULTS%）
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 신체 밑바닥에 피로가 쌓였다……（＋%RESULTS%）
 	PRINTW 
 	TFLAG:99 = 0
 ENDIF
 
-;ゲージ使用状況플래그를リセット
+;게이지 사용 상황 플래그를 초기화
 TCVARn:3 = 0
-;双方の増減をリセット
+;양쪽의 증감을 초기화
 TCVARn:6 = 0
 TCVARn:7 = 0
 
-;촉수の太さと数を保存
+;촉수의 굵기와 수를 보존
 REPEAT 감각수
 	TFLAG:(COUNT + 101) = TENTACLE_SIZE:0:COUNT
 	TFLAG:(COUNT + 105) = TENTACLE_NUM:1:COUNT
 REND
 TFLAG:109 = INSERT
-;촉수サイズを초기화
+;촉수 사이즈 초기화
 VARSET TENTACLE_SIZE
 
-;絶頂による変身解除、성내성が少ないほど発生率が上がる
+;절정에 의한 변신 해제, 성내성이 적을수록 발생률이 오른다
 LOCAL:2 = 0
 REPEAT 감각수
 	LOCAL:2 += NOWEX:(COUNT)
@@ -820,19 +820,19 @@ LOCAL:4 = RESULT
 CALL PERCENT_CAL, BASE:성내성, MAXBASE:성내성
 LOCAL:3 = 100 - (RESULT * 4 / 3)
 
-;暴走中の촉수 슈트だと解除されない
+;폭주 중인 촉수 슈트라면 해제되지 않는다
 IF CFLAG:1 == 1 && CFLAG:41 == 199 && CFLAG:41 == 199 && TCVARn:41 != 0
-;기력が尽きて変身が強制的に解けた場合の処理
+;기력이 다하여 변신이 강제적으로 풀린 경우의 처리
 ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && BASE:기력 <= 0 && (TCVARn:12 & 강구속) == 0
 	PRINTL 
-	;지문: 기력が尽きて変身が強制的に解けた
+	;지문: 기력이 다하여 변신이 강제로 풀렸다
 	CALL MESSAGE_BATTLE_CHARA_TRANSRELEASE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラを変身強制解除させた
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터를 강제 변신 해제시켰다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_TRANSRELEASE
 	CALL TRANSFORM, 0
 	
-	;心境変化
+	;심경 변화
 	LOCAL = RAND:100
 	IF LOCAL < 30
 		CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
@@ -841,17 +841,17 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && BASE:기력 <= 0 && (TC
 	ELSEIF LOCAL < 90
 		CALL SHINKYOU_CHANGE, "KOUYOU_SYOUTIN"
 	ENDIF
-;絶頂で変身が強制解除される場合の処理
+;절정으로 변신이 강제 해제될 경우의 처리
 ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && LOCAL:2 > 0 && RAND:100 < LOCAL:3 && RESULT < 50 && (TCVARn:12 & 강구속) == 0
 	PRINTL 
-	;지문: 絶頂で変身が強制的に解けた
+	;지문: 절정으로 변신이 강제로 풀렸다
 	CALL MESSAGE_BATTLE_CHARA_TRANSRELEASE_ECS
-	;지문: 세뇌/흑화 캐릭터가 絶頂で変身強制解除させた
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터를 절정으로 강제 변신 해제시켰다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_TRANSRELEASE_ECS
 	CALL TRANSFORM, 0
 
-	;心境変化
+	;심경 변화
 	LOCAL = RAND:100
 	IF LOCAL < 30
 		CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
@@ -862,16 +862,16 @@ ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && LOCAL:2 > 0 && RAND:100
 	ENDIF
 ELSEIF CFLAG:1 == 1 && LOCAL:2 > 0 && RESULT < 50 && (TCVARn:12 & 기절) == 0
 	PRINTL 
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%기력を振り絞り何とか変身を維持した！
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 어떻게든 기력을 쥐어짜 변신을 유지했다！
 ENDIF
 
-;보스の解析度を지성の基礎値に応じて上昇させる（実数値ではない）
+;보스의 해석도를 지성의 기초치에 따라 상승시킨다 (실수치는 아님)
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:20 < 100
 	LOCAL = MAX(BASE:지성 - 100, 1)
-	;전투 지원による補正
+	;전투 지원에 따른 보정
 	CALL CALC_CHISEI_SHIEN(2)
 	LOCAL = RESULT
-	;心境による増減
+	;심경에 따른 증감
 	IF TCVARn:1 == 2
 		LOCAL /= 2
 	ELSEIF TCVARn:1 == 4
@@ -891,46 +891,46 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && FLAG:20 < 100
 	PRINTL 
 	IF LOCAL > 0
 		DRAWLINE
-		PRINTFORML 敵の解析度が{LOCAL}％上がった！
+		PRINTFORML 적의 해석도가 {LOCAL}％ 올랐다！
 	ELSE
 		DRAWLINE
-		PRINTFORML 敵の解析度は上がらなかった…
+		PRINTFORML 적의 해석도가 오르지 않았다……
 	ENDIF
 	SIF FLAG:20 < 25 && FLAG:20 + LOCAL >= 25
-		PRINTL 敵の체력最大値が判明した！
+		PRINTL 적의 최대 체력이 판명났다！
 	SIF FLAG:20 < 50 && FLAG:20 + LOCAL >= 50
-		PRINTL 敵の체력現在値が判明した！
+		PRINTL 적의 현재 체력이 판명났다！
 	SIF FLAG:20 < 75 && FLAG:20 + LOCAL >= 75
-		PRINTL 敵の能力基礎値が判明した！
+		PRINTL 적의 기초 능력치가 판명났다！
 	IF FLAG:20 < 100 && FLAG:20 + LOCAL >= 100
-		PRINTL 敵の行動補正値が判明した！
-		PRINTL 敵の방심도が判明した！
-		PRINTL 敵の解析が完了した！
+		PRINTL 적의 행동 보정치가 판명났다！
+		PRINTL 적의 방심도가 판명났다！
+		PRINTL 적의 해석이 완료됐다！
 	ENDIF
 	FLAG:20 += LOCAL
 	SIF FLAG:20 > 100
 		FLAG:20 = 100
 	PRINTL 
 ENDIF
-;EXにNOWEXを加算
+;EX에 NOWEX를 가산
 REPEAT 감각수
 	EX:(COUNT) += NOWEX:(COUNT)
 REND
 
 PREVCOM = SELECTCOM
 
-;絶頂禁止カウント
+;절정 금지 카운트
 SIF TCVARn:0 == 0 && TCVARn:40 > 0
 	TCVARn:40 -= 1
 
 SETCOLOR 96, 96, 96
 SIF FLAG:999 == 1
-	PRINTFORML /* debug */ 絶頂禁止残ターン{TCVARn:40}
+	PRINTFORML /* Debug */ 절정 금지 남은 턴 {TCVARn:40}
 RESETCOLOR
 
 AT_VAR = LIMIT(950 + PALAMLV_F(PALAM:공순) * 3 + PALAMLV_F(PALAM:욕정) * 3 + PALAMLV_F(PALAM:굴복) * 2 + PALAMLV_F(PALAM:공포) * 2, 950, 995)
 
-;PALAM最大値を保存およびPALAMの減衰
+;PALAM 최대값을 보존 및 PALAM의 감쇠(減衰)
 FOR LCOUNT, 0, PALAM종점
 	SIF PALAM:(LCOUNT) > MAX_PALAM:(LCOUNT)
 		MAX_PALAM:(LCOUNT) = PALAM:(LCOUNT)
@@ -940,11 +940,11 @@ FOR LCOUNT, 0, PALAM종점
 	PALAM:(LCOUNT) = PALAM:(LCOUNT) * AT_VAR / 1000
 NEXT
 
-;逃げ遅れ市民と野次馬が減る
+;도망치지 못한 시민과 구경꾼이 줄어든다
 LOCAL:1 = 0
 FOR LOCAL,0,(FLAG:70 + FLAG:71)
-	;一定確率で退避完了
-	IF RAND:100 < 5 + TFLAG:0 + (TIME == 0) * 5 + (GETBATTLESITUATION("正体バレ不可") ? (FLAG:70 > 5 ? 50 # 15) # 0) && FLAG:70
+	;일정 확률로 대피 완료
+	IF RAND:100 < 5 + TFLAG:0 + (TIME == 0) * 5 + (GETBATTLESITUATION("정체 발각 불가") ? (FLAG:70 > 5 ? 50 # 15) # 0) && FLAG:70
 		FLAG:70 -= 1
 		LOCAL:1 += 1
 	ENDIF
@@ -955,19 +955,19 @@ FOR LOCAL,0,(FLAG:70 + FLAG:71)
 NEXT
 IF LOCAL:1
 	IF FLAG:72
-		PRINTFORML 危険を感じた観衆が{LOCAL:1}人避難した！
+		PRINTFORML 위험을 느낀 관중 {LOCAL:1}명이 급히 대피했다！
 	ELSE
-		PRINTFORML {LOCAL:1}人の一般人が安全な場所まで避難できたようだ・・・
+		PRINTFORML {LOCAL:1}명의 일반인이 안전한 장소까지 대피할 수 있었던 것 같다・・・
 	ENDIF
 	SIF FLAG:70 + FLAG:71 == 0
-		PRINTFORML どうやら周囲の避難が完了したようだ！
+		PRINTFORML 아무래도 주변 시민들의 대피가 완료된 것 같다！
 	PRINTW 
 ENDIF
 
-;イベント特有のターンエンド処理
+;이벤트 특유의 턴 엔드 처리
 TRYCALLFORM EVENT_BATTLE_TURNEND_{FLAG:45}
 
-;インスタントモードなら能力低下関数を呼び出す
+;INSTANT 모드라면 능력 저하 함수를 호출한다
 IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 	CALL INSTANT_ARG_DOWN
 ENDIF

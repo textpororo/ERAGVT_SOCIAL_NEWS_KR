@@ -16,7 +16,7 @@ SIF ENEMY_TYPE_CHECK_F("CITIZEN") == 1
 	RETURN
 
 ;発生確率そのものは방위력이 低いほどアップ、昼は確率アップ、昼の襲来イベントでは確実に発生
-LOCAL = 25 + MAX((5000 - FLAG:852) / 100, 0) + (TIME == 0) * 10 + GETBATTLESITUATION("市民確定") * 100
+LOCAL = 25 + MAX((5000 - FLAG:852) / 100, 0) + (TIME == 0) * 10 + GETBATTLESITUATION("시민 확정") * 100
 ;FEAT 효과에 따른観衆遭遇率アップ
 SIF TALENT:말려드는체질 > 0
 	LOCAL += 15
@@ -42,7 +42,7 @@ SIF TALENT:남다른미모 > 0
 	FLAG:70 += 1
 SIF TIME == 0
 	FLAG:70 += RAND:3
-SIF GETBATTLESITUATION("市民確定") == 1
+SIF GETBATTLESITUATION("시민 확정") == 1
 	FLAG:70 += 5
 ;夜は人数が少なくなる
 SIF TIME == 1 && FLAG:70
@@ -147,7 +147,7 @@ IF FLAG:72 > 0
 		PRINTW 
 		;心境が高揚になる
 		TCVARn:1 = 6
-	ELSEIF GETBATTLESITUATION("正体バレ不可")
+	ELSEIF GETBATTLESITUATION("정체 발각 불가")
 		PRINTL 。
 		PRINTFORML 決して見せてはいけない姿を撮影されてしまうかもしれない危機を感じながら
 		PRINTFORML 命知らずの観客に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%心の中で悲鳴を上げた・・・
@@ -167,7 +167,7 @@ IF FLAG:72 > 0
 	PRINTL 状態 になった
 	PRINTW 
 	;声援を受ける
-ELSEIF RAND:100 > 50 || GETBATTLESITUATION("市民確定") == 1
+ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 	PRINTL 
 
 	PRINTL 不意に、後ろの方から声がした・・・！
@@ -183,7 +183,7 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("市民確定") == 1
 	SIF (FLAG:70 + FLAG:71) > 1
 		PRINT たち
 	PRINTL の身の安全も顧みずに
-	IF GETBATTLESITUATION("正体バレ不可")
+	IF GETBATTLESITUATION("정체 발각 불가")
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%から촉수の注意を逸らそうと声を張り上げている！
 		PRINTW 
 		LOCALS = %PRINT_TRANSCALLNAME(TARGET)%%ISMALE(TARGET) ? "君" # "ちゃん"%
@@ -768,7 +768,7 @@ SIF FLAG:70 + FLAG:71 == 0
 	RETURN
 
 ;動画撮影されているとネットに配信されてしまう
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	CFLAG:284 += FLAG:71
 	SETBIT TFLAG:21,0
 ENDIF

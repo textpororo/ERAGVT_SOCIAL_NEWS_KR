@@ -23,7 +23,7 @@ ENDIF
 RETURNF LOCAL
 
 ;同一距離연속実行による直撃ボーナス/回避ペナルティの計算
-;　ARG…BraveHit発生回数　ARGS…"命中"または"回避"
+;　ARG…BraveHit発生回数　ARGS…"명중"または"회피"
 @GET_BRAVE_HIT(ARG,ARGS)
 #FUNCTION
 IF ARG < 4
@@ -35,7 +35,7 @@ ELSE
 ENDIF
 SIF LOCAL > 25
 	LOCAL = 25
-IF ARGS=="命中" && TCVARn:TARGET:0==1
+IF ARGS=="명중" && TCVARn:TARGET:0==1
 	;근거리は연속実行ボーナスを極端に
 	IF TALENT:근거리특기
 		TIMES LOCAL,3
@@ -44,7 +44,7 @@ IF ARGS=="命中" && TCVARn:TARGET:0==1
 	ELSE
 		TIMES LOCAL,1.7
 	ENDIF
-ELSEIF ARGS=="回避" && TCVARn:TARGET:0==2
+ELSEIF ARGS=="회피" && TCVARn:TARGET:0==2
 	;중거리は回避ペナルティを軽減
 	IF TALENT:중거리특기
 		TIMES LOCAL,0.8
@@ -53,7 +53,7 @@ ELSEIF ARGS=="回避" && TCVARn:TARGET:0==2
 	ELSE
 		TIMES LOCAL,0.85
 	ENDIF
-ELSEIF ARGS=="回避" && TCVARn:TARGET:0==3
+ELSEIF ARGS=="회피" && TCVARn:TARGET:0==3
 	;원거리は回避ペナルティを軽減
 	IF TALENT:원거리특기
 		TIMES LOCAL,0.7
@@ -196,7 +196,7 @@ IF TFLAG:30 > 1 && FLAG:73 == 0
 	;拘束された場合、または移動するか距離を取るとリセットされる
 	LOCALS:0 = 　＋BRAVE HIT
 	LOCALS:1 = 同一距離연속実行({TFLAG:30 - 1})
-	LOCALS:2 = 直撃率＋{GET_BRAVE_HIT(TFLAG:30 - 1,"命中") - 3}％　회피율−{GET_BRAVE_HIT(TFLAG:30 - 1,"回避")}％
+	LOCALS:2 = 直撃率＋{GET_BRAVE_HIT(TFLAG:30 - 1,"명중") - 3}％　회피율−{GET_BRAVE_HIT(TFLAG:30 - 1,"회피")}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%

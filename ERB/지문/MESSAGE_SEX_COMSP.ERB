@@ -214,7 +214,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 || ISMALE(FLAG:111) || ISTENTACLER(FLAG:111
 	PRINTW 
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -575,7 +575,7 @@ ELSE
 	ENDIF
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｃ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -769,7 +769,7 @@ IF FLAG:15 >= FLAG:14 && ((ARG & Ｖ) || (ARG & Ａ)) && TFLAG:4 > 0
 	ENDIF
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｃ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -894,7 +894,7 @@ PRINTL
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_SPCOM3")
 PRINTL 
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -944,7 +944,7 @@ ENDIF
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_SPCOM4")
 PRINTL 
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;嬲りものにされるところを見られた
 	SETBIT TFLAG:21,7
 ENDIF
@@ -1084,7 +1084,7 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 	ENDIF
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -1565,7 +1565,7 @@ IF FLAG:15 >= FLAG:14 * 2 && TFLAG:4 > 0
 	PRINTW 
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;挿入されたところを見られた
 	SIF (ARG & Ｖ)
 		SETBIT TFLAG:21,3
@@ -1639,7 +1639,7 @@ IF FLAG:15 >= FLAG:14 * 2 && TFLAG:4 > 0
 	PRINTW 
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;挿入されたところを見られた
 	SIF (ARG & Ａ)
 		SETBIT TFLAG:21,3
@@ -1814,7 +1814,7 @@ ELSE
 	ENDIF
 ENDIF
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた
 	SIF (ARG & Ｂ)
 		SETBIT TFLAG:21,1
@@ -1899,7 +1899,7 @@ ELSE
 ENDIF
 PRINTW 
 ;動画撮影フラグの処理
-IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;嬲りものにされるところを見られた
 	SETBIT TFLAG:21,7
 ENDIF

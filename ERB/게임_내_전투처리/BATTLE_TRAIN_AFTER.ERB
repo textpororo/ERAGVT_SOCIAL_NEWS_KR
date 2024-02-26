@@ -1,15 +1,15 @@
-﻿;戦闘終了時処理(@AFTERTRAIN)
+﻿;전투 종료 시 처리(@AFTERTRAIN)
 @EVENTEND
 #DIM LCOUNT
 VARSET LOCAL
 
-;戦闘中플래그를折る
+;전투 중 플래그를 접는다
 FLAG:700 = 0
-;피임 효과中に受けた사정量をリセット
+;피임 효과 중에 받은 사정량 초기화
 TFLAG:6 = 0
 
-;戦闘終了後の刻印取得
-;쾌락각인　一定量の욕정累積
+;전투 종료 후의 각인 취득
+;쾌락각인　일정량의 욕정 누적
 LOCAL = 0
 SIF PALAM:욕정 >= (40000 + MARK:쾌락각인방지 * 1000)
 	LOCAL = 1
@@ -25,13 +25,13 @@ IF LOCAL > MARK:쾌락각인
 	MARK:쾌락각인 = LOCAL
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	FONTBOLD
-	PRINTFORM %MARKNAME:0%{LOCAL}
+	PRINTFORM  %MARKNAME:0% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;고통각인　一定量の고통累積
+;고통각인　일정량의 고통 누적
 LOCAL = 0
 SIF PALAM:고통 >= (30000 + MARK:고통각인방지 * 750)
 	LOCAL = 1
@@ -47,13 +47,13 @@ IF LOCAL > MARK:고통각인
 	MARK:고통각인 = LOCAL
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	FONTBOLD
-	PRINTFORM %MARKNAME:1%{LOCAL}
+	PRINTFORM  %MARKNAME:1% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;굴복각인　一定量の굴복累積
+;굴복각인　일정량의 굴복 누적
 LOCAL = 0
 SIF PALAM:굴복 >= (20000 + MARK:굴복각인방지 * 500)
 	LOCAL = 1
@@ -69,13 +69,13 @@ IF LOCAL > MARK:굴복각인
 	MARK:굴복각인 = LOCAL
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	FONTBOLD
-	PRINTFORM %MARKNAME:2%{LOCAL}
+	PRINTFORM  %MARKNAME:2% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;공포각인　一定量の공포累積
+;공포각인　일정량의 공포 누적
 LOCAL = 0
 SIF PALAM:공포 >= (20000 + MARK:공포각인방지 * 500)
 	LOCAL = 1
@@ -91,13 +91,13 @@ IF LOCAL > MARK:공포각인
 	MARK:공포각인 = LOCAL
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	FONTBOLD
-	PRINTFORM %MARKNAME:3%{LOCAL}
+	PRINTFORM  %MARKNAME:3% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;치욕각인　一定量の치정累積
+;치욕각인　일정량의 치정 누적
 LOCAL = 0
 SIF PALAM:치정 >= (20000 + MARK:치욕각인방지 * 500)
 	LOCAL = 1
@@ -113,36 +113,36 @@ IF LOCAL > MARK:치욕각인
 	MARK:치욕각인 = LOCAL
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	FONTBOLD
-	PRINTFORM %MARKNAME:4%{LOCAL}
+	PRINTFORM  %MARKNAME:4% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;PALAM最大値を戻す
+;PALAM 최대값을 반환한다
 FOR LCOUNT, 0, PALAM종점
 	PALAM:LCOUNT = LIMIT(MAX_PALAM:LCOUNT, PALAM:LCOUNT, MAX_PALAM:LCOUNT)
 NEXT
 
-;PALAM補正をリセットする
+;PALAM 보정을 초기화한다
 VARSET COMMON_PALAM
 
-;能力 상승へ
+;능력 상승으로
 IF CFLAG:0 != 1 && CFLAG:0 != 4
-	;通常の能力上昇
+	;통상의 능력 상승
 	CALL _ABLUP, 0
 ELSE
-	;珠のみ獲得し、上昇処理をスキップする
+	;구슬만 획득하고, 상승 처리를 스킵한다
 	CALL _ABLUP, 2
 ENDIF
 
-;追加パッチここから（공중 촬영 드론）
-;時間切れ/撤退時の処理
+;추가 패치 여기서부터（공중 촬영 드론）
+;간 만료/철수 시의 처리
 IF TFLAG:98 == 0
-	;행동포인트が1以上の場合、수련Pが少しだけ入る
+	;행동 포인트가 1 이상인 경우, 수련P가 조금만 들어간다
 	SIF EX:행동포인트 > 0
 		CALL GET_SYUREN, EX:행동포인트
-	;消耗が激しいほど경험치が入る
+	;소모가 심할수록 경험치가 들어간다
 	LOCAL = 100 - PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + MAXBASE:성내성 * 10)
 	CALL TENTACLE_LEVEL
 	LOCAL = (RESULT - 2) / ABL:레벨 * LOCAL / 2 + RAND:10
@@ -150,9 +150,9 @@ IF TFLAG:98 == 0
 	SIF CFLAG:TARGET:43 == 505
 		LOCAL = LOCAL * 5 / 4
 	CALL GET_EXP,min(LOCAL,150)
-	;악질 시민戦以外なら방위력低下
+	;악질 시민전 이외라면 방위력이 저하
 	IF FLAG:73 == 0
-		;MIN(0,経過ターン-10)^2 * (8+(撃破보스数+経過撃破ノルマ)*難易度補正) + [100〜400]
+		;MIN(0,경과 턴-10)^2 * (8+(격파 보스 수+경과 격파 노르마)*난이도 보정) + [100〜400]
 		;(0〜1600) * (8 + [0〜7]*[2〜5] + [11〜13]*[0.5〜2]) + [100〜400]
 		LOCAL:1 = POWER(MIN(TFLAG:0 - 10, 0), 2)
 		CALL TENTACLE_LEVEL
@@ -168,26 +168,26 @@ IF TFLAG:98 == 0
 			ABS LOCAL:1
 			PRINTFORML 방위력이 {RESULT} 저하됐다.
 	
-		;방위력이 0なら確率で인기도가 低下
+		;방위력이 0이라면 일정 확률로 인기도가 저하
 		ELSEIF RAND:100 < LOCAL:1 / 50
 			FLAG:853 -= 1
 			SIF FLAG:853 < -100
 				FLAG:853 = -100
-			PRINTFORML 인기도가 1低下した
+			PRINTFORML 인기도가 1 저하했다.
 		ENDIF
-	;악질 시민戦なら救出は失敗
+	;악질 시민전이라면 구출 실패
 	ELSE
 		FOR LOCAL,1,CHARANUM
-			SIF CFLAG:LOCAL:71<=-1
-				CFLAG:LOCAL:71=1
+			SIF CFLAG:LOCAL:71 <= -1
+				CFLAG:LOCAL:71 = 1
 		NEXT
 	ENDIF
 
-	;イベント戦なら特殊ミッションを確認
+	;이벤트전이라면 특수 미션 확인
 	IF FLAG:45 > 0
 		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
 		CATCH
-			;無指定なら敗北時以外はミッション達成
+			;무지정이면 패배 시 외에는 미션 달성
 			RESULT = 1
 		ENDCATCH
 		IF RESULT == 1
@@ -200,33 +200,32 @@ IF TFLAG:98 == 0
 
 
 
-	;戦闘後の임신チェック
+	;전투 후 임신 체크
 	CALL NINSIN_CHECK_AFTER
-	;変身している場合、変身を解除する(악질 시민戦の場合はイベント側で処理)
+	;변신하고 있는 겅우, 변신을 해제한다(악질 시민전일 경우 이벤트 측에서 처리)
 	CALL TRANSFORM, 0
-	;흑화側も解除
+	;흑화측도 해제
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
-	;敗北扱いになる戦闘でなければ
-	;イベント衣装を解除する
+	;패배로 취급되는 전투가 아니라면 이벤트 의상을 해제한다
 	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
-	;보스と遭遇して未撃破なら確率をリセット
+	;보스와 조우하여 미격파라면 확률을 초기화
 	IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
 		IF FLAG:47 > FLAG:46
 			FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
 		ELSE
 			;탐색도 상승
 			LOCAL = 6 + RAND:4
-			PRINTFORML 探索度が{LOCAL} 상승했다.
+			PRINTFORML 탐색도가 {LOCAL} 상승했다.
 			CALL RESEARCH_PROGRESS, LOCAL
 			PRINTL 
 		ENDIF
 	ENDIF
-;勝利時の処理(雑魚の場合)
+;승리 시의 처리(잡몹일 경우)
 ELSEIF SAVESTR:13 == "MOB" && TFLAG:98 == 1
-	;잡몹적（戦闘あり）の場合
+	;잡몹적（전투 있음）일 경우
 	CALL GET_EXP_BATTLE
 
 	CALL TENTACLE_SURVIVE, "NUM"
@@ -240,26 +239,26 @@ ELSEIF SAVESTR:13 == "MOB" && TFLAG:98 == 1
 	SIF FLAG:852 < 0
 		FLAG:852 = 0
 	ABS LOCAL
-	PRINTFORM 방위력이 {RESULT}
+	PRINTFORM 방위력이 {RESULT} 
 	IF LOCAL < 0
-		PRINTL 低下した
+		PRINTL 저하했다.
 	ELSE
-		PRINTL 上昇した
+		PRINTL 상승했다.
 	ENDIF
 	PRINTL 
 
-	;戦闘後の임신チェック
+	;전투 후 임신 체크
 	CALL NINSIN_CHECK_AFTER
-	;変身している場合、変身を解除する
+	;변신하고 있는 겅우, 변신을 해제한다
 	CALL TRANSFORM, 0
-	;敵の変身も解除する(現状雑魚戦の敵に흑화ヒロインは出ないはずだが念のため)
+	;적의 변신도 해제한다(현상 잡몹전의 적에게 흑화 히로인이 나오지 않을 테지만 만일을 위해)
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
-	;イベント衣装を解除する(現状イベントで雑魚戦は発生しないが後のため)
+	;이벤트 의상을 해제한다(현상 이벤트로 잡몹전은 발생하지 않지만 추후를 위해)
 	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
-;勝利時の処理(보스の場合)
+;승리 시의 처리(보스일 경우)
 ELSEIF TFLAG:98 == 1
 	CALL GET_EXP_BATTLE
 	
@@ -282,11 +281,11 @@ ELSEIF TFLAG:98 == 1
 	FLAG:853 += LOCAL
 	PRINTFORML 인기도가 {LOCAL} 상승했다!
 
-	;イベント戦なら特殊ミッションを確認
+	;이벤트전이라면 특수 미션 확인
 	IF FLAG:45 > 0
 		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
 		CATCH
-			;無指定なら敗北時以外はミッション達成
+			;무지정이면 패배 시 외에는 미션 달성
 			RESULT = 1
 		ENDCATCH
 		IF RESULT == 1
@@ -296,18 +295,18 @@ ELSEIF TFLAG:98 == 1
 		ENDIF
 	ENDIF
 
-	;戦闘後の임신チェック
+	;전투 후 임신 체크
 	CALL NINSIN_CHECK_AFTER
-	;変身している場合、変身を解除する
+	;변신하고 있는 겅우, 변신을 해제한다
 	CALL TRANSFORM, 0
-	;敵の変身も解除する
+	;적의 변신도 해제한다
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
-	;イベント衣装を解除する
+	;이벤트 의상을 해제한다
 	CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 
-	;エンドレスモードの場合、撃破数と日数経過で期日が短くなる
+	;ENDLESS 모드일 경우, 격파 수와 일수 경과로 기일이 짧아진다
 	IF GAME_OPTION_CHECK_F(OPTION_endless)
 		CALL TENTACLE_SURVIVE, "NUM"
 		LOCAL = RESULT
@@ -331,13 +330,13 @@ ELSEIF TFLAG:98 == 1
 			GOTO LOOP_ENDLESSMODE
 		ENDIF
 	ENDIF
-;敗北時の処理
+;패배 시의 처리
 ELSEIF TFLAG:98 == 2
-	;敗北したキャラは大量の수련Pと경험치が入る
+	;패배한 캐릭터는 대량의 수련P와 경험치가 들어간다
 	CALL GET_SYUREN, 40 + (EX:행동포인트 * 4)
 	CALL TENTACLE_LEVEL
 	LOCAL = 250 * RESULT/(ABL:레벨 + 2) + RAND:10
-	;ただし악질 시민戦は控えめ
+	;단 악질 시민전은 적다
 	IF FLAG:73 > 0
 		LOCAL /= 8
 	ENDIF
@@ -351,12 +350,12 @@ ELSEIF TFLAG:98 == 2
 		FLAG:852 = 0
 	ABS LOCAL
 
-	;악질 시민戦なら
+	;악질 시민전이라면
 	IF FLAG:73 > 0
-		;「女の子が一人拉致されただけ」(建物などに被害は出ていない)
-		;なので방위력低下は少ない
+		;「여자아이가 한명 납치되었을 뿐」(건물 등에 피해는 발생하지 않았다)
+		;그래서 방위력 저하는 적다
 		RESULT /= 8
-		;救出は失敗
+		;구출 실패
 		FOR LOCAL,1,CHARANUM
 			SIF CFLAG:LOCAL:71==-1
 				CFLAG:LOCAL:71=1
@@ -365,9 +364,9 @@ ELSEIF TFLAG:98 == 2
 
 	PRINTFORM 방위력이 {RESULT}
 	IF LOCAL < 0
-		PRINTL 低下した
+		PRINTL 저하했다.
 	ELSE
-		PRINTL 上昇した
+		PRINTL 상승했다.
 	ENDIF
 	PRINTL 
 	;인기도
@@ -375,11 +374,11 @@ ELSEIF TFLAG:98 == 2
 	FLAG:853 -= LOCAL
 	PRINTFORML 인기도가 {LOCAL} 저하됐다.
 
-	;イベント戦なら特殊ミッションを確認
+	;이벤트전이라면 특수 미션 확인
 	IF FLAG:45 > 0
 		TRYCCALLFORM EVENT_BATTLE_MISSION_CHECKER_{FLAG:45}
 		CATCH
-			;無指定なら敗北時はミッション失敗
+			;무지정이라면 패배 시 미션 실패
 			RESULT = 0
 		ENDCATCH
 		IF RESULT == 1
@@ -389,39 +388,39 @@ ELSEIF TFLAG:98 == 2
 		ENDIF
 	ENDIF
 
-	;戦闘後の임신チェック
+	;전투 후 임신 체크
 	CALL NINSIN_CHECK_AFTER
 
-	;ヒロインの変身解除処理
-	;　유폐されている場合→オプションに準ずる
+	;히로인의 변신 해제 처리
+	;　유폐되어 있는 경우→설정에 준함
 	IF CFLAG:0>0
-		;ＴＳするキャラは変身解除しない、악질 시민戦の場合も解除しない
+		;ＴＳ하는 캐릭터는 변신 해제하지 않는다, 악질 시민전일 경우에도 해제하지 않는다
 		IF (TALENT:변신시TS > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
 			;
-		;力尽きても変身解除しないフラグがoffの場合、変身を解除する
+		;강제 변신 해제 방지 플래그가 off일 경우, 변신을 해제한다
 		ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0
 			CALL TRANSFORM, 0
 		ENDIF
-	;　유폐されていない場合→解除して戦闘前に戻す
+	;　유폐되어 있지 않은 경우→해제하고 전투 전으로 되돌린다
 	ELSE
 		CALL TRANSFORM, 0
-		;イベント衣装も解除する
+		;이벤트 의상도 해제한다
 		CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 	ENDIF
 
-	;흑화ヒロイン側も解除しておく
+	;흑화 히로인 측도 해제해 둔다
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
 
-	;보스と遭遇して未撃破なら確率をリセット
+	;보스와 조우하여 미격파라면 확률을 초기화
 	SIF (ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1) && FLAG:47 > FLAG:46
 		FLAG:47 = (FLAG:47 - FLAG:46) / 4 + FLAG:46
-	;조우율 상승 효과 리셋
+	;조우율 상승 효과 초기화
 	CFLAG:23 = 0
 ENDIF
 
-;보스(흑화含む)戦かつ勝利できなかった場合、보스の蓄積ダメージと解析度の情報を保持
+;보스전(흑화 포함)임과 동시에 승리하지 못한 경우, 보스 축적 피해량과 해석도의 정보를 유지
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 && TFLAG:98 != 1
 	RESULT = (FLAG:13 * 1000000 / FLAG:12)
 	FLAG:(300 + FLAG:11) = 1000000 - RESULT
@@ -439,7 +438,7 @@ ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1 && TFLAG:98 != 1
 	FLAG:(600 + FLAG:11) = FLAG:20
 ENDIF
 
-;전투 지원効果で回復
+;전투 지원 효과로 회복
 IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
 	LOCAL:1 = FLAG:43 * 8
 	;의상에 따른 보정
@@ -460,50 +459,50 @@ IF FLAG:43 && (CFLAG:100 == 101 || CFLAG:100 == 105) && TFLAG:98 != 2
 	LOCAL = LOCAL * LOCAL:1 / 100
 	BASE:기력 = LIMIT(LOCAL + BASE:기력, 0, MAXBASE:기력)
 	PRINTL 
-	PRINTFORML 전투 지원効果で%PRINT_CALLNAME(TARGET)%の체력と기력が回復した！
+	PRINTFORML 전투 지원 효과로 %PRINT_CALLNAME(TARGET)%의 체력과 기력이 회복됐다！
 ENDIF
 
-;疲労増加量が残っていれば処理する
+;피로 증가량이 남아 있으면 처리한다
 IF TFLAG:99 > 0
 	CFLAG:99 += TFLAG:99
 	RESULTS = {TFLAG:99}
 	TOFULL RESULTS
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の身体の底に疲労が蓄積した……（＋%RESULTS%）
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 신체 밑바닥에 피로가 쌓였다……（＋%RESULTS%）
 	TFLAG:99 = 0
 ENDIF
 
-;戦闘終了後のサブイベントへ
+;전투 종료 후의 서브 이벤트로
 CALL SUBEVENT_BATTLEEND
 
-;사정 게이지、모유 게이지のリセット
+;사정 게이지, 모유 게이지 초기화
 BASE:사정 = 0
 BASE:모유 = 0
 
-;空中ゲージの最大値を元に戻す
-;重複してゲージを減少させてしまわないよう、この処理は変身解除処理の後に行う必要があるので注意
+;공중 게이지의 최대값을 원래대로 되돌린다
+;중복되어 게이지를 감소시켜 버리지 않도록, 이 처리는 변신 해제 처리 후에 이행해야 하므로 주의
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF RESULT > 0
 	MAXBASE:공중대시 -= 1
-;입체기동장치の効果###
+;입체 기동 장치의 효과###
 SIF CFLAG:TARGET:43 == 510
 	MAXBASE:공중대시 -= 1
-;FEATによる공중대시増加
+;FEAT에 따른 공중대시 증가
 SIF TALENT:날개 > 0
 	MAXBASE:공중대시 -= 1
 
 SIF FLAG:45 == 0
 	PRINTW 
 
-;通常戦闘後のレイプ等
-IF CONFIG_CHECK_EVENT_F(3) > 0 && GETBATTLESITUATION("レイプなし") == 0
-	;戦闘終了後のレイプ
+;통상 전투 후의 강간 등
+IF CONFIG_CHECK_EVENT_F(3) > 0 && GETBATTLESITUATION("강간 없음") == 0
+	;전투 종료 후의 강간
 	SIF FLAG:73 == 0
 		CALL AFTER_TRAIN_RAPE,TFLAG:98
-	;動画流出
+	;영상 유출
 	CALL DOUGA_RYUSUTU,RESULT
 ENDIF
 
-;雑魚戦終了時の処理
+;잡몹전 종료시의 처리
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	IF FLAG:100
 		FLAG:10 = 0
@@ -512,22 +511,22 @@ IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	ENDIF
 ENDIF
 
-;その他の플래그를초기화
+;기타 플래그를 초기화
 VARSET TCVARn
-;追加責め関係の플래그를折る
+;추가 고문 관계의 플래그를 접는다
 VARSET EX_COM
 VARSET SH_COM
 VARSET INSERT
-;拡張度関係の플래그를折る
+;확장도 관계의 플래그를 접는다
 VARSET TENTACLE_SIZE
 VARSET TENTACLE_NUM
 FLAG:73 = 0
 
-;人類社会にヒロインが残されていなければ全滅エンド
+;인류 사회에 히로인이 남아있지 않으면 전멸 엔딩
 SIF CHARANUM_SAFE()+CHARANUM_ENSLAVED() == 0 && !GAME_OPTION_CHECK_F(OPTION_solo) && GAME_OPTION_CHECK_F(OPTION_게임오버없음) == 0 && CHECK_GAMEOVER_F() == 0
 	CALL ENDING_1
 
-;パーティー内の女性が全員악질 시민に監禁された
+;파티 내의 여성이 전원 악질 시민에게 감금되었다
 SIF CHARANUM_ENSLAVED() == (CHARANUM-1)-CHARANUM_MANLY()
 	CALL UNLOCK_ACHIEVEMENT(278,"결국엔 좆구멍에 불과하다")
 

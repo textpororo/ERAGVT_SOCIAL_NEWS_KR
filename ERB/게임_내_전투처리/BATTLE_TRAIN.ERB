@@ -1,6 +1,6 @@
 ﻿
-;戦闘開始時処理
-;　この後の流れはTRAIN⇒COM～COMAFTER⇒AFTERTRAIN
+;전투 개시 시 처리
+;　이 후의 흐름은 TRAIN⇒COM～COMAFTER⇒AFTERTRAIN
 @EVENTTRAIN
 #DIM CHISEI_CAL
 #DIM CHISEI_SUM
@@ -12,14 +12,14 @@ REDRAW 1
 
 
 
-;通常戦闘(イベント戦闘以外)ならTCVARを초기화しておく
+;통상 전투(이벤트 전투 이외)라면 TCVAR을 초기화해 둔다
 IF FLAG:45==0
 	CALL INITBATTLESITUATION()
 	VARSET TCVARn
-	;雑魚戦15ターン、보스전50ターンが基本
+	;잡몹전 15턴, 보스전 50턴이 기본
 	턴상한=(FLAG:10 == 2 ? 15 # 50)
 ENDIF
-;戦闘開始時に戦闘距離を원거리に설정する
+;전투 개시 시 전투 거리를 원거리로 설정한다
 IF FLAG:73 > 0
 	TCVARn:0 = 0
 ELSE
@@ -28,114 +28,114 @@ ENDIF
 FOR LCOUNT, 0, TCRLENGTH
 	TCREPORT:LCOUNT = 0
 NEXT
-;피임 효과中に受けた사정量をリセット
+;피임 효과 중에 받은 정액량을 초기화
 TFLAG:6 = 0
-;行動予約플래그를折る
+;행동 예약 플래그를 접는다
 TFLAG:16 = -1
 TFLAG:17 = -1
-;追加責め関係の플래그를折る
+;추가 고문 관계의 플래그를 접는다
 VARSET EX_COM
 VARSET SH_COM
 VARSET INSERT
-;拡張度関係の플래그를折る
+;확장도 관계의 플래그를 접는다
 VARSET TENTACLE_SIZE
 VARSET TENTACLE_NUM
 
-;最初から타락
+;처음부터 타락
 SIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	TFLAG:97 |= 타락
-;最初から쾌락굴복
+;처음부터 쾌락굴복
 SIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 	TFLAG:97 |= 쾌락굴복
-;最初から절망
+;처음부터 절망
 SIF (MESSAGE_BRANCH_F(TARGET) & 절망)
 	TFLAG:97 |= 절망
-;最初から성저항
+;처음부터 성저항
 SIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 	TFLAG:97 |= 성저항
-;最初から고전
+;처음부터 고전
 SIF (MESSAGE_BRANCH_F(TARGET) & 고전)
 	TFLAG:97 |= 고전
 
-;PALAM最大値をリセット
+;PALAM 최대값을 초기화
 VARSET MAX_PALAM
 
-;사정 게이지、모유 게이지のリセット
+;사정 게이지, 모유 게이지 초기화
 BASE:사정 = 0
 BASE:모유 = 0
 
-;공중대시回数をリセット
-;衣装による공중 성능 강화
+;공중대시 횟수를 초기화
+;의상에 의한 공중 성능 강화
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF RESULT > 0
 	MAXBASE:공중대시 += 1
-;입체기동장치の効果###
+;입체기동장치의 효과###
 SIF CFLAG:43 == 510
 	MAXBASE:공중대시 += 1
-;FEATによる공중대시増加
+;FEAT에 따른 공중대시 증가
 SIF TALENT:날개 > 0
 	MAXBASE:공중대시 += 1
 BASE:공중대시 = MAXBASE:공중대시
 SIF BASE:공중대시 >= 8
 	BASE:공중대시 = 8
 
-;FEAT 효과에 따른EX 게이지増加
+;FEAT 효과에 따른 EX 게이지 증가
 IF TALENT:마력저장 > 0
 	SETCOLOR 255,128,0
-	PRINTFORMW [마력저장]の効果で%CALLNAME%のEX 게이지が2つチャージされた！
+	PRINTFORMW [마력저장] 의 효과로 %CALLNAME%의 EX게이지가 2개 충전됐다！
 	RESETCOLOR
 	TCVARn:4 += 200
 ENDIF
 
-;イベント戦以外なら衣装の초기화をここで行う
+;이벤트전 이외라면 의상의 초기화를 여기서 한다
 IF FLAG:45==0
-	;衣装の耐久度を설정
+	;의상 내구도를 설정
 	CALL CLOTH_BATTLE_SETHP
-	;衣装の情報を更新
+	;의상 정보를 갱신
 	CALL REFRESH_CLOTH_DATA
 ENDIF
 
-;＠중국판より
-;　アイデアだけ書いてたsetbattlesituationに対応してくれた分
+;＠중국판 역수출
+;　아이디어만 적었던 setbattlesituation 대응해 준 만큼
 IF GETBATTLESITUATION("강제 발정") == 1
 	TCVARn:12 |= 발정
-	PRINTFORMW %타겟은% 抑えきれないほど발정している……
+	PRINTFORMW %타겟은% 억누를 수 없을 정도로 발정하고 있다……
 ENDIF
 IF GETBATTLESITUATION("강제 마비") == 1
 	TCVARn:12 |= 마비
-	PRINTFORMW %CALLNAME%の全身が痺れ、自由に動けない……
+	PRINTFORMW %CALLNAME%의 온몸이 저려, 마음대로 움직일 수 없다……
 ENDIF
-IF GETBATTLESITUATION("強制全裸") == 1
+IF GETBATTLESITUATION("강제 전라") == 1
 	CFLAG:TARGET:40 = 0
 	SIF CFLAG:TARGET:41 != 402
 		CFLAG:TARGET:41 = 0
 	SIF CFLAG:TARGET:42 != 400
 		CFLAG:TARGET:42 = 0
 	CFLAG:TARGET:43 = 0
-	PRINTFORMW %타겟은% 裸で敵と戦うしかない…
+	PRINTFORMW %타겟은% 알몸으로 적과 싸울 수밖에 없다…
 ENDIF
-IF GETBATTLESITUATION("強制拘束") == 1
+IF GETBATTLESITUATION("강제 구속") == 1
 	TCVARn:0 = 0
-	PRINTFORMW %타겟은% 力ずくで戦闘に引きずり込まれた……
+	PRINTFORMW %타겟은% 강제로 전투에 끌려 들어갔다……
 ENDIF
-IF GETBATTLESITUATION("強制挿入") == 1
+IF GETBATTLESITUATION("강제 삽입") == 1
 	TCVARn:0 = 0
 	TCVARn:12 |= 강구속
-	PRINTFORMW %CALLNAME%がっちりと巻き上げられ、強引に戦闘に引きずり込まれていく…。
+	PRINTFORMW %타겟은% 단단히 감아 올려져, 강제로 전투에 끌려 들어갔다…
 ENDIF
 
 
-;보스 촉수の行動選択
+;보스 촉수의 행동 선택
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL SELECT_ENEMY_ACTION
 ELSE
 	CALL SELECT_TENTACLE_ACTION
 ENDIF
 
-;戦闘中플래그를 세운다
+;전투 중 플래그를 세운다
 FLAG:700 = 1
 
-;解析度を読み込む
+;해석도를 불러들인다
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1
 	FLAG:20 = FLAG:(500 + FLAG:11)
 ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
@@ -147,7 +147,7 @@ ENDIF
 ;실적
 CHISEI_SUM = 0
 CHISEI_CAL = 0
-;전투 지원による補正
+;전투 지원에 따른 보정
 CALL CALC_CHISEI_SHIEN(0)
 CHISEI_SUM = RESULT
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -162,37 +162,37 @@ IF PERCENT_CAL_F(CHISEI_SUM, CHISEI_ENEMY) >= 200
 	CALL UNLOCK_ACHIEVEMENT(268,"Tactical Order")
 ENDIF
 
-;先制공격の判定
+;선제 공격의 판정
 INITIATIVE = MIN(SQRT(EXP:전투경험), 20) + MIN(SQRT(PERCENT_CAL_F(CHISEI_SUM, CHISEI_ENEMY)), 25) + 5
-;生き残っている보스の数を見る
+;살아 남은 보스의 수를 본다
 CALL TENTACLE_SURVIVE, "NUM"
-;１体目の보스撃破前は先制率アップ
+;１마리 째 보스 격파 전에는 선제율 향상
 SIF FLAG:3 == RESULT
 	INITIATIVE += 15
-;２体目の보스撃破前は先制率アップ
+;２마리 째 보스 격파 전에는 선제율 향상
 SIF FLAG:3 - 1 == RESULT
 	INITIATIVE += 15
-;FEAT 효과에 따른先制率アップ
+;FEAT 효과에 따른 선제율 향상
 SIF TALENT:정령교신 > 0
 	INITIATIVE += 15
 SIF TALENT:사냥꾼의직감 > 0
 	INITIATIVE += 15
-;잡몹적が相手の場合は先制率２倍
+;잡몹적이 상대일 경우 선제율 2배
 SIF ENEMY_TYPE_CHECK_F("MOB") == 1 && FLAG:73 == 0
 	INITIATIVE *= 2
 
-;市民確定なら先制공격は発生しない
-SIF GETBATTLESITUATION("市民確定") || GETBATTLESITUATION("先制無し")
+;시민 확정이라면 선제공격은 발생하지 않는다
+SIF GETBATTLESITUATION("시민 확정") || GETBATTLESITUATION("선제 없음")
 	INITIATIVE = 0
 
-;判定に成功したら確率を半分にして再度判定を行う
+;판정에 성공하면 확률을 반으로 줄여 다시 판정한다
 $INITIATIVE_LOOP
 SIF FLAG:73 > 0
 	INITIATIVE = 0
 IF FLAG:999 > 0 && FLAG:73 == 0
 	SETCOLOR 105,105,105
 	PRINTL 
-	PRINTFORML 　先制率　{INITIATIVE}％
+	PRINTFORML 　선제율　{INITIATIVE}％
 	PRINTL 
 	RESETCOLOR
 ENDIF
@@ -205,33 +205,33 @@ ENDIF
 IF TFLAG:24 > 0
 	IF TALENT:정령교신 > 0
 		SETCOLOR 255,128,0
-		PRINTFORMW [정령교신]の効果で先制率が上昇！
+		PRINTFORMW [정령교신] 의 효과로 선제율 상승！
 		RESETCOLOR
 	ENDIF
 	IF TALENT:사냥꾼의직감 > 0
 		SETCOLOR 255,128,0
-		PRINTFORMW [사냥꾼의직감]の効果で先制率が上昇！
+		PRINTFORMW [사냥꾼의직감] 의 효과로 선제율 상승！
 		RESETCOLOR
 	ENDIF
 
 	PRINTL 
 	FONTBOLD
-	PRINT 　先制공격
+	PRINT 　선제 공격
 	SIF TFLAG:24 > 1
 		PRINTFORM (+{TFLAG:24 - 1})
 	PRINT ！ 
 	FONTREGULAR
 	IF TFLAG:24 == 1
-		PRINTW 敵はこのターン動けない！
+		PRINTW 적은 이 턴에 움직일 수 없다！
 	ELSE
-		PRINTFORMW 敵は%TOSTR(TFLAG:24)%ターンの間動けない！
+		PRINTFORMW 적은 %TOSTR(TFLAG:24)%턴 동안 움직일 수 없다！
 	ENDIF
 	PRINTL 
-;応援判定　先制공격中は発生しない
+;응원 판정　선제 공격 중에는 발생하지 않는다
 ELSEIF CONFIG_CHECK_EVENT_F(3) > 0 && FLAG:73 == 0
 	CALL PERFORM_CHEERS_FIRST_HANTEI
 ENDIF
 
-;カテゴリ分けする場合、変身素質がないなら공격コマンドをデフォに
+;카테고리로 분류할 경우, 변신 소질이 없다면 공격 커맨드를 디폴트로
 SIF TALENT:변신능력 != 1 && CONFIG_CHECK_SCREEN_F(2) > 0
 	TCVARn:8 = 1

@@ -18,7 +18,7 @@ IF RESULT
 		ELSE
 			LOCAL:0 = RESULT:0
 		ENDIF
-		;敵がＡ촉수なら強制失敗
+		;적이 Ａ촉수라면 강제 실패
 		SIF ENEMY_TYPE_CHECK_F("BOSS") == 1 && FLAG:11 == 3
 			LOCAL:0 = 0
 		LOCALS = %TRAINNAME:ARG%({LOCAL:0}\%)[{ARG, 3}]

@@ -219,7 +219,7 @@ SIF LOCAL:1 == 1
 	PRINTL
 
 ;動画撮影フラグの処理
-IF FLAG:71 > 0 || GETBATTLESITUATION("常時撮影")
+IF FLAG:71 > 0 || GETBATTLESITUATION("상시 촬영")
 	;질내사정されたところを見られた
 	SIF (STAIN:3 & 4)
 		SETBIT TFLAG:21,4
@@ -454,7 +454,7 @@ IF ARG:9 > 0
 	ARG:9 = RESULT
 
 	;観衆の有無による補正
-	IF FLAG:71 || GETBATTLESITUATION("常時撮影")
+	IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 		ARG:9 = ARG:9 * (360 + FLAG:71 * 40 + FLAG:70 * 20) / 100
 	ELSEIF FLAG:70
 		ARG:9 = ARG:9 * (180 + FLAG:70 * 20) / 100
