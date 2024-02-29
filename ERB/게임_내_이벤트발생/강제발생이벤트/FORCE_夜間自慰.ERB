@@ -7,7 +7,7 @@ VARSET LOCAL
 SIF TIME != 1
 	RETURN
 ;초심はいずれかの감각が3以上でないと自慰しない
-SIF TALENT:초심 > 0 && ABL:C감각 < 3 && ABL:V감각 < 3 && ABL:A감각 < 3 && ABL:B감각 < 3 && ABL:촉수중독 < 3
+SIF TALENT:초심 > 0 && ABL:Ｃ감각 < 3 && ABL:Ｖ감각 < 3 && ABL:Ａ감각 < 3 && ABL:Ｂ감각 < 3 && ABL:촉수중독 < 3
 	RETURN
 
 LOCAL:2 = TARGET
@@ -202,10 +202,10 @@ ENDIF
 ;追加で自慰が発生した場合に備えて二度目のリセット
 VARSET NOWEX
 
-;V감각は1、A감각は2以上なら対応自慰が出来る
-SIF ABL:ARG:V감각 >= 1
+;Ｖ감각は1、Ａ감각は2以上なら対応自慰が出来る
+SIF ABL:ARG:Ｖ감각 >= 1
 	Ｖ自慰可 = 1
-SIF ABL:ARG:A감각 > 1
+SIF ABL:ARG:Ａ감각 > 1
 	Ａ自慰可 = 1
 
 IF Ｖ自慰可 == 0 && Ａ自慰可 == 0
@@ -259,49 +259,49 @@ REND
 ;ベース
 EXP:ARG:자위경험 += 1
 ;快C
-IF ABL:ARG:C감각 == 0
+IF ABL:ARG:Ｃ감각 == 0
 	LOCAL:0 = 200
-ELSEIF ABL:ARG:C감각 == 1
+ELSEIF ABL:ARG:Ｃ감각 == 1
 	LOCAL:0 = 1000
-ELSEIF ABL:ARG:C감각 == 2
+ELSEIF ABL:ARG:Ｃ감각 == 2
 	LOCAL:0 = 2000
-ELSEIF ABL:ARG:C감각 == 3
+ELSEIF ABL:ARG:Ｃ감각 == 3
 	LOCAL:0 = 4000
-ELSEIF ABL:ARG:C감각 == 4
+ELSEIF ABL:ARG:Ｃ감각 == 4
 	LOCAL:0 = 10000
-ELSEIF ABL:ARG:C감각 >= 5
+ELSEIF ABL:ARG:Ｃ감각 >= 5
 	LOCAL:0 = 20000
 ENDIF
 
 ;快B
-IF ABL:ARG:B감각 == 0
+IF ABL:ARG:Ｂ감각 == 0
 	LOCAL:3 = 200
-ELSEIF ABL:ARG:B감각 == 1
+ELSEIF ABL:ARG:Ｂ감각 == 1
 	LOCAL:3 = 400
-ELSEIF ABL:ARG:B감각 == 2
+ELSEIF ABL:ARG:Ｂ감각 == 2
 	LOCAL:3 = 1000
-ELSEIF ABL:ARG:B감각 == 3
+ELSEIF ABL:ARG:Ｂ감각 == 3
 	LOCAL:3 = 2000
-ELSEIF ABL:ARG:B감각 == 4
+ELSEIF ABL:ARG:Ｂ감각 == 4
 	LOCAL:3 = 4000
-ELSEIF ABL:ARG:B감각 >= 5
+ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
 ;처녀でなければVも使う
 IF TALENT:ARG:처녀 < 1 && ISFEMALE(ARG)
-	EXP:ARG:V경험 += 1
-	IF ABL:ARG:V감각 == 0
+	EXP:ARG:Ｖ경험 += 1
+	IF ABL:ARG:Ｖ감각 == 0
 		LOCAL:1 = 200
-	ELSEIF ABL:ARG:V감각 == 1
+	ELSEIF ABL:ARG:Ｖ감각 == 1
 		LOCAL:1 = 400
-	ELSEIF ABL:ARG:V감각 == 2
+	ELSEIF ABL:ARG:Ｖ감각 == 2
 		LOCAL:1 = 1000
-	ELSEIF ABL:ARG:V감각 == 3
+	ELSEIF ABL:ARG:Ｖ감각 == 3
 		LOCAL:1 = 4000
-	ELSEIF ABL:ARG:V감각 == 4
+	ELSEIF ABL:ARG:Ｖ감각 == 4
 		LOCAL:1 = 10000
-	ELSEIF ABL:ARG:V감각 >= 5
+	ELSEIF ABL:ARG:Ｖ감각 >= 5
 		LOCAL:1 = 20000
 	ENDIF
 ENDIF
@@ -418,17 +418,17 @@ REND
 EXP:ARG:자위경험 += 1
 
 ;快B
-IF ABL:ARG:B감각 == 0
+IF ABL:ARG:Ｂ감각 == 0
 	LOCAL:3 = 200
-ELSEIF ABL:ARG:B감각 == 1
+ELSEIF ABL:ARG:Ｂ감각 == 1
 	LOCAL:3 = 400
-ELSEIF ABL:ARG:B감각 == 2
+ELSEIF ABL:ARG:Ｂ감각 == 2
 	LOCAL:3 = 1000
-ELSEIF ABL:ARG:B감각 == 3
+ELSEIF ABL:ARG:Ｂ감각 == 3
 	LOCAL:3 = 2000
-ELSEIF ABL:ARG:B감각 == 4
+ELSEIF ABL:ARG:Ｂ감각 == 4
 	LOCAL:3 = 4000
-ELSEIF ABL:ARG:B감각 >= 5
+ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
@@ -536,15 +536,15 @@ REND
 
 ;ベース
 EXP:ARG:자위경험 += 1
-EXP:ARG:A경험 += 1
+EXP:ARG:Ａ경험 += 1
 ;快A
-IF ABL:ARG:A감각 == 2
+IF ABL:ARG:Ａ감각 == 2
 	LOCAL:2 = 2000
-ELSEIF ABL:ARG:A감각 == 3
+ELSEIF ABL:ARG:Ａ감각 == 3
 	LOCAL:2 = 4000
-ELSEIF ABL:ARG:A감각 == 4
+ELSEIF ABL:ARG:Ａ감각 == 4
 	LOCAL:2 = 10000
-ELSEIF ABL:ARG:A감각 >= 5
+ELSEIF ABL:ARG:Ａ감각 >= 5
 	LOCAL:2 = 20000
 ENDIF
 
@@ -654,62 +654,62 @@ REND
 EXP:ARG:자위경험 += 1
 ;快V	처녀だと減少、経験増加なし
 IF TALENT:ARG:처녀 >= 1
-	IF ABL:ARG:V감각 == 0
+	IF ABL:ARG:Ｖ감각 == 0
 		LOCAL:1 = 100
-	ELSEIF ABL:ARG:V감각 == 1
+	ELSEIF ABL:ARG:Ｖ감각 == 1
 		LOCAL:1 = 200
-	ELSEIF ABL:ARG:V감각 == 2
+	ELSEIF ABL:ARG:Ｖ감각 == 2
 		LOCAL:1 = 500
-	ELSEIF ABL:ARG:V감각 == 3
+	ELSEIF ABL:ARG:Ｖ감각 == 3
 		LOCAL:1 = 2000
-	ELSEIF ABL:ARG:V감각 == 4
+	ELSEIF ABL:ARG:Ｖ감각 == 4
 		LOCAL:1 = 4000
-	ELSEIF ABL:ARG:V감각 >= 5
+	ELSEIF ABL:ARG:Ｖ감각 >= 5
 		LOCAL:1 = 10000
 	ENDIF
 ;二穴の場合ちょっと下げる
 ELSEIF TALENT:ARG:음고 > 0
-	EXP:ARG:V경험 += 1
-	IF ABL:ARG:V감각 == 0
+	EXP:ARG:Ｖ경험 += 1
+	IF ABL:ARG:Ｖ감각 == 0
 		LOCAL:1 = 200
-	ELSEIF ABL:ARG:V감각 == 1
+	ELSEIF ABL:ARG:Ｖ감각 == 1
 		LOCAL:1 = 400
-	ELSEIF ABL:ARG:V감각 == 2
+	ELSEIF ABL:ARG:Ｖ감각 == 2
 		LOCAL:1 = 1000
-	ELSEIF ABL:ARG:V감각 == 3
+	ELSEIF ABL:ARG:Ｖ감각 == 3
 		LOCAL:1 = 3000
-	ELSEIF ABL:ARG:V감각 == 4
+	ELSEIF ABL:ARG:Ｖ감각 == 4
 		LOCAL:1 = 7500
-	ELSEIF ABL:ARG:V감각 >= 5
+	ELSEIF ABL:ARG:Ｖ감각 >= 5
 		LOCAL:1 = 15000
 	ENDIF
 ELSE
-	EXP:ARG:V경험 += 1
-	IF ABL:ARG:V감각 == 0
+	EXP:ARG:Ｖ경험 += 1
+	IF ABL:ARG:Ｖ감각 == 0
 		LOCAL:1 = 200
-	ELSEIF ABL:ARG:V감각 == 1
+	ELSEIF ABL:ARG:Ｖ감각 == 1
 		LOCAL:1 = 400
-	ELSEIF ABL:ARG:V감각 == 2
+	ELSEIF ABL:ARG:Ｖ감각 == 2
 		LOCAL:1 = 1000
-	ELSEIF ABL:ARG:V감각 == 3
+	ELSEIF ABL:ARG:Ｖ감각 == 3
 		LOCAL:1 = 4000
-	ELSEIF ABL:ARG:V감각 == 4
+	ELSEIF ABL:ARG:Ｖ감각 == 4
 		LOCAL:1 = 10000
-	ELSEIF ABL:ARG:V감각 >= 5
+	ELSEIF ABL:ARG:Ｖ감각 >= 5
 		LOCAL:1 = 20000
 	ENDIF
 ENDIF
 
 ;음고の場合、Ａも使い二穴オナに
 IF TALENT:ARG:음고 > 0
-	EXP:ARG:A경험 += 1
-	IF ABL:ARG:A감각 == 2
+	EXP:ARG:Ａ경험 += 1
+	IF ABL:ARG:Ａ감각 == 2
 		LOCAL:2 = 1000
-	ELSEIF ABL:ARG:A감각 == 3
+	ELSEIF ABL:ARG:Ａ감각 == 3
 		LOCAL:2 = 3000
-	ELSEIF ABL:ARG:A감각 == 4
+	ELSEIF ABL:ARG:Ａ감각 == 4
 		LOCAL:2 = 7500
-	ELSEIF ABL:ARG:A감각 >= 5
+	ELSEIF ABL:ARG:Ａ감각 >= 5
 		LOCAL:2 = 15000
 	ENDIF
 ENDIF

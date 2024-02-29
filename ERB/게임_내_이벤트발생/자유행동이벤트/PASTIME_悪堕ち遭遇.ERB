@@ -64,14 +64,14 @@ CALL DOT_AFTER, 1
 PRINTFORML 人目の届かない静かな裏小路に、熱い吐息と水音が響いている。
 PRINTW 
 IF ISFEMALE()
-	SIF EXP:V경험 < 50
+	SIF EXP:Ｖ경험 < 50
 		PRINT あまり経験の多くない
-	SIF EXP:V경험 > 100
+	SIF EXP:Ｖ경험 > 100
 		PRINT 経験豊富な
 ELSEIF TALENT:보추 > 0
-	SIF EXP:A경험 < 50
+	SIF EXP:Ａ경험 < 50
 		PRINT あまり経験の多くない
-	SIF EXP:A경험 > 100
+	SIF EXP:Ａ경험 > 100
 		PRINT 経験豊富な
 ELSE
 	SIF EXP:사정경험 < 50
@@ -95,9 +95,9 @@ SIF ABL:욕망 > 3 && TALENT:초심 < 1
 	PRINT 욕망の赴くまま
 SIF ABL:봉사정신 > 3
 	PRINT 熱心な奉仕をし、
-SIF EXP:(FLAG:111):V경험 > 100 && ISFEMALE(FLAG:111)
+SIF EXP:(FLAG:111):Ｖ경험 > 100 && ISFEMALE(FLAG:111)
 	PRINT 経験豊富な
-SIF EXP:(FLAG:111):A경험 > 100 && TALENT:(FLAG:111):보추 > 0
+SIF EXP:(FLAG:111):Ａ경험 > 100 && TALENT:(FLAG:111):보추 > 0
 	PRINT 経験豊富な
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%をなんとかイカせようとしている。
 

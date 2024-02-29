@@ -6,7 +6,7 @@
 @STATE_CHANGE_KIZETU_DAMAGE, ARG
 SIF (TCVARn:12 & 기절)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -47,7 +47,7 @@ ENDIF
 ;절정에 달했을 경우
 @STATE_CHANGE_EX, ARG
 VARSET LOCAL
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 FOR LOCAL, 0, 4
@@ -120,7 +120,7 @@ SIF LOCAL > 0
 LOCAL = 0
 SIF RAND:100 > ARG
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -171,7 +171,7 @@ SIF LOCAL > 0
 @STATE_CHANGE_MAHI, ARG
 SIF (TCVARn:12 & 마비)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -196,7 +196,7 @@ TCVARn:12 |= 마비
 @STATE_CHANGE_KIZETU, ARG
 SIF (TCVARn:12 & 기절)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -228,7 +228,7 @@ SIF TALENT:임신 > 0
 	RETURN 0
 SIF (TCVARn:12 & 배란)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 SIF ISMALE()
@@ -253,7 +253,7 @@ TCVARn:12 |= 배란
 @STATE_CHANGE_HATUJOU, ARG
 SIF (TCVARn:12 & 발정)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -276,7 +276,7 @@ TCVARn:12 |= 발정
 @STATE_CHANGE_BETOBETO, ARG
 SIF (TCVARn:12 & 끈적끈적)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 ;FEAT 효과로 인한 상태 이상 무효
@@ -299,7 +299,7 @@ TCVARn:12 |= 끈적끈적
 @STATE_CHANGE_PKOUSOKU, ARG
 SIF (TCVARn:12 & 강구속)
 	RETURN 0
-;SP변신 중에는 상태 이상 무효
+;ＳＰ변신 중에는 상태 이상 무효
 SIF CFLAG:1 == 2
 	RETURN 0
 SIF RAND:100 > ARG

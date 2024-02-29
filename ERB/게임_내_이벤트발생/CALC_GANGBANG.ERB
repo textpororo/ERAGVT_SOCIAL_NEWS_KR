@@ -18,21 +18,21 @@
 
 
 IF NAKADASHI
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 10
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:11 = 20
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:11 = 40
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:11 = 100
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:11 = 200
 	ELSE
 		LOCAL:11 = 400
 	ENDIF
 
-	;V경험
+	;Ｖ경험
 	LOCAL:120 = 10 + RAND:30
 
 	IF TALENT:처녀 == 1
@@ -54,20 +54,20 @@ IF NAKADASHI
 ENDIF
 
 
-IF ABL:A감각 == 0
+IF ABL:Ａ감각 == 0
 	LOCAL:12 = 6
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:12 = 50
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:12 = 200
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:12 = 600
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:12 = 900
 ELSE
 	LOCAL:12 = 1200
 ENDIF
-;A경험
+;Ａ경험
 LOCAL:121 = 40 - LOCAL:120 + RAND:5 - RAND:5
 SIF ISMALE()
 	TIMES LOCAL:121 , 1.50
@@ -95,7 +95,7 @@ IF シチュエーション=="감금" || シチュエーション=="생오나홀
 	LOCAL:142 = 1
 ELSEIF シチュエーション=="헌팅"
 	;ナンパレイプ回数＋
-	IF CFLAG:1 > 1 && TALENT:변신시TS > 0
+	IF CFLAG:1 > 1 && TALENT:변신시ＴＳ > 0
 		CFLAG:321 += 1
 	ELSE
 		CFLAG:320 += 1

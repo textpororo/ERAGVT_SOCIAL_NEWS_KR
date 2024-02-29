@@ -58,7 +58,7 @@ SELECTCASE RAND:7
 			PRINTL 「……ッ……ッッ！」
 			PRINTFORMDL しかし、%ITEMNAME:400%の刺激で本に集中できず、先ほどから一ページも読み進めていない。
 			;감각の最大値で派生
-			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 			IF RESULT < 3
 				PRINTFORMDL ……よく見れば、椅子の下まで\@ISMALE() ? 腸 # \@愛液が滴っている。
 			ELSE
@@ -326,7 +326,7 @@ ELSE
 			ENDIF
 		CASE 7
 			;マッサージ（감각の最大値で派生）
-			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 			IF RESULT == 0
 				PRINTL 「…………んっ」
 				PRINTFORMDL %타겟은% マッサージを受けている。
@@ -496,7 +496,7 @@ IF TALENT:보추
 	PRINTL 
 ENDIF
 	;감각の最大値で決める
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 1
 	SELECTCASE RAND:3
 		CASE 0
@@ -911,7 +911,7 @@ RESETCOLOR
 SETCOLOR 0xAEB4DE
 PRINTFORMDL
 ;감각の最大値で派生
-MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 IF RESULT == 0
 SELECTCASE RAND:2
 	CASE 0

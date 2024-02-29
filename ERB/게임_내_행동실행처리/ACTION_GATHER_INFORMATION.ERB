@@ -737,7 +737,7 @@ SELECTCASE ARG
 					ELSEIF RAND:2 == 0
 						PRINTFORML 이윽고 남자가 한계에 다다르자 "장내에 싸게 해준다면 비장의 정보를 알려주마" 라고 말해왔다.
 						PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 한순간 주저했으나,
-						IF ABL:A감각 < 2
+						IF ABL:Ａ감각 < 2
 							PRINTFORML 그것만은 용서해 달라며, 눈물을 흘리며 부탁했고,
 							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에서 머리를 내밀고 있는 즙 범벅인 귀두를 손바닥으로 어루만지며
 							PRINTFORML 뜨거운 정액의 격류를 받아 들였다.
@@ -749,7 +749,7 @@ SELECTCASE ARG
 						ENDIF
 					ELSE
 						PRINTFORML 이윽고 남자가 한계에 다다르자 피스톤질이 빨라지더니, 사고인지 고의인지 %PRINT_TRANSCALLNAME(TARGET)%의 애널에 생삽입할 뻔했다.
-						IF ABL:A감각 < 2
+						IF ABL:Ａ감각 < 2
 							PRINTFORML 그것만은 용서해 달라며, 눈물을 흘리며 부탁했고,
 							PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에서 머리를 내밀고 있는 즙 범벅인 귀두를 손바닥으로 어루만지며
 							PRINTFORML 뜨거운 정액의 격류를 받아 들였다.
@@ -820,11 +820,11 @@ SELECTCASE ARG
 				JUEL:습득 += 200
 
 				IF ISMALE()
-					EXP:A경험 += 2
-					JUEL:쾌A += 10 * ABL:A감각
+					EXP:Ａ경험 += 2
+					JUEL:쾌Ａ += 10 * ABL:Ａ감각
 				ELSE
-					EXP:V경험 += 2
-					JUEL:쾌V += 10 * ABL:V감각
+					EXP:Ｖ경험 += 2
+					JUEL:쾌Ｖ += 10 * ABL:Ｖ감각
 				ENDIF
 
 				EXP:정액경험 += 2
@@ -890,11 +890,11 @@ SELECTCASE ARG
 				JUEL:습득 += 200
 
 				IF ISMALE()
-					EXP:A경험 += 2
-					JUEL:쾌A += 10 * ABL:A감각
+					EXP:Ａ경험 += 2
+					JUEL:쾌Ａ += 10 * ABL:Ａ감각
 				ELSE
-					EXP:V경험 += 2
-					JUEL:쾌V += 10 * ABL:V감각
+					EXP:Ｖ경험 += 2
+					JUEL:쾌Ｖ += 10 * ABL:Ｖ감각
 				ENDIF
 
 				EXP:정액경험 += 2

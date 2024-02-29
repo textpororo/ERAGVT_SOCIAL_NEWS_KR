@@ -124,31 +124,31 @@ LOCAL:7 = 0
 CALL ABL_UP_12
 LOCAL:7 = RESULT
 
-;C감각 상승
+;Ｃ감각 상승
 LOCAL:8 = 0
 CALL ABL_UP_0
 LOCAL:8 = RESULT
 
-;V감각 상승
+;Ｖ감각 상승
 LOCAL:9 = 0
 CALL ABL_UP_1
 LOCAL:9 = RESULT
 
-;A감각 상승
+;Ａ감각 상승
 LOCAL:10 = 0
 CALL ABL_UP_2
 LOCAL:10 = RESULT
 
-;B감각 상승
+;Ｂ감각 상승
 LOCAL:11 = 0
 CALL ABL_UP_3
 LOCAL:11 = RESULT
 
 ;능력 상승과 표시
 ;표시는 ABL.CSV 순이므로 ベタ書き, 마지막은 뭔 말인지 ㅁ?ㄹ
-;C감각
-IF ABL:C감각 < LOCAL:8
-	ABL:C감각 = LOCAL:8
+;Ｃ감각
+IF ABL:Ｃ감각 < LOCAL:8
+	ABL:Ｃ감각 = LOCAL:8
 	PRINTFORML %ABLNAME:0%이 %조사처리(TOSTR(LOCAL:8),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -164,9 +164,9 @@ IF ABL:C감각 < LOCAL:8
 		PRINTFORML 】%조사만처리(CSTR:45,"를")% 얻었다.
 	ENDIF
 ENDIF
-;V감각
-IF ABL:V감각 < LOCAL:9
-	ABL:V감각 = LOCAL:9
+;Ｖ감각
+IF ABL:Ｖ감각 < LOCAL:9
+	ABL:Ｖ감각 = LOCAL:9
 	PRINTFORML %ABLNAME:1%이 %조사처리(TOSTR(LOCAL:9),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -178,9 +178,9 @@ IF ABL:V감각 < LOCAL:9
 		PRINTFORML 】%조사만처리(CSTR:46,"를")% 얻었다.
 	ENDIF
 ENDIF
-;A감각
-IF ABL:A감각 < LOCAL:10
-	ABL:A감각 = LOCAL:10
+;Ａ감각
+IF ABL:Ａ감각 < LOCAL:10
+	ABL:Ａ감각 = LOCAL:10
 	PRINTFORML %ABLNAME:2%이 %조사처리(TOSTR(LOCAL:10),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -192,9 +192,9 @@ IF ABL:A감각 < LOCAL:10
 		PRINTFORML 】%조사만처리(CSTR:47,"를")% 얻었다.
 	ENDIF
 ENDIF
-;B감각
-IF ABL:B감각 < LOCAL:11
-	ABL:B감각 = LOCAL:11
+;Ｂ감각
+IF ABL:Ｂ감각 < LOCAL:11
+	ABL:Ｂ감각 = LOCAL:11
 	PRINTFORML %ABLNAME:3%이 %조사처리(TOSTR(LOCAL:11),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -269,9 +269,9 @@ LOCAL:9 = RESULT:1
 LOCAL:10 = RESULT:2
 LOCAL:11 = RESULT:3
 
-;C감각
-IF ABL:C감각 < LOCAL:8
-	ABL:C감각 = LOCAL:8
+;Ｃ감각
+IF ABL:Ｃ감각 < LOCAL:8
+	ABL:Ｃ감각 = LOCAL:8
 	PRINTFORML %ABLNAME:0%이 %조사처리(TOSTR(LOCAL:8),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -287,9 +287,9 @@ IF ABL:C감각 < LOCAL:8
 		PRINTFORML 】%조사만처리(CSTR:45,"를")% 얻었다.
 	ENDIF
 ENDIF
-;V감각
-IF ABL:V감각 < LOCAL:9
-	ABL:V감각 = LOCAL:9
+;Ｖ감각
+IF ABL:Ｖ감각 < LOCAL:9
+	ABL:Ｖ감각 = LOCAL:9
 	PRINTFORML %ABLNAME:1%이 %조사처리(TOSTR(LOCAL:9),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -301,9 +301,9 @@ IF ABL:V감각 < LOCAL:9
 		PRINTFORML 】%조사만처리(CSTR:46,"를")% 얻었다.
 	ENDIF
 ENDIF
-;A감각
-IF ABL:A감각 < LOCAL:10
-	ABL:A감각 = LOCAL:10
+;Ａ감각
+IF ABL:Ａ감각 < LOCAL:10
+	ABL:Ａ감각 = LOCAL:10
 	PRINTFORML %ABLNAME:2%이 %조사처리(TOSTR(LOCAL:10),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -315,9 +315,9 @@ IF ABL:A감각 < LOCAL:10
 		PRINTFORML 】%조사만처리(CSTR:47,"를")% 얻었다.
 	ENDIF
 ENDIF
-;B감각
-IF ABL:B감각 < LOCAL:11
-	ABL:B감각 = LOCAL:11
+;Ｂ감각
+IF ABL:Ｂ감각 < LOCAL:11
+	ABL:Ｂ감각 = LOCAL:11
 	PRINTFORML %ABLNAME:3%이 %조사처리(TOSTR(LOCAL:11),"로")% 올랐다.
 	;뒷 프로필(裏プロフィール) 취득
 	IF CONFIG_CHECK_OTHER_F(6) == 1
@@ -363,29 +363,29 @@ ELSEIF TALENT:촉수의포로 == 0 && TALENT:음란 >= 1 && ABL:촉수중독 >= 
 	CALL MESSAGE_GETTALENT_TORIKO
 ENDIF
 ;음핵
-;조건: C감각이 Lv5 이상이며, 전투 중의 C절정 횟수가 50회 이상
-IF TALENT:음핵 == 0 && ABL:C감각 >= 5 && EX:C절정 >= 50
+;조건: Ｃ감각이 Lv5 이상이며, 전투 중의 Ｃ절정 횟수가 50회 이상
+IF TALENT:음핵 == 0 && ABL:Ｃ감각 >= 5 && EX:Ｃ절정 >= 50
 	TALENT:음핵 = 1
 	;지문: 음핵
 	CALL MESSAGE_GETTALENT_INKAKU
 ENDIF
 ;음호
-;조건: V감각이 Lv5, V경험이 200 이상이며, 전투 중의 V절정 횟수가 25회 이상
-IF TALENT:음호 == 0 && ABL:V감각 >= 5 && EXP:V경험 >= 200 && EX:V절정 >= 25
+;조건: Ｖ감각이 Lv5, Ｖ경험이 200 이상이며, 전투 중의 Ｖ절정 횟수가 25회 이상
+IF TALENT:음호 == 0 && ABL:Ｖ감각 >= 5 && EXP:Ｖ경험 >= 200 && EX:Ｖ절정 >= 25
 	TALENT:음호 = 1
 	;지문: 음호
 	CALL MESSAGE_GETTALENT_INTUBO
 ENDIF
 ;음고
-;조건: A감각이 Lv5, A경험이 200 이상이며, 전투 중의 A절정 횟수가 25회 이상
-IF TALENT:음고 == 0 && ABL:A감각 >= 5 && EXP:A경험 >= 200 && EX:A절정 >= 25
+;조건: Ａ감각이 Lv5, Ａ경험이 200 이상이며, 전투 중의 Ａ절정 횟수가 25회 이상
+IF TALENT:음고 == 0 && ABL:Ａ감각 >= 5 && EXP:Ａ경험 >= 200 && EX:Ａ절정 >= 25
 	TALENT:음고 = 1
 	;지문: 음고
 	CALL MESSAGE_GETTALENT_INJIRI
 ENDIF
 ;음유
-;조건: B감각이 Lv5이며, 전투 중의 B절정 횟수가 50회 이상
-IF TALENT:음유 == 0 && ABL:B감각 >= 5 && EX:B절정 >= 50
+;조건: Ｂ감각이 Lv5이며, 전투 중의 Ｂ절정 횟수가 50회 이상
+IF TALENT:음유 == 0 && ABL:Ｂ감각 >= 5 && EX:Ｂ절정 >= 50
 	TALENT:음유 = 1
 	;지문: 음유
 	CALL MESSAGE_GETTALENT_INNYUU
@@ -422,26 +422,26 @@ IF (TALENT:후타나리 == 2 || TALENT:변신시후타나리 == 2) && EXP:사정
 ENDIF
 	
 ;VABC의 감도가 높아진다
-SIF TALENT:V둔감 == 1 && ABL:V감각 >= 3
-	TALENT:V둔감 = 0
-SIF TALENT:V민감 == 0 && ABL:V감각 >= 4
-	TALENT:V민감 = 1
-SIF TALENT:A둔감 == 1 && ABL:A감각 >= 3
-	TALENT:A둔감 = 0
-SIF TALENT:A민감 == 0 && ABL:A감각 >= 4
-	TALENT:A민감 = 1
-SIF TALENT:B둔감 == 1 && ABL:B감각 >= 3
-	TALENT:B둔감 = 0
-SIF TALENT:B민감 == 0 && ABL:B감각 >= 4
-	TALENT:B민감 = 1
-SIF TALENT:C둔감 == 1 && ABL:C감각 >= 3
-	TALENT:C둔감 = 0
-SIF TALENT:C민감 == 0 && ABL:C감각 >= 4
-	TALENT:C민감 = 1
+SIF TALENT:Ｖ둔감 == 1 && ABL:Ｖ감각 >= 3
+	TALENT:Ｖ둔감 = 0
+SIF TALENT:Ｖ민감 == 0 && ABL:Ｖ감각 >= 4
+	TALENT:Ｖ민감 = 1
+SIF TALENT:Ａ둔감 == 1 && ABL:Ａ감각 >= 3
+	TALENT:Ａ둔감 = 0
+SIF TALENT:Ａ민감 == 0 && ABL:Ａ감각 >= 4
+	TALENT:Ａ민감 = 1
+SIF TALENT:Ｂ둔감 == 1 && ABL:Ｂ감각 >= 3
+	TALENT:Ｂ둔감 = 0
+SIF TALENT:Ｂ민감 == 0 && ABL:Ｂ감각 >= 4
+	TALENT:Ｂ민감 = 1
+SIF TALENT:Ｃ둔감 == 1 && ABL:Ｃ감각 >= 3
+	TALENT:Ｃ둔감 = 0
+SIF TALENT:Ｃ민감 == 0 && ABL:Ｃ감각 >= 4
+	TALENT:Ｃ민감 = 1
 
 ;여체수용（남성/여성기피가 있다면 반전한다）
 ;전제조건: "성별변화" 가 있는 동시에 원래 남성인 캐릭터가 여체화된 경우
-IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신시TS > 0 && ISFEMALE() && CFLAG:1 > 0))
+IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신시ＴＳ > 0 && ISFEMALE() && CFLAG:1 > 0))
 	;여체수용을 단계화한다
 	IF TALENT:여체수용 == 0
 		;조건 1: 촉수의포로 획득 시
@@ -450,8 +450,8 @@ IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신�
 			SWAP TALENT:남성기피,TALENT:여성기피
 			;지문: 촉수의포로 획득에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_TORIKO
-		;조건 2: 음란 혹은 음호 취득 시, 또는 V감각Lv5 이상이며 사정중독Lv이 (정액중독Lv + 모유중독Lv) 보다 낮을 때
-		ELSEIF TALENT:음란 > 0 || TALENT:음호 > 0 || (ABL:V감각 >= 5 && (ABL:정액중독 + ABL:모유중독 > ABL:사정중독))
+		;조건 2: 음란 혹은 음호 취득 시, 또는 Ｖ감각Lv5 이상이며 사정중독Lv이 (정액중독Lv + 모유중독Lv) 보다 낮을 때
+		ELSEIF TALENT:음란 > 0 || TALENT:음호 > 0 || (ABL:Ｖ감각 >= 5 && (ABL:정액중독 + ABL:모유중독 > ABL:사정중독))
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
 			;지문: 음란화에 의한 여체수용
@@ -468,8 +468,8 @@ IF TALENT:여체수용 == 0 && (TALENT:성별변화 % 10 == 1 || (TALENT:변신�
 			SWAP TALENT:남성기피,TALENT:여성기피
 			;지문: 여자의 매력에 의한 여체수용
 			CALL MESSAGE_GETTALENT_TSJYUYOU_CHARM
-		;조건 5: 양도를 보유함과 동시에, 음란 혹은 음호 취득 시, 또는 V감각이 Lv5 이상일 때
-		ELSEIF TALENT:양도 > 0 && (TALENT:음란 > 0 || TALENT:음호 > 0 || ABL:V감각 >= 5)
+		;조건 5: 양도를 보유함과 동시에, 음란 혹은 음호 취득 시, 또는 Ｖ감각이 Lv5 이상일 때
+		ELSEIF TALENT:양도 > 0 && (TALENT:음란 > 0 || TALENT:음호 > 0 || ABL:Ｖ감각 >= 5)
 			TALENT:여체수용 = 1
 			SWAP TALENT:남성기피,TALENT:여성기피
 			;지문: 양도에 의한 여체수용
@@ -633,7 +633,7 @@ RETURN LOCAL
 
 ;--------------------------------------------------
 ;사정중독 상승
-;필요한 구슬：쾌C, 욕정
+;필요한 구슬：쾌Ｃ, 욕정
 ;상승조건 １：사정경험 필요량　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
 ;상승조건 ２：Lv4 이상부터는 이상경험이 필요.
 @ABL_UP_24
@@ -642,32 +642,32 @@ LOCAL = ABL:사정중독
 REPEAT 5
 	;LV0->LV1
 	IF LOCAL == 0
-		IF JUEL:쾌C >= 1000 && EXP:사정경험 >= 5
-			JUEL:쾌C -= 1000
+		IF JUEL:쾌Ｃ >= 1000 && EXP:사정경험 >= 5
+			JUEL:쾌Ｃ -= 1000
 			LOCAL = 1
 		ENDIF
 	;LV1->LV2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌C >= 3000 && EXP:사정경험 >= 10
-			JUEL:쾌C -= 3000
+		IF JUEL:쾌Ｃ >= 3000 && EXP:사정경험 >= 10
+			JUEL:쾌Ｃ -= 3000
 			LOCAL = 2
 		ENDIF
 	;LV2->LV3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌C >= 5000 && EXP:사정경험 >= 20
-			JUEL:쾌C -= 5000
+		IF JUEL:쾌Ｃ >= 5000 && EXP:사정경험 >= 20
+			JUEL:쾌Ｃ -= 5000
 			LOCAL = 3
 		ENDIF
 	;LV3->LV4
 	ELSEIF LOCAL == 3 && EXP:이상경험
-		IF JUEL:쾌C >= 10000 && EXP:사정경험 >= 50
-			JUEL:쾌C -= 10000
+		IF JUEL:쾌Ｃ >= 10000 && EXP:사정경험 >= 50
+			JUEL:쾌Ｃ -= 10000
 			LOCAL = 4
 		ENDIF
 	;LV4->LV5
 	ELSEIF LOCAL == 4 && EXP:이상경험
-		IF JUEL:쾌C >= 30000 && EXP:사정경험 >= 100
-			JUEL:쾌C -= 30000
+		IF JUEL:쾌Ｃ >= 30000 && EXP:사정경험 >= 100
+			JUEL:쾌Ｃ -= 30000
 			LOCAL = 5
 		ENDIF
 	ENDIF
@@ -681,7 +681,7 @@ RETURN LOCAL
 
 ;--------------------------------------------------
 ;모유중독 상승
-;필요한 구슬：쾌B, 욕정
+;필요한 구슬：쾌Ｂ, 욕정
 ;상승조건 １：모유경험 필요량　LV1=5,LV2=10,LV3=20,LV4=50,LV5=100
 ;상승조건 ２：Lv4 이상부터는 이상경험이 필요
 @ABL_UP_23
@@ -690,32 +690,32 @@ LOCAL = ABL:모유중독
 REPEAT 5
 	;LV0->LV1
 	IF LOCAL == 0
-		IF JUEL:쾌B >= 1000 && EXP:모유경험 >= 5
-			JUEL:쾌B -= 1000
+		IF JUEL:쾌Ｂ >= 1000 && EXP:모유경험 >= 5
+			JUEL:쾌Ｂ -= 1000
 			LOCAL = 1
 		ENDIF
 	;LV1->LV2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌B >= 3000 && EXP:모유경험 >= 10
-			JUEL:쾌B -= 3000
+		IF JUEL:쾌Ｂ >= 3000 && EXP:모유경험 >= 10
+			JUEL:쾌Ｂ -= 3000
 			LOCAL = 2
 		ENDIF
 	;LV2->LV3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌B >= 5000 && EXP:모유경험 >= 20
-			JUEL:쾌B -= 5000
+		IF JUEL:쾌Ｂ >= 5000 && EXP:모유경험 >= 20
+			JUEL:쾌Ｂ -= 5000
 			LOCAL = 3
 		ENDIF
 	;LV3->LV4
 	ELSEIF LOCAL == 3 && EXP:이상경험
-		IF JUEL:쾌B >= 10000 && EXP:모유경험 >= 50
-			JUEL:쾌B -= 10000
+		IF JUEL:쾌Ｂ >= 10000 && EXP:모유경험 >= 50
+			JUEL:쾌Ｂ -= 10000
 			LOCAL = 4
 		ENDIF
 	;LV4->LV5
 	ELSEIF LOCAL == 4 && EXP:이상경험
-		IF JUEL:쾌B >= 30000 && EXP:모유경험 >= 100
-			JUEL:쾌B -= 30000
+		IF JUEL:쾌Ｂ >= 30000 && EXP:모유경험 >= 100
+			JUEL:쾌Ｂ -= 30000
 			LOCAL = 5
 		ENDIF
 	ENDIF
@@ -1016,43 +1016,43 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;C감각 상승
-;필요한 구슬：쾌C
+;Ｃ감각 상승
+;필요한 구슬：쾌Ｃ
 @ABL_UP_0
-LOCAL = ABL:C감각
+LOCAL = ABL:Ｃ감각
 
 REPEAT 5
-	;C감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
-	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:C감각 >= 5
+	;Ｃ감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
+	SIF ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 + LOCAL >= 35 && ABL:Ｃ감각 >= 5
 		BREAK
 	;LV0->1
 	IF LOCAL == 0
-		IF JUEL:쾌C >= 50
-			JUEL:쾌C -= 50
+		IF JUEL:쾌Ｃ >= 50
+			JUEL:쾌Ｃ -= 50
 			LOCAL = 1
 		ENDIF
 	;LV1->2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌C >= 500
-			JUEL:쾌C -= 500
+		IF JUEL:쾌Ｃ >= 500
+			JUEL:쾌Ｃ -= 500
 			LOCAL = 2
 		ENDIF
 	;LV2->3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌C >= 5000
-			JUEL:쾌C -= 5000
+		IF JUEL:쾌Ｃ >= 5000
+			JUEL:쾌Ｃ -= 5000
 			LOCAL = 3
 		ENDIF
 	;LV3->4
 	ELSEIF LOCAL == 3
-		IF JUEL:쾌C >= 10000
-			JUEL:쾌C -= 10000
+		IF JUEL:쾌Ｃ >= 10000
+			JUEL:쾌Ｃ -= 10000
 			LOCAL = 4
 		ENDIF
 	;LV4->5
 	ELSEIF LOCAL == 4
-		IF JUEL:쾌C >= 20000
-			JUEL:쾌C -= 20000
+		IF JUEL:쾌Ｃ >= 20000
+			JUEL:쾌Ｃ -= 20000
 			LOCAL = 5
 		ENDIF
 	ENDIF
@@ -1060,43 +1060,43 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;V감각 상승
-;필요한 구슬：쾌V
+;Ｖ감각 상승
+;필요한 구슬：쾌Ｖ
 @ABL_UP_1
-LOCAL = ABL:V감각
+LOCAL = ABL:Ｖ감각
 
 REPEAT 5
-	;V감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
-	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:V감각 >= 5
+	;Ｖ감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
+	SIF ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 + LOCAL >= 35 && ABL:Ｖ감각 >= 5
 		BREAK
 	;LV0->1
 	IF LOCAL == 0
-		IF JUEL:쾌V >= 75
-			JUEL:쾌V -= 75
+		IF JUEL:쾌Ｖ >= 75
+			JUEL:쾌Ｖ -= 75
 			LOCAL = 1
 		ENDIF
 	;LV1->2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌V >= 750
-			JUEL:쾌V -= 750
+		IF JUEL:쾌Ｖ >= 750
+			JUEL:쾌Ｖ -= 750
 			LOCAL = 2
 		ENDIF
 	;LV2->3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌V >= 7500
-			JUEL:쾌V -= 7500
+		IF JUEL:쾌Ｖ >= 7500
+			JUEL:쾌Ｖ -= 7500
 			LOCAL = 3
 		ENDIF
 	;LV3->4
 	ELSEIF LOCAL == 3
-		IF JUEL:쾌V >= 15000
-			JUEL:쾌V -= 15000
+		IF JUEL:쾌Ｖ >= 15000
+			JUEL:쾌Ｖ -= 15000
 			LOCAL = 4
 		ENDIF
 	;LV4->5
 	ELSEIF LOCAL == 4
-		IF JUEL:쾌V >= 30000
-			JUEL:쾌V -= 30000
+		IF JUEL:쾌Ｖ >= 30000
+			JUEL:쾌Ｖ -= 30000
 			LOCAL = 5
 		ENDIF
 	ENDIF
@@ -1104,43 +1104,43 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;A감각 상승
-;필요한 구슬：쾌A
+;Ａ감각 상승
+;필요한 구슬：쾌Ａ
 @ABL_UP_2
-LOCAL = ABL:A감각
+LOCAL = ABL:Ａ감각
 
 REPEAT 5
-	;A감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
-	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:A감각 >= 5
+	;Ａ감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
+	SIF ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 + LOCAL >= 35 && ABL:Ａ감각 >= 5
 		BREAK
 	;LV0->1
 	IF LOCAL == 0
-		IF JUEL:쾌A >= 75
-			JUEL:쾌A -= 75
+		IF JUEL:쾌Ａ >= 75
+			JUEL:쾌Ａ -= 75
 			LOCAL = 1
 		ENDIF
 	;LV1->2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌A >= 750
-			JUEL:쾌A -= 750
+		IF JUEL:쾌Ａ >= 750
+			JUEL:쾌Ａ -= 750
 			LOCAL = 2
 		ENDIF
 	;LV2->3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌A >= 7500
-			JUEL:쾌A -= 7500
+		IF JUEL:쾌Ａ >= 7500
+			JUEL:쾌Ａ -= 7500
 			LOCAL = 3
 		ENDIF
 	;LV3->4
 	ELSEIF LOCAL == 3
-		IF JUEL:쾌A >= 15000
-			JUEL:쾌A -= 15000
+		IF JUEL:쾌Ａ >= 15000
+			JUEL:쾌Ａ -= 15000
 			LOCAL = 4
 		ENDIF
 	;LV4->5
 	ELSEIF LOCAL == 4
-		IF JUEL:쾌A >= 30000
-			JUEL:쾌A -= 30000
+		IF JUEL:쾌Ａ >= 30000
+			JUEL:쾌Ａ -= 30000
 			LOCAL = 5
 		ENDIF
 	ENDIF
@@ -1148,43 +1148,43 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;B감각 상승
-;필요한 구슬：쾌B
+;Ｂ감각 상승
+;필요한 구슬：쾌Ｂ
 @ABL_UP_3
-LOCAL = ABL:B감각
+LOCAL = ABL:Ｂ감각
 
 REPEAT 5
-	;B감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
-	SIF ABL:V감각 + ABL:A감각 + ABL:B감각 + LOCAL >= 35 && ABL:B감각 >= 5
+	;Ｂ감각이 LV5 이상이며, 모든 감각LV의 합계가 35 이상이라면 종료
+	SIF ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 + LOCAL >= 35 && ABL:Ｂ감각 >= 5
 		BREAK
 	;LV0->1
 	IF LOCAL == 0
-		IF JUEL:쾌B >= 50
-			JUEL:쾌B -= 50
+		IF JUEL:쾌Ｂ >= 50
+			JUEL:쾌Ｂ -= 50
 			LOCAL = 1
 		ENDIF
 	;LV1->2
 	ELSEIF LOCAL == 1
-		IF JUEL:쾌B >= 500
-			JUEL:쾌B -= 500
+		IF JUEL:쾌Ｂ >= 500
+			JUEL:쾌Ｂ -= 500
 			LOCAL = 2
 		ENDIF
 	;LV2->3
 	ELSEIF LOCAL == 2
-		IF JUEL:쾌B >= 5000
-			JUEL:쾌B -= 5000
+		IF JUEL:쾌Ｂ >= 5000
+			JUEL:쾌Ｂ -= 5000
 			LOCAL = 3
 		ENDIF
 	;LV3->4
 	ELSEIF LOCAL == 3
-		IF JUEL:쾌B >= 10000
-			JUEL:쾌B -= 10000
+		IF JUEL:쾌Ｂ >= 10000
+			JUEL:쾌Ｂ -= 10000
 			LOCAL = 4
 		ENDIF
 	;LV4->5
 	ELSEIF LOCAL == 4
-		IF JUEL:쾌B >= 20000
-			JUEL:쾌B -= 20000
+		IF JUEL:쾌Ｂ >= 20000
+			JUEL:쾌Ｂ -= 20000
 			LOCAL = 5
 		ENDIF
 	ENDIF

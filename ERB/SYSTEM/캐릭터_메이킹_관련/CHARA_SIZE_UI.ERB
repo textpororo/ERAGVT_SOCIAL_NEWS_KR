@@ -492,7 +492,7 @@ DO
 		ENDIF
 		PRINTFORM %LOCALS, 10%　[70]
 	ELSE
-		IF TALENT:ARG:변신시TS > 0
+		IF TALENT:ARG:변신시ＴＳ > 0
 			PRINTPLAIN 　　변신 시 젖기쉬움/어려움
 			SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 				SETCOLOR 240, 255, 255
@@ -528,13 +528,13 @@ DO
 	PRINTL
 
 
-	PRINTPLAIN 　　C감각
+	PRINTPLAIN 　　Ｃ감각
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
-	IF TALENT:ARG:C민감 > 0
-		LOCALS=　　　　　　　　　　 C민감
-	ELSEIF TALENT:ARG:C둔감 > 0
-		LOCALS=　　　　　　　　　　 C둔감
+	IF TALENT:ARG:Ｃ민감 > 0
+		LOCALS=　　　　　　　　　　 Ｃ민감
+	ELSEIF TALENT:ARG:Ｃ둔감 > 0
+		LOCALS=　　　　　　　　　　 Ｃ둔감
 	ELSE
 		LOCALS'="　　　　　　　　　　　 ― "
 	ENDIF
@@ -544,7 +544,7 @@ DO
 	PRINT
 	;------
 	IF GLOBAL:244
-		IF ISFEMALE(ARG) || (ISMALE(ARG) && TALENT:ARG:변신시TS > 0)
+		IF ISFEMALE(ARG) || (ISMALE(ARG) && TALENT:ARG:변신시ＴＳ > 0)
 			PRINTPLAIN 　　　　　　　후타나리
 			SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 				SETCOLOR 240, 255, 255
@@ -571,33 +571,33 @@ DO
 
 
 	IF ISFEMALE(ARG)
-		PRINTPLAIN 　　V감각
+		PRINTPLAIN 　　Ｖ감각
 		SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 			SETCOLOR 240, 255, 255
-		IF TALENT:ARG:V민감 > 0
-			LOCALS=　　　　　　　　　　 V민감
-		ELSEIF TALENT:ARG:V둔감 > 0
-			LOCALS=　　　　　　　　　　 V둔감
+		IF TALENT:ARG:Ｖ민감 > 0
+			LOCALS=　　　　　　　　　　 Ｖ민감
+		ELSEIF TALENT:ARG:Ｖ둔감 > 0
+			LOCALS=　　　　　　　　　　 Ｖ둔감
 		ELSE
 			LOCALS'="　　　　　　　　　　　 ― "
 		ENDIF
 		PRINTFORM %LOCALS, 16,LEFT%　[72]
 	ELSE
-		IF TALENT:ARG:변신시TS > 0
-			PRINTPLAIN 　　변신 시 V감각
+		IF TALENT:ARG:변신시ＴＳ > 0
+			PRINTPLAIN 　　변신 시 Ｖ감각
 			SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 				SETCOLOR 240, 255, 255
-			IF TALENT:ARG:변신시V감각변동 > 0
-				LOCALS=　　　　　　 V민감
-			ELSEIF TALENT:ARG:변신시V감각변동 < 0
-				LOCALS=　　　　　　 V둔감
+			IF TALENT:ARG:변신시Ｖ감각변동 > 0
+				LOCALS=　　　　　　 Ｖ민감
+			ELSEIF TALENT:ARG:변신시Ｖ감각변동 < 0
+				LOCALS=　　　　　　 Ｖ둔감
 			ELSE
 				LOCALS'="　　　　　　　 ― "
 			ENDIF
 			PRINTFORM %LOCALS, 10-(6-STRCOUNT(LOCALS,"　")),LEFT%　[72]
 		ELSE
 			SETCOLOR 96, 96, 96
-			PRINTPLAIN 　　변신 시 V감각
+			PRINTPLAIN 　　변신 시 Ｖ감각
 			PRINTPLAIN 　　　 ― 　　　
 		ENDIF
 	ENDIF
@@ -605,7 +605,7 @@ DO
 		RESETCOLOR
 	;------
 	IF GLOBAL:245
-		IF ISMALE(ARG) && TALENT:ARG:변신시TS <= 0
+		IF ISMALE(ARG) && TALENT:ARG:변신시ＴＳ <= 0
 			SETCOLOR 96, 96, 96
 			PRINTPLAIN 　　　　　　　모유체질
 			LOCALS=　　　　　　 ― 
@@ -626,13 +626,13 @@ DO
 	ENDIF
 	PRINTL
 
-	PRINTPLAIN 　　A감각
+	PRINTPLAIN 　　Ａ감각
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
-	IF TALENT:ARG:A민감 > 0
-		LOCALS=　　　　　　　　　　 A민감
-	ELSEIF TALENT:ARG:A둔감 > 0
-		LOCALS=　　　　　　　　　　 A둔감
+	IF TALENT:ARG:Ａ민감 > 0
+		LOCALS=　　　　　　　　　　 Ａ민감
+	ELSEIF TALENT:ARG:Ａ둔감 > 0
+		LOCALS=　　　　　　　　　　 Ａ둔감
 	ELSE
 		LOCALS'="　　　　　　　　　　　 ― "
 	ENDIF
@@ -656,13 +656,13 @@ DO
 	PRINTL
 
 
-	PRINTPLAIN 　　B감각
+	PRINTPLAIN 　　Ｂ감각
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
-	IF TALENT:ARG:B민감 > 0
-		LOCALS=　　　　　　　　　　 B민감
-	ELSEIF TALENT:ARG:B둔감 > 0
-		LOCALS=　　　　　　　　　　 B둔감
+	IF TALENT:ARG:Ｂ민감 > 0
+		LOCALS=　　　　　　　　　　 Ｂ민감
+	ELSEIF TALENT:ARG:Ｂ둔감 > 0
+		LOCALS=　　　　　　　　　　 Ｂ둔감
 	ELSE
 		LOCALS'="　　　　　　　　　　　 ― "
 	ENDIF
@@ -1542,17 +1542,17 @@ DO
 			JUEL:ARG:수련P += 50
 		ENDIF
 		IF RESULT / 10 > 0
-			IF ((ISMALE(ARG) && TALENT:ARG:변신시TS == 0) || (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 1)) && TALENT:ARG:변신시보추 == 0
+			IF ((ISMALE(ARG) && TALENT:ARG:변신시ＴＳ == 0) || (ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 1)) && TALENT:ARG:변신시보추 == 0
 				TALENT:ARG:변신시보추 = 1
 			ELSE
 				IF CHARATALENT_F(ARG,1,"남자")
 					TALENT:ARG:변신시외관 = TALENT:ARG:외관
 					TALENT:ARG:변신시보추 = 1
 				ENDIF
-				IF TALENT:ARG:변신시TS > 0
-					TALENT:ARG:변신시TS = 0
+				IF TALENT:ARG:변신시ＴＳ > 0
+					TALENT:ARG:변신시ＴＳ = 0
 				ELSE
-					TALENT:ARG:변신시TS = 1
+					TALENT:ARG:변신시ＴＳ = 1
 				ENDIF
 			ENDIF
 		ELSE
@@ -1687,7 +1687,7 @@ DO
 		SETBIT DISPLAY_FLAG, 1
 ;변화의 유무 전환
 	ELSEIF RESULT == 20 && TALENT:ARG:변신능력 == 1
-		TALENT:ARG:변신시TS = 0
+		TALENT:ARG:변신시ＴＳ = 0
 		TALENT:ARG:변신시외관 = TALENT:ARG:외관
 		TALENT:ARG:변신시체격변동 = 0
 		TALENT:ARG:변신시가슴사이즈변동 = 0
@@ -1742,9 +1742,9 @@ DO
 			GOTO LOOP_99
 		ENDIF
 		;변신 시 여체화하지 않을 경우
-		IF ISFEMALE(ARG) || TALENT:ARG:변신시TS == 0
+		IF ISFEMALE(ARG) || TALENT:ARG:변신시ＴＳ == 0
 			TALENT:ARG:변신시젖기쉬움변동 = 0
-			TALENT:ARG:변신시V감각변동 = 0
+			TALENT:ARG:변신시Ｖ감각변동 = 0
 		ENDIF
 		BREAK
 ;앞머리 설정
@@ -1912,7 +1912,7 @@ DO
 				TALENT:ARG:젖기쉬움 = 1
 				TALENT:ARG:젖기어려움 = 0
 			ENDIF
-		ELSEIF ISMALE(ARG) && TALENT:ARG:변신시TS > 0
+		ELSEIF ISMALE(ARG) && TALENT:ARG:변신시ＴＳ > 0
 			IF TALENT:ARG:변신시젖기쉬움변동 > 0
 				TALENT:ARG:변신시젖기쉬움변동 = -1
 			ELSEIF TALENT:ARG:변신시젖기쉬움변동 < 0
@@ -1922,58 +1922,58 @@ DO
 			ENDIF
 		ENDIF
 	ELSEIF RESULT == 71
-		IF TALENT:ARG:C민감 > 0
-			TALENT:ARG:C민감 = 0
-			TALENT:ARG:C둔감 = 1
-		ELSEIF TALENT:ARG:C둔감 > 0
-			TALENT:ARG:C민감 = 0
-			TALENT:ARG:C둔감 = 0
+		IF TALENT:ARG:Ｃ민감 > 0
+			TALENT:ARG:Ｃ민감 = 0
+			TALENT:ARG:Ｃ둔감 = 1
+		ELSEIF TALENT:ARG:Ｃ둔감 > 0
+			TALENT:ARG:Ｃ민감 = 0
+			TALENT:ARG:Ｃ둔감 = 0
 		ELSE
-			TALENT:ARG:C민감 = 1
-			TALENT:ARG:C둔감 = 0
+			TALENT:ARG:Ｃ민감 = 1
+			TALENT:ARG:Ｃ둔감 = 0
 		ENDIF
 	ELSEIF RESULT == 72
 		IF ISFEMALE(ARG)
-			IF TALENT:ARG:V민감 > 0
-				TALENT:ARG:V민감 = 0
-				TALENT:ARG:V둔감 = 1
-			ELSEIF TALENT:ARG:V둔감 > 0
-				TALENT:ARG:V민감 = 0
-				TALENT:ARG:V둔감 = 0
+			IF TALENT:ARG:Ｖ민감 > 0
+				TALENT:ARG:Ｖ민감 = 0
+				TALENT:ARG:Ｖ둔감 = 1
+			ELSEIF TALENT:ARG:Ｖ둔감 > 0
+				TALENT:ARG:Ｖ민감 = 0
+				TALENT:ARG:Ｖ둔감 = 0
 			ELSE
-				TALENT:ARG:V민감 = 1
-				TALENT:ARG:V둔감 = 0
+				TALENT:ARG:Ｖ민감 = 1
+				TALENT:ARG:Ｖ둔감 = 0
 			ENDIF
-		ELSEIF ISMALE(ARG) && TALENT:ARG:변신시TS > 0
-			IF TALENT:ARG:변신시V감각변동 > 0
-				TALENT:ARG:변신시V감각변동 = -1
-			ELSEIF TALENT:ARG:변신시V감각변동 < 0
-				TALENT:ARG:변신시V감각변동 = 0
+		ELSEIF ISMALE(ARG) && TALENT:ARG:변신시ＴＳ > 0
+			IF TALENT:ARG:변신시Ｖ감각변동 > 0
+				TALENT:ARG:변신시Ｖ감각변동 = -1
+			ELSEIF TALENT:ARG:변신시Ｖ감각변동 < 0
+				TALENT:ARG:변신시Ｖ감각변동 = 0
 			ELSE
-				TALENT:ARG:변신시V감각변동 = 1
+				TALENT:ARG:변신시Ｖ감각변동 = 1
 			ENDIF
 		ENDIF
 	ELSEIF RESULT == 73
-		IF TALENT:ARG:A민감 > 0
-			TALENT:ARG:A민감 = 0
-			TALENT:ARG:A둔감 = 1
-		ELSEIF TALENT:ARG:A둔감 > 0
-			TALENT:ARG:A민감 = 0
-			TALENT:ARG:A둔감 = 0
+		IF TALENT:ARG:Ａ민감 > 0
+			TALENT:ARG:Ａ민감 = 0
+			TALENT:ARG:Ａ둔감 = 1
+		ELSEIF TALENT:ARG:Ａ둔감 > 0
+			TALENT:ARG:Ａ민감 = 0
+			TALENT:ARG:Ａ둔감 = 0
 		ELSE
-			TALENT:ARG:A민감 = 1
-			TALENT:ARG:A둔감 = 0
+			TALENT:ARG:Ａ민감 = 1
+			TALENT:ARG:Ａ둔감 = 0
 		ENDIF
 	ELSEIF RESULT == 74
-		IF TALENT:ARG:B민감 > 0
-			TALENT:ARG:B민감 = 0
-			TALENT:ARG:B둔감 = 1
-		ELSEIF TALENT:ARG:B둔감 > 0
-			TALENT:ARG:B민감 = 0
-			TALENT:ARG:B둔감 = 0
+		IF TALENT:ARG:Ｂ민감 > 0
+			TALENT:ARG:Ｂ민감 = 0
+			TALENT:ARG:Ｂ둔감 = 1
+		ELSEIF TALENT:ARG:Ｂ둔감 > 0
+			TALENT:ARG:Ｂ민감 = 0
+			TALENT:ARG:Ｂ둔감 = 0
 		ELSE
-			TALENT:ARG:B민감 = 1
-			TALENT:ARG:B둔감 = 0
+			TALENT:ARG:Ｂ민감 = 1
+			TALENT:ARG:Ｂ둔감 = 0
 		ENDIF
 	ELSEIF RESULT == 75
 		IF TALENT:ARG:백보지 == 0
@@ -2001,18 +2001,18 @@ DO
 			;있음
 			IF ISFEMALE(ARG)
 				TALENT:ARG:후타나리 = 3
-				IF TALENT:ARG:변신능력 == 1 && TALENT:ARG:변신시TS == 0
+				IF TALENT:ARG:변신능력 == 1 && TALENT:ARG:변신시ＴＳ == 0
 					TALENT:ARG:변신시후타나리 = 3
 				ENDIF
-			ELSEIF TALENT:ARG:변신능력 == 1 && TALENT:ARG:변신시TS > 0
+			ELSEIF TALENT:ARG:변신능력 == 1 && TALENT:ARG:변신시ＴＳ > 0
 				TALENT:ARG:변신시후타나리 = 3
 			ENDIF
 		ELSE
-			IF TALENT:ARG:변신능력 == 1 && ((ISFEMALE(ARG) && TALENT:ARG:변신시TS == 0 && TALENT:ARG:후타나리 == 3 && TALENT:ARG:변신시후타나리 == 3) || (ISMALE(ARG) && TALENT:ARG:변신시TS > 0 && TALENT:ARG:변신시후타나리 == 0))
+			IF TALENT:ARG:변신능력 == 1 && ((ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 0 && TALENT:ARG:후타나리 == 3 && TALENT:ARG:변신시후타나리 == 3) || (ISMALE(ARG) && TALENT:ARG:변신시ＴＳ > 0 && TALENT:ARG:변신시후타나리 == 0))
 				;변신 시에만 후타나리일 경우
 				TALENT:ARG:후타나리 = 0
 				TALENT:ARG:변신시후타나리 = 3
-			ELSEIF (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 0 && TALENT:ARG:후타나리 == 0 && TALENT:ARG:변신시후타나리 == 3)
+			ELSEIF (ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 0 && TALENT:ARG:후타나리 == 0 && TALENT:ARG:변신시후타나리 == 3)
 				;평상시에만 후타나리일 경우
 				TALENT:ARG:후타나리 = 3
 				TALENT:ARG:변신시후타나리 = 0

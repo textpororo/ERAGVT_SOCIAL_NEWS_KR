@@ -253,7 +253,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL
 
-IF BASE:C결계내구력 > 0
+IF BASE:Ｃ결계내구력 > 0
 	PRINTFORML 촉수は結界によって阻まれた
 ELSE
 	PRINTFORML ワゴン車は無数の촉수を伸ばした
@@ -292,7 +292,7 @@ CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL
 
 IF ISMALE()
-	IF BASE:C결계내구력 > 0
+	IF BASE:Ｃ결계내구력 > 0
 		PRINTFORML 촉수達は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押さえつけ、男根に吸い付こうとしたが
 		PRINTFORML 結界に阻まれて触れることができない
 	ELSE
@@ -310,7 +310,7 @@ IF ISMALE()
 		ENDIF
 	ENDIF
 ELSE
-	IF BASE:C결계내구력 > 0
+	IF BASE:Ｃ결계내구력 > 0
 		PRINTFORML 촉수達は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押さえつけ、클리토리스に吸い付こうとしたが
 		PRINTFORML 結界に阻まれて触れることができない
 	ELSE
@@ -605,7 +605,7 @@ FONTBOLD
 PRINTL Ａ攻め強
 FONTREGULAR
 
-IF BASE:A결계내구력 > 0
+IF BASE:Ａ결계내구력 > 0
 	PRINTFORML 촉수達は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押さえつけ、尻穴へ侵入をしようとしたが
 	PRINTFORML 結界に阻まれて触れることができない
 ELSE

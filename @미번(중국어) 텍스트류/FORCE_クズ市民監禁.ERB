@@ -972,7 +972,7 @@ ENDIF
 
 @SNUFF_RYONA,TARGET
 PALAM:TARGET:윤활 = 2100
-PALAM:TARGET:쾌A = 2100
+PALAM:TARGET:쾌Ａ = 2100
 ;以上用于测试是否能够正确显示A和V的润滑情况
 PRINTFORML 黒道組織的核心拠点中的某処刑房内……
 PRINTL 
@@ -1359,7 +1359,7 @@ PRINTL
 	PRINTW 
 	;ここから加筆
 	;スカトロ〇で有拡張度表示中のみ
-	IF FILTER_CHECK_F(15) == 0 && FILTER_CHECK_F(16) == 0 && (ABL:A감각 >= 5 || TALENT:음고 == 1 )
+	IF FILTER_CHECK_F(15) == 0 && FILTER_CHECK_F(16) == 0 && (ABL:Ａ감각 >= 5 || TALENT:음고 == 1 )
 	;2022.10.22加筆：水槽排洩+淋尿+排洩物灌口+排洩物灌腸，靈感來自PTJ-014 
 		PRINTFORML 開胃菜過後，%PRINT_TRANSCALLNAME(TARGET)%被M字開腳吊了起來、
 		PRINTFORMW 被取下眼罩的%PRINT_TRANSCALLNAME(TARGET)%發現自己被懸掛在一個玻璃大水缸的正上方、
@@ -1441,10 +1441,10 @@ PRINTL
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_hentaiA")
 	;습득
 	JUEL:습득 += 150
-	;A경험
-	EXP:A경험 += 3
-	;A감각
-	JUEL:쾌A += 15 * ABL:A감각
+	;Ａ경험
+	EXP:Ａ경험 += 3
+	;Ａ감각
+	JUEL:쾌Ａ += 15 * ABL:Ａ감각
 	;口交経験
 	EXP:口交経験 += 1
 	;정액경험
@@ -1606,12 +1606,12 @@ PRINTL
 			PRINTFORML 简单的插入就让%PRINT_TRANSCALLNAME(TARGET)%发出既痛苦又快乐的哼哼声、
 				IF ISMALE() || TALENT:偽娘 > 0 
 				PRINTFORML 螺旋状的龟头径直楔入直肠的最深处
-				EXP:A확장경험 += 1
-				EXP:A경험 += 3　
+				EXP:Ａ확장경험 += 1
+				EXP:Ａ경험 += 3　
 				ELSE
 				PRINTFORML 螺旋状的龟头径直楔入蜜道的最深处
-				EXP:V확장경험 += 1
-				EXP:V경험 += 3
+				EXP:Ｖ확장경험 += 1
+				EXP:Ｖ경험 += 3
 				ENDIF
 			PRINTFORMW 高頻率的摩擦和扭転令%PRINT_TRANSCALLNAME(TARGET)%得到了人類無法給予的快感、
 			PRINTL 
@@ -2111,7 +2111,7 @@ ENDIF
 #DIM CCOUNT
 VARSET LOCAL
 PALAM:TARGET:윤활 = 2100
-PALAM:TARGET:쾌A = 2100
+PALAM:TARGET:쾌Ａ = 2100
 STAIN:TARGET:3 |= 4
 ;以上用于测试是否能够正确显示A和V的润滑情况
 PRINTFORML 黒道組織的核心拠点中的某処刑房内……

@@ -302,7 +302,7 @@ ENDIF
 IF (ARG & Ｂ)
 	IF (TCVARn:12 & 기절)
 		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%
-		IF ABL:C감각 >= 4 && (ARG & Ｃ)
+		IF ABL:Ｃ감각 >= 4 && (ARG & Ｃ)
 			PRINTFORML の無防備に突き出された乳首に
 			PRINTFORM 別の촉수が３点責めの様相で追い打ちをかけ
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -313,7 +313,7 @@ IF (ARG & Ｂ)
 			PRINTFORM 別の촉수が無防備になった胸を責め立て
 		ENDIF
 	ELSE
-		IF ABL:C감각 >= 4 && (ARG & Ｃ)
+		IF ABL:Ｃ감각 >= 4 && (ARG & Ｃ)
 			PRINTFORML 思わず仰け反った%PRINT_TRANSCALLNAME(TARGET)%의 突き出された乳首に
 			PRINTFORM 別の촉수が３点責めの様相で追い打ちをかけ
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -365,7 +365,7 @@ IF (ARG & Ｂ)
 ENDIF
 IF (ARG & Ａ)
 	PRINTFORML 別の細い촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻を撫でまわし、
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORM まだきつく閉じられたままの
 	ELSE
 		PRINTFORM すっかり性感帯にされてしまった
@@ -516,7 +516,7 @@ IF (TCVARn:12 & 기절)
 		ELSE
 			PRINTFORML 絶妙な力加減で様々な方向へ引っ張りながら愛撫した。
 		ENDIF
-		IF PALAM:쾌C >= 1000
+		IF PALAM:쾌Ｃ >= 1000
 			PRINTFORM 既に充血している클리토리스を強く刺激されて
 			IF TALENT:주관시점 > 0
 				PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ひくんひくんと腰を上下させてしまう
@@ -717,7 +717,7 @@ ELSE
 		ELSE
 			PRINTFORML 絶妙な力加減で様々な方向へ引っ張りながら愛撫した。
 		ENDIF
-		IF PALAM:쾌C >= 1000
+		IF PALAM:쾌Ｃ >= 1000
 			PRINTFORML 既に充血している클리토리스を強く刺激されて
 			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 脳裏に電流が走る
 		ELSE
@@ -808,7 +808,7 @@ ELSEIF TALENT:후타나리 > 0 && (ARG & Ｖ)
 	PRINTW 
 ELSEIF (ARG & Ａ)
 	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORM 未開発の
 	ELSE
 		PRINTFORM 開発済みの
@@ -1050,7 +1050,7 @@ ELSE
 	ENDIF
 	;ランダム分岐フラグ
 	FLAG:900 = 3
-	IF TENTACLE_SIZE:0:쾌V < 40
+	IF TENTACLE_SIZE:0:쾌Ｖ < 40
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","単数"
 	ELSE
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","単数"
@@ -1519,7 +1519,7 @@ ELSEIF RAND:2 == 0
 		PRINTFORML それぞれが独立した動きで질내を刺激しながら、
 		PRINTFORML 予測不能なテンポで快楽を連打する・・・
 	ENDIF
-	IF TENTACLE_SIZE:0:쾌V >= 155
+	IF TENTACLE_SIZE:0:쾌Ｖ >= 155
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","たくさん"
 	ELSE
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","複数"
@@ -1550,7 +1550,7 @@ ELSE
 			PRINTFORML 인간業ではありえない動きでテンポよく突き上げていく・・・
 		ENDIF
 	ENDIF
-	IF TENTACLE_SIZE:0:쾌V < 40
+	IF TENTACLE_SIZE:0:쾌Ｖ < 40
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","単数"
 	ELSE
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","単数"
@@ -1612,9 +1612,9 @@ ELSEIF (TCVARn:12 & 기절) || TALENT:감정결여 > 0
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	PRINTFORML 愛液滴る膣肉が淫靡な音を立てて촉수を受け入れていき、
 	PRINTFORML 待ちに待った挿入の幸福感に満たされながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-	IF EX:V절정 < 1 && TALENT:주관시점 > 0
+	IF EX:Ｖ절정 < 1 && TALENT:주관시점 > 0
 		PRINTFORML 질壁を抉る快感に황홀としてしまう・・・
-	ELSEIF EX:V절정 < 1
+	ELSEIF EX:Ｖ절정 < 1
 		PRINTFORML 질壁を抉る快感に황홀としている・・・
 	ELSEIF TALENT:주관시점 > 0
 		PRINTFORML まだイキ足りないと言わんばかりに自ら腰を振り、快楽を貪ってしまう・・・
@@ -1622,10 +1622,10 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML まだイキ足りないと言わんばかりに自ら腰を振り、快楽を貪っている・・・
 	ENDIF
 	PRINTW 
-ELSEIF ABL:V감각 < 1
+ELSEIF ABL:Ｖ감각 < 1
 	PRINTFORML まだ性交に不慣れな膣壁を蹂躙される%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%まったく身動きできない・・・
 	PRINTW 
-ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:V감각 >= 4
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:Ｖ감각 >= 4
 	PRINTFORML 愛液滴る膣肉が淫靡な音を立てて촉수を受け入れていき、
 	PRINTFORML 女としての悦びが%PRINT_TRANSCALLNAME(TARGET)%의 理性を、
 	PRINTFORML 使命感を塗りつぶしていく・・・
@@ -1891,7 +1891,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 			PRINTFORM %PRINT_SWOON()%
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 愛欲に身を震わせる
-		ELSEIF ABL:A감각 < 3
+		ELSEIF ABL:Ａ감각 < 3
 			PRINTFORM 고통の声を漏らす
 		ELSE
 			SIF TALENT:감정결여 == 0
@@ -1927,9 +1927,9 @@ ELSEIF RAND:2 == 0 && (ARG & Ａ)
 				PRINTFORM 悦び、愛欲に身を震わせる
 			ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 				PRINTFORM 悦び、愛欲に身を震わせている
-			ELSEIF ABL:A감각 < 3 && TALENT:주관시점 > 0
+			ELSEIF ABL:Ａ감각 < 3 && TALENT:주관시점 > 0
 				PRINTFORM 耐え切れずに、고통の声を漏らしてしまう
-			ELSEIF ABL:A감각 < 3
+			ELSEIF ABL:Ａ감각 < 3
 				PRINTFORM 耐え切れずに、고통の声を漏らしている
 			ELSE
 				SIF TALENT:감정결여 == 0
@@ -1938,7 +1938,7 @@ ELSEIF RAND:2 == 0 && (ARG & Ａ)
 			ENDIF
 		ENDIF
 	ENDIF
-	IF TENTACLE_SIZE:0:쾌A < 40
+	IF TENTACLE_SIZE:0:쾌Ａ < 40
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","普通","単数"
 	ELSE
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","","複数"
@@ -1954,7 +1954,7 @@ ELSEIF (ARG & Ａ)
 		PRINTFORM 無意識に体を揺らす
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORM 愛欲に身を震わせる
-	ELSEIF ABL:A감각 < 3
+	ELSEIF ABL:Ａ감각 < 3
 		PRINTFORM 고통の声を漏らす
 	ELSE
 		SIF TALENT:감정결여 == 0
@@ -2142,7 +2142,7 @@ ENDIF
 IF (TCVARn:12 & 기절) && (ARG & Ａ)
 	PRINTFORML 無抵抗の%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널がズンズンと突き上げられ、
 	PRINTFORML ピストンを受け止める度に弛緩した손발がぶらぶらと揺れる・・・
-ELSEIF ABL:A감각 < 2 && (ARG & Ａ)
+ELSEIF ABL:Ａ감각 < 2 && (ARG & Ａ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%内臓を突き上げられる強烈な異物感と同時に、
 		PRINTFORM 未知の快楽を受け止めるのに必死になって
@@ -2158,7 +2158,7 @@ ELSEIF ABL:A감각 < 2 && (ARG & Ａ)
 	ELSE
 		PRINTFORML いる・・・
 	ENDIF
-ELSEIF ABL:A감각 < 4 && (ARG & Ａ)
+ELSEIF ABL:Ａ감각 < 4 && (ARG & Ａ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML 内臓を犯される感触に悦楽を感じつつある
 	ELSEIF TALENT:감정결여 > 0
@@ -2597,7 +2597,7 @@ IF (ARG & Ｖ)
 		PRINTFORML ・・・
 		PRINTW 
 	ENDIF
-	IF TENTACLE_SIZE:0:쾌V >= 40
+	IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","細い","たくさん"
 	ELSE
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","繊毛","たくさん"
@@ -2915,7 +2915,7 @@ ELSE
 			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		IF (ARG & Ｂ)
 			PRINT 가슴
-			IF TENTACLE_SIZE:0:쾌V >= 40
+			IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｂ","細い","たくさん"
 			ELSE
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｂ","繊毛","たくさん"
@@ -2925,7 +2925,7 @@ ELSE
 			PRINT と
 		IF (ARG & Ｖ)
 			PRINT ヴァギナ
-			IF TENTACLE_SIZE:0:쾌V >= 40
+			IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","細い","たくさん"
 			ELSE
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","繊毛","たくさん"
@@ -2935,7 +2935,7 @@ ELSE
 			PRINT と
 		IF (ARG & Ａ)
 			PRINT 애널
-			IF TENTACLE_SIZE:0:쾌V >= 40
+			IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","細い","たくさん"
 			ELSE
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","繊毛","たくさん"
@@ -3075,14 +3075,14 @@ IF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)
 	PRINTFORML 敏感な部位を容赦なく責め立てていく・・・
 	PRINTW 
 	IF ARG & Ｖ
-		IF TENTACLE_SIZE:0:쾌V >= 40
+		IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","細い","たくさん"
 		ELSE
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","繊毛","たくさん"
 		ENDIF
 	ENDIF
 	IF ARG & Ａ
-		IF TENTACLE_SIZE:0:쾌V >= 40
+		IF TENTACLE_SIZE:0:쾌Ｖ >= 40
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","細い","たくさん"
 		ELSE
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","繊毛","たくさん"

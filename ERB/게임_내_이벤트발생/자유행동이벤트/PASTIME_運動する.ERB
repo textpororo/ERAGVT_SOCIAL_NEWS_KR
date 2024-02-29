@@ -6,7 +6,7 @@ EROEVENT = 0
 
 PRINTL 운동한다
 PRINTL 
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	IF TALENT:음란 > 0 && TALENT:초심 < 1
 		PRINTFORML 女性の姿に変身した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして街に繰り出していた。
 		PRINTW 
@@ -95,7 +95,7 @@ ENDIF
 #DIM EROEVENT = 0
 #DIM CCOUNT
 
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CCOUNT = CFLAG:331
 ELSE
 	CCOUNT = CFLAG:330
@@ -147,7 +147,7 @@ ELSEIF RAND:2 == 0 && ISHOLE()
 	PRINTFORML 胸が透けて見えている。
 	PRINTL 
 ENDIF
-IF RAND:2 == 0 && TALENT:B민감 > 0
+IF RAND:2 == 0 && TALENT:Ｂ민감 > 0
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 乳首は他人に比べて敏感で、
 	PRINTFORML 走るリズムに合わせて甘い快感を与えていた。
 ENDIF
@@ -315,7 +315,7 @@ ENDIF
 PRINTW 
 
 ;運動公園に来た回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:331 += 1
 ELSE
 	CFLAG:330 += 1
@@ -329,7 +329,7 @@ RETURN EROEVENT
 #DIM EROEVENT = 0
 #DIM CCOUNT
 
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CCOUNT = CFLAG:335
 ELSE
 	CCOUNT = CFLAG:334
@@ -381,7 +381,7 @@ ENDIF
 PRINTW 
 
 ;フィットネスクラブに来た回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:335 += 1
 ELSE
 	CFLAG:334 += 1
@@ -395,7 +395,7 @@ RETURN EROEVENT
 #DIM EROEVENT = 0
 #DIM CCOUNT
 
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CCOUNT = CFLAG:339
 ELSE
 	CCOUNT = CFLAG:338
@@ -417,7 +417,7 @@ PRINTFORML 心地良い疲労感を感じながら休憩している・・・
 PRINTW 
 
 ;マッサージサロンに来た回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:339 += 1
 ELSE
 	CFLAG:338 += 1
@@ -431,7 +431,7 @@ RETURN EROEVENT
 #DIM EROEVENT = 0
 #DIM CCOUNT
 
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CCOUNT = CFLAG:343
 ELSE
 	CCOUNT = CFLAG:342
@@ -440,7 +440,7 @@ ENDIF
 SIF TIME==1
 	PRINT ナイト
 PRINTFORM プールに訪れた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	IF TALENT:여체수용 == 0
 		PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、
 	ENDIF
@@ -483,7 +483,7 @@ ELSE
 		PRINTFORML なぜ思わず着てしまったのか自分でもよくわからず、もじもじと股間を隠してしまう・・・
 ENDIF
 PRINTW
-IF  ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF  ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	IF TALENT:여체수용 == 0
 		PRINTFORML 女性化にもまだ慣れていない上に布一枚隔てて露わになったボディラインを
 		PRINTFORML 男共に変な目で見られていないかと気にしてしまう。
@@ -575,7 +575,7 @@ ELSEIF RAND:2 == 0 && ISGIRLY()
 	ENDIF
 	PRINTFORML ヒップにささっている。
 ENDIF
-IF  ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF  ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%男共が股間のモノを大きくしているのを察して
 	IF TALENT:여체수용 > 0
 		PRINTL ほくそ笑んだ。
@@ -640,7 +640,7 @@ PRINTFORML 心地良い疲労感を感じながら休憩している・・・
 PRINTW 
 
 ;プールに来た回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:343 += 1
 ELSE
 	CFLAG:342 += 1

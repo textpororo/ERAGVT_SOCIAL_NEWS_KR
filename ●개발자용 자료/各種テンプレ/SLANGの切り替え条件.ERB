@@ -78,29 +78,29 @@ ENDIF
 ;**********************************************************
 ;敏感か鈍感かでスラングを切り替えるためテンプレ
 ;**********************************************************
-IF TALENT:C민감
-	SLANGWORD_XXXX+="C민감"
+IF TALENT:Ｃ민감
+	SLANGWORD_XXXX+="Ｃ민감"
 ENDIF
-IF TALENT:C둔감
-	SLANGWORD_XXXX+="C둔감"
+IF TALENT:Ｃ둔감
+	SLANGWORD_XXXX+="Ｃ둔감"
 ENDIF
-IF TALENT:V민감
-	SLANGWORD_XXXX+="V민감"
+IF TALENT:Ｖ민감
+	SLANGWORD_XXXX+="Ｖ민감"
 ENDIF
-IF TALENT:V둔감
-	SLANGWORD_XXXX+="V둔감"
+IF TALENT:Ｖ둔감
+	SLANGWORD_XXXX+="Ｖ둔감"
 ENDIF
-IF TALENT:A민감
-	SLANGWORD_XXXX+="A민감"
+IF TALENT:Ａ민감
+	SLANGWORD_XXXX+="Ａ민감"
 ENDIF
-IF TALENT:A둔감
-	SLANGWORD_XXXX+="A둔감"
+IF TALENT:Ａ둔감
+	SLANGWORD_XXXX+="Ａ둔감"
 ENDIF
-IF TALENT:B민감
-	SLANGWORD_XXXX+="B민감"
+IF TALENT:Ｂ민감
+	SLANGWORD_XXXX+="Ｂ민감"
 ENDIF
-IF TALENT:B둔감
-	SLANGWORD_XXXX+="B둔감"
+IF TALENT:Ｂ둔감
+	SLANGWORD_XXXX+="Ｂ둔감"
 ENDIF
 
 
@@ -186,8 +186,8 @@ ENDIF
 IF TALENT:남자
 	SLANGWORD_XXXX+="남자"
 ENDIF
-IF TALENT:변신시TS
-	SLANGWORD_XXXX+="변신시TS"
+IF TALENT:변신시ＴＳ
+	SLANGWORD_XXXX+="변신시ＴＳ"
 ENDIF
 IF TALENT:변신시비처녀
 	SLANGWORD_XXXX+="변신시비처녀"
@@ -353,19 +353,19 @@ ENDIF
 ;**********************************************************
 ;감각の場合
 ;**********************************************************
-IF ABL:C감각
+IF ABL:Ｃ감각
 	SLANGWORD_XXXX+=""
 ENDIF
-IF ABL:V감각
+IF ABL:Ｖ감각
 	SLANGWORD_XXXX+=""
 ENDIF
-IF ABL:A감각
+IF ABL:Ａ감각
 	SLANGWORD_XXXX+=""
 ENDIF
-IF ABL:B감각
+IF ABL:Ｂ감각
 	SLANGWORD_XXXX+=""
 ENDIF
-IF ABL:V감각
+IF ABL:Ｖ감각
 	SLANGWORD_XXXX+=""
 ENDIF
 
@@ -376,11 +376,11 @@ ENDIF
 ;**********************************************************
 ;絶頂の場合
 ;**********************************************************
-IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+IF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 9
 	SLANGWORD_XXXX+=""
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	SLANGWORD_XXXX+=""
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 2
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 2
 	SLANGWORD_XXXX+=""
 ELSE
 	SLANGWORD_XXXX+=""
@@ -479,39 +479,39 @@ ENDIF
 
 
 
-IF PALAM:쾌C >= 2000
+IF PALAM:쾌Ｃ >= 2000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌C < 2000
+ELSEIF PALAM:쾌Ｃ < 2000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌C < 1000
+ELSEIF PALAM:쾌Ｃ < 1000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌C < 200
-	SLANGWORD_XXXX+=""
-ELSE
-	SLANGWORD_XXXX+=""
-ENDIF
-
-
-IF PALAM:쾌V >= 2000
-	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌V < 2000
-	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌V < 1000
-	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌V < 200
+ELSEIF PALAM:쾌Ｃ < 200
 	SLANGWORD_XXXX+=""
 ELSE
 	SLANGWORD_XXXX+=""
 ENDIF
 
 
-IF PALAM:쾌A >= 2000
+IF PALAM:쾌Ｖ >= 2000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌A < 2000
+ELSEIF PALAM:쾌Ｖ < 2000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌A < 1000
+ELSEIF PALAM:쾌Ｖ < 1000
 	SLANGWORD_XXXX+=""
-ELSEIF PALAM:쾌A < 200
+ELSEIF PALAM:쾌Ｖ < 200
+	SLANGWORD_XXXX+=""
+ELSE
+	SLANGWORD_XXXX+=""
+ENDIF
+
+
+IF PALAM:쾌Ａ >= 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌Ａ < 2000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌Ａ < 1000
+	SLANGWORD_XXXX+=""
+ELSEIF PALAM:쾌Ａ < 200
 	SLANGWORD_XXXX+=""
 ELSE
 	SLANGWORD_XXXX+=""

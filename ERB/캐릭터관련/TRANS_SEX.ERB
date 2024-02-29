@@ -1,5 +1,5 @@
 ﻿
-;♂→♀변신시TS캐릭터가 여체화하면 남자로 돌아올 수 없게 된다
+;♂→♀변신시ＴＳ캐릭터가 여체화하면 남자로 돌아올 수 없게 된다
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------------
 @TS_MtoF, ARG
 #DIM KEEP
@@ -47,7 +47,7 @@ TALENT:남자 = 0
 TALENT:보추 = 0
 SIF TALENT:변신시비처녀 == 0
 	TALENT:처녀 = 1
-TALENT:변신시TS = -1
+TALENT:변신시ＴＳ = -1
 TALENT:변신시비처녀 = 0
 TALENT:외관 = TALENT:변신시외관
 TALENT:후타나리 = TALENT:변신시후타나리
@@ -56,13 +56,13 @@ IF TALENT:변신시젖기쉬움변동 > 0
 ELSEIF TALENT:변신시젖기쉬움변동 < 0
 	TALENT:젖기어려움 = 1
 ENDIF
-IF TALENT:변신시V감각변동 > 0
-	TALENT:V민감 = 1
-ELSEIF TALENT:변신시V감각변동 < 0
-	TALENT:V둔감 = 1
+IF TALENT:변신시Ｖ감각변동 > 0
+	TALENT:Ｖ민감 = 1
+ELSEIF TALENT:변신시Ｖ감각변동 < 0
+	TALENT:Ｖ둔감 = 1
 ENDIF
 TALENT:변신시젖기쉬움변동 = 0
-TALENT:변신시V감각변동 = 0
+TALENT:변신시Ｖ감각변동 = 0
 
 IF CFLAG:34 > 0
 	CALL GENERATE_CHAR_SIZE, TARGET, 0
@@ -174,7 +174,7 @@ RETURN 1
 
 
 
-;♀→♂변신시TS 캐릭터가 여체화하면 남자로 변신할 수 없게 된다
+;♀→♂변신시ＴＳ 캐릭터가 여체화하면 남자로 변신할 수 없게 된다
 ;--------------------------------------------------------------------------------------------------------------------------------------------------------------
 @TS_FtoM, ARG
 #DIM KEEP
@@ -194,7 +194,7 @@ SIF CFLAG:1 < 1
 TALENT:성별변화 = 10
 TALENT:남자 = 0
 TALENT:보추 = 0
-TALENT:변신시TS = -1
+TALENT:변신시ＴＳ = -1
 SIF TALENT:처녀 < -2
 	TALENT:처녀 += 5
 MAXBASE:나이 = BASE:나이
@@ -371,7 +371,7 @@ ENDIF
 CALL TRANSFORM, 0
 
 PRINTL 【평상시】　가슴 사이즈　를 선택해 주십시오.
-IF TALENT:변신시TS > 0
+IF TALENT:변신시ＴＳ > 0
 	PRINT [0] 변신 후 [
 	IF CHARATALENT_F(TARGET,1,"절벽") > 0
 		PRINT 절벽
@@ -404,7 +404,7 @@ PRINTL [1] 절벽　　[2] 빈유　　[3] 보통　　
 PRINTL [4] 거유　　[5] 폭유　　[6] 초유　　[7] 마유　　[8] 기유　　
 $INPUT_LOOP_1
 INPUT
-IF RESULT == 0 && TALENT:변신시TS > 0
+IF RESULT == 0 && TALENT:변신시ＴＳ > 0
 	;가슴 사이즈를 변신 후에 맞춘다
 	IF CHARATALENT_F(TARGET,1,"절벽") > 0
 		TALENT:빈유 = 2
@@ -456,7 +456,7 @@ ELSE
 	GOTO INPUT_LOOP_1
 ENDIF
 ;변신시가슴사이즈변동 조정
-SIF TALENT:변신시TS > 0
+SIF TALENT:변신시ＴＳ > 0
 	TALENT:변신시가슴사이즈변동 = BREAST - TALENT:거유 + TALENT:빈유
 PRINTL 
 
@@ -470,7 +470,7 @@ IF TALENT:변신능력 > 0
 		BODY = 0
 	ENDIF
 ENDIF
-IF TALENT:변신시TS > 0
+IF TALENT:변신시ＴＳ > 0
 	PRINT [0] 변신 후 [
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		PRINT 왜소함
@@ -495,7 +495,7 @@ PRINTL [3] 보통　　　
 PRINTL [4] 장신　　　
 $INPUT_LOOP_2
 INPUT
-IF RESULT == 0 && TALENT:변신시TS > 0
+IF RESULT == 0 && TALENT:변신시ＴＳ > 0
 	;체격을 변신 후에 맞춘다
 	IF CHARATALENT_F(TARGET,1,"왜소함") > 0
 		TALENT:왜소함 = 1
@@ -523,7 +523,7 @@ SIF TALENT:변신능력 > 0
 	TALENT:변신시체격변동 = BODY - TALENT:장신 + TALENT:왜소함
 PRINTL 
 
-IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
+IF TALENT:변신능력 > 0 && TALENT:변신시ＴＳ == 0
 	PRINTL 【변신 후】　가슴 사이즈　를 선택해 주십시오.
 	PRINT [0] 평상시 [
 	IF CHARATALENT_F(TARGET,0,"절벽") > 0
@@ -614,7 +614,7 @@ IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
 ENDIF
 
 PRINTL 【평상시】　외관적 특징　을 선택해 주십시오.
-IF TALENT:변신시TS > 0
+IF TALENT:변신시ＴＳ > 0
 	PRINT [0] 변신 후 [
 	IF TALENT:변신시외관 == 1
 		PRINT 순산형
@@ -642,7 +642,7 @@ PRINTL [6] 왕뎅이　　
 PRINTL [7] 보통　　　
 $INPUT_LOOP_5
 INPUT
-IF RESULT == 0 && TALENT:변신시TS > 0
+IF RESULT == 0 && TALENT:변신시ＴＳ > 0
 	;외관을 변신 후에 맞춘다
 	TALENT:외관 = TALENT:변신시외관
 ELSEIF RESULT >= 1 && RESULT <= 6
@@ -654,7 +654,7 @@ ELSE
 ENDIF
 PRINTL 
 
-IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
+IF TALENT:변신능력 > 0 && TALENT:변신시ＴＳ == 0
 	PRINTL 【변신 후】　외관적 특징　을 선택해 주십시오.
 	PRINT [0] 평상시 [
 	IF TALENT:외관 == 1
@@ -700,14 +700,14 @@ IF TALENT:변신시젖기쉬움변동 > 0
 ELSEIF TALENT:변신시젖기쉬움변동 < 0
 	TALENT:젖기어려움 = 1
 ENDIF
-IF TALENT:변신시V감각변동 > 0
-	TALENT:V민감 = 1
-ELSEIF TALENT:변신시V감각변동 < 0
-	TALENT:V둔감 = 1
+IF TALENT:변신시Ｖ감각변동 > 0
+	TALENT:Ｖ민감 = 1
+ELSEIF TALENT:변신시Ｖ감각변동 < 0
+	TALENT:Ｖ둔감 = 1
 ENDIF
 
 ;실제 성별변화 처리
-IF TALENT:변신시TS > 0
+IF TALENT:변신시ＴＳ > 0
 	TALENT:성별변화 = 1
 	TALENT:후타나리 = TALENT:변신시후타나리
 ELSEIF TALENT:변신능력 > 0
@@ -723,8 +723,8 @@ SIF TALENT:변신시비처녀 == 0
 	TALENT:처녀 = 1
 
 IF TALENT:변신능력 > 0
-	IF TALENT:변신시TS > 0
-		TALENT:변신시TS = -1
+	IF TALENT:변신시ＴＳ > 0
+		TALENT:변신시ＴＳ = -1
 		TALENT:변신시비처녀 = 0
 	ENDIF
 	IF CFLAG:34 > 0
@@ -787,7 +787,7 @@ IF CSTR:ARG:30 != CSTR:ARG:31
 	ENDIF
 	PRINTL 
 ENDIF
-IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
+IF TALENT:변신능력 > 0 && TALENT:변신시ＴＳ == 0
 	IF CSTR:ARG:31 != CSTR:ARG:30
 		PRINTL 【변신 후】　머리색　을 선택해 주십시오.
 		PRINT [0] 변신 후의 색 [
@@ -840,7 +840,7 @@ IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 	ENDIF
 	PRINTL 
 ENDIF
-IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
+IF TALENT:변신능력 > 0 && TALENT:변신시ＴＳ == 0
 	IF (CSTR:ARG:32 != CSTR:ARG:34) || (CSTR:ARG:33 != CSTR:ARG:35)
 		PRINTL 【변신 후】　눈동자 색　을 선택해 주십시오.
 		PRINT [0] 변신 후의 색 [
@@ -893,7 +893,7 @@ IF CSTR:ARG:36 != CSTR:ARG:37
 	ENDIF
 	PRINTL 
 ENDIF
-IF TALENT:변신능력 > 0 && TALENT:변신시TS == 0
+IF TALENT:변신능력 > 0 && TALENT:변신시ＴＳ == 0
 	IF CSTR:ARG:36 != CSTR:ARG:37
 		PRINTL 【변신 후】　피부색　을 선택해 주십시오.
 		PRINT [0] 변신 후의 색 [

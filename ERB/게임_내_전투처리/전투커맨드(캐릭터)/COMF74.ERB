@@ -1,4 +1,4 @@
-﻿;SP풀버스트
+﻿;ＳＰ풀버스트
 @COM74
 
 ;距離表示
@@ -8,7 +8,7 @@ PRINTL
 ;疲労が蓄積し過ぎていると使用できない
 IF CFLAG:99 >= 100
 	PRINTFORML %PRINT_CALLNAME(TARGET)%に蓄積した疲労はもう限界に達している…！
-	PRINTFORML SP풀버스트は使えない…！
+	PRINTFORML ＳＰ풀버스트は使えない…！
 	PRINTW 
 	RETURN 0
 ENDIF
@@ -22,10 +22,10 @@ TCVARn:6 = -500
 TCVARn:3 = 0
 
 FONTBOLD
-PRINTL SP풀버스트
+PRINTL ＳＰ풀버스트
 FONTREGULAR
 
-;지문: SP풀버스트
+;지문: ＳＰ풀버스트
 CALL MESSAGE_BATTLE_CHARA_SP_FBURST
 
 ;체력, 기력最大値、공격力、残ゲージ依存の固定ダメージ

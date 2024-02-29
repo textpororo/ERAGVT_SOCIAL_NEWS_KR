@@ -272,13 +272,13 @@ ELSEIF BASE:체력+BASE:기력 == 0
 	PRINTFORML 「…………ぁ」
 	PRINTFORML 既に%타겟은% 抵抗する力はない……
 ;五回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「も、もうイヤァアア！」
 	SIF MARK:굴복각인
 		PRINTFORML 「お願い…もう……もう、やめて下さい……」
 	PRINTFORML 既に何度もイかされた%타겟은% 、更なる凌辱に怯え震えている……
 ;一回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 0
 	PRINTFORML 「……くっ、ま、また……っ！！」
 	PRINTFORML 未だ絶頂の余韻が抜けきらない内に、%타겟은% 再び捕まってしまった……
 ELSE
@@ -305,11 +305,11 @@ IF TALENT:촉수의포로 || MARK:쾌락각인 > 1
 	PRINTFORML 「いっ、いつも%SELF_CALL()%を好きに出来ると思わないことね！」
 	PRINTFORML 見事%STR:2500%を回避した%CALLNAME%だが、その表情はどこか残念そうにも見える……
 ;五回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「もう……はぁ……これ以上、は……耐えられ……ない……っ！」
 	PRINTFORML 既に何度もイかされている%타겟은% 、%STR:2500%を避けることすら難しくなっている……
 ;一回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 0
 	PRINTFORML 「……だめ…また捕まったら、%SELF_CALL()%……っ！！」
 	PRINTFORML %타겟은% 未だに先ほどの絶頂の余韻が抜けきっていない……
 ;촉수拘束服

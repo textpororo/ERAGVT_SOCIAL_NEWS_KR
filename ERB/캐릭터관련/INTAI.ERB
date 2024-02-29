@@ -131,32 +131,32 @@ PRINTW
 IF TALENT:전락
 	PRINTFORML %STR:2500%가 주는 쾌락에 몸도 마음도 침식당한
 ;완전 개발 완료
-ELSEIF MIN(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
+ELSEIF MIN(ABL:Ｃ감각,ABL:Ｖ감각,ABL:Ａ감각,ABL:Ｂ감각) == 5
 	PRINTFORML 이 세상의 모든 쾌락을 %STR:2500%에 의해 새겨졌기
 ;전신 개발 완료
-ELSEIF ABL:C감각 + ABL:V감각 + ABL:A감각 + ABL:B감각 > 14
+ELSEIF ABL:Ｃ감각 + ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 > 14
 	PRINTFORML %STR:2500%에게 집요하게 희롱당해, 온몸이 민감하기 짝이 없는 성감대가 되었기
 ;한 부위 MAX
-ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) == 5
+ELSEIF MAX(ABL:Ｃ감각,ABL:Ｖ감각,ABL:Ａ감각,ABL:Ｂ감각) == 5
 	PRINTFORM %STR:2500%에 의한 거듭되는 능욕으로 
-	IF ABL:A감각 == 5
+	IF ABL:Ａ감각 == 5
 		PRINTFORML %CALLNAME%의 항문은 성기 이상으로 민감하게 바뀌었기
-	ELSEIF ABL:V감각 == 5
+	ELSEIF ABL:Ｖ감각 == 5
 		PRINTFORML %타겟은% 암구멍에 삽입될 때마다, 미치도록 가 버리기
-	ELSEIF ABL:B감각 == 5
+	ELSEIF ABL:Ｂ감각 == 5
 		PRINTL 꼭지는 수그러들지 않고 계속 단단하게 서 있었기
-	ELSEIF ABL:C감각 == 5
+	ELSEIF ABL:Ｃ감각 == 5
 		PRINTL 음핵을 절정 스위치로 개조되었기
 	ENDIF
-ELSEIF MAX(ABL:C감각,ABL:V감각,ABL:A감각,ABL:B감각) > 2
+ELSEIF MAX(ABL:Ｃ감각,ABL:Ｖ감각,ABL:Ａ감각,ABL:Ｂ감각) > 2
 	PRINTFORM %STR:2500%에게 노리개 삼아진 결과,
-	IF ABL:A감각 > 2
+	IF ABL:Ａ감각 > 2
 		PRINTL 애널 절정의 맛을 배우게 되었기
-	ELSEIF ABL:V감각 > 2
+	ELSEIF ABL:Ｖ감각 > 2
 		PRINTL 암구멍이 촉수 단지라고 부를 수 있을 정도로 유린되었기
-	ELSEIF ABL:B감각 > 2
+	ELSEIF ABL:Ｂ감각 > 2
 		PRINTFORML 항상 %CALLNAME%의 유방은 쾌락을 탐내게 되었기
-	ELSEIF ABL:C감각 > 2
+	ELSEIF ABL:Ｃ감각 > 2
 		PRINTL 음핵을 발정 스위치로 개조되었기
 	ENDIF
 ELSE

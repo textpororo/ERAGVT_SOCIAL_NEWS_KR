@@ -8,7 +8,7 @@
 ;**********************************************************
 ;플레이어 행동 직후의 공통 처리
 ;**********************************************************
-;SP변신 종료까지는 피로가 축적되지 않는다
+;ＳＰ변신 종료까지는 피로가 축적되지 않는다
 IF CFLAG:1 == 2
 	TFLAG:99 += 1
 ;그 이외라면 행동의 반동으로 피로가 축적된다
@@ -281,7 +281,7 @@ IF FLAG:13 <= 0
 					;지문: 완전 섬멸
 					CALL MESSAGE_BATTLE_END_PERFECT
 					;실적
-					IF GAME_OPTION_CHECK_F(OPTION_solo) && TALENT:C민감 && TALENT:V민감 && TALENT:A민감 && TALENT:B민감
+					IF GAME_OPTION_CHECK_F(OPTION_solo) && TALENT:Ｃ민감 && TALENT:Ｖ민감 && TALENT:Ａ민감 && TALENT:Ｂ민감
 						CALL UNLOCK_ACHIEVEMENT(260,"촉수 따위에겐 지지 않아！")
 					ENDIF
 					IF GAME_OPTION_CHECK_F(OPTION_solo) && EXP:유폐경험 >= 1
@@ -448,21 +448,21 @@ SIF TCVARn:24 == -1 || (CLOTH_NO_INNER > 0 && LOCAL:1 > 0)
 SIF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
 	LOCAL:1 = 0
 ;운동할 때 클리토리스/페니스에 쾌감이 쑤신다
-;쾌C
-IF ABL:C감각 <= 2
+;쾌Ｃ
+IF ABL:Ｃ감각 <= 2
 	LOCAL = 0
-ELSEIF ABL:C감각 <= 4
+ELSEIF ABL:Ｃ감각 <= 4
 	LOCAL = 4
-ELSEIF ABL:C감각 == 5
+ELSEIF ABL:Ｃ감각 == 5
 	LOCAL = 8
-ELSEIF ABL:C감각 == 6
+ELSEIF ABL:Ｃ감각 == 6
 	LOCAL = 12
-ELSEIF ABL:C감각 == 7
+ELSEIF ABL:Ｃ감각 == 7
 	LOCAL = 20
-ELSEIF ABL:C감각 >= 8 && ABL:C감각 < 12
-	LOCAL = (ABL:C감각 * 2 / 3) * 15
-ELSEIF ABL:C감각 >= 10
-	LOCAL = (ABL:C감각 * 2 / 3) * 30
+ELSEIF ABL:Ｃ감각 >= 8 && ABL:Ｃ감각 < 12
+	LOCAL = (ABL:Ｃ감각 * 2 / 3) * 15
+ELSEIF ABL:Ｃ감각 >= 10
+	LOCAL = (ABL:Ｃ감각 * 2 / 3) * 30
 ENDIF
 SIF ISPENIS()
 	LOCAL += 20
@@ -508,21 +508,21 @@ SIF LOCAL < 100
 COMMON_PALAM:0 += LOCAL
 
 ;운동할 때 가슴에 쾌감이 쑤신다
-;쾌B
-IF ABL:B감각 <= 2
+;쾌Ｂ
+IF ABL:Ｂ감각 <= 2
 	LOCAL = 0
-ELSEIF ABL:B감각 <= 4
+ELSEIF ABL:Ｂ감각 <= 4
 	LOCAL = 5
-ELSEIF ABL:B감각 == 5
+ELSEIF ABL:Ｂ감각 == 5
 	LOCAL = 10
-ELSEIF ABL:B감각 == 6
+ELSEIF ABL:Ｂ감각 == 6
 	LOCAL = 20
-ELSEIF ABL:B감각 == 7
+ELSEIF ABL:Ｂ감각 == 7
 	LOCAL = 40
-ELSEIF ABL:B감각 >= 8 && ABL:B감각 < 12
-	LOCAL = (ABL:B감각 * 2 / 3) * 20
-ELSEIF ABL:B감각 >= 12
-	LOCAL = (ABL:B감각 * 2 / 3) * 40
+ELSEIF ABL:Ｂ감각 >= 8 && ABL:Ｂ감각 < 12
+	LOCAL = (ABL:Ｂ감각 * 2 / 3) * 20
+ELSEIF ABL:Ｂ감각 >= 12
+	LOCAL = (ABL:Ｂ감각 * 2 / 3) * 40
 ENDIF
 SIF TALENT:모유체질
 	LOCAL += 5
@@ -582,7 +582,7 @@ COMMON_PALAM:3 += LOCAL
 IF COMMON_PALAM:0 || (COMMON_PALAM:3 && ISGIRLY())
 	PRINTL 
 ENDIF
-IF COMMON_PALAM:0 && BASE:C결계내구력 == 0
+IF COMMON_PALAM:0 && BASE:Ｃ결계내구력 == 0
 	IF SELECTCOM == 8 || SELECTCOM == 9
 		PRINT 저항하고자 몸부림치는
 	ELSEIF SELECTCOM == 1 || SELECTCOM == 2 || SELECTCOM == 3 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
@@ -591,9 +591,9 @@ IF COMMON_PALAM:0 && BASE:C결계내구력 == 0
 		PRINT 사소한 움직임이라도
 	ENDIF
 	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%의 
-	SIF ABL:C감각 >= 6 || TALENT:음핵
+	SIF ABL:Ｃ감각 >= 6 || TALENT:음핵
 		PRINT 완전히 개발된 
-	SIF ABL:C감각 >= 3 || TALENT:C민감
+	SIF ABL:Ｃ감각 >= 3 || TALENT:Ｃ민감
 		PRINT 민감한 
 	IF ISPENIS()
 		SIF PALAM:욕정 >= 2000
@@ -619,7 +619,7 @@ IF COMMON_PALAM:0 && BASE:C결계내구력 == 0
 	ENDIF
 	PRINTL 
 ENDIF
-IF COMMON_PALAM:3 && ISGIRLY() && BASE:B결계내구력 == 0
+IF COMMON_PALAM:3 && ISGIRLY() && BASE:Ｂ결계내구력 == 0
 	IF SELECTCOM == 8 || SELECTCOM == 9
 		PRINT 저항하고자 몸부림치는
 	ELSEIF SELECTCOM == 1 || SELECTCOM == 2 || SELECTCOM == 3 || SELECTCOM == 5 || SELECTCOM == 6 || SELECTCOM == 7 || SELECTCOM == 16 || SELECTCOM == 17
@@ -628,17 +628,17 @@ IF COMMON_PALAM:3 && ISGIRLY() && BASE:B결계내구력 == 0
 		PRINT 사소한 움직임이더라도
 	ENDIF
 	PRINTFORM  %PRINT_TRANSCALLNAME(TARGET)%의 
-	SIF ABL:B감각 >= 6 || TALENT:음유
+	SIF ABL:Ｂ감각 >= 6 || TALENT:음유
 		PRINT 완전히 개발된 
 	IF TALENT:거유 > 0
 		PRINT 풍만
-		IF ABL:B감각 >= 3 || TALENT:B민감
+		IF ABL:Ｂ감각 >= 3 || TALENT:Ｂ민감
 			PRINT 하고 
 		ELSE
 			PRINT 한 
 		ENDIF
 	ENDIF
-	SIF ABL:B감각 >= 3 || TALENT:B민감
+	SIF ABL:Ｂ감각 >= 3 || TALENT:Ｂ민감
 		PRINT 민감한 
 	IF ISMALE()
 		;#region
@@ -1006,7 +1006,7 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 		ENDIF
 
 		;ＴＳ 할 수 없는 남자임과 동시에 양성평등 OFF라면 즉시 사망
-		IF ISHOLE(TARGET) == 0 && TALENT:변신시TS < 1 && CONFIG_CHECK_PRISON_F(0) == 0
+		IF ISHOLE(TARGET) == 0 && TALENT:변신시ＴＳ < 1 && CONFIG_CHECK_PRISON_F(0) == 0
 			CFLAG:0 = 9
 			CFLAG:20 = FLAG:10
 			CFLAG:21 = FLAG:11

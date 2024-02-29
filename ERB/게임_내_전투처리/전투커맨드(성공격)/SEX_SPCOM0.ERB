@@ -29,17 +29,17 @@ CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111
 
 
 ;快C
-IF ABL:C감각 == 0
+IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 2000
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:0 = 4000
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:0 = 10000
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:0 = 20000
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:0 = 40000
-ELSEIF ABL:C감각 >= 5
+ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 100000
 ENDIF
 ;ペニス持ちには効果大
@@ -75,8 +75,8 @@ EXP:고통쾌락경험 += 1
 
 
 
-;C감각が低いと고통と공포が入る
-IF ABL:C감각 < 4
+;Ｃ감각が低いと고통と공포が入る
+IF ABL:Ｃ감각 < 4
 	LOCAL:10 = 1000
 	LOCAL:11 = 1000
 ENDIF

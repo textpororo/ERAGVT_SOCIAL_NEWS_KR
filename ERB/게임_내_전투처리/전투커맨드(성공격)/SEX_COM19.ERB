@@ -44,48 +44,48 @@ CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111
 
 
 ;快V
-IF ABL:V감각 == 0
+IF ABL:Ｖ감각 == 0
 	LOCAL:1 = 30
-ELSEIF ABL:V감각 == 1
+ELSEIF ABL:Ｖ감각 == 1
 	LOCAL:1 = 75
-ELSEIF ABL:V감각 == 2
+ELSEIF ABL:Ｖ감각 == 2
 	LOCAL:1 = 150
-ELSEIF ABL:V감각 == 3
+ELSEIF ABL:Ｖ감각 == 3
 	LOCAL:1 = 300
-ELSEIF ABL:V감각 == 4
+ELSEIF ABL:Ｖ감각 == 4
 	LOCAL:1 = 750
-ELSEIF ABL:V감각 >= 5
+ELSEIF ABL:Ｖ감각 >= 5
 	LOCAL:1 = 1500
 ENDIF
 
 ;快A　감각が低いうちは少なめ
 IF CONFIG_CHECK_BALANCE_F(7) == 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 6
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 35
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 150
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 300
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 750
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 1500
 	ENDIF
-;컨피그オンで쾌A増加
+;컨피그オンで쾌Ａ増加
 ELSEIF CONFIG_CHECK_BALANCE_F(7) == 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 30
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 75
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 150
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 300
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 750
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 1500
 	ENDIF
 ENDIF
@@ -98,7 +98,7 @@ CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM19, EX_COM, SH_COM
 	;처녀なら고통が大量に入る
-	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:V결계내구력 <= 0
+	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 		LOCAL:10 = 10000
 		TALENT:처녀 = -1
 		CFLAG:206 = 2
@@ -108,7 +108,7 @@ IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	ENDIF
 ELSE
 	;처녀なら고통が大量に入る
-	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:V결계내구력 <= 0
+	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 		LOCAL:10 = 10000
 		CALL LOSTVIRGIN
 	ELSE
@@ -127,8 +127,8 @@ CALL SET_TENTACLE_POOL
 CALL CLOTH_BATTLE_DAMAGE, 3
 
 ;ベース
-EXP:V경험 += 1
-EXP:A경험 += 1
+EXP:Ｖ경험 += 1
+EXP:Ａ경험 += 1
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
 	EXP:근친교배경험 += 1
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
@@ -162,19 +162,19 @@ ELSEIF ABL:봉사정신 >= 5
 	LOCAL:6 = 600
 ENDIF
 
-;굴복　A감각に応じて
-IF ABL:A감각 == 0
+;굴복　Ａ감각に応じて
+IF ABL:Ａ감각 == 0
 	LOCAL:8 = 20
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:8 = 40
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:8 = 100
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:8 = 200
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:8 = 400
-ELSEIF ABL:A감각 >= 5
-	LOCAL:8 = 900 + ABL:A감각 * 20
+ELSEIF ABL:Ａ감각 >= 5
+	LOCAL:8 = 900 + ABL:Ａ감각 * 20
 ENDIF
 
 ;윤활が低いと고통が入る
@@ -184,25 +184,25 @@ ELSEIF PALAM:윤활 < 2000
 	LOCAL:10 += 200
 ENDIF
 
-;V감각が低いと공포が入る
-IF ABL:V감각 == 0
+;Ｖ감각が低いと공포が入る
+IF ABL:Ｖ감각 == 0
 	LOCAL:11 = 300
-ELSEIF ABL:V감각 == 1
+ELSEIF ABL:Ｖ감각 == 1
 	LOCAL:11 = 75
-ELSEIF ABL:V감각 == 2
+ELSEIF ABL:Ｖ감각 == 2
 	LOCAL:11 = 30
-ELSEIF ABL:V감각 == 3
+ELSEIF ABL:Ｖ감각 == 3
 	LOCAL:11 = 15
 ELSE
 ENDIF
-;A감각が低いと공포が入る
-IF ABL:A감각 == 0
+;Ａ감각が低いと공포が入る
+IF ABL:Ａ감각 == 0
 	LOCAL:11 = 150
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:11 = 75
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:11 = 35
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:11 = 15
 ELSE
 ENDIF

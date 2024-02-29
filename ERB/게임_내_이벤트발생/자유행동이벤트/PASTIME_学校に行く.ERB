@@ -26,7 +26,7 @@ ENDIF
 PRINTFORML 학교에간다
 PRINTL 
 ;中学・高校は制服、小学校・大学は사복
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	IF TALENT:음란 > 0 && TALENT:초심 <= 0
 		PRINTFORML 女性の姿に変身した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして%目的地%に登校した。
 		PRINTW 
@@ -123,7 +123,7 @@ PRINTL
 CALL PASTIME_CHIKAN, ARG
 IF RESULT == 0
 	;●ＴＳ変身して初登校した時の処理
-	IF TALENT:변신시TS > 0 && CFLAG:1 > 0 && CFLAG:351 < 1
+	IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && CFLAG:351 < 1
 		;　大学はだれも気にしない
 		IF TALENT:학생 == 4
 			PRINTFORML 変身した姿で大学へと訪れた%PRINT_TRANSCALLNAME(TARGET)%だったが、案の定というべきか
@@ -355,7 +355,7 @@ IF RESULT == 0
 	
 	;登校回数を増加
 	;回数が一定以上で目をつけられて脅迫とかストーカーとかイベント発生させてみたりとか？
-	IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+	IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 		CFLAG:351 += 1
 	ELSE
 		CFLAG:350 += 1
@@ -503,7 +503,7 @@ IF RAND:100 < LOCAL && ABL:욕망 > 0
 	ELSE
 		;自分でしてしまう
 		PRINTFORM いけないこととは思いながらも、つい
-		IF RAND:2 == 0 && ABL:B감각 > 3
+		IF RAND:2 == 0 && ABL:Ｂ감각 > 3
 			PRINTFORM 胸に
 		ELSE
 			PRINTFORM 股間に
@@ -933,7 +933,7 @@ ELSEIF RAND:5 == 0 && TALENT:보추 > 0
 				PRINTFORML なんとか拘束から逃れようとした%PRINT_TRANSCALLNAME(TARGET)%だったが、
 				PRINTFORML 戦闘で疲弊した体では抵抗のしようがなかった…
 			ENDIF
-			IF ABL:A감각 < 2
+			IF ABL:Ａ감각 < 2
 				PRINTL 
 				IF TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3
 					PRINTFORML 不慣れな애널を乱暴にこじ開けられる痛みに耐えながらも、
@@ -1055,7 +1055,7 @@ ELSEIF RAND:5 == 0 && TALENT:보추 > 0
 			PRINTFORML 
 			SIF JISSHU == 3
 				PRINTFORML 「お前らの青臭いザーメンをたっぷり질내に出してやれ」
-			IF ABL:A감각 < 2
+			IF ABL:Ａ감각 < 2
 				PRINTL 
 				IF TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3
 					PRINTFORML 不慣れな애널を乱暴にこじ開けられる痛みに耐えながらも、
@@ -1201,7 +1201,7 @@ ELSE
 			CFLAG:42 = 0
 			SIF ABL:노출벽 > 2
 				PRINTFORML いつ誰に見られるか分からない。そう妄想するだけで%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%言いようのないもどかしさと興奮を覚えた。
-			SIF TALENT:B민감 > 0
+			SIF TALENT:Ｂ민감 > 0
 				PRINTFORML 乳首がシャツに擦れてくすぐったい快楽を断続的に受けてしまう。
 		ELSEIF SUIEI == 1 && RAND:2 == 0 && ISFEMALE()
 			PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%更衣室で着替えているのを
@@ -1336,7 +1336,7 @@ IF (CFLAG:352 != 0 && CFLAG:352 != 10 && CFLAG:352 != 20) && CFLAG:1 < 1
 	CALL Message_School_Clubactivities
 ELSEIF (CFLAG:353 != 0 && CFLAG:353 != 10 && CFLAG:353 != 20) && CFLAG:1 > 0
 	CALL Message_School_Clubactivities
-ELSEIF (TALENT:변신시TS > 0 && CFLAG:351 == 0 && CFLAG:1 > 0)
+ELSEIF (TALENT:변신시ＴＳ > 0 && CFLAG:351 == 0 && CFLAG:1 > 0)
 	;ＴＳ転校生の場合初日に所属するか確認
 	IF TALENT:학생 == 4
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%敷地内を歩いているとサークルメンバー募集と書かれたポスターが目に入った。

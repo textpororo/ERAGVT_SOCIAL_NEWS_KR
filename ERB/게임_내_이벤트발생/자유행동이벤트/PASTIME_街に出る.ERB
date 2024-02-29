@@ -225,7 +225,7 @@ ELSEIF RESULT == 2
 	目的地 = 繁華街
 	PRINTFORML 繁華街に訪れた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 	;夜の繁華街。실제나이か変身前외관が20歳以上で変身後にＴＳ未成年化するオッサン、または、通常時か変身時のどちらかの状態でロリである실제나이ババア
-	IF TIME > 0 && ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) ||  BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
+	IF TIME > 0 && ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) ||  BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
 		PRINTFORML 日頃の疲れを癒すべく居酒屋に立ち寄ったが
 		PRINTFORML 未成年に酒を飲ませる訳にはいかないと追い払われた。
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%実際には{BASE:실제나이}歳だが
@@ -234,7 +234,7 @@ ELSEIF RESULT == 2
 		ELSEIF CFLAG:1 == 0 && BASE:나이 < 20
 			PRINTFORML 誰がどう見ても{BASE:나이}歳のそれである。
 		ENDIF
-		IF (BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20
+		IF (BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20
 			PRINTFORML 原因は不明だが%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%月に数回、変身が解けなくなることがあった。
 			PRINTFORML 一晩経てば変身は解けるので大して気にも留めていなかったが
 			PRINTFORML 運悪くどうしても酒が飲みたい今夜にそれが当たってしまった。

@@ -12,8 +12,8 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 	IF FLAG:11 < 5
 		PRINTFORML 次の瞬間、%PRINT_TRANSCALLNAME(TARGET)%의 脳髄を強烈な快感が走り抜ける！
 		PRINTW 
-		;변신시TSキャラが女体化すると남자に戻れなくなる
-		IF FLAG:11 == 2 && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		;변신시ＴＳキャラが女体化すると남자に戻れなくなる
+		IF FLAG:11 == 2 && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%しばらく身を震わせながら地面に横たわって何度も絶頂し、
 			PRINTFORML 戦闘後の気の緩みもあって完全に変身が解けてしまった。
@@ -21,13 +21,13 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			PRINTFORML 丸みを帯びた肉付きや腰のラインも変化する様子がない――
 			PRINTW 
 
-			;변신시TSキャラが女体化すると남자に戻れなくなる
+			;변신시ＴＳキャラが女体化すると남자に戻れなくなる
 			CALL TS_MtoF, TARGET
 
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女体化した姿のまま[남자]に戻れなくなった！
 			PRINT さらに、
-		;元が女性の변신시TSキャラが女体化すると남자になれなくなる
-		ELSEIF FLAG:11 == 2 && ISMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		;元が女性の변신시ＴＳキャラが女体化すると남자になれなくなる
+		ELSEIF FLAG:11 == 2 && ISMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 
 			PRINTFORML 思わず叫び声をあげてしまった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
@@ -35,7 +35,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			PRINTFORML 変身は解けていないのに、普段の自分とそっくりの状態になってしまっていて――
 			PRINTW 
 
-			;변신시TSキャラが女体化すると남자に戻れなくなる
+			;변신시ＴＳキャラが女体化すると남자に戻れなくなる
 			CALL TS_FtoM, TARGET
 
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身しても[남자]になれなくなってしまった！
@@ -79,7 +79,7 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 				ELSE
 					CALL MESSAGE_GETTALENT_INNYUU
 				ENDIF
-		;全部満たしていたら強絶頂
+		;全部満たしていたら강절정
 		ELSE
 			NOWEX:(FLAG:11-1) = 2
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 体を激しい快感が襲う・・・
@@ -120,55 +120,55 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 
 	;絶頂の表示
 	LOCAL = 0
-	IF NOWEX:C절정 == 1
+	IF NOWEX:Ｃ절정 == 1
 		;지문: C絶頂
 		CALL MESSAGE_SEX_ECSTASY_C
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_C
-	ELSEIF NOWEX:C절정 == 2
-		;지문: C強絶頂
+	ELSEIF NOWEX:Ｃ절정 == 2
+		;지문: C강절정
 		CALL MESSAGE_SEX_ECSTASY_C_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C강절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
 	ENDIF
-	IF NOWEX:V절정 == 1
+	IF NOWEX:Ｖ절정 == 1
 		;지문: V絶頂
 		CALL MESSAGE_SEX_ECSTASY_V
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_V
-	ELSEIF NOWEX:V절정 == 2
-		;지문: V強絶頂
+	ELSEIF NOWEX:Ｖ절정 == 2
+		;지문: V강절정
 		CALL MESSAGE_SEX_ECSTASY_V_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V강절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
 	ENDIF
-	IF NOWEX:A절정 == 1
+	IF NOWEX:Ａ절정 == 1
 		;지문: A絶頂
 		CALL MESSAGE_SEX_ECSTASY_A
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_A
-	ELSEIF NOWEX:A절정 == 2
-		;지문: A強絶頂
+	ELSEIF NOWEX:Ａ절정 == 2
+		;지문: A강절정
 		CALL MESSAGE_SEX_ECSTASY_A_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A강절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
 	ENDIF
-	IF NOWEX:B절정 == 1
+	IF NOWEX:Ｂ절정 == 1
 		;지문: B絶頂
 		CALL MESSAGE_SEX_ECSTASY_B
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B絶頂を見た
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B
-	ELSEIF NOWEX:B절정 == 2
-		;지문: B強絶頂
+	ELSEIF NOWEX:Ｂ절정 == 2
+		;지문: B강절정
 		CALL MESSAGE_SEX_ECSTASY_B_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B強絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B강절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B_HI
 	ENDIF

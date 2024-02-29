@@ -2,7 +2,7 @@
 @AUTO_V_DEFENCE, ARG
 SIF TFLAG:81 > 0
 	RETURN 1
-SIF BASE:ARG:V결계내구력 > 0
+SIF BASE:ARG:Ｖ결계내구력 > 0
 	RETURN 1
 IF TCVARn:12 & 기절 || (TCVARn:41 == -1 && CFLAG:(CFLAG:1==0 ? 40 # 41) == 199)
 	TFLAG:81 = 1
@@ -13,7 +13,7 @@ IF TALENT:ARG:처녀 > 0
 ELSE
 	PRINTL このままだと前の穴に挿入されそうだ……
 ENDIF
-PRINTL 咄嗟にV삽입방어しますか？
+PRINTL 咄嗟にＶ삽입방어しますか？
 PRINTL [0]する
 PRINTL [1]しない
 $INPUT_LOOP

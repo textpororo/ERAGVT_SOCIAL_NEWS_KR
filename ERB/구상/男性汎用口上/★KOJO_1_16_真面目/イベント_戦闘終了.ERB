@@ -85,11 +85,11 @@ ENDIF
 
 LOCAL = 1
 ;特定部位絶頂が8回以上
-IF EX:C절정 > 7 || EX:V절정 > 7 || EX:A절정 > 7 || EX:B절정 > 7
+IF EX:Ｃ절정 > 7 || EX:Ｖ절정 > 7 || EX:Ａ절정 > 7 || EX:Ｂ절정 > 7
 	PRINTFORML 「ぅあ、ぁ……%SELF_CALL_SINGLE()%、%SELF_CALL(7)%…くぅぅん……勝っ、た……のか…？」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:B절정 > 7
+	IF RESULT == 0 && EX:Ｂ절정 > 7
 		IF ISMALE()
 			;#region
 			PRINTFORML 数えきれないほど乳首でイかされた%타겟은% 、蕩けきった顔をしながら呟いた。
@@ -98,7 +98,7 @@ IF EX:C절정 > 7 || EX:V절정 > 7 || EX:A절정 > 7 || EX:B절정 > 7
 			PRINTFORML 数えきれないほど胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた。
 		ENDIF
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:C절정 > 7
+	ELSEIF RESULT == 1 && EX:Ｃ절정 > 7
 		IF ISMALE()
 			;#region
 			PRINTFORML  数えきれないほどイかされ、敏感になった%CALLNAME%のペニスは
@@ -108,16 +108,16 @@ IF EX:C절정 > 7 || EX:V절정 > 7 || EX:A절정 > 7 || EX:B절정 > 7
 		ENDIF
 		PRINTFORML 今再び、意思なき微風にすらイかされようとしている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 7
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 7
 		PRINTFORML  数えきれないほどイかされ、%CALLNAME%の菊門は ぽっかりと口をあけたままになっている……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:V절정 > 7
+	ELSEIF RESULT == 3 && EX:Ｖ절정 > 7
 		PRINTFORML 数えきれないほどイかされた%CALLNAME%の蜜壷は、ドロドロに蕩けている……
 		LOCAL = 0
 	ENDIF
 	WEND
 ;絶頂回数8回以上
-ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 7
+ELSEIF (EX:Ｃ절정 + EX:Ｖ절정 + EX:Ａ절정 + EX:Ｂ절정) > 7
 	PRINTFORML 「……………あっ、ンンんんん！！」
 	PRINTFORML 数えきれないほどイかされた%타겟은% 、地面に倒れ伏せ、ビクビクと痙攣している。
 ELSEIF PALAM:치정 > 80000
@@ -129,20 +129,20 @@ ELSEIF PALAM:치정 > 80000
 		PRINTFORML 全てを曝け出してしまった%타겟은% 蒼白になって절망している……
 	ENDIF
 ;特定部位絶頂が2回以上
-ELSEIF EX:C절정 > 1 || EX:V절정 > 1 || EX:A절정 > 1 || EX:B절정 > 1
+ELSEIF EX:Ｃ절정 > 1 || EX:Ｖ절정 > 1 || EX:Ａ절정 > 1 || EX:Ｂ절정 > 1
 	PRINTFORML 「あン…勝て、アッ、たのか…？あっ、ンンん！！」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:C절정 > 1
+	IF RESULT == 0 && EX:Ｃ절정 > 1
 		PRINTFORML  何度もイかされ、%타겟은% 歩くことも出来なさそうだ……
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:V절정 > 1
+	ELSEIF RESULT == 1 && EX:Ｖ절정 > 1
 		PRINTFORML  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 1
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 1
 		PRINTFORML  何度もイかされ、%CALLNAME%の菊門はヒクヒクと痙攣している……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:B절정 > 1
+	ELSEIF RESULT == 3 && EX:Ｂ절정 > 1
 		IF ISMALE()
 			;#region
 			PRINTFORML  何度も乳首でイかされた%타겟은% 、蕩けきった顔をしながら呟いた

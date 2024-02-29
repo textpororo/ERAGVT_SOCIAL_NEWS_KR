@@ -111,7 +111,7 @@ SELECTCASE ARG
 		SIF SHIELD:1 > 0
 			GOTO SHIELDED
 		;A経験が少ない보추の場合、A中心攻めにする
-		IF TALENT:보추 > 0 && EXP:A경험 < 20
+		IF TALENT:보추 > 0 && EXP:Ａ경험 < 20
 			CALL PRISON_COM2
 		;보추の場合はA拡張攻めで代替する
 		ELSEIF TALENT:보추 > 0
@@ -126,7 +126,7 @@ SELECTCASE ARG
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 			CALL PRISON_COM5
 		;V経験が少ない場合、V中心攻めにする
-		ELSEIF EXP:V경험 < 20
+		ELSEIF EXP:Ｖ경험 < 20
 			CALL PRISON_COM1
 		ELSE
 			CALL PRISON_COM101
@@ -138,7 +138,7 @@ SELECTCASE ARG
 		SIF SHIELD:2 > 0
 			GOTO SHIELDED
 		;A経験が少ない場合、A中心攻めにする
-		IF EXP:A경험 < 20
+		IF EXP:Ａ경험 < 20
 			CALL PRISON_COM2
 		ELSE
 			CALL PRISON_COM102
@@ -170,10 +170,10 @@ SELECTCASE ARG
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
 			CALL PRISON_COM5
 		ELSE
-			;V감각Lv5以上かV확장경험이 10以上でなければＶ拡張
-			IF ABL:V감각 < 5 && EXP:V확장경험 < 10
+			;Ｖ감각Lv5以上かＶ확장경험이 10以上でなければＶ拡張
+			IF ABL:Ｖ감각 < 5 && EXP:Ｖ확장경험 < 10
 				;V経験が少ない場合、V中心攻めにする
-				IF EXP:V경험 < 20
+				IF EXP:Ｖ경험 < 20
 					CALL PRISON_COM1
 				ELSE
 					CALL PRISON_COM101
@@ -203,7 +203,7 @@ SELECTCASE ARG
 			;部位結界
 			SIF SHIELD:2 > 0
 				GOTO SHIELDED
-			IF EXP:A확장경험 > 3
+			IF EXP:Ａ확장경험 > 3
 				CALL PRISON_COM201
 			;拡張経験が足りなければ拡張コマンドにする
 			ELSE
@@ -217,13 +217,13 @@ SELECTCASE ARG
 			;部位結界
 			SIF SHIELD:2 > 0
 				GOTO SHIELDED
-			IF EXP:A확장경험 > 3
+			IF EXP:Ａ확장경험 > 3
 				CALL PRISON_COM201
 			;拡張経験が足りなければ拡張コマンドにする
 			ELSE
 				CALL PRISON_COM102
 			ENDIF
-		ELSEIF EXP:V확장경험 > 3
+		ELSEIF EXP:Ｖ확장경험 > 3
 			CALL PRISON_COM200
 		;拡張経験が足りなければ拡張コマンドにする
 		ELSE
@@ -234,7 +234,7 @@ SELECTCASE ARG
 		;部位結界
 		SIF SHIELD:2 > 0
 			GOTO SHIELDED
-		IF EXP:A확장경험 > 3
+		IF EXP:Ａ확장경험 > 3
 			CALL PRISON_COM201
 		;拡張経験が足りなければ拡張コマンドにする
 		ELSE

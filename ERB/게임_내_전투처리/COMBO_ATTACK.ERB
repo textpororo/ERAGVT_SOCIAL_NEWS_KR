@@ -1,22 +1,22 @@
 ﻿;--------------------------------------------------
-;공격時コンボ系の処理
+;공격 시 콤보계의 처리
 
 
 ;--------------------------------------------------
 
-;空中공격の計算
+;공중 공격의 계산
 @GET_AIR_STRIKE(ARG)
 #FUNCTION
-;회피율上昇
+;회피율 상승
 IF ARG == 1
 	LOCAL = MAX(50 - CFLAG:99 / 5 * 5, 25)
-	;FEATによる공중 성능 강화
+	;FEAT에 따른 공중 성능 강화
 	SIF TALENT:에어마스터 > 0
 		LOCAL += 25
-;공중전특기による直撃率ボーナス
+;공중전특기에 따른 직격률 보너스
 ELSEIF ARG == 2
 	LOCAL = 25
-;공중전서툼による直撃率ペナルティ
+;공중전서툼에 따른 직격률 패널티
 ELSEIF ARG == 3
 	LOCAL = 10
 ENDIF
@@ -36,7 +36,7 @@ ENDIF
 SIF LOCAL > 25
 	LOCAL = 25
 IF ARGS=="명중" && TCVARn:TARGET:0==1
-	;근거리は연속実行ボーナスを極端に
+	;근거리는 연속 실행 보너스를 극단적으로
 	IF TALENT:근거리특기
 		TIMES LOCAL,3
 	ELSEIF TALENT:근거리서툼
@@ -45,7 +45,7 @@ IF ARGS=="명중" && TCVARn:TARGET:0==1
 		TIMES LOCAL,1.7
 	ENDIF
 ELSEIF ARGS=="회피" && TCVARn:TARGET:0==2
-	;중거리は回避ペナルティを軽減
+	;중거리는 회피 패널티를 경감
 	IF TALENT:중거리특기
 		TIMES LOCAL,0.8
 	ELSEIF TALENT:중거리서툼
@@ -54,7 +54,7 @@ ELSEIF ARGS=="회피" && TCVARn:TARGET:0==2
 		TIMES LOCAL,0.85
 	ENDIF
 ELSEIF ARGS=="회피" && TCVARn:TARGET:0==3
-	;원거리は回避ペナルティを軽減
+	;원거리는 회피 패널티를 경감
 	IF TALENT:원거리특기
 		TIMES LOCAL,0.7
 	ELSEIF TALENT:원거리서툼
@@ -65,7 +65,7 @@ ELSEIF ARGS=="회피" && TCVARn:TARGET:0==3
 ENDIF
 RETURNF LOCAL
 
-;연속ヒットコンボの計算
+;연속 히트 콤보 계산
 @GET_CHAIN_HIT(ARG)
 #FUNCTION
 IF ARG < 6
@@ -79,7 +79,7 @@ SIF LOCAL > 200
 	LOCAL = 200
 RETURNF LOCAL
 
-;방어공격コンボの計算
+;방어 공격 콤보 계산
 @GET_COUNTER_ATTACK(ARG)
 #FUNCTION
 IF ARG == 1
@@ -89,7 +89,7 @@ ELSEIF ARG == 2
 ENDIF
 RETURNF LOCAL
 
-;연속回避コンボの計算
+;연속 회피 콤보 계산
 @GET_EVADER_ATK(ARG)
 #FUNCTION
 IF ARG < 6
@@ -115,27 +115,27 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;コンボ系表示
+;콤보계 표시
 @PRINT_COMBO
-;文字間隔
+;문자 간격
 #DIM LENS
 
 LENS = 26
 
 IF GETBIT(TCVARn:216, 1)
-	;エアストライク
-	LOCALS:0 = 　＋AIR STRIKE
-	LOCALS:1 = 空中공격
+	;에어 스트라이크
+	LOCALS:0 = 　＋ AIR STRIKE
+	LOCALS:1 = 공중 공격
 	CALL CLOTH_BATTLE_HOSEI, "AIRPLUS", TARGET
 	LOCAL = MIN(TALENT:공중전특기 > 0, 1) * GET_AIR_STRIKE(2) + RESULT * 25 - MIN(TALENT:공중전서툼 > 0, 1) * GET_AIR_STRIKE(3)
 	IF LOCAL > 0
-		LOCALS:2 = 直撃率＋{LOCAL}％　회피율＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 직격률 ＋{LOCAL}％　회피율 ＋{GET_AIR_STRIKE(1)}％
 	ELSEIF LOCAL < 0
-		;負の値を反転して表示
+		;음의 값을 반전하여 표시
 		LOCAL *= -1
-		LOCALS:2 = 直撃率−{LOCAL}％　회피율＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 직격률 −{LOCAL}％　회피율 ＋{GET_AIR_STRIKE(1)}％
 	ELSE
-		LOCALS:2 = 회피율＋{GET_AIR_STRIKE(1)}％
+		LOCALS:2 = 회피율 ＋{GET_AIR_STRIKE(1)}％
 	ENDIF
 	IF TALENT:공중전특기 > 0
 		LOCALS:2 += @"（공중전특기）"
@@ -150,89 +150,89 @@ IF GETBIT(TCVARn:216, 1)
 	PRINTL 
 ENDIF
 IF GETBIT(TCVARn:217, 0)
-	;バースト공격
+	;버스트 공격
 	LOCALS:0 = 　＋BURST STRIKE
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "연속"
-			LOCALS:1 = バースト공격：연속
-			LOCALS:2 = 6回연속공격
+			LOCALS:1 = 버스트 공격：연속
+			LOCALS:2 = 6회 연속 공격
 		CASE "장갑"
-			LOCALS:1 = バースト공격：장갑
-			LOCALS:2 = 直撃率アップ＋공격後にオートガード
+			LOCALS:1 = 버스트 공격：장갑
+			LOCALS:2 = 직격률 증가＋공격 후 자동 방어
 		CASE "교란"
-			LOCALS:1 = バースト공격：교란
-			LOCALS:2 = 与ダメージアップ＋怯み効果
+			LOCALS:1 = 버스트 공격：교란
+			LOCALS:2 = 입히는 피해량 증가＋기죽임 효과
 		CASE "중격"
-			LOCALS:1 = バースト공격：중격
-			LOCALS:2 = 直撃しにくい大ダメージ공격
+			LOCALS:1 = 버스트 공격：중격
+			LOCALS:2 = 직격률이 낮지만 위력이 막대한 공격
 		CASE "광역"
-			LOCALS:1 = バースト공격：광역
-			LOCALS:2 = 必中공격＋反動で回避不能
+			LOCALS:1 = 버스트 공격：광역
+			LOCALS:2 = 필중 공격＋반동으로 회피 불능
 		CASE "전력"
-			LOCALS:1 = バースト공격：전력
-			LOCALS:2 = 捨て身の大ダメージ공격
+			LOCALS:1 = 버스트 공격：전력
+			LOCALS:2 = 이판사판 필사의 특대 피해량 공격
 		CASE "지략"
-			LOCALS:1 = バースト공격：지략
-			LOCALS:2 = クリティカル率アップ＋관찰한다効果
+			LOCALS:1 = 버스트 공격：지략
+			LOCALS:2 = 치명타율 증가＋관찰한다 효과
 		CASE "설치"
-			LOCALS:1 = バースト공격：설치
-			LOCALS:2 = 油断効果2倍
+			LOCALS:1 = 버스트 공격：설치
+			LOCALS:2 = 방심 효과 2배
 		CASE "사역"
-			LOCALS:1 = バースト공격：사역
-			LOCALS:2 = 直撃しにくい大ダメージ공격
+			LOCALS:1 = 버스트 공격：사역
+			LOCALS:2 = 직격률이 낮지만 위력이 막대한 공격
 		CASE "통상"
-			LOCALS:1 = バースト공격：통상
-			LOCALS:2 = 与ダメージアップ＋直撃率アップ
+			LOCALS:1 = 버스트 공격：통상
+			LOCALS:2 = 입히는 피해량 증가＋직격률 증가
 	ENDSELECT
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%
 	PRINTL 
 ENDIF
-;※악질 시민戦のブレイブヒット、チェインヒットは別の判定に使われている
+;※악질 시민전의 BRAVE HIT、CHAIN HIT는 다른 판정에 사용되고 있다
 IF TFLAG:30 > 1 && FLAG:73 == 0
-	;ブレイブヒット
-	;同じ距離で戦い続けると加算されていく
-	;拘束された場合、または移動するか距離を取るとリセットされる
-	LOCALS:0 = 　＋BRAVE HIT
-	LOCALS:1 = 同一距離연속実行({TFLAG:30 - 1})
-	LOCALS:2 = 直撃率＋{GET_BRAVE_HIT(TFLAG:30 - 1,"명중") - 3}％　회피율−{GET_BRAVE_HIT(TFLAG:30 - 1,"회피")}％
+	;BRAVE HIT
+	;같은 거리에서 계속 싸우면 가산되어 간다
+	;구속될 경우, 또는 이동하거나 거리를 벌릴 경우 초기화된다
+	LOCALS:0 = 　＋ BRAVE HIT
+	LOCALS:1 = 동일 거리 연속 실행 ({TFLAG:30 - 1})
+	LOCALS:2 = 직격률 ＋{GET_BRAVE_HIT(TFLAG:30 - 1,"명중") - 3}％　회피율 −{GET_BRAVE_HIT(TFLAG:30 - 1,"회피")}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%
 	PRINTL 
 ENDIF
 IF TFLAG:31 > 0 && FLAG:73 == 0
-	;チェインヒット
-	;연속で공격を命中させると加算されていく
-	;カス当たりでも加算されるが、拘束されるか距離を取るとリセットされる
-	LOCALS:0 = 　＋CHAIN HIT
-	LOCALS:1 = 연속で공격ヒット({TFLAG:31})
-	LOCALS:2 = 与ダメージ＋{GET_CHAIN_HIT(TFLAG:31) - 100}％
+	;CHAIN HIT
+	;연속으로 공격을 명중시키면 가산되어 간다
+	;공격이 가드되어도(カス当たり) 가산되지만, 구속되거나 거리를 벌릴 경우 초기화된다
+	LOCALS:0 = 　＋ CHAIN HIT
+	LOCALS:1 = 연속으로 공격 히트 ({TFLAG:31})
+	LOCALS:2 = 입히는 피해량 ＋{GET_CHAIN_HIT(TFLAG:31) - 100}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%
 	PRINTL 
 ENDIF
 IF TFLAG:32 > 0
-	;カウンターアタック
-	;방어を使った後に공격すると発動する、累積はしない
-	;キャラの방어力に応じて性能が強化されていく
-	LOCALS:0 = 　＋COUNTER ATTACK
-	LOCALS:1 = 방어しながら공격({TFLAG:32})
-	LOCALS:2 = 直撃率＋{GET_COUNTER_ATTACK(1)}％　被ダメージ−{GET_COUNTER_ATTACK(2)}％
+	;COUNTER ATTACK
+	;방어 혹은 반격을 사용한 후에 공격하면 발동한다, 그러나 누적되지는 않는다
+	;캐릭터의 방어력에 따라 성능이 강화되어 간다
+	LOCALS:0 = 　＋ COUNTER ATTACK
+	LOCALS:1 = 방어하면서 공격 ({TFLAG:32})
+	LOCALS:2 = 직격률 ＋{GET_COUNTER_ATTACK(1)}％　받는 피해량 −{GET_COUNTER_ATTACK(2)}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%
 	PRINTL 
 ENDIF
 IF TFLAG:33 > 1
-	;イベーダー
-	;연속で回避を成功させると加算されていく。敵が距離を取った場合は加算されない
-	;始動が遅いが、距離を取ってもリセットされない。被弾するとリセットされる
-	LOCALS:0 = 　＋EVADER
-	LOCALS:1 = 연속で回避成功({TFLAG:33 - 1})
-	LOCALS:2 = 与ダメージ＋{(GET_EVADER_ATK(TFLAG:33 - 1) - 100) / 2}％　クリティカル率＋{GET_EVADER_CRT(TFLAG:33 - 1)}％
+	;EVADER
+	;연속으로 회피를 성공시키면 가산되어 간다. 적이 거리를 벌린 경우는 가산되지 않는다
+	;시동이 느리지만, 거리를 벌려도 리셋되지 않는다. 피격될 시 초기화된다
+	LOCALS:0 = 　＋ EVADER
+	LOCALS:1 = 연속으로 회피 성공 ({TFLAG:33 - 1})
+	LOCALS:2 = 입히는 피해량 ＋{(GET_EVADER_ATK(TFLAG:33 - 1) - 100) / 2}％　치명타율 ＋{GET_EVADER_CRT(TFLAG:33 - 1)}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
 	PRINTFORM %LOCALS:2%

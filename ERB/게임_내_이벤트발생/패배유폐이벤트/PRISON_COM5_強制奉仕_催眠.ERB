@@ -9,10 +9,10 @@ VARSET LOCAL
 TFLAG:10 = 5
 
 ;取得する珠
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활 윤활は未使用
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -32,8 +32,8 @@ TFLAG:10 = 5
 ;LOCAL:132 고통쾌락경험,
 ;LOCAL:140 자위경험,
 ;LOCAL:150 이상경험
-;LOCAL:151 V확장경험
-;LOCAL:152 A확장경험
+;LOCAL:151 Ｖ확장경험
+;LOCAL:152 Ａ확장경험
 ;LOCAL:153 사정경험
 ;LOCAL:154 모유경험
 ;LOCAL:155 방뇨경험
@@ -48,38 +48,38 @@ SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
 ;快C
-IF ABL:C감각 == 0
+IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 1
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:0 = 2
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:0 = 20
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:0 = 100
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:0 = 200
-ELSEIF ABL:C감각 >= 5
+ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 400
 ENDIF
 
 ;快V
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 1
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 5
 		LOCAL:1 = 2
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 8
 		LOCAL:1 = 20
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 11
 		LOCAL:1 = 100
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 15
 		LOCAL:1 = 200
-	ELSEIF ABL:V감각 >= 5
+	ELSEIF ABL:Ｖ감각 >= 5
 		LOCAL:120 = 20
 		LOCAL:1 = 400
 	ENDIF
@@ -87,40 +87,40 @@ ENDIF
 
 ;快A
 ;A経験がないならAには入れない
-IF EXP:A경험 > 0
-	IF ABL:A감각 == 0
+IF EXP:Ａ경험 > 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:121 = 2
 		LOCAL:2 = 1
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:121 = 5
 		LOCAL:2 = 2
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:121 = 8
 		LOCAL:2 = 20
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:121 = 11
 		LOCAL:2 = 100
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:121 = 15
 		LOCAL:2 = 200
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:121 = 20
 		LOCAL:2 = 400
 	ENDIF
 ENDIF
 
 ;快B
-IF ABL:B감각 == 0
+IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 1
-ELSEIF ABL:B감각 == 1
+ELSEIF ABL:Ｂ감각 == 1
 	LOCAL:3 = 2
-ELSEIF ABL:B감각 == 2
+ELSEIF ABL:Ｂ감각 == 2
 	LOCAL:3 = 20
-ELSEIF ABL:B감각 == 3
+ELSEIF ABL:Ｂ감각 == 3
 	LOCAL:3 = 100
-ELSEIF ABL:B감각 == 4
+ELSEIF ABL:Ｂ감각 == 4
 	LOCAL:3 = 200
-ELSEIF ABL:B감각 >= 5
+ELSEIF ABL:Ｂ감각 >= 5
 	LOCAL:3 = 400
 ENDIF
 

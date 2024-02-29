@@ -85,27 +85,27 @@ ENDIF
 
 LOCAL = 1
 ;特定部位絶頂が10回以上
-IF EX:C절정 > 9 || EX:V절정 > 9 || EX:A절정 > 9 || EX:B절정 > 9
+IF EX:Ｃ절정 > 9 || EX:Ｖ절정 > 9 || EX:Ａ절정 > 9 || EX:Ｂ절정 > 9
 	PRINTFORML 「ぅあ、ぁ……%SELF_CALL_SINGLE()%、%SELF_CALL(7)%…くぅぅん……勝っ、た……の…？」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:B절정 > 9
+	IF RESULT == 0 && EX:Ｂ절정 > 9
 		PRINTFORML 数えきれないほど胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた。
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:C절정 > 9
+	ELSEIF RESULT == 1 && EX:Ｃ절정 > 9
 		PRINTFORML  数えきれないほどイかされ、敏感になった%CALLNAME%の陰核は
 		PRINTFORML 今再び、意思なき微風にすらイかされようとしている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 9
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 9
 		PRINTFORML  数えきれないほどイかされ、%CALLNAME%の菊門はぽっかりと口をあけている……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:V절정 > 9
+	ELSEIF RESULT == 3 && EX:Ｖ절정 > 9
 		PRINTFORML 数えきれないほどイかされた%CALLNAME%の蜜壷は、ドロドロに蕩けている……
 		LOCAL = 0
 	ENDIF
 	WEND
 ;絶頂回数10回以上
-ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 9
+ELSEIF (EX:Ｃ절정 + EX:Ｖ절정 + EX:Ａ절정 + EX:Ｂ절정) > 9
 	PRINTFORML 「……………あっ、ンンんんん！！」
 	PRINTFORML 数えきれないほどイかされた%타겟은% 、地面に倒れ伏せ、ビクビクと痙攣している。
 ELSEIF PALAM:치정 > 100000
@@ -117,20 +117,20 @@ ELSEIF PALAM:치정 > 100000
 		PRINTFORML 全てを曝け出してしまった%타겟은% 蒼白になって절망している……
 	ENDIF
 ;特定部位絶頂が3回以上
-ELSEIF EX:C절정 > 2 || EX:V절정 > 2 || EX:A절정 > 2 || EX:B절정 > 2
+ELSEIF EX:Ｃ절정 > 2 || EX:Ｖ절정 > 2 || EX:Ａ절정 > 2 || EX:Ｂ절정 > 2
 	PRINTFORML 「あン…勝て、アッ、たの…？あっ、ンンん！！」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:C절정 > 2
+	IF RESULT == 0 && EX:Ｃ절정 > 2
 		PRINTFORML  何度もイかされ、%타겟은% 歩くことも出来なさそうだ……
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:V절정 > 2
+	ELSEIF RESULT == 1 && EX:Ｖ절정 > 2
 		PRINTFORML  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 2
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 2
 		PRINTFORML  何度もイかされ、%CALLNAME%の菊門は ヒクヒクと痙攣している……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:B절정 > 2
+	ELSEIF RESULT == 3 && EX:Ｂ절정 > 2
 		PRINTFORML  何度も胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた
 		LOCAL = 0
 	ENDIF

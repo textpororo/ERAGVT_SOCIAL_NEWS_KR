@@ -187,10 +187,10 @@ VARSET LOCAL
 TFLAG:10 = 105
 
 ;取得する珠
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활 윤활は未使用
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -210,8 +210,8 @@ TFLAG:10 = 105
 ;LOCAL:132 고통쾌락경험,
 ;LOCAL:140 자위경험,
 ;LOCAL:150 이상경험
-;LOCAL:151 V확장경험
-;LOCAL:152 A확장경험
+;LOCAL:151 Ｖ확장경험
+;LOCAL:152 Ａ확장경험
 ;LOCAL:153 사정경험
 ;LOCAL:154 모유경험
 ;LOCAL:155 방뇨경험
@@ -256,17 +256,17 @@ IF TALENT:거유 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:거유 < 2 || TALENT
 	
 ELSE
 	;快B
-	IF ABL:B감각 == 0
+	IF ABL:Ｂ감각 == 0
 		LOCAL:3 = 100
-	ELSEIF ABL:B감각 == 1
+	ELSEIF ABL:Ｂ감각 == 1
 		LOCAL:3 = 150
-	ELSEIF ABL:B감각 == 2
+	ELSEIF ABL:Ｂ감각 == 2
 		LOCAL:3 = 200
-	ELSEIF ABL:B감각 == 3
+	ELSEIF ABL:Ｂ감각 == 3
 		LOCAL:3 = 600
-	ELSEIF ABL:B감각 == 4
+	ELSEIF ABL:Ｂ감각 == 4
 		LOCAL:3 = 1000
-	ELSEIF ABL:B감각 >= 5
+	ELSEIF ABL:Ｂ감각 >= 5
 		LOCAL:3 = 1500
 	ENDIF
 

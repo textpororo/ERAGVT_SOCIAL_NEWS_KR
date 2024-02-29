@@ -29,11 +29,11 @@ FOR LOCAL, 0, CHARANUM
 		CONTINUE
 	
 	;男キャラの場合は平等컨피그ONかつA感度2以上の場合のみ
-	SIF (ISHOLE() == 0) || (ISMALE() && ABL:A감각 < 2)
+	SIF (ISHOLE() == 0) || (ISMALE() && ABL:Ａ감각 < 2)
 		CONTINUE
 
 	;성처녀の場合は奉仕+정액중독+A感度が2以上の場合のみ
-	SIF CHECK_HOLYVIRGIN_F()==1 && ABL:봉사정신 + ABL:정액중독 + ABL:A감각 < 3
+	SIF CHECK_HOLYVIRGIN_F()==1 && ABL:봉사정신 + ABL:정액중독 + ABL:Ａ감각 < 3
 		CONTINUE
 		
 	;男キャラで짝사랑の場合は弾く
@@ -121,8 +121,8 @@ ENDIF
 ;追加で自慰が発生した場合に備えて二度目のリセット
 VARSET NOWEX
 
-;A감각が2以上なら애널セックスできる
-SIF ABL:ARG:A감각 > 1
+;Ａ감각が2以上なら애널セックスできる
+SIF ABL:ARG:Ａ감각 > 1
 	LOCAL:0 = 1
 
 IF LOCAL:0 == 0
@@ -168,52 +168,52 @@ REND
 
 ;ベース
 SIF CHECK_HOLYVIRGIN_F()==0
-	EXP:ARG:V경험 += 1
+	EXP:ARG:Ｖ경험 += 1
 
 EXP:ARG:정액경험 += 1
 EXP:ARG:펠라경험 += 1
 ;快C
-IF ABL:ARG:C감각 == 0
+IF ABL:ARG:Ｃ감각 == 0
 	LOCAL:0 = 200
-ELSEIF ABL:ARG:C감각 == 1
+ELSEIF ABL:ARG:Ｃ감각 == 1
 	LOCAL:0 = 1000
-ELSEIF ABL:ARG:C감각 == 2
+ELSEIF ABL:ARG:Ｃ감각 == 2
 	LOCAL:0 = 2000
-ELSEIF ABL:ARG:C감각 == 3
+ELSEIF ABL:ARG:Ｃ감각 == 3
 	LOCAL:0 = 4000
-ELSEIF ABL:ARG:C감각 == 4
+ELSEIF ABL:ARG:Ｃ감각 == 4
 	LOCAL:0 = 10000
-ELSEIF ABL:ARG:C감각 >= 5
+ELSEIF ABL:ARG:Ｃ감각 >= 5
 	LOCAL:0 = 20000
 ENDIF
 
 ;快B
-IF ABL:ARG:B감각 == 0
+IF ABL:ARG:Ｂ감각 == 0
 	LOCAL:3 = 200
-ELSEIF ABL:ARG:B감각 == 1
+ELSEIF ABL:ARG:Ｂ감각 == 1
 	LOCAL:3 = 400
-ELSEIF ABL:ARG:B감각 == 2
+ELSEIF ABL:ARG:Ｂ감각 == 2
 	LOCAL:3 = 1000
-ELSEIF ABL:ARG:B감각 == 3
+ELSEIF ABL:ARG:Ｂ감각 == 3
 	LOCAL:3 = 2000
-ELSEIF ABL:ARG:B감각 == 4
+ELSEIF ABL:ARG:Ｂ감각 == 4
 	LOCAL:3 = 4000
-ELSEIF ABL:ARG:B감각 >= 5
+ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
 ;快V
-IF ABL:ARG:V감각 == 0
+IF ABL:ARG:Ｖ감각 == 0
 	LOCAL:1 = 200
-ELSEIF ABL:ARG:V감각 == 1
+ELSEIF ABL:ARG:Ｖ감각 == 1
 	LOCAL:1 = 400
-ELSEIF ABL:ARG:V감각 == 2
+ELSEIF ABL:ARG:Ｖ감각 == 2
 	LOCAL:1 = 1000
-ELSEIF ABL:ARG:V감각 == 3
+ELSEIF ABL:ARG:Ｖ감각 == 3
 	LOCAL:1 = 4000
-ELSEIF ABL:ARG:V감각 == 4
+ELSEIF ABL:ARG:Ｖ감각 == 4
 	LOCAL:1 = 10000
-ELSEIF ABL:ARG:V감각 >= 5
+ELSEIF ABL:ARG:Ｖ감각 >= 5
 	LOCAL:1 = 20000
 ENDIF
 
@@ -348,16 +348,16 @@ REND
 
 ;ベース
 EXP:ARG:정액경험 += 1
-EXP:ARG:A경험 += 1
+EXP:ARG:Ａ경험 += 1
 EXP:ARG:펠라경험 += 1
 ;快A
-IF ABL:ARG:A감각 == 2
+IF ABL:ARG:Ａ감각 == 2
 	LOCAL:2 = 2000
-ELSEIF ABL:ARG:A감각 == 3
+ELSEIF ABL:ARG:Ａ감각 == 3
 	LOCAL:2 = 4000
-ELSEIF ABL:ARG:A감각 == 4
+ELSEIF ABL:ARG:Ａ감각 == 4
 	LOCAL:2 = 10000
-ELSEIF ABL:ARG:A감각 >= 5
+ELSEIF ABL:ARG:Ａ감각 >= 5
 	LOCAL:2 = 20000
 ENDIF
 

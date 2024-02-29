@@ -730,26 +730,26 @@ CFLAG:9 = CFLAG:ARG:230
 
 ;Ｃ촉수
 IF CFLAG:ARG:230 == 1
-	TALENT:C민감 = 1
-	TALENT:C둔감 = 0
+	TALENT:Ｃ민감 = 1
+	TALENT:Ｃ둔감 = 0
 	PAPA_POWER = 10
 	SETBIT RELATION:TARGET:TARGET, Ｃ촉수
 ;Ｖ촉수
 ELSEIF CFLAG:ARG:230 == 2
-	TALENT:V민감 = 1
-	TALENT:V둔감 = 0
+	TALENT:Ｖ민감 = 1
+	TALENT:Ｖ둔감 = 0
 	PAPA_POWER = 10
 	SETBIT RELATION:TARGET:TARGET, Ｖ촉수
 ;Ａ촉수
 ELSEIF CFLAG:ARG:230 == 3
-	TALENT:A민감 = 1
-	TALENT:A둔감 = 0
+	TALENT:Ａ민감 = 1
+	TALENT:Ａ둔감 = 0
 	PAPA_POWER = 10
 	SETBIT RELATION:TARGET:TARGET, Ａ촉수
 ;Ｂ촉수
 ELSEIF CFLAG:ARG:230 == 4
-	TALENT:B민감 = 1
-	TALENT:B둔감 = 0
+	TALENT:Ｂ민감 = 1
+	TALENT:Ｂ둔감 = 0
 	PAPA_POWER = 10
 	SETBIT RELATION:TARGET:TARGET, Ｂ촉수
 ;Ｓ촉수
@@ -770,16 +770,16 @@ ELSEIF CFLAG:ARG:230 == 7
 ;최종 보스계
 ELSEIF CFLAG:ARG:230 >= 100 && CFLAG:ARG:230 < 200
 	;모든 부위 민감
-	TALENT:C민감 = 1
+	TALENT:Ｃ민감 = 1
 	SIF ISFEMALE()
-		TALENT:V민감 = 1
-	TALENT:A민감 = 1
-	TALENT:B민감 = 1
+		TALENT:Ｖ민감 = 1
+	TALENT:Ａ민감 = 1
+	TALENT:Ｂ민감 = 1
 	;모든 부위에서 둔감 삭제
-	TALENT:C둔감 = 0
-	TALENT:V둔감 = 0
-	TALENT:A둔감 = 0
-	TALENT:B둔감 = 0
+	TALENT:Ｃ둔감 = 0
+	TALENT:Ｖ둔감 = 0
+	TALENT:Ａ둔감 = 0
+	TALENT:Ｂ둔감 = 0
 	PAPA_POWER = 15
 	SETBIT RELATION:TARGET:TARGET, 혈통불명
 ;잡몹 범용
@@ -812,12 +812,12 @@ ELSE
 ENDIF
 ;남자일 경우, V관련 소질은 붙지 않는다
 IF ISMALE()
-	IF TALENT:V민감 > 0
-		TALENT:C민감 = 1
-		TALENT:C둔감 = 0
+	IF TALENT:Ｖ민감 > 0
+		TALENT:Ｃ민감 = 1
+		TALENT:Ｃ둔감 = 0
 	ENDIF
-	TALENT:V민감 = 0
-	TALENT:V둔감 = 0
+	TALENT:Ｖ민감 = 0
+	TALENT:Ｖ둔감 = 0
 ENDIF
 
 ;부모의 능력에 따라 기초값에 보너스

@@ -1,9 +1,9 @@
 ﻿;--------------------------------------------------
-;パラメータの計算に関する共通関数
-;ARG:0 쾌C　ARG:1 쾌V　ARG:2 쾌A　ARG:3 쾌B 
+;파라미터 계산에 관한 공통 함수
+;ARG:0 쾌Ｃ　ARG:1 쾌Ｖ　ARG:2 쾌Ａ　ARG:3 쾌Ｂ 
 ;ARG:4 윤활  ARG:5 공순  ARG:6 습득  ARG:7 욕정
 ;ARG:8 굴복  ARG:9 치정  ARG:10고통　ARG:11공포
-;ARG:12 체력消費指定
+;ARG:12 체력 소비 지정
 @PALAM_CAL, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4, ARG:5, ARG:6, ARG:7, ARG:8, ARG:9, ARG:10, ARG:11 , ARG:12 = 0
 #DIM ECS_FLAG
 #DIM ECS_NUM
@@ -11,7 +11,7 @@
 
 VARSET LOCAL
 
-;現在のパラメータを表示用に逃がす
+;현재 파라미터를 표시용으로 놓아 준다
 FOR LOCAL:98, 0, PALAM수
 	LOCAL:99 = LOCAL:98
 	SIF LOCAL:98 >= 감각수
@@ -20,7 +20,7 @@ FOR LOCAL:98, 0, PALAM수
 	LOCAL:(LOCAL:99+100) = PALAM:(LOCAL:99)
 NEXT
 
-;감각LV6以上補正
+;감각LV6 이상 보정
 FOR LOCAL:0, 0, 감각수
 	CALL PALAM_OVERFEEL, TARGET, LOCAL:0
 	ARG:(LOCAL:0) = ARG:(LOCAL:0) * RESULT / 100
@@ -29,44 +29,44 @@ NEXT
 VARSET ECS_FLAG
 FOR LOCAL:0, 0, 감각수
 	IF ARG:(LOCAL:0) > 0
-		;体勢に関する補正
+		;자세에 관한 보정
 		CALL PALAM_HOSEI_POSE, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;성내성に関する補正
+		;성내성에 관한 보정
 		CALL PALAM_HOSEI_SEITAISEI, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;素質に関する補正
+		;소질에 관한 보정
 		CALL PALAM_HOSEI_TALENT, LOCAL:0, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;성격に関する補正
+		;성격에 관한 보정
 		CALL PALAM_HOSEI_SEIKAKU, LOCAL:0, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;촉수に関する補正
+		;촉수에 관한 보정
 		CALL PALAM_HOSEI_TENTACLE, LOCAL:0, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;ランダム性付与
+		;랜덤성 부여
 		CALL PALAM_HOSEI_RANDOM, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 		
-		;下限値の설정
+		;하한값 설정
 		SIF ARG:(LOCAL:0) <= 0
 			ARG:(LOCAL:0) = 1
 	ENDIF
-	;PALAM補正をARGに加算する
+	;PALAM 보정을 ARG에 가산한다
 	ARG:(LOCAL:0) += COMMON_PALAM:(LOCAL:0)
 
-	;絶頂抑制チェックのための計算
+	;절정 억제 체크를 위한 계산
 	SIF PALAM:(LOCAL:0) + ARG:(LOCAL:0) > 10000
 		LOCAL:1 += PALAM:(LOCAL:0) + ARG:(LOCAL:0) * (ABL:(LOCAL:0) + 10) / 15 * (TALENT:(LOCAL:0 + 153) + 5) / 5
 
 NEXT
 
-;絶頂の可否の判定
+;절정의 가부(可否)의 판정
 IF LOCAL:1 > 0
 	ECS_FLAG = LOCAL:1 * (ABL:욕망 + 5) / 10
 	ECS_FLAG = ECS_FLAG * (ABL:촉수중독 + 5) / 10
@@ -77,37 +77,37 @@ IF LOCAL:1 > 0
 	ECS_FLAG = ECS_FLAG * (PALAMLV_F(PALAM:굴복) + 25) / 30
 	ECS_FLAG /= SQRT(LIMIT(BASE:성내성 * 4, 1, 250) * LIMIT(BASE:기력 / 4, 1, 2500)) / 2 + 10
 	ECS_FLAG = LIMIT(ECS_FLAG, 32, 240)
-	;견딘다選択中なら絶頂しにくくなる
+	;【견딘다】선택 중이라면 절정하기 어려워진다
 	SIF TCVARn:2 == 자세：견딘다
 		TIMES ECS_FLAG, 0.65
-	;가만히있는다選択中なら絶頂しやすくなる
+	;【가만히있는다】선택 중이라면 절정하기 쉬워진다
 	SIF TCVARn:2 == 자세：가만히있는다
 		TIMES ECS_FLAG, 1.25
-	;사정 게이지が限界なら絶頂しやすくなる
+	;사정 게이지가 한계라면 절정하기 쉬워진다
 	IF BASE:사정 >= MAXBASE:사정 * 2
 		TIMES ECS_FLAG, 1.5
 	ELSEIF BASE:사정 >= MAXBASE:사정
 		TIMES ECS_FLAG, 1.25
 	ENDIF
-	;받아들인다、または기절中なら抑制できない
+	;【받아들인다】또는【기절】중이라면 억제할 수 없다
 	SIF TCVARn:2 == 자세：받아들인다 || (TCVARn:12 & 기절)
 		ECS_FLAG = 256
 
 	SETCOLOR 96, 96, 96
 	SIF FLAG:999 == 1
-		PRINTFORML /* debug */ 絶頂確率{ECS_FLAG, 3} / 256
+		PRINTFORML /* debug */ 절정 확률 {ECS_FLAG, 3} / 256
 	RESETCOLOR
 
 	LOCAL:2 = RAND:256
-	;絶頂禁止中
+	;절정 금지 중
 	IF TCVARn:40 > 0
 		ARG:(LOCAL:0 == 욕정 - PALAM시점 + 감각수) = ARG:(LOCAL:0 == 욕정 - PALAM시점 + 감각수) * 3 / 2
 		ECS_FLAG += 1000
 	ELSE
-		;絶頂可能
+		;절정 가능
 		IF ECS_FLAG > LOCAL:2
 			ECS_FLAG = 0
-		;絶頂抑制
+		;절정 억제
 		ELSE
 			ARG:(LOCAL:0 == 욕정 - PALAM시점 + 감각수) = ARG:(LOCAL:0 == 욕정 - PALAM시점 + 감각수) * 6 / 5
 		ENDIF
@@ -116,7 +116,7 @@ ELSE
 	ECS_FLAG = -1
 ENDIF
 
-;絶頂懇願
+;절정 애원
 IF ECS_FLAG > 1000
 	ARG:(LOCAL:0 == 공순 - PALAM시점 + 감각수) *= 2
 	ARG:(LOCAL:0 == 굴복 - PALAM시점 + 감각수) *= 2
@@ -131,39 +131,39 @@ IF ECS_FLAG > 1000
 	LOCAL:1 = RAND:256
 	SETCOLOR 96, 96, 96
 	SIF FLAG:999 == 1
-		PRINTFORML /* debug */ 懇願確率{LOCAL:2, 3} / 256
+		PRINTFORML /* debug */ 절정 애원 확률 {LOCAL:2, 3} / 256
 	RESETCOLOR
 
 	SIF LOCAL:2 > LOCAL:1
 		ECS_FLAG += 1000
 ENDIF
 
-;以降、
-;ECS_FLAG > 2000で絶頂懇願
-;ECS_FLAG > 1000で絶頂禁止
-;ECS_FLAG > 0で絶頂抑制
-;ECS_FLAG <= 0で絶頂可能
+;이후, 
+;ECS_FLAG > 2000으로 절정 애원
+;ECS_FLAG > 1000으로 절정 금지
+;ECS_FLAG > 0으로 절정 억제
+;ECS_FLAG <= 0으로 절정 가능
 
-;戦闘中でなければ堪えない
+;전투 중이 아니면 견딜 수 없다
 SIF ECS_FLAG > 0 && ECS_FLAG < 1000 && FLAG:700 == 0
 	ECS_FLAG = 0
 
-;PALAM補正をARGに加算する
+;PALAM 보정을 ARG에 가산한다
 ;FOR LOCAL, 0, 13
 ;	ARG:LOCAL += COMMON_PALAM:LOCAL
 ;	COMMON_PALAM:LOCAL = 0
 ;NEXT
 
 ECS_NUM = 0
-;快部位の絶頂チェック
+;쾌 부위의 절정 체크
 FOR LOCAL:0, 0, 감각수
 	IF ARG:(LOCAL:0) > 0
 		LOCAL:3 = ARG:(LOCAL:0)
-		;部位結界チェック
-		;戦闘中かつ拘束時でなければ結界は動作しない
+		;부위 결계 체크
+		;전투 중임과 동시에 구속 중이 아니라면 결계는 작동하지 않는다
 		IF BASE:(LOCAL:0 + 30) > 0 && FLAG:700 && TCVARn:0 == 0 && TFLAG:10 != 1006
 
-			;デバッグ表示
+			;DEBUG 표시
 			STRLENFORM {MAXBASE:(LOCAL:0 + 30)}
 			SETCOLOR 96, 96, 96
 			SIF FLAG:999
@@ -171,7 +171,7 @@ FOR LOCAL:0, 0, 감각수
 			RESETCOLOR
 			BASE:(LOCAL:0 + 30) -= LOCAL:3
 			LOCAL:3 = 0
-			;戦闘中でなければ表示しない
+			;전투 중이 아니면 표시하지 않는다
 			SIF FLAG:700
 				CALL MESSAGE_SHIELD_STATE, LOCAL:0
 		ENDIF
@@ -179,34 +179,34 @@ FOR LOCAL:0, 0, 감각수
 		CALL PALAM_ECSTASY, LOCAL:0, LOCAL:3, LOCAL:0, ECS_FLAG
 	ENDIF
 
-	;絶頂による굴복の増加
+	;절정에 따른 굴복의 증가
 	ECS_NUM += NOWEX:(LOCAL:0)
 NEXT
 
-;촉수サイズ表示、拡張度チェック
+;촉수 크기 표시, 확장도 체크
 IF TFLAG:1 == 0
 	SIF FLAG:700 > 0 && CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:34 > 0
 		CALL PRINT_TENTACLE_SIZE, ARG:0, ARG:1, ARG:2, ARG:3
-	;拡張判定
-	;改行判定用フラグ
+	;확장 판정
+	;개행(改行) 판정용 플래그
 	LOCAL:1 = 0
-	SIF TENTACLE_SIZE:1:쾌V > 0 && (INSERT & Ｖ)
+	SIF TENTACLE_SIZE:1:쾌Ｖ > 0 && (INSERT & Ｖ)
 		CALL GET_V_GAPING_EXP(GAPING_SIZE_TO_POINT("Ｖ"))
-	SIF TENTACLE_SIZE:1:쾌A > 0 && (INSERT & Ａ)
+	SIF TENTACLE_SIZE:1:쾌Ａ > 0 && (INSERT & Ａ)
 		CALL GET_A_GAPING_EXP(GAPING_SIZE_TO_POINT("Ａ"))
-	IF TENTACLE_SIZE:1:쾌V > 0 && (INSERT & Ｖ)
+	IF TENTACLE_SIZE:1:쾌Ｖ > 0 && (INSERT & Ｖ)
 		CALL V_GAPING(GAPING_SIZE_TO_POINT("Ｖ"))
 		IF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
-			PRINTFORML 　膣径：＋{RESULT / 10}.{RESULT % 10} cm
+			PRINTFORML 　질 지름：＋{RESULT / 10}.{RESULT % 10} cm
 			LOCAL:1 = 1
 		ENDIF
 	ENDIF
-	IF TENTACLE_SIZE:1:쾌A > 0 && (INSERT & Ａ)
+	IF TENTACLE_SIZE:1:쾌Ａ > 0 && (INSERT & Ａ)
 		CALL A_GAPING(GAPING_SIZE_TO_POINT("Ａ"))
 		IF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
 			SIF LOCAL:1 == 0
 				PRINTL
-			PRINTFORML 　肛径：＋{RESULT / 10}.{RESULT % 10} cm
+			PRINTFORML 　애널 지름：＋{RESULT / 10}.{RESULT % 10} cm
 			LOCAL:1 = 1
 		ENDIF
 	ENDIF
@@ -218,26 +218,26 @@ NEXT
 SIF LOCAL:1 == 1
 	PRINTL
 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 > 0 || GETBATTLESITUATION("상시 촬영")
-	;질내사정されたところを見られた
+	;질내사정 당하는 모습을 보였다
 	SIF (STAIN:3 & 4)
 		SETBIT TFLAG:21,4
-	;애널에 사정されたところを見られた
+	;애널에 사정당하는 모습을 보였다
 	SIF (STAIN:4 & 4)
 		SETBIT TFLAG:21,5
-	;精液ぶっかけされたところを見られた
+	;정액 붓카케 당하는 모습을 보였다
 	SIF (STAIN:0 & 4) || (STAIN:1 & 4) || (STAIN:2 & 4)
 		SETBIT TFLAG:21,6
-	;絶頂したところを見られた
+	;절정하는 모습을 보였다
 	SIF NOWEX:0 + NOWEX:1 + NOWEX:2 + NOWEX:3
 		SETBIT TFLAG:21,8
 ENDIF
 
-;굴복の増加
+;굴복 증가
 SIF ECS_NUM > 0
 	ARG:(굴복 - PALAM시점 + 감각수) += MIN(ECS_NUM * 5000, 20000)
-;공순の増加
+;공순 증가
 SIF ABL:촉수중독 > 0
 	ARG:(공순 - PALAM시점 + 감각수) += MIN(ECS_NUM * 1500 * ABL:촉수중독, 30000)
 SIF TALENT:촉수의포로 > 0
@@ -245,70 +245,70 @@ SIF TALENT:촉수의포로 > 0
 
 FOR LOCAL:0, 감각수, PALAM수
 	LOCAL:1 = LOCAL:0 + PALAM시점 - 감각수
-	;윤활,욕정,치정は後で個別に計算
+	;윤활, 욕정, 치정은 나중에 따로 계산
 	SIF LOCAL:0 == 윤활 - PALAM시점 + 감각수 || LOCAL:0 == 욕정 - PALAM시점 + 감각수 || LOCAL:0 == 치정 - PALAM시점 + 감각수
 		CONTINUE
 
 	IF ARG:(LOCAL:0) > 0
-		;体勢に関する補正
+		;자세에 관한 보정
 		CALL PALAM_HOSEI_POSE, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;성내성に関する補正
+		;성내성에 관한 보정
 		CALL PALAM_HOSEI_SEITAISEI, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;素質に関する補正
+		;소질에 관한 보정
 		CALL PALAM_HOSEI_TALENT, LOCAL:1, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;성격に関する補正
+		;성격에 관한 보정
 		CALL PALAM_HOSEI_SEIKAKU, LOCAL:1, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;촉수に関する補正
+		;촉수에 관한 보정
 		CALL PALAM_HOSEI_TENTACLE, LOCAL:1, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 
-		;촉수중독に関する補正
+		;촉수중독에 관한 보정
 		IF LOCAL:1 == 공순 || LOCAL:1 == 욕정 || LOCAL:1 == 굴복
 			CALL PALAM_HOSEI_POISONING_TENTACLE, ARG:(LOCAL:0)
 			ARG:(LOCAL:0) = RESULT
 		ENDIF
 
-		;ランダム性付与
+		;랜덤성 부여
 		CALL PALAM_HOSEI_RANDOM, ARG:(LOCAL:0)
 		ARG:(LOCAL:0) = RESULT
 		
-		;下限値の설정
+		;하한값 설정
 		SIF ARG:(LOCAL:0) <= 0
 			ARG:(LOCAL:0) = 1
 		
-		;取得パラメータ 상승チェック
+		;취득 파라미터 상승 체크
 		;CALL PALAM_LIMIT, LOCAL:1, ARG:(LOCAL:0)
 	ENDIF
 NEXT
 
 FOR LOCAL:0, 감각수, PALAM수
-	;PALAM補正をARGに加算する
+	;PALAM 보정을 ARG에 가산한다
 	ARG:(LOCAL:0) += COMMON_PALAM:(LOCAL:0)
 	COMMON_PALAM:(LOCAL:0) = 0
 NEXT
 
-;初めてのV拡張の場合、이상경험이 入る
+;첫 V확장일 경우, 이상경험이 들어간다
 IF CFLAG:202 == 0 && TFLAG:20 == 1009
 	CFLAG:202 = 1
 	EXP:이상경험 += 1
 	PRINTFORML %EXPNAME:50%＋1
 ENDIF
-;初めてのA拡張の場合、이상경험이 入る
+;첫 A확장일 경우, 이상경험이 들어간다
 IF CFLAG:203 == 0 && TFLAG:20 == 1010
 	CFLAG:203 = 1
 	EXP:이상경험 += 1
 	PRINTFORML %EXPNAME:50%＋1
 ENDIF
 
-;촉수の사정チェック
+;촉수 사정 체크
 IF FLAG:700 == 1
 	CALL TENTACLE_SYASEI_CHECK
 	SIF (TCVARn:12 & 배란) && (TFLAG:4 & 질)
@@ -320,58 +320,58 @@ IF FLAG:700 == 1
 ENDIF
 
 ;----------------------------------------------------------
-;キャラの사정チェック
+;캐릭터의 사정 체크
 IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 	IF ARG:0 && CONFIG_CHECK_SCREEN_F(1) > 0
 		FONTBOLD
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 사정値＋{ARG:0 + 500 * (NOWEX:C절정 + 1)}
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 사정치 ＋{ARG:0 + 500 * (NOWEX:Ｃ절정 + 1)}
 		FONTREGULAR
 	ENDIF
 	SIF ARG:0 > 0
-		BASE:사정 += ARG:0 + 500 * (NOWEX:C절정 + 1)
-	IF BASE:사정 >= MAXBASE:사정 * 2 && NOWEX:C절정 > 0
+		BASE:사정 += ARG:0 + 500 * (NOWEX:Ｃ절정 + 1)
+	IF BASE:사정 >= MAXBASE:사정 * 2 && NOWEX:Ｃ절정 > 0
 		BASE:사정 = 0
 		ARG:7 += 10000
 		ARG:8 += 8000
 		ARG:9 += 8000
 		ARG:12 += 600
-		;지문；キャラが대량사정した
+		;지문；캐릭터가 대량사정했다
 		CALL MESSAGE_SEX_CHARA_SYASEI_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 대량사정を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 대량사정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_SYASEI_HI
-		;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
+		;현재 성별이나 원래 성별 중 하나가 남자가 아니며, 그 상태에서의 사정이 처음이라면 이상경험 획득
 		IF CFLAG:200 == 0 && (ISFEMALE() || CHARATALENT_F(TARGET,0,"남자") == 0)
 			CFLAG:200 = 1
 			EXP:이상경험 += 1
-			PRINTFORML %EXPNAME:50%＋1
+			PRINTFORML %EXPNAME:50% ＋1
 		ENDIF
 		EXP:사정경험 += 2
-		PRINTFORML %EXPNAME:53%＋2
+		PRINTFORML %EXPNAME:53% ＋2
 		PRINTL 
-		NOWEX:C절정 += 2
+		NOWEX:Ｃ절정 += 2
 	ELSE
-		IF BASE:사정 >= MAXBASE:사정 && NOWEX:C절정 > 0
+		IF BASE:사정 >= MAXBASE:사정 && NOWEX:Ｃ절정 > 0
 			BASE:사정 = MAX(BASE:사정 - MAXBASE:사정, 0)
 			ARG:7 += 5000
 			ARG:8 += 4000
 			ARG:9 += 4000
 			ARG:12 += 300
-			;지문: キャラが사정した
+			;지문: 캐릭터가 사정했다
 			CALL MESSAGE_SEX_CHARA_SYASEI
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 사정を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 사정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_SYASEI
-			;現在の性別か元の性別のどちらかが남자でなく、その状態での사정が初であれば이상경험獲得
+			;현재 성별이나 원래 성별 중 하나가 남자가 아니며, 그 상태에서의 사정이 처음이라면 이상경험 획득
 			IF CFLAG:200 == 0 && (ISFEMALE() || CHARATALENT_F(TARGET,0,"남자") == 0)
 				CFLAG:200 = 1
 				EXP:이상경험 += 1
-				PRINTFORML %EXPNAME:50%＋1
+				PRINTFORML %EXPNAME:50% ＋1
 			ENDIF
 			EXP:사정경험 += 1
-			PRINTFORML %EXPNAME:53%＋1
+			PRINTFORML %EXPNAME:53% ＋1
 			PRINTL 
-			NOWEX:C절정 += 1
+			NOWEX:Ｃ절정 += 1
 		ELSEIF ARG:0 && CONFIG_CHECK_SCREEN_F(1) > 0
 			PRINTL 
 		ENDIF
@@ -379,51 +379,51 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 ENDIF
 
 ;----------------------------------------------------------
-;キャラの모유チェック
+;캐릭터의 모유 체크
 IF TALENT:모유체질 == 1
 	IF ARG:3 && CONFIG_CHECK_SCREEN_F(1) > 0
 		FONTBOLD
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모유値＋{ARG:3 / 4 + 500 * (NOWEX:B절정 + 1)}
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모유치 ＋{ARG:3 / 4 + 500 * (NOWEX:Ｂ절정 + 1)}
 		FONTREGULAR
 	ENDIF
 	SIF ARG:3 > 0
-		BASE:모유 += (ARG:3 / 4 + 500 * (NOWEX:B절정 + 1))
-	IF BASE:모유 >= MAXBASE:모유 * 2 && NOWEX:B절정 > 0
+		BASE:모유 += (ARG:3 / 4 + 500 * (NOWEX:Ｂ절정 + 1))
+	IF BASE:모유 >= MAXBASE:모유 * 2 && NOWEX:Ｂ절정 > 0
 		BASE:모유 = MAXBASE:모유 - 1
 		ARG:5 += 2000
 		ARG:7 += 2000
 		ARG:9 += 2000
-		;지문；キャラが大量모유した
+		;지문；캐릭터가 대량으로 모유를 분비했다
 		CALL MESSAGE_SEX_CHARA_HUNNYU_HI
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 大量모유を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 대량 모유 분비를 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU_HI
 		IF CFLAG:201 == 0
 			CFLAG:201 = 1
 			EXP:이상경험 += 1
-			PRINTFORML %EXPNAME:50%＋1
+			PRINTFORML %EXPNAME:50% ＋1
 		ENDIF
 		EXP:모유경험 += 2
-		PRINTFORML %EXPNAME:54%＋2
+		PRINTFORML %EXPNAME:54% ＋2
 		PRINTL 
 	ELSE
-		IF BASE:모유 >= MAXBASE:모유 && NOWEX:B절정 > 0
+		IF BASE:모유 >= MAXBASE:모유 && NOWEX:Ｂ절정 > 0
 			BASE:모유 = BASE:모유 - MAXBASE:모유
 			ARG:5 += 1000
 			ARG:7 += 1000
 			ARG:9 += 1000
-			;지문: キャラが모유した
+			;지문: 캐릭터가 모유를 분비했다
 			CALL MESSAGE_SEX_CHARA_HUNNYU
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 모유を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 모유 분비를 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_CHARA_HUNNYU
 			IF CFLAG:201 == 0
 				CFLAG:201 = 1
 				EXP:이상경험 += 1
-				PRINTFORML %EXPNAME:50%＋1
+				PRINTFORML %EXPNAME:50% ＋1
 			ENDIF
 			EXP:모유경험 += 1
-			PRINTFORML %EXPNAME:54%＋1
+			PRINTFORML %EXPNAME:54% ＋1
 			PRINTL 
 		ELSEIF ARG:3 && CONFIG_CHECK_SCREEN_F(1) > 0
 			PRINTL 
@@ -434,178 +434,178 @@ PRINTL
 
 
 ;----------------------------------------------------------
-;습득の取得
+;습득 취득
 SIF TCVARn:2 == 자세：봉사한다
 	ARG:6 += 150 + 15 * (ABL:순종 + ABL:봉사정신 * 2)
 
 ;----------------------------------------------------------
-;치정の取得
+;치정 취득
 
-;衣服の損傷LVによる치정の獲得
+;의복의 손상 LV에 따른 치정 획득
 CALL PALAM_TIJOU_CLOTH_DAMAGE
 ARG:9 += RESULT
 
-;快C,快V,快A,快B 상승値,絶頂の状態で計算する
+;쾌C, 쾌V, 쾌A, 쾌B의 상승치, 절정의 상태로 계산한다
 CALL PALAM_TIJOU, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:9 += RESULT
 IF ARG:9 > 0
-	;体勢に関する補正
+	;자세에 관한 보정
 	CALL PALAM_HOSEI_POSE, ARG:9
 	ARG:9 = RESULT
 
-	;観衆の有無による補正
+	;관중의 유무에 따른 보정
 	IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 		ARG:9 = ARG:9 * (360 + FLAG:71 * 40 + FLAG:70 * 20) / 100
 	ELSEIF FLAG:70
 		ARG:9 = ARG:9 * (180 + FLAG:70 * 20) / 100
 	ENDIF
 
-	;성내성に関する補正
+	;성내성에 관한 보정
 	CALL PALAM_HOSEI_SEITAISEI, ARG:9
 	ARG:9 = RESULT
 
-	;素質に関する補正
+	;소질에 관한 보정
 	CALL PALAM_HOSEI_TALENT, 15, ARG:9
 	ARG:9 = RESULT
 
-	;성격に関する補正
+	;성격에 관한 보정
 	CALL PALAM_HOSEI_SEIKAKU, 15, ARG:9
 	ARG:9 = RESULT
 
-	;촉수に関する補正
+	;촉수에 관한 보정
 	CALL PALAM_HOSEI_TENTACLE, 15, ARG:9
 	ARG:9 = RESULT
 	
-	;ランダム性付与
+	;랜덤성 부여
 	CALL PALAM_HOSEI_RANDOM, ARG:9
 	ARG:9 = RESULT
 	
-	;下限値の설정
+	;하한값 설정
 	SIF ARG:9 < 1
 		ARG:9 = 1
 	
-	;取得パラメータの上限チェック
+	;취득 파라미터의 상한 체크
 	;CALL PALAM_LIMIT, 15, ARG:9
 ENDIF
 
 ;----------------------------------------------------------
-;욕정の主計算
-;快C,快V,快A,快B,치정 상승値,고통 상승値(마조끼あり),絶頂の状態で計算する
+;욕정의 구슬 계산
+;쾌C, 쾌V, 쾌A, 쾌B, 치정 상승치, 고통의 상승치(마조끼 있음), 절정의 상태로 계산한다
 CALL PALAM_YOKUJOU, ARG:0, ARG:1, ARG:2, ARG:3, ARG:9, ARG:10
 ARG:7 += RESULT
 IF ARG:7 > 0
-	;体勢に関する補正
+	;자세에 관한 보정
 	CALL PALAM_HOSEI_POSE, ARG:7
 	ARG:7 = RESULT
 
-	;성내성に関する補正
+	;성내성에 관한 보정
 	CALL PALAM_HOSEI_SEITAISEI, ARG:7
 	ARG:7 = RESULT
 
-	;素質に関する補正
+	;소질에 관한 보정
 	CALL PALAM_HOSEI_TALENT, 13, ARG:7
 	ARG:7 = RESULT
 
-	;성격に関する補正
+	;성격에 관한 보정
 	CALL PALAM_HOSEI_SEIKAKU, 13, ARG:7
 	ARG:7 = RESULT
 
-	;촉수に関する補正
+	;촉수에 관한 보정
 	CALL PALAM_HOSEI_TENTACLE, 13, ARG:7
 	ARG:7 = RESULT
 	
-	;ランダム性付与
+	;랜덤성 부여
 	CALL PALAM_HOSEI_RANDOM, ARG:7
 	ARG:7 = RESULT
 	
-	;下限値の설정
+	;하한값 설정
 	SIF ARG:7 < 1
 		ARG:7 = 1
 	
-	;取得パラメータの上限チェック
+	;취득 파라미터의 상한 체크
 	;CALL PALAM_LIMIT, 13, ARG:7
 ENDIF
 
 ;----------------------------------------------------------
-;윤활の主計算
-;욕정 상승値で計算する
+;윤활의 구슬 계산
+;욕정 상승치로 계산한다
 CALL PALAM_JUNKATU, ARG:7
 ARG:4 += RESULT
 IF ARG:4 > 0
-	;体勢に関する補正
+	;자세에 관한 보정
 	CALL PALAM_HOSEI_POSE, ARG:4
 	ARG:4 = RESULT
 
-	;素質に関する補正
+	;소질에 관한 보정
 	CALL PALAM_HOSEI_TALENT, 10, ARG:4
 	ARG:4 = RESULT
 
-	;성격に関する補正
+	;성격에 관한 보정
 	CALL PALAM_HOSEI_SEIKAKU, 10, ARG:4
 	ARG:4 = RESULT
 
-	;촉수に関する補正
+	;촉수에 관한 보정
 	CALL PALAM_HOSEI_TENTACLE, 10, ARG:4
 	ARG:4 = RESULT
 	
-	;ランダム性付与
+	;랜덤성 부여
 	CALL PALAM_HOSEI_RANDOM, ARG:4
 	ARG:4 = RESULT
 	
-	;下限値の설정
+	;하한값 설정
 	SIF ARG:4 < 1
 		ARG:4 = 1
 	
-	;取得パラメータの上限チェック
+	;취득 파라미터의 상한 체크
 	;CALL PALAM_LIMIT, 10, ARG:4
 ENDIF
 
 ;----------------------------------------------------------
-;공순の主計算
-;快C,快V,快A,快B 상승値,絶頂の状態で計算する
+;공순의 구슬 계산
+;쾌C, 쾌V, 쾌A, 쾌B 상승치, 절정의 상태로 계산한다
 CALL PALAM_KYOUJUN, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:5 += RESULT
 IF ARG:5 > 0
-	;体勢に関する補正
+	;자세에 관한 보정
 	CALL PALAM_HOSEI_POSE, ARG:5
 	ARG:5 = RESULT
 
-	;성내성に関する補正
+	;성내성에 관한 보정
 	CALL PALAM_HOSEI_SEITAISEI, ARG:5
 	ARG:5 = RESULT
 
-	;素質に関する補正
+	;소질에 관한 보정
 	CALL PALAM_HOSEI_TALENT, 11, ARG:5
 	ARG:5 = RESULT
 
-	;성격に関する補正
+	;성격에 관한 보정
 	CALL PALAM_HOSEI_SEIKAKU, 11, ARG:5
 	ARG:5 = RESULT
 
-	;촉수に関する補正
+	;촉수에 관한 보정
 	CALL PALAM_HOSEI_TENTACLE, 11, ARG:5
 	ARG:5 = RESULT
 	
-	;ランダム性付与
+	;랜덤성 부여
 	CALL PALAM_HOSEI_RANDOM, ARG:5
 	ARG:5 = RESULT
 	
-	;下限値の설정
+	;하한값 설정
 	SIF ARG:5 < 1
 		ARG:5 = 1
 	
-	;取得パラメータの上限チェック
+	;취득 파라미터의 상한 체크
 	;CALL PALAM_LIMIT, 11, ARG:5
 ENDIF
 
 ;----------------------------------------------------------
-;기절中は굴복、치정、고통、공포 상승が抑えられる
+;기절 중에는 굴복, 치정, 고통, 공포의 상승이 억제된다
 IF (TCVARn:12 & 기절)
 	TIMES ARG:8, 0.25
 	TIMES ARG:9, 0.25
 	TIMES ARG:10, 0.25
 	TIMES ARG:11, 0.25
-;황홀の場合は공순、습득、욕정、굴복が上昇しやすい
+;황홀인 경우에는 공순, 습득, 욕정, 굴복이 상승하기 쉽다
 ELSEIF (TCVARn:12 & 황홀)
 	TIMES ARG:5, 1.25
 	TIMES ARG:6, 1.25
@@ -613,25 +613,25 @@ ELSEIF (TCVARn:12 & 황홀)
 	TIMES ARG:8, 1.25
 ENDIF
 
-;絶頂回数と珠の取得
+;절정 횟수와 구슬 취득
 LOCAL = 0
 REPEAT 감각수
 	SIF NOWEX:COUNT > 0
 		LOCAL += 1
 REND
-EXP:절정경험 += NOWEX:C절정 * LOCAL
-JUEL:쾌C += 1000 * NOWEX:C절정 * LOCAL
-EXP:절정경험 += NOWEX:V절정 * LOCAL
-JUEL:쾌V += 1000 * NOWEX:V절정 * LOCAL
-EXP:절정경험 += NOWEX:A절정 * LOCAL
-JUEL:쾌A += 1000 * NOWEX:A절정 * LOCAL
-EXP:절정경험 += NOWEX:B절정 * LOCAL
-JUEL:쾌B += 1000 * NOWEX:B절정 * LOCAL
+EXP:절정경험 += NOWEX:Ｃ절정 * LOCAL
+JUEL:쾌Ｃ += 1000 * NOWEX:Ｃ절정 * LOCAL
+EXP:절정경험 += NOWEX:Ｖ절정 * LOCAL
+JUEL:쾌Ｖ += 1000 * NOWEX:Ｖ절정 * LOCAL
+EXP:절정경험 += NOWEX:Ａ절정 * LOCAL
+JUEL:쾌Ａ += 1000 * NOWEX:Ａ절정 * LOCAL
+EXP:절정경험 += NOWEX:Ｂ절정 * LOCAL
+JUEL:쾌Ｂ += 1000 * NOWEX:Ｂ절정 * LOCAL
 
-;絶頂回数に応じて방심도を上昇
+;절정 횟수에 따라 방심도 증가
 TFLAG:3 += 50 * LOCAL
 
-;経験の加算
+;경험 가산
 ;노출쾌락경험
 SIF ARG:9 > 2000 && ARG:7 > 2000
 	EXP:노출쾌락경험 += 1
@@ -644,169 +644,169 @@ SIF ARG:7 > 2000 && (TCVARn:2 == 자세：봉사한다 || SELECTCOM >= 100 && SE
 SIF ARG:10 > 2000 && ARG:7 > 2000
 	EXP:고통쾌락경험 += 1
 
-;絶頂の表示
+;절정 표시
 LOCAL = 0
 
-;多重絶頂＆単絶頂
-IF NOWEX:C절정 > 0
-	IF NOWEX:V절정 > 0 && NOWEX:A절정 > 0 && NOWEX:B절정 > 0
-		;지문: 四重絶頂
+;다중절정＆단절정
+IF NOWEX:Ｃ절정 > 0
+	IF NOWEX:Ｖ절정 > 0 && NOWEX:Ａ절정 > 0 && NOWEX:Ｂ절정 > 0
+		;지문: 사중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CVAB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 四重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 사중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVAB
-	ELSEIF NOWEX:V절정 > 0 && NOWEX:A절정 > 0
-		;지문: CVA三重絶頂
+	ELSEIF NOWEX:Ｖ절정 > 0 && NOWEX:Ａ절정 > 0
+		;지문: CVA삼중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CVA
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVA三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVA삼중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVA
-	ELSEIF NOWEX:V절정 > 0 && NOWEX:B절정 > 0
-		;지문: CVB三重絶頂
+	ELSEIF NOWEX:Ｖ절정 > 0 && NOWEX:Ｂ절정 > 0
+		;지문: CVB삼중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CVB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CVB삼중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CVB
-	ELSEIF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
-		;지문: CAB三重絶頂
+	ELSEIF NOWEX:Ａ절정 > 0 && NOWEX:Ｂ절정 > 0
+		;지문: CAB삼중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CAB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CAB삼중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CAB
-	ELSEIF NOWEX:V절정 > 0
-		;지문: CV二重絶頂
+	ELSEIF NOWEX:Ｖ절정 > 0
+		;지문: CV이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CV
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CV二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CV이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CV
-	ELSEIF NOWEX:A절정 > 0
-		;지문: CA二重絶頂
+	ELSEIF NOWEX:Ａ절정 > 0
+		;지문: CA이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CA
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CA이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CA
-	ELSEIF NOWEX:B절정 > 0
-		;지문: CB二重絶頂
+	ELSEIF NOWEX:Ｂ절정 > 0
+		;지문: CB이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_CB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 CB이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_CB
 	ELSE
-		IF NOWEX:C절정 == 1
-			;지문: C絶頂
+		IF NOWEX:Ｃ절정 == 1
+			;지문: C절정
 			CALL MESSAGE_SEX_ECSTASY_C
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C
-		ELSEIF NOWEX:C절정 > 1
-			;지문: C強絶頂
-			CALL MESSAGE_SEX_ECSTASY_C_HI, NOWEX:C절정
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C強絶頂を見た
+		ELSEIF NOWEX:Ｃ절정 > 1
+			;지문: C강절정
+			CALL MESSAGE_SEX_ECSTASY_C_HI, NOWEX:Ｃ절정
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C강절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
 		ENDIF
 	ENDIF
-ELSEIF NOWEX:V절정 > 0
-	IF NOWEX:A절정 > 0 && NOWEX:B절정 > 0
-		;지문: VAB三重絶頂
+ELSEIF NOWEX:Ｖ절정 > 0
+	IF NOWEX:Ａ절정 > 0 && NOWEX:Ｂ절정 > 0
+		;지문: VAB삼중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_VAB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VAB三重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VAB삼중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VAB
-	ELSEIF NOWEX:A절정 > 0
-		;지문: VA二重絶頂
+	ELSEIF NOWEX:Ａ절정 > 0
+		;지문: VA이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_VA
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VA二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VA이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VA
-	ELSEIF NOWEX:B절정 > 0
-		;지문: VB二重絶頂
+	ELSEIF NOWEX:Ｂ절정 > 0
+		;지문: VB이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_VB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 VB이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_VB
 	ELSE
-		IF NOWEX:V절정 == 1
-			;지문: V絶頂
+		IF NOWEX:Ｖ절정 == 1
+			;지문: V절정
 			CALL MESSAGE_SEX_ECSTASY_V
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V
-		ELSEIF NOWEX:V절정 > 1
-			;지문: V強絶頂
-			CALL MESSAGE_SEX_ECSTASY_V_HI, NOWEX:V절정
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V強絶頂を見た
+		ELSEIF NOWEX:Ｖ절정 > 1
+			;지문: V강절정
+			CALL MESSAGE_SEX_ECSTASY_V_HI, NOWEX:Ｖ절정
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V강절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
 		ENDIF
 	ENDIF
-ELSEIF NOWEX:A절정 > 0
-	IF NOWEX:B절정 > 0
-		;지문: AB二重絶頂
+ELSEIF NOWEX:Ａ절정 > 0
+	IF NOWEX:Ｂ절정 > 0
+		;지문: AB이중절정
 		CALL MESSAGE_SEX_MULTIECSTASY_AB
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 AB二重絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 AB이중절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MULTIECSTASY_AB
 	ELSE
-		IF NOWEX:A절정 == 1
-			;지문: A絶頂
+		IF NOWEX:Ａ절정 == 1
+			;지문: A절정
 			CALL MESSAGE_SEX_ECSTASY_A
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A絶頂を見た
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A
-		ELSEIF NOWEX:A절정 > 1
-			;지문: A強絶頂
-			CALL MESSAGE_SEX_ECSTASY_A_HI, NOWEX:A절정
-			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A強絶頂を見た
+		ELSEIF NOWEX:Ａ절정 > 1
+			;지문: A강절정
+			CALL MESSAGE_SEX_ECSTASY_A_HI, NOWEX:Ａ절정
+			;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A강절정을 봤다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 				CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
 		ENDIF
 	ENDIF
-ELSEIF NOWEX:B절정 > 0
-	IF NOWEX:B절정 == 1
-		;지문: B絶頂
+ELSEIF NOWEX:Ｂ절정 > 0
+	IF NOWEX:Ｂ절정 == 1
+		;지문: B절정
 		CALL MESSAGE_SEX_ECSTASY_B
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B
-	ELSEIF NOWEX:B절정 > 1
-		;지문: B強絶頂
-		CALL MESSAGE_SEX_ECSTASY_B_HI, NOWEX:B절정
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B強絶頂を見た
+	ELSEIF NOWEX:Ｂ절정 > 1
+		;지문: B강절정
+		CALL MESSAGE_SEX_ECSTASY_B_HI, NOWEX:Ｂ절정
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B강절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B_HI
 	ENDIF
 ENDIF
 
-;絶頂禁止
+;절정 금지
 IF ECS_FLAG > 1000
 	CALL MESSAGE_SEX_ECSTASY_PROHIBITION
 
-	;絶頂懇願
+	;절정 애원
 	SIF ECS_FLAG > 2000
 		CALL MESSAGE_SEX_ECSTASY_ENTREATY
 
-;絶頂抑制
+;절정 억제
 ELSEIF ECS_FLAG > 0 && FLAG:700
 	CALL MESSAGE_SEX_ECSTASY_INHIBITION, ECS_FLAG
 ENDIF
 
-;絶頂による状態異常
+;절정에 의한 상태 이상
 SIF ECS_NUM && FLAG:700 > 0
 	CALL STATE_CHANGE_EX, ECS_NUM
 
-;電流による状態異常
+;전류에 의한 상태 이상
 SIF TFLAG:20 == 1004
 	CALL STATE_CHANGE_DENGEKI
 
-;媚薬効果のある行動を受けた場合
+;미약 효과가 있는 행동을 받은 경우
 SIF TFLAG:20 == 6 || TFLAG:20 == 1000 || TFLAG:20 == 1001
 	CALL STATE_CHANGE_HATUJOU, 100
 
-;強制기절の行動
+;강제 기절의 행동
 IF (TFLAG:20 == 1012 || TFLAG:20 == 1015) && (TCVARn:12 & 기절) == 0
 	CALL STATE_CHANGE_KIZETU, 100
-;特定コマンドを受けると目が覚める
+;특정 커맨드를 받으면 눈을 뜬다
 ELSEIF (TFLAG:20 == 8 || TFLAG:20 == 9 || TFLAG:20 == 12 || TFLAG:20 == 1009 || TFLAG:20 == 1010 || TFLAG:20 == 1013) && (TCVARn:12 & 기절) && (BASE:체력 > 0 || BASE:기력 > 0 || BASE:성내성 > 0)
 	TCVARn:101 = -999
 ENDIF
@@ -861,20 +861,20 @@ SIF TALENT:울보 > 0
 	TIMES ARG:11, 1.10
 
 FOR LOCAL:0, 감각수, PALAM수
-	;取得パラメータ 상승チェック
+	;취득 파라미터 상승 체크
 	SIF ARG:(LOCAL:0) > 0
 		CALL PALAM_LIMIT, LOCAL:0 + PALAM시점 - 감각수, ARG:(LOCAL:0)
 NEXT
 
-;체력、기력、성내성の減算
-;체력は고통から、기력は굴복と공포と치정から、성내성は공순と욕정からそれぞれ減算値を求める
+;체력, 기력, 성내성 뺄셈
+;체력은 고통에서, 기력은 굴복과 공포와 치정에서, 성내성은 공순과 욕정에서각각 뺄셈값을 구한다
 IF FLAG:700 == 1 && (TCVARn:0 == 0 || (TCVARn:41 != 0 && CFLAG:(CFLAG:1==0 ? 40 # 41) == 199))
 	CALL PALAM_TAIRYOKUDOWN, ARG:10, ARG:12
 	CALL PALAM_KIRYOKUDOWN, ARG:8, ARG:11, ARG:9
 	CALL PALAM_SEITAISEIDOWN, ARG:5, ARG:7
 	PRINTL 
 	IF ARG:10 + ARG:12 + ARG:8 + ARG:11 + ARG:7
-		;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
+		;피격될 때마다, 방어 기초값에 따라 ＥＸ게이지가 증가한다
 		SIF CFLAG:1 != 2
 			TCVARn:6 += LIMIT(SQRT(MAX(BASE:방어 - 100,0)), 0, 20) + 5
 	ENDIF
@@ -883,7 +883,7 @@ ENDIF
 IF CONFIG_CHECK_SCREEN_F(1) > 0
 	SIF ARG:0 + ARG:1 + ARG:2 + ARG:3 + ARG:4 + ARG:5 + ARG:6 + ARG:7 + ARG:8 + ARG:9 + ARG:10 + ARG:11
 		WAIT
-	;PALAM変化桁合わせ用変数
+	;PALAM 변화 자릿수?규모?(桁) 맞춤용 변수
 	LOCAL:998 = 4
 	LOCAL:997 = 4
 	FOR LCOUNT:1, 0, PALAM수
@@ -908,11 +908,11 @@ IF CONFIG_CHECK_SCREEN_F(1) > 0
 				CALL SHORTLINE
 			ENDIF
 			IF LOCAL < 감각수 && LOCAL:(100+LOCAL) + ARG:COUNT > 19999 && ECS_FLAG < 1
-				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - {LOCAL:(100+LOCAL) + ARG:COUNT - 9999, LOCAL:997} = {PALAM:LOCAL, LOCAL:997} %ECSTASY_RANK(NOWEX:LOCAL)%絶頂
+				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - {LOCAL:(100+LOCAL) + ARG:COUNT - 9999, LOCAL:997} = {PALAM:LOCAL, LOCAL:997} %ECSTASY_RANK(NOWEX:LOCAL)%절정
 			ELSEIF LOCAL < 감각수 && LOCAL:(100+LOCAL) + ARG:COUNT > 9999 && ECS_FLAG < 1
-				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - 10000 = {PALAM:LOCAL, LOCAL:997}　絶頂
+				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - 10000 = {PALAM:LOCAL, LOCAL:997}　절정
 			ELSEIF LOCAL >= 감각수 && LOCAL:(100+LOCAL) + ARG:COUNT > 999999
-				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - {LOCAL:(100+LOCAL) + ARG:COUNT - 999999, LOCAL:997} = {PALAM:LOCAL, LOCAL:997}　限界
+				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} - {LOCAL:(100+LOCAL) + ARG:COUNT - 999999, LOCAL:997} = {PALAM:LOCAL, LOCAL:997}　한계
 			ELSE
 				PRINTFORML %PALAMNAME:LOCAL%：{LOCAL:(100+LOCAL), LOCAL:997} + {ARG:COUNT, LOCAL:998} = {PALAM:LOCAL, LOCAL:997}\@BASE:(LOCAL + 30) > 0 && LOCAL < 감각수 && FLAG:700 ? 　（%TALENTNAME:(LOCAL + 190)%） # \@
 			ENDIF
@@ -925,8 +925,8 @@ IF CONFIG_CHECK_SCREEN_F(1) > 0
 	ENDIF
 ENDIF
 
-;刻印の取得(※악질 시민戦での取得は判定を厳しく見る)
-;쾌락각인　一定量の욕정
+;각인 취득(※악질 시민전에서의 취득은 판정을 엄격하게 본다)
+;쾌락각인　일정량의 욕정
 LOCAL = 0
 SIF ARG:7 >= (12000 + MARK:쾌락각인방지 * 300 + (FLAG:73 > 0 ? 5000 # 0))
 	LOCAL = 1
@@ -943,43 +943,43 @@ IF LOCAL > MARK:쾌락각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 쾌락각인１
 		CALL MESSAGE_SEX_MARK_KAIRAKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인１이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_1
 	ELSEIF LOCAL == 2
 		;지문: 쾌락각인２
 		CALL MESSAGE_SEX_MARK_KAIRAKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인２가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_2
 	ELSEIF LOCAL == 3
 		;지문: 쾌락각인３
 		CALL MESSAGE_SEX_MARK_KAIRAKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인３이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_3
 	ELSEIF LOCAL == 4
 		;지문: 쾌락각인４
 		CALL MESSAGE_SEX_MARK_KAIRAKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인４가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_4
 	ELSEIF LOCAL == 5
 		;지문: 쾌락각인５
 		CALL MESSAGE_SEX_MARK_KAIRAKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인５가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_5
 	ENDIF
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	FONTBOLD
-	PRINTFORM %MARKNAME:0%{LOCAL}
+	PRINTFORM %MARKNAME:0% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;고통각인　一定量の고통
+;고통각인　일정량의 고통
 LOCAL = 0
 SIF ARG:10 >= (10000 + MARK:고통각인방지 * 250 + (FLAG:73 > 0 ? 4000 # 0))
 	LOCAL = 1
@@ -996,43 +996,43 @@ IF LOCAL > MARK:고통각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 고통각인１
 		CALL MESSAGE_SEX_MARK_KUTUU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인１이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_1
 	ELSEIF LOCAL == 2
 		;지문: 고통각인２
 		CALL MESSAGE_SEX_MARK_KUTUU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인２가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_2
 	ELSEIF LOCAL == 3
 		;지문: 고통각인３
 		CALL MESSAGE_SEX_MARK_KUTUU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인３이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_3
 	ELSEIF LOCAL == 4
 		;지문: 고통각인４
 		CALL MESSAGE_SEX_MARK_KUTUU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인４가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_4
 	ELSEIF LOCAL == 5
 		;지문: 고통각인５
 		CALL MESSAGE_SEX_MARK_KUTUU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인５가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_5
 	ENDIF
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	FONTBOLD
-	PRINTFORM %MARKNAME:1%{LOCAL}
+	PRINTFORM %MARKNAME:1% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;굴복각인　一定量の굴복
+;굴복각인　일정량의 굴복
 LOCAL = 0
 SIF ARG:8 >= (8000 + MARK:굴복각인방지 * 200 + (FLAG:73 > 0 ? 3000 # 0))
 	LOCAL = 1
@@ -1049,43 +1049,43 @@ IF LOCAL > MARK:굴복각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 굴복각인１
 		CALL MESSAGE_SEX_MARK_KUPPUKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인１이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_1
 	ELSEIF LOCAL == 2
 		;지문: 굴복각인２
 		CALL MESSAGE_SEX_MARK_KUPPUKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인２가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_2
 	ELSEIF LOCAL == 3
 		;지문: 굴복각인３
 		CALL MESSAGE_SEX_MARK_KUPPUKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인３이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_3
 	ELSEIF LOCAL == 4
 		;지문: 굴복각인４
 		CALL MESSAGE_SEX_MARK_KUPPUKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인４가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_4
 	ELSEIF LOCAL == 5
 		;지문: 굴복각인５
 		CALL MESSAGE_SEX_MARK_KUPPUKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인５가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_5
 	ENDIF
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	FONTBOLD
-	PRINTFORM %MARKNAME:2%{LOCAL}
+	PRINTFORM %MARKNAME:2% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;공포각인　一定量の공포
+;공포각인　일정량의 공포
 LOCAL = 0
 SIF ARG:11 >= (8000 + MARK:공포각인방지 * 200 + (FLAG:73 > 0 ? 1500 # 0))
 	LOCAL = 1
@@ -1102,43 +1102,43 @@ IF LOCAL > MARK:공포각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 공포각인１
 		CALL MESSAGE_SEX_MARK_KYOUHU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인１이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_1
 	ELSEIF LOCAL == 2
 		;지문: 공포각인２
 		CALL MESSAGE_SEX_MARK_KYOUHU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인２가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_2
 	ELSEIF LOCAL == 3
 		;지문: 공포각인３
 		CALL MESSAGE_SEX_MARK_KYOUHU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인３이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_3
 	ELSEIF LOCAL == 4
 		;지문: 공포각인４
 		CALL MESSAGE_SEX_MARK_KYOUHU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인４가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_4
 	ELSEIF LOCAL == 5
 		;지문: 공포각인５
 		CALL MESSAGE_SEX_MARK_KYOUHU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인５가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_5
 	ENDIF
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	FONTBOLD
-	PRINTFORM %MARKNAME:3%{LOCAL}
+	PRINTFORM %MARKNAME:3% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;치욕각인　一定量の치정
+;치욕각인　일정량의 치정
 LOCAL = 0
 SIF ARG:9 >= (8000 + MARK:치욕각인방지 * 200 + (FLAG:73 > 0 ? 1000 # 0))
 	LOCAL = 1
@@ -1155,62 +1155,62 @@ IF LOCAL > MARK:치욕각인 && (FLAG:700 == 1 || CFLAG:0 == 1) && (TCVARn:12 & 
 	IF LOCAL == 1
 		;지문: 치욕각인１
 		CALL MESSAGE_SEX_MARK_TIJYOKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인１이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_1
 	ELSEIF LOCAL == 2
 		;지문: 치욕각인２
 		CALL MESSAGE_SEX_MARK_TIJYOKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인２가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_2
 	ELSEIF LOCAL == 3
 		;지문: 치욕각인３
 		CALL MESSAGE_SEX_MARK_TIJYOKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인３이 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_3
 	ELSEIF LOCAL == 4
 		;지문: 치욕각인４
 		CALL MESSAGE_SEX_MARK_TIJYOKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인４가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_4
 	ELSEIF LOCAL == 5
 		;지문: 치욕각인５
 		CALL MESSAGE_SEX_MARK_TIJYOKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인５가 붙는 것을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_5
 	ENDIF
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	FONTBOLD
-	PRINTFORM %MARKNAME:4%{LOCAL}
+	PRINTFORM %MARKNAME:4% {LOCAL}LV
 	FONTREGULAR
-	PRINTFORML を取得した
+	PRINTFORML 을 취득했다.
 	PRINTL 
 ENDIF
 
-;理性強度低下による구상分岐
+;이성 강도 저하에 따른 구상 분기
 CALL MESSAGE_BRANCH_MESSAGE_FAITH_DOWN
 
 ;실적
 CALL GET_STATE_EXPUP,TARGET
 
-;搾精用ＨＰチェック
+;착정용 ＨＰ 체크
 SIF FLAG:13 <= 0 && FLAG:700 == 1
 	JUMP SOURCE_CHECK
 
-;즉사공격ヒット直後とトドメの一撃は촉수・観衆関係のテキストを出さない
+;즉사 공격 히트 직후와 마무리 일격은 촉수・관중 관련 텍스트를 내지 않는다
 IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:성내성>0)
-	;촉수の油断の確認
+	;촉수의 방심 체크
 	CALL CLOTH_BATTLE_HOSEI, "YUDAN"
 	LOCAL = RESULT
 	CALL TENTACLE_LEVEL
 	LOCAL:1 = RESULT
 	SIF LOCAL:1 > 60
 		LOCAL:1 = 60
-	;방심도関係のFEAT効果
+	;방심도 관련 FEAT 효과
 	SIF TALENT:평범 > 0
 		LOCAL += 25
 	SIF TALENT:공세구축 > 0
@@ -1218,81 +1218,83 @@ IF TFLAG:23 != -1 && (BASE:TARGET:체력>0 ||BASE:TARGET:기력>0 ||BASE:TARGET:
 	IF FLAG:700 == 1
 		TFLAG:3 *= LOCAL / 100
 		FLAG:17 = LIMIT(FLAG:17 + TFLAG:3, 0 , FLAG:16 * 2)
-		;拘束中の場合、油断は毎ターン６％だけ増加する
+		;구속 중인 경우, 방심은 매턴 ６％만 증가한다
 		IF TCVARn:0 == 0
 			FLAG:17 += FLAG:16 * 6 * LOCAL / 10000
-		;油断している場合、방심도が毎ターン１２％だけ減少する
+		;방심하고 있는 경우, 방심도가 매턴 １２％만 감소한다
 		ELSEIF TFLAG:2 > 0
 			FLAG:17 -= FLAG:16 * 12 / 100
-		;それ以外の場合、방심도が毎ターン１％だけ減少する
+		;그 이외의 경우, 방심도가 매턴 １％만 감소한다
 		ELSE
 			FLAG:17 -= FLAG:16 * 1 / 100
 		ENDIF
 		SIF FLAG:17 < 0
 			FLAG:17 = 0
 
-		;デバッグ用
+		;DEBUG용
 		IF FLAG:999
 			SETCOLOR 105,105,105
-			PRINTFORM 방심도　補正＝{LOCAL}％ 방심도＝{FLAG:17}/{FLAG:16}
+			PRINTFORM 방심도　보정＝{LOCAL}％ 방심도＝{FLAG:17}/{FLAG:16}
 			SIF TCVARn:0 == 0
-				PRINTFORM  ＋ ターン経過{FLAG:16 * 12 * LOCAL / 10000}
+				PRINTFORM  ＋ 턴 경과 {FLAG:16 * 12 * LOCAL / 10000}
 			SIF TFLAG:3
-				PRINTFORM  ＋ 直接上昇{TFLAG:3}
+				PRINTFORM  ＋ 직접 상승 {TFLAG:3}
 			PRINTL 
 			PRINTL 
 			RESETCOLOR
 		ENDIF
 
-		;방심도상승량をリセット
+		;방심도 상승량을 초기화
 		TFLAG:3 = 0
 
-		;２ターン目までなら確実に油断が持続
+		;２턴째까지는 확실하게 방심이 지속된다
 		IF TFLAG:2 > 0 && TFLAG:2 <= 2 && FLAG:17 < FLAG:16
 			FLAG:17 = FLAG:16
-		;最大でも１２ターンまでしか持続しない、레벨に応じて短くなる
+		;최대 １２턴까지만 지속되며, 레벨에 따라 짧아진다
 		ELSEIF TFLAG:2 >= 12 - LOCAL:1 / 10
 			FLAG:17 = 0
 		ENDIF
-		;역치を越えていれば油断플래그를加算
+		;역치(閾値)를 초과하면 방심 플래그를 가산
 		IF FLAG:17 >= FLAG:16
 			TFLAG:2 += 1
-		;ターン経過で油断が解ける場合
+		;턴 경과로 방심이 풀리는 경우
 		ELSEIF TFLAG:2 > 0
 			TFLAG:2 = 0
 			FLAG:17 = 0
 			PRINTL 
 			IF (FLAG:110 == 0)
-				CALL TENTACLE_ACCESS, "NAME"
-				PRINTL は油断から立ち直った
+				;CALL TENTACLE_ACCESS, "NAME"
+				CALL TENTACLE_ACCESS, "GETNAME"
+				PRINTFORML %조사처리(RESULTS,"는")% 방심으로부터 회복했다！
 			ELSEIF (FLAG:110 == 1)
-				PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は油断から立ち直った
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 방심으로부터 회복했다！
 			ENDIF
 		ENDIF
 	ENDIF
 
-	;凌辱時の応援
+	;능욕 시의 응원
 	SIF TCVARn:0 == 0 && FLAG:700 == 1
 		CALL PERFORM_CHEERS_TENTACLE_SEX_HANTEI
 
 	IF TFLAG:2 > 0 && FLAG:700 == 1
 		PRINTL 
 		IF (FLAG:110 == 0)
-			CALL TENTACLE_ACCESS, "NAME"
-			PRINTL は油断しているようだ
+			;CALL TENTACLE_ACCESS, "NAME"
+			CALL TENTACLE_ACCESS, "GETNAME"
+			PRINTFORML %조사처리(RESULTS,"는")% 방심하고 있는 모양이다！
 		ELSEIF (FLAG:110 == 1)
-			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は油断しているようだ
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 방심하고 있는 모양이다！
 		ENDIF
 	ENDIF
 ENDIF
 
-;変身中かつ처녀でないなら、변신시비처녀を付与
+;변신 중임과 동시에 처녀가 아니라면, 변신시비처녀를 부여한다
 SIF CFLAG:1 > 0 && TALENT:처녀 == -1 && ISFEMALE() && TALENT:변신시비처녀 == 0
 	TALENT:변신시비처녀 = 1
 
 ;--------------------------------------------------
-;성내성に関する補正
-;성내성の残りが少なくなってくると取得値が大きくなってくる
+;성내성에 관한 보정
+;성내성 잔량이 적어지면 취득값이 커진다
 @PALAM_HOSEI_SEITAISEI, ARG
 LOCAL = 0
 IF BASE:성내성 > 0
@@ -1307,7 +1309,7 @@ ELSEIF LOCAL > 40
 	TIMES ARG, 1.20
 ELSEIF LOCAL > 20
 	TIMES ARG, 1.35
-ELSEIF	LOCAL > 10
+ELSEIF LOCAL > 10
 	TIMES ARG, 1.50
 ELSE
 	TIMES ARG, 1.70
@@ -1316,42 +1318,42 @@ ENDIF
 RETURN ARG
 
 ;--------------------------------------------------
-;素質に関する補正
+;소질에 관한 보정
 @PALAM_HOSEI_TALENT, ARG:0, ARG:1
 SELECTCASE ARG:0
-	;敏感、鈍感など
+	;민감, 둔감 등
 	CASE 0
-	;快C
-		IF TALENT:C민감 > 0
+	;쾌C
+		IF TALENT:Ｃ민감 > 0
 			TIMES ARG:1, 1.25
-		ELSEIF TALENT:C둔감 > 0
+		ELSEIF TALENT:Ｃ둔감 > 0
 			TIMES ARG:1, 0.75
 		ENDIF
 		SIF TALENT:음핵 > 0
 			TIMES ARG:1, 1.50
 	CASE 1
-	;快V
-		IF TALENT:V민감 > 0
+	;쾌V
+		IF TALENT:Ｖ민감 > 0
 			TIMES ARG:1, 1.25
-		ELSEIF TALENT:V둔감 > 0
+		ELSEIF TALENT:Ｖ둔감 > 0
 			TIMES ARG:1, 0.75
 		ENDIF
 		SIF TALENT:음호 > 0
 			TIMES ARG:1, 1.50
 	CASE 2
-	;快A
-		IF TALENT:A민감 > 0
+	;쾌A
+		IF TALENT:Ａ민감 > 0
 			TIMES ARG:1, 1.25
-		ELSEIF TALENT:A둔감 > 0
+		ELSEIF TALENT:Ａ둔감 > 0
 			TIMES ARG:1, 0.75
 		ENDIF
 		SIF TALENT:음고 > 0
 			TIMES ARG:1, 1.50
 	CASE 3
-	;快B
-		IF TALENT:B민감 > 0
+	;쾌B
+		IF TALENT:Ｂ민감 > 0
 			TIMES ARG:1, 1.25
-		ELSEIF TALENT:B둔감 > 0
+		ELSEIF TALENT:Ｂ둔감 > 0
 			TIMES ARG:1, 0.75
 		ENDIF
 		IF TALENT:빈유 == 2
@@ -1410,32 +1412,33 @@ ENDSELECT
 RETURN ARG:1
 
 ;--------------------------------------------------
-;성격に関する補正
+;성격에 관한 보정
+;CHARA_SEIKAKU.ERB 에서 따로 처리하고 있다
 @PALAM_HOSEI_SEIKAKU, ARG:0, ARG:1
 LOCAL = SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), ARG:0, ARG:1)
 RETURN LOCAL
 
 ;--------------------------------------------------
-;촉수に関する補正
+;촉수에 관한 보정
 @PALAM_HOSEI_TENTACLE, ARG:0, ARG:1
 SIF FLAG:700 == 0 || ENEMY_TYPE_CHECK_F("AKUOTI")
 	RETURN ARG:1
 
 CALL TENTACLE_ACCESS, "PALAM_HOSEI"
-;RESULT:0=快C　以降順番に RESULT:11=공포
+;RESULT:0=쾌C　이후 차례로 RESULT:11=공포
 
 SELECTCASE ARG:0
 	CASE 0
-	;快C
+	;쾌C
 		ARG:1 = ARG:1 * RESULT:0 / 100
 	CASE 1
-	;快V
+	;쾌V
 		ARG:1 = ARG:1 * RESULT:1 / 100
 	CASE 2
-	;快A
+	;쾌A
 		ARG:1 = ARG:1 * RESULT:2 / 100
 	CASE 3
-	;快B
+	;쾌B
 		ARG:1 = ARG:1 * RESULT:3 / 100
 	CASE 10
 	;윤활
@@ -1465,7 +1468,7 @@ ENDSELECT
 RETURN ARG:1
 
 ;--------------------------------------------------
-;촉수중독に関する補正
+;촉수중독에 관한 보정
 @PALAM_HOSEI_POISONING_TENTACLE, ARG
 IF ABL:촉수중독 == 1
 	TIMES ARG, 1.20
@@ -1481,21 +1484,21 @@ ENDIF
 RETURN ARG
 
 ;--------------------------------------------------
-;体勢に関する補正
+;자세에 관한 보정
 @PALAM_HOSEI_POSE, ARG
-;견딘다選択中ならパラメータ上昇しにくくなる
+;【견딘다】선택 중이라면 파라미터가 상승하기 어려워진다
 SIF TCVARn:2 == 자세：견딘다
 	TIMES ARG, 0.65
-;받아들인다選択中ならパラメータ上昇しやすくなる
+;【받아들인다】선택 중이라면 파라미터가 상승하기 쉬워진다
 SIF TCVARn:2 == 자세：받아들인다
 	TIMES ARG, 1.25
-;쥐어짠다選択中ならパラメータ上昇しやすくなる
+;【쥐어짠다】선택 중이라면 파라미터가 상승하기 쉬워진다
 SIF TCVARn:2 == 자세：쥐어짠다
 	TIMES ARG, 1.50
 RETURN ARG
 
 ;--------------------------------------------------
-;ランダム性付与
+;랜덤성 부여
 @PALAM_HOSEI_RANDOM, ARG
 LOCAL= RAND:100
 IF LOCAL < 20
@@ -1512,54 +1515,54 @@ ENDIF
 RETURN ARG
 
 ;--------------------------------------------------
-;快部位の絶頂チェック
+;쾌 부위 절정 체크
 @PALAM_ECSTASY, ARG:0, ARG:1, ARG:2, ARG:3
 
 IF ARG:1 + PALAM:(ARG:0) < 9999 || ARG:3 > 0
 	ARG:1 += PALAM:(ARG:0)
 ELSEIF ARG:1 + PALAM:(ARG:0) >=1000000
-	;最狂絶頂
+	;최광(最狂)절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 10
 ELSEIF ARG:1 + PALAM:(ARG:0) >=600000
-	;狂絶頂
+	;광(狂)절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 9
 ELSEIF ARG:1 + PALAM:(ARG:0) >=400000
-	;獄絶頂
+	;옥(獄)절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 8
 ELSEIF ARG:1 + PALAM:(ARG:0) >=250000
-	;極絶頂
+	;극(極)절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 7
 ELSEIF ARG:1 + PALAM:(ARG:0) >=150000
-	;凄絶頂
+	;괴절정, 원문은 凄絶頂 처절정이며 凄い(스고이) 할 때 凄라서 굉장해 -> 굉 -> 괴 이런 느낌으로 바꿔봤다.
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 6
 ELSEIF ARG:1 + PALAM:(ARG:0) >=100000
-	;最強絶頂
+	;최강절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 5
 ELSEIF ARG:1 + PALAM:(ARG:0) >=75000
-	;超強絶頂
+	;초강절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 4
 ELSEIF ARG:1 + PALAM:(ARG:0) >=50000
-	;超絶頂
+	;초절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 3
 ELSEIF ARG:1 + PALAM:(ARG:0) >=20000
-	;強絶頂
+	;강절정
 	ARG:1 = 9999
 	NOWEX:(ARG:2) += 2
 ELSEIF ARG:1 + PALAM:(ARG:0) >=10000
-	;絶頂
+	;절정
 	ARG:1 = PALAM:(ARG:0) - 10000 + ARG:1
 	NOWEX:(ARG:2) += 1
 ENDIF
 
-;減衰計算用変数をリセット
+;감쇠(減衰) 계산용 변수를 초기화
 SIF NOWEX:(ARG:2) > 0
 	MAX_PALAM:(ARG:0) = 0
 
@@ -1567,7 +1570,7 @@ PALAM:(ARG:0) = ARG:1
 
 
 ;--------------------------------------------------
-;パラメータ上昇チェック
+;파라미터 상한 체크
 @PALAM_LIMIT, ARG:0, ARG:1
 IF ARG:1 > 999999
 	ARG:1 = 999999
@@ -1578,9 +1581,9 @@ PALAM:(ARG:0) = ARG:1
 
 
 ;--------------------------------------------------
-;衣服の損傷LVによる치정の獲得
+;의복의 손상LV에 따른 치정 획득
 @PALAM_TIJOU_CLOTH_DAMAGE
-;壊れない衣装用
+;찢어지지 않는 의상용
 IF (CFLAG:1 == 0 && TCVARn:20 == -1) || (CFLAG:1 == 1 && TCVARn:22 == -1)
 	IF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) != 0 && TCVARn:41 == 0
 		RETURN
@@ -1615,16 +1618,16 @@ ELSE
 		LOCAL += 50
 	ENDIF
 ENDIF
-;戦闘中なら의상에 따른 보정がある
+;전투 중이라면 의상에 따른 보정이 있다
 IF FLAG:700
-	;衣装
+	;의상
 	CALL CLOTH_BATTLE_HOSEI, "SHYNESS"
 	LOCAL = LOCAL * RESULT / 100
 ENDIF
 RETURN LOCAL
 
 ;--------------------------------------------------
-;치정の取得
+;치정 취득
 @PALAM_TIJOU, ARG:0, ARG:1, ARG:2, ARG:3
 LOCAL = 0
 REPEAT 4
@@ -1652,7 +1655,7 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;욕정の取得
+;욕정 취득
 @PALAM_YOKUJOU, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4, ARG:5
 LOCAL = 0
 REPEAT 4
@@ -1682,7 +1685,7 @@ REPEAT 4
 	ENDIF
 REND
 
-;노출벽があると치정に応じて욕정が入る
+;노출벽이 있다면 치정에 따라 욕정이 들어간다
 IF ABL:노출벽 == 1
 	IF ARG:4 == 0
 	ELSEIF ARG:4 < 100
@@ -1750,7 +1753,7 @@ ELSEIF ABL:노출벽 == 5
 	ENDIF
 ENDIF
 
-;마조끼があると고통に応じて욕정が入る
+;마조끼가 있다면 고통에 따라 욕정이 들어간다
 IF ABL:마조끼 == 1
 	IF ARG:5 == 0
 	ELSEIF ARG:5 < 100
@@ -1820,7 +1823,7 @@ ENDIF
 RETURN LOCAL
 
 ;--------------------------------------------------
-;윤활の取得
+;윤활 취득
 @PALAM_JUNKATU, ARG
 LOCAL = 0
 IF ARG == 0
@@ -1840,7 +1843,7 @@ ENDIF
 RETURN LOCAL
 
 ;--------------------------------------------------
-;공순の取得
+;공순 취득
 @PALAM_KYOUJUN, ARG:0, ARG:1, ARG:2, ARG:3
 LOCAL = 0
 REPEAT 4
@@ -1868,7 +1871,7 @@ REND
 RETURN LOCAL
 
 ;--------------------------------------------------
-;체력の減算
+;체력 뺄셈
 @PALAM_TAIRYOKUDOWN, ARG:0, ARG:1
 LOCAL = MAXBASE:체력 * 50 / 1000
 IF ARG == 0
@@ -1909,7 +1912,7 @@ ENDIF
 ;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 LOCAL = LOCAL * RESULT / 100
-;敵の레벨による補正
+;적의 레벨에 따른 보정
 CALL TENTACLE_LEVEL
 LOCAL = LOCAL * (100 + RESULT) / 100
 
@@ -1923,13 +1926,13 @@ SIF BASE:체력 - LOCAL < 0
 
 IF LOCAL > 0
 	FONTBOLD
-	PRINTFORML %BASENAME:0%が{LOCAL}減った！
+	PRINTFORML %BASENAME:0%이 {LOCAL} 줄었다！
 	FONTREGULAR
 ENDIF
 BASE:체력 -= LOCAL
 
 ;--------------------------------------------------
-;기력の減算
+;기력 뺄셈
 @PALAM_KIRYOKUDOWN, ARG:0, ARG:1, ARG:2
 LOCAL = MAXBASE:기력 * 75 / 1000
 IF ARG:0 == 0
@@ -1995,7 +1998,7 @@ ENDIF
 ;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "KIRYOKU"
 LOCAL = LOCAL * RESULT / 100
-;敵の레벨による補正
+;적의 레벨에 따른 보정
 CALL TENTACLE_LEVEL
 LOCAL = LOCAL * (100 + RESULT) / 100
 
@@ -2013,10 +2016,10 @@ SIF BASE:기력 - LOCAL < 0
 IF LOCAL > 0
 	FONTBOLD
 	IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
-	;インスタントモードなら기초기력も減らす
-		PRINTFORML %BASENAME:1%が{LOCAL} %BASENAME:1%基礎が{LOCAL / 2}減った！
+	;INSTANT 모드라면 기초기력도 줄인다
+		PRINTFORML %BASENAME:1%이 {LOCAL}, 기초 %BASENAME:1%이 {LOCAL / 2} 줄었다！
 	ELSE
-		PRINTFORML %BASENAME:1%が{LOCAL}減った！
+		PRINTFORML %BASENAME:1%이 {LOCAL} 줄었다！
 	ENDIF
 	FONTREGULAR
 ENDIF
@@ -2024,12 +2027,12 @@ SIF PALAM_GUTS_F("KIRYOKU", LOCAL) > 0
 	LOCAL -= 1
 BASE:기력 -= LOCAL
 IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
-	;インスタントモードなら기초기력も減らす
+	;INSTANT 모드라면 기초기력도 줄인다
 	BASE:TARGET:기초기력 -= LOCAL / 2
 ENDIF
 
 ;--------------------------------------------------
-;성내성の減算
+;성내성 뺄셈
 @PALAM_SEITAISEIDOWN, ARG:0, ARG:1
 LOCAL = 0
 IF ARG:0 < 500
@@ -2081,7 +2084,7 @@ SIF RESULT <= 0
 CALL PERCENT_CAL, BASE:기력, MAXBASE:기력
 SIF RESULT <= 0
 	TIMES LOCAL,1.25
-;기교が高いと消耗を軽減できる
+;기교가 높으면 소모를 경감할 수 있다
 IF ABL:기교 == 2
 	TIMES LOCAL,0.95
 ELSEIF ABL:기교 == 3
@@ -2092,21 +2095,21 @@ ELSEIF ABL:기교 >= 5
 	TIMES LOCAL,0.80
 ENDIF
 
-;연속系コマンドは効果を小さく
+;연속계 커맨드는 효과를 적게 만든다
 SIF TFLAG:20 == 15
 	TIMES LOCAL,0.35
 
 ;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "SEITAISEI"
 LOCAL = LOCAL * RESULT / 100
-;방어による補正
+;방어에 따른 보정
 LOCAL = LOCAL * 100 / LIMIT(100 + (BASE:방어 - 100) / 5, 80, 160)
 SIF BASE:방어 - 100 < 0
 	LOCAL = LOCAL * (100 + (100 - BASE:방어) / 2) / 100
 SIF BASE:방어 - 100 > 0
 	LOCAL = LOCAL * 100 / LIMIT(100 + SQRT(BASE:방어 - 100), 100, 200)
 
-;敵の레벨による補正
+;적의 레벨에 따른 보정
 CALL TENTACLE_LEVEL
 LOCAL = LOCAL * (200 + RESULT) / 200
 
@@ -2116,14 +2119,14 @@ SIF BASE:성내성 - LOCAL < 0
 IF LOCAL > 0
 	FONTBOLD
 	IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
-		;インスタントモードなら기초성내성も減らす
-		PRINTFORML %BASENAME:2%が{LOCAL} %BASENAME:2%基礎が{LOCAL / 2}減った！
+		;INSTANT 모드라면 기초성내성도 줄어든다
+		PRINTFORML %BASENAME:2%이 {LOCAL}, 기초 %BASENAME:2%이 {LOCAL / 2} 줄었다！
 	ELSE
-		PRINTFORML %BASENAME:2%が{LOCAL}減った！
+		PRINTFORML %BASENAME:2%이 {LOCAL} 줄었다！
 	ENDIF
 	FONTREGULAR
 ENDIF
-;피임결계の消滅
+;피임 결계의 소멸
 IF TALENT:피임결계 > 0 && BASE:성내성 > 0 && BASE:성내성 - LOCAL < 1
 	PRINTW 
 	CALL MESSAGE_PREGNANCY_SHIELD_COLLAPSED
@@ -2131,12 +2134,12 @@ IF TALENT:피임결계 > 0 && BASE:성내성 > 0 && BASE:성내성 - LOCAL < 1
 ENDIF
 BASE:성내성 -= LOCAL
 IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
-	;インスタントモードなら기초성내성も減らす
+	;INSTANT 모드라면 기초성내성도 줄어든다
 	BASE:TARGET:기초성내성 -= LOCAL / 2
 ENDIF
 
 ;--------------------------------------------------
-;食いしばり効果
+;악물기(食いしばり) 효과
 @PALAM_GUTS_F(ARGS, ARG)
 #FUNCTION
 LOCAL = 0
@@ -2154,9 +2157,9 @@ ENDIF
 RETURNF LOCAL
 
 ;--------------------------------------------------
-;감각LV6以上補正
-;ARG:0	対象キャラ
-;ARG:1	部位
+;감각LV6 이상 보정
+;ARG:0	대상 캐릭터
+;ARG:1	부위
 @PALAM_OVERFEEL, ARG:0, ARG:1
 #DIM LCOUNT
 #DIM CAL_VAR
@@ -2174,47 +2177,47 @@ RETURN CAL_VAR
 
 
 
-;(性コマンド実行時に呼び出す)
-;「今回の공격でメイン部位のPALAMはどの程度になりそうか？」を予測する
-;10000超えるなら絶頂相当の快楽になる
-@PALAM_VABCestimate(部位,ARG:0,ARG:1,ARG:2,ARG:3,ARG:4)
-#DIM REF 部位,0;LOCALの参照渡し
-#DIM 現在部位,1
-#DIM 現在値,1
+;(성 명령어 실행 시 호출)
+;「이번 공격으로 메인 부위의 PALAM은 어느 정도가 될 것인가？」를 예측한다
+;10000을 넘으면 절정에 상당하는 쾌락이 된다
+@PALAM_VABCestimate(부위,ARG:0,ARG:1,ARG:2,ARG:3,ARG:4)
+#DIM REF 부위,0;LOCAL의 참조도(参照渡し)
+#DIM 현재부위,1
+#DIM 현재값,1
 
 FOR LOCAL,0,감각수
-		SIF ARG:LOCAL==-1
+		SIF ARG:LOCAL == -1
 			BREAK
 
-		現在部位=ARG:LOCAL
-		現在値=部位:現在部位
+		현재부위=ARG:LOCAL
+		현재값=부위:현재부위
 
-		;감각LV6以上補正
-		CALL PALAM_OVERFEEL, TARGET, 現在部位
-		現在値 = 現在値 * RESULT / 100
+		;감각 LV6 이상 보정
+		CALL PALAM_OVERFEEL, TARGET, 현재부위
+		현재값 = 현재값 * RESULT / 100
 
-		;体勢に関する補正
-		CALL PALAM_HOSEI_POSE, 現在値
-		現在値 = RESULT
+		;자세에 관한 보정
+		CALL PALAM_HOSEI_POSE, 현재값
+		현재값 = RESULT
 
-		;성내성に関する補正
-		CALL PALAM_HOSEI_SEITAISEI, 現在値
-		現在値 = RESULT
+		;성내성에 관한 보정
+		CALL PALAM_HOSEI_SEITAISEI, 현재값
+		현재값 = RESULT
 
-		;素質に関する補正
-		CALL PALAM_HOSEI_TALENT, 現在部位, 現在値
-		現在値 = RESULT
+		;소질에 관한 보정
+		CALL PALAM_HOSEI_TALENT, 현재부위, 현재값
+		현재값 = RESULT
 
-		;성격に関する補正
-		CALL PALAM_HOSEI_SEIKAKU, 現在部位, 現在値
-		現在値 = RESULT
+		;성격에 관한 보정
+		CALL PALAM_HOSEI_SEIKAKU, 현재부위, 현재값
+		현재값 = RESULT
 
-		;촉수に関する補正
-		CALL PALAM_HOSEI_TENTACLE, 現在部位, 現在値
-		現在値 = RESULT
+		;촉수에 관한 보정
+		CALL PALAM_HOSEI_TENTACLE, 현재부위, 현재값
+		현재값 = RESULT
 
-		;予測結果
-		TFLAG:100+=現在値/10000
+		;예측 결과
+		TFLAG:100 += 현재값 / 10000
 NEXT
 
 RETURN

@@ -668,8 +668,8 @@ ELSEIF RESULT == 100
 	IF SEX_NUM > 0
 		FOR LOCAL, 0, SEX_NUM+3*EXP:ARG:유폐경험
 			IF RAND:10 == 0 && TALENT:ARG:처녀 == 0
-				EXP:ARG:V경험 += 2
-				EXP:ARG:V확장경험 += 1
+				EXP:ARG:Ｖ경험 += 2
+				EXP:ARG:Ｖ확장경험 += 1
 				;출산경험
 				IF RAND:4 != 0
 					IF TALENT:ARG:처녀 == 0 && TALENT:ARG:미성숙 == 0
@@ -681,10 +681,10 @@ ELSEIF RESULT == 100
 					ENDIF
 				ENDIF
 			ELSEIF RAND:9 == 0
-				EXP:ARG:A경험 += 2
-				EXP:ARG:A확장경험 += 1
+				EXP:ARG:Ａ경험 += 2
+				EXP:ARG:Ａ확장경험 += 1
 			ELSEIF RAND:3 == 0 && TALENT:ARG:처녀 == 0
-				EXP:ARG:V경험 += 1
+				EXP:ARG:Ｖ경험 += 1
 				;출산경험
 				IF RAND:4 != 0
 					IF TALENT:ARG:처녀 == 0 && TALENT:ARG:미성숙 == 0
@@ -696,7 +696,7 @@ ELSEIF RESULT == 100
 					ENDIF
 				ENDIF
 			ELSEIF RAND:2 == 0
-				EXP:ARG:A경험 += 1
+				EXP:ARG:Ａ경험 += 1
 			ELSE
 				EXP:ARG:펠라경험 += 1
 			ENDIF
@@ -815,7 +815,7 @@ ELSEIF RESULT == 100
 		FOR LOCAL, 0, SEX_NUM
 			IF ISMALE(ARG)
 				SIF RAND:20 == 0
-					EXP:ARG:A경험 += 1
+					EXP:ARG:Ａ경험 += 1
 				IF RAND:4 != 0
 					SIF TALENT:ARG:미성숙 != 1
 						EXP:ARG:사정경험 += 1
@@ -824,16 +824,16 @@ ELSEIF RESULT == 100
 				;경험 횟수가 없고 생활 환경이 열악하다면 펠라만
 				IF OPTION:0 == 0 && OPTION:1 == 2
 					EXP:ARG:펠라경험 += 1
-				ELSEIF OPTION:3 == 2 && EXP:ARG:V경험 == 0
-					EXP:ARG:V경험 += 2
+				ELSEIF OPTION:3 == 2 && EXP:ARG:Ｖ경험 == 0
+					EXP:ARG:Ｖ경험 += 2
 					IF RAND:6 != 0
 						SIF TALENT:ARG:미성숙 != 1 && TALENT:ARG:후타나리 > 0
 							EXP:ARG:사정경험 += 1
 						SIF TALENT:ARG:모유체질 > 0 && RAND:2 == 0
 							EXP:ARG:모유경험 += 1
 					ENDIF	
-				ELSEIF OPTION:3 == 1 && EXP:ARG:V경험 == 0
-					EXP:ARG:V경험 += 1
+				ELSEIF OPTION:3 == 1 && EXP:ARG:Ｖ경험 == 0
+					EXP:ARG:Ｖ경험 += 1
 					IF RAND:4 != 0
 						SIF TALENT:ARG:미성숙 != 1 && TALENT:ARG:후타나리 > 0
 							EXP:ARG:사정경험 += 1
@@ -843,14 +843,14 @@ ELSEIF RESULT == 100
 				ELSEIF RAND:10 == 0
 					EXP:ARG:이상경험 += 1
 					IF RAND:3 == 0 && TALENT:ARG:처녀 == 0
-						EXP:ARG:V확장경험 += 1
+						EXP:ARG:Ｖ확장경험 += 1
 					ELSEIF RAND:2 == 0
-						EXP:ARG:A확장경험 += 1
+						EXP:ARG:Ａ확장경험 += 1
 					ELSE
 						EXP:ARG:방뇨경험 += 1
 					ENDIF
 				ELSEIF RAND:3 == 0 && TALENT:ARG:처녀 == 0
-					EXP:ARG:V경험 += 1
+					EXP:ARG:Ｖ경험 += 1
 					IF RAND:4 != 0
 						SIF TALENT:ARG:미성숙 != 1 && TALENT:ARG:후타나리 > 0
 							EXP:ARG:사정경험 += 1
@@ -858,7 +858,7 @@ ELSEIF RESULT == 100
 							EXP:ARG:모유경험 += 1
 					ENDIF
 				ELSEIF RAND:2 == 0
-					EXP:ARG:A경험 += 1
+					EXP:ARG:Ａ경험 += 1
 					IF RAND:4 != 0
 						SIF TALENT:ARG:미성숙 != 1 && TALENT:ARG:후타나리 > 0
 							EXP:ARG:사정경험 += 1
@@ -875,21 +875,21 @@ ELSEIF RESULT == 100
 			ENDIF
 		NEXT
 		;출산 경험
-		IF OPTION:3 == 1 && EXP:ARG:V경험 > 0
+		IF OPTION:3 == 1 && EXP:ARG:Ｖ경험 > 0
 			EXP:ARG:출산경험 += 1
-			SIF RAND:10 == 0 && EXP:ARG:V경험 >= 3
+			SIF RAND:10 == 0 && EXP:ARG:Ｖ경험 >= 3
 				EXP:ARG:출산경험 += 1
-		ELSEIF OPTION:3 == 2 && EXP:ARG:V경험 > 0
+		ELSEIF OPTION:3 == 2 && EXP:ARG:Ｖ경험 > 0
 			EXP:ARG:출산경험 += 1
-			SIF EXP:ARG:V경험 >= 2
+			SIF EXP:ARG:Ｖ경험 >= 2
 				EXP:ARG:출산경험 += 1
-			SIF RAND:10 == 0 && EXP:ARG:V경험 >= 5
+			SIF RAND:10 == 0 && EXP:ARG:Ｖ경험 >= 5
 				EXP:ARG:출산경험 += 1
-			SIF RAND:10 == 0 && EXP:ARG:V경험 >= 7
+			SIF RAND:10 == 0 && EXP:ARG:Ｖ경험 >= 7
 				EXP:ARG:출산경험 += 1
-			SIF RAND:20 == 0 && EXP:ARG:V경험 >= 8
+			SIF RAND:20 == 0 && EXP:ARG:Ｖ경험 >= 8
 				EXP:ARG:출산경험 += 1
-			SIF RAND:20 == 0 && EXP:ARG:V경험 >= 9
+			SIF RAND:20 == 0 && EXP:ARG:Ｖ경험 >= 9
 				EXP:ARG:출산경험 += 1
 		ENDIF
 		;매료

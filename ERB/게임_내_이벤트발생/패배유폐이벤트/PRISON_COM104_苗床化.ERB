@@ -9,10 +9,10 @@ VARSET LOCAL
 TFLAG:10 = 104
 
 ;取得する珠
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활 윤활は未使用
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -32,8 +32,8 @@ TFLAG:10 = 104
 ;LOCAL:132 고통쾌락경험,
 ;LOCAL:140 자위경험,
 ;LOCAL:150 이상경험
-;LOCAL:151 V확장경험
-;LOCAL:152 A확장경험
+;LOCAL:151 Ｖ확장경험
+;LOCAL:152 Ａ확장경험
 ;LOCAL:153 사정경험
 ;LOCAL:154 모유경험
 ;LOCAL:155 방뇨경험
@@ -62,22 +62,22 @@ IF TALENT:묘상화 == 0
 		LOCAL:124 = 4
 
 	;快V
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 10
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 5
 		LOCAL:1 = 50
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 8
 		LOCAL:1 = 100
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 11
 		LOCAL:1 = 250
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 15
 		LOCAL:1 = 500
-	ELSEIF ABL:V감각 >= 5
+	ELSEIF ABL:Ｖ감각 >= 5
 		LOCAL:120 = 20
 		LOCAL:1 = 1000
 	ENDIF
@@ -99,38 +99,38 @@ IF TALENT:묘상화 == 0
 	CALL MESSAGE_PRISON_NAEDOKO
 ELSE
 	;快V
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 6
 		LOCAL:1 = 200
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 15
 		LOCAL:1 = 300
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 24
 		LOCAL:1 = 400
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 33
 		LOCAL:1 = 600
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 45
 		LOCAL:1 = 1200
-	ELSEIF ABL:V감각 >= 5
+	ELSEIF ABL:Ｖ감각 >= 5
 		LOCAL:120 = 60
 		LOCAL:1 = 2000
 	ENDIF
 
 	;快B
-	IF ABL:B감각 == 0
+	IF ABL:Ｂ감각 == 0
 		LOCAL:3 = 1
-	ELSEIF ABL:B감각 == 1
+	ELSEIF ABL:Ｂ감각 == 1
 		LOCAL:3 = 5
-	ELSEIF ABL:B감각 == 2
+	ELSEIF ABL:Ｂ감각 == 2
 		LOCAL:3 = 20
-	ELSEIF ABL:B감각 == 3
+	ELSEIF ABL:Ｂ감각 == 3
 		LOCAL:3 = 100
-	ELSEIF ABL:B감각 == 4
+	ELSEIF ABL:Ｂ감각 == 4
 		LOCAL:3 = 200
-	ELSEIF ABL:B감각 >= 5
+	ELSEIF ABL:Ｂ감각 >= 5
 		LOCAL:3 = 400
 	ENDIF
 
@@ -159,14 +159,14 @@ ELSE
 	;굴복　とりあえず一定で
 	LOCAL:8 = 800
 
-	;V감각が低いと공포が入る
-	IF ABL:V감각 == 0
+	;Ｖ감각が低いと공포が入る
+	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:11 = 400
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:11 = 200
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:11 = 100
 	ELSE
 	ENDIF

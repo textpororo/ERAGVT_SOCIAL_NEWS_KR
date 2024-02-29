@@ -29,32 +29,32 @@ CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111
 
 ;快A　감각が低いうちは少なめ
 IF CONFIG_CHECK_BALANCE_F(7) == 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 40
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 400
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 1000
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 2000
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 4000
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 10000
 	ENDIF
-;컨피그オンで쾌A増加
+;컨피그オンで쾌Ａ増加
 ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 500
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 1000
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 2000
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 4000
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 8000
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 10000
 	ENDIF
 ENDIF
@@ -79,27 +79,27 @@ CALL CLOTH_BATTLE_DAMAGE, 4
 
 ;ベース
 SIF EX_COM & Ａ
-	EXP:A경험 += 1
+	EXP:Ａ경험 += 1
 
 
 
 ;굴복
-IF ABL:A감각 == 0
+IF ABL:Ａ감각 == 0
 	LOCAL:8 = 100
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:8 = 200
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:8 = 500
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:8 = 1000
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:8 = 2000
-ELSEIF ABL:A감각 >= 5
-	LOCAL:8 = 4500 * ABL:A감각 * 100
+ELSEIF ABL:Ａ감각 >= 5
+	LOCAL:8 = 4500 * ABL:Ａ감각 * 100
 ENDIF
 
 ;감각と윤활が低いと고통が入る
-IF ABL:A감각 < 3
+IF ABL:Ａ감각 < 3
 	IF PALAM:윤활 < 100
 		LOCAL:10 = 1000
 	ELSEIF PALAM:윤활 < 10000
@@ -115,19 +115,19 @@ ELSE
 	ELSE
 	ENDIF
 ENDIF
-SIF BASE:A결계내구력 > 0
+SIF BASE:Ａ결계내구력 > 0
 	LOCAL:10 = 0
 
 ;감각が低いと공포が入る
-IF ABL:A감각 == 0
+IF ABL:Ａ감각 == 0
 	LOCAL:11 = 1000
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:11 = 500
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:11 = 200
 ELSE
 ENDIF
-SIF BASE:A결계내구력 > 0
+SIF BASE:Ａ결계내구력 > 0
 	LOCAL:11 /= 2
 
 ;追加責め実行

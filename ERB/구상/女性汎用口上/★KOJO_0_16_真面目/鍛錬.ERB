@@ -11,7 +11,7 @@ IF CHECK_BODY("異常임신") > 0
 
 ELSEIF CHECK_BODY("触装")
 	;◆촉수服＋身体陥落クリティカルヒット時の鍛錬
-	IF ABL:B감각 >=3
+	IF ABL:Ｂ감각 >=3
 		IF 진지함_フラグ_シチュ==""
 			;実行時
 		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
@@ -31,7 +31,7 @@ ELSEIF CHECK_BODY("触装")
 ;◆精神陥落時の鍛錬
 ELSEIF ABL:노출벽+MARK:치욕각인 >= 5
 ;◆身体陥落時の鍛錬
-ELSEIF ABL:B감각 >=3
+ELSEIF ABL:Ｂ감각 >=3
 
 ;◆はじめて
 ELSEIF GETBIT(CFLAG:271,1)==0
@@ -276,7 +276,7 @@ IF RAND:4==0
 		PRINTFORML  기절していた間に再び分娩台に拘束された体には無数の端子と唸りを上げる吸引器が取り付けられていた。
 		PRINTFORML  ボテ腹の一番奥で脈打つ감각に、%타겟은% 唇を噛み締めた……
 	ENDIF
-ELSEIF ABL:B감각 >=4
+ELSEIF ABL:Ｂ감각 >=4
 	CFLAG:270 = 5
 	SELECTCASE RAND:3
 		CASE 0
@@ -335,7 +335,7 @@ IF (CHECK_PREGNANT_F(TARGET) > 0 || ABL:마조끼 >= 3) && RAND:3==0
 		PRINTFORML  眦に涙を浮かべ、嘔吐を繰り返す%CALLNAME%の目にはまだ、儚げな闘志の光が残されていた。
 	ENDIF
 ;胸が開発済みの場合
-ELSEIF ABL:B감각 >=4
+ELSEIF ABL:Ｂ감각 >=4
 	CFLAG:270 = 6
 	SELECTCASE RAND:2
 		CASE 0
@@ -660,7 +660,7 @@ ELSEIF CFLAG:270 == 20
 	CALL KOJO_0_TRAINING_SEISHIN_16
 ;瞑想
 ELSEIF CFLAG:270 == 3
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……心…頭、滅却、…っんん」
 		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 瞑想を続けた。
@@ -675,7 +675,7 @@ ELSEIF CFLAG:270 == 3
 	ENDIF
 ;筋トレ
 ELSEIF CFLAG:270 == 4
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
 		PRINTFORML %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 鍛錬を続けたが
@@ -691,7 +691,7 @@ ELSEIF CFLAG:270 == 4
 	ENDIF
 ;自衛訓練
 ELSEIF CFLAG:270 == 5
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?…グゥ！」
 		PRINTFORML %타겟은% 断続的な刺激に気を取られ、防ぎきることができなかった。
@@ -708,7 +708,7 @@ ELSEIF CFLAG:270 == 5
 ;ダッシュ
 ELSEIF CFLAG:270 == 6
 	;감각の最大値で決める
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……動…くなぁ…ぁあ！」
 		PRINTFORML %타겟은% 与えられる刺激に脚をもつれさせた
@@ -725,7 +725,7 @@ ELSEIF CFLAG:270 == 6
 	ENDIF
 ;근거리戦闘
 ELSEIF CFLAG:270 == 7
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
 		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、振るった木剣はむなしく空を切った。
@@ -742,7 +742,7 @@ ELSEIF CFLAG:270 == 7
 	ENDIF
 ;중거리戦闘
 ELSEIF CFLAG:270 == 8
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
 		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、放った矢はむなしく空を切った。
@@ -759,7 +759,7 @@ ELSEIF CFLAG:270 == 8
 	ENDIF
 ;원거리戦闘
 ELSEIF CFLAG:270 == 9
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……ッ!?」
 		PRINTFORML %타겟은% 股座からこみあげる刺激に気を取られ、放った弾丸はむなしく空を切った。
@@ -776,7 +776,7 @@ ELSEIF CFLAG:270 == 9
 	ENDIF
 ;戦術研究
 ELSEIF CFLAG:270 == 10
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 		PRINTFORML 「……っぅん！？」
 		PRINTFORML 突如として%ITEMNAME:400%に全身を愛撫され、%타겟은% 思考を邪魔される。

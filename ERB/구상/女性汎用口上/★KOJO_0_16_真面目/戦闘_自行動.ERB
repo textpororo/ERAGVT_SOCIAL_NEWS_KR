@@ -37,7 +37,7 @@
 	
 
 
-;SP변신 시 구호	再変身、必殺技の一つ
+;ＳＰ변신 시 구호	再変身、必殺技の一つ
 @KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_16
 PRINTL 「ここがチャンスっ！」
 
@@ -83,7 +83,7 @@ ELSE
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		;うぁ……そんな、に、臭いだけで…私っ…
 		;こ、こいつらの臭い…どうして…こんな…！？
-	ELSEIF ((TCVARn:12 & 마비) || ABL:B감각 >=4)
+	ELSEIF ((TCVARn:12 & 마비) || ABL:Ｂ감각 >=4)
 		PRINTDATAL
 		DATAFORM 「叩き潰して、あげ、くぅっ…」
 		DATAFORM 「食らいなさ、っくぅ、なさいっ！」
@@ -375,12 +375,12 @@ ENDIF
 @KOJO_0_BATTLE_CHARA_TETTAI_SUCCESS_16
 
 ;大量絶頂後
-IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+IF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 9
 	PRINTFORML 「ンんっ、あっ、んうぅっ！！」
 	PRINTFORML 数えきれないほどイかされた%CALLNAME%。
 	PRINTFORMW 腰に力を入れられず這いつくばりながら逃げ出した……
 ;多数絶頂後
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「……ンんっ、くっ……」
 	PRINTFORML 何度もイかされた%CALLNAME%。
 	PRINTFORMW 動くだけでも全身が快楽に貫かれ、愛蜜を垂らしながら逃走した……
@@ -428,12 +428,12 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CHARA_TETTAI_FALSE_16
 ;大量絶頂後
-IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+IF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 9
 	PRINTFORML 「だめ……イってる、イってるからぁ！」
 	PRINTFORML 数えきれないほどイかされた%CALLNAME%を逃がすまいと
 	PRINTFORMW %STR:2500%は、立ち上がれない%CALLNAME%をゆっくりと取り囲んだ……
 ;多数絶頂後
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「……ンんっ、これ、以上、イっ、たら……」
 	PRINTFORMW 何度もイかされた%타겟은% 更なる凌辱の予感に공포を隠せない…… 
 ;체력0

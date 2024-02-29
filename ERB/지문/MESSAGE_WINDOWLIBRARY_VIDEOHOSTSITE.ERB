@@ -146,14 +146,14 @@ ELSE
 		strVSWText:0:1:6=純潔を保った乙女です。
 		strVSWText:0:1:7=
 	ELSEIF TALENT:보추 > 0
-		IF EXP:A경험 <= 0
+		IF EXP:Ａ경험 <= 0
 			strVSWText:0:1:6=お尻の純潔を保った乙女です。
-		ELSEIF ABL:A감각 < 2
+		ELSEIF ABL:Ａ감각 < 2
 			strVSWText:0:1:6=お尻は……あんまり慣れてません。
 		ELSE
 			strVSWText:0:1:6=비처녀の中古ビッチです。
 		ENDIF
-		IF ABL:A감각 > 4
+		IF ABL:Ａ감각 > 4
 			strVSWText:0:1:7=男性様にケツマンコずぽずぽされるの大好きです
 		ELSE
 			strVSWText:0:1:7=
@@ -379,7 +379,7 @@ IF TALENT:보추 > 0
 	strVSWText:0:3:0=
 	strVSWText:0:3:1=性感帯は
 	strVSWText:0:3:2=
-	SELECTCASE ABL:C감각
+	SELECTCASE ABL:Ｃ감각
 		CASE 0
 			strVSWText:0:3:3=おちんちんはまだ気持ちよくない程度
 		CASE 1
@@ -394,10 +394,10 @@ IF TALENT:보추 > 0
 			strVSWText:0:3:3=ペニクリは風が吹くだけでイくほど敏感
 		ENDSELECT
 
-	;보추はV감각描写なし
+	;보추はＶ감각描写なし
 	strVSWText:0:3:4=
 
-	SELECTCASE ABL:A감각
+	SELECTCASE ABL:Ａ감각
 		CASE 0
 			strVSWText:0:3:5=おしりはまだ痛みを感じる程度
 		CASE 1
@@ -411,7 +411,7 @@ IF TALENT:보추 > 0
 		CASEELSE
 			strVSWText:0:3:5=ケツマンコをいじられるとすぐアクメ顔になる
 		ENDSELECT
-	SELECTCASE ABL:B감각
+	SELECTCASE ABL:Ｂ감각
 		CASE 0
 			strVSWText:0:3:6=おっぱいは何も快感を感じない
 		CASE 1
@@ -491,7 +491,7 @@ ELSEIF ISMALE()
 	strVSWText:0:3:0=
 	strVSWText:0:3:1=性感帯は
 	strVSWText:0:3:2=
-	SELECTCASE ABL:C감각
+	SELECTCASE ABL:Ｃ감각
 		CASE 0
 			strVSWText:0:3:3=おちんちんはまだ気持ちよくない程度
 		CASE 1
@@ -506,10 +506,10 @@ ELSEIF ISMALE()
 			strVSWText:0:3:3=ちんぽは風が吹くだけでイくほど敏感
 		ENDSELECT
 
-	;남자はV감각描写なし
+	;남자はＶ감각描写なし
 	strVSWText:0:3:4=
 
-	SELECTCASE ABL:A감각
+	SELECTCASE ABL:Ａ감각
 		CASE 0
 			strVSWText:0:3:5=おしりはただの排泄器官
 		CASE 1
@@ -523,7 +523,7 @@ ELSEIF ISMALE()
 		CASEELSE
 			strVSWText:0:3:5=애널は入れるものを求めて疼いている
 		ENDSELECT
-	SELECTCASE ABL:B감각
+	SELECTCASE ABL:Ｂ감각
 		CASE 0
 			strVSWText:0:3:6=おっぱいは何も快感を感じない
 		CASE 1
@@ -603,7 +603,7 @@ ELSE
 	strVSWText:0:3:0=
 	strVSWText:0:3:1=性感帯は
 	strVSWText:0:3:2=
-	SELECTCASE ABL:C감각
+	SELECTCASE ABL:Ｃ감각
 		CASE 0
 			strVSWText:0:3:3=클리토리스はまだ気持ちよくない程度
 		CASE 1
@@ -617,7 +617,7 @@ ELSE
 		CASEELSE
 			strVSWText:0:3:3=클리토리스は風が吹くだけでイくほど敏感
 		ENDSELECT
-	SELECTCASE ABL:V감각
+	SELECTCASE ABL:Ｖ감각
 		CASE 0
 			strVSWText:0:3:4=オマンコはまだ痛みを感じる程度
 		CASE 1
@@ -631,7 +631,7 @@ ELSE
 		CASEELSE
 			strVSWText:0:3:4=オマンコをいじられるとすぐアクメ顔になる
 		ENDSELECT
-	SELECTCASE ABL:A감각
+	SELECTCASE ABL:Ａ감각
 		CASE 0
 			strVSWText:0:3:5=おしりの穴はただの排泄器官
 		CASE 1
@@ -645,7 +645,7 @@ ELSE
 		CASEELSE
 			strVSWText:0:3:5=애널は入れるものを求めて疼いている
 		ENDSELECT
-	SELECTCASE ABL:B감각
+	SELECTCASE ABL:Ｂ감각
 		CASE 0
 			strVSWText:0:3:6=おっぱいは何も快感を感じない
 		CASE 1
@@ -829,17 +829,17 @@ IF ISMALE()
 	strVSWText:0:4:1=性経験は
 	strVSWText:0:4:2=
 	strVSWText:0:4:3=
-	SELECTCASE EXP:V경험
+	SELECTCASE EXP:Ｖ경험
 		CASE 0
 			strVSWText:0:4:3=
 		CASEELSE
-			strVSWText:0:4:3=オマンコは {EXP:V경험} 回
+			strVSWText:0:4:3=オマンコは {EXP:Ｖ경험} 回
 		ENDSELECT
-	SELECTCASE EXP:A경험
+	SELECTCASE EXP:Ａ경험
 		CASE 0
 			strVSWText:0:4:4=
 		CASEELSE
-			strVSWText:0:4:4=애널は {EXP:A경험} 回
+			strVSWText:0:4:4=애널は {EXP:Ａ경험} 回
 		ENDSELECT
 	SELECTCASE EXP:절정경험
 		CASE 0
@@ -895,17 +895,17 @@ ELSE
 	strVSWText:0:4:1=性経験は
 	strVSWText:0:4:2=
 	strVSWText:0:4:3=
-	SELECTCASE EXP:V경험
+	SELECTCASE EXP:Ｖ경험
 		CASE 0
 			strVSWText:0:4:3=
 		CASEELSE
-			strVSWText:0:4:3=オマンコは {EXP:V경험} 回
+			strVSWText:0:4:3=オマンコは {EXP:Ｖ경험} 回
 		ENDSELECT
-	SELECTCASE EXP:A경험
+	SELECTCASE EXP:Ａ경험
 		CASE 0
 			strVSWText:0:4:4=
 		CASEELSE
-			strVSWText:0:4:4=애널は {EXP:A경험} 回
+			strVSWText:0:4:4=애널は {EXP:Ａ경험} 回
 		ENDSELECT
 	SELECTCASE EXP:절정경험
 		CASE 0
@@ -969,7 +969,7 @@ IF TALENT:보추 > 0
 		CASE 7
 			strVSWText:1:4:LCOUNT=パンツ脱いだ！
 		CASE 6
-			IF ABL:A감각 < 2
+			IF ABL:Ａ감각 < 2
 				strVSWText:1:4:LCOUNT=けつまんこきれいだね
 			ELSE
 				strVSWText:1:4:LCOUNT=縦割れけつまんこだぁ
@@ -1084,7 +1084,7 @@ IF ISMALE()
 	strVSWText:0:5:8=
 	strVSWText:0:5:9=
 	strVSWText:0:5:10=
-	strVSWText:0:5:11=後ろの穴を{EXP:A확장경험}回、拡張されました
+	strVSWText:0:5:11=後ろの穴を{EXP:Ａ확장경험}回、拡張されました
 	strVSWText:0:5:12=
 	strVSWText:0:5:13=チンポミルクを{EXP:사정경험}回絞られました
 ELSE
@@ -1098,8 +1098,8 @@ ELSE
 	strVSWText:0:5:7=
 	strVSWText:0:5:8=
 	strVSWText:0:5:9=
-	strVSWText:0:5:10=前の穴を{EXP:V확장경험}回、拡張されて
-	strVSWText:0:5:11=後ろの穴を{EXP:A확장경험}回、拡張されました
+	strVSWText:0:5:10=前の穴を{EXP:Ｖ확장경험}回、拡張されて
+	strVSWText:0:5:11=後ろの穴を{EXP:Ａ확장경험}回、拡張されました
 	strVSWText:0:5:12=
 	strVSWText:0:5:13={EXP:모유경험}回の母乳イキ
 ENDIF
@@ -1113,7 +1113,7 @@ IF TALENT:보추 > 0
 		CASE 7
 			strVSWText:1:5:LCOUNT=締りの良さそうなケツアナだ
 		CASE 6
-			IF ABL:A감각 < 2
+			IF ABL:Ａ감각 < 2
 				strVSWText:1:5:LCOUNT=けつまんこきれいだね
 			ELSE
 				strVSWText:1:5:LCOUNT=縦割れけつまんこだぁ

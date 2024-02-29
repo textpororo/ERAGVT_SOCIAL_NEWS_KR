@@ -483,7 +483,7 @@ FOR LCOUNT, 0, CHARANUM
 				PRINT （육아 중）
 		ENDIF
 		SIF ARG:1 == 2
-			PRINTFORM （수련Ｐ：{JUEL:LCOUNT:수련P}）
+			PRINTFORM （수련P：{JUEL:LCOUNT:수련P}）
 		PRINTL 
 	ENDIF
 NEXT
@@ -902,7 +902,7 @@ IF EXP:ARG:(LOCAL:1) >= LOCAL:2 && ABL:ARG:(LOCAL:0) < 9
 		ENDIF
 		IF RESULT == 0
 			TALENT:ARG:변신능력 = 0
-			TALENT:ARG:변신시TS = 0
+			TALENT:ARG:변신시ＴＳ = 0
 			PRINTL 
 			PRINTFORML %PRINT_TRANSCALLNAME(ARG)%에게 변신 능력을 설정하지 않았습니다.
 		ELSEIF RESULT == 1
@@ -1390,9 +1390,9 @@ IF CFLAG:ARG:1 > 0
 			ENDIF
 		ELSEIF ARGS == "남자"
 			IF ISFEMALE(ARG)
-				SIF TALENT:ARG:변신시TS > 0
+				SIF TALENT:ARG:변신시ＴＳ > 0
 					LOCALS = 남자
-			ELSEIF TALENT:ARG:변신시TS == 0
+			ELSEIF TALENT:ARG:변신시ＴＳ == 0
 					LOCALS = 남자
 			ENDIF
 		ELSEIF ARGS == "보추"
@@ -1430,9 +1430,9 @@ ELSE
 		ELSEIF ARGS == "절벽" || ARGS == "빈유" || ARGS == "거유" || ARGS == "폭유" || ARGS == "초유" || ARGS == "마유" || ARGS == "기유"
 			LOCAL = TALENT:ARG:거유 - TALENT:ARG:빈유 + TALENT:ARG:변신시가슴사이즈변동
 			IF ISMALE(ARG)
-				SIF TALENT:ARG:변신시TS == 0
+				SIF TALENT:ARG:변신시ＴＳ == 0
 					LOCAL = 0
-			ELSEIF TALENT:ARG:변신시TS > 0
+			ELSEIF TALENT:ARG:변신시ＴＳ > 0
 					LOCAL = 0
 			ENDIF
 			IF LOCAL < -1
@@ -1452,9 +1452,9 @@ ELSE
 			ENDIF
 		ELSEIF ARGS == "남자"
 			IF ISMALE(ARG)
-				SIF TALENT:ARG:변신시TS == 0
+				SIF TALENT:ARG:변신시ＴＳ == 0
 					LOCALS = 남자
-			ELSEIF TALENT:ARG:변신시TS > 0
+			ELSEIF TALENT:ARG:변신시ＴＳ > 0
 					LOCALS = 남자
 			ENDIF
 		ELSEIF ARGS == "보추"
@@ -1543,7 +1543,7 @@ SIF TALENT:ARG:변신시체격변동 != 0
 	RETURNF 1
 SIF TALENT:ARG:변신시가슴사이즈변동 != 0
 	RETURNF 1
-SIF TALENT:ARG:변신시TS != 0
+SIF TALENT:ARG:변신시ＴＳ != 0
 	RETURNF 1
 SIF TALENT:ARG:외관 != TALENT:ARG:변신시외관
 	RETURNF 1

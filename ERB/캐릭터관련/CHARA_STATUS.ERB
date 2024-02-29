@@ -28,7 +28,7 @@ CASE 1
 	CALL SHORTLINE
 	CALL SHOW_STATUS_BASE_STATUSINFO, ARG
 	CALL SHOW_STATUS_SENGI, ARG
-	IF TALENT:ARG:C결계 + TALENT:ARG:V결계 + TALENT:ARG:A결계 + TALENT:ARG:B결계 + TALENT:ARG:피임결계
+	IF TALENT:ARG:Ｃ결계 + TALENT:ARG:Ｖ결계 + TALENT:ARG:Ａ결계 + TALENT:ARG:Ｂ결계 + TALENT:ARG:피임결계
 		PRINTL 
 		CALL SHORTLINE
 	ENDIF
@@ -1264,11 +1264,11 @@ ELSEIF ARG:1 == 1
 
 	LOCALS+= "성별："+(ISMALE(ARG:0) ? "남성" # (TALENT:(ARG:0):촉수의포로 ? "❤" # "여성"))+" "
 
-	IF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && (TALENT:(ARG:0):변신시TS < 1 || GETBATTLESITUATION("기습") == 0)
+	IF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && (TALENT:(ARG:0):변신시ＴＳ < 1 || GETBATTLESITUATION("기습") == 0)
 		LOCALS += "　<<미변신>>"
-	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("기습") && TFLAG:0 < 5
+	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시ＴＳ && GETBATTLESITUATION("기습") && TFLAG:0 < 5
 		LOCALS += "　<<미변신・준비 중>>"
-	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시TS && GETBATTLESITUATION("기습") && TFLAG:0 >= 5
+	ELSEIF TALENT:(ARG:0):변신능력 == 1 && CFLAG:(ARG:0):1 == 0 && TALENT:(ARG:0):변신시ＴＳ && GETBATTLESITUATION("기습") && TFLAG:0 >= 5
 		LOCALS += "　<<미변신・준비 완료>>"
 	ENDIF
 	PRINTFORML %LOCALS, 46,LEFT%
@@ -1327,7 +1327,7 @@ ELSEIF ARG:1 == 1
 	ENDIF
 
 	PRINTL 
-	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 6, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
+	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 5, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
 	PRINTL
 	;추가 게이지
 	LOCAL=0
@@ -1431,7 +1431,7 @@ ELSEIF ARG:1 == 1
 		FONTREGULAR
 	ENDIF
 	IF CFLAG:1 == 2 && (GETBIT(TCVARn:3, 0) || GETBIT(TCVARn:3, 1))
-		PRINT SP변신 시간
+		PRINT ＳＰ변신 시간
 		SIF GETBIT(TCVARn:3, 0)
 			PRINT ↓
 		SIF GETBIT(TCVARn:3, 1)
@@ -1577,7 +1577,7 @@ ELSEIF ARG:1 == 3
 	PRINTL 
 	CALLFORM COLORSENTENCE_BAR(BASENAME:1, 6, BASE:(ARG:0):기력, MAXBASE:(ARG:0):기력, 20)
 	PRINTL 
-	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 6, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
+	CALLFORM COLORSENTENCE_BAR(BASENAME:2, 5, BASE:(ARG:0):성내성, MAXBASE:(ARG:0):성내성, 20)
 	PRINTL 
 	PRINTFORML 전투력　　%BASENAME:10%：{MAXBASE:ARG:공격}  %BASENAME:11%：{MAXBASE:ARG:방어}  %BASENAME:12%：{MAXBASE:ARG:민첩}  %BASENAME:13%：{MAXBASE:ARG:지성}
 	CALL SHOW_STATUS_SEIKAKU, TARGET, 1
@@ -1675,7 +1675,7 @@ PRINTFORM 공중 성능：Lv.{MAXBASE:ARG:공중대시}
 @SHOW_STATUS_SHIELD, ARG
 #DIM LCOUNT
 LOCALS = ◆결계　　
-IF TALENT:ARG:C결계 + TALENT:ARG:V결계 + TALENT:ARG:A결계 + TALENT:ARG:B결계
+IF TALENT:ARG:Ｃ결계 + TALENT:ARG:Ｖ결계 + TALENT:ARG:Ａ결계 + TALENT:ARG:Ｂ결계
 	FOR LCOUNT, 0, 감각수
 		IF TALENT:ARG:(LCOUNT + 190)
 			PRINTFORM %LOCALS%%TALENTNAME:(LCOUNT + 190)%：
@@ -2000,7 +2000,7 @@ IF CONFIG_CHECK_SCREEN_F(0) == 0 || ARG:1 == 2
 						PRINTFORM [후타나리]
 					ENDIF
 				ENDIF
-			ELSEIF COUNT == 402 && TALENT:ARG:변신시TS == 0
+			ELSEIF COUNT == 402 && TALENT:ARG:변신시ＴＳ == 0
 			ELSEIF COUNT == 404 && (TALENT:ARG:변신능력 < 1 || CFLAG:ARG:1 > 0)
 			ELSEIF ARG:2
 				LOCALS += @"<nonbutton title='%TALENT_INFO(COUNT)%'>[%TALENTNAME:COUNT%]</nonbutton>"
@@ -2216,7 +2216,7 @@ ELSE
 	;0,처녀,
 	;300,후타나리,
 	;400,남자,
-	;401,변신시TS,
+	;401,변신시ＴＳ,
 	;201-249,종족
 
 	LOCALS = \@ARG:1?#　\@기본：
@@ -2244,8 +2244,8 @@ ELSE
 	SIF TALENT:ARG:초심 == 1
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(5)%'>[초심]</nonbutton>
 
-	SIF TALENT:ARG:변신시TS > 0
-		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(401)%'>[변신시TS]</nonbutton>
+	SIF TALENT:ARG:변신시ＴＳ > 0
+		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(401)%'>[변신시ＴＳ]</nonbutton>
 	SIF TALENT:ARG:변신시후타나리 > 0 && TALENT:ARG:변신능력 > 0 && CFLAG:ARG:1 == 0
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(404)%'>[변신시후타나리]</nonbutton>
 	SIF TALENT:ARG:여체수용 > 0
@@ -2368,14 +2368,14 @@ ELSE
 		CALL PRINT_TALENT_CATEGORY, "육체", ARG:1, ARG:2, 900, TALENT:ARG:성별변화
 
 	;----------------	　성벽　	----------------
-	;100,C민감,
-	;101,C둔감,
-	;102,V민감,
-	;103,V둔감,
-	;104,A민감,
-	;105,A둔감,
-	;106,B민감,
-	;107,B둔감,
+	;100,Ｃ민감,
+	;101,Ｃ둔감,
+	;102,Ｖ민감,
+	;103,Ｖ둔감,
+	;104,Ａ민감,
+	;105,Ａ둔감,
+	;106,Ｂ민감,
+	;107,Ｂ둔감,
 	FOR LOCAL, 100, 108
 		SIF TALENT:ARG:LOCAL > 0
 			CALL PRINT_TALENT_CATEGORY, "성벽", ARG:1, ARG:2, LOCAL
@@ -2402,10 +2402,10 @@ ELSE
 	;185,원거리서툼,
 	;186,공중전특기,
 	;187,공중전서툼,
-	;190,C결계,
-	;191,V결계,
-	;192,A결계,
-	;193,B결계,
+	;190,Ｃ결계,
+	;191,Ｖ결계,
+	;192,Ａ결계,
+	;193,Ｂ결계,
 	;303,피임결계,
 	FOR LOCAL, 180, 200
 		SIF TALENT:ARG:LOCAL > 0
@@ -2825,36 +2825,36 @@ SELECTCASE ARG
 	;사나움
 		RETURNF "「체력○ 공격◎ 민첩△ 지성△」공격 보정이 매우 높지만, 내면에 자신의 나약함을 품고 있다. 전투 도중『분노』상태가 되기 쉽다."
 	CASE 100
-	;C민감
-		RETURNF "PALAM:쾌C가 오르기 쉽다."
+	;Ｃ민감
+		RETURNF "PALAM:쾌Ｃ가 오르기 쉽다."
 	CASE 101
-	;C둔감
-		RETURNF "PALAM:쾌C가 잘 오르지 않는다."
+	;Ｃ둔감
+		RETURNF "PALAM:쾌Ｃ가 잘 오르지 않는다."
 	CASE 102
-	;V민감
-		RETURNF "PALAM:쾌V가 오르기 쉽다."
+	;Ｖ민감
+		RETURNF "PALAM:쾌Ｖ가 오르기 쉽다."
 	CASE 103
-	;V둔감
-		RETURNF "PALAM:쾌V가 잘 오르지 않는다."
+	;Ｖ둔감
+		RETURNF "PALAM:쾌Ｖ가 잘 오르지 않는다."
 	CASE 104
-	;A민감
-		RETURNF "PALAM:쾌A가 오르기 쉽다."
+	;Ａ민감
+		RETURNF "PALAM:쾌Ａ가 오르기 쉽다."
 	CASE 105
-	;A둔감
-		RETURNF "PALAM:쾌A가 잘 오르지 않는다."
+	;Ａ둔감
+		RETURNF "PALAM:쾌Ａ가 잘 오르지 않는다."
 	CASE 106
-	;B민감
-		RETURNF "PALAM:쾌B가 오르기 쉽다."
+	;Ｂ민감
+		RETURNF "PALAM:쾌Ｂ가 오르기 쉽다."
 	CASE 107
-	;B둔감
-		RETURNF "PALAM:쾌B가 잘 오르지 않는다."
+	;Ｂ둔감
+		RETURNF "PALAM:쾌Ｂ가 잘 오르지 않는다."
 
 	CASE 110
 	;빈유
-		RETURNF "가슴으로 받는 쾌감이 덜하지만, 쾌B가 잘 오르지 않는다."
+		RETURNF "가슴으로 받는 쾌감이 덜하지만, 쾌Ｂ가 잘 오르지 않는다."
 	CASE 111
 	;거유
-		RETURNF "가슴으로 받는 쾌감을 더 잘 느끼지만, 쾌B가 오르기 쉽다."
+		RETURNF "가슴으로 받는 쾌감을 더 잘 느끼지만, 쾌Ｂ가 오르기 쉽다."
 	CASE 112
 	;젖기쉬움
 		RETURNF "PALAM:윤활이 오르기가 쉽다."
@@ -2884,16 +2884,16 @@ SELECTCASE ARG
 		RETURNF "（미구현）"
 	CASE 153
 	;음핵
-		RETURNF "PALAM:쾌C가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
+		RETURNF "PALAM:쾌Ｃ가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 154
 	;음호
-		RETURNF "PALAM:쾌V가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
+		RETURNF "PALAM:쾌Ｖ가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 155
 	;음고
-		RETURNF "PALAM:쾌A가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
+		RETURNF "PALAM:쾌Ａ가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 156
 	;음유
-		RETURNF "PALAM:쾌B가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
+		RETURNF "PALAM:쾌Ｂ가 오르기 쉬우며, 요바이 이벤트가 발생하게 된다."
 	CASE 159
 	;임신
 		RETURNF "임신하고 있는 상태. 태아가 커지면 출격할 수 없게 된다."
@@ -2967,7 +2967,7 @@ SELECTCASE ARG
 		RETURNF "남성이라는 것을 표시하는 소질."
 
 	CASE 401
-	;변신시TS
+	;변신시ＴＳ
 		RETURNF "변신하면 성별이 역전되는 특성."
 
 	CASE 403
@@ -3275,7 +3275,7 @@ REPEAT 99
 				LOCAL:3 = 255
 			ENDIF			
 			IF ABL:ARG:COUNT > 10
-				LOCAL:3=MIN(LOCAL:3+64,255)
+				LOCAL:3 = MIN(LOCAL:3+64,255)
 				SETCOLOR LOCAL:1,LOCAL:2,LOCAL:3
 				PRINTFORM %ABLNAME:COUNT,(8-STRLENSU(ABLNAME:COUNT)),LEFT%：Lv{ABL:ARG:COUNT,2,RIGHT}[
 				CALL COLOR_BAR(ABL:ARG:COUNT-9,10,5,LOCAL:1,LOCAL:2,LOCAL:3,-16,10,10,6,2,"❤",">>")
@@ -3380,7 +3380,8 @@ REPEAT 99
 			LOCAL:3 = 255
 		ENDIF			
 		SETCOLOR LOCAL:1,LOCAL:2,LOCAL:3
-		PRINTFORM %EXPNAME:COUNT,14%：{EXP:ARG:COUNT,8,LEFT}
+		;PRINTFORM %EXPNAME:COUNT,14%：{EXP:ARG:COUNT,8,LEFT}
+		PRINTFORM %EXPNAME:COUNT,(14-STRLENSU(EXPNAME:COUNT))%：{EXP:ARG:COUNT,8,LEFT}
 		RESETCOLOR
 		SIF COUNT == 2 || COUNT == 7 || COUNT == 11 || COUNT == 21 || COUNT == 24 || COUNT == 32 || COUNT == 41 || COUNT == 52 || COUNT == 55
 			PRINTL 

@@ -85,7 +85,7 @@ IF CFLAG:42 == 400 && RAND:3 == 0
 	ENDIF
 	PRINTFORML を突き出す格好で拘束された目の前の供物に、
 	PRINTFORML 理性の限界に達した男は%PRINT_TRANSCALLNAME(TARGET)%へ男根を突き入れた……
-	IF (SHOJO == 5 && BASE:V결계내구력 > 0) || (SHOJO == 6 && BASE:A결계내구력 > 0)
+	IF (SHOJO == 5 && BASE:Ｖ결계내구력 > 0) || (SHOJO == 6 && BASE:Ａ결계내구력 > 0)
 		PRINTFORML 一瞬、結界が薄っすらと淡く光ったような気がしたが、
 		PRINTFORML それを確認する間も無く肉棒が深々と突き刺さった……
 	ENDIF
@@ -187,7 +187,7 @@ ELSEIF RAND:5 == 0 || (RAND:2 == 0 && FLAG:852 <= 2500) || (RAND:3 == 0 && FLAG:
 		SHOJO = 1
 	ENDIF
 	PRINTFORML に突き入れる。
-	IF (SHOJO == 1 && BASE:V결계내구력 > 0) || (SHOJO == 2 && BASE:A결계내구력 > 0)
+	IF (SHOJO == 1 && BASE:Ｖ결계내구력 > 0) || (SHOJO == 2 && BASE:Ａ결계내구력 > 0)
 		PRINTFORML 一瞬、結界が薄っすらと淡く光ったような気がしたが、
 		PRINTFORML それを確認する間も無く肉棒が深々と突き刺さった……
 	ENDIF
@@ -423,34 +423,34 @@ LOCAL:123 = 15 + RAND:16
 ;ACTION_SEISANを参考に基準値を定義
 C_計算元 = BASE:체력 * (10 + RAND:3) / 100
 
-;V경험	A경험---------------------------------------------
+;Ｖ경험	Ａ경험---------------------------------------------
 IF SHOJO == 1
-	;V경험
+	;Ｖ경험
 	LOCAL:120 += 1
 ELSEIF SHOJO == 2
-	;A경험
+	;Ａ경험
 	LOCAL:121 += 1
 ELSEIF SHOJO == 3
-	IF ABL:V감각 >= 4 && ABL:A감각 >= 4
-		;V경험
+	IF ABL:Ｖ감각 >= 4 && ABL:Ａ감각 >= 4
+		;Ｖ경험
 		LOCAL:120 += 2 + RAND:5
-		;A경험
+		;Ａ경험
 		LOCAL:121 += 2 + RAND:5
-	ELSEIF ABL:V감각 >= ABL:A감각
-		;V경험
+	ELSEIF ABL:Ｖ감각 >= ABL:Ａ감각
+		;Ｖ경험
 		LOCAL:120 += 4 + RAND:5
 	ELSE
-		;A경험
+		;Ａ경험
 		LOCAL:121 += 4 + RAND:5
 	ENDIF
 ELSEIF SHOJO == 4
-	;A경험
+	;Ａ경험
 	LOCAL:121 += 4 + RAND:5
 ELSEIF SHOJO == 5
-	;V경험
+	;Ｖ경험
 	LOCAL:120 = S_回数 - 6
 ELSEIF SHOJO == 6
-	;A경험
+	;Ａ경험
 	LOCAL:121 = S_回数 - 6
 ENDIF
 
@@ -461,7 +461,7 @@ SIF SHOJO == 1 || SHOJO == 2 || SHOJO == 5 || SHOJO == 6
 ;絶頂、奉仕快楽、사정、모유、방뇨경험----------------------
 IF SHOJO == 1 || SHOJO == 2
 	LOCAL:122 += 1
-	IF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+	IF (部位 == 7 && ABL:Ｂ감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:Ｃ감각 >= 3) || (部位 == 2 && ABL:Ｃ감각 >= 2)
 		;절정경험
 		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:4
 		;봉사쾌락경험
@@ -475,14 +475,14 @@ IF SHOJO == 1 || SHOJO == 2
 	ENDIF
 ELSEIF SHOJO == 3 || SHOJO == 4
 	;절정경험
-	SIF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+	SIF (部位 == 7 && ABL:Ｂ감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:Ｃ감각 >= 3) || (部位 == 2 && ABL:Ｃ감각 >= 2)
 		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100
-	IF ABL:V감각 >= 4 && ABL:A감각 >= 4
-		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(1 + (ABL:V감각 + ABL:A감각) / 4)
-	ELSEIF ABL:V감각 >= ABL:A감각
-		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:V감각 + 4) / 4)
+	IF ABL:Ｖ감각 >= 4 && ABL:Ａ감각 >= 4
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(1 + (ABL:Ｖ감각 + ABL:Ａ감각) / 4)
+	ELSEIF ABL:Ｖ감각 >= ABL:Ａ감각
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:Ｖ감각 + 4) / 4)
 	ELSE
-		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:A감각 + 4) / 4)
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:Ａ감각 + 4) / 4)
 	ENDIF
 	;봉사쾌락경험
 	LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
@@ -496,9 +496,9 @@ ELSEIF SHOJO == 3 || SHOJO == 4
 ELSEIF SHOJO == 5 || SHOJO == 6
 	;절정경험
 	IF SHOJO == 5
-		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:V감각 + 4) / 4)
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:Ｖ감각 + 4) / 4)
 	ELSEIF SHOJO == 6
-		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:A감각 + 4) / 4)
+		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:(2 + (ABL:Ａ감각 + 4) / 4)
 	ENDIF
 	;봉사쾌락경험
 	LOCAL:131 += C_計算元 * (2 + RAND:3) / 100
@@ -509,7 +509,7 @@ ELSEIF SHOJO == 5 || SHOJO == 6
 	SIF TALENT:오줌싸개버릇 > 0
 		LOCAL:155 += C_計算元 * (1 + RAND:3) / 100
 ELSE
-	IF (部位 == 7 && ABL:B감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:C감각 >= 3) || (部位 == 2 && ABL:C감각 >= 2)
+	IF (部位 == 7 && ABL:Ｂ감각 >= 4) || (部位 == 6 && ABL:정액중독 >= 4) || (部位 == 3 && ABL:Ｃ감각 >= 3) || (部位 == 2 && ABL:Ｃ감각 >= 2)
 		;절정경험
 		LOCAL:122 += C_計算元 * (1 + RAND:2) / 100 + RAND:4
 		;봉사쾌락경험
@@ -536,7 +536,7 @@ ENDIF
 ;(セックス回数＋ランダム대량사정、정액경험でキャップ)
 IF SHOJO == 1
 	S_질내精液 += MIN(LOCAL:120 + 10 + RAND:6, LOCAL:123)
-ELSEIF SHOJO == 3 && ((ABL:V감각 >= 4 && ABL:A감각 >= 4) || ABL:V감각 >= ABL:A감각)
+ELSEIF SHOJO == 3 && ((ABL:Ｖ감각 >= 4 && ABL:Ａ감각 >= 4) || ABL:Ｖ감각 >= ABL:Ａ감각)
 	S_질내精液 += MIN((LOCAL:120 + (LOCAL:120 * RAND:3)), LOCAL:123)
 ELSEIF SHOJO == 5
 	S_질내精液 += MIN((LOCAL:120 + (LOCAL:120 * RAND:4)), LOCAL:123)

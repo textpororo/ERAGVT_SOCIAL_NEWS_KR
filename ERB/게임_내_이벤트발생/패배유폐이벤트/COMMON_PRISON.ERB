@@ -1,9 +1,9 @@
 ﻿;**********************************************************
 ;유폐中パラメータ変動共通処理
-;ARG:0 쾌C
-;ARG:1 쾌V
-;ARG:2 쾌A
-;ARG:3 쾌B
+;ARG:0 쾌Ｃ
+;ARG:1 쾌Ｖ
+;ARG:2 쾌Ａ
+;ARG:3 쾌Ｂ
 ;ARG:4 윤활 윤활は未使用
 ;ARG:5 공순
 ;ARG:6 습득
@@ -31,36 +31,36 @@ VARSET COMMON_EXP
 ;素質に関する補正
 ;----------------------------------------------------------
 ;快C
-IF TALENT:C민감 > 0
+IF TALENT:Ｃ민감 > 0
 	TIMES ARG:0, 2.00
-ELSEIF TALENT:C둔감 > 0
+ELSEIF TALENT:Ｃ둔감 > 0
 	TIMES ARG:0, 0.50
 ENDIF
 SIF TALENT:음핵 > 0
 	TIMES ARG:0, 1.50
 
 ;快V
-IF TALENT:V민감 > 0
+IF TALENT:Ｖ민감 > 0
 	TIMES ARG:1, 2.00
-ELSEIF TALENT:V둔감 > 0
+ELSEIF TALENT:Ｖ둔감 > 0
 	TIMES ARG:1, 0.50
 ENDIF
 SIF TALENT:음호 > 0
 	TIMES ARG:1, 1.50
 
 ;快A
-IF TALENT:A민감 > 0
+IF TALENT:Ａ민감 > 0
 	TIMES ARG:2, 2.00
-ELSEIF TALENT:A둔감 > 0
+ELSEIF TALENT:Ａ둔감 > 0
 	TIMES ARG:2, 0.50
 ENDIF
 SIF TALENT:음고 > 0
 	TIMES ARG:2, 1.50
 
 ;快B
-IF TALENT:B민감 > 0
+IF TALENT:Ｂ민감 > 0
 	TIMES ARG:3, 2.00
-ELSEIF TALENT:B둔감 > 0
+ELSEIF TALENT:Ｂ둔감 > 0
 	TIMES ARG:3, 0.50
 ENDIF
 IF TALENT:빈유 == 2
@@ -393,31 +393,31 @@ IF LOCAL > MARK:쾌락각인
 	IF LOCAL == 1
 		;지문: 쾌락각인１
 		CALL MESSAGE_SEX_MARK_KAIRAKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인１이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_1
 	ELSEIF LOCAL == 2
 		;지문: 쾌락각인２
 		CALL MESSAGE_SEX_MARK_KAIRAKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인２가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_2
 	ELSEIF LOCAL == 3
 		;지문: 쾌락각인３
 		CALL MESSAGE_SEX_MARK_KAIRAKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인３이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_3
 	ELSEIF LOCAL == 4
 		;지문: 쾌락각인４
 		CALL MESSAGE_SEX_MARK_KAIRAKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인４가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_4
 	ELSEIF LOCAL == 5
 		;지문: 쾌락각인５
 		CALL MESSAGE_SEX_MARK_KAIRAKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに쾌락각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 쾌락각인５가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KAIRAKU_5
 	ENDIF
@@ -442,31 +442,31 @@ IF LOCAL > MARK:고통각인
 	IF LOCAL == 1
 		;지문: 고통각인１
 		CALL MESSAGE_SEX_MARK_KUTUU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인１이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_1
 	ELSEIF LOCAL == 2
 		;지문: 고통각인２
 		CALL MESSAGE_SEX_MARK_KUTUU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인２가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_2
 	ELSEIF LOCAL == 3
 		;지문: 고통각인３
 		CALL MESSAGE_SEX_MARK_KUTUU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인３이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_3
 	ELSEIF LOCAL == 4
 		;지문: 고통각인４
 		CALL MESSAGE_SEX_MARK_KUTUU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인４가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_4
 	ELSEIF LOCAL == 5
 		;지문: 고통각인５
 		CALL MESSAGE_SEX_MARK_KUTUU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに고통각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 고통각인５가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUTUU_5
 	ENDIF
@@ -491,31 +491,31 @@ IF LOCAL > MARK:굴복각인
 	IF LOCAL == 1
 		;지문: 굴복각인１
 		CALL MESSAGE_SEX_MARK_KUPPUKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인１이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_1
 	ELSEIF LOCAL == 2
 		;지문: 굴복각인２
 		CALL MESSAGE_SEX_MARK_KUPPUKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인２가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_2
 	ELSEIF LOCAL == 3
 		;지문: 굴복각인３
 		CALL MESSAGE_SEX_MARK_KUPPUKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인３이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_3
 	ELSEIF LOCAL == 4
 		;지문: 굴복각인４
 		CALL MESSAGE_SEX_MARK_KUPPUKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인４가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_4
 	ELSEIF LOCAL == 5
 		;지문: 굴복각인５
 		CALL MESSAGE_SEX_MARK_KUPPUKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに굴복각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 굴복각인５가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KUPPUKU_5
 	ENDIF
@@ -540,31 +540,31 @@ IF LOCAL > MARK:공포각인
 	IF LOCAL == 1
 		;지문: 공포각인１
 		CALL MESSAGE_SEX_MARK_KYOUHU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인１이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_1
 	ELSEIF LOCAL == 2
 		;지문: 공포각인２
 		CALL MESSAGE_SEX_MARK_KYOUHU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인２가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_2
 	ELSEIF LOCAL == 3
 		;지문: 공포각인３
 		CALL MESSAGE_SEX_MARK_KYOUHU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인３이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_3
 	ELSEIF LOCAL == 4
 		;지문: 공포각인４
 		CALL MESSAGE_SEX_MARK_KYOUHU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인４가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_4
 	ELSEIF LOCAL == 5
 		;지문: 공포각인５
 		CALL MESSAGE_SEX_MARK_KYOUHU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに공포각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 공포각인５가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_KYOUHU_5
 	ENDIF
@@ -589,31 +589,31 @@ IF LOCAL > MARK:치욕각인
 	IF LOCAL == 1
 		;지문: 치욕각인１
 		CALL MESSAGE_SEX_MARK_TIJYOKU_1
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인１が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인１이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_1
 	ELSEIF LOCAL == 2
 		;지문: 치욕각인２
 		CALL MESSAGE_SEX_MARK_TIJYOKU_2
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인２が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인２가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_2
 	ELSEIF LOCAL == 3
 		;지문: 치욕각인３
 		CALL MESSAGE_SEX_MARK_TIJYOKU_3
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인３が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인３이 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_3
 	ELSEIF LOCAL == 4
 		;지문: 치욕각인４
 		CALL MESSAGE_SEX_MARK_TIJYOKU_4
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인４が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인４가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_4
 	ELSEIF LOCAL == 5
 		;지문: 치욕각인５
 		CALL MESSAGE_SEX_MARK_TIJYOKU_5
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに치욕각인５が付くのを見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 치욕각인５가 붙는 것을 봤다
 		SIF CFLAG:20 == 2
 			CALL MESSAGE_OTHER_SEX_MARK_TIJYOKU_5
 	ENDIF
@@ -650,10 +650,10 @@ IF TALENT:배덕의낙인 > 0
 		ARG:LOCAL *= 135 / 100
 	NEXT
 ENDIF
-JUEL:쾌C += ARG:0
-JUEL:쾌V += ARG:1
-JUEL:쾌A += ARG:2
-JUEL:쾌B += ARG:3
+JUEL:쾌Ｃ += ARG:0
+JUEL:쾌Ｖ += ARG:1
+JUEL:쾌Ａ += ARG:2
+JUEL:쾌Ｂ += ARG:3
 ;JUEL:윤활 += ARG:4
 JUEL:공순 += ARG:5
 JUEL:습득 += ARG:6

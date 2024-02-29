@@ -75,49 +75,49 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 
 	;快V
 	IF ISFEMALE()
-		IF ABL:V감각 == 0
+		IF ABL:Ｖ감각 == 0
 			LOCAL:1 = 400
-		ELSEIF ABL:V감각 == 1
+		ELSEIF ABL:Ｖ감각 == 1
 			LOCAL:1 = 1000
-		ELSEIF ABL:V감각 == 2
+		ELSEIF ABL:Ｖ감각 == 2
 			LOCAL:1 = 2000
-		ELSEIF ABL:V감각 == 3
+		ELSEIF ABL:Ｖ감각 == 3
 			LOCAL:1 = 4000
-		ELSEIF ABL:V감각 == 4
+		ELSEIF ABL:Ｖ감각 == 4
 			LOCAL:1 = 10000
-		ELSEIF ABL:V감각 >= 5
+		ELSEIF ABL:Ｖ감각 >= 5
 			LOCAL:1 = 20000
 		ENDIF
 	ENDIF
 
 	;快A　감각が低いうちは少なめ
 	IF CONFIG_CHECK_BALANCE_F(7) == 0
-		IF ABL:A감각 == 0
+		IF ABL:Ａ감각 == 0
 			LOCAL:2 = 80
-		ELSEIF ABL:A감각 == 1
+		ELSEIF ABL:Ａ감각 == 1
 			LOCAL:2 = 500
-		ELSEIF ABL:A감각 == 2
+		ELSEIF ABL:Ａ감각 == 2
 			LOCAL:2 = 2000
-		ELSEIF ABL:A감각 == 3
+		ELSEIF ABL:Ａ감각 == 3
 			LOCAL:2 = 4000
-		ELSEIF ABL:A감각 == 4
+		ELSEIF ABL:Ａ감각 == 4
 			LOCAL:2 = 10000
-		ELSEIF ABL:A감각 >= 5
+		ELSEIF ABL:Ａ감각 >= 5
 			LOCAL:2 = 20000
 		ENDIF
-	;컨피그オンで쾌A増加
+	;컨피그オンで쾌Ａ増加
 	ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
-		IF ABL:A감각 == 0
+		IF ABL:Ａ감각 == 0
 			LOCAL:2 = 400
-		ELSEIF ABL:A감각 == 1
+		ELSEIF ABL:Ａ감각 == 1
 			LOCAL:2 = 1000
-		ELSEIF ABL:A감각 == 2
+		ELSEIF ABL:Ａ감각 == 2
 			LOCAL:2 = 2000
-		ELSEIF ABL:A감각 == 3
+		ELSEIF ABL:Ａ감각 == 3
 			LOCAL:2 = 4000
-		ELSEIF ABL:A감각 == 4
+		ELSEIF ABL:Ａ감각 == 4
 			LOCAL:2 = 10000
-		ELSEIF ABL:A감각 >= 5
+		ELSEIF ABL:Ａ감각 >= 5
 			LOCAL:2 = 20000
 		ENDIF
 	ENDIF
@@ -137,8 +137,8 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 
 	;ベース
 	SIF ISFEMALE()
-		EXP:V경험 += 5
-	EXP:A경험 += 5
+		EXP:Ｖ경험 += 5
+	EXP:Ａ경험 += 5
 	EXP:펠라경험 += 5
 	EXP:정액경험 += 20
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0

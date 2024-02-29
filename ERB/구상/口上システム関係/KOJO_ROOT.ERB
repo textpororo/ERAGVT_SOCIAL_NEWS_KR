@@ -12,22 +12,22 @@ IF (TCVARn:12 & 기절) && !FORCEPRINT
 	RETURN 0
 ENDIF
 ;結界で防がれた場合は구상なし
-IF BASE:C결계내구력 > 0 && (STRFIND(CODE, "SEX_COM0") != -1 || STRFIND(CODE, "SEX_COM1") != -1 || STRFIND(CODE, "SPCOM0") != -1)
+IF BASE:Ｃ결계내구력 > 0 && (STRFIND(CODE, "SEX_COM0") != -1 || STRFIND(CODE, "SEX_COM1") != -1 || STRFIND(CODE, "SPCOM0") != -1)
 	;ランダム分岐플래그를リセット
 	FLAG:900 = 0
 	RETURN 0
 ENDIF
-IF BASE:V결계내구력 > 0 && (STRFIND(CODE, "SEX_COM2") != -1 || STRFIND(CODE, "SEX_COM3") != -1 || STRFIND(CODE, "SPCOM1") != -1)
+IF BASE:Ｖ결계내구력 > 0 && (STRFIND(CODE, "SEX_COM2") != -1 || STRFIND(CODE, "SEX_COM3") != -1 || STRFIND(CODE, "SPCOM1") != -1)
 	;ランダム分岐플래그를リセット
 	FLAG:900 = 0
 	RETURN 0
 ENDIF
-IF BASE:A결계내구력 > 0 && (STRFIND(CODE, "SEX_COM4") != -1 || STRFIND(CODE, "SEX_COM5") != -1 || STRFIND(CODE, "SPCOM2") != -1)
+IF BASE:Ａ결계내구력 > 0 && (STRFIND(CODE, "SEX_COM4") != -1 || STRFIND(CODE, "SEX_COM5") != -1 || STRFIND(CODE, "SPCOM2") != -1)
 	;ランダム分岐플래그를リセット
 	FLAG:900 = 0
 	RETURN 0
 ENDIF
-IF BASE:B결계내구력 > 0 && (STRFIND(CODE, "SEX_COM6") != -1 || STRFIND(CODE, "SEX_COM7") != -1 || STRFIND(CODE, "SPCOM3") != -1 || STRFIND(CODE, "SPCOM5") != -1)
+IF BASE:Ｂ결계내구력 > 0 && (STRFIND(CODE, "SEX_COM6") != -1 || STRFIND(CODE, "SEX_COM7") != -1 || STRFIND(CODE, "SPCOM3") != -1 || STRFIND(CODE, "SPCOM5") != -1)
 	;ランダム分岐플래그를リセット
 	FLAG:900 = 0
 	RETURN 0

@@ -1,33 +1,33 @@
 ﻿
 
-;@SELF_CALL(オプション, 伸ばす長さ, キャラNO)
-;標準の일인칭を返す式中関数
+;@SELF_CALL(옵션, 늘이는 길이, 캐릭터NO)
+;표준 일인칭을 반환하는 식중함수
 
-;@SELF_CALL_SINGLE(位置指定, オプション, 伸ばす長さ, キャラNO)
-;일인칭のうち、指定した1音を返す式中関数
+;@SELF_CALL_SINGLE(위치 지정, 옵션, 늘이는 길이, 캐릭터NO)
+;일인칭 중, 지정한 1음을 반환하는 식중함수
 
-;@SELF_CALL_SUBSTRING(開始位置, 文字数, オプション, 伸ばす長さ, キャラNO)
-;일인칭のうち、指定した部分の文字列を返す式中関数
+;@SELF_CALL_SUBSTRING(시작 위치, 글자수, 옵션, 늘이는 길이, 캐릭터NO)
+;일인칭 중, 지정한 부분의 문자열을 반환하는 식중함수
 ;
-;@SELF_CALL_LENGTH(キャラNO)
-;일인칭の音数（文字数ではない）を返す式中関数
+;@SELF_CALL_LENGTH(캐릭터NO)
+;일인칭의 음수(音数, 문자수가 아님)를 반환하는 식중함수
 
-;オプション
-;1：濁音　2：濁音（強）　3：呂律　4：ひらがな　5：カタカナ　6：かなカナ反転　7：読み（SELF_CALLのみ）
-;それぞれオプションで指定した形式の文字列が返される
+;옵션
+;1：탁음　2：탁음(강)　3：어투　4：히라가나　5：가타카나　6：가타카나 반전　7：읽기（SELF_CALL만）
+;각각 옵션에서 지정한 형식의 문자열이 반환된다
 
-;伸ばす長さ
-;「私ぃぃいい」の「ぃぃいい」の部分の長さを指定できる
-;これにもオプションが適用される
-;省略するとなし
+;늘이는 길이
+;「私ぃぃいい」의「ぃぃいい」부분의 길이를 지정할 수 있다
+;여기에도 옵션이 적용된다
+;생략하면 없음
 
-;キャラNO
-;省略するとTARGETのものを返す
+;캐릭터NO
+;생략하면 TARGET의 번호를 반환한다
 
 
-;SELF_LENGTH	伸ばす長さ
-;SELF_OPTION	オプション
-;SELF_TARGET	キャラNO
+;SELF_LENGTH	늘이는 길이
+;SELF_OPTION	옵션
+;SELF_TARGET	캐릭터NO
 @SELF_CALL(SELF_OPTION, SELF_LENGTH, SELF_TARGET)
 #FUNCTIONS
 #DIM SELF_LENGTH
@@ -41,7 +41,7 @@
 
 VARSET SELFCALL_STR
 
-;対象のキャラNOが0（=MASTER）の場合、対象をTARGETに変更
+;대상 캐릭터NO가 0(=MASTER)인 경우, 대상을 TARGET으로 변경
 SIF SELF_TARGET == 0
 	SELF_TARGET = TARGET
 
@@ -49,7 +49,7 @@ PRN_VAR = CFLAG:SELF_TARGET:8 / 5 % 20
 SHW_VAR = CFLAG:SELF_TARGET:8 % 5
 
 IF SELF_OPTION == 0
-	;オプションなしならCSTRをそのまま返す
+	;옵션이 없으면 CSTR을 그대로 반환한다
 	IF CSTR:SELF_TARGET:4 != ""
 		SELFCALL_STR = %CSTR:SELF_TARGET:4%
 	ELSE
@@ -66,9 +66,9 @@ RETURNF SELFCALL_STR
 
 
 
-;S_ST	開始位置
-;SELF_LENGTH	伸ばす長さ
-;SELF_OPTION	オプション
+;S_ST	시작 위치
+;SELF_LENGTH	늘이는 길이
+;SELF_OPTION	옵션
 ;SELF_TARGET	TARGET
 @SELF_CALL_SINGLE(S_ST, SELF_OPTION, SELF_LENGTH, SELF_TARGET)
 #FUNCTIONS
@@ -78,7 +78,7 @@ RETURNF SELFCALL_STR
 #DIM SELF_TARGET
 #DIMS SELFCALL_STR
 
-;対象のキャラNOが0（=MASTER）の場合、対象をTARGETに変更
+;대상 캐릭터NO가 0(=MASTER)인 경우, 대상을 TARGET으로 변경
 SIF SELF_TARGET == 0
 	SELF_TARGET = TARGET
 
@@ -88,10 +88,10 @@ RETURNF SELFCALL_STR
 
 
 
-;S_ST	開始位置
-;S_ED	文字数
-;SELF_LENGTH	伸ばす長さ
-;SELF_OPTION	オプション
+;S_ST	시작 위치
+;S_ED	문자 수
+;SELF_LENGTH	늘이는 길이
+;SELF_OPTION	옵션
 ;SELF_TARGET	TARGET
 @SELF_CALL_SUBSTRING(S_ST, S_ED, SELF_OPTION, SELF_LENGTH, SELF_TARGET)
 #FUNCTIONS
@@ -110,11 +110,11 @@ RETURNF SELFCALL_STR
 #DIM CONST PRN_MAX = 4
 #DIMS SELFCALL_STR
 
-;切り取り用変数正規化
+;절취용 변수 정규화
 SIF S_ST < -1
 	S_ST = SELF_CALL_LENGTH(SELF_TARGET) - 1
 
-;最大音数
+;최대 음수
 SIF S_ST > PRN_MAX - 1
 	S_ST = PRN_MAX - 1
 
@@ -124,7 +124,7 @@ SIF S_ED < -1
 SIF S_ED > PRN_MAX
 	S_ED = SELF_CALL_LENGTH(SELF_TARGET)
 
-;対象のキャラNOが0（=MASTER）の場合、対象をTARGETに変更
+;대상 캐릭터NO가 0(=MASTER)인 경우, 대상을 TARGET으로 변경
 SIF SELF_TARGET == 0
 	SELF_TARGET = TARGET
 
@@ -138,25 +138,25 @@ SIF SHW_VAR == 2
 	CHR_VAR = 1
 
 IF PRN_VAR == 0
-	;わたし
+	;わたし 저
 	CAL_VAR = 22031086
 ELSEIF PRN_VAR == 1
-	;わたくし
+	;わたくし 저
 	CAL_VAR = 22013031086
 ELSEIF PRN_VAR == 2
-	;あたし
+	;あたし 나
 	CAL_VAR = 22031001
 ELSEIF PRN_VAR == 3
-	;あたい
+	;あたい 나
 	CAL_VAR = 2031001
 ELSEIF PRN_VAR == 4
-	;わらわ
+	;わらわ 이 몸
 	CAL_VAR = 86081086
 ELSEIF PRN_VAR == 5
-	;ぼく
+	;ぼく 나
 	CAL_VAR = 13060
 ELSEIF PRN_VAR == 6
-	;おれ
+	;おれ 나
 	CAL_VAR = 084005
 ELSEIF PRN_VAR == 19
 	CAL_VAR = CFLAG:SELF_TARGET:8 / 100
@@ -171,7 +171,7 @@ ENDIF
 FOR LCOUNT, 0, S_ST + S_ED
 	C_ROW = CAL_VAR % 1000
 	IF LCOUNT >= S_ST
-		;호출の最後かつ文字が長音記号かつ伸ばす場合
+		;호출의 마지막인 동시에 문자가 장음 기호이며 늘어지는 경우
 		IF LCOUNT == S_ST + S_ED - 1 && C_ROW == 95 && SELF_LENGTH > 0
 			SELFCALL_STR = %SELFCALL_STR%―
 		ELSE
@@ -181,7 +181,7 @@ FOR LCOUNT, 0, S_ST + S_ED
 	CAL_VAR /= 1000
 NEXT
 IF C_ROW == 92
-	;撥音
+	;발음(받침 ㄴ, ㅇ)
 	IF CHR_VAR
 		LOCALS:0 = ン
 		LOCALS:1 = ン
@@ -189,17 +189,17 @@ IF C_ROW == 92
 		LOCALS:0 = ん
 		LOCALS:1 = ん
 	ENDIF
-	;強制濁音
+	;강제 탁음
 	IF SELF_OPTION == 2
 		LOCALS:0 = %LOCALS:0%゛
 		LOCALS:1 = %LOCALS:1%゛
 	ENDIF
 ELSEIF C_ROW == 93
-	;促音
+	;촉음
 	LOCALS:0 = ―
 	LOCALS:1 = ―
 ELSEIF C_ROW == 95
-	;長音
+	;장음
 	LOCALS:0 = ―
 	LOCALS:1 = ―
 ELSE
@@ -244,7 +244,7 @@ ELSE
 			LOCALS:1 = お
 		ENDIF
 	ENDIF
-	;強制濁音
+	;강제 탁음
 	IF SELF_OPTION == 2
 		LOCALS:0 = %LOCALS:0%゛
 		LOCALS:1 = %LOCALS:1%゛
@@ -268,7 +268,7 @@ RETURNF SELFCALL_STR
 #DIM CAL_VAR
 #DIM SELF_TARGET
 
-;対象のキャラNOが0（=MASTER）の場合、対象をTARGETに変更
+;대상 캐릭터NO가 0(=MASTER)인 경우, 대상을 TARGET으로 변경
 SIF SELF_TARGET == 0
 	SELF_TARGET = TARGET
 
@@ -307,7 +307,7 @@ RETURNF (RESULT - 2) / 3 + ((RESULT - 2) % 3 > 0)
 STRLENFORMU %ARGS%
 INP_LEN = RESULT
 SIF INP_LEN > 10
-	;読みが多すぎます
+	;읽기가 너무 깁니다
 	RETURN -3
 VARSET PRN_VAR
 VARSET PRN_LEN
@@ -318,15 +318,15 @@ FOR LCOUNT, 0, INP_LEN
 	PRN_STR:LCOUNT = %RESULTS%
 	CALL CHECK_SINGLE_SOUND, PRN_STR:LCOUNT
 	IF RESULT < 0
-		;規定外の文字があります
+		;규정 외의 문자가 있습니다
 		RETURN -1
 	ENDIF
-	;かなORカナ判定
+	;히라가나OR가타카나 판정
 	IF LOCAL > 10 && RESULT:2 < 2
 		LOCAL = RESULT:2
 	ELSE
 		IF LOCAL != RESULT:2 && RESULT:2 != 2
-			;ひらがなとカタカナが混在しています
+			;히라가나와 가타카나가 혼재하는 경우
 			RETURN -2
 		ENDIF
 	ENDIF
@@ -350,7 +350,7 @@ SIF LOCAL > 10
 	LOCAL = 1
 
 IF PRN_LEN > 4
-	;読みが多すぎます
+	;읽기가 너무 깁니다
 	RETURN -3
 ENDIF
 RETURN LOCAL, PRN_VAR:0, PRN_VAR:1, PRN_VAR:2, PRN_VAR:3
@@ -506,17 +506,17 @@ RETURN -1
 
 
 
-;ARG:0	文字指定変数
-;ARG:1	かなORカナ
-;ARG:2	オプション
+;ARG:0	문자 지정 변수
+;ARG:1	히라가나 OR 가타카나
+;ARG:2	옵션
 @CHAR_LIB, ARG:0, ARG:1, ARG:2
 #FUNCTIONS
 #DIM CAL_VAR
-;行
+;행
 #DIM C_COL
-;段
+;단
 #DIM C_ROW
-;濁音フラグ
+;탁음 플래그
 #DIM D_FLAG
 
 #DIMS CAL_STR, 2
@@ -531,7 +531,7 @@ IF ARG:0 < 100
 	C_COL = (ARG:0 - 1) / 5
 	C_ROW = (ARG:0 - 1) % 5
 
-	;オプション：通常の濁音
+	;옵션：통상의 탁음
 	IF ARG:2 == 1 || ARG:2 == 2
 		;かさたは
 		IF C_COL == 2 || C_COL == 4 || C_COL == 6 || C_COL == 10
@@ -544,9 +544,9 @@ IF ARG:0 < 100
 		ENDIF
 	ENDIF
 
-	;オプション：呂律
+	;옵션：어투
 	IF ARG:2 == 3
-		;さ行（し以外）→しゃ行
+		;さ行（し이외）→しゃ行
 		IF C_COL == 4 && C_ROW != 1
 			C_COL = 99
 			C_ROW = 99
@@ -556,10 +556,10 @@ IF ARG:0 < 100
 			C_COL = 99
 			C_ROW = 99
 			ARG:0 = 195
-		;た行（ち、つ以外）→ら行
+		;た行（ち, つ이외）→ら行
 		ELSEIF C_COL == 6 && C_ROW != 1 && C_ROW != 2
 			C_COL = 16
-		;だ行（ぢ、づ以外）→ら行
+		;だ行（ぢ, づ이외）→ら行
 		ELSEIF C_COL == 7 && C_ROW != 1 && C_ROW != 2
 		;「し」→「ひ」
 		ELSEIF C_COL == 4 && C_ROW == 1
@@ -570,15 +570,15 @@ IF ARG:0 < 100
 		ENDIF
 	ENDIF
 
-	;オプション：ひらがな化
+	;옵션：히라가나화
 	SIF ARG:2 == 4
 		ARG:1 = 0
 
-	;オプション：カタカナ化
+	;옵션：가타카나화
 	SIF ARG:2 == 5
 		ARG:1 = 0
 
-	;オプション：かなカナ反転
+	;옵션：가타카나 반전
 	SIF ARG:2 == 6
 		INVERTBIT ARG:1, 0
 
@@ -610,11 +610,11 @@ IF ARG:0 < 100
 
 	SUBSTRINGU LOCALS, (C_COL % 4) * 5 + C_ROW, 1
 
-	;ひらがな+う+濁点
+	;히라가나+う+탁점
 	SIF  ARG:1 == 0 && C_COL == 18 && C_ROW == 3
 		RESULTS = %UNICODE(0x3094)%
 
-	;濁音（強）かつ濁点未処理
+	;탁음(강)인 동시에 탁점 미처리
 	SIF ARG:2 == 2 && D_FLAG == 0
 		RESULTS = %RESULTS%゛
 ENDIF
@@ -624,7 +624,7 @@ IF ARG:0 >= 100
 	C_COL = (ARG:0 - 101) / 5
 	C_ROW = (ARG:0 - 101) % 5 * 2
 
-	;通常の濁音
+	;통상의 탁음
 	IF ARG:2 == 1 || ARG:2 == 2
 		;ヴぁくぁきゃしゃすぃちゃつぁてぃとぅひゃ
 		IF C_COL == 1 || C_COL == 3 || C_COL == 5 || C_COL == 7 || C_COL == 9 || C_COL == 11 || C_COL == 13 || C_COL == 15 || C_COL == 17 || C_COL == 20
@@ -697,14 +697,14 @@ IF ARG:0 >= 100
 	ENDIF
 	SUBSTRINGU LOCALS, (C_COL % 2) * 10 + C_ROW, 2
 
-	;ひらがな+う+濁点
+	;히라가나+う+탁점 
 	IF  ARG:1 == 0 && C_COL == 2 && C_ROW != 2
 		LOCALS = ぁぃ　ぇぉ
 		SUBSTRINGU LOCALS, C_ROW, 1
 		RESULTS = %UNICODE(0x3094)%%RESULTS%
 	ENDIF
 
-	;オプション：濁音（強）かつ濁点未処理
+	;옵션：탁음(강)인 동시에 탁점 미처리
 	IF ARG:2 == 2 && D_FLAG == 0
 		CAL_STR:0 = %RESULTS%
 		SUBSTRINGU CAL_STR:0, 0, 1
@@ -716,8 +716,8 @@ ENDIF
 
 RETURNF RESULTS
 
-;일인칭のリスト
-;DIM.ERHの「#DIM CONST 일인칭_최대の値」より多いパターンは無視される
+;일인칭 목록
+;DIM.ERH의「#DIM CONST 일인칭_최대」의 값보다 많은 패턴은 무시된다
 @SELF_CALL_LIST(PRN_VAR, SHW_VAR)
 #FUNCTIONS
 #DIM PRN_VAR

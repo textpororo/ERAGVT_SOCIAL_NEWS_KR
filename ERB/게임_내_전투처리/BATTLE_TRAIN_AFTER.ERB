@@ -395,7 +395,7 @@ ELSEIF TFLAG:98 == 2
 	;　유폐되어 있는 경우→설정에 준함
 	IF CFLAG:0>0
 		;ＴＳ하는 캐릭터는 변신 해제하지 않는다, 악질 시민전일 경우에도 해제하지 않는다
-		IF (TALENT:변신시TS > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
+		IF (TALENT:변신시ＴＳ > 0 && CONFIG_CHECK_PRISON_F(0) > 0) || FLAG:73 > 0
 			;
 		;강제 변신 해제 방지 플래그가 off일 경우, 변신을 해제한다
 		ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0

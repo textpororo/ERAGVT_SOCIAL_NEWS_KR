@@ -181,7 +181,7 @@ SIF TALENT:희롱특화체질 > 0
 	CHIKAN_CHECK += 10
 
 LOCAL = 0
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	SIF CFLAG:326 >= 10
 		LOCAL += 10
 	SIF CFLAG:326 < 10
@@ -313,7 +313,7 @@ IF (RAND:80 <= CHIKAN_CHECK && ISHOLE() == 1) && KONZATU >= 40 && STAND_POS >= 0
 			PRINTFORML 電車が揺れる度にスマホを持った手が%PRINT_TRANSCALLNAME(TARGET)%의 胸に触れている…
 		ENDIF
 	ENDIF
-	IF ISFEMALE() && TALENT:변신시TS > 0 && TALENT:여체수용 == 0
+	IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && TALENT:여체수용 == 0
 		PRINTFORML この状況に、体は女でも心は男のつもりの%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		PRINTFORML 嫌悪感と奇妙な興奮のないまぜになった感情を昂らせ、激しい動悸に襲われている。
 	ELSEIF TALENT:여체수용 == 1
@@ -325,7 +325,7 @@ IF (RAND:80 <= CHIKAN_CHECK && ISHOLE() == 1) && KONZATU >= 40 && STAND_POS >= 0
 	ENDIF
 	;痴漢回数チェック
 	PRINTL
-	IF (ISFEMALE() && TALENT:변신시TS > 0) || TALENT:보추 > 0
+	IF (ISFEMALE() && TALENT:변신시ＴＳ > 0) || TALENT:보추 > 0
 		IF (CFLAG:326 > 14 || CFLAG:325 > 14) && TALENT:초심 < 1
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%日常的に痴漢されるうちに、常連痴漢のクセや好きな責めがわかるほどになっていた。
 			PRINTFORML どの路線、いつの時間帯か。位置取りの仕方、どこを責めるのが好きか、得意な技は何か。
@@ -538,7 +538,7 @@ SIF TALENT:소형체구 > 0
 SIF TALENT:희롱특화체질 > 0
 	TAKEOUT -= 15
 
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	SIF CFLAG:326 >= 10
 		TAKEOUT += 10
 	SIF CFLAG:326 < 10
@@ -606,7 +606,7 @@ IF ARG:1 == 0
 			ENDIF
 			PRINTFORML そっとシャツのボタンを外し、痴漢しやすいように誘いをかける。
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음유を直接責めはじめた。
-		ELSEIF TALENT:B민감
+		ELSEIF TALENT:Ｂ민감
 			IF ISMALE()
 				;#region
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感な乳首を責められ、我慢できずに喘ぎ声を漏らしてしまう。
@@ -670,7 +670,7 @@ IF ARG:1 == 0
 				PRINTFORML そっとスカートをまくり上げ、痴漢しやすいように誘いをかける。
 			ENDIF
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음고を直接責めはじめた。
-		ELSEIF TALENT:A민감
+		ELSEIF TALENT:Ａ민감
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感な尻を責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
 		ENDIF
@@ -707,7 +707,7 @@ IF ARG:1 == 0
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%その間違いを期待して、タイミングを合わせるように腰を前後に動かした。
 				PRINTW
 				PRINTFORML そして電車が大きく揺れた瞬間、%ARGS%のペニスが
-				IF ABL:A감각 > 2
+				IF ABL:Ａ감각 > 2
 					PRINTFORML 密やかな窄まりを押し広げて侵入し、痛みとともに体内を異物感が襲う。
 					PRINTFORML しかし발정しきった%PRINT_TRANSCALLNAME(TARGET)%의 体は
 					IF ISMALE()
@@ -786,7 +786,7 @@ IF ARG:1 == 0
 			PRINTFORML バッグを持ち直して、痴漢行為が他人に見つからないように壁を作る。
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%小声で訴えながら、%ARGS%の手を秘裂へ導く。
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음호を直接責めはじめた。
-		ELSEIF RAND:2 == 0 && TALENT:C민감
+		ELSEIF RAND:2 == 0 && TALENT:Ｃ민감
 			IF ISMALE()
 				;#region
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なペニスを責められ、我慢できずに喘ぎ声を漏らしてしまう。
@@ -795,7 +795,7 @@ IF ARG:1 == 0
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なクリを責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			ENDIF
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
-		ELSEIF TALENT:V민감
+		ELSEIF TALENT:Ｖ민감
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なヴァギナを責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
 		ENDIF
@@ -841,7 +841,7 @@ ELSE
 			ENDIF
 			PRINTFORML そっとシャツのボタンを外し、痴漢しやすいように誘いをかける。
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음유を直接責めはじめた。
-		ELSEIF TALENT:B민감
+		ELSEIF TALENT:Ｂ민감
 			IF ISMALE()
 				;#region
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感な乳首を責められ、我慢できずに喘ぎ声を漏らしてしまう。
@@ -875,7 +875,7 @@ ELSE
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%淫らに開発された尻を責められたい욕망に憑りつかれ
 			PRINTFORML そっとスカートをたくし上げ、痴漢しやすいように誘いをかける。
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음고を直接責めはじめた。
-		ELSEIF TALENT:A민감
+		ELSEIF TALENT:Ａ민감
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感な尻を責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
 		ENDIF
@@ -999,7 +999,7 @@ ELSE
 			PRINTFORML バッグを持ち直して、痴漢行為が他人に見つからないように壁を作る。
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%潤んだ目で訴えながら、%ARGS%の手を秘裂へ導く。
 			PRINTFORML 鼻息を荒くした%ARGS%は大胆にも誘いに乗り、음호を直接責めはじめた。
-		ELSEIF RAND:2 == 0 && TALENT:C민감
+		ELSEIF RAND:2 == 0 && TALENT:Ｃ민감
 			IF ISMALE()
 				;#region
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なペニスを責められ、我慢できずに喘ぎ声を漏らしてしまう。
@@ -1008,7 +1008,7 @@ ELSE
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なクリを責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			ENDIF
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
-		ELSEIF TALENT:V민감
+		ELSEIF TALENT:Ｖ민감
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敏感なヴァギナを責められ、我慢できずに喘ぎ声を漏らしてしまう。
 			PRINTFORML ハッとして周囲に視線を走らせると一人の男と目が合って羞恥に頬を染めてしまう。
 		ENDIF
@@ -1047,7 +1047,7 @@ IF ARG:2 == 1
 ENDIF
 
 ;痴漢された回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:326 += 1
 ELSE
 	CFLAG:325 += 1
@@ -1057,11 +1057,11 @@ ENDIF
 PRINTL 
 IF RAND:100 < TAKEOUT
 	;お持ち帰り回数による予感
-	IF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:328 > 14 || CFLAG:327 > 14) && TALENT:초심 < 1
+	IF (ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:328 > 14 || CFLAG:327 > 14) && TALENT:초심 < 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%と%ARGS%はお互いの名前も連絡先も知らないまま、
 		PRINTFORML 電車での痴漢行為だけしか繋がりがないセフレのような奇妙な関係になっていた。
 		PRINTFORML 無言のまま視線を合わせるのがこの後のＯＫサインになったのはいつからか%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%思い出せない。
-	ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:328 > 9 || CFLAG:327 > 9) && TALENT:초심 < 1
+	ELSEIF (ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:328 > 9 || CFLAG:327 > 9) && TALENT:초심 < 1
 		IF ISMALE()
 			;#region
 			PRINTFORML もう何度もそうされた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、この後の情事を想像し尻穴がひくひくと疼いているのに気付いて頬を紅潮させた。
@@ -1069,9 +1069,9 @@ IF RAND:100 < TAKEOUT
 		ELSE 
 			PRINTFORML もう何度もそうされた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、この後の情事を想像し太ももに愛液の雫が垂れているのに気付いて頬を紅潮させた。
 		ENDIF
-	ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:328 > 4 || CFLAG:327 > 4
+	ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:328 > 4 || CFLAG:327 > 4
 		PRINTFORML 今まで何度も断ろうとしたのに身体が言うことを聞かない。%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そう心の中で言い訳をしていた。
-	ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:328 > 2 || CFLAG:327 > 2
+	ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:328 > 2 || CFLAG:327 > 2
 		PRINTFORML これから自分がどうなるか%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%これまでの経験から予想出来てしまった。
 	ENDIF
 	PRINTL
@@ -1249,10 +1249,10 @@ IF RAND:3 != 0 && CHECK_HOLYVIRGIN_F()==0 && ISFEMALE()
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_normalA")
 	;습득
 	LOCAL:16 = 250
-	;V경험
+	;Ｖ경험
 	LOCAL:120 = 3
-	;V감각
-	LOCAL:11 = 15 * ABL:V감각
+	;Ｖ감각
+	LOCAL:11 = 15 * ABL:Ｖ감각
 	;정액경험
 	LOCAL:123 = 3
 	PRINTW 
@@ -1391,7 +1391,7 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 		;ランダム分岐フラグ
 		FLAG:900 = 1
 	ENDIF
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORML 不慣れな尻穴を男性に犯されて絶頂させられる快楽に굴복させられてしまった…
 		PRINTW 
 	ELSEIF NAMAHAME > 1
@@ -1403,10 +1403,10 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_normalA")
 	;습득
 	LOCAL:16 = 250
-	;A경험
+	;Ａ경험
 	LOCAL:121 = 3
-	;V감각
-	LOCAL:12 = 15 * ABL:A감각
+	;Ｖ감각
+	LOCAL:12 = 15 * ABL:Ａ감각
 	;정액경험
 	LOCAL:123 = 3
 	PRINTW 
@@ -1537,7 +1537,7 @@ ELSEIF RAND:2 == 0
 			PRINTFORML 舌と唇と喉奥とがそれぞれ別の生き物のように変幻自在に男性器を愛撫し、
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%妖艶な笑みを見せながら優れた舌技で奉仕していた。
 			PRINTFORML 歓喜の声をあげる%ARGS%に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%さらに昂ぶり、持てる限りの舌技を披露して
-		ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 			PRINTFORML 元々男である%PRINT_TRANSCALLNAME(TARGET)%にとって男性器のどこが感じるかは熟知している。
 			PRINTFORML 男の自分がフェラをされている想像をしながら%ARGS%の男性器を舐めしゃぶると、
 			PRINTFORML 今の自分にはない架空の男性器が快感を受けて、%PRINT_TRANSCALLNAME(TARGET)%의 口腔奉仕はさらに淫らになり、
@@ -1647,12 +1647,12 @@ ELSE
 		;습득
 		;JUEL:습득
 		LOCAL:16 = 150
-		;A경험
-		;EXP:A경험
+		;Ａ경험
+		;EXP:Ａ경험
 		LOCAL:121 = 3
-		;A감각
-		;JUEL:쾌A
-		LOCAL:12 = 15 * ABL:A감각
+		;Ａ감각
+		;JUEL:쾌Ａ
+		LOCAL:12 = 15 * ABL:Ａ감각
 		;펠라경험
 		;EXP:펠라경험
 		LOCAL:124 = 1
@@ -1706,7 +1706,7 @@ ENDIF
 PRINTW 
 
 ;痴漢お持ち帰りされた回数を増加
-IF TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	CFLAG:328 += 1
 ELSE
 	CFLAG:327 += 1

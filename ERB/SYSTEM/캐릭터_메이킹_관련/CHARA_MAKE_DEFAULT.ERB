@@ -419,7 +419,7 @@ FOR SELECT,1,CHARANUM
 	SIF CFLAG:SELECT:43 == -1
 		CFLAG:SELECT:43 = 0
 
-	;변신 전과 SP변신 후의 능력
+	;변신 전과 ＳＰ변신 후의 능력
 	SIF CFLAG:SELECT:10 == 0
 		CFLAG:SELECT:10 = 25
 	SIF CFLAG:SELECT:11 == 0
@@ -479,12 +479,12 @@ FOR SELECT,1,CHARANUM
 
 
 
-	;처음부터 비처녀라면 V경험이 들어간다
-	IF EXP:SELECT:V경험 > 0
+	;처음부터 비처녀라면 Ｖ경험이 들어간다
+	IF EXP:SELECT:Ｖ경험 > 0
 	ELSEIF TALENT:SELECT:처녀 < 1 && ISFEMALE(SELECT)
-		EXP:SELECT:V경험 = 1+RAND:4
+		EXP:SELECT:Ｖ경험 = 1+RAND:4
 	ELSE
-		EXP:SELECT:V경험 = 0
+		EXP:SELECT:Ｖ경험 = 0
 	ENDIF
 
 
@@ -949,11 +949,11 @@ NEXT
 ;------------------------------------------------------------------------------------------------------------------
 @CHARA_MAKE_STATUS_TALENT, ARG
 ;처녀？ 80% 확률로 처녀
-IF ISFEMALE(ARG) && EXP:ARG:V경험 == 0
+IF ISFEMALE(ARG) && EXP:ARG:Ｖ경험 == 0
 	LOCAL = RAND:100
 	IF LOCAL < 20
 		TALENT:ARG:처녀 = 0
-		EXP:ARG:V경험 = 1+RAND:4
+		EXP:ARG:Ｖ경험 = 1+RAND:4
 	ELSE
 		TALENT:ARG:처녀 = 1
 	ENDIF
@@ -973,30 +973,30 @@ SIF LOCAL < 20
 ;C
 LOCAL = RAND:100
 IF LOCAL < 3
-	TALENT:ARG:C민감 = 1
+	TALENT:ARG:Ｃ민감 = 1
 ELSEIF LOCAL > 96
-	TALENT:ARG:C둔감 = 1
+	TALENT:ARG:Ｃ둔감 = 1
 ENDIF
 ;V
 LOCAL = RAND:100
 IF LOCAL < 3 && ISFEMALE(ARG)
-	TALENT:ARG:V민감 = 1
+	TALENT:ARG:Ｖ민감 = 1
 ELSEIF LOCAL > 96 && ISFEMALE(ARG)
-	TALENT:ARG:V둔감 = 1
+	TALENT:ARG:Ｖ둔감 = 1
 ENDIF
 ;A
 LOCAL = RAND:100
 IF LOCAL < 3
-	TALENT:ARG:A민감 = 1
+	TALENT:ARG:Ａ민감 = 1
 ELSEIF LOCAL > 96
-	TALENT:ARG:A둔감 = 1
+	TALENT:ARG:Ａ둔감 = 1
 ENDIF
 ;B
 LOCAL = RAND:100
 IF LOCAL < 3
-	TALENT:ARG:B민감 = 1
+	TALENT:ARG:Ｂ민감 = 1
 ELSEIF LOCAL > 96
-	TALENT:ARG:B둔감 = 1
+	TALENT:ARG:Ｂ둔감 = 1
 ENDIF
 
 ;신체적 특징　빈유 거유 왜소함 장신은 20%확률로, 나머지는 5% 확률로

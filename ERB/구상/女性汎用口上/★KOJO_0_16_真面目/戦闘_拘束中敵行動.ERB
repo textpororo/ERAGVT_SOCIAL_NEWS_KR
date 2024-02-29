@@ -61,7 +61,7 @@ ELSE
 
 	;★堕ち
 	;★쾌락굴복
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 		PRINTDATA
 			DATAFORM 「くぅぅぅん！？ 
 			DATAFORM 「ひぁぁぁっ！？ 
@@ -84,7 +84,7 @@ ELSE
 		ENDDATA
 		PRINTFORML %타겟은% 瞬く間に昇り詰めていく――
 	;★성저항・고전
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		PRINTDATA
 			DATAFORM 「くぅぅぅん！ ひはぅ……
 			DATAFORM 「ひゃあぁっ！？ やっ、やめ……
@@ -219,7 +219,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｃ")
 
 	;敏感または部位陥落持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 		PRINTDATAL
 			DATAFORM 「ぉひっ？！ ぉほぉおおッ！！ おぉおおぉおッ！」
 			DATAFORM 「んおぉおぉっ！ そこっ、そこやめ、ぇひぃぃぃいぃぃっ！」
@@ -228,7 +228,7 @@ ELSE
 		ENDDATA
 		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;開発完了
-	ELSEIF LOCAL >= 5 || EX:C절정 > 1
+	ELSEIF LOCAL >= 5 || EX:Ｃ절정 > 1
 		PRINTDATAL
 			DATAFORM 「ひぎゃぁぁあぁぁあっ！」
 			DATAFORM 「ん゛ん゛、ん゛ん゛ん゛ん゛ん゛んっ！」
@@ -237,7 +237,7 @@ ELSE
 			DATAFORM 「やぇ、えぁっ、あっ、っぎ、っひぃぃ？！」
 		ENDDATA
 	;敏感状態
-	ELSEIF LOCAL >= 3 || EX:C절정 > 0
+	ELSEIF LOCAL >= 3 || EX:Ｃ절정 > 0
 		PRINTDATAL
 			DATAFORM 「ひぎゃぁぁっ！」
 			DATAFORM 「ん゛ん゛んっ！」
@@ -318,7 +318,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｃ")
 
 	;敏感または部位陥落持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 		PRINTFORML 「噛んじゃダメっ！ 弱いから、そこホントに弱いからぁあああ！！
 		PRINTDATA
 			DATAFORM ぅぎぃっ
@@ -340,7 +340,7 @@ ELSE
 		ENDDATA
 		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;開発完了
-	ELSEIF LOCAL >= 5 || EX:C절정 > 1
+	ELSEIF LOCAL >= 5 || EX:Ｃ절정 > 1
 		PRINTDATAL
 			DATAFORM 「だ、ダメっ！ そんなもので噛むなんて、今すぐやめなさ――
 			DATAFORM 「だ、ダメ、触らないでっ！ そこは女性の大切な――
@@ -356,7 +356,7 @@ ELSE
 		ENDDATA
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を剥き、涎を垂らして震えている……
 	;敏感状態
-	ELSEIF LOCAL >= 3 || EX:C절정 > 0
+	ELSEIF LOCAL >= 3 || EX:Ｃ절정 > 0
 		PRINTDATAL
 			DATAFORM 「だ、ダメっ！ そんなもので噛むなんて、今すぐやめなさ――
 			DATAFORM 「だ、ダメ、噛まないでっ！ そこは女性の大切な――
@@ -460,11 +460,11 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｖ")
 
 	;敏感または部位陥落持ちだけが来れる境地
-	IF LOCAL > 5 || EX:V절정 > 9
+	IF LOCAL > 5 || EX:Ｖ절정 > 9
 		PRINTFORML 「そこに、触、る、なぁあああ！！」
 		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		PRINTDATAL
 			DATAFORM 「ふ、わ、うぁっ…！」
 			DATAFORM 「さわ、る、な、さわら、ない、で……んあ！！」
@@ -499,7 +499,7 @@ ENDIF
 ;COM3：V攻め強　挿入　衣装は常に最低限破れている
 ;膣に挿入され、犯されます。
 ;TCVARn:2 == 자세：Ｖ방어のときはＶに挿入されません。
-;V감각が0のときは고통が強く、V감각が4以上なら強烈な快感を感じます。
+;Ｖ감각が0のときは고통が強く、Ｖ감각が4以上なら強烈な快感を感じます。
 ;--------------------------------------------------
 @KOJO_0_SEX_COM3_16
 
@@ -575,14 +575,14 @@ ELSE
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		;膣肉が淫靡な音を立てて촉수を受け入れ
 		;待ちに待った挿入の幸福感に満たされ
-		IF EX:V절정 < 1
+		IF EX:Ｖ절정 < 1
 			;膣壁を抉る快感に황홀として
 		ELSE
 			;まだイキ足りないと言わんばかりに自ら腰を振り、快楽を貪って
 		ENDIF
-	ELSEIF ABL:V감각 < 1
+	ELSEIF ABL:Ｖ감각 < 1
 		;まだ性交に不慣れな膣壁を蹂躙され　まったく身動きできない
-	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:V감각 >= 4
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:Ｖ감각 >= 4
 		;愛液滴る膣　淫靡な音を立てて촉수を受け入れ
 		;女としての悦びがヒロインの理性と使命感を塗りつぶしていく
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
@@ -621,7 +621,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｖ")
 	
 	;敏感または部位陥落持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:V절정 > 9
+	IF  LOCAL > 5 || EX:Ｖ절정 > 9
 		SELECTCASE RAND:4
 			CASE 0
 				PRINTFORML 「はひゅぅ、ひぅぅ、っくぁ、ぁ゛ぇ゛ぇっ！」
@@ -637,7 +637,7 @@ ELSE
 				PRINTFORML 顔を歪め、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%唇を噛む。
 		ENDSELECT
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		PRINTDATAL
 		DATAFORM 「あっ、はぁっ！くるっ、またくる、や、ぁああっ！？」
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
@@ -980,7 +980,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｖ")
 	
 	;敏感または部位陥落持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:V절정 > 9
+	IF  LOCAL > 5 || EX:Ｖ절정 > 9
 		PRINTFORML 「奥、ダメ！　弱いから、そこホントに弱いからぁあああ！！
 		PRINTDATAL
 		DATAFORM 　ゆ゛る゛ぢで、ゆ゛る゛し゛あ゛ぁ゛ぁ゛あ゛！
@@ -996,7 +996,7 @@ ELSE
 		ENDSELECT
 		PRINTFORML そして%타겟은% 瞬く間に上り詰めてしまう――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		PRINTDATAL
 		DATAFORM 「あっ、はぁっ！くるっ、くる、やぁああ！！」
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
@@ -1020,8 +1020,8 @@ ENDIF
 ;	地面に引き倒し、地面に顔面押し付け後ろ手でバック
 ;	押し倒し腕押さえつけ正常位	足で挟んで止めようとするが足扱き
 ;기절ならボコォで돌아간다、
-;IF EXP:V확장경험 < 3		;先端だけで限界、ボコォで膣破壊
-;ELSEIF EXP:V확장경험 < 8	;限界を超えるがまだ収まり切らない、子宮を突かれて痛みで絶叫
+;IF EXP:Ｖ확장경험 < 3		;先端だけで限界、ボコォで膣破壊
+;ELSEIF EXP:Ｖ확장경험 < 8	;限界を超えるがまだ収まり切らない、子宮を突かれて痛みで絶叫
 ;ELSE				;立派な인간オナホ　人形のように揺さぶられる
 ;から구상
 ;사정なら精液ボテ＆噴射
@@ -1048,7 +1048,7 @@ ENDIF
 
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		;愛欲に身を震わせる
-	ELSEIF ABL:A감각 < 3
+	ELSEIF ABL:Ａ감각 < 3
 		;고통の声を漏らす
 	ELSE
 		;恥辱に顔を紅潮させる
@@ -1080,11 +1080,11 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ａ")
 	
 	;敏感または部位陥落持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 		PRINTFORML 「そ、こ、触、る、なぁあああ！！」
 		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		PRINTDATAL
 		DATAFORM 「ど、どどど、何処をまさぐってるのよッ！？」
 		DATAFORM 「ひはっ？！ なッ、何よ！？」
@@ -1143,7 +1143,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ａ")
 	
 	;敏感または部位陥落持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 		PRINTDATAL
 		DATAFORM んおぉおお？！ おひりっ、おひりはぁぁッ！」
 		DATAFORM 「ぉひっ、ぉごぉぉーッ！ おひりっ、やめてぇーッ！」
@@ -1152,7 +1152,7 @@ ELSE
 		PRINTFORML  不浄の穴にねじ込まれた熱くのたくる異物に、
 		PRINTFORML  %PRINT_TRANSCALLNAME(TARGET)%의 体は人形のようにでたらめに跳ねあがった――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		PRINTDATAL
 		DATAFORM 「あっ、はぁっ！くるっ、くる、やぁああ！！」
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
@@ -1214,7 +1214,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ａ")
 	
 	;敏感または部位陥落持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 		PRINTDATAL
 		DATAFORM 「ふおおおおおおお！？」
 		DATAFORM 「く、狂う、頭、狂っちゃう、おひり、狂っちゃあああふううう！！」
@@ -1241,7 +1241,7 @@ ELSE
 		ENDSELECT
 
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		PRINTDATAL
 		DATAFORM 「ひぎ、ひぎっ！ぐるっ、ぐるぅ！やぁああ！！」
 		DATAFORM 「ぅ、ぅうくっ……んああああ！！」
@@ -1272,8 +1272,8 @@ ENDIF
 
 ;SPCOM10：A촉수専用SP　A拡張攻め（腹ボコ　衣装は少なくともほとんど破れている
 ;不定形촉수による疑似浣腸による拡張　拡張経験によって지문変化
-;IF EXP:A확장경험 < 3		;고통、手錠촉수で抵抗不可
-;ELSEIF EXP:A확장경험 < 8	;限界突破、ピストン突き上げ
+;IF EXP:Ａ확장경험 < 3		;고통、手錠촉수で抵抗不可
+;ELSEIF EXP:Ａ확장경험 < 8	;限界突破、ピストン突き上げ
 ;ELSE				;腸まで丸見え、ピストン侵入でボテ腹
 ;から구상
 ;사정時はボテ腹直腸にポンプ사정で精液叩き付け
@@ -1316,14 +1316,14 @@ ELSE
 	;敏感、鈍感で多少変化
 	LOCAL = CHECK_KANRAKU("Ｂ")
 
-	IF LOCAL > 5 || EX:B절정 > 9
+	IF LOCAL > 5 || EX:Ｂ절정 > 9
 		PRINTDATAL
 		DATAFORM 「ンんぅぅううぅああ――っっ！！」
 		DATAFORM 「ふあっ！くぅ、はぅうっ！！」
 		ENDDATA
 		PRINTFORML %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:B절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｂ절정 > 0
 		;거유
 		IF TALENT:거유
 			PRINTDATAL
@@ -1403,7 +1403,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｂ")
 
 	;敏感または部位陥落持ちだけが来れる境地
-	IF LOCAL > 5 || EX:B절정 > 9
+	IF LOCAL > 5 || EX:Ｂ절정 > 9
 		PRINTDATAL
 		DATAFORM 「お゛おぉぉッ！ も゛っ、お゛おぉ゛おぉッ！」
 		DATAFORM 「む゛ね゛っ、む゛ね゛ぇ゛……ぉ゛おぉ゛おぉぉぉッ！」
@@ -1417,7 +1417,7 @@ ELSE
 			PRINTFORML  髪を振り乱し、絡めとられた牝牛がいなないた。
 		ENDIF
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:B절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｂ절정 > 0
 		PRINTDATAL
 		DATAFORM 「ひ、やっ、いやあああぁぁっ！！？
 		DATAFORM 「吸う、なぁ…ぁああああああ！？
@@ -1487,7 +1487,7 @@ ELSE
 	LOCAL = CHECK_KANRAKU("Ｂ")
 
 	;敏感または部位陥落持ちだけが来れる境地
-	IF LOCAL > 5 || EX:B절정 > 9
+	IF LOCAL > 5 || EX:Ｂ절정 > 9
 		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
 		PRINTDATA
 		DATAFORM 「ひはッ
@@ -1503,7 +1503,7 @@ ELSE
 		ENDDATA
 		PRINTFORML  敏感な乳首に牙を立てられ、哀れな牝牛は悶え叫んでいる――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:B절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｂ절정 > 0
 		PRINTDATAL
 		DATAFORM 「ひぃぃいいイ！？」
 		DATAFORM 「イぃいいいいい！？」
@@ -2266,7 +2266,7 @@ ELSE
 	;きょぬー
 	ELSEIF TALENT:거유
 		;B敏感
-		IF TALENT:B민감
+		IF TALENT:Ｂ민감
 			PRINTFORML 「胸ぇ゛っ！ し、絞るなぁ゛！ 挟むのやめでぇっ！」
 		ELSE
 			PRINTDATAL

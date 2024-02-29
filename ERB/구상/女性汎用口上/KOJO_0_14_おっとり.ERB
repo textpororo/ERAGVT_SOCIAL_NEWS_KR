@@ -261,7 +261,7 @@ ENDIF
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 ;@KOJO_0_BATTLE_CHARA_NANORI_24
 
-;SP변신 시 구호
+;ＳＰ변신 시 구호
 @KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_14
 PRINTFORML 「覚悟なさい！」
 
@@ -645,7 +645,7 @@ ENDIF
 @KOJO_0_SEX_COM0_14
 
 ;C敏感
-IF TALENT:C민감
+IF TALENT:Ｃ민감
 	IF RAND:3 == 0
 		PRINTFORML 「ふあぁぁんっ！」
 	ELSEIF RAND:2 == 0
@@ -655,7 +655,7 @@ IF TALENT:C민감
 
 ENDIF
 ;C鈍感
-ELSEIF TALENT:C둔감
+ELSEIF TALENT:Ｃ둔감
 	PRINTFORML 「まさか、そこを責めているつもりですの？」
 
 ELSE
@@ -673,7 +673,7 @@ ENDIF
 @KOJO_0_SEX_COM1_14
 
 ;C敏感
-IF TALENT:C민감
+IF TALENT:Ｃ민감
 	IF RAND:3 == 0
 		PRINTFORML 「ひっ？　にゃっ、らめ、らめれすぅ！　そこらめぇ！！」
 	ELSEIF RAND:2 == 0
@@ -683,7 +683,7 @@ IF TALENT:C민감
 	ENDIF
 	PRINTFORML 仰け反って嬌声を張り上げる%PRINT_TRANSCALLNAME(TARGET)%의 下半身が大きく跳ねた。
 ;C鈍感
-ELSEIF TALENT:C둔감
+ELSEIF TALENT:Ｃ둔감
 	PRINTFORML 「ひぅっ！？　な、何を……やめなさい！」
 ELSE
 	IF RAND:2 == 0
@@ -707,7 +707,7 @@ ELSE
 	PRINT 「ぎゃんっ
 ENDIF
 ;C敏感
-IF TALENT:C민감
+IF TALENT:Ｃ민감
 	IF RAND:4 == 0
 		PRINTFORML ！ ぉほぉぉおぉぉッ！？」
 	ELSEIF RAND:3 == 0
@@ -754,7 +754,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_SEX_COM3_14
 ;挿入できなかった場合
-IF BASE:V결계내구력 > 0
+IF BASE:Ｖ결계내구력 > 0
 ELSEIF TCVARn:2 == 자세：Ｖ방어
 ;처녀
 ELSEIF TALENT:처녀 > 0
@@ -762,8 +762,8 @@ ELSEIF TALENT:처녀 > 0
 	PRINTFORML 「あっ……ああ…………」
         PRINTFORML (こんな屑のような生き物に、%SELF_CALL()%の純潔が汚されるなんて……！)
 
-	;V민감
-	IF TALENT:V민감
+	;Ｖ민감
+	IF TALENT:Ｖ민감
 		PRINTFORML 「…………痛く、ない？」
 		PRINTFORML 「처녀を散らす時は、とんでもなく痛いと聞いていましたの、に……ひぅっ」
 		PRINTFORML 「あっ、んぅっ……こんなっ、に、気持ち良いなんて……ああぁっ！」
@@ -771,8 +771,8 @@ ELSEIF TALENT:처녀 > 0
 		PRINTFORML 既に膣を突かれるその快感に溺れかけていた。
 		PRINTFORML 「駄目……腰が、勝手にぃっ……」
 		PRINTFORML 「抜いて、抜いてくださいまし……このままでは、んっ、あっ……んんっ……」
-	;V둔감
-	ELSEIF TALENT:V둔감
+	;Ｖ둔감
+	ELSEIF TALENT:Ｖ둔감
 		PRINTFORML 「い、痛いです……抜いて、抜いてぇっ……！」
 		PRINTFORML 「うぐっ……中で、暴れてっ、うあぁぁぁぁっ！！」
 		PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%破瓜と질내で暴れられる痛みに耐えかね、絶叫を上げた。
@@ -1049,7 +1049,7 @@ ENDIF
 @KOJO_0_SEX_ECSTASY_C_14
 
 
-;C強絶頂
+;C강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_C_HI_14
 
@@ -1059,7 +1059,7 @@ ENDIF
 @KOJO_0_SEX_ECSTASY_V_14
 
 
-;V強絶頂
+;V강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_V_HI_14
 
@@ -1070,7 +1070,7 @@ ENDIF
 
 
 
-;A強絶頂
+;A강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_A_HI_14
 
@@ -1082,7 +1082,7 @@ ENDIF
 
 
 
-;B強絶頂
+;B강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_B_HI_14
 
@@ -1091,62 +1091,62 @@ ENDIF
 
 ;多重絶頂に関する구상
 
-;四重絶頂
+;사중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVAB_14
 
 
 
-;CVA三重絶頂
+;CVA삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVA_14
 
 
-;CVB三重絶頂
+;CVB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVB_14
 
 
 
-;CAB三重絶頂
+;CAB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CAB_14
 
 
-;VAB三重絶頂
+;VAB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VAB_14
 
 
 
-;CV二重絶頂
+;CV이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CV_14
 
 
-;CA二重絶頂
+;CA이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CA_14
 
 
 
-;CB二重絶頂
+;CB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CB_14
 
 
-;VA二重絶頂
+;VA이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VA_14
 
 
-;VB二重絶頂
+;VB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VB_14
 
 
 
-;AB二重絶頂
+;AB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_AB_14
 
@@ -1427,27 +1427,27 @@ ENDIF
 @KOJO_0_BATTLE_DISACTION_TORIKO_14
 
 
-;快楽で体が竦む
+;쾌락으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KAIRAKU_14
 
 
-;고통で体が竦む
+;고통으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KUTUU_14
 
 
-;屈辱で体が竦む
+;굴욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KUTUZYOKU_14
 
 
-;공포で体が竦む
+;공포로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KYOUHU_14
 
 
-;恥辱で体が竦む
+;치욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_TIZYOKU_14
 

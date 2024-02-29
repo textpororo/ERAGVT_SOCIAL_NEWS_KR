@@ -315,7 +315,7 @@ ENDIF
 IF (ARG & Ｂ)
 	IF (TCVARn:12 & 기절)
 		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%
-		IF ABL:C감각 >= 4 && (ARG & Ｃ)
+		IF ABL:Ｃ감각 >= 4 && (ARG & Ｃ)
 			PRINTFORML の無防備に突き出された乳首に
 			PRINTFORML もう片方の手で追い打ちをかけていった・・・
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -326,7 +326,7 @@ IF (ARG & Ｂ)
 			PRINTFORML もう片方の手で無防備になった胸を責め立てていった・・・
 		ENDIF
 	ELSE
-		IF ABL:C감각 >= 4 && (ARG & Ｃ)
+		IF ABL:Ｃ감각 >= 4 && (ARG & Ｃ)
 			PRINTFORML 思わず仰け反った%PRINT_TRANSCALLNAME(TARGET)%의 突き出された乳首に
 			PRINTFORML もう片方の手で追い打ちをかけていった・・・
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
@@ -361,7 +361,7 @@ IF (ARG & Ｂ)
 ENDIF
 IF (ARG & Ａ)
 	PRINTFORML もう片方の手が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻を撫でまわし、
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORM まだきつく閉じられたままの
 	ELSE
 		PRINTFORM すっかり性感帯にされてしまった
@@ -692,7 +692,7 @@ ELSEIF (ARG & Ａ) && RAND:2 == 0
 		PRINTFORM %PRINT_SWOON()%
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORM 愛欲に身を震わせる
-	ELSEIF ABL:A감각 < 3
+	ELSEIF ABL:Ａ감각 < 3
 		PRINTFORM 고통の声を漏らす
 	ELSE
 		SIF TALENT:감정결여 == 0
@@ -722,9 +722,9 @@ ELSEIF (ARG & Ａ) && (ARG & Ｂ)
 			PRINTFORM 悦び、愛欲に身を震わせる
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 悦び、愛欲に身を震わせている
-		ELSEIF ABL:A감각 < 3 && TALENT:주관시점 > 0
+		ELSEIF ABL:Ａ감각 < 3 && TALENT:주관시점 > 0
 			PRINTFORM 耐え切れずに、고통の声を漏らしてしまう
-		ELSEIF ABL:A감각 < 3
+		ELSEIF ABL:Ａ감각 < 3
 			PRINTFORM 耐え切れずに、고통の声を漏らしている
 		ELSE
 			SIF TALENT:감정결여 == 0
@@ -743,7 +743,7 @@ ELSEIF (ARG & Ａ)
 		PRINTFORM 無意識に体を揺らす
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORM 愛欲に身を震わせる
-	ELSEIF ABL:A감각 < 3
+	ELSEIF ABL:Ａ감각 < 3
 		PRINTFORM 고통の声を漏らす
 	ELSE
 		SIF TALENT:감정결여 == 0
@@ -910,7 +910,7 @@ IF ((ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ))
 		PRINTFORML 질口を撫でまわしている。
 		PRINTL 
 	ELSEIF (ARG & Ａ)
-		SIF PALAM:쾌C >= 2000
+		SIF PALAM:쾌Ｃ >= 2000
 			PRINT ひくつく
 		PRINTFORML 菊穴の周りを撫でている。
 		PRINTL 
@@ -1179,10 +1179,10 @@ LOCAL:9 = 0	;特殊効果
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-LOCAL:10 = 0	;쾌C強度
-LOCAL:11 = 0	;쾌V強度
-LOCAL:12 = 0	;쾌A強度
-LOCAL:13 = 0	;쾌B強度
+LOCAL:10 = 0	;쾌Ｃ強度
+LOCAL:11 = 0	;쾌Ｖ強度
+LOCAL:12 = 0	;쾌Ａ強度
+LOCAL:13 = 0	;쾌Ｂ強度
 
 LOCAL:14 = 1	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
@@ -1302,10 +1302,10 @@ LOCAL:9 = 0	;特殊効果
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-LOCAL:10 = 0	;쾌C強度
-LOCAL:11 = 0	;쾌V強度
-LOCAL:12 = 0	;쾌A強度
-LOCAL:13 = 0	;쾌B強度
+LOCAL:10 = 0	;쾌Ｃ強度
+LOCAL:11 = 0	;쾌Ｖ強度
+LOCAL:12 = 0	;쾌Ａ強度
+LOCAL:13 = 0	;쾌Ｂ強度
 
 LOCAL:14 = 1	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
@@ -1439,10 +1439,10 @@ LOCAL:9 = 0	;特殊効果
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-LOCAL:10 = 6	;쾌C強度
-LOCAL:11 = 0	;쾌V強度
-LOCAL:12 = 0	;쾌A強度
-LOCAL:13 = 0	;쾌B強度
+LOCAL:10 = 6	;쾌Ｃ強度
+LOCAL:11 = 0	;쾌Ｖ強度
+LOCAL:12 = 0	;쾌Ａ強度
+LOCAL:13 = 0	;쾌Ｂ強度
 
 LOCAL:14 = 0	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
@@ -1523,7 +1523,7 @@ RETURN 통상
 FLAG:13 = 5	;기생するとセラプーは死ぬので、체력を強制的に減らし、絶頂で止めを刺す
 TALENT:TARGET:후타나리 = 2
 BASE:TARGET:사정 += MAXBASE:TARGET:사정*5
-NOWEX:C절정 += 1
+NOWEX:Ｃ절정 += 1
 
 LOCAL:0 = 2003	;コマンドのＩＤ
 LOCAL:2 = Ｃ	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
@@ -1537,10 +1537,10 @@ LOCAL:9 = 0	;特殊効果
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-LOCAL:10 = 8	;쾌C強度
-LOCAL:11 = 8	;쾌V強度
-LOCAL:12 = 8	;쾌A強度
-LOCAL:13 = 8	;쾌B強度
+LOCAL:10 = 8	;쾌Ｃ強度
+LOCAL:11 = 8	;쾌Ｖ強度
+LOCAL:12 = 8	;쾌Ａ強度
+LOCAL:13 = 8	;쾌Ｂ強度
 
 LOCAL:14 = 2	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
@@ -1654,10 +1654,10 @@ LOCAL:9 = 0	;特殊効果
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-LOCAL:10 = 5	;쾌C強度
-LOCAL:11 = 2	;쾌V強度
-LOCAL:12 = 2	;쾌A強度
-LOCAL:13 = 2	;쾌B強度
+LOCAL:10 = 5	;쾌Ｃ強度
+LOCAL:11 = 2	;쾌Ｖ強度
+LOCAL:12 = 2	;쾌Ａ強度
+LOCAL:13 = 2	;쾌Ｂ強度
 
 LOCAL:14 = 5	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
@@ -1719,7 +1719,7 @@ IF (ARG & Ｖ) && (ARG & Ａ)
 		ENDIF
 	ENDIF
 	PRINTFORML 指で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 秘部を責め立て
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORM まだきつく閉じられたままの
 	ELSE
 		PRINTFORM すっかり性感帯にされてしまった
@@ -1741,7 +1741,7 @@ ELSEIF (ARG & Ｖ)
 ELSEIF (ARG & Ａ)
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORM はさらに、
-	IF ABL:A감각 < 2
+	IF ABL:Ａ감각 < 2
 		PRINTFORM まだきつく閉じられたままの
 	ELSE
 		PRINTFORM すっかり性感帯にされてしまった
@@ -1750,7 +1750,7 @@ ELSEIF (ARG & Ａ)
 ELSEIF (ARG & Ｂ)
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORM はさらに、
-	SIF PALAM:쾌B >= 500
+	SIF PALAM:쾌Ｂ >= 500
 		PRINTFORM 勃起した
 	PRINTFORM 乳首を摘まんで弄り回した。
 ENDIF

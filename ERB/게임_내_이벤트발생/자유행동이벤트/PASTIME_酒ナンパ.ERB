@@ -76,8 +76,8 @@ RETURN 0
 #DIM 誘い内容
 #DIMS 誘い文句
 #DIMS 誘ってきた相手
-;변신시TS女体化キャラのメッセージ分岐
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+;변신시ＴＳ女体化キャラのメッセージ分岐
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	ＴＳキャラ = 1
 ELSE
 	ＴＳキャラ = 0
@@ -97,7 +97,7 @@ ENDIF
 
 ;실제나이か変身前외관が20歳以上でオッサンだが変身後にＴＳ未成年化するＴＳロリ
 ;または、실제나이ババアだが외관나이か変身後ロリ状態のロリババア
-IF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) || BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
+IF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) || BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
 	IF ＴＳキャラ == 1 || TALENT:보추 > 0
 		PRINTFORML そんなにお酒が飲みたいなら奢ろうかと誘われてしまった。
 	ELSE
@@ -334,7 +334,7 @@ ELSEIF TALENT:학생 == 4
 
 	;실제나이か変身前외관が20歳以上でオッサンだが変身後にＴＳ未成年化するＴＳロリ
 	;または、실제나이ババアだが외관나이か変身後ロリ状態になるロリババア
-ELSEIF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) || BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
+ELSEIF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) || BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
 	PRINTFORML %誘ってきた相手%はコンビニで酒とツマミを見繕ってまとめ買いすると
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%公園へ連れて行った。
 	PRINTL 
@@ -922,12 +922,12 @@ IF RAND:3 != 0 && ISFEMALE()
 	;습득
 	;JUEL:습득
 	LOCAL:16 = 250
-	;V경험
-	;EXP:V경험
+	;Ｖ경험
+	;EXP:Ｖ경험
 	LOCAL:120 = 3
-	;V감각
-	;JUEL:쾌V
-	LOCAL:11 = 15 * ABL:V감각
+	;Ｖ감각
+	;JUEL:쾌Ｖ
+	LOCAL:11 = 15 * ABL:Ｖ감각
 	;정액경험
 	;EXP:정액경험
 	LOCAL:123 = 3
@@ -1081,10 +1081,10 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 		PRINT 見知らぬ場所で、
 	ENDIF
 	;４以上なら体を動かせない
-	IF ABL:A감각 < 2 && MOOD > 3
+	IF ABL:Ａ감각 < 2 && MOOD > 3
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 초심な肢体が晒されている。
 		NAMAHAME = 0
-	ELSEIF ABL:A감각 < 2
+	ELSEIF ABL:Ａ감각 < 2
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 		NAMAHAME = 0
 	ELSE
@@ -1237,12 +1237,12 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 	;습득
 	;JUEL:습득
 	LOCAL:16 = 250
-	;A경험
-	;EXP:A경험
+	;Ａ경험
+	;EXP:Ａ경험
 	LOCAL:121 = 3
-	;A감각
-	;JUEL:쾌A
-	LOCAL:12 = 15 * ABL:A감각
+	;Ａ감각
+	;JUEL:쾌Ａ
+	LOCAL:12 = 15 * ABL:Ａ감각
 	;정액경험
 	;EXP:정액경험
 	LOCAL:123 = 3
@@ -1266,7 +1266,7 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 		;外出し
 	ELSEIF NAMAHAME == 1
 		;外出し失敗
-		IF RAND:5 == 0 && ABL:A감각 >= 2
+		IF RAND:5 == 0 && ABL:Ａ감각 >= 2
 			IF RAND:8 == 0
 				PRINTL 장내사정
 				PRINTL 
@@ -1461,12 +1461,12 @@ ELSEIF RAND:3 < MOOD - 3
 		;습득
 		;JUEL:습득
 		LOCAL:16 = 150
-		;A경험
-		;EXP:A경험
+		;Ａ경험
+		;EXP:Ａ경험
 		LOCAL:121 = 3
-		;A감각
-		;JUEL:쾌A
-		LOCAL:12 = 15 * ABL:A감각
+		;Ａ감각
+		;JUEL:쾌Ａ
+		LOCAL:12 = 15 * ABL:Ａ감각
 		;펠라경험
 		;EXP:펠라경험
 		LOCAL:124 = 1
@@ -1548,14 +1548,14 @@ ELSE
 		ENDIF
 
 		;ここは分からないので手をつけない。誰かお願いします
-		;テストではV경험とV감각、정액경험이 ついた
+		;テストではＶ경험とＶ감각、정액경험이 ついた
 		;僭越ながら通常ナンパのほぼ同プレイからコピーしました by보추改造者
 		;굴복
 		;JUEL:굴복
 		LOCAL:18 = 100
-		;B감각
-		;JUEL:쾌B
-		LOCAL:13 = 15 * ABL:B감각
+		;Ｂ감각
+		;JUEL:쾌Ｂ
+		LOCAL:13 = 15 * ABL:Ｂ감각
 		;절정경험
 		;EXP:절정경험
 		LOCAL:122 = 3
@@ -1624,7 +1624,7 @@ VARSET LOCAL
 SIF ISHOLE() == 0
 	RETURN 0
 
-IF CFLAG:1 > 0 && TALENT:변신시TS > 0
+IF CFLAG:1 > 0 && TALENT:변신시ＴＳ > 0
 	RAPECOUNT = CFLAG:321
 ELSE
 	RAPECOUNT = CFLAG:320
@@ -1694,7 +1694,7 @@ PRINTW
 IF CONFIG_CHECK_EVENT_F(5) == 1
 	;악질 시민エンカウントイベントの処理
 	CALL ENCOUNT_CITIZEN(6001)
-	IF CFLAG:1 > 1 && TALENT:변신시TS > 0
+	IF CFLAG:1 > 1 && TALENT:변신시ＴＳ > 0
 		CFLAG:321 += 1
 	ELSE
 		CFLAG:320 += 1
@@ -1910,7 +1910,7 @@ VARSET LOCAL
 SIF ISHOLE() == 0
 	RETURN 0
 
-IF CFLAG:1 > 0 && TALENT:변신시TS > 0
+IF CFLAG:1 > 0 && TALENT:변신시ＴＳ > 0
 	RAPECOUNT = CFLAG:321
 ELSE
 	RAPECOUNT = CFLAG:320

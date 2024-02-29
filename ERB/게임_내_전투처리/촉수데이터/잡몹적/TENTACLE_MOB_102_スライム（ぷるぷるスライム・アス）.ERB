@@ -367,19 +367,19 @@ LOCAL:7 = 2
 LOCAL:8 = 0
 
 ;特殊効果
-;1 = V삽입방어貫通（V삽입방어していても挿入される）
+;1 = Ｖ삽입방어貫通（Ｖ삽입방어していても挿入される）
 ;2 = 拡張責め（ＶまたはＡ強度が1以上なら굴복、치정、고통、공포が入る）
 LOCAL:9 = 2
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-;쾌C強度
+;쾌Ｃ強度
 LOCAL:10 = 0
-;쾌V強度
+;쾌Ｖ強度
 LOCAL:11 = 0
-;쾌A強度
+;쾌Ａ強度
 LOCAL:12 = 5
-;쾌B強度
+;쾌Ｂ強度
 LOCAL:13 = 0
 
 ;マゾによる굴복、공포影響度
@@ -450,11 +450,11 @@ CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML は身を窄み、%SLANG_A(TARGET)%を押し広げ容赦なくドロリとした体液を%PRINT_TRANSCALLNAME(TARGET)%의 中に注ぎ入れた。
 PRINTFORML 
 PRINTFORML 下腹に来た圧迫感に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
-SIF EXP:A경험 <= 10
+SIF EXP:Ａ경험 <= 10
 	PRINTFORML 顔を青ざめさせることしかできなかった。
-SIF EXP:A경험 > 10 && EXP:A경험 <= 30
+SIF EXP:Ａ경험 > 10 && EXP:Ａ경험 <= 30
 	PRINTFORML これから起こるであろうことを覚悟して、唇を噛み締めた。
-SIF EXP:A경험 > 30
+SIF EXP:Ａ경험 > 30
 	PRINTFORML 今何が起きているのか理解し、절망に顔を歪めてしまった。
 PRINTFORML 
 PRINTFORML …

@@ -11,7 +11,7 @@ IF CHECK_BODY("異常임신") > 0
 
 ELSEIF CHECK_BODY("触装")
 	;◆촉수服＋身体陥落クリティカルヒット時の鍛錬
-	IF ABL:B감각 >=3
+	IF ABL:Ｂ감각 >=3
 		IF 진지함_フラグ_シチュ==""
 			;実行時
 		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
@@ -31,7 +31,7 @@ ELSEIF CHECK_BODY("触装")
 ;◆精神陥落時の鍛錬
 ELSEIF ABL:노출벽+MARK:치욕각인 >= 5
 ;◆身体陥落時の鍛錬
-ELSEIF ABL:B감각 >=3
+ELSEIF ABL:Ｂ감각 >=3
 
 ;◆はじめて
 ELSEIF GETBIT(CFLAG:271,1)==0
@@ -74,7 +74,7 @@ IF TALENT:후타나리 > 0 || CHECK_PREGNANT_F(TARGET) > 0
 			PRINTFORML  両手で突き出たボテ腹を抱え、がに股で無様に走るその姿は既に牝豚以下だった……
 		ENDIF
 	ELSEIF 진지함_フラグ_シチュ=="触装暴走"
-		MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+		MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 		IF RESULT < 3
 			PRINTFORML 「っ……動…くなぁ…ぁあ！」
 		ELSEIF RESULT < 5
@@ -107,7 +107,7 @@ IF TALENT:후타나리 > 0 || CHECK_PREGNANT_F(TARGET) > 0
 	ENDIF
 ELSEIF CHECK_BODY("触装")
 	;◆촉수服＆身体陥落クリティカルヒット
-	IF ABL:B감각>4
+	IF ABL:Ｂ감각>4
 		IF 진지함_フラグ_シチュ==""
 			PRINTDATAL
 			DATAFORM 「ハァ……ハァ…この、化け物、がぁ、うぅ……」
@@ -165,7 +165,7 @@ ELSEIF CHECK_BODY("触装")
 			DATAFORM %타겟은% 必死に目の前の鍛錬へ集中しようとした。
 			ENDDATA
 		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
-			IF ABL:B감각 <= 6
+			IF ABL:Ｂ감각 <= 6
 				PRINTDATA
 				DATAFORM %randt("儚く","可憐に","健気に","気丈に")%我慢を続ける%randt(CALLNAME,"少女","姫君")%%randt("に苛立ったのか","を堕とそうとしてか","を嘲笑うかのように","を面白がるかのように")%、
 				DATAFORM %randt(CALLNAME,"少女")%の抵抗%randt("に反応したのか","に呼応するように","を受けて")%、
@@ -206,7 +206,7 @@ ELSEIF CHECK_BODY("触装")
 				DATAFORM 足を止めてへたり込んでしまった……
 				DATAFORM もはやトレーニングどころではなさそうだ……
 				ENDDATA
-			ELSEIF ABL:B감각 < 8
+			ELSEIF ABL:Ｂ감각 < 8
 				PRINTDATA
 				DATAFORM %randt("儚く","可憐に","健気に","気丈に","無様に","惨めに")%抵抗を続ける%randt(CALLNAME,"雌","少女","姫君","獲物")%%randt("に苛立ったのか","を堕とそうとしてか","を嘲笑うかのように","を面白がるかのように","に追い打ちをかけるように")%、
 				DATAFORM %randt(CALLNAME,"少女")%の발정%randt("に反応したのか","に呼応するように","を受けて")%、
@@ -295,7 +295,7 @@ ELSEIF CHECK_BODY("触装")
 			ENDDATA
 		ELSEIF 진지함_フラグ_シチュ=="触装暴走"
 			;감각の最大値で決める
-			MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+			MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 			IF RESULT < 3
 				PRINTFORML 「っ…いい加減に…動…くなぁ…ぁあっ！？」
 				PRINTFORML %타겟은% 与えられる刺激に脚をもつれさせた。
@@ -340,8 +340,8 @@ ELSEIF ABL:노출벽 >= 3 && RAND:3==0
 	ENDDATA
 	;★ランダムに露出盗撮フラグ？
 ;◆身体陥落
-ELSEIF ABL:B감각 >=3
-	LOCAL=ABL:B감각
+ELSEIF ABL:Ｂ감각 >=3
+	LOCAL=ABL:Ｂ감각
 	;◆Ｂ開発済み①
 	IF LOCAL < 5
 		PRINTDATAL

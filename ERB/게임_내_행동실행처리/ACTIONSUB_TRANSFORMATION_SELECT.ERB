@@ -31,7 +31,7 @@ ENDIF
 
 ;변신 가능 캐릭터는 변신 상태가 될지 선택할 수 있다
 ;임신이 밝혀진 경우, 남체화 TS변신 캐릭터는 변신 불가능
-IF TALENT:ARG:변신능력 > 0 && (ISFEMALE(ARG) && TALENT:ARG:변신시TS == 1 && CHECK_PREGNANT_F(ARG) > 0)
+IF TALENT:ARG:변신능력 > 0 && (ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 1 && CHECK_PREGNANT_F(ARG) > 0)
 	PRINTFORMW %조사처리(CALLNAME:ARG,"는")% 임신 중이기 때문에, 변신하여 남성화할 수 없습니다. %ACTION_NAME:1%
 ELSEIF TALENT:ARG:변신능력 > 0
 	;변신 후 이름 체크

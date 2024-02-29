@@ -10,7 +10,7 @@
 ;ARG:7  = コマンドの強度	弱0 強1 SP2
 ;ARG:8  = 처녀 상실の有無	なし0 あり1 あり、지문なし2
 ;ARG:9  = 特殊効果		ビット演算
-;	1	V삽입방어貫通
+;	1	Ｖ삽입방어貫通
 ;	2	拡張責め
 ;	4	
 ;	8	
@@ -19,10 +19,10 @@
 ;	64	
 ;	128	
 ;	256	
-;ARG:10 = 쾌C強度
-;ARG:11 = 쾌V強度
-;ARG:12 = 쾌A強度
-;ARG:13 = 쾌B強度
+;ARG:10 = 쾌Ｃ強度
+;ARG:11 = 쾌Ｖ強度
+;ARG:12 = 쾌Ａ強度
+;ARG:13 = 쾌Ｂ強度
 ;ARG:14 = マゾによる굴복、공포影響度
 ;ARG:15 = 挿入による공순影響度
 ;ARG:16 = 습득影響度
@@ -78,7 +78,7 @@ VARSET LOCAL
 ;처녀 상실あり
 IF ARG:8 == 2
 	;고통が大量に入る
-	IF TALENT:처녀 > 0 && BASE:V결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
+	IF TALENT:처녀 > 0 && BASE:Ｖ결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
 		LOCAL:10 = 10000
 		TALENT:처녀 = -1
 		CFLAG:206 = 2
@@ -88,7 +88,7 @@ IF ARG:8 == 2
 	ENDIF
 ELSEIF ARG:8 == 1
 	;고통が大量に入る
-	IF TALENT:처녀 > 0 && BASE:V결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
+	IF TALENT:처녀 > 0 && BASE:Ｖ결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
 		LOCAL:10 = 10000
 		CALL LOSTVIRGIN
 	ELSE
@@ -96,46 +96,46 @@ ELSEIF ARG:8 == 1
 	ENDIF
 ENDIF
 
-;쾌C
+;쾌Ｃ
 IF ARG:10 > 0
 	IF ARG:7 == 0
-		LOCAL:0 += MIN(ABL:C감각 * ABL:C감각, 25) * ARG:10 * 60 + ARG:10 * 100
+		LOCAL:0 += MIN(ABL:Ｃ감각 * ABL:Ｃ감각, 25) * ARG:10 * 60 + ARG:10 * 100
 	ELSEIF ARG:7 == 1
-		LOCAL:0 += MIN(ABL:C감각 * ABL:C감각, 25) * ARG:10 * 150 + ARG:10 * 80
+		LOCAL:0 += MIN(ABL:Ｃ감각 * ABL:Ｃ감각, 25) * ARG:10 * 150 + ARG:10 * 80
 	ELSE
-		LOCAL:0 += MIN(ABL:C감각 * ABL:C감각, 25) * ARG:10 * 300 + ARG:10 * 200
+		LOCAL:0 += MIN(ABL:Ｃ감각 * ABL:Ｃ감각, 25) * ARG:10 * 300 + ARG:10 * 200
 	ENDIF
 	;ペニス持ちには効果大
 	SIF ISMANLY() || TALENT:후타나리 > 0
 		LOCAL:0 += 500 * (ARG:7 + 1)
-	;C감각が低いと공포と고통が少し入る
-	IF ABL:C감각 < 3
-		LOCAL:10 += ARG:7 * ARG:7 * ARG:10 * 40 / (ABL:C감각 + 1) * (1 - (BASE:C결계내구력 > 0))
-		LOCAL:11 += ARG:7 * ARG:7 * ARG:10 * 40 / (ABL:C감각 + 1)
+	;Ｃ감각が低いと공포と고통が少し入る
+	IF ABL:Ｃ감각 < 3
+		LOCAL:10 += ARG:7 * ARG:7 * ARG:10 * 40 / (ABL:Ｃ감각 + 1) * (1 - (BASE:Ｃ결계내구력 > 0))
+		LOCAL:11 += ARG:7 * ARG:7 * ARG:10 * 40 / (ABL:Ｃ감각 + 1)
 	ENDIF
 ENDIF
-;쾌V
+;쾌Ｖ
 IF ARG:11 > 0
-	;V경험
-	EXP:V경험 += 1
+	;Ｖ경험
+	EXP:Ｖ경험 += 1
 	IF ARG:7 == 0
-		LOCAL:1 += MIN(ABL:V감각 * ABL:V감각, 25) * ARG:11 * 60 + ARG:11 * 100
+		LOCAL:1 += MIN(ABL:Ｖ감각 * ABL:Ｖ감각, 25) * ARG:11 * 60 + ARG:11 * 100
 	ELSEIF ARG:7 == 1
-		LOCAL:1 += MIN(ABL:V감각 * ABL:V감각, 25) * ARG:11 * 150 + ARG:11 * 80
+		LOCAL:1 += MIN(ABL:Ｖ감각 * ABL:Ｖ감각, 25) * ARG:11 * 150 + ARG:11 * 80
 	ELSE
-		LOCAL:1 += MIN(ABL:V감각 * ABL:V감각, 25) * ARG:11 * 300 + ARG:11 * 200
+		LOCAL:1 += MIN(ABL:Ｖ감각 * ABL:Ｖ감각, 25) * ARG:11 * 300 + ARG:11 * 200
 	ENDIF
-	;V감각が低いと공포と고통が少し入る
-	IF ABL:V감각 < 3
-		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:C감각 + 1) * (1 - (BASE:V결계내구력 > 0))
-		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:C감각 + 1) / (1 + (BASE:V결계내구력 > 0))
+	;Ｖ감각が低いと공포と고통が少し入る
+	IF ABL:Ｖ감각 < 3
+		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) * (1 - (BASE:Ｖ결계내구력 > 0))
+		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
 	ENDIF
 	;윤활が低いと공포と고통が少し入る
 	IF PALAM:윤활 < 2000
-		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:C감각 + 1) * (1 - (BASE:V결계내구력 > 0))
-		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:C감각 + 1) / (1 + (BASE:V결계내구력 > 0))
+		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) * (1 - (BASE:Ｖ결계내구력 > 0))
+		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
 	ENDIF
-	;Ｖ방어中かつ貫通なしなら쾌Vが減少
+	;Ｖ방어中かつ貫通なしなら쾌Ｖが減少
 	SIF TCVARn:2 == 자세：Ｖ방어 && (ARG:9 & 1) == 0
 		LOCAL:1 /= 4
 	;Ｖ挿入系コマンドの場合
@@ -143,17 +143,17 @@ IF ARG:11 > 0
 		IF (RESULT & 삽입) > 0
 			;윤활が低いと고통が入る
 			IF PALAM:윤활 < 1000
-				LOCAL:10 += 5000 * (1 - (BASE:V결계내구력 > 0))
+				LOCAL:10 += 5000 * (1 - (BASE:Ｖ결계내구력 > 0))
 			ELSEIF PALAM:윤활 < 2000
-				LOCAL:10 += 1000 * (1 - (BASE:V결계내구력 > 0))
+				LOCAL:10 += 1000 * (1 - (BASE:Ｖ결계내구력 > 0))
 			ENDIF
-			;挿入できていれば追加のV경험
-			IF BASE:V결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
-				EXP:V경험 += 1
+			;挿入できていれば追加のＶ경험
+			IF BASE:Ｖ결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
+				EXP:Ｖ경험 += 1
 				;Ｖ拡張の場合
 				IF (ARG:9 & 2) > 0
-					EXP:V확장경험 += 1
-					EXP:V경험 += 3
+					EXP:Ｖ확장경험 += 1
+					EXP:Ｖ경험 += 3
 				ENDIF
 			ENDIF
 		ENDIF
@@ -161,68 +161,68 @@ IF ARG:11 > 0
 	ENDCATCH
 	;Ｖ拡張の場合快楽、굴복、치정、고통、공포が入る
 	IF (ARG:9 & 2) > 0
-		IF EXP:V확장경험 < 3
+		IF EXP:Ｖ확장경험 < 3
 			TIMES LOCAL:1, 0.10
-			LOCAL:8 += ARG:11 * 400 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:9 += ARG:11 * 40 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:10 += ARG:11 * 800 * (1 - (BASE:V결계내구력 > 0))
-			LOCAL:11 += ARG:11 * 1600 / (1 + (BASE:V결계내구력 > 0))
-		ELSEIF EXP:V확장경험 < 5
+			LOCAL:8 += ARG:11 * 400 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:9 += ARG:11 * 40 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:10 += ARG:11 * 800 * (1 - (BASE:Ｖ결계내구력 > 0))
+			LOCAL:11 += ARG:11 * 1600 / (1 + (BASE:Ｖ결계내구력 > 0))
+		ELSEIF EXP:Ｖ확장경험 < 5
 			TIMES LOCAL:1, 0.50
-			LOCAL:8 += ARG:11 * 800 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:9 += ARG:11 * 80 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:10 += ARG:11 * 640 * (1 - (BASE:V결계내구력 > 0))
-			LOCAL:11 += ARG:11 * 1280 / (1 + (BASE:V결계내구력 > 0))
-		ELSEIF EXP:V확장경험 < 8
+			LOCAL:8 += ARG:11 * 800 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:9 += ARG:11 * 80 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:10 += ARG:11 * 640 * (1 - (BASE:Ｖ결계내구력 > 0))
+			LOCAL:11 += ARG:11 * 1280 / (1 + (BASE:Ｖ결계내구력 > 0))
+		ELSEIF EXP:Ｖ확장경험 < 8
 			TIMES LOCAL:1, 0.80
-			LOCAL:8 += ARG:11 * 1600 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:9 += ARG:11 * 160 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:10 += ARG:11 * 320 * (1 - (BASE:V결계내구력 > 0))
-			LOCAL:11 += ARG:11 * 640 / (1 + (BASE:V결계내구력 > 0))
+			LOCAL:8 += ARG:11 * 1600 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:9 += ARG:11 * 160 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:10 += ARG:11 * 320 * (1 - (BASE:Ｖ결계내구력 > 0))
+			LOCAL:11 += ARG:11 * 640 / (1 + (BASE:Ｖ결계내구력 > 0))
 		ELSE
-			LOCAL:8 += ARG:11 * 4000 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:9 += ARG:11 * 400 / (1 + (BASE:V결계내구력 > 0))
-			LOCAL:10 += ARG:11 * 80 * (1 - (BASE:V결계내구력 > 0))
-			LOCAL:11 += ARG:11 * 160 / (1 + (BASE:V결계내구력 > 0))
+			LOCAL:8 += ARG:11 * 4000 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:9 += ARG:11 * 400 / (1 + (BASE:Ｖ결계내구력 > 0))
+			LOCAL:10 += ARG:11 * 80 * (1 - (BASE:Ｖ결계내구력 > 0))
+			LOCAL:11 += ARG:11 * 160 / (1 + (BASE:Ｖ결계내구력 > 0))
 		ENDIF
 	ENDIF
 ENDIF
-;쾌A
+;쾌Ａ
 IF ARG:12 > 0
-	;A경험
-	EXP:A경험 += 1
+	;Ａ경험
+	EXP:Ａ경험 += 1
 	IF ARG:7 == 0
-		LOCAL:2 += MIN(ABL:A감각 * ABL:A감각, 25) * ARG:12 * 60 + ARG:12 * 100
+		LOCAL:2 += MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * ARG:12 * 60 + ARG:12 * 100
 	ELSEIF ARG:7 == 1
-		LOCAL:2 += MIN(ABL:A감각 * ABL:A감각, 25) * ARG:12 * 150 + ARG:12 * 80
+		LOCAL:2 += MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * ARG:12 * 150 + ARG:12 * 80
 	ELSE
-		LOCAL:2 += MIN(ABL:A감각 * ABL:A감각, 25) * ARG:12 * 300 + ARG:12 * 200
+		LOCAL:2 += MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * ARG:12 * 300 + ARG:12 * 200
 	ENDIF
-	;A감각が低いと공포と고통が少し入る
-	IF ABL:A감각 < 3
-		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:A감각 + 1) * (1 - (BASE:A결계내구력 > 0))
-		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:A감각 + 1) / (1 + (BASE:V결계내구력 > 0))
+	;Ａ감각が低いと공포と고통が少し入る
+	IF ABL:Ａ감각 < 3
+		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:Ａ감각 + 1) * (1 - (BASE:Ａ결계내구력 > 0))
+		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:Ａ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
 	ENDIF
-	;A감각に応じて굴복が入る
+	;Ａ감각に応じて굴복が入る
 	IF ARG:7 == 0
-		LOCAL:8 += MIN(ABL:A감각 * ABL:A감각, 25) * 120 + 100
-		SIF ABL:A감각 >= 5
-			LOCAL:8 += ABL:A감각 * 100 + 1400
+		LOCAL:8 += MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * 120 + 100
+		SIF ABL:Ａ감각 >= 5
+			LOCAL:8 += ABL:Ａ감각 * 100 + 1400
 	ELSE
-		LOCAL:8 += (MIN(ABL:A감각 * ABL:A감각, 25) * 120 + 100) * 2
-		SIF ABL:A감각 >= 5
-			LOCAL:8 += (ABL:A감각 * 100 + 1400) * 2
+		LOCAL:8 += (MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * 120 + 100) * 2
+		SIF ABL:Ａ감각 >= 5
+			LOCAL:8 += (ABL:Ａ감각 * 100 + 1400) * 2
 	ENDIF
 	;Ａ挿入系の場合
 	TRYCCALLFORM SEX_TYPE_MOB_{FLAG:11}_COM{ARG:0}
 		IF (RESULT & 삽입) > 0
-			;挿入できていれば追加のA경험
-			IF BASE:A결계내구력 <= 0
-				EXP:A경험 += 1
+			;挿入できていれば追加のＡ경험
+			IF BASE:Ａ결계내구력 <= 0
+				EXP:Ａ경험 += 1
 				;Ａ拡張の場合
 				IF (ARG:9 & 2) > 0
-					EXP:A확장경험 += 1
-					EXP:A경험 += 3
+					EXP:Ａ확장경험 += 1
+					EXP:Ａ경험 += 3
 				ENDIF
 			ENDIF
 		ENDIF
@@ -230,40 +230,40 @@ IF ARG:12 > 0
 	ENDCATCH
 	;Ａ拡張の場合快楽、굴복、치정、고통、공포が入る
 	IF (ARG:9 & 2) > 0
-		IF EXP:A확장경험 < 3
+		IF EXP:Ａ확장경험 < 3
 			TIMES LOCAL:2, 0.10
-			LOCAL:8 += ARG:12 * 400 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:9 += ARG:12 * 40 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:10 += ARG:12 * 800 * (1 - (BASE:A결계내구력 > 0))
-			LOCAL:11 += ARG:12 * 1600 / (1 + (BASE:A결계내구력 > 0))
-		ELSEIF EXP:A확장경험 < 5
+			LOCAL:8 += ARG:12 * 400 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:9 += ARG:12 * 40 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:10 += ARG:12 * 800 * (1 - (BASE:Ａ결계내구력 > 0))
+			LOCAL:11 += ARG:12 * 1600 / (1 + (BASE:Ａ결계내구력 > 0))
+		ELSEIF EXP:Ａ확장경험 < 5
 			TIMES LOCAL:2, 0.50
-			LOCAL:8 += ARG:12 * 800 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:9 += ARG:12 * 80 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:10 += ARG:12 * 640 * (1 - (BASE:A결계내구력 > 0))
-			LOCAL:11 += ARG:12 * 1280 / (1 + (BASE:A결계내구력 > 0))
-		ELSEIF EXP:A확장경험 < 8
+			LOCAL:8 += ARG:12 * 800 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:9 += ARG:12 * 80 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:10 += ARG:12 * 640 * (1 - (BASE:Ａ결계내구력 > 0))
+			LOCAL:11 += ARG:12 * 1280 / (1 + (BASE:Ａ결계내구력 > 0))
+		ELSEIF EXP:Ａ확장경험 < 8
 			TIMES LOCAL:2, 0.80
-			LOCAL:8 += ARG:12 * 1600 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:9 += ARG:12 * 160 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:10 += ARG:12 * 320 * (1 - (BASE:A결계내구력 > 0))
-			LOCAL:11 += ARG:12 * 640 / (1 + (BASE:A결계내구력 > 0))
+			LOCAL:8 += ARG:12 * 1600 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:9 += ARG:12 * 160 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:10 += ARG:12 * 320 * (1 - (BASE:Ａ결계내구력 > 0))
+			LOCAL:11 += ARG:12 * 640 / (1 + (BASE:Ａ결계내구력 > 0))
 		ELSE
-			LOCAL:8 += ARG:12 * 4000 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:9 += ARG:12 * 400 / (1 + (BASE:A결계내구력 > 0))
-			LOCAL:10 += ARG:12 * 80 * (1 - (BASE:A결계내구력 > 0))
-			LOCAL:11 += ARG:12 * 160 / (1 + (BASE:A결계내구력 > 0))
+			LOCAL:8 += ARG:12 * 4000 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:9 += ARG:12 * 400 / (1 + (BASE:Ａ결계내구력 > 0))
+			LOCAL:10 += ARG:12 * 80 * (1 - (BASE:Ａ결계내구력 > 0))
+			LOCAL:11 += ARG:12 * 160 / (1 + (BASE:Ａ결계내구력 > 0))
 		ENDIF
 	ENDIF
 ENDIF
-;쾌B
+;쾌Ｂ
 IF ARG:13 > 0
 	IF ARG:7 == 0
-		LOCAL:3 += MIN(ABL:B감각 * ABL:B감각, 25) * ARG:13 * 60 + ARG:13 * 100
+		LOCAL:3 += MIN(ABL:Ｂ감각 * ABL:Ｂ감각, 25) * ARG:13 * 60 + ARG:13 * 100
 	ELSEIF ARG:7 == 1
-		LOCAL:3 += MIN(ABL:B감각 * ABL:B감각, 25) * ARG:13 * 150 + ARG:13 * 80
+		LOCAL:3 += MIN(ABL:Ｂ감각 * ABL:Ｂ감각, 25) * ARG:13 * 150 + ARG:13 * 80
 	ELSE
-		LOCAL:3 += MIN(ABL:B감각 * ABL:B감각, 25) * ARG:13 * 300 + ARG:13 * 200
+		LOCAL:3 += MIN(ABL:Ｂ감각 * ABL:Ｂ감각, 25) * ARG:13 * 300 + ARG:13 * 200
 	ENDIF
 ENDIF
 ;マゾによる굴복、공포影響度

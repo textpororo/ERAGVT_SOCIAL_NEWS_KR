@@ -77,8 +77,8 @@ ELSEIF CHARATALENT_F(TARGET,0,"남자") > 0 && CONFIG_CHECK_PRISON_F(0) > 0
 		PRINTFORML 全身にあり得ないほどの快楽が走り抜け、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%絶叫した。
 	ENDIF
 	PRINTW 
-	;변신시TSキャラが女体化すると남자に戻れなくなる
-	IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+	;변신시ＴＳキャラが女体化すると남자に戻れなくなる
+	IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 		FONTBOLD
 		PRINTL 完全女体化
 		FONTREGULAR
@@ -126,7 +126,7 @@ ELSEIF CHARATALENT_F(TARGET,0,"남자") > 0 && CONFIG_CHECK_PRISON_F(0) > 0
 	PRINTW 
 	;구상
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_PRISENTENCE_FIRST")
-	;변신시TSキャラ♀→♂が男に変身できなくなる
+	;변신시ＴＳキャラ♀→♂が男に変身できなくなる
 ELSEIF CHARATALENT_F(TARGET,1,"남자") > 0 && CONFIG_CHECK_PRISON_F(0) > 0
 	PRINTFORML 生温かく湿った感触に%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%意識を取り戻すと、
 	PRINTFORML そこはまるで怪物の内臓を剥き出しにしたような肉の牢獄の中だった。
@@ -712,7 +712,7 @@ IF ISFEMALE() && SHIELD:1 <= 0
 		PRINTL 
 	PRINTFORML 질を貫く촉수の体液と分泌される愛液が混じりあって、泡だった音を立てている。
 ENDIF
-IF EXP:A경험 > 0 && SHIELD:2 <= 0
+IF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 	PRINTFORM 尻には
 	SIF SHIELD:3
 		PRINTL 
@@ -768,7 +768,7 @@ ELSE
 		ENDIF
 		PRINTFORML 陰核に数本の細い촉수が巻きついて包皮を剥き上げようとしたが、
 	ENDIF
-	PRINTFORML C결계が何とか接触を防ぎきった・・・
+	PRINTFORML Ｃ결계が何とか接触を防ぎきった・・・
 ENDIF
 PRINTW 
 
@@ -789,7 +789,7 @@ IF RAND:3 == 0 && SHIELD:1 <= 0
 	PRINTFORML 脚を高く上げさせられた姿勢で宙吊りになっている%PRINT_TRANSCALLNAME(TARGET)%。
 	PRINTL 
 	PRINTFORM 前方に向けて広げられた股間で
-	IF EXP:A경험 > 0 && SHIELD:2 <= 0
+	IF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 		PRINTFORML 2本の촉수が膣口と肛門を交互に突き上げている。
 	ELSE
 		PRINTFORML 突き入れられた촉수が膣口をぐちゃぐちゃとかき回している。
@@ -815,7 +815,7 @@ ELSEIF SHIELD:1 <= 0
 	PRINTFORML 大量の촉수に背後から圧し掛かられて、
 	PRINTFORML 尻を突きだすような굴복の姿勢を取らされた%PRINT_TRANSCALLNAME(TARGET)%。
 	PRINTL 
-	IF EXP:A경험 > 0 && SHIELD:2 <= 0
+	IF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 		PRINTFORML 질口と肛門には何本もの촉수が突き入れられ、
 		PRINTFORML 容赦のない乱暴なストロークで抽送を叩きつけられるたびに
 		PRINTFORML 下腹部がボコボコと不規則に膨らんでいる。
@@ -990,7 +990,7 @@ ELSE
 ENDIF
 IF ISFEMALE() && SHIELD:1 <= 0
 	PRINTFORM 下半身と
-ELSEIF EXP:A경험 > 0 && SHIELD:2 <= 0
+ELSEIF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 	PRINTFORM 肛門と
 ELSE
 ENDIF
@@ -1054,13 +1054,13 @@ IF ABL:마조끼 >= 2
 ELSE
 	PRINTFORM 完全に抵抗する気概を失ってピクピクと痙攣する%PRINT_TRANSCALLNAME(TARGET)%의 
 ENDIF
-IF ((EXP:V경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1) && ISFEMALE() && SHIELD:1 <= 0
-	IF EXP:A경험 > 0 && SHIELD:2 <= 0
+IF ((EXP:Ｖ경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1) && ISFEMALE() && SHIELD:1 <= 0
+	IF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 		PRINT 無防備なヴァギナと애널
 	ELSE
 		PRINT 無防備なヴァギナ
 	ENDIF
-ELSEIF EXP:A경험 > 0 && SHIELD:2 <= 0
+ELSEIF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 	PRINT 無防備な애널
 ELSE
 	PRINT 全身
@@ -1083,17 +1083,17 @@ PRINTL
 FONTBOLD
 PRINTL 強制奉仕
 FONTREGULAR
-IF (EXP:V경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1
-	IF EXP:A경험 > 0 && SHIELD:2 <= 0
+IF (EXP:Ｖ경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1
+	IF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 		PRINTFORM 前後の穴を同時に犯されて
 	ELSE
 		PRINTFORM 凌辱されて
 	ENDIF
-ELSEIF EXP:A경험 > 0 && SHIELD:2 <= 0
+ELSEIF EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 	PRINTFORM 尻穴を犯されて
 ENDIF
 PRINTFORM 身動きのとれない
-SIF ((EXP:V경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1) && EXP:A경험 > 0 && SHIELD:2 <= 0
+SIF ((EXP:Ｖ경험 > 0 && TALENT:처녀 < 1 && ISFEMALE()) || RESULT == 1) && EXP:Ａ경험 > 0 && SHIELD:2 <= 0
 	PRINTL 
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 口元に一本の촉수が突き出される。
 IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
@@ -1514,7 +1514,7 @@ PRINTL
 FONTBOLD
 PRINTL Ｖ拡張攻め
 FONTREGULAR
-IF EXP:V확장경험 >= 10
+IF EXP:Ｖ확장경험 >= 10
 	PRINTFORML 息絶え絶えに촉수の攻めを受けていた%PRINT_TRANSCALLNAME(TARGET)%의 膣に
 	PRINTFORML ひときわ太い巨大촉수が挿入されていく。
 	PRINTL 
@@ -1524,11 +1524,11 @@ IF EXP:V확장경험 >= 10
 	PRINTFORML 疑問を感じなくなってきている・・・
 ELSE
 	PRINTFORML 息絶え絶えに촉수の攻めを受けていた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-	IF EXP:V확장경험 == 0
+	IF EXP:Ｖ확장경험 == 0
 		PRINTFORML 見たことのない新しい촉수が自らに迫っていることに気付いた。
 		PRINTL 
 		PRINTFORML 明らかに他の촉수より太いそれを見せつけるように一度身振したそれは、
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:V감각 >= 4 || ABL:마조끼 >= 3
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:Ｖ감각 >= 4 || ABL:마조끼 >= 3
 			PRINTFORML これから襲い来る快楽を想像して表情の引き攣る%PRINT_TRANSCALLNAME(TARGET)%의 目の前で
 		ELSE
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 制止の声を振り切って、
@@ -1540,7 +1540,7 @@ ELSE
 		ENDIF
 	ELSE
 		PRINTFORM 目の前に現れた巨大な촉수を見た瞬間に
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:V감각 >= 4 || ABL:마조끼 >= 3
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:Ｖ감각 >= 4 || ABL:마조끼 >= 3
 			IF TALENT:주관시점 > 0
 				PRINTFORML これから何が行われるかを察してしまい、表情が引き攣っていく。
 				PRINTL 
@@ -1582,7 +1582,7 @@ PRINTL
 FONTBOLD
 PRINTL Ａ拡張攻め
 FONTREGULAR
-IF EXP:A확장경험 >= 10
+IF EXP:Ａ확장경험 >= 10
 	IF RAND:2 == 0 && TALENT:보추 > 0
 		PRINTFORML 息絶え絶えに촉수の攻めを受けていた%PRINT_TRANSCALLNAME(TARGET)%의 애널に
 		PRINTFORML ひときわ太い巨大촉수が挿入されていく。
@@ -1611,7 +1611,7 @@ ELSE
 	IF RAND:2 == 0 && TALENT:보추 > 0
 		PRINTFORML 息絶え絶えに촉수の攻めを受けていた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		PRINTFORM 目の前に現れた巨大な촉수を見た瞬間に
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:V감각 >= 4 || ABL:마조끼 >= 3
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:Ｖ감각 >= 4 || ABL:마조끼 >= 3
 			IF TALENT:주관시점 > 0
 				PRINTFORML これから何が行われるかを察してしまい、表情が引き攣っていく。
 				PRINTL 
@@ -1641,7 +1641,7 @@ ELSE
 		ENDIF
 	ELSE
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%バックから激しく애널を突き続けられていた。
-		IF EXP:A확장경험 > 0
+		IF EXP:Ａ확장경험 > 0
 			PRINTFORML 細い촉수の絶え間ない責めでほぐされた%PRINT_TRANSCALLNAME(TARGET)%의 尻穴に
 			PRINTFORML 腕よりも太い巨大な촉수がズブズブと挿入されていく。
 			PRINTL 
@@ -1651,7 +1651,7 @@ ELSE
 			PRINTL 
 			PRINTFORML かつて見たことのないほどの太さの촉수が애널に深々と突き刺さっていたのだった。
 		ENDIF
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:A감각 >= 4 || ABL:마조끼 >= 3
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:Ａ감각 >= 4 || ABL:마조끼 >= 3
 			PRINTFORML 肛門を無理やり押し広げられる今まで感じたことのない強烈な고통快楽に
 			IF TALENT:주관시점 > 0
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%裏返ったような喘ぎ声を上げてしまう・・・

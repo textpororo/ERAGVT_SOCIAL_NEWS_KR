@@ -464,7 +464,7 @@ SELECTCASE ARG
 				JUEL:습득 += 25
 				;치정
 				JUEL:치정 += 100
-			ELSEIF RAND:2 == 0 && ABL:C감각 + ABL:V감각 + ABL:A감각 + ABL:B감각 <= 10
+			ELSEIF RAND:2 == 0 && ABL:Ｃ감각 + ABL:Ｖ감각 + ABL:Ａ감각 + ABL:Ｂ감각 <= 10
 				PRINTFORML 身体が重い…顔が熱い…
 				PRINTFORMW そして…肢体が…疼く
 				PRINTFORML （何か…変）
@@ -666,24 +666,24 @@ SELECTCASE ARG
 			JUEL:습득 += 50
 			;욕정
 			JUEL:욕정 += 200
-			IF ISFEMALE() && BASE:V결계내구력 == 0
-				;V경험
-				EXP:V경험 += RESULT:0 / 2 + 2
-				;V감각
-				JUEL:쾌V += RESULT:0 * ABL:V감각 / 2 + 2
+			IF ISFEMALE() && BASE:Ｖ결계내구력 == 0
+				;Ｖ경험
+				EXP:Ｖ경험 += RESULT:0 / 2 + 2
+				;Ｖ감각
+				JUEL:쾌Ｖ += RESULT:0 * ABL:Ｖ감각 / 2 + 2
 				;사후피임약
 				CALL AFTER_PILL, TARGET, 5, 200
-			ELSEIF BASE:A결계내구력 == 0
-				;A경험
-				EXP:A경험 += RESULT:0 / 4 + 1
-				;A감각
-				JUEL:쾌A += RESULT:0 * ABL:A감각 / 4 + 1
+			ELSEIF BASE:Ａ결계내구력 == 0
+				;Ａ경험
+				EXP:Ａ경험 += RESULT:0 / 4 + 1
+				;Ａ감각
+				JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 / 4 + 1
 			ENDIF
-			IF BASE:A결계내구력 == 0
-				;A경험
-				EXP:A경험 += RESULT:0 / 4 + 1
-				;A감각
-				JUEL:쾌A += RESULT:0 * ABL:A감각 / 4 + 1
+			IF BASE:Ａ결계내구력 == 0
+				;Ａ경험
+				EXP:Ａ경험 += RESULT:0 / 4 + 1
+				;Ａ감각
+				JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 / 4 + 1
 			ENDIF
 			;펠라경험
 			EXP:펠라경험 += RESULT:0 / 2 + 2
@@ -694,7 +694,7 @@ SELECTCASE ARG
 				CFLAG:37 += RESULT:0 / 2 + 2
 			ENDIF
 			;임신 판정
-			SIF ISFEMALE() && BASE:V결계내구력 == 0
+			SIF ISFEMALE() && BASE:Ｖ결계내구력 == 0
 				CALL NINSIN_HANTEI,(RESULT:0 / 10 + 2), 50, 200
 			;촉수 구속구有りだと敗北イベントの可能性
 		ELSEIF CFLAG:42 == 400 && RAND:4 == 0
@@ -751,22 +751,22 @@ SELECTCASE ARG
 			JUEL:습득 += 50
 			;고통
 			JUEL:고통 += 200
-			IF ISFEMALE() && BASE:V결계내구력 == 0
-				;V경험
-				EXP:V경험 += RESULT:0 / 2 + 2
-				;V감각
-				JUEL:쾌V += RESULT:0 * ABL:V감각 / 2 + 2
-			ELSEIF BASE:A결계내구력 == 0
-				;A경험
-				EXP:A경험 += RESULT:0 / 4 + 1
-				;A감각
-				JUEL:쾌A += RESULT:0 * ABL:A감각 / 4 + 1
+			IF ISFEMALE() && BASE:Ｖ결계내구력 == 0
+				;Ｖ경험
+				EXP:Ｖ경험 += RESULT:0 / 2 + 2
+				;Ｖ감각
+				JUEL:쾌Ｖ += RESULT:0 * ABL:Ｖ감각 / 2 + 2
+			ELSEIF BASE:Ａ결계내구력 == 0
+				;Ａ경험
+				EXP:Ａ경험 += RESULT:0 / 4 + 1
+				;Ａ감각
+				JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 / 4 + 1
 			ENDIF
-			IF BASE:A결계내구력 == 0
-				;A경험
-				EXP:A경험 += RESULT:0 / 4 + 1
-				;A감각
-				JUEL:쾌A += RESULT:0 * ABL:A감각 / 4 + 1
+			IF BASE:Ａ결계내구력 == 0
+				;Ａ경험
+				EXP:Ａ경험 += RESULT:0 / 4 + 1
+				;Ａ감각
+				JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 / 4 + 1
 			ENDIF
 			;펠라경험
 			EXP:펠라경험 += RESULT:0 / 2 + 2
@@ -777,10 +777,10 @@ SELECTCASE ARG
 				CFLAG:37 += RESULT:0 / 2 + 2
 			ENDIF
 			;사후피임약
-			SIF ISFEMALE() && TALENT:처녀 < 1 && BASE:V결계내구력 == 0
+			SIF ISFEMALE() && TALENT:처녀 < 1 && BASE:Ｖ결계내구력 == 0
 				CALL AFTER_PILL, TARGET, 5, 200
 			;임신 판정
-			SIF ISFEMALE() && TALENT:처녀 < 1 && BASE:V결계내구력 == 0
+			SIF ISFEMALE() && TALENT:처녀 < 1 && BASE:Ｖ결계내구력 == 0
 				CALL NINSIN_HANTEI,(RESULT:0 / 10 + 2), 50, 200
 
 			;普通は楽勝
@@ -803,7 +803,7 @@ SELECTCASE ARG
 		PRINTL 援助交際
 		PRINTL 
 		;♀にTS中
-		IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 			IF TALENT:음란 > 0 && TALENT:초심 < 1
 				PRINTFORML 女性の姿に変身した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして街に繰り出していた。
 				PRINTW 
@@ -873,7 +873,7 @@ SELECTCASE ARG
 		IF RAND:5 != 0 && ISGIRLY()
 			IF TALENT:보추 > 0
 				; #region 
-				IF ABL:A감각 < 2
+				IF ABL:Ａ감각 < 2
 					PRINTFORML 繁華街のハズレのラブホテルに、%PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 					NAMAHAME = 0
 				ELSE
@@ -959,7 +959,7 @@ SELECTCASE ARG
 					;ランダム分岐フラグ
 					FLAG:900 = 1
 				ENDIF
-				IF ABL:A감각 < 2
+				IF ABL:Ａ감각 < 2
 					PRINTFORML まだ남자に不慣れな尻穴にペニスを受け入れて絶頂させられる快楽に굴복させられてしまった…
 					PRINTW 
 				ELSEIF NAMAHAME > 1
@@ -971,10 +971,10 @@ SELECTCASE ARG
 				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_normalA_A")
 				;습득
 				JUEL:습득 += 250
-				;A경험
-				EXP:A경험 += 3
-				;A감각
-				JUEL:쾌A += 15 * ABL:A감각
+				;Ａ경험
+				EXP:Ａ경험 += 3
+				;Ａ감각
+				JUEL:쾌Ａ += 15 * ABL:Ａ감각
 				;정액경험
 				EXP:정액경험 += 3
 				;基本報酬
@@ -1219,10 +1219,10 @@ SELECTCASE ARG
 				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_normalA")
 				;습득
 				JUEL:습득 += 250
-				;V경험
-				EXP:V경험 += 3
-				;V감각
-				JUEL:쾌V += 15 * ABL:V감각
+				;Ｖ경험
+				EXP:Ｖ경험 += 3
+				;Ｖ감각
+				JUEL:쾌Ｖ += 15 * ABL:Ｖ감각
 				;정액경험
 				EXP:정액경험 += 3
 				;基本報酬
@@ -1439,10 +1439,10 @@ SELECTCASE ARG
 				CALL MESSAGE_CITIZEN_TRAIN_KANCHO(TARGET,"男","특별 활동")
 				;습득
 				JUEL:습득 += 150
-				;A경험
-				EXP:A경험 += 3
-				;A감각
-				JUEL:쾌A += 15 * ABL:A감각
+				;Ａ경험
+				EXP:Ａ경험 += 3
+				;Ａ감각
+				JUEL:쾌Ａ += 15 * ABL:Ａ감각
 				;펠라경험
 				EXP:펠라경험 += 1
 				;정액경험
@@ -2085,20 +2085,20 @@ SELECTCASE ARG
 		;습득
 		JUEL:습득 += 150
 		IF ISFEMALE() && CHECK_HOLYVIRGIN_F()==0
-			;V경험
-			EXP:V경험 += 2
-			;V감각
-			JUEL:쾌V += 10 * ABL:V감각
+			;Ｖ경험
+			EXP:Ｖ경험 += 2
+			;Ｖ감각
+			JUEL:쾌Ｖ += 10 * ABL:Ｖ감각
 		ELSE
-			;A경험
-			EXP:A경험 += 2
-			;A감각
-			JUEL:쾌A += 10 * ABL:A감각
+			;Ａ경험
+			EXP:Ａ경험 += 2
+			;Ａ감각
+			JUEL:쾌Ａ += 10 * ABL:Ａ감각
 		ENDIF
-		;A경험
-		EXP:A경험 += 2
-		;A감각
-		JUEL:쾌A += 10 * ABL:A감각
+		;Ａ경험
+		EXP:Ａ경험 += 2
+		;Ａ감각
+		JUEL:쾌Ａ += 10 * ABL:Ａ감각
 		;펠라경험
 		EXP:펠라경험 += 1
 		;정액경험
@@ -2141,7 +2141,7 @@ SELECTCASE ARG
 				TALENT:처녀 = -1
 				EXP:이상경험 += 1
 			ENDIF
-			IF TALENT:보추 > 0 && ABL:A감각 < 2
+			IF TALENT:보추 > 0 && ABL:Ａ감각 < 2
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%浮浪者の不潔なペニスをしゃぶらされながら、
 				PRINTFORML 垢のこびりついた肉棒にまだ남자慣れしていない尻穴を穿たれた。
 				PRINTW 
@@ -2194,7 +2194,7 @@ SELECTCASE ARG
 				PRINTW 
 				TALENT:처녀 = -1
 				EXP:이상경험 += 1
-			ELSEIF TALENT:보추 > 0 && ABL:A감각 < 2
+			ELSEIF TALENT:보추 > 0 && ABL:Ａ감각 < 2
 				; #region 
 				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 密やかな애널は
 				SELECTCASE RAND:4
@@ -2283,20 +2283,20 @@ SELECTCASE ARG
 		;치정
 		JUEL:치정 += 100
 		IF ISFEMALE()
-			;V경험
-			EXP:V경험 += RESULT:0 / 2 + 2
-			;V감각
-			JUEL:쾌V += RESULT:0 * ABL:V감각 / 2 + 2
+			;Ｖ경험
+			EXP:Ｖ경험 += RESULT:0 / 2 + 2
+			;Ｖ감각
+			JUEL:쾌Ｖ += RESULT:0 * ABL:Ｖ감각 / 2 + 2
 		ELSE
-			;A경험
-			EXP:A경험 += RESULT:0 / 4 + 1
-			;A감각
-			JUEL:쾌A += RESULT:0 * ABL:A감각 / 4 + 1
+			;Ａ경험
+			EXP:Ａ경험 += RESULT:0 / 4 + 1
+			;Ａ감각
+			JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 / 4 + 1
 		ENDIF
-		;A경험
-		EXP:A경험 += RESULT:0 / 4 + 1
-		;A감각
-		JUEL:쾌A += RESULT:0 * ABL:A감각 /4 + 1
+		;Ａ경험
+		EXP:Ａ경험 += RESULT:0 / 4 + 1
+		;Ａ감각
+		JUEL:쾌Ａ += RESULT:0 * ABL:Ａ감각 /4 + 1
 		;펠라경험
 		EXP:펠라경험 += RESULT:0 / 2 + 2
 		;정액경험
@@ -2723,7 +2723,7 @@ SELECTCASE ARG
 		PRINTL 베개 영업
 		PRINTL 
 		;베개 영업の報酬は매료경험
-		IF TALENT:처녀 > 0 || (TALENT:보추 > 0 && ABL:A감각 < 2)
+		IF TALENT:처녀 > 0 || (TALENT:보추 > 0 && ABL:Ａ감각 < 2)
 			IF RAND:4 != 0
 				;さすがにプロデューサーは처녀を奪わない
 				PRINTFORML プロデューサーの機嫌を取るため、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%口で奉仕をしている
@@ -2890,22 +2890,22 @@ SELECTCASE ARG
 					CFLAG:206 = 7
 					;습득
 					JUEL:습득 += 175
-					;V경험
-					EXP:V경험 += 3
-					;V감각
-					JUEL:쾌V += 15 * ABL:V감각
+					;Ｖ경험
+					EXP:Ｖ경험 += 3
+					;Ｖ감각
+					JUEL:쾌Ｖ += 15 * ABL:Ｖ감각
 				ELSE
 					;습득
 					JUEL:습득 += 175
-					;A경험
-					EXP:A경험 += 3
-					;A감각
-					JUEL:쾌A += 15 * ABL:A감각
+					;Ａ경험
+					EXP:Ａ경험 += 3
+					;Ａ감각
+					JUEL:쾌Ａ += 15 * ABL:Ａ감각
 				ENDIF
-				;A경험
-				EXP:A경험 += 1
-				;A감각
-				JUEL:쾌A += 5 * ABL:A감각
+				;Ａ경험
+				EXP:Ａ경험 += 1
+				;Ａ감각
+				JUEL:쾌Ａ += 5 * ABL:Ａ감각
 				;펠라경험
 				EXP:펠라경험 += 1
 				;정액경험
@@ -2990,20 +2990,20 @@ SELECTCASE ARG
 					;습득
 					JUEL:습득 += 150
 					IF ISFEMALE()
-						;V경험
-						EXP:V경험 += 2
-						;V감각
-						JUEL:쾌V += 10 * ABL:V감각
+						;Ｖ경험
+						EXP:Ｖ경험 += 2
+						;Ｖ감각
+						JUEL:쾌Ｖ += 10 * ABL:Ｖ감각
 					ELSE
-						;A경험
-						EXP:A경험 += 2
-						;A감각
-						JUEL:쾌A += 10 * ABL:A감각
+						;Ａ경험
+						EXP:Ａ경험 += 2
+						;Ａ감각
+						JUEL:쾌Ａ += 10 * ABL:Ａ감각
 					ENDIF
-					;A경험
-					EXP:A경험 += 2
-					;A감각
-					JUEL:쾌A += 10 * ABL:A감각
+					;Ａ경험
+					EXP:Ａ경험 += 2
+					;Ａ감각
+					JUEL:쾌Ａ += 10 * ABL:Ａ감각
 					;펠라경험
 					EXP:펠라경험 += 1
 					;정액경험
@@ -3080,15 +3080,15 @@ SELECTCASE ARG
 					;공포
 					JUEL:공포 += 100
 					IF ISFEMALE()
-						;V경험
-						EXP:V경험 += 18
-						;V감각
-						JUEL:쾌V += 20 * ABL:V감각
+						;Ｖ경험
+						EXP:Ｖ경험 += 18
+						;Ｖ감각
+						JUEL:쾌Ｖ += 20 * ABL:Ｖ감각
 					ELSE
-						;A경험
-						EXP:A경험 += 18
-						;A감각
-						JUEL:쾌A += 20 * ABL:A감각
+						;Ａ경험
+						EXP:Ａ경험 += 18
+						;Ａ감각
+						JUEL:쾌Ａ += 20 * ABL:Ａ감각
 					ENDIF
 					;펠라경험
 					EXP:펠라경험 += 1
@@ -3107,7 +3107,7 @@ SELECTCASE ARG
 					ELSE
 						PRINTFORML 男の精力は無尽蔵のようで、何度も体位を変えながらひたすら애널を攻め続け
 					ENDIF
-					IF ABL:A감각 > 2
+					IF ABL:Ａ감각 > 2
 						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 尻穴は特に具合がいいらしく、相手は夢中で快楽を貪っている
 					ELSE
 						PRINTFORML アニメキャラの名前を呼びながら、男は%PRINT_TRANSCALLNAME(TARGET)%의 尻穴を開発していく
@@ -3121,10 +3121,10 @@ SELECTCASE ARG
 					JUEL:습득 += 225
 					;치정
 					JUEL:치정 += 100
-					;A감각
-					JUEL:쾌A += 20 * ABL:A감각
-					;A경험
-					EXP:A경험 += 18
+					;Ａ감각
+					JUEL:쾌Ａ += 20 * ABL:Ａ감각
+					;Ａ경험
+					EXP:Ａ경험 += 18
 					;펠라경험
 					EXP:펠라경험 += 1
 					;정액경험
@@ -3173,20 +3173,20 @@ SELECTCASE ARG
 				;습득
 				JUEL:습득 += 300
 				IF ISFEMALE()
-					;V경험
-					EXP:V경험 += 12
-					;V감각
-					JUEL:쾌V += 20 * ABL:V감각
+					;Ｖ경험
+					EXP:Ｖ경험 += 12
+					;Ｖ감각
+					JUEL:쾌Ｖ += 20 * ABL:Ｖ감각
 				ELSE
-					;A경험
-					EXP:A경험 += 12
-					;A감각
-					JUEL:쾌A += 20 * ABL:A감각
+					;Ａ경험
+					EXP:Ａ경험 += 12
+					;Ａ감각
+					JUEL:쾌Ａ += 20 * ABL:Ａ감각
 				ENDIF
-				;A경험
-				EXP:A경험 += 12
-				;A감각
-				JUEL:쾌A += 20 * ABL:A감각
+				;Ａ경험
+				EXP:Ａ경험 += 12
+				;Ａ감각
+				JUEL:쾌Ａ += 20 * ABL:Ａ감각
 				;펠라경험
 				EXP:펠라경험 += 18
 				;정액경험
@@ -3502,8 +3502,8 @@ SELECTCASE ARG:0
 				EXP:전투경험 += LOCAL:121 * (10 + RAND:3) / 100
 				EXP:피간경험 += LOCAL:121 * (20 + RAND:3) / 100
 				SIF ISFEMALE()
-					EXP:V경험 += LOCAL:121 * (10 + RAND:3) / 100
-				EXP:A경험 += LOCAL:121 * (10 + RAND:3) / 100
+					EXP:Ｖ경험 += LOCAL:121 * (10 + RAND:3) / 100
+				EXP:Ａ경험 += LOCAL:121 * (10 + RAND:3) / 100
 				EXP:절정경험 += LOCAL:121 * (10 + RAND:2) / 100
 				EXP:정액경험 += LOCAL:121 * (10 + RAND:2) / 100
 				EXP:펠라경험 += LOCAL:121 * (10 + RAND:2) / 100
@@ -3525,8 +3525,8 @@ SELECTCASE ARG:0
 		LOCAL:121 = BASE:체력 * (7 + RAND:3) / 100
 		EXP:피간경험 += LOCAL:121 * (2 + RAND:3) / 100
 		SIF ISFEMALE()
-			EXP:V경험 += LOCAL:121 * (1 + RAND:3) / 100
-		EXP:A경험 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:Ｖ경험 += LOCAL:121 * (1 + RAND:3) / 100
+		EXP:Ａ경험 += LOCAL:121 * (1 + RAND:3) / 100
 		EXP:절정경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:정액경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:펠라경험 += LOCAL:121 * (1 + RAND:2) / 100
@@ -3553,8 +3553,8 @@ SELECTCASE ARG:0
 		LOCAL:121 = BASE:체력 * (5 + RAND:3) / 100 + RAND:(EXP:매료경험 * 5 + 1) + MAX(EXP:매료경험 - 100,0) * 50
 		EXP:피간경험 += LOCAL:121 * (2 + RAND:3) / 100
 		SIF ISFEMALE()
-			EXP:V경험 += LOCAL:121 * (1 + RAND:3) / 100
-		EXP:A경험 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:Ｖ경험 += LOCAL:121 * (1 + RAND:3) / 100
+		EXP:Ａ경험 += LOCAL:121 * (1 + RAND:3) / 100
 		EXP:절정경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:정액경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:펠라경험 += LOCAL:121 * (1 + RAND:2) / 100
@@ -3581,8 +3581,8 @@ SELECTCASE ARG:0
 		LOCAL:121 = BASE:체력 * (6 + RAND:3) / 100
 		EXP:피간경험 += LOCAL:121 * (2 + RAND:3) / 100
 		SIF ISFEMALE()
-			EXP:V경험 += LOCAL:121 * (1 + RAND:3) / 100
-		EXP:A경험 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:Ｖ경험 += LOCAL:121 * (1 + RAND:3) / 100
+		EXP:Ａ경험 += LOCAL:121 * (1 + RAND:3) / 100
 		EXP:절정경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:정액경험 += LOCAL:121 * (1 + RAND:2) / 100
 		EXP:펠라경험 += LOCAL:121 * (1 + RAND:2) / 100
@@ -3679,8 +3679,8 @@ SELECTCASE ARG:0
 				LOCAL:120 = LOCAL:120 * (40 + RAND:7) / 100
 				LOCAL:130 = LOCAL:130 * (10 + RAND:4) / 100
 				SIF ISFEMALE()
-					EXP:V경험 += 1 + RAND:3
-				EXP:A경험 += RAND:3
+					EXP:Ｖ경험 += 1 + RAND:3
+				EXP:Ａ경험 += RAND:3
 				EXP:절정경험 += RAND:3
 				EXP:정액경험 += 1 + RAND:3
 				EXP:펠라경험 += 1 + RAND:2
@@ -3690,7 +3690,7 @@ SELECTCASE ARG:0
 			CASE 2
 				LOCAL:120 = LOCAL:120 * (50 + RAND:7) / 100
 				LOCAL:130 = LOCAL:130 * (50 + RAND:4) / 100
-				EXP:V경험 += 8 + RAND:5
+				EXP:Ｖ경험 += 8 + RAND:5
 				EXP:절정경험 += 3 + RAND:3
 				EXP:정액경험 += 3 + RAND:3
 				EXP:펠라경험 += 1 + RAND:2
@@ -3700,7 +3700,7 @@ SELECTCASE ARG:0
 			CASE 3
 				LOCAL:120 = LOCAL:120 * (50 + RAND:7) / 100
 				LOCAL:130 = LOCAL:130 * (50 + RAND:4) / 100
-				EXP:A경험 += 8 + RAND:5
+				EXP:Ａ경험 += 8 + RAND:5
 				EXP:절정경험 += 3 + RAND:3
 				EXP:정액경험 += 3 + RAND:3
 				EXP:펠라경험 += 1 + RAND:2
@@ -3711,8 +3711,8 @@ SELECTCASE ARG:0
 				LOCAL:120 = LOCAL:120 * (70 + RAND:7) / 100
 				LOCAL:130 = LOCAL:130 * (70 + RAND:4) / 100
 				SIF ISFEMALE()
-					EXP:V경험 += 15 + RAND:5
-				EXP:A경험 += 15 + RAND:5
+					EXP:Ｖ경험 += 15 + RAND:5
+				EXP:Ａ경험 += 15 + RAND:5
 				EXP:절정경험 += 10 + RAND:5
 				EXP:정액경험 += 15 + RAND:5
 				EXP:펠라경험 += 10 + RAND:5

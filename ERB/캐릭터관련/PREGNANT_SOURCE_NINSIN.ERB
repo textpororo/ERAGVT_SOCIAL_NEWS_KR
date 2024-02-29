@@ -245,7 +245,7 @@ IF CFLAG:21 > 0 || (FLAG:700 == 0 && TALENT:임신 == 2)
 	CALL NINSIN_TS_FIX
 ENDIF
 ;TS 변신 시의 정상 임신인 경우, 남자로 돌아갈 수 없게 돼버렷
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0 && TALENT:임신 == 4
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && TALENT:임신 == 4
 	PRINTW 
 	PRINTFORML %PRINT_CALLNAME(TARGET,1)%의 상태가 이상하다……
 	PRINTFORML 어째서인지 모르겠지만, 몸속 깊은 곳에 무언가 위화감이 느껴진다……
@@ -260,12 +260,12 @@ ENDIF
 ;TS마법소녀인 경우, 임신하면 남자로 돌아갈 수 없게 된다 or 일시적으로 남자로 변신할 수 없게 된다
 ;------------------------------
 @NINSIN_TS_FIX
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	;지문
 	CALL MESSAGE_NINNSIN_TS_FIX
 	;여체화 처리
 	CALL TS_MtoF, TARGET
-ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 == 0
+ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 == 0
 	;지문
 	CALL MESSAGE_NINNSIN_TS_FIX
 ENDIF
@@ -336,7 +336,7 @@ FOR CCOUNT,0,CHARANUM
 		IF CFLAG:222 >= 20
 			PRINTFORML %PRINT_CALLNAME(TARGET,1)%의 복부가 분명하게 부풀어 오르고 있다……
 			PRINTFORML 임신하고 있다는 사실은 이제 그 누가 봐도 알아챌 것이다……
-			IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 == 0
+			IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 == 0
 				PRINTW 
 				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")% 임신 중이므로, 변신할 수 없게 됩니다.
 			ENDIF
@@ -518,19 +518,19 @@ CALL GET_SYUREN,LOCAL/10
 SIF CFLAG:0 == 10
 	TIMES LOCAL , 3.00
 ;구슬 입수
-	LOCAL:1 += (ABL:V감각 + 1) * 10 * LOCAL * (1 + (TALENT:V민감 > 0) + (TALENT:음호 > 0)) / (1+(TALENT:V둔감 > 0))
-	LOCAL:3 += (ABL:모유중독 + 1) * (ABL:B감각 + 1) * 10 * LOCAL * (1 + (TALENT:B민감 > 0) + (TALENT:음유 > 0)) / (1 + (TALENT:B둔감 > 0))
-JUEL:쾌V = LOCAL:1
-JUEL:쾌B = LOCAL:3
+	LOCAL:1 += (ABL:Ｖ감각 + 1) * 10 * LOCAL * (1 + (TALENT:Ｖ민감 > 0) + (TALENT:음호 > 0)) / (1+(TALENT:Ｖ둔감 > 0))
+	LOCAL:3 += (ABL:모유중독 + 1) * (ABL:Ｂ감각 + 1) * 10 * LOCAL * (1 + (TALENT:Ｂ민감 > 0) + (TALENT:음유 > 0)) / (1 + (TALENT:Ｂ둔감 > 0))
+JUEL:쾌Ｖ = LOCAL:1
+JUEL:쾌Ｂ = LOCAL:3
 JUEL:공순 += (ABL:순종 + 1) * 100 * LOCAL
 JUEL:욕정 += (ABL:욕망 + 1) * 25 * LOCAL
 JUEL:굴복 += (ABL:순종 + 1) * 250 * LOCAL
 JUEL:치정 += (ABL:노출벽 + 1) * 25 * LOCAL
-SQRT (EXP:V확장경험+1)
+SQRT (EXP:Ｖ확장경험+1)
 JUEL:고통 += (ABL:마조끼 + 1) * 300 * LOCAL / RESULT
 SQRT (EXP:출산경험+1)
 JUEL:공포 += 100 * LOCAL / RESULT
-;V경험
+;Ｖ경험
 LOCAL:120 = LOCAL / 10
 ;절정경험
 LOCAL:122 = (LOCAL:1 + LOCAL:3) / 1000
@@ -542,7 +542,7 @@ SIF TALENT:모유체질 == 1
 ;V확장
 LOCAL:151 = 1
 
-;출산경험과 V확장경험 추가
+;출산경험과 Ｖ확장경험 추가
 ;생애 첫 출산이라면 이상경험이 들어가고, 체력과 기력이 약간 상승한다
 IF EXP:출산경험 == 0
 	LOCAL:150 += 1
@@ -564,7 +564,7 @@ NEXT
 
 ;확장도 상승 (쓰리 사이즈를 설정하지 않은 경우나 극단적인 확장을 차단한 경우에는 발생하지 않는다)
 IF CFLAG:34 > 0 && CONFIG_CHECK_MANIAC_F(17) == 1
-	TENTACLE_SIZE:1:쾌V = PREGNANCY_BELLY_EXPAND(TARGET) / 2
+	TENTACLE_SIZE:1:쾌Ｖ = PREGNANCY_BELLY_EXPAND(TARGET) / 2
 	CALL V_GAPING(GAPING_SIZE_TO_POINT("Ｖ"), TARGET)
 	IF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
 		PRINTFORML 　질경(膣径)：＋{RESULT / 10}.{RESULT % 10} cm	

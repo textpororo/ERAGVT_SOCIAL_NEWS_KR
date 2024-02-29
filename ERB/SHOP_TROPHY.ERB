@@ -285,7 +285,7 @@ ELSE
 
 		CALL PRINT_ACHIEVEMENT(275,"여성의 숙명","히로인이라 해도 피할 수 없다…",5,"촉수에게 패배하여 유폐됐다","","")
 		CALL PRINT_ACHIEVEMENT(258,"잠자는 촉수 속의 공주님","프로 납치범 쿠파도 한 수 접었다",10,"유폐경험 5 돌파","※캐릭터 메이킹 소질：유폐 해금","")
-		CALL PRINT_ACHIEVEMENT(264,"처녀 빗치 애널광","감히 빼앗지 않겠다，그리 두지도 않겠다",10,"처녀인 채로 A경험 10 돌파","처녀 빗치가 말이 되냐고？！","")
+		CALL PRINT_ACHIEVEMENT(264,"처녀 빗치 애널광","감히 빼앗지 않겠다，그리 두지도 않겠다",10,"처녀인 채로 Ａ경험 10 돌파","처녀 빗치가 말이 되냐고？！","")
 		CALL PRINT_ACHIEVEMENT(262,"음울(淫鬱) 허니문","모두 다같이 촉수의 아내",20,"【촉수의포로】인 인원이 3명 이상","※캐릭터 메이킹 소질：흑화 해금","")
 		;＠중국판(번호 중복으로 수정)
 		CALL PRINT_ACHIEVEMENT(279,"음마소녀조","우리들，더 이상 타락하지 않을게요♪",50,"【전락】인 인원이 3명 이상","","")
@@ -315,7 +315,7 @@ ELSE
 		CALL PRINT_ACHIEVEMENT(60,"init")
 		;특수 조건
 		CALL PRINT_ACHIEVEMENT(267,"기적의 역전승","위기의 순간에 벌어지는 엣치한 역전극",10,"착정 피해로 보스를 격파했다","","")
-		CALL PRINT_ACHIEVEMENT(259,"기가 막히는 자린고비","아끼기만하면 아까워요",10,"수련Ｐ를 1000 이상 남기고 클리어","","라임 지렸다")
+		CALL PRINT_ACHIEVEMENT(259,"기가 막히는 자린고비","아끼기만하면 아까워요",10,"수련P를 1000 이상 남기고 클리어","","라임 지렸다")
 		CALL PRINT_ACHIEVEMENT(260,"촉수 따위에겐 지지 않아！","일부러 감도 만땅인 캐릭터로！",10,"솔로 모드를 전 부위 민감 상태로 클리어","","※솔로 모드 한정")
 		CALL PRINT_ACHIEVEMENT(261,"불굴의 투지","으그윽…… 질까 보냐！",10,"솔로 모드를 유폐경험 1 이상으로 클리어","","※솔로 모드 한정")
 		CALL PRINT_ACHIEVEMENT(265,"NEXT GENERATION","다음 세대에도 이어지는 소녀들의 의지",10,"딸(娘)이 ３명 이상 있는 상태로 클리어","","※솔로 모드 불가능")
@@ -446,7 +446,7 @@ ENDIF
 
 ;ABL 관련 실적 일괄 체크
 @GET_STATE_ABLUP,ARG
-LOCAL = ABL:ARG:C감각 + ABL:ARG:V감각 + ABL:ARG:A감각 + ABL:ARG:B감각
+LOCAL = ABL:ARG:Ｃ감각 + ABL:ARG:Ｖ감각 + ABL:ARG:Ａ감각 + ABL:ARG:Ｂ감각
 IF LOCAL >= 5
 	CALL UNLOCK_ACHIEVEMENT(240,"성에 눈뜨다")
 ENDIF
@@ -533,7 +533,7 @@ ENDIF
 IF EXP:ARG:유폐경험 >= 5
 	CALL UNLOCK_ACHIEVEMENT(258,"잠자는 촉수 속의 공주님")
 ENDIF
-IF TALENT:ARG:처녀 > 0 && EXP:ARG:A경험 >= 10
+IF TALENT:ARG:처녀 > 0 && EXP:ARG:Ａ경험 >= 10
 	CALL UNLOCK_ACHIEVEMENT(264,"처녀 빗치 애널광")
 ENDIF
 

@@ -223,7 +223,7 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 	ELSE
 		IF SAVESTR:10 != ""
 			LOCALS = %SAVESTR:10%
-		ELSEIF ISMANLY() && TALENT:변신시TS == 0 && TALENT:변신시보추 <= 0
+		ELSEIF ISMANLY() && TALENT:변신시ＴＳ == 0 && TALENT:변신시보추 <= 0
 			LOCALS = 魔装少年
 		ELSE
 			LOCALS = 魔法少女
@@ -317,7 +317,7 @@ IF CFLAG:41 == 401
 	PRINTL 
 	IF SAVESTR:10 != ""
 		LOCALS = %SAVESTR:10%
-	ELSEIF ISMALE() && TALENT:변신시TS == 0 && TALENT:보추 <= 0 && TALENT:변신시보추 <= 0
+	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:보추 <= 0 && TALENT:변신시보추 <= 0
 		; #region 
 		LOCALS = 魔装少年
 		; #endregion
@@ -1121,12 +1121,12 @@ IF CFLAG:286 == 0 || RAND:2 == 0
 	PRINTFORM 男が
 	IF ISMALE()
 		; #region 
-		IF EXP:A경험 < 1 && CFLAG:36 <= 30
+		IF EXP:Ａ경험 < 1 && CFLAG:36 <= 30
 			PRINTL 指すら入った事ない애널をハンドクリームを使って
 			PRINTL 何度もほぐしてからペニスを後穴にあてがい、ゆっくり埋めていく。
 			PRINTL 肛門の裂け傷による痛みと共に、性器として認識されてなかったアヌスが男に貫かれた
 			PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 悲鳴をＢＧＭにし、男はそのまま
-		ELSEIF EXP:A경험 < 5 || CFLAG:36 <= 40
+		ELSEIF EXP:Ａ경험 < 5 || CFLAG:36 <= 40
 			PRINT ペニスで明らかに남자慣れしていない애널に捻り込んで、
 		ELSE
 			PRINT ペニスで애널をほぐして挿入し、
@@ -1138,12 +1138,12 @@ IF CFLAG:286 == 0 || RAND:2 == 0
 			PRINTL 胸でペニスを挟ませ、パイズリさせ始めた。
 			LOCAL = 1
 		ELSE
-			IF EXP:A경험 < 1 && CFLAG:36 <= 30
+			IF EXP:Ａ경험 < 1 && CFLAG:36 <= 30
 				PRINTL 指すら入った事ない애널をハンドクリームを使って
 				PRINTL 何度もほぐしてからペニスを後穴にあてがい、ゆっくり埋めていく。
 				PRINTL 肛門の裂け傷による痛みと共に、性器として認識されてなかったアヌスが男に貫かれた
 				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 悲鳴をＢＧＭにし、男はそのまま
-			ELSEIF EXP:A경험 < 5 || CFLAG:36 <= 40
+			ELSEIF EXP:Ａ경험 < 5 || CFLAG:36 <= 40
 				PRINT ペニスで明らかに남자慣れしていない애널に捻り込んで、
 			ELSE
 				PRINT ペニスで애널をほぐして挿入し、
@@ -1171,7 +1171,7 @@ ELSE
 	ENDIF
 	IF ISMALE()
 		; #region 
-		IF EXP:A경험 < 5 || CFLAG:36 <= 40
+		IF EXP:Ａ경험 < 5 || CFLAG:36 <= 40
 			PRINTL ペニスでまだ犯され慣れてない애널に捻り込んで、
 			PRINTFORML 悲鳴を上げる%PRINT_TRANSCALLNAME(TARGET)%의 声をＢＧＭに乱暴にピストンし始めた。
 		ELSE
@@ -1209,7 +1209,7 @@ IF TALENT:보추 > 0
 			PRINTFORML 誰とも知らない男性に尻穴を奪われたという事実に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%興奮して
 			PRINTFORML すぐに快楽を感じ始めてしまった。
 		ENDIF
-	ELSEIF ABL:A감각 < 2
+	ELSEIF ABL:Ａ감각 < 2
 		PRINTFORML 乱暴に애널を割り広げられる痛みに抵抗する기력を完全に奪われ、
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自分の身に起きた出来事を現実だと受け止めることすらできずに
 		PRINTFORML 誰とも知らない男に腸管の純潔を押し開かれていく。

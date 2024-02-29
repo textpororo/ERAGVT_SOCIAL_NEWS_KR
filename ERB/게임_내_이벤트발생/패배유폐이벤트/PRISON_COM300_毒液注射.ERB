@@ -9,10 +9,10 @@ VARSET LOCAL
 TFLAG:10 = 300
 
 ;取得する珠
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활 윤활は未使用
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -32,8 +32,8 @@ TFLAG:10 = 300
 ;LOCAL:132 고통쾌락경험,
 ;LOCAL:140 자위경험,
 ;LOCAL:150 이상경험
-;LOCAL:151 V확장경험
-;LOCAL:152 A확장경험
+;LOCAL:151 Ｖ확장경험
+;LOCAL:152 Ａ확장경험
 ;LOCAL:153 사정경험
 ;LOCAL:154 모유경험
 ;LOCAL:155 방뇨경험
@@ -48,15 +48,15 @@ SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
 ;快C
-IF ABL:C감각 == 0
+IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 500
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:0 = 700
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:0 = 900
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:0 = 1100
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:0 = 1300
 ELSE
 	LOCAL:0 = 1500
@@ -64,22 +64,22 @@ ENDIF
 
 ;快V
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 500
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 5
 		LOCAL:1 = 700
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 8
 		LOCAL:1 = 900
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 11
 		LOCAL:1 = 1100
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 15
 		LOCAL:1 = 1300
-	ELSEIF ABL:V감각 >= 5
+	ELSEIF ABL:Ｖ감각 >= 5
 		LOCAL:120 = 20
 		LOCAL:1 = 1500
 	ENDIF
@@ -87,40 +87,40 @@ ENDIF
 
 ;快A
 ;A経験がないならAには入れない
-IF EXP:A경험 > 0
-	IF ABL:A감각 == 0
+IF EXP:Ａ경험 > 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:121 = 2
 		LOCAL:2 = 500
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:121 = 5
 		LOCAL:2 = 700
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:121 = 8
 		LOCAL:2 = 900
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:121 = 11
 		LOCAL:2 = 1100
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:121 = 15
 		LOCAL:2 = 1300
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:121 = 20
 		LOCAL:2 = 1500
 	ENDIF
 ENDIF
 
 ;快B
-IF ABL:B감각 == 0
+IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 500
-ELSEIF ABL:B감각 == 1
+ELSEIF ABL:Ｂ감각 == 1
 	LOCAL:3 = 700
-ELSEIF ABL:B감각 == 2
+ELSEIF ABL:Ｂ감각 == 2
 	LOCAL:3 = 900
-ELSEIF ABL:B감각 == 3
+ELSEIF ABL:Ｂ감각 == 3
 	LOCAL:3 = 1100
-ELSEIF ABL:B감각 == 4
+ELSEIF ABL:Ｂ감각 == 4
 	LOCAL:3 = 1300
-ELSEIF ABL:B감각 >= 5
+ELSEIF ABL:Ｂ감각 >= 5
 	LOCAL:3 = 1500
 ENDIF
 
@@ -177,29 +177,29 @@ PRINTL
 
 ;注射による음란系素質の取得
 ;음핵
-;C감각が5
-IF TALENT:음핵 == 0 && ABL:C감각 >= 5
+;Ｃ감각が5
+IF TALENT:음핵 == 0 && ABL:Ｃ감각 >= 5
 	TALENT:음핵 = 1
 	;지문: 음핵
 	CALL MESSAGE_GETTALENT_INKAKU
 ENDIF
 ;음호
-;V감각が5、V経験が200以上
-IF TALENT:음호 == 0 && ABL:V감각 >= 5 && EXP:V경험 >= 200
+;Ｖ감각が5、V経験が200以上
+IF TALENT:음호 == 0 && ABL:Ｖ감각 >= 5 && EXP:Ｖ경험 >= 200
 	TALENT:음호 = 1
 	;지문: 음호
 	CALL MESSAGE_GETTALENT_INTUBO
 ENDIF
 ;음고
-;A감각が5、A経験が200以上
-IF TALENT:음고 == 0 && ABL:A감각 >= 5 && EXP:A경험 >= 200
+;Ａ감각が5、A経験が200以上
+IF TALENT:음고 == 0 && ABL:Ａ감각 >= 5 && EXP:Ａ경험 >= 200
 	TALENT:음고 = 1
 	;지문: 음고
 	CALL MESSAGE_GETTALENT_INJIRI
 ENDIF
 ;음유
-;B감각が5
-IF TALENT:음유 == 0 && ABL:B감각 >= 5
+;Ｂ감각が5
+IF TALENT:음유 == 0 && ABL:Ｂ감각 >= 5
 	TALENT:음유 = 1
 	;지문: 음유
 	CALL MESSAGE_GETTALENT_INNYUU

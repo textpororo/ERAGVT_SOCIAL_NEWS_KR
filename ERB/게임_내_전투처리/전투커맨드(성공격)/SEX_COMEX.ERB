@@ -1,8 +1,8 @@
 ﻿;追加責め関連
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -226,7 +226,7 @@ FOR LCOUNT, 0, 감각수
 				ELSEIF ABL:LCOUNT >= 5
 					L_VAR:LCOUNT = 10000
 				ENDIF
-			;컨피그オンで쾌A増加
+			;컨피그オンで쾌Ａ増加
 			ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
 				IF ABL:LCOUNT == 0
 					L_VAR:LCOUNT = 400
@@ -265,18 +265,18 @@ IF AT_PART:1 == 1
 	SIF TCVARn:2 == 자세：Ｖ방어
 		L_VAR:1 /= 4
 
-;V경험+1
+;Ｖ경험+1
 	SIF SHIEDED:1 == 0
-		EXP:V경험 += 1
+		EXP:Ｖ경험 += 1
 
 ;처녀だと공포が少し入る
 	CAL_VAR:0 = 0
 	IF TALENT:처녀 > 0
-		IF ABL:V감각 == 0
+		IF ABL:Ｖ감각 == 0
 			CAL_VAR:0 = 200
-		ELSEIF ABL:V감각 == 1
+		ELSEIF ABL:Ｖ감각 == 1
 			CAL_VAR:0 = 100
-		ELSEIF ABL:V감각 == 2
+		ELSEIF ABL:Ｖ감각 == 2
 			CAL_VAR:0 = 20
 		ENDIF
 	ENDIF
@@ -288,13 +288,13 @@ ENDIF
 
 ;Ａ
 IF AT_PART:2 == 1
-;A경험+1
+;Ａ경험+1
 	SIF SHIEDED:2 == 0
-		EXP:A경험 += 1
+		EXP:Ａ경험 += 1
 
 ;감각と윤활が低いと고통が入る
 	CAL_VAR:0 = 0
-	IF ABL:A감각 < 3
+	IF ABL:Ａ감각 < 3
 		IF PALAM:윤활 < 100
 			CAL_VAR:0 += 1000
 		ELSEIF PALAM:윤활 < 10000
@@ -315,11 +315,11 @@ IF AT_PART:2 == 1
 
 ;감각が低いと공포が入る
 	CAL_VAR:0 = 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		CAL_VAR:0 += 1000
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		CAL_VAR:0 += 500
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		CAL_VAR:0 += 200
 	ELSE
 	ENDIF

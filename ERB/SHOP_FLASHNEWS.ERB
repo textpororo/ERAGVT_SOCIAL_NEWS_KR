@@ -890,13 +890,13 @@ FOR LOCAL,0,CHARANUM
 			SIF mode!="변신 후"
 				CALL ADDRANDCHOOSE,LOCAL*10
 			;변신 시 TS를 하지 않는다면 변신 후 모습도 대상
-			IF mode!="변신 전" && TALENT:LOCAL:변신시TS == 0
+			IF mode!="변신 전" && TALENT:LOCAL:변신시ＴＳ == 0
 				CALL ADDRANDCHOOSE,LOCAL*10+1
 			ENDIF
 		;남성이다
 		ELSE
 			;변신 시 TS를 한다면 변신 후 모습이 대상
-			IF mode!="변신 전" && TALENT:LOCAL:변신시TS == 1
+			IF mode!="변신 전" && TALENT:LOCAL:변신시ＴＳ == 1
 				CALL ADDRANDCHOOSE,LOCAL*10+1
 			ENDIF
 		ENDIF

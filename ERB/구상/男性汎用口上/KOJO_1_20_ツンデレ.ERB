@@ -206,7 +206,7 @@ ELSEIF ABL:노출벽 >= 3
 		PRINTFORMDL  공포と期待に崩折れそうな足を奮い立たせ、%타겟은% 更に足を早めた。
 	ENDIF
 ;胸が開発済みの場合
-ELSEIF ABL:B감각 >=4
+ELSEIF ABL:Ｂ감각 >=4
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「くぅ……ぁん」
@@ -420,7 +420,7 @@ CFLAG:270 = 4
 ;自衛訓練
 ;--------------------------------------------------
 @KOJO_1_TRAINING_JIEI_20
-IF ABL:B감각 >=4
+IF ABL:Ｂ감각 >=4
 	SELECTCASE RAND:3
 		CASE 0
 			PRINTFORML 「くぅ……ぁん」
@@ -487,7 +487,7 @@ ELSE
 ENDIF
 
 ;胸が開発済みの場合
-IF ABL:B감각 >=4
+IF ABL:Ｂ감각 >=4
 	SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML 「くぅ……ぁん」
@@ -718,7 +718,7 @@ CFLAG:270 = 10
 ;走り込み
 IF CFLAG:270 == 1
 	;감각の最大値で決める
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……動…くなぁ…ぁあ！」
 ;;		PRINTFORMDL %타겟은% 与えられる刺激に脚をもつれさせた。
@@ -735,7 +735,7 @@ IF CFLAG:270 == 1
 	ENDIF
 ;精神鍛錬（通常）
 ELSEIF CFLAG:270 == 2
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……っぁあ！」
 ;;		PRINTFORMDL しかし、%ITEMNAME:400%の刺激に指先が震え、崩してしまった。
@@ -750,7 +750,7 @@ ELSEIF CFLAG:270 == 2
 	ENDIF
 ;精神鍛錬（刻印）
 ELSEIF CFLAG:270 == 20
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ひっ！」
 ;;		PRINTFORMDL %CALLNAME%の努力を嘲笑うかのように%ITEMNAME:400%が蠢き、膝が震え始めた。
@@ -765,7 +765,7 @@ ELSEIF CFLAG:270 == 20
 	ENDIF
 ;瞑想
 ELSEIF CFLAG:270 == 3
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……心…頭、滅却、…っんん」
 ;;		PRINTFORMDL %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 瞑想を続けた。
@@ -780,7 +780,7 @@ ELSEIF CFLAG:270 == 3
 	ENDIF
 ;筋トレ
 ELSEIF CFLAG:270 == 4
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ッ!？」
 ;;		PRINTFORMDL %ITEMNAME:400%に全身を愛撫されながら、%타겟은% 鍛錬を続けたが
@@ -796,7 +796,7 @@ ELSEIF CFLAG:270 == 4
 	ENDIF
 ;自衛訓練
 ELSEIF CFLAG:270 == 5
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ッ!？…グゥ！」
 ;;		PRINTFORMDL %타겟은% 断続的な刺激に気を取られ、防ぎきることができなかった。
@@ -813,7 +813,7 @@ ELSEIF CFLAG:270 == 5
 ;ダッシュ
 ELSEIF CFLAG:270 == 6
 	;감각の最大値で決める
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……動…くなぁ…ぁあ！」
 ;;		PRINTFORMDL %타겟은% 与えられる刺激に脚をもつれさせた
@@ -830,7 +830,7 @@ ELSEIF CFLAG:270 == 6
 	ENDIF
 ;근거리戦闘
 ELSEIF CFLAG:270 == 7
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ッ!？」
 ;;		PRINTFORMDL %타겟은% 股座からこみあげる刺激に気を取られ、振るった木剣はむなしく空を切った。
@@ -847,7 +847,7 @@ ELSEIF CFLAG:270 == 7
 	ENDIF
 ;중거리戦闘
 ELSEIF CFLAG:270 == 8
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ッ!？」
 ;;		PRINTFORMDL %타겟은% 股座からこみあげる刺激に気を取られ、투척たボールはむなしく空を切った。
@@ -864,7 +864,7 @@ ELSEIF CFLAG:270 == 8
 	ENDIF
 ;원거리戦闘
 ELSEIF CFLAG:270 == 9
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……ッ!？」
 ;;		PRINTFORMDL %타겟은% 股座からこみあげる刺激に気を取られ、放った弾丸はむなしく空を切った。
@@ -880,7 +880,7 @@ ELSEIF CFLAG:270 == 9
 ;;		PRINTFORMDW その下に添えられた、ライフルに性器をこすり付けながら……
 	ENDIF
 	ELSEIF CFLAG:270 == 10
-	MAX ABL:B감각,ABL:V감각,ABL:C감각,ABL:A감각
+	MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
 	IF RESULT < 3
 ;;		PRINTFORML 「……っぁあ！」
 ;;		PRINTFORMDL しかし、%ITEMNAME:400%の刺激に指先が震え、資料の乱してしまった。
@@ -1030,20 +1030,20 @@ ELSEIF ABL:욕망 == 5 || ABL:노출벽 == 5 || ABL:마조끼 == 5
 			LOCAL = 0
 		ENDIF
 	WEND
-ELSEIF ABL:V감각 >= 5 || ABL:A감각 >= 5 || ABL:B감각 >= 5 || ABL:C감각 >= 5
+ELSEIF ABL:Ｖ감각 >= 5 || ABL:Ａ감각 >= 5 || ABL:Ｂ감각 >= 5 || ABL:Ｃ감각 >= 5
 	PRINTFORML 「はぁ、はぁ、……」
 	WHILE LOCAL
 		RESULT = RAND:4
-		IF RESULT == 0 && ABL:B감각 >= 5 
+		IF RESULT == 0 && ABL:Ｂ감각 >= 5 
 			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の\@ISMALE() ? 乳首 # 가슴 \@は、早くも熱く蕩けている……
 			LOCAL = 0
-		ELSEIF RESULT == 1 && ABL:C감각 >= 5
+		ELSEIF RESULT == 1 && ABL:Ｃ감각 >= 5
 			PRINTFORMDL 開発され尽くした%CALLNAME%の\@ISMALE() ? ペニス # 陰核 \@は、歩くだけで痺れる快感を与えている……
 			LOCAL = 0
-		ELSEIF RESULT == 2 && ABL:A감각 >= 5
+		ELSEIF RESULT == 2 && ABL:Ａ감각 >= 5
 			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の菊門は、強く疼いている……
 			LOCAL = 0
-		ELSEIF RESULT == 3 && ABL:V감각 >= 5
+		ELSEIF RESULT == 3 && ABL:Ｖ감각 >= 5
 			PRINTFORMDL これから戦いに赴くというのに%CALLNAME%の蜜壷はヌルヌルと濡れそぼっている……
 			LOCAL = 0
 		ENDIF
@@ -1076,20 +1076,20 @@ ELSEIF ABL:촉수중독 > 4
 ELSE
 	PRINTFORMDL いつもと変わった様子もなく、ただ%타겟은% 武器を構えた。
 ENDIF
-IF ABL:V감각 >= 5 || ABL:A감각 >= 5 || ABL:B감각 >= 5 || ABL:C감각 >= 5
+IF ABL:Ｖ감각 >= 5 || ABL:Ａ감각 >= 5 || ABL:Ｂ감각 >= 5 || ABL:Ｃ감각 >= 5
 	PRINTFORML 「はぁ、はぁ、……」
 	WHILE LOCAL
 		RESULT = RAND:4
-		IF RESULT == 0 && ABL:B감각 >= 5 
+		IF RESULT == 0 && ABL:Ｂ감각 >= 5 
 			PRINTFORMDL けれど촉수によって開発され尽くした%CALLNAME%の\@ISMALE() ? 乳首 # 가슴 \@は、早くもその先端を屹立させていた……
 			LOCAL = 0
-		ELSEIF RESULT == 1 && ABL:C감각 >= 5
+		ELSEIF RESULT == 1 && ABL:Ｃ감각 >= 5
 			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の\@ISMALE() ? ペニス # 陰核 \@は、堅くそそり立ちそれだけで快楽を発していた……
 			LOCAL = 0
-		ELSEIF RESULT == 2 && ABL:A감각 >= 5
+		ELSEIF RESULT == 2 && ABL:Ａ감각 >= 5
 			PRINTFORMDL 촉수によって開発され尽くした%CALLNAME%の菊門は、開閉を繰り返し、ほじくり返される時を待っていた……
 			LOCAL = 0
-		ELSEIF RESULT == 3 && ABL:V감각 >= 5
+		ELSEIF RESULT == 3 && ABL:Ｖ감각 >= 5
 			PRINTFORMDL 戦いを前にして、%CALLNAME%の蜜壷はヌルヌルと蜜を溢し続けていた……
 			LOCAL = 0
 		ENDIF
@@ -1158,7 +1158,7 @@ ENDIF
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 ;@KOJO_1_BATTLE_CHARA_NANORI_20
 
-;SP변신 시 구호
+;ＳＰ변신 시 구호
 @KOJO_1_BATTLE_CHARA_SP_TRANSFORMCALL_20
 PRINTFORML 「見せてあげる！！」
 
@@ -1199,12 +1199,12 @@ PRINTFORMDW %CALLNAME%の顔は절망に染まっている……
 ;--------------------------------------------------
 @KOJO_1_BATTLE_CHARA_TETTAI_SUCCESS_20
 ;大量絶頂後
-IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+IF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 9
 	PRINTFORML 「ンんっ、あっ、んんっ！！」
 	PRINTFORMDL 数えきれないほどイかされた%CALLNAME%。
 	PRINTFORMDW 腰に力を入れられず這いつくばりながら逃げ出した……
 ;多数絶頂後
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「……ンんっ」
 	PRINTFORMDL 何度もイかされた%CALLNAME%。
 	PRINTFORMDW 動くだけでも全身が快楽に貫かれ、\@ISMALE() ? 腸 # \@愛蜜を垂らしながら逃走した……
@@ -1244,12 +1244,12 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_1_BATTLE_CHARA_TETTAI_FALSE_20
 ;大量絶頂後
-IF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 9
+IF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 9
 	PRINTFORML 「だめ……イってる、イってるからぁ！」
 	PRINTFORMDL 数えきれないほどイかされた%CALLNAME%を逃がすまいと
 	PRINTFORMDW %STR:2500%は、立ち上がれない%CALLNAME%をゆっくりと取り囲んだ……
 ;多数絶頂後
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「……ンんっ、これ、以上、イっ、たら……」
 	PRINTFORMDW 何度もイかされた%CALLNAME%を更なる凌辱の予感に공포を隠せない…… 
 ;체력0
@@ -1286,7 +1286,7 @@ ENDIF
 ;근거리공격
 ;--------------------------------------------------
 @KOJO_1_BATTLE_CHARA_ATTACK_RANGE_SHORT_20
-IF ABL:B감각 >=4
+IF ABL:Ｂ감각 >=4
 	SELECTCASE RAND:2
 		CASE 0
 			PRINTFORML 「ッ!？くぅ…」(乳首が、擦れる…！)
@@ -1673,7 +1673,7 @@ ELSE
 	ENDSELECT
 ENDIF
 
-;V삽입방어
+;Ｖ삽입방어
 ;--------------------------------------------------
 @KOJO_1_BATTLE_CHARA_ANTI_V_20
 PRINTFORML 「中でだけはやだ……それだけは、させないんだからっ」
@@ -2006,13 +2006,13 @@ ELSEIF BASE:체력 == 0
 	PRINTFORML 「…………ぁ」
 	PRINTFORMDL 既に%타겟은% 抵抗する力はない……
 ;五回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「も、もうヤダァアア！」
 	SIF MARK:굴복각인
 		PRINTFORML 「お願い、やだ……もうやめて……」
 	PRINTFORMDL 既に何度もイかされた%타겟은% 、更なる凌辱に怯え震えている……
 ;一回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 0
 	PRINTFORML 「……くっ、ま、また……っ！！」
 	PRINTFORMDL 未だ絶頂の余韻が抜けきらない内に、%타겟은% 再び捕まってしまった……
 ;内心期待してる時
@@ -2036,11 +2036,11 @@ IF TALENT:촉수의포로 > 0 || MARK:쾌락각인 > 1
 	PRINTFORML 「あっ……」
 	PRINTFORMDL 見事%STR:2500%を回避した%CALLNAME%だが、どこか残念そうにも見える……
 ;五回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 4
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 4
 	PRINTFORML 「もう……はぁ……これ以上はぁ……耐えられ……ない……！」
 	PRINTFORMDL 既に何度もイかされている%타겟은% 、%STR:2500%を避けることすら難しくなっている……
 ;一回以上絶頂してる時
-ELSEIF (EX:C절정+EX:V절정+EX:A절정+EX:B절정) > 0
+ELSEIF (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정) > 0
 	PRINTFORML 「だめ、また捕まったら……っ！！」
 	PRINTFORMDL %타겟은% 未だに先ほどの絶頂の余韻が抜けきっていない……
 ;촉수拘束服
@@ -2189,15 +2189,15 @@ IF CFLAG:250 == 0
 	CFLAG:250 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:C민감
-		LOCAL = ABL:C감각 + 2
-	ELSEIF TALENT:C둔감
-		LOCAL = ABL:C감각 - 2
+	IF TALENT:Ｃ민감
+		LOCAL = ABL:Ｃ감각 + 2
+	ELSEIF TALENT:Ｃ둔감
+		LOCAL = ABL:Ｃ감각 - 2
 	ELSE
-		LOCAL = ABL:C감각
+		LOCAL = ABL:Ｃ감각
 	ENDIF
 	;敏感持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2206,7 +2206,7 @@ ELSE
 		ENDSELECT
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2247,19 +2247,19 @@ IF CFLAG:251 == 0
 	CFLAG:251 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:C민감
-		LOCAL = ABL:C감각 + 2
-	ELSEIF TALENT:C둔감
-		LOCAL = ABL:C감각 - 2
+	IF TALENT:Ｃ민감
+		LOCAL = ABL:Ｃ감각 + 2
+	ELSEIF TALENT:Ｃ둔감
+		LOCAL = ABL:Ｃ감각 - 2
 	ELSE
-		LOCAL = ABL:C감각
+		LOCAL = ABL:Ｃ감각
 	ENDIF
 	;敏感持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 ;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2301,19 +2301,19 @@ IF CFLAG:252 == 0
 	CFLAG:252 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:C민감
-		LOCAL = ABL:C감각 + 2
-	ELSEIF TALENT:C둔감
-		LOCAL = ABL:C감각 - 2
+	IF TALENT:Ｃ민감
+		LOCAL = ABL:Ｃ감각 + 2
+	ELSEIF TALENT:Ｃ둔감
+		LOCAL = ABL:Ｃ감각 - 2
 	ELSE
-		LOCAL = ABL:C감각
+		LOCAL = ABL:Ｃ감각
 	ENDIF
 	;敏感持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 ;;		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2355,12 +2355,12 @@ IF CFLAG:253 == 0
 	CFLAG:253 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:V민감
-		LOCAL = ABL:V감각 + 2
-	ELSEIF TALENT:V둔감
-		LOCAL = ABL:V감각 - 2
+	IF TALENT:Ｖ민감
+		LOCAL = ABL:Ｖ감각 + 2
+	ELSEIF TALENT:Ｖ둔감
+		LOCAL = ABL:Ｖ감각 - 2
 	ELSE
-		LOCAL = ABL:V감각
+		LOCAL = ABL:Ｖ감각
 	ENDIF
 	;처녀の時は공포するよね
 	IF TALENT:처녀 > 0
@@ -2371,11 +2371,11 @@ ELSE
 ;;				PRINTFORML 「」
 		ENDSELECT
 	;敏感持ちだけが来れる境地
-	ELSEIF LOCAL > 5 || EX:V절정 > 9
+	ELSEIF LOCAL > 5 || EX:Ｖ절정 > 9
 ;;		PRINTFORML 「」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2417,20 +2417,20 @@ IF CFLAG:254 == 0
 	CFLAG:254 = 3
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:V민감
-		LOCAL = ABL:V감각 + 2
-	ELSEIF TALENT:V둔감
-		LOCAL = ABL:V감각 - 2
+	IF TALENT:Ｖ민감
+		LOCAL = ABL:Ｖ감각 + 2
+	ELSEIF TALENT:Ｖ둔감
+		LOCAL = ABL:Ｖ감각 - 2
 	ELSE
-		LOCAL = ABL:V감각
+		LOCAL = ABL:Ｖ감각
 	ENDIF
 	
 	;敏感持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:V절정 > 9
+	IF  LOCAL > 5 || EX:Ｖ절정 > 9
 ;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2472,20 +2472,20 @@ IF CFLAG:254 == 0
 	CFLAG:254 = 3
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:V민감
-		LOCAL = ABL:V감각 + 2
-	ELSEIF TALENT:V둔감
-		LOCAL = ABL:V감각 - 2
+	IF TALENT:Ｖ민감
+		LOCAL = ABL:Ｖ감각 + 2
+	ELSEIF TALENT:Ｖ둔감
+		LOCAL = ABL:Ｖ감각 - 2
 	ELSE
-		LOCAL = ABL:V감각
+		LOCAL = ABL:Ｖ감각
 	ENDIF
 	
 	;敏感持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:V절정 > 9
+	IF  LOCAL > 5 || EX:Ｖ절정 > 9
 ;;		PRINTFORML 「」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2527,20 +2527,20 @@ IF CFLAG:256 == 0
 	CFLAG:256 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:A민감
-		LOCAL = ABL:A감각 + 2
-	ELSEIF TALENT:A둔감
-		LOCAL = ABL:A감각 - 2
+	IF TALENT:Ａ민감
+		LOCAL = ABL:Ａ감각 + 2
+	ELSEIF TALENT:Ａ둔감
+		LOCAL = ABL:Ａ감각 - 2
 	ELSE
-		LOCAL = ABL:A감각
+		LOCAL = ABL:Ａ감각
 	ENDIF
 	
 	;敏感持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 ;;		PRINTFORML 「」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2582,20 +2582,20 @@ IF CFLAG:257 == 0
 	CFLAG:257 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:A민감
-		LOCAL = ABL:A감각 + 2
-	ELSEIF TALENT:A둔감
-		LOCAL = ABL:A감각 - 2
+	IF TALENT:Ａ민감
+		LOCAL = ABL:Ａ감각 + 2
+	ELSEIF TALENT:Ａ둔감
+		LOCAL = ABL:Ａ감각 - 2
 	ELSE
-		LOCAL = ABL:A감각
+		LOCAL = ABL:Ａ감각
 	ENDIF
 	
 	;敏感持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 ;;		PRINTFORML 「」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2639,16 +2639,16 @@ IF CFLAG:257 < 2
 	CFLAG:257 = 2
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:A민감
-		LOCAL = ABL:A감각 + 2
-	ELSEIF TALENT:A둔감
-		LOCAL = ABL:A감각 - 2
+	IF TALENT:Ａ민감
+		LOCAL = ABL:Ａ감각 + 2
+	ELSEIF TALENT:Ａ둔감
+		LOCAL = ABL:Ａ감각 - 2
 	ELSE
-		LOCAL = ABL:A감각
+		LOCAL = ABL:Ａ감각
 	ENDIF
 	
 	;敏感持ちだけが来れる境地
-	IF  LOCAL > 5 || EX:A절정 > 9
+	IF  LOCAL > 5 || EX:Ａ절정 > 9
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2657,7 +2657,7 @@ ELSE
 		ENDSELECT
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;鈍感持ちだと来れない境地
-	ELSEIF LOCAL > 3 || EX:A절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ａ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2699,14 +2699,14 @@ IF CFLAG:259 == 0
 	CFLAG:259 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:V민감
-		LOCAL = ABL:V감각 + 2
-	ELSEIF TALENT:V둔감
-		LOCAL = ABL:V감각 - 2
+	IF TALENT:Ｖ민감
+		LOCAL = ABL:Ｖ감각 + 2
+	ELSEIF TALENT:Ｖ둔감
+		LOCAL = ABL:Ｖ감각 - 2
 	ELSE
-		LOCAL = ABL:V감각
+		LOCAL = ABL:Ｖ감각
 	ENDIF
-	IF LOCAL > 5 || EX:V절정 > 9
+	IF LOCAL > 5 || EX:Ｖ절정 > 9
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2715,7 +2715,7 @@ ELSE
 		ENDSELECT
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:V절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｖ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2757,19 +2757,19 @@ IF CFLAG:260 == 0
 	CFLAG:260 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:C민감
-		LOCAL = ABL:C감각 + 2
-	ELSEIF TALENT:C둔감
-		LOCAL = ABL:C감각 - 2
+	IF TALENT:Ｃ민감
+		LOCAL = ABL:Ｃ감각 + 2
+	ELSEIF TALENT:Ｃ둔감
+		LOCAL = ABL:Ｃ감각 - 2
 	ELSE
-		LOCAL = ABL:C감각
+		LOCAL = ABL:Ｃ감각
 	ENDIF
 	;敏感持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 ;;		PRINTFORML 「ダメ、弱いから、そこホントに弱いからぁあああ！！」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -2811,19 +2811,19 @@ IF CFLAG:261 == 0
 	CFLAG:261 = 1
 ELSE
 	;敏感、鈍感で多少変化
-	IF TALENT:C민감
-		LOCAL = ABL:C감각 + 2
-	ELSEIF TALENT:C둔감
-		LOCAL = ABL:C감각 - 2
+	IF TALENT:Ｃ민감
+		LOCAL = ABL:Ｃ감각 + 2
+	ELSEIF TALENT:Ｃ둔감
+		LOCAL = ABL:Ｃ감각 - 2
 	ELSE
-		LOCAL = ABL:C감각
+		LOCAL = ABL:Ｃ감각
 	ENDIF
 	;敏感持ちだけが来れる境地
-	IF LOCAL > 5 || EX:C절정 > 9
+	IF LOCAL > 5 || EX:Ｃ절정 > 9
 ;;		PRINTFORML 「噛んじゃ、ダメ！　弱いから、そこホントに弱いからぁあああ！！」
 ;;		PRINTFORMDL %타겟은% 瞬く間に上り詰めていく――
 	;敏感状態
-	ELSEIF LOCAL > 3 || EX:C절정 > 0
+	ELSEIF LOCAL > 3 || EX:Ｃ절정 > 0
 		SELECTCASE RAND:2
 			CASE 0
 ;;				PRINTFORML 「」
@@ -3362,7 +3362,7 @@ SELECTCASE RAND:4
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;C強絶頂
+;C강절정
 ;--------------------------------------------------
 @KOJO_1_SEX_ECSTASY_C_HI_20
 SETCOLOR 243,213,26
@@ -3392,7 +3392,7 @@ SELECTCASE RAND:4
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;V強絶頂
+;V강절정
 ;--------------------------------------------------
 @KOJO_1_SEX_ECSTASY_V_HI_20
 SETCOLOR 243,213,26
@@ -3422,7 +3422,7 @@ SELECTCASE RAND:4
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;A強絶頂
+;A강절정
 ;--------------------------------------------------
 @KOJO_1_SEX_ECSTASY_A_HI_20
 SETCOLOR 243,213,26
@@ -3452,7 +3452,7 @@ SELECTCASE RAND:4
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;B強絶頂
+;B강절정
 ;--------------------------------------------------
 @KOJO_1_SEX_ECSTASY_B_HI_20
 SETCOLOR 243,213,26
@@ -3471,7 +3471,7 @@ RESETCOLOR
 
 ;多重絶頂に関する구상
 
-;四重絶頂
+;사중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CVAB_20
 SETCOLOR 243,213,26
@@ -3493,7 +3493,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CVA三重絶頂
+;CVA삼중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CVA_20
 SETCOLOR 243,213,26
@@ -3515,7 +3515,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CVB三重絶頂
+;CVB삼중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CVB_20
 SETCOLOR 243,213,26
@@ -3537,7 +3537,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CAB三重絶頂
+;CAB삼중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CAB_20
 SETCOLOR 243,213,26
@@ -3559,7 +3559,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;VAB三重絶頂
+;VAB삼중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_VAB_20
 SETCOLOR 243,213,26
@@ -3581,7 +3581,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CV二重絶頂
+;CV이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CV_20
 SETCOLOR 243,213,26
@@ -3603,7 +3603,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CA二重絶頂
+;CA이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CA_20
 SETCOLOR 243,213,26
@@ -3625,7 +3625,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;CB二重絶頂
+;CB이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_CB_20
 SETCOLOR 243,213,26
@@ -3647,7 +3647,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;VA二重絶頂
+;VA이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_VA_20
 SETCOLOR 243,213,26
@@ -3669,7 +3669,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;VB二重絶頂
+;VB이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_VB_20
 SETCOLOR 243,213,26
@@ -3691,7 +3691,7 @@ SELECTCASE RAND:3
 ;;		PRINTFORML 「」
 ENDSELECT
 RESETCOLOR
-;AB二重絶頂
+;AB이중절정
 ;--------------------------------------------------
 @KOJO_1_SEX_MULTIECSTASY_AB_20
 SETCOLOR 243,213,26
@@ -4096,27 +4096,27 @@ RESETCOLOR
 SETCOLOR 243,213,26
 LOCAL = 1
 ;特定部位絶頂が10回以上
-IF EX:C절정 > 9 || EX:V절정 > 9 || EX:A절정 > 9 || EX:B절정 > 9
+IF EX:Ｃ절정 > 9 || EX:Ｖ절정 > 9 || EX:Ａ절정 > 9 || EX:Ｂ절정 > 9
 ;;	PRINTFORML 「」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:C절정 > 9
+	IF RESULT == 0 && EX:Ｃ절정 > 9
 ;;		PRINTFORMDL 数えきれないほど胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:V절정 > 9
+	ELSEIF RESULT == 1 && EX:Ｖ절정 > 9
 ;;		PRINTFORMDL  数えきれないほどイかされ、敏感になった%CALLNAME%の陰核は
 ;;		PRINTFORMDL 今再び、意思なき微風にすらイかされようとしている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 9
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 9
 ;;		PRINTFORMDL  数えきれないほどイかされ、%CALLNAME%の菊門はぽっかりと口をあけている……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:B절정 > 9
+	ELSEIF RESULT == 3 && EX:Ｂ절정 > 9
 ;;		PRINTFORMDL 数えきれないほどイかされた%CALLNAME%の蜜壷は、ドロドロに蕩けている……
 		LOCAL = 0
 	ENDIF
 	WEND
 ;絶頂回数10回以上
-ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 9
+ELSEIF (EX:Ｃ절정 + EX:Ｖ절정 + EX:Ａ절정 + EX:Ｂ절정) > 9
 ;;	PRINTFORML 「」
 ;;	PRINTFORMDL 数えきれないほどイかされた%타겟은% 、地面に倒れ伏せ、ビクビクと痙攣している。
 ELSEIF PALAM:치정 > 100000
@@ -4128,26 +4128,26 @@ ELSEIF PALAM:치정 > 100000
 ;;		PRINTFORMDL 全てを曝け出してしまった%타겟은% 蒼白になって절망している……
 	ENDIF
 ;特定部位絶頂が3回以上
-ELSEIF EX:C절정 > 2 || EX:V절정 > 2 || EX:A절정 > 2 || EX:B절정 > 2
+ELSEIF EX:Ｃ절정 > 2 || EX:Ｖ절정 > 2 || EX:Ａ절정 > 2 || EX:Ｂ절정 > 2
 ;;	PRINTFORML 「」
 	WHILE LOCAL
 	RESULT = RAND:4
-	IF RESULT == 0 && EX:C절정 > 2
+	IF RESULT == 0 && EX:Ｃ절정 > 2
 ;;		PRINTFORMDL  何度もイかされ、%타겟은% 歩くことも出来なさそうだ……
 		LOCAL = 0
-	ELSEIF RESULT == 1 && EX:V절정 > 2
+	ELSEIF RESULT == 1 && EX:Ｖ절정 > 2
 ;;		PRINTFORMDL  何度もイかされた%CALLNAME%の蜜壷は、ドロドロにふやけている……
 		LOCAL = 0
-	ELSEIF RESULT == 2 && EX:A절정 > 2
+	ELSEIF RESULT == 2 && EX:Ａ절정 > 2
 ;;		PRINTFORMDL  何度もイかされ、%CALLNAME%の菊門は ヒクヒクと痙攣している……
 		LOCAL = 0
-	ELSEIF RESULT == 3 && EX:B절정 > 2
+	ELSEIF RESULT == 3 && EX:Ｂ절정 > 2
 ;;		PRINTFORMDL  何度も胸でイかされた%타겟은% 、蕩けきった顔をしながら呟いた
 		LOCAL = 0
 	ENDIF
 	WEND
 ;絶頂回数5回以上
-ELSEIF (EX:C절정 + EX:V절정 + EX:A절정 + EX:B절정) > 4
+ELSEIF (EX:Ｃ절정 + EX:Ｖ절정 + EX:Ａ절정 + EX:Ｂ절정) > 4
 ;恥ずかしいこと
 ELSEIF PALAM:치정 > 10000
 	IF ABL:노출벽 > 1
@@ -4430,27 +4430,27 @@ RESETCOLOR
 @KOJO_1_BATTLE_DISACTION_TORIKO_20
 SETCOLOR 243,213,26
 RESETCOLOR
-;快楽で体が竦む
+;쾌락으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_1_BATTLE_DISACTION_KAIRAKU_20
 SETCOLOR 243,213,26
 RESETCOLOR
-;고통で体が竦む
+;고통으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_1_BATTLE_DISACTION_KUTUU_20
 SETCOLOR 243,213,26
 RESETCOLOR
-;屈辱で体が竦む
+;굴욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_1_BATTLE_DISACTION_KUTUZYOKU_20
 SETCOLOR 243,213,26
 RESETCOLOR
-;공포で体が竦む
+;공포로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_1_BATTLE_DISACTION_KYOUHU_20
 SETCOLOR 243,213,26
 RESETCOLOR
-;恥辱で体が竦む
+;치욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_1_BATTLE_DISACTION_TIZYOKU_20
 SETCOLOR 243,213,26

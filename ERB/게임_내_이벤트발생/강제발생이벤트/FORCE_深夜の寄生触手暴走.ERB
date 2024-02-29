@@ -109,15 +109,15 @@ ENDIF
 #DIM CCOUNT
 VARSET LOCAL
 ;快C
-IF ABL:C감각 == 0
+IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 100
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:0 = 200
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:0 = 500
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:0 = 1000
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:0 = 2000
 ELSE
 	LOCAL:0 = 5000
@@ -126,19 +126,19 @@ ENDIF
 ;快V
 ;남자を除外
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 100
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 5
 		LOCAL:1 = 200
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 8
 		LOCAL:1 = 500
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 11
 		LOCAL:1 = 1000
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 15
 		LOCAL:1 = 2000
 	ELSE
@@ -148,20 +148,20 @@ IF ISFEMALE()
 ELSE
 ENDIF
 
-;쾌A
-IF ABL:A감각 == 0
+;쾌Ａ
+IF ABL:Ａ감각 == 0
 	LOCAL:121 = 2
 	LOCAL:2 = 100
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:121 = 5
 	LOCAL:2 = 200
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:121 = 8
 	LOCAL:2 = 500
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:121 = 11
 	LOCAL:2 = 1000
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:121 = 15
 	LOCAL:2 = 2000
 ELSE
@@ -170,15 +170,15 @@ ELSE
 ENDIF
 
 ;快B
-IF ABL:B감각 == 0
+IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 100
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:3 = 200
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:3 = 500
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:3 = 1000
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:3 = 2000
 ELSE
 	LOCAL:3 = 5000
@@ -202,27 +202,27 @@ ENDIF
 ;굴복　とりあえず一定で
 LOCAL:8 = 500
 
-;V감각が低いと공포が入る
-;남자の場合はA감각で
+;Ｖ감각が低いと공포が入る
+;남자の場合はＡ감각で
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:11 = 400
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:11 = 200
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:11 = 100
 	ELSE
 	ENDIF
 ELSE
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:11 = 800
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:11 = 400
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:11 = 200
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:11 = 100
 	ELSE
 	ENDIF
@@ -958,15 +958,15 @@ PRINTFORML [999]夜這いは行わない
 VARSET LOCAL
 
 ;快C
-IF ABL:C감각 == 0
+IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 100
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:0 = 200
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:0 = 500
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:0 = 1000
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:0 = 2000
 ELSE
 	LOCAL:0 = 5000
@@ -975,19 +975,19 @@ ENDIF
 ;快V
 ;남자を除外
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 100
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:120 = 5
 		LOCAL:1 = 200
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:120 = 8
 		LOCAL:1 = 500
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:120 = 11
 		LOCAL:1 = 1000
-	ELSEIF ABL:V감각 == 4
+	ELSEIF ABL:Ｖ감각 == 4
 		LOCAL:120 = 15
 		LOCAL:1 = 2000
 	ELSE
@@ -997,20 +997,20 @@ IF ISFEMALE()
 ELSE
 ENDIF
 
-;쾌A
-IF ABL:A감각 == 0
+;쾌Ａ
+IF ABL:Ａ감각 == 0
 	LOCAL:121 = 2
 	LOCAL:2 = 100
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:121 = 5
 	LOCAL:2 = 200
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:121 = 8
 	LOCAL:2 = 500
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:121 = 11
 	LOCAL:2 = 1000
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:121 = 15
 	LOCAL:2 = 2000
 ELSE
@@ -1019,15 +1019,15 @@ ELSE
 ENDIF
 
 ;快B
-IF ABL:B감각 == 0
+IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 100
-ELSEIF ABL:C감각 == 1
+ELSEIF ABL:Ｃ감각 == 1
 	LOCAL:3 = 200
-ELSEIF ABL:C감각 == 2
+ELSEIF ABL:Ｃ감각 == 2
 	LOCAL:3 = 500
-ELSEIF ABL:C감각 == 3
+ELSEIF ABL:Ｃ감각 == 3
 	LOCAL:3 = 1000
-ELSEIF ABL:C감각 == 4
+ELSEIF ABL:Ｃ감각 == 4
 	LOCAL:3 = 2000
 ELSE
 	LOCAL:3 = 5000
@@ -1046,27 +1046,27 @@ ENDIF
 ;굴복　とりあえず一定で
 LOCAL:8 = 500
 
-;V감각が低いと공포が入る
-;남자の場合はA감각で
+;Ｖ감각が低いと공포が入る
+;남자の場合はＡ감각で
 IF ISFEMALE()
-	IF ABL:V감각 == 0
+	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800
-	ELSEIF ABL:V감각 == 1
+	ELSEIF ABL:Ｖ감각 == 1
 		LOCAL:11 = 400
-	ELSEIF ABL:V감각 == 2
+	ELSEIF ABL:Ｖ감각 == 2
 		LOCAL:11 = 200
-	ELSEIF ABL:V감각 == 3
+	ELSEIF ABL:Ｖ감각 == 3
 		LOCAL:11 = 100
 	ELSE
 	ENDIF
 ELSE
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:11 = 800
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:11 = 400
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:11 = 200
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:11 = 100
 	ELSE
 	ENDIF

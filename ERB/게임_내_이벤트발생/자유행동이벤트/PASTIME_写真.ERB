@@ -37,7 +37,7 @@ LOCALS'=""
 ;②「変身後の姿が女性＆現在未変身」
 ;（変身後の姿が보추＆現在未変身を追加）
 ;なら専用分岐
-IF CFLAG:284 && ((TALENT:변신능력 == 1 && TALENT:변신시TS == 0 && ISFEMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시TS == 1 && ISMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시보추 == 1 && CFLAG:1 == 0))
+IF CFLAG:284 && ((TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 0 && ISFEMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 1 && ISMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시보추 == 1 && CFLAG:1 == 0))
 	LOCALS'="촉수凌辱流出"
 	被害者名=%CSTR:1%
 	;変身後の凌辱動画が流出

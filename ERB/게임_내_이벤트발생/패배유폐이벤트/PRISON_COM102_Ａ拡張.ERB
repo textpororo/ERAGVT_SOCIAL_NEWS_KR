@@ -9,10 +9,10 @@ VARSET LOCAL
 TFLAG:10 = 102
 
 ;取得する珠
-;LOCAL:0 쾌C
-;LOCAL:1 쾌V
-;LOCAL:2 쾌A
-;LOCAL:3 쾌B
+;LOCAL:0 쾌Ｃ
+;LOCAL:1 쾌Ｖ
+;LOCAL:2 쾌Ａ
+;LOCAL:3 쾌Ｂ
 ;LOCAL:4 윤활 윤활は未使用
 ;LOCAL:5 공순
 ;LOCAL:6 습득
@@ -32,8 +32,8 @@ TFLAG:10 = 102
 ;LOCAL:132 고통쾌락경험,
 ;LOCAL:140 자위경험,
 ;LOCAL:150 이상경험
-;LOCAL:151 V확장경험
-;LOCAL:152 A확장경험
+;LOCAL:151 Ｖ확장경험
+;LOCAL:152 Ａ확장경험
 ;LOCAL:153 사정경험
 ;LOCAL:154 모유경험
 ;LOCAL:155 방뇨경험
@@ -48,37 +48,37 @@ SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
 ;快A
-IF ABL:A감각 == 0
+IF ABL:Ａ감각 == 0
 	LOCAL:121 = 5
 	LOCAL:152 = 1
 	LOCAL:2 = 100
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:121 = 8
 	LOCAL:152 = 1
 	LOCAL:2 = 150
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:121 = 11
 	LOCAL:152 = 2
 	LOCAL:2 = 200
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:121 = 15
 	LOCAL:152 = 2
 	LOCAL:2 = 600
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:121 = 20
 	LOCAL:152 = 4
 	LOCAL:2 = 1000
-ELSEIF ABL:A감각 >= 5
+ELSEIF ABL:Ａ감각 >= 5
 	LOCAL:121 = 30
 	LOCAL:152 = 8
 	LOCAL:2 = 1500
 ENDIF
 ;拡張経験が少ない場合は快Aが入りにくい
-IF EXP:A확장경험 < 3
+IF EXP:Ａ확장경험 < 3
 	TIMES LOCAL:2, 0.10
-ELSEIF EXP:A확장경험 < 5
+ELSEIF EXP:Ａ확장경험 < 5
 	TIMES LOCAL:2, 0.50
-ELSEIF EXP:A확장경험 < 8
+ELSEIF EXP:Ａ확장경험 < 8
 	TIMES LOCAL:2, 0.80
 ELSE
 ENDIF
@@ -90,11 +90,11 @@ CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 ;굴복
 ;拡張経験に応じて
-IF EXP:A확장경험 < 3
+IF EXP:Ａ확장경험 < 3
 	LOCAL:8 = 500
-ELSEIF EXP:A확장경험 < 5
+ELSEIF EXP:Ａ확장경험 < 5
 	LOCAL:8 = 1000
-ELSEIF EXP:A확장경험 < 8
+ELSEIF EXP:Ａ확장경험 < 8
 	LOCAL:8 = 2000
 ELSE
 	LOCAL:8 = 5000
@@ -102,11 +102,11 @@ ENDIF
 
 ;치정
 ;拡張経験が高いと치정が入る
-IF EXP:A확장경험 < 3
+IF EXP:Ａ확장경험 < 3
 	LOCAL:8 = 500
-ELSEIF EXP:A확장경험 < 5
+ELSEIF EXP:Ａ확장경험 < 5
 	LOCAL:9 = 1000
-ELSEIF EXP:A확장경험 < 8
+ELSEIF EXP:Ａ확장경험 < 8
 	LOCAL:9 = 2000
 ELSE
 	LOCAL:9 = 5000
@@ -114,11 +114,11 @@ ENDIF
 
 ;고통
 ;拡張経験が低いと入る
-IF EXP:A확장경험 < 3
+IF EXP:Ａ확장경험 < 3
 	LOCAL:10 = 1000
-ELSEIF EXP:A확장경험 < 5
+ELSEIF EXP:Ａ확장경험 < 5
 	LOCAL:10 = 800
-ELSEIF EXP:A확장경험 < 8
+ELSEIF EXP:Ａ확장경험 < 8
 	LOCAL:10 = 400
 ELSE
 	LOCAL:10 = 100
@@ -126,11 +126,11 @@ ENDIF
 
 ;공포
 ;拡張経験が低いと入る
-IF EXP:A확장경험 < 3
+IF EXP:Ａ확장경험 < 3
 	LOCAL:11 = 1000
-ELSEIF EXP:A확장경험 < 5
+ELSEIF EXP:Ａ확장경험 < 5
 	LOCAL:11 = 800
-ELSEIF EXP:A확장경험 < 8
+ELSEIF EXP:Ａ확장경험 < 8
 	LOCAL:11 = 400
 ELSE
 	LOCAL:11 = 100

@@ -1,13 +1,13 @@
 ﻿;--------------------------------------------------
 ;보스 촉수・최종 보스 촉수 섬멸 상황 확인
-;ローカル変数LOCAL:0はチェック用
-;LOCAL:1は生き残っている촉수 총 마릿수が入る
+;지역 변수 LOCAL:0은 체크용
+;LOCAL:1은 살아 남아 있는 촉수의 총 마릿수가 들어간다
 @TENTACLE_SURVIVE, ARGS
 LOCAL:0 = 1
 LOCAL:1 = 0
 LOCAL:2 = 0
 LOCAL:3 = 0
-;보스残存or雑魚戦
+;보스 잔존or잡몹전
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	FOR LOCAL:2, 0, FLAG:3
 		CALL TENTACLE_SURVIVE_CHECK, LOCAL:0
@@ -22,12 +22,12 @@ IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 		LOCAL:0 *= 2
 	NEXT
 
-	;返す値の選定
+	;반환할 값 선정
 	SELECTCASE ARGS
 		CASE "NUM"
 			RETURN LOCAL:1
 	ENDSELECT
-;최종 보스のみ
+;최종 보스만
 ELSE
 	FOR LOCAL:2, 0, FLAG:4
 		CALL TENTACLE_SURVIVE_CHECK, LOCAL:0
@@ -42,7 +42,7 @@ ELSE
 		LOCAL:0 *= 2
 	NEXT
 
-	;返す値の選定
+	;반환할 값 선정
 	SELECTCASE ARGS
 		CASE "NUM"
 			RETURN LOCAL:1
@@ -50,10 +50,10 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;ビット値を투척て生きている보스 촉수・최종 보스 촉수の番号を返す
-;BOSSx.ERBの番号を返す
+;비트값을 던져 살아 있는 보스 촉수・최종 보스 촉수의 번호를 반환한다
+;BOSSx.ERB의 번호를 반환한다
 @TENTACLE_SURVIVE_CHECK, ARG
-;보스残存or雑魚戦
+;보스 잔존or잡몹전
 IF FLAG:100 > 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	IF FLAG:100 & ARG
 		;Ｃ촉수
@@ -77,56 +77,56 @@ IF FLAG:100 > 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 		;H촉수
 		ELSEIF ARG == 64
 			RETURN 7
-		;０か負の値
+		;０이거나 음수
 		ELSEIF ARG <= 0
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
-			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしている보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
-			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+			PRINTL @TENTACLE_SURVIVE_CHECK 에서
+			PRINTFORML 참조하려고 하는 보스 ID가 ０이거나 음수(ARG = {ARG})로 되어 있습니다.
+			PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 			PRINTW 
 		ELSE
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
-			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしている보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
-			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+			PRINTL @TENTACLE_SURVIVE_CHECK 에서
+			PRINTFORML 참조하려고 하는 보스 ID가 범위 외의 값(ARG = {ARG})으로 되어 있습니다.
+			PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 			PRINTW 
 		ENDIF
 	ENDIF
-;生存보스＝최종 보스のみ
+;생존 보스＝최종 보스만
 ELSE
 	IF FLAG:101 & ARG
 		;K촉수
 		IF ARG == 1
 			RETURN 1
-		;천사の樹
+		;천사의 나무
 		ELSEIF ARG == 2
 			RETURN 2
-		;０か負の値
+		;０이거나 음수
 		ELSEIF ARG <= 0
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
-			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしている최종 보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
-			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+			PRINTL @TENTACLE_SURVIVE_CHECK 에서
+			PRINTFORML 참조하려고 하는 최종 보스 ID가 ０이거나 음수(ARG = {ARG})로 되어 있습니다.
+			PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 			PRINTW 
 		ELSE
 			PRINTL 
 			PRINTL #####     ERROR !!     #####
-			PRINTL @TENTACLE_SURVIVE_CHECKにて
-			PRINTFORML 参照しようとしている최종 보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
-			PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+			PRINTL @TENTACLE_SURVIVE_CHECK 에서
+			PRINTFORML 참조하려고 하는 최종 보스 ID가 범위 외의 값(ARG = {ARG})으로 되어 있습니다.
+			PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 			PRINTW 
 		ENDIF
 	ENDIF
 ENDIF
 
 ;--------------------------------------------------
-;BOSSx.ERBの番号を元に보스 촉수・최종 보스 촉수のビット値を返す
-;上の関数の逆版
+;BOSSx.ERB의 번호를 바탕으로 보스 촉수・최종 보스 촉수의 비트값을 반환한다
+;위 함수의 역판(逆版)
 @TENTACLE_BITVALUE, ARG
-;보스or雑魚
+;보스or잡몹
 IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	;Ｃ촉수
 	IF ARG == 1
@@ -149,20 +149,20 @@ IF ENEMY_TYPE_CHECK_F("BOSS") == 1 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	;H촉수
 	ELSEIF ARG == 7
 		RETURN 64
-	;０か負の値
+	;０이거나 음수
 	ELSEIF ARG <= 0
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
-		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしている보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
-		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+		PRINTL @TENTACLE_BITVALUE 에서
+		PRINTFORML 참조하려고 하는 보스 ID가 ０이거나 음수(ARG = {ARG})로 되어 있습니다.
+		PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 		PRINTW 
 	ELSE
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
-		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしている보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
-		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+		PRINTL @TENTACLE_BITVALUE 에서
+		PRINTFORML 참조하려고 하는 보스 ID가 범위 외의 값(ARG = {ARG})으로 되어 있습니다.
+		PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 		PRINTW 
 	ENDIF
 ;최종 보스
@@ -170,35 +170,35 @@ ELSE
 	;K촉수
 	IF ARG == 1
 		RETURN 1
-	;천사の樹
+	;천사의 나무
 	ELSEIF ARG == 2
 		RETURN 2
-	;０か負の値
+	;０이거나 음수
 	ELSEIF ARG <= 0
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
-		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしている최종 보스IDが０か負の値（ARG = {ARG}）になっています。原因究明のため、
-		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+		PRINTL @TENTACLE_BITVALUE 에서
+		PRINTFORML 참조하려고 하는 최종 보스 ID가 ０이거나 음수(ARG = {ARG})로 되어 있습니다.
+		PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 		PRINTW 
 	ELSE
 		PRINTL 
 		PRINTL #####     ERROR !!     #####
-		PRINTL @TENTACLE_BITVALUEにて
-		PRINTFORML 参照しようとしている최종 보스IDが範囲外（ARG = {ARG}）になっています。原因究明のため、
-		PRINTL 掲示板にできるだけ詳細な発生状況を報告してください
+		PRINTL @TENTACLE_BITVALUE 에서
+		PRINTFORML 참조하려고 하는 최종 보스 ID가 범위 외의 값(ARG = {ARG})으로 되어 있습니다.
+		PRINTL 원인 규명을 위해, 커뮤니티에 가능한 한 상세한 발생 상황을 보고해 주세요.
 		PRINTW 
 	ENDIF
 ENDIF
 
 ;--------------------------------------------------
-;촉수のファイルにアクセス（戦闘用）
-;FLAG:10の値でアクセス先が보스 촉수か최종 보스 촉수か判定する
-;パッチ1 幼体とか雑魚촉수生成用　置換BOSS→%SAVESTR:13%
+;촉수 파일에 접근 (전투용)
+;FLAG:10의 값으로 접근처가 보스 촉수인지 최종 보스 촉수인지 판정한다
+;패치1 유체 또는 잡몹 촉수 생성용　치환 BOSS→%SAVESTR:13%
 @TENTACLE_ACCESS, ARGS
 
-;보스またはザコ
-RESULTS'="【エラー："+SAVESTR:13+"_"+TOSTR(FLAG:11)+"'"+ARGS+"'のTENTACLE_ACCESS関数失敗】"
+;보스or잡몹
+RESULTS'="【ERROR："+SAVESTR:13+"_"+TOSTR(FLAG:11)+"'"+ARGS+"'의 TENTACLE_ACCESS 함수 실패】"
 IF GET_LASTBOSS_PHASE_F() == 0 || ENEMY_TYPE_CHECK_F("MOB") == 1
 	SELECTCASE ARGS
 		CASE "NAME"
@@ -309,8 +309,8 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;촉수のファイルにアクセス（유폐用）
-;CFLAG:20の値でアクセス先が보스 촉수か최종 보스 촉수か判定する
+;촉수 파일에 접근 (유폐용)
+;CFLAG:20의 값으로 접근처가 보스 촉수인지 최종 보스 촉수인지 판정한다
 @TENTACLE_ACCESS_PRISON, ARG, ARGS
 IF CFLAG:ARG:20 == 0
 	SELECTCASE ARGS
@@ -343,8 +343,8 @@ ELSEIF CFLAG:ARG:20 == 1
 ENDIF
 
 ;--------------------------------------------------
-;보스 촉수・최종 보스 촉수の補正
-;式 ((Lv * 10 + 95) * BASE) /100 + BONUS
+;보스 촉수・최종 보스 촉수의 보정
+;계산식 ((Lv * 10 + 95) * BASE) / 100 + BONUS
 @TENTACLE_STATUS_HOSEI, ARG,ARG:1 = 100
 CALL TENTACLE_LEVEL
 LOCAL:0 = RESULT * 10
@@ -352,16 +352,16 @@ LOCAL:2 = ((LOCAL:0 + 95) * ARG) / 100 + ARG:1
 RETURN LOCAL:2
 
 ;--------------------------------------------------
-;보스 촉수・최종 보스 촉수の레벨
+;보스 촉수・최종 보스   촉수의 레벨
 @TENTACLE_LEVEL
-#DIM 撃破数
-#DIM 基礎레벨
-#DIM 日数레벨
+#DIM 격파수
+#DIM 기초레벨
+#DIM 일수레벨
 
-;撃破数
+;격파수
 CALL TENTACLE_SURVIVE, "NUM"
-撃破数 = FLAG:3 - RESULT
-;撃破した촉수の数に応じて基礎레벨上昇
+격파수 = FLAG:3 - RESULT
+;격파한 촉수의 수에 따라 기초 레벨 상승
 LOCAL = 3
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL += 2
@@ -376,21 +376,21 @@ SIF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 SIF LOCAL < -4
 	LOCAL = -4
 
-基礎레벨 = 撃破数 * LOCAL + 4
-;ザコ敵なら3/4
+기초레벨 = 격파수 * LOCAL + 4
+;잡몹적은 3/4
 SIF ENEMY_TYPE_CHECK_F("MOB") == 1
-	基礎레벨 = 基礎레벨 * 3 / 4
+	기초레벨 = 기초레벨 * 3 / 4
 
-;日数経過による레벨アップ
-;(経過日数/一体あたり制限時間)*1.5　が上昇基準値
+;일수 경과에 따른 레벨 업
+;상승 기준은 (경과 일수/한 마리당 제한 시간)*1.5
 LOCAL = 150
-;※エンドレスは普通より緩やかな上昇
+;※ENDLESS는 보통보다 완만한 상승
 SIF GAME_OPTION_CHECK_F(OPTION_endless)
 	LOCAL = LOCAL/3
-;※ハードコアは普通より急な上昇
+;※HARDCORE는 보통보다 급격한 상승
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL = LOCAL*4/3
-;インスタントも緩やか
+;INSTANT도 완만하다
 SIF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 	LOCAL = LOCAL*2/3
 SIF GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
@@ -399,17 +399,17 @@ SIF GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
 SIF LOCAL < 0
 	LOCAL = 0
 
-日数레벨 = LOCAL * DAY / FLAG:2 / 100
+일수레벨 = LOCAL * DAY / FLAG:2 / 100
 
-;計算結果
-LOCAL = 基礎레벨 + 日数레벨
+;계산 결과
+LOCAL = 기초레벨 + 일수레벨
 RETURN LOCAL
 
 
 
 ;--------------------------------------------------
-;보스 촉수のERBの数を返す
-;今はまだ１００種類までしか作れないので注意
+;보스 촉수의 ERB 수를 반환한다
+;지금은 아직 최대 １００가지 밖에 만들 수 없으니 주의
 @GET_BOSS_ERB_NUM
 VARSET LOCAL
 LOCAL = 1
@@ -423,8 +423,8 @@ WEND
 RETURN LOCAL - 1
 
 ;--------------------------------------------------
-;최종 보스 촉수のERBの数を返す
-;今はまだ１００種類までしか作れないので注意
+;최종 보스 촉수의 ERB 수를 반환한다
+;지금은 아직 최대 １００가지 밖에 만들 수 없으니 주의
 @GET_LASTBOSS_ERB_NUM
 VARSET LOCAL
 LOCAL = 1
@@ -442,24 +442,24 @@ RETURN LOCAL - 1
 
 
 ;--------------------------------------------------
-;보스撃破時のフラグ処理関係
+;보스 격파 시의 플래그 처리 관계
 @AFTER_KILLED_BOSS
-;ターン終了まで보스出現を抑制
+;턴 종료까지 보스 출현을 억제
 FLAG:49 = 1
 CALL RESEARCH_QUOTA
 
 
 ;--------------------------------------------------
-;探索ノルマ
-;보스の레벨と同様の算出方法
+;탐색 기준량(norma)
+;보스의 레벨과 동일한 산출 방법
 @RESEARCH_QUOTA
 #DIM LCOUNT
-#DIM 撃破数
-#DIM 討伐補正
-#DIM 日数補正
+#DIM 격파수
+#DIM 토벌보정
+#DIM 일수보정
 CALL TENTACLE_SURVIVE, "NUM"
-撃破数 = MIN(FLAG:3 - RESULT + 1, 9)
-;撃破した촉수の数に応じてノルマ増加
+격파수 = MIN(FLAG:3 - RESULT + 1, 9)
+;격파한 촉수의 수에 따라 기준량 증가
 LOCAL = 12
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL += 6
@@ -470,24 +470,24 @@ SIF GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
 SIF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 	LOCAL -= 1
 
-;計算開始
-討伐補正 = 撃破数 * LOCAL / 3 + 24
+;계산 개시
+토벌보정 = 격파수 * LOCAL / 3 + 24
 SIF GAME_OPTION_CHECK_F(OPTION_제한시간없음)
-	討伐補正 /= 2
+	토벌보정 /= 2
 SIF GAME_OPTION_CHECK_F(OPTION_solo)
-	討伐補正 -= 12
+	토벌보정 -= 12
 
-;日数経過による補正をかける
+;일수 경과에 따른 보정을 건다
 LOCAL = 2
 SIF GAME_OPTION_CHECK_F(OPTION_제한시간없음)
 	LOCAL -= 4
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL += 1
 
-日数補正 = SQRT(DAY) * LOCAL
+일수보정 = SQRT(DAY) * LOCAL
 
 
-LOCAL = 討伐補正 + 日数補正
+LOCAL = 토벌보정 + 일수보정
 SIF LOCAL < 10
 	LOCAL = 10
 IF GAME_OPTION_CHECK_F(OPTION_solo) && LOCAL >= 60 + RAND:5
@@ -503,16 +503,16 @@ FLAG:47 = 0
 
 
 ;--------------------------------------------------
-;雑魚撃破ノルマ
-;보스の레벨と同様の算出方法
+;잡몹 격파 기준량(norma)
+;보스의 레벨과 동일한 산출 방법
 @MOB_KILL_QUOTA
-#DIM 撃破数
-#DIM 討伐補正
-#DIM 日数補正
+#DIM 격파수
+#DIM 토벌보정
+#DIM 일수보정
 
 CALL TENTACLE_SURVIVE, "NUM"
-撃破数 = MIN(FLAG:3 - RESULT + 1, 9)
-;撃破した촉수の数に応じてノルマ増加
+격파수 = MIN(FLAG:3 - RESULT + 1, 9)
+;격파한 촉수의 수에 따라 기준량 증가
 LOCAL = 2
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL += 1
@@ -521,9 +521,9 @@ SIF GAME_OPTION_CHECK_F(OPTION_solo)
 SIF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
 	LOCAL -= 1
 
-討伐補正 = 撃破数 * LOCAL / 3 + 2
+토벌보정 = 격파수 * LOCAL / 3 + 2
 
-;日数経過による補正をかける
+;일수 경과에 따른 보정을 건다
 LOCAL = 150
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	LOCAL = LOCAL*4/3
@@ -533,10 +533,10 @@ SIF GAME_OPTION_CHECK_F(OPTION_가입은퇴있음)
 SIF LOCAL < 0
 	LOCAL = 0
 
-日数補正 = LOCAL * DAY / FLAG:2 / 100
+일수보정 = LOCAL * DAY / FLAG:2 / 100
 
 
-LOCAL = 討伐補正 + 日数補正
+LOCAL = 토벌보정 + 일수보정
 SIF GET_LASTBOSS_PHASE_F() >= 1
 	LOCAL /= 2
 SIF GAME_OPTION_CHECK_F(OPTION_solo) && LOCAL >= 8 + RAND:5

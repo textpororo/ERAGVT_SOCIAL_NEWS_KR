@@ -992,24 +992,24 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 	
 	;C
 	LOCAL:10 = 0
-	LOCAL:0 = ABL:(FLAG:111):C감각
+	LOCAL:0 = ABL:(FLAG:111):Ｃ감각
 	LOCAL:0 += 5
 	SIF ABL:(FLAG:111):욕망 >= 3 && TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS())
 		LOCAL:0 += 25
 	
 	;V
 	LOCAL:11 = LOCAL:10 + LOCAL:0
-	LOCAL:1 = ABL:(FLAG:111):V감각
+	LOCAL:1 = ABL:(FLAG:111):Ｖ감각
 	LOCAL:1 += 15 + LOCAL:11
 	
 	;A
 	LOCAL:12 = LOCAL:11 + LOCAL:1
-	LOCAL:2 = ABL:(FLAG:111):A감각
+	LOCAL:2 = ABL:(FLAG:111):Ａ감각
 	LOCAL:2 += 10 + LOCAL:12
 	
 	;B
 	LOCAL:13 = LOCAL:12 + LOCAL:2
-	LOCAL:3 = ABL:(FLAG:111):B감각
+	LOCAL:3 = ABL:(FLAG:111):Ｂ감각
 	LOCAL:3 += 10 + LOCAL:13
 	
 	;고통系
@@ -1060,7 +1060,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		;敵側の욕망が3以上ならSPコマンドも選択肢に入る
 		;남자の場合はC攻めに振り変える
 		IF ISMALE()
-			;敵キャラのC감각が3以上ならSPコマンドも選択肢に入る
+			;敵キャラのＣ감각が3以上ならSPコマンドも選択肢に入る
 			IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
 				;C攻めSP
 				SELECT = 1000

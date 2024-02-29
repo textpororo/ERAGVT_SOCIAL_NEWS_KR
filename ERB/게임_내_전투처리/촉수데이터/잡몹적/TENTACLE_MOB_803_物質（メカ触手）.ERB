@@ -17,32 +17,32 @@
 @SHIELD_PLACE, ARG
 #FUNCTIONS
 LOCALS = 
-SIF BASE:ARG:B결계내구력 > 0 
+SIF BASE:ARG:Ｂ결계내구력 > 0 
 	LOCALS '= LOCALS + "胸"
-SIF BASE:ARG:B결계내구력 > 0 && (BASE:ARG:C결계내구력 > 0 || BASE:ARG:V결계내구력 > 0 || BASE:ARG:A결계내구력 > 0)
+SIF BASE:ARG:Ｂ결계내구력 > 0 && (BASE:ARG:Ｃ결계내구력 > 0 || BASE:ARG:Ｖ결계내구력 > 0 || BASE:ARG:Ａ결계내구력 > 0)
 	LOCALS '= LOCALS + "・"
-SIF BASE:ARG:C결계내구력 > 0 
+SIF BASE:ARG:Ｃ결계내구력 > 0 
 	LOCALS '= LOCALS + "클리토리스"
-SIF BASE:ARG:C결계내구력 > 0 && (BASE:ARG:V결계내구력 > 0 || BASE:ARG:A결계내구력 > 0)
+SIF BASE:ARG:Ｃ결계내구력 > 0 && (BASE:ARG:Ｖ결계내구력 > 0 || BASE:ARG:Ａ결계내구력 > 0)
 	LOCALS '= LOCALS + "・"
-SIF BASE:ARG:V결계내구력 > 0 
+SIF BASE:ARG:Ｖ결계내구력 > 0 
 	LOCALS '= LOCALS + "膣口"
-SIF BASE:ARG:V결계내구력 > 0 && BASE:ARG:A결계내구력 > 0
+SIF BASE:ARG:Ｖ결계내구력 > 0 && BASE:ARG:Ａ결계내구력 > 0
 	LOCALS '= LOCALS + "・"
-SIF BASE:ARG:A결계내구력 > 0 
+SIF BASE:ARG:Ａ결계내구력 > 0 
 	LOCALS '= LOCALS + "애널"
 RETURNF LOCALS
 
 @SHIELD_COUNT, ARG
 #FUNCTIONS
 LOCAL = 0
-SIF BASE:ARG:B결계내구력 > 0 
+SIF BASE:ARG:Ｂ결계내구력 > 0 
 	LOCAL += 1
-SIF BASE:ARG:C결계내구력 > 0 
+SIF BASE:ARG:Ｃ결계내구력 > 0 
 	LOCAL += 1
-SIF BASE:ARG:V결계내구력 > 0 
+SIF BASE:ARG:Ｖ결계내구력 > 0 
 	LOCAL += 1
-SIF BASE:ARG:A결계내구력 > 0 
+SIF BASE:ARG:Ａ결계내구력 > 0 
 	LOCAL += 1
 IF LOCAL == 0
 	LOCALS = 0
@@ -235,7 +235,7 @@ ENDIF
 IF RAND:3 == 0 && CLOTH_OUTER_PER >= CLOTH_OUTER_DEF && CLOTH_INNER_PER >= CLOTH_INNER_DEF
 	RETURN 14	;衣装を破く
 ELSEIF RAND:2 == 0 && CLOTH_OUTER_PER < CLOTH_OUTER_DEF && CLOTH_INNER_PER < CLOTH_INNER_DEF && ISHOLE() == 1
-	IF BASE:V결계내구력 > 0 || BASE:A결계내구력 > 0
+	IF BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0
 		RETURN 2000	;結界破り
 	ELSEIF ISFEMALE() && CHECK_HOLYVIRGIN_F() == 0
 		RETURN 3	;Ｖ攻め強
@@ -263,15 +263,15 @@ IF ARG == 1
 	RETURN 14	;衣装を破く
 ELSEIF ARG == 2
 	IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
-		IF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:V결계내구력 == 0 && BASE:A결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
+		IF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:Ｖ결계내구력 == 0 && BASE:Ａ결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
 			RETURN 19	;両穴ピストン（ＶＡ系統）
-		ELSEIF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:V결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
+		ELSEIF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:Ｖ결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
 			RETURN 15	;種付けピストン（Ｖ系統）
-		ELSEIF ISHOLE() == 1 && BASE:A결계내구력 == 0
+		ELSEIF ISHOLE() == 1 && BASE:Ａ결계내구력 == 0
 			RETURN 17	;애널ピストン（Ａ系統）
 		ENDIF
 	ENDIF
-	IF (TCVARn:12 & 기절)==0 && (BASE:C결계내구력 > 0 || BASE:V결계내구력 > 0 || BASE:A결계내구력 > 0 || BASE:B결계내구력 > 0)
+	IF (TCVARn:12 & 기절)==0 && (BASE:Ｃ결계내구력 > 0 || BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0 || BASE:Ｂ결계내구력 > 0)
 		RETURN 2000	;結界破り
 	ELSE
 		RETURN 9	;針
@@ -363,14 +363,14 @@ ELSEIF (TCVARn:12 & 기절) || TALENT:감정결여 > 0
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	PRINTFORML 愛液滴る膣肉が淫靡な音を立てて촉수を受け入れていき、
 	PRINTFORML 待ちに待った挿入の幸福感に満たされながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-	IF EX:V절정 < 1
+	IF EX:Ｖ절정 < 1
 		PRINTFORML 질壁を抉る快感に황홀として\@TALENT:주관시점 > 0 ? しまう # いる\@・・・
 	ELSE
 		PRINTFORML まだイキ足りないと言わんばかりに自ら腰を振り、快楽を貪って\@TALENT:주관시점 > 0 ? しまう # いる\@・・・
 	ENDIF
-ELSEIF ABL:V감각 < 1
+ELSEIF ABL:Ｖ감각 < 1
 	PRINTFORML まだ性交に不慣れな膣壁を蹂躙される%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%まったく身動きできない・・・
-ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:V감각 >= 4
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) || ABL:Ｖ감각 >= 4
 	PRINTFORML 愛液滴る膣肉が淫靡な音を立てて촉수を受け入れていき、
 	PRINTFORML 女としての悦びが%PRINT_TRANSCALLNAME(TARGET)%의 理性を、
 	PRINTFORML 使命感を塗りつぶしていく・・・
@@ -551,7 +551,7 @@ ENDIF
 IF (TCVARn:12 & 기절) && (ARG & Ａ)
 	PRINTFORML 無抵抗の%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널がズンズンと突き上げられ、
 	PRINTFORML ピストンを受け止める度に弛緩した손발がぶらぶらと揺れる・・・
-ELSEIF ABL:A감각 < 2 && (ARG & Ａ)
+ELSEIF ABL:Ａ감각 < 2 && (ARG & Ａ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%内臓を突き上げられる強烈な異物感と同時に、
 		PRINTFORM 未知の快楽を受け止めるのに必死になって
@@ -565,7 +565,7 @@ ELSEIF ABL:A감각 < 2 && (ARG & Ａ)
 	ELSE
 		PRINTFORML \@TALENT:주관시점 > 0 ? しまう # いる\@・・・
 	ENDIF
-ELSEIF ABL:A감각 < 4 && (ARG & Ａ)
+ELSEIF ABL:Ａ감각 < 4 && (ARG & Ａ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML 内臓を犯される感触に悦楽を感じつつある
 	ELSEIF TALENT:감정결여 > 0
@@ -648,7 +648,7 @@ FONTBOLD
 IF RAND:4==0
 	FLAG:900 = 1
 	PRINTL 全身連射
-ELSEIF RAND:3==0 && BASE:B결계내구력 <= 0
+ELSEIF RAND:3==0 && BASE:Ｂ결계내구력 <= 0
 	FLAG:900 = 2
 	PRINTL 가슴連射
 ELSEIF RAND:2==0
@@ -687,11 +687,11 @@ PRINTL 針刺し
 FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORM はアームの先から針を生やし、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
-IF RAND:2 == 0 && (ARG & Ｃ) == 0 && ISPENIS(TARGET) == 0 && BASE:C결계내구력 <= 0
+IF RAND:2 == 0 && (ARG & Ｃ) == 0 && ISPENIS(TARGET) == 0 && BASE:Ｃ결계내구력 <= 0
 	PRINT 클리토리스
 	;ランダム分岐フラグ
 	FLAG:900 = 1
-ELSEIF (ARG & Ｂ) == 0 && BASE:B결계내구력 <= 0
+ELSEIF (ARG & Ｂ) == 0 && BASE:Ｂ결계내구력 <= 0
 	PRINT 乳首
 	;ランダム分岐フラグ
 	FLAG:900 = 2
@@ -1201,13 +1201,13 @@ LOCAL:0 = 2000
 
 ;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:2 = 0
-SIF BASE:C결계내구력 > 0 
+SIF BASE:Ｃ결계내구력 > 0 
 	LOCAL:2 += Ｃ
-SIF BASE:V결계내구력 > 0 
+SIF BASE:Ｖ결계내구력 > 0 
 	LOCAL:2 += Ｖ
-SIF BASE:A결계내구력 > 0 
+SIF BASE:Ａ결계내구력 > 0 
 	LOCAL:2 += Ａ
-SIF BASE:B결계내구력 > 0 
+SIF BASE:Ｂ결계내구력 > 0 
 	LOCAL:2 += Ｂ
 
 ;방심도상승량
@@ -1215,9 +1215,9 @@ LOCAL:3 += 10
 
 ;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 ワレメ64 오발128 ビット演算）
 LOCAL:4 = 0
-SIF BASE:B결계내구력 > 0 
+SIF BASE:Ｂ결계내구력 > 0 
 	LOCAL:4 += 가슴
-SIF BASE:C결계내구력 > 0 || BASE:V결계내구력 > 0 || BASE:A결계내구력 > 0 
+SIF BASE:Ｃ결계내구력 > 0 || BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0 
 	LOCAL:4 += 균열
 
 ;사정 게이지상승량
@@ -1234,19 +1234,19 @@ LOCAL:7 = 1
 LOCAL:8 = 0
 
 ;特殊効果
-;1 = V삽입방어貫通（V삽입방어していても挿入される）
+;1 = Ｖ삽입방어貫通（Ｖ삽입방어していても挿入される）
 ;2 = 拡張責め（ＶまたはＡ強度が1以上なら굴복、치정、고통、공포が入る）
 LOCAL:9 = 0
 
 ;PALAM影響度　影響なしなら=0　基本値=5
 ;-------------------------
-;쾌C強度
+;쾌Ｃ強度
 LOCAL:10 = 2
-;쾌V強度
+;쾌Ｖ強度
 LOCAL:11 = 2
-;쾌A強度
+;쾌Ａ強度
 LOCAL:12 = 2
-;쾌B強度
+;쾌Ｂ強度
 LOCAL:13 = 2
 
 ;マゾによる굴복、공포影響度
@@ -1341,18 +1341,18 @@ ELSE
 ENDIF
 PRINTW ・・・
 	;★これだいぶ弱いけどいいのか？
-	BASE:C결계내구력 -= 100
-	BASE:V결계내구력 -= 100
-	BASE:A결계내구력 -= 100
-	BASE:B결계내구력 -= 100
-SIF BASE:C결계내구력 < 0 
-	BASE:C결계내구력 = 0
-SIF BASE:V결계내구력 < 0 
-	BASE:V결계내구력 = 0
-SIF BASE:A결계내구력 < 0 
-	BASE:A결계내구력 = 0
-SIF BASE:B결계내구력 < 0 
-	BASE:B결계내구력 = 0
+	BASE:Ｃ결계내구력 -= 100
+	BASE:Ｖ결계내구력 -= 100
+	BASE:Ａ결계내구력 -= 100
+	BASE:Ｂ결계내구력 -= 100
+SIF BASE:Ｃ결계내구력 < 0 
+	BASE:Ｃ결계내구력 = 0
+SIF BASE:Ｖ결계내구력 < 0 
+	BASE:Ｖ결계내구력 = 0
+SIF BASE:Ａ결계내구력 < 0 
+	BASE:Ａ결계내구력 = 0
+SIF BASE:Ｂ결계내구력 < 0 
+	BASE:Ｂ결계내구력 = 0
 
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 	;愛撫されたところを見られた

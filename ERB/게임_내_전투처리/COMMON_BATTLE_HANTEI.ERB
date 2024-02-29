@@ -1,29 +1,29 @@
 ﻿;--------------------------------------------------
-;촉수や敵キャラとの戦闘に関する共通関数
+;촉수나 적 캐릭터와의 전투에 관한 공통 함수
 
 ;--------------------------------------------------
-;行動の成否判定：キャラ側
+;행동의 성공 여부 판정：캐릭터 측
 @ACT_HANTEI_CHARA_TO_TENTACLE, ARGS, ARG = 0
 #DIM CHISEI_COR
 #DIM CHISEI_CAL
 #DIM CCOUNT
 
-;キャラの체력＋기력の残量求める
+;캐릭터의 체력＋기력의 잔량을 구한다
 LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXBASE:기력)
-;消耗度の最低値は방어力依存
+;소모도의 최저치는 방어력 의존
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT 효과에 따른消耗度軽減
+;FEAT 효과에 의한 소모도 경감
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
-;마비で残量半減
+;마비로 잔량 반감
 SIF (TCVARn:12 & 마비)
 	LOCAL:0 /= 2
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력•기력의 감소에 따른 영향을 받지 않는다
 SIF CFLAG:1 == 2
 	LOCAL:0 = 100
 
-;敵の체력残量による補正
+;적의 체력 잔량에 따른 보정
 IF PERCENT_CAL_F(FLAG:13, FLAG:12) > 50
 	LOCAL:1 = 100
 ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
@@ -31,30 +31,30 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の방심도による補正
+;적의 방심도에 따른 보정
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
-;풀어낸다の場合
+;풀어낸다의 경우
 IF ARGS == "HURIHODOKU"
-	;キャラの방어を見る
+	;캐릭터의 방어를 본다
 	LOCAL:2 = MAXBASE:방어
-	;「EX:防」中は방어値上昇
+	;「EX:방」중에는 방어치 상승
 	SIF GETBIT(TCVARn:3, 1)
 		LOCAL:2 *= 2
-	;풀어낸다場合は지성の補正が入る
+	;풀어낸다일 경우에는 지성 보정이 들어간다
 	CHISEI_COR = MAXBASE:지성 / 4
 
-	;왜소함・장신なら민첩に補正
+	;왜소함・장신이라면 민첩에 보정
 	SIF TALENT:왜소함 == 1
 		TIMES LOCAL:2, 0.90
 	SIF TALENT:장신 == 1
 		TIMES LOCAL:2, 1.05
 
-	;변신능력のあるキャラの補正
+	;변신 능력이 있는 캐릭터의 보정
 	IF FLAG:73 > 0
-		;ただし악질 시민戦では変身していても未変身基準の倍率を参照する
-		;(変身の有無はフレーバーであるため)
+		;단, 악질 시민전에서는 변신해도 미변신 기준의 배율을 참조한다
+		;(변신의 유무는 플레이버이기 때문에)
 		LOCAL:2 = MIN(LOCAL:2,CORRECTION_TRANS(LOCAL:2))
 	ELSE
 		LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
@@ -65,85 +65,86 @@ IF ARGS == "HURIHODOKU"
 	CALL CLOTH_BATTLE_HOSEI, "CHISEI"
 	CHISEI_COR = CHISEI_COR * RESULT / 100
 
-	;心境の補正
+	;심경의 보정
 	CALL SHINKYOU_CHECK, "BOUGYO", LOCAL:2
 	LOCAL:2 = RESULT
 	CALL SHINKYOU_CHECK, "CHISEI", CHISEI_COR
 	CHISEI_COR = RESULT
 
-	;전투 지원による補正
+	;전투 지원에 의한 보정
 	CALL CALC_CHISEI_SHIEN(1)
 	CHISEI_COR += RESULT
-	;消耗度による지성への補正
+	;소모도에 따른 지성으로의 보정
 	CHISEI_COR = CHISEI_COR * 2 * (100 - LOCAL:0) / 100
 
-	;(악질 시민戦では影響薄い)
+	;(악질 시민전에서는 영향이 적다)
 	IF FLAG:73 > 0
 		CHISEI_COR = MAXBASE:지성 / 8
 	ENDIF
 
 	IF FLAG:73 > 0 && CFLAG:1 > 0
-		;악질 시민戦で変身状態なら適当に弱化させておく
+		;악질 시민전에서 변신 상태라면 적당히 약화시켜 둔다
 		LOCAL:2 = MIN(LOCAL/2,50)
 	ENDIF
 
-;通常の行動
+;통상 행동
 ELSE
-	;キャラの민첩を見る
+	;캐릭터의 민첩을 본다
 	LOCAL:2 = MAXBASE:민첩
 	CHISEI_COR = 0
-	;救出中は민첩四半減
+	;구출 중에는 민첩 4 반감
+	;(원문) 救出中は민첩四半減
 	TRYCALL KYUSHUTU_NOW
-	;왜소함・장신なら민첩に補正
+	;왜소함・장신이라면 민첩에 보정
 	SIF TALENT:왜소함 == 1
 		TIMES LOCAL:2, 1.05
 	SIF TALENT:장신 == 1
 		TIMES LOCAL:2, 0.90
 
-	;변신능력のあるキャラの補正
+	;변신 능력이 있는 캐릭터의 보정
 	LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 
 	;의상에 따른 보정
 	CALL CLOTH_BATTLE_HOSEI, "BINSYOU"
 	LOCAL:2 = LOCAL:2 * RESULT / 100
 
-	;心境の補正
+	;심경의 보정
 	CALL SHINKYOU_CHECK, "BINSYOU", LOCAL:2
 	LOCAL:2 = RESULT
 ENDIF
 
 IF FLAG:111 == 0
-	;촉수の민첩
+	;촉수의 민첩
 	CALL TENTACLE_ACCESS, "BINSYOU"
 	LOCAL:3 = RESULT
 ELSE
-	;敵キャラの민첩
+	;적 캐릭터의 민첩
 	LOCAL:3 = MAXBASE:(FLAG:111):민첩
 
-	;敵キャラが왜소함・장신なら민첩に補正
+	;적 캐릭터가 왜소함・장신이라면 민첩에 보정
 	SIF TALENT:(FLAG:111):왜소함 == 1
 		TIMES LOCAL:3, 1.05
 	SIF TALENT:(FLAG:111):장신 == 1
 		TIMES LOCAL:3, 0.90
 
-	;敵キャラの戦技による補正
+	;적 캐릭터의 전투 기술에 따른 보정
 	LOCAL:3 = CORRECTION_SENGI_AVOID(LOCAL:3, 0, FLAG:111)
 ENDIF
 
-;敵の油断による補正(악질 시민戦では無効)
+;적의 방심에 따른 보정(악질 시민전에서는 무효)
 SIF TFLAG:2 >= 1 && FLAG:73 == 0
 	TIMES LOCAL:3, 0.25
 
-;민첩の差による補正
+;민첩의 차이에 따른 보정
 SIF FLAG:999 == 1 && ARG == 0
-	PRINTFORML 민첩差 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
+	PRINTFORML 민첩차 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
 LOCAL:4 = CORRECTION_BINSYOU_F(PERCENT_CAL_F(LOCAL:2, LOCAL:3))
 
-;成功値計算
+;성공치 계산
 LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 
 IF FLAG:999 == 1 && ARG == 0
-	PRINTL CHARA TO TENTACLE
+	PRINTL CHARA TO TENTACLE 기초 성공치 계산
 	PRINTFORML LOCAL:0 ＝ {LOCAL:0}
 	PRINTFORML LOCAL:1 ＝ {LOCAL:1}
 	PRINTFORML LOCAL:2 ＝ {LOCAL:2}
@@ -152,166 +153,167 @@ IF FLAG:999 == 1 && ARG == 0
 	PRINTFORML LOCAL:5 ＝ {LOCAL:5}
 ENDIF
 
-;行動ごとの補正
+;동마다의 보정
 SELECTCASE ARGS
 	CASE "ATTACK_RANGE_SHORT"
-		;근거리공격補正：1.05倍
+		;근거리 공격 보정：1.05배
 		TIMES LOCAL:5, 1.05
 
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 0, TARGET)
 
-		;공격成功の最低値
+		;공격 성공 최저치
 		IF ENEMY_TYPE_CHECK_F("MOB") == 1 && LOCAL:5 < 15
 			LOCAL:5 = 15
 		ELSEIF LOCAL:5 < 30
 			LOCAL:5 = 30
 		ENDIF
-		;공격成功の最高値
+		;공격 성공 최고치
 		SIF LOCAL:5 > 80
 			LOCAL:5 = 80
 
-		;格下相手の레벨差補正ボーナス(～95%)
+		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
 		LOCAL:5+=MIN(15,3*MAX(0,ABL:레벨-RESULT))
 
-		;EX攻による命中率上昇効果
+		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
 			LOCAL:5 += 25
 			
 	CASE "ATTACK_RANGE_MIDDLE"
 
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 1, TARGET)
 
-		;공격成功の最低値
+		;공격 성공 최저치
 		IF ENEMY_TYPE_CHECK_F("MOB") == 1 && LOCAL:5 < 12
 			LOCAL:5 = 12
 		ELSEIF LOCAL:5 < 25
 			LOCAL:5 = 25
 		ENDIF
-		;공격成功の最高値
+		;공격 성공 최고치
 		SIF LOCAL:5 > 85
 			LOCAL:5 = 85
 
-		;格下相手の레벨差補正ボーナス(～95%)
+		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
 		LOCAL:5+=MIN(10,2*MAX(0,ABL:레벨-RESULT))
 
-		;EX攻による命中率上昇効果
+		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
 			LOCAL:5 += 30
 			
 	CASE "ATTACK_RANGE_LONG"
-		;원거리공격補正：0.95倍
+		;원거리 공격 보정：0.95배
 		TIMES LOCAL:5, 0.95
 		
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 2, TARGET)
 
-		;공격成功の最低値
+		;공격 성공 최저치
 		IF ENEMY_TYPE_CHECK_F("MOB") == 1 && LOCAL:5 < 9
 			LOCAL:5 = 9
 		ELSEIF LOCAL:5 < 20
 			LOCAL:5 = 20
 		ENDIF
-		;공격成功の最高値
+		;공격 성공 최고치
 		SIF LOCAL:5 > 90
 			LOCAL:5 = 90
 
-		;格下相手の레벨差補正ボーナス(～95%)
+		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
 		LOCAL:5+=MIN(5,MAX(0,ABL:레벨-RESULT))
 
-		;EX攻による命中率上昇効果
+		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
 			LOCAL:5 += 35
 
 	CASE "HURIHODOKU"
-		;풀어낸다成功の最低値
+		;풀어낸다 성공 최저치
 		SIF LOCAL:5 < 20
 			LOCAL:5 = 20
 
-		;풀어낸다場合は지성補正が入る
+		;풀어낸다일 경우에는 지성 보정이 들어간다
 		IF FLAG:73 == 0
 			LOCAL:5 += MIN(CHISEI_COR / 15,30)
 		ENDIF
 
-		;체력＋기력が50%以上残っているかつ成功値が45%以下の場合、45%に
+		;체력＋기력이 50% 이상 남아 있는 동시에 성공치가 45% 이하일 경우, 45%로 보정
 		SIF LOCAL:5 <= 45 && LOCAL:O > 49
 			LOCAL:5 = 45
 
-		;체력＋기력が75%以上残っているかつ成功値が60%以下の場合、60%に
+		;체력＋기력이 75% 이상 남아 있는 동시에 성공치가 60% 이하일 경우, 60%로 보정
 		SIF LOCAL:5 <= 60 && LOCAL:O > 74
 			LOCAL:5 = 60
 
-		;拘束力による修正
+		;구속력에 따른 수정
 		IF FLAG:111 == 0 && ARGS == "HURIHODOKU"
 			CALL TENTACLE_ACCESS, "HOLD"
 			LOCAL:5 = LOCAL:5 * 100 / RESULT
 		ENDIF
 
-		;날뛴다：成功、または耐えた次のターンは振りほどきやすくなる
+		;날뛴다：성공, 또는 견딘 다음의 턴은 풀어내기 쉬워진다
 		SIF TCVARn:2 == 자세：견딘다 || TCVARn:2 == 자세：날뛴다방어
 			LOCAL:5 += 20
-		;睨みつけたターンは少しだけ振りほどきやすくなる
+		;노려본 턴은 조금만 풀어내기 쉬워진다
 		SIF TCVARn:2 == 자세：노려본다
 			LOCAL:5 += 10
-		;引き剥がした次のターンはかなり振りほどきやすくなる
+		;떼어낸 다음의 턴은 꽤나 풀어내기 쉬워진다
 		SIF PREVCOM == 40
 			LOCAL:5 += 40
-		;날뛴다：失敗した次のターンは振りほどきにくくなる
+		;날뛴다：실패인 다음의 턴은 풀어내기가 어려워진다
 		SIF TCVARn:2 == 자세：날뛴다실패
 			LOCAL:5 -= 10
 
-		;풀어낸다成功の最高値
+		;풀어낸다 성공 최고치
 		SIF LOCAL:5 > 80
 			LOCAL:5 = 80
 
-		;「EX:防」中は成功率アップ
+		;「EX:방」중에는 성공률 상승
 		SIF GETBIT(TCVARn:3, 1)
 			LOCAL:5 += 35
 
-		;풀어낸다強化の効果
+		;풀어낸다 강화 효과
 		IF FLAG:903
 			LOCAL:5 += 10
-		;풀어낸다弱化の効果
+		;풀어낸다 약화 효과
 		ELSEIF FLAG:908
 			LOCAL:5 -= 10
 		ENDIF
 
-		;FEAT 효과에 따른풀어낸다補正
+		;FEAT 효과에 의한 풀어낸다 보정
 		SIF TALENT:근력강화 > 0
 			LOCAL:5 += 10
 		SIF TALENT:소형체구 > 0
 			LOCAL:5 -= 10
 
-		;황홀状態なら補正
+		;황홀 상태라면 보정
 		SIF (TCVARn:12 & 황홀)
 			LOCAL:5 -= 10
-		;敵が油断して、황홀状態でない場合は100%成功
+		;적이 방심했고, 황홀 상태가 아닌 경우 100% 성공
 		IF TFLAG:2 >= 1 && (TCVARn:12 & 황홀) == 0
 			IF FLAG:73==0
 				LOCAL:5 = 100
-			;악질 시민戦ではボーナスのみ
+			;악질 시민전에서는 보너스만
 			ELSE
 				LOCAL:5 += 10
 			ENDIF
 		ENDIF
-		;;악질 시민からの拘束は5ターン目以降は確定で振りほどける
+		;;악질 시민으로부터의 구속은 5턴째 이후에서 확정으로 풀린다
 		;SIF FLAG:73 > 0 && TFLAG:0 > 4
 		;	LOCAL:5 = 100
 
-		;풀어낸다成功の最低値を再설정
+		;풀어낸다 성공 최저치를 재설정
 		SIF LOCAL:5 < 10
 			LOCAL:5 = 10
 
 ENDSELECT
 
-;[汎用]スタイルの直撃ボーナス
+;원래 汎用 스타일이라고 써져 있었는데, FIGHT_STYLE.ERB의 이 함수에는 없는 거라 비슷한 효과인 통상으로 바꿨다
+;[통상] 스타일의 직격 보너스
 IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "汎用" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 5
-;[지략]スタイルの直撃ボーナス
+;[지략] 스타일의 직격 보너스
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략" && ARGS != "HURIHODOKU"
 	;キャラの지성を見る
 	LOCAL:6 = MAXBASE:지성
@@ -320,17 +322,17 @@ ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략" && ARGS != "HURIHODOKU"
 	CALL SHINKYOU_CHECK, "CHISEI", LOCAL:6
 	LOCAL:6 = RESULT
 	LOCAL:5 += LIMIT(LOCAL:6 * LOCAL:6 / 4000, 0, 50)
-;[광역]スタイルの直撃ペナルティ
+;[광역] 스타일의 직격 패널티
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역" && ARGS != "HURIHODOKU"
 	TIMES LOCAL:5, 0.25
-;[전력]スタイルの直撃ペナルティ
+;[전력] 스타일의 직격 패널티
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력" && ARGS != "HURIHODOKU"
 	LOCAL:5 = MAX(LOCAL:5 - CFLAG:99 + 15,LOCAL:5 / 2 + 15)
 ENDIF
-;衣装による直撃補正
+;의상에 의한 직격 보정
 CALL CLOTH_BATTLE_HOSEI, "HIT"
 LOCAL:5 += RESULT
-;FEATによる直撃率修正
+;FEAT에 의한 직격률 수정
 SIF TALENT:공세구축 > 0
 	LOCAL:5 += 6
 SIF TALENT:숨겨진힘 > 0 && PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 25
@@ -339,26 +341,26 @@ SIF TALENT:심안 > 0
 	LOCAL:5 += 3
 SIF TALENT:공생 > 0
 	LOCAL:5 += 2
-;슈퍼 스코프による上昇#####
+;슈퍼 스코프에 의한 상승#####
 SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
 	LOCAL:5 += 10
-;BRAVE HIT(同一距離で연속공격)による直撃ボーナス
+;BRAVE HIT(동일 거리에서 연속 공격)에 의한 직격 보너스
 SIF TFLAG:30 > 1 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_BRAVE_HIT(TFLAG:30 - 1,"명중")
-;COUNTER_ATTACKによる直撃ボーナス
+;COUNTER_ATTACK에 의한 직격 보너스
 SIF TFLAG:32 > 0 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_COUNTER_ATTACK(1)
-;공중전특기による直撃ボーナス
+;공중전특기에 의한 직격 보너스
 SIF GETBIT(TCVARn:216, 1) && TALENT:공중전특기 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_AIR_STRIKE(2)
-;공중 성능 강화による直撃ボーナス
+;공중 성능 강화에 의한 직격 보너스
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF GETBIT(TCVARn:216, 1) && RESULT > 0 && ARGS != "HURIHODOKU"
 	LOCAL:5 += 25
-;공중전서툼による直撃ペナルティ
+;공중전서툼에 의한 직격 패널티
 SIF GETBIT(TCVARn:216, 1) && TALENT:공중전서툼 && ARGS != "HURIHODOKU"
 	LOCAL:5 -= GET_AIR_STRIKE(3)
-;バースト공격による直撃率修正
+;버스트 공격에 의한 직격률 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "장갑"
@@ -379,17 +381,17 @@ ENDIF
 ;DEBUG
 IF FLAG:999 == 1 && ARG == 0
 	IF ARGS == "HURIHODOKU"
-		PRINTFORML キャラの방어 {MAXBASE:방어} {LOCAL:2}
+		PRINTFORML 캐릭터의 방어 {MAXBASE:방어} {LOCAL:2}
 	ELSE
-		PRINTFORML キャラの민첩 {MAXBASE:민첩} {LOCAL:2}
+		PRINTFORML 캐릭터의 민첩 {MAXBASE:민첩} {LOCAL:2}
 	ENDIF
 	SIF ARGS == "HURIHODOKU"
-		PRINTFORML キャラの지성 {MAXBASE:지성} {CHISEI_COR}
-	PRINTFORML 敵の민첩　 {LOCAL:3}
+		PRINTFORML 캐릭터의 지성 {MAXBASE:지성} {CHISEI_COR}
+	PRINTFORML 적의 민첩　 {LOCAL:3}
 	IF ARGS == "HURIHODOKU"
-		PRINTFORML 行動成功値：{LOCAL:5 - MIN(CHISEI_COR / 15,30)} {LOCAL:5}
+		PRINTFORML 행동 성공치：{LOCAL:5 - MIN(CHISEI_COR / 15,30)} {LOCAL:5}
 	ELSE
-		PRINTFORML 行動成功値：{LOCAL:5}
+		PRINTFORML 행동 성공치：{LOCAL:5}
 	ENDIF
 	PRINTL 
 ENDIF
@@ -406,21 +408,22 @@ ENDIF
 RETURN RESULT, LOCAL:5
 
 ;--------------------------------------------------
-;カス当たりの判定：キャラ側
+;가드 대미지의 판정: 캐릭터 쪽
+;역) カス当たり를 "가드 대미지"로 의역하였으며, 이보다 더 잘 어울리는 번역명을 추천해 주신다면 감사하겠습니다
 @ACT_HANTEI_CHARA_TO_TENTACLE_GUARD, ARGS
-;キャラの체력＋기력の残量求める
+;캐릭터의 체력＋기력의 잔량을 구한다
 LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXBASE:기력)
-;消耗度の最低値は방어力依存
+;소모도 최저치는 방어력 의존
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT 효과에 따른消耗度軽減
+;FEAT 효과에 의한 소모도 경감
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 기력 및 체력의 감소로 인한 영향을 받지 않는다
 SIF CFLAG:1 == 2
 	LOCAL:0 = 100
 
-;敵の체력残量による補正
+;적의 체력 잔량에 의한 보정
 IF PERCENT_CAL_F(FLAG:13, FLAG:12) > 50
 	LOCAL:1 = 100
 ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
@@ -428,47 +431,48 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の방심도による補正
+;적의 방심도에 의한 보정
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
-;キャラの민첩に応じた固定値
+;캐릭터의 민첩성에 따른 고정값
 LOCAL:2 = MAXBASE:민첩
 
-;왜소함・장신なら補正
+;왜소함・장신이라면 보정
 SIF TALENT:왜소함 == 1
 	TIMES LOCAL:2, 1.05
 SIF TALENT:장신 == 1
 	TIMES LOCAL:2, 0.90
 
 IF FLAG:111 == 0
-	;촉수の민첩
+	;촉수의 민첩
 	CALL TENTACLE_ACCESS, "BINSYOU"
 	LOCAL:3 = RESULT
 ELSE
-	;敵キャラの민첩
+	;적 캐릭터의 민첩
 	LOCAL:3 = MAXBASE:(FLAG:111):민첩
 
-	;敵キャラが왜소함・장신なら민첩に補正
+	;적 캐릭터가 왜소함・장신이라면 민첩에 보정
 	SIF TALENT:(FLAG:111):왜소함 == 1
 		TIMES LOCAL:3, 1.05
 	SIF TALENT:(FLAG:111):장신 == 1
 		TIMES LOCAL:3, 0.90
 
-	;敵キャラの戦技による補正
+	;적 캐릭터의 전투 기술에 따른 보정
 	LOCAL:3 = CORRECTION_SENGI_AVOID(LOCAL:3, 0, FLAG:111)
 ENDIF
 
-;민첩の差による補正
+;민첩의 차이에 따른 보정
 SIF FLAG:999 == 1
-	PRINTFORML 민첩差 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
+	PRINTFORML 민첩차 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
 LOCAL:4 = CORRECTION_BINSYOU_F(PERCENT_CAL_F(LOCAL:2, LOCAL:3)) / 2 + 50
 
-;成功値計算
+;성공치 계산
 LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 
+;DEBUG 모드일 시 세부 사항 표시
 IF FLAG:999 == 1
-	PRINTL カス当たり
+	PRINTL 가드 대미지 기초 성공치 계산
 	PRINTFORML LOCAL:0 ＝ {LOCAL:0}
 	PRINTFORML LOCAL:1 ＝ {LOCAL:1}
 	PRINTFORML LOCAL:2 ＝ {LOCAL:2}
@@ -477,56 +481,56 @@ IF FLAG:999 == 1
 	PRINTFORML LOCAL:5 ＝ {LOCAL:5}
 ENDIF
 
-;行動ごとの補正
+;행동마다의 확률 보정
 SELECTCASE ARGS
 	CASE "ATTACK_RANGE_SHORT"
-		;근거리공격補正：0.95倍
+		;근거리 공격 보정：0.95배
 		TIMES LOCAL:5, 0.95
 		
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 0, TARGET)
 		
-		;공격成功の最低値
+		;공격 성공 최저치
 		SIF LOCAL:5 < 35
 			LOCAL:5 = 35
 			
 	CASE "ATTACK_RANGE_MIDDLE"
 
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 1, TARGET)
 
-		;공격成功の最低値
+		;공격 성공 최저치
 		SIF LOCAL:5 < 45
 			LOCAL:5 = 45
 			
 	CASE "ATTACK_RANGE_LONG"
-		;원거리공격補正：1.05倍
+		;원거리 공격 보정：1.05배
 		TIMES LOCAL:5, 1.05
 		
-		;戦技による補正
+		;전투 기술에 따른 보정
 		LOCAL:5 = CORRECTION_SENGI(LOCAL:5, 2, TARGET)
 		
-		;공격成功の最低値
+		;공격 성공 최저치
 		SIF LOCAL:5 < 50
 			LOCAL:5 = 50
 			
 ENDSELECT
 
-;[광역]スタイルのカス当たりボーナス
+;[광역] 스타일의 가드 대미지 확률 보너스
 SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 35
-;[전력]スタイルのカス当たりペナルティ
+;[전력] 스타일의 가드 대미지 확률 패널티
 SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력" && ARGS != "HURIHODOKU"
 	TIMES LOCAL:5, 0.85
-;슈퍼 스코프による減少#####
+;슈퍼 스코프에 의한 감소#####
 SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
 	LOCAL:5 -= 10
 
-;EX攻による命中率上昇効果
+;EX공에 의한 명중률 상승 효과
 SIF GETBIT(TCVARn:3, 0)
 	LOCAL:5 += 100
 
-;バースト공격によるカス当たり修正
+;버스트 공격에 따른 가드 대미지 확률 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "전력"
@@ -536,9 +540,9 @@ ENDIF
 
 ;DEBUG
 IF FLAG:999 == 1
-	PRINTFORML キャラの민첩 {MAXBASE:민첩} {LOCAL:2}
-	PRINTFORML 敵の민첩　 {LOCAL:3}
-	PRINTFORML 行動成功値：{LOCAL:5}
+	PRINTFORML 캐릭터의 민첩 {MAXBASE:민첩} {LOCAL:2}
+	PRINTFORML 적의 민첩　 {LOCAL:3}
+	PRINTFORML 행동 성공치：{LOCAL:5}
 	PRINTL 
 ENDIF
 
@@ -551,25 +555,25 @@ ENDIF
 RETURN RESULT
 
 ;--------------------------------------------------
-;行動の成否判定：촉수側（判定成功=キャラが공격回避=촉수の공격ミス）
+;행동의 성공 여부 판정：촉수 측（판정 성공=캐릭터가 공격을 회피=촉수의 공격이 미스된다）
 @ACT_HANTEI_TENTACLE_TO_CHARA, ARGS
 
-;キャラの체력＋기력の残量求める
+;캐릭터의 체력＋기력의 잔량을 구한다
 LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXBASE:기력)
-;消耗度の最低値は방어力依存
+;소모도의 최저치는 방어력 의존
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75)
-;FEAT 효과에 따른消耗度軽減
+;FEAT 효과에 의한 소모도 경감
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
-;마비で残量半減
+;마비로 잔량 반감
 SIF (TCVARn:12 & 마비)
 	LOCAL:0 /= 2
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력•기력의 감소에 의한 영향을 받지 않는다
 SIF CFLAG:1 == 2
 	LOCAL:0 = 100
 
-;敵の체력残量による補正
+;적의 체력 잔량에 따른 보정
 IF PERCENT_CAL_F(FLAG:13, FLAG:12) > 50
 	LOCAL:1 = 100
 ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
@@ -577,12 +581,12 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 110
 ENDIF
-;敵の방심도による補正
+;적의 방심도에 따른 보정
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
-;＠중국판
-;胸部重量ペナルティ
+;＠중국판 역수출
+;흉부 중량 패널티
 IF ISFEMALE() 
 	IF TALENT:변신능력 == 1 && CFLAG:1 == 2
 		LOCAL:2 -= LOCAL:2 * (1+MAXBASE:가슴무게) / (1+BASE:체중)
@@ -592,21 +596,21 @@ IF ISFEMALE()
 ENDIF
 
 
-;キャラの민첩
+;캐릭터의 민첩
 LOCAL:2 = MAXBASE:민첩
-;キャラの방어
+;캐릭터의 방어
 LOCAL:6 = MAXBASE:방어
-;「EX:防」中は방어値上昇
+;「EX:방」중에는 방어치 상승
 SIF GETBIT(TCVARn:3, 1)
 	LOCAL:6 *= 2
 
-;왜소함・장신なら민첩に補正
+;왜소함・장신이라면 민첩에 보정
 SIF TALENT:왜소함 == 1
 	TIMES LOCAL:2, 1.05
 SIF TALENT:장신 == 1
 	TIMES LOCAL:2, 0.90
 
-;변신능력のあるキャラの補正
+;변신 능력이 있는 캐릭터의 보정
 LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 LOCAL:6 = CORRECTION_TRANS(LOCAL:6)
 
@@ -616,35 +620,35 @@ LOCAL:2 = LOCAL:2 * RESULT / 100
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:6 = LOCAL:6 * RESULT / 100
 
-;心境の補正
+;심경의 보정
 CALL SHINKYOU_CHECK, "BINSYOU", LOCAL:2
 LOCAL:2 = RESULT
 CALL SHINKYOU_CHECK, "BOUGYO", LOCAL:6
 LOCAL:6 = RESULT
 
-;変身行動による補正
+;변신 행동에 따른 보정
 SIF SELECTCOM == 0 ||  SELECTCOM == 73
 	TIMES LOCAL:2, 1.50
 
-;戦技による補正
+;전투 기술에 따른 보정
 LOCAL:2 = CORRECTION_SENGI_AVOID(LOCAL:2, 0, TARGET)
 LOCAL:6 = CORRECTION_SENGI_AVOID(LOCAL:6, 0, TARGET)
 
 IF FLAG:111 == 0
-	;촉수の민첩
+	;촉수의 민첩
 	CALL TENTACLE_ACCESS, "BINSYOU"
 	LOCAL:3 = RESULT
 ELSE
-	;敵キャラの민첩
+	;적 캐릭터의 민첩
 	LOCAL:3 = MAXBASE:(FLAG:111):민첩
 
-	;敵キャラが왜소함・장신なら민첩に補正
+	;적 캐릭터가 왜소함・장신이라면 민첩에 보정
 	SIF TALENT:(FLAG:111):왜소함 == 1
 		TIMES LOCAL:3, 1.05
 	SIF TALENT:(FLAG:111):장신 == 1
 		TIMES LOCAL:3, 0.90
 
-	;敵キャラの戦技による補正
+	;적 캐릭터의 전투 기술에 따른 보정
 	IF TCVARn:0 == 1
 		LOCAL:3 = CORRECTION_SENGI(LOCAL:3, 0, FLAG:111)
 	ELSEIF TCVARn:0 == 2
@@ -654,27 +658,27 @@ ELSE
 	ENDIF
 ENDIF
 
-;敵の油断による補正
+;적의 방심에 따른 보정
 SIF TFLAG:2 >= 1
 	TIMES LOCAL:3, 0.50
 
-;공격箇所数による補正
+;공격 부위수에 따른 보정
 SIF TFLAG:12 == 1
 	TIMES LOCAL:3, 1.2
 SIF TFLAG:12 == 3
 	TIMES LOCAL:3, 0.8
-;邪悪な波動は命中しやすい
+;사악한 파동은 명중하기 쉽다
 SIF ARGS == "AVOID_HADOU"
 	TIMES LOCAL:3, 1.5
 
-;민첩の差による補正
+;민첩의 차이에 따른 보정
 SIF FLAG:999 == 1
-	PRINTFORML 민첩差 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
+	PRINTFORML 민첩차 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
 LOCAL:4 = CORRECTION_BINSYOU_F(PERCENT_CAL_F(LOCAL:2, LOCAL:3))
 
 
 IF FLAG:111 == 0
-	;촉수の戦技に応じて補正
+	;촉수의 전투 기술에 따라 보정
 	IF TCVARn:0 == 1
 		CALL TENTACLE_ACCESS, "SHORT"
 		LOCAL:4 = LOCAL:4 * 100 / RESULT
@@ -687,25 +691,25 @@ IF FLAG:111 == 0
 	ENDIF
 ENDIF
 
-;成功値計算
+;성공치 계산
 LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 
-;衣装による回避補正
+;의상에 의한 회피 보정
 CALL CLOTH_BATTLE_HOSEI, "AVOID"
 LOCAL:5 += RESULT
-;가속 장치による회피율上昇#####
+;가속 장치에 의한 회피율 상승#####
 SIF CFLAG:TARGET:43 == 502
 	LOCAL:5 += 5
-;[중격]スタイルの回避ペナルティ
+;[중격] 스타일의 회피 패널티
 SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "중격"
 	TIMES LOCAL:5, 0.70
-;BRAVE HITによる回避ペナルティ
+;BRAVE HIT에 의한 회피 패널티
 SIF TFLAG:30 > 1
 	LOCAL:5 -= GET_BRAVE_HIT(TFLAG:30 - 1,"회피")
 
-;距離による補正
-;근거리なら回避が0.85倍
-;원거리なら回避が1.15倍
+;거리에 따른 보정
+;근거리라면 회피가 0.85배
+;원거리라면 회피가 1.15배
 IF TCVARn:0 == 1
 	TIMES LOCAL:5, 0.85
 ELSEIF TCVARn:0 == 3
@@ -713,6 +717,7 @@ ELSEIF TCVARn:0 == 3
 ENDIF
 
 IF FLAG:999 == 1
+	PRINTL TENTACLE TO CHARA 기초 성공치 계산
 	PRINTFORML LOCAL:0 ＝ {LOCAL:0}
 	PRINTFORML LOCAL:1 ＝ {LOCAL:1}
 	PRINTFORML LOCAL:2 ＝ {LOCAL:2}
@@ -722,143 +727,143 @@ IF FLAG:999 == 1
 	PRINTFORML LOCAL:6 ＝ {LOCAL:6}
 ENDIF
 
-;行動ごとの補正
+;행동마다의 보정
 SELECTCASE ARGS
 	CASE "AVOID_KOUGEKI"
 		;근거리
-		;上限80%
+		;상한 80%
 		IF TCVARn:0 == 1
-			;最低値
+			;최저치 30%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 15,30)
 				LOCAL:5 = MIN(LOCAL:6 / 15,30)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 
 		;중거리
-		;上限85%
+		;상한 85%
 		ELSEIF TCVARn:0 == 2
-			;最低値
+			;최저치 35%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 12,35)
 				LOCAL:5 = MIN(LOCAL:6 / 12,35)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 85
 				LOCAL:5 = 85
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
 		;원거리
-		;上限90%
+		;상한 90%
 		ELSEIF TCVARn:0 == 3
-			;最低値
+			;최저치 40%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 10,40)
 				LOCAL:5 = MIN(LOCAL:6 / 10,40)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 90
 				LOCAL:5 = 90
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 		ENDIF
 
 	CASE "AVOID_KARAMITUKU"
 		;근거리
-		;上限70%
+		;상한 70%
 		IF TCVARn:0 == 1
-			;最低値
+			;최저치 30%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 15,30)
 				LOCAL:5 = MIN(LOCAL:6 / 15,30)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 		;중거리
-		;上限75%
+		;상한 75%
 		ELSEIF TCVARn:0 == 2
-			;最低値
+			;최저치 35%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 12,35)
 				LOCAL:5 = MIN(LOCAL:6 / 12,35)
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
 		;원거리
-		;上限80%
+		;상한 80%
 		ELSEIF TCVARn:0 == 3
-			;最低値
+			;최저치 40%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 10,40)
 				LOCAL:5 = MIN(LOCAL:6 / 10,40)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 		ENDIF
 
 	CASE "AVOID_TAIEKI"
 		;근거리
-		;上限85%
+		;상한 85%
 		IF TCVARn:0 == 1
-			;最低値
+			;최저치 40%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 10,40)
 				LOCAL:5 = MIN(LOCAL:6 / 10,40)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 85
 				LOCAL:5 = 85
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
 		;중거리
-		;上限80%
+		;상한 80%
 		ELSEIF TCVARn:0 == 2
-			;最低値
+			;최저치 35%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 12,35)
 				LOCAL:5 = MIN(LOCAL:6 / 12,35)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 
 		;원거리
-		;上限75%
+		;상한 75%
 		ELSEIF TCVARn:0 == 3
-			;最低値
+			;최저치 30%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 15,30)
 				LOCAL:5 = MIN(LOCAL:6 / 15,30)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 50
 
@@ -866,46 +871,46 @@ SELECTCASE ARGS
 
 	CASE "AVOID_OSHITAOSU"
 		;근거리
-		;上限70%
+		;상한 70%
 		IF TCVARn:0 == 1
-			;最低値
+			;최저치 30%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 15,30)
 				LOCAL:5 = MIN(LOCAL:6 / 15,30)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 35
 
 		;중거리
-		;上限75%
+		;상한 75%
 		ELSEIF TCVARn:0 == 2
-			;最低値
+			;최저치 35%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 12,35)
 				LOCAL:5 = MIN(LOCAL:6 / 12,35)
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 40
 
 		;원거리
-		;上限80%
+		;상한 80%
 		ELSEIF TCVARn:0 == 3
-			;最低値
+			;최저치 40%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 10,40)
 				LOCAL:5 = MIN(LOCAL:6 / 10,40)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 80
 				LOCAL:5 = 80
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 45
 
@@ -913,63 +918,63 @@ SELECTCASE ARGS
 
 	CASE "AVOID_HADOU"
 		;근거리
-		;上限75%
+		;상한 75%
 		IF TCVARn:0 == 1
-			;最低値
+			;최저치 40%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 10,40)
 				LOCAL:5 = MIN(LOCAL:6 / 10,40)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 75
 				LOCAL:5 = 75
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 55
 
 		;중거리
-		;上限70%
+		;상한 70%
 		ELSEIF TCVARn:0 == 2
-			;最低値
+			;최저치 35%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 12,35)
 				LOCAL:5 = MIN(LOCAL:6 / 12,35)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 70
 				LOCAL:5 = 70
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 60
 
 		;원거리
-		;上限65%
+		;상한 65%
 		ELSEIF TCVARn:0 == 3
-			;最低値
+			;최저치 30%
 			SIF LOCAL:5 < MIN(LOCAL:6 / 15,30)
 				LOCAL:5 = MIN(LOCAL:6 / 15,30)
 
-			;最高値
+			;최고치
 			SIF LOCAL:5 > 65
 				LOCAL:5 = 65
 
-			;EX防による회피율上昇効果
+			;EX방에 의한 회피율 상승 효과
 			SIF GETBIT(TCVARn:3, 1)
 				LOCAL:5 += 65
 
 		ENDIF
 ENDSELECT
 
-;対空공격に対して空中に居ると회피율ダウン
+;대공 공격에 대하여 공중에 있으면 회피율 감소
 SIF GETBIT(TCVARn:216, 1) && (TFLAG:11 & 8) && RAND:100 < 25
 	LOCAL:5 = 0
 
-;着地中は회피율ゼロ（距離による空振りは発生する）
-;FEATによる着地ペナルティの回避
+;착지 중에는 회피율 0%（거리에 따른 빗나감(空振り)은 발생한다）
+;FEAT에 의한 착지 패널티 회피
 SIF GETBIT(TCVARn:216, 2) && TALENT:소형체구 == 0
 	LOCAL:5 = 0
 
-;バースト공격による회피율修正
+;버스트 공격에 따른 회피율 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "광역"
@@ -979,23 +984,23 @@ IF GETBIT(TCVARn:217,0)
 	ENDSELECT
 ENDIF
 
-;공격した箇所にキャラが居ない
+;공격한 장소에 캐릭터가 없다
 SIF (TCVARn:0 == 1 && GETBIT(TFLAG:11, 0) == 0) || (TCVARn:0 == 2 && GETBIT(TFLAG:11, 1) == 0) || (TCVARn:0 == 3 && GETBIT(TFLAG:11, 2) == 0)
 	LOCAL:5 = -1
 
-;通常範囲に対して空中にいる
+;통상 범위에 대하여 공중에 있다
 SIF GETBIT(TCVARn:216, 1) && GETBIT(TFLAG:11, 3) == 0 && RAND:100 < GET_AIR_STRIKE(1)
 	LOCAL:5 = -1
 
-;아무것도안한다を選んでいると絶対に被弾する
+;【아무것도안한다】를 골랐다면 확정적으로 피격된다
 SIF TCVARn:2 == 자세：아무것도안한다
 	LOCAL:5 = 0
 
 IF FLAG:999 == 1
-	PRINTFORML キャラの민첩 {MAXBASE:민첩} {LOCAL:2}
-	PRINTFORML キャラの방어 {MAXBASE:방어} {LOCAL:6}
-	PRINTFORML 敵の민첩　 {LOCAL:3}
-	PRINTFORML 行動成功値：{LOCAL:5}
+	PRINTFORML 캐릭터의 민첩 {MAXBASE:민첩} {LOCAL:2}
+	PRINTFORML 캐릭터의 방어 {MAXBASE:방어} {LOCAL:6}
+	PRINTFORML 적의 민첩　 {LOCAL:3}
+	PRINTFORML 행동 성공치：{LOCAL:5}
 	PRINTL 
 ENDIF
 
@@ -1004,11 +1009,11 @@ IF LOCAL:5 == -1
 ELSEIF RAND:100 < LOCAL:5
 	RETURN 1
 ELSE
-	;FEAT 효과에 따른絶対回避
+	;FEAT 효과에 의한 절대 회피
 	IF TALENT:고속회피 > 0 && TFLAG:80 == 0 && TCVARn:2 != 자세：아무것도안한다
 		TFLAG:80 += 1
 		SETCOLOR 255,128,0
-		PRINTFORMW [고속회피]が発動、공격を絶対に回避する！
+		PRINTFORMW [고속회피] 가 발동, 1회의 공격을 무조건 회피한다！
 		RESETCOLOR
 		PRINTL 
 		RETURN 1
@@ -1019,25 +1024,25 @@ ENDIF
 RETURN RESULT
 
 ;--------------------------------------------------
-;撤退の成否判定
+;철수의 성공 여부 판정
 @ACT_HANTEI_TETTAI_TENTACLE
 
-;キャラの체력＋기력の残量求める
+;캐릭터의 체력＋기력의 잔량을 구한다
 LOCAL:0 = PERCENT_CAL_F(BASE:체력 * 2 + BASE:기력, MAXBASE:체력 * 2 + MAXBASE:기력) + 20
-;消耗度の最低値は방어力依存
+;소모도의 최저치는 방어력 의존
 SIF LOCAL:0 < MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75) + 20
 	LOCAL:0 = MIN(SQRT(MAX(BASE:방어 - 100, 0)) * 8, 75) + 20
-;FEAT 효과에 따른消耗度軽減
+;FEAT 효과에 의한 소모도 경감
 SIF TALENT:불굴 > 0
 	LOCAL:0 = LOCAL:0 + (100 - LOCAL:0) / 2
-;끈적끈적、쓰러짐で残量半減
+;끈적끈적, 쓰러짐으로 잔량 반감
 SIF (TCVARn:12 & 끈적끈적) || (TCVARn:12 & 쓰러짐)
 	LOCAL:0 /= 2
-;SP変身中は기력체력の減少による影響を受けない
+;SP변신 중에는 체력•기력의 감소에 의한 영향을 받지 않는다
 SIF CFLAG:1 == 2
 	LOCAL:0 = 120
 
-;敵の체력残量による補正
+;적의 체력 잔량에 따른 보정
 IF PERCENT_CAL_F(FLAG:13, FLAG:12) > 50
 	LOCAL:1 = 100
 ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
@@ -1045,24 +1050,24 @@ ELSEIF PERCENT_CAL_F(FLAG:13, FLAG:12) > 25
 ELSE
 	LOCAL:1 = 140
 ENDIF
-;敵の방심도による補正
+;적의 방심도에 따른 보정
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16)) / 100
 
-;キャラの민첩
+;캐릭터의 민첩
 LOCAL:2 = MAXBASE:민첩
 
-;왜소함・장신なら민첩に補正
+;왜소함・장신이라면 민첩에 보정
 SIF TALENT:왜소함 == 1
 	TIMES LOCAL:2, 1.05
 SIF TALENT:장신 == 1
 	TIMES LOCAL:2, 0.90
 
-;변신능력のあるキャラの補正
+;변신 능력이 있는 캐릭터의 보정
 LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
 
 ;＠중국판
-;胸部重量ペナルティ
+;흉부 중량 패널티
 IF ISFEMALE() 
 	IF TALENT:변신능력 == 1 && CFLAG:1 == 2
 		LOCAL:2 -= LOCAL:2 * (1+MAXBASE:가슴무게) / (1+BASE:체중)
@@ -1075,53 +1080,53 @@ ENDIF
 CALL CLOTH_BATTLE_HOSEI, "BINSYOU"
 LOCAL:2 = LOCAL:2 * RESULT / 100
 
-;心境の補正
+;심경의 보정
 CALL SHINKYOU_CHECK, "BINSYOU", LOCAL:2
 LOCAL:2 = RESULT
 
 IF FLAG:111 == 0
-	;촉수の민첩
+	;촉수의 민첩
 	CALL TENTACLE_ACCESS, "BINSYOU"
 	LOCAL:3 = RESULT
 ELSE
-	;敵キャラの민첩
+	;적 캐릭터의 민첩
 	LOCAL:3 = MAXBASE:(FLAG:111):민첩
 
-	;敵キャラが왜소함なら민첩に補正
+	;적 캐릭터가 왜소함이라면 민첩에 보정
 	SIF TALENT:(FLAG:111):왜소함 == 1
 		TIMES LOCAL:3, 1.05
 ENDIF
 
-;敵の油断による補正
+;적의 방심에 따른 보정
 SIF TFLAG:2 >= 1
 	TIMES LOCAL:3, 0.50
 
-;민첩の差による補正
+;민첩의 차이에 따른 보정
 SIF FLAG:999 == 1
-	PRINTFORML 민첩差 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
+	PRINTFORML 민첩차 {PERCENT_CAL_F(LOCAL:2, LOCAL:3)}％
 LOCAL:4 = CORRECTION_BINSYOU_F(PERCENT_CAL_F(LOCAL:2, LOCAL:3))
 
 
-;成功値計算
+;성공치 계산
 LOCAL:5 = LOCAL:0 * LOCAL:1 * LOCAL:4 / 10000
 
-;行動ごとの補正
-;撤退成功の最低値
+;행동마다의 보정
+;철수 성공 최저치
 SIF LOCAL:5 < 50
 	LOCAL:5 = 50
-;전투 지원効果
+;전투 지원 효과
 LOCAL:5 += 20 * FLAG:43
 
-;観客がいると確定失敗
+;관객이 있으면 확정 실패
 SIF FLAG:70 + FLAG:71 > 0
 	LOCAL:5 = 0
 
 IF FLAG:999 == 1
-	PRINTFORML キャラの민첩 {MAXBASE:민첩} {LOCAL:2}
-	PRINTFORML 敵の민첩　 {LOCAL:3}
-	PRINTFORML 行動成功値：{LOCAL:5}
+	PRINTFORML 캐릭터의 민첩 {MAXBASE:민첩} {LOCAL:2}
+	PRINTFORML 적의 민첩　 {LOCAL:3}
+	PRINTFORML 행동 성공치：{LOCAL:5}
 	PRINTL 
-	PRINTFORML 逃走成功率を入力してください（負の数で変更なし）
+	PRINTFORML 도주 성공률을 입력해 주십시오.（음수 입력으로 변경 없음）
 	INPUT
 	SIF RESULT >= 0
 		LOCAL:5 = RESULT
@@ -1138,13 +1143,13 @@ ENDIF
 RETURN RESULT
 
 ;--------------------------------------------------
-;ダメージ計算
+;피해량 계산
 @DAMAGE, ARGS
 
-;実공격力
+;실공격력
 CALL FSTYLE_ATTACK,TARGET,TCVARn:0
 LOCAL:5 = RESULT
-;「EX攻」中は공격値上昇
+;「EX공」중에는 공격치 상승
 IF GETBIT(TCVARn:3, 0)
 	IF CFLAG:1 == 2
 		LOCAL:5 = LOCAL:5 * 150 / 100
@@ -1152,27 +1157,27 @@ IF GETBIT(TCVARn:3, 0)
 		LOCAL:5 = LOCAL:5 * 200 / 100
 	ENDIF
 ENDIF
-;변신능력のあるキャラの補正
+;변신 능력이 있는 캐릭터의 보정
 LOCAL:5 = CORRECTION_TRANS(LOCAL:5)
 
 ;＠중국판
-;유두피어싱공격ボーナス
-;　★戯けた補正になってるけどこれ大丈夫なのか？
-;　　(対応イベント実装時に調整)
-IF TALENT:유두피어싱 == 1 ;1级乳环补正1.4倍
+;유두피어싱 공격 보너스
+;　★장난스런 보정이 되어 있는데 이거 괜찮은거야？
+;　　(대응 이벤트 구현 시 조정)
+IF TALENT:유두피어싱 == 1 ;1급 유두피어싱 보정 1.4배
 	TIMES LOCAL:5, 1.40
-ELSEIF TALENT:유두피어싱 == 2 ;2级乳环补正1.6倍
+ELSEIF TALENT:유두피어싱 == 2 ;2급 유두피어싱 보정 1.6배
 	TIMES LOCAL:5, 1.60
-ELSEIF TALENT:유두피어싱 == 3 ;3级乳环补正1.8倍
+ELSEIF TALENT:유두피어싱 == 3 ;3급 유두피어싱 보정 1.8배
 	TIMES LOCAL:5, 1.80
-ELSEIF TALENT:유두피어싱 == 4 ;4级乳环补正2.0倍
+ELSEIF TALENT:유두피어싱 == 4 ;4급 유두피어싱 보정 2.0배
 	TIMES LOCAL:5, 2.00
-ELSEIF TALENT:유두피어싱 == 5 ;5级乳环补正5倍
+ELSEIF TALENT:유두피어싱 == 5 ;5급 유두피어싱 보정 5배
 	TIMES LOCAL:5, 5.00
 ENDIF
-;거유공격ボーナス
+;거유 공격 보너스
 IF ISFEMALE() 
-	;SP変身中は変身時거유化のボーナスが乗る的な調整だと思われる(たぶん)
+	;SP변신 중에는 변신 시 거유화의 보너스가 타는적인 조정이라고 생각된다(아마도)
 	IF TALENT:변신능력 == 1 && CFLAG:1 == 2
 		LOCAL:5 += LOCAL:5 * (1 + MAXBASE:가슴무게) / (1 + BASE:체중)
 	ELSE
@@ -1183,20 +1188,20 @@ ENDIF
 
 ;방어力
 LOCAL:6 = MAXBASE:방어
-;「EX防」中は방어値上昇
+;「EX방」중에는 방어치 상승
 SIF GETBIT(TCVARn:3, 1)
 	LOCAL:6 = LOCAL:6 * 200 / 100
-;변신능력のあるキャラの補正
+;변신 능력이 있는 캐릭터의 보정
 LOCAL:6 = CORRECTION_TRANS(LOCAL:6)
 
 ;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:6 = LOCAL:6 * RESULT / 100
 
-;[교란]スタイルの방어ペナルティ
+;[교란] 스타일의 방어 패널티
 IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 	TIMES LOCAL:6, 0.85
-;[장갑]スタイルの방어ボーナス
+;[장갑] 스타일의 방어 보너스
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 	LOCAL:6 += 50
 	TIMES LOCAL:6, 1.15
@@ -1204,28 +1209,28 @@ ENDIF
 
 SELECTCASE ARGS
 	CASE "ATTACK_RANGE_SHORT"
-		;距離による공격力補正（近） 2.50倍の補正が入る
+		;거리에 따른 공격력 보정（근） 2.50배의 보정이 들어간다
 		CALL SHINKYOU_CHECK, "KOUGEKI", LOCAL:5
 		LOCAL:0 = RESULT
 		TIMES LOCAL:0, 2.50
 
-		;戦技による공격力の補正
+		;전투 기술에 따른 공격력 보정
 		LOCAL:0 = CORRECTION_SENGI_DAMAGE(LOCAL:0, 0, TARGET)
 
 		IF FLAG:111 == 0
-			;촉수の방어力
+			;촉수의 방어력
 			CALL TENTACLE_ACCESS, "BOUGYO"
 			LOCAL:1 = RESULT
 		ELSE
-			;敵キャラの방어力
+			;적 캐릭터의 방어력
 			LOCAL:1 = MAXBASE:(FLAG:111):방어
 		ENDIF
 
-		;敵の油断による補正
+		;적의 방심에 따른 보정
 		SIF TFLAG:2 >= 1
 			TIMES LOCAL:1, 0.50
 
-		;得意・苦手による補正
+		;특기・서툼에 따른 보정
 		SIF TALENT:근거리특기
 			TIMES LOCAL:0, 1.20
 		SIF TALENT:근거리서툼
@@ -1242,28 +1247,28 @@ SELECTCASE ARGS
 			TIMES LOCAL:0, 1.16
 
 	CASE "ATTACK_RANGE_MIDDLE"
-		;距離による공격力補正（중） 2.25倍の補正が入る
+		;거리에 따른 공격력 보정（중） 2.25배의 보정이 들어간다
 		CALL SHINKYOU_CHECK, "KOUGEKI", LOCAL:5
 		LOCAL:0 = RESULT
 		TIMES LOCAL:0, 2.25
 
-		;戦技による공격力の補正
+		;전투 기술에 따른 공격력 보정
 		LOCAL:0 = CORRECTION_SENGI_DAMAGE(LOCAL:0, 1, TARGET)
 
 		IF FLAG:111 == 0
-			;촉수の방어力
+			;촉수의 방어력
 			CALL TENTACLE_ACCESS, "BOUGYO"
 			LOCAL:1 = RESULT
 		ELSE
-			;敵キャラの방어力
+			;적 캐릭터의 방어력
 			LOCAL:1 = MAXBASE:(FLAG:111):방어
 		ENDIF
 
-		;敵の油断による補正
+		;적의 방심에 따른 보정
 		SIF TFLAG:2 >= 1
 			TIMES LOCAL:1, 0.50
 
-		;得意・苦手による補正
+		;특기・서툼에 따른 보정
 		SIF TALENT:근거리특기
 			TIMES LOCAL:0, 0.90
 		SIF TALENT:근거리서툼
@@ -1280,28 +1285,28 @@ SELECTCASE ARGS
 			TIMES LOCAL:0, 1.085
 
 	CASE "ATTACK_RANGE_LONG"
-		;距離による공격力補正（遠） 2.00倍の補正が入る
+		;거리에 따른 공격력 보정（원） 2.00배의 보정이 들어간다
 		CALL SHINKYOU_CHECK, "KOUGEKI", LOCAL:5
 		LOCAL:0 = RESULT
 		TIMES LOCAL:0, 2.00
 
-		;戦技による공격力の補正
+		;전투 기술에 따른 공격력 보정
 		LOCAL:0 = CORRECTION_SENGI_DAMAGE(LOCAL:0, 2, TARGET)
 
 		IF FLAG:111 == 0
-			;촉수の방어力
+			;촉수의 방어력
 			CALL TENTACLE_ACCESS, "BOUGYO"
 			LOCAL:1 = RESULT
 		ELSE
-			;敵キャラの방어力
+			;적 캐릭터의 방어력
 			LOCAL:1 = MAXBASE:(FLAG:111):방어
 		ENDIF
 
-		;敵の油断による補正
+		;적의 방심에 따른 보정
 		SIF TFLAG:2 >= 1
 			TIMES LOCAL:1, 0.50
 
-		;得意・苦手による補正
+		;특기・서툼에 따른 보정
 		SIF TALENT:근거리특기
 			TIMES LOCAL:0, 0.95
 		SIF TALENT:근거리서툼
@@ -1318,7 +1323,7 @@ SELECTCASE ARGS
 			TIMES LOCAL:0, 1.0275
 
 	CASE "ABARERU"
-		;공격力補正（無） 雑魚촉수は0.125倍、보스 촉수は1.00倍、敵キャラなら2.00倍の補正が入る
+		;공격력 보정（無） 잡몹 촉수는 0.125배, 보스 촉수는 1.00배, 적 캐릭터라면 2.00배의 보정이 들어간다
 		CALL SHINKYOU_CHECK, "KOUGEKI", LOCAL:5
 		LOCAL:0 = RESULT
 		IF ENEMY_TYPE_CHECK_F("MOB") == 1
@@ -1330,29 +1335,29 @@ SELECTCASE ARGS
 		ENDIF
 
 		IF FLAG:111 == 0
-			;촉수の방어力半減
+			;촉수의 방어력 반감
 			CALL TENTACLE_ACCESS, "BOUGYO"
 			LOCAL:1 = RESULT / 2
 
-			;촉수の油断による補正
+			;촉수의 뱡심에 따른 보정
 			SIF TFLAG:2 >= 1
 				TIMES LOCAL:1, 0.50
 		ENDIF
 
-		;날뛴다の場合「EX:攻」の効果がさらに2倍
+		;【날뛴다】일 경우「EX:공」의 효과가 더욱이 2배
 		SIF GETBIT(TCVARn:3, 0)
 			LOCAL:1 *= 2
 
 	CASE "CHARA"
 		IF FLAG:111 == 0
-			;촉수の공격力
+			;촉수의 공격력
 			CALL TENTACLE_ACCESS, "KOUGEKI"
 			LOCAL:0 = RESULT
 		ELSE
-			;敵キャラの공격力
+			;적 캐릭터의 공격력
 			LOCAL:0 = MAXBASE:(FLAG:111):공격
 
-			;敵キャラの戦技による補正
+			;적 캐릭터의 전투 기술에 따른 보정
 			IF TCVARn:0 == 1
 				LOCAL:0 = CORRECTION_SENGI_DAMAGE(LOCAL:0, 0, FLAG:111)
 			ELSEIF TCVARn:0 == 2
@@ -1362,11 +1367,11 @@ SELECTCASE ARGS
 			ENDIF
 		ENDIF
 		
-		;相手の油断による補正
+		;상대방의 방심에 따른 보정
 		SIF TFLAG:2 >= 1
 			TIMES LOCAL:0, 0.75
 		
-		;距離による공격力補正
+		;거리에 따른 공격력 보정
 		CALL TENTACLE_LEVEL
 		IF TCVARn:0 == 1
 			LOCAL:3 = 75 + RESULT * 2
@@ -1379,41 +1384,42 @@ SELECTCASE ARGS
 		ENDIF
 		LOCAL:0 = LOCAL:0 * LOCAL:3 / 100
 		
-		;공격箇所数による공격力補正
+		;공격 부위수에 따른 공격력 보정
 		SIF TFLAG:12 == 2
 			TIMES LOCAL:0, 0.90
 		SIF TFLAG:12 == 3
 			TIMES LOCAL:0, 0.80
 		
-		;キャラの방어力
+		;캐릭터의 방어력
 		CALL SHINKYOU_CHECK, "BOUGYO", LOCAL:6
 		LOCAL:1 = RESULT
 
-		;방어フラグが立っている場合はダメージ半減
+		;방어 플래그가 세워져 있는 경우에는 피해량 반감
 		SIF TCVARn:2 == 자세：방어
 			LOCAL:0 /= 2
 
-		;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
+		;피격될 때마다, 방어 기초값에 따라 ＥＸ게이지가 상승한다
 		SIF CFLAG:1 != 2
 			TCVARn:6 += LIMIT(SQRT(MAX(BASE:방어 - 100,0)), 0, 20) + 5
 ENDSELECT
 
-;ダメージ計算
-;0.26までの式 最低ダメージは10
+;피해량 계산
+;0.26 버전까지 쓰이던 식　최소 피해량은 10
 ;LOCAL:3 = LIMIT(LOCAL:0 - LOCAL:1, 10, LOCAL:0 - LOCAL:1)
 
-;0.27からの式 最低ダメージは80
-;基本ダメージ500 * 공격力修正（공격/방어）
-;LOCAL:6 = 倍率補正値
+;0.27 버전부터 쓰이는 식　최소 피해량은 80
+;기본 피해량 500 * 공격력 수정(공격/방어)
+;LOCAL:6 = 배율 보정치
 LOCAL:6 = 100
 
 LOCAL:3 = MAX(500000 * (LOCAL:0 + LOCAL:6) / (LOCAL:1 + LOCAL:6) / 1000, 80)
 
-;방어基礎値による直接減算
+;방어 기초값에 따른 직접 감산
 SIF ARGS == "CHARA"
 	LOCAL:3 = MAX(LOCAL:3 + 100 - (LOCAL:1 - LEVELSTATUS_UP(100,ABL:레벨,50,9999)) * 175 / 100, 80)
 
-;バースト공격による与ダメージ修正
+;버스트 공격에 따른 입히는 피해량 수정
+;(원문) バースト공격による与ダメージ修正
 IF GETBIT(TCVARn:217,0) && ARGS != "CHARA"
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "연속"
@@ -1429,12 +1435,13 @@ IF GETBIT(TCVARn:217,0) && ARGS != "CHARA"
 		CASE "통상"
 			LOCAL:3 = LOCAL:3 * 110 / 100
 	ENDSELECT
-	;FEAT 효과에 따른バースト威力上昇
+	;FEAT 효과에 의한 버스트 위력 상승
 	SIF TALENT:풀버스트 > 0
 		LOCAL:3 = LOCAL:3 * 125 / 100
 ENDIF
 
-;バースト공격による被ダメージ修正
+;버스트 공격에 따른 받는 피해량 수정
+;(원문) バースト공격による被ダメージ修正
 IF GETBIT(TCVARn:217,0) && ARGS == "CHARA"
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "전력"
@@ -1442,17 +1449,17 @@ IF GETBIT(TCVARn:217,0) && ARGS == "CHARA"
 	ENDSELECT
 ENDIF
 
-;CHAIN HITによるダメージボーナス
+;CHAIN HIT에 의한 피해량 보너스
 SIF TFLAG:31 > 1 && ARGS != "CHARA"
 	LOCAL:3 = LOCAL:3 * GET_CHAIN_HIT(TFLAG:31 - 1) / 100
-;COUNTER_ATTACKによる被ダメージ軽減
+;COUNTER ATTACK에 의한 피해량 경감
 SIF TFLAG:32 > 0 && ARGS == "CHARA"
 	LOCAL:3 = LOCAL:3 * (100 - GET_COUNTER_ATTACK(2)) / 100
-;EVADERによるダメージボーナス
+;EVADER에 의한 피해량 보너스
 SIF TFLAG:33 > 1 && ARGS != "CHARA"
 	LOCAL:3 = LOCAL:3 * ((GET_EVADER_ATK(TFLAG:33 - 1) - 100) / 2 + 100) / 100
 
-;疲労によるダメージペナルティ
+;피로에 따른 피해량 패널티
 IF CFLAG:99 > 0 && ARGS != "CHARA"
 	IF CFLAG:99 >= 50
 		LOCAL:7 = 750
@@ -1483,13 +1490,14 @@ ENDIF
 
 ;DEBUG
 IF FLAG:999 == 1
-	PRINTFORML キャラの공격 {MAXBASE:공격} {LOCAL:5}
-	PRINTFORML キャラの방어 {MAXBASE:방어} {LOCAL:6}
-	PRINTFORML 공격側の공격力 {LOCAL:0}
-	PRINTFORML 방어側の방어力 {LOCAL:1}
+	PRINTL 최종 피해량 계산
+	PRINTFORML 캐릭터의 공격（보정 전{MAXBASE:공격}）（보정 후{LOCAL:5}）
+	PRINTFORML 캐릭터의 방어（보정 전{MAXBASE:방어}）（보정 후{LOCAL:6}）
+	PRINTFORML 공격측의 공격력 {LOCAL:0}
+	PRINTFORML 방어측의 방어력 {LOCAL:1}
 	PRINTFORML LOCAL:3 {LOCAL:3}
 	SIF ARGS != "CHARA"
-		PRINTFORML ダメージペナルティ {(LOCAL:7)/10}％
+		PRINTFORML 피해량 패널티 {(LOCAL:7)/10}％
 	PRINTL 
 ENDIF
 

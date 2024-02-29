@@ -75,9 +75,9 @@ RETURN 0
 #DIM 誘い内容
 #DIMS 誘い文句
 #DIMS 誘ってきた相手
-;변신시TS女体化キャラのメッセージ分岐
+;변신시ＴＳ女体化キャラのメッセージ分岐
 ;보추もＴＳキャラと同じ反応に
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	ＴＳキャラ = 1
 ELSE
 	ＴＳキャラ = 0
@@ -1819,7 +1819,7 @@ ENDIF
 ;성처녀 改案（성처녀は애널セックス可）
 IF RAND:4 != 0
 	IF TALENT:보추 > 0
-		IF ABL:A감각 < 2
+		IF ABL:Ａ감각 < 2
 			PRINTFORML に、%PRINT_TRANSCALLNAME(TARGET)%의 嬌声が響いている。
 			NAMAHAME = 0
 			PRINTL 
@@ -1833,7 +1833,7 @@ IF RAND:4 != 0
 			PRINTW 
 			PRINTFORML たっぷり애널を弄られて腸淫液を溢れさせている%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 			;애널처녀分岐
-			IF EXP:A경험 <= 0
+			IF EXP:Ａ경험 <= 0
 				PRINTFORML お尻に挿れる以外なら何でも言うことを聞くから犯さないでほしいと訴えた。
 			ELSEIF TALENT:교제상대 > 0
 				SELECTCASE TALENT:교제상대
@@ -1873,7 +1873,7 @@ IF RAND:4 != 0
 				ENDIF
 				PRINTFORM %ARGS%はしきりに、ゴムでするより生の方が絶対気持ちいいよ、と甘言で惑わしている。
 			ENDIF
-			;A감각２以上
+			;Ａ감각２以上
 		ELSE
 			PRINTFORM で、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ARGS%の前で膝をついて
 			SIF TALENT:음란 > 0
@@ -2069,12 +2069,12 @@ IF RAND:4 != 0
 		;굴복
 		;JUEL:굴복
 		LOCAL:18 = 200
-		;A경험
-		;EXP:A경험
+		;Ａ경험
+		;EXP:Ａ경험
 		LOCAL:121 = 3
-		;A감각
-		;JUEL:쾌A
-		LOCAL:12 = 15 * ABL:A감각
+		;Ａ감각
+		;JUEL:쾌Ａ
+		LOCAL:12 = 15 * ABL:Ａ감각
 		;절정경험
 		;EXP:절정경험
 		LOCAL:122 = 3
@@ -2481,7 +2481,7 @@ IF RAND:4 != 0
 			PRINTL 처녀 상실
 			CFLAG:206 = 8
 			TALENT:처녀 = -1
-		ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 			IF RAND:3
 				PRINTFORML 질肉が男性器を咥えこんで受ける快感を覚えてしまった…
 			ELSEIF RAND:2
@@ -2531,12 +2531,12 @@ IF RAND:4 != 0
 			;굴복
 			;JUEL:굴복
 			LOCAL:18 = 200
-			;A경험
-			;EXP:A경험
+			;Ａ경험
+			;EXP:Ａ경험
 			LOCAL:121 = 3
-			;A감각
-			;JUEL:쾌A
-			LOCAL:12 = 15 * ABL:A감각
+			;Ａ감각
+			;JUEL:쾌Ａ
+			LOCAL:12 = 15 * ABL:Ａ감각
 			;절정경험
 			;EXP:절정경험
 			LOCAL:122 = 3
@@ -2552,12 +2552,12 @@ IF RAND:4 != 0
 			;굴복
 			;JUEL:굴복
 			LOCAL:18 = 200
-			;V경험
-			;EXP:V경험
+			;Ｖ경험
+			;EXP:Ｖ경험
 			LOCAL:120 = 3
-			;V감각
-			;JUEL:쾌V
-			LOCAL:11 = 15 * ABL:V감각
+			;Ｖ감각
+			;JUEL:쾌Ｖ
+			LOCAL:11 = 15 * ABL:Ｖ감각
 			;절정경험
 			;EXP:절정경험
 			LOCAL:122 = 3
@@ -2580,12 +2580,12 @@ IF RAND:4 != 0
 				PRINTFORML レイプ同然の状態に抵抗するも、%ARGS%はそのまま無許可での中出しを敢行した…
 				PRINTW 
 				PRINTFORML 茫然とする%PRINT_TRANSCALLNAME(TARGET)%に、%ARGS%は何食わぬ顔で気持ち良かったよ等と言っている…
-				;V경험
-				;EXP:V경험
+				;Ｖ경험
+				;EXP:Ｖ경험
 				LOCAL:120 = 1
-				;V감각
-				;JUEL:쾌V
-				LOCAL:11 = 15 * ABL:V감각
+				;Ｖ감각
+				;JUEL:쾌Ｖ
+				LOCAL:11 = 15 * ABL:Ｖ감각
 				NAKADASHI = 1
 			ELSE
 				IF RAND:4 == 0
@@ -2779,7 +2779,7 @@ ELSEIF RAND:3 == 0
 			PRINTFORML 舌と唇と喉奥とがそれぞれ別の生き物のように変幻自在に男性器を愛撫し、
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%妖艶な笑みを見せながら優れた舌技で奉仕していた。
 			PRINTFORML 歓喜の声をあげる%ARGS%に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%さらに昂ぶり、持てる限りの舌技を披露して
-		ELSEIF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+		ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 			PRINTFORML 元々男である%PRINT_TRANSCALLNAME(TARGET)%にとって男性器のどこが感じるかは熟知している。
 			PRINTFORML 男の自分がフェラをされている想像をしながら%ARGS%の男性器を舐めしゃぶると、
 			PRINTFORML 今の自分にはない架空の男性器が快感を受けて、%PRINT_TRANSCALLNAME(TARGET)%의 口腔奉仕はさらに淫らになり、
@@ -2825,9 +2825,9 @@ ELSEIF RAND:3 == 0
 		;굴복
 		;JUEL:굴복
 		LOCAL:18 = 100
-		;B감각
-		;JUEL:쾌B
-		LOCAL:13 = 15 * ABL:B감각
+		;Ｂ감각
+		;JUEL:쾌Ｂ
+		LOCAL:13 = 15 * ABL:Ｂ감각
 		;절정경험
 		;EXP:절정경험
 		LOCAL:122 = 3
@@ -2842,26 +2842,26 @@ ELSEIF RAND:3 == 0
 		ENDIF
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%くぐもったうめき声を上げながら何度も体を痙攣させ、
 		PRINTFORML のけぞる체력もなくなるまでイカされ続けてしまった…
-		;C감각
-		;JUEL:쾌C
-		LOCAL:10 = 15 * ABL:C감각
+		;Ｃ감각
+		;JUEL:쾌Ｃ
+		LOCAL:10 = 15 * ABL:Ｃ감각
 		IF TALENT:처녀 <= 0 && ISFEMALE()
-			;V감각
-			;JUEL:쾌V
-			LOCAL:11 = 15 * ABL:V감각
-			;V경험
-			;EXP:V경험
+			;Ｖ감각
+			;JUEL:쾌Ｖ
+			LOCAL:11 = 15 * ABL:Ｖ감각
+			;Ｖ경험
+			;EXP:Ｖ경험
 			LOCAL:120 = 3
 		ENDIF
-		;A감각
-		;JUEL:쾌A
-		LOCAL:12 = 15 * ABL:A감각
-		;A경험
-		;EXP:A경험
+		;Ａ감각
+		;JUEL:쾌Ａ
+		LOCAL:12 = 15 * ABL:Ａ감각
+		;Ａ경험
+		;EXP:Ａ경험
 		LOCAL:121 = 3
-		;B감각
-		;JUEL:쾌B
-		LOCAL:13 = 15 * ABL:B감각
+		;Ｂ감각
+		;JUEL:쾌Ｂ
+		LOCAL:13 = 15 * ABL:Ｂ감각
 		;절정경험
 		;EXP:절정경험
 		LOCAL:122 = 9
@@ -2974,12 +2974,12 @@ ELSE
 	;습득
 	;JUEL:습득
 	LOCAL:16 = 150
-	;A경험
-	;EXP:A경험
+	;Ａ경험
+	;EXP:Ａ경험
 	LOCAL:121 = 3
-	;A감각
-	;JUEL:쾌A
-	LOCAL:12 = 15 * ABL:A감각
+	;Ａ감각
+	;JUEL:쾌Ａ
+	LOCAL:12 = 15 * ABL:Ａ감각
 	;펠라경험
 	;EXP:펠라경험
 	LOCAL:124 = 1
@@ -3031,7 +3031,7 @@ SIF ARG:1
 SIF ISHOLE() == 0
 	RETURN 0
 
-IF CFLAG:1 > 0 && TALENT:변신시TS > 0
+IF CFLAG:1 > 0 && TALENT:변신시ＴＳ > 0
 	RAPECOUNT = CFLAG:321
 ELSE
 	RAPECOUNT = CFLAG:320
@@ -3076,7 +3076,7 @@ PRINTW
 IF CONFIG_CHECK_EVENT_F(5) == 1
 	;악질 시민エンカウントイベントの処理
 	CALL ENCOUNT_CITIZEN(6001)
-	IF CFLAG:1 > 1 && TALENT:변신시TS > 0
+	IF CFLAG:1 > 1 && TALENT:변신시ＴＳ > 0
 		CFLAG:321 += 1
 	ELSE
 		CFLAG:320 += 1

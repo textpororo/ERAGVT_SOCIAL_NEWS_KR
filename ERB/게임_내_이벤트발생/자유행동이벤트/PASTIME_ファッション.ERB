@@ -2,8 +2,8 @@
 @PASTIME_FASHION, ARG
 #DIM CCOUNT
 #DIM ＴＳキャラ
-;변신시TS女体化キャラのメッセージ分岐
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+;변신시ＴＳ女体化キャラのメッセージ分岐
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	ＴＳキャラ = 1
 ELSE
 	ＴＳキャラ = 0
@@ -17,7 +17,7 @@ ENDIF
 CCOUNT = CFLAG:310
 
 PRINTL 
-IF ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0
+IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、身綺麗にして거리로나간다ことにした。
 ELSEIF TALENT:성별변화 % 10 == 1
 	PRINTFORML 少しずつ女のカラダに慣れていこうと考え、身綺麗にして거리로나간다ことにした。
@@ -119,7 +119,7 @@ IF TALENT:음란 > 0
 		PRINTFORM いかにも腰の軽そうなギャル風だ。
 	ENDIF
 ;TS娘or完全／強制女体化娘
-ELSEIF (ISFEMALE() && TALENT:변신시TS > 0 && CFLAG:1 > 0) || TALENT:성별변화 % 10 == 1
+ELSEIF (ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0) || TALENT:성별변화 % 10 == 1
 	;服選び・여체수용まで数段階。下着セットをノリノリで選ぶのは五段階目で良いのか？
 	;受容１その後
 	IF TALENT:여체수용 > 0 && RAND:4 == 0

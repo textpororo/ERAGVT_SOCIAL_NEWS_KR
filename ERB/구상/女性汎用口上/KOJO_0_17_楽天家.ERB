@@ -315,7 +315,7 @@ PRINTFORML 「……すっごく痛いから覚悟してね」
 ;구상オリジナルの名乗りを使用する場合のみコメントアウトを外して記述してください
 ;@KOJO_0_BATTLE_CHARA_NANORI_17
 
-;SP변신 시 구호
+;ＳＰ변신 시 구호
 @KOJO_0_BATTLE_CHARA_SP_TRANSFORMCALL_17
 PRINTL 「今から泣いて謝っても遅いからね！」
 
@@ -469,7 +469,7 @@ PRINTFORML 「この……エッチ♥」
 PRINTFORML 「ハムッ♥」
 PRINTFORML 「いっぱい出してね♥」
 
-;V삽입방어
+;Ｖ삽입방어
 ;--------------------------------------------------
 @KOJO_0_BATTLE_CHARA_ANTI_V_17
 PRINTFORML （いくらなんでも挿れられたらマズい）
@@ -643,7 +643,7 @@ SIF TALENT:촉수의포로
 ;COM3：V攻め強　挿入
 ;--------------------------------------------------
 @KOJO_0_SEX_COM3_17
-IF TALENT:촉수의포로 || ABL:V감각 >= 2
+IF TALENT:촉수의포로 || ABL:Ｖ감각 >= 2
 	PRINTFORML 「アッ♥…ハァァ…♥」
 ELSE
 	PRINTFORML 「グッ！…グゥゥ…」
@@ -652,7 +652,7 @@ ENDIF
 ;SPCOM1：V攻めSP　奥を突く
 ;--------------------------------------------------
 @KOJO_0_SEX_SPCOM1_17
-IF TALENT:촉수의포로 || ABL:V감각 >= 4
+IF TALENT:촉수의포로 || ABL:Ｖ감각 >= 4
 	PRINTFORML 「ハァァンッ♥」
 	PRINTFORML  %타겟은% %ESTRUS_TEXT_F(TARGET)%子宮を촉수で小突かれ、強い快楽に襲われている……
 ELSE
@@ -666,7 +666,7 @@ ENDIF
 PRINTFORML 「そ、そこはっ…！」
 IF TALENT:촉수의포로
 	PRINTFORML 「早くぅ…早く挿れてぇっ！」
-ELSEIF ABL:A감각 >= 2
+ELSEIF ABL:Ａ감각 >= 2
 	PRINTFORML 「きたなッ…！　ヒャァァン！♥」
 ELSE
 	PRINTFORML 「お尻はッ…！グッ！…ウグゥ…」
@@ -676,7 +676,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_SEX_COM5_17
 PRINTFORML 「！　…まさか！」
-IF TALENT:촉수의포로 || ABL:A감각 >= 3
+IF TALENT:촉수의포로 || ABL:Ａ감각 >= 3
 	PRINTFORML 「アァァァン♥」
 	PRINTFORML 「ちょっといきなり…イヤァン♥」
 ELSE
@@ -687,7 +687,7 @@ ENDIF
 ;SPCOM2：A攻めSP　激しく애널を犯す
 ;--------------------------------------------------
 @KOJO_0_SEX_SPCOM2_17
-IF TALENT:촉수의포로 || ABL:A감각 == 5
+IF TALENT:촉수의포로 || ABL:Ａ감각 == 5
 	PRINTFORML 「ア゛♥ア゛ァ゛ッ♥」
 	PRINTFORML 「お゛じり゛でぇ゛っ♥お゛じり゛でにんじんしぢゃうう゛っ♥」
 	PRINTFORML %타겟은% 촉수の妙技に飲まれ、狂ったように快楽を貪っている……
@@ -700,7 +700,7 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_0_SEX_COM6_17
 PRINTFORML 「ちょ、ちょっと！？」
-IF TALENT:촉수의포로 || ABL:B감각 >= 2
+IF TALENT:촉수의포로 || ABL:Ｂ감각 >= 2
 	PRINTFORML 「あっ♥そんなっ♥やさしく揉まないでぇっ♥」
 ELSE
 	PRINTFORML 「……」
@@ -710,7 +710,7 @@ ENDIF
 ;COM7：B攻め強　乳首に吸い付く
 ;--------------------------------------------------
 @KOJO_0_SEX_COM7_17
-IF TALENT:촉수의포로 || ABL:B감각 >= 3
+IF TALENT:촉수의포로 || ABL:Ｂ감각 >= 3
 	PRINTFORML 「ひぃぃっ♥はぅんっ♥」
 	PRINTFORML 「乳首ペロペロしちゃだめぇっ♥」
 ELSE
@@ -899,7 +899,7 @@ PRINTFORML 「おっぱいでちゃうにょおおぉぉぉっ！♥」
 @KOJO_0_SEX_ECSTASY_C_17
 PRINTFORML 「ちょっと待って！　そこ触ったらイッ…ちゃぁぁう♥」
 
-;C強絶頂
+;C강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_C_HI_17
 PRINTFORML 「あ゛っあ゛あ゛っ♥」
@@ -911,7 +911,7 @@ PRINTFORML 「すごいのきちゃう…すごい…のお゛お゛お゛お゛
 @KOJO_0_SEX_ECSTASY_V_17
 PRINTFORML 「そ、そんなに激しくしたら…いやぁぁぁん♥」
 
-;V強絶頂
+;V강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_V_HI_17
 PRINTFORML 「あ゛あ゛あ゛っ！♥」
@@ -924,7 +924,7 @@ PRINTFORML 「おかしく…なっ…ちゃぁああああああ゛あ゛あ゛
 @KOJO_0_SEX_ECSTASY_A_17
 PRINTFORML 「お、お尻でイくだなん…てぇぇぇ♥」
 
-;A強絶頂
+;A강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_A_HI_17
 PRINTFORML 「おしりがぁ…♥」
@@ -936,7 +936,7 @@ PRINTFORML 「おし、おしりがぁっ！♥あ゛♥あ゛♥あ゛♥あ゛
 @KOJO_0_SEX_ECSTASY_B_17
 PRINTFORML 「おっぱいをそんなに揉みしだかない…でッ♥」
 
-;B強絶頂
+;B강절정
 ;--------------------------------------------------
 @KOJO_0_SEX_ECSTASY_B_HI_17
 PRINTFORML 「おっぱい゛い゛っ♥そんなにもみゃれてぁらぁっ♥」
@@ -946,70 +946,70 @@ PRINTFORML 「イっ…ちゃ…イっ…ちゃ…てるぅぅぅぅぅぅぅぅ
 
 ;多重絶頂に関する구상
 
-;四重絶頂
+;사중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVAB_17
 PRINTFORML 「えっ…こっちも！？　あっちも！？　もしかして…そっちも！？」
 PRINTFORML 「全部なの！？　ヒャァァァァァン♥」
 PRINTFORML  全方位から来る快楽に軽口を叩くキャパシティも残されていないようだ……
 
-;CVA三重絶頂
+;CVA삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVA_17
 PRINTFORML 「あっちょっと待って！？」
 PRINTFORML 「下のほうからぐ…るぅッ！？♥」
 PRINTFORML  %타겟은% 下半身の全てを責め立てた공격になす術もない……
 
-;CVB三重絶頂
+;CVB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CVB_17
 PRINTFORML 「あっちょっとやめて！」
 PRINTFORML 「やめないと…ヒャァァン♥」
 PRINTFORML  %타겟은% 性感帯をことごとく責め立てられて無様にもイってしまったようだ……
 
-;CAB三重絶頂
+;CAB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CAB_17
 PRINTFORML 「アンッ♥ハァンッ♥ヒィャンッ♥」
 PRINTFORML  %타겟은% 前と後ろからの快楽に、胸を責め立てられて絶頂してしまった……
 
-;VAB三重絶頂
+;VAB삼중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VAB_17
 PRINTFORML 「ア゛ッ♥エ゛ッ♥オ゛ッ♥」
 PRINTFORML  %타겟은% 二つの穴を責め立てられ、おまけに胸をいじくられ、そして達した。
 
-;CV二重絶頂
+;CV이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CV_17
 PRINTFORML 「アッ♥そこダメェェェェェッ！♥」
 PRINTFORML 촉수が%CALLNAME%の女性器に与える容赦ない快楽に彼女は絶頂を迎えた。
 
-;CA二重絶頂
+;CA이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CA_17
 PRINTFORML 「クリだけじゃなくてっ♥お尻まで気持ちよくなっちゃうぅ♥」
 PRINTFORML %타겟은% 陰核とアヌスのもたらす快楽の奔流に飲み込まれている……
 
-;CB二重絶頂
+;CB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_CB_17
 PRINTFORML 「いっしょにだなんてぇ♥ア♥ダメ♥ダメなの♥」
 PRINTFORML 女性の証を二箇所同時に責め立てられ、%CALLNAME%の理性はあっけなく崩壊した。
 
-;VA二重絶頂
+;VA이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VA_17
 PRINTFORML 「前も後ろもだなんて卑怯だよぅ…♥」
 PRINTFORML %타겟은% 二つの穴を容赦なく責める촉수に情けなくイかされた。
 
-;VB二重絶頂
+;VB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_VB_17
 PRINTFORML 「おマンコもおっぱいもいっしょになんて気持ちよくなっちゃうでしょぉぉ♥」
 PRINTFORML 乳房と陰唇を同時に絶頂まで導かれた%타겟은% はしたなく獣の本性をさらけ出している……
 
-;AB二重絶頂
+;AB이중절정
 ;--------------------------------------------------
 @KOJO_0_SEX_MULTIECSTASY_AB_17
 PRINTFORML 「お尻とっ♥おっぱいでっ♥イっちゃうなんてぇっ♥」
@@ -1329,27 +1329,27 @@ PRINTFORML （これは……ちょっとミスしちゃったかな）
 @KOJO_0_BATTLE_DISACTION_TORIKO_17
 PRINTFORML  %타겟은% 촉수の姿を視認した途端、その場にひれ伏してしまった。
 
-;快楽で体が竦む
+;쾌락으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KAIRAKU_17
 PRINTFORML 「……ッ♥」
 
-;고통で体が竦む
+;고통으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KUTUU_17
 PRINTFORML 「ヒッ……」
 
-;屈辱で体が竦む
+;굴욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KUTUZYOKU_17
 PRINTFORML 「…こ、これはタダの武者震いだよ！」
 
-;공포で体が竦む
+;공포로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_KYOUHU_17
 PRINTFORML 「く、来るな！」
 
-;恥辱で体が竦む
+;치욕으로 몸이 움츠러든다
 ;--------------------------------------------------
 @KOJO_0_BATTLE_DISACTION_TIZYOKU_17
 PRINTFORML 「あっ…♥」
@@ -1455,7 +1455,7 @@ ENDIF
 ;C中心攻め
 ;--------------------------------------------------
 @KOJO_0_PRISON_COM_0_17
-SELECTCASE ABL:C감각
+SELECTCASE ABL:Ｃ감각
 	CASE 0, 1
 		PRINTFORML 「ンッ…」
 		PRINTFORML 「まったく気持ち悪い触り方だなぁ」
@@ -1476,7 +1476,7 @@ ENDSELECT
 ;V中心攻め
 ;--------------------------------------------------
 @KOJO_0_PRISON_COM_1_17
-SELECTCASE ABL:V감각
+SELECTCASE ABL:Ｖ감각
 	CASE 0, 1
 		PRINTFORML 「ッッ…！」
 		PRINTFORML 「…女の子の大切な所なんだからもうちょっと慎重に扱いなよ」
@@ -1499,7 +1499,7 @@ ENDSELECT
 ;A中心攻め
 ;--------------------------------------------------
 @KOJO_0_PRISON_COM_2_17
-SELECTCASE ABL:A감각
+SELECTCASE ABL:Ａ감각
 	CASE 0, 1
 		PRINTFORML 「ちょっといったいなぁ！」
 	CASE 2
@@ -1519,7 +1519,7 @@ ENDSELECT
 ;B中心攻め
 ;--------------------------------------------------
 @KOJO_0_PRISON_COM_3_17
-SELECTCASE ABL:B감각
+SELECTCASE ABL:Ｂ감각
 	CASE 0, 1
 		PRINTFORML 「…そんなに揉んでも何も出ないよ」
 	CASE 2

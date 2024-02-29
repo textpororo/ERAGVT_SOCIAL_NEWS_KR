@@ -1,9 +1,9 @@
 ﻿;--------------------------------------------------
-;戦闘に関する共通関数
+;전투에 관한 공통 함수
 
 
 ;--------------------------------------------------
-;민첩の差による補正
+;민첩의 차이에 따른 보정
 @CORRECTION_BINSYOU, ARG
 IF ARG < 10
 	LOCAL = ARG * 15 / 100
@@ -18,7 +18,7 @@ ELSE
 ENDIF
 RETURN LOCAL
 
-;式中関数版
+;식중함수판
 @CORRECTION_BINSYOU_F(ARG)
 #FUNCTION
 IF ARG < 10
@@ -35,13 +35,13 @@ ENDIF
 RETURNF LOCAL
 
 ;--------------------------------------------------
-;변신능력のあるキャラの補正
+;변신 능력이 있는 캐릭터 보정
 @CORRECTION_TRANS(ARG)
 #FUNCTION
 IF (TALENT:변신능력 == 1 && CFLAG:1 == 0) || TALENT:변신능력 == -1
 	ARG = ARG * CFLAG:10 / 100
 ELSEIF TALENT:변신능력 == 1 && CFLAG:1 == 2
-	;SP변신の能力倍率は１００未満にならない
+	;ＳＰ변신의 능력 배율은 100 미만이 되지 않는다
 	LOCAL = CFLAG:11
 	SIF LOCAL < 100
 		LOCAL = 100
@@ -50,7 +50,7 @@ ENDIF
 RETURNF ARG
 
 ;--------------------------------------------------
-;戦技による行動成功値の補正
+;전투 기술에 따른 행동 성공치 보정
 @CORRECTION_SENGI(ARG:0, ARG:1 ,ARG:2)
 #FUNCTION
 IF ARG:1 == 0
@@ -84,7 +84,7 @@ ENDIF
 RETURNF ARG:0
 
 ;--------------------------------------------------
-;戦技による공격力の補正
+;전투 기술에 따른 공격력 보정
 @CORRECTION_SENGI_DAMAGE(ARG:0, ARG:1 ,ARG:2)
 #FUNCTION
 IF ARG:1 == 0
@@ -160,10 +160,10 @@ ENDIF
 RETURNF ARG:0
 
 ;--------------------------------------------------
-;戦技による回避値の補正
+;전투 기술에 따른 회피치 보정
 @CORRECTION_SENGI_AVOID(ARG:0, ARG:1 = 0, ARG:2)
 #FUNCTION
-;근거리のみ補正を持つ
+;근거리만 보정을 갖는다
 SIF ARG:1 != 0
 	RETURNF ARG:0
 LOCAL = 30
@@ -191,32 +191,33 @@ ENDIF
 RETURNF ARG:0
 
 ;--------------------------------------------------
-;行動制限
-;各種刻印や特定の素質がついていると低確率で体が竦んで行動できなくなる
+;행동 제한
+;각종 각인이나 특정 소질이 붙어 있으면 낮은 확률로 몸이 움츠러들고 행동할 수 없게 된다
 @ACT_LIMIT
 LOCAL = 0
 LOCAL:1 = 0
-IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 == 2 && TCVARn == 3
+;관전 인원이 있고 악질 시민 플래그가 있으며 EX:공 활성화 및 BRAVE HIT가 2회 누적되어 있으면 분기
+IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 > 2 && TCVARn == 3
 	PRINTL 
-	PRINTFORML 戦っている%PRINT_TRANSCALLNAME(TARGET)%의 後ろにいる観衆が
-	PRINTFORML さっきよりも近づいている気がする
+	PRINTFORML 싸우고 있는 %PRINT_TRANSCALLNAME(TARGET)%의 뒤에 있는 관중이
+	PRINTFORML 아까보다도 더 가까워지고 있는 것 같다・・・
 ENDIF
 IF TALENT:촉수의포로 == 1
 	LOCAL = RAND:100
 	IF LOCAL < 6
-		;空中にいる場合は着地する
+		;공중에 있을 경우 착지한다
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT 효과에 따른着地時の反動
+		;FEAT 효과에 따른 착지 시의 반동
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
-		;距離表示
+		;거리 표시
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
-		;지문 敵キャラの虜で体が竦む
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모습이 이상하다・・・
+		;지문: 적 캐릭터의 포로로 몸이 움츠러든다
 		CALL MESSAGE_BATTLE_DISACTION_TORIKO
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「촉수의포로で体が竦む」を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「촉수의포로로 몸이 움츠러든다」를 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_DISACTION_TORIKO
 			
@@ -226,26 +227,26 @@ ENDIF
 IF TALENT:기생 == 1
 
 	IF TALENT:공생 == 1
-		;공생持ちの場合は行動制限発生確率を下げる
+		;공생자의 경우는 행동 제한 발생 확률을 낮춘다
 		LOCAL = RAND:200
 	ELSE
 		LOCAL = RAND:100
 	ENDIF
 	
 	IF LOCAL < 6
-		;空中にいる場合は着地する
+		;공중에 있을 경우 착지한다
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT 효과에 따른着地時の反動
+		;FEAT 효과에 따른 착지 시의 반동
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
-		;距離表示
+		;거리 표시
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
-		;지문 기생した촉수が暴れて体が竦む
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모습이 이상하다・・・
+		;지문: 기생한 촉수가 날뛰어 몸이 움츠러든다
 		CALL MESSAGE_BATTLE_DISACTION_PARASITE
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「기생で体が竦む」を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「기생으로 몸이 움츠러든다」를 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_DISACTION_PARASITE
 			
@@ -256,18 +257,18 @@ ENDIF
 IF (TALENT:임신 == 4 || TALENT:임신 == 5) && CFLAG:222 >= 56
 	LOCAL = RAND:100
 	IF LOCAL < 3 + SQRT(CFLAG:222 / 4)
-		;空中にいる場合は着地する
+		;공중에 있을 경우 착지한다
 		SIF (TCVARn:216 & 1)
 			TCVARn:216 = 4
-		;FEAT 효과에 따른着地時の反動
+		;FEAT 효과에 따른 착지 시의 반동
 		SIF TALENT:날개 > 0
 			TFLAG:99 += 1
-		;距離表示
+		;거리 표시
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%突然強い吐き気を感じて
-		PRINTL 体が竦んでしまった・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모습이 이상하다・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 갑자기 심한 메스꺼움을 느껴
+		PRINTL 몸이 움츠러들고 말았다・・・
 		RETURN 1
 
 	ENDIF
@@ -276,15 +277,14 @@ ENDIF
 IF FLAG:72 > 0 && FLAG:70 > 0 && TFLAG:30 > 2 && TCVARn == 3
 	LOCAL = RAND:100
 	IF LOCAL < 11
-		;空中にいる場合は無効
+		;공중에 있을 경우 무효
 		SIF (TCVARn:216 & 1)
 			RETURN 1
-		;距離表示
+		;거리 표시
 		CALL PRINT_DISTANCE
 		PRINTL 
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%動こうとすると
-		PRINTFORML 観衆の一人に腕をつかまれてしまい
-		PRINTFORML 動くことができなかった・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 움직이려 하자,
+		PRINTFORML 관중 중 한 명에게 팔을 잡혀버려 움직일 수가 없었다・・・
 		RETURN 1
 
 	ENDIF
@@ -294,7 +294,7 @@ ENDIF
 LOCAL = 0
 
 REPEAT 5
-	;基本確率を설정
+	;기본 확률을 설정
 	IF MARK:COUNT == 0
 		LOCAL = 0
 	ELSEIF MARK:COUNT == 1
@@ -309,7 +309,7 @@ REPEAT 5
 		LOCAL = 300
 	ENDIF
 
-	;성격 보정を설정
+	;성격 보정을 설정
 	IF COUNT == 0
 		LOCAL:2 = 13
 	ELSEIF COUNT == 1
@@ -321,15 +321,15 @@ REPEAT 5
 	ELSEIF COUNT == 4
 		LOCAL:2 = 15
 	ELSE
-		PRINTW ERROR 刻印の호출先が不正です
+		PRINTW ERROR 각인의 호출처가 올바르지 않습니다.
 		RETURN 0
 	ENDIF
 	LOCAL = SEIKAKU_HOSEI_PALAM_F(SEIKAKU_CHECK_F(TARGET), LOCAL:2, LOCAL)
 
-	;刻印怯み無効の効果
+	;각인 기죽음 무효 효과
 	IF FLAG:905
 		LOCAL = 0
-	;刻印怯み２倍の効果
+	;각인 기죽음 2배 효과
 	ELSEIF FLAG:910
 		LOCAL *= 2
 	ENDIF
@@ -337,48 +337,48 @@ REPEAT 5
 	IF LOCAL > 0
 		LOCAL:1 = RAND:10000
 		IF LOCAL:1 < LOCAL
-			;空中にいる場合は着地する
+			;공중에 있을 경우 착지한다
 			SIF (TCVARn:216 & 1)
 				TCVARn:216 = 4
-			;FEAT 효과에 따른着地時の反動
+			;FEAT 효과에 따른 착지 시의 반동
 			SIF TALENT:날개 > 0
 				TFLAG:99 += 1
-			;距離表示
+			;거리 표시
 			CALL PRINT_DISTANCE
 			PRINTL 
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 様子がおかしい・・・
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 모습이 이상하다・・・
 			IF COUNT == 0
-				;지문 快楽で体が竦む
+				;지문: 쾌락으로 몸이 움츠러든다
 				CALL MESSAGE_BATTLE_DISACTION_KAIRAKU
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「快楽で体が竦む」を見た
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「쾌락으로 몸이 움츠러든다」를 봤다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KAIRAKU
 					
 			ELSEIF COUNT == 1
-				;지문 고통で体が竦む
+				;지문: 고통으로 몸이 움츠러든다
 				CALL MESSAGE_BATTLE_DISACTION_KUTUU
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「고통で体が竦む」を見た
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「고통으로 몸이 움츠러든다」를 봤다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KUTUU
 					
 			ELSEIF COUNT == 2
-				;지문 屈辱で体が竦む
+				;지문: 굴욕으로 몸이 움츠러든다
 				CALL MESSAGE_BATTLE_DISACTION_KUTUZYOKU
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「屈辱で体が竦む」を見た
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「굴욕으로 몸이 움츠러든다」를 봤다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KUTUZYOKU
 
 			ELSEIF COUNT == 3
-				;지문 공포で体が竦む
+				;지문: 공포로 몸이 움츠러든다
 				CALL MESSAGE_BATTLE_DISACTION_KYOUHU
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「공포で体が竦む」を見た
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「공포로 몸이 움츠러든다」를 봤다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_KYOUHU
 
 			ELSEIF COUNT == 4
-				;지문 恥辱で体が竦む
+				;지문: 치욕으로 몸이 움츠러든다
 				CALL MESSAGE_BATTLE_DISACTION_TIZYOKU
-				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 「恥辱で体が竦む」を見た
+				;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「치욕으로 몸이 움츠러든다」를 봤다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 					CALL MESSAGE_OTHER_BATTLE_DISACTION_TIZYOKU
 
@@ -392,28 +392,28 @@ RETURN 0
 
 
 ;--------------------------------------------------
-;撤退可能かどうかを判定する式中関数
+;철수 가능 여부를 판정하는 식중 함수
 @CHECK_CAN_RETREAT_F()
 #FUNCTION
-;デバッグ中は条件を無視して使用可能
+;DEBUG 중에는 아래의 조건을 무시하고 사용 가능
 IF FLAG:999 == 0
-	;拘束されているならだめ
+	;구속되어 있다면 철수 불가능
 	SIF TCVARn:0 == 0
 		RETURNF 0
-	;악질 시민戦は拘束されてなければ逃げれる
+	;악질 시민전은 구속되지 않았다면 도망칠 수 있다
 	IF FLAG:73 > 0
-		;악질 시민機能がオフの場合、8ターン目以降か체력, 기력どちらかが50%未満でないとだめ
+		;악질 시민 기능이 OFF일 경우, 8턴째 이전이거나 체력•기력 중 하나가 50% 미만이 아니라면 철수 불가능
 		SIF CONFIG_CHECK_EVENT_F(3) == 0 && TFLAG:0 < 8 && PERCENT_CAL_F(BASE:체력, MAXBASE:체력) > 50 && PERCENT_CAL_F(BASE:기력, MAXBASE:기력) > 50
 			RETURNF 0
-		;악질 시민機能がオンの場合、避難が完了していないとだめ
+		;악질 시민 기능이 ON일 경우, 피난이 완료되지 않았다면 철수 불가능
 		SIF CONFIG_CHECK_EVENT_F(3) > 0 && (FLAG:70 + FLAG:71) > 0
 			RETURNF 0
-		;襲撃イベント中ならだめ
+		;습격 이벤트 중이라면 철수 불가능
 		SIF GETBATTLESITUATION("철수 불가") > 0
 			RETURNF 0
 	ENDIF
 ENDIF
-;ここまで抜けて来たら使用可能
+;여기까지 빠져나오면 사용 가능
 RETURNF 1
 
 
@@ -421,26 +421,26 @@ RETURNF 1
 
 
 ;--------------------------------------------------
-;キャラクターの変身処理
-;ARG	変身
+;캐릭터의 변신 처리
+;ARG	변신
 @TRANSFORM, ARG, ARG:1 = -999
 #DIM AIRPLUS
 
-;ARG:1が省略された場合はTARGETを優先
+;ARG:1이 생략된 경우 TARGET을 우선
 SIF ARG:1 == -999
 	ARG:1 = TARGET
 
-;現在の変身状況（CFLAG:1）と目的となる変身状況（ARG）が同じなら終了
+;현재의 변신 상황(CFLAG:1)과, 목적이 되는 변신 상황(ARG)이 같다면 종료
 SIF CFLAG:(ARG:1):1 == ARG
 	RETURN 0
 SIF CFLAG:(ARG:1):1 == 0 && ARG == 0
 	RETURN 0
 
-;変身前の공중 성능 강화
+;변신 전의 공중 성능 강화
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",ARG:1
 AIRPLUS = RESULT
 
-;공중 성능 강화の変動
+;공중 성능 강화의 변동
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",ARG:1
 IF AIRPLUS == 0 && RESULT > 0
 	MAXBASE:(ARG:1):공중대시 += 1
@@ -454,28 +454,28 @@ ELSEIF AIRPLUS == 1 && RESULT == 0
 		BASE:(ARG:1):공중대시 = 0
 ENDIF
 
-;通常→変身
+;통상→변신
 IF ARG > 0
-	;남자が変身中に女体化する場合
-	IF TALENT:(ARG:1):변신시TS > 0 && CHARATALENT_F(ARG:1,1,"남자") == 0
+	;남자가 변신 중에 여체화하는 경우
+	IF TALENT:(ARG:1):변신시ＴＳ > 0 && CHARATALENT_F(ARG:1,1,"남자") == 0
 		TALENT:(ARG:1):남자 = -1
 		TALENT:(ARG:1):처녀 = 1
 		SIF TALENT:(ARG:1):변신시비처녀 > 0
 			TALENT:(ARG:1):처녀 = -1
-		;変身時濡れやすさ
+		;변신 시 젖기쉬움/어려움
 		IF TALENT:(ARG:1):변신시젖기쉬움변동 == 1
 			TALENT:(ARG:1):젖기쉬움 = 1
 		ELSEIF TALENT:(ARG:1):변신시젖기쉬움변동 == -1
 			TALENT:(ARG:1):젖기어려움 = 1
 		ENDIF
-		;変身時V감각
-		IF TALENT:(ARG:1):변신시V감각변동 == 1
-			TALENT:(ARG:1):V민감 = 1
-		ELSEIF TALENT:(ARG:1):변신시V감각변동 == -1
-			TALENT:(ARG:1):V둔감 = 1
+		;변신 시 Ｖ감각
+		IF TALENT:(ARG:1):변신시Ｖ감각변동 == 1
+			TALENT:(ARG:1):Ｖ민감 = 1
+		ELSEIF TALENT:(ARG:1):변신시Ｖ감각변동 == -1
+			TALENT:(ARG:1):Ｖ둔감 = 1
 		ENDIF
-	;女が変身中に남자になる場合
-	ELSEIF TALENT:(ARG:1):변신시TS > 0 && CHARATALENT_F(ARG:1,1,"남자") > 0
+	;여자가 변신 중에 남자가 되는 경우
+	ELSEIF TALENT:(ARG:1):변신시ＴＳ > 0 && CHARATALENT_F(ARG:1,1,"남자") > 0
 		TALENT:(ARG:1):남자 = 1
 		SIF TALENT:(ARG:1):처녀 > 0
 			TALENT:(ARG:1):처녀 -= 5
@@ -483,12 +483,12 @@ IF ARG > 0
 			TCVARn:12 -= 배란
 		TALENT:(ARG:1):젖기쉬움 *= -1
 		TALENT:(ARG:1):젖기어려움 *= -1
-		TALENT:(ARG:1):V민감 *= -1
-		TALENT:(ARG:1):V둔감 *= -1
+		TALENT:(ARG:1):Ｖ민감 *= -1
+		TALENT:(ARG:1):Ｖ둔감 *= -1
 		TALENT:(ARG:1):빈유 *= -1
 		TALENT:(ARG:1):거유 *= -1
 	ENDIF
-	;胸サイズ変動
+	;가슴 사이즈 변동
 	IF MAX(TALENT:(ARG:1):거유,0) - MAX(TALENT:(ARG:1):빈유,0) + TALENT:(ARG:1):변신시가슴사이즈변동 <= -2
 		TALENT:(ARG:1):빈유 = 2
 		TALENT:(ARG:1):거유 = 0
@@ -511,7 +511,7 @@ IF ARG > 0
 		TALENT:(ARG:1):빈유 = 0
 		TALENT:(ARG:1):거유 = 5
 	ENDIF
-	;体格変動
+	;체격 변동
 	IF MAX(TALENT:(ARG:1):장신,0) - MAX(TALENT:(ARG:1):왜소함,0) + TALENT:(ARG:1):변신시체격변동 < 0
 		TALENT:(ARG:1):왜소함 = 1
 		TALENT:(ARG:1):장신 = 0
@@ -522,42 +522,42 @@ IF ARG > 0
 		TALENT:(ARG:1):왜소함 = 0
 		TALENT:(ARG:1):장신 = 1
 	ENDIF
-	;보추の入れ替え
+	;보추 교체
 	SWAP TALENT:(ARG:1):보추,TALENT:(ARG:1):변신시보추
-	;후타나리の入れ替え
+	;후타나리 교체
 	SWAP TALENT:(ARG:1):후타나리,TALENT:(ARG:1):변신시후타나리
-	;変身済み플래그를 세운다
+	;변신 종료 플래그를 세운다
 	SIF TFLAG:700 > 0
 		TCVARn:10 = 1
-;変身→通常
+;변신→통상
 ELSE
-	;남자が変身中に女体化している場合
-	IF TALENT:(ARG:1):변신시TS > 0 && CHARATALENT_F(ARG:1,0,"남자") > 0
+	;남자가 변신 중에 여체화하고 있는 경우
+	IF TALENT:(ARG:1):변신시ＴＳ > 0 && CHARATALENT_F(ARG:1,0,"남자") > 0
 		TALENT:(ARG:1):남자 = 1
 		SIF TALENT:(ARG:1):처녀 == -1
 			TALENT:(ARG:1):변신시비처녀 = 1
 		TALENT:(ARG:1):처녀 = 0
 		SIF (TCVARn:12 & 배란)
 			TCVARn:12 -= 배란
-		;濡れやすさ変動
+		;젖기쉬움/어려움 변동
 		TALENT:(ARG:1):젖기쉬움 = 0
 		TALENT:(ARG:1):젖기어려움 = 0
-		;V감각変動
-		TALENT:(ARG:1):V민감 = 0
-		TALENT:(ARG:1):V둔감 = 0
-	;女が変身中に남자になっている場合
-	ELSEIF TALENT:(ARG:1):변신시TS > 0 && CHARATALENT_F(ARG:1,0,"남자") == 0
+		;Ｖ감각 변동
+		TALENT:(ARG:1):Ｖ민감 = 0
+		TALENT:(ARG:1):Ｖ둔감 = 0
+	;여자가 변신 중에 남자가 되어 있는 경우
+	ELSEIF TALENT:(ARG:1):변신시ＴＳ > 0 && CHARATALENT_F(ARG:1,0,"남자") == 0
 		TALENT:(ARG:1):남자 = 0
 		SIF TALENT:(ARG:1):처녀 < -2
 			TALENT:(ARG:1):처녀 += 5
 		TALENT:(ARG:1):젖기쉬움 *= -1
 		TALENT:(ARG:1):젖기어려움 *= -1
-		TALENT:(ARG:1):V민감 *= -1
-		TALENT:(ARG:1):V둔감 *= -1
+		TALENT:(ARG:1):Ｖ민감 *= -1
+		TALENT:(ARG:1):Ｖ둔감 *= -1
 		TALENT:(ARG:1):빈유 *= -1
 		TALENT:(ARG:1):거유 *= -1
 	ENDIF
-	;胸サイズ変動
+	;가슴 사이즈 변동
 	IF MAX(TALENT:(ARG:1):거유,0) - MAX(TALENT:(ARG:1):빈유,0) - TALENT:(ARG:1):변신시가슴사이즈변동 <= -2
 		TALENT:(ARG:1):빈유 = 2
 		TALENT:(ARG:1):거유 = 0
@@ -583,7 +583,7 @@ ELSE
 		TALENT:(ARG:1):빈유 = 0
 		TALENT:(ARG:1):거유 = 5
 	ENDIF
-	;体格変動
+	;体格변동
 	IF MAX(TALENT:(ARG:1):장신,0) - MAX(TALENT:(ARG:1):왜소함,0) - TALENT:(ARG:1):변신시체격변동 < 0
 		TALENT:(ARG:1):왜소함 = 1
 		TALENT:(ARG:1):장신 = 0
@@ -594,14 +594,14 @@ ELSE
 		TALENT:(ARG:1):왜소함 = 0
 		TALENT:(ARG:1):장신 = 1
 	ENDIF
-	;보추の入れ替え
+	;보추 교체
 	SWAP TALENT:(ARG:1):보추,TALENT:(ARG:1):변신시보추
-	;후타나리の入れ替え
+	;후타나리 교체
 	SWAP TALENT:(ARG:1):후타나리,TALENT:(ARG:1):변신시후타나리
 ENDIF
-;変身状況をARGに
+;변신 상황을 ARG로
 CFLAG:(ARG:1):1 = ARG
-;衣装チェック
+;의상 체크
 CALL CLOTH_NO_INNER, TARGET
 CLOTH_NO_INNER = RESULT
 

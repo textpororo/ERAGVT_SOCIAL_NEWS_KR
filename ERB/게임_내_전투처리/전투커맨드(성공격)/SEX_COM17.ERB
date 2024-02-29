@@ -49,32 +49,32 @@ CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111
 
 ;快A　감각が低いうちは少なめ
 IF CONFIG_CHECK_BALANCE_F(7) == 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 8
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 50
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 200
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 400
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 1000
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 2000
 	ENDIF
-;컨피그オンで쾌A増加
+;컨피그オンで쾌Ａ増加
 ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
-	IF ABL:A감각 == 0
+	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 40
-	ELSEIF ABL:A감각 == 1
+	ELSEIF ABL:Ａ감각 == 1
 		LOCAL:2 = 100
-	ELSEIF ABL:A감각 == 2
+	ELSEIF ABL:Ａ감각 == 2
 		LOCAL:2 = 200
-	ELSEIF ABL:A감각 == 3
+	ELSEIF ABL:Ａ감각 == 3
 		LOCAL:2 = 400
-	ELSEIF ABL:A감각 == 4
+	ELSEIF ABL:Ａ감각 == 4
 		LOCAL:2 = 1000
-	ELSEIF ABL:A감각 >= 5
+	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 2000
 	ENDIF
 ENDIF
@@ -98,7 +98,7 @@ CALL SET_TENTACLE_POOL
 CALL CLOTH_BATTLE_DAMAGE, 2
 
 ;ベース
-EXP:A경험 += 1
+EXP:Ａ경험 += 1
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
 	EXP:근친교배경험 += 1
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
@@ -131,19 +131,19 @@ ELSEIF ABL:봉사정신 >= 5
 	LOCAL:6 = 500
 ENDIF
 
-;굴복　A감각に応じて
-IF ABL:A감각 == 0
+;굴복　Ａ감각に応じて
+IF ABL:Ａ감각 == 0
 	LOCAL:8 = 20
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:8 = 40
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:8 = 100
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:8 = 200
-ELSEIF ABL:A감각 == 4
+ELSEIF ABL:Ａ감각 == 4
 	LOCAL:8 = 400
-ELSEIF ABL:A감각 >= 5
-	LOCAL:8 = 900 + ABL:A감각 * 20
+ELSEIF ABL:Ａ감각 >= 5
+	LOCAL:8 = 900 + ABL:Ａ감각 * 20
 ENDIF
 
 ;윤활が低いと고통が入る
@@ -153,14 +153,14 @@ ELSEIF PALAM:윤활 < 2000
 	LOCAL:10 += 200
 ENDIF
 
-;A감각が低いと공포が入る
-IF ABL:A감각 == 0
+;Ａ감각が低いと공포が入る
+IF ABL:Ａ감각 == 0
 	LOCAL:11 = 200
-ELSEIF ABL:A감각 == 1
+ELSEIF ABL:Ａ감각 == 1
 	LOCAL:11 = 100
-ELSEIF ABL:A감각 == 2
+ELSEIF ABL:Ａ감각 == 2
 	LOCAL:11 = 50
-ELSEIF ABL:A감각 == 3
+ELSEIF ABL:Ａ감각 == 3
 	LOCAL:11 = 20
 ELSE
 ENDIF
@@ -177,7 +177,7 @@ ENDIF
 IF FLAG:15 >= FLAG:14 * 2
 	TFLAG:17 = 18
 ;Ｖ追加責めが立っていれば両穴ピストンに移行
-ELSEIF (EX_COM & Ｖ) && FLAG:15 >= FLAG:14 && BASE:V결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
+ELSEIF (EX_COM & Ｖ) && FLAG:15 >= FLAG:14 && BASE:Ｖ결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
 	TFLAG:17 = 19
 ;それ以外なら애널ピストン続行
 ELSE
