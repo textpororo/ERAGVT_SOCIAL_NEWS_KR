@@ -1,138 +1,139 @@
 ﻿
-;CON	キャラの変身状況	0：変身前　1：変身後
-;TAR	キャラクターID		0：現在のTARGET
+;CON	캐릭터의 변신 상황	0：변신 전　1：변신 후
+;TAR	캐릭터 ID		0：현재 TARGET
 
 
-;RANK 0　E 繊毛
-;	中央値：0
-;	範囲　：-5 〜 5
+;RANK 0　E 섬모
+;	중앙값：0
+;	범위　：-5 〜 5
 
 ;RANK 1　E+
-;	中央値：10
-;	範囲　：5 〜 15
+;	중앙값：10
+;	범위　：5 〜 15
 
-;RANK 2　D 指
-;	中央値：20
-;	範囲　：15 〜 25
+;RANK 2　D 손가락
+;	중앙값：20
+;	범위　：15 〜 25
 
 ;RANK 3　D+
-;	中央値：32
-;	範囲　：25 〜 40
+;	중앙값：32
+;	범위　：25 〜 40
 
-;RANK 4　C 男性器
-;	中央値：50
-;	範囲　：40 〜 60
+;RANK 4　C 남성기
+;	중앙값：50
+;	범위　：40 〜 60
 
 ;RANK 5　C+
-;	中央値：72
-;	範囲　：60 〜 85
+;	중앙값：72
+;	범위　：60 〜 85
 
-;RANK 6　B 腕
-;	中央値：100
-;	範囲　：85 〜 115
+;RANK 6　B 팔다리
+;	중앙값：100
+;	범위　：85 〜 115
 
 ;RANK 7　B+
-;	中央値：135
-;	範囲　：115 〜 155
+;	중앙값：135
+;	범위　：115 〜 155
 
-;RANK 8　A 頭
-;	中央値：180
-;	範囲　：155 〜 205
+;RANK 8　A 머리
+;	중앙값：180
+;	범위　：155 〜 205
 
 ;RANK 9　A+
-;	中央値：235
-;	範囲　：205 〜 265
+;	중앙값：235
+;	범위　：205 〜 265
 
-;RANK10　S 腰
-;	中央値：300
-;	範囲　：265 〜 335
+;RANK10　S 허리
+;	중앙값：300
+;	범위　：265 〜 335
 
 ;RANK11　S+
-;	中央値：400
-;	範囲　：335 〜 465
+;	중앙값：400
+;	범위　：335 〜 465
 
-;＠중국판より
-;RANK12　凄 头
-;	中央值：550
-;	範囲　：465 〜 635
-;RANK13　極 
-;	中央值：700
-;	範囲　：635 〜 765
-;RANK14　絶 腰
-;	中央值：850
-;	範囲　：765 〜 935
-;RANK15　獄
-;	中央值：1000
-;	範囲　：935 〜 1065
-;RANK16　狂 槌
-;	中央值：1135
-;	範囲　：1065 〜 1205
-;RANK17　最狂 艏
-;	中央值：1280
-;	範囲　：1205 〜 1355
-
-;--------------------------------------------------
-;FUNCTION関数	主に変数算出
-;--------------------------------------------------
+;＠중국판 역수출
+;정말이지 중국판만 나오면 뭐든지 극으로 치닫는 느낌이 든다
+;RANK12　처 머리 (凄 头)
+;	중앙값：550
+;	범위　：465 〜 635
+;RANK13　극(極) 
+;	중앙값：700
+;	범위　：635 〜 765
+;RANK14　절 허리 (絶 腰)
+;	중앙값：850
+;	범위　：765 〜 935
+;RANK15　옥 (獄)
+;	중앙값：1000
+;	범위　：935 〜 1065
+;RANK16　광 망치 (狂 槌)
+;	중앙값：1135
+;	범위　：1065 〜 1205
+;RANK17　최광 선수 (最狂 艏)
+;	중앙값：1280
+;	범위　：1205 〜 1355
 
 ;--------------------------------------------------
-;拡張度から現在の拡張ランクを返す
-;ARG	拡張度
+;FUNCTION함수	구슬로 변수 산출
+;--------------------------------------------------
+
+;--------------------------------------------------
+;확장도로부터 현재의 확장 등급을 반환한다
+;ARG	확장도
 @GAPING_RANK(ARG)
 #FUNCTION
 
-;E	繊毛
+;E	섬모
 IF ARG < 5
 	LOCAL = 0
 ;E+
 ELSEIF ARG < 15
 	LOCAL = 1
-;D	指
+;D	손가락
 ELSEIF ARG < 25
 	LOCAL = 2
 ;D+
 ELSEIF ARG < 40
 	LOCAL = 3
-;C	男性器
+;C	남성기
 ELSEIF ARG < 60
 	LOCAL = 4
 ;C+
 ELSEIF ARG < 85
 	LOCAL = 5
-;B	腕
+;B	팔다리
 ELSEIF ARG < 115
 	LOCAL = 6
 ;B+
 ELSEIF ARG < 155
 	LOCAL = 7
-;A	頭
+;A	머리
 ELSEIF ARG < 205
 	LOCAL = 8
 ;A+
 ELSEIF ARG < 265
 	LOCAL = 9
-;S	腰
+;S	허리
 ELSEIF ARG < 335
 	LOCAL = 10
 ;S+
 ELSEIF ARG < 465
 	LOCAL = 11
-;凄
+;처(凄)
 ELSEIF ARG < 635
 	LOCAL = 12
-;極
+;극(極)
 ELSEIF ARG < 765
 	LOCAL = 13
-;絶
+;절(絶)
 ELSEIF ARG < 935
 	LOCAL = 14
-;獄
+;옥(獄)
 ELSEIF ARG < 1065
 	LOCAL = 15
-;狂
+;광(狂)
 ELSEIF ARG < 1205
 	LOCAL = 16
-;最狂
+;최광(最狂)
 ELSE
 	LOCAL = 17
 ENDIF
@@ -142,11 +143,11 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;拡張ランクから、Ｅ〜Ｓ+もしくは説明テキストを返す
-;ARG	拡張ランク
-;ARGS	NAME	ランクのアルファベット表記
-;	TEXT	ランクごとの説明文
-;	T_TEXT	촉수側の説明文
+;확장 등급으로부터, Ｅ〜Ｓ+ 혹은 설명 텍스트를 반환한다
+;ARG	확장 등급
+;ARGS	NAME	등급의 알파벳 표기
+;	TEXT	등급별 설명문
+;	T_TEXT	촉수측 설명문
 @GAPING_RANK_STR(ARG, ARGS)
 #FUNCTIONS
 SELECTCASE ARGS
@@ -180,99 +181,100 @@ SELECTCASE ARGS
 		ELSEIF ARG == 11
 			LOCALS = %UNICODE(0x0020)%Ｓ+
 		ELSEIF ARG == 12
-			LOCALS = %UNICODE(0x0020)%凄%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%처%UNICODE(0x0020)%
 		ELSEIF ARG == 13
-			LOCALS = %UNICODE(0x0020)%極%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%극%UNICODE(0x0020)%
 		ELSEIF ARG == 14
-			LOCALS = %UNICODE(0x0020)%絶%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%절%UNICODE(0x0020)%
 		ELSEIF ARG == 15
-			LOCALS = %UNICODE(0x0020)%獄%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%옥%UNICODE(0x0020)%
 		ELSEIF ARG == 16
-			LOCALS = %UNICODE(0x0020)%狂%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%광%UNICODE(0x0020)%
 		ELSE
-			LOCALS = %UNICODE(0x0020)%最狂%UNICODE(0x0020)%
+			LOCALS = %UNICODE(0x0020)%최광%UNICODE(0x0020)%
 		ENDIF
 	CASE "TEXT"
 		IF ARG == 0
-			LOCALS = 繊毛と同程度の
+			LOCALS = 섬모와 같은 정도의
 		ELSEIF ARG == 1
-			LOCALS = 繊毛よりも太い
+			LOCALS = 섬모보다도 굵은
 		ELSEIF ARG == 2
-			LOCALS = 自身の指と同程度の
+			LOCALS = 자신의 손가락과 같은 정도의
 		ELSEIF ARG == 3
-			LOCALS = 自身の指よりも太い
+			LOCALS = 자신의 손가락보다도 굵은
 		ELSEIF ARG == 4
-			LOCALS = 一般的な男性器と同程度の
+			LOCALS = 일반적인 남성기와 같은 정도의
 		ELSEIF ARG == 5
-			LOCALS = 一般的な男性器よりも太い
+			LOCALS = 일반적인 남성기보다도 굵은
 		ELSEIF ARG == 6
-			LOCALS = 自身の腕と同程度の
+			LOCALS = 자신의 팔과 같은 정도의
 		ELSEIF ARG == 7
-			LOCALS = 自身の腕より太い
+			LOCALS = 자신의 팔다리보다도 굵은
 		ELSEIF ARG == 8
-			LOCALS = 自身の脛と同程度の
+			LOCALS = 자신의 정강이와 같은 정도의
 		ELSEIF ARG == 9
-			LOCALS = 自身の脛より太い
+			LOCALS = 자신의 정강이보다도 굵은
 		ELSEIF ARG == 10
-			LOCALS = 自身の太ももと同程度の
+			LOCALS = 자신의 허벅지와 같은 정도의
 		ELSEIF ARG == 11
-			LOCALS = 自身の太ももより太い
+			LOCALS = 자신의 허벅지보다도 굵은
 		ELSEIF ARG == 12
-			LOCALS = 自身の頭と同程度の
+			LOCALS = 자신의 머리와 같은 정도의
 		ELSEIF ARG == 13
-			LOCALS = 自身の頭より太い
+			LOCALS = 자신의 머리보다 굵은
 		ELSEIF ARG == 14
-			LOCALS = 自身の腰より太い
+			LOCALS = 자신의 허리보다 굵은
 		ELSEIF ARG == 15
-			LOCALS = 自身の腰よりも格段に太い
+			LOCALS = 자신의 허리보다도 현격히 굵은
 		ELSEIF ARG == 16
-			;＠중국판らしさを感じる喩え
-			LOCALS = 破城槌のように太い
+			;＠중국판스러움이 느껴지는 비유
+			;원문은 破城槌のように太い
+			LOCALS = 공성추만큼이나 굵은
 		ELSE
-			LOCALS = 船の船首ほどの大きさの
+			LOCALS = 뱃머리만 한 크기의
 		ENDIF
-		LOCALS = %LOCALS%モノを受け入れられる
+		LOCALS = %LOCALS% 것을 받아들일 수 있다
 		SIF ARG == -2
 			LOCALS = 
 		SIF ARG == -1
-			LOCALS = 未だ純潔を保っている
+			LOCALS = 여태까지 순결을 유지하고 있다
 	CASE "T_TEXT"
 		IF ARG == 0
-			LOCALS = 繊毛サイズ
+			LOCALS = 섬모 크기
 		ELSEIF ARG == 1
-			LOCALS = 繊毛よりは太い程度
+			LOCALS = 섬모보다 굵은 정도
 		ELSEIF ARG == 2
-			LOCALS = %PRINT_CALLNAME(TARGET)%の指と同程度
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 손가락과 같은 정도
 		ELSEIF ARG == 3
-			LOCALS = %PRINT_CALLNAME(TARGET)%の指よりも太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 손가락 보다도 굵다
 		ELSEIF ARG == 4
-			LOCALS = 一般的な男性器と同程度
+			LOCALS = 일반적인 남성기와 같은 정도
 		ELSEIF ARG == 5
-			LOCALS = 一般的な男性器よりも太い
+			LOCALS = 일반적인 남성기보다도 굵다
 		ELSEIF ARG == 6
-			LOCALS = %PRINT_CALLNAME(TARGET)%の腕と同程度
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 팔과 같은 정도
 		ELSEIF ARG == 7
-			LOCALS = %PRINT_CALLNAME(TARGET)%の腕より太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 팔보다도 굵다
 		ELSEIF ARG == 8
-			LOCALS = %PRINT_CALLNAME(TARGET)%の脛と同程度
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 정강이와 같은 정도
 		ELSEIF ARG == 9
-			LOCALS = %PRINT_CALLNAME(TARGET)%の脛よりも太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 정강이보다도 굵다
 		ELSEIF ARG == 10
-			LOCALS = %PRINT_CALLNAME(TARGET)%の太ももと同程度
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 허벅지와 같은 정도
 		ELSEIF ARG == 11
-			LOCALS = %PRINT_CALLNAME(TARGET)%の太ももよりも太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 허벅지보다도 굵다
 		ELSEIF ARG == 12
-			LOCALS = %PRINT_CALLNAME(TARGET)%の頭と同程度
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 머리와 같은 정도
 		ELSEIF ARG == 13
-			LOCALS = %PRINT_CALLNAME(TARGET)%の頭よりも太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 머리보다도 굵다
 		ELSEIF ARG == 14
-			LOCALS = %PRINT_CALLNAME(TARGET)%の腰よりも太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 허리보다도 굵다
 		ELSEIF ARG == 15
-			LOCALS = %PRINT_CALLNAME(TARGET)%の腰よりも格段に太い
+			LOCALS = %PRINT_CALLNAME(TARGET)%의 허리보다도 현격히 굵다
 		ELSEIF ARG == 16
-			LOCALS = %PRINT_CALLNAME(TARGET)%を引き裂けそうなほど太い
+			LOCALS = %조사처리(PRINT_CALLNAME(TARGET),"를")% 찢을 수 있을 만큼 굵다
 		ELSE
-			LOCALS = %PRINT_CALLNAME(TARGET)%を粉砕しそうなほど太い
+			LOCALS = %조사처리(PRINT_CALLNAME(TARGET),"를")% 으깨 버릴 만큼 굵다
 		ENDIF
 ENDSELECT
 
@@ -281,8 +283,8 @@ RETURNF LOCALS
 
 
 ;--------------------------------------------------
-;その拡張ランクまでに必要な拡張度を返す
-;ARG	拡張ランク
+;그 확장 등급까지 필요한 확장도를 반환한다
+;ARG	확장 등급
 @GAPING_RANK_TO_POINT(ARG)
 #FUNCTION
 
@@ -311,7 +313,7 @@ ELSEIF ARG == 10
 	LOCAL = 265
 ELSEIF ARG == 11
 	LOCAL = 335
-;計算の都合上、ランクの1段階外側も설정
+;계산 사정상, 등급의 1단계 바깥쪽도 설정
 ELSEIF ARG == -1
 	LOCAL = -5
 ELSEIF ARG == 12
@@ -334,11 +336,11 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;拡張度からTARGETに応じた実際のサイズ（mm）を返す
-;ARG	拡張度
-;D_RANK	TARGETの現在の拡張ランク
-;D_SIZE	その拡張ランクの上限・下限
-;MED_VAR	各ランクの中央値
+;확장도로부터 TARGET에 따른 실제 크기(mm)를 반환한다
+;ARG	확장도
+;D_RANK	TARGET의 현재 확장 등급
+;D_SIZE	그 확장 등급의 상한・하한
+;MED_VAR	각 등급의 중앙값
 @GAPING_SIZE(ARG, CON = -1, TAR = -1)
 #FUNCTION
 #DIM CON
@@ -353,10 +355,10 @@ SIF CON == -1
 	CON = CFLAG:TAR:1
 
 D_RANK = GAPING_RANK(ARG)
-;そのランクの中央値を求める
+;그 등급의 중앙값을 구한다
 MED_VAR:0 = (GAPING_RANK_TO_POINT(D_RANK) + GAPING_RANK_TO_POINT(D_RANK + 1)) / 2
 
-;現在の拡張度が中央値より高いか低いか
+;현재의 확장도가 중앙값보다 높은지 낮은지
 IF ARG > MED_VAR:0
 	MED_VAR:1 = (GAPING_RANK_TO_POINT(D_RANK + 1) + GAPING_RANK_TO_POINT(D_RANK + 2)) / 2
 ELSE
@@ -427,7 +429,7 @@ ENDIF
 RETURNF (D_SIZE:1 - D_SIZE:0) * (ARG - MED_VAR:0) / (MED_VAR:1 - MED_VAR:0) + D_SIZE:0
 
 
-;繊毛
+;E(~E+?)　섬모
 @GAPING_SIZE_01(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -435,7 +437,7 @@ RETURNF (D_SIZE:1 - D_SIZE:0) * (ARG - MED_VAR:0) / (MED_VAR:1 - MED_VAR:0) + D_
 
 RETURNF GAPING_SIZE_02(CON, TAR) * 10 / 20
 
-;D	指
+;D	손가락
 @GAPING_SIZE_02(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -443,7 +445,7 @@ RETURNF GAPING_SIZE_02(CON, TAR) * 10 / 20
 
 RETURNF GET_HEIGHT(CON, TAR) * 10 / 1054
 
-;D+	指
+;D+	손가락
 @GAPING_SIZE_03(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -453,7 +455,7 @@ LOCAL = GAPING_SIZE_02(CON, TAR)
 
 RETURNF (GAPING_SIZE_04(CON, TAR) - LOCAL) * 10 / 25 + LOCAL
 
-;C	男性器
+;C	남성기
 @GAPING_SIZE_04(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -461,7 +463,7 @@ RETURNF (GAPING_SIZE_04(CON, TAR) - LOCAL) * 10 / 25 + LOCAL
 
 RETURNF GET_HEIGHT(CON, TAR) * 100 / 3952
 
-;C+	男性器
+;C+	남성기
 @GAPING_SIZE_05(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -471,7 +473,7 @@ LOCAL = GAPING_SIZE_04(CON, TAR)
 
 RETURNF (GAPING_SIZE_06(CON, TAR) - LOCAL) * 15 / 35 + LOCAL
 
-;B	腕や脚
+;B	팔다리
 @GAPING_SIZE_06(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -479,7 +481,7 @@ RETURNF (GAPING_SIZE_06(CON, TAR) - LOCAL) * 15 / 35 + LOCAL
 
 RETURNF GET_HEIGHT(CON, TAR) * 100 / 2108
 
-;B+	腕や脚
+;B+	팔다리
 @GAPING_SIZE_07(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -489,7 +491,7 @@ LOCAL = GAPING_SIZE_06(CON, TAR)
 
 RETURNF (GAPING_SIZE_08(CON, TAR) - LOCAL) * 40 / 85 + LOCAL
 
-;A	頭
+;A	머리
 @GAPING_SIZE_08(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -497,7 +499,7 @@ RETURNF (GAPING_SIZE_08(CON, TAR) - LOCAL) * 40 / 85 + LOCAL
 
 RETURNF GET_HEIGHT(CON, TAR) * 10 / 131 + 40
 
-;A+	脛
+;A+	머리
 @GAPING_SIZE_09(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -507,14 +509,14 @@ LOCAL = GAPING_SIZE_08(CON, TAR)
 
 RETURNF (GAPING_SIZE_10(CON, TAR) - LOCAL) * 40 / 83 + LOCAL
 
-;S	股
+;S	허벅지
 @GAPING_SIZE_10(CON, TAR)
 #FUNCTION
 #DIM CON
 #DIM TAR
 
 RETURNF GET_HEIGHT(CON, TAR) * 10 / 160 + 20
-;S+	股
+;S+	허벅지
 @GAPING_SIZE_11(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -524,7 +526,7 @@ LOCAL = GAPING_SIZE_10(CON, TAR)
 
 RETURNF (GAPING_SIZE_12(CON, TAR) - LOCAL) * 40 / 81 + LOCAL
 
-;凄	頭
+;처	머리
 @GAPING_SIZE_12(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -532,7 +534,7 @@ RETURNF (GAPING_SIZE_12(CON, TAR) - LOCAL) * 40 / 81 + LOCAL
 
 RETURNF GET_HEIGHT(CON, TAR) * 10 / 131 + 40
 
-;極	頭
+;극	머리
 @GAPING_SIZE_13(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -542,7 +544,7 @@ LOCAL = GAPING_SIZE_12(CON, TAR)
 
 RETURNF (GAPING_SIZE_14(CON, TAR) - LOCAL) * 45 / 90 + LOCAL
 
-;絶	腰
+;절	허리
 @GAPING_SIZE_14(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -550,7 +552,7 @@ RETURNF (GAPING_SIZE_14(CON, TAR) - LOCAL) * 45 / 90 + LOCAL
 
 RETURNF GET_HIP(CON, TAR) * 100 / 314
 
-;獄	腰
+;옥	허리
 @GAPING_SIZE_15(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -558,7 +560,7 @@ RETURNF GET_HIP(CON, TAR) * 100 / 314
 
 RETURNF GET_HIP(CON, TAR) * 13849 / 31415
 
-;RANK16　狂 槌
+;RANK16　광 망치
 @GAPING_SIZE_16(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -566,7 +568,7 @@ RETURNF GET_HIP(CON, TAR) * 13849 / 31415
 
 RETURNF GET_HIP(CON, TAR) * 13660 / 31415
 
-;RANK17　最狂 艏
+;RANK17　최광 선수(艏)
 @GAPING_SIZE_17(CON, TAR)
 #FUNCTION
 #DIM CON
@@ -579,69 +581,69 @@ RETURNF GET_HIP(CON, TAR) * 13740 / 31415
 
 
 ;--------------------------------------------------
-;変身状況に応じた신장を返す
-;TARGETが-1の場合、「一般的な」サイズ
+;변신 상황에 따른 신장을 반환한다
+;TARGET이 -1일 경우,「일반적인」크기
 @GET_HEIGHT(CON, TAR)
 #FUNCTION
 #DIM CON
 #DIM TAR
-#DIM 신장値
+#DIM 신장치
 #DIM KEEPTARGET
 
 KEEPTARGET = TARGET
 
 IF TAR < 0
-	신장値 = 1581
+	신장치 = 1581
 ELSE
 	SIF TAR > 0
 		TARGET = TAR
 
 	IF CON == 0 || TALENT:변신능력 != 1
-		신장値 = BASE:신장
+		신장치 = BASE:신장
 	ELSE
-		신장値 = MAXBASE:신장
+		신장치 = MAXBASE:신장
 	ENDIF
 ENDIF
 
 TARGET = KEEPTARGET
 
-RETURNF 신장値
+RETURNF 신장치
 
 
 
 ;--------------------------------------------------
-;変身状況に応じた골반둘레を返す
-;TARGETが-1の場合、「一般的な」サイズ
+;변신 상황에 따른 골반 둘레를 반환한다
+;TARGET이 -1일 경우,「일반적인」크기
 @GET_HIP(CON, TAR)
 #FUNCTION
 #DIM CON
 #DIM TAR
-#DIM 골반둘레値
+#DIM 골반둘레치
 #DIM KEEPTARGET
 
 KEEPTARGET = TARGET
 
 IF TAR < 0
-	골반둘레値 = 816
+	골반둘레치 = 816
 ELSE
 	SIF TAR > 0
 		TARGET = TAR
 
 	IF CON == 1 || TALENT:변신능력 != 1 || (CON == 0 && CFLAG:1 == 0)
-		골반둘레値 = BASE:골반둘레
+		골반둘레치 = BASE:골반둘레
 	ELSE
-		골반둘레値 = MAXBASE:골반둘레
+		골반둘레치 = MAXBASE:골반둘레
 	ENDIF
 ENDIF
 
 TARGET = KEEPTARGET
 
-RETURNF 골반둘레値
+RETURNF 골반둘레치
 
 
 
 ;--------------------------------------------------
-;実際のサイズ（mm）からTARGETに応じた拡張ランクを返す
+;실제 크기(mm)로부터 TARGET에 따른 확장 등급을 반환한다
 ;ARG
 @GAPING_SIZE_TO_RANK(ARG, CON, TAR)
 #FUNCTION
@@ -691,12 +693,12 @@ RETURNF LOCAL
 
 
 ;--------------------------------------------------
-;サイズ差による拡張度 상승値を決定
-;ARGS	部位指定　Ｖ, Ａ
+;크기차에 따른 확장도의 상승치를 결정
+;ARGS	부위 지정　Ｖ, Ａ
 
-;P_SIZE	プレイヤーサイズ
-;P_RANK	プレイヤーランク
-;E_SIZE	촉수サイズ
+;P_SIZE	플레이어 크기
+;P_RANK	플레이어 등급
+;E_SIZE	촉수 크기
 @GAPING_SIZE_TO_POINT(ARGS, TAR)
 #FUNCTION
 #DIM TAR
@@ -712,7 +714,7 @@ KEEPTARGET = TARGET
 SIF TAR > 0
 	TARGET = TAR
 
-;対象が남자かつＶなら終了
+;대상이 남자임과 동시에 Ｖ라면 종료
 IF ISMALE() && ARGS == "Ｖ"
 	TARGET = KEEPTARGET
 	RETURNF 0
@@ -746,33 +748,33 @@ RETURNF LOCAL
 
 
 ;-----------------------------------------------------------------------------------------------------------------------------------------------------------
-;通常の関数	処理
+;통상 함수	처리
 ;-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ;--------------------------------------------------
-;各部位に使用される촉수サイズの表示
+;각 부위에 사용되는 촉수 크기 표시
 @PRINT_TENTACLE_SIZE, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
-;T_RANK	촉수サイズランク
+;T_RANK	촉수 크기 등급
 #DIM T_RANK, 2
 REPEAT 감각수
 	IF TENTACLE_SIZE:0:COUNT > 0 || TENTACLE_SIZE:1:COUNT > 0
 		T_RANK:0 = GAPING_SIZE_TO_RANK(TENTACLE_SIZE:0:COUNT)
 		T_RANK:1 = GAPING_SIZE_TO_RANK(TENTACLE_SIZE:1:COUNT)
-		;部位名表示
+		;부위명 표시
 		SUBSTRINGU ABLNAME:COUNT, 0, 1
-		LOCALS = 　%RESULTS%用촉수　
-		;촉수ではないため、TENTACLE_SIZE:0:COUNTは0のまま
+		LOCALS = 　%RESULTS%용 촉수　
+		;촉수가 아니기 때문에, TENTACLE_SIZE:0:COUNT는 0인 채로
 		IF TENTACLE_SIZE:0:COUNT == 0
 			LOCALS = %LOCALS%[%GAPING_RANK_STR(T_RANK:1, "NAME")%] %GAPING_RANK_STR(T_RANK:1, "T_TEXT")%
-		;それ以外
+		;그 외
 		ELSE
-			LOCALS = %LOCALS%[%GAPING_RANK_STR(T_RANK:1, "NAME")%] %GAPING_RANK_STR(T_RANK:0, "T_TEXT")% {TENTACLE_NUM:0:COUNT}本 
+			LOCALS = %LOCALS%[%GAPING_RANK_STR(T_RANK:1, "NAME")%] %GAPING_RANK_STR(T_RANK:0, "T_TEXT")% {TENTACLE_NUM:0:COUNT}마리 
 			SIF FLAG:700 == 1 && ((COUNT == 1 && INSERT & 질) || (COUNT == 2 && INSERT & 애널))
-				LOCALS += "（挿入中）"
+				LOCALS += "（삽입중）"
 			SIF (SHIELD:COUNT > 0 && FLAG:700 == 0) || (TENTACLE_NUM:1:COUNT == 0 && FLAG:700 == 1)
-				LOCALS = %LOCALS, 50, LEFT% → [ × ] 結界に阻まれている
+				LOCALS = %LOCALS, 50, LEFT% → [ × ] 결계에 막혀 있다
 		ENDIF
-		;debug表示
+		;debug표시
 		SIF FLAG:999 > 0
 			LOCALS = %LOCALS% 　<font color='#606060' >/* debug */ {TENTACLE_SIZE:0:COUNT / 10, 2}.{TENTACLE_SIZE:0:COUNT % 10} cm × {TENTACLE_NUM:0:COUNT} → {TENTACLE_SIZE:1:COUNT / 10, 2}.{TENTACLE_SIZE:1:COUNT % 10} cm</font>
 		SIF LOCAL:COUNT - COMMON_PALAM:COUNT > 0 && (FLAG:700 == 0 || TFLAG:10 != 1006 || CFLAG:0 == 1)
@@ -784,7 +786,7 @@ PRINTL
 
 
 
-;現在の拡張度を表示
+;현재의 확장도를 표시
 ;--------------------------------------------------
 @PRINTFORM_GAPING_NOW, TAR = -1, CON = -1
 #DIM CON
@@ -795,9 +797,9 @@ SIF CON == -1
 	CON = CFLAG:TAR:1
 
 
-;拡張度컨피그フラグチェック
+;확장도 컨피그 플래그 체크
 IF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:TAR:34>0
-	;拡張度初期値설정
+	;확장도 초기값 설정
 	IF CFLAG:TAR:35 == 0
 		CFLAG:TAR:35 = LIMIT((BASE:TAR:나이 - 10), 0, 15) / 3 - (TALENT:TAR:미성숙 > 0) * 3 + (TALENT:TAR:Ｖ민감 > 0) * 3 - (TALENT:TAR:Ｖ둔감 > 0) * 3 + 20
 		CALL V_GAPING, EXP:TAR:Ｖ확장경험 * 10, TAR
@@ -807,17 +809,17 @@ IF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:TAR:34>0
 		CALL A_GAPING, EXP:TAR:Ａ확장경험 * 10, TAR
 	ENDIF
 
-	PRINTL 　　拡張度
+	PRINTL 　　확장도
 
 	FOR LOCAL:1, 0, 2
 		IF LOCAL:1 == 0
 			IF ISMALE(TAR)
 				LOCALS = %UNICODE(0x0020)%―%UNICODE(0x0020)%
 			ELSE
-				LOCALS = 질径
+				LOCALS = 　질 지름
 			ENDIF
 		ELSE
-			LOCALS = 肛径
+			LOCALS = 애널 지름
 		ENDIF
 
 		LOCAL:2 = GAPING_RANK(CFLAG:TAR:(35 + LOCAL:1))
@@ -838,16 +840,16 @@ IF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:TAR:34>0
 
 		LOCALS = %LOCALS% cm　/　<nonbutton title='%GAPING_RANK_STR(LOCAL:2, "TEXT")%'>[%GAPING_RANK_STR(LOCAL:2, "NAME")%]</nonbutton>
 		SIF FLAG:999 && FLAG:700 == 0
-			LOCALS = %LOCALS%　　<font color='#606060' >/* debug */ (拡張度：{CFLAG:TAR:(35 + LOCAL:1), 4})　　　<button value='{30 + LOCAL:1}'>[{30 + LOCAL:1}]リセット</button></font>
+			LOCALS = %LOCALS%　　<font color='#606060' >/* debug */ (확장도：{CFLAG:TAR:(35 + LOCAL:1), 4})　　　<button value='{30 + LOCAL:1}'>[{30 + LOCAL:1}] 초기화</button></font>
 		HTML_PRINT LOCALS
 	NEXT
 ENDIF
 
 ;--------------------------------------------------
-;Ｖ拡張度 상승
-;CFLAG:35	Ｖ拡張度
-;ARG		上昇値
-;P_SIZE		拡張後との比較のためサイズを一時記憶
+;Ｖ확장도 상승
+;CFLAG:35	Ｖ확장도
+;ARG		상승치
+;P_SIZE		확장 후와의 비교를 위해 크기를 일시 기억
 @V_GAPING(ARG, TAR)
 #DIM TAR
 #DIM KEEPTARGET
@@ -864,7 +866,7 @@ SIF ISMALE()
 SIF CFLAG:34 == 0
 	RETURN 0
 
-;上昇値が0なら終了
+;상승값이 0이라면 종료
 SIF ARG == 0
 	RETURN 0
 
@@ -901,7 +903,7 @@ FOR LCOUNT, 0, ARG * ARG
 
 	UPRATE = LIMIT(UPRATE, 50, 9999)
 
-	;極端な拡張を抑制されている場合
+	;극단적인 확장이 억제되어 있는 경우
 	IF CONFIG_CHECK_MANIAC_F(17) == 0
 		SIF CFLAG:35 >= GAPING_RANK_TO_POINT(8) - 1
 			RETURN 0
@@ -925,10 +927,10 @@ TARGET = KEEPTARGET
 RETURN LOCAL
 
 ;--------------------------------------------------
-;Ａ拡張 상승
-;CFLAG:36	Ａ拡張度
-;ARG		上昇値
-;P_SIZE		拡張後との比較のためサイズを一時記憶
+;Ａ 확장도 상승
+;CFLAG:36	Ａ확장도
+;ARG		상승치
+;P_SIZE		확장 후와의 비교를 위해 크기를 일시 기억
 @A_GAPING(ARG, TAR)
 #DIM TAR
 #DIM KEEPTARGET
@@ -942,7 +944,7 @@ SIF TAR > 0
 SIF CFLAG:34 == 0
 	RETURN 0
 
-;上昇値が0なら終了
+;상승값이 0이라면 종료
 SIF ARG == 0
 	RETURN 0
 
@@ -977,7 +979,7 @@ FOR LCOUNT, 0, ARG * ARG
 
 	UPRATE = LIMIT(UPRATE, 500, 9999)
 
-	;極端な拡張を抑制されている場合
+	;극단적인 확장이 억제되어 있는 경우
 	IF CONFIG_CHECK_MANIAC_F(17) == 0
 		SIF CFLAG:36 >= GAPING_RANK_TO_POINT(8) - 1
 			RETURN 0
@@ -998,9 +1000,9 @@ TARGET = KEEPTARGET
 RETURN LOCAL
 
 ;--------------------------------------------------
-;Ｖ확장경험の獲得
-;CFLAG:35	Ｖ拡張度
-;ARG		サイズ差
+;Ｖ확장경험 획득
+;CFLAG:35	Ｖ확장도
+;ARG		크기차
 @GET_V_GAPING_EXP(ARG, TAR, OPTION = 0)
 #DIM OPTION
 #DIM TAR
@@ -1029,9 +1031,9 @@ TARGET = KEEPTARGET
 RETURN LOCAL
 
 ;--------------------------------------------------
-;サイズ差によるＡ拡張判定
-;CFLAG:36	Ａ拡張度
-;ARG		サイズ差
+;크기차에 따른 Ａ확장 판정
+;CFLAG:36	Ａ확장도
+;ARG		크기차
 @GET_A_GAPING_EXP(ARG, TAR, OPTION = 0)
 #DIM OPTION
 #DIM TAR
@@ -1060,12 +1062,12 @@ RETURN LOCAL
 
 
 ;--------------------------------------------------
-;보스 촉수・최종 보스各部位用촉수のサイズ
-;ARG:0	ARG:1の番号が보스 촉수のものか、최종 보스 촉수のものかを判断する。0=보스 촉수、1=최종 보스 촉수、2=雑魚戦闘
-;ARG:1	相手の촉수を示す。촉수の番号で見る、-1だと보스 촉수が出現しない
-;ARG:2	세뇌/흑화 캐릭터가 相手の場合、1
-;ARG:3	세뇌/흑화のキャラ番号
-;ARG:4　敵の選んだコマンド番号
+;보스 촉수・최종 보스의 각 부위용 촉수 크기
+;ARG:0	ARG:1의 번호가 보스 촉수의 것인지, 최종 보스 촉수의 것인지를 판단한다 (0=보스 촉수, 1=최종 보스 촉수, 2=잡몹 전투)
+;ARG:1	상대의 촉수를 나타낸다. 촉수의 번호로 보며, -1이라면 보스 촉수가 출현하지 않는다
+;ARG:2	세뇌/흑화 캐릭터가 상대일 경우, 1
+;ARG:3	세뇌/흑화인 캐릭터 번호
+;ARG:4　적이 선택한 커맨드 번호
 @SET_TENTACLE_SIZE, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4
 #DIM LCOUNT
 IF ARG:2 > 0
@@ -1073,12 +1075,12 @@ IF ARG:2 > 0
 ELSE
 	CALL TENTACLE_LEVEL
 ENDIF
-;極端なサイズありの場合
+;극단적인 사이즈 ON일 경우
 SIF CONFIG_CHECK_MANIAC_F(20) == 1
 	RESULT = RESULT*10
 
-;촉수サイズ基本値
-;強制自慰
+;촉수 크기 기본값
+;강제 자위
 IF ARG:4 == 1006 && FLAG:700 == 1
 	;LOCAL = GAPING_SIZE(10, 0, TARGET)
 	FOR LCOUNT, 0, 감각수
@@ -1087,12 +1089,12 @@ IF ARG:4 == 1006 && FLAG:700 == 1
 		TENTACLE_NUM:0:LCOUNT = 2 + RAND:4
 	NEXT
 	RETURN 0
-;세뇌/흑화 캐릭터가 相手
+;세뇌/흑화 캐릭터가 상대
 ELSEIF ARG:2 > 0
-	;기생による촉수がある
+	;기생에 의한 촉수가 있다
 	IF TALENT:(ARG:3):기생 > 0
 		LOCAL = SQRT((RESULT * 4 + 15 + ABL:(ARG:3):욕망) * (20 + TALENT:(ARG:3):촉수의포로 * 15))
-		;極端なサイズOff時は抑制
+		;극단적인 사이즈 Off 시에는 억제
 		SIF CONFIG_CHECK_MANIAC_F(20) == 0
 			LOCAL = SQRT(LOCAL * 55)
 		FOR LCOUNT, 0, 감각수
@@ -1100,13 +1102,13 @@ ELSEIF ARG:2 > 0
 			RESULT:(LCOUNT+4) = 1
 		NEXT
 	ELSE
-		;各部位に세뇌/흑화 캐릭터의 指サイズを指定
+		;각 부위에 세뇌/흑화 캐릭터의 손가락 크기를 지정
 		LOCAL = GAPING_SIZE(10, 0, ARG:3)
 		FOR LCOUNT, 0, 감각수
 			TENTACLE_SIZE:0:LCOUNT = LOCAL
 			TENTACLE_NUM:0:LCOUNT = 1
 		NEXT
-		;세뇌/흑화 캐릭터가 男性器を持つ場合、ＶＡのみサイズ指定
+		;세뇌/흑화 캐릭터가 남성기를 지닌 경우, ＶＡ만 크기 지정
 		IF ISPENIS(ARG:3)
 			LOCAL = ((ABL:(ARG:3):욕망 * 3 + ABL:(ARG:3):사정중독 * 6 + ABL:(ARG:3):Ｃ감각 + TALENT:(ARG:3):음란 * 9)) * 18 / 74 + 32
 			LOCAL = GAPING_SIZE(LOCAL, 0, ARG:3)
@@ -1116,27 +1118,27 @@ ELSEIF ARG:2 > 0
 			TENTACLE_NUM:0:쾌Ａ = 1
 		ENDIF
 
-		;촉수がなければ部位ごとの割り振り・ランダムは必要ない
+		;촉수가 없으면 부위별 할당・랜덤은 필요없다
 		RETURN 0
 	ENDIF
 ;보스 촉수
 ELSEIF ARG:0 == 0
 	LOCAL = SQRT((RESULT * 2 + 30) * 50)
-	;極端なサイズOff時は抑制
+	;극단적인 사이즈 Off 시에는 억제
 	SIF CONFIG_CHECK_MANIAC_F(20) == 0
 		LOCAL = SQRT(LOCAL * 40)
 	TRYCALLFORM TENTACLE_BOSS_{ARG:1}_TENTACLE_SIZE, ARG:4
 ;최종 보스 촉수
 ELSEIF ARG:0 == 1
 	LOCAL = SQRT((RESULT * 6 + 35) * 150)
-	;極端なサイズOff時は抑制
+	;극단적인 사이즈 Off 시에는 억제
 	SIF CONFIG_CHECK_MANIAC_F(20) == 0
 		LOCAL = SQRT(LOCAL * 75)
 	TRYCALLFORM TENTACLE_LASTBOSS_{ARG:1}_TENTACLE_SIZE, ARG:4
-;雑魚
+;잡몹
 ELSEIF ARG:0 == 2
 	LOCAL = SQRT((RESULT * 1 + 20) * 30)
-	;極端なサイズOff時は抑制
+	;극단적인 사이즈 Off 시에는 억제
 	SIF CONFIG_CHECK_MANIAC_F(20) == 0
 		LOCAL = SQRT(LOCAL * 25)
 	FOR LCOUNT, 0, 감각수
@@ -1169,10 +1171,10 @@ TENTACLE_SIZE:0:쾌Ｂ = LOCAL * RESULT:3 / (255 +  + RAND:91) + 5
 TENTACLE_NUM:0:쾌Ｂ = RESULT:7
 
 ;--------------------------------------------------
-;描写に合わせた촉수サイズと本数に変化させる(지문を優先する)処理
-;ARGS:0 촉수の部位　Ｃ　Ｖ　Ａ　Ｂ
-;ARGS:1 촉수の太さ　繊毛　細い　普通　太い　極太
-;ARGS:2 촉수の数　　単数　複数　たくさん
+;묘사에 맞는 크기와 갯수로 변화시키는(지문을 우선한다) 처리
+;ARGS:0 촉수의 부위　Ｃ　Ｖ　Ａ　Ｂ
+;ARGS:1 촉수의 굵기　섬모　가늠　보통　굵음　극태
+;ARGS:2 촉수의 수　　단수　복수　대량(たくさん)
 @SET_TENTACLE_SIZE_BY_MESSAGE, ARGS:0, ARGS:1, ARGS:2
 #DIM SELECT
 IF ARGS:0 == "Ｃ"
@@ -1184,34 +1186,34 @@ ELSEIF ARGS:0 == "Ａ"
 ELSEIF ARGS:0 == "Ｂ"
 	SELECT = 3
 ENDIF
-IF ARGS:1 == "繊毛"
+IF ARGS:1 == "섬모"
 	IF TENTACLE_SIZE:0:SELECT >= 15
 		TENTACLE_SIZE:0:SELECT = RAND:10 + 5
 	ENDIF
-ELSEIF ARGS:1 == "細い"
+ELSEIF ARGS:1 == "가늠"
 	IF TENTACLE_SIZE:0:SELECT < 15
 		TENTACLE_SIZE:0:SELECT = RAND:10 + 15
 	ELSEIF TENTACLE_SIZE:0:SELECT >= 40
 		TENTACLE_SIZE:0:SELECT = RAND:15 + 25
 	ENDIF
-ELSEIF ARGS:1 == "普通"
+ELSEIF ARGS:1 == "보통"
 	IF TENTACLE_SIZE:0:SELECT < 40
 		TENTACLE_SIZE:0:SELECT = RAND:20 + 40
 	ELSEIF TENTACLE_SIZE:0:SELECT >= 85
 		TENTACLE_SIZE:0:SELECT = RAND:25 + 60
 	ENDIF
-ELSEIF ARGS:1 == "太い"
+ELSEIF ARGS:1 == "굵음"
 	IF TENTACLE_SIZE:0:SELECT < 85
 		TENTACLE_SIZE:0:SELECT = RAND:30 + 85
 	ELSEIF TENTACLE_SIZE:0:SELECT >= 155
 		TENTACLE_SIZE:0:SELECT = RAND:40 + 115
 	ENDIF
-ELSEIF ARGS:1 == "極太"
+ELSEIF ARGS:1 == "극태"
 	IF TENTACLE_SIZE:0:SELECT < 155
 		TENTACLE_SIZE:0:SELECT = RAND:50 + 155
 	ENDIF
 ENDIF
-IF ARGS:2 == "たくさん"
+IF ARGS:2 == "대량"
 	IF TENTACLE_SIZE:0:SELECT < 5
 		TENTACLE_NUM:0:SELECT = RAND:128 + 2
 	ELSEIF TENTACLE_SIZE:0:SELECT < 15
@@ -1231,7 +1233,7 @@ IF ARGS:2 == "たくさん"
 	ELSE
 		TENTACLE_NUM:0:SELECT = 2
 	ENDIF
-ELSEIF ARGS:2 == "複数"
+ELSEIF ARGS:2 == "복수"
 	IF TENTACLE_SIZE:0:SELECT < 5
 		TENTACLE_NUM:0:SELECT = RAND:64 + 2
 	ELSEIF TENTACLE_SIZE:0:SELECT < 15
@@ -1249,19 +1251,19 @@ ELSEIF ARGS:2 == "複数"
 	ELSE
 		TENTACLE_NUM:0:SELECT = 2
 	ENDIF
-ELSEIF ARGS:2 == "単数"
+ELSEIF ARGS:2 == "단수"
 	TENTACLE_NUM:0:SELECT = 1
 ENDIF
 
 
 ;--------------------------------------------------
-;結界による촉수本数の変動
+;결계에 따른 촉수 마릿수의 변동
 @SET_TENTACLE_POOL
 #DIM LCOUNT
 #DIM TENTACLE_POOL
 VARSET TENTACLE_POOL
 FOR LCOUNT, 0, 감각수
-	;結界が健在な場合
+	;결계가 건재한 경우
 	IF BASE:(LCOUNT + 30) > 0 && (TFLAG:10 != 1006 || CFLAG:0 == 1)
 		TENTACLE_NUM:1:LCOUNT = 0
 		TENTACLE_POOL ++
@@ -1269,7 +1271,7 @@ FOR LCOUNT, 0, 감각수
 		TENTACLE_NUM:1:LCOUNT = TENTACLE_NUM:0:LCOUNT
 	ENDIF
 NEXT
-;結界に防がれた分だけ残った部位の本数が増える
+;결계에 막힌 만큼만 남은 부위의 갯수가 늘어난다
 IF TENTACLE_POOL > 0
 	FOR LCOUNT, 0, 감각수
 		TENTACLE_NUM:1:LCOUNT = TENTACLE_NUM:1:LCOUNT * (100 + TENTACLE_POOL * 25) / 100
@@ -1280,27 +1282,27 @@ IF TENTACLE_POOL > 0
 	NEXT
 ENDIF
 
-;計算に使う実際の촉수サイズを설정
+;계산에 사용하는 실제 촉수 크기를 설정
 CALL SET_TENTACLE_SIZE_R
 
 RETURN 1
 
 
 ;--------------------------------------------------
-;유폐時の処理
-;実際の拡張経験への加算処理は専用の関数で行うため、上昇値のみを返す
-;対象はTARGET固定
-;ARG:0		V経験上昇予定値
-;ARG:1		A経験上昇予定値
-;ARG:2		V拡張経験上昇予定値
-;ARG:3		A拡張経験上昇予定値
-;LOCAL:0～3 촉수サイズ？？？
+;유폐 시의 처리
+;실제 확장 경험에 대한 가산 처리는 전용 함수로 하기 때문에, 상승치만 반환한다
+;대상은 TARGET 고정
+;ARG:0		V경험 상승 예정치
+;ARG:1		A경험 상승 예정치
+;ARG:2		V확장 경험 상승 예정치
+;ARG:3		A확장 경험 상승 예정치
+;LOCAL:0～3 촉수 크기 ？？？
 @PRISON_GAPING, ARG:0, ARG:1, ARG:2, ARG:3, ARG:4, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
 VARSET TENTACLE_SIZE
-;흑화に유폐
+;흑화 캐릭터에게 유폐
 IF CFLAG:20 == 2
 	CALL SET_TENTACLE_SIZE, 0, 0, CFLAG:20, FLAG:111
-;촉수に유폐
+;촉수에게 유폐
 ELSE
 	CALL SET_TENTACLE_SIZE, CFLAG:20, CFLAG:21, 0, 0,-TFLAG:10
 ENDIF
@@ -1308,36 +1310,36 @@ ENDIF
 ;	TENTACLE_NUM:1:COUNT = TENTACLE_NUM:0:COUNT
 ;REND
 
-;計算に使う実際の촉수サイズを설정
+;계산에 사용되는 실제 촉수 크기를 설정
 CALL SET_TENTACLE_SIZE_R
 
-;各部位に使用される촉수サイズの表示
+;각 부위에 사용되는 촉수 크기 표시
 SIF CONFIG_CHECK_MANIAC_F(16) == 1 && CFLAG:34 > 0
 	CALL PRINT_TENTACLE_SIZE, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3
 
 
-;V拡張判定
+;V확장 판정
 IF ARG:0 > 0
 	CALL GET_V_GAPING_EXP(GAPING_SIZE_TO_POINT("Ｖ"), TARGET, 1)
 	ARG:2 += RESULT
 	CALL V_GAPING(GAPING_SIZE_TO_POINT("Ｖ"))
 	SIF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
-		PRINTFORML 질径：＋{RESULT / 10}.{RESULT % 10} cm
+		PRINTFORML 　질 지름：＋{RESULT / 10}.{RESULT % 10} cm
 ENDIF
-;A拡張判定
+;A확장 판정
 IF ARG:1 > 0
 	CALL GET_A_GAPING_EXP(GAPING_SIZE_TO_POINT("Ａ"), TARGET, 1)
 	ARG:3 += RESULT
 	CALL A_GAPING(GAPING_SIZE_TO_POINT("Ａ"))
 	SIF RESULT > 0 && CONFIG_CHECK_MANIAC_F(16) == 1
-		PRINTFORML 肛径：＋{RESULT / 10}.{RESULT % 10} cm
+		PRINTFORML 애널 지름：＋{RESULT / 10}.{RESULT % 10} cm
 ENDIF
 
 RETURN ARG:2, ARG:3
 
 
 ;--------------------------------------------------
-;計算に使う実際の촉수サイズを설정
+;계산에 사용되는 실제 촉수 크기를 설정
 @SET_TENTACLE_SIZE_R
 REPEAT 감각수
 	IF TENTACLE_NUM:0:COUNT > 2
@@ -1345,7 +1347,7 @@ REPEAT 감각수
 	ELSE
 		TENTACLE_SIZE:1:COUNT = TENTACLE_SIZE:0:COUNT * TENTACLE_NUM:0:COUNT
 	ENDIF
-	;極端な촉수の太さを抑制するがオンの場合A以上にならないようにする
+	;극단적인 촉수 굵기를 억제하는 설정이 ON일 경우 A 이상이 되지 않도록 한다
 	IF CONFIG_CHECK_MANIAC_F(20) == 1
 		LOCAL:1 = GAPING_SIZE(154 - RAND:19)
 		LOCAL:2 = GAPING_SIZE(155)
@@ -1358,7 +1360,7 @@ REPEAT 감각수
 		ENDIF
 	ENDIF
 REND
-;ピストン系なら太さ＆数をそのままに
+;피스톤계라면 굵기＆수를 그대로
 IF TFLAG:10 >= 15 && TFLAG:10 <= 20 && FLAG:700
 	REPEAT 감각수
 		IF (COUNT + 101 == 102 && (TFLAG:109 & 질) && (INSERT & 질)) || (COUNT + 101 == 103 && (TFLAG:109 & 애널) && (INSERT & 애널))
@@ -1367,14 +1369,14 @@ IF TFLAG:10 >= 15 && TFLAG:10 <= 20 && FLAG:700
 			TENTACLE_NUM:1:COUNT = TFLAG:(COUNT + 105)
 		ENDIF
 	REND
-;V拡張攻めなら太さ補正
+;V확장 공격이라면 굵기 보정
 ELSEIF (TFLAG:10 == 1009 && FLAG:700) || (TFLAG:10 == 101 && FLAG:700 == 0)
 	TIMES TENTACLE_SIZE:0:1, 1.3
-;A拡張攻めなら太さ補正
+;A확장 공격이라면 굵기 보정
 ELSEIF (TFLAG:10 == 1010 && FLAG:700) || (TFLAG:10 == 102 && FLAG:700 == 0)
 	TIMES TENTACLE_SIZE:0:2, 1.3
 ENDIF
-;補正した時用に재계산
+;보정했을 때용으로 재계산
 REPEAT 감각수
 	IF TENTACLE_NUM:0:COUNT > 2
 		TENTACLE_SIZE:1:COUNT = TENTACLE_SIZE:0:COUNT * (TENTACLE_NUM:0:COUNT + 4) / 3

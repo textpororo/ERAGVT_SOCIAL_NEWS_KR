@@ -97,7 +97,7 @@ CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM19, EX_COM, SH_COM
-	;처녀なら고통が大量に入る
+	;처녀라면 고통이 대량으로 들어간다
 	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 		LOCAL:10 = 10000
 		TALENT:처녀 = -1
@@ -107,14 +107,14 @@ IF ENEMY_TYPE_CHECK_F("MOB") == 1
 		LOCAL:10 = 0
 	ENDIF
 ELSE
-	;처녀なら고통が大量に入る
+	;처녀라면 고통이 대량으로 들어간다
 	IF TALENT:처녀 > 0 && TCVARn:2 != 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 		LOCAL:10 = 10000
 		CALL LOSTVIRGIN
 	ELSE
 		LOCAL:10 = 0
 	ENDIF
-	;지문: 세뇌/흑화 캐릭터가 操作キャラに両穴ピストンをした
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 両穴ピストンをした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM19
 	;지문: COM17

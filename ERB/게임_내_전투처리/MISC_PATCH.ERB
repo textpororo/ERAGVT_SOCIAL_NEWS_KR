@@ -1,8 +1,8 @@
 ﻿;------------------------------------------------------------------------------------------------
-;TK-ドローン
+;TK-드론
 @TK_DRONE
 LOCAL:0 = RAND:26
-;ダメージ計算前にEX:攻を一旦切る
+;피해량 계산 전에 EX:공을 잠깐 끊는다
 LOCAL:2 = 0
 IF GETBIT(TCVARn:3, 0)
 	LOCAL:2 = 1
@@ -11,30 +11,30 @@ ENDIF
 
 CALL DAMAGE, "ATTACK_RANGE_LONG"
 
-;EX:攻の状態を復帰
+;EX:공 상태를 복귀
 SIF LOCAL:2 == 1
 	SETBIT TCVARn:3, 0
 	
 LOCAL:1 = RESULT * LOCAL:0 / 100
-PRINTL TK-드론の火力支援！
+PRINTL TK-드론의 화력 지원！
 PRINTW 
 IF FLAG:73 > 0
-	PRINTL 一般人に火器を使用するわけにはいかない！
+	PRINTL 하지만 일반인에게 화기를 사용할 수는 없어 곧바로 철수했다……
 	LOCAL:1 = 0
 ELSEIF LOCAL:0 < 5
-	PRINTL TK-드론は機銃を掃射した！
+	PRINTL TK-드론은 기총을 소사했다！
 	LOCAL:1 += 50
 ELSEIF LOCAL:0 < 20
-	PRINTL TK-드론は対촉수レーザービームを掃射した！	
+	PRINTL TK-드론은 대촉수 레이저빔을 소사했다！	
 	LOCAL:1 += 100
 ELSE
-	PRINTL TK-드론はミサイルを発射した！
+	PRINTL TK-드론은 미사일을 발사했다！
 	LOCAL:1 += 250
 ENDIF
 FLAG:13 -= LOCAL:1
 FONTBOLD
 SIF LOCAL:1 > 0
-	PRINTFORML {LOCAL:1}のダメージを与えた！
+	PRINTFORML {LOCAL:1}의 피해를 입혔다！
 FONTREGULAR
 PRINTW
 
@@ -47,8 +47,8 @@ SIF BASE:체력 + LOCAL:1 >= MAXBASE:체력
 	LOCAL:1 = MAXBASE:체력 - BASE:체력
 BASE:체력 += LOCAL:1
 IF LOCAL:1 > 0
-	PRINTFORML 우주 씰から流れ込む力が%PRINT_CALLNAME(TARGET)%の体を癒す…
-	PRINTFORML %BASENAME:0%が{LOCAL:1}回復した
+	PRINTFORML 우주 씰로부터 흘러드는 힘이 %PRINT_CALLNAME(TARGET)%의 몸을 치유한다……
+	PRINTFORML %BASENAME:0%이 {LOCAL:1} 회복됐다！
 ENDIF
 
 ;------------------------------------------------------------------------------------------------
@@ -56,27 +56,27 @@ ENDIF
 @SERVANT
 LOCAL:0 = RAND:25
 IF ENEMY_TYPE_CHECK_F("CITIZEN") == 1
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の심부름꾼は敵の気を引くように動いた…
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 심부름꾼은 적의 주의를 끌고자 움직였다……
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の심부름꾼は촉수を교란している…
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 심부름꾼은 촉수를 교란하고 있다……
 ENDIF
 PRINTL 
 IF LOCAL:0 < 5
-	PRINTW しかし、あまりうまくいかなかったようだ…
+	PRINTW 그러나, 그다지 잘 통하지는 않았던 것 같다……
 ELSEIF LOCAL:0 > 4 && LOCAL:0 < 10 && FLAG:73 > 0
-	PRINTW 少しだけ敵の気を逸らせたようだ
+	PRINTW 조금이나마 적의 주의를 돌릴 수 있었던 것 같다.
 ELSEIF LOCAL:0 > 4 && LOCAL:0 < 10
-	PRINTW 少しだけ촉수の気を逸らせたようだ
+	PRINTW 조금이나마 촉수의 주의를 돌릴 수 있었던 것 같다.
 ELSEIF LOCAL:0 > 9 && LOCAL:0 < 15
-	PRINTW 교란に成功したようだ！
+	PRINTW 교란에 성공한 것 같다！
 ELSEIF LOCAL:0 > 14 && LOCAL:0 < 20 && FLAG:73 > 0
-	PRINTW 敵は심부름꾼を警戒している！
+	PRINTW 적은 확실히 심부름꾼을 경계하고 있다！
 ELSEIF LOCAL:0 > 14 && LOCAL:0 < 20
-	PRINTW 촉수は심부름꾼を警戒している！
+	PRINTW 촉수는 확실히 심부름꾼을 경계하고 있다！
 ELSEIF FLAG:73 > 0
-	PRINTW 심부름꾼に翻弄され、敵は混乱しているようだ！
+	PRINTW 심부름꾼에게 농락당하여, 적은 혼란스러워 하는 것 같다！
 ELSE
-	PRINTW 심부름꾼に翻弄され、촉수は混乱しているようだ！
+	PRINTW 심부름꾼에게 농락당하여, 촉수는 혼란스러워 하는 것 같다！
 ENDIF
 TFLAG:3 += LOCAL:0
 SIF FLAG:17 + TFLAG:3 < FLAG:16

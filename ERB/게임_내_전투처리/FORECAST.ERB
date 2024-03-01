@@ -2,10 +2,10 @@
 @ATTACK_PLACE_DECISION
 #DIM CHISEI_CAL
 #DIM CCOUNT
-;촉수/敵の공격箇所を決定
+;촉수/적의 공격 장소를 결정
 
 $SELECT_LOOP
-;行動ごとに次ターンの공격箇所を決定
+;행동마다 다음 턴의 공격 장소를 결정
 IF TFLAG:10 == 1
 	IF RAND:2 == 0
 		TFLAG:11 |= 1
@@ -37,6 +37,7 @@ IF TFLAG:10 == 1
 			TFLAG:11 |= 8
 		ENDIF
 	ENDIF
+;악질 시민전
 ELSEIF FLAG:73 > 0
 	TFLAG:11 |= 1
 	SIF RAND:4 == 0
@@ -71,7 +72,7 @@ ELSEIF TFLAG:10 == 6
 ELSE
 ENDIF
 
-;아무것도안한다場合は絶対に捕まる
+;【아무것도안한다】일 경우에는 무조건 잡힌다
 IF TCVARn:0 == 1 && TCVARn:2 == 자세：아무것도안한다
 	TFLAG:11 |= 1
 ELSEIF TCVARn:0 == 2 && TCVARn:2 == 자세：아무것도안한다
@@ -81,7 +82,7 @@ ELSEIF TCVARn:0 == 3 && TCVARn:2 == 자세：아무것도안한다
 ELSEIF GETBIT(TCVARn:216, 1) && TCVARn:2 == 자세：아무것도안한다
 	TFLAG:11 |= 8
 ENDIF
-;기절・쓰러짐中は正確に狙われるオプション
+;기절・쓰러짐 중에 확정적으로 피격되는 설정이 ON일 경우
 IF CONFIG_CHECK_BALANCE_F(8) && ((TCVARn:12 & 기절) || (TCVARn:12 & 쓰러짐))
 	SIF TCVARn:0 == 1
 		TFLAG:11 |= 1
@@ -92,19 +93,19 @@ IF CONFIG_CHECK_BALANCE_F(8) && ((TCVARn:12 & 기절) || (TCVARn:12 & 쓰러짐)
 ENDIF
 
 
-;공격箇所の数を算出
+;공격 장소의 수를 산출
 SIF (TFLAG:11 & 1) == 1
 	TFLAG:12 ++
 SIF (TFLAG:11 & 2) == 2
 	TFLAG:12 ++
 SIF (TFLAG:11 & 4) == 4
 	TFLAG:12 ++
-;공격箇所が설정されていないならループで再설정を行う
+;공격 장소가 설정되어 있지 않다면 루프에서 재설정을 한다
 SIF TFLAG:12 == 0 && TFLAG:10 != 4
 	GOTO SELECT_LOOP
 
-;対空공격の설정
-;악질 시민は対空を行わない
+;대공 공격 설정
+;악질 시민은 대공을 행하지 않는다. 애초에 일반인이 총이나 미사일을 쏘는 게 아닌 이상 가능할까?
 IF FLAG:11 == 1150
 ELSEIF TFLAG:10 == 1
 	IF RAND:4 == 0
@@ -125,24 +126,24 @@ ELSEIF TFLAG:10 == 6
 		TFLAG:11 |= 8
 ELSE
 ENDIF
-;空中に居ない場合、50%の確率で対空範囲を除外
+;공중에 있지 않은 경우, 50% 확률로 대공 범위를 제외
 SIF GETBIT(TCVARn:216, 1) == 0 && RAND:2 == 0
 	CLEARBIT TFLAG:11, 3
-;全体공격の場合、75%の確率で対空範囲を除外
+;전체 공격일 경우, 75% 확률로 대공 범위를 제외
 SIF TFLAG:12 == 3 && RAND:4 != 0
 	CLEARBIT TFLAG:11, 3
 
-;予測成否判定
+;예측 성패 판정
 LOCAL:0 = MAXBASE:지성
 
-;관찰한다による予測精度上昇効果
+;【관찰한다】에 의한 예측 정확도 상승
 SIF TFLAG:25 > 0
 	LOCAL:0 = LOCAL:0 * 3 / 2 + 25
 
-;관찰한다効果のリセット
+;관찰한다 효과 초기화
 TFLAG:25 = 0
 
-;기력による補正
+;기력에 따른 보정
 CALL PERCENT_CAL, BASE:기력 * 2, MAXBASE:기력
 IF RESULT < 100
 	LOCAL:0 = LOCAL:0 * (RESULT + 300) /400
@@ -152,7 +153,7 @@ ENDIF
 CALL CLOTH_BATTLE_HOSEI, "CHISEI"
 LOCAL:0 = LOCAL:0 * RESULT / 100
 
-;心境による補正
+;심경에 따른 보정
 CALL SHINKYOU_CHECK, "CHISEI", LOCAL:0
 LOCAL:0 = RESULT
 
@@ -160,31 +161,33 @@ LOCAL:0 = RESULT
 CALL CALC_CHISEI_SHIEN(0)
 LOCAL:0 += RESULT
 
-;보스 촉수/敵キャラの지성
+;보스 촉수/적 캐릭터의 지성
 IF ENEMY_TYPE_CHECK_F("AKUOTI")
 	LOCAL:1 = MAXBASE:(FLAG:111):지성
 ELSE
 	CALL TENTACLE_ACCESS, "CHISEI"
 	LOCAL:1 = RESULT
 ENDIF
+;캐릭터의 지성(보정O) + 보스•적 캐릭터의 지성
 LOCAL:2 = LOCAL:0 + LOCAL:1
 LOCAL:3 = 160 * LOCAL:0 / LOCAL:2 + 96
 
 IF FLAG:999 == 1
-	PRINTFORML PC지성：{LOCAL:0}({MAXBASE:지성})
-	PRINTFORML 敵지성：{LOCAL:1}
-	PRINTFORML {LOCAL:3} / 256（{100 * LOCAL:3 / 256}％）    ファンブル値{(256 - LOCAL:3) / 4}（{(256 - LOCAL:3) * 25 / 256}％）
+	PRINTFORML PC 지성：{LOCAL:0}(보정 전 {MAXBASE:지성})
+	PRINTFORML 적 지성：{LOCAL:1}
+	PRINTFORML {LOCAL:3} / 256（{100 * LOCAL:3 / 256}％）    펌블치 {(256 - LOCAL:3) / 4}（{(256 - LOCAL:3) * 25 / 256}％）
 ENDIF
 
-;ファンブル
+;펌블, 대충 대실패라는 의미
+;지략 스타일인 거리에서는 펌블이 나지 않는다
 IF RAND:256 < (256 - LOCAL:3) / 4 && SELECTCOM != 7 && (GETBIT(TCVARn:217, 0) == 0 || FSTYLE_NAME_F(TARGET,TCVARn:0) != "지략")
 	SIF FLAG:999 == 1
-		PRINTFORML 予測ファンブル！
+		PRINTFORML 예측 펌블！（다음 턴에 모든 거리의 행동 예측이 실패한다）
 	TCVARn:30 = -1
 	TCVARn:31 = -1
 	TCVARn:32 = -1
 ENDIF
-;予測数値決定
+;예측 수치 결정
 FOR LOCAL:5, 0, 3
 	IF RAND:256 < LOCAL:3
 		CALL INT_EVAL, LOCAL:0, LOCAL:1
@@ -194,7 +197,7 @@ FOR LOCAL:5, 0, 3
 		TCVARn:(LOCAL:5 + 30) = -1
 	ENDIF
 NEXT
-;空中の予測は別枠
+;공중의 예측은 다른 기준
 IF RAND:256 < LOCAL:3
 	CALL INT_EVAL, LOCAL:0 * 2, LOCAL:1
 	CALL INVERSION_PROBABILITY, GETBIT(TFLAG:11, 3), RESULT
@@ -204,10 +207,10 @@ ELSE
 ENDIF
 ;--------------------------------------------------
 @MAJORITY_VOTING_PROBABILITY, ARG:0, ARG:1, ARG:2
-;確率の決定
-;ARG:0	結果（0 or 1）
-;ARG:1	確率の偏り（(128 ± n) / 256）
-;ARG:2	確率の偏り（(128 ± n) / 256）
+;확률 결정
+;ARG:0	결과（0 or 1）
+;ARG:1	확률의 편향(偏り)（(128 ± n) / 256）
+;ARG:2	확률의 편향(偏り)（(128 ± n) / 256）
 LOCAL:0 = 128 - ARG:1
 SIF ARG:0
 	LOCAL:0 += ARG:1 * 2
@@ -230,8 +233,8 @@ RETURN LOCAL:1
 
 ;--------------------------------------------------
 @MAJORITY_VOTING_PROBABILITY_NUM ,ARG:0 ,ARG:1
-;ARG:0	試行回数
-;ARG:1	確率(N / 256)
+;ARG:0	시행 횟수
+;ARG:1	확률 (N / 256)
 
 $SAME_RESULT
 
@@ -257,29 +260,33 @@ ENDIF
 
 ;--------------------------------------------------
 @PRINT_FORECAST
-;確率の表示
+;확률 표시
 RESETCOLOR
 
 LOCAL = TCVARn:30
 SIF TCVARn:0 == 0
 	LOCAL = 0
-PRINT 近:
+PRINT 근:
 CALL FORECAST_OUTPUT_NUM, LOCAL
 PRINT  %
 
 LOCAL = TCVARn:31
 SIF TCVARn:0 == 0
 	LOCAL = 0
-PRINT  中:
+PRINT  중:
 CALL FORECAST_OUTPUT_NUM, LOCAL
 PRINT  %
 
 LOCAL = TCVARn:32
 SIF TCVARn:0 == 0
 	LOCAL = 0
-PRINT  遠:
+PRINT  원:
 CALL FORECAST_OUTPUT_NUM, LOCAL
 PRINT  %
+SIF FLAG:999 == 1 && TCVAR:30 == -1 && TCVAR:31 == -1 && TCVAR:32 == -1 && TCVAR:0 != 0
+	PRINT （예측 펌블！）
+
+;공중 예측 확률은 STATUS_TRAIN 에서 따로 FORECAST_OUTPUT_NUM 함수를 호출하고 있다
 
 	;전투 지원에 따른 보정률
 	CALL CALC_CHISEI_SHIEN(0)
@@ -292,7 +299,7 @@ PRINT  %
 		LOCAL:1 = RESULT
 	ENDIF
 	LOCAL:2 = 160 * (MAXBASE:지성 + LOCAL:0) / (MAXBASE:지성 + LOCAL:0 + LOCAL:1) + 96
-	PRINT 　予測精度：
+	PRINT 　예측 정확도：
 	FONTBOLD
 	IF TCVARn:0 == 0
 		SETCOLOR 105,105,105
@@ -321,15 +328,15 @@ PRINT  %
 
 
 ;--------------------------------------------------
-;予測率に応じた色付き数字の表示
+;예측률에 따른 채색된 숫자 표시
 @FORECAST_OUTPUT_NUM, ARG
-;ARG	確率（n / 100）
-;　　　　ただし不明な場合(予測失敗)は-1
+;ARG	확률（n / 100）
+;　　　　단 불명인 경우(예측 실패)에는 -1
 
 SIF TCVARn:0 == 0
 	ARG=-1
 
-;確率に応じた色付け
+;확률에 따른 채색
 CALL FORECAST_OUTPUT_SETCOLOR(ARG)
 
 IF TCVARn:0 == 0
@@ -340,7 +347,7 @@ ELSE
 	PRINTFORM {ARG, 3}
 ENDIF
 RESETCOLOR
-;↑で使う色の指定
+;↑위에서 사용할 색 지정
 @FORECAST_OUTPUT_SETCOLOR(ARG,ARGS)
 	IF ARGS=="COM"
 		IF ARG == -1
@@ -392,13 +399,13 @@ RESETCOLOR
 
 
 
-;両者の지성を比較し、確率表示に使う値（0〜10）を算出する
+;양측의 지성을 비교하여, 확률 표시에 사용하는 값(0~10)을 산출한다
 ;--------------------------------------------------
 @INT_EVAL, PC_INT, EN_INT
-;RAND_VAR	確率の偏り算出用　RAND_VAR:11は総和
-;PC_INT		プレイヤーキャラクター지성
-;EN_INT		敵지성
-;PER_INT	敵지성に対するプレイヤーキャラクター지성の割合（%）
+;RAND_VAR	확률의 편향(偏り) 산출용　RAND_VAR:11은 총화(総和 총계?)
+;PC_INT		플레이어 캐릭터 지성
+;EN_INT		적 지성
+;PER_INT	적 지성에 대한 플레이어 캐릭터 지성의 비율(%)
 
 #DIM RAND_VAR, 12
 #DIM PC_INT
@@ -406,7 +413,7 @@ RESETCOLOR
 #DIM PER_INT
 #DIM LCOUNT
 
-;敵ごとの補正
+;적마다의 보정
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	LOCAL = 0
 ELSEIF ENEMY_TYPE_CHECK_F("BOSS") == 1
@@ -416,13 +423,13 @@ ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
 ELSEIF ENEMY_TYPE_CHECK_F("MOB") == 1
 	LOCAL = 50 + RAND:25
 ENDIF
-;ハードモードだと補正1.5倍
+;HARDCORE 모드라면 보정 1.5배
 SIF GAME_OPTION_CHECK_F(OPTION_hardcore)
 	TIMES LOCAL, 1.50
-;イージーモードだと補正0.75倍
+;INSTANT 모드라면 보정 0.75배
 SIF GAME_OPTION_CHECK_F(OPTION_easy)
 	TIMES LOCAL, 0.75
-;ソロモードだと補正半減
+;SOLO모드라면 보정 반감
 SIF GAME_OPTION_CHECK_F(OPTION_solo)
 	TIMES LOCAL, 0.50
 EN_INT = EN_INT + LOCAL
@@ -434,7 +441,7 @@ VARSET RAND_VAR
 
 FOR LCOUNT, 0, 11
 	RAND_VAR:LCOUNT = ((LCOUNT * 2 - 10) * (105 - PER_INT) + LCOUNT * 5 + 250) / 33
-	;지성比による補正
+	;지성비에 따른 보정
 	IF PER_INT < 40
 		SIF LCOUNT < 3
 			RAND_VAR:LCOUNT = 0
@@ -504,15 +511,15 @@ NEXT
 RETURN LCOUNT - 1
 
 
-;INT_EVALの値から、表示する予測値（0〜100）を決定する
+;INT_EVAL의 값으로부터, 표시할 예측값(0~100)을 결정한다
 ;--------------------------------------------------
 @INVERSION_PROBABILITY, BLN_VAR, INT_VAR
-;BLN_VAR	공격の有無　ブーリアン値
-;INT_VAR	INT_EVALの値
-;		0なら予測値は100もしくは0
-;		1なら予測値は90もしくは10
+;BLN_VAR	공격의 유무　불리언(Boolean) 값
+;INT_VAR	INT_EVAL의 값
+;		0이라면 예측치는 100 혹은 0
+;		1이라면 예측치는 90혹은 10 (라고 써져있지만 95 혹은 5인 것 같다)
 ;			：
-;		10なら予測値は50
+;		10이라면 예측치는 50
 
 #DIM BLN_VAR
 #DIM INT_VAR

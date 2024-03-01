@@ -184,7 +184,7 @@ ELSEIF LOCAL < 40 && TALENT:모유체질
 ;全身愛撫
 ELSEIF LOCAL < 70
 	RETURN 0
-;Ｃ攻め強
+;Ｃ공격(강)
 ELSEIF LOCAL < 80
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -247,14 +247,14 @@ ENDIF
 RETURN 15
 
 ;--------------------------------------------------
-;Ｃ攻め強
+;Ｃ공격(강)
 ;性コマンド分類
 @SEX_TYPE_MOB_1_COM1
 RETURN 통상
 
 @MESSAGE_MOB_1_COM1, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ攻め強
+PRINT Ｃ공격(강)
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 

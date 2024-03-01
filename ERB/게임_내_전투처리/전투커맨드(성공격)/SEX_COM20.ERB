@@ -106,7 +106,7 @@ CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM20, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラに両穴フィニッシュをした
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 両穴フィニッシュをした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM20
 	;지문: COM20

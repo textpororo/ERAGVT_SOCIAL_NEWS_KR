@@ -1,15 +1,15 @@
 ﻿@INSTANT_ARG_DOWN
-;未変身状態だと能力低下5回
+;미변신 상태라면 능력 저하 5회
 IF CFLAG:1 == 0
 	LOCAL:1 = 5
-	PRINTFORMW 敵の纏う瘴気が体に染み込む……
-;変身・SP変身状態なら能力低下2回
+	PRINTFORMW 적을 둘러싼 독기가 몸에 스며든다……
+;변신・SP변신 상태라면 능력 저하 2회
 ELSE
 	LOCAL:1 = 2
-	PRINTFORMW 敵の纏う瘴気が辺りに撒き散らされている……
+	PRINTFORMW 적을 둘러싼 독기가 주위에 퍼져 있다……
 ENDIF
 $LOOP_I_ARG_DOWN
-;공격・방어・민첩・지성のどれか1つを減らす
+;공격・방어・민첩・지성・기초 체력(10) 중 하나를 줄인다
 LOCAL:2 = RAND:5
 IF LOCAL:2 == 0
 	BASE:TARGET:공격 -= 1
@@ -20,12 +20,13 @@ ELSEIF LOCAL:2 == 2
 ELSEIF LOCAL:2 == 3
 	BASE:TARGET:지성 -= 1
 ELSE
-	BASE:TARGET:기초체력 -=10
-
+	BASE:TARGET:기초체력 -= 10
 ENDIF
-;LOCAL:1が0になるまで繰り返す
+;LOCAL:1이 0이 될 때까지 반복한다
 LOCAL:1 -= 1
 IF LOCAL:1 > 0
 	GOTO LOOP_I_ARG_DOWN
 ENDIF
+;존나 불친절하게 이런 중요한 정보를 안 알려주니까 직접 썼음
+PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%의 기초 능력이 일부 감소하였다！
 

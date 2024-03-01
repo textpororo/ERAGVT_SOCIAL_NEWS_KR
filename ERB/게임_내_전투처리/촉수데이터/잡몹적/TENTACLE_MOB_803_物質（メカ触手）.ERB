@@ -218,8 +218,8 @@ ENDIF
 ;【専用ルーチン（性行為）】
 ;--------------------------------------------------
 @TENTACLE_MOB_803_SEX_ROUTINE
-;RETURN 3	;Ｖ攻め強
-;RETURN 4	;Ａ攻め強
+;RETURN 3	;Ｖ공격(강)
+;RETURN 4	;Ａ공격(강)
 ;RETURN 8	;スパンキング
 ;RETURN 9	;針
 ;RETURN 12	;イラマチオ
@@ -238,9 +238,9 @@ ELSEIF RAND:2 == 0 && CLOTH_OUTER_PER < CLOTH_OUTER_DEF && CLOTH_INNER_PER < CLO
 	IF BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0
 		RETURN 2000	;結界破り
 	ELSEIF ISFEMALE() && CHECK_HOLYVIRGIN_F() == 0
-		RETURN 3	;Ｖ攻め強
+		RETURN 3	;Ｖ공격(강)
 	ELSE
-		RETURN 4	;Ａ攻め強
+		RETURN 4	;Ａ공격(강)
 	ENDIF
 ELSEIF RAND:4 == 0 && ISHOLE() == 1
 	RETURN 12	;イラマチオ
@@ -284,16 +284,16 @@ RETURN -1
 ;==================================================
 ;【性コマンド関係】
 ;--------------------------------------------------
-;COM3：V攻め強
+;COM3：V공격(강)
 @SEX_TYPE_MOB_803_COM3
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM3, ARG:0, ARG:1
 FONTBOLD
 IF (ARG & Ａ)
-	PRINT ＶＡ攻め強
+	PRINT ＶＡ공격(강)
 ELSE
-	PRINT Ｖ攻め強
+	PRINT Ｖ공격(강)
 ENDIF
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
@@ -508,13 +508,13 @@ ENDIF
 RETURN Ａ
 
 ;--------------------------------------------------
-;COM5：A攻め強
+;COM5：A공격(강)
 @SEX_TYPE_MOB_803_COM5
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM5, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ攻め強
+PRINT Ａ공격(강)
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 

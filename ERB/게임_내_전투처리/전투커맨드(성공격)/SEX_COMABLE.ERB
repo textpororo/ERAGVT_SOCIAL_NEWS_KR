@@ -27,16 +27,16 @@ ENDIF
 ;特定衣装による保護機能無視
 ;속옷：성기 가리개
 IF CFLAG:42 == 398 && CLOTH_NO_INNER_L == 0
-	;Ａ攻め強、Ａ攻めＳＰ、Ａ拡張攻め
+	;Ａ공격(강)、Ａ攻めＳＰ、Ａ拡張攻め
 	SIF ARG == 5 || ARG == 1002 || ARG == 1010
 		CLOTH_INNER_DEF_L = 100
 ENDIF
 TFLAG:10 = ARG
 SELECTCASE ARG
-	;C攻め弱
+	;C공격(약)
 	CASE 0
 		CALL SEX_COM0, FLAG:11, LOCAL
-	;C攻め強
+	;C공격(강)
 	CASE 1
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
@@ -45,35 +45,35 @@ SELECTCASE ARG
 		ELSE
 			CALL SEX_COM1, FLAG:11, LOCAL
 		ENDIF
-	;V攻め弱
+	;V공격(약)
 	CASE 2
-		;보추の場合はA攻め弱に振り替える
+		;보추の場合はA공격(약)に振り替える
 		IF TALENT:보추 > 0
 			TFLAG:10 = 0
 			CALL SEX_COM4, FLAG:11, LOCAL
-		;남자の場合はC攻め弱に振り替える
+		;남자の場合はC공격(약)に振り替える
 		ELSEIF ISMALE()
 			TFLAG:10 = 0
 			CALL SEX_COM0, FLAG:11, LOCAL
 		ELSE
 			CALL SEX_COM2, FLAG:11, LOCAL
 		ENDIF
-	;V攻め強
+	;V공격(강)
 	CASE 3
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はA攻め強に振り替える
+			;보추の場合はA공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM5, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り替える
+			;남자の場合はC공격(강)に振り替える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;성처녀はＢ攻めにしたい(今はV攻め弱に振ってる)
+			;성처녀はＢ攻めにしたい(今はV공격(약)に振ってる)
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 			;	CALL SEX_COM7, FLAG:11, LOCAL
 				TFLAG:10 = 2
@@ -82,23 +82,23 @@ SELECTCASE ARG
 				CALL SEX_COM3, FLAG:11, LOCAL
 			ENDIF
 		ENDIF
-	;A攻め弱
+	;A공격(약)
 	CASE 4
-		;남자かつ男女平等オフならC攻め弱に振り替える
+		;남자かつ男女平等オフならC공격(약)に振り替える
 		IF ISHOLE() == 0
 			TFLAG:10 = 0
 			CALL SEX_COM0, FLAG:11, LOCAL
 		ELSE
 			CALL SEX_COM4, FLAG:11, LOCAL
 		ENDIF
-	;A攻め強
+	;A공격(강)
 	CASE 5
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならC攻め強に振り替える
+			;남자かつ男女平等オフならC공격(강)に振り替える
 			IF ISHOLE() == 0
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
@@ -106,17 +106,17 @@ SELECTCASE ARG
 				CALL SEX_COM5, FLAG:11, LOCAL
 			ENDIF
 		ENDIF
-	;B攻め弱
+	;B공격(약)
 	CASE 6
 		CALL SEX_COM6, FLAG:11, LOCAL
-	;B攻め強
+	;B공격(강)
 	CASE 7
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならＣ攻め弱に振り替える
+			;남자かつ男女平等オフならＣ공격(약)に振り替える
 				IF ISHOLE() == 0
 				TFLAG:10 = 0
 				CALL SEX_COM0, FLAG:11, LOCAL
@@ -138,7 +138,7 @@ SELECTCASE ARG
 		ENDIF
 	;手淫
 	CASE 10
-		;기절中はＣ攻め弱に振り替える
+		;기절中はＣ공격(약)に振り替える
 		IF (TCVARn:12 & 기절)
 			TFLAG:10 = 0
 			CALL SEX_COM0, FLAG:11, LOCAL
@@ -188,7 +188,7 @@ SELECTCASE ARG
 				TCVARn:12 -= 강구속
 			TFLAG:10 = 1
 			CALL SEX_COM17, FLAG:11, LOCAL
-		;남자の場合はC攻め強に振り替える
+		;남자の場合はC공격(강)に振り替える
 		ELSEIF ISMALE()
 			;강구속を消す
 			SIF (TCVARn:12 & 강구속)
@@ -215,7 +215,7 @@ SELECTCASE ARG
 				TCVARn:12 -= 강구속
 			TFLAG:10 = 1
 			CALL SEX_COM18, FLAG:11, LOCAL
-		;남자の場合はC攻め強に振り替える
+		;남자の場合はC공격(강)に振り替える
 		ELSEIF ISMALE()
 			;강구속を消す
 			SIF (TCVARn:12 & 강구속)
@@ -235,7 +235,7 @@ SELECTCASE ARG
 		ENDIF
 	;애널ピストン
 	CASE 17
-		;남자かつ男女平等オフならC攻め強に振り替える
+		;남자かつ男女平等オフならC공격(강)に振り替える
 		IF ISHOLE() == 0
 			;강구속を消す
 			SIF (TCVARn:12 & 강구속)
@@ -247,7 +247,7 @@ SELECTCASE ARG
 		ENDIF
 	;애널フィニッシュ
 	CASE 18
-		;남자かつ男女平等オフならC攻め強に振り替える
+		;남자かつ男女平等オフならC공격(강)に振り替える
 		IF ISHOLE() == 0
 			;강구속を消す
 			SIF (TCVARn:12 & 강구속)
@@ -305,7 +305,7 @@ SELECTCASE ARG
 		ELSE
 			CALL SEX_COM20, FLAG:11, LOCAL
 		ENDIF
-	;C攻めSP
+	;C공격(SP)
 	CASE 1000
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
@@ -314,22 +314,22 @@ SELECTCASE ARG
 		ELSE
 			CALL SEX_SPCOM0
 		ENDIF
-	;V攻めSP
+	;V공격(SP)
 	CASE 1001
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はA攻め強に振り替える
+			;보추の場合はA공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM5, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り変える
+			;남자の場合はC공격(강)に振り変える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;성처녀はC攻めSPに振る予定(現状はC強攻め)
+			;성처녀はC공격(SP)に振る予定(現状はC強攻め)
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 			;	CALL SEX_SPCOM0
 				TFLAG:10 = 1
@@ -338,18 +338,18 @@ SELECTCASE ARG
 				CALL SEX_SPCOM1
 			ENDIF
 		ENDIF
-	;A攻めSP
+	;A공격(SP)
 	CASE 1002
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90 || CLOTH_INNER_PER_L > CLOTH_INNER_DEF_L / 2
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならC攻めSPに振り替える
+			;남자かつ男女平等オフならC공격(SP)に振り替える
 				IF ISHOLE() == 0
 				TFLAG:10 = 1000
 				CALL SEX_SPCOM0
-			;소프트 바디슈트の場合は貫通できないのでA攻め強に振り返る
+			;소프트 바디슈트の場合は貫通できないのでA공격(강)に振り返る
 			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
 				TFLAG:10 = 5
 				CALL SEX_COM5, FLAG:11, LOCAL
@@ -357,14 +357,14 @@ SELECTCASE ARG
 				CALL SEX_SPCOM2
 			ENDIF
 		ENDIF
-	;B攻めSP
+	;B공격(SP)
 	CASE 1003
 		;衣装の耐久度が高ければ衣装破壊を優先する
 		IF CLOTH_OUTER_PER_L > 90
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならＢ攻め弱に振り替える
+			;남자かつ男女平等オフならＢ공격(약)に振り替える
 				IF ISHOLE() == 0
 				TFLAG:10 = 6
 				CALL SEX_COM6, FLAG:11, LOCAL
@@ -377,7 +377,7 @@ SELECTCASE ARG
 		CALL SEX_SPCOM4
 	;パイズリ
 	CASE 1005
-		;남자の場合はB攻め強に振り変える
+		;남자の場合はB공격(강)に振り変える
 		IF ISMALE()
 			TFLAG:10 = 7
 			CALL SEX_COM7, FLAG:11, LOCAL
@@ -386,7 +386,7 @@ SELECTCASE ARG
 		ENDIF
 	;強制自慰
 	CASE 1006
-		;기절中はＣ攻め弱に振り替える
+		;기절中はＣ공격(약)に振り替える
 		IF (TCVARn:12 & 기절)
 			TFLAG:10 = 0
 			CALL SEX_COM0, FLAG:11, LOCAL
@@ -395,11 +395,11 @@ SELECTCASE ARG
 		ENDIF
 	;羞恥プレイ
 	CASE 1007
-		;기절中はＣ攻め弱に振り替える
+		;기절中はＣ공격(약)に振り替える
 		IF (TCVARn:12 & 기절)
 			TFLAG:10 = 0
 			CALL SEX_COM0, FLAG:11, LOCAL
-		;남자かつ男女平等オフならC攻め強に振り替える
+		;남자かつ男女平等オフならC공격(강)に振り替える
 		ELSEIF ISHOLE() == 0
 			TFLAG:10 = 1
 			CALL SEX_COM1, FLAG:11, LOCAL
@@ -427,11 +427,11 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はA攻め強に振り替える
+			;보추の場合はA공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM5, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り替える
+			;남자の場合はC공격(강)に振り替える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
@@ -458,11 +458,11 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならC攻めSPに振り替える
+			;남자かつ男女平等オフならC공격(SP)に振り替える
 				IF ISHOLE() == 0
 				TFLAG:10 = 1000
 				CALL SEX_SPCOM0
-			;소프트 바디슈트の場合は貫通できないのでA攻め強に振り返る
+			;소프트 바디슈트の場合は貫通できないのでA공격(강)に振り返る
 			ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
 				TFLAG:10 = 5
 				CALL SEX_COM5, FLAG:11, LOCAL
@@ -480,11 +480,11 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はB攻め強に振り替える
+			;보추の場合はB공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM7, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り替える
+			;남자の場合はC공격(강)に振り替える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
@@ -518,7 +518,7 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;남자かつ男女平等オフならC攻めSPに振り替える
+			;남자かつ男女平等オフならC공격(SP)に振り替える
 				IF ISHOLE() == 0
 				TFLAG:10 = 1000
 				CALL SEX_SPCOM0
@@ -539,15 +539,15 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はA攻め強に振り替える
+			;보추の場合はA공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM5, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り替える
+			;남자の場合はC공격(강)に振り替える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
-			;성처녀の場合もC攻め強に振り替える
+			;성처녀の場合もC공격(강)に振り替える
 			ELSEIF CHECK_HOLYVIRGIN_F()==1
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL
@@ -569,11 +569,11 @@ SELECTCASE ARG
 			TFLAG:10 = 14
 			CALL SEX_COM14, FLAG:11, LOCAL
 		ELSE
-			;보추の場合はA攻め強に振り替える
+			;보추の場合はA공격(강)に振り替える
 			IF TALENT:보추 > 0
 				TFLAG:10 = 1
 				CALL SEX_COM5, FLAG:11, LOCAL
-			;남자の場合はC攻め強に振り替える
+			;남자の場合はC공격(강)に振り替える
 			ELSEIF ISMALE()
 				TFLAG:10 = 1
 				CALL SEX_COM1, FLAG:11, LOCAL

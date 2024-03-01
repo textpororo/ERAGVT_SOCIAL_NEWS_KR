@@ -1,4 +1,4 @@
-﻿;B攻め弱
+﻿;B공격(약)
 
 ;性コマンド分類
 @SEX_TYPE_COM6
@@ -60,7 +60,7 @@ CALL PALAM_VABCestimate(LOCAL,3,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM6, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラにB攻め弱をした
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 B공격(약)을 했다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM6
 	;지문: COM6

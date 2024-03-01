@@ -1,4 +1,4 @@
-﻿;C攻め強
+﻿;C공격(강)
 
 ;性コマンド分類
 @SEX_TYPE_COM1
@@ -51,7 +51,7 @@ CALL PALAM_VABCestimate(LOCAL,0,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM1, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラにC攻め強をした
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 C공격(강)을 했다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM1
 	;지문: COM1

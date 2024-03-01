@@ -68,7 +68,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	;Ｃ攻め系統で남자でないならなら50%でＶ攻め플래그를 세운다
 	SIF ARG == Ｃ && ISFEMALE() && RAND:2 == 0
 		SETBIT AT_FLAG, (Ｖ - 1)
-	;Ｖ攻めSPなら50%でＡ攻め플래그를 세운다
+	;Ｖ공격(SP)なら50%でＡ攻め플래그를 세운다
 	SIF TFLAG:10 == 1001 && RAND:2 == 0
 		SETBIT AT_FLAG, (Ａ - 1)
 ENDIF

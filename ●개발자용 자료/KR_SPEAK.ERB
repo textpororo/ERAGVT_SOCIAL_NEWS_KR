@@ -1,0 +1,140 @@
+;한국어 말투 처리 라이브러리 KR_SPEAK
+;ver 24.03.01
+;-------------------------------
+;구어체에 가깝도록 다양한 상황에 대응해 글자로도 생동감(?)을 느낄 수 있도록 하는데 목적을 둡니다.
+;아직 작업중인 부분이 있습니다. 자유롭게 활용하시되 수정한 부분은 이 행 아래에 표기해주세요.
+;===============================
+;간편함수 모음
+;===============================
+;초성만 - 받은 단어의 (l_index + 1)번째 초성을 반환함
+;-------------------------------
+@초성만(word, l_index = 0)
+#FUNCTIONS
+#DIMS word
+#DIM l_index
+
+RETURNF SINGLE_Syllable(CHARATU(word, l_index), 1, 0)
+;===============================
+;발음 처리 메인 함수 모음
+;===============================
+;발음 늘이기 함수 KR_SPEAK_Long
+;select_j - 처리유무 bit0: 초성, bit1: 중성, bit2: 종성
+;s_index  - 원 음절 위치
+;w_length - 늘릴 발음 길이
+;option   - bit0: 자모 단독처리 안함 (참/거짓), bit1: 대상 글자 앞/뒤 (참/거짓), bit2: 원 음절 종성 날리기 (참/거짓)
+@KR_SPEAK_Long(word, select_j, s_index = 1, w_length = 1, option = 0b11)
+#FUNCTIONS
+#DIMS word
+#DIM select_j
+#DIM s_index
+#DIM w_length
+#DIM option
+
+#DIMS f_letter
+#DIMS tmp_letters, 3
+#DIM letter_index, 3
+
+;늘릴 발음은 최소 1글자
+w_length = MAX(w_length, 1)
+
+;단어 내 대상 글자 앞뒤 분리해 저장
+SUBSTRINGU word, 0, s_index
+tmp_letters:0 '= RESULTS
+SUBSTRINGU word, s_index + 1, -1
+tmp_letters:1 '= RESULTS
+;원 음절 저장
+tmp_letters:2 '= CHARATU(word, s_index)
+
+f_letter '= SINGLE_Syllable(tmp_letters:2, select_j, option) * w_length
+
+SIF GETBIT(option, 2) ;원 음절 종성 날리기
+    tmp_letters:2 '= UNICODE((ENCODETOUNI(tmp_letters:2) - 0xAC00) - ((ENCODETOUNI(tmp_letters:2) - 0xAC00) % 28) + 0xAC00)
+
+word '= tmp_letters:0 + @"\@ GETBIT(option, 1) ? %f_letter%%tmp_letters:2% # %tmp_letters:2%%f_letter%\@" + tmp_letters:1
+
+RETURNF word
+;-------------------------------
+;외딴 글자 처리 함수 SINGLE_Syllable
+;KR_SPEAK_Long의 기능을 한 글자를 받아서라도 쓸 수 있게
+;select_j - 처리유무 bit0: 초성, bit1: 중성, bit2: 종성
+;option   - 자모 단독처리 안함 (참/거짓)
+;-------------------------------
+@SINGLE_Syllable(letter, select_j, option = 1)
+#FUNCTIONS
+#DIMS letter
+#DIM select_j
+#DIM option
+
+#DIM letter_index, 3
+#DIM tmp_count
+
+RESULTS '= SPLIT_Syllable(letter, GETBIT(option, 0))
+SIF RESULTS:0 == "" ;처리할 글자 없음
+    RETURNF letter
+
+IF !GETBIT(option, 0) && GROUPMATCH(select_j, 1p0,1p1,1p2) ;자모 단독처리 유무
+    SELECTCASE select_j
+    CASE 1p0 ;초성만
+        RETURNF RESULTS:0
+    CASE 1p1 ;중성만
+        RETURNF RESULTS:1
+    CASE 1p2 ;종성만
+        RETURNF RESULTS:2
+    ENDSELECT
+ELSE
+    letter_index = TOINT(RESULTS:0), TOINT(RESULTS:1), TOINT(RESULTS:2)
+
+    FOR tmp_count, 0, 3
+        IF !GETBIT(select_j, tmp_count) ;대상 자모 생략
+            IF tmp_count
+                letter_index:tmp_count = 0
+            ELSE ;초성 생략시 ㅇ으로 변환
+                letter_index:0 = 11
+            ENDIF
+        ENDIF
+    NEXT
+
+    RETURNF JOIN_Jamo(letter_index)
+ENDIF
+;===============================
+;기능 처리용 함수 모음
+;===============================
+;-------------------------------
+;자모 분리 함수 SPLIT_Syllable
+;letter - 음절
+;option - 0: 문자열 반환 1: index값 반환
+;RESULTS:0 = 초성, RESULTS:1 = 중성, RESULTS:2 = 종성
+;-------------------------------
+@SPLIT_Syllable(letter, option = 0)
+#FUNCTIONS
+#DIMS letter
+#DIM option
+#DIM j_index, 4
+
+RESULTS '= "", "", letter ;SIF 탈출 처리용 letter 종성 삽입
+SIF !INRANGE(ENCODETOUNI(letter), 0xAC00, 0xD7A3) ;한글이 아닐 때
+    RETURNF RESULTS
+
+j_index:0 = ENCODETOUNI(letter) - 0xAC00
+;초성/중성/종성 유니코드값 획득
+j_index:1 = (j_index:0 / 28) / 21 ;초성
+j_index:2 = (j_index:0 / 28) % 21 ;중성
+j_index:3 = j_index:0 % 28 ;종성
+
+IF option == 1 ;index값 반환
+    RESULTS '= @"{j_index:1}", @"{j_index:2}", @"{j_index:3}"
+ELSE
+    RESULTS '= UNICODE(j_index:1 + 0x1100), UNICODE(j_index:2 + 0x1161), UNICODE(j_index:3 + 0x11a7)
+ENDIF
+
+RETURNF RESULTS
+
+;-------------------------------
+;자모 결합 함수 JOIN_Jamo
+;u_jamo :0 초성 :1 중성 :2 종성 index값
+;-------------------------------
+@JOIN_Jamo(u_jamo)
+#FUNCTIONS
+#DIM REF u_jamo, 0
+
+RETURNF UNICODE(0xAC00 + ((u_jamo:0 * 21) + u_jamo:1) * 28 + u_jamo:2)

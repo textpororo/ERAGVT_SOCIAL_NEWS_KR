@@ -1,6 +1,7 @@
 ﻿@SUPART_BLOOD
+;하나하나씩 누르는 근본
 IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
-	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%STR:2500%の返り血を浴びてしまった！
+	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% %STR:2500%의 피를 뒤집어쓰고 말았다！
 	IF CONFIG_CHECK_SCREEN_F(3) == 0
 		PRINTW ・・・
 		PRINTW ・・・・・・
@@ -10,64 +11,64 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 	ENDIF
 	;VABＣ촉수
 	IF FLAG:11 < 5
-		PRINTFORML 次の瞬間、%PRINT_TRANSCALLNAME(TARGET)%의 脳髄を強烈な快感が走り抜ける！
+		PRINTFORML 그 다음 순간, 강렬한 쾌감이 %PRINT_TRANSCALLNAME(TARGET)%의 뇌수를 스쳐 지나간다！
 		PRINTW 
-		;변신시ＴＳキャラが女体化すると남자に戻れなくなる
+		;변신시ＴＳ 캐릭터가 여체화할 시 남자로 돌아갈 수 없게 된다
 		IF FLAG:11 == 2 && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%しばらく身を震わせながら地面に横たわって何度も絶頂し、
-			PRINTFORML 戦闘後の気の緩みもあって完全に変身が解けてしまった。
-			PRINTFORML ところが、平らに돌아간다はずの胸は膨らんだままで、
-			PRINTFORML 丸みを帯びた肉付きや腰のラインも変化する様子がない――
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 잠시 몸을 떨며 땅바닥에 주저앉아 몇 번이고 절정에 이르렀고,
+			PRINTFORML 전투가 끝나 긴장이 풀리기도 한 탓에 완전히 변신이 풀려 버렸다.
+			PRINTFORML 그러나, 변신 전처럼 평평하게 돌아왔어야 할 가슴은 부풀어 오른 채였고,
+			PRINTFORML 둥그런 살집이나 허리 라인도 변화할 기미가 전혀 없었다――
 			PRINTW 
 
-			;변신시ＴＳキャラが女体化すると남자に戻れなくなる
+			;변신시ＴＳ캐릭터가 여체화할 시 남자로 돌아올 수 없게 된다
 			CALL TS_MtoF, TARGET
 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女体化した姿のまま[남자]に戻れなくなった！
-			PRINT さらに、
-		;元が女性の변신시ＴＳキャラが女体化すると남자になれなくなる
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 여체화한 모습 그대로인 채 [남자] 로 돌아갈 수 없게 돼 버렸다！
+			PRINT 게다가, 
+		;원래 여성인 변신시ＴＳ캐릭터가 여체화할 시 남자가 될 수 없게 된다
 		ELSEIF FLAG:11 == 2 && ISMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 
-			PRINTFORML 思わず叫び声をあげてしまった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
-			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
-			PRINTFORML 見れば胸は膨らみを取り戻し、肉付きや腰のラインも変化して柔らかくなっている。
-			PRINTFORML 変身は解けていないのに、普段の自分とそっくりの状態になってしまっていて――
+			PRINTFORML 엉겁결에 소리를 질러 버린 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%,
+			PRINTFORML 자신의 목소리가 묘하게 사랑스러워지고 있다는 것을 깨달았다.
+			PRINTFORML 직접 살펴보니 가슴은 부풀어 올라 있고, 살집과 허리 라인도 변화하여 부드러워졌다.
+			PRINTFORML 변신은 풀리지 않았는데도, 평소의 자신과 똑 닮은 상태가 돼 버려서――
 			PRINTW 
 
-			;변신시ＴＳキャラが女体化すると남자に戻れなくなる
+			;변신시ＴＳ캐릭터가 여체화할 시 남자로 돌아올 수 없게 된다
 			CALL TS_FtoM, TARGET
 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%変身しても[남자]になれなくなってしまった！
-			PRINT さらに、
-		;元が남자のキャラがV촉수を倒すと女体化させられる
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 변신해도 [남자] 가 될 수 없게 돼 버렸다！
+			PRINT 게다가, 
+		;원래 남자인 캐릭터가 V촉수를 쓰러뜨리면 여체화된다
 		ELSEIF FLAG:11 == 2 && ISMALE() && CHARATALENT_F(TARGET,0,"남자") > 0
 
-			PRINTFORML 思わず叫び声をあげてしまった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
-			PRINTFORML 自分の声が妙に可愛らしくなっていることに気が付いた。
-			PRINTFORML 見れば胸は膨らみを増し、肉付きや腰のラインも変化して柔らかくなっている。
-			PRINTFORML 張りと瑞々しさを得た肌には健康的な色気が漂い、程よく髪も伸びたその姿は――
+			PRINTFORML 엉겁결에 소리를 질러 버린 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
+			PRINTFORML 자신의 목소리가 묘하게 사랑스러워지고 있다는 것을 깨달았다.
+			PRINTFORML 직접 살펴보니 가슴은 부풀어 올라 있고, 살집과 허리 라인도 변화하여 부드러워졌다.
+			PRINTFORML 탱탱함과 생기를 얻은 피부에는 건강한 색기가 감돌았고, 머리카락도 적당하게 자라난 그 모습은――
 			PRINTW 
 
-			;通常の女体化処理
+			;통상의 여체화 처리
 			CALL TS_NORMAL, TARGET
 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[남자]を失い、完全に女性になってしまった！
-			PRINT さらに、
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [남자] 를 잃고, 완전히 여성이 돼 버렸다！
+			PRINT 게다가, 
 		ENDIF
-		;CVAB촉수を倒すと、該当箇所が敏感になる
+		;CVAB촉수를 쓰러뜨릴 시, 해당 부위가 민감해진다
 		LOCAL:0 = 2*FLAG:11+98
 		IF TALENT:(LOCAL:0) == 0
 			TALENT:(LOCAL:0+1) -= 10
 			TALENT:(LOCAL:0) += 10
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%[%TALENTNAME:(LOCAL:0)%]になってしまった！
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [%TALENTNAME:(LOCAL:0)%] 이 되고 말았다！
 			PRINTW 
-		;既に敏感で감각がLV5未満だった場合、珠を大量に獲得する
+		;이미 민감하고 감각이 LV5 미만인 경우, 구슬을 대량으로 획득한다
 		ELSEIF ABL:(FLAG:11-1) < 5
 			JUEL:(FLAG:11-1) += 25421
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体が熱く疼く……。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 신체가 뜨겁게 쑤신다……
 			PRINTW 
-		;敏感かつ開発済みなら淫○付与
+		;민감함과 동시에 개발 완료라면 음○계 소질 부여
 		ELSEIF TALENT:(FLAG:11+152) == 0 && ABL:(FLAG:11-1) >= 5
 			TALENT:(FLAG:11+152) += 10
 				IF FLAG:11 == 1
@@ -79,51 +80,51 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 				ELSE
 					CALL MESSAGE_GETTALENT_INNYUU
 				ENDIF
-		;全部満たしていたら강절정
+		;전부 만족하고 있다면 강절정
 		ELSE
 			NOWEX:(FLAG:11-1) = 2
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 体を激しい快感が襲う・・・
+			PRINTFORML 격렬한 쾌감이 %PRINT_TRANSCALLNAME(TARGET)%의 몸을 덮친다・・・
 			PRINTW 
 		ENDIF
 	ELSEIF FLAG:11 == 5
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 意識が強烈な被虐願望で満たされてゆく・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 의식이 강렬한 피학 열망으로 채워져 간다・・・
 		PRINTW 
 
-		;S촉수を倒すとマゾッ気上昇
+		;S촉수를 쓰러뜨리면 마조끼 상승
 		ABL:마조끼 += 3
 		SIF ABL:마조끼 > 5
 			ABL:마조끼=5
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:15%が大幅に上がった。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %ABLNAME:15%가 큰 폭으로 올랐다.
 		PRINTW 
 	ELSEIF FLAG:11 == 6
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 意識が촉수の臭気に満たされ蕩けてゆく・・・
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 의식이 촉수의 악취로 채워져 황홀해져 간다・・・
 		PRINTW 
-		;P촉수を倒すと촉수중독上昇
+		;P촉수를 쓰러뜨리면 촉수중독 상승
 		ABL:촉수중독 += 2
 		SIF ABL:촉수중독 > 5
 			ABL:촉수중독=5
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:20%が大幅に上がった。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %ABLNAME:20%이 큰 폭으로 올랐다.
 		PRINTW 
 	ELSEIF FLAG:11 == 7
-		PRINTFORML ありもしない淫らな記憶が%PRINT_TRANSCALLNAME(TARGET)%의 意識に刷り込まれてゆく・・・
+		PRINTFORML 있지도 않은 추잡한 기억이 %PRINT_TRANSCALLNAME(TARGET)%의 의식에 새겨져 간다・・・
 		PRINTW 
-		;H촉수を倒すと露出壁、자위중독上昇
+		;H촉수를 쓰러뜨리면 노출벽, 자위중독 상승
 		ABL:노출벽+=3
 		ABL:자위중독 += 2
 		SIF ABL:노출벽 > 5
 			ABL:노출벽=5
 		SIF ABL:자위중독 > 5
 			ABL:자위중독=5
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%ABLNAME:14%と%ABLNAME:21%が大幅に上がった。
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %ABLNAME:14%과 %ABLNAME:21%이 큰 폭으로 올랐다.
 		PRINTW 
 	ENDIF
 
-	;絶頂の表示
+	;절정 표시
 	LOCAL = 0
 	IF NOWEX:Ｃ절정 == 1
-		;지문: C絶頂
+		;지문: C절정
 		CALL MESSAGE_SEX_ECSTASY_C
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 C절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_C
 	ELSEIF NOWEX:Ｃ절정 == 2
@@ -134,9 +135,9 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			CALL MESSAGE_OTHER_SEX_ECSTASY_C_HI
 	ENDIF
 	IF NOWEX:Ｖ절정 == 1
-		;지문: V絶頂
+		;지문: V절정
 		CALL MESSAGE_SEX_ECSTASY_V
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 V절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_V
 	ELSEIF NOWEX:Ｖ절정 == 2
@@ -147,9 +148,9 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			CALL MESSAGE_OTHER_SEX_ECSTASY_V_HI
 	ENDIF
 	IF NOWEX:Ａ절정 == 1
-		;지문: A絶頂
+		;지문: A절정
 		CALL MESSAGE_SEX_ECSTASY_A
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 A절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_A
 	ELSEIF NOWEX:Ａ절정 == 2
@@ -160,9 +161,9 @@ IF CONFIG_CHECK_BALANCE_F(4) > 0 && FLAG:11 > 0
 			CALL MESSAGE_OTHER_SEX_ECSTASY_A_HI
 	ENDIF
 	IF NOWEX:Ｂ절정 == 1
-		;지문: B絶頂
+		;지문: B절정
 		CALL MESSAGE_SEX_ECSTASY_B
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B絶頂を見た
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 B절정을 봤다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_SEX_ECSTASY_B
 	ELSEIF NOWEX:Ｂ절정 == 2

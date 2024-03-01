@@ -1,30 +1,30 @@
 ﻿;**********************************************************
-;戦闘のサブイベント類
-;AFTERTRAIN.ERBから呼ばれるものはSUBEVENT_BATTLEENDに
-;AFTERCOM.ERBから呼ばれるものは各自個別の関数に
+;전투의 서브 이벤트류
+;AFTERTRAIN.ERB에서 호출되는 것은 SUBEVENT_BATTLEEND으로
+;AFTERCOM.ERB에서 호출되는 것은 각자 개별 함수로
 
 @SUBEVENT_BATTLEEND
-;戦闘後自慰
-;絶頂禁止の解放
+;전투 후 자위
+;절정 금지 해방
 SIF TCVARn:40 > 0
 	CALL SUBEVENT_RELEASE_ECSTASY
-;時間切れか勝利時（撤退も）に条件を満たせば自慰をする
+;제한 시간 경과 혹은 승리 시(철수 포함)에 조건을 충족하면 자위를 한다
 SIF TFLAG:98 == 0 || TFLAG:98 == 1
 	CALL SELF_BATTLEEND, TARGET
 
-;これ以降はAFTERCOM.ERBから呼ばれる個別イベント
+;이 이후로는 AFTERCOM.ERB에서 호출되는 개별 이벤트
 
 ;----------------------------------------------------------
-;サブイベントの計算前の초기화
+;서브 이벤트 계산 전의 초기화
 @SUBEVENT_BATTLE_PRECALCRESET
 VARSET NOWEX, 0
 
 ;----------------------------------------------------------
-;흑화 캐릭터に敗北して犯される
+;흑화 캐릭터에게 패배하여 범해진다
 @SUBEVENT_BATTLE_RAPED_ENEMY
 
-;パラメータの取得は暫定値（β３）
-;ベース値の明示的초기화
+;파라미터 취득은 잠정치(暫定値) (β３)
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -33,35 +33,35 @@ LOCAL:8 = 2000
 ;치정
 LOCAL:9 = 2000
 
-;지문: レイプする側
+;지문: 강간하는 쪽
 CALL MESSAGE_OTHER_SUBEVENT_BATTLE_RAPE_ENEMY
 
-;지문: 흑화 캐릭터に敗北して犯される
+;지문: 흑화 캐릭터에게 패배하여 범해진다
 CALL MESSAGE_SUBEVENT_BATTLE_RAPED_ENEMY
 
 
-;피간경험を加算
+;피간경험을 가산
 EXP:피간경험 += 1
 
-;計算へ
+;계산으로
 
-;サブイベントの計算前の초기화
+;서브 이벤트 계산 전의 초기화
 CALL SUBEVENT_BATTLE_PRECALCRESET
 
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
 ;----------------------------------------------------------
-;악질 시민に敗北して犯される
+;악질 시민에게 패배하여 범해진다
 @SUBEVENT_BATTLE_RAPED_CITIZEN
 
-;지문: 악질 시민に敗北して犯される
+;지문: 악질 시민에게 패배하여 범해진다
 CALL MESSAGE_SUBEVENT_BATTLE_RAPED_CITIZEN
 
-;피간경험を加算
+;피간경험을 가산
 EXP:피간경험 += 1
 
-;計算へ
-;サブイベントの計算前の초기화
+;계산으로
+;서브 이벤트 계산 전의 초기화
 CALL SUBEVENT_BATTLE_PRECALCRESET
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
@@ -84,19 +84,19 @@ ENDIF
 LOCAL:1 = 35 - MIN((FLAG:45>0 ? 1 # 0) * 12, 12)
 IF LOCAL == 1 && RAND(100) < LOCAL:1
 	CFLAG:42 = 400
-	;지문: 촉수 구속구を着せられた
+	;지문: 촉수 구속구를 씌워졌다
 	CALL MESSAGE_SUBEVENT_BATTLE_SETTENTACLECLOTH
 ENDIF
 
 ;----------------------------------------------------------
-;촉수 구속구による被姦
+;촉수 구속구에 의한 피간
 @SUBEVENT_BATTLE_ACTTENTACLECLOTH
 #DIM LCOUNT
 SIF CFLAG:42 != 400
 	RETURN 0
 
-;取得パラメータ計算
-;β２時点では微々たる上昇で
+;취득 파라미터 계산
+;β２시점에서는 미미한 상승으로
 CALL SEX_COMEX, 0, 0, 15
 REPEAT 12
 	LOCAL:COUNT = RESULT:COUNT / 2
@@ -104,54 +104,54 @@ REND
 SIF ISMALE()
 	LOCAL:1 = 0
 
-;지문: 촉수 구속구による被姦
+;지문: 촉수 구속구에 의한 피간
 CALL MESSAGE_SUBEVENT_BATTLE_ACTTENTACLECLOTH
 
-;피간경험を加算
+;피간경험을 가산
 EXP:피간경험 += 1
 
-;サブイベントの計算前の초기화
+;서브 이벤트 계산 전의 초기화
 CALL SUBEVENT_BATTLE_PRECALCRESET
 
-;計算へ
+;계산으로
 ;CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
-;LOCALをPALAM補正に加算する
+;LOCAL을 PALAM 보정에 가산한다
 FOR LCOUNT, 0, 13
 	IF LOCAL:LCOUNT > 0
-		;体勢に関する補正
+		;자세에 관한 보정
 		CALL PALAM_HOSEI_POSE, LOCAL:LCOUNT
 		LOCAL:LCOUNT = RESULT
 
-		;성내성に関する補正
+		;성내성에 관한 보정
 		CALL PALAM_HOSEI_SEITAISEI, LOCAL:LCOUNT
 		LOCAL:LCOUNT = RESULT
 
-		;素質に関する補正
+		;소질에 관한 보정
 		CALL PALAM_HOSEI_TALENT, LCOUNT, LOCAL:LCOUNT
 		LOCAL:LCOUNT = RESULT
 
-		;성격に関する補正
+		;성격에 관한 보정
 		CALL PALAM_HOSEI_SEIKAKU, LCOUNT, LOCAL:LCOUNT
 		LOCAL:LCOUNT = RESULT
 
-		;촉수に関する補正
+		;촉수에 관한 보정
 		;CALL PALAM_HOSEI_TENTACLE, LCOUNT, LOCAL:LCOUNT
 		;LOCAL:LCOUNT = RESULT
 
-		;촉수중독に関する補正
+		;촉수중독에 관한 보정
 		IF LCOUNT + PALAM시점 - 감각수 == 공순 || LCOUNT + PALAM시점 - 감각수 == 욕정 || LCOUNT + PALAM시점 - 감각수 == 굴복
 			CALL PALAM_HOSEI_POISONING_TENTACLE, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 		ENDIF
 
-		;ランダム性付与
+		;랜덤성 부여
 		CALL PALAM_HOSEI_RANDOM, LOCAL:LCOUNT
 		LOCAL:LCOUNT = RESULT
 		
-		;下限値の설정
+		;하한치 설정
 		SIF LOCAL:LCOUNT <= 0
 			LOCAL:LCOUNT = 1
-		;上限値の설정
+		;상한치 설정
 		SIF LOCAL:LCOUNT > 999999 && LCOUNT >= 감각수
 			LOCAL:LCOUNT = 999999
 	ENDIF
@@ -159,7 +159,7 @@ FOR LCOUNT, 0, 13
 NEXT
 
 ;----------------------------------------------------------
-;絶頂禁止の解放
+;절정 금지 해방
 @SUBEVENT_RELEASE_ECSTASY
 #DIM LCOUNT
 SIF TCVARn:40 <= 0
@@ -170,7 +170,7 @@ FOR LCOUNT, 0, 감각수
 	CALL PALAM_ECSTASY, LCOUNT, 0, LCOUNT, 0
 NEXT
 
-;絶頂回数と珠の取得
+;절정 횟수와 구슬의 취득
 LOCAL = 0
 REPEAT 감각수
 	SIF NOWEX:COUNT > 0
@@ -189,33 +189,33 @@ EXP:노출쾌락경험 += LOCAL
 
 IF NOWEX:0 + NOWEX:1 + NOWEX:2 + NOWEX:3
 	PRINTL 
-	;지문: 絶頂禁止の解放
+	;지문: 절정 금지 해방
 	SIF TFLAG:98 != 2
 		CALL MESSAGE_SUBEVENT_BATTLE_RELEASE_ECSTASY
-	;絶頂の表示
+	;절정 표시
 	IF NOWEX:Ｃ절정 == 1
-		;지문: C絶頂
+		;지문: C절정
 		CALL MESSAGE_SEX_ECSTASY_C
 	ELSEIF NOWEX:Ｃ절정 > 1
 		;지문: C강절정
 		CALL MESSAGE_SEX_ECSTASY_C_HI, NOWEX:Ｃ절정
 	ENDIF
 	IF NOWEX:Ｖ절정 == 1
-		;지문: V絶頂
+		;지문: V절정
 		CALL MESSAGE_SEX_ECSTASY_V
 	ELSEIF NOWEX:Ｖ절정 > 1
 		;지문: V강절정
 		CALL MESSAGE_SEX_ECSTASY_V_HI, NOWEX:Ｖ절정
 	ENDIF
 	IF NOWEX:Ａ절정 == 1
-		;지문: A絶頂
+		;지문: A절정
 		CALL MESSAGE_SEX_ECSTASY_A
 	ELSEIF NOWEX:Ａ절정 > 1
 		;지문: A강절정
 		CALL MESSAGE_SEX_ECSTASY_A_HI, NOWEX:Ａ절정
 	ENDIF
 	IF NOWEX:Ｂ절정 == 1
-		;지문: B絶頂
+		;지문: B절정
 		CALL MESSAGE_SEX_ECSTASY_B
 	ELSEIF NOWEX:Ｂ절정 > 1
 		;지문: B강절정
@@ -226,24 +226,24 @@ TCVARn:40 = 0
 
 
 ;---------------------------------------------------------------------------
-;オート振り解きの処理
+;자동 풀어내기 처리
 @AUTO_UNTANGLE
-;기절中は不可
+;기절 중에는 불가능
 IF (TCVARn:12 & 기절)
 	TFLAG:22 = 1
 	RETURN
 ENDIF
-;황홀中は不可
+;황홀 중에는 불가능
 IF (TCVARn:12 & 황홀)
 	TFLAG:22 = 1
 	RETURN
 ENDIF
-;わざと捕まった場合は不可
+;일부러 잡힌 경우에는 불가능
 IF SELECTCOM == 69
 	TFLAG:22 = 1
 	RETURN
 ENDIF
-;악질 시민戦はテンポ悪いから不可
+;악질 시민전은 템포가 안 좋으므로 불가능
 IF FLAG:73 > 0
 	TFLAG:22 = 1
 	RETURN
@@ -254,14 +254,14 @@ IF TCVARn:0 == 0
 		TFLAG:22 = 1
 		RETURN
 	ENDIF
-	;풀어낸다成功判定
+	;풀어낸다 성공 판정
 	CALL ACT_HANTEI_CHARA_TO_TENTACLE, "HURIHODOKU"
 
-	;確率判定
+	;확률 판정
 	IF RESULT == 1
 		PRINTL 
 		FONTBOLD
-		PRINTL オート振り解き
+		PRINTL 자동 풀어내기
 		FONTREGULAR
 		;지문: 풀어낸다
 		CALL MESSAGE_BATTLE_CHARA_HURIHODOKU
@@ -269,30 +269,32 @@ IF TCVARn:0 == 0
 		TCVARn:0 = 2
 		TFLAG:4 = 0
 
-		;지문: 풀어낸다成功
+		;지문: 풀어낸다 성공
 		CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_SUCCESS
-		;지문: 세뇌/흑화 캐릭터가 操作キャラに振り解かれてしまった
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「풀어낸다」를 막지 못했다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
 
-		;自動で戦闘メニューを選択する
+		;자동으로 전투 메뉴를 선택한다
 		TCVARn:8 = 1
 
-		;フラグ類をリセット
+		;플래그류를 초기화
 		TFLAG:1 = 0
 		TFLAG:16 = -1
 		TFLAG:17 = -1
 		TFLAG:20 = -1
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-			CALL TENTACLE_ACCESS, "NAME"
+			;CALL TENTACLE_ACCESS, "NAME"
+			CALL TENTACLE_ACCESS, "GETNAME"
+			PRINTFORM %조사처리(RESULTS,"는")% 
 		ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-			PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+			PRINTFORM %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 
 		ENDIF
-		PRINTL は体勢を立て直している・・・
+		PRINTL 자세를 가다듬고 있다・・・
 		PRINTL 
 	ELSE
 		PRINTL 
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%がっちり拘束されて身動きできない・・・
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 단단히 구속되어 꼼짝도 못 했다・・・
 		PRINTL 
 		TFLAG:22 = 1
 	ENDIF
@@ -304,7 +306,7 @@ ENDIF
 
 
 ;---------------------------------------------------------------------------
-;촉수服の処理
+;촉수옷 처리
 @SUBEVENT_BATTLE_ACTTENTACLESUIT
 #DIM LCOUNT
 SIF CFLAG:1 == 0 && CFLAG:40 != 199
@@ -312,7 +314,7 @@ SIF CFLAG:1 == 0 && CFLAG:40 != 199
 SIF CFLAG:1 > 0 && CFLAG:41 != 199
 	RETURN 0
 VARSET LOCAL
-;촉수 슈트の名前をLOCALSに代入
+;촉수 슈트의 이름을 LOCALS에 대입
 IF CFLAG:1 == 0 && CSTR:8 != ""
 	LOCALS = %CSTR:8%
 ELSEIF CSTR:9 != ""
@@ -335,13 +337,13 @@ IF BASE:성내성 > 0 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 4) != 4 && 
 	ENDSELECT
 	BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
 	PRINTL 
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%성내성を{LOCAL}消費した！
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 성내성을 {LOCAL} 소비했다！
 	SIF BASE:성내성 == 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 성내성が尽きてしまった！
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 성내성이 다 해 버렸다！
 	PRINTW 
 ELSE
 	PRINTL 
-	;取得パラメータ計算
+	;취득 파라미터 계산
 	CALL SEX_COMEX, 0, 0, 15
 	REPEAT 12
 		LOCAL:COUNT = RESULT:COUNT * (100 + FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 2) * 20) / 100
@@ -353,7 +355,7 @@ ELSE
 		ENDSELECT
 	REND
 
-	;지문: 촉수服による被姦
+	;지문: 촉수옷에 의한 피간
 	CALL MESSAGE_SUBEVENT_BATTLE_ACTTENTACLESUIT
 	IF TCVARn:0 == 0
 		SELECTCASE TCVARn:2
@@ -365,14 +367,14 @@ ELSE
 		LOCAL:1 = 0
 	ELSEIF TCVARn:41 == 1
 		IF PALAM:윤활 >= 500
-			;快V
+			;쾌V
 			TIMES LOCAL:1, 1.3
-			;快A
+			;쾌A
 			TIMES LOCAL:2, 1.3
 			;윤활
 			;LOCAL:4 = 2000
 
-			;처녀なら고통が大量に入る
+			;처녀라면 고통이 대량으로 들어간다
 			IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
 				LOCAL:10 += 10000
 				TALENT:처녀 = -1
@@ -383,39 +385,39 @@ ELSE
 			TCVARn:41 = 0
 		ENDIF
 	ELSEIF TCVARn:41 == 2
-		;快V
+		;쾌V
 		SIF TALENT:처녀 < 1
 			TIMES LOCAL:1, 1.5
-		;快A
+		;쾌A
 		TIMES LOCAL:2, 1.5
 
 	ELSEIF TCVARn:41 == 3
 		IF TALENT:처녀 < 1 && ISFEMALE()
 			FONTBOLD
-			PRINTL 질내대량사정
+			PRINTL 질내 대량 사정
 			FONTREGULAR
-			PRINTFORML %LOCALS%の촉수と%PRINT_TRANSCALLNAME(TARGET)%의 膣口の隙間から、収まりきらない精液が溢れ出した
+			PRINTFORML %LOCALS%의 촉수와 %PRINT_TRANSCALLNAME(TARGET)%의 질 구멍 사이로부터, 미처 다 가라앉지 않은 정액이 흘러나왔다.
 			TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_VAGINA_HI")
 			PRINTL 
 		ENDIF
 		FONTBOLD
-		PRINTL 애널대량사정
+		PRINTL 애널 대량 사정
 		FONTREGULAR
-		PRINTFORML 直腸に大量に流し込まれた精液により、%PRINT_TRANSCALLNAME(TARGET)%의 腹は%LOCALS%を押し上げ、
-		PRINTFORML ぽっこりと膨らんでしまっている…
+		PRINTFORML 직장에 대량으로 부어 넣어진 정액으로 인해,
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 배는 %조사처리(LOCALS,"를")% 밀어 올려 불룩하게 부풀어 있다……
 		TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_ANAL_HI")
 		PRINTL 
-		;快V
+		;쾌V
 		SIF TALENT:처녀 < 1
 			LOCAL:1 *= 2
-		;快A
+		;쾌A
 		LOCAL:2 *= 2
 
-		;汚れ
+		;불결
 		SIF ISFEMALE()
 			STAIN:3 |= 4
 		STAIN:4 |= 4
-		;임신確率 出産後の中だし回数と今までの출산경험に応じ可能性が増える
+		;임신 확률　출산 후의 질내사정 횟수와 지금까지의 출산경험에 따라 가능성이 늘어난다
 		SIF TALENT:처녀 < 1
 			CALL NINSIN_HANTEI,2,3,200
 
@@ -425,29 +427,29 @@ ELSE
 			FONTBOLD
 			PRINTL 질내사정
 			FONTREGULAR
-			PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 질내に精液を流し込んだ
+			PRINTFORML %조사처리(LOCALS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 질내에 정액을 부어 넣었다.
 			TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_VAGINA")
 			PRINTL 
 		ENDIF
 		FONTBOLD
 		PRINTL 애널사정
 		FONTREGULAR
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 直腸に精液を流し込んだ
+		PRINTFORML %조사처리(LOCALS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 직장에 정액을 부어 넣었다.
 		TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_ANAL")
 		PRINTL 
-		;快V
+		;쾌V
 		TIMES LOCAL:1, 1.7
-		;快A
+		;쾌A
 		TIMES LOCAL:2, 1.7
 
-		;임신確率 出産後の中だし回数と今までの출산경험に応じ可能性が増える
+		;임신 확률　출산 후의 질내사정 횟수와 지금까지의 출산경험에 따라 가능성이 늘어난다
 		SIF TALENT:처녀 < 1
 			CALL NINSIN_HANTEI,1,3,200
 
 		EXP:정액경험 += 1
 	ENDIF
 
-	;피간경험を加算
+	;피간경험을 가산
 	EXP:피간경험 += 1
 
 	IF TCVARn:0 == 0
@@ -457,47 +459,47 @@ ELSE
 	ELSE
 		TCVARn:41 ++
 	ENDIF
-	;サブイベントの計算前の초기화
+	;서브 이벤트 계산 전의 초기화
 	CALL SUBEVENT_BATTLE_PRECALCRESET
 
-	;計算へ
-	;LOCALをPALAM補正に加算する
+	;계산으로
+	;LOCAL을 PALAM 보정에 가산한다
 	FOR LCOUNT, 0, 13
 		IF LOCAL:LCOUNT > 0
-			;体勢に関する補正
+			;자세에 관한 보정
 			CALL PALAM_HOSEI_POSE, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 
-			;성내성に関する補正
+			;성내성에 관한 보정
 			CALL PALAM_HOSEI_SEITAISEI, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 
-			;素質に関する補正
+			;소질에 관한 보정
 			CALL PALAM_HOSEI_TALENT, LCOUNT, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 
-			;성격に関する補正
+			;성격에 관한 보정
 			CALL PALAM_HOSEI_SEIKAKU, LCOUNT, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 
-			;촉수に関する補正
+			;촉수에 관한 보정
 			;CALL PALAM_HOSEI_TENTACLE, LCOUNT, LOCAL:LCOUNT
 			;LOCAL:LCOUNT = RESULT
 
-			;촉수중독に関する補正
+			;촉수중독에 관한 보정
 			IF LCOUNT + PALAM시점 - 감각수 == 공순 || LCOUNT + PALAM시점 - 감각수 == 욕정 || LCOUNT + PALAM시점 - 감각수 == 굴복
 				CALL PALAM_HOSEI_POISONING_TENTACLE, LOCAL:LCOUNT
 				LOCAL:LCOUNT = RESULT
 			ENDIF
 
-			;ランダム性付与
+			;랜덤성 부여
 			CALL PALAM_HOSEI_RANDOM, LOCAL:LCOUNT
 			LOCAL:LCOUNT = RESULT
 			
-			;下限値の설정
+			;하한치 설정
 			SIF LOCAL:LCOUNT <= 0
 				LOCAL:LCOUNT = 1
-			;上限値の설정
+			;상한치 설정
 			SIF LOCAL:LCOUNT > 999999 && LCOUNT >= 감각수
 				LOCAL:LCOUNT = 999999
 		ENDIF
@@ -508,7 +510,7 @@ ENDIF
 
 
 ;---------------------------------------------------------------------------
-;발정によって배란してしまう（現状では種族：ケモミミのみ）
+;발정에 의해 배란하고 만다 (현재로서는 종족：짐승족만)
 @HATUJOU_TO_HAIRAN
 SIF TALENT:짐승족 == 0
 	RETURN 0
@@ -520,64 +522,63 @@ SIF (TCVARn:12 & 배란) > 0
 	RETURN 0
 SIF (TCVARn:12 & 발정) == 0
 	RETURN 0
-;毎ターンの発生率10%
+;매 턴 발생률 10%
 SIF RAND:100 >= 10
 	RETURN 0
 
 IF TALENT:주관시점 > 0
-	PRINTFORML 激しい動悸を感じる…
+	PRINTFORML 가슴의 격렬한 고동이 느껴진다……
 ELSE
-	PRINTFORML 突如、%PRINT_CALLNAME(TARGET)%は激しい動悸に見舞われた。
+	PRINTFORML 느닷없이, %PRINT_CALLNAME(TARGET)%의 가슴이 격렬하게 고동치고 있었다……
 ENDIF
-PRINTFORML 媚薬の効果により、強制的に발정期を迎えさせられたことで
+PRINTFORML 미약의 효과에 의해 강제로 발정기를 맞이하게 되어,
 IF TFLAG:7 > 0
 	SIF TFLAG:7 >= 2
-		PRINTFORM たっぷりと
-	PRINTFORM 子種を注がれた
-ELSEIF	EXP:출산경험 >= 20
-	PRINTFORM これまで幾度となく孕まされてきた
+		PRINTFORM 듬뿍 
+	PRINTFORM 정자를 받은 
+ELSEIF EXP:출산경험 >= 20
+	PRINTFORM 지금껏 여러 번이고 잉태되어 온 
 ENDIF
-PRINTFORM %PRINT_CALLNAME(TARGET)%の
+PRINTFORM %PRINT_CALLNAME(TARGET)%의 
 IF TALENT:주관시점 > 0 && TALENT:청순파 > 0
-	PRINTFORM 下腹の奥
+	PRINTFORM 아랫배 안쪽
 ELSE
-	PRINTFORM %ESTRUS_TEXT_F(TARGET,"の")%子宮
+	PRINTFORM %ESTRUS_TEXT_F(TARGET,"의")% 자궁
 ENDIF
-PRINTFORM が
+PRINTFORM 이 
 SIF !(MESSAGE_BRANCH_F(TARGET) & 타락) && !(MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
-	PRINTFORM 意思に反して
+	PRINTFORM 의사에 반하여 
 SIF TFLAG:7 == 0 && EXP:출산경험 >= 20
-	PRINTFORM 再び
+	PRINTFORM 다시금 
 IF TFLAG:7 == 0
-	PRINTFORM キュンキュンと切なく疼き
+	PRINTFORM 꾸욱꾸욱하고 애달프게 쑤셔
 	IF TALENT:주관시점 > 0
-		PRINTFORML だす。
+		PRINTFORML 왔다.
 	ELSE
-		PRINTFORML 、
+		PRINTFORML 와,
 		IF FLAG:96 == 0
-			PRINTFORM 子作り交尾の
+			PRINTFORM 아이 만들기 교미의 
 		ELSE
-			PRINTFORM 子孫を宿す
+			PRINTFORM 자손을 밸 
 		ENDIF
-		PRINTFORML 準備を始めてしまう。
+		PRINTFORML 준비를 시작하고 말았다.
 	ENDIF
 ELSE
-	PRINTFORM ジリジリと熱く火照
+	PRINTFORM 조금씩 뜨겁게 달아
 	IF TALENT:주관시점 > 0
-		PRINTFORML っている。
+		PRINTFORML 올라 있었다.
 	ELSE
-		PRINTFORML り、
-		PRINTFORML 子孫を宿そうとしている。
+		PRINTFORML 올라, 자손을 배려 하고 있었다.
 	ENDIF
 ENDIF
 PRINTW 
-PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%발정によって
+PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 발정에 의해 
 FONTBOLD
 SETCOLOR 150,0,250
-PRINT [배란]
+PRINT [배란] 
 RESETCOLOR
 FONTREGULAR
-PRINTL してしまった！
+PRINTL 상태가 되고 말았다！
 PRINTW 
 TCVARn:12 |= 배란
 

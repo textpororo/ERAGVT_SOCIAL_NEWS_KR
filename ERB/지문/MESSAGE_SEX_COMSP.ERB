@@ -7,7 +7,7 @@
 
 
 ;==================================================
-;SPCOM0：C攻めSP
+;SPCOM0：C공격(SP)
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM0, ARG:0, ARG:1
 FONTBOLD
@@ -223,7 +223,7 @@ ENDIF
 
 
 ;==================================================
-;SPCOM1：V攻めSP
+;SPCOM1：V공격(SP)
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM1, ARG:0, ARG:1
 FONTBOLD
@@ -416,14 +416,14 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ISTENTACLER(FLAG:111) == 0 && (TALENT:(F
 	ENDIF
 ELSE
 	IF TENTACLE_SIZE:0:쾌Ｖ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","단수"
 	ELSE
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","단수"
 	ENDIF
 	IF TENTACLE_SIZE:0:쾌Ａ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","普通","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","보통","단수"
 	ELSE
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","","단수"
 	ENDIF
 	IF (ARG & Ｖ) == 0
 		PRINTFORML を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 結界が阻んだが、
@@ -587,7 +587,7 @@ ENDIF
 
 
 ;==================================================
-;SPCOM2：A攻めSP
+;SPCOM2：A공격(SP)
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM2, ARG:0, ARG:1
 FONTBOLD
@@ -597,7 +597,7 @@ CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
 
 IF TENTACLE_SIZE:0:쾌Ａ < 40
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","","たくさん"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","","대량"
 ENDIF
 
 SIF TCVARn:2 == 자세：Ｖ방어 && (ARG & Ａ)
@@ -633,14 +633,14 @@ IF TCVARn:2 != 자세：Ｖ방어 && (ARG & Ｖ)
 		PRINTFORML されるがままになっている・・・
 	ENDIF
 	IF TENTACLE_SIZE:0:쾌Ｖ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","たくさん"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","대량"
 	ELSEIF TENTACLE_SIZE:0:쾌Ｖ >= 60
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","太い","複数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","굵음","복수"
 	ENDIF
 	IF TENTACLE_SIZE:0:쾌Ａ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","普通","たくさん"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","보통","대량"
 	ELSEIF TENTACLE_SIZE:0:쾌Ａ >= 60
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","太い","複数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","굵음","복수"
 	ENDIF
 ELSEIF (ARG & Ａ)
 	PRINTFORML は男性器状の촉수を幾つも%PRINT_TRANSCALLNAME(TARGET)%의 애널に捻じ込んだ。
@@ -648,9 +648,9 @@ ELSEIF (ARG & Ａ)
 	PRINTFORML 秘所の守りを緩めるわけには行かない%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	PRINTFORML されるがままになっている・・・
 	IF TENTACLE_SIZE:0:쾌Ａ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","普通","たくさん"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","보통","대량"
 	ELSEIF TENTACLE_SIZE:0:쾌Ａ >= 60
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","太い","複数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","굵음","복수"
 	ENDIF
 ELSE
 	IF (ARG & Ｖ)
@@ -684,9 +684,9 @@ ELSE
 			PRINTFORML 애널の結界にも無数の촉수が集まってミシミシと押し付けられ、
 			PRINTFORML 破られるのも時間の問題だ・・・
 			IF TENTACLE_SIZE:0:쾌Ｖ < 40
-				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","単数"
+				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","단수"
 			ELSEIF TENTACLE_SIZE:0:쾌Ｖ >= 60
-				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","太い","単数"
+				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","굵음","단수"
 			ENDIF
 		ENDIF
 	ELSE
@@ -780,7 +780,7 @@ ENDIF
 
 
 ;==================================================
-;SPCOM3：B攻めSP
+;SPCOM3：B공격(SP)
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM3, ARG:0, ARG:1
 FONTBOLD
@@ -1364,11 +1364,11 @@ CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
 
 IF TENTACLE_SIZE:0:쾌Ｖ < 60
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","たくさん"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","대량"
 ELSEIF TENTACLE_SIZE:0:쾌Ｖ < 115
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","太い","複数"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","굵음","복수"
 ELSE
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","極太","単数"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","극태","단수"
 ENDIF
 
 PRINT Ｖ촉수は
@@ -1585,11 +1585,11 @@ CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
 
 IF TENTACLE_SIZE:0:쾌Ａ < 60
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","普通","たくさん"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","보통","대량"
 ELSEIF TENTACLE_SIZE:0:쾌Ａ < 115
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","太い","複数"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","굵음","복수"
 ELSE
-	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","極太","単数"
+	CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ａ","극태","단수"
 ENDIF
 
 SIF (FLAG:110 == 0)
@@ -1658,7 +1658,7 @@ FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
 
-CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","単数"
+CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","","단수"
 
 PRINTFORML Ｂ촉수は%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押し倒して四肢を拘束しつつ、マウントを取る体勢になった。
 PRINT ネットリと唾液を垂らしながら口を開くと、露出した
@@ -2048,10 +2048,10 @@ IF ISFEMALE()
 	PRINTL 
 ENDIF
 IF ISFEMALE()
-	PRINTL 질내대량사정
+	PRINTL 질내 대량 사정
 	PRINTL 
 ENDIF
-PRINTL 애널대량사정
+PRINTL 애널 대량 사정
 FONTREGULAR
 PRINTL
 ;以下でヒロインが사정구상を喋らないように기절させておく
@@ -2307,9 +2307,9 @@ ELSE
 	ENDIF
 
 	IF TENTACLE_SIZE:0:쾌Ｖ < 40
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","普通","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","단수"
 	ELSEIF TENTACLE_SIZE:0:쾌Ｖ >= 60
-		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","太い","単数"
+		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","굵음","단수"
 	ENDIF
 ENDIF
 
@@ -2347,7 +2347,7 @@ PRINTW
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_SPCOM15")
 PRINTL 
 PRINTFORML すると腕ほどの太さの촉수が%PRINT_TRANSCALLNAME(TARGET)%의 股間に擦りつけられた。
-CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","太い","単数"
+CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","굵음","단수"
 
 PRINTFORML 横一文字に脚が引き伸ばされた状態でぱっくり開いたワレメに先端が押し当てられると、
 PRINTFORML 捻りを加えた回転挿入によって容赦なくヴァギナが貫かれた。

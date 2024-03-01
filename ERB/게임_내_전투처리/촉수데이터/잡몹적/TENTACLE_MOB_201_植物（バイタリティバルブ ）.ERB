@@ -159,12 +159,12 @@ ENDIF
 LOCAL = RAND:100
 
 ;20%以下の공격（겉옷&속옷の방어無視、男女平等）
-;C攻め弱
+;C공격(약)
 IF LOCAL < 20
 	RETURN 0
 
 ;40%-20%=20%の確率
-;V攻め弱
+;V공격(약)
 ELSEIF LOCAL < 40
 	IF ISMALE() ;남자は別行動に割り振り
 		SELECTCASE RAND:4
@@ -182,12 +182,12 @@ ELSEIF LOCAL < 40
 	ENDIF
 
 ;60%-40%=20%の確率
-;A攻め弱
+;A공격(약)
 ELSEIF LOCAL < 60
 	RETURN 4
 
 ;80%-60%=20%の確率
-;B攻め弱
+;B공격(약)
 ELSEIF LOCAL < 80
 	RETURN 6
 
@@ -217,7 +217,7 @@ RETURN -1
 ;【コマンド使用時の描写】
 ;--------------------------------------------------
 ;==================================================
-;【Ｃ攻め弱】
+;【Ｃ공격(약)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM0
@@ -225,14 +225,14 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM0, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｃ攻め弱
+PRINTL Ｃ공격(약)
 FONTREGULAR
 
 SELECTCASE RAND:2
 	CASE 1
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORM は
-		CALL COLOR_T_SHAPE("","繊毛")
+		CALL COLOR_T_SHAPE("","섬모")
 		PRINTFORML で
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		IF ISPENIS()
@@ -270,7 +270,7 @@ RETURN 1
 
 
 ;==================================================
-;【Ｃ攻め強】
+;【Ｃ공격(강)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM1
@@ -278,7 +278,7 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM1, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｃ攻め強
+PRINTL Ｃ공격(강)
 FONTREGULAR
 
 SELECTCASE RAND:2
@@ -319,7 +319,7 @@ ENDIF
 
 
 ;==================================================
-;【Ｖ攻め弱】
+;【Ｖ공격(약)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM2
@@ -327,7 +327,7 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM2, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｖ攻め弱
+PRINTL Ｖ공격(약)
 FONTREGULAR
 
 SELECTCASE RAND:2
@@ -339,7 +339,7 @@ SELECTCASE RAND:2
 	CASEELSE
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORM は
-		CALL COLOR_T_SHAPE("","繊毛")
+		CALL COLOR_T_SHAPE("","섬모")
 		PRINTFORML で、
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		PRINTFORML %WRITTENSLANG("小陰唇")%を擦っている。
@@ -359,7 +359,7 @@ ENDIF
 
 
 ;==================================================
-;【Ｖ攻め強】
+;【Ｖ공격(강)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM3
@@ -367,7 +367,7 @@ RETURN 삽입
 
 @MESSAGE_MOB_201_COM3, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｖ攻め強
+PRINTL Ｖ공격(강)
 FONTREGULAR
 
 SELECTCASE RAND:2
@@ -403,7 +403,7 @@ ENDIF
 
 
 ;==================================================
-;【Ａ攻め弱】
+;【Ａ공격(약)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM4
@@ -411,13 +411,13 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM4, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ａ攻め弱
+PRINTL Ａ공격(약)
 FONTREGULAR
 SELECTCASE RAND:2
 	CASE 1
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORM は
-		CALL COLOR_T_SHAPE("","繊毛")
+		CALL COLOR_T_SHAPE("","섬모")
 		PRINTFORML で、
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		PRINTFORML %WRITTENSLANG("애널")%を洗っている。
@@ -442,7 +442,7 @@ ENDIF
 
 
 ;==================================================
-;【Ａ攻め強】
+;【Ａ공격(강)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM5
@@ -450,7 +450,7 @@ RETURN 삽입
 
 @MESSAGE_MOB_201_COM5, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ａ攻め強
+PRINTL Ａ공격(강)
 FONTREGULAR
 
 
@@ -484,7 +484,7 @@ ENDIF
 
 
 ;==================================================
-;【Ｂ攻め弱】
+;【Ｂ공격(약)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM6
@@ -492,14 +492,14 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM6, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｂ攻め弱
+PRINTL Ｂ공격(약)
 FONTREGULAR
 SELECTCASE RAND:2
 	CASE 1
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORM は
 		PRINTFORM は
-		CALL COLOR_T_SHAPE("","繊毛")
+		CALL COLOR_T_SHAPE("","섬모")
 		PRINTFORML で、
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		IF ISMALE()
@@ -529,7 +529,7 @@ ENDIF
 
 
 ;==================================================
-;【Ｂ攻め強】
+;【Ｂ공격(강)】
 ;--------------------------------------------------
 ;性コマンド分類
 @SEX_TYPE_MOB_201_COM7
@@ -537,7 +537,7 @@ RETURN 통상
 
 @MESSAGE_MOB_201_COM7, ARG:0, ARG:1
 FONTBOLD
-PRINTL Ｂ攻め強
+PRINTL Ｂ공격(강)
 FONTREGULAR
 SELECTCASE RAND:2
 	CASE 1
@@ -705,7 +705,7 @@ SELECTCASE RAND:2
 	CASEELSE
 		CALL TENTACLE_ACCESS, "NAME"
 		PRINTFORM は
-		CALL COLOR_T_SHAPE("","繊毛")
+		CALL COLOR_T_SHAPE("","섬모")
 		PRINTFORML で、
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
 		PRINTFORML %WRITTENSLANG("マウス")%に侵入して磨いている

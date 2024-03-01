@@ -87,7 +87,7 @@ CALL PALAM_VABCestimate(LOCAL,2,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM18, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラに애널フィニッシュをした
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 애널フィニッシュをした
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM18
 	;지문: COM18

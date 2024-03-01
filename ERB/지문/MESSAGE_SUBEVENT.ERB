@@ -84,10 +84,10 @@ ELSEIF TCVARn:41 >= 1
 ENDIF
 PRINTL 
 FONTREGULAR
-PRINTFORML %LOCALS%はエネルギー供給を断たれて暴走している！
+PRINTFORML %조사처리(LOCALS,"는")%エネルギー供給を断たれて暴走している！
 PRINTW 
 IF TCVARn:0 == 0
-	PRINTFORML %LOCALS%はまるで相手の凌辱を手助けするかのように
+	PRINTFORML %조사처리(LOCALS,"는")%まるで相手の凌辱を手助けするかのように
 	;PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身動きを封じつつ、無理やりＭ字に開脚させた・・・
 	IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身動きを封じ、抵抗できないようにした・・・
@@ -100,16 +100,16 @@ IF TCVARn:0 == 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%態勢を崩された！
 	ENDSELECT
 ELSEIF TCVARn:41 == -1
-	PRINTFORML %LOCALS%は再び%PRINT_TRANSCALLNAME(TARGET)%의 全身に촉수を絡みつかせ、
+	PRINTFORML %조사처리(LOCALS,"는")%再び%PRINT_TRANSCALLNAME(TARGET)%의 全身に촉수を絡みつかせ、
 	PRINTFORML 凌辱を再開した・・・
 ELSEIF TCVARn:41 == 0 || ISMALE()
-	PRINTFORML 制御を失った%LOCALS%は正体を現し、
+	PRINTFORML 制御を失った%조사처리(LOCALS,"는")%正体を現し、
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 全身に촉수を絡みつかせながら強引に愛撫している。
 	SIF ISFEMALE()
 		PRINTFORML 激しい責めに股間からはくちゅくちゅと水音がし始めている・・・
 ELSEIF TCVARn:41 == 1
 	IF CHECK_HOLYVIRGIN_F()==0
-		PRINTFORML %LOCALS%はアソコが十分に濡れてきたことを確かめると、
+		PRINTFORML %조사처리(LOCALS,"는")%アソコが十分に濡れてきたことを確かめると、
 		IF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) == 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナと애널に촉수の先端をあてがい、
 		ELSE
@@ -123,7 +123,7 @@ ELSEIF TCVARn:41 == 1
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あっさりと처녀を奪われてしまった・・・
 		ENDIF
 	ELSE
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 애널に윤활液をたっぷりと塗り込むと、
+		PRINTFORML %조사처리(LOCALS,"는")%%PRINT_TRANSCALLNAME(TARGET)%의 애널に윤활液をたっぷりと塗り込むと、
 		SIF FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) != 0
 			PRINT 股間部分の形状を変化させ形作った一際大きな
 		PRINTL 촉수の先端をあてがい、
@@ -131,28 +131,28 @@ ELSEIF TCVARn:41 == 1
 	ENDIF
 ELSEIF TCVARn:41 == 2
 	IF TALENT:처녀 < 1
-		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら両穴を犯している。
+		PRINTFORML %조사처리(LOCALS,"는")%촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら両穴を犯している。
 	ELSE
-		PRINTFORML %LOCALS%は촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら菊穴を犯している。
+		PRINTFORML %조사처리(LOCALS,"는")%촉수で%PRINT_TRANSCALLNAME(TARGET)%의 全身を愛撫しながら菊穴を犯している。
 	ENDIF
 	PRINTFORML だんだんピストンが加速し、責めが激しくなっているようだ。
 	PRINTFORML このままではマズイかもしれない・・・
 ELSEIF TCVARn:41 == 3
 	IF TALENT:처녀 < 1
-		PRINTFORML %LOCALS%は%PRINT_TRANSCALLNAME(TARGET)%의 両穴を激しく犯しながらも更にピストンを加速させていく。
+		PRINTFORML %조사처리(LOCALS,"는")%%PRINT_TRANSCALLNAME(TARGET)%의 両穴を激しく犯しながらも更にピストンを加速させていく。
 		PRINTFORML やがて深くまで突き入れられた촉수の根元がムクリと膨らみ、
 		PRINTFORML 一気に大量の精液が질내と菊穴の奥へと注ぎ込まれていった・・・
 	ELSE
-		PRINTFORML %LOCALS%は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%激しく犯しながらも更にピストンを加速させていく。
+		PRINTFORML %조사처리(LOCALS,"는")%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%激しく犯しながらも更にピストンを加速させていく。
 		PRINTFORML やがて深くまで突き入れられた촉수の根元がムクリと膨らみ、
 		PRINTFORML 一気に大量の精液が菊穴の奥へと注ぎ込まれていった・・・
 	ENDIF
 ELSEIF RAND:3 == 0 && TALENT:처녀 < 1
-	PRINTFORML %LOCALS%は사정しながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%犯し続けている。
+	PRINTFORML %조사처리(LOCALS,"는")%사정しながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%犯し続けている。
 	PRINTFORM 애널をずんと突きあげられて海老反りになると、すぐさま前から질내を抉られ抑えつけられる。
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%股間から精液を噴き出させながら翻弄されるままだ・・・
 ELSEIF RAND:2 == 0 && TALENT:처녀 < 1
-	PRINTFORML %LOCALS%は사정しながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%犯し続けている。
+	PRINTFORML %조사처리(LOCALS,"는")%사정しながら%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%犯し続けている。
 	PRINTFORML 小刻みに動く촉수に%ESTRUS_TEXT_F(TARGET,"の")%子宮口をコツコツと叩かれ、
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%질내사정される感触に理性を塗りつぶされていく・・・
 ELSE

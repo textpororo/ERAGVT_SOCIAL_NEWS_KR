@@ -1,169 +1,170 @@
 ﻿;===================================================================================================
-;	説明:戦闘履歴を残す関数
+;	설명: 전투 이력을 남기는 함수
 ;
 ;
 ;===================================================================================================
 @BATTLE_REPORT()
-;BASE関連の履歴
-IF BASE:체력 == 0 && TCREPORT:TCR체력零 == 0
-	TCREPORT:TCR체력零 = TFLAG:TFターン
-	TCREPORT:TCR체력零時絶頂回数 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
+;BASE관련 이력
+IF BASE:체력 == 0 && TCREPORT:TCR체력고갈 == 0
+	TCREPORT:TCR체력고갈 = TFLAG:TF턴
+	TCREPORT:TCR체력고갈시절정횟수 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
 ENDIF
-IF BASE:기력 == 0 && TCREPORT:TCR기력零 == 0
-	TCREPORT:TCR기력零 = TFLAG:TFターン
-	TCREPORT:TCR기력零時絶頂回数 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
+IF BASE:기력 == 0 && TCREPORT:TCR기력고갈 == 0
+	TCREPORT:TCR기력고갈 = TFLAG:TF턴
+	TCREPORT:TCR기력고갈시절정횟수 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
 ENDIF
-IF BASE:성내성 == 0 && TCREPORT:TCR耐性零 == 0
-	TCREPORT:TCR耐性零 = TFLAG:TFターン
-	TCREPORT:TCR耐性零時絶頂回数 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
+IF BASE:성내성 == 0 && TCREPORT:TCR성내성고갈 == 0
+	TCREPORT:TCR성내성고갈 = TFLAG:TF턴
+	TCREPORT:TCR성내성고갈시절정횟수 = (EX:Ｃ절정+EX:Ｖ절정+EX:Ａ절정+EX:Ｂ절정)
 ENDIF
-;衣装関連の履歴
-IF TCVARn:TCV外装耐久 == 0 && TCREPORT:TCR外装耐久零 == 0
-	TCREPORT:TCR外装耐久零 = TFLAG:TFターン
+;의상 관련 이력
+;外装 외투 장비
+IF TCVARn:TCV외장내구 == 0 && TCREPORT:TCR외장내구고갈 == 0
+	TCREPORT:TCR외장내구고갈 = TFLAG:TF턴
 ENDIF
-IF TCVARn:TCV変装耐久 == 0 && TCREPORT:TCR変装耐久零 == 0
-	TCREPORT:TCR変装耐久零 = TFLAG:TFターン
+;変装 변신 장비
+IF TCVARn:TCV변장내구 == 0 && TCREPORT:TCR변장내구고갈 == 0
+	TCREPORT:TCR변장내구고갈 = TFLAG:TF턴
 ENDIF
-IF TCVARn:TCV内装耐久 == 0 && TCREPORT:TCR内装耐久零 == 0
-	TCREPORT:TCR内装耐久零 = TFLAG:TFターン
+;内装 내의 장비
+IF TCVARn:TCV속옷내구 == 0 && TCREPORT:TCR속옷내구고갈 == 0
+	TCREPORT:TCR속옷내구고갈 = TFLAG:TF턴
 ENDIF
 ;===================================================================================================
-;	説明:eraいことになった
-;[in]	キャラ番号　現状GVTだとほぼ確定でTARGETですが拡張性を持たせる
-;[out]	1:	シチュエーション対応してる지문を表示した。
-;		0:	지문を表示してないためデフォルト文を表示する。
+;	설명: era스럽게 만든다 (eraいことになった)
+;[in]	캐릭터 번호　현재 GVT라면 대부분 확정으로 TARGET이지만 확장성을 가지게 한다
+;[out]	1:	상황에 대응하고 있는 지문을 표시했다.
+;		0:	지문을 표시하지 않았기 때문에 기본 문장을 표시한다.
 ;===================================================================================================
 @LOSE_SITUATION(A_CHARAID)
 #DIM A_CHARAID
-#DIM CONST RJ時間 = 10
-#DIM 絶頂回数差
-;作者がeraいと思う順番
-;イメージ
+#DIM CONST RJ시간 = 10
+#DIM 절정횟수차
+;작자가 era스럽다고 느끼는 순서
+;이미지
 ;체력0 = 기절
-;기력0 = 戦意喪失
-;耐性0 = 意識はあるけど体は動かない
+;기력0 = 전의 상실
+;성내성0 = 의식은 있지만 몸은 움직여지지 않는다
 
-
-;心を折られた後に長時間徹底的に凌辱されて기절させてお持ち帰り
-IF (TCREPORT:TCR기력零 < TCREPORT:TCR체력零 - RJ時間) && GET_RSIT(気性体)
-	PRINTFORML ……촉수の猛攻の前に心が折れた%PRINT_TRANSCALLNAME(A_CHARAID)%。
-	PRINTW それは捕食者にとっては格好の獲物だった。
-	PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%を拘束し、ぬめった촉수を使い獲物の全身を舐め回す。
-	PRINTL 与えられる刺激に反応する獲物の様子が面白くて仕方がないようだ。
-	PRINTL 舐め上げ、吸い付き、時には叩き、突き上げる。
-	PRINTFORML 次々と趣向を変えて繰り出される責め苦に%PRINT_TRANSCALLNAME(A_CHARAID)%は抵抗もできず、ただただ凌辱者を楽しませるだけだった。
-	絶頂回数差 = TCREPORT:TCR耐性零時絶頂回数 - TCREPORT:TCR기력零時絶頂回数
-	IF TCREPORT:TCR기력零時絶頂回数 == 0 && TCREPORT:TCR耐性零時絶頂回数> 0
-		PRINTL そして、ついには倒すべき敵の前で屈辱の絶頂を果たしてしまう。
+;전의를 상실한 이후 긴 시간 철저하게 능욕하곤 기절시켜 가지고 간다
+IF (TCREPORT:TCR기력고갈 < TCREPORT:TCR체력고갈 - RJ시간) && GET_RSIT(기성체)
+	PRINTFORML ……촉수의 맹공에 결국 전의를 상실한 %PRINT_TRANSCALLNAME(A_CHARAID)%.
+	PRINTW 체념한 채로 쓰러진 마법소녀는 그야말로 포식자에게 안성맞춤인 사냥감이었다.
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"를")% 구속하고, 미끈미끈한 촉수로 사냥감의 전신을 구석구석 핥는다.
+	PRINTL 자극을 주면 움찔거리며 반응하는 모습이 재미있는지, 신나서 어쩔 줄 모르는 듯하다.
+	PRINTL 핥아 올렸다가, 빨아들이고, 때론 두드리거나, 밀어 올린다.
+	PRINTFORML 차례차례 취향을 바꾸며 쏟아내는 성고문에 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"는")% 저항도 못하고, 그저 장난감처럼 촉수에게 다뤄지고 있었다.
+	절정횟수차 = TCREPORT:TCR성내성고갈시절정횟수 - TCREPORT:TCR기력고갈시절정횟수
+	IF TCREPORT:TCR기력고갈시절정횟수 == 0 && TCREPORT:TCR성내성고갈시절정횟수> 0
+		PRINTL 그리고 결국에는, 쓰러뜨려야 할 적 앞에서 굴욕적인 절정을 맞이하고 만다.
 	ENDIF
-	IF 絶頂回数差 > 1
-		PRINTL 獲物が一度イッても촉수が手を休めることなどなく、次の絶頂を迎えさせんと更に強く責め立てる
+	IF 절정횟수차 > 1
+		PRINTFORML 사냥감이 한 번 가버렸음에도 촉수는 능욕을 멈추지 않았고, 또 다시 절정시키고자 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"를")% 더욱더 세게 몰아세운다.
 	ENDIF
-	絶頂回数差 = TCREPORT:TCR체력零時絶頂回数 - TCREPORT:TCR耐性零時絶頂回数
-	IF 絶頂回数差 > 0
-		PRINTFORML {TCREPORT:TCR耐性零時絶頂回数}回イかせた頃に獲物の弱点を把握した凌辱者は、集中して弱点をいじめ抜き始めた。
-		IF 絶頂回数差 > 1
-			;PRINTFORML 玩具が기절するイかせ続けた後、촉수の塊は%CALLNAME%を体内に取り込むと巣に帰っていった…………
-			PRINTFORMW 更に연속で{絶頂回数差}回イかせ、反応が無くなるまで嬲り尽くすと体内に取り込み巣に帰っていった…………
+	절정횟수차 = TCREPORT:TCR체력고갈시절정횟수 - TCREPORT:TCR성내성고갈시절정횟수
+	IF 절정횟수차 > 0
+		PRINTFORML {TCREPORT:TCR성내성고갈시절정횟수}번 가버렸을 즈음에, 사냥감의 약점을 파악한 촉수는 그곳만을 집중하여 괴롭히기 시작했다.
+		IF 절정횟수차 > 1
+			;PRINTFORML 기절할 정도로 가버리게 한 이후, 촉수 덩어리는 %타겟을% 체내에 가둬놓곤 둥지로 돌아갔다…………
+			PRINTFORMW 더욱이 연속으로 {절정횟수차}번 가버리게 하여 반응을 보이지 않을 때까지 희롱하곤, %조사처리(CALLNAME:A_CHARAID,"를")% 체내에 거둔 뒤 둥지로 돌아갔다…………
 		ELSE
-			PRINTFORMW 弱点を的確に責め立てる事で%CALLNAME:A_CHARAID%を特大の絶頂で失神させ、体内に取り込み巣に帰っていった…………
+			PRINTFORMW 약점을 정확하게 노림으로써 %조사처리(CALLNAME:A_CHARAID,"를")% 특대절정으로 실신시키곤, 체내에 거둔 뒤 둥지로 돌아갔다…………
 		ENDIF
 	ELSE
-		PRINTFORMW 性愛玩具での遊びを十分に堪能した捕食者は一つ満足げに震えた後、ソレの意識を奪い体内に取り込むと巣に帰っていった…………
+		PRINTFORMW 성애완구로 놀이를 충분히 즐긴 촉수는 만족스러운 듯 한 번 떨더니, 장난감의 의식을 끊고는 체내에 거둔 뒤 둥지로 돌아갔다…………
 	ENDIF
 	RETURN 1
 ENDIF
-;抵抗の意思はあるが体は裏切り動けず、長時間(ry
-IF (TCREPORT:TCR耐性零 < TCREPORT:TCR기력零 - RJ時間) && (TCREPORT:TCR耐性零 < TCREPORT:TCR체력零 - RJ時間)
-	PRINTFORML ……촉수の群れの前に투척出された%PRINT_TRANSCALLNAME(A_CHARAID)%。
-	PRINT 気丈に迫りくる촉수を睨むも
-	IF TCREPORT:TCR耐性零時絶頂回数 > 1
-		PRINT 何度もイかされた
+;저항할 의사는 있으나 반대로 몸은 움직일 수 없다, 긴 시간(ry
+IF (TCREPORT:TCR성내성고갈 < TCREPORT:TCR기력고갈 - RJ시간) && (TCREPORT:TCR성내성고갈 < TCREPORT:TCR체력고갈 - RJ시간)
+	PRINTFORML ……촉수 무리 앞에 내던져진 %PRINT_TRANSCALLNAME(A_CHARAID)%.
+	PRINT 어기차게 다가오는 촉수를 노려보아도, 
+	IF TCREPORT:TCR성내성고갈시절정횟수 > 1
+		PRINT 몇 번이나 가버린
 	ELSE
-		PRINT 全身をくまなく嬲られた
+		PRINT 군데군데 빠짐없이 희롱당한
 	ENDIF
-	PRINTL 体では立ち上がることさえできなかった。
-	PRINTFORML 捕食者は%PRINT_TRANSCALLNAME(A_CHARAID)%をゆっくりと拘束し、ぬめった촉수を使い獲物の全身を舐め回す。
-	PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%の意思とは裏腹に、その肉体は촉수の愛撫を受け入れ快楽を貪り始めた。
-	IF GET_RSIT(性気体)
-		絶頂回数差 = TCREPORT:TCR기력零時絶頂回数 -TCREPORT:TCR耐性零時絶頂回数
-		IF 絶頂回数差 > 2
-			PRINTFORML 촉수の激しい責めに弄ばれながらも戦意を保っていた%PRINT_TRANSCALLNAME(A_CHARAID)%だったが
-			PRINTFORML {TCREPORT:TCR기력零時絶頂回数}回目の絶頂を迎える頃には、その기력も保てなくなり
-			絶頂回数差 = TCREPORT:TCR체력零時絶頂回数 -TCREPORT:TCR기력零時絶頂回数
-			IF 絶頂回数差 > 0
-				PRINTFORM 更に{絶頂回数差}回イかされたことにより
-			ENDIF
-			PRINTL 失神してしまった。
+	PRINTL  몸으로는 일어설 수조차 없었다.
+	PRINTFORML 촉수는 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"를")% 천천히 구속하고, 미끈미끈한 촉수로 사냥감의 전신을 구석구석 핥는다.
+	PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%의 의사와는 반대로, 그 육체는 촉수의 애무를 받아들여 쾌락을 탐하기 시작했다.
+	IF GET_RSIT(성기체)
+		절정횟수차 = TCREPORT:TCR기력고갈시절정횟수 -TCREPORT:TCR성내성고갈시절정횟수
+		IF 절정횟수차 > 2
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"는")% 촉수의 격심한 성고문에 농락당하면서도 전의를 유지하고 있었지만
+			PRINTFORML {TCREPORT:TCR기력고갈시절정횟수}번째 절정을 맞이할 무렵에는, 그 기력조차 유지할 수 없게 되어
+			절정횟수차 = TCREPORT:TCR체력고갈시절정횟수 -TCREPORT:TCR기력고갈시절정횟수
+			SIF 절정횟수차 > 0
+				PRINTFORM 더욱이 {절정횟수차}번 가버린 탓에 
+			PRINTL 결국에는 실신하고 말았다.
 			
 			RETURN 1
 		ELSE
-			PRINTL 촉수は獲物の最後の抵抗を楽しもうと責め手を緩め、
-			PRINTFORML 念入りにいたぶろうと%PRINT_TRANSCALLNAME(A_CHARAID)%を焦らし始めた。
+			PRINTL 촉수는 사냥감의 마지막 저항을 즐기기 위해 고문을 멈췄고,
+			PRINTFORML 정성껏 괴롭히고자 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"를")% 애태우기 시작했다.
 			PRINTW
-			IF 絶頂回数差 > 0
-				PRINTFORML 촉수は被虐者の足掻きに十分に満足すると、トドメをさして巣に帰っていった…………
-			ELSE ;あるのかこれ……？
-				PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%の心を折るために始めた焦らしプレイがよほど楽しかったのか、
-				PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%が絶頂を迎えることを許さないまま巣に持ち帰った。
-				PRINTFORML %CALLNAME:A_CHARAID%が泣いて絶頂を懇願するまで続けるのだろう…………
+			IF 절정횟수차 > 0
+				PRINTFORML 촉수는 %PRINT_TRANSCALLNAME(A_CHARAID)%의 발버둥질에 충분히 만족하고는, 마무리를 지어 놓고 둥지로 돌아갔다…………
+			ELSE ;이게 있긴 한 건가……？
+				PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%의 전의를 꺾기 위해 시작한 애태우기 플레이가 상당히 즐거웠는지,
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"가")% 끝까지 절정을 맞이하지 못하는 채 둥지로 가져갔다.
+				PRINTFORML %조사처리(CALLNAME:A_CHARAID,"가")% 울며 절정을 간청할 때까지 계속될 것이다…………
 			ENDIF
 			RETURN 1
 		ENDIF
-	ELSEIF GET_RSIT(性体気)
-		絶頂回数差 = TCREPORT:TCR체력零時絶頂回数 -TCREPORT:TCR耐性零時絶頂回数
-		IF 絶頂回数差 > 2
-			PRINTFORML 촉수の激しい責めに弄ばれながらも戦意を保っていた%PRINT_TRANSCALLNAME(A_CHARAID)%だったが
-			PRINTFORMW {TCREPORT:TCR체력零時絶頂回数}回もイかされてしまっては체력も尽き、失神してしまった。
-			絶頂回数差 = TCREPORT:TCR기력零時絶頂回数 - TCREPORT:TCR체력零時絶頂回数
-			IF 絶頂回数差 > 0
-				PRINTFORML だが凌辱者は기절した%PRINT_TRANSCALLNAME(A_CHARAID)%に更なる凌辱を行い
-				PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%の心の奥底にまで敗北絶頂を刻み込んだ。
+	ELSEIF GET_RSIT(성체기)
+		절정횟수차 = TCREPORT:TCR체력고갈시절정횟수 -TCREPORT:TCR성내성고갈시절정횟수
+		IF 절정횟수차 > 2
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"는")% 촉수의 격심한 성고문에 농락당하면서도 전의를 유지하고 있었지만
+			PRINTFORMW {TCREPORT:TCR체력고갈시절정횟수}번이나 가버려선 체력도 금방 떨어지기에, 결국 실신하고 말았다.
+			절정횟수차 = TCREPORT:TCR기력고갈시절정횟수 - TCREPORT:TCR체력고갈시절정횟수
+			IF 절정횟수차 > 0
+				PRINTFORML 하지만 촉수는 기절한 %PRINT_TRANSCALLNAME(A_CHARAID)%에게 한층 더 능욕을 가하여
+				PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%의 마음속 깊이까지 패배 절정을 새겨 넣었다.
 			ENDIF
-			PRINTFORMW 性愛玩具での遊びを十分に堪能した捕食者は一つ満足げに震えた後、%CALLNAME:A_CHARAID%を体内に取り込むと巣に帰っていった…………
+			PRINTFORMW 성애완구로 놀이를 충분히 즐긴 촉수는 만족스러운 듯 한 번 떨더니, %조사처리(CALLNAME:A_CHARAID,"를")% 체내에 거둔 뒤 둥지로 돌아갔다…………
 			
 			RETURN 1
 		ENDIF
 	ENDIF
 ENDIF
-;全裸で戦わされいじめられる
-IF (TCREPORT:TCR内装耐久零 + RJ時間 *15/10) < TFLAG:TFターン
-	PRINTFORML	…………%PRINT_TRANSCALLNAME(A_CHARAID)%は촉수と闘いを繰り広げていた。
+;벌거벗고 싸워 괴롭힘당한다
+IF (TCREPORT:TCR속옷내구고갈 + RJ시간 *15/10) < TFLAG:TF턴
+	PRINTFORML	%조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"는")% 계속해서 촉수와 싸움을 벌이고 있었다.
 	PRINTL		…………
-	PRINTW		…………全裸で。
-	IF TCREPORT:TCR内装耐久零 < 10
-		PRINT 瞬く間に
-	ELSEIF TCREPORT:TCR内装耐久零 < 20
-		PRINT 衣服に공격を集中され
+	PRINTW		…………알몸인 상태로.
+	IF TCREPORT:TCR속옷내구고갈 < 10
+		PRINT 눈 깜짝할 사이에
+	ELSEIF TCREPORT:TCR속옷내구고갈 < 20
+		PRINT 의복을 집중적으로 공격당하여
 	ELSE
-		PRINT 戦いの最中
+		PRINT 싸움이 한창일 때
 	ENDIF
-	;TODO 노출벽分岐
-	PRINTFORM 裸にされてしまった%PRINT_TRANSCALLNAME(A_CHARAID)%だが、
+	;TODO 노출벽 분기
+	PRINTFORM  발가벗겨진 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"였")%지만, 
 	IF ABL:노출벽 > 2
-		PRINT 興奮で
+		PRINT 흥분으로
 	ELSE
-		PRINT ピンチに
+		PRINT 위기로
 	ENDIF
-	PRINTW 闘志に火が付いたのか、촉수と一進一退の攻防を続けていた。
-	PRINTW だがそれは촉수の巧妙な罠だった。
+	PRINTW  투지에 불이 붙었는지, 촉수와 일진일퇴의 공방을 이어가고 있었다.
+	PRINTW 하지만 그것은 촉수의 교묘한 함정이었다.
 	PRINTL
-	PRINTL 対象を裸にした後、あえて手を抜くことで戦いを続けさせる。
-	;TODO　きょにう差分
-	;PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%の艶やかな肢体を
-	PRINTFORM そして%PRINT_TRANSCALLNAME(A_CHARAID)%が、
+	PRINTL 대상을 전라로 만든 후에, 일부러 밀리는 척을 하며 계속 싸우도록 이끌었다.
+	;TODO　きょにう差分 뭔 말인지 ㅁ?ㄹ
+	;PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%의 요염한 지체를
+	PRINTFORM 그리고 %조사처리(PRINT_TRANSCALLNAME(A_CHARAID),"가")% 
 	IF ABL:노출벽 > 2
-		PRINT 興奮で
+		PRINT 흥분하여
 	ELSE
-		PRINT 羞恥で
+		PRINT 수치심에
 	ENDIF
-	PRINTL 判断を誤るのを待っていたのだった。
-	;TODO 魅力差分
+	PRINTL  판단을 그르치기를 기다리고 있었던 것이다.
+	;TODO 매력차분 (魅力差分)
 	[SKIPSTART]
-	;と思ったけどこれだけやる理由が無かった
+	;라고 생각했지만 이것만 할 이유가 없었다
 	IF EXP:매료경험 > 100
-		;アイドルと正体バレの条件分岐ってどうやるんだろう
-		;とりあえずCALLNAME = CSTR:1の時またはCSTRが空の時に分岐 
+		;아이돌과 정체 발각의 조건 분기는 어떻게 하는 것일까(どうやるんだろう)
+		;일단은 CALLNAME = CSTR:1 일 때 또는 CSTR이 비었을 때 분기 
 		IF %CALLNAME% == %PRINT_TRANSCALLNAME(A_CHARAID)%  || %PRINT_TRANSCALLNAME(A_CHARAID)% == ""
 			PRINTFORML
 		ELSE
@@ -179,74 +180,74 @@ IF (TCREPORT:TCR内装耐久零 + RJ時間 *15/10) < TFLAG:TFターン
 		
 	ENDIF
 	[SKIPEND]
-	PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%の艶やかな肢体を存分に堪能し終わった後、隙をついて数多の촉수で雁字搦めに拘束した
-	PRINTFORML どうやらお気に召したらしく、コレクションのひとつに加えることにしたようだ……
+	PRINTFORML %PRINT_TRANSCALLNAME(A_CHARAID)%의 요염한 지체를 마음껏 즐기고 난 후, 틈을 타서 수많은 촉수로 밧줄을 매듯이 꽉 구속했다.
+	PRINTFORML 아무래도 자신의 작품이 마음에 들었는지, 컬렉션에 하나 더 추가하기로 한 것 같다……
 	RETURN 1
 ENDIF
 
-IF GET_RSIT(体気性)
+IF GET_RSIT(체기성)
 
 ENDIF
-IF GET_RSIT(体性気)
+IF GET_RSIT(체성기)
 
 ENDIF
-IF GET_RSIT(気体性)
+IF GET_RSIT(기체성)
 
 ENDIF
-IF GET_RSIT(気性体)
+IF GET_RSIT(기성체)
 
 ENDIF
-IF GET_RSIT(性体気)
+IF GET_RSIT(성체기)
 
 ENDIF
-IF GET_RSIT(性気体)
+IF GET_RSIT(성기체)
 
 ENDIF
 ;===================================================================================================
-;	説明:シチュエーション判定関数
+;	설명: 상황 판정 함수
 ;
 ;
 ;===================================================================================================
 @GET_RSIT(ARG:0)
 #FUNCTION
-IF (ARG:0 == 体気性)
-	IF (TCREPORT:TCR체력零 < TCREPORT:TCR기력零) && (TCREPORT:TCR기력零 < TCREPORT:TCR耐性零)
+IF (ARG:0 == 체기성)
+	IF (TCREPORT:TCR체력고갈 < TCREPORT:TCR기력고갈) && (TCREPORT:TCR기력고갈 < TCREPORT:TCR성내성고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0
 	ENDIF
 ENDIF
-IF (ARG:0 == 体性気)
-	IF (TCREPORT:TCR체력零 < TCREPORT:TCR耐性零) && (TCREPORT:TCR耐性零 < TCREPORT:TCR기력零)
+IF (ARG:0 == 체성기)
+	IF (TCREPORT:TCR체력고갈 < TCREPORT:TCR성내성고갈) && (TCREPORT:TCR성내성고갈 < TCREPORT:TCR기력고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0
 	ENDIF
 ENDIF
-IF (ARG:0 == 気体性)
-	IF (TCREPORT:TCR기력零 < TCREPORT:TCR체력零) && (TCREPORT:TCR체력零 < TCREPORT:TCR耐性零)
+IF (ARG:0 == 기체성)
+	IF (TCREPORT:TCR기력고갈 < TCREPORT:TCR체력고갈) && (TCREPORT:TCR체력고갈 < TCREPORT:TCR성내성고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0
 	ENDIF
 ENDIF
-IF (ARG:0 == 気性体)
-	IF (TCREPORT:TCR기력零 < TCREPORT:TCR耐性零) && (TCREPORT:TCR耐性零 < TCREPORT:TCR체력零)
+IF (ARG:0 == 기성체)
+	IF (TCREPORT:TCR기력고갈 < TCREPORT:TCR성내성고갈) && (TCREPORT:TCR성내성고갈 < TCREPORT:TCR체력고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0
 	ENDIF
 ENDIF
-IF (ARG:0 == 性体気)
-	IF (TCREPORT:TCR耐性零 < TCREPORT:TCR체력零) && (TCREPORT:TCR체력零 < TCREPORT:TCR체력零)
+IF (ARG:0 == 성체기)
+	IF (TCREPORT:TCR성내성고갈 < TCREPORT:TCR체력고갈) && (TCREPORT:TCR체력고갈 < TCREPORT:TCR체력고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0
 	ENDIF
 ENDIF
 
-IF (ARG:0 == 性気体)
-	IF (TCREPORT:TCR耐性零 < TCREPORT:TCR기력零) && (TCREPORT:TCR기력零 < TCREPORT:TCR체력零)
+IF (ARG:0 == 성기체)
+	IF (TCREPORT:TCR성내성고갈 < TCREPORT:TCR기력고갈) && (TCREPORT:TCR기력고갈 < TCREPORT:TCR체력고갈)
 		RETURNF 1
 	ELSE
 		RETURNF 0

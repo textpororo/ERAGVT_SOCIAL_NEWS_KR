@@ -1861,7 +1861,7 @@ SELECTCASE ARG
 				LOCALS = 『凌辱ヒロイン プリティー☆%PRINT_TRANSCALLNAME(TARGET)% セカンドシーズン』
 			ENDIF
 		ENDIF
-		PRINTFORMW %LOCALS%は{RESULT:0}本売れ、{PAYMENT}＄の報酬を得ました。
+		PRINTFORMW %조사처리(LOCALS,"는")%{RESULT:0}本売れ、{PAYMENT}＄の報酬を得ました。
 
 
 		IF PAYMENT >= 2000
@@ -2521,7 +2521,7 @@ SELECTCASE ARG
 					ELSE
 						PRINTL 
 					ENDIF
-					PRINTFORML 写真集%LOCALS%は{RESULT:0}部売れ、ギャラとして{PAYMENT}＄の資金を稼いだ。
+					PRINTFORML 写真集%조사처리(LOCALS,"는")%{RESULT:0}部売れ、ギャラとして{PAYMENT}＄の資金を稼いだ。
 				ENDIF
 				IF EXP:매료경험 >= 250
 					LOCAL:2 = 8 + RAND:6

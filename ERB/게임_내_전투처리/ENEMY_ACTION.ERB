@@ -19,84 +19,84 @@ IF TCVARn:2 == 자세：아무것도안한다
 	ENDIF
 ENDIF
 
-;●非拘束中の敵コマンド
+;●비구속 중의 적 커맨드
 IF TCVARn:0 > 0
-	;行動予約があるならその通りに行動する
+	;행동 예약이 있다면 그대로 행동한다
 	SIF TFLAG:16 >= 0
 		TFLAG:10 = TFLAG:16
-	;分岐開始
+	;분기 개시
 	SELECTCASE TFLAG:10
 		CASE 1
 			;공격
-			;지문: 敵キャラが공격開始
+			;지문: 적 캐릭터가 공격 개시
 			CALL MESSAGE_BATTLE_TENTACLE_ATTACK
-			;지문: 세뇌/흑화 캐릭터가 공격を開始した
+			;지문: 세뇌/흑화 캐릭터가 공격을 개시했다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK
 			
-			;敵キャラ側の공격成功率
+			;적 캐릭터측의 공격 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KOUGEKI"
 			IF RESULT == 1
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;カス当たり判定
+				;공격이 가드되는(カス当たり) 판정
 				CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KOUGEKI"
 				IF RESULT == 0 && CLOTH_OUTER_PER + CLOTH_INNER_PER > 0
-					;지문: 敵キャラの공격を自力回避
+					;지문: 적 캐릭터의 공격을 자력 회피
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_GRAZE
-					;지문: 세뇌/흑화 캐릭터가 공격を回避された
+					;지문: 세뇌/흑화 캐릭터의 공격이 회피됐다
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_GRAZE
 					;의상에의 피해
 					CALL CLOTH_BATTLE_DAMAGE, 8
 				ELSE
-					;지문: 敵キャラの공격を回避
+					;지문: 적 캐릭터의 공격을 回避
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_FALSE
-					;지문: 세뇌/흑화 캐릭터가 공격を回避された
+					;지문: 세뇌/흑화 캐릭터의 공격이 회피됐다
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_FALSE
 				ENDIF
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;공격範囲外
+				;공격 범위 외
 				CALL MESSAGE_BATTLE_TENTACLE_ABSENCE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;연속回避リセット
+				;연속 회피 초기화
 				TFLAG:33 = 0
 
-				;クリティカル判定
-				;FEAT 효과에 따른被クリティカル防止
+				;치명타 판정
+				;FEAT 효과에 의한 피치명타 방지
 				IF RAND:100 < 5 && FSTYLE_NAME_F(TARGET,TCVARn:0) != "장갑" && TALENT:타고난전사 == 0
 					LOCAL:1 = 15
-					;지문: 敵キャラの공격がクリティカルヒット
+					;지문: 적 캐릭터의 공격이 치명타 히트
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
-					;지문: 세뇌/흑화 캐릭터가 공격がクリティカルヒットさせた
+					;지문: 세뇌/흑화 캐릭터가 공격을 치명타로 입혔다
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
 						
 				ELSE
 					LOCAL:1 = 10
-					;지문: 敵キャラの공격が通常ヒット
+					;지문: 적 캐릭터의 공격이 통상 히트
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_HIT
-					;지문: 세뇌/흑화 캐릭터가 공격が通常ヒットさせた
+					;지문: 세뇌/흑화 캐릭터가 공격을 명중시켰다
 					SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_HIT
 					
 				ENDIF
 				
-				;ダメージ計算
+				;피해량 계산
 				CALL DAMAGE, "CHARA"
 				LOCAL:2 = RESULT * LOCAL:1 / 10
 				
@@ -104,7 +104,7 @@ IF TCVARn:0 > 0
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
-				;체력ダメージによるソース獲得
+				;체력 피해량에 따른 SOURCE 획득
 				IF (100 * LOCAL:2 / MAXBASE:체력) < 5
 					LOCAL:8 = 0
 					LOCAL:10 = 150
@@ -147,7 +147,7 @@ IF TCVARn:0 > 0
 				LOCAL:11 += LOCAL:2 / 4
 
 				FONTBOLD
-				PRINTFORML {LOCAL:2}のダメージを受けた！
+				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
 				PRINTL 
 				SIF BASE:체력 - (LOCAL:2) <= 0
@@ -157,91 +157,93 @@ IF TCVARn:0 > 0
 				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 8 * (LOCAL:1 + LOCAL:10 / 2000) / 10
 
-				;被弾時の応援
+				;피격 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_HIT_HANTEI
 
-				;エネミー独自の追加効果
+				;적 단독의 추가 효과
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;状態異常：기절
+				;상태 이상：기절
 				CALL STATE_CHANGE_KIZETU_DAMAGE, LOCAL:2
 
-				;심경 변화変化：怒りか諦観
+				;심경 변화：분노 혹은 체념
 				SIF (TCVARn:12 & 기절) == 0
 					CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 			ENDIF
 		CASE 2
-			;絡みつく　絡みつくが成功して拘束状態になってから性行為にうつる
-			;지문: 敵キャラが絡みつくを開始
+			;휘감는다　휘감는다가 성공하여 구속 상태가 되고 나서 성행위로 옮긴다
+			;지문: 적 캐릭터가 휘감기를 개시
 			CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU
-			;지문: 세뇌/흑화 캐릭터가 絡みつく開始した
+			;지문: 세뇌/흑화 캐릭터가「휘감는다」를 시전했다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU
 			
-			;敵キャラ側の絡みつく判定
+			;적 캐릭터측의 휘감는다 판정
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KARAMITUKU"
 			IF RESULT == 1
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;지문: 絡みつく自力回避
+				;지문: 휘감기 회피
 				CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU_FALSE
-				;지문: 세뇌/흑화 캐릭터가 絡みつくを回避された
+				;지문: 세뇌/흑화 캐릭터가「휘감는다」를 빗맞혔다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU_FALSE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 	
 			ELSEIF RESULT == 2
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;공격範囲外
+				;공격 범위 외
 				CALL MESSAGE_BATTLE_TENTACLE_ABSENCE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;연속回避リセット
+				;연속 회피 초기화
 				TFLAG:33 = 0
 
-				;ダメージ計算 通常食らうダメージの1/4
+				;피해량 계산　통상 입는 피해량의 1/4
 				CALL DAMAGE, "CHARA"
 				TIMES RESULT, 0.25
 				
-				;距離を零にし拘束中にする
+				;거리를 0으로 하여 구속 중으로 한다
 				TCVARn:0 = 0
-				;拘束されたら自動で拘束メニューを選択する
+				;구속되면 자동으로 구속 메뉴를 선택한다
 				TCVARn:8 = 2
 				
-				;退避用
+				;퇴피용
 				LOCAL:99 = 0
 				LOCAL:99 = RESULT
 				
-				;지문: 敵キャラの絡みつく成功
+				;지문: 적 캐릭터의 휘감기 성공
 				CALL MESSAGE_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
-				;지문: 세뇌/흑화 캐릭터가 絡みつくを成功させた
+				;지문: 세뇌/흑화 캐릭터가「휘감는다」를 성공시켰다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
 				
 				;의상에 따른 보정
+				;이전엔 (LOCAL:2 = LOCAL:2 * RESULT / 100) 대미지에 보정을 걸어야 하는데 사실상 0에 보정을 걸어 버리고 있었음
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
-				LOCAL:2 = LOCAL:2 * RESULT / 100
+				LOCAL:2 = LOCAL:99 * RESULT / 100
 				
 				FONTBOLD
-				PRINTFORML {LOCAL:99}のダメージを受けた！
+				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
-				LOCAL:2 = LOCAL:99
+				;체력 계산 전에 보정 전 피해량으로 돌려버리기 때문에 주석 처리
+				;LOCAL:2 = LOCAL:99
 				SIF BASE:체력 - (LOCAL:2) <= 0
 					LOCAL:2 = BASE:체력
 				BASE:체력 -= LOCAL:2
-				
-				;기력の減算　現在は固定で-50
+
+				;기력 뺄셈　현재는 고정으로 -50
 				IF TCVARn:2 == 자세：방어
 					LOCAL:2 = 25
 				ELSE
@@ -253,7 +255,7 @@ IF TCVARn:0 > 0
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
 				FONTBOLD
-				PRINTFORML %BASENAME:1%が{LOCAL:2}減った！
+				PRINTFORML %BASENAME:1%이 {LOCAL:2} 줄었다！
 				FONTREGULAR
 				PRINTL 
 				SIF BASE:기력 < LOCAL:2
@@ -262,73 +264,73 @@ IF TCVARn:0 > 0
 				
 				FONTBOLD
 				SETCOLOR 250,0,0
-				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%拘束されてしまった！
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 구속되고 말았다！
 				RESETCOLOR
 				FONTREGULAR
 
 				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 8
 				
-				;エネミー独自の追加効果
+				;적 단독의 추가 효과
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;심경 변화：冷静か動揺
+				;심경 변화：냉정 혹은 동요
 				CALL SHINKYOU_CHANGE, "REISEI_DOUYOU"
 				
-				;絡みつく成功直後、一回分犯す
+				;휘감는다 성공 직후, 1회분 범한다
 				PRINTL 
-				;욕망3未満かつ체력が残っているなら捕まった直後はＶ방어状態になる
+				;욕망 3 미만이라면 잡힌 직후에는 Ｖ방어 상태가 된다
 				SIF ABL:욕망 < 3 && ISFEMALE() && BASE:체력>0
 					TCVARn:2 = 자세：Ｖ방어
 				GOTO LOOP_TOP
 				
 			ENDIF
 		CASE 3
-			;体液を吐く
-			;지문: 敵キャラが体液を吐くを開始
+			;체액을 내뿜는다(体液を吐く)
+			;지문: 적 캐릭터가 체액 내뿜기를 개시
 			CALL MESSAGE_BATTLE_TENTACLE_TAIEKI
-			;지문: 세뇌/흑화 캐릭터가 体液を吐くを開始した
+			;지문: 세뇌/흑화 캐릭터가「체액을 내뿜는다」를 시전했다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI
 			
-			;敵キャラ側の体液を吐く成功率
+			;적 캐릭터측의 체액 내뿜기 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_TAIEKI"
 			IF RESULT == 1
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;지문: 敵キャラの体液を吐くを自力回避
+				;지문: 적 캐릭터의 체액 내뿜기를 자력 회피
 				CALL MESSAGE_BATTLE_TENTACLE_TAIEKI_FALSE
-				;지문: 세뇌/흑화 캐릭터가 体液を吐くを回避された
+				;지문: 세뇌/흑화 캐릭터가「체액을 내뿜는다」를 빗맞혔다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI_FALSE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;공격範囲外
+				;공격 범위 외
 				CALL MESSAGE_BATTLE_TENTACLE_ABSENCE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;연속回避リセット
+				;연속 회피 초기화
 				TFLAG:33 = 0
 
-				;지문: 敵キャラの体液を吐くがヒット
+				;지문: 적 캐릭터의 체액 내뿜기가 히트
 				CALL MESSAGE_BATTLE_TENTACLE_TAIEKI_HIT
-				;지문: 세뇌/흑화 캐릭터가 体液を吐くをヒットさせた
+				;지문: 세뇌/흑화 캐릭터가「체액을 내뿜는다」를 성공시켰다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI_HIT
 				
-				;ダメージ計算 방어を無視した固定ダメージ
+				;피해량 계산　방어를 무시한 고정 피해
 				CALL TENTACLE_LEVEL
 				LOCAL:2 = 120 + RESULT * 20
 				LOCAL:3 = LOCAL:2
@@ -336,26 +338,27 @@ IF TCVARn:0 > 0
 					LOCAL:2 /= 2
 					LOCAL:3 /= 2
 				ENDIF
-				;COUNTER_ATTACKによる被ダメージ軽減
+
+				;COUNTER_ATTACK에 의한 입는 피해량 경감
 				IF TFLAG:32 > 0
 					LOCAL:2 = LOCAL:2 * (100 - GET_COUNTER_ATTACK(2)) / 100
 					LOCAL:3 = LOCAL:3 * (100 - GET_COUNTER_ATTACK(2)) / 100
 				ENDIF
 
-				;Ｐ촉수の場合はダメージが２倍
+				;Ｐ촉수의 경우에는 피해량 ２배
 				CALL TENTACLE_ACCESS, "GETNAME"
 				IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && RESULTS == "Ｐ촉수"
 					LOCAL:2 *= 2
 					LOCAL:3 *= 2
 				ENDIF
 
-				;FEAT 효과에 따른粘液ダメージ増大
+				;FEAT 효과에 의한 점액 피해량 증대
 				IF TALENT:축복 > 0
 					LOCAL:2 = LOCAL:2 * 125 / 100
 					LOCAL:3 = LOCAL:3 * 125 / 100
 				ENDIF
 
-				;공격箇所数による공격力補正
+				;공격 장소수에 따른 공격력 보정
 				IF TFLAG:12 == 2
 					TIMES LOCAL:2, 0.90
 					TIMES LOCAL:3, 0.90
@@ -373,27 +376,26 @@ IF TCVARn:0 > 0
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				LOCAL:3 = LOCAL:3 * RESULT / 100
 				
-				;굴복、고통、공포のソース
+				;굴복, 고통, 공포의 SOURCE
 				LOCAL:8 += LOCAL:2 / 4
 				LOCAL:10 += LOCAL:2 * 2
 				LOCAL:11 += LOCAL:2 / 2
 
-				;[교란]スタイルの被ダメージ増大
+				;[교란] 스타일의 입는 피해량 증대
 				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 					TIMES LOCAL:2, 1.15
 					TIMES LOCAL:3, 1.15
-				;[장갑]スタイルの被ダメージ軽減
+				;[장갑] 스타일의 입는 피해량 경감
 				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 					TIMES LOCAL:2, 0.85
 					TIMES LOCAL:3, 0.85
-				ENDIF
-				;[전력]バースト공격の被ダメージ増大
-				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
+				;[전력] 버스트 공격의 입는 피해량 증대
+				ELSEIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 					TIMES LOCAL:2, 1.25
 					TIMES LOCAL:3, 1.25
 				ENDIF
 				FONTBOLD
-				PRINTFORML {LOCAL:2}のダメージを受けた！
+				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
 				SIF BASE:체력 - (LOCAL:2) <= 0
 					LOCAL:2 = BASE:체력
@@ -401,12 +403,13 @@ IF TCVARn:0 > 0
 				
 				FONTBOLD
 				IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
-					PRINTFORML %BASENAME:1%が{LOCAL:3} %BASENAME:1%基礎が{LOCAL:3 / 2}減った！
+					PRINTFORML %BASENAME:1%이 {LOCAL:3}, 기초 %BASENAME:1%이 {LOCAL:3 / 2} 줄었다！
 				ELSE
-					PRINTFORML %BASENAME:1%が{LOCAL:3}減った！
+					PRINTFORML %BASENAME:1%이 {LOCAL:3} 줄었다！
 				ENDIF
 				FONTREGULAR
 				PRINTL 
+
 				SIF BASE:기력 - (LOCAL:3) <= 0
 					LOCAL:3 = BASE:기력
 				BASE:기력 -= LOCAL:3
@@ -416,46 +419,46 @@ IF TCVARn:0 > 0
 				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 15
 
-				;エネミー独自の追加効果
+				;적 단독의 추가 효과
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;状態異常：끈적끈적
+				;상태 이상：끈적끈적
 				CALL STATE_CHANGE_BETOBETO, 25
 
-				;状態異常：배란
+				;상태 이상：배란
 				CALL STATE_CHANGE_HAIRAN, 2
 
 
-				;被弾時の応援
+				;피격 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_HIT_HANTEI
 				
-				;심경 변화変化：怒りか諦観
+				;심경 변화：분노 혹은 체념
 				CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 
-				;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
+				;피격될 때마다, 기초 방어값에 따라 ＥＸ게이지가 상승한다
 				SIF CFLAG:1 != 2
 					TCVARn:6 += LIMIT(SQRT(MAX(BASE:방어 - 100,0)), 0, 20) + 5
 			ENDIF
 			
 		CASE 4
-			;거리를벌린다　敵キャラの체력が回復する
+			;거리를 벌린다　적 캐릭터의 체력이 회복된다
 			
 			LOCAL:3 = FLAG:12
 			IF ENEMY_TYPE_CHECK_F("AKUOTI")
 				TIMES LOCAL:3, 0.08
 			ELSE
-				;Ｋ촉수の場合は回復量が低下
+				;Ｋ촉수의 경우에는 회복량이 저하
 				IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1
 					TIMES LOCAL:3, 0.04
-				;雑魚촉수の場合は回復量が上昇
+				;잡몹 촉수의 경우에는 회복량이 상승
 				ELSEIF ENEMY_TYPE_CHECK_F("MOB") == 1
 					TIMES LOCAL:3, 0.16
 				ELSE
 					TIMES LOCAL:3, 0.08
 				ENDIF
-				;최종 보스強化時はさらに回復量が低下
+				;최종 보스 강화 시에는 한층 더 회복량 감소
 				CALL LASTBOSS_REST
 				LOCAL:3 /= (2 + RESULT)
 			ENDIF
@@ -468,103 +471,107 @@ IF TCVARn:0 > 0
 			ELSE
 				CALL TENTACLE_ACCESS, "NAME"
 			ENDIF
-			PRINTFORML の체력が{LOCAL:3}回復した
+			PRINTFORML 의 체력이 {LOCAL:3} 회복됐다！
 			
-			;방심도が最大値の25%回復する
+			;방심도가 최대치의 25% 회복된다
 			LOCAL:4 = FLAG:16
 			TIMES LOCAL:4, 0.25
 			FLAG:17 = LIMIT(FLAG:17 - LOCAL:4, 0 , FLAG:17)
-			;２ターン目までなら確実に油断が持続
+			;２턴째까지라면 확실하게 방심이 지속
 			IF TFLAG:2 == 1 && FLAG:17 < FLAG:16
 				FLAG:17 = FLAG:16
 			ELSEIF FLAG:17 < FLAG:16
 				TFLAG:2 = 0
 				PRINTL 
 				IF ENEMY_TYPE_CHECK_F("AKUOTI")
-					PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
+					PRINTFORM %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 
 				ELSE
-					CALL TENTACLE_ACCESS, "NAME"
+					;CALL TENTACLE_ACCESS, "NAME"
+					CALL TENTACLE_ACCESS, "GETNAME"
+					PRINTFORM %조사처리(RESULTS,"는")% 
 				ENDIF
-				PRINTL は油断から立ち直った
+				PRINTFORML 방심 상태로부터 회복했다！
 				PRINTL 
 			ENDIF
 			
-			;지문: 敵キャラが거리를벌린다
+			;지문: 적 캐릭터가 거리를 벌린다
 			CALL MESSAGE_BATTLE_TENTACLE_TAKEAWAY
-			;지문: 세뇌/흑화 캐릭터가 距離をとった
+			;지문: 세뇌/흑화 캐릭터가 거리를 벌렸다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAKEAWAY
 
 		CASE 5
-			;押し倒す　絡みつくの改変　ほぼ絡みつくと一緒だが、メインはこちらになる
-			;지문: 敵キャラが押し倒すを開始
+			;넘어뜨린다　휘감는다의 개변　휘감는다와 거의 똑같지만, 메인은 이쪽이 된다
+			;지문: 적 캐릭터가 넘어뜨리기를 개시
 			CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU
-			;지문: 세뇌/흑화 캐릭터가 押し倒すを開始した
+			;지문: 세뇌/흑화 캐릭터가「밀어 넘어뜨린다」를 시전했다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU
 			
-			;敵キャラ側の絡みつく判定
+			;적 캐릭터측의 넘어뜨리기 판정
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_OSHITAOSU"
 			IF RESULT == 1
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;지문: 押し倒す自力回避
+				;지문: 넘어뜨리기 자력 회피
 				CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU_FALSE
-				;지문: 세뇌/흑화 캐릭터가 押し倒すを回避された
+				;지문: 세뇌/흑화 캐릭터가「밀어 넘어뜨린다」를 빗맞혔다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU_FALSE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 				
 			ELSEIF RESULT == 2
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;공격範囲外
+				;공격 범위 외
 				CALL MESSAGE_BATTLE_TENTACLE_ABSENCE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;연속回避
+				;연속 회피 초기화
 				TFLAG:33 = 0
 
-				;ダメージ計算 通常食らうダメージの1/4
+				;피해량 계산　통상 입는 피해량의 1/4
 				CALL DAMAGE, "CHARA"
 				TIMES RESULT, 0.25
 				
-				;距離を零にし拘束中にする
+				;거리를 0으로 하여 구속 중으로 한다
 				TCVARn:0 = 0
-				;拘束されたら自動で拘束メニューを選択する
+				;구속되면 자동으로 구속 메뉴를 선택한다
 				TCVARn:8 = 2
 				
-				;退避用
+				;퇴피용
 				LOCAL:99 = 0
 				LOCAL:99 = RESULT
 				
-				;지문: 敵キャラの押し倒す成功
+				;지문: 적 캐릭터의 넘어뜨리기 성공
 				CALL MESSAGE_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
-				;지문: 세뇌/흑화 캐릭터가 押し倒すを成功させた
+				;지문: 세뇌/흑화 캐릭터가「밀어 넘어뜨린다」를 성공시켰다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
 				
 				;의상에 따른 보정
+				;이전엔 (LOCAL:2 = LOCAL:2 * RESULT / 100) 대미지에 보정을 걸어야 하는데 사실상 0에 보정을 걸어 버리고 있었음
 				CALL CLOTH_BATTLE_HOSEI, "TAIRYOKU"
-				LOCAL:2 = LOCAL:2 * RESULT / 100
+				LOCAL:2 = LOCAL:99 * RESULT / 100
 				
 				FONTBOLD
-				PRINTFORML {LOCAL:99}のダメージを受けた！
+				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
-				LOCAL:2 = LOCAL:99
+				;체력 계산 전에 보정 전 피해량으로 돌려버리기 때문에 주석 처리
+				;LOCAL:2 = LOCAL:99
 				SIF BASE:체력 - (LOCAL:2) <= 0
 					LOCAL:2 = BASE:체력
 				BASE:체력 -= LOCAL:2
 				
-				;기력の減算　現在は固定で-50
+				;기력 뺄셈　현재는 고정으로 -50
 				IF TCVARn:2 == 자세：방어
 					LOCAL:2 = 25
 				ELSE
@@ -576,7 +583,7 @@ IF TCVARn:0 > 0
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				
 				FONTBOLD
-				PRINTFORML %BASENAME:1%が{LOCAL:2}減った！
+				PRINTFORML %BASENAME:1%이 {LOCAL:2} 줄었다！
 				FONTREGULAR
 				PRINTL 
 				SIF BASE:기력 < LOCAL:2
@@ -585,82 +592,82 @@ IF TCVARn:0 > 0
 
 				FONTBOLD
 				SETCOLOR 250,0,0
-				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%押し倒されてしまった！
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 넘어뜨려지고 말았다！
 				RESETCOLOR
 				FONTREGULAR
 
 				;의상에의 피해
 				CALL CLOTH_BATTLE_DAMAGE, 4
 				
-				;エネミー独自の追加効果
+				;적 단독의 추가 효과
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;심경 변화：冷静か動揺
+				;심경 변화：냉정 혹은 동요
 				CALL SHINKYOU_CHANGE, "REISEI_DOUYOU"
 				
-				;絡みつく成功直後、一回分犯す
+				;넘어뜨리기 성공 직후, 일회분 범한다
 				PRINTL 
-				;욕망3未満なら捕まった直後はＶ방어状態になる
+				;욕망 3 미만이라면 잡힌 직후에는 Ｖ방어 상태가 된다
 				SIF ABL:욕망 < 3 && ISFEMALE()
 					TCVARn:2 = 자세：Ｖ방어
 				GOTO LOOP_TOP
 				
 			ENDIF
 		CASE 6
-			;邪悪な波動
-			;지문: 敵キャラが邪悪な波動を開始
+			;사악한 파동
+			;지문: 적 캐릭터가 사악한 파동을 개시
 			CALL MESSAGE_BATTLE_TENTACLE_HADOU
-			;지문: 세뇌/흑화 캐릭터가 邪悪な波動を開始した
+			;지문: 세뇌/흑화 캐릭터가 사악한 파동을 시전했다
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU
 			
-			;敵キャラ側の邪悪な波動の成功率
+			;적 캐릭터측의 사악한 파동의 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_HADOU"
 			IF RESULT == 1
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;지문: 敵キャラの邪悪な波動を自力回避
+				;지문: 적 캐릭터의 사악한 파동을 자력 회피
 				CALL MESSAGE_BATTLE_TENTACLE_HADOU_FALSE
-				;지문: 세뇌/흑화 캐릭터가 邪悪な波動を回避された
+				;지문: 세뇌/흑화 캐릭터가 사악한 파동을 빗맞혔다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU_FALSE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 
 			ELSEIF RESULT == 2
-				;연속回避
+				;연속 회피
 				TFLAG:33 += 1
 
-				;공격範囲外
+				;공격 범위 외
 				CALL MESSAGE_BATTLE_TENTACLE_ABSENCE
 
-				;回避時の応援
+				;회피 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_MISS_HANTEI
 			ELSE
-				;연속回避リセット
+				;연속 회피 초기화
 				TFLAG:33 = 0
 
-				;지문: 敵キャラの邪悪な波動がヒット
+				;지문: 적 캐릭터의 사악한 파동이 히트
 				CALL MESSAGE_BATTLE_TENTACLE_HADOU_HIT
-				;지문: 세뇌/흑화 캐릭터가 邪悪な波動をヒットさせた
+				;지문: 세뇌/흑화 캐릭터가 사악한 파동을 명중시켰다
 				SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 					CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU_HIT
 				
-				;ダメージ計算 방어力を無視した固定ダメージ
+				;피해량 계산　방어력을 무시한 고정 피해
 				CALL TENTACLE_LEVEL
 				LOCAL:2 = 60 + RESULT * 10
 				LOCAL:3 = 180 + RESULT * 25
 				IF ENEMY_TYPE_CHECK_F("AKUOTI")
-					;敵キャラの공격力
+					;적 캐릭터의 공격력
 					LOCAL:2 += RAND:MAX((MAXBASE:(FLAG:111):공격 / 2), 1)
 					LOCAL:3 += RAND:MAX((MAXBASE:(FLAG:111):공격), 1)
 				ELSE
-					;촉수の공격力
+					;촉수의 공격력
 					CALL TENTACLE_ACCESS, "KOUGEKI"
 					LOCAL:2 += RAND:(RESULT / 8)
 					LOCAL:3 += RAND:(RESULT / 4)
@@ -669,19 +676,19 @@ IF TCVARn:0 > 0
 					LOCAL:2 /= 2
 					LOCAL:3 /= 2
 				ENDIF
-				;COUNTER_ATTACKによる被ダメージ軽減
+				;COUNTER_ATTACK에 의한 입는 피해량 경감
 				IF TFLAG:32 > 0
 					LOCAL:2 = LOCAL:2 * (100 - GET_COUNTER_ATTACK(2)) / 100
 					LOCAL:3 = LOCAL:3 * (100 - GET_COUNTER_ATTACK(2)) / 100
 				ENDIF
 
-				;FEAT 효과에 따른波動ダメージ増大
+				;FEAT 효과에 의한 파동 피해량 증대
 				IF TALENT:축복 > 0
 					LOCAL:2 = LOCAL:2 * 125 / 100
 					LOCAL:3 = LOCAL:3 * 125 / 100
 				ENDIF
 
-				;공격箇所数による공격力補正
+				;공격 장소수에 따른 공격력 보정
 				IF TFLAG:12 == 2
 					TIMES LOCAL:2, 0.90
 					TIMES LOCAL:3, 0.90
@@ -699,35 +706,34 @@ IF TCVARn:0 > 0
 				LOCAL:2 = LOCAL:2 * RESULT / 100
 				LOCAL:3 = LOCAL:3 * RESULT / 100
 				
-				;굴복、고통、공포のソース
+				;굴복, 고통, 공포의 SOURCE
 				LOCAL:8 += LOCAL:2 / 4
 				LOCAL:10 += LOCAL:2 * 2
 				LOCAL:11 += LOCAL:2 / 2
 
-				;[교란]スタイルの被ダメージ増大
+				;[교란] 스타일의 입는 피해량 증대
 				IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 					TIMES LOCAL:2, 1.15
 					TIMES LOCAL:3, 1.15
-				;[장갑]スタイルの被ダメージ軽減
+				;[장갑] 스타일의 입는 피해량 경감
 				ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 					TIMES LOCAL:2, 0.85
 					TIMES LOCAL:3, 0.85
-				ENDIF
-				;[전력]バースト공격の被ダメージ増大
-				IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
+				;[전력] 버스트 공격의 입는 피해량 증대
+				ELSEIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 					TIMES LOCAL:2, 1.25
 					TIMES LOCAL:3, 1.25
 				ENDIF
 
 				FONTBOLD
-				PRINTFORML {LOCAL:2}のダメージを受けた！
+				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
 				SIF BASE:체력 - (LOCAL:2) <= 0
 					LOCAL:2 = BASE:체력
 				BASE:체력 -= LOCAL:2
 				
 				FONTBOLD
-				PRINTFORML %BASENAME:1%が{LOCAL:3}減った！
+				PRINTFORML %BASENAME:1%이 {LOCAL:3} 줄었다！
 				FONTREGULAR
 				PRINTL 
 				SIF BASE:기력 - (LOCAL:3) <= 0
@@ -738,92 +744,93 @@ IF TCVARn:0 > 0
 				CALL CLOTH_BATTLE_DAMAGE, 6
 
 
-				;被弾時の応援
+				;피격 시의 응원
 				SIF CONFIG_CHECK_EVENT_F(3) > 0
 					CALL PERFORM_CHEERS_TENTACLE_HIT_HANTEI
 				
-				;エネミー独自の追加効果
+				;적 단독의 추가 효과
 				SIF TCVARn:14 > 0
 					CALL STATE_CHANGE_EXTRAEFFECT,TCVARn:15
 
-				;심경 변화変化：怒りか諦観
+				;심경 변화：분노 혹은 체념
 				CALL SHINKYOU_CHANGE, "IKARI_TEIKAN"
 
-				;被弾するたびに、방어基礎値に応じてＥＸゲージが上昇する
+				;피격될 때마다, 기초 방어값에 따라 ＥＸ게이지가 상승한다
 				SIF CFLAG:1 != 2
 					TCVARn:6 += LIMIT(SQRT(MAX(BASE:방어 - 100,0)), 0, 20) + 5
 			ENDIF
 			
 	ENDSELECT
 	
-	;공격によって得たソースの計算
-	;衣服の損傷による치정の取得はCOMMON_PALAM_CALの内部で行っている
+	;공격에 의해 얻은 SOURCE 계산
+	;의복의 손상에 의한 치정의 취득은 COMMON_PALAM_CAL 내부에서 행하고 있다
 	CALL PALAM_CAL, 0, 0, 0, 0, 0, 0, 0, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
-;●흑화 캐릭터の拘束中性コマンド
+;●흑화 캐릭터의 구속 중의 성 커맨드
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
 	$ROUTINE_LOOP_0
 	RESULT = -1
 
-	;ルーチン호출
+	;루틴 호출
 	CALL ENEMY_ACTION_SEX_ROUTINE
-	;コマンド実行
+	;커맨드 실행
 	CALL SEX_COMABLE, RESULT
 	IF RESULT == 0
 		TFLAG:17 = -1
 		GOTO ROUTINE_LOOP_0
 	ENDIF
 
-	;피간경험を加算
+	;피간경험 가산
 	EXP:피간경험 += 1
-	;심경 변화：倒錯
+	;심경 변화：도착(倒錯)
 	CALL SHINKYOU_CHANGE, "TOUSAKU"
 
-;●촉수の拘束中性コマンド
+;●촉수의 구속 중의 성 커맨드
 ELSE
-	;촉수の再行動判定
+	;촉수의 재행동 판정
 	LOCAL:3 = 0
 	CALL TENTACLE_LEVEL
 	WHILE RAND:100 < min(RESULT,50) && RAND:2
 		SIF RESULT >= 10
 			LOCAL:3 ++
 	WEND
-	;잡몹적の場合は再行動しやすい
+	;잡몹적의 경우에는 재행동하기 쉽다
 	SIF ENEMY_TYPE_CHECK_F("MOB") == 1 && RAND:2 == 0
 		LOCAL:3 ++
 	$ROUTINE_LOOP_1
 	RESULT = -1
 
-	;ルーチン호출
+	;루틴 호출
 	CALL ENEMY_ACTION_SEX_ROUTINE
-	;コマンド実行
+	;커맨드 실행
 	CALL SEX_COMABLE, RESULT
 	IF RESULT == 0
 		TFLAG:17 = -1
 		GOTO ROUTINE_LOOP_1
 	ENDIF
 
-	;피간경험を加算
+	;피간경험 가산
 	EXP:피간경험 += 1
 
 	IF LOCAL:3 && FLAG:13 > 0
 		LOCAL:3 --
-		;EXにNOWEXを加算し、NOWEXをリセット
+		;EX에 NOWEX를 가산하고, NOWEX를 초기화
 		REPEAT 감각수
 			EX:(COUNT) += NOWEX:(COUNT)
 		REND
 		VARSET NOWEX
 		PRINTW 
 		FONTBOLD
-		PRINTL 연속行動！
+		PRINTL 연속 행동！
 		FONTREGULAR
 		PRINTL 
 		GOTO ROUTINE_LOOP_1
 	ENDIF
 
-	;심경 변화：倒錯
+	;심경 변화：도착(倒錯)
 	CALL SHINKYOU_CHANGE, "TOUSAKU"
 ENDIF
+
 IF ENEMY_TYPE_CHECK_F("AKUOTI")
 	CALL SELECT_ENEMY_ACTION
 ELSE
@@ -831,17 +838,17 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;보스 촉수の行動選択
+;보스 촉수의 행동 선택
 @SELECT_TENTACLE_ACTION
-;공격箇所플래그를リセット
+;공격 장소 플래그를 초기화
 TFLAG:11 = 0
 TFLAG:12 = 0
-;戦闘　1=공격,2=絡みつく,3=体液を吐く,4=距離を取る,
-;専用ルーチン（戦闘）による処理
+;전투　1=공격, 2=휘감는다, 3=체액을 내뿜는다, 4=거리를 벌린다
+;전용 루틴(전투)에 따른 처리
 CALL TENTACLE_ACCESS, "ATTACK_ROUTINE"
 TFLAG:10 = RESULT
 
-;汎用ルーチン（戦闘）での処理
+;범용 루틴(전투)에서의 처리
 IF TFLAG:10 == 0
 	LOCAL:1 = RAND:100
 	IF LOCAL:1 < 40
@@ -855,7 +862,7 @@ IF TFLAG:10 == 0
 	ENDIF
 ENDIF
 
-;絡みつく選択率ダウンの効果
+;휘감는다 선택률 감소 효과
 IF FLAG:902 && TFLAG:10 == 2
 	LOCAL:1 = RAND:100
 	IF LOCAL:1 < 15
@@ -865,19 +872,19 @@ IF FLAG:902 && TFLAG:10 == 2
 	ELSEIF LOCAL:1 < 35
 		TFLAG:10 = 4
 	ENDIF
-;絡みつく選択率アップの効果
+;휘감는다 선택률 향상 효과
 ELSEIF FLAG:907 && RAND:100 < 20
 	TFLAG:10 = 2
 ENDIF
 
-;敵の残り체력が75%以上なら距離を取るを使わない
+;적의 남은 체력이 75% 이상이라면 거리 벌리기를 사용하지 않는다
 SIF TFLAG:10 == 4 && PERCENT_CAL_F(FLAG:13,FLAG:12) >= 75
 	TFLAG:10 = 1
 
-;通常공격時にキャラの체력が0の場合、絡みつくか体液を吐くになる
+;통상 공격 시에 캐릭터의 체력이 0일 경우, 휘감기 또는 체액 내뿜기가 된다
 IF TFLAG:10 == 1 && BASE:체력 <= 0
 	TFLAG:10 = RAND:2 + 2
-	;기력も0の場合、絡みつくになる
+	;기력도 0일 경우, 휘감기가 된다
 	SIF BASE:기력 <= 0
 		TFLAG:10 = 2
 ENDIF
@@ -885,38 +892,38 @@ ENDIF
 CALL ATTACK_PLACE_DECISION
 
 ;--------------------------------------------------
-;흑화 캐릭터の行動選択
+;흑화 캐릭터의 행동 선택
 @SELECT_ENEMY_ACTION
-;공격箇所플래그를リセット
+;공격 장소 플래그를 초기화
 TFLAG:11 = 0
 TFLAG:12 = 0
-;戦闘　1=공격,2=絡みつく,3=体液を吐く,4=距離を取る,5=押し倒す,6=邪悪な波動
-;専用ルーチン（戦闘）による処理
+;전투　1=공격, 2=휘감는다, 3=체액을 내뿜는다, 4=거리를 벌린다, 5=넘어뜨린다, 6=사악한 파동
+;전용 루틴(전투)에 의한 처리
 ;CALL ENEMY_ACCESS, "ATTACK_ROUTINE"
 RESULT = 0
 TFLAG:10 = RESULT
 
-;汎用ルーチン（戦闘）での処理
+;범용 루틴(전투)에서의 처리
 IF TFLAG:10 == 0
 	LOCAL:1 = RAND:100
-	;通常공격
+	;통상 공격
 	IF LOCAL:1 < 55
 		TFLAG:10 = 1
-	;邪悪な波動
+	;사악한 파동
 	ELSEIF LOCAL:1 < 70
 		TFLAG:10 = 6
-	;絡みつく
+	;휘감는다
 	ELSEIF LOCAL:1 < 85
 		TFLAG:10 = 2
-	;体液を吐く
+	;체액을 내뿜는다
 	ELSEIF LOCAL:1 < 95
 		TFLAG:10 = 3
-	;距離を取る
+	;거리를 벌린다
 	ELSE
 		TFLAG:10 = 4
 	ENDIF
 ENDIF
-;絡みつく選択率ダウンの効果
+;휘감는다 선택률 감소 효과
 IF FLAG:902 && TFLAG:10 == 2
 	LOCAL:1 = RAND:100
 	IF LOCAL:1 < 15
@@ -928,16 +935,16 @@ IF FLAG:902 && TFLAG:10 == 2
 	ELSEIF LOCAL:1 < 40
 		TFLAG:10 = 6
 	ENDIF
-;絡みつく選択率アップの効果
+;휘감는다 선택률 향상 효과
 ELSEIF FLAG:907 && RAND:100 < 20
 	TFLAG:10 = 2
 ENDIF
 
-;敵の残り체력が90%以上なら距離を取るを使わない
+;적의 남은 체력이 90% 이상이라면 거리 벌리기를 사용하지 않는다
 SIF TFLAG:10 == 4 && PERCENT_CAL_F(FLAG:13,FLAG:12) >= 90
 	TFLAG:10 = 1
 
-;キャラの체력のみが0の場合、絡みつくか体液を吐くか邪悪な波動になる
+;캐릭터의 체력만이 0일 경우, 휘감기, 체액 내뿜기 또는 사악한 파동이 된다
 IF BASE:체력 <= 0 && BASE:기력 > 0
 	LOCAL:1 = RAND:100
 	IF LOCAL:1 < 40
@@ -947,7 +954,7 @@ IF BASE:체력 <= 0 && BASE:기력 > 0
 	ELSE
 		TFLAG:10 = 3
 	ENDIF
-;キャラの기력のみが0の場合、공격か絡みつくか体液を吐くになる
+;캐릭터의 기력만이 0일 경우, 공격 또는 휘감기 또는 체액 내뿜기가 된다
 ELSEIF BASE:기력 <= 0 && BASE:체력 > 0
 	LOCAL:1 = RAND:100
 	IF LOCAL:1 < 40
@@ -957,15 +964,15 @@ ELSEIF BASE:기력 <= 0 && BASE:체력 > 0
 	ELSE
 		TFLAG:10 = 3
 	ENDIF
-;両方が０の場合、絡みつく
+;둘 다 0일 경우, 휘감기가 된다
 ELSEIF BASE:체력 <= 0 && BASE:기력 <= 0
 	TFLAG:10 = 2
 ENDIF
-;絡みつく場合、기생なしなら押し倒す
+;휘감기일 경우, 기생이 없다면 넘어뜨리기가 된다
 SIF TFLAG:10 == 2 && TALENT:(FLAG:111):기생 == 0
 	TFLAG:10 = 5
 
-;体液を吐く場合、기생なしなら공격
+;체액 내뿜기일 경우, 기생이 없다면 공격이 된다
 SIF TFLAG:10 == 3 && TALENT:(FLAG:111):기생 == 0
 	TFLAG:10 = 1
 
@@ -974,21 +981,21 @@ CALL ATTACK_PLACE_DECISION
 
 
 ;--------------------------------------------------
-;敵の性コマンド選択ルーチン
+;적의 성 커맨드 선택 루틴
 @ENEMY_ACTION_SEX_ROUTINE
 #DIM SELECT
 VARSET LOCAL
 SELECT = -1
-;性コマンド予約による処理
+;성 커맨드 예약에 따른 처리
 SIF TFLAG:17 >= 0
 	SELECT = TFLAG:17
 SIF TFLAG:10 < 15 || TFLAG:10 > 20
 	VARSET INSERT
-;흑화 캐릭터の性コマンド処理
+;흑화 캐릭터의 성 커맨드 처리
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 
-	;性行動は敵キャラの性的パラメータを参照して決定される
-	;関連するパラメータが高いほど、同様のパラメータを成長させる行動を選択する
+	;성 행동은 적 캐릭터의 성적 파라미터를 참조하여 결정된다
+	;관련된 파라미터가 높을수록, 같은 파라미터를 성장시키는 행동을 선택한다
 	
 	;C
 	LOCAL:10 = 0
@@ -1012,145 +1019,145 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 	LOCAL:3 = ABL:(FLAG:111):Ｂ감각
 	LOCAL:3 += 10 + LOCAL:13
 	
-	;고통系
-	;마조끼を参照
+	;고통계
+	;마조끼를 참조
 	LOCAL:14 = LOCAL:13 + LOCAL:3
 	LOCAL:4 = ABL:(FLAG:111):마조끼
 	LOCAL:4 += 5 + LOCAL:14
 	
-	;奉仕系
+	;봉사계
 	LOCAL:15 = LOCAL:14 + LOCAL:4
-	;순종と봉사정신を参照
+	;순종과 봉사정신을 참조
 	LOCAL:5 = LIMIT((ABL:(FLAG:111):순종 + ABL:(FLAG:111):봉사정신), 0, 5)
 	LOCAL:5 += 10 + LOCAL:15
 	
-	;羞恥系
+	;수치계
 	LOCAL:16 = LOCAL:15 + LOCAL:5
-	;노출벽を参照
+	;노출벽을 참조
 	LOCAL:6 = ABL:(FLAG:111):노출벽
 	LOCAL:6 += 5 + LOCAL:16
 	
-	;기생持ち、후타나리、남자のいずれかを持っている
+	;기생 보유, 후타나리, 남자 중 하나라도 가지고 있을 경우
 	LOCAL:101 = 0
 	SIF ISTENTACLER(FLAG:111) == 1 || TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111)
 		LOCAL:101 = 1
 
-	;行動の決定
+	;행동 결정
 	$SELECTED_SEXCOM_LOOP
-	;乱数を取得
+	;난수를 취득
 	LOCAL:99 = RAND:(100)
 
 	IF (SELECT == -1 && LOCAL:99 >= LOCAL:10 && LOCAL:99 <= LOCAL:0) || SELECT == 0 || SELECT == 1 || SELECT == 1000
 		;C
-		;前提として敵キャラが기생中か후타나리か남자でないと強・SPコマンドにはならない
-		;敵キャラの욕망が3以上ならSPコマンドも選択肢に入る
+		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
+		;적 캐릭터의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
-			;C攻めSP
+			;C공격(SP)
 			SELECT = 1000
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;C攻め強
+			;C공격(강)
 			SELECT = 1
 		ELSE
-			;C攻め弱
+			;C공격(약)
 			SELECT = 0
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:11 && LOCAL:99 <= LOCAL:1) || SELECT == 2 || SELECT == 3 || SELECT == 1001
 		;V
-		;前提として敵キャラが기생中か후타나리か남자でないと強・SPコマンドにはならない
-		;敵側の욕망が3以上ならSPコマンドも選択肢に入る
-		;남자の場合はC攻めに振り変える
+		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
+		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
+		;남자일 경우에는 C공격으로 돌린다
 		IF ISMALE()
-			;敵キャラのＣ감각が3以上ならSPコマンドも選択肢に入る
+			;적 캐릭터의 C감각이 3이상이라면 SP커맨드도 선택지에 들어간다
 			IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
-				;C攻めSP
+				;C공격(SP)
 				SELECT = 1000
 			ELSEIF RAND:100 < 40 && LOCAL:101
-				;C攻め強
+				;C공격(강)
 				SELECT = 1
 			ELSE
-				;C攻め弱
+				;C공격(약)
 				SELECT = 0
 			ENDIF
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
-			;V攻め弱
+			;V공격(약)
 			SELECT = 2
 		ELSEIF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3
-			;V攻めSP
+			;V공격(SP)
 			SELECT = 1001
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;V攻め強
+			;V공격(강)
 			SELECT = 3
 		ELSE
-			;V攻め弱
+			;V공격(약)
 			SELECT = 2
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:12 && LOCAL:99 <= LOCAL:2) || SELECT == 4 || SELECT == 5 || SELECT == 1002
 		;A
-		;前提として敵キャラが기생中か후타나리か남자でないと強・SPコマンドにはならない
-		;敵側の욕망が3以上ならSPコマンドも選択肢に入る
+		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
+		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3 && ISTENTACLER(FLAG:111) == 1
-			;A攻めSP
+			;A공격(SP)
 			SELECT = 1002
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;A攻め強
+			;A공격(강)
 			SELECT = 5
 		ELSE
-			;A攻め弱
+			;A공격(약)
 			SELECT = 4
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:13 && LOCAL:99 <= LOCAL:3) || SELECT == 6 || SELECT == 7 || SELECT == 1003
 		;B
-		;前提として敵キャラが기생中か후타나리か남자でないと強・SPコマンドにはならない
-		;敵キャラの욕망が3以上ならSPコマンドも選択肢に入る
+		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
+		;적 캐릭터의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3
-			;B攻めSP
+			;B공격(SP)
 			SELECT = 1003
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;B攻め強
+			;B공격(강)
 			SELECT = 7
 		ELSE
-			;B攻め弱
+			;B공격(약)
 			SELECT = 6
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:14 && LOCAL:99 <= LOCAL:4) || SELECT == 8 || SELECT == 9 || SELECT == 1004
-		;고통系
-		;前提として敵キャラが기생中でないと強・SPコマンドにはならない
-			;敵キャラの마조끼が3以上かつ기생持ちならSPコマンドも選択肢に入る
+		;고통계
+		;전제로서 적 캐릭터가 기생 중이 아니라면 강・SP커맨드는 되지 않는다
+			;적 캐릭터의 마조끼가 3 이상임과 동시에 기생 중이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && ISTENTACLER(FLAG:111) == 1 && ABL:(FLAG:111):마조끼 >= 3
-			;電流
+			;전류
 			SELECT = 1004
 		ELSEIF RAND:100 < 40 && ISTENTACLER(FLAG:111) == 1
-			;針
+			;바늘
 			SELECT = 9
 		ELSE
-			;スパンキング
+			;스팽킹
 			SELECT = 8
 		ENDIF
 	ELSEIF ((SELECT == -1 && LOCAL:99 >= LOCAL:15 && LOCAL:99 <= LOCAL:5) || SELECT == 10 || SELECT == 11 || SELECT == 12 || SELECT == 1005) && LOCAL:101
-		;奉仕系
-		;前提として敵キャラが기생中か후타나리か남자でないとこの系統のコマンドは選択されない
-		;敵キャラの순종と봉사정신の合計が3以上ならSPコマンドも選択肢に入る
+		;봉사계
+		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 이 계통의 커맨드는 선택되지 않는다
+		;적 캐릭터의 순종과 봉사정신의 합계가 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && (ABL:(FLAG:111):순종 + ABL:(FLAG:111):봉사정신) >= 3
-			;パイズリ
+			;파이즈리
 			SELECT = 1005
 		ELSEIF RAND:100 < 20
-			;イラマチオ
+			;이라마치오
 			SELECT = 12
 		ELSEIF RAND:100 < 40
-			;フェラ
+			;펠라
 			SELECT = 11
 		ELSE
-			;手淫
+			;수음
 			SELECT = 10
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:16 && LOCAL:99 <= LOCAL:6) || SELECT == 1006 || SELECT == 1007
-		;羞恥系
-		;敵キャラの노출벽が3以上ならSPコマンドも選択肢に入る
+		;수치계
+		;적 캐릭터의 노출벽이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && ABL:(FLAG:111):노출벽 >= 3
-			;羞恥プレイ
+			;수치 플레이
 			SELECT = 1007
 		ELSE
-			;強制自慰
+			;강제 자위
 			SELECT = 1006
 		ENDIF
 	ELSE
@@ -1158,86 +1165,86 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		GOTO SELECTED_SEXCOM_LOOP
 	ENDIF
 
-;촉수による性コマンドの処理
+;촉수에 의한 성 커맨드 처리
 ELSEIF TCVARn:0 == 0
-	;絶頂禁止
+	;절정 금지
 	SIF TCVARn:40 == 1 && SELECT < 0
 		SELECT = 13
 
-	;実行可能であれば衣装の破壊を優先する
+	;실행 가능하다면 의상 파괴를 우선한다
 	SIF RAND:100 < 8 && SELECT < 0
 		SELECT = 14
 
-	;専用ルーチン（性行為）による処理
+	;전용 루틴(성행위)에 의한 처리
 	IF SELECT < 0
 		CALL TENTACLE_ACCESS, "SEX_ROUTINE"
 		SELECT = RESULT
 	ENDIF
 
-	;汎用ルーチン（性行為）での処理
+	;범용 루틴(성행위)에서의 처리
 	IF SELECT < 0
 
-		;汎用行動の種類　촉수のコマンドのフォルダ内のSEX_COMX,ERBの数を記述
+		;범용 행동의 종류　촉수의 커맨드 폴더 내의 SEX_COM○, ERB의 수를 기술
 		$TENTACLE_HANYOU_COMMOND
 
-		;LOCAL:0は汎用ルーチンで呼ばれる可能性のあるコマンドの数
+		;LOCAL:0은 범용 루틴으로 호출될 수 있는 커맨드의 수
 		LOCAL:0 = 13
 		LOCAL:1 = LOCAL:0 * 10
 		LOCAL:2 = RAND:(LOCAL:1)
 		
 		IF LOCAL:2 < LOCAL:0
-			;C攻め弱
+			;C공격(약)
 			SELECT = 0
 		ELSEIF LOCAL:2 < LOCAL:0 + (LOCAL:0 / 2)
-			;C攻め強
+			;C공격(강)
 			SELECT = 1
 		ELSEIF LOCAL:2 < (LOCAL:0 * 2) + (LOCAL:0 / 2)
-			;V攻め弱
+			;V공격(약)
 			SELECT = 2
 		ELSEIF LOCAL:2 < LOCAL:0 * 3
-			;V攻め強
+			;V공격(강)
 			SELECT = 3
 		ELSEIF LOCAL:2 < LOCAL:0 * 4
-			;A攻め弱
+			;A공격(약)
 			SELECT = 4
 		ELSEIF LOCAL:2 < (LOCAL:0 * 4) + (LOCAL:0 / 2)
-			;A攻め強
+			;A공격(강)
 			SELECT = 5
 		ELSEIF LOCAL:2 < (LOCAL:0 * 5) + (LOCAL:0 / 2)
-			;B攻め弱
+			;B공격(약)
 			SELECT = 6
 		ELSEIF LOCAL:2 < LOCAL:0 * 6
-			;B攻め強
+			;B공격(강)
 			SELECT = 7
 		ELSEIF LOCAL:2 < LOCAL:0 * 7
-			;絶頂禁止中は快感系のコマンドを優先
+			;절정 금지 중에는 쾌감계 커맨드를 우선
 			SIF TCVARn:40 > 0 && RAND:3
 				GOTO TENTACLE_HANYOU_COMMOND
-			;スパンキング
+			;스팽킹
 			SELECT = 8
 		ELSEIF LOCAL:2 < (LOCAL:0 * 7) + (LOCAL:0 / 2)
-			;絶頂禁止中は快感系のコマンドを優先
+			;절정 금지 중에는 쾌감계 커맨드를 우선
 			SIF TCVARn:40 > 0 && RAND:3
 				GOTO TENTACLE_HANYOU_COMMOND
-			;針
+			;바늘
 			SELECT = 9
 		ELSEIF LOCAL:2 < (LOCAL:0 * 8) + (LOCAL:0 / 2)
-			;手淫
+			;수음
 			SELECT = 10
 		ELSEIF LOCAL:2 < LOCAL:0 * 9
-			;フェラ
+			;펠라
 			SELECT = 11
 		ELSEIF LOCAL:2 < LOCAL:0 * 10
-			;絶頂禁止中は快感系のコマンドを優先
+			;절정 금지 중에는 쾌감계 커맨드를 우선
 			SIF TCVARn:40 > 0 && RAND:3
 				GOTO TENTACLE_HANYOU_COMMOND
-			;イラマチオ
+			;이라마치오
 			SELECT = 12
 		ELSEIF LOCAL:2 < LOCAL:0 * 10 && TCVARn:40 == 0 && ABL:욕망 > 2
-			;絶頂禁止
+			;절정 금지
 			SELECT = 13
 		ELSE
-			;その他 現在は無いため判定からやり直しにする
+			;기타　현재는 없기 때문에 판정부터 다시 하기로 한다
 			GOTO TENTACLE_HANYOU_COMMOND
 		ENDIF
 	ENDIF

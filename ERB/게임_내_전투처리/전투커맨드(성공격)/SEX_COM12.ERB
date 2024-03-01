@@ -43,7 +43,7 @@ CALL PALAM_VABCestimate(LOCAL,-1)
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM12, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 操作キャラにイラマチオをさせた
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 イラマチオをさせた
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM12
 	;지문: COM12

@@ -157,7 +157,7 @@ IF LOCAL < 15 && TALENT:모유체질
 ;全身愛撫
 ELSEIF LOCAL < 20
 	RETURN 0
-;Ｃ攻め強
+;Ｃ공격(강)
 ELSEIF LOCAL < 40
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -171,7 +171,7 @@ ELSEIF LOCAL < 60
 	ELSE
 		RETURN 11
 	ENDIF
-;V攻め弱
+;V공격(약)
 ELSEIF LOCAL < 80
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -245,14 +245,14 @@ ENDIF
 RETURN 15
 
 ;--------------------------------------------------
-;Ｃ攻め強
+;Ｃ공격(강)
 ;性コマンド分類
 @SEX_TYPE_MOB_1150_COM1
 RETURN 통상
 
 @MESSAGE_MOB_1150_COM1, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ攻め強
+PRINT Ｃ공격(강)
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -400,7 +400,7 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;Ｖ攻め弱
+;Ｖ공격(약)
 
 @SEX_TYPE_MOB_901_COM2
 RETURN 통상
