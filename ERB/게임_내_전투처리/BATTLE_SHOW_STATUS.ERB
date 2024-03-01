@@ -339,10 +339,10 @@ DRAWLINE
 IF TCVARn:0 == 0
 	IF (TCVARn:12 & 강구속)
 		SETCOLOR 200,50,50
-		PRINT   <<강구속 중>>
+		PRINT   <<강구속>>
 	ELSE
 		SETCOLOR 255, 146, 238
-		PRINT   <<구속 중>>
+		PRINT   <<구속중>>
 	ENDIF
 	RESETCOLOR
 	PRINTL 
@@ -427,10 +427,10 @@ PRINT [
 IF TCVARn:0 == 0
 	IF TCVARn:12 & 강구속
 		SETCOLOR 200,50,50
-		LOCALS = 강구속 중
+		LOCALS = 강구속
 	ELSE
 		SETCOLOR 255, 146, 238
-		LOCALS = 구속 중
+		LOCALS = 구속중
 	ENDIF
 ELSE
 	IF TCVARn:0 == 1

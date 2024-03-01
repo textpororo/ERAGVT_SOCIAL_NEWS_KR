@@ -375,8 +375,8 @@ ENDIF
 
 
 IF achievename=="init"
-	PRINTL 실적명　　　　　　　　　　　　내용　　　　　　　　　　　　　　　　주회 보너스
-	CALL SHORTLINE
+	PRINTL 실적명　　　　　　　　　　　　내용　　　　　　　　　　　　주회 보너스
+	CALL SHORTLINE_2
 	numhead=num
 	return
 ENDIF
@@ -385,16 +385,18 @@ numtext'=(numhead<=9 ? "0" # "")+TOSTR(numhead)
 numhead+=1
 
 IF GLOBAL:num
-	PRINTFORML 　%numtext% %achievename,28,LEFT%%desc,38,LEFT%+{bonus}
+	;PRINTFORML 　%numtext% %achievename,28,LEFT%%desc,38,LEFT%+{bonus}
+	PRINTFORML 　%numtext% %achievename,18,LEFT%%desc,38,LEFT%+{bonus}
 ELSE
 	SETCOLOR 105,105,105
-	PRINTFORML 　%numtext% ？？？　　　　　　　　　　　%hint,38,LEFT%？
+	;PRINTFORML 　%numtext% ？？？　　　　　　　　　　　%hint,38,LEFT%？
+	PRINTFORML 　%numtext% ？？？　　　　　　%hint,38,LEFT%？
 	RESETCOLOR
 ENDIF
 IF GLOBAL:num
-	PRINTFORML 　　　　　　　　　　　　　　　　%otherA,38,RIGHT%
+	PRINTFORML 　　　　　　　　　　　%otherA,38,RIGHT%
 ELSE
-	PRINTFORML 　　　　　　　　　　　　　　　　%otherB,38,RIGHT%
+	PRINTFORML 　　　　　　　　　　　%otherB,38,RIGHT%
 ENDIF
 
 
