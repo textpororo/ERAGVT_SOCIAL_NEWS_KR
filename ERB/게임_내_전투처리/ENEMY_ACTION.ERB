@@ -1,18 +1,18 @@
 ﻿;--------------------------------------------------
-;敵キャラの行動
-;촉수の行動の改変
+;적 캐릭터의 행동
+;촉수의 행동 개변
 @ENEMY_ACTION
 $LOOP_TOP
 
 ;초기화
 VARSET LOCAL
 
-;キャラが아무것도안한다なら絡みつくになる
+;캐릭터가【아무것도안한다】라면 휘감긴다
 IF TCVARn:2 == 자세：아무것도안한다
 	IF FLAG:11 == 1150 && TCVARn :0 > 1
 	ELSE
 		TFLAG:10 = 2
-		;絡みつく場合、기생なし흑화 캐릭터なら押し倒す
+		;휘감길 경우, 기생이 없는 흑화 캐릭터라면 넘어뜨린다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") && TFLAG:10 == 2 && ISTENTACLER(FLAG:111) == 0
 			TFLAG:10 = 5
 		CALL ATTACK_PLACE_DECISION

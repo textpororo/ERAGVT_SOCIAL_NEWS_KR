@@ -484,13 +484,13 @@ DO
 		SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 			SETCOLOR 240, 255, 255
 		IF TALENT:ARG:젖기쉬움 > 0
-			LOCALS=　　　　　　민감
+			LOCALS=　　　민감
 		ELSEIF TALENT:ARG:젖기어려움 > 0
-			LOCALS=　　　　　　둔감
+			LOCALS=　　　둔감
 		ELSE
-			LOCALS'="　　　　　　 ― "
+			LOCALS'="　　　 ― "
 		ENDIF
-		PRINTFORM %LOCALS, 10%　[70]
+		PRINTFORM %LOCALS, 14%　[70]
 	ELSE
 		IF TALENT:ARG:변신시ＴＳ > 0
 			PRINTPLAIN 　　변신 시 젖기쉬움/어려움
@@ -532,11 +532,11 @@ DO
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	IF TALENT:ARG:Ｃ민감 > 0
-		LOCALS=　　　　　　　　　　 Ｃ민감
+		LOCALS=　　　　　　Ｃ민감
 	ELSEIF TALENT:ARG:Ｃ둔감 > 0
-		LOCALS=　　　　　　　　　　 Ｃ둔감
+		LOCALS=　　　　　　Ｃ둔감
 	ELSE
-		LOCALS'="　　　　　　　　　　　 ― "
+		LOCALS'="　　　　　　　 ― "
 	ENDIF
 	PRINTFORM %LOCALS, 4,LEFT%　[71]
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
@@ -552,9 +552,9 @@ DO
 			IF TALENT:ARG:후타나리 == 3 && TALENT:ARG:변신시후타나리 == 3
 				LOCALS=　　　　후타나리
 			ELSEIF TALENT:ARG:변신시후타나리 == 3
-				LOCALS=　　 변신 시에만
+				LOCALS=　　  변신 시에만
 			ELSEIF TALENT:ARG:후타나리 == 3
-				LOCALS=　　 변신 시에만
+				LOCALS=　　  변신 시에만
 			ELSE
 				LOCALS=　　　　　　 ― 
 			ENDIF
@@ -575,11 +575,11 @@ DO
 		SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 			SETCOLOR 240, 255, 255
 		IF TALENT:ARG:Ｖ민감 > 0
-			LOCALS=　　　　　　　　　　 Ｖ민감
+			LOCALS=　　　　　　Ｖ민감
 		ELSEIF TALENT:ARG:Ｖ둔감 > 0
-			LOCALS=　　　　　　　　　　 Ｖ둔감
+			LOCALS=　　　　　　Ｖ둔감
 		ELSE
-			LOCALS'="　　　　　　　　　　　 ― "
+			LOCALS'="　　　　　　　 ― "
 		ENDIF
 		PRINTFORM %LOCALS, 16,LEFT%　[72]
 	ELSE
@@ -588,17 +588,17 @@ DO
 			SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 				SETCOLOR 240, 255, 255
 			IF TALENT:ARG:변신시Ｖ감각변동 > 0
-				LOCALS=　　　　　　 Ｖ민감
+				LOCALS=　　　Ｖ민감
 			ELSEIF TALENT:ARG:변신시Ｖ감각변동 < 0
-				LOCALS=　　　　　　 Ｖ둔감
+				LOCALS=　　　Ｖ둔감
 			ELSE
-				LOCALS'="　　　　　　　 ― "
+				LOCALS=　　　　 ― 
 			ENDIF
-			PRINTFORM %LOCALS, 10-(6-STRCOUNT(LOCALS,"　")),LEFT%　[72]
+			PRINTFORM %LOCALS, 12,LEFT%　[72]
 		ELSE
 			SETCOLOR 96, 96, 96
 			PRINTPLAIN 　　변신 시 Ｖ감각
-			PRINTPLAIN 　　　 ― 　　　
+			PRINTPLAIN 　　　　 ― 　　　
 		ENDIF
 	ENDIF
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
@@ -630,11 +630,11 @@ DO
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	IF TALENT:ARG:Ａ민감 > 0
-		LOCALS=　　　　　　　　　　 Ａ민감
+		LOCALS=　　　　　　Ａ민감
 	ELSEIF TALENT:ARG:Ａ둔감 > 0
-		LOCALS=　　　　　　　　　　 Ａ둔감
+		LOCALS=　　　　　　Ａ둔감
 	ELSE
-		LOCALS'="　　　　　　　　　　　 ― "
+		LOCALS'="　　　　　　　 ― "
 	ENDIF
 	PRINTFORM %LOCALS, 16,LEFT%　[73]
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
@@ -660,11 +660,11 @@ DO
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	IF TALENT:ARG:Ｂ민감 > 0
-		LOCALS=　　　　　　　　　　 Ｂ민감
+		LOCALS=　　　　　　Ｂ민감
 	ELSEIF TALENT:ARG:Ｂ둔감 > 0
-		LOCALS=　　　　　　　　　　 Ｂ둔감
+		LOCALS=　　　　　　Ｂ둔감
 	ELSE
-		LOCALS'="　　　　　　　　　　　 ― "
+		LOCALS'="　　　　　　　 ― "
 	ENDIF
 	PRINTFORM %LOCALS, 16,LEFT%　[74]
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
@@ -691,14 +691,14 @@ DO
 		SETCOLOR 240, 255, 255
 	IF TALENT:ARG:백보지 > 0
 		IF ISMALE(ARG)
-			LOCALS=　　　　　　　　　나지않음
+			LOCALS=　　　　　　나지않음
 		ELSE
-			LOCALS=　　　　　　　　　　백보지
+			LOCALS=　　　　　　　백보지
 		ENDIF
 	ELSE
-		LOCALS'="　　　　　　　　　　　 ― "
+		LOCALS=　　　　　　　　 ―  
 	ENDIF
-	PRINTFORM %LOCALS, 18-(9-STRCOUNT(LOCALS,"　")),LEFT%　[75]
+	PRINTFORM %LOCALS, 20,LEFT%　[75]
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		RESETCOLOR
 	PRINTL
@@ -709,15 +709,15 @@ DO
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		SETCOLOR 240, 255, 255
 	IF TALENT:ARG:미성숙 == 1
-		LOCALS=　　　　　　　　미성숙
+		LOCALS=　　　　　미성숙
 	ELSEIF TALENT:ARG:미성숙 == 2
-		LOCALS=　　　　　　　　　불임
+		LOCALS=　　　　　　불임
 	ELSEIF TALENT:ARG:인조인간 > 0 && ISFEMALE(ARG)
-		LOCALS=　　　　　　　인공자궁
+		LOCALS=　　　　인공자궁
 	ELSE
-		LOCALS'="　　　　　　　　　 ― "
+		LOCALS=　　　　　　 ― 
 	ENDIF
-	PRINTFORM %LOCALS, 15-(8-STRCOUNT(LOCALS,"　")),LEFT%　[76]
+	PRINTFORM %LOCALS, 16,LEFT%　[76]
 	SIF INPUT_MODE % 10 != 0 && INPUT_MODE != 2
 		RESETCOLOR
 	;------

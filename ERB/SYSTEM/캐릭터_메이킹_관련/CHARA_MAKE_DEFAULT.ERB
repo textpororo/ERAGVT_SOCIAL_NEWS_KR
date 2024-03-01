@@ -133,7 +133,7 @@
 					BREAK
 				CATCH
 					;구상이 없다(가챠 속행)
-					local:1++
+					local:1 ++
 				ENDCATCH
 			ENDIF
 		WEND
@@ -876,7 +876,7 @@ NEXT
 
 	;일본 or 중국일 경우
 	IF LOCAL:0 < 3500 || (LOCAL:0 >= 16000 && LOCAL:0 < 16500)
-		LOCALS:2 = %LOCALS:0%%LOCALS:1%
+		LOCALS:2 = %LOCALS:0% %LOCALS:1%
 	ELSE
 		LOCALS:2 = %LOCALS:1%・%LOCALS:0%
 	ENDIF
