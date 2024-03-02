@@ -1,43 +1,43 @@
 ﻿;*******************************************************************************************************
-;悪落ちキャラの容姿を戻す。
-;CSTR:50〜に登録された容姿と現在の容姿を入れ替えることで容姿を戻す。
-;確率でCSTR:50〜に登録済みの容姿を書き換えることで、容姿の定着を表現する。
+;흑화 캐릭터의 외관을 되돌린다
+;CSTR:50〜에 등록된 외관과 현재의 외관을 교체함으로써 외관을 되돌린다.
+;일정 확률로 CSTR:50〜에 등록된 외관을 고쳐 쓰는(書き換える) 것으로, 외관의 정착을 표현한다.
 ;*******************************************************************************************************
 @RECOVER_CORRUPTION, ARG
 #DIM ExpCorrupt
 ExpCorrupt = EXP:ARG:함락경험
 
-;컨피그未설정なら実行しない
+;컨피그 미설정이라면 실행하지 않는다
 SIF CONFIG_CHECK_PRISON_F(4) == 0
 	RETURN 1
 
-;プロフィール未설정なら実行しない
+;프로필 미설정이라면 실행하지 않는다
 SIF CFLAG:ARG:34 == 0
 	RETURN 1
 
-;初回登録未なら実行しない
+;최초 등록이 없다면 실행하지 않는다
 SIF GETBIT(CFLAG:ARG:80, 0) == 0
 	RETURN 1
 
-;髪
+;머리
 IF GETBIT(CFLAG:ARG:80, 4) == 1 && GETBIT(CFLAG:ARG:81, 0) == 0 && RAND:100 <= (ExpCorrupt * 15)
 	CALL STAIN_CORRUPTED_HAIR_COLOR, ARG
 	SETBIT CFLAG:ARG:81, 0
 ENDIF
 
-;右目
+;오른쪽 눈
 IF GETBIT(CFLAG:ARG:80, 5) == 1 && GETBIT(CFLAG:ARG:81, 1) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
 	CALL STAIN_CORRUPTED_EYE_COLOR_RIGHT, ARG
 	SETBIT CFLAG:ARG:81, 1
 ENDIF
 
-;左目
+;왼쪽 눈
 IF GETBIT(CFLAG:ARG:80, 5) == 1 && GETBIT(CFLAG:ARG:81, 2) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
 	CALL STAIN_CORRUPTED_EYE_COLOR_LEFT, ARG
 	SETBIT CFLAG:ARG:81, 2
 ENDIF
 
-;肌
+;피부
 IF GETBIT(CFLAG:ARG:80, 1) == 1 && GETBIT(CFLAG:ARG:81, 3) == 0 && RAND:100 <= ((ExpCorrupt-1) * 15)
 	CALL STAIN_CORRUPTED_SKIN_COLOR, ARG
 	SETBIT CFLAG:ARG:81, 3
@@ -51,10 +51,10 @@ IF TALENT:ARG:전락 == 0 && (ExpCorrupt > 10 || CFLAG:81 == 0b1111)
 	TALENT:ARG:전락 = 1
 ENDIF
 
-;容姿変更
+;외관 변경
 CALL CORRUPT_CHANGE_LOOKS, ARG
 
-;悪落ち中フラグ削除
+;흑화 중 플래그 삭제
 CLEARBIT CFLAG:80, 2
 
 RETURN 0
