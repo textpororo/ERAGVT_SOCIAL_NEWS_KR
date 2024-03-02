@@ -1,13 +1,13 @@
-﻿;羞恥プレイ
+﻿;수치 플레이
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1007
 RETURN 통상
 
 @SEX_SPCOM7
-;取得パラメータ計算
+;취득 파라미터 계산
 
-;ベース値の明示的초기화
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -15,13 +15,13 @@ REND
 ;방심도 상승
 TFLAG:3 += 50
 
-;사정値 100
+;사정치 100
 CALL TENTACLE_SYASEI_UP, 100
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1007
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,-1)
 
 
@@ -32,15 +32,15 @@ SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 ;지문: SPCOM7
 CALL MESSAGE_SEX_SPCOM7
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 4
 
-;ベース
+;BASE
 EXP:노출쾌락경험 += 1
 
-;욕정　노출벽が高くなると多くなる
+;욕정　노출벽이 높아질 수록 더 많아진다
 IF ABL:노출벽 == 0
 	LOCAL:7 = 50
 ELSEIF ABL:노출벽 == 1
@@ -55,7 +55,7 @@ ELSEIF ABL:노출벽 >= 5
 	LOCAL:7 = 2000
 ENDIF
 
-;치정　노출벽が高くなると多くなる
+;치정　노출벽이 높아질 수록 더 많아진다
 IF ABL:노출벽 == 0
 	LOCAL:9 = 2000
 ELSEIF ABL:노출벽 == 1
@@ -70,7 +70,7 @@ ELSEIF ABL:노출벽 >= 5
 	LOCAL:9 = 5500
 ENDIF
 
-;공포　노출벽が高くなると少なくなる
+;공포　노출벽이 높아질 수록 적어진다
 IF ABL:노출벽 == 0
 	LOCAL:11 = 2000
 ELSEIF ABL:노출벽 == 1
@@ -85,7 +85,7 @@ ELSEIF ABL:노출벽 >= 5
 	LOCAL:11 = 50
 ENDIF
 
-;노출벽が高いと욕정にボーナス
+;노출벽이 높을 수록 욕정에 보너스
 IF ABL:노출벽 == 2
 	LOCAL:7 = 500
 ELSEIF ABL:노출벽 == 3
@@ -96,13 +96,13 @@ ELSEIF ABL:노출벽 >= 5
 	LOCAL:7 = 5000
 ENDIF
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1007
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 150
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

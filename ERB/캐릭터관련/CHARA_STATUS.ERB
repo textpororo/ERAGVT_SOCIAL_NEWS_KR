@@ -3168,7 +3168,7 @@ SELECTCASE ARG
 
 	CASE 1200
 	;숨겨진힘
-		RETURNF "남은 체력・기력의 합계가 최대치의 25% 이하일 때 직격률과 치명타율 +12% / 모든 스탯 보너스 -10"
+		RETURNF "남은 체력・기력의 합계가 최대치의 25% 이하일 때 직격률과 치명타율 +12% / 소모율에 따라 치명타 배율 증가 / 모든 스탯 보너스 -5"
 
 	CASE 1201
 	;행운아
@@ -3907,6 +3907,8 @@ IF LOCAL:1 == 1
 	LOCAL:3 = 0
 	;버스트 공격의 피로도
 	LOCAL:4 = 0
+	;치명타 배율
+	LOCAL:5 = 0
 
 	;메리트 효과
 	PRINT    
@@ -3924,6 +3926,9 @@ IF LOCAL:1 == 1
 	IF TALENT:숨겨진힘 > 0 && PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 25
 		LOCAL:2 += 12
 		LOCAL:3 += 12
+		LOCAL:5 += 50
+		SIF PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 10
+			LOCAL:5 += 50
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2
 	ENDIF
@@ -3949,6 +3954,13 @@ IF LOCAL:1 == 1
 	IF LOCAL:3 > 0
 		PRINT 치명타율 +
 		PRINTFORM {LOCAL:3}
+		PRINT %  
+		SIF LOCAL:1 < 2
+			LOCAL:1 = 2
+	ENDIF
+	IF LOCAL:5 > 0
+		PRINT 치명타 배율 +
+		PRINTFORM {LOCAL:5}
 		PRINT %  
 		SIF LOCAL:1 < 2
 			LOCAL:1 = 2

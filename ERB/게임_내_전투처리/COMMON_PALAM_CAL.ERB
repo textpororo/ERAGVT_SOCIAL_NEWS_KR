@@ -445,7 +445,7 @@ SIF TCVARn:2 == 자세：봉사한다
 CALL PALAM_TIJOU_CLOTH_DAMAGE
 ARG:9 += RESULT
 
-;쾌C, 쾌V, 쾌A, 쾌B의 상승치, 절정의 상태로 계산한다
+;쾌Ｃ, 쾌Ｖ, 쾌Ａ, 쾌Ｂ의 상승치, 절정의 상태로 계산한다
 CALL PALAM_TIJOU, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:9 += RESULT
 IF ARG:9 > 0
@@ -490,7 +490,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;욕정의 구슬 계산
-;쾌C, 쾌V, 쾌A, 쾌B, 치정 상승치, 고통의 상승치(마조끼 있음), 절정의 상태로 계산한다
+;쾌Ｃ, 쾌Ｖ, 쾌Ａ, 쾌Ｂ, 치정 상승치, 고통의 상승치(마조끼 있음), 절정의 상태로 계산한다
 CALL PALAM_YOKUJOU, ARG:0, ARG:1, ARG:2, ARG:3, ARG:9, ARG:10
 ARG:7 += RESULT
 IF ARG:7 > 0
@@ -562,7 +562,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;공순의 구슬 계산
-;쾌C, 쾌V, 쾌A, 쾌B 상승치, 절정의 상태로 계산한다
+;쾌Ｃ, 쾌Ｖ, 쾌Ａ, 쾌Ｂ 상승치, 절정의 상태로 계산한다
 CALL PALAM_KYOUJUN, ARG:0, ARG:1, ARG:2, ARG:3
 ARG:5 += RESULT
 IF ARG:5 > 0
@@ -1323,7 +1323,7 @@ RETURN ARG
 SELECTCASE ARG:0
 	;민감, 둔감 등
 	CASE 0
-	;쾌C
+	;쾌Ｃ
 		IF TALENT:Ｃ민감 > 0
 			TIMES ARG:1, 1.25
 		ELSEIF TALENT:Ｃ둔감 > 0
@@ -1332,7 +1332,7 @@ SELECTCASE ARG:0
 		SIF TALENT:음핵 > 0
 			TIMES ARG:1, 1.50
 	CASE 1
-	;쾌V
+	;쾌Ｖ
 		IF TALENT:Ｖ민감 > 0
 			TIMES ARG:1, 1.25
 		ELSEIF TALENT:Ｖ둔감 > 0
@@ -1341,7 +1341,7 @@ SELECTCASE ARG:0
 		SIF TALENT:음호 > 0
 			TIMES ARG:1, 1.50
 	CASE 2
-	;쾌A
+	;쾌Ａ
 		IF TALENT:Ａ민감 > 0
 			TIMES ARG:1, 1.25
 		ELSEIF TALENT:Ａ둔감 > 0
@@ -1350,7 +1350,7 @@ SELECTCASE ARG:0
 		SIF TALENT:음고 > 0
 			TIMES ARG:1, 1.50
 	CASE 3
-	;쾌B
+	;쾌Ｂ
 		IF TALENT:Ｂ민감 > 0
 			TIMES ARG:1, 1.25
 		ELSEIF TALENT:Ｂ둔감 > 0
@@ -1425,20 +1425,20 @@ SIF FLAG:700 == 0 || ENEMY_TYPE_CHECK_F("AKUOTI")
 	RETURN ARG:1
 
 CALL TENTACLE_ACCESS, "PALAM_HOSEI"
-;RESULT:0=쾌C　이후 차례로 RESULT:11=공포
+;RESULT:0=쾌Ｃ　이후 차례로 RESULT:11=공포
 
 SELECTCASE ARG:0
 	CASE 0
-	;쾌C
+	;쾌Ｃ
 		ARG:1 = ARG:1 * RESULT:0 / 100
 	CASE 1
-	;쾌V
+	;쾌Ｖ
 		ARG:1 = ARG:1 * RESULT:1 / 100
 	CASE 2
-	;쾌A
+	;쾌Ａ
 		ARG:1 = ARG:1 * RESULT:2 / 100
 	CASE 3
-	;쾌B
+	;쾌Ｂ
 		ARG:1 = ARG:1 * RESULT:3 / 100
 	CASE 10
 	;윤활

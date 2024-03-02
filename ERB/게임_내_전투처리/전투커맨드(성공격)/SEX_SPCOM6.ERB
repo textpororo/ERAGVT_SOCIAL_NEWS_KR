@@ -1,14 +1,14 @@
-﻿;自慰強制
+﻿;강제 자위
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1006
 RETURN 통상
 
-;本家eraのように自慰と強制自慰の区別はいまのところ無し
+;본가 era처럼 자위와 강제 자위의 구별은 현재로서는 없다
 @SEX_SPCOM6
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -16,14 +16,14 @@ REND
 ;방심도 상승
 TFLAG:3 += 50
 
-;사정値 50
+;사정치 50
 CALL TENTACLE_SYASEI_UP, 50
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1006
 
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,-1)
 
 ;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 강제 자위를 시켰다
@@ -33,13 +33,13 @@ SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 ;지문: SPCOM6
 CALL MESSAGE_SEX_SPCOM6
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1006
 
-;ベースと計算は自慰の専用処理で行うのでここには記述しない
+;BASE와 계산은 자위 전용 처리로 진행하기 때문에 여기에는 기술하지 않는다
 CALL SELF_KIND, TARGET, 0

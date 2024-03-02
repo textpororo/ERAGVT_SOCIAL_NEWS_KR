@@ -1,22 +1,22 @@
-﻿;催眠姦
+﻿;최면간
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1014
 RETURN 통상
 
 @SEX_SPCOM14
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 EX_COM = 2
 SH_COM = 0
 
-;사정部位フラグ:膣を立てる
+;사정 부위 플래그:질을 세운다
 TFLAG:4 = TFLAG:4 | 질
 INSERT = INSERT | 질
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -24,13 +24,13 @@ REND
 ;방심도 상승
 TFLAG:3 += 100
 
-;사정値 800
+;사정치 800
 CALL TENTACLE_SYASEI_UP, 800
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1014
 
-;快V
+;쾌Ｖ
 IF ABL:Ｖ감각 == 0
 	LOCAL:1 = 1000
 ELSEIF ABL:Ｖ감각 == 1
@@ -45,7 +45,7 @@ ELSEIF ABL:Ｖ감각 >= 5
 	LOCAL:1 = 40000
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
@@ -62,12 +62,12 @@ ELSE
 	LOCAL:10 = 0
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 2
 
-;ベース
+;BASE
 EXP:Ｖ경험 += 3
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
 	EXP:근친교배경험 += 1
@@ -91,50 +91,50 @@ ELSEIF ABL:봉사정신 >= 5
 	LOCAL:6 = 1000
 ENDIF
 
-;윤활が低いと고통が入る
+;윤활이 낮으면 고통이 들어간다
 SIF PALAM:윤활 < 2000
 	LOCAL:10 += 2000
 
-;성내성が残り50%以上なら派生しにくい
+;성내성이 나머지 50% 이상이면 파생되기 어렵다
 IF PERCENT_CAL_F(BASE:성내성, MAXBASE:성내성) >= 50 && RAND:2 == 0
-;ＶＡ挿入成功＆사정 게이지不足なら両穴ピストン＋강구속状態
+;ＶＡ삽입 성공＆사정 게이지 부족이라면 양 구멍 피스톤＋강구속 상태
 ELSEIF (EX_COM & Ｖ) && (EX_COM & Ａ) && FLAG:15 < FLAG:14 && BASE:Ｖ결계내구력 == 0 && BASE:Ａ결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
 	TFLAG:17 = 19
-	;状態異常：강구속
+	;상태 이상：강구속
 	CALL STATE_CHANGE_PKOUSOKU, 100
-;Ｖ挿入成功＆사정 게이지不足なら種付けピストン＋강구속状態
+;Ｖ삽입 성공＆사정 게이지 부족이라면 교배 피스톤＋강구속 상태
 ELSEIF FLAG:15 < FLAG:14 && BASE:Ｖ결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
 	TFLAG:17 = 15
-	;状態異常：강구속
+	;상태 이상：강구속
 	CALL STATE_CHANGE_PKOUSOKU, 100
 ELSE
-	;行動予約なし
+	;행동 예약 없음
 	TFLAG:17 = -1
 ENDIF
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1014
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 0
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 1000
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 3000
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 3000
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 0
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 0
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 500
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 

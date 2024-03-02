@@ -1,16 +1,16 @@
 ﻿;견딘다
 @COM10
 
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;방어フラグ：견딘다にする
+;방어 플래그：견딘다로 한다
 TCVARn:2 = 자세：견딘다
 
 ;지문: 견딘다
@@ -19,7 +19,7 @@ CALL MESSAGE_BATTLE_CHARA_TAERU
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_TAERU
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 RETURN 1

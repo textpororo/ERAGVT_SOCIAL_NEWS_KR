@@ -100,13 +100,13 @@ RETURN RESULT
 ;--------------------------------------------------
 ;PALAM補正 百分率で返す
 @TENTACLE_MOB_601_PALAM_HOSEI
-;快C
+;쾌Ｃ
 LOCAL:0 = 50
-;快V
+;쾌Ｖ
 LOCAL:1 = 100
-;快A
+;쾌Ａ
 LOCAL:2 = 50
-;快B
+;쾌Ｂ
 LOCAL:3 = 50
 ;윤활
 LOCAL:4 = 50
@@ -184,7 +184,7 @@ RETURN -1
 ;--------------------------------------------------
 ;素股
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_601_COM2
 RETURN 통상
 
@@ -235,7 +235,7 @@ ENDIF
 ;--------------------------------------------------
 ;Ｖ挿入
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_601_COM3
 RETURN 삽입
 
@@ -285,7 +285,7 @@ ENDIF
 
 ;--------------------------------------------------
 ;キック
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_601_COM8
 RETURN 통상
 
@@ -305,15 +305,15 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;==================================================
-;【衣装を破く】
+;【의상을 찢는다】
 ;--------------------------------------------------
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_601_COM14
 RETURN 통상
 
 @MESSAGE_MOB_601_COM14, ARG:0, ARG:1
 FONTBOLD
-PRINTL 衣装を破く
+PRINTL 의상을 찢는다
 FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 IF RAND:2 == 0
@@ -323,7 +323,7 @@ IF RAND:2 == 0
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
 	PRINTL 
-	;状態異常：끈적끈적
+	;상태 이상：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
 	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 衣装を噛みちぎった。

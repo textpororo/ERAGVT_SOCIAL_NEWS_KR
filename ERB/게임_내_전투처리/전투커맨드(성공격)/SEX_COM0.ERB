@@ -1,4 +1,4 @@
-﻿;C공격(약)
+﻿;Ｃ공격（약）
 ;LOCAL:0 쾌Ｃ
 ;LOCAL:1 쾌Ｖ
 ;LOCAL:2 쾌Ａ
@@ -12,20 +12,20 @@
 ;LOCAL:10 고통
 ;LOCAL:11 공포
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM0
 RETURN 통상
 
 @SEX_COM0,ARG = 0,ARG:1 = 0
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 CALL SEX_COMEX_RANDOM, Ｃ, ARG:1
 EX_COM = RESULT:0
 SH_COM = RESULT:1
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -33,13 +33,13 @@ REND
 ;방심도 상승
 TFLAG:3 += 25
 
-;사정値 50
+;사정치 50
 CALL TENTACLE_SYASEI_UP, 50
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 0
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 500
 ELSEIF ABL:Ｃ감각 == 1
@@ -53,33 +53,33 @@ ELSEIF ABL:Ｃ감각 == 4
 ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 8000
 ENDIF
-;ペニス持ちには効果大
+;페니스가 있다면 효과가 크다
 SIF ISMANLY() || TALENT:후타나리 > 0
 	LOCAL:0 += 500
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,-1)
 
 
 IF ENEMY_TYPE_CHECK_F("MOB") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM0, EX_COM, SH_COM
 ELSE
-	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 C공격(약)을 했다
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 Ｃ공격（약）을 했다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM0
 	;지문: COM0
 	CALL MESSAGE_SEX_COM0, EX_COM, SH_COM
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
 
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 4
 
-;ベース
+;BASE
 
 
-;追加責め実行
+;추가 고문 실행
 IF EX_COM
 	CALL SEX_COMEX, Ｃ, 0, EX_COM | SH_COM
 	REPEAT 12
@@ -87,31 +87,31 @@ IF EX_COM
 	REND
 ENDIF
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 0
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 0
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 500
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 50
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 0
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 0
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 50
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

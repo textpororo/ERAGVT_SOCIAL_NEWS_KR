@@ -8,7 +8,7 @@ NAKADASHI=0
 VARSET LOCAL
 SIF TIME != 1 ;夜じゃないと発生しない
 	RETURN 0
-SIF ISHOLE() == 0 ;男女平等オフにターゲットは남자の場合は弾く（보추除外処理追記）
+SIF ISHOLE() == 0 ;男女平等オフにターゲットは남자인 경우에는 弾く（보추除外処理追記）
 	RETURN 0
 SIF CFLAG:72 > 0 ;イベントクールダウン中
 	RETURN 0

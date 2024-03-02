@@ -1,8 +1,8 @@
 ﻿;幼体촉수の群れを改変
 ;魔法っぽいものを使う空飛ぶ妖精
-;1割の確率で「衣装を破く」が끈적끈적付与判定(30%)に入り、「通常공격」が마비判定(10%)に入るになる
+;1割の確率で「의상을 찢는다」が끈적끈적付与判定(30%)に入り、「通常공격」が마비判定(10%)に入るになる
 
-;スパンキング、針、フェラって追加攻めできないのかな？지문書いたけど表示されない。一応消さないでおこう
+;스팽킹、針、フェラって追加攻めできないのかな？지문書いたけど表示されない。一応消さないでおこう
 
 ;2021/12/30公開（第７支部の>>252）
 ;2021/01/07更新（第７支部の>>252）@PRINT_CLOTH_CONDITION追加、魔法少女側　性コマンド지문追加、その他
@@ -172,13 +172,13 @@ RETURN RESULT
 ;--------------------------------------------------
 ;PALAM補正 百分率で返す
 @TENTACLE_MOB_902_PALAM_HOSEI
-;快C
+;쾌Ｃ
 LOCAL:0 = 100
-;快V
+;쾌Ｖ
 LOCAL:1 = 100
-;快A
+;쾌Ａ
 LOCAL:2 = 100
-;快B
+;쾌Ｂ
 LOCAL:3 = 100
 ;윤활
 LOCAL:4 = 50
@@ -238,28 +238,28 @@ ENDIF
 @TENTACLE_MOB_902_SEX_ROUTINE
 IF RAND:4 == 0
 	IF RAND:3 == 0 && !CHECK_HOLYVIRGIN_F()
-		RETURN 3	;V공격(강)
+		RETURN 3	;Ｖ공격（강）
 	ELSEIF RAND:2 == 0
-		RETURN 5	;A공격(강)
+		RETURN 5	;Ａ공격（강）
 	ELSE
 		RETURN 11	;フェラ
 	ENDIF
 ELSEIF RAND:3 == 0
 	IF RAND:2 == 0
-		RETURN 1	;C공격(강)
+		RETURN 1	;Ｃ공격（강）
 	ELSE
-		RETURN 7	;B공격(강)
+		RETURN 7	;Ｂ공격（강）
 	ENDIF
 ELSEIF RAND:2 == 0
 	IF RAND:3 == 0
-		RETURN 14	;衣装を破く
+		RETURN 14	;의상을 찢는다
 	ELSEIF RAND:3 == 0
-		RETURN 8	;スパンキング
+		RETURN 8	;스팽킹
 	ELSE
-		RETURN 9	;針
+		RETURN 9	;바늘
 	ENDIF
 ELSE
-	RETURN 0	;C공격(약)(全身愛撫)
+	RETURN 0	;Ｃ공격（약）(全身愛撫)
 ENDIF
 
 ;==================================================
@@ -273,9 +273,9 @@ IF ARG == 1
 	RETURN 3
 ELSEIF ARG == 2
 	IF RAND:2 == 0 && !CHECK_HOLYVIRGIN_F()
-		RETURN 3	;V공격(강)
+		RETURN 3	;Ｖ공격（강）
 	ELSE
-		RETURN 5	;A공격(강)
+		RETURN 5	;Ａ공격（강）
 	ENDIF
 ELSEIF ARG == 3
 	RETURN 11	;フェラ
@@ -285,7 +285,7 @@ RETURN -1
 ;==================================================
 ;【性コマンド関係】
 ;--------------------------------------------------
-;C공격(약)
+;Ｃ공격（약）
 @SEX_TYPE_MOB_902_COM0
 RETURN 통상
 
@@ -358,7 +358,7 @@ ENDIF
 RETURN Ｖ + Ａ + Ｂ
 
 ;--------------------------------------------------
-;C공격(강)
+;Ｃ공격（강）
 @SEX_TYPE_MOB_902_COM1
 RETURN 통상
 
@@ -447,7 +447,7 @@ SIF RAND:3==0
 RETURN LOCAL
 
 ;--------------------------------------------------
-;V공격(강)
+;Ｖ공격（강）
 @SEX_TYPE_MOB_902_COM3
 RETURN 삽입
 
@@ -520,7 +520,7 @@ ELSEIF TALENT:처녀 > 0
 		ENDIF
 		PRINTFORM そんな様子にはお構いなしに、妖精は「初めてのオンナ」を犯すのに夢中になっている
 	ENDIF
-;前ターンＶ공격(강)
+;前ターンＶ공격（강）
 ELSEIF TFLAG:20 == 3
 	PRINT 腰に掴まり、夢中でピストンを続けている
 ELSE
@@ -529,7 +529,7 @@ ELSE
 ENDIF
 IF (ARG & Ａ)
 	PRINTL 。
-	;前ターンＡ공격(강)
+	;前ターンＡ공격（강）
 	IF TFLAG:20 == 5
 		PRINT また、もう一匹の妖精が肥大化したペニスで애널を犯し続けている
 	ELSE
@@ -563,7 +563,7 @@ SIF RAND:3==0
 RETURN LOCAL
 
 ;--------------------------------------------------
-;A공격(강)
+;Ａ공격（강）
 @SEX_TYPE_MOB_902_COM5
 RETURN 삽입
 
@@ -588,7 +588,7 @@ PRINTFORM 一匹の妖精が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의
 IF (ARG & Ａ) == 0
 	PRINTFORML 애널に近づいたが
 	PRINTFORM 結界に阻まれて触れることができなかった
-;前ターンＡ공격(강)
+;前ターンＡ공격（강）
 ELSEIF TFLAG:20 == 5
 	PRINTFORM 腰に掴まり、夢中でピストンを続けている
 ELSE
@@ -597,7 +597,7 @@ ELSE
 ENDIF
 IF (ARG & Ｖ)
 	PRINTL 。
-	;前ターンＶ공격(강)
+	;前ターンＶ공격（강）
 	IF TFLAG:20 == 3
 		PRINTL また、もう一匹の妖精が肥大化したペニスでヴァギナを犯し続けている
 	ELSE
@@ -649,7 +649,7 @@ SIF RAND:3==0
 RETURN LOCAL
 
 ;--------------------------------------------------
-;B공격(강)
+;Ｂ공격（강）
 @SEX_TYPE_MOB_902_COM7
 RETURN 통상
 
@@ -721,7 +721,7 @@ SIF RAND:3==0
 RETURN LOCAL
 
 ;--------------------------------------------------
-;スパンキング
+;스팽킹
 @SEX_TYPE_MOB_902_COM8
 RETURN 통상
 
@@ -768,7 +768,7 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;針
+;바늘
 @SEX_TYPE_MOB_902_COM9
 RETURN 통상
 
@@ -889,7 +889,7 @@ ENDIF
 
 ;-----------------------------------------------------------------------------------------------------------------------------------------------
 ;==================================================
-;【衣装を破く】
+;【의상을 찢는다】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_902_COM14
 RETURN 통상
@@ -918,7 +918,7 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
 PRINTL 
-;状態異常：끈적끈적
+;상태 이상：끈적끈적
 SIF LOCAL == 1
 	CALL STATE_CHANGE_BETOBETO(30)
 

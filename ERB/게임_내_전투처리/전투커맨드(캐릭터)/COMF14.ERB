@@ -1,28 +1,28 @@
 ﻿;Ｖ삽입방어
 @COM14
 
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
 ;방심도 상승
 TFLAG:3 += 5
 
-;방어フラグ：Ｖ방어にする
+;방어 플래그：Ｖ방어로 한다
 TCVARn:2 = 자세：Ｖ방어
 
 ;지문: Ｖ삽입방어
 CALL MESSAGE_BATTLE_CHARA_ANTI_V
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 Ｖ삽입방어を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「Ｖ삽입방어」를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_ANTI_V
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 RETURN 1

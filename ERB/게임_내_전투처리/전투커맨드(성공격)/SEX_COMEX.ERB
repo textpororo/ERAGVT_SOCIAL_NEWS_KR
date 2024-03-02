@@ -1,4 +1,4 @@
-﻿;追加責め関連
+﻿;추가 고문 관련
 ;LOCAL:0 쾌Ｃ
 ;LOCAL:1 쾌Ｖ
 ;LOCAL:2 쾌Ａ
@@ -12,7 +12,7 @@
 ;LOCAL:10 고통
 ;LOCAL:11 공포
 
-;追加部位決定
+;추가 부위 결정
 ;**********************************************************
 @SEX_COMEX_RANDOM, ARG, ARG:1 = 0
 ;AT_RAND
@@ -25,34 +25,34 @@
 #DIM SHIELDED, 감각수 + 1
 
 AT_FLAG = 0
-;責める部位の決定
+;고문할 부위 결정
 FOR LCOUNT, 0, 감각수
 	AT_RAND = 30
 
-	;레벨補正
+	;레벨 보정
 	CALL TENTACLE_LEVEL
 	SIF RESULT > 30
 		RESULT = 30
 	AT_RAND += RESULT
 
-	;それぞれの촉수は該当部位を責める確率が高い
+	;각 촉수는 그 이름에 해당하는 부위를 고문할 확률이 높다
 	SIF LCOUNT + 1 == FLAG:11
 		AT_RAND += 25
-	;최종 보스 촉수は全部位を責める確率が高い
+	;최종 보스 촉수는 모든 부위를 고문할 확률이 높다
 	SIF FLAG:10
 		AT_RAND += 15
-	;判定
+	;판정
 	SIF RAND:100 < AT_RAND
 		SETBIT AT_FLAG, LCOUNT
 NEXT
-;固有の責めパターンがある場合
+;고유의 고문 패턴이 있는 경우
 IF ARG:1 > 0
 	AT_FLAG = ARG:1
 ELSEIF ARG:1 < 0
 	AT_FLAG = 0
 ENDIF
 
-;調教対象が남자の場合でＶ攻めがある場合はＣ攻めかＡ攻めに変更
+;조교 대상이 남자일 때 Ｖ공격이 있을 경우, Ｃ공격이나 Ａ공격으로 변경
 IF (AT_FLAG & 2) && ISMALE()
 	AT_FLAG -= 2
 	IF RAND:2 == 0
@@ -62,18 +62,18 @@ IF (AT_FLAG & 2) && ISMALE()
 	ENDIF
 ENDIF
 
-;相手が세뇌/흑화で기생されていない場合、追加責め플래그를リセット
+;상대가 세뇌/흑화인 동시에 기생되어 있지 않은 경우, 추가 고문 플래그를 리셋
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	AT_FLAG = 0
-	;Ｃ攻め系統で남자でないならなら50%でＶ攻め플래그를 세운다
+	;Ｃ공격 계통에서 남자가 아니라면 50% 확률로 Ｖ공격 플래그를 세운다
 	SIF ARG == Ｃ && ISFEMALE() && RAND:2 == 0
 		SETBIT AT_FLAG, (Ｖ - 1)
-	;Ｖ공격(SP)なら50%でＡ攻め플래그를 세운다
+	;Ｖ공격（ＳＰ）이라면 50% 확률로 Ａ공격 플래그를 세운다
 	SIF TFLAG:10 == 1001 && RAND:2 == 0
 		SETBIT AT_FLAG, (Ａ - 1)
 ENDIF
 
-;もともとの性コマンドも플래그를 세운다
+;원래의 성 커맨드도 플래그를 세운다
 SIF (ARG & Ｃ)
 	AT_FLAG |= Ｃ
 SIF (ARG & Ｖ) && ISFEMALE()
@@ -83,7 +83,7 @@ SIF (ARG & Ａ)
 SIF (ARG & Ｂ)
 	AT_FLAG |= Ｂ
 
-;部位結界の有無の確認
+;부위 결계의 유무 확인
 SHIELDED:감각수 = 0
 FOR LCOUNT, 0, 감각수
 	IF BASE:(LCOUNT + 30) > 0
@@ -94,9 +94,9 @@ FOR LCOUNT, 0, 감각수
 	ENDIF
 NEXT
 
-;責め部位がすべて部位結界に阻まれた
+;고문 부위가 전부 부위 결계에 막혔다
 IF (AT_FLAG & ~SHIELDED:감각수) == 0 && ARG:1 == 0
-	;責めてない部位があれば一箇所追加
+	;고문하지 않은 부위가 있으면 한 군데 추가
 	REPEAT 감각수
 		LOCAL:COUNT = 0
 	REND
@@ -110,10 +110,10 @@ IF (AT_FLAG & ~SHIELDED:감각수) == 0 && ARG:1 == 0
 	REND
 	SIF LCOUNT
 		SETBIT AT_FLAG, LOCAL:(RAND:LCOUNT)
-;元のはこちら
+;구버전까지 사용된 코드
 ;	;DO
 ;	AT_RAND = RAND:감각수
-;		;調教対象が남자
+;		;조교 대상이 남자
 ;		SIF (ISMALE() && AT_RAND == 1) || SHIELDED:AT_RAND
 ;			AT_RAND = -1
 ;	;LOOP AT_RAND == -1
@@ -124,17 +124,17 @@ RETURN AT_FLAG & ~SHIELDED:감각수, AT_FLAG & SHIELDED:감각수
 
 
 
-;追加部位責め実行
+;추가 부위 고문 실행
 ;**********************************************************
 @SEX_COMEX, ARG:0, ARG:1, ARG:2
-;ARG:0	もともとの性コマンドが、どの部位を責めるものか（ビット）
-;	0：なし　1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;ARG:1	コマンドの強度（変数）
-;	0：弱　1：強　2：SP
-;ARG:2	追加責め実行部位（ビット）
+;ARG:0	원래의 성 커맨드가 어떤 부위를 고문할 것인지（비트）
+;	0：없음　1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
+;ARG:1	커맨드의 강도（변수）
+;	0：약　1：강　2：SP
+;ARG:2	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;AT_PART	追加責め実行部位
-;		0：Ｃ　1：Ｖ　2：Ａ　3：Ｂ　それぞれ1なら実行、2は元コマンドでの責め
+;AT_PART	추가 고문 실행 부위
+;		0：Ｃ　1：Ｖ　2：Ａ　3：Ｂ　각각 1이면 실행, 2는 본래의 커맨드로 고문
 ;AT_MAG		
 ;SHIEDED	
 ;L_VAR		
@@ -146,10 +146,10 @@ RETURN AT_FLAG & ~SHIELDED:감각수, AT_FLAG & SHIELDED:감각수
 #DIM SHIEDED, 감각수
 #DIM L_VAR, 15
 
-;ローカル変数の초기화
+;지역 변수 초기화
 VARSET L_VAR:LCOUNT
 
-;責め状況をローカル変数に取得
+;고문 상황을 지역 변수로 취득
 CAL_VAR:0 = 1
 FOR LCOUNT, 0, 감각수
 	IF ARG:2 & CAL_VAR:0
@@ -166,7 +166,7 @@ FOR LCOUNT, 0, 감각수
 	CAL_VAR:0 *= 2
 NEXT
 
-;元の性コマンド部位
+;본래의 성 커맨드 부위
 FOR LCOUNT, 0, 감각수
 	IF ARG:0 & POWER(2, LCOUNT)
 		AT_PART:LCOUNT = 2
@@ -174,13 +174,13 @@ FOR LCOUNT, 0, 감각수
 	ENDIF
 NEXT
 
-;部位結界・箇所数による倍率の変化
-;CAL_VAR:0	阻まれた倍率の総量
-;CAL_VAR:1	通った責めの数
+;부위 결계・장소수(箇所数)에 따른 배율의 변화
+;CAL_VAR:0	막힌 배율의 총량
+;CAL_VAR:1	통한 고문의 수
 CAL_VAR:0 = 0
 CAL_VAR:1 = 0
 FOR LCOUNT, 0, 감각수
-	;箇所数に応じて軽減
+	;장소수(箇所数)에 따라 경감
 	SIF AT_PART:0 + AT_PART:1 + AT_PART:2 + AT_PART:3 > 2
 		AT_MAG:LCOUNT = AT_MAG:LCOUNT * (130 - (AT_PART:0 + AT_PART:1 + AT_PART:2 + AT_PART:3) * 15) / 100
 
@@ -195,7 +195,7 @@ NEXT
 
 FOR LCOUNT, 0, 감각수
 	IF AT_PART:LCOUNT > 0
-		;各快追加ベース
+		;각 쾌~ 추가 BASE
 		IF LCOUNT != 2
 			IF ABL:LCOUNT == 0
 				L_VAR:LCOUNT = 400
@@ -211,7 +211,7 @@ FOR LCOUNT, 0, 감각수
 				L_VAR:LCOUNT = 8000
 			ENDIF
 		ELSE
-			;快A　감각が低いうちは少なめ
+			;쾌Ａ　감각이 낮을 때는 적다
 			IF CONFIG_CHECK_BALANCE_F(7) == 0
 				IF ABL:LCOUNT == 0
 					L_VAR:LCOUNT = 40
@@ -226,7 +226,7 @@ FOR LCOUNT, 0, 감각수
 				ELSEIF ABL:LCOUNT >= 5
 					L_VAR:LCOUNT = 10000
 				ENDIF
-			;컨피그オンで쾌Ａ増加
+			;컨피그 ON일 시 쾌Ａ 증가
 			ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
 				IF ABL:LCOUNT == 0
 					L_VAR:LCOUNT = 400
@@ -244,24 +244,24 @@ FOR LCOUNT, 0, 감각수
 			ENDIF
 		ENDIF
 
-	;阻まれた分の倍率を通った箇所に加算
+	;막힌 만큼의 배율을 통과한 장소에 가산
 	AT_MAG:LCOUNT += CAL_VAR:0 / CAL_VAR:1
-	;部位倍率適用
+	;부위 배율 적용
 	L_VAR:LCOUNT = L_VAR:LCOUNT * AT_MAG:LCOUNT / 100
 	ENDIF
 NEXT
 
-;各部位ごとの処理
+;부위별로 처리
 ;Ｃ
 IF AT_PART:0 == 1
-	;ペニス持ちには効果大
+	;페니스가 있다면 효과가 크다
 	SIF ISMANLY() || TALENT:후타나리 > 0
 		L_VAR:0 += 100
 ENDIF
 
 ;Ｖ
 IF AT_PART:1 == 1
-;Ｖ방어効果
+;Ｖ방어 효과
 	SIF TCVARn:2 == 자세：Ｖ방어
 		L_VAR:1 /= 4
 
@@ -269,7 +269,7 @@ IF AT_PART:1 == 1
 	SIF SHIEDED:1 == 0
 		EXP:Ｖ경험 += 1
 
-;처녀だと공포が少し入る
+;처녀라면 공포가 조금 들어간다
 	CAL_VAR:0 = 0
 	IF TALENT:처녀 > 0
 		IF ABL:Ｖ감각 == 0
@@ -292,7 +292,7 @@ IF AT_PART:2 == 1
 	SIF SHIEDED:2 == 0
 		EXP:Ａ경험 += 1
 
-;감각と윤활が低いと고통が入る
+;감각과 윤활이 낮으면 고통이 들어간다
 	CAL_VAR:0 = 0
 	IF ABL:Ａ감각 < 3
 		IF PALAM:윤활 < 100
@@ -313,7 +313,7 @@ IF AT_PART:2 == 1
 	SIF SHIEDED:2 == 0
 		L_VAR:10 += CAL_VAR:0
 
-;감각が低いと공포が入る
+;감각이 낮으면 공포가 들어간다
 	CAL_VAR:0 = 0
 	IF ABL:Ａ감각 == 0
 		CAL_VAR:0 += 1000
@@ -331,7 +331,7 @@ ENDIF
 
 ;Ｂ
 IF AT_PART:3 == 1
-;該当処理なし
+;해당 처리 없음
 
 ENDIF
 

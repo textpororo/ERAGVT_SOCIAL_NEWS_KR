@@ -1,17 +1,17 @@
 ﻿;노려본다
 @COM44
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
 ;방심도 상승
 TFLAG:3 += 25
 
-;방어フラグ：노려본다にする
+;방어 플래그：노려본다로 한다
 TCVARn:2 = 자세：노려본다
 
-;ゲージが増加
+;게이지가 증가
 IF CFLAG:99 < 5
 	TCVARn:6 += 20 + RAND:16
 ELSEIF CFLAG:99 < 15
@@ -20,13 +20,13 @@ ELSE
 	TCVARn:6 += 10 + RAND:6
 ENDIF
 
-;기력が5%回復　疲労の影響がない
-;회복빠름なら+1%
-;회복느림なら-1%
-;最大値と衣装と방어力による補正から回復量を計算
+;기력이 5% 회복　피로의 영향이 없다
+;회복빠름이라면 +1%
+;회복느림이라면 -1%
+;최대값과 의상 및 방어력에 따른 보정에서 회복량 계산
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
-;FEATによる回復量ボーナス
+;FEAT에 의한 회복량 보너스
 SIF TALENT:넘치는생명력 > 0
 	TIMES LOCAL:1, 1.25
 IF TALENT:회복빠름 == 1
@@ -38,26 +38,26 @@ ELSE
 ENDIF
 SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 	LOCAL:1 = MAXBASE:기력 - BASE:기력
-;기력が尽きている場合、기력が回復しない
+;기력이 다한 경우, 기력이 회복되지 않는다
 SIF BASE:기력 == 0
 	LOCAL:1 = 0
 BASE:기력 += LOCAL:1
 
 ;지문: 노려본다
 CALL MESSAGE_BATTLE_CHARA_NIRAMI
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 노려본다を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「노려본다」를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_NIRAMI
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 IF BASE:기력
-	PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+	PRINTFORML %BASENAME:1%이 {LOCAL:1} 회복됐다.
 ELSE
-	PRINTFORML %BASENAME:1%は既に尽きてしまっている……
+	PRINTFORML 이미 %BASENAME:1%을 다하여 회복되지 않았다……
 ENDIF
-PRINTFORML ＥＸゲージが少し溜まった！
+PRINTFORML ＥＸ 게이지가 조금 쌓였다！
 PRINTL 
 
 RETURN 1

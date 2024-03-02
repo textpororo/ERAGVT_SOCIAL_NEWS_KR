@@ -1,48 +1,48 @@
-﻿;A공격(강)
+﻿;Ａ공격（강）
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM5
 RETURN 삽입
 
 @SEX_COM5,ARG = 0,ARG:1 = 0
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 CALL SEX_COMEX_RANDOM, Ａ, ARG:1
 EX_COM = RESULT:0
 SH_COM = RESULT:1
 
-;성기 가리개が残っている場合はＶ追加攻め플래그를折る
+;성기 가리개가 남아있는 경우 Ｖ추가 공격 플래그를 접는다
 SIF CFLAG:42 == 398 && CLOTH_INNER_PER > 0 && (EX_COM & 질)
 	EX_COM -= 질
-;애널プレイはＶ挿入しない場合
+;애널 플레이는 V삽입을 하지 않을 경우
 SIF CONFIG_CHECK_OTHER_F(4) > 0 && (EX_COM & 질)
 	EX_COM -= 질
 
-;청순파なら１度だけ自動でＶ방어
+;청순파라면 한 번만 자동으로 Ｖ방어
 SIF TALENT:청순파 > 0 && TCVARn:2 != 100 && (EX_COM & 질)
 	CALL AUTO_V_DEFENCE, TARGET
 
-;사정部位フラグ:애널を立てる
+;사정 부위 플래그:애널을 세운다
 IF BASE:Ａ결계내구력 <= 0
 	TFLAG:4 = TFLAG:4 | 애널
 	INSERT = INSERT | 애널
 ENDIF
-;Ｖ追加攻めがあるなら膣사정플래그를 세운다
+;Ｖ추가 공격이 있다면 질 사정 플래그를 세운다
 IF (EX_COM & 질) && TCVARn:2 != 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 	TFLAG:4 = TFLAG:4 | 질
 	INSERT = INSERT | 질
 ENDIF
-;Ｖ追加攻めがあり、挿入방어中ならワレメ사정플래그를 세운다
+;Ｖ추가 공격이 있고, 삽입 방어 중이라면 균열 사정 플래그를 세운다
 SIF (EX_COM & 질) && TCVARn:2 == 자세：Ｖ방어 && BASE:Ｖ결계내구력 <= 0
 	TFLAG:4 = TFLAG:4 | 균열
 
-;흑화 캐릭터のペニス位置をセット
+;흑화 캐릭터의 페니스 위치를 세트
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	TFLAG:18 = 애널
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -50,13 +50,13 @@ REND
 ;방심도 상승
 TFLAG:3 += 50
 
-;사정値 300
+;사정치 300
 CALL TENTACLE_SYASEI_UP, 300
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 5
 
-;快A　감각が低いうちは少なめ
+;쾌Ａ　감각이 낮을 때는 적다
 IF CONFIG_CHECK_BALANCE_F(7) == 0
 	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 80
@@ -71,7 +71,7 @@ IF CONFIG_CHECK_BALANCE_F(7) == 0
 	ELSEIF ABL:Ａ감각 >= 5
 		LOCAL:2 = 20000
 	ENDIF
-;컨피그オンで쾌Ａ増加
+;컨피그 ON이라면 쾌Ａ 증가
 ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
 	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 400
@@ -87,7 +87,7 @@ ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
 		LOCAL:2 = 20000
 	ENDIF
 ENDIF
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 
@@ -111,19 +111,19 @@ ELSE
 	ELSE
 		LOCAL:10 = 0
 	ENDIF
-	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 A공격(강)을 했다
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 Ａ공격（강）을 했다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_SEX_COM5
 	;지문: COM5
 	CALL MESSAGE_SEX_COM5, EX_COM, SH_COM
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 8
 
-;ベース
+;BASE
 IF EX_COM & Ａ
 	EXP:Ａ경험 += 2
 	SIF INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
@@ -160,7 +160,7 @@ ELSEIF ABL:봉사정신 >= 5
 	LOCAL:6 = 1000
 ENDIF
 
-;굴복　Ａ감각に応じて
+;굴복　Ａ감각에 의존
 IF ABL:Ａ감각 == 0
 	LOCAL:8 = 200
 ELSEIF ABL:Ａ감각 == 1
@@ -175,7 +175,7 @@ ELSEIF ABL:Ａ감각 >= 5
 	LOCAL:8 = 9000 + ABL:Ａ감각 * 200
 ENDIF
 
-;윤활が低いと고통が入る
+;윤활이 낮으면 고통이 들어간다
 IF ABL:Ａ감각 < 3
 	IF PALAM:윤활 < 100
 		LOCAL:10 += 10000
@@ -196,7 +196,7 @@ ENDIF
 SIF BASE:Ａ결계내구력 > 0
 	LOCAL:10 = 0
 
-;감각が低いと공포が入る
+;감각이 낮으면 공포가 들어간다
 IF ABL:Ａ감각 == 0
 	LOCAL:11 = 2000
 ELSEIF ABL:Ａ감각 == 1
@@ -210,7 +210,7 @@ ENDIF
 SIF BASE:Ａ결계내구력 > 0
 	LOCAL:11 = 0
 
-;追加責め実行
+;추가 고문 실행
 IF EX_COM
 	CALL SEX_COMEX, Ａ, 1, EX_COM | SH_COM
 	REPEAT 12
@@ -218,45 +218,45 @@ IF EX_COM
 	REND
 ENDIF
 
-;성내성が残り50%以上なら派生しにくい
+;성내성이 나머지 50% 이상이면 파생되기 어렵다
 IF PERCENT_CAL_F(BASE:성내성, MAXBASE:성내성) >= 50 && RAND:2 == 0
-;ＶＡ挿入成功＆사정 게이지不足なら両穴ピストン＋강구속状態
+;ＶＡ삽입 성공＆사정 게이지 부족이라면 양 구멍 피스톤＋강구속 상태
 ELSEIF (EX_COM & Ｖ) && (EX_COM & Ａ) && FLAG:15 < FLAG:14 && BASE:Ｖ결계내구력 == 0 && BASE:Ａ결계내구력 == 0 && TCVARn:2 != 자세：Ｖ방어 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISFEMALE()
 	TFLAG:17 = 19
-	;状態異常：강구속
+	;상태 이상：강구속
 	CALL STATE_CHANGE_PKOUSOKU, 100
-;Ａ挿入成功＆사정 게이지不足なら애널ピストン＋강구속状態
+;Ａ삽입 성공＆사정 게이지 부족이라면 애널 피스톤＋강구속 상태
 ELSEIF (EX_COM & Ａ) && FLAG:15 < FLAG:14 && BASE:Ａ결계내구력 == 0 && (ENEMY_TYPE_CHECK_F("MOB") == 0 && ENEMY_TYPE_CHECK_F("CITIZEN") == 0) && ISHOLE() == 1
 	TFLAG:17 = 17
-	;状態異常：강구속
+	;상태 이상：강구속
 	CALL STATE_CHANGE_PKOUSOKU, 100
 ELSE
-	;行動予約なし
+	;행동 예약 없음
 	TFLAG:17 = -1
 ENDIF
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 5
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 2000
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 4000
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 800
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 200
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 500
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 200
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

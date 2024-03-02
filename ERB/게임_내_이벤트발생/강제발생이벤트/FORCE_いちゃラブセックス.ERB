@@ -161,18 +161,18 @@ ENDIF
 
 
 
-;ベース値の明示的초기화
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
 
-;ベース
+;BASE
 SIF CHECK_HOLYVIRGIN_F()==0
 	EXP:ARG:Ｖ경험 += 1
 
 EXP:ARG:정액경험 += 1
 EXP:ARG:펠라경험 += 1
-;快C
+;쾌Ｃ
 IF ABL:ARG:Ｃ감각 == 0
 	LOCAL:0 = 200
 ELSEIF ABL:ARG:Ｃ감각 == 1
@@ -187,7 +187,7 @@ ELSEIF ABL:ARG:Ｃ감각 >= 5
 	LOCAL:0 = 20000
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:ARG:Ｂ감각 == 0
 	LOCAL:3 = 200
 ELSEIF ABL:ARG:Ｂ감각 == 1
@@ -202,7 +202,7 @@ ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
-;快V
+;쾌Ｖ
 IF ABL:ARG:Ｖ감각 == 0
 	LOCAL:1 = 200
 ELSEIF ABL:ARG:Ｖ감각 == 1
@@ -251,7 +251,7 @@ ELSEIF ABL:ARG:기교 >= 5
 	TIMES LOCAL:3, 2.00
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
 
 
@@ -259,7 +259,7 @@ CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
 CALL MESSAGE_SEX_V, LOCAL:100
 
 
-;굴복　노출벽が高くなると多くなる
+;굴복　노출벽이 높아질 수록 더 많아진다
 IF ABL:ARG:노출벽 == 0
 	LOCAL:8 = 50
 ELSEIF ABL:ARG:노출벽 == 1
@@ -274,7 +274,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:8 = 2000
 ENDIF
 
-;치정　노출벽が高くなると多くなる
+;치정　노출벽이 높아질 수록 더 많아진다
 IF ABL:ARG:노출벽 == 0
 	LOCAL:9 = 50
 ELSEIF ABL:ARG:노출벽 == 1
@@ -318,10 +318,10 @@ ELSEIF ABL:ARG:봉사정신 >= 5
 	LOCAL:6 = 4000
 ENDIF
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 = 150
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 
 ;ゴム컨피그オン＆ゴム有りなら判定無し
@@ -341,16 +341,16 @@ ENDIF
 @SEX_A, ARG
 
 
-;ベース値の明示的초기화
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
 
-;ベース
+;BASE
 EXP:ARG:정액경험 += 1
 EXP:ARG:Ａ경험 += 1
 EXP:ARG:펠라경험 += 1
-;快A
+;쾌Ａ
 IF ABL:ARG:Ａ감각 == 2
 	LOCAL:2 = 2000
 ELSEIF ABL:ARG:Ａ감각 == 3
@@ -374,14 +374,14 @@ ELSEIF ABL:ARG:기교 >= 5
 	TIMES LOCAL:2, 2.00
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 
 ;지문: 애널セックス
 CALL MESSAGE_SEX_A
 
-;굴복　노출벽が高くなると多くなる
+;굴복　노출벽이 높아질 수록 더 많아진다
 IF ABL:ARG:노출벽 == 0
 	LOCAL:8 = 100
 ELSEIF ABL:ARG:노출벽 == 1
@@ -396,7 +396,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:8 = 4000
 ENDIF
 
-;치정　노출벽が高くなると多くなる
+;치정　노출벽이 높아질 수록 더 많아진다
 IF ABL:ARG:노출벽 == 0
 	LOCAL:9 = 100
 ELSEIF ABL:ARG:노출벽 == 1
@@ -440,10 +440,10 @@ ELSEIF ABL:ARG:봉사정신 >= 5
 	LOCAL:6 = 4000
 ENDIF
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 = 150
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 
 ;----------------------------------------------------------

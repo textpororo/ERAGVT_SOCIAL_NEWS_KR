@@ -3,7 +3,7 @@
 ;魔法少女を生かさず殺さず痛めつける感じ
 
 ;1割の確率で
-;「衣装を破く」が끈적끈적(10%)付与判定に入る
+;「의상을 찢는다」が끈적끈적(10%)付与判定に入る
 ;「通常공격」が마비付与判定(10%)に入る
 ;「邪悪な波動」が발정付与判定(10%)に入る
 ;常に
@@ -159,13 +159,13 @@ RETURN RESULT
 ;--------------------------------------------------
 ;PALAM補正 百分率で返す
 @TENTACLE_MOB_803_PALAM_HOSEI
-;快C
+;쾌Ｃ
 LOCAL:0 = 30
-;快V
+;쾌Ｖ
 LOCAL:1 = 30
-;快A
+;쾌Ａ
 LOCAL:2 = 30
-;快B
+;쾌Ｂ
 LOCAL:3 = 30
 ;윤활
 LOCAL:4 = 50
@@ -218,37 +218,37 @@ ENDIF
 ;【専用ルーチン（性行為）】
 ;--------------------------------------------------
 @TENTACLE_MOB_803_SEX_ROUTINE
-;RETURN 3	;Ｖ공격(강)
-;RETURN 4	;Ａ공격(강)
-;RETURN 8	;スパンキング
-;RETURN 9	;針
-;RETURN 12	;イラマチオ
-;RETURN 15	;種付けピストン（Ｖ系統）
-;RETURN 16	;種付けフィニッシュ（Ｖ系統）
-;RETURN 17	;애널ピストン（Ａ系統）
-;RETURN 18	;애널フィニッシュ（Ａ系統）
-;RETURN 19	;両穴ピストン（ＶＡ系統）
-;RETURN 20	;両穴フィニッシュ（ＶＡ系統）
-;RETURN 14	;衣装を破く
+;RETURN 3	;Ｖ공격（강）
+;RETURN 4	;Ａ공격（강）
+;RETURN 8	;스팽킹
+;RETURN 9	;바늘
+;RETURN 12	;이라마치오
+;RETURN 15	;교배 피스톤（Ｖ系統）
+;RETURN 16	;교배 피니쉬（Ｖ系統）
+;RETURN 17	;애널 피스톤（Ａ系統）
+;RETURN 18	;애널 피니쉬（Ａ系統）
+;RETURN 19	;양 구멍 피스톤（ＶＡ系統）
+;RETURN 20	;양 구멍 피니쉬（ＶＡ系統）
+;RETURN 14	;의상을 찢는다
 ;RETURN 2000	;結界破り
 
 IF RAND:3 == 0 && CLOTH_OUTER_PER >= CLOTH_OUTER_DEF && CLOTH_INNER_PER >= CLOTH_INNER_DEF
-	RETURN 14	;衣装を破く
+	RETURN 14	;의상을 찢는다
 ELSEIF RAND:2 == 0 && CLOTH_OUTER_PER < CLOTH_OUTER_DEF && CLOTH_INNER_PER < CLOTH_INNER_DEF && ISHOLE() == 1
 	IF BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0
 		RETURN 2000	;結界破り
 	ELSEIF ISFEMALE() && CHECK_HOLYVIRGIN_F() == 0
-		RETURN 3	;Ｖ공격(강)
+		RETURN 3	;Ｖ공격（강）
 	ELSE
-		RETURN 4	;Ａ공격(강)
+		RETURN 4	;Ａ공격（강）
 	ENDIF
 ELSEIF RAND:4 == 0 && ISHOLE() == 1
-	RETURN 12	;イラマチオ
+	RETURN 12	;이라마치오
 ELSE
 	IF RAND:2 == 0
-		RETURN 8	;スパンキング
+		RETURN 8	;스팽킹
 	ELSE
-		RETURN 9	;針
+		RETURN 9	;바늘
 	ENDIF
 ENDIF
 
@@ -260,40 +260,40 @@ ENDIF
 ;ARG=3　フェラチオ誘発時の行動指定
 @TENTACLE_MOB_803_REACTION_REF, ARG = 0
 IF ARG == 1
-	RETURN 14	;衣装を破く
+	RETURN 14	;의상을 찢는다
 ELSEIF ARG == 2
 	IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		IF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:Ｖ결계내구력 == 0 && BASE:Ａ결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
-			RETURN 19	;両穴ピストン（ＶＡ系統）
+			RETURN 19	;양 구멍 피스톤（ＶＡ系統）
 		ELSEIF TCVARn:2 != 자세：Ｖ방어 && ISFEMALE() && BASE:Ｖ결계내구력 == 0 && !CHECK_HOLYVIRGIN_F()
-			RETURN 15	;種付けピストン（Ｖ系統）
+			RETURN 15	;교배 피스톤（Ｖ系統）
 		ELSEIF ISHOLE() == 1 && BASE:Ａ결계내구력 == 0
-			RETURN 17	;애널ピストン（Ａ系統）
+			RETURN 17	;애널 피스톤（Ａ系統）
 		ENDIF
 	ENDIF
 	IF (TCVARn:12 & 기절)==0 && (BASE:Ｃ결계내구력 > 0 || BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계내구력 > 0 || BASE:Ｂ결계내구력 > 0)
 		RETURN 2000	;結界破り
 	ELSE
-		RETURN 9	;針
+		RETURN 9	;바늘
 	ENDIF
 ELSEIF ARG == 3
-	RETURN 12	;イマラチオ
+	RETURN 12	;이라마치오
 ENDIF
 RETURN -1
 
 ;==================================================
 ;【性コマンド関係】
 ;--------------------------------------------------
-;COM3：V공격(강)
+;COM3：Ｖ공격（강）
 @SEX_TYPE_MOB_803_COM3
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM3, ARG:0, ARG:1
 FONTBOLD
 IF (ARG & Ａ)
-	PRINT ＶＡ공격(강)
+	PRINT ＶＡ공격（강）
 ELSE
-	PRINT Ｖ공격(강)
+	PRINT Ｖ공격（강）
 ENDIF
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
@@ -508,13 +508,13 @@ ENDIF
 RETURN Ａ
 
 ;--------------------------------------------------
-;COM5：A공격(강)
+;COM5：Ａ공격（강）
 @SEX_TYPE_MOB_803_COM5
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM5, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ공격(강)
+PRINT Ａ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -638,7 +638,7 @@ ENDIF
 RETURN -1
 
 ;--------------------------------------------------
-;COM8：スパンキング
+;COM8：스팽킹
 @SEX_TYPE_MOB_803_COM8
 RETURN 통상
 
@@ -677,7 +677,7 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM8：針
+;COM8：바늘
 @SEX_TYPE_MOB_803_COM9
 RETURN 통상
 
@@ -723,13 +723,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM12：イラマチオ
+;COM12：이라마치오
 @SEX_TYPE_MOB_803_COM12
 RETURN 펠라
 
 @MESSAGE_MOB_803_COM12, ARG:0, ARG:1
 FONTBOLD
-PRINTL イラマチオ
+PRINTL 이라마치오
 FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 頭を掴んで固定すると、
@@ -803,13 +803,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM15：種付けピストン（Ｖ系統）
+;COM15：교배 피스톤（Ｖ系統）
 @SEX_TYPE_MOB_803_COM15
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM15, ARG:0, ARG:1
 FONTBOLD
-PRINT 種付けピストン
+PRINT 교배 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -875,13 +875,13 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM16：種付けフィニッシュ（Ｖ系統）
+;COM16：교배 피니쉬（Ｖ系統）
 @SEX_TYPE_MOB_803_COM16
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM16, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：種付けフィニッシュ
+PRINT 派生行動：교배 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -935,13 +935,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM17：애널ピストン（Ａ系統）
+;COM17：애널 피스톤（Ａ系統）
 @SEX_TYPE_MOB_803_COM17
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM17, ARG:0, ARG:1
 FONTBOLD
-PRINT 애널ピストン
+PRINT 애널 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -997,13 +997,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM18：애널フィニッシュ（Ａ系統）
+;COM18：애널 피니쉬（Ａ系統）
 @SEX_TYPE_MOB_803_COM18
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM18, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：애널フィニッシュ
+PRINT 派生行動：애널 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -1058,13 +1058,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM19：両穴ピストン（ＶＡ系統）
+;COM19：양 구멍 피스톤（ＶＡ系統）
 @SEX_TYPE_MOB_803_COM19
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM19, ARG:0, ARG:1
 FONTBOLD
-PRINT 両穴ピストン
+PRINT 양 구멍 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ+Ａ
 PRINTL 
@@ -1128,13 +1128,13 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM20：両穴フィニッシュ（ＶＡ系統）
+;COM20：양 구멍 피니쉬（ＶＡ系統）
 @SEX_TYPE_MOB_803_COM20
 RETURN 삽입
 
 @MESSAGE_MOB_803_COM20, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：両穴フィニッシュ
+PRINT 派生行動：양 구멍 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ+Ａ
 PRINTL 
@@ -1223,11 +1223,11 @@ SIF BASE:Ｃ결계내구력 > 0 || BASE:Ｖ결계내구력 > 0 || BASE:Ａ결계
 ;사정 게이지상승량
 LOCAL:5 = 10
 
-;服へのダメージ
+;의상에의 피해
 LOCAL:6 = RAND:11 + RAND:11 + 10
 
 ;コマンドの強度（弱=0 強=1 SP=2）
-;追加責めの効果とPALAM影響度の両方が強化される
+;추가 고문の効果とPALAM影響度の両方が強化される
 LOCAL:7 = 1
 
 ;처녀 상실の有無（なし0 あり1 あり、지문なし2）
@@ -1238,7 +1238,7 @@ LOCAL:8 = 0
 ;2 = 拡張責め（ＶまたはＡ強度が1以上なら굴복、치정、고통、공포が入る）
 LOCAL:9 = 0
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 ;쾌Ｃ強度
 LOCAL:10 = 2
@@ -1258,10 +1258,10 @@ LOCAL:15 = 0
 ;습득影響度
 LOCAL:16 = 1
 
-;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
+;노출벽による욕정、치정、공포影響度（수치 플레이など）
 LOCAL:17 = 1
 
-;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 LOCAL:18 = 2
 
 ;펠라경험
@@ -1273,36 +1273,36 @@ EXP:방뇨경험 += 0
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = LOCAL:0
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
 
-;윤활基本値
+;윤활 기본값
 RESULT:4 += 50
 
-;습득基本値
+;습득 기본값
 RESULT:6 += 0
 
-;욕정基本値
+;욕정 기본값
 RESULT:7 += 0
 
-;굴복基本値
+;굴복 기본값
 RESULT:8 += 1000
 
-;치정基本値
+;치정 기본값
 RESULT:9 += 50
 
-;고통基本値
+;고통 기본값
 RESULT:10 += 500
 
-;공포基本値
+;공포 기본값
 RESULT:11 += 2000
 
-;체력消費基本値
+;체력 소비 기본값
 RESULT:12 += 200
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 
@@ -1363,7 +1363,7 @@ ENDIF
 
 ;-----------------------------------------------------------------------------------------------------------------------------------------------
 ;==================================================
-;【衣装を破く】
+;【의상을 찢는다】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_803_COM14
 RETURN 통상
@@ -1376,7 +1376,7 @@ IF RAND:10 == 0
 	PRINTL 衣装を溶かす
 	LOCAL = 1
 ELSE
-	PRINTL 衣装を破く
+	PRINTL 의상을 찢는다
 ENDIF
 FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
@@ -1392,7 +1392,7 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
 PRINTL 
-;状態異常：끈적끈적
+;상태 이상：끈적끈적
 SIF LOCAL == 1
 	CALL STATE_CHANGE_BETOBETO(10)
 

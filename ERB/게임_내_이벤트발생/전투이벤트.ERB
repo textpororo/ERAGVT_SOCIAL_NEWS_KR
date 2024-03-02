@@ -145,14 +145,14 @@ IF FLAG:72 > 0
 		PRINTFORML もしかしたら自分の痴態を見られてしまうかもしれない興奮を感じながら
 		PRINTFORML 「予定外の観客」の参加に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%心の中で笑みをこぼした・・・
 		PRINTW 
-		;心境が高揚になる
+		;心境が고양になる
 		TCVARn:1 = 6
 	ELSEIF GETBATTLESITUATION("정체 발각 불가")
 		PRINTL 。
 		PRINTFORML 決して見せてはいけない姿を撮影されてしまうかもしれない危機を感じながら
 		PRINTFORML 命知らずの観客に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%心の中で悲鳴を上げた・・・
 		PRINTW 
-		;心境が高揚になる
+		;心境が고양になる
 		TCVARn:1 = 6
 	ELSE
 		PRINTL 。
@@ -273,7 +273,7 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 	PRINTFORML 気合を入れなおした%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%避難を呼びかけながら、
 	PRINTFORML 敵の注意を引き付けるべく前に進み出た・・・
 	PRINTL 
-	;心境が高揚になる
+	;心境が고양になる
 	TCVARn:1 = 6
 	;ゲージ増加
 	TCVARn:4 += 100
@@ -281,7 +281,7 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 	BASE:체력 = MIN(BASE:체력 + MAXBASE:체력 * 12 / 100, MAXBASE:체력)
 	;기력の回復
 	BASE:기력 = MIN(BASE:기력 + MAXBASE:기력 * 24 / 100, MAXBASE:기력)
-	PRINTFORML 체력、기력が回復し、ＥＸゲージが増加した！
+	PRINTFORML 체력、기력が回復し、ＥＸ게이지가 증가した！
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	CALL SHINKYOU_CHECK, "PRINT", 0
 	PRINTL 状態 になった
@@ -293,7 +293,7 @@ ELSE
 	PRINTFORML 彼らが無事に避難できるように、時間を稼ぐ必要がある。
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%敵の注意を引き付けるべく前に進み出た・・・
 	PRINTL 
-	;心境が冷静になる
+	;心境が냉정になる
 	TCVARn:1 = 4
 	;ゲージ増加
 	TCVARn:4 += 200
@@ -377,7 +377,7 @@ IF CFLAG:41 == 401
 	PRINTFORML 気合を入れなおした%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%避難を呼びかけながら、
 	PRINTFORML 敵の注意を引き付けるべく前に進み出た・・・
 	PRINTL 
-	;心境が消沈になる
+	;心境が소침になる
 	TCVARn:1 = 7
 	;増加効果なし
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 

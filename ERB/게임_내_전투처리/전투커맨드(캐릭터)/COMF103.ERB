@@ -1,14 +1,14 @@
-﻿;스마타애태우기
+﻿;스마타 애태우기
 @COM103
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
 ;방심도 상승
 TFLAG:3 += 25 + 5 * ABL:기교
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	COMMON_PALAM:0 = 250
 ELSEIF ABL:Ｃ감각 == 1
@@ -23,7 +23,7 @@ ELSEIF ABL:Ｃ감각 >= 5
 	COMMON_PALAM:0 = 4000
 ENDIF
 
-;快V
+;쾌Ｖ
 IF ABL:Ｖ감각 == 0
 	COMMON_PALAM:1 = 125
 ELSEIF ABL:Ｖ감각 == 1
@@ -38,9 +38,9 @@ ELSEIF ABL:Ｖ감각 >= 5
 	COMMON_PALAM:1 = 2000
 ENDIF
 
-;成功率설정
+;성공 확률 설정
 LOCAL = 35 + ABL:기교 * 5
-;매료경험依存
+;매료경험 의존
 IF EXP:매료경험 >= 200
 	LOCAL += 20
 ELSEIF EXP:매료경험 >= 100
@@ -49,32 +49,32 @@ ELSEIF EXP:매료경험 >= 50
 	LOCAL += (EXP:매료경험 - 50) / 5
 ENDIF
 
-;暴走촉수 슈트を装備している場合、成功率ダウン
+;폭주 촉수 슈츠를 장비하고 있는 경우, 성공 확률 하락
 IF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && TCVARn:41 != 0
 	LOCAL -= 20
-;촉수 구속구を装備している場合、成功率ダウン
+;촉수 구속구를 장비하고 있는 경우, 성공 확률 하락
 ELSEIF CFLAG:42 == 400
 	LOCAL -= 10
 ENDIF
-;성처녀は確定失敗
+;성처녀 유지 설정 ON일 시 확정 실패
 SIF CHECK_HOLYVIRGIN_F()==1
 	LOCAL = 0
 SETCOLOR 105,105,105
 SIF FLAG:999
-	PRINTFORML 스마타애태우기成功率 = {LOCAL}％
+	PRINTFORML 스마타 애태우기 성공 확률 = {LOCAL}％
 RESETCOLOR
-;判定に成功した場合
+;판정에 성공한 경우
 IF RAND:100 < LOCAL || CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
-	;服へのダメージ
+	;의상에의 피해
 	CALL CLOTH_BATTLE_DAMAGE, 12
 
-	;지문: 스마타애태우기
+	;지문: 스마타 애태우기
 	CALL MESSAGE_BATTLE_CHARA_SEX_ATTACK103
-	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 스마타애태우기を見た
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「스마타애태우기」를 봤다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK103
 
-	;사정 게이지を記録
+	;사정 게이지를 기록
 	LOCAL:1 = FLAG:15
 
 	;사정
@@ -87,106 +87,106 @@ IF RAND:100 < LOCAL || CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DE
 	ELSEIF (FLAG:110 == 1)
 		PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 	ENDIF
-	PRINT に
+	PRINT 에게 
 	FONTBOLD
-	PRINTFORM {FLAG:15 - LOCAL:1}の快楽
+	PRINTFORM {FLAG:15 - LOCAL:1} 의 쾌락
 	FONTREGULAR
-	PRINTW を与えた！
-	PRINT 次のターン相手は
+	PRINTW 을 줬다！
+	PRINT 다음 턴에, 상대는
 	FONTBOLD
-	PRINT 挿入系コマンド
+	PRINT 삽입계 커맨드
 	FONTREGULAR
-	PRINTL を選択しやすくなった！
+	PRINTL 를 선택하기가 쉬워졌다！
 	PRINTW 
 
-	;촉수の사정チェック
+	;촉수의 사정 체크
 	CALL TENTACLE_SYASEI_CHECK
 	PRINTL 
 
-	;습득の獲得
+	;습득 획득
 	COMMON_PALAM:6 += 250 + 25 * (ABL:순종 + ABL:봉사정신 * 2)
 
-	;촉수を行動不能にする
+	;촉수를 행동 불능으로 만든다
 	TFLAG:1 = 1
 
-	;행동포인트を+1
+	;행동 포인트를 +1
 	EX:행동포인트 += 1
 
 	RETURN 1
-;判定に失敗した場合
+;판정에 실패한 경우
 ELSE
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%스마타애태우기の構え！
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 스마타 애태우기를 준비했다！
 	PRINTW 
 	IF BASE:Ｖ결계내구력 > 0
-		PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%의 行動は失敗した！
-		PRINTFORML 無防備な体勢で촉수に抑え込まれ、촉수の攻勢に晒されるＶ결계が
-		PRINTFORML たちまち輝きを失っていく…
+		PRINTFORML 그러나 %PRINT_TRANSCALLNAME(TARGET)%의 행동은 실패했다！
+		PRINTFORML 무방비한 자세로 촉수에게 꼼짝 못하게 되어,
+		PRINTFORML 촉수의 공세에 노출된 Ｖ결계가 금세 빛을 잃어간다……
 		COMMON_PALAM:1 *= 4
 	ELSEIF TALENT:처녀 > 0
-		PRINTFORML 挑発するように素股していた%PRINT_TRANSCALLNAME(TARGET)%だったが
-		IF (CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && TCVARn:41 != 0) || CFLAG:42 == 400
-			IF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && TCVARn:41 != 0
-				PRINTFORM 暴走した%ITEMNAME:199%
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 도발하듯이 스마타를 걸었지만,
+		IF (CFLAG:(CFLAG:1 == 0 ? 40 # 41) == 199 && TCVARn:41 != 0) || CFLAG:42 == 400
+			IF CFLAG:(CFLAG:1 == 0 ? 40 # 41) == 199 && TCVARn:41 != 0
+				PRINTFORM 폭주한 %ITEMNAME:199%
 			ELSEIF CFLAG:42 == 400
 				PRINTFORM %ITEMNAME:400%
 			ENDIF
-			PRINTFORML の촉수に強制開脚させられてしまう。
+			PRINTFORML 의 촉수에게 강제로 다리를 벌려지고 만다.
 			PRINTL 
 			IF RAND:3 == 0
-				PRINTFORML 拘束されて雌穴をくぱぁと広げられ、
+				PRINTFORML 구속된 채 암구멍을 활짝 벌려져,
 			ELSEIF RAND:2 == 0
-				PRINTFORML 種付けを받아들인다屈辱的な体勢を無理やり取らされ、
+				PRINTFORML 교배를 받아들이는 굴욕적인 자세를 억지로 취해져,
 			ELSE
-				PRINTFORML 思わぬタイミングで体勢を崩され、
+				PRINTFORML 뜻밖의 타이밍에 자세가 흐트러져,
 			ENDIF
-			PRINTFORML なし崩し的にズブリと男根の侵入を許してしまった！
+			PRINTFORML 조금씩 들어오는 남근의 침입을 쑤욱하고 허용하고 말았다！
 		ELSE
-			PRINTFORML まだ性交したことのないヴァギナに亀頭の先端がぐちゅっと挿入り込み、
-			PRINTFORML 未知の감각に思わず「んッ・・・❤」と色付いた吐息を漏らしてしまう。
+			PRINTFORML 아직 성교한 적도 없는 여성기에 귀두 끝이 찌걱찌걱 파고 들어가,
+			PRINTFORML 미지의 감각에 무심코「우응・・・❤」하며 성에 눈을 뜬 한숨을 내쉬어 버린다.
 			PRINTL 
-			PRINTFORML その拍子に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%膣圧の加減を間違えてしまい、
-			PRINTFORML なし崩し的にズブリと男根の侵入を許してしまった！
+			PRINTFORML 그 순간에 %PRINT_TRANSCALLNAME(TARGET)%의 질압이 느슨해진 틈을 타,
+			PRINTFORML 조금씩 들어오는 남근의 침입을 쑤욱하고 허용하고 말았다！
 		ENDIF
 		PRINTW 
 		PRINTFORML 처녀 상실
 		PRINTL 
-		PRINTFORML 不意に訪れた破瓜の痛みに驚き慌てて引き抜こうとするも時既に遅く、
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そのまま強制交尾の体勢に持ち込まれてしまった・・・
+		PRINTFORML 느닷없이 찾아온 파과의 아픔에 놀라 황급히 빼내려고 했지만 때는 이미 늦었고,
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%은(는) 그대로 강제 교미 자세로 범해지고 말았다・・・
 		PRINTW 
-		;고통が大量に入る
+		;고통이 대량으로 들어간다
 		COMMON_PALAM:10 = 10000
 		TALENT:처녀 = -1
 		CFLAG:206 = 2
-	ELSEIF (CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && TCVARn:41 != 0) || CFLAG:42 == 400
-		PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%의 行動は失敗した！
-		IF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && TCVARn:41 != 0
-			PRINTFORM 暴走した%ITEMNAME:199%
+	ELSEIF (CFLAG:(CFLAG:1 == 0 ? 40 # 41) == 199 && TCVARn:41 != 0) || CFLAG:42 == 400
+		PRINTFORML 그러나 %PRINT_TRANSCALLNAME(TARGET)%의 행동은 실패했다！
+		IF CFLAG:(CFLAG:1 == 0 ? 40 # 41) == 199 && TCVARn:41 != 0
+			PRINTFORM 폭주한 %ITEMNAME:199%
 		ELSEIF CFLAG:42 == 400
 			PRINTFORM %ITEMNAME:400%
 		ENDIF
-		PRINT の촉수に
+		PRINT 의 촉수에게 
 		IF RAND:3 == 0
-			PRINTFORML 拘束されて雌穴をくぱぁと広げられ、
+			PRINTFORML 구속되어 암구멍을 활짝 벌려져,
 		ELSEIF RAND:2 == 0
-			PRINTFORML 種付けを받아들인다屈辱的な体勢を無理やり取らされ、
+			PRINTFORML 교배를 받아들이는 굴욕적인 자세를 억지로 취해져,
 		ELSE
-			PRINTFORML 思わぬタイミングで体勢を崩され、
+			PRINTFORML 뜻밖의 타이밍에 자세가 흐트러져,
 		ENDIF
-		PRINTFORML なし崩し的に挿入を許してしまう・・・
+		PRINTFORML 조금씩 들어오는 남근의 침입을 허용하고 말았다・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 고전)
-		PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%의 行動は失敗した！
-		PRINTFORML 先走り汁に光る先端を淫裂に押し当てられたところで腰を浮かそうとするが、
-		PRINTFORML 力で抑え込まれそのまま挿入されてしまう・・・
+		PRINTFORML 그러나 %PRINT_TRANSCALLNAME(TARGET)%의 행동은 실패했다！
+		PRINTFORML 쿠퍼액에 빛나는 끝부분을 음렬에 대고 꽉 누르며 허리를 띄우려고 했지만,
+		PRINTFORML 힘으로 억제되어 그대로 삽입되고 말았다・・・
 	ELSE
-		PRINTFORML しかし%PRINT_TRANSCALLNAME(TARGET)%의 行動は失敗した！
-		PRINTFORML 素股だけのつもりが、先端が少しだけ挿入ったタイミングでズンと突き上げられ、
-		PRINTFORML そのまま雪崩れ込むように膣穴を犯されてしまう・・・
+		PRINTFORML 그러나 %PRINT_TRANSCALLNAME(TARGET)%의 행동은 실패했다！
+		PRINTFORML 스마타만 걸 셈이었지만, 끝부분이 조금 들어간 타이밍에 쓱 밀어올려져
+		PRINTFORML 그대로 밀어닥치듯이 질구멍을 범해지고 말았다・・・
 	ENDIF
 
-	;습득の獲得
+	;습득 획득
 	COMMON_PALAM:6 += 50 + 25 * (ABL:순종 + ABL:봉사정신 * 2)
 
-	;행동포인트を+1
+	;행동 포인트를 +1
 	EX:행동포인트 += 1
 
 	IF ENEMY_TYPE_CHECK_F("MOB") == 1

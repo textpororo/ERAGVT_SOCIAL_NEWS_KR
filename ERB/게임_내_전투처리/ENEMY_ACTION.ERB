@@ -1052,43 +1052,43 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
 		;적 캐릭터의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
-			;C공격(SP)
+			;Ｃ공격Ａ공격（ＳＰ）
 			SELECT = 1000
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;C공격(강)
+			;Ｃ공격（강）
 			SELECT = 1
 		ELSE
-			;C공격(약)
+			;Ｃ공격（약）
 			SELECT = 0
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:11 && LOCAL:99 <= LOCAL:1) || SELECT == 2 || SELECT == 3 || SELECT == 1001
 		;V
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
 		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
-		;남자일 경우에는 C공격으로 돌린다
+		;남자일 경우에는 Ｃ공격으로 돌린다
 		IF ISMALE()
 			;적 캐릭터의 C감각이 3이상이라면 SP커맨드도 선택지에 들어간다
 			IF ABL:(FLAG:111):욕망 >= 3 && (ISTENTACLER(FLAG:111) == 1 || (TALENT:(FLAG:111):처녀 < 1 && ISFEMALE(FLAG:111) && (ISPENIS()))) && RAND:100 < 40 && LOCAL:101
-				;C공격(SP)
+				;Ｃ공격Ａ공격（ＳＰ）
 				SELECT = 1000
 			ELSEIF RAND:100 < 40 && LOCAL:101
-				;C공격(강)
+				;Ｃ공격（강）
 				SELECT = 1
 			ELSE
-				;C공격(약)
+				;Ｃ공격（약）
 				SELECT = 0
 			ENDIF
 		ELSEIF CHECK_HOLYVIRGIN_F()==1
-			;V공격(약)
+			;Ｖ공격（약）
 			SELECT = 2
 		ELSEIF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3
-			;V공격(SP)
+			;Ｖ공격（ＳＰ）
 			SELECT = 1001
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;V공격(강)
+			;Ｖ공격（강）
 			SELECT = 3
 		ELSE
-			;V공격(약)
+			;Ｖ공격（약）
 			SELECT = 2
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:12 && LOCAL:99 <= LOCAL:2) || SELECT == 4 || SELECT == 5 || SELECT == 1002
@@ -1096,13 +1096,13 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
 		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3 && ISTENTACLER(FLAG:111) == 1
-			;A공격(SP)
+			;Ａ공격（ＳＰ）
 			SELECT = 1002
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;A공격(강)
+			;Ａ공격（강）
 			SELECT = 5
 		ELSE
-			;A공격(약)
+			;Ａ공격（약）
 			SELECT = 4
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:13 && LOCAL:99 <= LOCAL:3) || SELECT == 6 || SELECT == 7 || SELECT == 1003
@@ -1110,13 +1110,13 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
 		;적 캐릭터의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3
-			;B공격(SP)
+			;Ｂ공격（ＳＰ）
 			SELECT = 1003
 		ELSEIF RAND:100 < 40 && LOCAL:101
-			;B공격(강)
+			;Ｂ공격（강）
 			SELECT = 7
 		ELSE
-			;B공격(약)
+			;Ｂ공격（약）
 			SELECT = 6
 		ENDIF
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:14 && LOCAL:99 <= LOCAL:4) || SELECT == 8 || SELECT == 9 || SELECT == 1004
@@ -1193,28 +1193,28 @@ ELSEIF TCVARn:0 == 0
 		LOCAL:2 = RAND:(LOCAL:1)
 		
 		IF LOCAL:2 < LOCAL:0
-			;C공격(약)
+			;Ｃ공격（약）
 			SELECT = 0
 		ELSEIF LOCAL:2 < LOCAL:0 + (LOCAL:0 / 2)
-			;C공격(강)
+			;Ｃ공격（강）
 			SELECT = 1
 		ELSEIF LOCAL:2 < (LOCAL:0 * 2) + (LOCAL:0 / 2)
-			;V공격(약)
+			;Ｖ공격（약）
 			SELECT = 2
 		ELSEIF LOCAL:2 < LOCAL:0 * 3
-			;V공격(강)
+			;Ｖ공격（강）
 			SELECT = 3
 		ELSEIF LOCAL:2 < LOCAL:0 * 4
-			;A공격(약)
+			;Ａ공격（약）
 			SELECT = 4
 		ELSEIF LOCAL:2 < (LOCAL:0 * 4) + (LOCAL:0 / 2)
-			;A공격(강)
+			;Ａ공격（강）
 			SELECT = 5
 		ELSEIF LOCAL:2 < (LOCAL:0 * 5) + (LOCAL:0 / 2)
-			;B공격(약)
+			;Ｂ공격（약）
 			SELECT = 6
 		ELSEIF LOCAL:2 < LOCAL:0 * 6
-			;B공격(강)
+			;Ｂ공격（강）
 			SELECT = 7
 		ELSEIF LOCAL:2 < LOCAL:0 * 7
 			;절정 금지 중에는 쾌감계 커맨드를 우선

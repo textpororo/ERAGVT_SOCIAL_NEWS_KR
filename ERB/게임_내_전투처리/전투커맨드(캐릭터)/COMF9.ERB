@@ -3,12 +3,12 @@
 #DIM HIT_FLAG
 HIT_FLAG = 1
 
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
@@ -18,30 +18,30 @@ CALL MESSAGE_BATTLE_CHARA_ABARERU
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_ABARERU
 
-;날뛴다には命中判定なし　100%成功
+;「날뛴다」에는 명중 판정 없음　100% 성공
 
-;방어フラグ判定：確率で相手を怯ませる
+;방어 플래그 판정：일정 확률로 상대를 기죽인다
 IF FLAG:111 == 0
-	;촉수の공격力を見る
+	;촉수의 공격력을 본다
 	CALL TENTACLE_ACCESS, "KOUGEKI"
 	LOCAL:0 = RESULT
 ELSE
-	;敵キャラの공격力
+	;적 캐릭터의 공격력
 	LOCAL:0 = MAXBASE:(FLAG:111):공격
 ENDIF
-;相手の油断による補正
+;상대의 방심에 따른 보정
 SIF TFLAG:2 >= 1
 	LOCAL:0 = 1
-;キャラの방어を見る
+;캐릭터의 방어를 본다
 CALL SHINKYOU_CHECK, "BOUGYO", CORRECTION_TRANS(MAXBASE:방어)
 LOCAL:1 = RESULT
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:1 = RESULT * LOCAL:1 / 100
-;「EX:防」中は방어値上昇
+;「EX:방」상태일 때는 방어치 상승
 SIF GETBIT(TCVARn:3, 1)
 	LOCAL:1 *= 2
 
-;行動成功率確率算出
+;행동 성공 확률 산출
 LOCAL:0 = LIMIT(20 * LOCAL:1 / LOCAL:0 + 5, 5, 70)
 SIF ENEMY_TYPE_CHECK_F("MOB") == 1
 	LOCAL:0 /= 2
@@ -51,24 +51,24 @@ ELSE
 	TCVARn:2 = 자세：날뛴다실패
 ENDIF
 
-;クリティカル判定
+;치명타 판정
 ;의상에 따른 보정
 RESULT = 0
 CALL CLOTH_BATTLE_HOSEI, "CRITICAL"
 IF RAND:100 < 5 + RESULT
 	LOCAL:0 = 15
-	;直撃フラグ
+	;직격 플래그
 	HIT_FLAG = 2
-	;지문: 공격がクリティカルヒット
+	;지문: 공격이 치명타로 들어갔다
 	CALL MESSAGE_BATTLE_CHARA_ATTACK_CRITICAL_HIT
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격을 치명타로 받았다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_CRITICAL_HIT
-	;クリティカルした場合、相手を怯ませる
+	;치명타를 입힌 경우, 상대를 기죽인다
 	TCVARn:2 = 자세：날뛴다치명타
 ELSE
 	LOCAL:0 = 10
-	;지문: 공격が通常ヒット
+	;지문: 공격이 통상 명중했다
 	CALL MESSAGE_BATTLE_CHARA_ATTACK_HIT
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격에 피격됐다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -76,32 +76,32 @@ ELSE
 	
 ENDIF
 
-;ダメージ計算
+;피해량 계산
 CALL DAMAGE, "ABARERU"
 
 FLAG:13 -= RESULT * LOCAL:0 / 10
 FONTBOLD
-PRINTFORML {RESULT * LOCAL:0 / 10}のダメージを与えた！
+PRINTFORML {RESULT * LOCAL:0 / 10} 의 피해량을 입혔다！
 FONTREGULAR
 PRINTW 
 
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 4
 
-;행동포인트を+3
+;행동 포인트를 +3
 EX:행동포인트 += 3
 
-;サディストの効果
+;새디스트 효과
 IF TALENT:새드기질 > 0 && HIT_FLAG > 0
-	;기력が微量に回復
+	;기력이 미량 회복
 	LOCAL:1 = RAND:MAX((MAXBASE:기력 * HIT_FLAG * 8 / 100), 1) + 10
 	SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 		LOCAL:1 = MAXBASE:기력 - BASE:기력
 	BASE:기력 += LOCAL:1
-	;욕정が微量に増加
+	;욕정이 미량 증가
 	COMMON_PALAM:7 += LOCAL:1 * 10
 	SIF LOCAL:1 > 0
-		PRINTFORML サディスティックな快楽で%BASENAME:1%が{LOCAL:1}回復した
+		PRINTFORML 새디스틱한 쾌락으로 %BASENAME:1%이 {LOCAL:1} 회복됐다.
 ENDIF
 
 RETURN 1

@@ -1,30 +1,30 @@
 ﻿;수음공격
 @COM100
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;사정部位フラグ:手を立てる
+;사정 부위 플래그:손을 세운다
 SIF (FLAG:15 >= FLAG:14 * 2) || RAND:2 == 0
 	TFLAG:4 = TFLAG:4 | 손
-;강구속中は사정部位플래그를折る
+;강구속 중에는 사정 부위 플래그를 접는다
 SIF (TCVARn:12 & 강구속)
 	TFLAG:4 = 0
 
-;방어フラグ：봉사한다にする
+;방어 플래그：봉사한다로 한다
 TCVARn:2 = 자세：봉사한다
 
 ;방심도 상승
 TFLAG:3 += 55 + 5 * ABL:기교
 
-;지문: 수음공격
+;지문: 수음 공격
 CALL MESSAGE_BATTLE_CHARA_SEX_ATTACK100
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 수음공격を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「수음공격」을 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_SEX_ATTACK100
 
-;사정 게이지を記録
+;사정 게이지를 기록
 LOCAL:1 = FLAG:15
 
 ;사정
@@ -37,18 +37,18 @@ IF (FLAG:110 == 0)
 ELSEIF (FLAG:110 == 1)
 	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
-PRINT に
+PRINT 에게 
 FONTBOLD
-PRINTFORM {FLAG:15 - LOCAL:1}の快楽
+PRINTFORM {FLAG:15 - LOCAL:1} 의 쾌락
 FONTREGULAR
-PRINTL を与えた！
+PRINTL 을 줬다！
 PRINTW 
 
-;촉수の사정チェック
+;촉수의 사정 체크
 CALL TENTACLE_SYASEI_CHECK
 PRINTL 
 
-;기교Lv3以上なら10%でフェラチオを誘発する
+;기교Lv3 이상이면 10% 확률로 펠라치오를 유발한다
 IF ABL:기교 >= 3 && RAND:100 < 10
 	IF ENEMY_TYPE_CHECK_F("MOB") == 1
 		TRYCALLFORM TENTACLE_MOB_{FLAG:11}_REACTION_REF, 3
@@ -61,10 +61,10 @@ IF ABL:기교 >= 3 && RAND:100 < 10
 		TFLAG:17 = RESULT
 ENDIF
 
-;습득の獲得
+;습득 획득
 COMMON_PALAM:6 += 450 + 25 * (ABL:순종 + ABL:봉사정신 * 2)
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 RETURN 1

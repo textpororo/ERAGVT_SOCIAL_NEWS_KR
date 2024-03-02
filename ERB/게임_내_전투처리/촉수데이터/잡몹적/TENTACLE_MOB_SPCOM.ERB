@@ -1,12 +1,12 @@
 ﻿;--------------------------------------------------------------------------------------------
 ;잡몹적専用コマンド共通ヘッダー処理
 ;ARG:0 = コマンドのID
-;ARG:1  = 直接受け渡し（追加責めの部位）
+;ARG:1  = 直接受け渡し（추가 고문の部位）
 ;ARG:2  = メイン部位		なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8
 ;ARG:3  = 방심도상승량
 ;ARG:4  = 사정フラグ		なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 （ビット演算）
 ;ARG:5  = 사정 게이지상승량
-;ARG:6  = 服へのダメージ
+;ARG:6  = 의상에의 피해
 ;ARG:7  = コマンドの強度	弱0 強1 SP2
 ;ARG:8  = 처녀 상실の有無	なし0 あり1 あり、지문なし2
 ;ARG:9  = 特殊効果		ビット演算
@@ -31,14 +31,14 @@
 
 
 @MOB_CREATE_COM,ARG = 0,ARG:1 = 0,ARG:2,ARG:3,ARG:4,ARG:5,ARG:6,ARG:7,ARG:8,ARG:9,ARG:10,ARG:11,ARG:12,ARG:13,ARG:14,ARG:15,ARG:16,ARG:17,ARG:18
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 CALL SEX_COMEX_RANDOM, ARG:2, ARG:1
 EX_COM = RESULT:0
 SH_COM = RESULT:1
 
-;청순파なら１度だけ自動でＶ방어
+;청순파라면 한 번만 자동으로 Ｖ방어
 SIF TALENT:청순파 > 0 && TCVARn:2 != 100 && ARG:8 > 0
 	CALL AUTO_V_DEFENCE, TARGET
 
@@ -46,8 +46,8 @@ SIF TALENT:청순파 > 0 && TCVARn:2 != 100 && ARG:8 > 0
 SIF ARG:4 > 0
 	TFLAG:4 = ARG:4
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -56,28 +56,28 @@ REND
 SIF ARG:3 > 0
 	TFLAG:3 += ARG:3
 
-;사정値
+;사정치
 SIF ARG:5 > 0
 	CALL TENTACLE_SYASEI_UP, ARG:5
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, ARG:0
 
 ;지문호출
 TRYCALLFORM MESSAGE_MOB_{FLAG:11}_COM{ARG:0}, EX_COM, SH_COM
 
-;服へのダメージ
+;의상에의 피해
 SIF ARG:6 > 0
 	CALL CLOTH_BATTLE_DAMAGE, ARG:6
 
-;ベースの獲得
+;BASEの獲得
 ;ここ以降のLOCALはPALAMの상승량として扱う
 ;------------------------------------------------------------------------------------------------------------------
 VARSET LOCAL
 
 ;처녀 상실あり
 IF ARG:8 == 2
-	;고통が大量に入る
+	;고통이 대량으로 들어간다
 	IF TALENT:처녀 > 0 && BASE:Ｖ결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
 		LOCAL:10 = 10000
 		TALENT:처녀 = -1
@@ -87,7 +87,7 @@ IF ARG:8 == 2
 		LOCAL:10 = 0
 	ENDIF
 ELSEIF ARG:8 == 1
-	;고통が大量に入る
+	;고통이 대량으로 들어간다
 	IF TALENT:처녀 > 0 && BASE:Ｖ결계내구력 <= 0 && (TCVARn:2 != 자세：Ｖ방어 || (ARG:9 & 1) > 0)
 		LOCAL:10 = 10000
 		CALL LOSTVIRGIN
@@ -105,7 +105,7 @@ IF ARG:10 > 0
 	ELSE
 		LOCAL:0 += MIN(ABL:Ｃ감각 * ABL:Ｃ감각, 25) * ARG:10 * 300 + ARG:10 * 200
 	ENDIF
-	;ペニス持ちには効果大
+	;페니스가 있다면 효과가 크다
 	SIF ISMANLY() || TALENT:후타나리 > 0
 		LOCAL:0 += 500 * (ARG:7 + 1)
 	;Ｃ감각が低いと공포と고통が少し入る
@@ -130,7 +130,7 @@ IF ARG:11 > 0
 		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) * (1 - (BASE:Ｖ결계내구력 > 0))
 		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
 	ENDIF
-	;윤활が低いと공포と고통が少し入る
+	;윤활이 낮으면 공포と고통が少し入る
 	IF PALAM:윤활 < 2000
 		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) * (1 - (BASE:Ｖ결계내구력 > 0))
 		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 20 / (ABL:Ｃ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
@@ -141,7 +141,7 @@ IF ARG:11 > 0
 	;Ｖ挿入系コマンドの場合
 	TRYCCALLFORM SEX_TYPE_MOB_{FLAG:11}_COM{ARG:0}
 		IF (RESULT & 삽입) > 0
-			;윤활が低いと고통が入る
+			;윤활이 낮으면 고통이 들어간다
 			IF PALAM:윤활 < 1000
 				LOCAL:10 += 5000 * (1 - (BASE:Ｖ결계내구력 > 0))
 			ELSEIF PALAM:윤활 < 2000
@@ -203,7 +203,7 @@ IF ARG:12 > 0
 		LOCAL:10 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:Ａ감각 + 1) * (1 - (BASE:Ａ결계내구력 > 0))
 		LOCAL:11 += ARG:7 * ARG:7 * ARG:11 * 50 / (ABL:Ａ감각 + 1) / (1 + (BASE:Ｖ결계내구력 > 0))
 	ENDIF
-	;Ａ감각に応じて굴복が入る
+	;Ａ감각に굴복が入る
 	IF ARG:7 == 0
 		LOCAL:8 += MIN(ABL:Ａ감각 * ABL:Ａ감각, 25) * 120 + 100
 		SIF ABL:Ａ감각 >= 5
@@ -304,7 +304,7 @@ ENDIF
 ;強制奉仕による굴복影響度
 IF ARG:18 > 0
 	LOCAL:8 += MIN(ABL:순종 * ABL:순종, 25) * ARG:18 * 40 + ARG:18 * 20
-	;봉사정신に応じてボーナス
+	;봉사정신에 따라 보너스
 	IF ABL:봉사정신 < 3
 	ELSEIF ABL:봉사정신 < 4
 		LOCAL:5 += 500
@@ -320,7 +320,7 @@ IF ARG:18 > 0
 	EXP:봉사쾌락경험 += 1
 ENDIF
 
-;追加責め実行
+;추가 고문 실행
 IF EX_COM
 	CALL SEX_COMEX, ARG:2, ARG:7, EX_COM | SH_COM
 	REPEAT 12

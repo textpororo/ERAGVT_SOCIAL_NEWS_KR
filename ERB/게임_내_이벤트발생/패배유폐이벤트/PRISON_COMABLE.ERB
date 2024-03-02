@@ -45,10 +45,10 @@ SELECTCASE ARG
 		CALL PRISON_COM0
 	;V中心攻め
 	CASE 1
-		;보추の場合はA中心攻めで代替する
+		;보추인 경우에는 A中心攻めで代替する
 		IF TALENT:보추 > 0
 			CALL PRISON_COM2
-		;남자の場合はC中心攻めで代替する
+		;남자인 경우에는 C中心攻めで代替する
 		ELSEIF ISMALE()
 			CALL PRISON_COM0
 		;성처녀用だったやつ(B攻めに振り変えてたけどやめ)
@@ -82,10 +82,10 @@ SELECTCASE ARG
 		;部位結界
 		SIF SHIELD:1 > 0
 			GOTO SHIELDED
-		;보추の場合はA中心攻めで代替する
+		;보추인 경우에는 A中心攻めで代替する
 		IF TALENT:보추 > 0
 			CALL PRISON_COM2
-		;남자の場合はC中心攻めで代替する
+		;남자인 경우에는 C中心攻めで代替する
 		ELSEIF ISMALE()
 			CALL PRISON_COM0
 		;성처녀の場合は強制奉仕で代替する
@@ -113,13 +113,13 @@ SELECTCASE ARG
 		;A経験が少ない보추の場合、A中心攻めにする
 		IF TALENT:보추 > 0 && EXP:Ａ경험 < 20
 			CALL PRISON_COM2
-		;보추の場合はA拡張攻めで代替する
+		;보추인 경우에는 Ａ확장 공격で代替する
 		ELSEIF TALENT:보추 > 0
 			;部位結界
 			SIF SHIELD:2 > 0
 				GOTO SHIELDED
 			CALL PRISON_COM102
-		;남자の場合はC中心攻めで代替する
+		;남자인 경우에는 C中心攻めで代替する
 		ELSEIF ISMALE()
 			CALL PRISON_COM0
 		;성처녀の場合は強制奉仕で代替する
@@ -160,10 +160,10 @@ SELECTCASE ARG
 		;部位結界
 		SIF SHIELD:1 > 0
 			GOTO SHIELDED
-		;보추の場合は強制奉仕で代替する
+		;보추인 경우에는 強制奉仕で代替する
 		IF TALENT:보추 > 0
 			CALL PRISON_COM5
-		;남자の場合はC中心攻めで代替する
+		;남자인 경우에는 C中心攻めで代替する
 		ELSEIF ISMALE()
 			CALL PRISON_COM0
 		;성처녀の場合は強制奉仕で代替する
@@ -198,7 +198,7 @@ SELECTCASE ARG
 		;部位結界
 		SIF SHIELD:1 > 0
 			GOTO SHIELDED
-		;보추の場合はAに産卵で代替する
+		;보추인 경우에는 Aに産卵で代替する
 		IF TALENT:보추 > 0
 			;部位結界
 			SIF SHIELD:2 > 0
@@ -209,7 +209,7 @@ SELECTCASE ARG
 			ELSE
 				CALL PRISON_COM102
 			ENDIF
-		;남자の場合はC中心攻めで代替する
+		;남자인 경우에는 C中心攻めで代替する
 		ELSEIF ISMALE()
 			CALL PRISON_COM0
 		;성처녀の場合はAに産卵で代替する

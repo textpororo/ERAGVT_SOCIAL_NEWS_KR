@@ -285,10 +285,10 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_ECSTASY_INHIBITION")
 PRINTL 
 
 ;--------------------------------------------------
-;絶頂禁止
+;절정 금지
 @MESSAGE_SEX_ECSTASY_PROHIBITION
 FONTBOLD
-PRINTL 絶頂禁止
+PRINTL 절정 금지
 FONTREGULAR
 PRINTFORM 先ほどの薬液のせいか、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%イくことができなかった・・・
 PRINTL 
@@ -874,7 +874,7 @@ PRINTL
 ;촉수手에 사정
 @MESSAGE_SEX_TENTACLE_SYASEI_HAND
 FONTBOLD
-PRINTL 手淫사정
+PRINTL 수음 사정
 FONTREGULAR
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
@@ -892,7 +892,7 @@ PRINTL
 ;촉수手に대량사정
 @MESSAGE_SEX_TENTACLE_SYASEI_HAND_HI
 FONTBOLD
-PRINTL 手淫대량사정
+PRINTL 수음 대량사정
 FONTREGULAR
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
@@ -1902,9 +1902,9 @@ CATCH
 	;ペニスしか持っていない相手の場合
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && TALENT:(FLAG:111):기생 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%のペニスに指を絡め、扱き始めた！
-	;それ以外は촉수に手淫する
+	;それ以外は촉수に수음する
 	ELSE
-		PRINTFORML 手近な%촉수市民("촉수","ペニス")%を掴み、手淫を始めた！
+		PRINTFORML 手近な%촉수市民("촉수","ペニス")%を掴み、수음を始めた！
 	ENDIF
 	IF ABL:기교 == 0
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)
@@ -1975,7 +1975,7 @@ CATCH
 	;ペニスしか持っていない相手の場合
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && TALENT:(FLAG:111):기생 == 0
 		PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%のペニスにフェラチオし始めた！
-	;それ以外は촉수に手淫する
+	;それ以外は촉수に수음する
 	ELSE
 		PRINTFORML 手近な%촉수市民("촉수","ペニス")%を口で咥えてフェラチオし始めた！
 	ENDIF

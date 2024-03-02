@@ -1,23 +1,23 @@
-﻿;サブミッションファック
+﻿;서브미션 퍽 (Submission Fuck)
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1015
 RETURN 통상
 
 @SEX_SPCOM15
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 EX_COM = 2
 SH_COM = 0
 
-;사정部位플래그를 세운다
+;사정 부위 플래그를 세운다
 TFLAG:4 = TFLAG:4 | 질
 TFLAG:4 = TFLAG:4 | 입
 INSERT = INSERT | 질
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -25,17 +25,17 @@ REND
 ;방심도 상승
 TFLAG:3 += 100
 
-;사정値 800
+;사정치 800
 CALL TENTACLE_SYASEI_UP, 800
 
-;我慢：대량사정でなければ사정部位플래그를折る
+;참기：대량 사정이 아니면 사정 부위 플래그를 접는다
 SIF FLAG:15 < FLAG:14 * 2
 	TFLAG:4 = 0
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1015
 
-;快V
+;쾌Ｖ
 IF ABL:Ｖ감각 == 0
 	LOCAL:1 = 1000
 ELSEIF ABL:Ｖ감각 == 1
@@ -49,7 +49,7 @@ ELSEIF ABL:Ｖ감각 == 4
 ELSEIF ABL:Ｖ감각 >= 5
 	LOCAL:1 = 40000
 ENDIF
-;마조끼による쾌Ｖ追加
+;마조끼에 따른 쾌Ｖ 증가
 IF ABL:마조끼 <= 2
 ELSEIF ABL:마조끼 == 3
 	LOCAL:1 += 1000
@@ -58,7 +58,7 @@ ELSEIF ABL:마조끼 == 4
 ELSEIF ABL:마조끼 >= 5
 	LOCAL:1 += 6000
 ENDIF
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
@@ -75,12 +75,12 @@ ELSE
 	LOCAL:10 = 0
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 2
 
-;ベース
+;BASE
 EXP:Ｖ경험 += 3
 EXP:고통쾌락경험 += 2
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && INCEST_F(TARGET, FLAG:10 * 100 + FLAG:11, 1) > 0
@@ -92,7 +92,7 @@ SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && INCEST_F(TARGET, FLAG:111) > 0
 
 
 
-;굴복　마조끼で変化
+;굴복　마조끼로 변화
 IF ABL:마조끼 == 0
 	LOCAL:8 = 2000
 ELSEIF ABL:마조끼 == 1
@@ -107,7 +107,7 @@ ELSEIF ABL:마조끼 >= 5
 	LOCAL:8 = 24000
 ENDIF
 
-;공포　순종と마조끼で大まかに
+;공포　대충 순종과 마조끼로
 IF ABL:순종 < 4
 	IF ABL:마조끼 <= 2
 		LOCAL:11 = 20000
@@ -124,36 +124,36 @@ ELSE
 	ENDIF
 ENDIF
 
-;윤활が低いと고통が入る
+;윤활이 낮으면 고통이 들어간다
 SIF PALAM:윤활 < 2000
 	LOCAL:10 += 2000
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1015
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 2000
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 500
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 0
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 0
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 15000
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 1500
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 1050
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 

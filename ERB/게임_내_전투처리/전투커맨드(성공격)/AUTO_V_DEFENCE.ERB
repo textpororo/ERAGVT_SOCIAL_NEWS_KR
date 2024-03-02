@@ -1,4 +1,4 @@
-﻿;청순파による自動Ｖ방어
+﻿;청순파에 의한 자동 Ｖ방어
 @AUTO_V_DEFENCE, ARG
 SIF TFLAG:81 > 0
 	RETURN 1
@@ -9,13 +9,13 @@ IF TCVARn:12 & 기절 || (TCVARn:41 == -1 && CFLAG:(CFLAG:1==0 ? 40 # 41) == 199
 	RETURN 1
 ENDIF
 IF TALENT:ARG:처녀 > 0
-	PRINTL このままだと처녀を奪われそうだ……
+	PRINTL 이대로라면 처녀를 빼앗길 듯 보인다……
 ELSE
-	PRINTL このままだと前の穴に挿入されそうだ……
+	PRINTL 이대로라면 앞 구멍에 삽입될 것 같다……
 ENDIF
-PRINTL 咄嗟にＶ삽입방어しますか？
-PRINTL [0]する
-PRINTL [1]しない
+PRINTL 즉시 Ｖ삽입을 방어합니까？
+PRINTL [0] 네
+PRINTL [1] 아니오
 $INPUT_LOOP
 INPUT
 IF RESULT == 0

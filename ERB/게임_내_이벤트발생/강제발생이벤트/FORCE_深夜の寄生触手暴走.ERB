@@ -12,7 +12,7 @@ FOR CCOUNT, 0, CHARANUM
 	SIF CFLAG:CCOUNT:999 == 0
 		CONTINUE
 
-	;기생されているなら기생경험이 増加
+	;기생されているなら기생경험이 증가
 	IF TALENT:(FLAG:799):기생
 		EXP:(FLAG:799):기생경험 += 1
 		
@@ -108,7 +108,7 @@ ENDIF
 @PARASITE_ACTION, ARG
 #DIM CCOUNT
 VARSET LOCAL
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 100
 ELSEIF ABL:Ｃ감각 == 1
@@ -123,7 +123,7 @@ ELSE
 	LOCAL:0 = 5000
 ENDIF
 
-;快V
+;쾌Ｖ
 ;남자を除外
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
@@ -169,7 +169,7 @@ ELSE
 	LOCAL:2 = 5000
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 100
 ELSEIF ABL:Ｃ감각 == 1
@@ -184,7 +184,7 @@ ELSE
 	LOCAL:3 = 5000
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
 
 
@@ -202,8 +202,8 @@ ENDIF
 ;굴복　とりあえず一定で
 LOCAL:8 = 500
 
-;Ｖ감각が低いと공포が入る
-;남자の場合はＡ감각で
+;Ｖ감각이 낮으면 공포가 들어간다
+;남자인 경우에는 Ａ감각で
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800
@@ -571,7 +571,7 @@ CALL SYNBIOSIS_ABL_UP, 2
 ;기생촉수による夜這い判定
 ;基本的には@YOBAIの判定を流用。但し、変身による可否判定は行わない
 ;夜這いかける側は촉수で致すし、受け手側は同意プレーじゃないから변신한다暇ないだろうし
-;また、実行者の性경험치や対象者の性경험치による成否判定は行わない。殆どレイプ紛い。
+;また、実行者の性경험치や対象者の性경험치による성패 여부は行わない。殆どレイプ紛い。
 ;공생とは名ばかりの、実質촉수による支配
 
 #DIM CCOUNT
@@ -957,7 +957,7 @@ PRINTFORML [999]夜這いは行わない
 #DIM CCOUNT
 VARSET LOCAL
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 100
 ELSEIF ABL:Ｃ감각 == 1
@@ -972,7 +972,7 @@ ELSE
 	LOCAL:0 = 5000
 ENDIF
 
-;快V
+;쾌Ｖ
 ;남자を除外
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
@@ -1018,7 +1018,7 @@ ELSE
 	LOCAL:2 = 5000
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 100
 ELSEIF ABL:Ｃ감각 == 1
@@ -1046,8 +1046,8 @@ ENDIF
 ;굴복　とりあえず一定で
 LOCAL:8 = 500
 
-;Ｖ감각が低いと공포が入る
-;남자の場合はＡ감각で
+;Ｖ감각이 낮으면 공포가 들어간다
+;남자인 경우에는 Ａ감각で
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800

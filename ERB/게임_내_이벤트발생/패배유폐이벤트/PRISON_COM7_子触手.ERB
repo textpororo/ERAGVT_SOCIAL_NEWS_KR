@@ -44,7 +44,7 @@ TFLAG:10 = 7
 ;汚染度
 CFLAG:30 += 10 + RAND:11
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 1
 ELSEIF ABL:Ｃ감각 == 1
@@ -59,7 +59,7 @@ ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 400
 ENDIF
 
-;快V
+;쾌Ｖ
 IF ABL:Ｖ감각 == 0
 	LOCAL:120 = 2
 	LOCAL:1 = 1
@@ -83,7 +83,7 @@ ENDIF
 LOCAL:120 *= (CFLAG:220 + 100) / 100
 LOCAL:1 *= SQRT(CFLAG:220) + 1
 
-;快A
+;쾌Ａ
 IF ABL:Ａ감각 == 0
 	LOCAL:121 = 2
 	LOCAL:2 = 1
@@ -104,7 +104,7 @@ ELSEIF ABL:Ａ감각 >= 5
 	LOCAL:2 = 1000
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 1
 ELSEIF ABL:Ｂ감각 == 1
@@ -121,7 +121,7 @@ ENDIF
 ;새끼 촉수のの数だけ倍増
 LOCAL:3 *= SQRT(CFLAG:220) + 1
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
 
 
@@ -161,7 +161,7 @@ ENDIF
 ;굴복　とりあえず一定で
 LOCAL:8 = 800
 
-;Ｖ감각が低いと공포が入る
+;Ｖ감각이 낮으면 공포가 들어간다
 IF ABL:Ｖ감각 == 0
 	LOCAL:11 = 800
 ELSEIF ABL:Ｖ감각 == 1
@@ -173,22 +173,22 @@ ELSEIF ABL:Ｖ감각 == 3
 ELSE
 ENDIF
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 10
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 500
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 500
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 0
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 500
 
 ;정액경험

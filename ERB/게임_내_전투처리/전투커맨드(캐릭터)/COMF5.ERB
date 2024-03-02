@@ -1,41 +1,41 @@
 ﻿;거리를벌린다
 @COM5
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
-;空中공격플래그를進める
+;공중 공격 플래그를 진행한다
 CALL ATTACK_AIR_FLAG
-;끈적끈적中だと失敗することがある
+;끈적끈적 상태라면 실패할 수가 있다
 IF (TCVARn:12 & 끈적끈적) && RAND:100 < 50 && GETBIT(TCVARn:216, 1) == 0
-	;距離表示
+	;거리 표시
 	CALL PRINT_DISTANCE
 	PRINTL 
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%脚を滑らせてしまった！
-	PRINTFORML 移動を伴う行動が失敗した！
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 발이 미끄러지고 말았다！
+	PRINTFORML 이동을 수반하는 행동이 실패했다！
 	PRINTW 
 	RETURN 1
 ENDIF
 
-;同一距離플래그를折る
+;동일 거리 플래그를 접는다
 TFLAG:30 = 0
-;チェインコンボをリセット
+;체인 콤보를 리셋
 TFLAG:31 = 0
 
-;距離を遠にする
+;거리를 원거리로 한다
 TCVARn:0 = 3
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;체력45%、기력が20%回復　心境が普通になりやすい
-;회복빠름なら+4%,+2%
-;회복느림なら-4%,-2%
-;[공생]持ちなら更に+4%
-;最大値と衣装と방어力による補正から回復量を計算
+;체력 45%, 기력 20% 회복　심경이「보통」으로 돌아가기 쉽다
+;회복빠름이라면 +4%, +2%
+;회복느림이라면 -4%, -2%
+;[공생] 이 있다면 더욱이 +4%
+;최대값과 의상 및 방어력에 따른 보정에서 회복량 계산
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:0 = MAXBASE:체력 + BASE:방어 * RESULT * 2 / 100
-;FEATによる回復量ボーナス
+;FEAT에 의한 회복량 보너스
 SIF TALENT:넘치는생명력 > 0
 	TIMES LOCAL:0, 1.25
 IF TALENT:회복빠름 == 1
@@ -49,18 +49,18 @@ SIF TALENT:(FLAG:799):공생 == 1
 	TIMES LOCAL:0, 1.04
 SIF BASE:기력 == 0
 	LOCAL:0 /= 2
-;疲労により回復量が減少
+;피로에 따라 회복량이 감소
 REPEAT CFLAG:99
 	SIF LOCAL:0 <= 1
 		BREAK
-	;FEAT 효과에 따른回復量維持
+	;FEAT 효과에 의한 회복량 유지
 	IF TALENT:스태미나 > 0
 		TIMES LOCAL:0, 0.985
 	ELSE
 		TIMES LOCAL:0, 0.97
 	ENDIF
 REND
-;疲労が少ない時は체력大回復
+;피로가 적을 시에는 체력 대회복
 IF TALENT:스태미나 > 0
 	IF CFLAG:99 < 5
 		TIMES LOCAL:0, 1.25
@@ -79,15 +79,15 @@ SIF CFLAG:TARGET:43 == 504
 	LOCAL:0 = LOCAL:0 + 200
 SIF BASE:체력 + LOCAL:0 >= MAXBASE:체력
 	LOCAL:0 = MAXBASE:체력 - BASE:체력
-;체력が尽きている場合、체력が回復しない
+;체력이 다한 경우, 체력이 회복되지 않는다
 SIF BASE:체력 == 0
 	LOCAL:0 = 0
 BASE:체력 += LOCAL:0
 
-;最大値と衣装と방어力による補正から回復量を計算
+;최대값과 의상 및 방어력에 따른 보정에서 회복량 계산
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
-;FEATによる回復量ボーナス
+;FEAT에 의한 회복량 보너스
 SIF TALENT:넘치는생명력 > 0
 	TIMES LOCAL:1, 1.25
 IF TALENT:회복빠름 == 1
@@ -99,11 +99,11 @@ ELSE
 ENDIF
 SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 	LOCAL:1 = MAXBASE:기력 - BASE:기력
-;疲労により回復量が減少
+;피로에 따라 회복량이 감소
 REPEAT CFLAG:99
 	SIF LOCAL:1 <= 1
 		BREAK
-	;FEAT 효과에 따른回復量維持
+	;FEAT 효과에 의한 회복량 유지
 	IF TALENT:스태미나 > 0
 		TIMES LOCAL:1, 0.995
 	ELSE
@@ -112,26 +112,26 @@ REPEAT CFLAG:99
 REND
 BASE:기력 += LOCAL:1
 
-;疲労が少し蓄積
+;피로가 조금 축적
 TFLAG:99 += 1
-;FEAT 효과에 따른反動の増加
+;FEAT 효과에 의한 반동 증가
 SIF TALENT:공중부유 > 0
 	TFLAG:99 += 1
 
-;지문: 距離を取る
+;지문: 거리를 벌린다
 CALL MESSAGE_BATTLE_CHARA_TAKEAWAY
 ;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「거리를벌린다」를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_TAKEAWAY
 
 IF BASE:체력
-	PRINTFORML %BASENAME:0%が{LOCAL:0}回復した
+	PRINTFORML %BASENAME:0%이 {LOCAL:0} 회복됐다.
 ELSE
-	PRINTFORML %BASENAME:0%は既に尽きてしまっている……
+	PRINTFORML 이미 %BASENAME:0%을 다하여 회복되지 않았다……
 ENDIF
-PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+PRINTFORML %BASENAME:1%이 {LOCAL:1} 회복됐다.
 
-;心境が普通に戻りやすい
+;심경이「보통」으로 돌아가기 쉽다
 IF TCVARn:1 > 0 && RAND:100 < (TCVARn:11 * 20)
 	CALL SHINKYOU_CHANGE, "NORMAL"
 ELSE

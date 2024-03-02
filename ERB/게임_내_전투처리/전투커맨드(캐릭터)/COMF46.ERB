@@ -1,23 +1,23 @@
 ﻿;반항한다
 @COM46
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
 ;방심도 상승
 TFLAG:3 += 5
 
-;방어フラグ：반항한다
+;방어 플래그：반항한다
 TCVARn:2 = 자세：반항한다
 
-;기력が30%回復　ただし罵倒よりも疲労の影響が出にくい
-;회복빠름なら+3%
-;회복느림なら-3%
-;最大値と衣装と방어力による補正から回復量を計算
+;기력이 30% 회복　다만 매도보다는 피로의 영향을 덜 받는다
+;회복빠름이라면 +3%
+;회복느림이라면 -3%
+;최대값과 의상 및 방어력에 따른 보정에서 회복량 계산
 CALL CLOTH_BATTLE_HOSEI, "BOUGYO"
 LOCAL:1 = MAXBASE:기력 + BASE:방어 * RESULT * 4 / 200
-;FEATによる回復量ボーナス
+;FEAT에 의한 회복량 보너스
 SIF TALENT:넘치는생명력 > 0
 	TIMES LOCAL:1, 1.25
 IF TALENT:회복빠름 == 1
@@ -29,14 +29,14 @@ ELSE
 ENDIF
 SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 	LOCAL:1 = MAXBASE:기력 - BASE:기력
-;기력が尽きている場合、기력が回復しない
+;기력이 다한 경우, 기력이 회복되지 않는다
 SIF BASE:기력 == 0
 	LOCAL:1 = 0
-;疲労により回復量が減少
+;피로에 따라 회복량이 감소
 REPEAT CFLAG:99
 	SIF LOCAL:1 <= 1
 		BREAK
-	;FEAT 효과에 따른回復量維持
+	;FEAT 효과에 의한 회복량 유지
 	IF TALENT:스태미나 > 0
 		TIMES LOCAL:1, 0.995
 	ELSE
@@ -44,25 +44,25 @@ REPEAT CFLAG:99
 	ENDIF
 REND
 BASE:기력 += LOCAL:1
-;疲労が少し蓄積
+;피로가 조금 축적
 TFLAG:99 += 1
 
 ;지문: 반항한다
 CALL MESSAGE_BATTLE_CHARA_RESISTANCE
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 반항한다を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「반항한다」를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_RESISTANCE
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 IF BASE:기력
-	PRINTFORML %BASENAME:1%が{LOCAL:1}回復した
+	PRINTFORML %BASENAME:1%이 {LOCAL:1} 회복됐다.
 ELSE
-	PRINTFORML %BASENAME:1%は既に尽きてしまっている……
+	PRINTFORML 이미 %BASENAME:1%을 다하여 회복되지 않았다……
 ENDIF
 
-;心境が冷静になりやすいが、快楽に屈するか절망していると諦観してしまう
+;심경이「냉정」이 되기 쉽지만, 쾌락에 굴복하거나 절망하고 있으면 체념해 버린다
 IF RAND:100 < (TCVARn:11 * 20) || TCVARn:1 == 0
 	IF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망)
 		CALL SHINKYOU_CHANGE, "TEIKAN"

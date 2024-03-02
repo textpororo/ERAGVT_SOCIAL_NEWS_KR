@@ -47,7 +47,7 @@ CFLAG:30 += 5 + RAND:6
 SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 1
 ELSEIF ABL:Ｃ감각 == 1
@@ -62,7 +62,7 @@ ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 400
 ENDIF
 
-;快V
+;쾌Ｖ
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
@@ -85,7 +85,7 @@ IF ISFEMALE()
 	ENDIF
 ENDIF
 
-;快A
+;쾌Ａ
 IF ABL:Ａ감각 == 0
 	LOCAL:121 = 2
 	LOCAL:2 = 1
@@ -106,7 +106,7 @@ ELSEIF ABL:Ａ감각 >= 5
 	LOCAL:2 = 1000
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 1
 ELSEIF ABL:Ｂ감각 == 1
@@ -121,13 +121,13 @@ ELSEIF ABL:Ｂ감각 >= 5
 	LOCAL:3 = 400
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
 
 
 
-;ベース
-;굴복　마조끼で変化
+;BASE
+;굴복　마조끼로 변화
 IF ABL:마조끼 == 0
 	LOCAL:8 = 200
 ELSEIF ABL:마조끼 == 1
@@ -142,7 +142,7 @@ ELSEIF ABL:마조끼 >= 5
 	LOCAL:8 = 5000
 ENDIF
 
-;공포　순종と마조끼で大まかに
+;공포　대충 순종과 마조끼로
 IF ABL:순종 < 3
 	IF ABL:마조끼 < 3
 		LOCAL:11 = 1500
@@ -183,22 +183,22 @@ IF ISMALE()
 	LOCAL:120 = 0
 ENDIF
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 0
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 800
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 100
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 800
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 800
 
 ;정액경험

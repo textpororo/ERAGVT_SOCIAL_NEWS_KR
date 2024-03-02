@@ -244,27 +244,27 @@ ENDSELECT
 
 ;戦闘中のみ計算
 IF FLAG:700 > 0
-	;倒錯
+	;도착
 	IF TCVARn:1 == 2
 		FAITH_S += -1
-	;怒り
+	;분노
 	ELSEIF TCVARn:1 == 2
 		FAITH_S += 1
 		BRAVE_S += 1
-	;諦観
+	;체념
 	ELSEIF TCVARn:1 == 3
 		FAITH_S += -1
 		BRAVE_S += -1
-	;冷静
+	;냉정
 	ELSEIF TCVARn:1 == 4
 		BRAVE_S += 1
-	;動揺
+	;동요
 	ELSEIF TCVARn:1 == 5
 		BRAVE_S += -1
-	;高揚
+	;고양
 	ELSEIF TCVARn:1 == 6
 		BRAVE_S += 2
-	;消沈
+	;소침
 	ELSEIF TCVARn:1 == 7
 		BRAVE_S += -2
 	ENDIF

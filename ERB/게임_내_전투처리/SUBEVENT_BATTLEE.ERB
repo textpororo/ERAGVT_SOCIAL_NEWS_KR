@@ -339,7 +339,7 @@ IF BASE:성내성 > 0 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 4) != 4 && 
 	PRINTL 
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 성내성을 {LOCAL} 소비했다！
 	SIF BASE:성내성 == 0
-		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 성내성이 다 해 버렸다！
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 성내성이 다해 버렸다！
 	PRINTW 
 ELSE
 	PRINTL 
@@ -367,9 +367,9 @@ ELSE
 		LOCAL:1 = 0
 	ELSEIF TCVARn:41 == 1
 		IF PALAM:윤활 >= 500
-			;쾌V
+			;쾌Ｖ
 			TIMES LOCAL:1, 1.3
-			;쾌A
+			;쾌Ａ
 			TIMES LOCAL:2, 1.3
 			;윤활
 			;LOCAL:4 = 2000
@@ -385,10 +385,10 @@ ELSE
 			TCVARn:41 = 0
 		ENDIF
 	ELSEIF TCVARn:41 == 2
-		;쾌V
+		;쾌Ｖ
 		SIF TALENT:처녀 < 1
 			TIMES LOCAL:1, 1.5
-		;쾌A
+		;쾌Ａ
 		TIMES LOCAL:2, 1.5
 
 	ELSEIF TCVARn:41 == 3
@@ -407,10 +407,10 @@ ELSE
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 배는 %조사처리(LOCALS,"를")% 밀어 올려 불룩하게 부풀어 있다……
 		TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_ANAL_HI")
 		PRINTL 
-		;쾌V
+		;쾌Ｖ
 		SIF TALENT:처녀 < 1
 			LOCAL:1 *= 2
-		;쾌A
+		;쾌Ａ
 		LOCAL:2 *= 2
 
 		;불결
@@ -437,9 +437,9 @@ ELSE
 		PRINTFORML %조사처리(LOCALS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 직장에 정액을 부어 넣었다.
 		TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_TENTACLE_SYASEI_ANAL")
 		PRINTL 
-		;쾌V
+		;쾌Ｖ
 		TIMES LOCAL:1, 1.7
-		;쾌A
+		;쾌Ａ
 		TIMES LOCAL:2, 1.7
 
 		;임신 확률　출산 후의 질내사정 횟수와 지금까지의 출산경험에 따라 가능성이 늘어난다

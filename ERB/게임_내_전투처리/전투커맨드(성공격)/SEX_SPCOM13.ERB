@@ -1,20 +1,20 @@
-﻿;丸飲み精液攻め
+﻿;삼키기＆정액 공격 (丸飲み精液攻め)
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1013
 RETURN 통상
 
 @SEX_SPCOM13
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1013
 
-;丸飲み準備
+;삼키기 준비
 IF TFLAG:23 == 0
 	;방심도 상승
 	TFLAG:3 += 0
@@ -22,7 +22,7 @@ IF TFLAG:23 == 0
 	;지문: SPCOM13_PRE
 	CALL MESSAGE_SEX_SPCOM13_PRE
 
-	;촉수의포로なら욕정、それ以外は공포
+	;촉수의포로라면 욕정, 그 외에는 공포가 들어간다
 	IF TALENT:촉수의포로
 		LOCAL:7 = 1500
 	ELSE
@@ -32,29 +32,29 @@ IF TFLAG:23 == 0
 	;윤활
 	LOCAL:4 = 0
 
-	;습득基本値
+	;습득 기본값
 	LOCAL:6 += 0
 
-	;욕정基本値
+	;욕정 기본값
 	LOCAL:7 += 0
 
-	;굴복基本値
+	;굴복 기본값
 	LOCAL:8 += 200
 
-	;치정基本値
+	;치정 기본값
 	LOCAL:9 += 0
 
-	;고통基本値
+	;고통 기본값
 	LOCAL:10 += 0
 
-	;공포基本値
+	;공포 기본값
 	LOCAL:11 += 0
 
-	;체력消費基本値
+	;체력 소비 기본값
 	LOCAL:12 += 0
-;기절している場合、または確率で즉사。연속実行される度に成功率が上がる
+;기절해 있는 경우나 일정 확률로 즉사. 연속 실행될 때마다 성공률이 올라간다
 ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
-	;全個所에 사정
+	;모든 장소에 사정
 	IF ISFEMALE()
 		TFLAG:4 = TFLAG:4 | 질
 		TFLAG:4 = TFLAG:4 | 균열
@@ -69,11 +69,11 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 	;방심도 상승
 	TFLAG:3 += 0
 
-	;사정値 1000
+	;사정치 1000
 	CALL TENTACLE_SYASEI_UP, 1000
 
 
-	;快V
+	;쾌Ｖ
 	IF ISFEMALE()
 		IF ABL:Ｖ감각 == 0
 			LOCAL:1 = 400
@@ -90,7 +90,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		ENDIF
 	ENDIF
 
-	;快A　감각が低いうちは少なめ
+	;쾌Ａ　감각이 낮을 때는 적다
 	IF CONFIG_CHECK_BALANCE_F(7) == 0
 		IF ABL:Ａ감각 == 0
 			LOCAL:2 = 80
@@ -105,7 +105,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		ELSEIF ABL:Ａ감각 >= 5
 			LOCAL:2 = 20000
 		ENDIF
-	;컨피그オンで쾌Ａ増加
+	;컨피그 ON이라면 쾌Ａ 증가
 	ELSEIF CONFIG_CHECK_BALANCE_F(7) > 0
 		IF ABL:Ａ감각 == 0
 			LOCAL:2 = 400
@@ -122,20 +122,20 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		ENDIF
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 
 
 	;지문: SPCOM13
 	CALL MESSAGE_SEX_SPCOM13
 
-	;丸飲み行動の終了
-	TFLAG:23=-1
+	;삼키기 행동 종료
+	TFLAG:23 =- 1
 
-	;服へのダメージ
+	;의상에의 피해
 	CALL CLOTH_BATTLE_DAMAGE, 25
 
-	;ベース
+	;BASE
 	SIF ISFEMALE()
 		EXP:Ｖ경험 += 5
 	EXP:Ａ경험 += 5
@@ -151,7 +151,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 
 
 
-	;굴복　정액중독で変化
+	;굴복　정액중독으로 변화
 	IF ABL:정액중독 == 0
 		LOCAL:8 = 2000
 	ELSEIF ABL:정액중독 == 1
@@ -202,7 +202,7 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		LOCAL:6 = 1000
 	ENDIF
 
-	;공포　순종と정액중독で大まかに
+	;공포　대충 순종과 정액중독으로
 	IF ABL:순종 < 4
 		IF ABL:정액중독 < 4
 			LOCAL:11 = 20000
@@ -217,34 +217,35 @@ ELSEIF (TCVARn:12 & 기절) || RAND:100 < (20 + TFLAG:23 * 15)
 		ENDIF
 	ENDIF
 
-	;습득基本値
+	;습득 기본값
 	LOCAL:6 += 0
 
-	;욕정基本値
+	;욕정 기본값
 	LOCAL:7 += 10000
 
-	;굴복基本値
+	;굴복 기본값
 	LOCAL:8 += 5000
 
-	;치정基本値
+	;치정 기본값
 	LOCAL:9 += 500
 
-	;고통基本値
+	;고통 기본값
 	LOCAL:10 += 0
 
-	;공포基本値
+	;공포 기본값
 	LOCAL:11 += 2000
 
-	;체력消費基本値
+	;체력 소비 기본값
 	LOCAL:12 += 1050
 
-	;임신 판정を余分に行う
+	;임신 판정을 여분에 진행한다
 	SIF ISFEMALE()
 		CALL NINSIN_HANTEI,5,3
 
-	;즉사공격、これを食らったら유폐される
+	;즉사 공격, 이 공격을 받으면 유폐된다
 	BASE:체력 = 0
 	BASE:기력 = 0
+;즉사를 회피한 경우
 ELSE
 	;방심도 상승
 	TFLAG:3 += 200
@@ -252,16 +253,16 @@ ELSE
 	;지문: SPCOM13_MISS
 	CALL MESSAGE_SEX_SPCOM13_MISS
 
-	;服へのダメージ
+	;의상에의 피해
 	CALL CLOTH_BATTLE_DAMAGE, 10
 
-	;ベース
+	;BASE
 	EXP:정액경험 += 2
 
 	;윤활
 	LOCAL:4 = 200
 
-	;굴복　정액중독で変化
+	;굴복　정액중독으로 변화
 	IF ABL:정액중독 == 0
 		LOCAL:8 = 200
 	ELSEIF ABL:정액중독 == 1
@@ -276,7 +277,7 @@ ELSE
 		LOCAL:8 = 4000
 	ENDIF
 
-	;공포　순종で大まかに
+	;공포　대충 순종으로
 	IF ABL:순종 < 4
 		IF ABL:정액중독 < 4
 			LOCAL:11 = 1000
@@ -291,35 +292,35 @@ ELSE
 		ENDIF
 	ENDIF
 
-	;습득基本値
+	;습득 기본값
 	LOCAL:6 += 100
 
-	;욕정基本値
+	;욕정 기본값
 	LOCAL:7 += 0
 
-	;굴복基本値
+	;굴복 기본값
 	LOCAL:8 += 200
 
-	;치정基本値
+	;치정 기본값
 	LOCAL:9 += 200
 
-	;고통基本値
+	;고통 기본값
 	LOCAL:10 += 0
 
-	;공포基本値
+	;공포 기본값
 	LOCAL:11 += 0
 
-	;체력消費基本値
+	;체력 소비 기본값
 	LOCAL:12 += 300
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1013
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

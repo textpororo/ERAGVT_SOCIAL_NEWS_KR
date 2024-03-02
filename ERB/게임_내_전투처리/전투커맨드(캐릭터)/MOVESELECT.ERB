@@ -1,4 +1,4 @@
-﻿;移動選択の処理
+﻿;이동 선택 처리
 @TRANSFORM_MOVESELECT
 #DIM ABLE5
 #DIM ABLE6
@@ -6,16 +6,16 @@
 #DIM LCOUNT
 
 
-;先制공격中は選択する必要がない
+;선제 공격 중에는 선택할 필요가 없다
 SIF TFLAG:24 > 0
 	RETURN 0
-;捕まってるときは選択不能
+;잡혀있을 때에는 선택 불능
 SIF TCVARn:0 < 1
 	RETURN 0
-;공중대시との併用不能
+;공중대시와 함께 사용할 수 없다
 SIF GETBIT(TCVARn:216, 1)
 	RETURN 0
-;移動系コマンドが使用できない場合は選択不能
+;이동계 커맨드를 사용할 수 없는 경우 선택 불가능
 TCVARn:8+=10
 	CALL COM_ABLE5
 	ABLE5 = RESULT
@@ -29,30 +29,30 @@ SIF ABLE5 == 0 && ABLE6 == 0 && ABLE7 == 0
 LCOUNT = LINECOUNT
 
 
-;変身スタイル固定時
+;변신 스타일 고정 시
 IF CFLAG:12 > 0
 	RESULT = CFLAG:12
-;コマンド側で選択時
+;커맨드 측에서 선택시
 ELSEIF SELECTCOM > 200
 	RESULT = SELECTCOM-200
-;その場で選択時
+;그 장소에서 선택할 시
 ELSE
 	PRINTL 
-	PRINTFORML 変身方法を選択してください
+	PRINTFORML 변신 방법을 선택해 주십시오.
 	IF TCVARn:0 == 1
-		PRINTL [1]その場で변신한다　　　　　（回避+20%）
+		PRINTL [1] 그 자리에서 변신한다　　　　　（회피 +20%）
 	ELSEIF ABLE6 > 0
-		PRINTL [1]踏み込んで隙を突く　　　　（근거리に移動、EX 게이지が上昇）
+		PRINTL [1] 뛰어들어 빈틈을 찌른다　　　　（근거리로 이동, EX 게이지 상승）
 	ENDIF
 	IF TCVARn:0 == 2
-		PRINTL [2]その場で변신한다　　　　　（回避+15%）
+		PRINTL [2] 그 자리에서 변신한다　　　　　（회피 +15%）
 	ELSEIF ABLE7 > 0
-		PRINTL [2]敵の動きを見極める　　　　（중거리に移動、次のターン予測精度アップ）
+		PRINTL [2] 적의 움직임을 관찰한다　　　　（중거리로 이동, 다음 턴의 예측 정확도 증가）
 	ENDIF
 	IF TCVARn:0 == 3
-		PRINTL [3]その場で변신한다　　　　　（回避+10%）
+		PRINTL [3] 그 자리에서 변신한다　　　　　（회피 +10%）
 	ELSEIF ABLE5 > 0
-		PRINTL [3]距離を取って態勢を整える　（원거리に移動、체력, 기력が多めに回復）
+		PRINTL [3] 거리를 벌려 태세를 갖춘다　　 （원거리로 이동, 체력 및 기력 대량 회복）
 	ENDIF
 	$INPUT_LOOP
 	INPUT
@@ -62,21 +62,21 @@ IF RESULT == TCVARn:0
 	RETURN 0
 ELSEIF RESULT == 1 && ABLE6 > 0
 	TCVARn:0 = 1
-	;FEAT 효과에 따른反動の増加
+	;FEAT 효과에 의한 반동 증가
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT
 	RETURN 1
 ELSEIF RESULT == 2 && ABLE7 > 0
 	TCVARn:0 = 2
-	;FEAT 효과에 따른反動の増加
+	;FEAT 효과에 의한 반동 증가
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT
 	RETURN 2
 ELSEIF RESULT == 3 && ABLE5 > 0
 	TCVARn:0 = 3
-	;FEAT 효과에 따른反動の増加
+	;FEAT 효과에 의한 반동 증가
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 += 1
 	CLEARLINE LINECOUNT - LCOUNT

@@ -879,7 +879,7 @@ PRINTL
 FONTBOLD
 PRINTL Ａ中心攻め
 FONTREGULAR
-;보추の場合はV攻め流用もパターンに追加
+;보추인 경우에는 V攻め流用もパターンに追加
 IF RAND:3 == 0 && SHIELD:2 <= 0 && TALENT:보추 > 0
 	PRINTFORML 二つ折りにされるように촉수に拘束され、
 	PRINTFORML 脚を高く上げさせられた姿勢で宙吊りになっている%PRINT_TRANSCALLNAME(TARGET)%。
@@ -1365,7 +1365,7 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		SIF CFLAG:220 >= 3
 			PRINT たち
 		SIF CFLAG:220 >= 2
-			PRINT が順番を争わないよう手淫をしてやりながら
+			PRINT が順番を争わないよう수음をしてやりながら
 		PRINTFORML 、
 		IF TALENT:주관시점 > 0
 			PRINTFORML 我が子が立派なオスになるよう激励するため、褒め言葉を口にする。
@@ -1580,7 +1580,7 @@ PRINTL
 ;A拡張
 @MESSAGE_PRISON_COM_102
 FONTBOLD
-PRINTL Ａ拡張攻め
+PRINTL Ａ확장 공격
 FONTREGULAR
 IF EXP:Ａ확장경험 >= 10
 	IF RAND:2 == 0 && TALENT:보추 > 0

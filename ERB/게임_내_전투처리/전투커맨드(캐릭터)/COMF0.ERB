@@ -1,7 +1,7 @@
 ﻿;변신한다
 @COM0
 #DIM MOVESELECT
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
@@ -11,16 +11,16 @@ CALL TRANSFORM_MOVESELECT
 MOVESELECT = RESULT
 
 
-;空中공격플래그를進める
+;공중 공격 플래그를 진행한다
 CALL ATTACK_AIR_FLAG
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;지문: 変身　변신 시 구호がある場合はこの中で処理
+;지문: 변신　변신 시 구호가 있는 경우는 이 안에서 처리
 CALL MESSAGE_BATTLE_CHARA_TRANSFORMCALL
 
-;この戦闘で二度目に変身した場合、名乗り구상を出さない
+;이 전투에서 두 번째로 변신한 경우, 자칭 구상을 내보내지 않는다
 IF TCVARn:10 == 1
 	;
 ELSE
@@ -31,30 +31,30 @@ ELSE
 ENDIF
 PRINTW 
 
-;ＴＳ男性化するキャラが임신 중、かつ発覚していない場合
+;ＴＳ남성화한 캐릭터가 임신 중인 동시에 발각되지 않은 경우
 IF CHARATALENT_F(TARGET,0,"남자") == 0 && CHARATALENT_F(TARGET,1,"남자") > 0 && TALENT:임신 > 0
 	PRINTL
-	PRINTFORML しかし、なぜか男性化できない！
-	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無防備な体制のまま変身に失敗してしまった！
+	PRINTFORML 하지만, 어째서인지 남성화할 수 없었다！
+	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 무방비한 상태인 채로 변신에 실패하고 말았다！
 	TCVARn:2 = 자세：아무것도안한다
 	RETURN 1
 ENDIF
 
-IF GETBATTLESITUATION("奇襲") && TALENT:변신시ＴＳ && TFLAG:0 < 3
-	PRINTFORML しかし、急の襲撃で身体が変身準備に入れない！（変身チャージ完了まで：{3-TFLAG:0}ターン）
-	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無防備な体制のまま変身に失敗してしまった！
+IF GETBATTLESITUATION("기습") && TALENT:변신시ＴＳ && TFLAG:0 < 3
+	PRINTFORML 그러나, 갑작스러운 습격으로 몸이 변신 준비에 들어서지 못했다！（변신 충전 완료까지：{3-TFLAG:0}턴）
+	PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 무방비한 상태인 채로 변신에 실패하고 말았다！
 	TCVARn:2 = 자세：아무것도안한다
 	RETURN 1
 ENDIF
 
-;変身
+;변신
 CALL TRANSFORM, 1
 
-;겉옷（変身後）のダメージが少し回復する
+;겉옷(변신 후)의 피해량이 조금 회복된다
 SIF CFLAG:41 != 0 && TCVARn:23 == 0
 	TCVARn:23 = 10
 
-;ゲージが増加
+;게이지가 증가
 IF MOVESELECT == 1
 	IF CFLAG:99 < 5
 		TCVARn:6 += 30 + RAND:16
@@ -65,14 +65,14 @@ IF MOVESELECT == 1
 	ENDIF
 ENDIF
 
-;관찰한다플래그를 세운다
+;「관찰한다」플래그를 세운다
 SIF MOVESELECT == 2
 	TFLAG:25 = 1
 
-;체력20%回復
-;회복빠름なら+2%
-;회복느림なら-2%
-;[공생]持ちなら更に+2%
+;체력 20% 회복
+;회복빠름이라면 +2%
+;회복느림이라면 -2%
+;[공생] 이 있다면 더욱이 +2%
 LOCAL:0 = MAXBASE:체력
 IF TALENT:회복빠름 == 1
 	TIMES LOCAL:0, 0.22
@@ -83,19 +83,19 @@ ELSE
 ENDIF
 SIF TALENT:(FLAG:799):공생 == 1
 	TIMES LOCAL:0, 1.02
-;距離を取った場合
+;거리를 벌린 경우
 SIF MOVESELECT == 3
 	TIMES LOCAL:0, 1.50
 SIF BASE:체력 + LOCAL:0 >= MAXBASE:체력
 	LOCAL:0 = MAXBASE:체력 - BASE:체력
-;체력が尽きている場合、체력が回復しない
+;체력이 다한 경우, 체력이 회복되지 않는다
 SIF BASE:체력 == 0
 	LOCAL:0 = 0
 BASE:체력 += LOCAL:0
 
-;기력20%回復
-;회복빠름なら+2%
-;회복느림なら-2%
+;기력 20% 회복
+;회복빠름이라면 +2%
+;회복느림이라면 -2%
 LOCAL:1 = MAXBASE:기력
 IF TALENT:회복빠름 == 1
 	TIMES LOCAL:1, 0.22
@@ -104,7 +104,7 @@ ELSEIF TALENT:회복느림 == 1
 ELSE
 	TIMES LOCAL:1, 0.20
 ENDIF
-;距離を取った場合
+;거리를 벌린 경우
 SIF MOVESELECT == 3
 	TIMES LOCAL:1, 1.50
 SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
@@ -114,7 +114,7 @@ BASE:기력 += LOCAL:1
 RETURN 1
 
 
-;距離指定変身の間借り
+;거리 지정 변신의 間借り(뭔말인지 모르겠다)
 @COM201
 	CALL COM0
 	RETURN RESULT

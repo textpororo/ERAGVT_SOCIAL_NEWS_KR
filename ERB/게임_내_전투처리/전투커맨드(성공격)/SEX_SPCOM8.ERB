@@ -1,18 +1,18 @@
-﻿;尿道攻め
+﻿;요도 공격
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM1008
 RETURN 통상
 
 @SEX_SPCOM8
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め
+;추가 고문
 EX_COM = 1
 SH_COM = 0
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -20,14 +20,14 @@ REND
 ;방심도 상승
 TFLAG:3 += 50
 
-;사정値 50
+;사정치 50
 CALL TENTACLE_SYASEI_UP, 50
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 1008
 
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 2000
 ELSEIF ABL:Ｃ감각 == 1
@@ -41,30 +41,30 @@ ELSEIF ABL:Ｃ감각 == 4
 ELSEIF ABL:Ｃ감각 >= 5
 	LOCAL:0 = 40000
 ENDIF
-;ペニス持ちには効果大
+;페니스가 있다면 효과가 크다
 SIF ISMANLY() || TALENT:후타나리 > 0
 	LOCAL:0 += 1500
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,-1)
 
 
 ;지문: SPCOM8
 CALL MESSAGE_SEX_SPCOM8, EX_COM, SH_COM
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 1
 
-;ベース
+;BASE
 EXP:방뇨경험 += 1
 EXP:노출쾌락경험 += 1
 
 
 
 ;굴복
-;노출벽に応じて
+;노출벽에 정비례
 IF ABL:노출벽 < 3
 	LOCAL:8 = 2000
 ELSEIF ABL:노출벽 == 3
@@ -76,7 +76,7 @@ ELSE
 ENDIF
 
 ;치정
-;노출벽に応じて
+;노출벽에 반비례
 IF ABL:노출벽 < 3
 	LOCAL:9 = 2000
 ELSEIF ABL:노출벽 == 3
@@ -88,7 +88,8 @@ ELSE
 ENDIF
 
 ;공포
-;방뇨경험이 低いと入る
+;방뇨경험이 낮으면 들어간다
+;기준치를 0, 5, 10 이런 식으로 두면 어떨까 싶다
 IF EXP:방뇨경험 == 0
 	LOCAL:11 = 8000
 ELSEIF EXP:방뇨경험 == 1
@@ -99,32 +100,32 @@ ELSE
 	LOCAL:11 = 800
 ENDIF
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 1008
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 500
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 2000
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 400
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 500
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 4000
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 50
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 

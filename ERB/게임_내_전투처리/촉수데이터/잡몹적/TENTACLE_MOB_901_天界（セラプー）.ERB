@@ -7,7 +7,7 @@
 @TENTACLE_MOB_901
 
 @TENTACLE_MOB_901_GETNAME
-;V공격(약)・A공격(약)で確率で付与される行動予約を無かったことにする
+;Ｖ공격（약）・Ａ공격（약）で確率で付与される行動予約を無かったことにする
 SIF TFLAG:17 == 3 || TFLAG:17 == 5
 	TFLAG:17 = -1
 RESULTS = セラプー
@@ -100,10 +100,10 @@ RETURN RESULT
 ;--------------------------------------------------
 ;PALAM補正 百分率で返す
 @TENTACLE_MOB_901_PALAM_HOSEI
-LOCAL:0 = 100	;快C
-LOCAL:1 = 100	;快V
-LOCAL:2 = 100	;快A
-LOCAL:3 = 100	;快B
+LOCAL:0 = 100	;쾌Ｃ
+LOCAL:1 = 100	;쾌Ｖ
+LOCAL:2 = 100	;쾌Ａ
+LOCAL:3 = 100	;쾌Ｂ
 LOCAL:4 = 50	;윤활
 LOCAL:5 = 50	;공순
 LOCAL:6 = 50	;取得
@@ -175,7 +175,7 @@ ELSEIF (CHARATALENT_F(TARGET,0,"남자")!=1 && CHARATALENT_F(TARGET,0,"후타나
 ELSEIF ((CHARATALENT_F(TARGET,0,"남자")==1 || CHARATALENT_F(TARGET,0,"후타나리")==1) || (CHARATALENT_F(TARGET,1,"남자")!=1 && CHARATALENT_F(TARGET,1,"후타나리")!=1)) && RAND:4 == 0
 	RETURN 2001	;ドレインキッス
 ELSEIF RAND:6 == 0 && BASE:TARGET:체력<MAXBASE:TARGET:체력/10
-	RETURN 8	;スパンキング(跳ね回る)
+	RETURN 8	;스팽킹(跳ね回る)
 ELSE
 	SELECTCASE RAND:5
 	CASE 0
@@ -204,14 +204,14 @@ RETURN 0
 ;--------------------------------------------------
 ;COM0〜20
 ;==================================================
-;0【Ｃ공격(약)】
+;0【Ｃ공격（약）】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM0
 RETURN 통상
 
 @MESSAGE_MOB_901_COM0, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ攻め
+PRINT Ｃ공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -399,17 +399,17 @@ ELSE
 ENDIF
 
 ;==================================================
-;2【Ｖ공격(약)】
+;2【Ｖ공격（약）】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM2
 RETURN 통상
 
 @MESSAGE_MOB_901_COM2, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｖ攻め
+PRINT Ｖ공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
-TFLAG:17 = -1	;行動予約なし
+TFLAG:17 = -1	;행동 예약 없음
 PRINTL 
 
 CALL TENTACLE_ACCESS, "NAME"
@@ -665,20 +665,20 @@ CASE 2
 ENDSELECT
 
 ;==================================================
-;4【Ａ공격(약)】
+;4【Ａ공격（약）】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM4
 RETURN 통상
 
 @MESSAGE_MOB_901_COM4, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ攻め
+PRINT Ａ공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
-TFLAG:17 = -1	;行動予約なし
+TFLAG:17 = -1	;행동 예약 없음
 PRINTL 
 
-TFLAG:17 = -1	;行動予約なし
+TFLAG:17 = -1	;행동 예약 없음
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORM は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 体の上に乗っかり
 IF (ARG & Ａ) == 0
@@ -847,17 +847,17 @@ ELSE
 ENDIF
 
 ;==================================================
-;6【Ｂ공격(약)】
+;6【Ｂ공격（약）】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM6
 RETURN 통상
 
 @MESSAGE_MOB_901_COM6, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｂ攻め
+PRINT Ｂ공격（약）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
-TFLAG:17 = -1	;行動予約なし
+TFLAG:17 = -1	;행동 예약 없음
 PRINTL 
 
 CALL TENTACLE_ACCESS, "NAME"
@@ -960,7 +960,7 @@ ELSE
 ENDIF
 
 ;==================================================
-;1【Ｃ공격(강)(クリしゃぶりつき)】
+;1【Ｃ공격（강）(クリしゃぶりつき)】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM1
 RETURN 통상
@@ -1023,7 +1023,7 @@ IF (CHARATALENT_F(TARGET,0,"남자")!=1 && CHARATALENT_F(TARGET,0,"후타나리"
 ;女、女→女 かつ 속옷방어無し
 	TFLAG:17 = 2002	;行動予約「기생準備」
 ELSE
-	TFLAG:17 = -1	;行動予約なし
+	TFLAG:17 = -1	;행동 예약 없음
 ENDIF
 
 ;撮影フラグは、愛撫(1)、口淫(2)、挿入(3)、嬲りものにされる(7)の４つ
@@ -1071,7 +1071,7 @@ ELSE
 ENDIF
 
 ;==================================================
-;8【スパンキング(跳ね回る)】
+;8【스팽킹(跳ね回る)】
 ;--------------------------------------------------
 @SEX_TYPE_MOB_901_COM8
 RETURN 통상
@@ -1127,15 +1127,15 @@ ENDIF
 RETURN -1
 
 ;==================================================
-;14【衣装を破く】
+;14【의상을 찢는다】
 ;--------------------------------------------------
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_901_COM14
 RETURN 통상
 
 @MESSAGE_MOB_901_COM14, ARG:0, ARG:1
 FONTBOLD
-PRINTL 衣装を破く
+PRINTL 의상을 찢는다
 FONTREGULAR
 IF RAND:2 == 0
 	CALL TENTACLE_ACCESS, "NAME"
@@ -1172,12 +1172,12 @@ LOCAL:2 = 0	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:3 = 30	;방심도상승량
 LOCAL:4 = 0	;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 ビット演算）
 LOCAL:5 = 20	;사정 게이지상승량
-LOCAL:6 = 0	;服へのダメージ
+LOCAL:6 = 0	;의상에의 피해
 LOCAL:7 = 0	;コマンドの強度（弱=0 強=1 SP=2）
 LOCAL:8 = 0	;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:9 = 0	;特殊効果
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 LOCAL:10 = 0	;쾌Ｃ強度
 LOCAL:11 = 0	;쾌Ｖ強度
@@ -1187,8 +1187,8 @@ LOCAL:13 = 0	;쾌Ｂ強度
 LOCAL:14 = 1	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
 LOCAL:16 = 6	;습득影響度
-LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
-LOCAL:18 = 4	;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（수치 플레이など）
+LOCAL:18 = 4	;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 EXP:펠라경험 += 1	;펠라경험
 EXP:방뇨경험 += 0	;방뇨경험
 
@@ -1196,19 +1196,19 @@ EXP:방뇨경험 += 0	;방뇨경험
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-TFLAG:20 = LOCAL:0	;촉수の行動を記録
-TFLAG:17 = -1	;行動予約なし
+TFLAG:20 = LOCAL:0	;촉수의 행동을 기록
+TFLAG:17 = -1	;행동 예약 없음
 
-RESULT:4 += 2	;윤활基本値
-RESULT:6 += 5	;습득基本値
-RESULT:7 += 5	;욕정基本値
-RESULT:8 += 5	;굴복基本値
-RESULT:9 += 5	;치정基本値
-RESULT:10 += 0	;고통基本値
-RESULT:11 += 1	;공포基本値
-RESULT:12 += 1	;체력消費基本値
+RESULT:4 += 2	;윤활 기본값
+RESULT:6 += 5	;습득 기본값
+RESULT:7 += 5	;욕정 기본값
+RESULT:8 += 5	;굴복 기본값
+RESULT:9 += 5	;치정 기본값
+RESULT:10 += 0	;고통 기본값
+RESULT:11 += 1	;공포 기본값
+RESULT:12 += 1	;체력 소비 기본값
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 @MESSAGE_MOB_901_COM2000, ARG:0, ARG:1
@@ -1295,12 +1295,12 @@ LOCAL:2 = 0	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:3 = 30	;방심도상승량
 LOCAL:4 = 0	;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 ビット演算）
 LOCAL:5 = 20	;사정 게이지상승량
-LOCAL:6 = 0	;服へのダメージ
+LOCAL:6 = 0	;의상에의 피해
 LOCAL:7 = 0	;コマンドの強度（弱=0 強=1 SP=2）
 LOCAL:8 = 0	;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:9 = 0	;特殊効果
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 LOCAL:10 = 0	;쾌Ｃ強度
 LOCAL:11 = 0	;쾌Ｖ強度
@@ -1310,8 +1310,8 @@ LOCAL:13 = 0	;쾌Ｂ強度
 LOCAL:14 = 1	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
 LOCAL:16 = 6	;습득影響度
-LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
-LOCAL:18 = 4	;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（수치 플레이など）
+LOCAL:18 = 4	;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 EXP:펠라경험 += 1	;펠라경험
 EXP:방뇨경험 += 0	;방뇨경험
 
@@ -1319,19 +1319,19 @@ EXP:방뇨경험 += 0	;방뇨경험
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-TFLAG:20 = LOCAL:0	;촉수の行動を記録
+TFLAG:20 = LOCAL:0	;촉수의 행동을 기록
 TFLAG:17 = -1	;行動予約
 
-RESULT:4 += 2	;윤활基本値
-RESULT:6 += 5	;습득基本値
-RESULT:7 += 5	;욕정基本値
-RESULT:8 += 5	;굴복基本値
-RESULT:9 += 5	;치정基本値
-RESULT:10 += 0	;고통基本値
-RESULT:11 += 1	;공포基本値
-RESULT:12 += 1	;체력消費基本値
+RESULT:4 += 2	;윤활 기본값
+RESULT:6 += 5	;습득 기본값
+RESULT:7 += 5	;욕정 기본값
+RESULT:8 += 5	;굴복 기본값
+RESULT:9 += 5	;치정 기본값
+RESULT:10 += 0	;고통 기본값
+RESULT:11 += 1	;공포 기본값
+RESULT:12 += 1	;체력 소비 기본값
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 @MESSAGE_MOB_901_COM2001, ARG:0, ARG:1
@@ -1379,7 +1379,7 @@ IF BASE:TARGET:기력 <= 0
 	CALL TENTACLE_ACCESS, "NAME"
 	PRINTFORML は{LOCAL:0}回復した！
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%체력が{LOCAL:0}吸い取られた！
-	;状態異常：기절
+	;상태 이상：기절
 	CALL STATE_CHANGE_KIZETU_DAMAGE(LOCAL:1*2)
 ELSEIF LOCAL:0 > BASE:TARGET:기력
 ;기력だけでは足りない
@@ -1432,12 +1432,12 @@ LOCAL:2 = Ｃ	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:3 = 30	;방심도상승량
 LOCAL:4 = 0	;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 ビット演算）
 LOCAL:5 = 0	;사정 게이지상승량
-LOCAL:6 = 0	;服へのダメージ
+LOCAL:6 = 0	;의상에의 피해
 LOCAL:7 = 0	;コマンドの強度（弱=0 強=1 SP=2）
 LOCAL:8 = 0	;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:9 = 0	;特殊効果
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 LOCAL:10 = 6	;쾌Ｃ強度
 LOCAL:11 = 0	;쾌Ｖ強度
@@ -1447,8 +1447,8 @@ LOCAL:13 = 0	;쾌Ｂ強度
 LOCAL:14 = 0	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
 LOCAL:16 = 0	;습득影響度
-LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
-LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（수치 플레이など）
+LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 EXP:펠라경험 += 0	;펠라경험
 EXP:방뇨경험 += 0	;방뇨경험
 
@@ -1456,19 +1456,19 @@ EXP:방뇨경험 += 0	;방뇨경험
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-TFLAG:20 = LOCAL:0	;촉수の行動を記録
+TFLAG:20 = LOCAL:0	;촉수의 행동을 기록
 TFLAG:17 = 2003	;「기생」
 
-RESULT:4 += 1000	;윤활基本値
-RESULT:6 += 100	;습득基本値
-RESULT:7 += 500	;욕정基本値
-RESULT:8 += 1000	;굴복基本値
-RESULT:9 += 50	;치정基本値
-RESULT:10 += 100	;고통基本値
-RESULT:11 += 50	;공포基本値
-RESULT:12 += 100	;체력消費基本値
+RESULT:4 += 1000	;윤활 기본값
+RESULT:6 += 100	;습득 기본값
+RESULT:7 += 500	;욕정 기본값
+RESULT:8 += 1000	;굴복 기본값
+RESULT:9 += 50	;치정 기본값
+RESULT:10 += 100	;고통 기본값
+RESULT:11 += 50	;공포 기본값
+RESULT:12 += 100	;체력 소비 기본값
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 @MESSAGE_MOB_901_COM2002, ARG:0, ARG:1
@@ -1497,7 +1497,7 @@ ELSE
 ENDIF
 PRINTFORMW 
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스は不思議な熱を発している。
-;状態異常：강구속
+;상태 이상：강구속
 CALL STATE_CHANGE_PKOUSOKU, 50
 SIF (TCVARn:12 & 강구속)
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 손발はより強く拘束された！
@@ -1530,12 +1530,12 @@ LOCAL:2 = Ｃ	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:3 = 100	;방심도상승량
 LOCAL:4 = 0	;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 ビット演算）
 LOCAL:5 = 5000	;사정 게이지상승량
-LOCAL:6 = 0	;服へのダメージ
+LOCAL:6 = 0	;의상에의 피해
 LOCAL:7 = 2	;コマンドの強度（弱=0 強=1 SP=2）
 LOCAL:8 = 0	;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:9 = 0	;特殊効果
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 LOCAL:10 = 8	;쾌Ｃ強度
 LOCAL:11 = 8	;쾌Ｖ強度
@@ -1545,8 +1545,8 @@ LOCAL:13 = 8	;쾌Ｂ強度
 LOCAL:14 = 2	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
 LOCAL:16 = 0	;습득影響度
-LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
-LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（수치 플레이など）
+LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 EXP:펠라경험 += 0	;펠라경험
 EXP:방뇨경험 += 0	;방뇨경험
 
@@ -1554,19 +1554,19 @@ EXP:방뇨경험 += 0	;방뇨경험
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-TFLAG:20 = LOCAL:0	;촉수の行動を記録
-TFLAG:17 = -1	;行動予約なし
+TFLAG:20 = LOCAL:0	;촉수의 행동을 기록
+TFLAG:17 = -1	;행동 예약 없음
 
-RESULT:4 += 1000	;윤활基本値
-RESULT:6 += 100	;습득基本値
-RESULT:7 += 1000	;욕정基本値
-RESULT:8 += 1000	;굴복基本値
-RESULT:9 += 100	;치정基本値
-RESULT:10 += 1000	;고통基本値
-RESULT:11 += 50	;공포基本値
-RESULT:12 += 100	;체력消費基本値
+RESULT:4 += 1000	;윤활 기본값
+RESULT:6 += 100	;습득 기본값
+RESULT:7 += 1000	;욕정 기본값
+RESULT:8 += 1000	;굴복 기본값
+RESULT:9 += 100	;치정 기본값
+RESULT:10 += 1000	;고통 기본값
+RESULT:11 += 50	;공포 기본값
+RESULT:12 += 100	;체력 소비 기본값
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 @MESSAGE_MOB_901_COM2003, ARG:0, ARG:1
@@ -1647,12 +1647,12 @@ LOCAL:2 = Ｃ	;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:3 = 30	;방심도상승량
 LOCAL:4 = 0	;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 균열64 오발128 ビット演算）
 LOCAL:5 = 50	;사정 게이지상승량
-LOCAL:6 = 0	;服へのダメージ
+LOCAL:6 = 0	;의상에의 피해
 LOCAL:7 = 2	;コマンドの強度（弱=0 強=1 SP=2）
 LOCAL:8 = 0	;처녀 상실の有無（なし0 あり1 あり、지문なし2）
 LOCAL:9 = 0	;特殊効果
 
-;PALAM影響度　影響なしなら=0　基本値=5
+;PALAM影響度　影響なしなら=0　 기본값=5
 ;-------------------------
 LOCAL:10 = 5	;쾌Ｃ強度
 LOCAL:11 = 2	;쾌Ｖ強度
@@ -1662,8 +1662,8 @@ LOCAL:13 = 2	;쾌Ｂ強度
 LOCAL:14 = 5	;マゾによる굴복、공포影響度
 LOCAL:15 = 0	;挿入による공순影響度
 LOCAL:16 = 3	;습득影響度
-LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（羞恥プレイなど）
-LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、イラマチオ、パイズリなど）
+LOCAL:17 = 3	;노출벽による욕정、치정、공포影響度（수치 플레이など）
+LOCAL:18 = 0	;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
 EXP:펠라경험 += 0	;펠라경험
 EXP:방뇨경험 += 0	;방뇨경험
 
@@ -1671,19 +1671,19 @@ EXP:방뇨경험 += 0	;방뇨경험
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
-TFLAG:20 = LOCAL:0	;촉수の行動を記録
-TFLAG:17 = -1	;行動予約なし
+TFLAG:20 = LOCAL:0	;촉수의 행동을 기록
+TFLAG:17 = -1	;행동 예약 없음
 
-RESULT:4 += 1000	;윤활基本値
-RESULT:6 += 1000	;습득基本値
-RESULT:7 += 100	;욕정基本値
-RESULT:8 += 1000	;굴복基本値
-RESULT:9 += 100	;치정基本値
-RESULT:10 += 1000	;고통基本値
-RESULT:11 += 50	;공포基本値
-RESULT:12 += 100	;체력消費基本値
+RESULT:4 += 1000	;윤활 기본값
+RESULT:6 += 1000	;습득 기본값
+RESULT:7 += 100	;욕정 기본값
+RESULT:8 += 1000	;굴복 기본값
+RESULT:9 += 100	;치정 기본값
+RESULT:10 += 1000	;고통 기본값
+RESULT:11 += 50	;공포 기본값
+RESULT:12 += 100	;체력 소비 기본값
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESULT:6, RESULT:7, RESULT:8, RESULT:9, RESULT:10, RESULT:11, RESULT:12
 
 @MESSAGE_MOB_901_COM2004, ARG:0, ARG:1

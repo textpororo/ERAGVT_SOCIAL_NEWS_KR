@@ -1,26 +1,26 @@
 ﻿;방어
 @COM4
 
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
 
-;滞空中なら着地状態になる
+;체공 중이라면 착지 상태가 된다
 IF GETBIT(TCVARn:216, 1)
 	TCVARn:216 = 4
-	;FEAT 효과에 따른着地時の反動
+	;FEAT 효과에 의한 착지 시의 반동 증가
 	SIF TALENT:날개 > 0
 		TFLAG:99 += 1
 ELSE
 	TCVARn:216 = 0
 ENDIF
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;방어플래그를 세운다
+;방어 플래그를 세운다
 TCVARn:2 = 자세：방어
 
 ;지문: 방어
@@ -29,7 +29,7 @@ CALL MESSAGE_BATTLE_CHARA_DEFENSE
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_DEFENSE
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 RETURN 1

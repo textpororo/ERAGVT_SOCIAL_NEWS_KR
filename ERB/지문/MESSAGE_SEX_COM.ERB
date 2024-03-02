@@ -3,10 +3,10 @@
 ;C=ARG&1 V=ARG&2 A=ARG&4 B=ARG&8
 ;--------------------------------------------------
 
-;COM0：C공격(약)
+;COM0：Ｃ공격（약）
 @MESSAGE_SEX_COM0, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ공격(약)
+PRINT Ｃ공격（약）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -384,10 +384,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM1：C공격(강)
+;COM1：Ｃ공격（강）
 @MESSAGE_SEX_COM1, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ공격(강)
+PRINT Ｃ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -828,10 +828,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM2：V공격(약)
+;COM2：Ｖ공격（약）
 @MESSAGE_SEX_COM2, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｖ공격(약)
+PRINT Ｖ공격（약）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -1019,7 +1019,7 @@ ELSE
 			PRINTFORML いる・・・
 			PRINTW 
 		ENDIF
-		;사정値 100
+		;사정치 100
 		CALL TENTACLE_SYASEI_UP, 100
 		;例外的にこの行動のみ確率で사정箇所플래그를 세운다
 		TFLAG:4 = TFLAG:4 | 균열
@@ -1283,10 +1283,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM3：V공격(강)
+;COM3：Ｖ공격（강）
 @MESSAGE_SEX_COM3, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｖ공격(강)
+PRINT Ｖ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -1865,10 +1865,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM4：A공격(약)
+;COM4：Ａ공격（약）
 @MESSAGE_SEX_COM4, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ공격(약)
+PRINT Ａ공격（약）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -2055,10 +2055,10 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM5：A공격(강)
+;COM5：Ａ공격（강）
 @MESSAGE_SEX_COM5, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ공격(강)
+PRINT Ａ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -2299,10 +2299,10 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM6：B공격(약)
+;COM6：Ｂ공격（약）
 @MESSAGE_SEX_COM6, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｂ공격(약)
+PRINT Ｂ공격（약）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
@@ -2445,10 +2445,10 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM7：B공격(강)
+;COM7：Ｂ공격（강）
 @MESSAGE_SEX_COM7, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｂ공격(강)
+PRINT Ｂ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
@@ -2635,10 +2635,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM8：スパンキング
+;COM8：스팽킹
 @MESSAGE_SEX_COM8
 FONTBOLD
-PRINTL スパンキング
+PRINTL 스팽킹
 FONTREGULAR
 
 IF (FLAG:110 == 0)
@@ -2767,7 +2767,7 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM9：針
+;COM9：바늘
 @MESSAGE_SEX_COM9
 FONTBOLD
 PRINTL 針刺し
@@ -2825,10 +2825,10 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM10：手淫
+;COM10：수음
 @MESSAGE_SEX_COM10, ARG:0, ARG:1
 FONTBOLD
-PRINT 強制手淫
+PRINT 強制수음
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, 0
 PRINTL 
@@ -2896,7 +2896,7 @@ ELSE
 	ELSE
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%촉수を握りつぶそうと指先に力を込めるが、
 		PRINTFORM 逆効果と言わんばかりに촉수の先端からは先走り汁が噴き出して顔や胸を汚していく。
-		PRINTFORML その様子はさながら手淫をしているようにしか見えない事に、
+		PRINTFORML その様子はさながら수음をしているようにしか見えない事に、
 		IF TALENT:주관시점 > 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気付いてしまう・・・
 		ELSE
@@ -3152,10 +3152,10 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM12：イラマチオ
+;COM12：이라마치오
 @MESSAGE_SEX_COM12
 FONTBOLD
-PRINTL イラマチオ
+PRINTL 이라마치오
 FONTREGULAR
 
 IF (FLAG:110 == 0)
@@ -3276,19 +3276,19 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;COM13：絶頂禁止
+;COM13：절정 금지
 @MESSAGE_SEX_COM13, ARG:0, ARG:1
 FONTBOLD
 IF TCVARn:40
 	PRINT 焦らし嬲り（絶頂解放）
 ELSE
-	PRINT 焦らし嬲り（絶頂禁止）
+	PRINT 焦らし嬲り（절정 금지）
 ENDIF
 FONTREGULAR
 SIF ARG:0
 	CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, 0
 PRINTL 
-;絶頂禁止中
+;절정 금지中
 IF TCVARn:40
 	IF (FLAG:110 == 0)
 		CALL TENTACLE_ACCESS, "NAME"
@@ -3316,7 +3316,7 @@ IF TCVARn:40
 	ELSE
 		PRINTL 身体の奥底から何かが湧き上がってくるのを感じる・・・
 	ENDIF
-;絶頂禁止中ではない
+;절정 금지中ではない
 ELSE
 	IF (FLAG:110 == 0)
 		CALL TENTACLE_ACCESS, "NAME"
@@ -3361,10 +3361,10 @@ ENDIF
 
 
 ;--------------------------------------------------
-;COM14：衣装を破く
+;COM14：의상을 찢는다
 @MESSAGE_SEX_COM14
 FONTBOLD
-PRINTL 衣装を破く
+PRINTL 의상을 찢는다
 FONTREGULAR
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
@@ -3410,10 +3410,10 @@ PRINTL
 
 
 ;--------------------------------------------------
-;COM15：種付けピストン（Ｖ系統）
+;COM15：교배 피스톤（Ｖ系統）
 @MESSAGE_SEX_COM15, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：種付けピストン
+PRINT 派生行動：교배 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -3495,10 +3495,10 @@ ENDCATCH
 
 
 ;--------------------------------------------------
-;COM16：種付けフィニッシュ（Ｖ系統）
+;COM16：교배 피니쉬（Ｖ系統）
 @MESSAGE_SEX_COM16, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：種付けフィニッシュ
+PRINT 派生行動：교배 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -3580,10 +3580,10 @@ ENDCATCH
 
 
 ;--------------------------------------------------
-;COM17：애널ピストン（Ａ系統）
+;COM17：애널 피스톤（Ａ系統）
 @MESSAGE_SEX_COM17, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：애널ピストン
+PRINT 派生行動：애널 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -3658,10 +3658,10 @@ ENDCATCH
 
 
 ;--------------------------------------------------
-;COM18：애널フィニッシュ（Ａ系統）
+;COM18：애널 피니쉬（Ａ系統）
 @MESSAGE_SEX_COM18, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：애널フィニッシュ
+PRINT 派生行動：애널 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -3760,10 +3760,10 @@ ENDCATCH
 
 
 ;--------------------------------------------------
-;COM19：両穴ピストン（ＶＡ系統）
+;COM19：양 구멍 피스톤（ＶＡ系統）
 @MESSAGE_SEX_COM19, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：両穴ピストン
+PRINT 派生行動：양 구멍 피스톤
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ+Ａ
 PRINTL 
@@ -3849,10 +3849,10 @@ ENDCATCH
 
 
 ;--------------------------------------------------
-;COM20：両穴フィニッシュ（ＶＡ系統）
+;COM20：양 구멍 피니쉬（ＶＡ系統）
 @MESSAGE_SEX_COM20, ARG:0, ARG:1
 FONTBOLD
-PRINT 派生行動：両穴フィニッシュ
+PRINT 派生行動：양 구멍 피니쉬
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ+Ａ
 PRINTL 

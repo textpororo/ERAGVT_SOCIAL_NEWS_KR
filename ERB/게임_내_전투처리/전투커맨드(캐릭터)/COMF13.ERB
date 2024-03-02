@@ -1,26 +1,26 @@
 ﻿;봉사한다
 @COM13
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;사정部位フラグ:手を立てる
+;사정 부위 플래그:손을 세운다
 TFLAG:4 = TFLAG:4 | 손
-;기교が２以上なら口を立てる
+;기교가 2 이상이면 입을 세운다
 SIF ABL:기교 >= 2
 	TFLAG:4 = TFLAG:4 | 입
-;강구속中は사정部位플래그를折る
+;강구속 중에는 사정 부위 플래그를 접는다
 SIF (TCVARn:12 & 강구속)
 	TFLAG:4 = 0
 
-;방어フラグ：봉사한다にする
+;방어 플래그：봉사한다로 한다
 TCVARn:2 = 자세：봉사한다
 
 ;방심도 상승
 TFLAG:3 += 100
 
-;사정 기교依存
+;사정 기교 의존
 IF ABL:기교 < 2
 	LOCAL = 70
 ELSEIF ABL:기교 == 2
@@ -40,7 +40,7 @@ CALL MESSAGE_BATTLE_CHARA_HOUSI
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_HOUSI
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
 RETURN 1

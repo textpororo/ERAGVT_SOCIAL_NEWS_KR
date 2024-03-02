@@ -47,7 +47,7 @@ CFLAG:30 += 20 + RAND:10
 SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
-;快C
+;쾌Ｃ
 IF ABL:Ｃ감각 == 0
 	LOCAL:0 = 500
 ELSEIF ABL:Ｃ감각 == 1
@@ -62,7 +62,7 @@ ELSE
 	LOCAL:0 = 1500
 ENDIF
 
-;快V
+;쾌Ｖ
 IF ISFEMALE()
 	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
@@ -85,7 +85,7 @@ IF ISFEMALE()
 	ENDIF
 ENDIF
 
-;快A
+;쾌Ａ
 ;A経験がないならAには入れない
 IF EXP:Ａ경험 > 0
 	IF ABL:Ａ감각 == 0
@@ -109,7 +109,7 @@ IF EXP:Ａ경험 > 0
 	ENDIF
 ENDIF
 
-;快B
+;쾌Ｂ
 IF ABL:Ｂ감각 == 0
 	LOCAL:3 = 500
 ELSEIF ABL:Ｂ감각 == 1
@@ -124,7 +124,7 @@ ELSEIF ABL:Ｂ감각 >= 5
 	LOCAL:3 = 1500
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,2,3,-1)
 
 
@@ -135,22 +135,22 @@ SIF CFLAG:20 == 2
 ;지문: 注射
 CALL MESSAGE_PRISON_COM_300
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 0
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 1000
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 500
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 0
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 500
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 500
 
 ;유폐中パラメータ変動共通処理へ

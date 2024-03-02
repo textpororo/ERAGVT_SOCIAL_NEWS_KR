@@ -1,14 +1,14 @@
 ﻿;ＳＰ버스트
 @COM70
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;疲労が蓄積し過ぎていると使用できない
+;피로가 너무 많이 쌓이면 사용할 수 없다
 IF CFLAG:99 >= 100
-	PRINTFORML %PRINT_CALLNAME(TARGET)%に蓄積した疲労はもう限界に達している…！
-	PRINTFORML ＳＰ버스트は使えない…！
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 신체에 축적된 피로는 이미 한계에 다다랐다…！
+	PRINTFORML ＳＰ버스트를 사용할 수 없다…！
 	PRINTW 
 	RETURN 0
 ENDIF
@@ -16,31 +16,31 @@ ENDIF
 TCVARn:0 = 2
 TFLAG:4 = 0
 
-;全ゲージ消費
+;모든 게이지 소비
 TCVARn:6 += -500
 
 FONTBOLD
-PRINTL SPバースト
+PRINTL SP버스트
 FONTREGULAR
 
-;지문: SPバースト
+;지문: SP버스트
 CALL MESSAGE_BATTLE_CHARA_SP_BURST
 
-;체력, 기력最大値、방어力、残ゲージ、행동포인트依存の固定ダメージ
+;체력 및 기력 최대치, 방어력, 게이지 잔량, 행동 포인트 의존의 고정 피해량
 LOCAL = MAX((MAXBASE:체력 + MAXBASE:기력 - 2000) * 2 + (MAXBASE:방어 - 100) * 3, 480) * POWER(MAX(TCVARn:4 + TCVARn:5 - 200, 0), 2) * (100 + EX:행동포인트 * 2) / 4800000 + 2500 * (CFLAG:1 == 2)
 
-;直前に노려본다、매도한다、반항한다、설득해본다を使っていた場合ダメージ上昇
+;직전에 노려본다, 매도한다, 반항한다, 설득해본다 를 사용한 경우에는 피해량 상승
 SIF PREVCOM == 44 || PREVCOM == 45 || PREVCOM == 46 || PREVCOM == 47
 	LOCAL = LOCAL * 115 / 100
-;雑魚にはダメージ強化
+;잡몹에게는 피해량 강화
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 0 && ENEMY_TYPE_CHECK_F("MOB") == 1
 	LOCAL *= 2
-;消耗度が低いとダメージ低下、高いとダメージ上昇
+;체력 기력 성내성의 소모도가 낮을 수록 피해량 감소, 반대로 높을 수록 피해량 상승
 LOCAL = LOCAL * (125 - PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 40, MAXBASE:체력 + MAXBASE:기력 + MAXBASE:성내성 * 40)) / 100
-;변신능력のないキャラはリスクが少ないぶんダメージ低下
+;변신능력이 없는 캐릭터는 리스크가 적은 만큼 피해량 감소
 SIF TALENT:변신능력 < 1
 	LOCAL = LOCAL * 85 / 100
-;ダメージキャップ
+;피해량 최대치
 LOCAL = LIMIT(LOCAL, 500, 99999)
 
 FLAG:13 -= LOCAL
@@ -50,27 +50,27 @@ IF (FLAG:110 == 0)
 ELSEIF (FLAG:110 == 1)
 	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
-PRINTFORML に{LOCAL}のダメージを与えた！
+PRINTFORML 에게 {LOCAL} 의 피해량을 입혔다！
 
-;反動として残り체력と기력の1/4分を消費
+;반동으로서 나머지 체력과 기력의 1/4분을 소비
 LOCAL = BASE:체력 / 4
 LOCAL:1 = BASE:기력 / 4
 BASE:체력 -= LOCAL
 BASE:기력 -= LOCAL:1
-PRINTFORML 체력を{LOCAL}、기력を{LOCAL:1}消費した！
+PRINTFORML 체력을 {LOCAL}, 기력을 {LOCAL:1} 소비했다！
 PRINTW 
 FONTREGULAR
 
-;威力に応じて疲労が蓄積
+;위력에 따라 피로가 축적
 TFLAG:99 += 2 + MAX(TCVARn:4 + TCVARn:5 - 200, 0) * EX:행동포인트 / 400
 
-;행동포인트を半減
+;행동 포인트를 반감
 SIF EX:행동포인트 > 0
 	EX:행동포인트 = EX:행동포인트 / 2 + 1
 
-;촉수の体勢が崩れる
+;촉수의 자세가 흐트러진다
 TFLAG:1 = 1
-;自動で戦闘メニューを選択する
+;자동으로 전투 메뉴를 선택한다
 TCVARn:8 = 1
 
 RETURN 1

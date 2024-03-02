@@ -7,11 +7,11 @@
 
 
 ;==================================================
-;SPCOM0：C공격(SP)
+;SPCOM0：Ｃ공격Ａ공격（ＳＰ）
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM0, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ攻めＳＰ
+PRINT Ｃ공격（ＳＰ）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -223,11 +223,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM1：V공격(SP)
+;SPCOM1：Ｖ공격（ＳＰ）
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM1, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｖ攻めＳＰ
+PRINT Ｖ공격（ＳＰ）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -587,11 +587,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM2：A공격(SP)
+;SPCOM2：Ａ공격（ＳＰ）
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM2, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ攻めＳＰ
+PRINT Ａ공격（ＳＰ）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -780,11 +780,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM3：B공격(SP)
+;SPCOM3：Ｂ공격（ＳＰ）
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM3, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｂ攻めＳＰ
+PRINT Ｂ공격（ＳＰ）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
@@ -951,11 +951,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM5：パイズリ
+;SPCOM5：파이즈리
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM5, ARG:0, ARG:1
 FONTBOLD
-PRINT 強制パイズリ
+PRINT 強制파이즈리
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
@@ -1094,11 +1094,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM6：強制自慰
+;SPCOM6：강제 자위
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM6
 FONTBOLD
-PRINTL 強制自慰
+PRINTL 강제 자위
 FONTREGULAR
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
@@ -1121,12 +1121,12 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_SPCOM6")
 PRINTL 
 
 ;==================================================
-;SPCOM7：羞恥プレイ
+;SPCOM7：수치 플레이
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM7
 #DIM LCOUNT
 FONTBOLD
-PRINTL 羞恥プレイ
+PRINTL 수치 플레이
 FONTREGULAR
 IF (FLAG:110 == 0)
 	CALL TENTACLE_ACCESS, "NAME"
@@ -1299,11 +1299,11 @@ PRINTL
 
 
 ;==================================================
-;SPCOM8：尿道攻め
+;SPCOM8：요도 공격
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM8, ARG:0, ARG:1
 FONTBOLD
-PRINT 尿道攻め
+PRINT 요도 공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -1354,7 +1354,7 @@ PRINTW
 
 
 ;==================================================
-;SPCOM9：V拡張攻め
+;SPCOM9：Ｖ확장 공격
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM9, ARG:0, ARG:1
 FONTBOLD
@@ -1575,11 +1575,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM10：A拡張攻め
+;SPCOM10：Ａ확장 공격
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM10, ARG:0, ARG:1
 FONTBOLD
-PRINT Ａ拡張攻め
+PRINT Ａ확장 공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -1649,11 +1649,11 @@ ENDIF
 
 
 ;==================================================
-;SPCOM11：甘えん坊授乳プレイ
+;SPCOM11：응석받이 수유 플레이
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM11, ARG:0, ARG:1
 FONTBOLD
-PRINT 甘えん坊授乳プレイ
+PRINT 응석받이 수유 플레이
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｂ
 PRINTL 
@@ -1782,7 +1782,7 @@ ELSE
 		ELSE
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 				PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%極上の快楽のあまり
-				;ダメージ計算上の絶頂ライン
+				;피해량 계산上の絶頂ライン
 				IF TFLAG:100 > 0
 					PRINTFORML 蕩けたアクメ顔を晒している・・・
 				ELSE
@@ -1906,7 +1906,7 @@ ENDIF
 
 
 ;==================================================
-;SPCOM13：丸飲み精液攻め
+;SPCOM13：삼키기＆정액 공격
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM13_PRE, ARG:0, ARG:1
 FONTBOLD
@@ -1928,7 +1928,7 @@ TFLAG:23 += 1
 
 @MESSAGE_SEX_SPCOM13, ARG:0, ARG:1
 FONTBOLD
-PRINT 丸飲み精液攻め
+PRINT 삼키기＆정액 공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, 0
 PRINTL 
@@ -2118,11 +2118,11 @@ TFLAG:23 += 1
 
 
 ;==================================================
-;SPCOM14：催眠姦
+;SPCOM14：최면간
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM14, ARG:0, ARG:1
 FONTBOLD
-PRINT 催眠姦
+PRINT 최면간
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
@@ -2322,11 +2322,11 @@ PRINTL
 
 
 ;==================================================
-;SPCOM15：サブミッションファック
+;SPCOM15：서브미션 퍽
 ;--------------------------------------------------
 @MESSAGE_SEX_SPCOM15, ARG:0, ARG:1
 FONTBOLD
-PRINT サブミッションファック
+PRINT 서브미션 퍽
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 

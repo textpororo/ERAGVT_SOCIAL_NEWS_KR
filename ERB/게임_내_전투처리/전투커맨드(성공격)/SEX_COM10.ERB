@@ -1,29 +1,29 @@
-﻿;手淫 弄るのと同時に弄られる
+﻿;수음　서로 만지고 만져지는 모습 (弄るのと同時に弄られる)
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_COM10
 RETURN 통상
 
 @SEX_COM10,ARG = 0,ARG:1 = 0
-;EX_COM	追加責め実行部位（ビット）
+;EX_COM	추가 고문 실행 부위（비트）
 ;	1：Ｃ　2：Ｖ　4：Ａ　8：Ｂ
-;追加責め（特定部位なし）
+;추가 고문（特定部位なし）
 CALL SEX_COMEX_RANDOM, 0, ARG:1
 EX_COM = RESULT:0
 SH_COM = RESULT:1
 
-;사정部位フラグ:手を立てる
+;사정 부위 플래그:손을 세운다
 TFLAG:4 = TFLAG:4 | 손
-;我慢：確率で사정部位플래그를折る
+;참기：일정 확률로 사정 부위 플래그를 접는다
 SIF RAND:100 < 75
 	TFLAG:4 = 0
 
-;흑화 캐릭터のペニス位置をセット
+;흑화 캐릭터의 페니스 위치를 세트
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISPENIS(FLAG:111))
 	TFLAG:18 = 손
 
-;取得パラメータ計算
-;ベース値の明示的초기화
+;취득 파라미터 계산
+;BASE값의 명시적 초기화
 REPEAT 12
 	LOCAL:COUNT = 0
 REND
@@ -31,13 +31,13 @@ REND
 ;방심도 상승
 TFLAG:3 += 25
 
-;사정値 150
+;사정치 150
 CALL TENTACLE_SYASEI_UP, 150
 
-;촉수サイズの설정
+;촉수 크기 설정
 CALL SET_TENTACLE_SIZE, FLAG:10, FLAG:11, ENEMY_TYPE_CHECK_F("AKUOTI"), FLAG:111, 10
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,-1)
 
 
@@ -51,12 +51,12 @@ ELSE
 	CALL MESSAGE_SEX_COM10, EX_COM, SH_COM
 ENDIF
 
-;結界による촉수本数の変動
+;결계에 따른 촉수 개수의 변동
 CALL SET_TENTACLE_POOL
-;服へのダメージ
+;의상에의 피해
 CALL CLOTH_BATTLE_DAMAGE, 5
 
-;ベース
+;BASE
 EXP:봉사쾌락경험 += 1
 
 ;공순
@@ -86,7 +86,7 @@ ELSEIF ABL:봉사정신 >= 5
 	LOCAL:6 = 2000
 ENDIF
 
-;봉사정신に応じてボーナス
+;봉사정신에 따라 보너스
 IF ABL:봉사정신 < 3
 ELSEIF ABL:봉사정신 < 4
 	LOCAL:5 += 500
@@ -99,7 +99,7 @@ ELSE
 	LOCAL:6 += 1000
 ENDIF
 
-;追加責め実行
+;추가 고문 실행
 IF EX_COM
 	CALL SEX_COMEX, 0, 0, EX_COM | SH_COM
 	REPEAT 12
@@ -107,31 +107,31 @@ IF EX_COM
 	REND
 ENDIF
 
-;行動予約なし
+;행동 예약 없음
 TFLAG:17 = -1
-;촉수の行動を記録
+;촉수의 행동을 기록
 TFLAG:20 = 10
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 2000
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 400
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 100
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 0
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 0
 
-;체력消費基本値
+;체력 소비 기본값
 LOCAL:12 += 50
 
-;計算へ
+;계산으로
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12

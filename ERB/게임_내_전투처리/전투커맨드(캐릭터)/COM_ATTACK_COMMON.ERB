@@ -1,5 +1,5 @@
 ﻿
-;공격コマンドの共通処理
+;공격 커맨드의 공통 처리
 @COM_ATTACK_COMMON
 #DIM ATTACK_NUM
 #DIM HIT_FLAG
@@ -8,29 +8,29 @@ ATTACK_NUM = 0
 HIT_FLAG = 0
 
 
-;전투스타일チェンジスキーム
+;전투 스타일 변경 체계(scheme)
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "BATTLE_CHARA_BATTLE_STYLE_CHANGE")
 
-;[연속]スタイルによる공격回数アップ
+;[연속] 스타일에 따른 공격 횟수 증가
 SIF FSTYLE_NAME_F(TARGET, TCVARn:0) == "연속"
 	ATTACK_NUM += 1
-;[연속]バーストによる공격回数アップ
+;[연속] 버스트에 따른 공격 횟수 증가
 SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET, TCVARn:0) == "연속"
 	ATTACK_NUM += 4
-;[사역]スタイルによる공격回数アップ
+;[사역] 스타일에 따른 공격 횟수 증가
 SIF GETBIT(TCVARn:217, 0) == 0 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "사역"
 	ATTACK_NUM += 1
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINT 　
-;武器詳細表示
+;무기 상세 표시
 FONTBOLD
 SIF CSTR:(TCVARn:0 + 4) != ""
 	PRINTFORM 『%CSTR:(TCVARn:0 + 4)%』
 PRINTFORML <<%FSTYLE_NAME_F(TARGET,TCVARn:0)%>>
 FONTREGULAR
-;コンボ表示
+;콤보 표시
 CALL PRINT_COMBO
 PRINTL 
 
@@ -44,7 +44,7 @@ ELSEIF TCVARn:0 == 3
 ENDIF
 
 $ATTACK_AGAIN
-;命中判定
+;명중 판정
 IF TCVARn:0 == 1
 	CALL ACT_HANTEI_CHARA_TO_TENTACLE, "ATTACK_RANGE_SHORT"
 ELSEIF TCVARn:0 == 2
@@ -53,12 +53,12 @@ ELSEIF TCVARn:0 == 3
 	CALL ACT_HANTEI_CHARA_TO_TENTACLE, "ATTACK_RANGE_LONG"
 ENDIF
 IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 1 && FLAG:11 == 2 && FLAG:21 == 1 && (TFLAG:13 & TCVARn:0) == 0
-	PRINTFORML 待ち構えていた촉수に本体への공격を阻まれた……
+	PRINTFORML 기다리고 있던 촉수의 본체를 향한 공격은 막혀 버렸다……
 	PRINTL 
 	RESULT = 0
 ENDIF
 IF RESULT == 0
-	;カス当たりの判定
+	;가드 대미지(カス当たり)의 처리
 	IF TCVARn:0 == 1
 		CALL ACT_HANTEI_CHARA_TO_TENTACLE_GUARD, "ATTACK_RANGE_SHORT"
 	ELSEIF TCVARn:0 == 2
@@ -68,14 +68,14 @@ IF RESULT == 0
 	ENDIF
 
 	IF RESULT
-		;カス当たりフラグ
+		;가드 대미지(カス当たり) 플래그
 		HIT_FLAG = -1
-		;チェイン加算
+		;체인 가산
 		TFLAG:31 += 1
-		;ダメージ計算
+		;피해량 계산
 		IF TCVARn:0 == 1
 			CALL DAMAGE, "ATTACK_RANGE_SHORT"
-			;[광역]スタイルはカス当たりの威力が高い
+			;[광역] 스타일은 가드 대미지(カス当たり)의 위력이 높다
 			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 100 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 20, 40) / 10000 + 100, RESULT) * (RAND:26 + 75) / 100
 			ELSE
@@ -83,7 +83,7 @@ IF RESULT == 0
 			ENDIF
 		ELSEIF TCVARn:0 == 2
 			CALL DAMAGE, "ATTACK_RANGE_MIDDLE"
-			;[광역]スタイルはカス当たりの威力が高い
+			;[광역] 스타일은 가드 대미지(カス当たり)의 위력이 높다
 			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 200 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 15, 30) / 10000 + 100, RESULT) * (RAND:51 + 50) / 100
 			ELSE
@@ -91,7 +91,7 @@ IF RESULT == 0
 			ENDIF
 		ELSEIF TCVARn:0 == 3
 			CALL DAMAGE, "ATTACK_RANGE_LONG"
-			;[광역]スタイルはカス当たりの威力が高い
+			;[광역] 스타일은 가드 대미지(カス当たり)의 위력이 높다
 			IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역"
 				LOCAL:1 = MIN(RESULT * 300 * MIN(BASE:체력 * 100 / MAXBASE:체력 + 10, 20) / 10000 + 100, RESULT) * (RAND:76 + 25) / 100
 			ELSE
@@ -99,13 +99,13 @@ IF RESULT == 0
 			ENDIF
 		ENDIF
 		FLAG:13 -= LOCAL:1
-		;지문: カス当たり
+		;지문: 가드 대미지(カス当たり)
 		CALL MESSAGE_BATTLE_CHARA_ATTACK_GUARD, ATTACK_NUM
-		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 カス当たりされた
+		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격을 가드했다(カス当たり)
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_GUARD, ATTACK_NUM
 		FONTBOLD
-		PRINTFORML {LOCAL:1}のダメージを与えた！
+		PRINTFORML {LOCAL:1}의 피해량을 입혔다！
 		FONTREGULAR
 		PRINTW 
 		IF LOCAL:1 >= 5000
@@ -113,27 +113,27 @@ IF RESULT == 0
 		ENDIF
 		LOCAL:2 = 1
 	ELSE
-		;공격ミスフラグ
+		;공격 미스 플래그
 		HIT_FLAG = 0
-		;チェインリセット
+		;체인 리셋
 		TFLAG:31 = 0
-		;지문: 공격失敗
+		;지문: 공격 실패
 		CALL MESSAGE_BATTLE_CHARA_ATTACK_FALSE, ATTACK_NUM
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격을 회피했다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_FALSE, ATTACK_NUM
 	ENDIF
 
-	;심경 변화：高揚か消沈
+	;심경 변화：「고양」또는「소침」
 	SIF TCVARn:1 == 0 && ATTACK_NUM == 0
 		CALL SHINKYOU_CHANGE, "KOUYOU_SYOUTIN"
 
-	;방심도上昇の追加効果
+	;방심도 상승의 추가 효과
 	LOCAL:3 = 0
-	;[설치]スタイル
+	;[설치] 스타일
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "설치" && LOCAL:2
 		LOCAL:3 += 125
-		;[설치]バーストの効果
+		;[설치] 버스트의 효과
 		SIF GETBIT(TCVARn:217, 0)
 			LOCAL:3 += 125
 	ENDIF
@@ -145,24 +145,24 @@ IF RESULT == 0
 		ENDIF
 		LOCALS = {LOCAL:3}
 		TOFULL LOCALS
-		PRINTFORML の방심도が少し上昇した……（＋%RESULTS%）
+		PRINTFORML 의 방심도가 조금 상승했다……（＋%RESULTS%）
 		PRINTW 
 		FLAG:17 += LOCAL:3
 	ENDIF
-	;[교란]バーストの怯み効果10％
+	;[교란] 버스트의 기죽임 효과 10％
 	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란" && RAND:10 == 0 && HIT_FLAG == -1
 		TFLAG:1 = 1
-		PRINTFORML うまく相手の体勢を崩した！
+		PRINTFORML 상대의 자세를 무너뜨렸다！
 	ENDIF
 ELSE
-	;直撃時の処理
+	;직격 시의 처리
 
-	;チェイン加算
+	;체인 가산
 	TFLAG:31 += 1
 	;의상에 따른 보정
 	RESULT = 0
 	CALL CLOTH_BATTLE_HOSEI, "CRITICAL"
-	;FEATによる치명타 보정
+	;FEAT에 의한 치명타 보정
 	SIF TALENT:야수의후손 > 0
 		RESULT += 6
 	SIF TALENT:숨겨진힘 > 0 && PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 25
@@ -171,16 +171,16 @@ ELSE
 		RESULT += 3
 	SIF TALENT:공생 > 0
 		RESULT += 2
-	;[교란]スタイルの치명타 보정
+	;[교란] 스타일의 치명타 보정
 	SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 		RESULT += 5
-	;[지략]バーストの치명타율アップ
+	;[지략] 버스트의 치명타 확률 향상
 	SIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략"
 		RESULT += 5
-	;EVADERの치명타 보정
+	;EVADER의 치명타 보정
 	SIF TFLAG:33 > 1
 		RESULT += GET_EVADER_CRT(TFLAG:33 - 1)
-	;방어力による치명타 보정（隠し効果）
+	;방어력에 따른 치명타 보정 (숨겨진 효과)
 	LOCAL:0 = MAX(BASE:방어 - 100, 0)
 	IF LOCAL:0 < 0
 		LOCAL:0 = ABS(LOCAL:0)
@@ -188,29 +188,30 @@ ELSE
 	ELSE
 		RESULT += MIN(SQRT(LOCAL:0) * 2 / 3 , 12)
 	ENDIF
-	;근거리はクリティカルしやすい。さらにBRAVE HIT中は追加の補正が掛かる
+	;근거리는 치명타를 내기 쉽다. 게다가 BRAVE HIT 중에는 추가 보정이 걸린다
 	IF TCVARn:0 == 1
-		RESULT += 3+(TFLAG:30)*2
+		RESULT += 3 + (TFLAG:30) * 2
 	ENDIF
-	;중거리は少しだけクリティカルしやすい
+	;중거리는 치명타를 내기가 조금 쉽다
 	SIF TCVARn:0 == 2
 		RESULT += 1
-	;クリティカル判定
+	;치명타 판정
+	;치명타 배율(LOCAL:0)에 들어가는 값은 5 = 50% 와 같이 보면 된다
 	IF RAND:100 < 5 + RESULT
 		LOCAL:0 = 15
-		;バースト공격時はクリティカル倍率が上昇
+		;버스트 공격 시에는 치명타 배율이 상승
 		SIF GETBIT(TCVARn:217, 0)
 			LOCAL:0 += 5
-		;숨겨진힘の隠し補正
+		;「숨겨진힘」의 숨김 보정
 		SIF TALENT:숨겨진힘 > 0 && PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 25
-			RESULT += 5
+			LOCAL:0 += 5
 		SIF TALENT:숨겨진힘 > 0 && PERCENT_CAL_F(BASE:체력 + BASE:기력, MAXBASE:체력 + MAXBASE:기력) <= 10
-			RESULT += 5
+			LOCAL:0 += 5
 	ELSE
 		LOCAL:0 = 10
 	ENDIF
 
-	;ダメージ計算
+	;피해량 계산
 	IF TCVARn:0 == 1
 		CALL DAMAGE, "ATTACK_RANGE_SHORT"
 	ELSEIF TCVARn:0 == 2
@@ -224,39 +225,39 @@ ELSE
 	LOCAL:2 = LOCAL:1
 	RESULT = 0
 	IF LOCAL:0 > 10
-		;クリティカルフラグ
+		;치명타 플래그
 		HIT_FLAG = 2
-		;지문: 공격がクリティカルヒット
+		;지문: 공격이 치명타로 들어갔다
 		CALL MESSAGE_BATTLE_CHARA_ATTACK_CRITICAL_HIT, ATTACK_NUM
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격을 치명타로 받았다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_CRITICAL_HIT, ATTACK_NUM
 	ELSE
-		;直撃フラグ
+		;직격 플래그
 		HIT_FLAG = 1
-		;지문: 공격が通常ヒット
+		;지문: 공격이 통상 명중했다
 		CALL MESSAGE_BATTLE_CHARA_ATTACK_HIT, ATTACK_NUM
 		;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 공격에 피격됐다
 		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 			CALL MESSAGE_OTHER_BATTLE_CHARA_ATTACK_HIT, ATTACK_NUM
 	ENDIF
-	;とどめ演出用
+	;마무리 연출용
 	SIF FLAG:13 <= 0 && RESULT == 999
 		LOCAL:1 = LOCAL:1 * 16
 	FONTBOLD
-	PRINTFORML {LOCAL:1}のダメージを与えた！
+	PRINTFORML {LOCAL:1}의 피해량을 입혔다！
 	FONTREGULAR
 	PRINTW 
 	IF LOCAL:2 >= 5000
 		CALL UNLOCK_ACHIEVEMENT(263,"파괴신의 일격")
 	ENDIF
 
-	;방심도上昇の追加効果
+	;방심도 상승의 추가 효과
 	LOCAL:3 = 0
-	;[설치]スタイル
+	;[설치] 스타일
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "설치"
 		LOCAL:3 += 300
-		;[설치]バーストの効果
+		;[설치] 버스트의 효과
 		SIF GETBIT(TCVARn:217, 0)
 			LOCAL:3 += 300
 	ENDIF
@@ -268,30 +269,30 @@ ELSE
 		ENDIF
 		LOCALS = {LOCAL:3}
 		TOFULL LOCALS
-		PRINTFORML の방심도が少し上昇した……（＋%RESULTS%）
+		PRINTFORML 의 방심도가 조금 상승했다……（＋%RESULTS%）
 		PRINTW 
 		FLAG:17 += LOCAL:3
 	ENDIF
-	;[교란]バーストの怯み効果50％、クリティカルで100％
+	;[교란] 버스트의 기죽임 효과 50％, 치명타일 시 100％
 	IF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 		IF HIT_FLAG == 2 || RAND:2 == 0
 			TFLAG:1 = 1
-			PRINTFORML うまく相手の体勢を崩した！
+			PRINTFORML 상대의 자세를 무너뜨렸다！
 		ENDIF
 	ENDIF
 ENDIF
 
-;追撃の発動
+;추격 발동
 IF ATTACK_NUM
 	ATTACK_NUM --
 	GOTO ATTACK_AGAIN
 ENDIF
 
-;[전력]スタイルの反動
+;[전력] 스타일의 반동
 SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "전력"
 	TFLAG:99 += 2
 
-;バースト공격の反動
+;버스트 공격의 반동
 IF GETBIT(TCVARn:217, 0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "연속"
@@ -315,57 +316,57 @@ IF GETBIT(TCVARn:217, 0)
 		CASE "통상"
 			TFLAG:99 += 1
 	ENDSELECT
-	;FEAT 효과에 따른反動増加
+	;FEAT 효과에 의한 반동 증가
 	SIF TALENT:핫스타트 > 0
 		TFLAG:99 += 1
 	SIF TALENT:풀버스트 > 0
 		TFLAG:99 += 1
 
-	;[장갑]バーストのオートガード効果
+	;[장갑] 버스트의 오토 가드 효과
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 		TCVARn:2 = 자세：방어
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%방어態勢になった！
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 방어 태세를 갖췄다！
 	ENDIF
-	;[지략]バーストの관찰한다効果
+	;[지략] 버스트의 관찰(관찰한다) 효과
 	IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략"
 		TFLAG:25 = 1
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%관찰한다状態になった！
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 관찰 상태가 됐다！
 	ENDIF
 ENDIF
 
-;サディストの効果
+;새디스트의 효과
 IF TALENT:새드기질 > 0 && HIT_FLAG > 0
-	;기력が微量に回復
+	;기력이 미량으로 회복
 	LOCAL:1 = RAND:MAX((MAXBASE:기력 * HIT_FLAG * 8 / 100), 1) + 10
 	SIF BASE:기력 + LOCAL:1 >= MAXBASE:기력
 		LOCAL:1 = MAXBASE:기력 - BASE:기력
 	BASE:기력 += LOCAL:1
-	;욕정が微量に増加
+	;욕정이 미량으로 증가
 	COMMON_PALAM:7 += LOCAL:1 * 10
 	SIF LOCAL:1 > 0
-		PRINTFORML サディスティックな快楽で%BASENAME:1%が{LOCAL:1}回復した
+		PRINTFORML 새디스틱한 쾌락으로 %BASENAME:1%이 {LOCAL:1} 회복됐다.
 ENDIF
 
 RETURN 1
 
 
 
-;空中공격フラグ管理
+;공중 공격 플래그 관리
 @ATTACK_AIR_FLAG
 IF GETBIT(TCVARn:216, 1) && GETBIT(TCVARn:216, 0) == 0
 	TCVARn:216 = 4
-	;FEAT 효과에 따른着地時の反動
+	;FEAT 효과에 의한 착지 시의 반동 증가
 	SIF TALENT:날개 > 0
 		TFLAG:99 += 1
 ELSEIF GETBIT(TCVARn:216, 0) && BASE:공중대시
 	SETBIT TCVARn:216, 1
 	BASE:공중대시 -= 1
-	;空中공격の反動
+	;공중 공격의 반동
 	TFLAG:99 += 1
-	;FEAT 효과에 따른反動の軽減
+	;FEAT 효과에 의한 반동 경감
 	SIF TALENT:공중부유 > 0
 		TFLAG:99 -= 1
-	;FEAT 효과에 따른反動の増加
+	;FEAT 효과에 의한 반동 증가
 	SIF TALENT:에어마스터 > 0
 		TFLAG:99 += 1
 ENDIF

@@ -47,7 +47,7 @@ CFLAG:30 += 10 + RAND:10
 SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
-;快V
+;쾌Ｖ
 IF ABL:Ｖ감각 == 0
 	LOCAL:120 = 5
 	LOCAL:151 = 1
@@ -73,7 +73,7 @@ ELSEIF ABL:Ｖ감각 >= 5
 	LOCAL:151 = 8
 	LOCAL:1 = 2000
 ENDIF
-;출산경험이 少ない場合は快Vが入りにくい
+;출산경험이 少ない場合は쾌Ｖが入りにくい
 IF EXP:출산경험 < 3
 	TIMES LOCAL:1, 0.30
 ELSEIF EXP:출산경험 < 5
@@ -83,7 +83,7 @@ ELSEIF EXP:출산경험 < 8
 ELSE
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
@@ -150,22 +150,22 @@ ENDIF
 ;지문: Vに産卵
 CALL MESSAGE_PRISON_COM_200
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 0
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 500
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 0
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 500
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 500
 
 ;初めてのV出産の場合、이상경험이 入る

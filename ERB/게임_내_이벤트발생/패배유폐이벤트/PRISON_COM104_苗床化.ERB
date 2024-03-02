@@ -61,7 +61,7 @@ IF TALENT:묘상화 == 0
 	SIF TALENT:촉수의포로
 		LOCAL:124 = 4
 
-	;快V
+	;쾌Ｖ
 	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 2
 		LOCAL:1 = 10
@@ -82,7 +82,7 @@ IF TALENT:묘상화 == 0
 		LOCAL:1 = 1000
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
@@ -98,7 +98,7 @@ IF TALENT:묘상화 == 0
 	;지문: 묘상화
 	CALL MESSAGE_PRISON_NAEDOKO
 ELSE
-	;快V
+	;쾌Ｖ
 	IF ABL:Ｖ감각 == 0
 		LOCAL:120 = 6
 		LOCAL:1 = 200
@@ -119,7 +119,7 @@ ELSE
 		LOCAL:1 = 2000
 	ENDIF
 
-	;快B
+	;쾌Ｂ
 	IF ABL:Ｂ감각 == 0
 		LOCAL:3 = 1
 	ELSEIF ABL:Ｂ감각 == 1
@@ -134,7 +134,7 @@ ELSE
 		LOCAL:3 = 400
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,1,3,-1)
 
 
@@ -159,7 +159,7 @@ ELSE
 	;굴복　とりあえず一定で
 	LOCAL:8 = 800
 
-	;Ｖ감각が低いと공포が入る
+	;Ｖ감각이 낮으면 공포가 들어간다
 	IF ABL:Ｖ감각 == 0
 		LOCAL:11 = 800
 	ELSEIF ABL:Ｖ감각 == 1
@@ -197,22 +197,22 @@ ELSE
 
 ENDIF
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 20
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 250
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 0
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 250
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 250
 
 ;유폐中パラメータ変動共通処理へ

@@ -95,13 +95,13 @@ RETURN RESULT
 ;--------------------------------------------------
 ;PALAM補正 百分率で返す
 @TENTACLE_MOB_1150_PALAM_HOSEI
-;快C
+;쾌Ｃ
 LOCAL:0 = 100
-;快V
+;쾌Ｖ
 LOCAL:1 = 100
-;快A
+;쾌Ａ
 LOCAL:2 = 100
-;快B
+;쾌Ｂ
 LOCAL:3 = 100
 ;윤활
 LOCAL:4 = 50
@@ -157,7 +157,7 @@ IF LOCAL < 15 && TALENT:모유체질
 ;全身愛撫
 ELSEIF LOCAL < 20
 	RETURN 0
-;Ｃ공격(강)
+;Ｃ공격（강）
 ELSEIF LOCAL < 40
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -171,7 +171,7 @@ ELSEIF LOCAL < 60
 	ELSE
 		RETURN 11
 	ENDIF
-;V공격(약)
+;Ｖ공격（약）
 ELSEIF LOCAL < 80
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -218,7 +218,7 @@ RETURN -1
 ;【性コマンド関係】
 ;--------------------------------------------------
 ;全身愛撫
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM0
 RETURN 통상
 
@@ -245,14 +245,14 @@ ENDIF
 RETURN 15
 
 ;--------------------------------------------------
-;Ｃ공격(강)
-;性コマンド分類
+;Ｃ공격（강）
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM1
 RETURN 통상
 
 @MESSAGE_MOB_1150_COM1, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｃ공격(강)
+PRINT Ｃ공격（강）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
@@ -317,7 +317,7 @@ ENDIF
 ;--------------------------------------------------
 ;種付け
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM3
 RETURN 삽입
 
@@ -400,17 +400,17 @@ IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
 ENDIF
 
 ;--------------------------------------------------
-;Ｖ공격(약)
+;Ｖ공격（약）
 
 @SEX_TYPE_MOB_901_COM2
 RETURN 통상
 
 @MESSAGE_MOB_901_COM2, ARG:0, ARG:1
 FONTBOLD
-PRINT Ｖ攻め
+PRINT Ｖ공격
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
-TFLAG:17 = -1	;行動予約なし
+TFLAG:17 = -1	;행동 예약 없음
 PRINTL 
 
 CALL TENTACLE_ACCESS, "NAME"
@@ -667,7 +667,7 @@ ENDSELECT
 
 ;母乳吸い
 
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM7
 RETURN 통상
 
@@ -730,7 +730,7 @@ ENDIF
 
 ;--------------------------------------------------
 ;口辱
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM11
 RETURN 펠라
 
@@ -767,7 +767,7 @@ ENDIF
 ;-----------------------------------------------------------------------------------------------------------------------------------------------
 
 ;薬物注射
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM9
 RETURN 통상
 
@@ -833,15 +833,15 @@ ENDIF
 
 
 ;==================================================
-;【衣装を破く】
+;【의상을 찢는다】
 ;--------------------------------------------------
-;性コマンド分類
+;성 커맨드 분류
 @SEX_TYPE_MOB_1150_COM14
 RETURN 통상
 
 @MESSAGE_MOB_1150_COM14, ARG:0, ARG:1
 FONTBOLD
-PRINTL 衣装を破く
+PRINTL 의상을 찢는다
 FONTREGULAR
 CALL TENTACLE_ACCESS, "NAME"
 IF RAND:3 == 0
@@ -852,7 +852,7 @@ IF RAND:3 == 0
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
 	PRINTL 
-	;状態異常：끈적끈적
+	;상태 이상：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
 	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 衣装を鋭利なナイフで切り刻んでいる。

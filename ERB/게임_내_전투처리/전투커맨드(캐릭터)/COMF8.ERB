@@ -1,12 +1,12 @@
 ﻿;풀어낸다
 @COM8
 
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
 
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
@@ -14,7 +14,7 @@ PRINTL
 CALL MESSAGE_BATTLE_CHARA_HURIHODOKU
 
 
-;풀어낸다成功判定
+;풀어낸다 성공 판정
 CALL ACT_HANTEI_CHARA_TO_TENTACLE, "HURIHODOKU"
 
 IF RESULT == 1
@@ -23,19 +23,19 @@ IF RESULT == 1
 	TFLAG:16 = -1
 	TFLAG:17 = -1
 	
-	;지문: 풀어낸다成功
+	;지문: 풀어낸다 성공
 	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_SUCCESS
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「풀어낸다」를 막지 못했다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 		CALL MESSAGE_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
 
-	;촉수の体勢が崩れる
+	;촉수의 자세가 흐트러진다
 	TFLAG:1 = 1
-	;自動で戦闘メニューを選択する
+	;자동으로 전투 메뉴를 선택한다
 	TCVARn:8 = 1
 	
 ELSE
-	;지문: 풀어낸다失敗
+	;지문: 풀어낸다 실패
 	CALL MESSAGE_BATTLE_CHARA_HURIHODOKU_FALSE
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「풀어낸다」를 막았다
 	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
@@ -43,10 +43,10 @@ ELSE
 
 ENDIF
 
-;행동포인트を+1
+;행동 포인트를 +1
 EX:행동포인트 += 1
 
-;FEAT 효과에 따른反動の増加
+;FEAT 효과에 의한 반동 증가
 SIF TALENT:근력강화 > 0
 	TFLAG:99 += 1
 

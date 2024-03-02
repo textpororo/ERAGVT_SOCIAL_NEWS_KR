@@ -1,28 +1,28 @@
-﻿;배후로돈다
+﻿;배후로 돈다
 @COM6
-;刻印による行動制限判定　１で行動できない
+;각인에 의한 행동 제한 판정　１이면 행동할 수 없다
 CALL ACT_LIMIT
 SIF RESULT == 1
 	RETURN 1
-;空中공격플래그를進める
+;공중 공격 플래그를 진행한다
 CALL ATTACK_AIR_FLAG
-;끈적끈적中だと失敗することがある
+;끈적끈적 상태라면 실패할 수가 있다
 IF (TCVARn:12 & 끈적끈적) && RAND:100 < 50 && GETBIT(TCVARn:216, 1) == 0
-	;距離表示
+	;거리 표시
 	CALL PRINT_DISTANCE
 	PRINTL 
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%脚を滑らせてしまった！
-	PRINTFORML 移動を伴う行動が失敗した！
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 발이 미끄러지고 말았다！
+	PRINTFORML 이동을 수반하는 행동이 실패했다！
 	PRINTW 
 	RETURN 1
 ENDIF
 
-;同一距離플래그를折る
+;동일 거리 플래그를 접는다
 TFLAG:30 = 0
-;チェインコンボをリセット
+;체인 콤보를 리셋
 TFLAG:31 = 0
 
-;ゲージが増加
+;게이지가 증가
 IF CFLAG:99 < 5
 	TCVARn:6 += 30 + RAND:16
 ELSEIF CFLAG:99 < 15
@@ -31,36 +31,36 @@ ELSE
 	TCVARn:6 += 10 + RAND:6
 ENDIF
 
-;距離を近にする
+;거리를 근거리로 한다
 TCVARn:0 = 1
-;距離表示
+;거리 표시
 CALL PRINT_DISTANCE
 PRINTL 
 
-;疲労が少し蓄積
+;피로가 조금 축적
 TFLAG:99 += 1
-;FEAT 효과에 따른反動の増加
+;FEAT 효과에 의한 반동 증가
 SIF TALENT:공중부유 > 0
 	TFLAG:99 += 1
 
-;지문: 배후로돈다
+;지문: 배후로 돈다
 CALL MESSAGE_BATTLE_CHARA_STEPIN
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 배후로돈다を見た
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「배후로돈다」를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
 	CALL MESSAGE_OTHER_BATTLE_CHARA_STEPIN
 
-;成否判定
+;성패 여부
 LOCAL:0 = MAXBASE:지성
 
 ;의상에 따른 보정
 CALL CLOTH_BATTLE_HOSEI, "CHISEI"
 LOCAL:0 = LOCAL:0 * RESULT / 100
 
-;心境による補正
+;심경에 의한 보정
 CALL SHINKYOU_CHECK, "CHISEI", LOCAL:0
 LOCAL:0 = RESULT
 
-;보스 촉수/敵キャラの지성
+;보스 촉수/적 캐릭터의 지성
 IF ENEMY_TYPE_CHECK_F("AKUOTI")
 	LOCAL:1 = MAXBASE:(FLAG:111):지성
 ELSE
@@ -74,29 +74,29 @@ IF RAND:360 + 90 < RESULT || TFLAG:10 == 4
 	LOCALS = {LOCAL}
 	TOFULL LOCALS
 	TFLAG:3 += LOCAL
-	PRINTFORML 相手は一瞬こちらを見失って取り乱した！
-	PRINTFORML 방심도＋（%RESULTS%）
+	PRINTFORML 상대는 순간 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 시야에서 놓쳐 당황하고 있다！
+	PRINTFORML 방심도 ＋（%RESULTS%）
 	TFLAG:1 = 1
 ELSEIF RAND:240 + 60 < RESULT
 	LOCAL = 250 + RAND:RESULT / 2
 	LOCALS = {LOCAL}
 	TOFULL LOCALS
 	TFLAG:3 += LOCAL
-	PRINTFORML うまく相手を翻弄することができた！
-	PRINTFORML 방심도＋（%RESULTS%）
+	PRINTFORML 상대를 제대로 농락할 수 있었다！
+	PRINTFORML 방심도 ＋（%RESULTS%）
 ELSEIF RAND:180 + 30 < RESULT
 	LOCAL = 100 + RAND:RESULT / 4
 	LOCALS = {LOCAL}
 	TOFULL LOCALS
 	TFLAG:3 += LOCAL
-	PRINTFORML 相手のペースを乱した！
-	PRINTFORML 방심도＋（%RESULTS%）
+	PRINTFORML 상대의 페이스를 흐트러뜨렸다！
+	PRINTFORML 방심도 ＋（%RESULTS%）
 ELSE
-	PRINTFORML しかしうまくいかなかった・・・
+	PRINTFORML 그러나 잘 통하지는 않았다・・・
 ENDIF
-PRINTFORML EX 게이지が大きく溜まった！
+PRINTFORML ＥＸ 게이지가 많이 쌓였다！
 
-;心境が高揚になりやすい
+;심경이「고양」으로 변하기 쉽다
 IF RAND:100 < (TCVARn:11 * TCVARn:11) || TCVARn:1 == 0
 	SIF RAND:2 == 0
 		CALL SHINKYOU_CHANGE, "KOUYOU"

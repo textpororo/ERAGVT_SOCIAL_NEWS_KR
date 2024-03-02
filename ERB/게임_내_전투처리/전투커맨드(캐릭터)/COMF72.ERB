@@ -1,7 +1,7 @@
-﻿;EX:防
+﻿;EX:방
 @COM72
 
-;プレイヤーゲージ増減
+;플레이어 게이지 증감
 IF GETBIT(TCVARn:3, 1) == 0
 	IF CFLAG:1 == 2
 		IF TCVARn:217
@@ -24,7 +24,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;ゲージ使用フラグ
+;게이지 사용 플래그
 INVERTBIT TCVARn:3, 1
 
 RETURN 0

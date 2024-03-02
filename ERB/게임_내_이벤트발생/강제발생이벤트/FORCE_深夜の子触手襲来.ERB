@@ -11,7 +11,7 @@
 SIF CHARANUM_ACTIVE() == 0
 	RETURN 0
 
-;男女平等のオプションOff時の中断判定 キャラが全員남자の場合は中断
+;男女平等のオプションOff時の中断判定 キャラが全員남자인 경우에는 中断
 LOCAL = 0
 FOR CCOUNT, 1, CHARANUM
 	SIF CFLAG:CCOUNT:999 == 0
@@ -154,7 +154,7 @@ WHILE 1==1
 	;SIF ISMALE() && LOCAL:1 == 3
 	;	LOCAL:1 = 0
 
-	;성처녀はＶ以外にする
+	;성처녀는 Ｖ以外にする
 	SIF LOCAL:1 != 1 || CHECK_HOLYVIRGIN_F()==0
 		BREAK
 WEND
@@ -171,7 +171,7 @@ VARSET LOCAL
 IF ARG == 0
 	;Ｃ襲来
 
-	;快C
+	;쾌Ｃ
 	IF ABL:Ｃ감각 == 0
 		LOCAL:0 = 6
 	ELSEIF ABL:Ｃ감각 == 1
@@ -186,7 +186,7 @@ IF ARG == 0
 		LOCAL:0 = 1200
 	ENDIF
 	
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,0,-1)
 
 
@@ -226,7 +226,7 @@ ELSEIF ARG == 1
 		LOCAL:1 = 400
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
@@ -266,7 +266,7 @@ ELSEIF ARG == 1
 ELSEIF ARG == 2
 	;Ａ襲来
 
-	;快A
+	;쾌Ａ
 	IF ABL:Ａ감각 == 0
 		LOCAL:2 = 6
 	ELSEIF ABL:Ａ감각 == 1
@@ -281,7 +281,7 @@ ELSEIF ARG == 2
 		LOCAL:2 = 1200
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 
@@ -301,7 +301,7 @@ ELSEIF ARG == 2
 ELSEIF ARG == 3
 	;Ｂ襲来
 
-	;快B
+	;쾌Ｂ
 	IF ABL:Ｂ감각 == 0
 		LOCAL:3 = 6
 	ELSEIF ABL:Ｂ감각 == 1
@@ -316,7 +316,7 @@ ELSEIF ARG == 3
 		LOCAL:3 = 1200
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,3,-1)
 
 
@@ -364,8 +364,8 @@ ELSEIF ARG == 3
 ELSEIF ARG == 4
 	;고통襲来
 
-	;ベース
-	;굴복　마조끼で変化
+	;BASE
+	;굴복　마조끼로 변화
 	IF ABL:마조끼 == 0
 		LOCAL:8 = 50
 	ELSEIF ABL:마조끼 == 1
@@ -383,7 +383,7 @@ ELSEIF ARG == 4
 	;고통　とりあえず固定
 	LOCAL:10 = 5000
 	
-	;공포　순종と마조끼で大まかに
+	;공포　대충 순종과 마조끼로
 	IF ABL:순종 < 3
 		IF ABL:마조끼 < 3
 			LOCAL:11 = 1000
@@ -418,7 +418,7 @@ ELSEIF ARG == 4
 		LOCAL:132 = 25
 	ENDIF
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,-1)
 
 
@@ -469,7 +469,7 @@ ELSEIF ARG == 5
 		LOCAL:8 = 5000
 	ENDIF
 
-	;봉사정신に応じてボーナス
+	;봉사정신에 따라 보너스
 	IF ABL:봉사정신 < 3
 	ELSEIF ABL:봉사정신 < 4
 		LOCAL:5 += 200
@@ -489,7 +489,7 @@ ELSEIF ARG == 5
 	;봉사쾌락경험
 	LOCAL:131 += 1
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,-1)
 
 
@@ -498,7 +498,7 @@ ELSEIF ARG == 5
 ELSEIF ARG == 6
 	;羞恥襲来
 
-	;치정　노출벽が高くなると多くなる
+	;치정　노출벽이 높아질 수록 더 많아진다
 	IF ABL:노출벽 == 0
 		LOCAL:9 = 100
 	ELSEIF ABL:노출벽 == 1
@@ -513,7 +513,7 @@ ELSEIF ARG == 6
 		LOCAL:9 = 5000
 	ENDIF
 
-	;노출벽が高いと욕정にボーナス
+	;노출벽이 높을 수록 욕정에 보너스
 	IF ABL:노출벽 == 1
 		LOCAL:7 = 100
 	ELSEIF ABL:노출벽 == 2
@@ -535,7 +535,7 @@ ELSEIF ARG == 6
 	;정액경험
 	LOCAL:123 = 5 + RAND:11
 
-	;メイン部位絶頂見込みの予測
+	;메인 부위 절정 예정의 예측
 	CALL PALAM_VABCestimate(LOCAL,-1)
 
 	;지문

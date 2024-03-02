@@ -30,7 +30,7 @@ VARSET COMMON_EXP
 
 ;素質に関する補正
 ;----------------------------------------------------------
-;快C
+;쾌Ｃ
 IF TALENT:Ｃ민감 > 0
 	TIMES ARG:0, 2.00
 ELSEIF TALENT:Ｃ둔감 > 0
@@ -39,7 +39,7 @@ ENDIF
 SIF TALENT:음핵 > 0
 	TIMES ARG:0, 1.50
 
-;快V
+;쾌Ｖ
 IF TALENT:Ｖ민감 > 0
 	TIMES ARG:1, 2.00
 ELSEIF TALENT:Ｖ둔감 > 0
@@ -48,7 +48,7 @@ ENDIF
 SIF TALENT:음호 > 0
 	TIMES ARG:1, 1.50
 
-;快A
+;쾌Ａ
 IF TALENT:Ａ민감 > 0
 	TIMES ARG:2, 2.00
 ELSEIF TALENT:Ａ둔감 > 0
@@ -57,7 +57,7 @@ ENDIF
 SIF TALENT:음고 > 0
 	TIMES ARG:2, 1.50
 
-;快B
+;쾌Ｂ
 IF TALENT:Ｂ민감 > 0
 	TIMES ARG:3, 2.00
 ELSEIF TALENT:Ｂ둔감 > 0
@@ -121,13 +121,13 @@ ARG:11 = SEIKAKU_HOSEI_PALAM_F(LOCAL, 17, ARG:11)
 ;----------------------------------------------------------
 IF CFLAG:0 == 1 || CFLAG:0 == 2 || CFLAG:0 == 3 || CFLAG:0 == 9
 	CALL TENTACLE_ACCESS_PRISON, TARGET, "PALAM_HOSEI"
-	;快C
+	;쾌Ｃ
 	ARG:0 = ARG:0 * RESULT:0 / 100
-	;快V
+	;쾌Ｖ
 	ARG:1 = ARG:1 * RESULT:1 / 100
-	;快A
+	;쾌Ａ
 	ARG:2 = ARG:2 * RESULT:2 / 100
-	;快B
+	;쾌Ｂ
 	ARG:3 = ARG:3 * RESULT:3 / 100
 	;윤활
 	ARG:4 = ARG:4 * RESULT:4 / 100
@@ -205,7 +205,7 @@ SIF ARG:3 > 1000
 	LOCAL:103 = SQRT(ARG:3) / 10
 
 ;치정のボーナス計算
-;戦闘時と同じように快C,快V,快A,快B 상승値,絶頂の状態で計算した値を上乗せ
+;戦闘時と同じように쾌Ｃ,쾌Ｖ,쾌Ａ,쾌Ｂ 상승値,絶頂の状態で計算した値を上乗せ
 LOCAL = ARG:0 + (ARG:1 * 2) + (ARG:2 * 2) + ARG:3
 LOCAL:1 = 0
 IF LOCAL == 0
@@ -238,7 +238,7 @@ ENDIF
 ARG:9 += LOCAL:1
 
 ;욕정のボーナス計算
-;快C,快V,快A,快B,치정 상승値,고통 상승値(마조끼あり),絶頂の状態で計算する
+;쾌Ｃ,쾌Ｖ,쾌Ａ,쾌Ｂ,치정 상승値,고통 상승値(마조끼あり),絶頂の状態で計算する
 LOCAL = 0
 LOCAL:1 = 0
 LOCAL:2 = 0

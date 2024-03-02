@@ -47,7 +47,7 @@ CFLAG:30 += 10 + RAND:5
 SIF INCEST_F(TARGET, CFLAG:20 * 100 + CFLAG:21, 1) > 0
 	LOCAL:141 += 1
 
-;快A
+;쾌Ａ
 IF ABL:Ａ감각 == 0
 	LOCAL:121 = 5
 	LOCAL:152 = 1
@@ -73,7 +73,7 @@ ELSEIF ABL:Ａ감각 >= 5
 	LOCAL:152 = 8
 	LOCAL:2 = 1500
 ENDIF
-;拡張経験が少ない場合は快Aが入りにくい
+;확장 경험이 적은 경우에는 쾌Ａ가 들어가기 어렵다
 IF EXP:Ａ확장경험 < 3
 	TIMES LOCAL:2, 0.10
 ELSEIF EXP:Ａ확장경험 < 5
@@ -83,13 +83,13 @@ ELSEIF EXP:Ａ확장경험 < 8
 ELSE
 ENDIF
 
-;メイン部位絶頂見込みの予測
+;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 
 
 ;굴복
-;拡張経験に応じて
+;확장 경험에 정비례
 IF EXP:Ａ확장경험 < 3
 	LOCAL:8 = 500
 ELSEIF EXP:Ａ확장경험 < 5
@@ -101,7 +101,7 @@ ELSE
 ENDIF
 
 ;치정
-;拡張経験が高いと치정が入る
+;확장 경험이 높을 수록 들어간다
 IF EXP:Ａ확장경험 < 3
 	LOCAL:8 = 500
 ELSEIF EXP:Ａ확장경험 < 5
@@ -113,7 +113,7 @@ ELSE
 ENDIF
 
 ;고통
-;拡張経験が低いと入る
+;확장 경험이 낮을 수록 들어간다
 IF EXP:Ａ확장경험 < 3
 	LOCAL:10 = 1000
 ELSEIF EXP:Ａ확장경험 < 5
@@ -125,7 +125,7 @@ ELSE
 ENDIF
 
 ;공포
-;拡張経験が低いと入る
+;확장 경험이 낮을 수록 들어간다
 IF EXP:Ａ확장경험 < 3
 	LOCAL:11 = 1000
 ELSEIF EXP:Ａ확장경험 < 5
@@ -157,22 +157,22 @@ SIF CFLAG:20 == 2
 ;지문: A拡張
 CALL MESSAGE_PRISON_COM_102
 
-;습득基本値
+;습득 기본값
 LOCAL:6 += 20
 
-;욕정基本値
+;욕정 기본값
 LOCAL:7 += 0
 
-;굴복基本値
+;굴복 기본값
 LOCAL:8 += 500
 
-;치정基本値
+;치정 기본값
 LOCAL:9 += 0
 
-;고통基本値
+;고통 기본값
 LOCAL:10 += 100
 
-;공포基本値
+;공포 기본값
 LOCAL:11 += 100
 
 ;LOCAL:152 += RAND:2 + 1
