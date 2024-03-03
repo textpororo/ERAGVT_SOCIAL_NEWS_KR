@@ -1,18 +1,18 @@
 ﻿;--------------------------------------------------
 ;보스 촉수6 P촉수
-;↓촉수の存在確認用関数　何も処理しない
+;↓촉수의 존재 확인용 함수　아무것도 처리하지 않는다
 @TENTACLE_BOSS_6
 ;--------------------------------------------------
-;名前
+;이름
 @TENTACLE_BOSS_6_GETNAME
 RESULTS = Ｐ촉수
 
 ;--------------------------------------------------
-;名前
+;정의
 @TENTACLE_BOSS_6_DEFENITION
 ;PLANT
-PRINTFORML （蔦のごとく촉수を生やした食虫植物のような姿の보스 촉수）
-PRINTFORML （ウツボカズラ状の胴体には得体のしれない液体が蓄えられている）
+PRINTFORML （담쟁이덩굴처럼 촉수를 기른 벌레잡이 식물과도 같은 모습의 보스 촉수.）
+PRINTFORML （벌레잡이통풀 모양의 몸통에는 정체 모를 액체가 저장되어 있다.）
 
 ;--------------------------------------------------
 ;HP
@@ -22,20 +22,20 @@ CALL TENTACLE_STATUS_HOSEI, LOCAL,2500
 RETURN RESULT
 
 ;--------------------------------------------------
-;사정限界値
+;사정 한계치
 @TENTACLE_BOSS_6_SYASEI
 CALL TENTACLE_LEVEL
 LOCAL = 700 + RESULT * 25
 RETURN LOCAL
 
 ;--------------------------------------------------
-;搾精ダメージ補正
+;착정 피해량 보정
 @TENTACLE_BOSS_6_SAKUSEI
 LOCAL = 60
 RETURN LOCAL
 
 ;--------------------------------------------------
-;방심도역치
+;방심도 역치
 @TENTACLE_BOSS_6_YUDAN
 LOCAL = 1560
 RETURN LOCAL
@@ -87,13 +87,13 @@ RESULT = 125
 RETURN RESULT
 
 ;--------------------------------------------------
-;拘束力
+;구속력
 @TENTACLE_BOSS_6_HOLD
 RESULT = 180
 RETURN RESULT
 
 ;--------------------------------------------------
-;PALAM補正 百分率で返す
+;PALAM보정　백분율로 되돌린다
 @TENTACLE_BOSS_6_PALAM_HOSEI
 
 ;쾌Ｃ
@@ -114,7 +114,7 @@ LOCAL:6 = 200
 LOCAL:7 = 100
 ;굴복
 LOCAL:8 = 120
-;恥辱
+;치정
 LOCAL:9 = 100
 ;고통
 LOCAL:10 = 100
@@ -132,7 +132,7 @@ RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, L
 
 
 ;--------------------------------------------------
-;専用ルーチン（戦闘）
+;전용 루틴（전투）
 @TENTACLE_BOSS_6_ATTACK_ROUTINE
 LOCAL:0 = RAND:100
 IF LOCAL:0 < 20
@@ -142,9 +142,9 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;専用ルーチン（性行為）
+;전용 루틴（성행위）
 @TENTACLE_BOSS_6_SEX_ROUTINE
-;挿入系コマンドが少ないため、衣装の破壊の優先度アップ
+;삽입계 커맨드가 적기 때문에, 의상 파괴의 우선순위 향상
 SIF RAND:100 < 12
 	RETURN 14
 
@@ -175,10 +175,10 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;性コマンドレファレンス
-;ARG=1　스마타애태우기成功時の行動指定
-;ARG=2　스마타애태우기失敗時の行動指定
-;ARG=3　フェラチオ誘発時の行動指定
+;성 커맨드 레퍼런스
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
 @TENTACLE_BOSS_6_REACTION_REF, ARG = 0
 IF ARG == 1
 	LOCAL = RAND:6
@@ -200,7 +200,7 @@ RETURN -1
 
 
 ;--------------------------------------------------
-;専用ルーチン（유폐）
+;전용 루틴（유폐）
 @TENTACLE_BOSS_6_PRISON_ROUTINE
 LOCAL = RAND:100
 IF CHECK_HOLYVIRGIN_F()==0
@@ -232,19 +232,19 @@ ELSE
 ENDIF
 
 ;--------------------------------------------------
-;촉수サイズ補正
-;この補正の後に部位ごとの補正が入る
+;촉수 크기 보정
+;이 보정 후에 부위별 보정이 들어간다
 @TENTACLE_BOSS_6_TENTACLE_SIZE,ARG
-;C用촉수
+;C용 촉수
 LOCAL:0 = 190
 LOCAL:4 = 1
-;V用촉수
+;V용 촉수
 LOCAL:1 = 30
 LOCAL:5 = RAND:90 + 5
-;A用촉수
+;A용 촉수
 LOCAL:2 = 150
 LOCAL:6 = 1
-;B用촉수
+;B용 촉수
 LOCAL:3 = 30
 LOCAL:7 = RAND:90 + 5
 RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7

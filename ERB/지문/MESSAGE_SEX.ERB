@@ -1819,7 +1819,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 			PRINTFORM 戦意を挫かれ完全に快楽に屈した
 			IF (TCVARn:12 & 기절)
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
-				PRINTFORML %PRINT_SWOON()%まま無様なアヘ顔を晒している・・・
+				PRINTFORML %PRINT_SWOON()% まま無様なアヘ顔を晒している・・・
 			ELSE
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無様なアヘ顔を晒している・・・
 			ENDIF
@@ -1845,7 +1845,7 @@ ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 		PRINTL 理性低下
 		FONTREGULAR
 		IF (TCVARn:12 & 기절)
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 身体は、
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 身体は、
 			PRINTFORML それでも押し寄せる快楽に必死で抗っている・・・
 		ELSE
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%押し寄せる快楽に抗うのに必死になっている・・・
@@ -1904,7 +1904,7 @@ CATCH
 		PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%のペニスに指を絡め、扱き始めた！
 	;それ以外は촉수に수음する
 	ELSE
-		PRINTFORML 手近な%촉수市民("촉수","ペニス")%を掴み、수음を始めた！
+		PRINTFORML 手近な%촉수市民("촉수","페니스")%を掴み、수음を始めた！
 	ENDIF
 	IF ABL:기교 == 0
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && (ISFEMALE(FLAG:111) && TALENT:(FLAG:111):후타나리 < 1 && TALENT:(FLAG:111):기생 == 0)
@@ -1977,7 +1977,7 @@ CATCH
 		PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%のペニスにフェラチオし始めた！
 	;それ以外は촉수に수음する
 	ELSE
-		PRINTFORML 手近な%촉수市民("촉수","ペニス")%を口で咥えてフェラチオし始めた！
+		PRINTFORML 手近な%촉수市民("촉수","페니스")%を口で咥えてフェラチオし始めた！
 	ENDIF
 	IF EXP:펠라경험 < 5 && ABL:기교 < 3
 		PRINTFORM まだ初々しい미성숙な舌使いでは
@@ -2032,7 +2032,7 @@ CATCH
 	FONTBOLD
 	PRINTL 挿入行動にカウンター
 	FONTREGULAR
-	IF LOCALS == "ペニス"
+	IF LOCALS == "페니스"
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%襲い掛かってきた%LOCALS:1%のペニスを両足で挟み込み、
 		PRINTFORML 挿入を阻止すると同時に足コキで反撃した！
 		PRINTL 

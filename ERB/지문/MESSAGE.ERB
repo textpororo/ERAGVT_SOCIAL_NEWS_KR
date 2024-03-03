@@ -190,7 +190,7 @@ ENDIF
 
 
 ;--------------------------------------------------
-;기절時の形容を返す式中関数
+;기절 시의 형용사를 반환하는 식중함수
 @PRINT_SWOON
 #FUNCTIONS
 VARSET LOCALS
@@ -198,48 +198,48 @@ IF (TCVARn:12 & 기절)
 	IF TALENT:주관시점 > 0
 		SELECTCASE RAND:10
 			CASE 9
-				LOCALS = 気を失いかけている
+				LOCALS = 정신을 잃기 직전인
 			CASE 8
-				LOCALS = 寝そべっている
+				LOCALS = 엎드려 누워 있는
 			CASE 7
-				LOCALS = 伏せっている
+				LOCALS = 엎드려 있는
 			CASE 6
-				LOCALS = 倒れている
+				LOCALS = 쓰러져 있는
 			CASE 5
-				LOCALS = 기절しかけている
+				LOCALS = 기절하기 직전인
 			CASE 4
-				LOCALS = 気を失いかけた
+				LOCALS = 정신을 잃을 뻔한
 			CASE 3
-				LOCALS = 寝そべった
+				LOCALS = 드러누운
 			CASE 2
-				LOCALS = 地に伏せた
+				LOCALS = 땅에 드러누운
 			CASE 1
-				LOCALS = 倒れ込んだ
+				LOCALS = 쓰러진
 			CASE 0
-				LOCALS = 朦朧とした意識の
+				LOCALS = 의식이 몽롱한
 		ENDSELECT
 	ELSE
 		SELECTCASE RAND:10
 			CASE 9
-				LOCALS = 気を失っている
+				LOCALS = 정신을 잃어 버린
 			CASE 8
-				LOCALS = 寝そべっている
+				LOCALS = 엎드려 누워 있는
 			CASE 7
-				LOCALS = 伏せっている
+				LOCALS = 엎드려 있는
 			CASE 6
-				LOCALS = 倒れている
+				LOCALS = 쓰러져 있는
 			CASE 5
-				LOCALS = 기절している
+				LOCALS = 기절하고 만
 			CASE 4
-				LOCALS = 気を失った
+				LOCALS = 정신을 잃은
 			CASE 3
-				LOCALS = 寝そべった
+				LOCALS = 드러누운
 			CASE 2
-				LOCALS = 地に伏せた
+				LOCALS = 땅에 드러누운
 			CASE 1
-				LOCALS = 倒れ込んだ
+				LOCALS = 쓰러진
 			CASE 0
-				LOCALS = 기절した
+				LOCALS = 기절한
 		ENDSELECT
 	ENDIF
 ENDIF
@@ -249,13 +249,13 @@ RETURNF LOCALS
 
 
 ;--------------------------------------------------
-;キャラクターの외관を加味した나이帯を返す式中関数
+;캐릭터의 외관을 가미한 나이띠를 반환하는 식중함수
 @GET_AGEBAND(ARG)
 #FUNCTIONS
 #DIM AGE
 
-;プロフィール未설정のキャラは나이帯なし
-LOCALS = なし
+;프로필 미설정인 캐릭터는 나이띠 없음
+LOCALS = 없음
 SIF CFLAG:ARG:34 == 0
 	RETURNF LOCALS
 
@@ -266,13 +266,17 @@ ELSE
 ENDIF
 
 IF AGE < 10
-	LOCALS = 幼い
+	;幼い
+	LOCALS = 어린
 ELSEIF AGE < 16
-	LOCALS = 子供
+	;子供, 어린이 라는 뜻인데 11~15세에는 어린이라고 하면 중학생 나이에서 좀 애매해지니까 미숙하다고 바꿨다
+	LOCALS = 미숙한
 ELSEIF AGE < 25
-	LOCALS = 若い
+	;若い
+	LOCALS = 젊은
 ELSE
-	LOCALS = 大人
+	;大人
+	LOCALS = 성인
 ENDIF
 
 RETURNF LOCALS

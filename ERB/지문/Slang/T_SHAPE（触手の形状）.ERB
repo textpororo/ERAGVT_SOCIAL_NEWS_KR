@@ -1,19 +1,20 @@
 ﻿;**********************************************************
-;基本ルール
-;加筆修正は、自由に行ってください
-;ただし、前の方が書いた文章は出来る限り消さないでください
+;기본 규칙
+;가필 수정은, 자유롭게 해주세요.
+;하지만, 앞에 분이 쓰셨던 문장은 되도록 지우지 말아주세요.
 ;
-;書き込む順番は、クドくなり過ぎないように3要素と部位で表現します
-;ARGS:0;色
-;ARGS:1;形状
+;써넣는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현하겠습니다.
+;ARGS:0 색
+;ARGS:1 형상
 ;
-;最後は「〜〜の촉수」、「〜〜の様なモノ」みたいに名詞で止めます
-;挿入などの動作は지문に任せて、
-;ここではどんな촉수が良いか書くにとどめましょう
+;마지막은「〜〜의 촉수」, 「〜〜와 같은 것」처럼 명사로 끝냅니다.
+;삽입 등의 동작은 지문에 맡기고,
+;여기서는 어떤 촉수가 좋을지 쓰는 것에 그칩시다.
 ;
 ;
-;未登録の中に放り込むなり、掲示板にアップするなりすれば、
-;実装される可能性があります
+;미등록 안에 집어넣거나 게시판에 올리거나 하면,
+;구현될 가능성이 있습니다.
+;(아마 스레 얘기일듯)
 ;
 ;by 雑魚の人 2018/02/11
 ;**********************************************************
@@ -23,93 +24,99 @@
 
 
 ;**********************************************************
-;촉수の초기화
+;촉수 초기화
 @T_SHAPE(ARGS:0,ARGS:1)
 #DIMS TWORD
 #FUNCTIONS
 
 
-;ARGS:0の色指定チェック
+;ARGS:0의 색 지정 체크
 STRLENFORM %ARGS:0%
 SIF RESULT:0 == -1
 	ARGS:0=%T_STATUS_BCOLOR(TARGET)%
 
 ;**********************************************************
-;촉수の色の설정
+;촉수의 색 설정
 SELECTCASE ARGS:0
-	CASE "透明"
-		TWORD=透き通った
+	CASE "투명"
+		TWORD=투명한
 	CASE "빨강"
-		TWORD=真っ赤な
+		TWORD=새빨간
 	CASE "담홍","담홍색"
-		TWORD=淡い담홍색の
+		TWORD=연한 담홍색의
 	CASE "분홍","분홍색"
-		TWORD=艶やかな桃色の
+		TWORD=반들반들한 분홍색의
 	CASE "핑크","핑크색"
-		TWORD=艶やかなピンク色の
-	CASE "살몬 핑크"
-		TWORD=鮮やかな살몬 핑크の
+		TWORD=반들반들한 핑크색의
+	CASE "살몬 핑크","연어색"
+		TWORD=선명한 연어색의
 	CASEELSE
-	TWORD=%ARGS:0%
+		TWORD=%ARGS:0%의
 ENDSELECT
 
-
+;한글 띄어쓰기 추가
+TWORD += " "
 
 ;**********************************************************
-;촉수の形状と動き
+;촉수의 형상과 움직임
 SELECTCASE ARGS:1
 	;**************【】***************
-	CASE "ブラシ"
-		TWORD+="ブラシ状のうごめく촉수"
+	CASE "브러쉬"
+		TWORD+="브러쉬 모양의 꿈틀거리는 촉수"
 	CASE "섬모"
-		TWORD+="繊毛のうごめく촉수"
-	CASE "筆"
-		TWORD+="体液を塗りつける筆状の촉수"
+		TWORD+="섬모 모양의 꿈틀거리는 촉수"
+	CASE "붓"
+		TWORD+="체액을 칠하는 붓 모양의 촉수"
 
 
 	;**************【】***************
-	CASE "内視鏡"
-		TWORD+="内視鏡の様に奥まで透して見える촉수"
-	CASE "カテーテル"
-		TWORD+="カテーテルのような촉수"
-	CASE "注射器"
-		TWORD+="注射器の様な촉수"
-	CASE "搾乳器" , "搾乳機"
-		TWORD+="カップ状の촉수"
-	CASE "イチジク浣腸"
-		TWORD+="先がすぼまっているイチジクのような촉수"
+	CASE "내시경"
+		TWORD+="내시경처럼 안쪽까지 비춰 보이는 촉수"
+	CASE "카테터"
+		TWORD+="카테터 모양의 촉수"
+	CASE "주사기"
+		TWORD+="주사기 모양의 촉수"
+	;搾乳器와 搾乳機를 착유기로 통합
+	CASE "착유기"
+		TWORD+="컵 모양의 촉수"
+	CASE "무화과 관장"
+		TWORD+="끝이 오므라진 무화과 모양의 촉수"
 
 
 	;**************【】***************
-	CASE "針"
-		TWORD+="針が先端に付いた촉수"
-	CASE "トゲトゲ"
-		TWORD+="トゲトゲした凹凸のある촉수"
+	CASE "바늘"
+		TWORD+="끝부분에 바늘이 달린 촉수"
+	;凹凸 요철 원문인데 이거 은근 귀엽다
+	CASE "삐죽삐죽"
+		TWORD+="삐죽삐죽한 요철이 있는 촉수"
 
 
 	;**************【】***************
-	CASE "吸盤"
-		TWORD+="吸い付く吸盤촉수"
-	CASE "猫舌","ネコ舌"
-		TWORD+="ザラザラとした舌のような촉수"
-	CASE "舌"
-		TWORD+="舌のような平たく濡れた촉수"
+	CASE "빨판"
+		TWORD+="달라붙는 빨판 촉수"
+	;猫舌와 ネコ舌를 고양이 혀로 통합
+	CASE "고양이 혀"
+		TWORD+="까칠까칠한 혀 모양의 촉수"
+	CASE "혀"
+		TWORD+="딱 봐도 젖어있는 혀 모양의 촉수"
 
 
 	;**************【】***************
-	CASE "イボイボ"
-		TWORD+="凸凹なイボがたくさんついた촉수"
-	CASE "巨根"
-		TWORD+="血管が脈打つ太い촉수"
+	CASE "돌기"
+		TWORD+="울퉁불퉁한 돌기가 잔뜩 붙어있는 촉수"
+	CASE "거근"
+		TWORD+="맥박치는 혈관이 보이는 굵은 촉수"
 
 
 	;**************【】***************
-	CASE "ツタ", "蔦"
-		TWORD+="ツタの様な촉수"
-	CASE "ヒモ", "ロープ", "紐"
-		TWORD+="細い촉수がロープ状に捩じ束ねられた촉수"
-	CASE "極細", "糸"
-		TWORD+="糸状の極細の촉수"
+	;ツタ와 蔦를 담쟁이덩굴로 통합
+	CASE "담쟁이덩굴"
+		TWORD+="담쟁이덩굴과도 같은 촉수"
+	;ヒモ와 紐를 끈으로 통합
+	CASE "끈" , "로프"
+		TWORD+="가는 촉수가 로프 모양으로 꼬여 묶인 촉수"
+	CASE "극세", "실"
+		TWORD+="실과 같이 극도로 미세한 촉수"
 
 
 	;**************【】***************
@@ -121,7 +128,7 @@ ENDSELECT
 
 
 
-;**************【終了】***************
+;**************【종료】***************
 
 RETURNF TWORD
 
@@ -129,7 +136,7 @@ RETURNF TWORD
 
 
 ;**********************************************************
-;촉수の체력で４段階、사정치で４段階の変色するシステム＊暫定
+;촉수의 체력에서 ４단계, 사정치에서 ４단계로 변색되는 시스템＊잠정
 ;Tentacle's STATUS make BodyCOLOR
 ;**********************************************************
 @T_STATUS_BCOLOR(ARG)
@@ -138,9 +145,9 @@ RETURNF TWORD
 
 IF (FLAG:13 > FLAG:12 *3/4)
 	IF (FLAG:15 > FLAG:14 *3/4)
-		T_COLOR_SET=桃色
+		T_COLOR_SET=분홍색
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
-		T_COLOR_SET=ピンク
+		T_COLOR_SET=핑크
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
 		T_COLOR_SET=담홍색
 	ELSE
@@ -148,43 +155,43 @@ IF (FLAG:13 > FLAG:12 *3/4)
 	ENDIF
 ELSEIF (FLAG:13 > FLAG:12 *2/4)
 	IF (FLAG:15 > FLAG:14 *3/4)
-		T_COLOR_SET=ピンク
+		T_COLOR_SET=핑크
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
-		T_COLOR_SET=ピンク
+		T_COLOR_SET=핑크
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
-		T_COLOR_SET=ピンク
+		T_COLOR_SET=핑크
 	ELSE
-		T_COLOR_SET=ピンク
+		T_COLOR_SET=핑크
 	ENDIF
 ELSEIF (FLAG:13 > FLAG:12 *1/4)
 	IF (FLAG:15 > FLAG:14 *3/4)
-		T_COLOR_SET=赤褐色
+		T_COLOR_SET=적갈색
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
-		T_COLOR_SET=赤褐色
+		T_COLOR_SET=적갈색
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
-			T_COLOR_SET=赤褐色
+			T_COLOR_SET=적갈색
 	ELSE
-		T_COLOR_SET=赤褐色
+		T_COLOR_SET=적갈색
 	ENDIF
 ELSEIF (FLAG:13 > FLAG:12 /10) && (FLAG:13 > 500) 
 	IF (FLAG:15 > FLAG:14 *3/4)
-		T_COLOR_SET=赤黒
+		T_COLOR_SET=검붉은색
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ELSE
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ENDIF
 ELSE
 	IF (FLAG:15 > FLAG:14 *3/4)
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ELSEIF (FLAG:15 > FLAG:14 *2/4)
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ELSEIF (FLAG:15 > FLAG:14 *1/4)
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ELSE
-		T_COLOR_SET=赤紫
+		T_COLOR_SET=적자색
 	ENDIF
 ENDIF
 
@@ -194,7 +201,7 @@ RETURNF T_COLOR_SET
 
 
 ;**********************************************************
-;T_SHAPE(ARGS:0,ARGS:1)の文字を着色してPRINTFORMする
+;T_SHAPE(ARGS:0,ARGS:1)의 글자를 착색하여 PRINTFORM한다
 ;**********************************************************
 @COLOR_T_SHAPE(ARGS:0,ARGS:1)
 #DIMS COLORPRINT_CSET
@@ -213,7 +220,7 @@ ELSE
 	COLORPRINT_TEXT=%T_SHAPE(COLORPRINT_CSET,ARGS:1)%
 ENDIF
 
-;PRINTFORM形式で호출
+;PRINTFORM 형식으로 호출
 CALL PRINT_RGBTEXT(COLORPRINT_CSET,COLORPRINT_TEXT)
 
 

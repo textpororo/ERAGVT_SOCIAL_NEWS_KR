@@ -1,19 +1,19 @@
 ﻿;==================================================
-;【基本】
+;【기본】
 ;--------------------------------------------------
 ;잡몹적
 @TENTACLE_MOB_102
 ;--------------------------------------------------
-;名前
+;이름
 @TENTACLE_MOB_102_GETNAME
-RESULTS = ぷるぷるスライム・アス
+RESULTS = 푸르푸르 슬라임・Ａ
 
 ;--------------------------------------------------
-;解説
+;정의
 @TENTACLE_MOB_102_DEFENITION
-PRINTFORML （あまり変形しない固体スライム生物の変種）
-PRINTFORML （無色透明な体は、水に入り込むと存在に気がつくのは困難である）
-PRINTFORML （死の間際に子孫を残す本能が有る）
+PRINTFORML （잘 변형되지 않는 고체 슬라임 생물의 변종.）
+PRINTFORML （무색 투명한 몸은, 물속으로 들어가면 그 존재를 알아차리기가 어렵다.）
+PRINTFORML （죽기 직전에 자손을 남기는 본능이 있다.）
 
 
 ;==================================================
@@ -26,20 +26,20 @@ CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
 RETURN RESULT
 
 ;--------------------------------------------------
-;사정限界値
+;사정 한계치
 @TENTACLE_MOB_102_SYASEI
 CALL TENTACLE_LEVEL
 LOCAL = 480 + RESULT * 5
 RETURN LOCAL
 
 ;--------------------------------------------------
-;搾精ダメージ補正
+;착정 피해량 보정
 @TENTACLE_MOB_102_SAKUSEI
 LOCAL = 200
 RETURN LOCAL
 
 ;--------------------------------------------------
-;방심도역치
+;방심도 역치
 @TENTACLE_MOB_102_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -91,13 +91,13 @@ RESULT = 150
 RETURN RESULT
 
 ;--------------------------------------------------
-;拘束力
+;구속력
 @TENTACLE_MOB_102_HOLD
 RESULT = 150
 RETURN RESULT
 
 ;--------------------------------------------------
-;PALAM補正 百分率で返す
+;PALAM보정　백분율로 되돌린다
 @TENTACLE_MOB_102_PALAM_HOSEI
 ;쾌Ｃ
 LOCAL:0 = 100
@@ -111,13 +111,13 @@ LOCAL:3 = 100
 LOCAL:4 = 50
 ;공순
 LOCAL:5 = 50
-;取得
+;습득
 LOCAL:6 = 50
 ;욕정
 LOCAL:7 = 40
 ;굴복
 LOCAL:8 = 25
-;恥辱
+;치정
 LOCAL:9 = 50
 ;고통
 LOCAL:10 = 50
@@ -128,7 +128,7 @@ RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, L
 
 
 ;==================================================
-;【専用ルーチン（戦闘）】
+;【전용 루틴（전투）】
 ;--------------------------------------------------
 @TENTACLE_MOB_102_ATTACK_ROUTINE
 IF LOCAL < 45
@@ -140,13 +140,13 @@ ENDIF
 
 
 ;==================================================
-;【専用ルーチン（性行為）】
+;【전용 루틴（성행위）】
 ;--------------------------------------------------
-;専用ルーチン（性行為）
+;전용 루틴（성행위）
 @TENTACLE_MOB_102_SEX_ROUTINE
 
-;사정치が3/4（FLAG:15 > FLAG:14*3/4 ）かつ체력が1割以下（FLAG:13 < FLAG:12 /10 ）
-;A촉수専用SPの浣腸拡張
+;사정치가 3/4 이상(FLAG:15 > FLAG:14*3/4)임과 동시에 체력이 1할 이하(FLAG:13 < FLAG:12 /10)
+;A촉수 전용 SP의 관장 확장
 IF (FLAG:15 > FLAG:14 *3/4) && (FLAG:13 < FLAG:12 /10)
 	;의상의 내구도가 높으면 의상 파괴를 우선한다
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF / 4
@@ -159,17 +159,17 @@ IF (FLAG:15 > FLAG:14 *3/4) && (FLAG:13 < FLAG:12 /10)
 		ELSEIF CFLAG:41 == 299 && CFLAG:1 > 0
 			RETURN 5
 		ELSE
-			;専用コマンド「浣腸拡張」
+			;전용 커맨드「관장 확장」
 			RETURN 2000
 		ENDIF
 	ENDIF
 ELSE
 
 
-	;ランダム係数호출（Ａ공격（강）、Ａ공격（약）、CＡ공격（약））
+	;랜덤 계수 호출（Ａ공격（강）, Ａ공격（약）, ＣＡ공격（약））
 	LOCAL = RAND:100
 
-	;애널に潜り込む
+	;애널에 침입한다
 	IF LOCAL < 20 + (ISMALE()) * 20 || (TFLAG:20 == 5 && LOCAL < 80)
 		IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 			RETURN 14
@@ -181,11 +181,11 @@ ELSE
 			ENDIF
 		ENDIF
 
-	;CＡ공격（약）
+	;ＣＡ공격（약）
 	ELSEIF LOCAL < 50
 		RETURN 0
 
-	;애널공격（약）
+	;애널 공격（약）
 	ELSE
 		IF ISHOLE() == 0
 			RETURN 1
@@ -198,11 +198,11 @@ ENDIF
 RETURN 1
 
 ;==================================================
-;【性コマンドレファレンス】
+;【성 커맨드 레퍼런스】
 ;--------------------------------------------------
-;ARG=1　스마타애태우기成功時の行動指定
-;ARG=2　스마타애태우기失敗時の行動指定
-;ARG=3　フェラチオ誘発時の行動指定
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
 @TENTACLE_MOB_102_REACTION_REF, ARG = 0
 IF ARG == 1
 	RETURN 5
@@ -222,41 +222,41 @@ RETURN 통상
 
 @MESSAGE_MOB_102_COM0, ARG:0, ARG:1
 FONTBOLD
-PRINT ＣＡ愛撫
+PRINT ＣＡ애무
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 背中から%T_SHAPE("透明","ブラシ")%の舌を伸ばし、
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 등에서부터 %T_SHAPE("투명","브러쉬")%의 혀를 뻗어,
 PRINTFORM %SLANG_A(TARGET)%から
 IF ISPENIS()
 	PRINTFORM %SLANG_P(TARGET)%
 ELSE
 	PRINTFORM %SLANG_C(TARGET)%
 ENDIF
-PRINTFORML を丹念に舐め回している
-PRINTFORM 透明な
+PRINTFORML を 정성껏 핥고 있었다.
+PRINTFORM 투명한 
 CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML の舌で広げられ、シワを数えるように%SLANG_A(TARGET)%を舐めまわしている。
+PRINTFORML 의 혀로 벌리고, 주름을 세듯이 %SLANG_A(TARGET)%を 구석구석 꼼꼼하게 핥아 갔다.
 IF ISMALE()
 	;#region
-	PRINTFORML そのことに気がついた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その尻穴を疼かせるのであった……
+	PRINTFORML 그 사실을 깨달은 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 그 엉덩이 구멍이 쑤시는 것이었다.……
 	;#endregion
 ELSE 
-	PRINTFORML そのことに気がついた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その股を濡らすのであった……
+	PRINTFORML 그 사실을 깨달은 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 그 허벅지를 적시는 것이었다……
 ENDIF
 PRINTW 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM0")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
 @SEXCOM_OPTION_MOB_102_COM0
-;追加攻め部位指定
+;추가 공격 부위 지정
 RETURN 5
 
 
@@ -269,32 +269,32 @@ RETURN 통상
 
 @MESSAGE_MOB_102_COM4, ARG:0, ARG:1
 FONTBOLD
-PRINT 애널舐め
+PRINT 애널 핥기
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は、%PRINT_TRANSCALLNAME(TARGET)%의 背中から舌を伸ばし、
-PRINTFORML %SLANG_A(TARGET)%を中心に丹念に舐め回している。
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%は、舌の動きに過敏に反応してしまう。
-PRINTFORML 拒絶するように%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%%SLANG_A(TARGET)%を締めるが、
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML はその反応に気を良くした様に、%PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%を舐め続けた。
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 등에서부터 혀를 뻗어,
+PRINTFORML %SLANG_A(TARGET)%を 중심으로 정성껏 핥고 있었다.
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%は, 혀의 움직임에 과민하게 반응해 버린다.
+PRINTFORML 거절하듯이 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% %SLANG_A(TARGET)%を 조였지만,
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 오히려 그 반응에 만족했다는 듯이, 계속해서 %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%を 핥아 갔다・・・
 PRINTW 
 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM4")
 PRINTL 
 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
 
 @SEXCOM_OPTION_MOB_102_COM4
-;追加攻め部位指定
+;추가 공격 부위 지정
 RETURN 1
 
 
@@ -311,86 +311,86 @@ PRINT 애널侵入
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 背中から伸ばした舌を、
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 등에서부터 뻗은 혀를, 
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%へ突き入れた。
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は、%PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%に、
-PRINTFORML 粘液に塗れる%T_SHAPE("透明","ブラシ")%をジュブジュブと出し入れし続けている。
-PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、排泄するだけでは得られない快感を味わい続けた。
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%に, 
+PRINTFORML 점액 범벅인 %T_SHAPE("투명","브러쉬")%を 쑤컹쑤컹 넣었다 빼기를 반복하고 있었다.
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 배설하는 것만으로는 얻을 수 없는 쾌감을 계속 맛보았다・・・
 PRINTW 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM5")
 PRINTL 
 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
-	;挿入されたところを見られた
+	;삽입당하는 모습을 보였다
 	SIF (ARG & Ｖ) || (ARG & Ａ)
 		SETBIT TFLAG:21,3
 ENDIF
 
 ;================================================================================
-;固有コマンド：浣腸産卵
+;고유 커맨드：관장 산란
 ;--------------------------------------------------------------------------------
 ;성 커맨드 분류
 @SEX_TYPE_MOB_102_COM2000
 RETURN 삽입
 
 @SEXCOM_MOB_102_COM2000,ARG = 0,ARG:1 = 0
-;コマンドのＩＤ
+;커맨드의 ＩＤ
 LOCAL:0 = 2000
 
-;メイン部位（なし0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
+;메인 부위（없음0 Ｃ1 Ｖ2 Ａ4 Ｂ8）
 LOCAL:2 = Ａ
 
-;방심도상승량
+;방심도 상승량
 LOCAL:3 = 100
 
-;사정フラグ（なし0 질2 애널4 가슴8 입16 手32 ワレメ64 오발128 ビット演算）
+;사정 플래그（없음0 질2 애널4 가슴8 입16 손32 균열64 오발128 비트 연산）
 LOCAL:4 = 애널
 
-;사정 게이지상승량
+;사정 게이지 상승량
 LOCAL:5 = 2000
 
 ;의상에의 피해
 LOCAL:6 = 2
 
-;コマンドの強度（弱=0 強=1 SP=2）
-;추가 고문の効果とPALAM影響度の両方が強化される
+;커맨드의 강도（약=0 강=1 SP=2）
+;추가 고문의 효과와 PALAM 영향도 양쪽이 강화된다
 LOCAL:7 = 2
 
-;처녀 상실の有無（なし0 あり1 あり、지문なし2）
+;처녀 상실 유무（없음0 있음1 있음, 지문 없음2）
 LOCAL:8 = 0
 
-;特殊効果
-;1 = Ｖ삽입방어貫通（Ｖ삽입방어していても挿入される）
-;2 = 拡張責め（ＶまたはＡ強度が1以上なら굴복、치정、고통、공포が入る）
+;특수 효과
+;1 = Ｖ삽입방어 관통（Ｖ삽입방어를 하고 있어도 삽입당한다）
+;2 = 확장 고문（Ｖ 또는 Ａ강도가 1이상이라면 굴복, 치정, 고통, 공포가 들어간다）
 LOCAL:9 = 2
 
-;PALAM影響度　影響なしなら=0　 기본값=5
+;PALAM 영향도　영향이 없으면=0　 기본값=5
 ;-------------------------
-;쾌Ｃ強度
+;쾌Ｃ 강도
 LOCAL:10 = 0
-;쾌Ｖ強度
+;쾌Ｖ 강도
 LOCAL:11 = 0
-;쾌Ａ強度
+;쾌Ａ 강도
 LOCAL:12 = 5
-;쾌Ｂ強度
+;쾌Ｂ 강도
 LOCAL:13 = 0
 
-;マゾによる굴복、공포影響度
+;마조에 따른 굴복, 공포 영향도
 LOCAL:14 = 0
-;挿入による공순影響度
+;삽입에 따른 공순 영향도
 LOCAL:15 = 0
-;습득影響度
+;습득 영향도
 LOCAL:16 = 5
-;노출벽による욕정、치정、공포影響度（수치 플레이など）
+;노출벽에 따른 욕정, 치정, 공포 영향도（수치 플레이 등）
 LOCAL:17 = 0
-;強制奉仕による굴복影響度（フェラ、이라마치오、파이즈리など）
+;강제 봉사에 의한 굴복 영향도（펠라치오, 이라마치오, 파이즈리 등）
 LOCAL:18 = 0
 
 ;펠라경험
@@ -398,7 +398,7 @@ EXP:펠라경험 += 0
 ;방뇨경험
 EXP:방뇨경험 += 0
 
-;共通処理を호출
+;공통 처리를 호출
 VARSET RESULT
 CALL MOB_CREATE_COM, LOCAL:0, ARG:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12, LOCAL:13, LOCAL:14, LOCAL:15, LOCAL:16, LOCAL:17, LOCAL:18
 
@@ -438,61 +438,61 @@ CALL PALAM_CAL, RESULT:0, RESULT:1, RESULT:2, RESULT:3, RESULT:4, RESULT:5, RESU
 @MESSAGE_MOB_102_COM2000, ARG:0, ARG:1
 ;--------------------------------------------------
 FONTBOLD
-PRINTL 浣腸産卵（拡張）
+PRINTL 관장 산란（확장）
 FONTREGULAR
 
-PRINTFORM 自身の死期を悟った
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は、その体をイチジクの様な形に変化させた。
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 背中から、お尻に向けて촉수の先が伸ばされていく。
-PRINTFORML 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は身を窄み、%SLANG_A(TARGET)%を押し広げ容赦なくドロリとした体液を%PRINT_TRANSCALLNAME(TARGET)%의 中に注ぎ入れた。
-PRINTFORML 
-PRINTFORML 下腹に来た圧迫感に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
+PRINTFORM 자신의 임종을 깨달은
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 그 몸을 무화과 모양으로 변화시켰다.
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 등에서부터 엉덩이를 향해 촉수의 끝이 뻗어갔다.
+PRINTL 
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 몸을 오므리고, %SLANG_A(TARGET)%を 억지로 벌려 물컹물컹한 체액을 %PRINT_TRANSCALLNAME(TARGET)%의 안쪽에 사정없이 부어 넣었다.
+PRINTL 
+PRINTFORML 아랫배에 오는 압박감에 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 
 SIF EXP:Ａ경험 <= 10
-	PRINTFORML 顔を青ざめさせることしかできなかった。
+	PRINTL 평소에는 느끼지 못할 이질적인 자극에 얼굴이 파랗게 질릴 수밖에 없었다.
 SIF EXP:Ａ경험 > 10 && EXP:Ａ경험 <= 30
-	PRINTFORML これから起こるであろうことを覚悟して、唇を噛み締めた。
+	PRINTL 앞으로 일어날 일을 각오하고, 입술을 꽉 깨물었다.
 SIF EXP:Ａ경험 > 30
-	PRINTFORML 今何が起きているのか理解し、절망に顔を歪めてしまった。
-PRINTFORML 
-PRINTFORML …
-PRINTFORML ……
-PRINTFORML ………
+	PRINTL 지금 무슨 일이 일어나고 있는지를 이해하곤, 절망에 얼굴을 일그러뜨리고 말았다.
+PRINTL 
+PRINTL …
+PRINTL ……
+PRINTL ………
 PRINTW
 PRINTFORML 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML はイチジクの様な膨らみの中にあった卵入りの浣腸液を、全て%PRINT_TRANSCALLNAME(TARGET)%의 直腸内に注ぎ込んだ。
-PRINTFORM そして、
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は小さくなった体で最期のピストン運動を始めた。、
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 무화과처럼 부풀어 오른 부위 속에 있던 알을 포함한 관장액을, 전부 %PRINT_TRANSCALLNAME(TARGET)%의 직장 안으로 쏟아부었다.
+PRINTFORM 그리고, 
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 작아진 몸으로 최후의 피스톤 운동을 하기 시작했다.
 PRINTFORML 
 PRINTW
-PRINTFORML 
-PRINTFORML …
-PRINTFORML ……
-PRINTFORML ………
-PRINTFORML
-PRINTW
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 直腸に産み付けられた
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML の卵は、腸内の精液を吸収して大きく膨らんでいった
-PRINTW
-PRINTFORML
-PRINTFORML プリッ
-PRINTW
-PRINTFORML
-PRINTFORML プリッ
-PRINTFORML 
-PRINTW
-PRINTFORML 自由の身となった%PRINT_TRANSCALLNAME(TARGET)%だったが、
-PRINTFORM その尻穴からは、一つまた一つと丸々とした卵が産み落とされていた。
+PRINTL 
+PRINTL …
+PRINTL ……
+PRINTL ………
 PRINTL
-PRINTFORML 数えるように%PRINT_TRANSCALLNAME(TARGET)%から産まれ落ちるその卵は、
+PRINTW
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 직장에 품어진
 CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML  の死を悼む数珠の様であった…
-PRINTFORML
+PRINTL 의 알은, 장내 정액을 흡수하여 크게 부풀어 올랐다.
+PRINTW
+PRINTL
+PRINTL 탱글……
+PRINTW
+PRINTL
+PRINTL 탱글……
+PRINTL 
+PRINTW
+PRINTFORML 시간이 지나 %PRINT_TRANSCALLNAME(TARGET)%의 몸은 비로소 자유롭게 풀려났지만, 
+PRINT 그 엉덩이 구멍에서는, 하나 둘 동실동실한 알이 품어져 있었다.
+PRINTL
+PRINTFORML 세어가듯 %PRINT_TRANSCALLNAME(TARGET)%로부터 태어나는 그 알은, 
+CALL TENTACLE_ACCESS, "NAME"
+PRINTL 의 죽음을 애도하는 염주와도 같았다……
+PRINTL
 SIF FLAG:13 > 0
 	FLAG:13 = 0
 
@@ -500,11 +500,11 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "MOB_102_COM2000")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SETBIT TFLAG:21,1
-	;挿入されたところを見られた
+	;삽입당하는 모습을 보였다
 	SETBIT TFLAG:21,3
 ENDIF
 
@@ -519,11 +519,12 @@ RETURN 통상
 FONTBOLD
 PRINTL 의상을 찢는다
 FONTREGULAR
-CALL TENTACLE_ACCESS, "NAME"
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")% 
 IF RAND:3 == 0
-	PRINTFORML は촉수の先端から濁った色の粘液を勢いよく吐き出した！
-	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%의 全身に降りかかり、
-	PRINTFORML 衣装がみるみる溶かされていく・・・
+	PRINTFORML 촉수 끝에서 탁한 색의 점액을 힘차게 뿜어냈다！
+	PRINTFORML 이상한 냄새가 나는 점액이 %PRINT_TRANSCALLNAME(TARGET)%의 온몸을 덮어,
+	PRINTFORML 의상이 순식간에 녹아 간다・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -531,8 +532,8 @@ IF RAND:3 == 0
 	;상태 이상：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
-	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身に絡まり、激しく蠢いている！
-	PRINTFORML もみくちゃにされた%PRINT_TRANSCALLNAME(TARGET)%의 衣装が引き裂かれていく・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 온몸에 엉켜 격렬하게 꿈틀거리고 있다！
+	PRINTFORML 쭈글쭈글해진 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 찢어져 간다・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -541,30 +542,30 @@ ENDIF
 
 
 ;==================================================
-;【絡みつく】
+;【휘감는다】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_102_KARAMITUKU
-PRINT 可愛いらしいスライム
+PRINT 귀여운 생김새의 슬라임
 IF TFLAG:12 == 3
-	PRINTFORM が勢い良く%PRINT_TRANSCALLNAME(TARGET)%へ向かって跳ねてきた！
+	PRINTFORM 이 힘차게 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 향해 뛰어왔다！
 ELSEIF RAND:2 == 0
-	PRINTFORM が体を地面に跳ねさせ、%PRINT_TRANSCALLNAME(TARGET)%의 脚元から飛びかかってきた！
+	PRINTFORM 이 지면에 몸을 튕겨, %PRINT_TRANSCALLNAME(TARGET)%의 발밑에서 덤벼들어 왔다！
 ELSE
-	PRINTFORM がゴム鞠の様に飛び跳ねて、%PRINT_TRANSCALLNAME(TARGET)%의 頭上から襲いかかってきた！
+	PRINTFORM 이 고무공처럼 튀어 올라, %PRINT_TRANSCALLNAME(TARGET)%의 머리 위에서부터 덤벼들어 왔다！
 ENDIF
 PRINT （
 IF TFLAG:11 & 1
-	PRINT 近
+	PRINT 근
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 2
-	PRINT 中
+	PRINT 중
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 4
-	PRINT 遠
+	PRINT 원
 ELSE
 	PRINT 　
 ENDIF
@@ -572,12 +573,11 @@ PRINTL ）
 
 
 ;==================================================
-;【絡みつく成功】
+;【휘감는다 성공】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_102_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML に背後に回り込まれ、
-PRINTFORML 背中に張り付かれてしまった！
+PRINTFORM 다 피하지 못한 %PRINT_TRANSCALLNAME(TARGET)%의 배후를,
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"가")% 돌아 들어가 등에 착 달라붙어 버렸다！
 
 

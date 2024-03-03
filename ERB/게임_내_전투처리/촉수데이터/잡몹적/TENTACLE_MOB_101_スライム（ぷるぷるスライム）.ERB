@@ -1,20 +1,21 @@
 ﻿;==================================================
-;【基本】
+;【기본】
 ;--------------------------------------------------
 ;잡몹적
-;↓촉수の存在確認用関数　何も処理しない
+;↓촉수의 존재 확인용 함수　아무것도 처리하지 않는다
 @TENTACLE_MOB_101
 ;--------------------------------------------------
-;名前
+;이름
 @TENTACLE_MOB_101_GETNAME
-RESULTS = ぷるぷるスライム
+RESULTS = 푸르푸르 슬라임
 
 ;--------------------------------------------------
-;解説
+;정의
 @TENTACLE_MOB_101_DEFENITION
-PRINTFORML （あまり変形しない固体スライム生物）
-PRINTFORML （見た目が可愛いので騙されて近づくと酷い目に遭う）
-PRINTFORML （ぶにゅぶにゅと弾力があり、表面はひんやりしている）
+PRINTFORML （잘 변형되지 않는 고체 슬라임 생물.）
+PRINTFORML （생각보다 귀여운 생김새에 속아서 다가갔다간 심한 꼴을 당한다.）
+;탱글탱글의 원문은 ぶにゅぶにゅ
+PRINTFORML （탱글탱글한 탄력이 있고, 표면은 싸늘하다.）
 
 
 ;==================================================
@@ -27,20 +28,20 @@ CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
 RETURN RESULT
 
 ;--------------------------------------------------
-;사정限界値
+;사정 한계치
 @TENTACLE_MOB_101_SYASEI
 CALL TENTACLE_LEVEL
 LOCAL = 480 + RESULT * 5
 RETURN LOCAL
 
 ;--------------------------------------------------
-;搾精ダメージ補正
+;착정 피해량 보정
 @TENTACLE_MOB_101_SAKUSEI
 LOCAL = 200
 RETURN LOCAL
 
 ;--------------------------------------------------
-;방심도역치
+;방심도 역치
 @TENTACLE_MOB_101_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -92,13 +93,13 @@ RESULT = 150
 RETURN RESULT
 
 ;--------------------------------------------------
-;拘束力
+;구속력
 @TENTACLE_MOB_101_HOLD
 RESULT = 150
 RETURN RESULT
 
 ;--------------------------------------------------
-;PALAM補正 百分率で返す
+;PALAM보정　백분율로 되돌린다
 @TENTACLE_MOB_101_PALAM_HOSEI
 ;쾌Ｃ
 LOCAL:0 = 100
@@ -112,13 +113,13 @@ LOCAL:3 = 100
 LOCAL:4 = 50
 ;공순
 LOCAL:5 = 50
-;取得
+;습득
 LOCAL:6 = 50
 ;욕정
 LOCAL:7 = 50
 ;굴복
 LOCAL:8 = 50
-;恥辱
+;치정
 LOCAL:9 = 50
 ;고통
 LOCAL:10 = 50
@@ -128,7 +129,7 @@ LOCAL:11 = 50
 RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
 ;==================================================
-;【専用ルーチン（戦闘）】
+;【전용 루틴（전투）】
 ;--------------------------------------------------
 @TENTACLE_MOB_101_ATTACK_ROUTINE
 LOCAL = RAND:100
@@ -140,12 +141,12 @@ ENDIF
 
 
 ;==================================================
-;【専用ルーチン（性行為）】
+;【전용 루틴（성행위）】
 ;--------------------------------------------------
 @TENTACLE_MOB_101_SEX_ROUTINE
 LOCAL = RAND:100
 
-;촉수バランスボール Ｖ挿入
+;촉수 밸런스볼（Ｖ삽입）
 IF LOCAL < 5 || (TFLAG:20 == 2 && LOCAL < 90) && ISFEMALE() && CHECK_HOLYVIRGIN_F()==0
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
@@ -153,24 +154,24 @@ IF LOCAL < 5 || (TFLAG:20 == 2 && LOCAL < 90) && ISFEMALE() && CHECK_HOLYVIRGIN_
 		RETURN 3
 	ENDIF
 
-;촉수バランスボール Ｖブラッシング
+;촉수 밸런스볼（Ｖ브러싱）
 ELSEIF LOCAL < 40 && ISFEMALE()
 	RETURN 2
 
-;촉수バランスボール弱
+;촉수 밸런스볼（약）
 ELSE
 	RETURN 0
 ENDIF
 RETURN 1
 
 ;==================================================
-;【性コマンドレファレンス】
+;【성 커맨드 레퍼런스】
 ;--------------------------------------------------
-;ARG=1　스마타애태우기成功時の行動指定
-;ARG=2　스마타애태우기失敗時の行動指定
-;ARG=3　フェラチオ誘発時の行動指定
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
 @TENTACLE_MOB_101_REACTION_REF, ARG = 0
-;挿入系コマンドがルーチンに無いので-1を返す
+;삽입계 커맨드가 루틴에 없으므로 -1을 반환한다
 IF ARG == 1
 	RETURN 3
 ELSEIF ARG == 2
@@ -180,9 +181,9 @@ RETURN -1
 
 
 ;==================================================
-;【コマンド使用時の描写】
+;【커맨드 사용 시의 묘사】
 ;--------------------------------------------------
-;촉수バランスボール　繊毛
+;촉수 밸런스볼（섬모）
 
 ;성 커맨드 분류
 @SEX_TYPE_MOB_101_COM0
@@ -190,69 +191,68 @@ RETURN 통상
 
 @MESSAGE_MOB_101_COM0, ARG:0, ARG:1
 FONTBOLD
-PRINT 촉수バランスボール 繊毛
+PRINT 촉수 밸런스볼（섬모）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
 PRINTL 
-IF  TFLAG:20 == 3
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORM は、太い촉수を解き繊毛の様な촉수へと変え、
-	PRINTFORML その身を大きく震わせた！
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")% 
+IF TFLAG:20 == 3
+	PRINTFORM 굵은 촉수를 풀어 섬모 모양의 촉수로 바꾸고,
+	PRINTFORML 그 몸을 크게 떨었다！
 	PRINTL 
-ELSEIF  TFLAG:20 == 2
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORM は、ブラシ촉수が分かれ繊毛の様な촉수へと変え、
-	PRINTFORML その身を大きく震わせた！
+ELSEIF TFLAG:20 == 2
+	PRINTFORM 브러쉬 촉수가 갈라져 섬모 모양의 촉수로 바꾸고,
+	PRINTFORML 그 몸을 크게 떨었다！
 	PRINTL 
 ELSEIF TFLAG:20 == 0
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORM は、その身を大きく震わせている！
-	PRINTL 
+	PRINTFORML 그 몸을 크게 떨고 있다！
+	PRINTL
 ENDIF
 
 IF TFLAG:20 == 0 || TFLAG:20 == 2 || TFLAG:20 == 3
-	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	SIF TFLAG:20 == 0
-		PRINTFORML は落ちた腰を上げることができずにいる。
+		PRINTFORML 힘이 빠져 무너진 허리를 도통 들지 못하고 있다.
 	SIF TFLAG:20 == 2
-		PRINTFORML は先程の촉수ブラシによるマッサージで腰に力が入らなかった。
+		PRINTFORML 조금 전 촉수 브러쉬에 의한 마사지로 허리에 힘이 들어가지 않았다.
 	SIF TFLAG:20 == 3
-		PRINTFORML の責め苦に晒された体は、抗うことが出来なかった。
+		PRINTFORML %RESULTS%의 고문에 무방비하게 노출되어, 속수무책으로 당할 수밖에 없었다.
 ELSE
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%跨がっている
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 올라타고 있던 
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML の刺激を腰を浮かせることで回避しようとした。
-	PRINTFORML しかし、にゅるりと촉수が伸びて%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%逃さない。
+	PRINTFORML 의 자극을 허리를 띄움으로써 회피하려고 했다.
+	PRINTFORML 하지만, 촉수가 스르륵 뻗으며 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 놓치지 않았다.
 ENDIF
 PRINTL 
 IF ISMALE()
 	;#region
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 股間にピッタリと張り付いた繊毛状の촉수に、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에 딱 달라붙은 섬모 모양의 촉수에,
 	;#endregion
 ELSE 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 恥丘にピッタリと張り付いた繊毛状の촉수に、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 치간에 딱 달라붙은 섬모 모양의 촉수에,
 ENDIF
 IF ISMALE()
-	PRINTFORML 亀頭を磨かれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その身を悶えさせるのであった・・・
+	PRINTFORML 귀두를 문질러지던%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 이내 몸부림치는 것이었다・・・
 ELSE
-	PRINTFORML 클리토리스を磨かれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、その身を悶えさせるのであった・・・
+	PRINTFORML 클리토리스를 문질러지던%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 이내 몸부림치는 것이었다・・・
 ENDIF
 PRINTW 
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM0")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
 @SEXCOM_OPTION_MOB_101_COM0
-;追加攻め部位指定
+;추가 공격 부위 지정
 RETURN 7
 
 ;--------------------------------------------------
-;촉수バランスボール　Ｖブラッシング
+;촉수 밸런스볼（Ｖ브러싱）
 
 ;성 커맨드 분류
 @SEX_TYPE_MOB_101_COM2
@@ -260,33 +260,33 @@ RETURN 통상
 
 @MESSAGE_MOB_101_COM2, ARG:0, ARG:1
 FONTBOLD
-PRINT 촉수バランスボール Ｖブラッシング
+PRINT 촉수 밸런스볼（Ｖ브러싱）
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
 PRINTL 
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML は、小さな촉수が並ぶシャンプーブラシの様な形を作り始め、
-PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 恥丘にピッタリと촉수ブラシを押し当てた！
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")%, 작은 촉수들이 늘어선 샴푸 브러쉬 모양을 만들기 시작했고,
+PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 치구에 촉수 브러쉬를 가져다 꽉 눌렀다！
 PRINTL 
 IF (ARG & Ｖ) == 0
-	PRINTFORM しかし、촉수は結界に阻まれて直接触れることができなかった
+	PRINTFORM 하지만, 촉수는 결계에 막혀 직접 만질 수가 없었다
 ELSE
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%乗せたまま、
-	PRINTFORML ウネウネと촉수を動かしながら、体を揺らし始めた！
+	CALL TENTACLE_ACCESS, "GETNAME"
+	PRINTFORML %조사처리(RESULTS,"는")%, %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 태운 채로,
+	PRINTFORML 꾸불꾸불 촉수를 움직이며 몸을 흔들기 시작했다！
 	PRINTFORML 
-	PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	IF TALENT:촉수의포로
-		PRINTFORM 촉수のマッサージに幸福そうな表情を浮かべている
+		PRINTFORM 촉수の마사지에 엄청 행복한 표정을 짓고 있었다
 	ELSEIF ABL:욕망 >= 3
-		PRINTFORM 強い快楽にだらしなく表情を弛緩させている
+		PRINTFORM 강한 쾌락에 칠칠치 못하게 표정을 이완시키고 있었다
 	ELSEIF (TCVARn:12 & 기절)
-		PRINTFORM 敏感なところに強く刺激され、意識がないまま悶絶している
+		PRINTFORM 민감한 곳에 강한 자극을 받으며, 의식이 없는 채로 넋을 잃고 있었다
 	ELSE
-		PRINTFORM 嫌悪感から
-		CALL TENTACLE_ACCESS, "NAME"
-		PRINTFORML を両手で掴んで引き離そうとするが、
-		PRINTFORM 返って強く押し付けられて余計に悶絶している
+		PRINTFORM 혐오감을 느끼곤 
+		CALL TENTACLE_ACCESS, "GETNAME"
+		PRINTFORML %조사처리(RESULTS,"를")% 양손으로 잡고 떼어내려고 했지만,
+		PRINTFORM 오히려 더 강하게 눌려 더욱이 넋을 잃고 있었다
 	ENDIF
 ENDIF
 PRINTFORML ・・・
@@ -294,20 +294,20 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM1")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ)
 		SETBIT TFLAG:21,1
 ENDIF
 @SEXCOM_OPTION_MOB_101_COM2
-;追加攻め部位指定
+;추가 공격 부위 지정
 RETURN 1
 
 
 
 ;--------------------------------------------------
-;촉수バランスボール　Ｖ挿入
+;촉수 밸런스볼（Ｖ삽입）
 
 ;성 커맨드 분류
 @SEX_TYPE_MOB_101_COM3
@@ -315,58 +315,60 @@ RETURN 삽입
 
 @MESSAGE_MOB_101_COM3, ARG:0, ARG:1
 FONTBOLD
-PRINTL 촉수バランスボール Ｖ挿入
+PRINTL 촉수 밸런스볼（Ｖ삽입）
 FONTREGULAR
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")%, 
 IF TFLAG:20 == 0
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、繊毛の中から太い촉수を伸ばし始めた！
+	PRINTFORML 섬모 속에서 굵은 촉수를 뻗기 시작했다！
 	PRINTL 
 ELSEIF TFLAG:20 == 2
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、小さな촉수をまとめて太い촉수を%PRINT_TRANSCALLNAME(TARGET)%へと伸ばした！
+	PRINTFORML 작은 촉수들을 모은 굵은 촉수를 %PRINT_TRANSCALLNAME(TARGET)%에게 뻗었다！
 	PRINTL 
 ELSEIF TFLAG:20 == 3
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、太い촉수で%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%陵辱し続けている！
+	PRINTFORML 굵은 촉수로 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 계속 능욕하고 있었다！
 	PRINTL 
 ENDIF
 
 IF (ARG & Ｖ) == 0
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、開脚された%PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナを貫こうとしたが、
-	PRINTFORM 結界に阻まれて触れることができなかった
+	CALL TENTACLE_ACCESS, "GETNAME"
+	PRINTFORM %조사처리(RESULTS,"는")%, 양옆으로 벌려진 %PRINT_TRANSCALLNAME(TARGET)%의 음부를 꿰뚫으려 했지만,
+	PRINTFORM 결계에 막혀 건드리지도 못했다
 
 ELSEIF TCVARn:2 == 자세：Ｖ방어
-	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は、開脚された%PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナを貫こうとしたが、
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%両手を使って挿入を防いだため、
-	PRINTFORM うまく行かなかったようだ
+	CALL TENTACLE_ACCESS, "GETNAME"
+	PRINTFORM %조사처리(RESULTS,"는")%, 양옆으로 벌려진 %PRINT_TRANSCALLNAME(TARGET)%의 음부를 꿰뚫으려 했지만,
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 필사적으로 양손을 써 삽입을 가로막은 덕분에
+	PRINTFORM 제대로 통하지 않았던 것 같다
 
 ELSEIF TALENT:처녀 > 0
 	LOCAL:10 = 10000
 	CALL LOSTVIRGIN
 	PRINTFORML 
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORM の太い촉수で
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 처녀は貫かれてしまった。
-	PRINTFORML 巨大な촉수ボールが動くたびに、%PRINT_TRANSCALLNAME(TARGET)%의 身体は無残にも蹂躙される。
+	PRINTFORM 의 굵은 촉수로
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 처녀가 꿰뚫리고 말았다.
+	PRINTFORML 거대한 촉수공이 움직일 때마다, %PRINT_TRANSCALLNAME(TARGET)%의 몸은 무참히 유린당하고 있었다.
 	PRINTL
 	PRINTW
-	PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、縦横無尽の揺さぶりに必死に抵抗を続けるうちに、
-	PRINTFORML 身体は重心でバランスを取ることを覚えた。
-	PRINTFORML 下からうちつける촉수の塊を、まるで馬のように乗りこなす。
-	PRINTFORM いつの間にか、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そんなことを覚えてしまった。
+	PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 종횡무진 흔들기에 필사적으로 저항을 이어가던 사이,
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 신체는 중심으로 균형을 잡는 법을 익히게 됐다.
+	PRINTFORML 아래서부터 부딪치는 촉수 덩어리를, 마치 말처럼 능숙하게 타고 있었다.
+	PRINTFORM 어느샌가 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%, 그런 것을 기억해 버렸다.
 	PRINTW
 ELSE
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣へ潜り込んで来た。
-	PRINTFORML 巨大な촉수ボールが動くたびに、%PRINT_TRANSCALLNAME(TARGET)%의 身体は犯される。
-	PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、縦横無尽の揺さぶり下からうちつける촉수の塊を、
-	PRINTFORML まるで馬のように乗りこなす。
-	PRINTFORM しかし、そんな抵抗も虚しく
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 질로 기어들어왔다.
+	PRINTFORML 거대한 촉수공이 움직일 때마다, %PRINT_TRANSCALLNAME(TARGET)%의 신체는 범해졌다.
+	PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 종횡무진 흔들며 아래서부터 부딪치는 촉수 덩어리를,
+	PRINTFORML 마치 말을 타듯이 억제해 보려 했다.
+	PRINTFORM 하지만, 그런 저항도 허무하게 
 	CALL TENTACLE_ACCESS, "NAME"
-	PRINTFORML の動きは止まることはなく、
-	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%に快楽の波は押し寄せ、嬌声を上げ続けた
+	PRINTFORML 의 움직임은 멈추지 않았고,
+	PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%에게 쾌락의 파동이 몰려오며, 교성을 계속 지르는 꼴이 될 뿐이었다
 ENDIF
 
 PRINTFORML ・・・
@@ -374,9 +376,9 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM3")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -394,11 +396,11 @@ RETURN 통상
 FONTBOLD
 PRINTL 의상을 찢는다
 FONTREGULAR
-CALL TENTACLE_ACCESS, "NAME"
+CALL TENTACLE_ACCESS, "GETNAME"
 IF RAND:2 == 0
-	PRINTFORML は体の表面から濁った色の粘液を滲み出した！
-	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%의 体に付着し、
-	PRINTFORML 衣装がみるみる溶かされていく・・・
+	PRINTFORML %RESULTS%의 몸 표면으로부터 탁한 색의 점액이 스며나왔다！
+	PRINTFORML 이상한 냄새가 나는 점액이 %PRINT_TRANSCALLNAME(TARGET)%의 몸에 부착되어,
+	PRINTFORML 의상이 순식간에 녹아 갔다・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -406,8 +408,8 @@ IF RAND:2 == 0
 	;상태 이상：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
-	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 小さな촉수を伸ばし激しく蠢いている！
-	PRINTFORML もみくちゃにされた%PRINT_TRANSCALLNAME(TARGET)%의 衣装が引き裂かれていく・・・
+	PRINTFORML %조사처리(RESULTS,"는")% %PRINT_TRANSCALLNAME(TARGET)%에게 작은 촉수들을 뻗어 격렬하게 꿈틀거리고 있다！
+	PRINTFORML 쭈글쭈글해진 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 찢어져 간다・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -416,30 +418,30 @@ ENDIF
 
 
 ;==================================================
-;【絡みつく】
+;【휘감는다】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_101_KARAMITUKU
-PRINT 可愛らしい見た目のスライム
+PRINT 귀여운 생김새의 슬라임
 IF TFLAG:12 == 3
-	PRINTFORM が、%PRINT_TRANSCALLNAME(TARGET)%의 太ももに向かって絡みついてきた！
+	PRINTFORM 이, %PRINT_TRANSCALLNAME(TARGET)%의 허벅지를 향해 엉겨 붙어 왔다！
 ELSEIF RAND:2 == 0
-	PRINTFORM が地面から跳ねて、%PRINT_TRANSCALLNAME(TARGET)%의 脚元から絡みついてきた！
+	PRINTFORM 이 지면에서 뛰어올라, %PRINT_TRANSCALLNAME(TARGET)%의 발밑에서 엉겨 붙어 왔다！
 ELSE
-	PRINTFORM が勢い良く飛びかかり、%PRINT_TRANSCALLNAME(TARGET)%의 両足にトリモチのように絡みついた！
+	PRINTFORM 이 힘차게 덤벼들어, %PRINT_TRANSCALLNAME(TARGET)%의 두 다리에 끈끈이처럼 달라붙었다！
 ENDIF
 PRINT （
 IF TFLAG:11 & 1
-	PRINT 近
+	PRINT 근
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 2
-	PRINT 中
+	PRINT 중
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 4
-	PRINT 遠
+	PRINT 원
 ELSE
 	PRINT 　
 ENDIF
@@ -447,43 +449,43 @@ PRINTL ）
 
 
 ;==================================================
-;【絡みつく成功】
+;【휘감는다 성공】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_101_KARAMITUKU_SUCCESS
-PRINTFORML 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%両足に絡みつかれて拘束されてしまった。
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML はその体をみるみる膨らませて、拘束された%PRINT_TRANSCALLNAME(TARGET)%의 足をM字に広げてみせた。
+PRINTFORML 다 피하지 못한 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 두 다리가 휘감겨 구속되고 말았다！
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"는")% 자신의 몸을 순식간에 부풀려, 구속된 %PRINT_TRANSCALLNAME(TARGET)%의 다리를 M자로 벌려 보였다.
 
-;=====パンツを見せるor秘所を開帳するかなど=====
-;촉수 구속구を装着していた場合
+;=====팬티를 보여 줄지or비소를 개장할지 등등=====
+;촉수 구속구를 장착한 경우
 IF CFLAG:42 == 400
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、蠢く촉수 구속구を衆目にさらされてしまった……
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 꿈틀거리는 촉수 구속구를 남들에게 보이고 말았다……
 	IF ISMALE()
 		;#region
-		PRINTFORML 촉수 구속구は、恥辱に濡れる%PRINT_TRANSCALLNAME(TARGET)%의 先走り汁を啜って喜びに身を震わせている。
+		PRINTFORML 촉수 구속구는, 치욕에 젖은 %PRINT_TRANSCALLNAME(TARGET)%의 쿠퍼액을 홀짝이며 기쁨에 몸을 떨고 있다.
 		;#endregion
 	ELSE 
-		PRINTFORML 촉수 구속구は、恥辱に濡れる%PRINT_TRANSCALLNAME(TARGET)%의 愛液を啜って喜びに身を震わせている。
+		PRINTFORML 촉수 구속구는, 치욕에 젖은 %PRINT_TRANSCALLNAME(TARGET)%의 애액을 홀짝이며 기쁨에 몸을 떨고 있다.
 	ENDIF
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、촉수 구속구による辱めに견딘다しかなかった……
-;속옷が破壊されきっていない場合		
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 촉수 구속구에 의한 수모를 그저 견딜 수밖에 없었다……
+;속옷이 완전히 파괴되지 않은 경우	
 ELSEIF TCVARn:25 > 0
 	SIF TCVARn:25 == TCVARn:24
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、綺麗な%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 예쁜 %조사처리(ITEMNAME:(CFLAG:42),"를")% 남들 눈앞에서 보이고 말았다……
 	SIF TCVARn:25 < TCVARn:24
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、破かれた%ITEMNAME:(CFLAG:42)%を衆目にさらされてしまった…
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 찢어진 %조사처리(ITEMNAME:(CFLAG:42),"를")% 남들 눈앞에서 보이고 말았다……
 ELSE
-	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 	SIF TALENT:백보지 == 1
-		PRINTFORM 毛も生えてない
-	PRINTFORML アソコを衆目にさらされてしまった…
+		PRINTFORM 털도 나지 않은 매끈한 
+	PRINTFORML 그곳을 적나라하게 보이고 말았다……
 ENDIF
 
 
-;=====拘束された結果=====
-CALL TENTACLE_ACCESS, "NAME"
-PRINTFORML が膨らみ終えると、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
-PRINTFORML 半透明の大玉に跨がったような形で両足を拘束されていた…
+;=====구속당한 결과=====
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORML %조사처리(RESULTS,"가")% 부풀만큼 부풀어 오르자,
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 반투명한 큰 구슬에 걸친 듯한 모습으로 두 다리가 구속되어 있었다……
 PRINTL 
 
 

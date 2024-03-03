@@ -19,7 +19,7 @@ ENDIF
 IF RAND:2 == 0 && (ARG & Ｃ) && (ARG & Ｖ)
 	PRINT は
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 唇を奪うと股間に手を伸ばし、
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 唇を奪うと股間に手を伸ばし、
 		IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
 			IF CLOTH_NO_INNER > 0
 				PRINT 衣装の上から
@@ -40,7 +40,7 @@ IF RAND:2 == 0 && (ARG & Ｃ) && (ARG & Ｖ)
 				PRINT 下着の上から
 			ENDIF
 		ENDIF
-		PRINTFORM ブラシ状の촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+		PRINTFORM ブラシ状の촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 	ENDIF
 	IF ISPENIS()
 		PRINT ペニス
@@ -61,13 +61,13 @@ IF RAND:2 == 0 && (ARG & Ｃ) && (ARG & Ｖ)
 		IF (TCVARn:12 & 기절)
 			IF PALAM < 2000 && TALENT:촉수의포로 == 0 && TALENT:주관시점 > 0
 				PRINTL 、
-				PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快感に体を震わせてしまう
+				PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快感に体を震わせてしまう
 			ELSEIF PALAM < 2000 && TALENT:촉수의포로 == 0
 				PRINTL 、
-				PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、それでも体を震わせている
+				PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、それでも体を震わせている
 			ELSE
 				PRINTL 、
-				PRINTFORM 痺れるような熱が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 意識を包み込んでいく
+				PRINTFORM 痺れるような熱が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 意識を包み込んでいく
 			ENDIF
 		ELSE
 			IF PALAM < 2000 && TALENT:촉수의포로 == 0
@@ -83,17 +83,17 @@ IF RAND:2 == 0 && (ARG & Ｃ) && (ARG & Ｖ)
 	ENDIF
 ELSEIF ISPENIS()
 	IF (ARG & Ｃ) == 0
-		PRINTFORM は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスに触
+		PRINTFORM は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスに触
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 			PRINTL れようとしたが
 			PRINTFORML 結界に阻まれ、指先が押し戻された
 		ELSE
 			PRINTFORML 手を伸ばしたが、
-			PRINTFORML 結界に阻まれて触れることができないでいる
+			PRINTFORML 결계에 막혀 건드리지도 못했다でいる
 		ENDIF
 	ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI")
-		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 股間に手を伸ばし、
-		PRINTFORM 怪しげな手つきで%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間に手を伸ばし、
+		PRINTFORM 怪しげな手つきで%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 		IF PALAM < 2000 && TALENT:촉수의포로 == 0
 			PRINTFORML 亀頭の皮をそっと指先で剥きながら
 		ELSE
@@ -118,7 +118,7 @@ ELSEIF ISPENIS()
 		ELSE
 			PRINTL 。
 			PRINTL 
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
 				PRINTFORML 愛らしく蕩けきった顔に、
 			ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && TALENT:주관시점 > 0
@@ -133,11 +133,11 @@ ELSEIF ISPENIS()
 			PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%は楽しそうな表情で指先に力を込めた
 		ENDIF
 	ELSE
-		PRINTFORM は細い촉수を%PRINT_SWOON()%%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスに巻きつけ、上下に動かし始めた
+		PRINTFORM は細い촉수を%PRINT_SWOON()% %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスに巻きつけ、上下に動かし始めた
 	ENDIF
 ELSE
 	IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
-		PRINTFORM は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 秘部に手を伸ば
+		PRINTFORM は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 秘部に手を伸ば
 		IF (ARG & Ｖ)
 			PRINTL すと、
 			IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
@@ -176,7 +176,7 @@ ELSE
 			ENDIF
 		ENDIF
 	ELSE
-		PRINTFORM は촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 秘部に擦りつけながら
+		PRINTFORM は촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 秘部に擦りつけながら
 		IF (ARG & Ｖ)
 			PRINTL 、
 			IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
@@ -197,7 +197,7 @@ ELSE
 			ENDIF
 		ELSEIF (ARG & Ｃ) == 0
 			PRINTL 
-			PRINTFORM 先端で클리토리스を弄ぼうとしたが、結界に阻まれて触れることができないでいる
+			PRINTFORM 先端で클리토리스を弄ぼうとしたが、결계에 막혀 건드리지도 못했다でいる
 		ELSE
 			PRINT 、
 			IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
@@ -236,7 +236,7 @@ IF (ARG & Ｃ) == 0 && (ARG & Ｖ) == 0
 ELSEIF (ARG & Ｂ) == 0 && (ARG & Ａ) == 0
 	PRINTL 。
 	IF (TCVARn:12 & 기절)
-		PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+		PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 			IF TALENT:주관시점 > 0
 				PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%の丁寧な愛撫に色付いた吐息を洩らしてしまう
@@ -296,12 +296,12 @@ ELSEIF (ARG & Ｂ) == 0 && (ARG & Ａ) == 0
 	PRINTFORML ・・・
 	PRINTW 
 ELSE
-	PRINTFORML 。
+	PRINTFORML .
 	PRINTL 
 ENDIF
 IF (ARG & Ｂ)
 	IF (TCVARn:12 & 기절)
-		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%
+		PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%
 		IF ABL:Ｃ감각 >= 4 && (ARG & Ｃ)
 			PRINTFORML の無防備に突き出された乳首に
 			PRINTFORM 別の촉수が３点責めの様相で追い打ちをかけ
@@ -364,7 +364,7 @@ IF (ARG & Ｂ)
 	ENDIF
 ENDIF
 IF (ARG & Ａ)
-	PRINTFORML 別の細い촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻を撫でまわし、
+	PRINTFORML 別の細い촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 尻を撫でまわし、
 	IF ABL:Ａ감각 < 2
 		PRINTFORM まだきつく閉じられたままの
 	ELSE
@@ -376,9 +376,9 @@ ENDIF
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM0")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -401,9 +401,9 @@ IF (TCVARn:12 & 기절)
 	IF ISPENIS()
 		IF (ARG & Ｃ)
 			IF ENEMY_TYPE_CHECK_F("AKUOTI")
-				PRINTFORM は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスに舌を這わせると、
+				PRINTFORM は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスに舌を這わせると、
 			ELSE
-				PRINTFORML は先端が口のように開いた촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込み、
+				PRINTFORML は先端が口のように開いた촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込み、
 			ENDIF
 			IF TALENT:주관시점 > 0
 				PRINTFORML 緩急を付けながら激しく吸い上げてきた。
@@ -411,16 +411,16 @@ IF (TCVARn:12 & 기절)
 				PRINTFORML 緩急を付けながら激しく吸い上げた。
 			ENDIF
 			IF BASE:사정 >= 5000
-				PRINTFORM すで에 사정寸前だった%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 体は、激しく痙攣しながら腰を上下させている
+				PRINTFORM すで에 사정寸前だった%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 体は、激しく痙攣しながら腰を上下させている
 			ELSE
-				PRINTFORM じゅぽじゅぽと音を立てて吸われる快楽に、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 体はビクビクと震えている
+				PRINTFORM じゅぽじゅぽと音を立てて吸われる快楽に、%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 体はビクビクと震えている
 			ENDIF
 		ELSE
 			IF ENEMY_TYPE_CHECK_F("AKUOTI")
-				PRINTFORML は結界に阻まれて%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスに触れることができない
+				PRINTFORML は結界に阻まれて%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスに触れることができない
 			ELSE
-				PRINTFORML は先端が口のように開いた촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込もうとしたが
-				PRINTFORM 結界に阻まれて触れることができない
+				PRINTFORML は先端が口のように開いた촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込もうとしたが
+				PRINTFORM 결계에 막혀 건드리지도 못했다
 			ENDIF
 		ENDIF
 		IF (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
@@ -438,15 +438,15 @@ IF (TCVARn:12 & 기절)
 		IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 1 || ISPENIS(FLAG:111)
 			IF TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111)
 				PRINTFORML は毒々しい青筋を浮かべたペニスを勃起させて
-				PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
+				PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
 			ELSE
 				CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","단수"
 				PRINTFORML ペニスバンド状の촉수を身につけて
-				PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
+				PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
 			ENDIF
 		ELSE
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","단수"
-			PRINTFORM は無数のイボに覆われた長い촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
+			PRINTFORM は無数のイボに覆われた長い촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間にあてが
 		ENDIF
 		PRINTFORML い、
 		PRINTFORML 素股の要領で前後に激しく動き始めた。
@@ -454,7 +454,7 @@ IF (TCVARn:12 & 기절)
 			CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｃ","","단수"
 			TENTACLE_SIZE:0:Ｃ = TENTACLE_SIZE:0:Ｖ
 
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 성저항) || TCVARn:2 == 자세：봉사한다
 				PRINTL は
 			ELSE
@@ -480,7 +480,7 @@ IF (TCVARn:12 & 기절)
 				PRINTFORM 容赦なくゴリゴリと蹂躙され、気絶したまま苦しげに表情をゆがませている
 			ENDIF
 		ELSE
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 秘裂は、
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 秘裂は、
 			IF ENEMY_TYPE_CHECK_F("AKUOTI") && (TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111))
 				PRINTFORM 亀頭の先端で
 			ELSE
@@ -510,7 +510,7 @@ IF (TCVARn:12 & 기절)
 		ENDIF
 	ELSEIF RAND:2 == 0 && (ARG & Ｃ) && (FLAG:110 == 0 || ISTENTACLER(FLAG:111) == 1)
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｃ","섬모","복수"
-		PRINTFORML は多数の細い촉수を器用に%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に巻き付け、
+		PRINTFORML は多数の細い촉수を器用に%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に巻き付け、
 		IF TALENT:주관시점 > 0
 			PRINTFORML 絶妙な力加減で様々な方向へ引っ張りながら愛撫してきた。
 		ELSE
@@ -519,12 +519,12 @@ IF (TCVARn:12 & 기절)
 		IF PALAM:쾌Ｃ >= 1000
 			PRINTFORM 既に充血している클리토리스を強く刺激されて
 			IF TALENT:주관시점 > 0
-				PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ひくんひくんと腰を上下させてしまう
+				PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ひくんひくんと腰を上下させてしまう
 			ELSE
-				PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ひくんひくんと腰を上下させている
+				PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、ひくんひくんと腰を上下させている
 			ENDIF
 		ELSE
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스は刺激で
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스は刺激で
 			PRINTFORM あっという間に充血してしまう
 		ENDIF
 		IF (ARG & Ａ) || (ARG & Ｂ)
@@ -538,11 +538,11 @@ IF (TCVARn:12 & 기절)
 	ELSEIF (ARG & Ｃ)
 		IF TALENT:주관시점 > 0
 			PRINTFORML は内側に微細な촉수が生えたリングを
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けてきた。
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けてきた。
 			PRINTFORM リングに生えた촉수が클리토리스を全方位から舐り回してくる
 		ELSE
 			PRINTFORML は内側に極小촉수の生えたリングを
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けた。
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けた。
 			PRINTFORM リングの生えた촉수が클리토리스を全方位から舐り回す
 		ENDIF
 		IF (ARG & Ａ) || (ARG & Ｂ)
@@ -559,8 +559,8 @@ IF (TCVARn:12 & 기절)
 		ELSE
 			PRINTFORM は多数の細い촉수を
 		ENDIF
-		PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 股間に伸ばしたが、
-		PRINTFORM 結界に阻まれて触れることができない
+		PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間に伸ばしたが、
+		PRINTFORM 결계에 막혀 건드리지도 못했다
 		IF (ARG & Ａ) || (ARG & Ｂ)
 			PRINTL 。
 			PRINTL 
@@ -595,7 +595,7 @@ ELSE
 				PRINTFORML は結界に阻まれて%PRINT_TRANSCALLNAME(TARGET)%의 ペニスに触れることができない
 			ELSE
 				PRINTFORML は先端が口のように開いた촉수で%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込もうとしたが
-				PRINTFORM 結界に阻まれて触れることができない
+				PRINTFORM 결계에 막혀 건드리지도 못했다
 			ENDIF
 		ENDIF
 		IF (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
@@ -719,9 +719,9 @@ ELSE
 		ENDIF
 		IF PALAM:쾌Ｃ >= 1000
 			PRINTFORML 既に充血している클리토리스を強く刺激されて
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 脳裏に電流が走る
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 脳裏に電流が走る
 		ELSE
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스は刺激で
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스は刺激で
 			PRINTFORM あっという間に充血してしまう
 		ENDIF
 		IF (ARG & Ａ) || (ARG & Ｂ)
@@ -735,11 +735,11 @@ ELSE
 	ELSEIF (ARG & Ｃ)
 		IF TALENT:주관시점 > 0
 			PRINTFORML は内側に微細な촉수が生えたリングを
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けてきた。
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けてきた。
 			PRINTFORM リングに生えた촉수が클리토리스を全方位から舐り回してくる
 		ELSE
 			PRINTFORML は内側に極小촉수の生えたリングを
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けた。
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스に押し付けた。
 			PRINTFORM リングの生えた촉수が클리토리스を全方位から舐り回す
 		ENDIF
 		IF (ARG & Ａ) || (ARG & Ｂ)
@@ -757,7 +757,7 @@ ELSE
 			PRINTFORM は多数の細い촉수を
 		ENDIF
 		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 股間に伸ばしたが、
-		PRINTFORM 結界に阻まれて触れることができない
+		PRINTFORM 결계에 막혀 건드리지도 못했다
 		IF (ARG & Ａ) || (ARG & Ｂ)
 			PRINTL 。
 			PRINTL 
@@ -820,9 +820,9 @@ ENDIF
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM1")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -1275,9 +1275,9 @@ IF FLAG:15 >= FLAG:14 && (TFLAG:4 & 균열)
 		ENDIF
 	ENDIF
 ENDIF
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -1307,7 +1307,7 @@ ELSEIF (FLAG:110 == 1)
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0 && ISPENIS(FLAG:111)
 	PRINTFORML は大きく勃起したペニスを何度も擦りつけながら
-	PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣に
+	PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣に
 	SIF TCVARn:2 != 자세：Ｖ방어 && (ARG & Ｖ)
 		PRINT 根元まで
 	PRINT 挿入し
@@ -1334,8 +1334,8 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0 && ISPENIS(FLAG:11
 		ENDIF
 		PRINTL 
 		IF (TCVARn:12 & 기절)
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 体をしっかり抱きしめ腰を打ち付ける%PRINT_TRANSCALLNAME(FLAG:111)%
-			PRINTFORML 질腔を締め付け精液を催願する%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%に、%PRINT_TRANSCALLNAME(FLAG:111)%はにやりと笑う
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 体をしっかり抱きしめ腰を打ち付ける%PRINT_TRANSCALLNAME(FLAG:111)%
+			PRINTFORML 질腔を締め付け精液を催願する%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%に、%PRINT_TRANSCALLNAME(FLAG:111)%はにやりと笑う
 			PRINTFORML ギュッと抱きしめたまま、%PRINT_TRANSCALLNAME(FLAG:111)%が腰の動きを早めていく・・・
 		ELSE
 			PRINTFORML 妖しげに%PRINT_TRANSCALLNAME(FLAG:111)%の瞳が輝くと、
@@ -1345,7 +1345,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0 && ISPENIS(FLAG:11
 	ENDIF
 ELSEIF LOCALS:1 == "Ｃ촉수"
 	PRINTFORML は胴体の中ほどにある部分から細かい毛の生えた異形のペニスを伸ばし、
-	PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押\@ (TCVARn:12 & 기절) ? さえつけて # し倒して \@種付け
+	PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押\@ (TCVARn:12 & 기절) ? さえつけて # し倒して \@種付け
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORML しようとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1364,7 +1364,7 @@ ELSEIF LOCALS:1 == "Ｃ촉수"
 		IF (TCVARn:12 & 기절)
 			PRINTFORML 巨大な芋虫そのものの외관のＣ촉수に抱きつかれている事態に
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 意識があれば、悲鳴の一つも上がったであろうが
-			PRINTFORML 身じろぎ一つしない%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 全身に
+			PRINTFORML 身じろぎ一つしない%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 全身に
 			PRINTFORML 念入りに촉수が巻き付けられていく。
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORML 巨大な芋虫そのものの외관のＣ촉수に抱きつかれ求愛されることに
@@ -1387,11 +1387,11 @@ ELSEIF LOCALS:1 == "Ｃ촉수"
 			PRINTFORML 半狂乱になって押し退けようとするものの체중差のあるＣ촉수はビクともしない。
 		ENDIF
 		PRINTW 
-		PRINTFORML 完全に身動きを封じたＣ촉수は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 深くへと分け入り
+		PRINTFORML 完全に身動きを封じたＣ촉수は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 深くへと分け入り
 		PRINTFORML パンパンと腰を使ってピストンし始めた・・・
 	ENDIF
 ELSEIF LOCALS:1 == "Ａ촉수"
-	PRINTFORM は変形して%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%に取り付
+	PRINTFORM は変形して%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%に取り付
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORML こうとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1410,7 +1410,7 @@ ELSEIF LOCALS:1 == "Ａ촉수"
 		PRINTFORML 外部からは大きく押し広げられた大陰唇が丸見えになってしまっている。
 		PRINTW 
 		IF (TCVARn:12 & 기절)
-			PRINTFORML そのまま自在に%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 손발を動かし、
+			PRINTFORML そのまま自在に%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 손발を動かし、
 			PRINTFORML 両足を大きく割り開くようにして無防備な体勢に固定した。
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORML これから種付けするつもりだと理解した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
@@ -1430,7 +1430,7 @@ ELSEIF LOCALS:1 == "Ａ촉수"
 		PRINTFORML 勢いを付けて自身をワレメに叩き込んだ・・・
 	ENDIF
 ELSEIF RAND:5 == 0
-	PRINTFORM は先端が無数の繊毛に枝分かれしたイソギンチャク촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
+	PRINTFORM は先端が無数の繊毛に枝分かれしたイソギンチャク촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORML ようとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1451,10 +1451,10 @@ ELSEIF RAND:5 == 0
 			PRINTFORML 力強いストロークで責め立てた。
 		ENDIF
 		PRINTFORML 突き上げられる快感と同時に繊毛촉수が一斉に蠢いて膣壁に絡み付いて撫でまわし、
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 淫肉を激しく責め立ててくる・・・
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 淫肉を激しく責め立ててくる・・・
 	ENDIF
 ELSEIF RAND:4 == 0
-	PRINTFORM は無数の突起が付いた촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
+	PRINTFORM は無数の突起が付いた촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORML ようとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1474,11 +1474,11 @@ ELSEIF RAND:4 == 0
 		ELSE
 			PRINTFORML 力強いストロークで責め立てた。
 		ENDIF
-		PRINTFORML 突起の一つひとつが%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣壁をゴリゴリと抉り、
+		PRINTFORML 突起の一つひとつが%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣壁をゴリゴリと抉り、
 		PRINTFORML 強烈な快感となって理性に焼き付いてくる・・・
 	ENDIF
 ELSEIF RAND:3 == 0
-	PRINTFORM は無数のヒダが付いた촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
+	PRINTFORM は無数のヒダが付いた촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣に深く挿入し
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORML ようとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1494,10 +1494,10 @@ ELSEIF RAND:3 == 0
 	ELSE
 		PRINTFORML 、
 		PRINTFORML 力強いストロークで責め立てた。
-		PRINTFORML ヒダの一つ一つが%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 질내を隅々まで擦り上げる・・・
+		PRINTFORML ヒダの一つ一つが%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 질내を隅々まで擦り上げる・・・
 	ENDIF
 ELSEIF RAND:2 == 0
-	PRINTFORM の複数の촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣に殺到
+	PRINTFORM の複数の촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣に殺到
 	IF (TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0) && !(TCVARn:12 & 기절)
 		PRINTFORML するが、
 		IF (ARG & Ｖ) == 0
@@ -1525,7 +1525,7 @@ ELSEIF RAND:2 == 0
 		CALL SET_TENTACLE_SIZE_BY_MESSAGE,"Ｖ","보통","복수"
 	ENDIF
 ELSE
-	PRINTFORML は男性器の形をした촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 膣をほぐし、
+	PRINTFORML は男性器の形をした촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 膣をほぐし、
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 		PRINTFORM 回転を加えて潜り込もうとしたが、
 		IF (ARG & Ｖ) == 0
@@ -1572,7 +1572,7 @@ IF TCVARn:2 != 자세：Ｖ방어 && (ARG & Ｖ)
 	ELSE
 		PRINTFORM 正常位で犯される
 	ENDIF
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 \@ TALENT:빈유 > 0 ? 薄い胸 # 乳房 \@が
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 \@ TALENT:빈유 > 0 ? 薄い胸 # 乳房 \@が
 	PRINT ピストンのたびに
 	IF TALENT:빈유 > 0
 		SELECTCASE RAND:3
@@ -1606,7 +1606,7 @@ IF TCVARn:2 != 자세：Ｖ방어 && (ARG & Ｖ)
 ENDIF
 IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
 ELSEIF (TCVARn:12 & 기절) || TALENT:감정결여 > 0
-	PRINTFORML 好き勝手に肉穴を使われる%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+	PRINTFORML 好き勝手に肉穴を使われる%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	PRINTFORML 完全にオナホ扱いされてしまっている・・・
 	PRINTW 
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
@@ -1672,7 +1672,7 @@ IF (ARG & Ｃ)
 			PRINTW 
 		ENDIF
 	ELSEIF ISPENIS()
-		PRINTFORM 先端が口のように開いた촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込んで激しく吸い上げ
+		PRINTFORM 先端が口のように開いた촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスを飲み込んで激しく吸い上げ
 		IF (ARG & Ａ) || (ARG & Ｂ)
 			PRINT ながら、
 		ELSE
@@ -1680,7 +1680,7 @@ IF (ARG & Ｃ)
 			PRINTW 
 		ENDIF
 	ELSE
-		PRINTFORM 多数の細い촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 클리토리스をコリコリと刺激し
+		PRINTFORM 多数の細い촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 클리토리스をコリコリと刺激し
 		IF (ARG & Ａ) || (ARG & Ｂ)
 			PRINTL 、
 		ELSE
@@ -1716,7 +1716,7 @@ IF (ARG & Ａ)
 ENDIF
 IF (ARG & Ｂ)
 	IF (TCVARn:12 & 기절)
-		PRINTFORM 意識を取り戻す様子のない%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+		PRINTFORM 意識を取り戻す様子のない%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORM 욕정を抑えきれない様子の%PRINT_TRANSCALLNAME(TARGET)%의 
 	ELSE
@@ -1742,17 +1742,17 @@ IF FLAG:15 >= FLAG:14 && LOCALS:1 == "Ａ촉수"
 ENDIF
 IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 	IF TCVARn:2 == 자세：Ｖ방어 || (ARG & Ｖ) == 0
-		PRINTFORML 限界に達した%LOCALS%が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 口に突き込まれ、
+		PRINTFORML 限界に達した%LOCALS%が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 口に突き込まれ、
 		PRINTFORM 深くストロークしたかと思うと喉
 		SIF (ARG & Ａ)
 			PRINT と애널の
 		PRINTL 奥へ精が放たれた・・・
 		PRINTW 
 		IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
-			PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%朦朧としたまま喉を鳴らして飲み下していたが
+			PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%朦朧としたまま喉を鳴らして飲み下していたが
 			PRINTFORML 収まりきらなかった精液に咳き込み、口元から一気に逆流した・・・
 		ELSEIF (TCVARn:12 & 기절)
-			PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気絶したまま喉を鳴らして飲み下していたが
+			PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気絶したまま喉を鳴らして飲み下していたが
 			PRINTFORML 収まりきらなかった精液に咳き込み、口元から一気に逆流した・・・
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%むせながらも喉を鳴らして精液を飲み干し、
@@ -1780,9 +1780,9 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 			PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 		ENDIF
 		PRINTFORML は一気にピストンを加速させると、
-		PRINTFORML そのまま%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 一番奥へと勢いよく사정した・・・
+		PRINTFORML そのまま%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 一番奥へと勢いよく사정した・・・
 		PRINTW 
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナから%LOCALS%が抜き取られると
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ヴァギナから%LOCALS%が抜き取られると
 		PRINTFORML ドロリと질내사정された精液が流れ出してきた・・・
 		PRINTW 
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
@@ -1851,15 +1851,15 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 		PRINTW 
 	ENDIF
 ENDIF
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
-	;挿入されたところを見られた
+	;삽입당하는 모습을 보였다
 	SIF (ARG & Ｖ) || (ARG & Ａ)
 		SETBIT TFLAG:21,3
-	;口を犯されたところを見られた
+	;입을 범해지는 모습을 보였다
 	SIF (ARG & Ｖ) == 0
 		SETBIT TFLAG:21,2
 ENDIF
@@ -1879,7 +1879,7 @@ ELSEIF (FLAG:110 == 1)
 	PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
-	PRINTFORM は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 全身を抱きよせて
+	PRINTFORM は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 全身を抱きよせて
 	IF (ARG & Ａ) == 0
 		PRINTFORML 
 		PRINTFORML 애널に手を伸ばしたが、結界に阻まれて直接触れることはできなかった
@@ -1888,7 +1888,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 		PRINTFORML 指先で尻穴をほぐしていった。
 		PRINTL 
 		IF (TCVARn:12 & 기절)
-			PRINTFORM %PRINT_SWOON()%
+			PRINTFORM %PRINT_SWOON()% 
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORM 愛欲に身を震わせる
 		ELSEIF ABL:Ａ감각 < 3
@@ -1902,13 +1902,13 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 		PRINTFORM 穴を広げて指を中へと沈ませていく
 	ENDIF
 ELSEIF RAND:2 == 0 && (ARG & Ａ)
-	PRINTFORML のペニスのような形状の촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널に擦りつけられ、
+	PRINTFORML のペニスのような形状の촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널に擦りつけられ、
 	PRINTFORM 先端が浅く挿入されていく
 	IF (ARG & Ｂ)
-		PRINTFORML 。
+		PRINTFORML .
 		PRINTL 
 		IF (TCVARn:12 & 기절)
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒され
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 無防備に晒され
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 성저항)
 			PRINTFORM 思わず仰け反った%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%突きだし
 		ELSE
@@ -1917,10 +1917,10 @@ ELSEIF RAND:2 == 0 && (ARG & Ａ)
 		PRINTFORML た胸にはまた別の촉수が取り付き、
 		PRINTFORM 乳首を刺激しながら撫でまわしている
 	ELSE
-		PRINTFORML 。
+		PRINTFORML .
 		PRINTL 
 		IF (TCVARn:12 & 기절)
-			PRINTFORM %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無抵抗のまま好き勝手されている
+			PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無抵抗のまま好き勝手されている
 		ELSE
 			PRINTFORM その感触に%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
@@ -1945,9 +1945,9 @@ ELSEIF RAND:2 == 0 && (ARG & Ａ)
 	ENDIF
 ELSEIF (ARG & Ａ)
 	IF TALENT:주관시점 > 0
-		PRINTFORML は回転する드릴のような촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널に突き入れてきた。
+		PRINTFORML は回転する드릴のような촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널に突き入れてきた。
 	ELSE
-		PRINTFORML は回転する드릴のような촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널に突き入れた。
+		PRINTFORML は回転する드릴のような촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널に突き入れた。
 	ENDIF
 	PRINTL 
 	IF (TCVARn:12 & 기절)
@@ -1980,13 +1980,13 @@ ELSEIF (ARG & Ａ)
 		PRINTFORM は、じっと凌辱が終わるのを待つしかない
 	ENDIF
 ELSE
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻穴に촉수を伸ばしたが、
-	PRINTFORM 結界に阻まれて触れることができなかった
+	PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 尻穴に촉수を伸ばしたが、
+	PRINTFORM 결계에 막혀 건드리지도 못했다
 	IF (ARG & Ｂ)
-		PRINTFORML 。
+		PRINTFORML .
 		PRINTL 
 		IF (TCVARn:12 & 기절)
-			PRINTFORML すると%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸に、口の開いた촉수が取り付き、
+			PRINTFORML すると%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸に、口の開いた촉수が取り付き、
 			PRINTFORM 乳首を刺激しながら吸い付いていく
 		ELSE
 			IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
@@ -2022,7 +2022,7 @@ ELSE
 ENDIF
 IF (ARG & Ｃ) && (ARG & Ｖ)
 	PRINTFORML ブラシ状の촉수がヴァギナと\@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@を撫で付けながら、
-	PRINTFORML 時折小刻みな振動を与えて%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 肉体に快楽を擦り込んでいく・・・
+	PRINTFORML 時折小刻みな振動を与えて%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 肉体に快楽を擦り込んでいく・・・
 	PRINTW 
 ELSEIF (ARG & Ｃ)
 	IF ISPENIS()
@@ -2036,7 +2036,7 @@ ELSEIF (ARG & Ｃ)
 		PRINTW 
 	ENDIF
 ELSEIF (ARG & Ｖ)
-	PRINTFORM 細い촉수が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM 細い촉수が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 	SIF PALAM:윤활 >= 2000
 		PRINT 濡れそぼった
 	PRINTFORML ヴァギナを焦らすように撫でつけ、
@@ -2046,9 +2046,9 @@ ENDIF
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM4")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -2078,7 +2078,7 @@ ELSEIF (FLAG:110 == 1)
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	IF TALENT:(FLAG:111):후타나리 > 0 || ISMALE(FLAG:111)
-		PRINTFORML はペニスを%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、
+		PRINTFORML はペニスを%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、
 		PRINTFORM 後背位でそのまま一気に貫
 		IF (ARG & Ａ) == 0
 			PRINTFORML こうとしたが、結界に阻まれて挿入には至らなかった・・・
@@ -2100,23 +2100,23 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	ENDIF
 ELSEIF RAND:3 == 0 && (ARG & Ａ)
 	IF TALENT:주관시점 > 0
-		PRINTFORML は小さな瘤が連なった촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、貫く―――
+		PRINTFORML は小さな瘤が連なった촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、貫く―――
 	ELSE
-		PRINTFORML は小さな瘤が連なった촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、貫いた。
+		PRINTFORML は小さな瘤が連なった촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널にあてがい、貫いた。
 	ENDIF
 	PRINTFORML 本来刺激されることのないはずの穴の内壁を瘤がボコボコと通過していく。
 ELSEIF RAND:2 == 0 && (ARG & Ａ)
 	IF TALENT:주관시점 > 0
-		PRINTFORML は촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻穴に一気に挿入する。
+		PRINTFORML は촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 尻穴に一気に挿入する。
 	ELSE
-		PRINTFORML は촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 尻穴に一気に挿入した。
+		PRINTFORML は촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 尻穴に一気に挿入した。
 	ENDIF
 	PRINTFORML 直腸内を進む촉수で腹部が異様な形状に膨れていく。
 ELSEIF (ARG & Ａ)
-	PRINTFORML は촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널に挿入し、ピストンを開始した。
+	PRINTFORML は촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널に挿入し、ピストンを開始した。
 	PRINTFORML 動きに連動した空気の抜けるような下品な音が\@ (TCVARn:12 & 기절) ? 周囲に響き渡 # 否応にも羞恥心を煽 \@っていく。
 ELSE
-	PRINTFORM が伸ばした無数の촉수は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 結界に阻まれ
+	PRINTFORM が伸ばした無数の촉수は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 結界に阻まれ
 	IF (TCVARn:12 & 기절)
 		PRINTL たが、
 		PRINTL そのままミシミシと押し付けられていく・・・
@@ -2140,7 +2140,7 @@ ELSE
 	ENDIF
 ENDIF
 IF (TCVARn:12 & 기절) && (ARG & Ａ)
-	PRINTFORML 無抵抗の%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널がズンズンと突き上げられ、
+	PRINTFORML 無抵抗の%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널がズンズンと突き上げられ、
 	PRINTFORML ピストンを受け止める度に弛緩した손발がぶらぶらと揺れる・・・
 ELSEIF ABL:Ａ감각 < 2 && (ARG & Ａ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
@@ -2203,11 +2203,11 @@ IF (ARG & Ｖ)
 		PRINTFORM 애널と膣の二本同時に責め立て
 		IF (ARG & Ｃ)
 			PRINTFORML る촉수の根本には太めの突起があり、
-			PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 \@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@にグリグリと押し付けられる・・・
+			PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 \@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@にグリグリと押し付けられる・・・
 		ELSE
 			PRINTFORML られ、
 			IF (TCVARn:12 & 기절)
-				PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%人形のように揺さぶられている・・・
+				PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%人形のように揺さぶられている・・・
 			ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に理性を溶かされてガクガクと揺さぶられるしかない・・・
 			ELSE
@@ -2235,7 +2235,7 @@ IF FLAG:15 >= FLAG:14 && ((ARG & Ａ) || (ARG & Ｖ)) && TFLAG:4 > 0
 			PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 		ENDIF
 		PRINTFORML は一気にピストンを加速させると、
-		PRINTFORML そのまま%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 一番奥へと勢いよく사정した・・・
+		PRINTFORML そのまま%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 一番奥へと勢いよく사정した・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML 사정が近いことを察した%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%期待を瞳に浮かべると、
 		PRINTFORML ひときわ深くまで突き入れられた%LOCALS%から精が放たれた・・・
@@ -2251,7 +2251,7 @@ IF FLAG:15 >= FLAG:14 && ((ARG & Ａ) || (ARG & Ｖ)) && TFLAG:4 > 0
 		IF (TCVARn:12 & 기절)
 			PRINTFORML ドクドクと脈打ちながら精液を注ぎ込まれ、
 			PRINTFORML 前後の穴の結合部から胎内に収まりきらない白濁を交互に噴き出させながら、
-			PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%弛緩した表情を晒している・・・
+			PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%弛緩した表情を晒している・・・
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 			PRINTFORML ドクドクと脈打ちながら精液を注ぎ込まれ、
 			PRINTFORML 前後の穴の結合部からは胎内に収まりきらない白濁が交互に噴き出す様子を見つめながら、
@@ -2272,7 +2272,7 @@ IF FLAG:15 >= FLAG:14 && ((ARG & Ａ) || (ARG & Ｖ)) && TFLAG:4 > 0
 		PRINTW 
 	ELSEIF (TCVARn:12 & 기절)
 		PRINTFORML 大量に注ぎ込まれた精液が腸内を逆流していき、
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 腹部がパンパンになっている・・・
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 腹部がパンパンになっている・・・
 	ELSE
 		PRINTFORML 大量に注ぎ込まれ腸内を逆流する精液に
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락) && TALENT:주관시점 > 0
@@ -2287,12 +2287,12 @@ IF FLAG:15 >= FLAG:14 && ((ARG & Ａ) || (ARG & Ｖ)) && TFLAG:4 > 0
 		PRINTW 
 	ENDIF
 ENDIF
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
-	;挿入されたところを見られた
+	;삽입당하는 모습을 보였다
 	SIF (ARG & Ｖ) || (ARG & Ａ)
 		SETBIT TFLAG:21,3
 ENDIF
@@ -2314,32 +2314,32 @@ ELSEIF (FLAG:110 == 1)
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	IF (ARG & Ｂ) == 0
-		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸に
-		PRINTFORML 手を伸ばしたが、結界に阻まれて触れることができなかった・・・
+		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸に
+		PRINTFORML 手を伸ばしたが、결계에 막혀 건드리지도 못했다・・・
 	ELSE
-		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%\@ (TCVARn:12 & 기절) ? に絡みつき # を押さえつけ \@、
+		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%\@ (TCVARn:12 & 기절) ? に絡みつき # を押さえつけ \@、
 		PRINTFORML \@ (TCVARn:12 & 기절) ? 無防備に晒された # 身動きを封じながら \@胸を愛撫した。
 		IF TALENT:보추 > 0
 			PRINTFORM 柔らかくもぺたんこな%PRINT_TRANSCALLNAME(TARGET)%의 胸
 		ELSEIF ISMALE()
 			PRINTFORM 引き締まった%PRINT_TRANSCALLNAME(TARGET)%의 胸
 		ELSEIF TALENT:거유 > 3
-			PRINTFORM はちきれんばかりの%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 乳房
+			PRINTFORM はちきれんばかりの%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 乳房
 		ELSEIF TALENT:거유 > 2
-			PRINTFORM たわわに実った%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 乳房
+			PRINTFORM たわわに実った%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 乳房
 		ELSEIF TALENT:거유 > 0
-			PRINTFORM 豊満な%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 乳房
+			PRINTFORM 豊満な%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 乳房
 		ELSEIF TALENT:빈유 > 0
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 愛らしい小ぶりな胸
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 愛らしい小ぶりな胸
 		ELSE
-			PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 形のいい乳房
+			PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 形のいい乳房
 		ENDIF
 		PRINTFORML を弄り回しながら、クスクスと\@ (TCVARn:12 & 기절) ? 愉悦の # 挑発的な \@笑みを浮かべている・・・
 	ENDIF
 	;ランダム分岐フラグ
 	FLAG:900 = 1
 ELSEIF RAND:4 == 0 && TALENT:거유 > 0 && (ARG & Ｂ)
-	PRINTFORML が촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸を撫でると、
+	PRINTFORML が촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸を撫でると、
 	IF TALENT:거유 > 3
 		PRINTFORML はちきれんばかりの乳房がぶるんと揺れた・・・
 	ELSEIF TALENT:거유 > 2
@@ -2350,7 +2350,7 @@ ELSEIF RAND:4 == 0 && TALENT:거유 > 0 && (ARG & Ｂ)
 	;ランダム分岐フラグ
 	FLAG:900 = 1
 ELSEIF RAND:2 == 0 && (ARG & Ｂ)
-	PRINTFORM はブラシ状の촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM はブラシ状の촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 	IF TALENT:빈유 > 0
 		PRINT 控えめな
 	ELSEIF TALENT:거유 > 0
@@ -2370,18 +2370,18 @@ ELSEIF RAND:2 == 0 && (ARG & Ｂ)
 	;ランダム分岐フラグ
 	FLAG:900 = 1
 ELSEIF (ARG & Ｂ)
-	PRINTFORML は細い촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 乳首を摘み、
+	PRINTFORML は細い촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 乳首を摘み、
 	PRINTFORML 左右交互に引っ張った・・・
 	;ランダム分岐フラグ
 	FLAG:900 = 2
 ELSE
-	PRINTFORML が%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸に촉수を巻きつけようとするが、
-	PRINTFORML 結界に阻まれて触れることができないでいる・・・
+	PRINTFORML が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸に촉수を巻きつけようとするが、
+	PRINTFORML 결계에 막혀 건드리지도 못했다でいる・・・
 ENDIF
 PRINTW 
 IF ((ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)) && (ARG & Ｂ)
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸と下半身に촉수が集まり、
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸と下半身に촉수が集まり、
 		PRINTFORML 全身を包み込んで丁寧な愛撫を始めた。
 		PRINTL 
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망)
@@ -2401,11 +2401,11 @@ IF ((ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)) && (ARG & Ｂ)
 	ELSE
 		PRINTFORML 乳房を弄る촉수の動きがより大胆になっていき、
 	ENDIF
-	PRINTFORML \@ (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망) || (TCVARn:12 & 기절) ? されるがままになっている # 抵抗しきれない \@%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸の感触を存分に堪能しながら
+	PRINTFORML \@ (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || (MESSAGE_BRANCH_F(TARGET) & 절망) || (TCVARn:12 & 기절) ? されるがままになっている # 抵抗しきれない \@%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸の感触を存分に堪能しながら
 	PRINTFORML 分泌した媚薬粘液を念入りに擦り込んでいく。
 ELSEIF (ARG & Ｂ) && (FLAG:110 == 0 || (ISTENTACLER(FLAG:111) == 1))
 	IF (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸を
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸を
 		PRINTFORML 촉수が玩具でも弄るかのように揉みくちゃにしている。
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%自分から身を差し出すように胸を突き出し、
@@ -2436,9 +2436,9 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM6")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -2460,15 +2460,15 @@ ELSEIF (FLAG:110 == 1)
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	IF (ARG & Ｂ) == 0
-		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸を
-		PRINTFORM 責めようとしたが、結界に阻まれて触れることができない
+		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸を
+		PRINTFORM 責めようとしたが、결계에 막혀 건드리지도 못했다
 	ELSEIF ISMALE()
 		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%に抱きつくと
 		PRINTFORM キスを交わしながら乳首に舌を這わせた
 		;ランダム分岐フラグ
 		FLAG:900 = 1
 	ELSEIF RAND:2 == 0
-		PRINTFORML は\@ (TCVARn:12 & 기절) ? 座らせた # 立っている \@%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸を
+		PRINTFORML は\@ (TCVARn:12 & 기절) ? 座らせた # 立っている \@%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸を
 		PRINTFORML 背後から鷲掴みにすると、耳元に舌を這わせながら揉み上げた。
 		IF (TCVARn:12 & 기절)
 			PRINTFORML 身を震わせながらも目を覚まさない%PRINT_TRANSCALLNAME(TARGET)%に、満足げに笑う%PRINT_TRANSCALLNAME(FLAG:111)%
@@ -2483,7 +2483,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 		IF (TCVARn:12 & 기절)
 			PRINTFORML は、横たわっている%PRINT_TRANSCALLNAME(TARGET)%にのしかかりながら
 			PRINTFORML 無防備に晒されている乳首に吸い付いた
-			PRINTFORM 小さく肩を震わせ僅かに甘い寝息を立てるが、%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を覚まさない
+			PRINTFORM 小さく肩を震わせ僅かに甘い寝息を立てるが、%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%目を覚まさない
 		ELSE
 			PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 両腕を押さえながら
 			PRINTFORML 無防備になった胸に吸いついた。
@@ -2492,7 +2492,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 				PRINTFORML と、
 				PRINTFORML 先端からは薄っすらと母乳が滲み出してくる。
 				PRINTFORML ここぞとばかりに%PRINT_TRANSCALLNAME(FLAG:111)%が乳首を吸い上げ、
-				PRINTFORM %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 \@ (TCVARn:12 & 기절) ? ミルクを存分に味わう # 羞恥心を煽りたてる \@
+				PRINTFORM %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 \@ (TCVARn:12 & 기절) ? ミルクを存分に味わう # 羞恥心を煽りたてる \@
 			ENDIF
 		ENDIF
 		;ランダム分岐フラグ
@@ -2500,7 +2500,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	ENDIF
 ELSEIF (ARG & Ｂ)
 	IF (TCVARn:12 & 기절)
-		PRINTFORM %PRINT_SWOON()%
+		PRINTFORM %PRINT_SWOON()% 
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINT は完全に無防備になっている
 	ELSE
@@ -2518,7 +2518,7 @@ ELSEIF (ARG & Ｂ)
 	PRINTFORML 촉수の先端がぐちゃりと糸を引きながら開いていく。
 	PRINTW 
 	IF (TCVARn:12 & 기절)
-		PRINTFORML そのまま촉수は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 乳首に吸い付き、
+		PRINTFORML そのまま촉수は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 乳首に吸い付き、
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML 媚びるような声を洩らす%PRINT_TRANSCALLNAME(TARGET)%의 乳首に촉수が吸い付き、
 	ELSE
@@ -2534,7 +2534,7 @@ ELSEIF (ARG & Ｂ)
 	;ランダム分岐フラグ
 	FLAG:900 = 3
 ELSE
-	PRINTFORM は結界で守られている%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸を執拗に責め立て
+	PRINTFORM は結界で守られている%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸を執拗に責め立て
 	IF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)
 		PRINTFORML ながら、
 		PRINTFORM 下半身にも촉수を忍び寄らせている
@@ -2615,7 +2615,7 @@ IF (ARG & Ａ)
 	PRINTFORML 半透明の촉수が取りついており、
 	PRINTFORM 何やら得体のしれない液体を注入し続けながら不気味に蠢いている
 	IF (ARG & Ｃ) && (ARG & Ｖ) && (ARG & Ａ)
-		PRINTFORML 。
+		PRINTFORML .
 		PRINTW 
 		PRINTFORML そして%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%愛撫する촉수は一つ、また一つとその数を増やし
 		PRINTFORML ついにはその全身を包みこんでいった・・・
@@ -2627,9 +2627,9 @@ ENDIF
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM7")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -2648,7 +2648,7 @@ ELSEIF (FLAG:110 == 1)
 ENDIF
 PRINT は
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-	PRINTFORM 鞭のようにしならせた촉수を%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM 鞭のようにしならせた촉수を%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 	IF (CONFIG_CHECK_MANIAC_F(14) == 0)
 		PRINTL 身体に何度も打ちつけた・・・
 	ELSEIF !(TCVARn:12 & 기절)
@@ -2760,9 +2760,9 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM8")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;嬲りものにされるところを見られた
+	;희롱감이 되는 모습을 보였다
 	SETBIT TFLAG:21,7
 ENDIF
 
@@ -2784,9 +2784,9 @@ ELSE
 	PRINT は
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") == 0
-	PRINTFORM 先端を尖らせた細い촉수で%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM 先端を尖らせた細い촉수で%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 ELSEIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-	PRINTFORM 無数の針を取り出し、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 
+	PRINTFORM 無数の針を取り出し、%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 
 ENDIF
 IF RAND:2 == 0
 	PRINTFORM 敏感な部分を
@@ -2817,9 +2817,9 @@ ENDIF
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM9")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;嬲りものにされるところを見られた
+	;희롱감이 되는 모습을 보였다
 	SETBIT TFLAG:21,7
 ENDIF
 
@@ -2966,9 +2966,9 @@ PRINTW
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM10")
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -2996,16 +2996,16 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = 
 ENDIF
 IF RAND:2 == 0
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 唇をこじ開け、口内を蹂躙した。
+	PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 唇をこじ開け、口内を蹂躙した。
 ELSE
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 口に無理やり突っ込み、激しく前後に動いた。
+	PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 口に無理やり突っ込み、激しく前後に動いた。
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
-		PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%身動きが取れないまま髪を掴み上げられ、
+		PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%身動きが取れないまま髪を掴み上げられ、
 		PRINTFORML 입を性処理道具のように扱われてしまう・・・
 	ELSEIF (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気絶したまま髪を掴み上げられ、
+		PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%気絶したまま髪を掴み上げられ、
 		PRINTFORML 입を性処理道具のように扱われている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML 乱暴に髪を掴みあげられ、強制的に口で奉仕させられる行為に
@@ -3029,7 +3029,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	ENDIF
 ELSE
 	IF (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%口内を凌辱され、
+		PRINTFORML %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%口内を凌辱され、
 		PRINTFORML 性処理道具のように扱われている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML 勃起した異形の肉촉수に強制的に口で奉仕させられる行為に
@@ -3054,7 +3054,7 @@ ELSE
 ENDIF
 PRINTW 
 IF (ARG & Ｂ)
-	PRINTFORML 입だけでなく%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 胸にも촉수が擦りつけられ、
+	PRINTFORML 입だけでなく%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 胸にも촉수が擦りつけられ、
 	PRINTFORM 摩擦で勃起した乳首がツンと天を突いている
 	IF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)
 		PRINTL 。
@@ -3071,7 +3071,7 @@ IF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ)
 	ELSE
 		PRINT 抵抗できずにいる
 	ENDIF
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 下半身にも無数の촉수が伸び、
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 下半身にも無数の촉수が伸び、
 	PRINTFORML 敏感な部位を容赦なく責め立てていく・・・
 	PRINTW 
 	IF ARG & Ｖ
@@ -3106,11 +3106,11 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 		ELSEIF (FLAG:110 == 1)
 			PRINTFORM %PRINT_TRANSCALLNAME(FLAG:111)%
 		ENDIF
-		PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 喉奥深くへと突き入れると、
+		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 喉奥深くへと突き入れると、
 		PRINTFORML そのまま勢いよく精液を放った・・・
 		PRINTW 
 		PRINTFORML 사정を終えて%LOCALS%が引き抜かれると、
-		PRINTFORML だらしなく開かれた%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 口から
+		PRINTFORML だらしなく開かれた%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 口から
 		PRINTFORML 白濁液がじゃばあと溢れ出した・・・
 	ELSE
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
@@ -3142,12 +3142,12 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 		PRINTW 
 	ENDIF
 ENDIF
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
-	;口を犯されたところを見られた
+	;입을 범해지는 모습을 보였다
 	SETBIT TFLAG:21,2
 ENDIF
 
@@ -3172,18 +3172,18 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = 
 ENDIF
 IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 髪を掴んで首を上に向かせると、
+	PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 髪を掴んで首を上に向かせると、
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 절망) || (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 口内に最大まで勃起した男根を乱暴に突き入れた。
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 口内に最大まで勃起した男根を乱暴に突き入れた。
 	ELSEIF TALENT:주관시점 > 0
 		PRINTFORML 抵抗する%PRINT_TRANSCALLNAME(TARGET)%의 口内に最大まで勃起した男根を乱暴に突き入れてくる。
 	ELSE
 		PRINTFORML 抵抗する%PRINT_TRANSCALLNAME(TARGET)%의 口内に最大まで勃起した男根を乱暴に突き入れた。
 	ENDIF
 ELSE
-	PRINTFORML は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 全身を縛りつけて軽々と持ち上げて身動きを封じると、
+	PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 全身を縛りつけて軽々と持ち上げて身動きを封じると、
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 절망) || (TCVARn:12 & 기절)
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 口内に太い촉수を乱暴に突き入れた。
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 口内に太い촉수を乱暴に突き入れた。
 	ELSEIF TALENT:주관시점 > 0
 		PRINTFORML 抵抗する%PRINT_TRANSCALLNAME(TARGET)%의 口内に太い촉수を乱暴に突き入れてくる。
 	ELSE
@@ -3192,7 +3192,7 @@ ELSE
 ENDIF
 PRINTL 
 IF (TCVARn:12 & 기절)
-	PRINTFORML 喉を激しく犯されて%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%咳き込み、
+	PRINTFORML 喉を激しく犯されて%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%咳き込み、
 	PRINTFORML その拍子に意識が戻ったものの、손발は固定され凌辱からは逃れられない・・・
 ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	PRINTFORML 입淫と呼ぶにはあまりに暴力的な行為にも関わらず、
@@ -3267,11 +3267,11 @@ IF FLAG:15 >= FLAG:14 && TFLAG:4 > 0
 	ENDIF
 	PRINTW 
 ENDIF
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;口を犯されたところを見られた
+	;입을 범해지는 모습을 보였다
 	SETBIT TFLAG:21,2
-	;嬲りものにされるところを見られた
+	;희롱감이 되는 모습을 보였다
 	SETBIT TFLAG:21,7
 ENDIF
 
@@ -3310,7 +3310,7 @@ IF TCVARn:40
 		PRINT 身体
 	ENDIF
 	PRINTL を愛撫しながら
-	PRINTFORML 再び%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 耳の中に液体を注入した。
+	PRINTFORML 再び%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 耳の中に液体を注入した。
 	IF (TCVARn:12 & 기절)
 		PRINTL 意識が無いにもかかわらず、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%体をもじもじと揺らしている
 	ELSE
@@ -3340,11 +3340,11 @@ ELSE
 		ENDIF
 		PRINTL を愛撫しながら
 	ELSE
-		PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 隙を見て
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 隙を見て
 	ENDIF
 	PRINTL 細い촉수をひそやかに耳の中に差し入れ、得体の知れない液体を放った。
 	IF (TCVARn:12 & 기절)
-		PRINTFORML 耳孔に詰められた液体がさらに深く浸入し、%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 息が上がっていく
+		PRINTFORML 耳孔に詰められた液体がさらに深く浸入し、%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 息が上がっていく
 	ELSE
 		PRINTL 鼓膜のさらに奥まで液体が浸透していくのを感じる・・・
 	ENDIF
@@ -3353,9 +3353,9 @@ PRINTL
 ;구상
 TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM13
 PRINTL 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;嬲りものにされるところを見られた
+	;희롱감이 되는 모습을 보였다
 	SETBIT TFLAG:21,7
 ENDIF
 
@@ -3430,7 +3430,7 @@ ELSEIF (FLAG:110 == 1)
 	ENDIF
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
-PRINTFORML %LOCALS:1%は%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
+PRINTFORML %LOCALS:1%は%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
 IF RAND:2 == 0
 	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
 		PRINTFORML 意識の薄れた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%大きく脚を開いた無防備な姿勢を取らされ
@@ -3516,10 +3516,10 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 PRINTFORML 限界が近いのか、まるで秒読みをするかのようにピストンが加速していく。
-PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
+PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
 PRINTFORML 止めと言わんばかりに無防備な子宮へと一気に白濁とした욕망を吐き出した！
 PRINTW 
-IF LOCALS == "ペニス"
+IF LOCALS == "페니스"
 	PRINTFORML ぴったりと子宮口に押し当てられたペニスから勢いよく精液が放たれ、
 	PRINTFORML あまりの사정量に%PRINT_TRANSCALLNAME(TARGET)%의 下腹部がぽっこりと膨らんでいく・・・
 	PRINTW 
@@ -3600,7 +3600,7 @@ ELSEIF (FLAG:110 == 1)
 	ENDIF
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
-PRINTFORML %LOCALS:1%は%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
+PRINTFORML %LOCALS:1%は%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
 IF RAND:2 == 0
 	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
 		PRINTFORML 意識の薄れた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%大きく脚を開いた無防備な姿勢を取らされ
@@ -3679,14 +3679,14 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 PRINTFORML 限界が近いのか、まるで秒読みをするかのようにピストンが加速していく。
-PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
+PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
 IF TALENT:주관시점 > 0
 	PRINTFORML 止めと言わんばかりに直腸内へと一気に白濁とした욕망を吐き出す！
 ELSE
 	PRINTFORML 止めと言わんばかりに直腸内へと一気に白濁とした욕망を吐き出した！
 ENDIF
 PRINTW 
-IF LOCALS == "ペニス"
+IF LOCALS == "페니스"
 	PRINTFORML 애널に深々と叩きつけられたペニスから勢いよく精液が放たれ、
 	PRINTFORML あまりの사정量に%PRINT_TRANSCALLNAME(TARGET)%의 下腹部がぽっこりと膨らんでいく・・・
 	PRINTW 
@@ -3781,11 +3781,11 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 IF TFLAG:20 == 15 || TFLAG:20 == 3 || TFLAG:20 == 1001 || TFLAG:20 == 1011 || TFLAG:20 == 1014
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 애널にも촉수が挿入され、両方の穴を交互に犯し始めた。
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 애널にも촉수が挿入され、両方の穴を交互に犯し始めた。
 ELSEIF TFLAG:20 == 17 || TFLAG:20 == 5 || TFLAG:20 == 1002
-	PRINTFORML %PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 前の穴にも촉수が挿入され、両方の穴を交互に犯し始めた。
+	PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 前の穴にも촉수が挿入され、両方の穴を交互に犯し始めた。
 ELSE
-	PRINTFORML %LOCALS:1%は%PRINT_SWOON()%%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
+	PRINTFORML %LOCALS:1%は%PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%組み敷いたまま激しくピストンを続けている。
 ENDIF
 IF RAND:2 == 0
 	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
@@ -3870,10 +3870,10 @@ ELSEIF (FLAG:110 == 1)
 	LOCALS:1 = %PRINT_TRANSCALLNAME(FLAG:111)%
 ENDIF
 PRINTFORML 限界が近いのか、まるで秒読みをするかのようにピストンが加速していく。
-PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()%%PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
+PRINTFORML ついにはボルテージが最高潮に達すると%LOCALS:1%は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 一番奥まで%LOCALS%を無理やり押し込み、
 PRINTFORML 止めと言わんばかりに前後の穴へと同時に白濁とした욕망を吐き出した！
 PRINTW 
-IF LOCALS == "ペニス"
+IF LOCALS == "페니스"
 	PRINTFORML ヴァギナと애널に深々と叩きつけられたペニスから勢いよく精液が放たれ、
 	PRINTFORML あまりの사정量に%PRINT_TRANSCALLNAME(TARGET)%의 下腹部がぽっこりと膨らんでいく・・・
 	PRINTW 

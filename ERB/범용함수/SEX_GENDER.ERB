@@ -47,13 +47,13 @@ RETURNF LOCAL
 	ENDIF
 RETURNF LOCAL
 ;「凌辱対象(穴)となり得る」
-;通常のISGIRLY() ＋ 男女平等オプションOnなら無条件に１が返る
+;通常のISGIRLY() ＋ 양성평등オプションOnなら無条件に１が返る
 @ISHOLE(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
 	SIF ARG == 0
 		RETURNF 1
-	;♀、보추、男女平等オプションなら1
+	;♀、보추、양성평등オプションなら1
 	;※※※※※※※※※※※※※※※※※※※※※※※※
 	;ここうっかりISHOLE()でラップしないように注意！！
 	;※※※※※※※※※※※※※※※※※※※※※※※※

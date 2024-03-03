@@ -30,15 +30,15 @@ S_SLANGWORD_Juice=
 ;**************************
 SELECTCASE ARGS:0
 	;精液は専用のコールへ
-	CASE "ザーメン" , "精液" , "スペルマ"
+	CASE "자멘" , "정액" , "スペルマ"
 		S_SLANGWORD_Juice=%S_SLANG_Semen(TARGET)%
 
 
-	CASE "愛液" , "ラブジュース" , "膣分泌液"
+	CASE "애액" , "러브 주스" , "질 분비액"
 		IF TALENT:음호>0 || TALENT:음란>0
 			SELECTCASE RAND:2
 				CASE 1
-					S_SLANGWORD_Juice += "愛液"
+					S_SLANGWORD_Juice += "애액"
 				CASEELSE
 					S_SLANGWORD_Juice += "淫水"
 			ENDSELECT
@@ -52,7 +52,7 @@ SELECTCASE ARGS:0
 		ENDIF
 
 
-	CASE "腸液" , "直腸液" , "肛門液"
+	CASE "장액" , "직장액" , "항문액"
 		IF TALENT:음고>0 || TALENT:음란>0
 			SELECTCASE RAND:2
 				CASE 1
@@ -63,7 +63,7 @@ SELECTCASE ARGS:0
 		ELSE
 			SELECTCASE RAND:2
 				CASE 1
-					S_SLANGWORD_Juice += "腸液"
+					S_SLANGWORD_Juice += "장액"
 				CASEELSE
 					S_SLANGWORD_Juice += "윤활液"
 			ENDSELECT
@@ -77,7 +77,7 @@ SELECTCASE ARGS:0
 			CASE 2
 				S_SLANGWORD_Juice += "粘液"
 			CASE 1
-				S_SLANGWORD_Juice += "ラブジュース"
+				S_SLANGWORD_Juice += "러브 주스"
 			CASEELSE
 				S_SLANGWORD_Juice += ARGS:0
 		ENDSELECT

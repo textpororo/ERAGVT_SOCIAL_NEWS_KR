@@ -1,15 +1,15 @@
 ﻿;**********************************************************
-;基本ルール
-;加筆修正は、自由に行ってください
+;기본 규칙
+;가필 수정은, 자유롭게 해주세요.
 ;
-;プログラムの可読性を上げるための試みです
-;IF構文と時間差が気になるが、可読性の為にSELECTCASE構文にしました
-;重い処理を一つ挟むので、うまく活用してください
+;프로그램의 가독성을 높이기 위한 시도입니다.
+;IF구문과 시간차가 신경 쓰이지만, 가독성을 위하여 SELECTCASE구문으로 했습니다.
+;무거운 처리를 하나 끼우기 때문에, 잘 활용해주세요.
 ;
 ;
 ;by 雑魚の人 2018/02/11
 ;**********************************************************
-;スラングの自動切り替えと호출
+;속어의 자동 전환 및 호출
 @WRITTENSLANG(ARGS:0)
 #DIMS WRITTENSLANG_WORD
 #FUNCTIONS
@@ -18,57 +18,63 @@
 WRITTENSLANG_WORD=
 
 SELECTCASE ARGS:0
-	CASE "애널" , "肛門"
+	CASE "애널" , "항문"
 		WRITTENSLANG_WORD=%SLANG_A(TARGET)%
 
-	CASE "おっぱい" , "胸" , "バスト"
+	;おっぱい와 胸을 두고 찌찌를 쓸지 고민했는데 그냥 젖가슴 가슴으로 하기로 했다
+	CASE "젖가슴" , "가슴" , "바스트"
 		WRITTENSLANG_WORD=%SLANG_B(TARGET)%
 
-	CASE "클리토리스" , "陰核"
+	CASE "클리토리스" , "음핵"
 		WRITTENSLANG_WORD=%SLANG_C(TARGET)%
 
-	CASE "ヒップ" , "お尻"
+	CASE "힙" , "엉덩이"
 		WRITTENSLANG_WORD=%SLANG_H(TARGET)%
 
-	CASE "愛液" , "ラブジュース" , "膣分泌液"
-		WRITTENSLANG_WORD=%SLANG_Juice(TARGET,"愛液")%
-	CASE "腸液" , "直腸液" , "肛門液"
-		WRITTENSLANG_WORD=%SLANG_Juice(TARGET,"腸液")%
+	CASE "애액" , "러브 주스" , "질 분비액"
+		WRITTENSLANG_WORD=%SLANG_Juice(TARGET,"애액")%
+	CASE "장액" , "직장액" , "항문액"
+		WRITTENSLANG_WORD=%SLANG_Juice(TARGET,"장액")%
 
-	CASE "ラビア" , "陰唇"
+	CASE "라비아" , "음순"
 		WRITTENSLANG_WORD=%SLANG_Labia(TARGET)%
 
-	CASE "ワレメ" , "大陰唇"
+	CASE "균열" , "대음순"
 		WRITTENSLANG_WORD=%SLANG_LabiaMajora(TARGET)%
 
-	CASE "ビラビラ" , "小陰唇"
+	;ビラビラ가 여성의 음순을 뜻하는 속어라고 하는데, 우리말에서 마땅한 게 안 떠올랐다
+	CASE "ビラビラ" , "소음순"
 		WRITTENSLANG_WORD=%SLANG_LabiaMinora(TARGET)%
 
-	CASE "マウス" , "口"
+	CASE "마우스" , "입"
 		WRITTENSLANG_WORD=%SLANG_M(TARGET)%
 
-	CASE "ニップル" , "乳首"
+	;원래 젖꼭지만 있었는데 유두를 따로 추가해 봤다
+	CASE "니플" , "젖꼭지" , "유두"
 		WRITTENSLANG_WORD=%SLANG_N(TARGET)%
 
-	CASE "ペニス" , "男根" , "チンコ"
+	;음경이라는 말도 따로 추가해 봤다
+	CASE "페니스" , "남근" , "자지" , "음경"
 		WRITTENSLANG_WORD=%SLANG_P(TARGET)%
 
-	CASE "ザーメン" , "精液"
+	;일본어로는 ザーメン이라 하기도 해서 자멘 시멘 둘 다 추가했다
+	CASE "자멘" , "시멘" , "정액"
 		WRITTENSLANG_WORD=%SLANG_Semen(TARGET)%
 
-	CASE "金玉" , "睾丸" , "テスティクル"
+	CASE "불알" , "고환" , "테스티클"
 		WRITTENSLANG_WORD=%SLANG_Testicle(TARGET)%
 
-	CASE "尿道" , "膀胱"
+	CASE "요도" , "방광"
 		WRITTENSLANG_WORD=%SLANG_U(TARGET)%
 
-	CASE "ヴァギナ" , "膣"
+	CASE "바기나" , "질"
 		WRITTENSLANG_WORD=%SLANG_V(TARGET)%
 
-	CASE "子宮"
+	;아기방은 그냥 추가해 보고 싶었다
+	CASE "자궁" , "아기방"
 		WRITTENSLANG_WORD=%SLANG_W(TARGET)%
 
-	;該当なしで、そのまま部位名だけ返す
+	;해당 없음으로, 그대로 부위 이름만 반환한다
 	CASEELSE
 		WRITTENSLANG_WORD=%ARGS:0%
 ENDSELECT

@@ -108,7 +108,7 @@ PRINTL
 IF TALENT:교제상대 == 0
 	CALL PASTIME_KOKURARE
 ENDIF
-;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
+;★양성평등On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 	PRINTFORML すれ違う男共の視線が%PRINT_TRANSCALLNAME(TARGET)%의 服の上からでもわかる
 	IF TALENT:거유 > 2
@@ -258,7 +258,7 @@ IF RAND:4 == 0 && ISHOLE() == 1 && TIME > 0
 ENDIF
 PRINTW
 
-;★男女平等On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
+;★양성평등On時に男でも分岐してるけど、男の胸ってこの表現使うんだろうか…？
 IF RAND:3 == 0 && ISHOLE() == 1 && TALENT:거유 > 0
 	IF RAND:2 == 0
 		PRINTFORML 走り終えた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%息も絶え絶えに

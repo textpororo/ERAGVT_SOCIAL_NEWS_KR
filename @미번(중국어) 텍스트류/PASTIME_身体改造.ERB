@@ -18,7 +18,7 @@ FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
 	;描写が女キャラ向けなので、男性は除外する
-	;偽娘を男性扱いしないように追記、対応ついでに男女平等のときは男性も可に
+	;偽娘を男性扱いしないように追記、対応ついでに양성평등のときは男性も可に
 	SIF CFLAG:CCOUNT:0 == 3 && (ISGIRLY(CCOUNT) || FILTER_CHECK_F(5) == 0) && MIN(RAND:(SQRT(FLAG:852) / 2 + 20), 100) < LOCAL
 		CALL ADDRANDCHOOSE,CCOUNT
 NEXT
@@ -498,7 +498,7 @@ PRINTFORML 然後，該輪到另外一辺了……
 PRINTL · · ·
 PRINTL  · · ·
 PRINTW   · · ·
-PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"애액")%従椅子上流下積成了小水窪。
 PRINTFORML 不知達到了多少次的高潮……
 IF TALENT:TARGET:모유체질 > 0
 PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
@@ -814,7 +814,7 @@ PRINT 用鑷子将陰蒂環安装到位、
 PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%悪作劇地用指尖撥了撥、欣賞着%PRINT_TRANSCALLNAME(TARGET)%雌獣般的嬌声。
 CALL MESSAGE_SEX_ECSTASY_C
 PRINTL 
-PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"애액")%従椅子上流下積成了小水窪。
 PRINTFORML 不知達到了多少次的高潮……
 IF TALENT:TARGET:모유체질 > 0
 PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
@@ -1019,7 +1019,7 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 3 ;进展至4级
 	ENDDATA
 	PRINTL 
 	PRINTFORML 即使已经经历过许多次，敏感部位的激烈疼痛仍然使得%PRINT_TRANSCALLNAME(TARGET)%惨叫起来
-	PRINTFORML 从下体溅出大量的%SLANG_Juice(TARGET,"愛液")%。
+	PRINTFORML 从下体溅出大量的%SLANG_Juice(TARGET,"애액")%。
 	PRINTFORML 无视着娇艳凄惨的呻吟、%PRINT_TRANSCALLNAME(FLAG:111)%为%PRINT_TRANSCALLNAME(TARGET)%穿上了四個陰唇環。
 	PRINTFORMW 然后…………
 	PRINTL 

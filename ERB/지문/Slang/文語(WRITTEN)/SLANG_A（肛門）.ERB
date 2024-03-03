@@ -12,7 +12,7 @@
 ;尻穴を中心に表現することを努める、尻肉は@SLANG_Hへ
 ;プレイ内容では、挿入しないかもしれないので、
 ;内部の直腸や結腸などの表現は控えましょう
-;腸液など分泌液などは、%SLANG_Juice(TARGET,"腸液")%で用意しています
+;腸液など分泌液などは、%SLANG_Juice(TARGET,"장액")%で用意しています
 ;
 ;増やして欲しい隠語は、アウトプットしてリクエストなりしましょう
 ;未登録の中に放り込むなり、掲示板にアップするなりすれば、
@@ -52,7 +52,7 @@ ENDIF
 
 ;どの様な液体が
 IF PALAM:윤활 >= 2000 && PALAM:쾌Ａ> 2000
-	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"直腸液")%
+	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"직장액")%
 	SELECTCASE RAND:3
 		CASE 2
 			SLANGWORD_A += "をダムの放流の如く出している"
@@ -64,7 +64,7 @@ IF PALAM:윤활 >= 2000 && PALAM:쾌Ａ> 2000
 
 
 ELSEIF PALAM:윤활 < 2000 && PALAM:윤활 >= 1000 && PALAM:쾌Ａ> 1000
-	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"直腸液")%
+	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"직장액")%
 	SELECTCASE RAND:2
 		CASE 1
 			SLANGWORD_A += "を垂らしている"
@@ -74,7 +74,7 @@ ELSEIF PALAM:윤활 < 2000 && PALAM:윤활 >= 1000 && PALAM:쾌Ａ> 1000
 
 
 ELSEIF PALAM:윤활 < 1000 && PALAM:윤활 >= 200 && PALAM:쾌Ａ> 200
-	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"直腸液")%
+	SLANGWORD_A = %SLANGWORD_A%%SLANG_Juice(TARGET,"직장액")%
 
 	SELECTCASE RAND:2
 		CASE 1
@@ -124,7 +124,7 @@ ELSE
 		CASE 3
 			SLANGWORD_A += "애널"
 		CASE 2
-			SLANGWORD_A += "お尻"
+			SLANGWORD_A += "엉덩이"
 		CASE 1
 			SLANGWORD_A += "菊"
 			SELECTCASE RAND:3
@@ -142,7 +142,7 @@ ELSE
 				CASE 1
 					SLANGWORD_A += "後ろ"
 				CASEELSE
-					SLANGWORD_A += "お尻"
+					SLANGWORD_A += "엉덩이"
 			ENDSELECT
 			SLANGWORD_A += "の穴"
 	ENDSELECT

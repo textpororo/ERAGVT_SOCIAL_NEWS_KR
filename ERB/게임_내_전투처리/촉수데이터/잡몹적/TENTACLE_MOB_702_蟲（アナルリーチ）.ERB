@@ -1,15 +1,15 @@
 ﻿;==================================================
-;【基本】
+;【기본】
 ;--------------------------------------------------
 ;잡몹적
 @TENTACLE_MOB_702
 ;--------------------------------------------------
-;名前
+;이름
 @TENTACLE_MOB_702_GETNAME
 RESULTS = 애널リーチ
 
 ;--------------------------------------------------
-;解説
+;정의
 @TENTACLE_MOB_702_DEFENITION
 PRINTFORML （ヘビくらいの大きさの、排泄物をエサとするヒル）
 PRINTFORML （直腸内に潜り込み、身を捩って回転しながら内壁を舐め取る）
@@ -26,20 +26,20 @@ CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
 RETURN RESULT
 
 ;--------------------------------------------------
-;사정限界値
+;사정 한계치
 @TENTACLE_MOB_702_SYASEI
 CALL TENTACLE_LEVEL
 LOCAL = 480 + RESULT * 5
 RETURN LOCAL
 
 ;--------------------------------------------------
-;搾精ダメージ補正
+;착정 피해량 보정
 @TENTACLE_MOB_702_SAKUSEI
 LOCAL = 100
 RETURN LOCAL
 
 ;--------------------------------------------------
-;방심도역치
+;방심도 역치
 @TENTACLE_MOB_702_YUDAN
 LOCAL = 500
 RETURN LOCAL
@@ -91,13 +91,13 @@ RESULT = 100
 RETURN RESULT
 
 ;--------------------------------------------------
-;拘束力
+;구속력
 @TENTACLE_MOB_702_HOLD
 RESULT = 150
 RETURN RESULT
 
 ;--------------------------------------------------
-;PALAM補正 百分率で返す
+;PALAM보정　백분율로 되돌린다
 @TENTACLE_MOB_702_PALAM_HOSEI
 ;쾌Ｃ
 LOCAL:0 = 50
@@ -111,13 +111,13 @@ LOCAL:3 = 50
 LOCAL:4 = 50
 ;공순
 LOCAL:5 = 50
-;取得
+;습득
 LOCAL:6 = 50
 ;욕정
 LOCAL:7 = 40
 ;굴복
 LOCAL:8 = 60
-;恥辱
+;치정
 LOCAL:9 = 60
 ;고통
 LOCAL:10 = 50
@@ -128,7 +128,7 @@ RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, L
 
 
 ;==================================================
-;【専用ルーチン（戦闘）】
+;【전용 루틴（전투）】
 ;--------------------------------------------------
 @TENTACLE_MOB_702_ATTACK_ROUTINE
 IF LOCAL < 45
@@ -140,9 +140,9 @@ ENDIF
 
 
 ;==================================================
-;【専用ルーチン（性行為）】
+;【전용 루틴（성행위）】
 ;--------------------------------------------------
-;専用ルーチン（性行為）
+;전용 루틴（성행위）
 @TENTACLE_MOB_702_SEX_ROUTINE
 
 ;ランダム係数호출（Ａ공격（강）、Ａ공격（약）、CＡ공격（약））
@@ -165,11 +165,11 @@ RETURN 1
 
 
 ;==================================================
-;【性コマンドレファレンス】
+;【성 커맨드 레퍼런스】
 ;--------------------------------------------------
-;ARG=1　스마타애태우기成功時の行動指定
-;ARG=2　스마타애태우기失敗時の行動指定
-;ARG=3　フェラチオ誘発時の行動指定
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
 @TENTACLE_MOB_702_REACTION_REF, ARG = 0
 IF ARG == 1
 	RETURN 5
@@ -191,7 +191,7 @@ RETURN 통상
 
 @MESSAGE_MOB_702_COM4, ARG:0, ARG:1
 FONTBOLD
-PRINT 애널舐め
+PRINT 애널 핥기
 FONTREGULAR
 CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ａ
 PRINTL 
@@ -208,9 +208,9 @@ PRINTW
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM4")
 PRINTL 
 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
 ENDIF
@@ -242,12 +242,12 @@ PRINTW
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM5")
 PRINTL 
 
-;動画撮影フラグの処理
+;동영상 촬영 플래그 처리
 IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
-	;愛撫されたところを見られた
+	;애무당하는 모습을 보였다
 	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
 		SETBIT TFLAG:21,1
-	;挿入されたところを見られた
+	;삽입당하는 모습을 보였다
 	SIF (ARG & Ｖ) || (ARG & Ａ)
 		SETBIT TFLAG:21,3
 ENDIF
@@ -264,7 +264,8 @@ RETURN 통상
 FONTBOLD
 PRINTL 의상을 찢는다
 FONTREGULAR
-CALL TENTACLE_ACCESS, "NAME"
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")% 
 IF RAND:3 == 0
 	PRINTFORML は口から濁った色の粘液を勢いよく吐き出した！
 	PRINTFORML 異臭のする粘液が%PRINT_TRANSCALLNAME(TARGET)%に降りかかり、
@@ -276,8 +277,8 @@ IF RAND:3 == 0
 	;상태 이상：끈적끈적
 	CALL STATE_CHANGE_BETOBETO, 15
 ELSE
-	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 全身に絡まり、激しく蠢いている！
-	PRINTFORML もみくちゃにされた%PRINT_TRANSCALLNAME(TARGET)%의 衣装が引き裂かれていく・・・
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 온몸에 엉켜 격렬하게 꿈틀거리고 있다！
+	PRINTFORML 쭈글쭈글해진 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 찢어져 간다・・・
 	PRINTL 
 	;구상
 	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
@@ -286,30 +287,30 @@ ENDIF
 
 
 ;==================================================
-;【絡みつく】
+;【휘감는다】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_702_KARAMITUKU
 CALL TENTACLE_ACCESS, "NAME"
 IF TFLAG:12 == 3
 	PRINTFORM が勢い良く%PRINT_TRANSCALLNAME(TARGET)%へ向かって跳ねてきた！
 ELSEIF RAND:2 == 0
-	PRINTFORM が体を地面に跳ねさせ、%PRINT_TRANSCALLNAME(TARGET)%의 脚元から飛びかかってきた！
+	PRINTFORM が体を地面に跳ねさせ、%PRINT_TRANSCALLNAME(TARGET)%의 발밑에서 덤벼들어 왔다！
 ELSE
 	PRINTFORM がゴム紐の様にその身を収縮させ、%PRINT_TRANSCALLNAME(TARGET)%의 頭上から襲いかかってきた！
 ENDIF
 PRINT （
 IF TFLAG:11 & 1
-	PRINT 近
+	PRINT 근
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 2
-	PRINT 中
+	PRINT 중
 ELSE
 	PRINT 　
 ENDIF
 IF TFLAG:11 & 4
-	PRINT 遠
+	PRINT 원
 ELSE
 	PRINT 　
 ENDIF
@@ -317,10 +318,10 @@ PRINTL ）
 
 
 ;==================================================
-;【絡みつく成功】
+;【휘감는다 성공】
 ;--------------------------------------------------
 @MESSAGE_BATTLE_MOB_702_KARAMITUKU_SUCCESS
-PRINTFORM 避けきれなかった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+PRINTFORM 다 피하지 못한 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
 CALL TENTACLE_ACCESS, "NAME"
 PRINTFORML に背後に回り込まれ、
 PRINTFORML 臀部に張り付かれてしまった！
