@@ -311,7 +311,7 @@ ENDSELECT
 
 ;원래 汎用 스타일이라고 써져 있었는데, FIGHT_STYLE.ERB의 이 함수에는 없는 거라 비슷한 효과인 통상으로 바꿨다
 ;[통상] 스타일의 직격 보너스
-IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "汎用" && ARGS != "HURIHODOKU"
+IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "통상" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 5
 ;[지략] 스타일의 직격 보너스
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략" && ARGS != "HURIHODOKU"
