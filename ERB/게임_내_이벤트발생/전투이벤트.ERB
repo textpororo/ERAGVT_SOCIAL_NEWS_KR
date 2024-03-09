@@ -8,7 +8,7 @@
 @PERFORM_CHEERS_FIRST_HANTEI
 VARSET LOCAL
 ;救出イベント戦では発生しない
-SIF GETBATTLESITUATION("市民なし") == 1
+SIF GETBATTLESITUATION("시민 없음") == 1
 	RETURN
 
 ;악질 시민戦では発生しない(踏まないはずだけど念のため)
@@ -979,7 +979,7 @@ LOCAL = MIN((5000 - FLAG:852) / 100, 50) + MIN(CFLAG:285 * 2, 50) + (TALENT:희�
 SIF FLAG:72 == 0
 	LOCAL = LOCAL / 2
 
-SIF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 >= LOCAL
+SIF GETBATTLESITUATION("강간 확정") == 0 && RAND:100 >= LOCAL
 	RETURN 0
 
 ;待ち構えていた男たちに襲われる
@@ -992,7 +992,7 @@ PRINTL
 LOCAL:1 = PERCENT_CAL_F(BASE:체력 + BASE:기력 + BASE:성내성 * 10, MAXBASE:체력 + MAXBASE:기력 + BASE:성내성 * 10)
 PRINTL 
 ;消耗率が低い、または勝利した場合はやや襲われにくい。ただし夜は襲われやすい
-IF GETBATTLESITUATION("レイプ確定") == 0 && RAND:100 < LOCAL:1 * 3 / 4 + (TFLAG:98 == 1) * 6 - (TIME == 1) * 12 - (TALENT:희롱특화체질 > 0) * 12
+IF GETBATTLESITUATION("강간 확정") == 0 && RAND:100 < LOCAL:1 * 3 / 4 + (TFLAG:98 == 1) * 6 - (TIME == 1) * 12 - (TALENT:희롱특화체질 > 0) * 12
 	IF LOCAL < 25 || RAND:2 == 0
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%誰かに尾けられているような気がしたが、
 		PRINTFORML どうやら気のせいだったようだ・・・
