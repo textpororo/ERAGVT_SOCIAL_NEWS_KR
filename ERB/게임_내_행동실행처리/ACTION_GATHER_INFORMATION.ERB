@@ -601,7 +601,7 @@ SELECTCASE ARG
 			SIF TALENT:거유 > 0
 				PRINTL  [1] 가슴으로 봉사한다
 			PRINTL  [2] 스마타
-			SIF TALENT:보추 > 0
+			SIF TALENT:오토코노코 > 0
 				PRINT  [3] 애널 본방 
 			SIF ISFEMALE()
 				PRINT  [3] 본방(실전) 
@@ -715,7 +715,7 @@ SELECTCASE ARG
 				EXP:정액경험 += 1
 			;스마타는 처녀가 유지될 수 있다
 			ELSEIF RESULT == 2
-				IF TALENT:보추 >0
+				IF TALENT:오토코노코 >0
 					PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가랑이를 닫아, 
 					PRINTFORML 자신의 것을 밀어낼 수 있도록, 고간의 역삼각형의 틈새로 페니스를 끼워 넣었다・・・
 					PRINTFORML 남자는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 사실은 여자가 아님을 알고 있음에도, 전혀 신경 쓰지 않는다・・・

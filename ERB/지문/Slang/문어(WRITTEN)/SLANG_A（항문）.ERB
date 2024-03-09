@@ -1,0 +1,169 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+
+;쓰는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현합니다
+;【상황】즙에 젖어 있는, 기생되어 있는, 촉수 구속구 등을 장착한 등등
+;【형태】크기, 깊이 등
+;【동작】벌려진, 꿈틀거리는 등등의 움직임을 표현
+;【부위 호칭】음란, 발정, 성격으로 저속한 쓰기를
+;
+;엉덩이 구멍을 중심으로 표현하기 위해 노력한다, 엉덩이살(尻肉)은 @SLANG_H 로
+;플레이 내용에서는, 삽입하지 않을지도 모르기 때문에
+;내부의 직장이나 결장 등의 표현은 삼가합시다
+;장액이나 분비액 등은, %SLANG_Juice(TARGET,"장액")% 에서 준비되어 있습니다
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Anal(애널)의 음어(淫語)
+;**********************************************************
+@SLANG_A(ARG)
+#DIMS SLANGWORD_A
+#FUNCTIONS
+
+;초기화
+SLANGWORD_A=
+
+
+;**********************************************************
+;제1형용사：상황（즙에 젖어있는 등등）
+;**********************************************************
+;전투 상황일 경우
+;*************************
+;끈적끈적 상태
+SIF (TCVARn:12 & 끈적끈적)
+	SLANGWORD_A += "끈적끈적해져 버린"
+;붓카케 상태
+SIF (STAIN:4 & 4)
+	SLANGWORD_A = %SLANGWORD_A% %조사처리(SLANG_SEMEN(TARGET),"가")% 뚝뚝 떨어지고 있는
+
+
+
+;*************************
+;PALAM:윤활 의 값에 의존
+;*************************
+
+;어떤 액체인가
+IF PALAM:윤활 >= 2000 && PALAM:쾌Ａ> 2000
+	SLANGWORD_A = %SLANGWORD_A% %SLANG_Juice(TARGET,"직장액")%
+	SELECTCASE RAND:3
+		CASE 2
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"를") + " 댐이 방류하듯 내고 있는"
+		CASE 1
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"를") + " 막을 수도 없이 퍼뜨리는"
+		CASEELSE
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"가") + " 끝없이 넘치고 있는"
+	ENDSELECT
+
+
+ELSEIF PALAM:윤활 < 2000 && PALAM:윤활 >= 1000 && PALAM:쾌Ａ> 1000
+	SLANGWORD_A = %SLANGWORD_A% %SLANG_Juice(TARGET,"직장액")%
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"를") + " 늘어뜨리고 있는"
+		CASEELSE
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"가") + " 새어 나오는"
+	ENDSELECT
+
+
+ELSEIF PALAM:윤활 < 1000 && PALAM:윤활 >= 200 && PALAM:쾌Ａ> 200
+	SLANGWORD_A = %SLANGWORD_A% %SLANG_Juice(TARGET,"직장액")%
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"가") + " 스며든"
+		CASEELSE
+			SLANGWORD_A += 조사만처리(SLANG_Juice(TARGET,"직장액"),"가") + " 배어 있는"
+	ENDSELECT
+;쾌Ａ나 윤활이 거의 없으면 체액 관련 묘사 생략
+ELSE
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_A += "물기가 거의 없는"
+		CASEELSE
+			SLANGWORD_A += "제대로 준비되어 있지 않은"
+	ENDSELECT
+ENDIF
+
+;제1형용사 뒤에 띄어쓰기 추가
+SLANGWORD_A += " "
+
+
+;제2형용사：형태 표현
+
+
+;제3형용사：동작 표현
+
+
+;부위 호칭
+IF TALENT:음고 > 0 || TALENT:음란 > 0
+	SELECTCASE RAND:4
+		CASE 3
+			SLANGWORD_A += "엉덩이 오나홀"
+		CASE 2
+			SLANGWORD_A += "애널"
+		CASEELSE
+			;엉덩이 보지
+			SELECTCASE RAND:2
+				CASE 1
+					SLANGWORD_A += "엉덩이"
+				CASEELSE
+					;원문은 ケツ인데 엉덩이가 겹치므로 바꿨다. 호불호 갈릴지도?
+					SLANGWORD_A += "똥꼬"
+			ENDSELECT
+			SLANGWORD_A += " 보지"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:5
+		CASE 4
+			SLANGWORD_A += "배설 기관"
+		CASE 3
+			SLANGWORD_A += "애널"
+		CASE 2
+			SLANGWORD_A += "엉덩이"
+		CASE 1
+			SLANGWORD_A += "국"
+			SELECTCASE RAND:3
+				CASE 2
+					SLANGWORD_A += "화"
+				CASE 1
+					SLANGWORD_A += "문"
+				CASEELSE
+					SLANGWORD_A += "혈"
+			ENDSELECT
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 2
+					SLANGWORD_A += "불결한 "
+				CASE 1
+					SLANGWORD_A += "뒷 "
+				CASEELSE
+					SLANGWORD_A += "엉덩이 "
+			ENDSELECT
+			SLANGWORD_A += "구멍"
+	ENDSELECT
+ENDIF
+
+RETURNF SLANGWORD_A
+
+
+;*************【음어 메모（미등록）】***********************
+;애널 로즈
+;항열(肛悦)
+;
+;
+;
+;*************【음어 메모（미등록）】***********************
+;
+;*************【음어 메모（따로 준비할 예정）】***********************
+;S자 결장
+;장 점막
+;장벽
+;장도(腸道)
+;*************【음어 메모（따로 준비할 예정）】***********************
+
+

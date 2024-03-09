@@ -1,0 +1,96 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;구술에서의「즙」이므로, 한숨이나 가득 차는(詰まった) 표현 등은 있습니다
+;체력이나 발정 등, 스테이터스로 말을 더듬거나 하도록 합시다
+;이 변수를 호출할 때에는, 말을 더듬는 것도 포함해서 사용해 주세요
+;자멘(ザーメン)은 따로 준비하고 있습니다만, 호출해 버릴 경우를 생각해서
+;이쪽에서도 날아가도록 해 보겠습니다
+;
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Juice(汁)의 음어(淫語)
+;**********************************************************
+@S_SLANG_Juice(ARG,ARGS:0)
+#DIMS S_SLANGWORD_Juice
+#FUNCTIONS
+
+;초기화
+S_SLANGWORD_Juice =
+
+;**************************
+;액체 명칭 분류
+;**************************
+SELECTCASE ARGS:0
+	;정액은 전용 함수로
+	CASE "자멘" , "정액" , "스페르마"
+		S_SLANGWORD_Juice = %S_SLANG_Semen(TARGET)%
+
+
+	CASE "애액" , "러브 주스" , "질 분비액"
+		IF TALENT:음호 > 0 || TALENT:음란 > 0
+			SELECTCASE RAND:2
+				CASE 1
+					S_SLANGWORD_Juice += "애액"
+				CASEELSE
+					S_SLANGWORD_Juice += "음수"
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 1
+					S_SLANGWORD_Juice += "질 점액"
+				CASEELSE
+					S_SLANGWORD_Juice += "윤활액"
+			ENDSELECT
+		ENDIF
+
+
+	CASE "장액" , "직장액" , "항문액"
+		IF TALENT:음고 > 0 || TALENT:음란 > 0
+			SELECTCASE RAND:2
+				CASE 1
+					S_SLANGWORD_Juice += "항밀"
+				CASEELSE
+					S_SLANGWORD_Juice += "발정액"
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 1
+					S_SLANGWORD_Juice += "장액"
+				CASEELSE
+					S_SLANGWORD_Juice += "윤활액"
+			ENDSELECT
+		ENDIF
+
+
+	CASEELSE
+		SELECTCASE RAND:4
+			CASE 3
+				S_SLANGWORD_Juice += "윤활액"
+			CASE 2
+				S_SLANGWORD_Juice += "점액"
+			CASE 1
+				S_SLANGWORD_Juice += "러브 주스"
+			CASEELSE
+				S_SLANGWORD_Juice += ARGS:0
+		ENDSELECT
+ENDSELECT
+
+
+
+RETURNF S_SLANGWORD_Juice
+
+
+;*************【음어 메모（미등록）】***********************
+;
+;*************【음어 메모（미등록）】***********************
+
+
+

@@ -136,10 +136,10 @@ RETURN LOCAL
 ;전용 루틴（성행위）
 @TENTACLE_BOSS_2_SEX_ROUTINE
 ;남자인 경우, 범용 행동만 취한다
-;보추인 경우에는 범용과 펠라, 이라마치오도 취한다
-SIF RAND:3 == 0 && TALENT:보추 > 0
+;오토코노코인 경우에는 범용과 펠라, 이라마치오도 취한다
+SIF RAND:3 == 0 && TALENT:오토코노코 > 0
 	RETURN 11
-SIF RAND:2 == 0 && TALENT:보추 > 0
+SIF RAND:2 == 0 && TALENT:오토코노코 > 0
 	RETURN 12
 SIF ISMALE()
 	RETURN 0

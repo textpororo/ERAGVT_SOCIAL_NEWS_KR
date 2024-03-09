@@ -202,9 +202,9 @@ IF TFLAG:98 == 0
 
 	;전투 후 임신 체크
 	CALL NINSIN_CHECK_AFTER
-	;변신하고 있는 겅우, 변신을 해제한다(악질 시민전일 경우 이벤트 측에서 처리)
+	;변신하고 있는 겅우, 변신을 해제한다(악질 시민전일 경우 이벤트 쪽에서 처리)
 	CALL TRANSFORM, 0
-	;흑화측도 해제
+	;흑화 쪽도 해제
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 
@@ -408,7 +408,7 @@ ELSEIF TFLAG:98 == 2
 		CALL EVENT_BATTLE_RESET_COSTUME(TARGET)
 	ENDIF
 
-	;흑화 히로인 측도 해제해 둔다
+	;흑화 히로인 쪽도 해제해 둔다
 	SIF TALENT:(FLAG:111):변신능력 > 0 && CFLAG:(FLAG:111):1 > 0
 		CALL TRANSFORM, 0, FLAG:111
 

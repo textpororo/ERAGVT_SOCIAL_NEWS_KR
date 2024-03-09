@@ -35,9 +35,9 @@ LOCALS'=""
 
 ;①촉수凌辱動画の流出後
 ;②「変身後の姿が女性＆現在未変身」
-;（変身後の姿が보추＆現在未変身を追加）
+;（変身後の姿が오토코노코＆現在未変身を追加）
 ;なら専用分岐
-IF CFLAG:284 && ((TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 0 && ISFEMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 1 && ISMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시보추 == 1 && CFLAG:1 == 0))
+IF CFLAG:284 && ((TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 0 && ISFEMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시ＴＳ == 1 && ISMALE() && CFLAG:1 == 0) || (TALENT:변신능력 == 1 && TALENT:변신시오토코노코 == 1 && CFLAG:1 == 0))
 	LOCALS'="촉수凌辱流出"
 	被害者名=%CSTR:1%
 	;変身後の凌辱動画が流出
@@ -75,7 +75,7 @@ ELSEIF CFLAG:284==0 && FLAG:852<8000 && ISGIRLY() && CFLAG:1 == 0 && RAND:2==0
 	ENDDATA
 	PRINTFORML 「エロ動画」だった。
 	PRINTFORML ……そのような恥ずべき行為の記憶など、現実の%被害者名%たちには存在しない。
-	SIF TALENT:보추 > 0
+	SIF TALENT:오토코노코 > 0
 		PRINTFORML そもそも動画の子は顔こそ%被害者名%だが、カラダは股間まで女の子だ。
 	PRINTFORML 何らかの手段で作成された、悪質な合成動画である事は明らかだった。
 

@@ -1,0 +1,919 @@
+﻿
+;==================================================
+;【기본】
+;--------------------------------------------------
+;잡몹적
+;↓촉수의 존재 확인용 함수　아무것도 처리하지 않는다
+@TENTACLE_MOB_501
+;--------------------------------------------------
+;이름
+@TENTACLE_MOB_501_GETNAME
+RESULTS = 擬態촉수・악질 시민
+
+;--------------------------------------------------
+;정의
+@TENTACLE_MOB_501_DEFENITION
+PRINTFORML （暴徒と化した市民に擬態した人型촉수）
+PRINTFORML （외관や行動はよく似ているが、注意深く観察すれば判別可能）
+PRINTFORML （常に複数で行動し、人数に応じて最大HPが変化する）
+
+
+;==================================================
+;【스테이터스】
+;--------------------------------------------------
+;HP
+;とりあえず1体あたり750×2～5体
+@TENTACLE_MOB_501_HP
+LOCAL = 1500
+SIF RAND:2 == 0
+	LOCAL += 750
+SIF RAND:2 == 0
+	LOCAL += 750
+SIF RAND:2 == 0
+	LOCAL += 750
+CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
+RETURN RESULT
+
+;--------------------------------------------------
+;사정 한계치
+@TENTACLE_MOB_501_SYASEI
+LOCAL = 500
+RETURN LOCAL
+
+;--------------------------------------------------
+;착정 피해량 보정
+@TENTACLE_MOB_501_SAKUSEI
+LOCAL = 30
+RETURN LOCAL
+
+;--------------------------------------------------
+;방심도 역치
+@TENTACLE_MOB_501_YUDAN
+LOCAL = 100
+RETURN LOCAL
+
+;--------------------------------------------------
+;공격
+@TENTACLE_MOB_501_KOUGEKI
+LOCAL = 25
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;방어
+@TENTACLE_MOB_501_BOUGYO
+LOCAL = 200
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;민첩
+@TENTACLE_MOB_501_BINSYOU
+LOCAL = 150
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;지성
+@TENTACLE_MOB_501_CHISEI
+LOCAL = 10
+CALL TENTACLE_STATUS_HOSEI, LOCAL,10
+RETURN RESULT
+
+;--------------------------------------------------
+;근거리
+@TENTACLE_MOB_501_SHORT
+RESULT = 120
+RETURN RESULT
+
+;--------------------------------------------------
+;중거리
+@TENTACLE_MOB_501_MIDDLE
+RESULT = 120
+RETURN RESULT
+
+;--------------------------------------------------
+;원거리
+@TENTACLE_MOB_501_LONG
+RESULT = 120
+RETURN RESULT
+
+;--------------------------------------------------
+;구속력
+@TENTACLE_MOB_501_HOLD
+RESULT = 180
+RETURN RESULT
+
+;--------------------------------------------------
+;PALAM보정　백분율로 되돌린다
+@TENTACLE_MOB_501_PALAM_HOSEI
+;쾌Ｃ
+LOCAL:0 = 100
+;쾌Ｖ
+LOCAL:1 = 100
+;쾌Ａ
+LOCAL:2 = 100
+;쾌Ｂ
+LOCAL:3 = 100
+;윤활
+LOCAL:4 = 50
+;공순
+LOCAL:5 = 50
+;습득
+LOCAL:6 = 50
+;욕정
+LOCAL:7 = 50
+;굴복
+LOCAL:8 = 50
+;치정
+LOCAL:9 = 50
+;고통
+LOCAL:10 = 50
+;공포
+LOCAL:11 = 50
+
+RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+
+
+;==================================================
+;【전용 루틴（전투）】
+;--------------------------------------------------
+@TENTACLE_MOB_501_ATTACK_ROUTINE
+LOCAL = RAND:100
+;エロ공격以外行わない
+
+IF LOCAL < 45
+	RETURN 2
+ELSE
+	RETURN 0
+ENDIF
+
+
+;==================================================
+;【전용 루틴（성행위）】
+;--------------------------------------------------
+@TENTACLE_MOB_501_SEX_ROUTINE
+LOCAL = RAND:100
+;모유 흡입
+IF LOCAL < 15 && TALENT:모유체질
+	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		RETURN 14
+	ELSE
+		IF ISHOLE() == 0
+			RETURN 1
+		ELSE
+			RETURN 7
+		ENDIF
+	ENDIF
+;전신 애무
+ELSEIF LOCAL < 20
+	RETURN 0
+;Ｃ공격（강）
+ELSEIF LOCAL < 40
+	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		RETURN 14
+	ELSE
+		RETURN 1
+	ENDIF
+;펠라
+ELSEIF LOCAL < 60
+	IF ISHOLE() == 0
+		RETURN 1
+	ELSE
+		RETURN 11
+	ENDIF
+;Ｖ공격（약）
+ELSEIF LOCAL < 80
+	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		RETURN 14
+	ELSE
+		IF ISMALE()
+			RETURN 1
+		ELSE
+			RETURN 2
+		ENDIF
+	ENDIF
+;씨받이 교배
+ELSEIF (LOCAL < 95 || (TFLAG:20 == 3 && LOCAL < 90) || (TCVAR:12 & 배란) > 0) && CHECK_HOLYVIRGIN_F()==0
+	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		RETURN 14
+	ELSE
+		IF ISMALE()
+			RETURN 1
+		ELSE
+			RETURN 3
+		ENDIF
+	ENDIF
+;약물 주사
+ELSE
+	RETURN 9
+ENDIF
+
+;==================================================
+;【성 커맨드 레퍼런스】
+;--------------------------------------------------
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
+@TENTACLE_MOB_501_REACTION_REF, ARG = 0
+IF ARG == 1
+	RETURN 3
+ELSEIF ARG == 2
+	RETURN 3
+ELSEIF ARG == 3
+	RETURN 11
+ENDIF
+RETURN -1
+
+
+;==================================================
+;【성 커맨드 관련】
+;--------------------------------------------------
+;전신 애무
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM0
+RETURN 통상
+
+@MESSAGE_MOB_501_COM0, ARG:0, ARG:1
+FONTBOLD
+PRINT 전신 애무
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
+PRINTL 
+PRINTFORML 겨드랑이 아래로 팔이 감겨와 붙잡혀버린 %PRINT_TRANSCALLNAME(TARGET)%의 살갗을, 무수한 손들이 기어 다니고 있다・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM0")
+PRINTL 
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+@SEXCOM_OPTION_MOB_501_COM0
+;추가 공격 부위 지정
+RETURN 15
+
+;--------------------------------------------------
+;Ｃ공격（강）
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM1
+RETURN 통상
+
+@MESSAGE_MOB_501_COM1, ARG:0, ARG:1
+FONTBOLD
+PRINT Ｃ공격（강）
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｃ
+PRINTL 
+CALL TENTACLE_ACCESS, "NAME"
+IF ISPENIS()
+	IF (ARG & Ｃ) == 0
+		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 ペニスをつかもうとしたが
+		PRINTFORM 결계에 막혀 건드리지도 못했다
+	ELSE
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 ペニスにオナホをかぶせると、
+		PRINTFORML 前後に動いてシゴき始めた。
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+			PRINTFORM オナホに与えられる快楽に幸福そうな表情を浮かべている
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+			PRINTFORM オナホに与えられる快楽にだらしなく表情を弛緩させている
+		ELSEIF (TCVAR:12 & 기절)
+			PRINTFORM 敏感なところに強く吸い付かれ、意識がないまま悶絶している
+		ELSE
+			PRINTFORM 혐오감을 느끼곤 
+			CALL TENTACLE_ACCESS, "GETNAME"
+			PRINTFORML %조사처리(RESULTS,"를")% 양손으로 잡고 떼어내려고 했지만,
+			PRINTFORM 오히려 꽉 달라붙어 더욱이 넋을 잃고 있었다
+		ENDIF
+	ENDIF
+ELSE
+	IF (ARG & Ｃ) == 0
+		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 전신을 애무하면서 클리토리스에 달라붙으려 했지만
+		PRINTFORM 결계에 막혀 건드리지도 못했다
+	ELSE
+		PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 전신을 애무하면서 클리토리스에 달라붙곤,
+		PRINTFORML 입全体を使って激しく吸い上げ始めた。
+		PRINTFORM %PRINT_SWOON()% %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락)
+			PRINTFORM 음두에 주어지는 쾌락에 행복한 표정을 짓고 있었다
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+			PRINTFORM 음두에 주어지는 쾌락에 칠칠치 못하게 표정을 이완시키고 있었다
+		ELSEIF (TCVAR:12 & 기절)
+			PRINTFORM 敏感なところに強く吸い付かれ、意識がないまま悶絶している
+		ELSE
+			PRINTFORM 혐오감을 느끼곤 
+			CALL TENTACLE_ACCESS, "GETNAME"
+			PRINTFORML %조사처리(RESULTS,"를")% 양손으로 잡고 떼어내려고 했지만,
+			PRINTFORM 오히려 꽉 달라붙어 더욱이 넋을 잃고 있었다
+		ENDIF
+	ENDIF
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM1")
+PRINTL 
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+;--------------------------------------------------
+;씨받이 교배
+
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM3
+RETURN 삽입
+
+@MESSAGE_MOB_501_COM3, ARG:0, ARG:1
+FONTBOLD
+PRINTL 씨받이 교배
+FONTREGULAR
+IF (ARG & Ｖ) == 0
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML のうち一人が%PRINT_TRANSCALLNAME(TARGET)%に覆い被さろうとしたが
+	PRINTFORM 결계에 막혀 건드리지도 못했다
+ELSEIF TCVARn:2 == 자세：Ｖ방어
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML のうち一人が%PRINT_TRANSCALLNAME(TARGET)%に覆い被さろうとしたが
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 순간적으로 몸을 비틀어 저항한 덕분에
+	PRINTFORM 제대로 통하지 않았던 것 같다
+ELSEIF TALENT:처녀 > 0
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML のうち一人が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%에게 덮쳐,
+	PRINTFORML 充血しアンバランスに肥大化したペニスを膣口に擦りつけ始めた。
+	PRINTFORML それは瘴気の影響か一般的なモノよりもサイズが大きく、
+	PRINTFORML 反り返った亀頭がヴァギナの奥中目指して押し込められていく。
+	PRINTW 
+	IF (TCVAR:12 & 기절)
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)% 상대로 몇번이나 삽입에 실패하면서도
+		PRINTFORML 단단하고 따뜻한 것이 질내를 천천히 넓혀갔고,
+		PRINTFORML 그 다음 순간에는 희미한 통증과 함께 아랫배 안쪽까지 관통되고 말았다・・・
+		PRINTW 
+		PRINTL 처녀 상실
+		PRINTW 
+		PRINTFORML 순결의 피를 주르륵 흘리면서도, %PRINT_TRANSCALLNAME(TARGET)%의 의식이 돌아올 기미는 없어 보인다.
+		PRINTFORML それに興奮した男は「初めてのオンナ」の질내の感触に身を震わせ、
+		PRINTFORM 마구잡이로 욕망을 내던지기 시작했다
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 자신보다 훨씬 더 약해 빠진 상대에게 깔려 눕혀져 있음에 흥분하곤,
+		PRINTFORML 끝부분이 질구멍에 찌걱찌걱 삽입되어 가는 감촉에 도착적인 행복을 느껴 버리고 만다.
+		PRINTFORML 단단하고 따뜻한 것이 질내를 천천히 넓혀갔고,
+		PRINTFORML 그 다음 순간에는 희미한 통증과 함께 아랫배 안쪽까지 관통되고 말았다・・・
+		PRINTW 
+		PRINTL 처녀 상실
+		PRINTW
+		PRINTFORML 次の瞬間には一気に下腹部の奥まで貫かれる・・・
+		PRINTW 
+		PRINTFORML 어설프지만, 격렬하게.
+		PRINTFORML 「正義のヒロイン」に夢中で욕망をぶつける男を見つめながら
+		;원문은 形ばかりの抵抗の言葉を口にしつつ
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 형식적일 뿐인 저항의 말을 외치면서
+		PRINTFORM 뺨을 붉히곤 만족스러운 한숨을 내쉬고 있었다
+	ELSE
+		PRINTFORML 끝부분이 질구멍에 찌걱찌걱 삽입되어 가는 감촉에 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 필사적으로 저항해도,
+		PRINTFORML 無数の男たちに손발を拘束された状態では満足に振り払うことができない。
+		PRINTFORML 단단하고 따뜻한 것이 질내를 천천히 넓혀갔고,
+		PRINTFORML 그 다음 순간에는 희미한 통증과 함께 아랫배 안쪽까지 관통되고 말았다・・・
+		PRINTW 
+		PRINTL 처녀 상실
+		PRINTW 
+		PRINTFORML 자신보다 훨씬 더 약해 빠진 상대에게 제대로 저항도 못 하고 처녀를 빼앗겨,
+		IF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 분함에 눈물을 글썽이면서도 의연한 표정을 유지했다.
+		ELSE
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 이내 망연자실하고 만다.
+		ENDIF
+		PRINTFORM そんな様子にはお構いなしに、興奮した男は「正義のヒロイン」を犯すのに夢中になっている
+	ENDIF
+ELSEIF TFLAG:20 == 3
+	PRINTFORM 男は%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 깔아 눕힌 채, 정신없이 피스톤질을 계속하고 있었다
+ELSE
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML のうち一人が%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%에게 뛰어들어,
+	PRINTFORM 無防備に晒された秘唇を押し広げるようにペニスを挿入し、犯し始めた
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM3")
+PRINTL 
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+;--------------------------------------------------
+;Ｖ공격（약）
+
+@SEX_TYPE_MOB_501_COM2
+RETURN 통상
+
+@MESSAGE_MOB_501_COM2, ARG:0, ARG:1
+FONTBOLD
+PRINT Ｖ공격
+FONTREGULAR
+CALL MESSAGE_SEX_STATE, ARG:0, ARG:1, Ｖ
+TFLAG:17 = -1	;행동 예약 없음
+PRINTL 
+
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 股間に顔をうずめ、
+IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
+	IF CLOTH_NO_INNER > 0
+		PRINT 衣装越しに
+	ELSEIF CFLAG:42 == 305 || CFLAG:42 == 306
+		PRINT 수영복越しに
+	ELSE
+		PRINT 下着越しに
+	ENDIF
+ENDIF
+PRINTFORML 舌で膣口を愛撫し始めた。
+PRINTL 
+IF (ARG & Ｖ)
+	IF RAND:2 == 0
+		PRINTFORML 時折클리토리스に軽くキスをしながら、
+	ELSE
+		PRINTFORML わざとジュルジュルと水音を立てて吸いつき、
+	ENDIF
+	IF TALENT:주관시점 > 0
+		PRINTFORML まるで甘い蜜を啜るかのように%PRINT_TRANSCALLNAME(TARGET)%의 愛液を貪りつつ
+		PRINTFORML 舌を軽く挿入して\@ (TCVAR:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
+	ELSE
+		PRINTFORML まるで%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 愛液が甘い蜜であるかのように貪りつつ
+		PRINTFORML 舌を軽く挿入して\@ (TCVAR:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
+	ENDIF
+	PRINTW 
+ELSE
+	PRINTFORML 結界に阻まれて触れられてこそいないが、
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORML の怪しげな舌使いが結界の表面を撫でるたびに
+	PRINTFORML 結界の光が弱まっていく・・・
+	PRINTW 
+ENDIF
+IF (ARG & Ｃ)
+	PRINTFORM 同時に애널をもう片方の手に撫でまわされ
+	IF TALENT:주관시점 > 0
+		PRINTFORML \@TALENT:후타나리 == 1 ? ペニス # 클리토리스 \@を舌で舐めまわしてきた。
+	ELSE
+		PRINTFORML \@TALENT:후타나리 == 1 ? ペニス # 클리토리스 \@を舌で舐めまわした。
+	ENDIF
+	PRINTFORM すっかり愛液で濡れた%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 スリットが
+	PRINTFORML ひくひくと痙攣している・・・
+	PRINTW 
+ELSE
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINT は
+	IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
+		IF CLOTH_NO_INNER > 0
+			PRINT 衣装越しに
+		ELSEIF CFLAG:42 == 305 || CFLAG:42 == 306
+			PRINT 수영복越しに
+		ELSE
+			PRINT 下着越しに
+		ENDIF
+	ENDIF
+	IF TALENT:주관시점 > 0
+		PRINTFORML 指を%PRINT_TRANSCALLNAME(TARGET)%의 膣に擦りつけてきた。
+	ELSE
+		PRINTFORML 指を%PRINT_TRANSCALLNAME(TARGET)%의 膣に擦りつけた。
+	ENDIF
+	PRINTW 
+	IF (ARG & Ｖ)
+		IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
+			IF CLOTH_NO_INNER > 0
+				PRINT 衣装
+			ELSEIF CFLAG:42 == 305 || CFLAG:42 == 306
+				PRINT 수영복
+			ELSE
+				PRINT 下着
+			ENDIF
+			PRINTL の布地に阻まれるが、気にせずに指で膣口を摩っている・・・
+		ELSE
+			PRINTL 질내に浅く指を挿入すると、指先で軽く膣壁を掻いている・・・
+		ENDIF
+		PRINTL 
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) && (TCVAR:12 & 기절) == 0
+			PRINTFORM 挿入への期待に目にハートマークを浮かべる%PRINT_TRANSCALLNAME(TARGET)%의 股間
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && (MESSAGE_BRANCH_F(TARGET) & 절망) == 0 && (TCVAR:12 & 기절) == 0
+			PRINTFORM 快楽に抗うのに必死な%PRINT_TRANSCALLNAME(TARGET)%의 股間
+		ELSE
+			PRINTFORM ひたすら膣口を弄ばれ続ける%PRINT_TRANSCALLNAME(TARGET)%의 股間
+		ENDIF
+		IF CLOTH_INNER_PER >= CLOTH_INNER_DEF
+			PRINTL には
+			PRINT ヌメヌメした先走り汁で汚れた
+			IF CLOTH_NO_INNER > 0
+				PRINT 衣装
+			ELSEIF CFLAG:42 == 305 || CFLAG:42 == 306
+				PRINT 수영복
+			ELSE
+				PRINT 下着
+			ENDIF
+			PRINT がぴったりと肌に張り付いて
+			IF (ARG & 1)
+				PRINTFORML おり、
+				PRINTFORM もう片方の手が\@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@を好き勝手に弄り回して
+			ENDIF
+			IF TALENT:주관시점 > 0
+				PRINTFORML くる・・・
+			ELSE
+				PRINTFORML いる・・・
+			ENDIF
+			PRINTW 
+		ELSE
+			PRINTFORML からはヌメヌメした先走り汁が
+			PRINTFORM 糸を引いて地面に垂れて
+			IF (ARG & Ｃ)
+				PRINTFORML おり、
+				PRINTFORML 敏感な\@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@はもう片方の手で好き勝手な方向に引っ張られて
+				PRINTFORM 充血しきって
+			ENDIF
+			PRINTFORML いる・・・
+			PRINTW 
+		ENDIF
+	ELSEIF (ARG & Ｃ)
+		PRINTFORML 結界に阻まれて触れることはできないものの、
+		PRINTFORML 敏感な\@TALENT:후타나리 > 0 ? ペニス # 클리토리스 \@はゴリゴリと刺激されて充血しきっている・・・
+		PRINTW 
+	ENDIF
+ENDIF
+IF (ARG & Ａ)
+	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%同時に애널を
+	CALL TENTACLE_ACCESS, "NAME"
+	PRINTFORM のもう片方の手に撫でまわされ
+	IF (ARG & Ｂ)
+		PRINTFORML ながら、
+	ELSEIF (TCVAR:12 & 기절)
+		PRINTFORML 、
+		PRINTFORML 기절したまま快楽に頬を染めている・・・
+	ELSE
+		SIF TALENT:감정결여 > 0
+			PRINT るも
+		PRINTFORML 、
+		PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+			IF TALENT:주관시점 > 0
+				PRINTFORML 愉悦に身を震わせてしまう・・・
+			ELSE
+				PRINTFORML 愉悦に身を震わせている・・・
+			ENDIF
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && TALENT:주관시점 > 0
+			PRINTFORML 快楽に견딘다のに必死だ・・
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+			PRINTFORML 快楽に견딘다のに必死な様子だ・・
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 절망)
+			PRINTFORML 為すすべなく好き放題にされている・・・
+		ELSEIF TALENT:감정결여 > 0
+			PRINTFORML 無表情を貫いている・・・
+		ELSEIF TALENT:주관시점 > 0
+			PRINTFORML 屈辱に顔を歪めてしまう・・・
+		ELSE
+			PRINTFORML 屈辱に顔を歪めている・・・
+		ENDIF
+		PRINTW 
+	ENDIF
+ENDIF
+IF (ARG & Ａ) == 0 && (ARG & Ｂ) && RAND:2 == 0
+	IF TALENT:빈유 > 0
+		PRINTFORM 同時に%PRINT_TRANSCALLNAME(TARGET)%의 乳首にも手が伸びており、
+	ELSE
+		PRINTFORM 同時に%PRINT_TRANSCALLNAME(TARGET)%의 胸も玩具のように揉みくちゃにされて、
+	ENDIF
+	PRINTL 
+	IF (TCVAR:12 & 기절)
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 体は完全に人形のように扱われている・・・
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		IF TALENT:주관시점 > 0
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせてしまう・・・
+		ELSE
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
+		ENDIF
+	ELSEIF TCVAR:2 == 자세：받아들인다
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽と恥辱に歯を食いしばっている・・・
+	ELSEIF TALENT:감정결여 > 0
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%僅かに不快感に表情を歪めた・・・
+	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔を真っ赤にしている・・・
+	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
+		PRINTFORML さすがの%PRINT_TRANSCALLNAME(TARGET)%も悔しさに涙を浮かべるしかない・・・
+	ELSE
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%嫌悪感と屈辱に歯を食いしばっている・・・
+	ENDIF
+	PRINTW 
+ELSEIF (ARG & Ａ) == 0 && (ARG & Ｂ)
+	PRINTFORM 乳房に伸ばされた手で
+	IF TALENT:빈유 > 0
+		PRINTFORM 乳首をコリコリ摘ままれ
+	ELSE
+		PRINTFORM 가슴まで玩具のように揉みくちゃにされ
+	ENDIF
+	IF (TCVAR:12 & 기절) && TALENT:주관시점 > 0
+		PRINTFORML てしまっており、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無抵抗のまま弄ばれている・・・
+	ELSEIF (TCVAR:12 & 기절)
+		PRINTFORML てしまっており、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%기절したまま頬を染めている・・・
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
+		PRINTFORML てしまい、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
+	ELSEIF TCVAR:2 == 자세：받아들인다
+		PRINTFORML ることを受け入れてしまっており、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && TALENT:주관시점 > 0
+		PRINTFORML てしまい、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に抗おうと歯を食いしばった・・・
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
+		PRINTFORML てしまい、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に抗おうと歯を食いしばっている・・・
+	ELSEIF TALENT:감정결여 > 0
+		PRINTFORML てしまっている・・・
+	ELSEIF TALENT:겁쟁이 || TALENT:비관적 || TALENT:부끄럼쟁이
+		PRINTFORML てしまい、
+		IF TALENT:주관시점 > 0
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔が真っ赤に染まっていく・・・
+		ELSE
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%あまりの羞恥心に顔を真っ赤にしている・・・
+		ENDIF
+	ELSEIF TALENT:오기 || TALENT:고풍적 || TALENT:사나움
+		PRINTFORML っては、
+		PRINTFORML さすがの%PRINT_TRANSCALLNAME(TARGET)%も悔しさに涙を浮かべるしかない・・・
+	ELSEIF TALENT:주관시점 > 0
+		PRINTFORML てしまい、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 表情が嫌悪感と屈辱に歪んでいく・・・
+	ELSE
+		PRINTFORML てしまい、
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%嫌悪感と屈辱に表情を歪めている・・・
+	ENDIF
+	PRINTW 
+ENDIF
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM2")
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+@SEXCOM_OPTION_MOB_501_COM2
+SELECTCASE RAND:3
+CASE 0
+	RETURN Ｃ
+CASE 1
+	RETURN Ａ
+CASE 2
+	RETURN Ｂ
+ENDSELECT
+
+;모유 흡입
+
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM7
+RETURN 통상
+
+;--------------------------------------------------
+@MESSAGE_MOB_501_COM7, ARG:0, ARG:1
+FONTBOLD
+PRINTL 모유 흡입
+FONTREGULAR
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")% 
+IF (ARG & Ｂ) == 0
+	IF ISMALE()
+		;#region
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 젖꼭지에 달라붙으려고 했지만
+		;#endregion
+	ELSE 
+		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 유방에 달라붙으려고 했지만
+	ENDIF
+	PRINTFORM 결계에 막혀 건드리지도 못했다
+ELSE
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 전신을 애무하면서,
+	PRINTFORML まるで赤子のように、
+	IF TALENT:거유 > 2
+		PRINT ダイナミックな大きさの乳房
+	ELSEIF TALENT:거유 > 1
+		PRINT たわわに実った乳房
+	ELSEIF TALENT:거유 > 0
+		PRINT 豊満な乳房
+	ELSEIF TALENT:오토코노코 > 0
+		PRINT ぺたんこな胸
+	ELSEIF ISMALE()
+		PRINT 平坦な胸
+	ELSEIF TALENT:거유 == 0 && TALENT:빈유 == 0
+		PRINT 程よいお椀型の乳房
+	ELSEIF TALENT:빈유 > 0
+		PRINT 控えめに膨らんだ乳房
+	ENDIF
+	PRINTFORM に吸い付いた
+	IF TALENT:모유체질 > 0
+		PRINTFORML .
+		PRINTW 
+		PRINTFORML 그 움직임이 %PRINT_TRANSCALLNAME(TARGET)%의 육체의 모성을 자극한 것인지
+		PRINTFORML 끈적끈적한 젖꼭지를 만지작거리는 감촉에 끝에서 모유가 배어나오자,
+		PRINTFORML 興奮した男たちは性欲に従って、
+		PRINTFORM 더욱 격렬하게 눈앞의 사냥감에 매달리며 탐닉하기 시작했다
+	ENDIF
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM7")
+PRINTL 
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+;--------------------------------------------------
+;입 강간
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM11
+RETURN 펠라
+
+@MESSAGE_MOB_501_COM11, ARG:0, ARG:1
+FONTBOLD
+PRINTL 입 강간
+FONTREGULAR
+IF RAND:2 == 0
+	PRINTFORML 男のうち一人がペニスを%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 뺨에 문질러 왔다.
+	IF (TCVAR:12 & 기절)
+		PRINTFORM 무방비하게 반쯤 벌어진 입술을 비집어 열고, 입을 오나홀처럼 다루고 있었다
+	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
+		PRINTFORML 꾹꾹 눌러대는 미숙한 수컷의 악취에 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 참지 못 하고,
+		PRINTFORM 半ば無意識にペニスを口に含み、丁寧に舌を絡めて奉仕し初めた
+	ELSE
+		PRINTFORML 그 악취에 어떻게든 얼굴을 돌리려고 했지만,
+		PRINTFORM 横から現れた別の一人に強引に口に挿入され、フェラチオを強要されてしまう
+	ENDIF
+ELSE
+	PRINTFORML 男のうち一匹が%PRINT_TRANSCALLNAME(TARGET)%의 口内に大きく勃起したペニスを挿入し、
+	PRINTFORM 펠라치오를 시키듯 격렬하게 앞뒤로 움직였다
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+;구상
+TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_COM11")
+PRINTL 
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;입을 범해지는 모습을 보였다
+	SETBIT TFLAG:21,2
+ENDIF
+
+;-----------------------------------------------------------------------------------------------------------------------------------------------
+
+;약물 주사
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM9
+RETURN 통상
+
+@MESSAGE_MOB_501_COM9, ARG:0, ARG:1
+#DIM DRUG
+FONTBOLD
+PRINTL 약물 주사
+FONTREGULAR
+
+IF RAND:2 == 0
+	PRINTFORM 男のうち一人が
+	DRUG = RAND:3
+	IF DRUG == 0
+		PRINT 緑色の
+	ELSEIF DRUG == 1
+		PRINT ピンク色をした
+	ELSE
+		PRINT 青い
+	ENDIF
+	PRINTFORML 液体の入った注射器を%PRINT_TRANSCALLNAME(TARGET)%に突き刺した。
+	PRINTFORM 得体のしれない薬品を注射された%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+ENDIF
+PRINTFORML ・・・
+PRINTW 
+IF DRUG == 1
+	CALL STATE_CHANGE_HATUJOU, 100
+ELSE
+	CALL STATE_CHANGE_KIZETU, 100
+ENDIF
+PRINTL  
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM9
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+	;입을 범해지는 모습을 보였다
+	SIF (ARG & Ｖ) == 0
+		SETBIT TFLAG:21,2
+	;삽입당하는 모습을 보였다
+	SIF (ARG & Ｖ) || (ARG & Ａ)
+		SETBIT TFLAG:21,3
+	;질내사정 당하는 모습을 보였다
+	SIF (STAIN:3 & 4)
+		SETBIT TFLAG:21,4
+	;애널에 사정당하는 모습을 보였다
+	SIF (STAIN:4 & 4)
+		SETBIT TFLAG:21,5
+	;정액 붓카케 당하는 모습을 보였다
+	SIF (STAIN:0 & 4) || (STAIN:1 & 4) || (STAIN:2 & 4)
+		SETBIT TFLAG:21,6
+	;희롱감이 되는 모습을 보였다
+	SETBIT TFLAG:21,7
+	;절정하는 모습을 보였다
+	SIF NOWEX:0 + NOWEX:1 + NOWEX:2 + NOWEX:3
+		SETBIT TFLAG:21,8
+ENDIF
+
+
+;==================================================
+;【의상을 찢는다】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_501_COM14
+RETURN 통상
+
+@MESSAGE_MOB_501_COM14, ARG:0, ARG:1
+FONTBOLD
+PRINTL 의상을 찢는다
+FONTREGULAR
+CALL TENTACLE_ACCESS, "NAME"
+IF RAND:3 == 0
+	PRINTFORML の一人が液体の入った瓶を取り出し、%PRINT_TRANSCALLNAME(TARGET)%めがけてぶっかけた
+	PRINTFORML どうやら中身は촉수由来の粘液らしく
+	PRINTFORML 液体のかかった衣装がみるみる溶かされていく・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+	;상태 이상：끈적끈적
+	CALL STATE_CHANGE_BETOBETO, 15
+ELSE
+	PRINTFORML は%PRINT_TRANSCALLNAME(TARGET)%의 衣装を鋭利なナイフで切り刻んでいる。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 衣装は見る見る間に煽情的なボロキレへと変化した・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+ENDIF
+
+
+;==================================================
+;【휘감는다】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_501_KARAMITUKU
+PRINT 無数の男たち
+IF TFLAG:12 == 3
+	PRINTFORM が 설득하려고 다가간 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%拘束しようととびかかってきた！
+ELSEIF RAND:2 == 0
+	PRINTFORM が%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 넘어뜨리고자 발을 걸었다！
+ELSE
+	PRINTFORM が注意を引いている間に%PRINT_TRANSCALLNAME(TARGET)%의 背後に回り込んだ男が飛びかかってきた！
+ENDIF
+PRINT （
+IF TFLAG:11 & 1
+	PRINT 근
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 2
+	PRINT 중
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 4
+	PRINT 원
+ELSE
+	PRINT 　
+ENDIF
+PRINTL ）
+
+
+;==================================================
+;【휘감는다 성공】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_501_KARAMITUKU_SUCCESS
+PRINTFORM 다 피하지 못한 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORML 의 팔에 붙잡혀,
+PRINTFORML 군중 속으로 휘말리고 말았다！
+

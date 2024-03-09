@@ -269,8 +269,8 @@ DO
 		PRINTPLAIN [ 2]　
 	ENDIF
 	IF CHARATALENT_F(ARG,0,"남자")
-		IF TALENT:ARG:보추
-			PRINT [보추]
+		IF TALENT:ARG:오토코노코
+			PRINT [오토코노코]
 		ELSE
 			PRINT [ 남 ]
 		ENDIF
@@ -291,8 +291,8 @@ DO
 			PRINTPLAIN [12]　
 		ENDIF
 		IF CHARATALENT_F(ARG,1,"남자")
-			IF TALENT:ARG:변신시보추
-				PRINT [보추]
+			IF TALENT:ARG:변신시오토코노코
+				PRINT [오토코노코]
 			ELSE
 				PRINT [ 남 ]
 			ENDIF
@@ -1542,12 +1542,12 @@ DO
 			JUEL:ARG:수련P += 50
 		ENDIF
 		IF RESULT / 10 > 0
-			IF ((ISMALE(ARG) && TALENT:ARG:변신시ＴＳ == 0) || (ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 1)) && TALENT:ARG:변신시보추 == 0
-				TALENT:ARG:변신시보추 = 1
+			IF ((ISMALE(ARG) && TALENT:ARG:변신시ＴＳ == 0) || (ISFEMALE(ARG) && TALENT:ARG:변신시ＴＳ == 1)) && TALENT:ARG:변신시오토코노코 == 0
+				TALENT:ARG:변신시오토코노코 = 1
 			ELSE
 				IF CHARATALENT_F(ARG,1,"남자")
 					TALENT:ARG:변신시외관 = TALENT:ARG:외관
-					TALENT:ARG:변신시보추 = 1
+					TALENT:ARG:변신시오토코노코 = 1
 				ENDIF
 				IF TALENT:ARG:변신시ＴＳ > 0
 					TALENT:ARG:변신시ＴＳ = 0
@@ -1556,9 +1556,9 @@ DO
 				ENDIF
 			ENDIF
 		ELSE
-			IF ISMALE(ARG) && TALENT:ARG:보추 == 0
-				TALENT:ARG:보추 = 1
-				TALENT:ARG:변신시보추 = 1
+			IF ISMALE(ARG) && TALENT:ARG:오토코노코 == 0
+				TALENT:ARG:오토코노코 = 1
+				TALENT:ARG:변신시오토코노코 = 1
 			ELSEIF ISMALE(ARG)
 				SIF CHARATALENT_F(ARG,1,"절벽")
 					TALENT:ARG:빈유 = 2
@@ -1577,8 +1577,8 @@ DO
 				SIF CHARATALENT_F(ARG,1,"남자") == 0
 					TALENT:ARG:외관 = TALENT:ARG:변신시외관
 				TALENT:ARG:남자 = 0
-				TALENT:ARG:보추 = 0
-				TALENT:ARG:변신시보추 = 0
+				TALENT:ARG:오토코노코 = 0
+				TALENT:ARG:변신시오토코노코 = 0
 			ELSE
 				TALENT:ARG:남자 = 1
 				IF CHARATALENT_F(ARG,1,"남자") == 0
@@ -1599,7 +1599,7 @@ DO
 			TALENT:ARG:변신시외관 = 0
 			TALENT:ARG:변신시후타나리 = 0
 		ELSE
-			TALENT:ARG:변신시보추 = 0
+			TALENT:ARG:변신시오토코노코 = 0
 		ENDIF
 		SETBIT DISPLAY_FLAG, 0
 		SETBIT DISPLAY_FLAG, 1
@@ -1649,7 +1649,7 @@ DO
 		ENDIF
 		SETBIT DISPLAY_FLAG, RESULT / 10
 ;외관 소질 변경
-	ELSEIF RESULT == 4 && (CHARATALENT_F(ARG,(RESULT/10),"남자") == 0 || CHARATALENT_F(ARG,(RESULT/10),"보추")) && NO:ARG == 0
+	ELSEIF RESULT == 4 && (CHARATALENT_F(ARG,(RESULT/10),"남자") == 0 || CHARATALENT_F(ARG,(RESULT/10),"오토코노코")) && NO:ARG == 0
 		IF TALENT:ARG:외관 == 1
 			TALENT:ARG:외관 = 2
 		ELSEIF TALENT:ARG:외관 == 2
@@ -1668,7 +1668,7 @@ DO
 		SIF CHARATALENT_F(ARG,1,"남자") == 0
 			TALENT:ARG:변신시외관 = TALENT:ARG:외관
 		SETBIT DISPLAY_FLAG, 0
-	ELSEIF RESULT == 14 && (CHARATALENT_F(ARG,(RESULT/10),"남자") == 0 || CHARATALENT_F(ARG,(RESULT/10),"보추")) && NO:ARG == 0
+	ELSEIF RESULT == 14 && (CHARATALENT_F(ARG,(RESULT/10),"남자") == 0 || CHARATALENT_F(ARG,(RESULT/10),"오토코노코")) && NO:ARG == 0
 		IF TALENT:ARG:변신시외관 == 1
 			TALENT:ARG:변신시외관 = 2
 		ELSEIF TALENT:ARG:변신시외관 == 2

@@ -1,0 +1,77 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;지문에 따라서는「누런」또는「처녀혈이 섞인」등을 외부에서 넣기 때문에
+;여기서 쓰는 색은「하양」을 기본으로 합시다
+;「거품이 이는」등등 성교의 내용에 따라 달라질 것 같은 표현은, 가능한 한 피해 주세요
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Semen(精液)의 음어(淫語)
+;**********************************************************
+@SLANG_Semen(ARG)
+#DIMS SLANGWORD_Semen
+#FUNCTIONS
+
+;초기화
+SLANGWORD_Semen =
+
+
+;부위 호칭
+IF TALENT:청순파
+	SELECTCASE RAND:3
+		CASE 2
+			SLANGWORD_Semen += "백탁액"
+		CASE 1
+			SLANGWORD_Semen += "보얗고 흐린 액체"
+		CASEELSE
+			SLANGWORD_Semen += "아기씨"
+	ENDSELECT
+ELSEIF TALENT:음란 > 0
+	SELECTCASE RAND:4
+		CASE 3
+			SLANGWORD_Semen += "백탁액"
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 2
+					SLANGWORD_Semen += "잉태"
+				;원문은 ザー
+				CASE 1
+					SLANGWORD_Semen += "자지"
+				CASEELSE
+					SLANGWORD_Semen += "정자"
+			ENDSELECT
+			SLANGWORD_Semen += "즙"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 2
+			SLANGWORD_Semen += "스페르마"
+		CASE 1
+			SLANGWORD_Semen += "자멘"
+		CASEELSE
+			SLANGWORD_Semen += "정액"
+	ENDSELECT
+ENDIF
+
+
+;합성하여 완성된 음어를 반환한다
+RETURNF SLANGWORD_Semen
+
+
+
+
+
+;*************【음어 메모（미등록）】***********************
+;칼피스 원액과 비슷한(カルピスの原液に似た)
+;
+;*************【음어 메모（미등록）】***********************
+
+
+

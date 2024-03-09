@@ -1,0 +1,99 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은, 자유롭게 해주세요.
+;
+;프로그램의 가독성을 높이기 위한 시도입니다.
+;IF구문과 시간차가 신경 쓰이지만, 가독성을 위하여 SELECTCASE구문으로 했습니다.
+;무거운 처리를 하나 끼우기 때문에, 잘 활용해주세요.
+;
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;속어의 자동 전환 및 호출
+@SPOKENSLANG(ARGS:0)
+#DIMS SPOKENSLANG_WORD
+#FUNCTIONS
+
+;초기화
+SPOKENSLANG_WORD =
+
+SELECTCASE ARGS:0
+	CASE "애널" , "항문"
+		SPOKENSLANG_WORD = %S_SLANG_A(TARGET)%
+
+	;おっぱい와 胸을 두고 찌찌를 쓸지 고민했는데 그냥 젖가슴 가슴으로 하기로 했다
+	CASE "젖가슴" , "가슴" , "바스트"
+		SPOKENSLANG_WORD = %S_SLANG_B(TARGET)%
+
+	CASE "클리토리스" , "음핵"
+		SPOKENSLANG_WORD = %S_SLANG_C(TARGET)%
+
+	CASE "힙" , "엉덩이"
+		SPOKENSLANG_WORD = %S_SLANG_H(TARGET)%
+
+
+	;**********************************************************
+	CASE "애액" , "러브 주스" , "질 분비액"
+		SPOKENSLANG_WORD = %S_SLANG_Juice(TARGET,"애액")%
+	CASE "장액" , "직장액" , "항문액"
+		SPOKENSLANG_WORD = %S_SLANG_Juice(TARGET,"장액")%
+	;**********************************************************
+
+
+	;**********************************************************
+	CASE "라비아" , "음순"
+		SPOKENSLANG_WORD = %S_SLANG_Labia(TARGET)%
+
+	CASE "균열" , "대음순"
+		SPOKENSLANG_WORD = %S_SLANG_LabiaMajora(TARGET)%
+
+	;ビラビラ가 여성의 음순을 뜻하는 속어라고 하는데, 우리말에서 마땅한 게 안 떠올랐다
+	CASE "비라비라" , "소음순"
+		SPOKENSLANG_WORD = %S_SLANG_LabiaMinora(TARGET)%
+
+	;**********************************************************
+
+
+	CASE "마우스" , "입"
+		SPOKENSLANG_WORD = %S_SLANG_M(TARGET)%
+
+	;원래 젖꼭지만 있었는데 유두를 따로 추가해 봤다
+	CASE "니플" , "젖꼭지" , "유두"
+		SPOKENSLANG_WORD = %S_SLANG_N(TARGET)%
+
+	;음경이라는 말도 따로 추가해 봤다
+	CASE "페니스" , "남근" , "자지" , "음경"
+		SPOKENSLANG_WORD = %S_SLANG_P(TARGET)%
+
+	;일본어로는 ザーメン이라 하기도 해서 자멘 시멘 둘 다 추가했다
+	CASE "자멘" , "정액"
+		SPOKENSLANG_WORD = %S_SLANG_Semen(TARGET)%
+
+	CASE "불알" , "고환" , "테스티클"
+		SPOKENSLANG_WORD = %S_SLANG_Testicle(TARGET)%
+
+	CASE "요도" , "방광"
+		SPOKENSLANG_WORD = %S_SLANG_U(TARGET)%
+
+	CASE "바기나" , "질"
+		SPOKENSLANG_WORD = %S_SLANG_V(TARGET)%
+
+	;아기방은 그냥 추가해 보고 싶었다
+	CASE "자궁" , "아기방"
+		SPOKENSLANG_WORD = %S_SLANG_W(TARGET)%
+
+	;**********************************************************
+	;해당 없음으로, 그대로 부위 이름만 반환한다
+	CASEELSE
+		SPOKENSLANG_WORD = %ARGS:0%
+	;**********************************************************
+
+
+ENDSELECT
+
+
+RETURNF SPOKENSLANG_WORD
+
+
+
+

@@ -1,0 +1,107 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;쓰는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현합니다
+;【상황】즙에 젖어 있는, 기생되어 있는, 촉수 구속구 등을 장착한 등등
+;【형태】크기, 깊이 등
+;【동작】벌려진, 꿈틀거리는 등등의 움직임을 표현
+;【부위 호칭】음란, 발정, 성격으로 저속한 쓰기(書き方)로
+;
+;자멘(ザーメン)은 따로 표현되어 있기 때문에, 여기서 잘 다룬다
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Testicle(睾丸)의 음어(淫語)
+@SLANG_Testicle(ARG)
+#DIMS SLANGWORD_Testicle
+#FUNCTIONS
+
+;초기화
+SLANGWORD_Testicle=
+
+;제1형용사：상황（즙에 젖어있는 등등）
+IF TALENT:음란 > 0
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_Testicle += "쿠퍼액이 흘러넘치는"
+		;원문은 カウパーが溢れる 인데, 위에서 先走り液 쿠퍼액을 이미 써서 쿠퍼선액으로 변경
+		CASEELSE
+			SLANGWORD_Testicle += "쿠퍼선액이 흘러넘치는"
+	ENDSELECT
+
+	;제1형용사 뒤에 띄어쓰기 추가
+	SLANGWORD_Testicle += " "
+ENDIF
+
+
+
+;제2형용사：형태 표현
+
+
+
+;제3형용사：동작 표현
+IF TALENT:음란 > 0
+	SELECTCASE RAND:2
+		;원문은 ドクドクと脈打つ인데, 콸콸 맥이 뛴다는 게 뭔말인지 모르겠다
+		CASE 1
+			SLANGWORD_Testicle += "움찔움찔 맥이 뛰는"
+		;キュンキュンしている 이건 두근두근보단 큥큥이 낫지 않을까
+		CASEELSE
+			SLANGWORD_Testicle += "큥큥하고 있는"
+	ENDSELECT
+
+	;제3형용사 뒤에 띄어쓰기 추가
+	SLANGWORD_Testicle += " "
+ENDIF
+
+;부위 호칭
+IF TALENT:음란 > 0
+	SELECTCASE RAND:3
+		CASE 2
+			SLANGWORD_Testicle += "정액 제조기"
+		CASE 1
+			SLANGWORD_Testicle += "정액 뱅크"
+		CASEELSE
+			SLANGWORD_Testicle += "자멘 탱크"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		;왜 없나 싶어서 따로 추가해 봤다
+		CASE 3
+			SLANGWORD_Testicle += "고환"
+		;원문은 玉袋
+		CASE 2
+			SLANGWORD_Testicle += "음낭"
+		CASE 1
+			SLANGWORD_Testicle += "고환"
+		CASEELSE
+			SLANGWORD_Testicle += "불알"
+	ENDSELECT
+ENDIF
+
+
+;합성하여 완성된 음어를 반환한다
+RETURNF SLANGWORD_Testicle
+
+
+
+
+
+;*************【음어 메모（미등록）】***********************
+;
+;
+;
+;
+;
+;*************【음어 메모（미등록）】***********************
+
+
+
+
+

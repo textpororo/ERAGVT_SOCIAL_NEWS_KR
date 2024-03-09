@@ -1,0 +1,91 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+
+;쓰는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현합니다
+;【상황】즙에 젖어 있는, 기생되어 있는, 촉수 구속구 등을 장착한 등등
+;【형태】크기, 깊이 등
+;【동작】벌려진, 꿈틀거리는 등등의 움직임을 표현
+;【부위 호칭】음란, 발정, 성격으로 저속한 쓰기(書き方)로
+;
+;방광에서 요도와 구멍까지 표현, 페니스등의 표현은 @SLANG_P 로
+;남자, 후타나리, 여자로 분기하도록
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Urethra(尿道)의 음어(淫語)
+;**********************************************************
+@SLANG_U(ARG)
+#FUNCTIONS
+#DIMS SLANGWORD_U
+
+;초기화
+SLANGWORD_U =
+
+;제1형용사：상황（즙에 젖어있는 등등）
+IF ISMALE()
+	;원문은 精子焼けしている
+	SIF TALENT:음핵
+		SLANGWORD_U += "정자로 달궈져 있는 "
+
+	SELECTCASE RAND:4
+		CASE 3
+			SLANGWORD_U += "요로"
+		CASE 2
+			SLANGWORD_U += "소변길"
+		CASE 1
+			SLANGWORD_U += "오줌길"
+		CASEELSE
+			SLANGWORD_U += "요도"
+	ENDSELECT
+ELSEIF TALENT:후타나리 > 0
+	;원문은 精液の染み付いた
+	SIF TALENT:음핵
+		SLANGWORD_U += "정액에 찌든 "
+
+	SELECTCASE RAND:5
+		CASE 4
+			SLANGWORD_U += "방광"
+		CASE 3
+			SLANGWORD_U += "요로"
+		CASE 2
+			SLANGWORD_U += "소변길"
+		CASE 1
+			SLANGWORD_U += "오줌길"
+		CASEELSE
+			SLANGWORD_U += "요도"
+	ENDSELECT
+ELSE
+	;원문은 精液の染み付いた
+	SIF TALENT:음핵
+		SLANGWORD_U += "정액에 찌든 "
+
+	SELECTCASE RAND:4
+		CASE 3
+			SLANGWORD_U += "요로"
+		CASE 2
+			SLANGWORD_U += "소변길"
+		CASE 1
+			SLANGWORD_U += "오줌길"
+		CASEELSE
+			SLANGWORD_U += "요도"
+	ENDSELECT
+ENDIF
+RETURNF SLANGWORD_U
+
+;*************【음어 메모（미등록）】***********************
+;
+;비뇨(泌尿)
+;소변(小便)
+;피스(ピス)
+;
+;
+;*************【음어 메모（미등록）】***********************
+
+
+

@@ -1,0 +1,79 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;구술에서의「정액」이므로, 한숨이나 가득 차는(詰まった) 표현 등은 있습니다
+;체력이나 발정 등, 스테이터스로 말을 더듬거나 하도록 합시다
+;이 변수를 호출할 때에는, 말을 더듬는 것도 포함해서 사용해 주세요
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Spoken_Semen(精液)의 구술 음어
+;**********************************************************
+@S_SLANG_Semen(ARG)
+#DIMS S_SLANGWORD_Semen
+#FUNCTIONS
+
+;초기화
+S_SLANGWORD_Semen =
+
+
+;부위 호칭
+IF TALENT:청순파
+	SELECTCASE RAND:3
+		CASE 2
+			S_SLANGWORD_Semen += "흰 오줌"
+		CASE 1
+			S_SLANGWORD_Semen += "야한 즙"
+		CASEELSE
+			S_SLANGWORD_Semen += "아기씨"
+	ENDSELECT
+ELSEIF TALENT:음란 > 0
+	SELECTCASE RAND:5
+		CASE 4
+			S_SLANGWORD_Semen += "자지 밀크"
+		CASE 3
+			S_SLANGWORD_Semen += "수컷 밀크"
+		CASEELSE
+			SELECTCASE RAND:3
+				CASE 2
+					S_SLANGWORD_Semen += "잉태"
+				;원문은 ザー
+				CASE 1
+					S_SLANGWORD_Semen += "자지"
+				CASEELSE
+					S_SLANGWORD_Semen += "정자"
+			ENDSELECT
+			S_SLANGWORD_Semen += "즙"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 2
+			S_SLANGWORD_Semen += "스페르마"
+		CASE 1
+			S_SLANGWORD_Semen += "자멘"
+		CASEELSE
+			S_SLANGWORD_Semen += "정액"
+	ENDSELECT
+ENDIF
+
+
+;합성하여 완성된 음어를 반환한다
+RETURNF S_SLANGWORD_Semen
+
+
+
+
+
+;*************【음어 메모（미등록）】***********************
+;수컷즙(牡汁)
+;
+;*************【음어 메모（미등록）】***********************
+
+
+

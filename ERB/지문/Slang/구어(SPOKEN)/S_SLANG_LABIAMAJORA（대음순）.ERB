@@ -1,0 +1,134 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;구술에서의「대음순」이므로, 한숨이나 가득 차는(詰まった) 표현 등은 있습니다
+;체력이나 발정 등, 스테이터스로 말을 더듬거나 하도록 합시다
+;이 변수를 호출할 때에는, 말을 더듬는 것도 포함해서 사용해 주세요
+;안쪽의 비라비라(ビラビラ)에 대해서는 쓰지 말아 주세요
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;LabiaMajora(大陰唇)의 음어(淫語)
+@S_SLANG_LabiaMajora(ARG)
+#DIMS S_SLANGWORD_LabiaMajora
+#FUNCTIONS
+
+;초기화
+S_SLANGWORD_LabiaMajora =
+
+;제1형용사：상황（즙에 젖어있다 등등）
+;STAIN:3: 질, 균열
+IF (STAIN:3 & 4)
+	S_SLANGWORD_LabiaMajora = %S_SLANGWORD_LabiaMajora% %S_SLANG_SEMEN(TARGET)%
+	SELECTCASE RAND:2
+		CASE 1
+			S_SLANGWORD_LabiaMajora += 조사만처리(S_SLANG_SEMEN(TARGET),"로") + " 더럽혀져 있는"
+		CASEELSE
+			S_SLANGWORD_LabiaMajora += "에 젖어 뚝뚝 떨어지고 있는"
+	ENDSELECT
+	
+	;제1형용사 뒤에 띄어쓰기 추가
+	S_SLANGWORD_LabiaMajora += " "
+ENDIF
+
+
+;제2형용사：형태 표현
+;순산형
+;원문은 プリプリしている
+IF TALENT:812 == 1
+	S_SLANGWORD_LabiaMajora += "쭉쭉빵빵한"
+;포동포동
+;원문은 ムチムチしている
+ELSEIF TALENT:812 == 2
+	S_SLANGWORD_LabiaMajora += "포동포동한"
+;유아배
+;원문은 プニっとしている
+ELSEIF TALENT:812 == 3
+	S_SLANGWORD_LabiaMajora += "뽀잉뽀잉한"
+;날씬함
+;원문은 スラッとしている
+ELSEIF TALENT:812 == 4
+	S_SLANGWORD_LabiaMajora += "늘씬한"
+;빵뎅이
+;원문은 ムチッとしている
+ELSEIF TALENT:812 == 5
+	S_SLANGWORD_LabiaMajora += "탱탱한"
+;왕뎅이
+;원문은 ムニッとしている
+ELSEIF TALENT:812 == 6
+	S_SLANGWORD_LabiaMajora += "몰캉몰캉한"
+ENDIF
+
+;제2형용사 뒤에 띄어쓰기 추가
+SIF TALENT:812 > 0
+	S_SLANGWORD_LabiaMajora += " "
+
+;제3형용사：동작 표현
+IF TALENT:음란 > 0
+	SELECTCASE RAND:2
+		;원문은 期待で開く
+		CASE 1
+			S_SLANGWORD_LabiaMajora += "기대하는 듯 벌려진"
+		;원문은 興奮で開く
+		CASEELSE
+			S_SLANGWORD_LabiaMajora += "흥분으로 벌려진"
+	ENDSELECT
+	
+	;제3형용사 뒤에 띄어쓰기 추가
+	S_SLANGWORD_LabiaMajora += " "
+ENDIF
+
+
+
+;부위 호칭
+IF TALENT:음란 > 0
+	SELECTCASE RAND:3
+		CASE 2
+			S_SLANGWORD_LabiaMajora += "음란한 틈새"
+		CASE 1
+			S_SLANGWORD_LabiaMajora += "음란한 골짜기"
+		;원문은 淫裂
+		CASEELSE
+			S_SLANGWORD_LabiaMajora += "음란한 균열"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 3
+			S_SLANGWORD_LabiaMajora += "대음순"
+		;원문은 陰裂
+		CASE 2
+			S_SLANGWORD_LabiaMajora += "음렬"
+		CASE 1
+			S_SLANGWORD_LabiaMajora += "균열"
+		;원문은 縦筋
+		CASEELSE
+			S_SLANGWORD_LabiaMajora += "일자 균열"
+	ENDSELECT
+ENDIF
+
+
+;합성하여 완성된 음어를 반환한다
+RETURNF S_SLANGWORD_LabiaMajora
+
+
+
+
+
+;*************【음어 메모（미등록）】***********************
+;미육의 조개(媚肉の二枚貝)
+;
+;
+;
+;
+;*************【음어 메모（미등록）】***********************
+
+
+
+
+

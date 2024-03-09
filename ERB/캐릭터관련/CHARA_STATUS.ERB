@@ -655,7 +655,7 @@ CASE 5
 		CALL TOP_UNDER, ARG, 1
 		CALL CUP_SIZE, RESULT + PREGNANCY_BOOB_EXPAND(ARG)
 		PRINTL ]
-		IF (CFLAG:ARG:1 > 0 && ISMALE(ARG) && TALENT:ARG:보추 == 0) || (CFLAG:ARG:1 == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"보추") == 0)
+		IF (CFLAG:ARG:1 > 0 && ISMALE(ARG) && TALENT:ARG:오토코노코 == 0) || (CFLAG:ARG:1 == 0 && CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"오토코노코") == 0)
 			PRINTFORML 　　　　　　　　　　　　　　　　　　　 Ｂ ：　（―）
 		ELSE
 			B_SIZE = MAXBASE:ARG:가슴둘레 + PREGNANCY_BOOB_EXPAND(ARG)
@@ -668,7 +668,7 @@ CASE 5
 
 		LOCALS = 『%CSTR:ARG:18%』
 		PRINTFORM 　　　　눈매：%LOCALS, 20, LEFT%
-		IF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"보추") == 0
+		IF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"오토코노코") == 0
 			PRINTFORML 　　 Ｗ ：　（―）
 		ELSE
 			W_SIZE = MAXBASE:ARG:허리둘레 + PREGNANCY_BELLY_EXPAND(ARG)
@@ -683,7 +683,7 @@ CASE 5
 		RESETCOLOR
 		PRINT ]
 
-		IF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"보추") == 0
+		IF CHARATALENT_F(ARG,1,"남자") > 0 && CHARATALENT_F(ARG,1,"오토코노코") == 0
 			PRINTFORML 　　　　　　　　　 Ｈ ：　（―）
 		ELSE
 			H_SIZE = MAXBASE:ARG:골반둘레
@@ -720,8 +720,8 @@ CASE 5
 			PRINT [남성화]
 		SIF CHARATALENT_F(ARG,1,"남자") == 0 && CHARATALENT_F(ARG,0,"남자") > 0
 			PRINT [여체화]
-		SIF CHARATALENT_F(ARG,1,"보추") > 0
-			PRINT [보추]
+		SIF CHARATALENT_F(ARG,1,"오토코노코") > 0
+			PRINT [오토코노코]
 		SIF CHARATALENT_F(ARG,1,"후타나리") > 0
 			PRINT [후타나리]
 		IF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
@@ -767,7 +767,7 @@ CASE 5
 		CALL TOP_UNDER, ARG, 0
 		CALL CUP_SIZE, RESULT + PREGNANCY_BOOB_EXPAND(ARG)
 		PRINTL ]
-		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"보추") == 0
+		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"오토코노코") == 0
 			PRINTFORML 　　　　　　　　　　　　　　　　　　　 Ｂ ：　（―）
 		ELSE
 			B_SIZE = BASE:ARG:가슴둘레 + PREGNANCY_BOOB_EXPAND(ARG)
@@ -780,7 +780,7 @@ CASE 5
 
 		LOCALS = 『%CSTR:ARG:18%』
 		PRINTFORM 　　　　눈매：%LOCALS, 20, LEFT%
-		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"보추") == 0
+		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"오토코노코") == 0
 			PRINTFORML 　　 Ｗ ：　（―）
 		ELSE
 			W_SIZE = BASE:ARG:허리둘레 + PREGNANCY_BELLY_EXPAND(ARG)
@@ -795,7 +795,7 @@ CASE 5
 		RESETCOLOR
 		PRINT ]
 
-		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"보추") == 0
+		IF CHARATALENT_F(ARG,0,"남자") > 0 && CHARATALENT_F(ARG,0,"오토코노코") == 0
 			PRINTFORML 　　　　　　　　　 Ｈ ：　（―）
 		ELSE
 			H_SIZE = BASE:ARG:골반둘레
@@ -828,8 +828,8 @@ CASE 5
 			PRINT [기유]
 		SIF CHARATALENT_F(ARG,0,"남자") > 0
 			PRINT [남자]
-		SIF CHARATALENT_F(ARG,0,"보추") > 0
-			PRINT [보추]
+		SIF CHARATALENT_F(ARG,0,"오토코노코") > 0
+			PRINT [오토코노코]
 		SIF CHARATALENT_F(ARG,0,"후타나리") > 0
 			PRINT [후타나리]
 		IF TALENT:ARG:임신 == 5 && CFLAG:ARG:222 < 11
@@ -2233,8 +2233,8 @@ ELSE
 		LOCALS = %LOCALS%<nonbutton title='여성임을 나타내는 소질'>[여자]</nonbutton>
 	ENDIF
 
-	SIF TALENT:ARG:보추 == 1
-		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(405)%'>[보추]</nonbutton>
+	SIF TALENT:ARG:오토코노코 == 1
+		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(405)%'>[오토코노코]</nonbutton>
 
 	IF TALENT:ARG:처녀 == 2 && ISFEMALE(ARG)
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(0)%'>[성처녀]</nonbutton>
@@ -2250,8 +2250,8 @@ ELSE
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(404)%'>[변신시후타나리]</nonbutton>
 	SIF TALENT:ARG:여체수용 > 0
 		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(403)%'>[여체수용]</nonbutton>
-	SIF TALENT:ARG:변신시보추 == 1
-		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(406)%'>[변신시보추]</nonbutton>
+	SIF TALENT:ARG:변신시오토코노코 == 1
+		LOCALS = %LOCALS%<nonbutton title='%TALENT_INFO(406)%'>[변신시오토코노코]</nonbutton>
 	;종족
 	FOR COUNT, 201, 250
 		SIF TALENT:ARG:COUNT > 0
@@ -2979,12 +2979,12 @@ SELECTCASE ARG
 		RETURNF "변신 시에 후타나리가 되는 특성."
 
 	CASE 405
-	;보추
+	;오토코노코
 		RETURNF "남자면서 여자아이로밖에 보이지 않는 아이."
 
 	CASE 406
-	;변신시보추
-		RETURNF "변신 시에 보추가 되는 특성."
+	;변신시오토코노코
+		RETURNF "변신 시에 오토코노코가 되는 특성."
 
 	CASE 507
 	;사지결손

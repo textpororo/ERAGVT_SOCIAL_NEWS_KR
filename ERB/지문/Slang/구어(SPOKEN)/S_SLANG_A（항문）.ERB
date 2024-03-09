@@ -1,0 +1,104 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+
+;구술에서의「항문」이므로, 한숨이나 가득 차는(詰まった) 표현 등은 있습니다
+;체력이나 발정 등, 스테이터스로 말을 더듬거나 하도록 합시다
+;이 변수를 호출할 때에는, 말을 더듬는 것도 포함해서 사용해 주세요
+;
+;내부의 직장이나 결장 등의 표현은 삼가합시다
+;장액이나 분비액 등은, %S_SLANG_Juice(TARGET,"장액")% 에서 준비되어 있습니다
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Anal(애널)의 음어(淫語)
+;**********************************************************
+@S_SLANG_A(ARG)
+#DIMS S_SLANGWORD_A
+#FUNCTIONS
+
+;초기화
+S_SLANGWORD_A=
+
+
+;PALAM:쾌Ａ> 2000
+
+;부위 호칭
+
+IF (TALENT:음고>0) || (TALENT:음란>0) || (PALAM:쾌Ａ>2000)
+	SELECTCASE RAND:4
+		CASE 3
+			S_SLANGWORD_A += "엉덩이 오나홀"
+		CASE 2
+			S_SLANGWORD_A += "애널"
+		CASEELSE
+			;엉덩이 보지
+			SELECTCASE RAND:2
+				CASE 1
+					S_SLANGWORD_A += "엉덩이"
+				CASEELSE
+					;원문은 ケツ인데 엉덩이가 겹치므로 바꿨다. 호불호 갈릴지도?
+					S_SLANGWORD_A += "똥꼬"
+			ENDSELECT
+			S_SLANGWORD_A += " 보지"
+	ENDSELECT
+ELSEIF (TALENT:청순파>0) && (PALAM:쾌Ａ<2000)
+	SELECTCASE RAND:4
+		CASE 3
+			S_SLANGWORD_A += "불결한 "
+		CASE 2
+			;원문은 うんち
+			S_SLANGWORD_A += "응가 "
+		CASE 1
+			S_SLANGWORD_A += "뒷"
+		CASEELSE
+			S_SLANGWORD_A += "엉덩이 "
+	ENDSELECT
+	S_SLANGWORD_A += "구멍"
+
+ELSE
+	SELECTCASE RAND:5
+		CASE 4
+			S_SLANGWORD_A += "배설 기관"
+		CASE 3
+			S_SLANGWORD_A += "애널"
+		CASE 2
+			S_SLANGWORD_A += "엉덩이"
+		CASE 1
+			S_SLANGWORD_A += "국"
+			SELECTCASE RAND:3
+				CASE 2
+					S_SLANGWORD_A += "화"
+				CASE 1
+					S_SLANGWORD_A += "문"
+				CASEELSE
+					S_SLANGWORD_A += "혈"
+			ENDSELECT
+		CASEELSE
+	ENDSELECT
+ENDIF
+
+RETURNF S_SLANGWORD_A
+
+
+;*************【음어 메모（미등록）】***********************
+;애널 로즈
+;항열(肛悦)
+;
+;
+;
+;*************【음어 메모（미등록）】***********************
+;
+;*************【음어 메모（따로 준비할 예정）】***********************
+;S자 결장
+;장 점막
+;장벽
+;장도(腸道)
+;*************【음어 메모（따로 준비할 예정）】***********************
+
+

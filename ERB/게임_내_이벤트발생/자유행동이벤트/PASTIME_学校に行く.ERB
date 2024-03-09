@@ -104,7 +104,7 @@ ELSEIF TALENT:성별변화 % 10 == 1 && ISFEMALE()
 		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだが
 		PRINTFORML 不慣れな為か変な目で見られていないかと気になってしまう。
 	ENDIF
-ELSEIF TALENT:보추 > 0 && 改造制服 == 1
+ELSEIF TALENT:오토코노코 > 0 && 改造制服 == 1
 	PRINTFORML 촉수共は남자より女性を狙いやすい、囮となって捜索するには…
 	PRINTFORML そんな理由があって、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%やむにやまれず女子の服を着ていた。
 	CALL KAIZOU_SEIFUKU
@@ -641,7 +641,7 @@ IF RAND:10 == 0 && ISFEMALE()
 	PRINTFORML {LOCAL}人の男子に見られた・・・
 
 ;盗撮されるより確率高いですよね、そうですよね
-ELSEIF RAND:3 == 0 && TALENT:보추 > 0
+ELSEIF RAND:3 == 0 && TALENT:오토코노코 > 0
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%更衣室で着替えているのを周囲の男子からチラチラと見られている。
 	IF ABL:노출벽 > 2
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そのことに気付いたが、見られることに興奮してしまう性で
@@ -893,8 +893,8 @@ IF RAND:5 == 0 && ISFEMALE()
 			PRINTFORML 女子生徒のほとんどは진지함に聞いているが、男子生徒は茶化す者が多いようだ。
 		ENDIF
 	ENDIF
-;보추ver
-ELSEIF RAND:5 == 0 && TALENT:보추 > 0
+;오토코노코ver
+ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 	;護身術
  	IF RAND:2 == 0
 		PRINTFORML 柔道をする様だ。
@@ -1231,8 +1231,8 @@ ELSE
 			PRINTFORML 胸を
 		LOCAL = RAND:5 + 1
 		PRINTFORML {LOCAL}人の男子に見られた・・・
-		;보추Ver
-		ELSEIF RAND:2 == 0 && TALENT:보추 > 0
+		;오토코노코Ver
+		ELSEIF RAND:2 == 0 && TALENT:오토코노코 > 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%更衣室で着替えているのを周囲の男子からチラチラと見られている。
 			IF ABL:노출벽 > 2
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%そのことに気付いたが、見られることに興奮してしまう性で
@@ -1273,8 +1273,8 @@ PRINTW
 
 ;パンチライベント
 ;制服カスタムでロングスカート、ブルマ、ズボンならパンチラ除外
-;남자除外処理を追加、ただし보추で改造制服だと発生
-IF RAND:10 == 0 && ((((CFLAG:40 == 101 && FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 1 || FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 3) || (CFLAG:40 == 102 && FIGURE_SPLIT(EQUIP:TARGET:2, 5) != 3)) && ISFEMALE()) || (TALENT:보추 > 0 && (CFLAG:40 == 101 || CFLAG:40 == 102) && CFLAG:1 < 1))
+;남자除外処理を追加、ただし오토코노코で改造制服だと発生
+IF RAND:10 == 0 && ((((CFLAG:40 == 101 && FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 1 || FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 3) || (CFLAG:40 == 102 && FIGURE_SPLIT(EQUIP:TARGET:2, 5) != 3)) && ISFEMALE()) || (TALENT:오토코노코 > 0 && (CFLAG:40 == 101 || CFLAG:40 == 102) && CFLAG:1 < 1))
 	PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%
 	SELECTCASE RAND:3
 		CASE 0

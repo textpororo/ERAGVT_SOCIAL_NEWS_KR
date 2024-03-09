@@ -267,7 +267,7 @@ FOR SELECT,1,CHARANUM
 	;소질 기본값 보존
 	;통상 성별
 	IF CHARATALENT_F(SELECT, 0, "남자") > 0
-		IF CHARATALENT_F(SELECT, 0, "보추") > 0
+		IF CHARATALENT_F(SELECT, 0, "오토코노코") > 0
 			BASE:SELECT:성별기본값 = 3
 		ELSE
 			BASE:SELECT:성별기본값 = 1
@@ -321,7 +321,7 @@ FOR SELECT,1,CHARANUM
 	ENDIF
 	;변신 시 성별
 	IF CHARATALENT_F(SELECT, 1, "남자") > 0
-		IF CHARATALENT_F(SELECT, 1, "보추") > 0
+		IF CHARATALENT_F(SELECT, 1, "오토코노코") > 0
 			MAXBASE:SELECT:성별기본값 = 3
 		ELSE
 			MAXBASE:SELECT:성별기본값 = 1

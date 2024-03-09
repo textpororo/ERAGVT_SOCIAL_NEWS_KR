@@ -223,7 +223,7 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 	ELSE
 		IF SAVESTR:10 != ""
 			LOCALS = %SAVESTR:10%
-		ELSEIF ISMANLY() && TALENT:변신시ＴＳ == 0 && TALENT:변신시보추 <= 0
+		ELSEIF ISMANLY() && TALENT:변신시ＴＳ == 0 && TALENT:변신시오토코노코 <= 0
 			LOCALS = 魔装少年
 		ELSE
 			LOCALS = 魔法少女
@@ -317,7 +317,7 @@ IF CFLAG:41 == 401
 	PRINTL 
 	IF SAVESTR:10 != ""
 		LOCALS = %SAVESTR:10%
-	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:보추 <= 0 && TALENT:변신시보추 <= 0
+	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:오토코노코 <= 0 && TALENT:변신시오토코노코 <= 0
 		; #region 
 		LOCALS = 魔装少年
 		; #endregion
@@ -1096,7 +1096,7 @@ IF ISMALE() && (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:4
 		CALL KAIZOU_PANT
 	ENDIF
 	PRINTL が露わになった。
-	IF TALENT:보추 > 0
+	IF TALENT:오토코노코 > 0
 		PRINTFORML 男たちの興奮とも怒号ともつかない歓声が沸き起こる。
 		PRINTFORML オンナみたいな顔とカラダで騙しやがって、と理不尽な罵声を浴びせられながら、
 		PRINTFORML 硬い靴の裏でぐりぐりと%PRINT_TRANSCALLNAME(TARGET)%의 ペニスが踏みつけられる。
@@ -1198,7 +1198,7 @@ IF ISMALE() && (CFLAG:42 != 300 || CFLAG:42 != 308 || CFLAG:42 != 314 || CFLAG:4
 	; #endregion
 ENDIF
 PRINTW 
-IF TALENT:보추 > 0
+IF TALENT:오토코노코 > 0
 	; #region 
 	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
 		PRINTFORML 乱暴に애널を割り広げられる痛みに耐えながらも、

@@ -2319,7 +2319,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && ISTENTACLER(FLAG:111) == 0
 	ELSE
 		PRINTFORML は%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%\@ (TCVARn:12 & 기절) ? に絡みつき # を押さえつけ \@、
 		PRINTFORML \@ (TCVARn:12 & 기절) ? 無防備に晒された # 身動きを封じながら \@胸を愛撫した。
-		IF TALENT:보추 > 0
+		IF TALENT:오토코노코 > 0
 			PRINTFORM 柔らかくもぺたんこな%PRINT_TRANSCALLNAME(TARGET)%의 胸
 		ELSEIF ISMALE()
 			PRINTFORM 引き締まった%PRINT_TRANSCALLNAME(TARGET)%의 胸
@@ -2355,9 +2355,9 @@ ELSEIF RAND:2 == 0 && (ARG & Ｂ)
 		PRINT 控えめな
 	ELSEIF TALENT:거유 > 0
 		PRINT 豊満な
-	ELSEIF TALENT:보추 > 0
+	ELSEIF TALENT:오토코노코 > 0
 		PRINT ぺたんこな
-	ELSEIF TALENT:보추 > 0
+	ELSEIF TALENT:오토코노코 > 0
 		PRINT 平坦な
 	ELSE
 		PRINT 形のいい
@@ -2506,7 +2506,7 @@ ELSEIF (ARG & Ｂ)
 	ELSE
 		PRINT は犯されまいと下半身に気を取られている
 	ENDIF
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 \@TALENT:보추 > 0 ? ぺたんこな # \@胸を揉みしだいた。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 \@TALENT:오토코노코 > 0 ? ぺたんこな # \@胸を揉みしだいた。
 	IF (TCVARn:12 & 기절)
 		PRINT 気が付く様子のない
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)

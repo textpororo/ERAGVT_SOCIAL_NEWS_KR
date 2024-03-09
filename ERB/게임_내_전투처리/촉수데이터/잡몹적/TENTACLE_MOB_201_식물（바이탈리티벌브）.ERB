@@ -1,0 +1,856 @@
+﻿;==================================================
+;【기본】
+;--------------------------------------------------
+;잡몹적
+@TENTACLE_MOB_201
+;--------------------------------------------------
+;이름
+@TENTACLE_MOB_201_GETNAME
+RESULTS = バイタリティバルブ 
+
+;--------------------------------------------------
+;정의
+@TENTACLE_MOB_201_DEFENITION
+PRINTFORML （大きく透明の身体を持った球根型の촉수が現れた）
+PRINTFORML （ぷっくりと膨らんだ貯蔵器官には、裸の少女が捕らえられており）
+PRINTFORML （中から%PRINT_TRANSCALLNAME(TARGET)%に助けを求めている）
+
+
+
+;==================================================
+;【스테이터스】
+;--------------------------------------------------
+;HP
+@TENTACLE_MOB_201_HP
+LOCAL = 2000
+CALL TENTACLE_STATUS_HOSEI, LOCAL, 500
+RETURN RESULT
+
+;--------------------------------------------------
+;사정 한계치
+@TENTACLE_MOB_201_SYASEI
+CALL TENTACLE_LEVEL
+LOCAL = 480 + RESULT * 5
+RETURN LOCAL
+
+;--------------------------------------------------
+;착정 피해량 보정
+@TENTACLE_MOB_201_SAKUSEI
+LOCAL = 100
+RETURN LOCAL
+
+;--------------------------------------------------
+;방심도 역치
+@TENTACLE_MOB_201_YUDAN
+LOCAL = 500
+RETURN LOCAL
+
+;--------------------------------------------------
+;공격
+@TENTACLE_MOB_201_KOUGEKI
+LOCAL = 100
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;방어
+@TENTACLE_MOB_201_BOUGYO
+LOCAL = 50
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;민첩
+@TENTACLE_MOB_201_BINSYOU
+LOCAL = 25
+CALL TENTACLE_STATUS_HOSEI, LOCAL
+RETURN RESULT
+
+;--------------------------------------------------
+;지성
+@TENTACLE_MOB_201_CHISEI
+LOCAL = 50
+CALL TENTACLE_STATUS_HOSEI, LOCAL,10
+RETURN RESULT
+
+;--------------------------------------------------
+;근거리
+@TENTACLE_MOB_201_SHORT
+RESULT = 200
+RETURN RESULT
+
+;--------------------------------------------------
+;중거리
+@TENTACLE_MOB_201_MIDDLE
+RESULT = 200
+RETURN RESULT
+
+;--------------------------------------------------
+;원거리
+@TENTACLE_MOB_201_LONG
+RESULT = 200
+RETURN RESULT
+
+;--------------------------------------------------
+;구속력
+@TENTACLE_MOB_201_HOLD
+RESULT = 200
+RETURN RESULT
+
+;--------------------------------------------------
+;PALAM보정　백분율로 되돌린다
+@TENTACLE_MOB_201_PALAM_HOSEI
+;쾌Ｃ
+LOCAL:0 = 100
+;쾌Ｖ
+LOCAL:1 = 100
+;쾌Ａ
+LOCAL:2 = 100
+;쾌Ｂ
+LOCAL:3 = 100
+;윤활
+LOCAL:4 = 50
+;공순
+LOCAL:5 = 50
+;습득
+LOCAL:6 = 50
+;욕정
+LOCAL:7 = 40
+;굴복
+LOCAL:8 = 25
+;치정
+LOCAL:9 = 50
+;고통
+LOCAL:10 = 50
+;공포
+LOCAL:11 = 25
+
+RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
+
+
+
+;==================================================
+;【전용 루틴（전투）】
+;--------------------------------------------------
+@TENTACLE_MOB_201_ATTACK_ROUTINE, ARG:0, ARG:1
+
+LOCAL = RAND:100
+;공격 범위가 넓다
+SIF RAND:4 == 0
+	TFLAG:11 |= 1
+SIF RAND:4 == 0
+	TFLAG:11 |= 2
+SIF RAND:4 == 0
+	TFLAG:11 |= 4
+
+IF LOCAL < 45
+	RETURN 2
+ELSE
+	RETURN 0
+ENDIF
+
+
+
+;==================================================
+;【전용 루틴（성행위）】
+;--------------------------------------------------
+@TENTACLE_MOB_201_SEX_ROUTINE, ARG:0, ARG:1
+
+LOCAL = RAND:100
+
+;20% 이하의 공격（겉옷&속옷의 방어 무시, 양성평등）
+;Ｃ공격（약）
+IF LOCAL < 20
+	RETURN 0
+
+;40%-20%=20%의 확률
+;Ｖ공격（약）
+ELSEIF LOCAL < 40
+	IF ISMALE() ;남자は別行動に割り振り
+		SELECTCASE RAND:4
+		CASE 0
+			RETURN 0
+		CASE 1
+			RETURN 4
+		CASE 2
+			RETURN 6
+		CASE 3
+			RETURN 11
+		ENDSELECT
+	ELSE
+		RETURN 2
+	ENDIF
+
+;60%-40%=20%의 확률
+;Ａ공격（약）
+ELSEIF LOCAL < 60
+	RETURN 4
+
+;80%-60%=20%의 확률
+;Ｂ공격（약）
+ELSEIF LOCAL < 80
+	RETURN 6
+
+;100%-80%=20%의 확률（양성평등）
+;펠라
+ELSE
+	RETURN 11
+ENDIF
+
+;==================================================
+;【성 커맨드 레퍼런스】
+;--------------------------------------------------
+;ARG=1　스마타 애태우기 성공 시의 행동 지정
+;ARG=2　스마타 애태우기 실패 시의 행동 지정
+;ARG=3　펠라치오 유발 시의 행동 지정
+@TENTACLE_MOB_201_REACTION_REF, ARG = 0
+IF ARG == 1
+	RETURN -1
+ELSEIF ARG == 2
+	RETURN -1
+ELSEIF ARG == 3
+	RETURN 11
+ENDIF
+RETURN -1
+
+;==================================================
+;【커맨드 사용 시의 묘사】
+;--------------------------------------------------
+;==================================================
+;【Ｃ공격（약）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM0
+RETURN 통상
+
+@MESSAGE_MOB_201_COM0, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｃ공격（약）
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORM は
+		CALL COLOR_T_SHAPE("","섬모")
+		PRINTFORML で
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISPENIS()
+			PRINTFORM %SLANG_P(TARGET)%
+		ELSE
+			PRINTFORM %SLANG_C(TARGET)%
+		ENDIF
+		PRINTFORML に覆い被さり刺激を与えている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("투명","빨판")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISPENIS()
+			PRINTFORM %조사처리(SLANG_P(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_C(TARGET),"를")%
+		ENDIF
+		PRINTFORML  責め立てている。
+ENDSELECT
+
+		
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM0
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+@SEXCOM_OPTION_MOB_201_COM0
+;추가 공격 부위 지정
+RETURN 1
+
+
+;==================================================
+;【Ｃ공격（강）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM1
+RETURN 통상
+
+@MESSAGE_MOB_201_COM1, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｃ공격（강）
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISPENIS()
+			PRINTFORM %조사처리(SLANG_P(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_C(TARGET),"를")%
+		ENDIF
+		PRINTFORML  高速回転で磨いている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISPENIS()
+			PRINTFORM %조사처리(SLANG_P(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_C(TARGET),"를")%
+		ENDIF
+		PRINTFORML  縦横無尽に磨いている
+ENDSELECT
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM1
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ｖ공격（약）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM2
+RETURN 통상
+
+@MESSAGE_MOB_201_COM2, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｖ공격（약）
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(WRITTENSLANG("음순"),"를")% 磨いている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORM は
+		CALL COLOR_T_SHAPE("","섬모")
+		PRINTFORML で、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(WRITTENSLANG("소음순"),"를")% 擦っている。
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM2
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ｖ공격（강）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM3
+RETURN 삽입
+
+@MESSAGE_MOB_201_COM3, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｖ공격（강）
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","빨판")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %WRITTENSLANG("바기나")%에 吸い付きながら潜り込んでいる。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","돌기")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(SLANG_V(TARGET),"를")% リズミカルに挿入している。
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM3
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+	;입을 범해지는 모습을 보였다
+	SIF (ARG & Ｖ) == 0
+		SETBIT TFLAG:21,2
+	;삽입당하는 모습을 보였다
+	SIF (ARG & Ｖ) || (ARG & Ａ)
+		SETBIT TFLAG:21,3
+ENDIF
+
+
+
+;==================================================
+;【Ａ공격（약）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM4
+RETURN 통상
+
+@MESSAGE_MOB_201_COM4, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ａ공격（약）
+FONTREGULAR
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORM は
+		CALL COLOR_T_SHAPE("","섬모")
+		PRINTFORML で、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(WRITTENSLANG("애널"),"를")% 洗っている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(SLANG_H(TARGET),"를")% 磨いている。
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM4
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ａ공격（강）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM5
+RETURN 삽입
+
+@MESSAGE_MOB_201_COM5, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ａ공격（강）
+FONTREGULAR
+
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %조사처리(WRITTENSLANG("애널"),"를")% 磨くように潜らせている
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","돌기")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_A(TARGET)%に挿入している
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM5
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+	;삽입당하는 모습을 보였다
+	SIF (ARG & Ｖ) || (ARG & Ａ)
+		SETBIT TFLAG:21,3
+ENDIF
+
+
+
+;==================================================
+;【Ｂ공격（약）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM6
+RETURN 통상
+
+@MESSAGE_MOB_201_COM6, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｂ공격（약）
+FONTREGULAR
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORM は
+		CALL COLOR_T_SHAPE("","섬모")
+		PRINTFORML で、
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISMALE()
+			PRINTFORM %조사처리(SLANG_N(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_B(TARGET),"를")%
+		ENDIF
+		PRINTFORML  擦っている
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","빨판")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_N(TARGET)%に吸い付いている
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM6
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【Ｂ공격（강）】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM7
+RETURN 통상
+
+@MESSAGE_MOB_201_COM7, ARG:0, ARG:1
+FONTBOLD
+PRINTL Ｂ공격（강）
+FONTREGULAR
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISMALE()
+			PRINTFORM %조사처리(SLANG_N(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_B(TARGET),"를")%
+		ENDIF
+		PRINTFORML  縦横無尽に擦っている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","착유기")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %SLANG_N(TARGET)%に取り付いて吸引している。
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM7
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【스팽킹】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM8
+RETURN 통상
+
+@MESSAGE_MOB_201_COM8, ARG:0, ARG:1
+FONTBOLD
+PRINTL 스팽킹
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","거근")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		PRINTFORML %조사처리(SLANG_H(TARGET),"를")% ドラムのように叩いている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","돌기")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISMALE()
+			PRINTFORM %조사처리(SLANG_N(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_B(TARGET),"를")%
+		ENDIF
+		PRINTFORML  鞭で叩く様に嬲っている。
+ENDSELECT
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM8
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;희롱감이 되는 모습을 보였다
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【바늘】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM9
+RETURN 통상
+
+@MESSAGE_MOB_201_COM9, ARG:0, ARG:1
+FONTBOLD
+PRINTL 바늘
+FONTREGULAR
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","주사기")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISPENIS()
+			PRINTFORM %조사처리(SLANG_P(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_C(TARGET),"를")%
+		ENDIF
+		PRINTFORML  刺している。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","바늘")%로, 
+		PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 
+		IF ISMALE()
+			PRINTFORM %조사처리(SLANG_N(TARGET),"를")%
+		ELSE
+			PRINTFORM %조사처리(SLANG_B(TARGET),"를")%
+		ENDIF
+		PRINTFORML  突いている。
+ENDSELECT
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM9
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;희롱감이 되는 모습을 보였다
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【수음】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM10
+RETURN 통상
+
+@MESSAGE_MOB_201_COM10, ARG:0, ARG:1
+FONTBOLD
+PRINTL 수음
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM10
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+ENDIF
+
+
+
+;==================================================
+;【펠라치오】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM11
+RETURN 펠라
+
+@MESSAGE_MOB_201_COM11, ARG:0, ARG:1
+FONTBOLD
+PRINTL 펠라치오
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","브러쉬")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %WRITTENSLANG("입")%에 挿入して擦っている
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORM は
+		CALL COLOR_T_SHAPE("","섬모")
+		PRINTFORML 로,
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %WRITTENSLANG("마우스")%에 侵入して磨いている
+ENDSELECT
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM11
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;애무당하는 모습을 보였다
+	SIF (ARG & Ｃ) || (ARG & Ｖ) || (ARG & Ａ) || (ARG & Ｂ)
+		SETBIT TFLAG:21,1
+	;입을 범해지는 모습을 보였다
+	SETBIT TFLAG:21,2
+ENDIF
+
+
+
+;==================================================
+;【이라마치오】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM12
+RETURN 펠라
+
+@MESSAGE_MOB_201_COM12, ARG:0, ARG:1
+FONTBOLD
+PRINTL 이라마치오
+FONTREGULAR
+
+SELECTCASE RAND:2
+	CASE 1
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","돌기")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %WRITTENSLANG("입")% 안쪽을 嬲っている。
+	CASEELSE
+		CALL TENTACLE_ACCESS, "NAME"
+		PRINTFORML は %T_SHAPE("","거근")%로, 
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 %WRITTENSLANG("마우스")% 안쪽에 突き入れている。
+ENDSELECT
+
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM12
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;입을 범해지는 모습을 보였다
+	SETBIT TFLAG:21,2
+	;희롱감이 되는 모습을 보였다
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【절정 금지】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM13
+RETURN 통상
+
+@MESSAGE_MOB_201_COM13, ARG:0, ARG:1
+FONTBOLD
+PRINTL 절정 금지
+FONTREGULAR
+
+;구상
+TRYCALLFORM KOJO_{CFLAG:6}_COM13
+PRINTL 
+
+;동영상 촬영 플래그 처리
+IF FLAG:71 || GETBATTLESITUATION("상시 촬영")
+	;희롱감이 되는 모습을 보였다
+	SETBIT TFLAG:21,7
+ENDIF
+
+
+
+;==================================================
+;【의상을 찢는다】
+;--------------------------------------------------
+;성 커맨드 분류
+@SEX_TYPE_MOB_201_COM14
+RETURN 통상
+
+@MESSAGE_MOB_201_COM14, ARG:0, ARG:1
+FONTBOLD
+PRINTL 의상을 찢는다
+FONTREGULAR
+CALL TENTACLE_ACCESS, "GETNAME"
+PRINTFORM %조사처리(RESULTS,"는")% 
+IF RAND:3 == 0
+	PRINTFORML 촉수 끝에서 탁한 색의 점액을 힘차게 뿜어냈다！
+	PRINTFORML 이상한 냄새가 나는 점액이 %PRINT_TRANSCALLNAME(TARGET)%의 온몸을 덮어,
+	PRINTFORML 의상이 순식간에 녹아 간다・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+	;상태 이상：끈적끈적
+	CALL STATE_CHANGE_BETOBETO, 15
+ELSE
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 온몸에 엉켜 격렬하게 꿈틀거리고 있다！
+	PRINTFORML 쭈글쭈글해진 %PRINT_TRANSCALLNAME(TARGET)%의 의상이 찢어져 간다・・・
+	PRINTL 
+	;구상
+	TRYCALLFORM KOJO_{CFLAG:6}_SEX_COM14
+	PRINTL 
+ENDIF
+
+
+
+;==================================================
+;【휘감는다】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_201_KARAMITUKU
+
+CALL TENTACLE_ACCESS, "NAME"
+IF TFLAG:12 == 3
+	PRINTFORM が、%PRINT_TRANSCALLNAME(TARGET)%의 근거리에서 덤벼들었다！
+ELSEIF RAND:2 == 0
+	PRINTFORM が、%PRINT_TRANSCALLNAME(TARGET)%의 중거리에서 덤벼들었다！
+ELSE
+	PRINTFORM が、%PRINT_TRANSCALLNAME(TARGET)%의 원거리에서 덤벼들었다！
+ENDIF
+PRINT （
+IF TFLAG:11 & 1
+	PRINT 근
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 2
+	PRINT 중
+ELSE
+	PRINT 　
+ENDIF
+IF TFLAG:11 & 4
+	PRINT 원
+ELSE
+	PRINT 　
+ENDIF
+PRINTL ）
+
+
+
+;==================================================
+;【휘감는다 성공】
+;--------------------------------------------------
+@MESSAGE_BATTLE_MOB_201_KARAMITUKU_SUCCESS
+
+PRINTFORM 다 피하지 못한 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 
+CALL TENTACLE_ACCESS, "NAME"
+PRINTFORML 에게 휘감기고 말았다！
+
+
+

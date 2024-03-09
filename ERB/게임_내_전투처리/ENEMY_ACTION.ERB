@@ -34,7 +34,7 @@ IF TCVARn:0 > 0
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK
 			
-			;적 캐릭터측의 공격 성공률
+			;적 캐릭터 측의 공격 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KOUGEKI"
 			IF RESULT == 1
 				;연속 회피
@@ -180,7 +180,7 @@ IF TCVARn:0 > 0
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_KARAMITUKU
 			
-			;적 캐릭터측의 휘감는다 판정
+			;적 캐릭터 측의 휘감는다 판정
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_KARAMITUKU"
 			IF RESULT == 1
 				;연속 회피
@@ -294,7 +294,7 @@ IF TCVARn:0 > 0
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_TAIEKI
 			
-			;적 캐릭터측의 체액 내뿜기 성공률
+			;적 캐릭터 측의 체액 내뿜기 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_TAIEKI"
 			IF RESULT == 1
 				;연속 회피
@@ -507,7 +507,7 @@ IF TCVARn:0 > 0
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_OSHITAOSU
 			
-			;적 캐릭터측의 넘어뜨리기 판정
+			;적 캐릭터 측의 넘어뜨리기 판정
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_OSHITAOSU"
 			IF RESULT == 1
 				;연속 회피
@@ -621,7 +621,7 @@ IF TCVARn:0 > 0
 			SIF ENEMY_TYPE_CHECK_F("AKUOTI")
 				CALL MESSAGE_OTHER_BATTLE_TENTACLE_HADOU
 			
-			;적 캐릭터측의 사악한 파동의 성공률
+			;적 캐릭터 측의 사악한 파동의 성공률
 			CALL ACT_HANTEI_TENTACLE_TO_CHARA, "AVOID_HADOU"
 			IF RESULT == 1
 				;연속 회피
@@ -1063,7 +1063,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:11 && LOCAL:99 <= LOCAL:1) || SELECT == 2 || SELECT == 3 || SELECT == 1001
 		;V
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
-		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
+		;적 측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		;남자일 경우에는 Ｃ공격으로 돌린다
 		IF ISMALE()
 			;적 캐릭터의 C감각이 3이상이라면 SP커맨드도 선택지에 들어간다
@@ -1093,7 +1093,7 @@ IF ENEMY_TYPE_CHECK_F("AKUOTI") && TCVARn:0 == 0
 	ELSEIF (SELECT == -1 && LOCAL:99 >= LOCAL:12 && LOCAL:99 <= LOCAL:2) || SELECT == 4 || SELECT == 5 || SELECT == 1002
 		;A
 		;전제로서 적 캐릭터가 기생 중이나 후타나리나 남자가 아니라면 강・SP 커맨드는 되지 않는다
-		;적측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
+		;적 측의 욕망이 3 이상이라면 SP커맨드도 선택지에 들어간다
 		IF RAND:100 < 40 && LOCAL:101 && ABL:(FLAG:111):욕망 >= 3 && ISTENTACLER(FLAG:111) == 1
 			;Ａ공격（ＳＰ）
 			SELECT = 1002

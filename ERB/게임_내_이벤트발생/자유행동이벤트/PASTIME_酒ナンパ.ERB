@@ -30,7 +30,7 @@ SIF TALENT:왜소함 > 0
 SIF TALENT:여체수용 > 0
 	SAKE_NANPA += 2
 
-SIF TALENT:보추 > 0
+SIF TALENT:오토코노코 > 0
 	SAKE_NANPA += 1
 
 SIF TALENT:사교적 > 0
@@ -98,7 +98,7 @@ ENDIF
 ;실제나이か変身前외관が20歳以上でオッサンだが変身後にＴＳ未成年化するＴＳロリ
 ;または、실제나이ババアだが외관나이か変身後ロリ状態のロリババア
 IF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0 && MAXBASE:나이 < 20) || BASE:실제나이 >= 20 && ((CFLAG:1 == 0 && BASE:나이 < 20) || (CFLAG:1 > 0 && MAXBASE:나이 < 20))
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML そんなにお酒が飲みたいなら奢ろうかと誘われてしまった。
 	ELSE
 		PRINTFORML そんなにお酒が飲みたいなら奢ろうかと誘われているところを見ると、
@@ -106,14 +106,14 @@ IF ((BASE:실제나이 >= 20 || BASE:나이 >= 20) && ISFEMALE() && TALENT:변�
 	誘い文句 = 酒を奢ってくれる
 	;変身前未成年だが変身後の成人になっている（ミンキーモモとか）
 ELSEIF BASE:실제나이 < 20 && BASE:나이 < 20 && MAXBASE:나이 >= 20 && CFLAG:1 > 0
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML レディースデーでカクテル飲み放題の店があると誘われてしまった。
 	ELSE
 		PRINTFORML レディースデーでカクテル飲み放題の店があると誘われいるところを見ると
 	ENDIF
 	誘い文句 = １口だけ飲んでみる
 ELSEIF TALENT:학생 == 1
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML 甘酒の試飲をしませんかと誘われてしまった。
 	ELSE
 		PRINTFORML 甘酒の試飲をしませんかと誘われいるところを見ると、
@@ -121,14 +121,14 @@ ELSEIF TALENT:학생 == 1
 	誘い文句 = 試飲をする
 	;중학생と고등학생はまとめる
 ELSEIF TALENT:학생 == 2 || TALENT:학생 == 3
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML 一緒にカラオケに行かないかと誘われてしまった。
 	ELSE
 		PRINTFORML 一緒にカラオケに行かないかと誘われているところを見ると、
 	ENDIF
 	誘い文句 = 一緒にカラオケする
 ELSEIF TALENT:학생 == 4
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML 合コンに一人足りないから出てくれないかと誘われてしまった。
 	ELSE
 		PRINTFORML 合コンに一人足りないから出てくれないかと誘われているところを見ると、
@@ -136,7 +136,7 @@ ELSEIF TALENT:학생 == 4
 	誘い文句 = 数合わせのために合コンする
 	;普通の成人キャラ
 ELSEIF BASE:실제나이 >= 20 && BASE:나이 >= 20 && MAXBASE:나이 >= 20
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML １杯奢らせてくれないかと誘われてしまった。
 	ELSE
 		PRINTFORML １杯奢らせてくれないかと誘われているところを見ると、	
@@ -144,14 +144,14 @@ ELSEIF BASE:실제나이 >= 20 && BASE:나이 >= 20 && MAXBASE:나이 >= 20
 	誘い文句 = １杯だけ奢られる
 	誘い内容 = RAND:2	
 ELSEIF 誘い内容 == 0
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML 一緒にカラオケに行かないかと誘われてしまった。
 	ELSE
 		PRINTFORML 一緒にカラオケに行かないかと誘われているところを見ると、
 	ENDIF
 	誘い文句 = 一緒にカラオケする
 ELSEIF 誘い内容 == 1
-	IF ＴＳキャラ == 1 || TALENT:보추 > 0
+	IF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 		PRINTFORML 一緒に食事でもどうかと誘われてしまった。
 	ELSE
 		PRINTFORML 一緒に食事でもどうかと誘われているところを見ると、
@@ -160,9 +160,9 @@ ELSEIF 誘い内容 == 1
 ENDIF
 IF TALENT:학생 == 1 && BASE:실제나이 < 20 && CFLAG:1 == 0
 	PRINTFORML …営業マンだ…！	
-ELSEIF ＴＳキャラ == 1 || TALENT:보추 > 0
+ELSEIF ＴＳキャラ == 1 || TALENT:오토코노코 > 0
 	PRINTFORML …ナンパだ…！
-	SIF TALENT:보추 > 0
+	SIF TALENT:오토코노코 > 0
 		PRINTFORML どうやら完全に%PRINT_TRANSCALLNAME(TARGET)%의 ことを女の子だと勘違いしているらしい…
 ELSE
 	PRINTFORML これが噂に聞くナンパという奴かもしれない。
@@ -234,7 +234,7 @@ ELSEIF RESULT == 2
 	PRINTL 
 	IF RAND:100 < ABL:순종 * 10 + 15
 		PRINTFORML はっきり断ろうとした%PRINT_TRANSCALLNAME(TARGET)%だったが
-		IF TALENT:보추 > 0
+		IF TALENT:오토코노코 > 0
 			PRINTFORML これでも남자だ、と言ってもまったく信じて貰えず、
 			PRINTFORM 最後には
 		ELSE
@@ -672,7 +672,7 @@ ELSE
 	PRINT 酔い状態
 ENDIF
 PRINTFORML だ。
-IF TALENT:보추 > 0
+IF TALENT:오토코노코 > 0
 	PRINTL
 	PRINTFORML 無遠慮に肢体をまさぐってくる男は、%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%実は女の子ではないと既に気付いているようだが、
 	IF MOOD > 4
@@ -1062,8 +1062,8 @@ IF RAND:3 != 0 && ISFEMALE()
 		PRINTFORML 男たちは我先にとベルトを外し始めた…
 	ENDIF
 
-	;通常の性交、보추Ver
-ELSEIF RAND:3 != 0 && TALENT:보추 > 0
+	;通常の性交、오토코노코Ver
+ELSEIF RAND:3 != 0 && TALENT:오토코노코 > 0
 	; #region 
 	IF ARG == 0
 		IF RAND:3 == 0
@@ -1205,12 +1205,12 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 		IF MOOD > 3
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%力なく床に這いつくばり、尻を上げた体勢で後ろから%ARGS%に犯されていた。
 			PRINTFORML 激しさを増していく動きに、上半身で체중を支える%PRINT_TRANSCALLNAME(TARGET)%의 
-			PRINTFORML 慎ましやかな보추ペニスの揺れが増して、ぺちぺちと下腹に当たっている…
+			PRINTFORML 慎ましやかな오토코노코ペニスの揺れが増して、ぺちぺちと下腹に当たっている…
 			PRINTFORML まるで獣のような交尾快楽に酔いしれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		ELSE
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%壁に手をついた体勢で後ろから%ARGS%に犯されていた。
 			PRINTFORML 激しさを増していく動きに腰を突き返し、肘で체중を支える%PRINT_TRANSCALLNAME(TARGET)%의 
-			PRINTFORML 慎ましやかな보추ペニスの揺れが増して、ぺちぺちと下腹に当たっている…
+			PRINTFORML 慎ましやかな오토코노코ペニスの揺れが増して、ぺちぺちと下腹に当たっている…
 			PRINTFORML まるで獣のような交尾快楽に酔いしれた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		ENDIF
 		;ランダム分岐フラグ
@@ -1218,7 +1218,7 @@ ELSEIF RAND:3 != 0 && TALENT:보추 > 0
 	ELSE
 		PRINTFORML %ARGS%に圧し掛かられた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%完全に無防備を晒して何時間も責められ続けていた。
 		PRINTFORML ねちっこい腰使いで執拗に直腸の突き当たりを責められ、%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%幾度となく絶頂に導かれてしまう…
-		PRINTFORML 脳が焼き切れるほど官能を昂らせ、보추から牝へと堕とされた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+		PRINTFORML 脳が焼き切れるほど官能を昂らせ、오토코노코から牝へと堕とされた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		;ランダム分岐フラグ
 		FLAG:900 = 1
 	ENDIF
@@ -1549,7 +1549,7 @@ ELSE
 
 		;ここは分からないので手をつけない。誰かお願いします
 		;テストではＶ경험とＶ감각、정액경험이 ついた
-		;僭越ながら通常ナンパのほぼ同プレイからコピーしました by보추改造者
+		;僭越ながら通常ナンパのほぼ同プレイからコピーしました by오토코노코改造者
 		;굴복
 		;JUEL:굴복
 		LOCAL:18 = 100
@@ -1657,7 +1657,7 @@ ELSE
 ENDIF
 IF RAPECOUNT == 0
 	PRINTFORML そろそろヤッちまおうと宣言すると男達がにじり寄ってくる…
-	IF TALENT:보추 > 0
+	IF TALENT:오토코노코 > 0
 		PRINTL 
 		PRINTFORML 女の子にしか見えない%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%本当は남자だと彼らも気付いたはずだが、
 		PRINTFORML 男に犯されるのが大好きなメスにしてやるよ、とむしろ股間をいきり立たせているようだ…
@@ -1926,7 +1926,7 @@ PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%瞼を重たそう�
 PRINTFORML 酩酊感に襲われ上下左右の감각も掴めない%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 PRINTFORML 自分が立っているのか横になっているかすら定かではない。
 PRINTFORML 男が服を脱がせるのを見たが、思考することが出来ずやがて瞼を閉じた。
-IF TALENT:보추 > 0
+IF TALENT:오토코노코 > 0
 	; #region 
 	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%女の子ではないとわかれば大丈夫だろう。
 	PRINTFORML 掠れていく思考の最後にどこかでそう思い、一瞬、男の動きが戸惑うように止まったのも感じたが、
@@ -1976,7 +1976,7 @@ ENDIF
 PRINTW 
 PRINTFORML 両手で%PRINT_TRANSCALLNAME(TARGET)%의 頭を押さえ、口にペニスを抽送する。
 PRINTFORML フェラチオで限界に達した男が사정に至るが、全く衰える様子をみせない。
-SIF CHECK_HOLYVIRGIN_F()==0 || TALENT:보추 > 0
+SIF CHECK_HOLYVIRGIN_F()==0 || TALENT:오토코노코 > 0
 	PRINTFORML 男は%PRINT_TRANSCALLNAME(TARGET)%의 脚を大きく広げて狙いを定めている。
 
 PRINTW 

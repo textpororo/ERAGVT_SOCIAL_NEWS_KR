@@ -83,8 +83,8 @@ ELSEIF TALENT:ARG:변신능력 > 0
 			PRINTFORML 그러나, %LOCALS!="" ? LOCALS+조사만처리(LOCALS,"로")+"의" # CALLNAME:ARG+"의"% 변신이 실패했다!
 			PRINTFORML 평소처럼 변신하려고 다시 시도해 봤지만, 어째선지 아무 일도 일어나지 않는다……
 			PRINTFORM 어쩔 수 없이, %조사처리(CALLNAME:ARG,"는")% %ACTION_NAME:1%
-			IF TALENT:ARG:보추 > 0
-				PRINT (보추)
+			IF TALENT:ARG:오토코노코 > 0
+				PRINT (오토코노코)
 			ELSEIF ISMALE(ARG)
 				PRINT (♂)
 			ELSEIF TALENT:ARG:후타나리
@@ -96,8 +96,8 @@ ELSEIF TALENT:ARG:변신능력 > 0
 		ELSE
 			PRINTFORM %조사처리(CALLNAME:ARG,"는")% %LOCALS!="" ? LOCALS+조사만처리(LOCALS,"로") # ""% 변신했다!
 			IF CHARATALENT_F(ARG,0,"남자") != CHARATALENT_F(ARG,1,"남자")
-				IF TALENT:ARG:보추 > 0
-					PRINT (보추)→
+				IF TALENT:ARG:오토코노코 > 0
+					PRINT (오토코노코)→
 				ELSEIF ISMALE(ARG)
 					PRINT (♂)→
 				ELSEIF TALENT:ARG:후타나리
@@ -107,8 +107,8 @@ ELSEIF TALENT:ARG:변신능력 > 0
 				ENDIF
 			ENDIF
 			CALL TRANSFORM, 1
-			IF TALENT:ARG:보추 > 0
-				PRINT (보추)
+			IF TALENT:ARG:오토코노코 > 0
+				PRINT (오토코노코)
 			ELSEIF ISMALE(ARG)
 				PRINT (♂)
 			ELSEIF TALENT:ARG:후타나리
@@ -120,8 +120,8 @@ ELSEIF TALENT:ARG:변신능력 > 0
 		PRINTL
 	ELSEIF RESULT == 1
 		PRINTFORM %ACTION_NAME:1%
-		IF TALENT:ARG:보추 > 0
-			PRINT (보추)
+		IF TALENT:ARG:오토코노코 > 0
+			PRINT (오토코노코)
 		ELSEIF ISMALE(ARG)
 			PRINT (♂)
 		ELSEIF TALENT:ARG:후타나리

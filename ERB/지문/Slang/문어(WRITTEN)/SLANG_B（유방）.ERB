@@ -1,0 +1,165 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;쓰는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현합니다
+;【상황】즙에 젖어 있는, 기생되어 있는, 촉수 구속구 등을 장착한 등등
+;【형태】크기, 깊이 등
+;【동작】벌려진, 꿈틀거리는 등등의 움직임을 표현
+;【부위 호칭】음란, 발정, 성격으로 저속한 쓰기(書き方)로
+;
+;Nipple(젖꼭지)은 따로 표현하는 것이 있습니다
+;유륜이나 젖꼭지는 되도록 표현하지 말고, 지문으로 보충해 주세요
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;Bust(バスト)의 음어(淫語)
+;**********************************************************
+@SLANG_B(ARG)
+#DIMS SLANGWORD_B
+#FUNCTIONS
+
+;초기화
+SLANGWORD_B=
+
+;제1형용사：상황（즙에 젖어있는 등등）
+SIF (STAIN:2 & 4)
+	SLANGWORD_B = %SLANGWORD_B% %조사처리(SLANG_Semen(TARGET),"가")% 묻은 
+
+
+;제2형용사：형태 표현
+
+
+;제3형용사：동작 표현
+IF TALENT:빈유 > 0
+	SELECTCASE RAND:3
+		;원문은 ぷにぷにな 폭신폭신한 인데, 빈유니까 탱글탱글이 좀 더 어울릴 것 같아서 바꿔봤다
+		CASE 2
+			SLANGWORD_B += "탱글탱글한"
+		CASE 1
+			SLANGWORD_B += "아담한"
+		CASE 0
+			SLANGWORD_B += "조그마한"
+	ENDSELECT
+ELSEIF TALENT:거유 > 0
+	SELECTCASE RAND:3
+		;ゆっさゆっさ
+		CASE 2
+			SLANGWORD_B += "뽀잉뽀잉하며"
+		;ぶるんぶるん
+		CASE 1
+			SLANGWORD_B += "부웅부웅하며"
+		;たゆんたゆん
+		CASEELSE
+			SLANGWORD_B += "출렁출렁하며"
+	ENDSELECT
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_B += " 흔들리는"
+		CASEELSE
+			SLANGWORD_B += " 튀어 오르는"
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		;ぷるぷるな
+		CASE 2
+			SLANGWORD_B += "탱탱한"
+		;ふるふるな
+		CASE 1
+			SLANGWORD_B += "뭉글뭉글한"
+		;ゆらゆらな
+		CASEELSE
+			SLANGWORD_B += "흔들흔들거리는"
+	ENDSELECT
+ENDIF
+
+;제3형용사 뒤에 띄어쓰기 추가
+SLANGWORD_B += " "
+
+;부위 호칭
+IF TALENT:음유 > 0
+	IF TALENT:빈유 > 0
+		SELECTCASE RAND:3
+			CASE 2
+				SLANGWORD_B += "쾌락에 녹아내리는 작은 가슴"
+			CASE 1
+				SLANGWORD_B += "쾌락에 녹아내르는 음란한 빈유"
+			;눌어붙은의 원문은 焼き焦げた
+			CASEELSE
+				SLANGWORD_B += "쾌락에 눌어붙은 찌찌"
+		ENDSELECT
+	ELSEIF TALENT:거유 > 0
+		SELECTCASE RAND:3
+			CASE 2
+				SLANGWORD_B += "쾌락에 녹아내리는 풍만한 가슴"
+			;농익은 가슴의 원문은 鞠乳
+			CASE 1
+				SLANGWORD_B += "쾌락이 터져 나오는 음란한 농익은 가슴"
+			CASEELSE
+				SLANGWORD_B += "쾌락에 눌어붙는 빵빵한 가슴"
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:4
+			CASE 3
+				SLANGWORD_B += "쾌락에 타오르는 가슴"
+			CASE 2
+				SLANGWORD_B += "쾌락에 눌어붙은 바스트"
+			CASE 1
+				SLANGWORD_B += "쾌락에 녹아내리는 음란한 가슴"
+			CASEELSE
+				SLANGWORD_B += "쾌락에 녹아내리는 음란한 찌찌"
+		ENDSELECT
+	ENDIF
+ELSE
+	IF TALENT:빈유 > 0
+		SLANGWORD_B += "찌찌"
+	ELSEIF TALENT:거유 > 0
+		SELECTCASE RAND:5
+			CASE 4
+				SLANGWORD_B += "젖탱이"
+			CASE 3
+				SLANGWORD_B += "쭈쭈"
+			;위의 두 개는 역자가 추가해 보고 싶어서 썼다
+			CASE 2
+				SLANGWORD_B += "바스트"
+			CASE 1
+				SLANGWORD_B += "빵빵한 가슴"
+			CASEELSE
+				SLANGWORD_B += "거유"
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:4
+			CASE 3
+				SLANGWORD_B += "가슴"
+			CASE 2
+				SLANGWORD_B += "바스트"
+			CASE 1
+				SLANGWORD_B += "젖가슴"
+			CASEELSE
+				SLANGWORD_B += "보유"
+		ENDSELECT
+	ENDIF
+ENDIF
+
+RETURNF SLANGWORD_B
+
+
+;*************【음어 메모（미등록）】***********************
+;쌍유(双乳)
+;유륜
+;젖풍선
+;유과(乳果)
+;풍유
+;유국(乳鞠)
+;젖덩어리(乳塊)
+;유방
+;농익은(たわわに実った)
+;*************【음어 메모（미등록）】***********************
+
+
+

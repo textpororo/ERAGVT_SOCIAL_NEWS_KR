@@ -1,0 +1,226 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은, 자유롭게 해주세요.
+;하지만, 앞에 분이 쓰셨던 문장은 되도록 지우지 말아주세요.
+;
+;써넣는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현하겠습니다.
+;ARGS:0 색
+;ARGS:1 형상
+;
+;마지막은「〜〜의 촉수」, 「〜〜와 같은 것」처럼 명사로 끝냅니다.
+;삽입 등의 동작은 지문에 맡기고,
+;여기서는 어떤 촉수가 좋을지 쓰는 것에 그칩시다.
+;
+;
+;미등록 안에 집어넣거나 게시판에 올리거나 하면,
+;구현될 가능성이 있습니다.
+;(아마 스레 얘기일듯)
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+
+
+
+
+
+;**********************************************************
+;촉수 초기화
+@T_SHAPE(ARGS:0,ARGS:1)
+#DIMS TWORD
+#FUNCTIONS
+
+
+;ARGS:0의 색 지정 체크
+STRLENFORM %ARGS:0%
+SIF RESULT:0 == -1
+	ARGS:0 = %T_STATUS_BCOLOR(TARGET)%
+
+;**********************************************************
+;촉수의 색 설정
+SELECTCASE ARGS:0
+	CASE "투명"
+		TWORD = 투명한
+	CASE "빨강"
+		TWORD = 새빨간
+	CASE "담홍","담홍색"
+		TWORD = 연한 담홍색의
+	CASE "분홍","분홍색"
+		TWORD = 반들반들한 분홍색의
+	CASE "핑크","핑크색"
+		TWORD = 반들반들한 핑크색의
+	CASE "살몬 핑크","연어색"
+		TWORD = 선명한 연어색의
+	CASEELSE
+		TWORD = %ARGS:0%의
+ENDSELECT
+
+;한글 띄어쓰기 추가
+TWORD += " "
+
+;**********************************************************
+;촉수의 형상과 움직임
+SELECTCASE ARGS:1
+	;**************【】***************
+	CASE "브러쉬"
+		TWORD += "브러쉬 모양의 꿈틀거리는 촉수"
+	CASE "섬모"
+		TWORD += "섬모 모양의 꿈틀거리는 촉수"
+	CASE "붓"
+		TWORD += "체액을 칠하는 붓 모양의 촉수"
+
+
+	;**************【】***************
+	CASE "내시경"
+		TWORD += "내시경처럼 안쪽까지 비춰 보이는 촉수"
+	CASE "카테터"
+		TWORD += "카테터 모양의 촉수"
+	CASE "주사기"
+		TWORD += "주사기 모양의 촉수"
+	;搾乳器와 搾乳機를 착유기로 통합
+	CASE "착유기"
+		TWORD += "컵 모양의 촉수"
+	CASE "무화과 관장"
+		TWORD += "끝이 오므라진 무화과 모양의 촉수"
+
+
+	;**************【】***************
+	CASE "바늘"
+		TWORD += "끝부분에 바늘이 달린 촉수"
+	;凹凸 요철 원문인데 이거 은근 귀엽다
+	CASE "삐죽삐죽"
+		TWORD += "삐죽삐죽한 요철이 있는 촉수"
+
+
+	;**************【】***************
+	CASE "빨판"
+		TWORD += "달라붙는 빨판 촉수"
+	;猫舌와 ネコ舌를 고양이 혀로 통합
+	CASE "고양이 혀"
+		TWORD += "까칠까칠한 혀 모양의 촉수"
+	CASE "혀"
+		TWORD += "딱 봐도 젖어있는 혀 모양의 촉수"
+
+
+	;**************【】***************
+	CASE "돌기"
+		TWORD += "울퉁불퉁한 돌기가 잔뜩 붙어있는 촉수"
+	CASE "거근"
+		TWORD += "맥박치는 혈관이 보이는 굵은 촉수"
+
+
+	;**************【】***************
+	;ツタ와 蔦를 담쟁이덩굴로 통합
+	CASE "담쟁이덩굴"
+		TWORD += "담쟁이덩굴과도 같은 촉수"
+	;ヒモ와 紐를 끈으로 통합
+	CASE "끈" , "로프"
+		TWORD += "가는 촉수가 로프 모양으로 꼬여 묶인 촉수"
+	CASE "극세", "실"
+		TWORD += "실과 같이 극도로 미세한 촉수"
+
+
+	;**************【】***************
+	CASEELSE
+		TWORD += "촉수"
+
+
+ENDSELECT
+
+
+
+;**************【종료】***************
+
+RETURNF TWORD
+
+
+
+
+;**********************************************************
+;촉수의 체력에서 ４단계, 사정치에서 ４단계로 변색되는 시스템＊잠정
+;Tentacle's STATUS make BodyCOLOR
+;**********************************************************
+@T_STATUS_BCOLOR(ARG)
+#DIMS T_COLOR_SET
+#FUNCTIONS
+
+IF (FLAG:13 > FLAG:12 *3/4)
+	IF (FLAG:15 > FLAG:14 *3/4)
+		T_COLOR_SET = 분홍색
+	ELSEIF (FLAG:15 > FLAG:14 *2/4)
+		T_COLOR_SET = 핑크
+	ELSEIF (FLAG:15 > FLAG:14 *1/4)
+		T_COLOR_SET = 담홍색
+	ELSE
+		T_COLOR_SET = 살몬 핑크
+	ENDIF
+ELSEIF (FLAG:13 > FLAG:12 *2/4)
+	IF (FLAG:15 > FLAG:14 *3/4)
+		T_COLOR_SET = 핑크
+	ELSEIF (FLAG:15 > FLAG:14 *2/4)
+		T_COLOR_SET = 핑크
+	ELSEIF (FLAG:15 > FLAG:14 *1/4)
+		T_COLOR_SET = 핑크
+	ELSE
+		T_COLOR_SET = 핑크
+	ENDIF
+ELSEIF (FLAG:13 > FLAG:12 *1/4)
+	IF (FLAG:15 > FLAG:14 *3/4)
+		T_COLOR_SET = 적갈색
+	ELSEIF (FLAG:15 > FLAG:14 *2/4)
+		T_COLOR_SET = 적갈색
+	ELSEIF (FLAG:15 > FLAG:14 *1/4)
+			T_COLOR_SET = 적갈색
+	ELSE
+		T_COLOR_SET = 적갈색
+	ENDIF
+ELSEIF (FLAG:13 > FLAG:12 /10) && (FLAG:13 > 500) 
+	IF (FLAG:15 > FLAG:14 *3/4)
+		T_COLOR_SET = 검붉은색
+	ELSEIF (FLAG:15 > FLAG:14 *2/4)
+		T_COLOR_SET = 적자색
+	ELSEIF (FLAG:15 > FLAG:14 *1/4)
+		T_COLOR_SET = 적자색
+	ELSE
+		T_COLOR_SET = 적자색
+	ENDIF
+ELSE
+	IF (FLAG:15 > FLAG:14 *3/4)
+		T_COLOR_SET = 적자색
+	ELSEIF (FLAG:15 > FLAG:14 *2/4)
+		T_COLOR_SET = 적자색
+	ELSEIF (FLAG:15 > FLAG:14 *1/4)
+		T_COLOR_SET = 적자색
+	ELSE
+		T_COLOR_SET = 적자색
+	ENDIF
+ENDIF
+
+
+RETURNF T_COLOR_SET
+
+
+
+;**********************************************************
+;T_SHAPE(ARGS:0,ARGS:1)의 글자를 착색하여 PRINTFORM한다
+;**********************************************************
+@COLOR_T_SHAPE(ARGS:0,ARGS:1)
+#DIMS COLORPRINT_CSET
+#DIMS COLORPRINT_TEXT
+
+
+;초기화
+COLORPRINT_CSET = %ARGS:0%
+
+STRLENFORM %COLORPRINT_CSET%
+
+IF RESULT:0 > 0
+	COLORPRINT_TEXT = %T_SHAPE(COLORPRINT_CSET,ARGS:1)%
+ELSE
+	COLORPRINT_CSET = %T_STATUS_BCOLOR(TARGET)%
+	COLORPRINT_TEXT = %T_SHAPE(COLORPRINT_CSET,ARGS:1)%
+ENDIF
+
+;PRINTFORM 형식으로 호출
+CALL PRINT_RGBTEXT(COLORPRINT_CSET,COLORPRINT_TEXT)
+
+

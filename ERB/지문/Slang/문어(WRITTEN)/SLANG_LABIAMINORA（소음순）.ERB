@@ -1,0 +1,91 @@
+﻿;**********************************************************
+;기본 규칙
+;가필 수정은 자유롭게 해 주세요
+;단, 앞의 분이 쓴 문장은 되도록 지우지 말아 주세요
+;
+;쓰는 순서는, 너무 장황해지지 않도록 3요소와 부위로 표현합니다
+;【상황】즙에 젖어 있는, 기생되어 있는, 촉수 구속구 등을 장착한 등등
+;【형태】크기, 깊이 등
+;【동작】벌려진, 꿈틀거리는 등등의 움직임을 표현
+;【부위 호칭】음란, 발정, 성격으로 저속한 쓰기(書き方)로
+;
+;바깥쪽의 두툼한 대음순（균열 ワレメ）은 쓰지 않도록
+;
+;늘려 주었으면 하는 은어는, 아웃풋하여 리퀘스트를 하는 식으로 합시다
+;미등록인 상태로 던져 넣거나, 게시판에 올리거나 하면
+;실장될 가능성이 있습니다
+;
+;by 雑魚の人 2018/02/11
+;**********************************************************
+;eXample(예)의 은어
+@SLANG_LabiaMinora(ARG)
+#DIMS SLANGWORD_LabiaMinora
+#FUNCTIONS
+
+;초기화
+SLANGWORD_LabiaMinora=
+;제1형용사：상황（즙에 젖어있는 등등）
+;STAIN:0 입 || STAIN:3 질, 균열 || STAIN:4 애널
+IF (STAIN:3 & 4)
+	SLANGWORD_LabiaMinora = %SLANGWORD_LabiaMinora% %SLANG_SEMEN(TARGET)%
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_LabiaMinora += 조사만처리(S_SLANG_SEMEN(TARGET),"로") + " 더럽혀진"
+		CASEELSE
+			SLANGWORD_LabiaMinora += "에 젖어 뚝뚝 떨어지는"
+	ENDSELECT
+
+	;제1형용사 뒤에 띄어쓰기 추가
+	SLANGWORD_LabiaMinora += " "
+ENDIF
+
+
+
+;제2형용사：형태 표현
+
+
+;제3형용사：동작 표현
+IF TALENT:음란 > 0
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_LabiaMinora += "기대하듯 벌려져 있는"
+		CASEELSE
+			SLANGWORD_LabiaMinora += "흥분에 벌려져 있는"
+	ENDSELECT
+
+	;제3형용사 뒤에 띄어쓰기 추가
+	SLANGWORD_LabiaMinora += " "
+ENDIF
+
+;부위 호칭
+IF TALENT:음란 > 0
+	;원문은 媚肉の二枚貝
+	SLANGWORD_LabiaMinora += "미육의 이매패"
+ELSE
+	SELECTCASE RAND:2
+		CASE 1
+			SLANGWORD_LabiaMinora += "소음순"
+		CASEELSE
+			SLANGWORD_LabiaMinora += "비라비라"
+	ENDSELECT
+ENDIF
+
+
+;합성하여 완성된 음어를 반환한다
+RETURNF SLANGWORD_LabiaMinora
+
+
+
+
+
+;*************【음어 메모（미등록）】***********************
+;
+;
+;
+;
+;*************【음어 메모（미등록）】***********************
+
+
+
+
+

@@ -1,6 +1,6 @@
 ﻿;●性別周りの判定を整理
 ;	・生物学的オスorメス			ISMALE(id)  ISFEMALE(id)
-;	・외관上の男性or女性(보추用)		ISMANLY(id) ISGIRLY(id)
+;	・외관上の男性or女性(오토코노코用)		ISMANLY(id) ISGIRLY(id)
 ;	・ちんまん有無チェック(후타나리用)	ISPENIS(id) ISVAGINA(id)
 
 ;-------------------------------------------------
@@ -24,23 +24,23 @@ RETURNF 0
 
 ;-------------------------------------------------
 ;「女に見える외관」
-;周囲が女の子扱いする判定(지문용)　女性または보추なら１が返る
+;周囲が女の子扱いする判定(지문용)　女性または오토코노코なら１が返る
 @ISGIRLY(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
-	IF ISFEMALE(LOCAL) || TALENT:LOCAL:보추
+	IF ISFEMALE(LOCAL) || TALENT:LOCAL:오토코노코
 		LOCAL=1
 	ELSE
 		LOCAL=0
 	ENDIF
 RETURNF LOCAL
 ;「男らしい외관の남자」
-;周囲が남자扱いする判定(지문용、↑の逆)　남자かつ보추でなければ１が返る
+;周囲が남자扱いする判定(지문용、↑の逆)　남자かつ오토코노코でなければ１が返る
 ;※なお、現行GVTはガチで男に見える男装に非対応です(支払う分岐処理の複雑さに対して需要が薄いと考えられるため)
 @ISMANLY(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
-	IF ISFEMALE(LOCAL) || TALENT:LOCAL:보추
+	IF ISFEMALE(LOCAL) || TALENT:LOCAL:오토코노코
 		LOCAL=0
 	ELSE
 		LOCAL=1
@@ -53,7 +53,7 @@ RETURNF LOCAL
 	LOCAL=ARG==-1 ? TARGET # ARG
 	SIF ARG == 0
 		RETURNF 1
-	;♀、보추、양성평등オプションなら1
+	;♀、오토코노코、양성평등オプションなら1
 	;※※※※※※※※※※※※※※※※※※※※※※※※
 	;ここうっかりISHOLE()でラップしないように注意！！
 	;※※※※※※※※※※※※※※※※※※※※※※※※

@@ -172,7 +172,7 @@ ELSE
 	PRINTFORML 
 	PRINTFORML 卑猥な姿勢で拘束された自分の身体と、周囲全てを埋め尽くし、
 	PRINTFORML 今もまた自分の身体を這い回る촉수が集まった肉壁だった・・・！
-	IF TALENT:보추 > 0
+	IF TALENT:오토코노코 > 0
 		PRINTFORML 
 		PRINTFORML 남자でありながら丸みを帯びた肉付きや華奢な骨格、
 		PRINTFORML 叫び声すら可愛らしい物である%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
@@ -228,7 +228,7 @@ ELSEIF CFLAG:0 == 2 && CHECK_GAMEOVER_F() == 1
 ELSEIF CFLAG:0 == 3 && CHECK_GAMEOVER_F() == 1
 	SIF ISMANLY()
 		PRINT 남자でありながら
-	PRINTFORML 自ら촉수の\@TALENT:보추 > 0 ? 보추 # \@孕み妻となった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%期待に瞳を潤わせながら、
+	PRINTFORML 自ら촉수の\@TALENT:오토코노코 > 0 ? 오토코노코 # \@孕み妻となった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%期待に瞳を潤わせながら、
 	PRINTFORML 媚びるような表情で跪いて手近な%촉수市民("촉수","페니스")%を引き寄せると、
 	IF TALENT:주관시점 > 0
 		PRINTFORML 上目づかいで種付けをして欲しいと懇願してしまう・・・
@@ -408,7 +408,7 @@ IF TALENT:촉수의포로 > 0 || TALENT:희롱특화체질 > 0
 		PRINTDATA
 			DATAFORM 脈打つ地面に上半身を擦り付け、
 			DATAFORM 産まれたばかりの촉수のように肉の地面をのたうち回り、
-			DATAFORM ブヨブヨ波打つ地面の突起に%SLANG_P(TARGET)%を擦り付けながら、
+			DATAFORM ブヨブヨ波打つ地面の突起に %조사처리(SLANG_P(TARGET),"를")% 擦り付けながら、
 			DATAFORM 尻穴から촉수の精液をゴボリと噴き出しながら、
 		ENDDATA
 		PRINTFORML 不満そうにうめき声を上げる。
@@ -418,7 +418,7 @@ IF TALENT:촉수의포로 > 0 || TALENT:희롱특화체질 > 0
 		PRINTDATA
 			DATAFORM 脈打つ地面に乳房を擦り付け、
 			DATAFORM 産まれたばかりの촉수のように肉の地面をのたうち回り、
-			DATAFORM ブヨブヨ波打つ地面の突起に%SLANG_C(TARGET)%を擦り付けながら、
+			DATAFORM ブヨブヨ波打つ地面の突起に %조사처리(SLANG_C(TARGET),"를")% 擦り付けながら、
 			DATAFORM 穴という穴から촉수の精液をゴボリと噴き出しながら、
 		ENDDATA
 		PRINTFORML 不満そうにうめき声を上げる。
@@ -879,8 +879,8 @@ PRINTL
 FONTBOLD
 PRINTL Ａ中心攻め
 FONTREGULAR
-;보추인 경우에는 V攻め流用もパターンに追加
-IF RAND:3 == 0 && SHIELD:2 <= 0 && TALENT:보추 > 0
+;오토코노코인 경우에는 V攻め流用もパターンに追加
+IF RAND:3 == 0 && SHIELD:2 <= 0 && TALENT:오토코노코 > 0
 	PRINTFORML 二つ折りにされるように촉수に拘束され、
 	PRINTFORML 脚を高く上げさせられた姿勢で宙吊りになっている%PRINT_TRANSCALLNAME(TARGET)%。
 	PRINTL 
@@ -905,7 +905,7 @@ IF RAND:3 == 0 && SHIELD:2 <= 0 && TALENT:보추 > 0
 	ENDIF
 	;ランダム分岐フラグ
 	FLAG:900 = 1
-ELSEIF RAND:2 == 0 && SHIELD:2 <= 0 && TALENT:보추 > 0
+ELSEIF RAND:2 == 0 && SHIELD:2 <= 0 && TALENT:오토코노코 > 0
 	PRINTFORML 大量の촉수に背後から圧し掛かられて、
 	PRINTFORML 尻を突きだすような굴복の姿勢を取らされた%PRINT_TRANSCALLNAME(TARGET)%。
 	PRINTL 
@@ -1583,7 +1583,7 @@ FONTBOLD
 PRINTL Ａ확장 공격
 FONTREGULAR
 IF EXP:Ａ확장경험 >= 10
-	IF RAND:2 == 0 && TALENT:보추 > 0
+	IF RAND:2 == 0 && TALENT:오토코노코 > 0
 		PRINTFORML 息絶え絶えに촉수の攻めを受けていた%PRINT_TRANSCALLNAME(TARGET)%의 애널に
 		PRINTFORML ひときわ太い巨大촉수が挿入されていく。
 		PRINTL 
@@ -1608,7 +1608,7 @@ IF EXP:Ａ확장경험 >= 10
 		PRINTFORML 촉수が満足するまで玩具にされ続けた・・・
 	ENDIF
 ELSE
-	IF RAND:2 == 0 && TALENT:보추 > 0
+	IF RAND:2 == 0 && TALENT:오토코노코 > 0
 		PRINTFORML 息絶え絶えに촉수の攻めを受けていた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 		PRINTFORM 目の前に現れた巨大な촉수を見た瞬間に
 		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복) || ABL:Ｖ감각 >= 4 || ABL:마조끼 >= 3
