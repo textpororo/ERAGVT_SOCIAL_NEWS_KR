@@ -215,33 +215,40 @@ ELSEIF ARG:1 == 3
 	PRINT 원거리 
 ENDIF
 PRINTL 무기의 전투 스타일을 선택해 주십시오.
+PRINTL ※[통상] 이외의 동일한 전투 스타일을 2개 이상 중복하여 선택할 수 없습니다.
 PRINTFORML 현재 전투 스타일：<<%FSTYLE_NAME_F(ARG,ARG:1)%>>
 PRINTL 
 PRINTL  [0] <<통상>>　　　통상적인 전투 스타일　　　　 어느 쪽에도 편향되지 않아 다루기가 쉬운 계열（+ 버스트 공격의 반동↓）
 PRINTL 
 PRINTL  [1] <<연속>>　　【민첩】이 높은 캐릭터 추천　　연속으로 ２회 공격이 가능하여 명중률은 단연 탑급
 PRINTL 
-PRINTL  [2] <<장갑>>　　【방어】가 높은 캐릭터 추천　　가드가 단단해져 서툰 거리의 서포트에 능하다
+PRINTL  [2] <<교란>>　　【민첩】이 높은 캐릭터 추천　　치명타율과 위력이 높지만 가드가 약한 하이리스크 하이리턴형
 PRINTL 
-PRINTL  [3] <<교란>>　　【민첩】이 높은 캐릭터 추천　　치명타율과 위력이 높지만 가드가 약한 하이리스크 하이리턴형
+PRINTL  [3] <<장갑>>　　【방어】가 높은 캐릭터 추천　　가드가 단단해져 서툰 거리의 서포트에 능하다
 PRINTL 
 PRINTL  [4] <<중격>>　　【방어】가 높은 캐릭터 추천　　회피율이나 직격률은 뒤처지지만 위력이 높아 고점은 확실한 타입
 PRINTL 
-PRINTL  [5] <<광역>>　　【공격】이 높은 캐릭터 추천　　직격하지 않더라도 위력이 높아 지속적인 피해를 주기에 적합하다
+PRINTL  [5] <<반격>>　　【방어】가 높은 캐릭터 추천　　상대방의 공격을 막는 동시에 강력한 일격으로 반격하는 딜러형 탱커
 PRINTL 
-PRINTL  [6] <<전력>>　　【공격】이 높은 캐릭터 추천　　위력이 매우 높지만 반동도 큰 필사의 일격을 가한다
+PRINTL  [6] <<광역>>　　【공격】이 높은 캐릭터 추천　　직격하지 않더라도 위력이 높아 지속적인 피해를 주기에 적합하다
 PRINTL 
-PRINTL  [7] <<지략>>　　【지성】이 높은 캐릭터 추천　　지성이 높을 수록 직격하기 쉬워진다
+PRINTL  [7] <<전력>>　　【공격】이 높은 캐릭터 추천　　위력이 매우 높지만 반동도 큰 필사의 일격을 가한다
 PRINTL 
-PRINTL  [8] <<설치>>　　【지성】이 높은 캐릭터 추천　　위력은 낮지만 상대방의 빈틈을 만드는 추가 효과를 가진다
+;PRINTL   [8] <<속성>>　　【공격】이 높은 캐릭터 추천　　공격을 제외한 방어, 민첩, 지성 중 가장 높은 스탯에 따라 추가 효과를 부여한다 (아직 미정)
+;PRINTL 
+PRINTL  [8] <<지략>>　　【지성】이 높은 캐릭터 추천　　지성이 높을 수록 직격하기 쉬워진다
 PRINTL 
-PRINTL  [9] <<사역>>　　【지성】이 높은 캐릭터 추천　　상황에 따라 다채로운 공격을 펼칠 수 있다
+PRINTL  [9] <<설치>>　　【지성】이 높은 캐릭터 추천　　위력은 낮지만 상대방의 빈틈을 만드는 추가 효과를 가진다
+PRINTL 
+PRINTL [10] <<사역>>　　【지성】이 높은 캐릭터 추천　　상황에 따라 다채로운 공격을 펼칠 수 있다
 PRINTL 
 PRINTL  [999] 돌아간다
 $INPUT_LOOP
 INPUT
-IF RESULT >= 0 && RESULT <= 9
+IF RESULT >= 0 && RESULT <= 10
 	CLEARLINE 1
+
+	[SKIPSTART]
 	IF ARG:1 == 1
 		CDFLAG:ARG:근거리:전투스타일 = RESULT
 	ELSEIF ARG:1 == 2
@@ -249,6 +256,35 @@ IF RESULT >= 0 && RESULT <= 9
 	ELSEIF ARG:1 == 3
 		CDFLAG:ARG:원거리:전투스타일 = RESULT
 	ENDIF
+	[SKIPEND]
+
+	SELECTCASE ARG:1
+		CASE 1
+			IF RESULT != 0 && GROUPMATCH(RESULT, CDFLAG:ARG:중거리:전투스타일, CDFLAG:ARG:원거리:전투스타일)
+				PRINTW 동일한 전투 스타일은 2개 이상 중복해서 선택할 수 없습니다.
+				CLEARLINE 1
+				GOTO INPUT_LOOP
+			ELSE
+				CDFLAG:ARG:근거리:전투스타일 = RESULT
+			ENDIF
+		CASE 2
+			IF RESULT != 0 && GROUPMATCH(RESULT, CDFLAG:ARG:근거리:전투스타일, CDFLAG:ARG:원거리:전투스타일)
+				PRINTW 동일한 전투 스타일은 2개 이상 중복해서 선택할 수 없습니다.
+				CLEARLINE 1
+				GOTO INPUT_LOOP
+			ELSE
+				CDFLAG:ARG:중거리:전투스타일 = RESULT
+			ENDIF
+		CASE 3
+			IF RESULT != 0 && GROUPMATCH(RESULT, CDFLAG:ARG:근거리:전투스타일, CDFLAG:ARG:중거리:전투스타일)
+				PRINTW 동일한 전투 스타일은 2개 이상 중복해서 선택할 수 없습니다.
+				CLEARLINE 1
+				GOTO INPUT_LOOP
+			ELSE
+				CDFLAG:ARG:원거리:전투스타일 = RESULT
+			ENDIF
+	ENDSELECT
+
 	RETURN
 ELSEIF RESULT == 999
 	RETURN
@@ -256,5 +292,4 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 
-
-
+	

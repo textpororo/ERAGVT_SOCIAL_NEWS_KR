@@ -45,6 +45,8 @@ LOCAL:0 = 2 + RAND:7
 LOCAL:1 = MAXBASE:체력 * LOCAL:0 / 100
 SIF BASE:체력 + LOCAL:1 >= MAXBASE:체력
 	LOCAL:1 = MAXBASE:체력 - BASE:체력
+SIF BASE:체력 == 0 && TALENT:스태미나 == 0
+	LOCAL:1 = 0
 BASE:체력 += LOCAL:1
 IF LOCAL:1 > 0
 	PRINTFORML 우주 씰로부터 흘러드는 힘이 %PRINT_CALLNAME(TARGET)%의 몸을 치유한다……

@@ -685,11 +685,13 @@ SIF TCVARn:1 > 0
 IF GETBIT(TCVARn:216, 2) || TCVARn:0 == 0
 	TCVARn:216 = 0
 	BASE:공중대시 = MAXBASE:공중대시
-	SIF BASE:공중대시>= 8
+	SIF BASE:공중대시 >= 8
 		BASE:공중대시 = 8
 ;체공 상태로 계속해서 공중대시를 사용하지 않는다면 착지 상태가 된다
+;[에어마스터] FEAT의 추가 효과 발동 금지 플래그를 초기화
 ELSEIF GETBIT(TCVARn:216, 1) && GETBIT(TCVARn:216, 0) == 0
 	SETBIT TCVARn:216,2
+	TCVARn:210 -= 추가발동금지
 	SIF GETBIT(TCVARn:216, 1)
 		TCVARn:216 -= 2
 ENDIF

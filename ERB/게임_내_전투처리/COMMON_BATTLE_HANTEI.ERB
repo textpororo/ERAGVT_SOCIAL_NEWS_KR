@@ -153,7 +153,7 @@ IF FLAG:999 == 1 && ARG == 0
 	PRINTFORML LOCAL:5 ＝ {LOCAL:5}
 ENDIF
 
-;동마다의 보정
+;행동마다의 보정
 SELECTCASE ARGS
 	CASE "ATTACK_RANGE_SHORT"
 		;근거리 공격 보정：1.05배
@@ -174,7 +174,7 @@ SELECTCASE ARGS
 
 		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
-		LOCAL:5+=MIN(15,3*MAX(0,ABL:레벨-RESULT))
+		LOCAL:5 += MIN(15,3*MAX(0,ABL:레벨-RESULT))
 
 		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
@@ -197,7 +197,7 @@ SELECTCASE ARGS
 
 		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
-		LOCAL:5+=MIN(10,2*MAX(0,ABL:레벨-RESULT))
+		LOCAL:5 += MIN(10,2*MAX(0,ABL:레벨-RESULT))
 
 		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
@@ -222,7 +222,7 @@ SELECTCASE ARGS
 
 		;레벨이 낮은 상대의 레벨차 보정 보너스(～95%)
 		CALL TENTACLE_LEVEL
-		LOCAL:5+=MIN(5,MAX(0,ABL:레벨-RESULT))
+		LOCAL:5 += MIN(5,MAX(0,ABL:레벨-RESULT))
 
 		;EX공에 의한 명중률 상승 효과
 		SIF GETBIT(TCVARn:3, 0)
@@ -234,9 +234,8 @@ SELECTCASE ARGS
 			LOCAL:5 = 20
 
 		;풀어낸다일 경우에는 지성 보정이 들어간다
-		IF FLAG:73 == 0
+		SIF FLAG:73 == 0
 			LOCAL:5 += MIN(CHISEI_COR / 15,30)
-		ENDIF
 
 		;체력＋기력이 50% 이상 남아 있는 동시에 성공치가 45% 이하일 경우, 45%로 보정
 		SIF LOCAL:5 <= 45 && LOCAL:O > 49
@@ -311,17 +310,19 @@ ENDSELECT
 
 ;원래 汎用 스타일이라고 써져 있었는데, FIGHT_STYLE.ERB의 이 함수에는 없는 거라 비슷한 효과인 통상으로 바꿨다
 ;[통상] 스타일의 직격 보너스
-IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "汎用" && ARGS != "HURIHODOKU"
+IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "통상" && ARGS != "HURIHODOKU"
 	LOCAL:5 += 5
+[SKIPSTART]
 ;[지략] 스타일의 직격 보너스
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "지략" && ARGS != "HURIHODOKU"
-	;キャラの지성を見る
+	;캐릭터의 지성을 본다
 	LOCAL:6 = MAXBASE:지성
 	CALL CLOTH_BATTLE_HOSEI, "CHISEI"
 	LOCAL:6 = LOCAL:6 * RESULT / 100
 	CALL SHINKYOU_CHECK, "CHISEI", LOCAL:6
 	LOCAL:6 = RESULT
 	LOCAL:5 += LIMIT(LOCAL:6 * LOCAL:6 / 4000, 0, 50)
+[SKIPEND]
 ;[광역] 스타일의 직격 패널티
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "광역" && ARGS != "HURIHODOKU"
 	TIMES LOCAL:5, 0.25
@@ -347,19 +348,24 @@ SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
 ;BRAVE HIT(동일 거리에서 연속 공격)에 의한 직격 보너스
 SIF TFLAG:30 > 1 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_BRAVE_HIT(TFLAG:30 - 1,"명중")
-;COUNTER_ATTACK에 의한 직격 보너스
+;COUNTER ATTACK에 의한 직격 보너스
 SIF TFLAG:32 > 0 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_COUNTER_ATTACK(1)
 ;공중전특기에 의한 직격 보너스
 SIF GETBIT(TCVARn:216, 1) && TALENT:공중전특기 && ARGS != "HURIHODOKU"
 	LOCAL:5 += GET_AIR_STRIKE(2)
-;공중 성능 강화에 의한 직격 보너스
+;공중 성능 강화에 따른 직격 보너스
 CALL CLOTH_BATTLE_HOSEI, "AIRPLUS",TARGET
 SIF GETBIT(TCVARn:216, 1) && RESULT > 0 && ARGS != "HURIHODOKU"
 	LOCAL:5 += 25
 ;공중전서툼에 의한 직격 패널티
 SIF GETBIT(TCVARn:216, 1) && TALENT:공중전서툼 && ARGS != "HURIHODOKU"
 	LOCAL:5 -= GET_AIR_STRIKE(3)
+;반격, 강화 반격의 직격 보너스
+SIF TCVARn:2 == 자세：반격
+	LOCAL:5 += 10
+SIF TCVARn:2 == 자세：강화반격
+	LOCAL:5 += 20
 ;버스트 공격에 의한 직격률 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
@@ -388,6 +394,10 @@ IF FLAG:999 == 1 && ARG == 0
 	SIF ARGS == "HURIHODOKU"
 		PRINTFORML 캐릭터의 지성 {MAXBASE:지성} {CHISEI_COR}
 	PRINTFORML 적의 민첩　 {LOCAL:3}
+	SIF TCVARn:2 == 자세：반격
+		PRINTL 반격 직격률 보너스 ＋10％
+	SIF TCVARn:2 == 자세：강화반격
+		PRINTL 강화 반격 직격률 보너스 ＋20％
 	IF ARGS == "HURIHODOKU"
 		PRINTFORML 행동 성공치：{LOCAL:5 - MIN(CHISEI_COR / 15,30)} {LOCAL:5}
 	ELSE
@@ -530,6 +540,12 @@ SIF CFLAG:TARGET:43 == 501 && ARGS != "HURIHODOKU"
 SIF GETBIT(TCVARn:3, 0)
 	LOCAL:5 += 100
 
+;반격, 강화 반격의 가드 대미지 확률 보너스
+SIF TCVARn:2 == 자세：반격
+	LOCAL:5 += 15
+SIF TCVARn:2 == 자세：강화반격
+	LOCAL:5 += 25
+
 ;버스트 공격에 따른 가드 대미지 확률 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
@@ -542,7 +558,11 @@ ENDIF
 IF FLAG:999 == 1
 	PRINTFORML 캐릭터의 민첩 {MAXBASE:민첩} {LOCAL:2}
 	PRINTFORML 적의 민첩　 {LOCAL:3}
-	PRINTFORML 행동 성공치：{LOCAL:5}
+	SIF TCVARn:2 == 자세：반격
+		PRINTL 반격 가드 대미지 확률 보너스 ＋15％
+	SIF TCVARn:2 == 자세：강화반격
+		PRINTL 강화 반격 가드 대미지 확률 보너스 ＋25％
+	PRINTFORML 행동 성공률：{LOCAL:5}％
 	PRINTL 
 ENDIF
 
@@ -585,6 +605,9 @@ ENDIF
 SIF PERCENT_CAL_F(FLAG:17, FLAG:16)
 	LOCAL:1 = LOCAL:1 * (100 + PERCENT_CAL_F(FLAG:17, FLAG:16) / 2) / 100
 
+;캐릭터의 민첩
+LOCAL:2 = MAXBASE:민첩
+
 ;＠중국판 역수출
 ;흉부 중량 패널티
 IF ISFEMALE() 
@@ -595,20 +618,18 @@ IF ISFEMALE()
 	ENDIF
 ENDIF
 
+;왜소함・장신이라면 민첩에 보정
+IF TALENT:왜소함 == 1
+	TIMES LOCAL:2, 1.05
+ELSEIF TALENT:장신 == 1
+	TIMES LOCAL:2, 0.90
+ENDIF
 
-;캐릭터의 민첩
-LOCAL:2 = MAXBASE:민첩
 ;캐릭터의 방어
 LOCAL:6 = MAXBASE:방어
 ;「EX:방」중에는 방어치 상승
 SIF GETBIT(TCVARn:3, 1)
 	LOCAL:6 *= 2
-
-;왜소함・장신이라면 민첩에 보정
-SIF TALENT:왜소함 == 1
-	TIMES LOCAL:2, 1.05
-SIF TALENT:장신 == 1
-	TIMES LOCAL:2, 0.90
 
 ;변신 능력이 있는 캐릭터의 보정
 LOCAL:2 = CORRECTION_TRANS(LOCAL:2)
@@ -706,6 +727,13 @@ SIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "중격"
 ;BRAVE HIT에 의한 회피 패널티
 SIF TFLAG:30 > 1
 	LOCAL:5 -= GET_BRAVE_HIT(TFLAG:30 - 1,"회피")
+
+;반격 시의 회피 보정
+IF TCVARn:2 == 자세：반격
+	TIMES LOCAL:5, 0.75
+ELSEIF TCVARn:2 == 자세：강화반격
+	TIMES LOCAL:5, 0.90
+ENDIF
 
 ;거리에 따른 보정
 ;근거리라면 회피가 0.85배
@@ -963,6 +991,11 @@ SELECTCASE ARGS
 				LOCAL:5 += 65
 
 		ENDIF
+				
+		;파동 공격은 반격 자세일 경우 회피율이 더 감소
+		SIF TCVARn:2 == 자세：반격 || TCVARn:2 == 자세：강화반격
+			LOCAL:5 -= 10
+
 ENDSELECT
 
 ;대공 공격에 대하여 공중에 있으면 회피율 감소
@@ -974,6 +1007,10 @@ SIF GETBIT(TCVARn:216, 1) && (TFLAG:11 & 8) && RAND:100 < 25
 SIF GETBIT(TCVARn:216, 2) && TALENT:소형체구 == 0
 	LOCAL:5 = 0
 
+;반격 자세일 경우 최종 회피율 감소
+;SIF TCVARn:2 == 자세：반격 || TCVARn:2 == 자세：강화반격
+;	LOCAL:5 -= 20
+
 ;버스트 공격에 따른 회피율 수정
 IF GETBIT(TCVARn:217,0)
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
@@ -981,6 +1018,9 @@ IF GETBIT(TCVARn:217,0)
 			LOCAL:5 = 0
 		CASE "전력"
 			LOCAL:5 = 0
+		;버스트 공격 리워크 필요
+		;CASE "반격"
+		;	LOCAL:5 = 0
 	ENDSELECT
 ENDIF
 
@@ -989,8 +1029,11 @@ SIF (TCVARn:0 == 1 && GETBIT(TFLAG:11, 0) == 0) || (TCVARn:0 == 2 && GETBIT(TFLA
 	LOCAL:5 = -1
 
 ;통상 범위에 대하여 공중에 있다
-SIF GETBIT(TCVARn:216, 1) && GETBIT(TFLAG:11, 3) == 0 && RAND:100 < GET_AIR_STRIKE(1)
+;[에어마스터] FEAT에 대한 추가 효과 발동 금지 플래그를 세운다
+IF GETBIT(TCVARn:216, 1) && GETBIT(TFLAG:11, 3) == 0 && RAND:100 < GET_AIR_STRIKE(1)
 	LOCAL:5 = -1
+	TCVARn:210 |= 추가발동금지
+ENDIF
 
 ;【아무것도안한다】를 골랐다면 확정적으로 피격된다
 SIF TCVARn:2 == 자세：아무것도안한다
@@ -1186,7 +1229,7 @@ IF ISFEMALE()
 ENDIF
 
 
-;방어力
+;방어력
 LOCAL:6 = MAXBASE:방어
 ;「EX방」중에는 방어치 상승
 SIF GETBIT(TCVARn:3, 1)
@@ -1205,6 +1248,10 @@ IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "교란"
 ELSEIF FSTYLE_NAME_F(TARGET,TCVARn:0) == "장갑"
 	LOCAL:6 += 50
 	TIMES LOCAL:6, 1.15
+;[반격] 스타일의 버스트 반격 효과(방어 50% 감소)
+;버스트 공격 리워크 필요
+;ELSEIF GETBIT(TCVARn:217, 0) && FSTYLE_NAME_F(TARGET,TCVARn:0) == "반격"
+;	TIMES LOCAL:6, 0.50
 ENDIF
 
 SELECTCASE ARGS
@@ -1397,7 +1444,16 @@ SELECTCASE ARGS
 		;방어 플래그가 세워져 있는 경우에는 피해량 반감
 		SIF TCVARn:2 == 자세：방어
 			LOCAL:0 /= 2
-
+		;반격 플래그가 세워져 있는 경우에는 피해량 감소
+		;전체 공격일 경우 피해량 감소 효과 저하
+		;구속 공격은 불가능
+		IF TCVARn:2 == 자세：반격 && (TFLAG:10 != 2 || 5)
+			IF TFLAG:12 < 3
+				TIMES LOCAL:0, 0.65
+			ELSE
+				TIMES LOCAL:0, 0.85
+			ENDIF
+		ENDIF
 		;피격될 때마다, 방어 기초값에 따라 ＥＸ게이지가 상승한다
 		SIF CFLAG:1 != 2
 			TCVARn:6 += LIMIT(SQRT(MAX(BASE:방어 - 100,0)), 0, 20) + 5
@@ -1495,10 +1551,20 @@ IF FLAG:999 == 1
 	PRINTFORML 캐릭터의 방어（보정 전{MAXBASE:방어}）（보정 후{LOCAL:6}）
 	PRINTFORML 공격 쪽의 공격력 {LOCAL:0}
 	PRINTFORML 방어 쪽의 방어력 {LOCAL:1}
+	PRINT 강화 반격에 의한 절대 방어
+	IF TCVARn:2 == 자세：강화반격
+		PRINTL O
+	ELSE
+		PRINTL X
+	ENDIF
 	PRINTFORML LOCAL:3 {LOCAL:3}
 	SIF ARGS != "CHARA"
 		PRINTFORML 피해량 패널티 {(LOCAL:7)/10}％
 	PRINTL 
 ENDIF
+
+;강화 반격일 경우 절대 방어
+SIF TCVARn:2 == 자세：강화반격
+	LOCAL:3 = 0
 
 RETURN LOCAL:3

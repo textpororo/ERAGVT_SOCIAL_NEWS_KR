@@ -1,10 +1,10 @@
 ﻿;--------------------------------------------------
-;エンディング処理
+;엔딩 처리
 @ENDING
 SIF FLAG:64 > 0
 	GOTO START_SUCCESSION
 
-;エンディング２　ゲームクリア
+;엔딩２　게임 클리어
 LOCAL = 0
 IF FLAG:100 <= 0 && FLAG:101 <= 0 && CHECK_GAMEOVER_F() == 0
 	CALL ENDING_2
@@ -13,7 +13,7 @@ IF FLAG:100 <= 0 && FLAG:101 <= 0 && CHECK_GAMEOVER_F() == 0
 	RESETBGCOLOR
 	CALL SCORE
 	FLAG:64 = RESULT
-	PRINTL クリアデータを記録しますか？
+	PRINTL 클리어 데이터를 기록하시겠습니까？
 	PRINTL [0] 네
 	PRINTL [1] 아니오
 	$INPUT_LOOP_2_0
@@ -27,8 +27,8 @@ IF FLAG:100 <= 0 && FLAG:101 <= 0 && CHECK_GAMEOVER_F() == 0
 		GOTO INPUT_LOOP_2_0
 	ENDIF
 	$START_SUCCESSION
-	;引き継ぎ開始前に施設関係の資金を還元
-	;施設
+	;인계 개시 전에 시설 관련 자금을 환원
+	;시설
 	REPEAT FLAG:50
 		SIF COUNT == 0
 			CONTINUE
@@ -69,8 +69,8 @@ IF FLAG:100 <= 0 && FLAG:101 <= 0 && CHECK_GAMEOVER_F() == 0
 	JUMP SUCCESSION,FLAG:64
 ENDIF
 
-;エンディング３　日数制限超過
-;　ただし デバッグ・GAMEOVERモード・引き継ぎオプション適用中or特定モードの日数制限解除状態 いずれかなら判定スルー
+;엔딩３　제한 일수 초과
+;　단, DEBUG・GAMEOVER 모드・인계 옵션(제한 일수 제한) 적용 중 or 특정 모드의 일수 제한 해제 상태　어느 하나에 속할 시 판정 무시(through)
 IF FLAG:999 == 0 && CHECK_GAMEOVER_F() == 0 && GAME_OPTION_CHECK_F(OPTION_제한시간없음)==0
 	LOCAL = 0
 	CALL TENTACLE_SURVIVE, "NUM"
@@ -87,75 +87,81 @@ SIF FLAG:999 == -997
 	GOTO START_SCORE
 
 
-
 ;--------------------------------------------------
-;エンディング１　全滅ED
+;엔딩１　전멸ED
 @ENDING_1
 PRINTL 
-PRINTL 全滅しました・・・
+PRINTL 모든 마법소녀들이 전멸했습니다・・・
 FORCEWAIT
-;最後の一人が「女性的」なら追加エンディング
+;최후의 1인이「여성적」이라면 추가 엔딩
 SIF ISMANLY()
 	GOTO SKIP
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORM 　『%STR:2500%』との戦いに仲間たちが一人また一人と敗北していく中、それでも
-PRINTFORM 最後まで戦い続けていた%PRINT_CALLNAME(TARGET)%だったが、その抵抗もついに途絶えることとなる日が訪れた。
+PRINTFORM 　『%STR:2500%』와의 싸움에 동료들이 하나 둘 패배해 가는 가운데, 
+PRINTFORM 　절망적인 상황에서도 끝까지 맞서 싸우던 %PRINT_CALLNAME(TARGET)%조차, 결국에는 저항의 의지를 잃고 말았다.
 PRINTL
 PRINTW 
-PRINTFORM 　相手が最後の“敵”であることを知っているかのように、%PRINT_CALLNAME(TARGET)%を囲んだ
+PRINTL 　이것이 최후의“적”임을 알고 있다는 듯이,
+PRINTFORM 　%PRINT_CALLNAME(TARGET)% 주변을 에워싼 
 IF ISMALE()
 	;#region
-	PRINTFORM %STR:2500%の群れはぐったりとした少女然とした身体を代わる代わるに弄り出した。
+	PRINTFORML %STR:2500% 무리는 축 늘어진 소녀와도 같은 몸을 번갈아 만지작거리기 시작했다.
 	;#endregion
 ELSE 
-	PRINTFORM %STR:2500%の群れはぐったりとした少女の身体を代わる代わるに弄り出した。
+	PRINTFORML %STR:2500% 무리는 축 늘어진 소녀의 몸을 번갈아 만지작거리기 시작했다.
 ENDIF
-PRINTFORM 　戦闘が決着した時にはまだ多少なりとも残っていた%PRINT_CALLNAME(TARGET)%の衣服は完全に
-PRINTFORM 破られ、間もなくして手首や襟元にほんの僅かな名残を留めるだけになってしまった。
+PRINTFORML 　전투가 끝났을 때에는 조금이나마 남아 있었던 %PRINT_CALLNAME(TARGET)%의 옷은 완전히 찢겨나갔고,
+PRINTL 　얼마 지나지 않아 손목이나 목덜미에 아주 약간의 자취만이 남겨졌다.
 PRINTL
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORM 　全裸よりも扇情的な姿になった%PRINT_CALLNAME(TARGET)%に四本の촉수が巻きつき、四肢を
+PRINTFORM 　전라보다도 선정적인 모습이 된 %PRINT_CALLNAME(TARGET)%에게 네 마리의 촉수가 휘감겨, 사지를 
 IF ISMALE()
 	;#region
-	PRINTFORM 大の字に開かせていく。かすかに呻き声を上げた少年には、まだ意識が돌아간다
+	PRINTL 큰 대자로 벌려 나간다.
+	PRINT 　희미하게 신음소리를 낸 소년에게는, 
 	;#endregion
 ELSE 
-	PRINTFORM 大の字に開かせていく。かすかに呻き声を上げた少女には、まだ意識が돌아간다
+	PRINTL 큰 대자로 벌려 나간다.
+	PRINT 　희미하게 신음소리를 낸 소녀에게는, 
 ENDIF
 IF ISMALE()
 	;#region
-	PRINTFORM 様子はない。だが少しして息苦しさのためか、少年は小さく口を開いた。
+	PRINTL 아직 의식이 돌아올 기색이 보이지 않았다.
+	PRINTL 　하지만 조금 있다가 답답함을 느낀 건지, 소년은 작게 입을 열었다.
 	;#endregion
 ELSE 
-	PRINTFORM 様子はない。だが少しして息苦しさのためか、少女は小さく口を開いた。
-ENDIF
-PRINTL
-PRINTW 
-PRINTFORM 　その瞬間、唇と唇の隙間を掻き分けて肉色をした太い촉수が入り込んだ。
-PRINTFORM 　口腔内に太く硬い肉質を押し込まれ、%PRINT_CALLNAME(TARGET)%は苦鳴を洩らす。
-PRINTFORM 　しかし촉수の動きは止まることなく、%PRINT_CALLNAME(TARGET)%のさらに奥深くへと侵入していった。
-IF ISMALE()
-	;#region
-	PRINTFORM 　少年は異物感にえずきながら、止めようのない涙を零しはじめた。
-	;#endregion
-ELSE 
-	PRINTFORM 　少女は異物感にえずきながら、止めようのない涙を零しはじめた。
+	PRINTL 아직 의식이 돌아올 기색이 보이지 않았다.
+	PRINTL 　하지만 조금 있다가 답답함을 느낀 건지, 소녀는 작게 입을 열었다.
 ENDIF
 PRINTL
 PRINTW 
-PRINTFORM 　それがきっかけになったのだろうか、それまで思い思いに%PRINT_CALLNAME(TARGET)%の身体を
-PRINTFORM 弄くっていた촉수達が、先を争うように%PRINT_CALLNAME(TARGET)%の孔という孔へと先端を押し
+PRINTFORM 　그 순간, 입술과 입술 사이를 헤집곤 살빛을 띠던 굵은 촉수가 파고 들어갔다.
+PRINTFORM 　구강 내에 굵고 단단한 육질을 밀어 넣어져, %조사처리(PRINT_CALLNAME(TARGET),"는")% 괴로운 신음을 흘렸다.
+PRINTFORM 　그러나 촉수의 움직임은 멈추지 않고, %PRINT_CALLNAME(TARGET)%의 입속을 더욱 깊숙히 침입해 갔다.
 IF ISMALE()
 	;#region
-	PRINTFORM 付け出した。陰茎の鈴口やアヌス、口腔は言うにおよばず、鼻腔や耳穴、さらには
+	PRINT 　소년은 
 	;#endregion
 ELSE 
-	PRINTFORM 付け出した。秘裂やアヌス、口腔は言うにおよばず、鼻腔や耳穴、さらには
+	PRINT 　소녀는 
 ENDIF
-PRINTFORM 涙腺にまで、%PRINT_CALLNAME(TARGET)%の身体を촉수で埋め尽くそうというように無数の촉수が蠢きはじめた……。
+PRINTL 이물감에 메스꺼워하며, 눈물이 멈추지 않고 흘러내리기 시작했다.
+PRINTL
+PRINTW 
+PRINTFORML 　그것이 계기가 된 건지, 여태까지 제멋대로 %PRINT_CALLNAME(TARGET)%의 신체를 만지작거리던 촉수들이
+PRINTFORML 　마치 서로 앞다투듯이 %PRINT_CALLNAME(TARGET)%의 구멍이란 구멍에 촉수를 밀어 넣었다.
+IF ISMALE()
+	;#region
+	PRINT 　자지
+	;#endregion
+ELSE 
+	PRINT 　질
+ENDIF
+PRINTL  구멍이나 항문, 구강은 말할 것도 없고, 비강이나 귓구멍에도, 심지어는 눈물샘에까지.
+PRINTFORML 　%PRINT_CALLNAME(TARGET)%의 몸을 촉수로 채우려는 듯이 무수한 촉수들이 꿈틀거리기 시작했다……
 PRINTL
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
@@ -284,18 +290,18 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 		CALL LB
 		FLAG:999 = -997
 	ELSE
-		PRINTL 　　ゲームオーバーモードに移行します。
-		PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+		PRINTL 　　GAME OVER모드로 이행합니다.
+		PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 		PRINTL 
-		;ゲームオーバーモードにする
+		;GAME OVER모드로 변경
 		CALL CHANGE_GAMEOVER_MODE
 		FLAG:999 = -998
 	ENDIF
 ELSE
-	PRINTL 　　ゲームオーバーモードに移行します。
-	PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+	PRINTL 　　GAME OVER모드로 이행합니다.
+	PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 	PRINTL 
-	;ゲームオーバーモードにする
+	;GAME OVER모드로 변경
 	CALL CHANGE_GAMEOVER_MODE
 	FLAG:999 = -998
 ENDIF
@@ -304,15 +310,15 @@ FORCEWAIT
 
 
 ;--------------------------------------------------
-;エンディング２　ゲームクリア
+;엔딩２　게임 클리어
 @ENDING_2
 #DIM CCOUNT
 VARSET LOCAL
 VARSET LOCALS
 PRINTL 
-PRINTFORML %STR:2500%を完全に殲滅しました！
-PRINTL この街に平和が戻りました！！
-;消失したままのキャラがいると完クリにはならない
+PRINTFORML %STR:2500%를 완전히 섬멸했습니다！
+PRINTL 마침내 도시에 평화가 돌아왔습니다！！
+;사라진 채로 있는 캐릭터가 있으면 완전히 클리어되지 않는다
 LOCAL = 0
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER || CCOUNT == 0
@@ -344,130 +350,139 @@ NEXT
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORML かくして、『%STR:2500%』との壮絶な戦いは幕を閉じた。
-PRINTFORML 最後の敵に止めを刺した瞬間、世界中の%STR:2500%が次々と動きを止め、
-PRINTFORML まるで糸が切れたかのようにその場に倒れ伏していった。
+PRINTFORML 이리하여,『%STR:2500%』와의 장렬한 싸움은 막을 내렸다.
+PRINTFORML 최후의 적에게 마지막 일격을 날린 순간, 전 세계의 %STR:2500%가 차례차례 움직임을 멈춰,
+PRINTFORML 마치 실이 끊어진 것처럼 그 자리에 쓰러져 갔다.
 PRINTL 
-PRINTFORML 本体以外の%STR:2500%は全て遠隔操作されている生体端末だったとか、
-PRINTFORML 最大個体が死んだことにより脳波を共有する群体全てがショック死したなど、
-PRINTFORML 世間で様々な憶測が飛び交ったが、原因は結局よく分からずじまいであった。
-PRINTFORM しかし、%STR:2500%の脅威が去ったということを疑う者はいなかった
+PRINTFORML 본체 이외의 %STR:2500%는 모두 원격으로 조작되고 있는 생체 단말기였다든가,
+PRINTFORML 최대 개체가 사망함으로써 뇌파를 공유하는 군체 모두가 쇼크사했다는 등,
+PRINTFORML 세간에서는 갖가지 억측이 난무했지만, 원인은 결국 명확히 밝혀지지 않았다.
+PRINTFORM 그러나, %STR:2500%의 위협이 사라졌다는 것을 의심하는 이는 아무도 없었다
 IF LOCAL:2 > 0
-	PRINTL 。
+	PRINTL .
 	PRINTL 
-	PRINTFORML 敵によって操られていた人々も一人またひとりと正気に戻り、
-	PRINTFORM 세뇌されていた%LOCALS:2%
+	PRINTFORML 촉수에 의해 조종되던 사람들도 하나둘 정신을 차리기 시작했고,
+	PRINTFORM 동시에 세뇌되어 있던 %LOCALS:2%
 	SIF LOCAL:2 >= 2
-		PRINT たち
-	PRINTFORML もまた、自分を取り戻すことができた。
+		PRINT 들
+	PRINTFORML  또한, 제정신을 되찾을 수 있었다.
 	PRINTL 
-	PRINTFORML 泣いて詫びる%LOCALS:2%を%PRINT_CALLNAME(TARGET)%は優しく抱きしめ、
-	PRINTFORML お互いが生きていることに感謝するのであった・・・
+	PRINTFORML 울며 사과하는 %조사처리(LOCALS:2,"를")% %조사처리(PRINT_CALLNAME(TARGET),"가")% 다정하게 껴안으며,
+	PRINTFORML 서로가 살아있음에 감사하는 것이었다・・・
 ELSE
 	PRINTL ・・・
 ENDIF
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTL ――決戦から一週間後。
-PRINTFORM 戦いを終えた%PRINT_CALLNAME(TARGET)%
-SIF LOCAL:1 + LOCAL:3 == 0
-	PRINT たち
-PRINTL は、つかの間の日常を謳歌していた。
-PRINTL 復興に湧く街の大通りは活気で溢れており、人々の顔からは不安の影が消え去っている。
-IF LOCAL:1 > 0 || LOCAL:3 > 0
-	PRINT だが、戦いの中で行方不明になった 
-	PRINTFORM %LOCALS:1% 
-	SIF LOCAL:1 + LOCAL:3 >= 2
-		PRINT たち
-	PRINTW が帰ってくることはなかった・・・
-	PRINTL 
-	PRINT 仲間
-	SIF LOCAL:1 + LOCAL:3 >= 2
-		PRINT たち
-	PRINTL の犠牲があればこそ、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は勝利することができたのかもしれない。
-	PRINTL ――それとも、別の結末が有り得たのだろうか？
-	PRINTL 
-	PRINTL 人々の笑い声がする夕焼けを見ながら、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%はそのことについて思いを巡らせる・・・
+PRINTL ――결전이 끝나고 일주일 후.
+PRINT 싸움을 끝낸
+IF LOCAL:1 + LOCAL:3 == 0
+	PRINTFORM %PRINT_CALLNAME(TARGET)%네들은,
 ELSE
-	PRINTFORM その様子を、%PRINT_CALLNAME(TARGET)%
-	SIF LOCAL:1 + LOCAL:3 == 0
-		PRINT たち
-	PRINTFORML は遠くから眩しそうに見守っていた。
+	PRINTFORM %조사처리(PRINT_CALLNAME(TARGET),"는")%,
+ENDIF
+PRINTL  잠시나마 일상을 구가하고 있었다.
+PRINTL 부흥에 샘솟는 도시의 길거리는 활기로 가득 찼고, 사람들의 얼굴에서는 불안의 그림자가 사라지고 있었다.
+IF LOCAL:1 > 0 || LOCAL:3 > 0
+	PRINT 그러나, 싸움 중에 행방 불명이 된 
+	IF LOCAL:1 + LOCAL:3 >= 2
+		PRINTFORM %LOCALS:1%네들이
+	ELSE
+		PRINTFORM %조사처리(LOCALS:1,"가")%
+	ENDIF
+	PRINTL  돌아오는 일은 없었다・・・
+	PRINTW 
+	PRINT 그녀
+	SIF LOCAL:1 + LOCAL:3 >= 2
+		PRINT 들
+	PRINTL 의 희생이 아니었더라면,
+	PRINTFORML 그 때 %조사처리(PRINT_CALLNAME(TARGET),"는")% 승리하지 못했을지도 모른다.
+	PRINTL ――어쩌면, 이와는 다른 결말을 만들 수 있었던 게 아니었을까？
+	PRINTL 
+	PRINTL 사람들의 웃음소리가 나는 노을을 보며,
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")% 그 일에 대해 골똘히 생각하고 있었다・・・
+ELSE
+	PRINT 그 모습을, 
+	IF LOCAL:1 + LOCAL:3 == 0
+		PRINTFORM %PRINT_CALLNAME(TARGET)%네들이
+	ELSE
+		PRINTFORM %조사처리(PRINT_CALLNAME(TARGET),"가")%
+	ENDIF
+	PRINTL  멀리서 눈부시게 지켜보고 있었다.
 ENDIF
 PRINTL 
-PRINTL 戦いが終われば、正義の味方は必要ない。
-PRINTFORM %STR:2500%が全滅したいま、自分
+PRINTL 싸움이 끝났다면, 정의의 영웅은 필요 없다.
+PRINTFORM %STR:2500%가 전멸한 시점에서, 자신
 SIF LOCAL:1 + LOCAL:3 == 0
-	PRINT たち
-PRINTL もまた、力を捨てる時が来たのだ。
-PRINTW ・・・いや、本当にそうだろうか？
+	PRINT 들
+PRINTL  또한 힘을 버릴 때가 된 것이다.
+PRINTW ・・・아니, 정말로 그럴까？
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORML 数ヶ月後、そこには再び戦場に立つ%PRINT_CALLNAME(TARGET)%の姿があった。
+PRINTFORML 몇 달 후, 그곳에는 다시 전쟁터에 나선 %PRINT_CALLNAME(TARGET)%의 모습이 있었다.
 PRINTDATAL
-	DATAFORM 南極に突如出現した"超空間通路"から、謎の敵が飛来し都市を襲い始めたのだ。
-	DATAFORM 少女たちの욕망を喰らって成長する"魔女"と、人知れず死闘を繰り広げているのだ。
-	DATAFORM 一般市民を攫って改造인간を作り出す"悪の組織"の存在を見過ごすことはできない。
-	DATAFORM "人類の兵器を模倣する謎の敵"の侵攻を食い止めるべく、新たな特殊組織が結成されたのだ。
-	DATAFORM 月面から飛来する"新たな脅威"と、日夜戦い続けているのだ。
-	DATAFORM 太平洋の深海から湧き出る謎の"怪獣"たちが、人類の新たな脅威と化していたのだ。
+	DATA 남극에 갑자기 출현한 "초공간 통로" 로부터, 안경을 쓴 펭귄을 비롯한 여러 외계 생명체가 날아와 도시를 덮치기 시작한 것이다.
+	DATA 소녀들의 욕망을 먹고 성장한 "마녀" 와 남몰래 사투를 벌이고 있는 것이다.
+	DATA 일반 시민을 사로잡아 개조 인간을 만들어 내는 "가면 드라이버" 의 존재를 간과할 수는 없었던 것이다.
+	DATA "인류의 병기를 모방하는 수수께끼의 적" 의 침공을 막기 위해, 새로운 특수 조직이 결성된 것이다.
+	DATA 달 표면에서 날아온 "헬창 달토끼" 와 같은 새로운 위협과 밤낮으로 싸우고 있는 것이다.
+	DATAFORM 태평양의 심해에서 솟아 나온 수수께끼의 "괴수"들이, 인류의 새로운 위협이 되고 있었던 것이다.
 ENDDATA
-PRINTL 力ある者には責任がある。
-PRINTFORMW 人々の平和を脅かす存在がある限り、%PRINT_CALLNAME(TARGET)%の戦いが終わることはない・・・
+PRINTL 힘 있는 자에게는 책임이 따르는 법.
+PRINTFORMW 사람들의 평화를 위협하는 존재가 있는 한, %PRINT_CALLNAME(TARGET)%의 싸움은 끝나지 않는다・・・
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
 PRINTW 　　ＣＯＮＧＲＡＴＵＬＡＴＩＯＮＳ　！！
 PRINTL
-PRINTL お疲れ様でした
+PRINTL 게임 클리어를 축하드립니다.
 PRINTL 
 FORCEWAIT
 
 ;--------------------------------------------------
-;エンディング３　日数制限超過
+;엔딩３　제한 일수 초과
 @ENDING_3
 CALL LB
 CALL DOT_AFTER, 1
 PRINTL 
-PRINTW 時間切れです・・・
+PRINTW 제한 시간이 다 되었습니다・・・
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
 IF ISMALE()
 	;#region
-	PRINTFORML %STR:2500%との戦いを続ける少年たち。しかし、彼らの行動は遅すぎた。
+	PRINTFORML %STR:2500%와의 싸움을 이어가는 소년들. 그러나, 그들의 대처가 너무 느렸던 탓일까.
 	;#endregion
 ELSE 
-	PRINTFORML %STR:2500%との戦いを続ける少女たち。しかし、彼女たちの行動は遅すぎた。
+	PRINTFORML %STR:2500%와의 싸움을 이어가는 소녀들. 그러나, 그녀들의 대처가 너무 느렸던 탓일까.
 ENDIF
-PRINTFORML その日、残る全ての%STR:2500%が一斉に街に現れ、そして一つの巨大な%STR:2500%へと融合していった。
-PRINTFORML その巨大な%STR:2500%からは無数の小さな%STR:2500%がとめどなくあふれ出している。
+PRINTFORML 그 날, 남아있는 모든 %STR:2500%가 일제히 거리에 나타나, 하나의 거대한 %STR:2500%로 융합되어 갔다.
+PRINTFORML 그 거대한 %STR:2500%로부터 무수히 작은 %STR:2500%가 하염없이 쏟아져 나오고 있었다.
 IF ISMALE()
 	;#region
-	PRINTFORML 少年たちの抵抗もむなしく、瞬く間に街は%STR:2500%によって飲み込まれていった・・・
+	PRINT 소년
 	;#endregion
 ELSE 
-	PRINTFORML 少女たちの抵抗もむなしく、瞬く間に街は%STR:2500%によって飲み込まれていった・・・
+	PRINT 소녀
 ENDIF
-PRINTFORML 一人、また一人と力尽き、촉수と汚液の奔流に沈んでゆく可憐な花たち。
-PRINTFORMW 命運を察した%PRINT_CALLNAME(TARGET)%の頬にも、白濁化粧に混ざって一筋の涙が流れ落ちていた・・・
+PRINTFORML 들의 저항이 허무하게도, 순식간에 거리는%STR:2500%에 의해 삼켜져 갔다・・・
+PRINTL 한 명, 또 한 명이 힘을 다하여, 촉수와 오액의 분류에 가라앉아가는 가련한 꽃들.
+PRINTFORMW 명운을 헤아린 %PRINT_CALLNAME(TARGET)%의 볼에도, 백탁한 화장에 섞여 한 줄기 눈물이 흘러내리고 있었다・・・
 PRINTL  
-;エンドレスモードの場合
+;ENDLESS모드일 경우
 CALL TENTACLE_SURVIVE, "NUM"
 LOCAL = FLAG:3 - RESULT
 IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-	;撃破数を記録
-	PRINTFORML 보스撃破記録　　{LOCAL} 体
+	;격파 수를 기록
+	PRINTFORML 보스 격파 기록　{LOCAL} 체
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML 보스撃破の新記録を達成しました！
-		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
+		PRINTFORML 보스 격파 신기록을 달성했습니다！
+		PRINTFORMW 　{GLOBAL:114}체 → {LOCAL}체
 		PRINTL 
 		GLOBAL:114 = LOCAL
 		SAVEGLOBAL
@@ -484,7 +499,7 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 		PRINTL 
 		PRINTL 　　ＧＡＭＥ　ＯＶＥＲ
 		PRINTL 
-		PRINTW タイトル画面に戻ります
+		PRINTW 타이틀 화면으로 돌아갑니다.
 		FLAG:999 = -999
 	ENDIF
 ELSE
@@ -492,71 +507,73 @@ ELSE
 	PRINTL 
 	PRINTL 　　ＧＡＭＥ　ＯＶＥＲ
 	PRINTL 
-	PRINTW タイトル画面に戻ります
+	PRINTW 타이틀 화면으로 돌아갑니다.
 	FLAG:999 = -999
 ENDIF
 FORCEWAIT
 
 
 ;--------------------------------------------------
-;エンディング４　ソロモードで세뇌/흑화した
+;엔딩４　SOLO모드에서 세뇌/흑화했다
 @ENDING_4
 PRINTL 
-PRINTW 希望は失われました・・・
+PRINTW 도시의 유일한 희망이 사라졌습니다・・・
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORML かくして、『%STR:2500%』に対抗しうる唯一の存在であった%PRINT_CALLNAME(TARGET)%は闇へと飲まれた。
+PRINTFORML 이리하여,『%STR:2500%』에 대항할 수 있는 유일한 존재였던 %조사처리(PRINT_CALLNAME(TARGET),"는")% 결국 어둠에 휩쓸렸다.
 IF TALENT:촉수의포로 > 0
-	PRINTL 与えられる快楽にその身も心も捧げ、本来の使命を忘れて自ら異形たちの尖兵となり果てたのだ。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%という司令塔を手に入れた『%STR:2500%』は組織的に人々を襲うようになり、
-	PRINTFORML 『%STR:2500%』の群れを率いて街を襲っては虐殺と욕망の限りを尽くす%PRINT_CALLNAME(TARGET)%は
-	PRINT 人類の裏切り者
+	PRINTL 주어지는 쾌락에 그 몸도 마음도 바치고, 본래 사명을 잊은 채 스스로 이형 생물들의 첨병이 된 것이다.
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"라")%는 사령관을 얻은『%STR:2500%』는 조직적으로 사람들을 덮치게 되었고,
+	PRINTFORML 『%STR:2500%』무리를 이끌고 거리를 덮치곤 학살과 욕망을 다하는 %조사처리(PRINT_CALLNAME(TARGET),"는")%
+	PRINT 인류의 배신자 
 	PRINTDATA
-		DATAFORM "魔装の
-		DATAFORM "触装の
-		DATAFORM "淫装の
-		DATAFORM "淫獄の
-		DATAFORM "魔獄の
+		DATA "마장의
+		DATA "촉장의
+		DATA "음장의
+		DATA "음옥의
+		DATA "마옥의
 	ENDDATA
+	PRINT  
 	PRINTDATA
-		DATAFORM 悪魔"
-		DATAFORM 隷姫"
-		DATAFORM 妖姫"
-		DATAFORM 隷嬢"
-		DATAFORM 妖花"
+		DATAFORM 악마"
+		DATAFORM 예희"
+		DATAFORM 요희"
+		DATAFORM 노예녀"
+		DATAFORM 요화"
 	ENDDATA
-	PRINTW として恐れられるようになる・・・
+	PRINTW  로서 두려움의 대상이 되었다・・・
 ELSE
-	PRINTL 望まずとも身体が勝手に動き、異形たちの意のままに操られる肉人形となり果てたのだ。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%の知識を吸収した『%STR:2500%』は組織的に人々を襲うようになり、
-	PRINTFORML 感情も見せずに同じ인간をためらいなく殺戮していく%PRINT_CALLNAME(TARGET)%は
-	PRINT 人類の裏切り者
+	PRINTL 원하지 않아도 몸이 마음대로 움직여, 이형 생물들의 뜻대로 조종당하는 살아있는 인형이 된 것이다.
+	PRINTFORML %PRINT_CALLNAME(TARGET)%의 지식을 흡수한『%STR:2500%』는 조직적으로 사람들을 덮치게 되었고,
+	PRINTFORML 감정도 보이지 않으며 같은 인간을 서슴없이 살육해 가는 %조사처리(PRINT_CALLNAME(TARGET),"는")%
+	PRINT 인류의 배신자 
 	PRINTDATA
-		DATAFORM "魔装の
-		DATAFORM "触装の
-		DATAFORM "魔獄の
+		DATA "마장의
+		DATA "촉장의
+		DATA "마옥의
 	ENDDATA
+	PRINT  
 	PRINTDATA
-		DATAFORM 悪魔"
-		DATAFORM 隷姫"
-		DATAFORM 隷嬢"
-		DATAFORM 隷花"
+		DATA 악마"
+		DATA 예희"
+		DATA 노예녀"
+		DATA 예화"
 	ENDDATA
-	PRINTW として恐れられるようになる・・・
+	PRINTW  로서 두려움의 대상이 되었다・・・
 ENDIF
 PRINTL 
-PRINTW そして、人類という種が滅亡することは、このときに既に決まっていたのだった・・・
+PRINTW 그리고, 인류라는 종의 멸망은 이 때부터 이미 정해져 있던 것이었다・・・
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
 PRINTW 　　ＧＡＭＥ　ＯＶＥＲ
 PRINTL 
-PRINTL 　　ゲームオーバーモードに移行します。
-PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+PRINTL 　　GAME OVER모드로 이행합니다.
+PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 PRINTL 
 
-;ゲームオーバーモードにする
+;GAME OVER모드로 변경
 CALL CHANGE_GAMEOVER_MODE
 FLAG:999 = -998
 
@@ -571,83 +588,83 @@ PRINTW 希望は失われました・・・
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORML かくして、『%STR:2500%』に対抗しうる唯一の存在であった%PRINT_CALLNAME(TARGET)%は肉壁の奥へと沈んだ。
+PRINTFORML 이리하여,『%STR:2500%』に対抗しうる唯一の存在であった%PRINT_CALLNAME(TARGET)%は肉壁の奥へと沈んだ。
 PRINTL 
-PRINTL ……急激に数を増した強大な촉수 생물を前に人類は成すすべなく蹂躙され、
+PRINTL ……急激に数を増した強大な触手生物を前に人類は成すすべなく蹂躙され、
 PRINTL 都市インフラの維持すらまもなく不可能となった。
 PRINTL 
-PRINTL かつて自宅、学校、市街地だった場所で、数多くの女性が촉수に犯され続けていた。
+PRINTL かつて自宅、学校、市街地だった場所で、数多くの女性が触手に犯され続けていた。
 PRINTL 暴力的な快感に正気を失ったかのごとく喘ぐ女性、終わらぬ凌辱に涙も悲鳴も枯れ果てた女性……
-PRINTL 彼女らが辿る悲惨な運命は、それでも촉수の巣へと連れ去られた"花嫁"たちのそれに比べれば可愛いものだった。
+PRINTL 彼女らが辿る悲惨な運命は、それでも触手の巣へと連れ去られた"花嫁"たちのそれに比べれば可愛いものだった。
 PRINTL 少なくとも「ヒトとして生きてはいる」のだから……
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
 IF CONFIG_CHECK_MANIAC_F(14) > 0
-	PRINTL 薄暗い촉수洞窟の奥深く。年若き少女たちが手脚を失った状態で肉壁に固定され、あらゆる穴を蹂躙されていた。
+	PRINTL 薄暗い触手洞窟の奥深く。年若き少女たちが手脚を失った状態で肉壁に固定され、あらゆる穴を蹂躙されていた。
 ELSE
 	PRINTL 薄暗い肉の洞窟の奥深く。年若き少女たちが壁に手足を埋め込まれ、穴という穴を蹂躙されていた。
 ENDIF
-PRINTL 狂ったように卵子を排出する卵巣、挿入された촉수のストロークに合わせて潮を噴き続ける膣穴…
+PRINTL 狂ったように卵子を排出する卵巣、挿入された触手のストロークに合わせて潮を噴き続ける膣穴…
 PRINTL 苗床として造り替えられた子宮、全身を循環する高濃度の媚液、脊髄から指先まで張り巡らされた快楽神経…
 PRINTL 雌としてのすべてがヒトとしての脳を裏切り、鈍らせ、侵し、尊厳までも蕩けさせてゆく。
 PRINTW 
-PRINTL ほんの僅かばかり前までは学校に通い、친구らと笑い合い、恋に悩む普通の少女であったはずの「それ」らは、
+PRINTL ほんの僅かばかり前までは学校に通い、友人らと笑い合い、恋に悩む普通の少女であったはずの「それ」らは、
 PRINTL 華やかな人生、日常を奪われた理由も分からぬまま、今では臨月の妊婦より膨らんだ腹部を痙攣させて揺れ動いていた。
-PRINTL 最早「それ」らは촉수の巣に属する苗床に過ぎず、二度と少女としての生には戻れぬ哀れな繁殖器官だった…
+PRINTL 最早「それ」らは触手の巣に属する苗床に過ぎず、二度と少女としての生には戻れぬ哀れな繁殖器官だった…
 PRINTL 
 IF ISMALE()
 	; #region 
-	PRINTFORML 남자である%PRINT_CALLNAME(TARGET)%もまた、例外ではなかった。
-	PRINTFORML その力か、容姿か、なにを촉수達が気に入ったのかはわからないが、
-	PRINTFORMW %PRINT_CALLNAME(TARGET)%は他の남자達とは違って、特別な肉体改造を施されていた。
+	PRINTFORML オトコである%PRINT_CALLNAME(TARGET)%もまた、例外ではなかった。
+	PRINTFORML その力か、容姿か、なにを触手達が気に入ったのかはわからないが、
+	PRINTFORMW %PRINT_CALLNAME(TARGET)%は他のオトコ達とは違って、特別な肉体改造を施されていた。
 	PRINTFORML 
 	PRINTFORML ペニスは不必要だとばかりに縮み上がり、もはや勃起することもできずに薄い精液を力なく垂れ流し続けている。
 	PRINTFORML 代わりに、微かに膨らんだ胸の頂にある肥大化した乳首からは、
-	PRINTFORML 真っ白な母乳が사정のような勢いで断続的に噴き出して、촉수の子達に降り注いでいた。
+	PRINTFORML 真っ白な母乳が射精のような勢いで断続的に噴き出して、触手の子達に降り注いでいた。
 	PRINTFORML 
-	PRINTFORML その촉수の子達は、まぎれもなく%PRINT_CALLNAME(TARGET)%が孕んで産み落とした子ども達だ。
-	PRINTFORML 直腸の奥に촉수の子だけを孕むことのできる苗床子宮を造られてしまい、
-	PRINTFORML 애널を抉る野太い촉수に種付けされるか、ボテ腹を抱えながら애널から촉수の子どもをひり出すか。
+	PRINTFORML その触手の子達は、まぎれもなく%PRINT_CALLNAME(TARGET)%が孕んで産み落とした子ども達だ。
+	PRINTFORML 直腸の奥に触手の子だけを孕むことのできる苗床子宮を造られてしまい、
+	PRINTFORML アナルを抉る野太い触手に種付けされるか、ボテ腹を抱えながらアナルから触手の子どもをひり出すか。
 	PRINTFORMW 常に繁殖に使われ、もう%PRINT_CALLNAME(TARGET)%の尻穴が閉じることはなかった…
 	; #endregion
 	PRINTL 
 ELSE
 	PRINTFORML 力尽きた%PRINT_CALLNAME(TARGET)%もまた、例外ではなかった。
-	PRINTFORML その力か、女性として類い稀なほどの容姿か、なにを촉수達が気に入ったのかはわからないが…
+	PRINTFORML その力か、女性として類い稀なほどの容姿か、なにを触手達が気に入ったのかはわからないが…
 	PRINTFORMW もはや抵抗のかなわぬ%PRINT_CALLNAME(TARGET)%は、特に念入りに肉体改造を施されていた。
 	PRINTFORML 
 	PRINTFORML 肥大化した%PRINT_CALLNAME(TARGET)%の双丘では頂で乳首が嬲られて痛ましいまでに腫れあがり、
-	PRINTFORML 拡張された乳腺からは白濁した母乳がごぼごぼと断続的に噴き出し、촉수の子達へと降り注ぎ続けた。
+	PRINTFORML 拡張された乳腺からは白濁した母乳がごぼごぼと断続的に噴き出し、触手の子達へと降り注ぎ続けた。
 	PRINTFORML 
-	PRINTFORML …その촉수の子達は、まぎれもなく%PRINT_CALLNAME(TARGET)%が孕んで産み落とした子ども達だ。
-	PRINTFORML 開ききった雌穴から垂れ下がる“へその緒”は一本残らず異形の촉수達に直結され、
+	PRINTFORML …その触手の子達は、まぎれもなく%PRINT_CALLNAME(TARGET)%が孕んで産み落とした子ども達だ。
+	PRINTFORML 開ききった雌穴から垂れ下がる“へその緒”は一本残らず異形の触手達に直結され、
 	PRINTFORMW 孕み袋として生まれ変わった%PRINT_CALLNAME(TARGET)%の新たな現実を示していた。
 	PRINTFORML 
 	PRINTFORML 乳房の内部や直腸の奥、果ては子宮の奥や喉にまで……
 	PRINTFORML 肉体改造によって全身に苗床子宮を造られた%PRINT_CALLNAME(TARGET)%は、疑う余地もなく特上の孕み袋だった。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%本来の子宮も、壊造された苗床子宮も、種付けを繰り返す촉수にとっては何ら違いが無い。
-	PRINTFORML 번식자루にされた%PRINT_CALLNAME(TARGET)%の「雌穴」は촉수で満たされ、一秒たりとも閉じることがない。
+	PRINTFORML %PRINT_CALLNAME(TARGET)%本来の子宮も、壊造された苗床子宮も、種付けを繰り返す触手にとっては何ら違いが無い。
+	PRINTFORML 繁殖袋にされた%PRINT_CALLNAME(TARGET)%の「雌穴」は触手で満たされ、一秒たりとも閉じることがない。
 	PRINTFORML 
-	PRINTFORML 耕され、抉り殺され、ボテ腹を抱えながらイキ果てては、穴という穴から촉수をひり出す%PRINT_CALLNAME(TARGET)%。
+	PRINTFORML 耕され、抉り殺され、ボテ腹を抱えながらイキ果てては、穴という穴から触手をひり出す%PRINT_CALLNAME(TARGET)%。
 	PRINTFORML 広がりきった全ての「雌穴」からは、とめどなく溢れる愛液に混じって無数の“へその緒”が垂れ下がる。
-	PRINTFORML 見る影もない無様な表情で出産と絶頂だけを繰り返す、촉수専用の번식자루…
-	PRINTFORMW 촉수専用の哀れな苗床少女に、もう人類の希望だった頃の…ヒトであった頃の面影は無い。
+	PRINTFORML 見る影もない無様な表情で出産と絶頂だけを繰り返す、触手専用の繁殖袋…
+	PRINTFORMW 触手専用の哀れな苗床少女に、もう人類の希望だった頃の…ヒトであった頃の面影は無い。
 	PRINTL 
 ENDIF
 PRINTL 人類という種の滅亡は、このときに既に決まっていたのだった。
 PRINTL だがヒト未満の存在と化した孕み袋たちにとって、人類の命運などはもう知る由も無い。
-PRINTFORMW 嬌声だけが鳴り響く절망の宴の中で、今日も%PRINT_CALLNAME(TARGET)%たちは촉수を産み落とし続けるのだ……
+PRINTFORMW 嬌声だけが鳴り響く絶望の宴の中で、今日も%PRINT_CALLNAME(TARGET)%たちは触手を産み落とし続けるのだ……
 PRINTL 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
 PRINTW 　　ＧＡＭＥ　ＯＶＥＲ
 PRINTL 
-PRINTL 　　ゲームオーバーモードに移行します。
-PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+PRINTL 　　GAME OVER모드로 이행합니다.
+PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 PRINTL 
 
-;ゲームオーバーモードにする
+;GAME OVER모드로 변경
 CALL CHANGE_GAMEOVER_MODE
 FLAG:999 = -998
 
@@ -663,12 +680,12 @@ PRINTL
 PRINTL 全滅した・・・
 FORCEWAIT
 PRINTFORML 最後の魔法少女%PRINT_CALLNAME(TARGET)%は、%STR:2500%との戦いで倒れはしなかった。
-PRINTFORML 악질 시민によって不必要に捕らえられ、監禁され、凌辱され、支配され、
+PRINTFORML クズ市民によって不必要に捕らえられ、監禁され、凌辱され、支配され、
 PRINTFORMW 最終的には動物のように屠殺された。
 PRINTL
-PRINTFORML 魔法少女が消えた後も촉수の공격は続き、
+PRINTFORML 魔法少女が消えた後も触手の攻撃は続き、
 PRINTFORML 政府と軍は崩壊し、社会は完全に崩壊した。
-PRINTFORMW 男たちは暴力を浪費し、本能のままに욕망を満たしてゆく・・・
+PRINTFORMW 男たちは暴力を浪費し、本能のままに欲望を満たしてゆく・・・
 PRINTW 
 PRINTFORML \@ TALENT:TARGET:사지결손 > 0 ? 腕と脚が切り落とされた # \@%PRINT_CALLNAME(TARGET)% の身体は剥製化され、
 PRINTFORMW ピアスポールに取り付けられたまま、裏社会の秘密の拠点に勝利旗のように掲げられていた。
@@ -679,7 +696,7 @@ IF TALENT:거유 >= 5
 ELSEIF TALENT:거유 >= 4
 	PRINTL 最期の瞬間がいかに美しかったかを物語るかのように、その豊満な胸が前に突き出される。
 ELSEIF TALENT:거유 >= 3
-	PRINTL 膨らんだ胸と발정した体は、死後もその魅惑的な魅力を保ち続ける。
+	PRINTL 膨らんだ胸と発情した体は、死後もその魅惑的な魅力を保ち続ける。
 ELSE
 	PRINTL 隆起して硬くなった乳首は、死ぬ前の極度の性的興奮を示している。
 ENDIF
@@ -693,14 +710,14 @@ PRINTFORMW %PRINT_CALLNAME(TARGET)%の体からは常に強い生臭さが漂っ
 
 PRINTFORML 新たな獲物を捕まえるたびに、男たちは彼女の死体を見せに行った。
 PRINTFORML 魔法少女%PRINT_TRANSNAME(TARGET)%さえもこのような運命にあると知れば、
-PRINTFORML 獲物は簡単に순종になる……
+PRINTFORML 獲物は簡単に従順になる……
 
 PRINTFORMW この世界の未来など、もう誰も気にしていない……
 PRINTL 
 PRINTFORML ついにその日、%STR:2500%が一斉に街路に出現し、うねり狂いながら巨大な一つの%STR:2500%として合体した。
 PRINTFORML %STR:2500%の巨体から中小の%STR:2500%が無数に溢れ出し、
 PRINTFORML 瞬く間に街は%STR:2500%の津波に飲み込まれてしまった。
-PRINTL それが인간の世界が終わった時間だった……
+PRINTL それが人間の世界が終わった時間だった……
 PRINTL  
 PRINTW  
 
@@ -711,12 +728,12 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 	;撃破数を記録
 	;撃破数を記録
-	PRINTFORML 보스撃破記録　　{LOCAL} 体
+	PRINTFORML 보스 격파 기록　　{LOCAL} 체
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML 보스撃破の新記録を達成しました！
-		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
+		PRINTFORML 보스 격파 신기록을 달성했습니다！
+		PRINTFORMW 　{GLOBAL:114}체 → {LOCAL}체
 		PRINTL 
 		GLOBAL:114 = LOCAL
 		SAVEGLOBAL
@@ -729,19 +746,19 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 		CALL LB
 		FLAG:999 = -997
 	ELSE
-		PRINTL 　　ゲームオーバーモードに移行します。
-		PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+		PRINTL 　　GAME OVER모드로 이행합니다.
+		PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 		PRINTL 
-		;ゲームオーバー
+		;GAME OVER
 		FLAG:0 = 0
 		FLAG:999 = -998
 		DAY:2 = DAY*2+TIME
 	ENDIF
 ELSE
-	PRINTL 　　ゲームオーバーモードに移行します。
-	PRINTW 　（全キャラが凌辱され続け、終わりはありません。飽きたら終了しましょう）
+	PRINTL 　　GAME OVER모드로 이행합니다.
+	PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
 	PRINTL 
-	;ゲームオーバー
+	;GAME OVER
 	FLAG:0 = 0
 	FLAG:999 = -998
 	DAY:2 = DAY*2+TIME

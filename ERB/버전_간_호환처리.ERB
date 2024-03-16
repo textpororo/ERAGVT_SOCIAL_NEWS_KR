@@ -621,11 +621,36 @@ IF LASTLOAD_VERSION != -1
 				CSTR:CCOUNT:18 = 보통
 		NEXT
 	ENDIF
+	;KR판에 추가된 밸런스 패치
+	FOR CCOUNT, 0, CHARANUM
+		SIF CCOUNT == MASTER
+			CONTINUE
+		;중복되는 전투 스타일을 통상 스타일로 변경한다
+		;통상 스타일은 중복 항목에서 제외한다
+		SIF GROUPMATCH(0, CDFLAG:CCOUNT:근거리:전투스타일, CDFLAG:CCOUNT:중거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일) > 1
+			CONTINUE
+		SIF GROUPMATCH(CDFLAG:CCOUNT:근거리:전투스타일, CDFLAG:CCOUNT:중거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일) || GROUPMATCH(CDFLAG:CCOUNT:중거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일)
+			PRINTFORMW 캐릭터 %NAME:CCOUNT%에게 2개 이상 중복되는 전투 스타일이 감지되어「통상」스타일로 변경하였습니다.
+		IF GROUPMATCH(CDFLAG:CCOUNT:근거리:전투스타일, CDFLAG:CCOUNT:중거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일) == 2
+			CDFLAG:CCOUNT:근거리:전투스타일 = 0
+			CDFLAG:CCOUNT:중거리:전투스타일 = 0
+			CDFLAG:CCOUNT:원거리:전투스타일 = 0
+		ELSEIF GROUPMATCH(CDFLAG:CCOUNT:근거리:전투스타일, CDFLAG:CCOUNT:중거리:전투스타일)
+			CDFLAG:CCOUNT:근거리:전투스타일 = 0
+			CDFLAG:CCOUNT:중거리:전투스타일 = 0
+		ELSEIF GROUPMATCH(CDFLAG:CCOUNT:근거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일)
+			CDFLAG:CCOUNT:근거리:전투스타일 = 0
+			CDFLAG:CCOUNT:원거리:전투스타일 = 0
+		ELSEIF GROUPMATCH(CDFLAG:CCOUNT:중거리:전투스타일, CDFLAG:CCOUNT:원거리:전투스타일)
+			CDFLAG:CCOUNT:중거리:전투스타일 = 0
+			CDFLAG:CCOUNT:원거리:전투스타일 = 0
+		ENDIF
+	NEXT
 
 	IF LASTLOAD_VERSION < 398
 		;패치 불러오기(取り込み) 사정(다루는 플래그를 바꿨다)
-		FLAG:855=0
-		FLAG:856=0
+		FLAG:855 = 0
+		FLAG:856 = 0
 	ENDIF
 
 	IF LASTLOAD_VERSION < 399
@@ -642,8 +667,8 @@ IF LASTLOAD_VERSION != -1
 
 	IF LASTLOAD_VERSION < 400
 		;컨피그 번호 정리(유폐・흑화 관련 신설)
-		LOCAL=FLAG:804
-		FLAG:804=0
+		LOCAL = FLAG:804
+		FLAG:804 = 0
 		SETBIT FLAG:804,0,GETBIT(LOCAL,1)
 		SETBIT FLAG:804,1,GETBIT(LOCAL,3)
 		SETBIT FLAG:804,2,GETBIT(LOCAL,2)
@@ -654,7 +679,7 @@ IF LASTLOAD_VERSION != -1
 		SETBIT FLAG:804,7,GETBIT(LOCAL,12)
 		SETBIT FLAG:804,8,GETBIT(LOCAL,13)
 		SETBIT FLAG:804,9,GETBIT(LOCAL,16)
-		FLAG:805=0
+		FLAG:805 = 0
 		SETBIT FLAG:805,0,GETBIT(LOCAL,0)
 		SETBIT FLAG:805,1,GETBIT(LOCAL,4)
 		SETBIT FLAG:805,2,GETBIT(LOCAL,5)
@@ -665,61 +690,61 @@ IF LASTLOAD_VERSION != -1
 		SETBIT FLAG:805,7,GETBIT(LOCAL,17)
 	ENDIF
 	IF LASTLOAD_VERSION < 401
-		LOCAL=FLAG:804
+		LOCAL = FLAG:804
 		SETBIT FLAG:804,9,GETBIT(LOCAL,10)
 		SETBIT FLAG:804,10,GETBIT(LOCAL,9)
 	ENDIF
 	IF LASTLOAD_VERSION < 402
 		;커맨드 분리에 따른 변신 스타일 고정 폐지
 		FOR LOCAL,1, CHARANUM
-			CFLAG:LOCAL:12=0
+			CFLAG:LOCAL:12 = 0
 		NEXT
 	ENDIF
 
 	IF LASTLOAD_VERSION < 405
-		IF LASTLOAD_VERSION<=402
+		IF LASTLOAD_VERSION <= 402
 			;확실하게 수정대상(구 사양으로 만들어진 데이터로 확정)
 			LOCAL=1
-		ELSEIF FLAG:0==0 || (FLAG:0!=1 && FLAG:0!=2 && FLAG:0!=4 && FLAG:0!=10 && FLAG:0!=16)
+		ELSEIF FLAG:0 == 0 || (FLAG:0 != 1 && FLAG:0 != 2 && FLAG:0 != 4 && FLAG:0 != 10 && FLAG:0 != 16)
 			;확실히 수정 불필요(GAMEOVER＝플래그 수정 불필요　또는 새로운 사양으로 만들어진 데이터로 확정)
-			LOCAL=0
+			LOCAL = 0
 		ELSE
 			;성가신 사태가 되어 버린 버전
 			;자동 식별 시행
-			LOCAL=-1
+			LOCAL =- 1
 			;get mode info from last-load text			
 			STRFIND LASTLOAD_TEXT,"NORMAL",0
-			IF RESULT>-1
+			IF RESULT > -1
 				;old data(need to fix) OR new data
-				LOCAL=FLAG:0==1 ? 1 # 0
+				LOCAL = FLAG:0 == 1 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"SOLO",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==2 ? 1 # 0
+				LOCAL = FLAG:0 == 2 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"HARDCORE",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==4 ? 1 # 0
+				LOCAL = FLAG:0 == 4 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"SURVIVAL",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==10 ? 1 # 0
+				LOCAL = FLAG:0 == 10 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"FREEPLAY",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==10 ? 1 # 0
+				LOCAL = FLAG:0 == 10 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"SANDBOX",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==10 ? 1 # 0
+				LOCAL = FLAG:0 == 10 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"ENDLESS",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==10 ? 1 # 0
+				LOCAL = FLAG:0 == 10 ? 1 # 0
 			ENDIF
 			STRFIND LASTLOAD_TEXT,"INSTANT",0
 			IF RESULT>-1
-				LOCAL=FLAG:0==16 ? 1 # 0
+				LOCAL = FLAG:0 == 16 ? 1 # 0
 			ENDIF
 
 			;세이브 데이터 문자열에 의한 자동 식별에 실패한 경우(만약을 위해)
@@ -727,7 +752,7 @@ IF LASTLOAD_VERSION != -1
 				FONTBOLD
 				PRINTL 커스텀 게임 모드 도입 패치에 의한 FLAG:0 데이터 호환 끊김
 				SETCOLOR 255,128,128
-				PRINTL !　패치 수동 도입, 또는【사회파판2023/08/29】을 경계로 하여, 
+				PRINTL !　패치 수동 도입, 또는【사회파판(뉴스판)2023/08/29】을 경계로 하여, 
 				PRINTL !　세이브 데이터의 내부 호환성이 상실되었습니다.
 				PRINTFORML !　최종 버전이 0.{LASTLOAD_VERSION} 인 데이터에는, 복원 처리가 필요할지도 모릅니다.
 				FONTREGULAR
@@ -805,17 +830,30 @@ IF LASTLOAD_VERSION != -1
 	IF LASTLOAD_VERSION < 406
 		;공통 설정 사양 변경
 		FOR LOCAL,0,9
-			IF SAVESTR:14==transnamegenre:LOCAL
-				FLAG:820=LOCAL+1
+			IF SAVESTR:14 == transnamegenre:LOCAL
+				FLAG:820 = LOCAL + 1
 				BREAK	
 			ENDIF
 		NEXT
-		SAVESTR:14'=""
+		SAVESTR:14 '= ""
 		;최종 보스 촉수의 수는 출현 시까지 0인 채로
 		SIF FLAG:100 > 0
 			FLAG:101 = 0
 	ENDIF
 
+	IF LASTLOAD_VERSION < 407
+		;KR판에서 반격 스타일을 추가함과 더불어, 일부 전투 스타일의 순번을 바꿨으므로 이에 맞춘다
+		FOR LOCAL, 1, 3
+			SELECTCASE CDFLAG:CCOUNT:LOCAL:전투스타일
+				CASE 2
+					CDFLAG:CCOUNT:LOCAL:전투스타일 = 3
+				CASE 3
+					CDFLAG:CCOUNT:LOCAL:전투스타일 = 2
+				CASE 5 TO 9
+					CDFLAG:CCOUNT:LOCAL:전투스타일 ++
+			ENDSELECT
+		NEXT
+	ENDIF
 
 	IF LASTLOAD_VERSION < GAMEBASE_VERSION
 		PRINTL 【세이브 데이터를 최신 버전으로 업데이트했습니다.】

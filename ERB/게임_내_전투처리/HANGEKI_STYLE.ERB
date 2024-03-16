@@ -1,0 +1,100 @@
+﻿@HANGEKI_TO_TENTACLE, ARG, ARG:1, ARG:2
+;ARG는 적이 선택한 커맨드
+;ARG:1은 적 커맨드의 성패 판정, 0=피격 1=회피(또는 스침) 2=피격 범위 외 공격 회피
+;ARG:2는 그 턴에 반격으로 경감시키거나 무효화한 피해량
+
+;공격 범위로부터 벗어나 있었으면 반격 실패 (예를 들어 중거리에 있었는데 근,원 공격이 오면 반격 실패)
+;단, 에어 스트라이크로 피했을 경우는 반격 성공으로 판정한다
+SIF ARG:1 == 2 && GETBIT(TCVARn:216, 1) == 0
+    RETURN 0
+    
+;강화 반격이 성공했을 경우 "절대 방어(피해 면역)" 와 함께 확정 반격 성공 판정
+    ;*통상 반격도 일반 공격에 한하여 절대 방어에 성공할 가능성이 있다
+    ;*휘감기 또는 넘어뜨리기(구속 공격), 거리를벌린다 는 "절대 방어" 불가능
+SIF TCVARn:200 > 0
+    GOTO SKIP
+
+;각 커맨드별 세부 조건
+;막상 써보니까 별거 없는데, 조만간 추가로 뭐가 더 생길지도 모르니까?
+;에어 스트라이크에 의해 ARG:1이 2인 경우는 이미 위에서 조건문을 달았으므로, 회피 시 성공일 경우에 ARG:1 == 2 도 넣어도 된다
+SELECTCASE ARG
+    ;공격
+    CASE 1
+        ;전체 공격은 불가능
+        ;SIF TFLAG:12 == 3
+        ;    RETURN 0
+    ;휘감는다(구속 공격), 피격 시 실패
+    CASE 2
+        SIF ARG:1 == 0
+            RETURN 0
+    ;점액
+    CASE 3
+        ;피격 시 실패
+        SIF ARG:1 == 0
+            RETURN 0
+    ;거리를벌린다, 무조건 반격 실패
+    CASE 4
+        RETURN 0
+    ;넘어뜨린다, 피격 시 실패
+    CASE 5
+        SIF ARG:1 == 0
+            RETURN 0
+    ;파동
+    CASE 6
+        ;피격 시 실패
+        SIF ARG:1 == 0
+            RETURN 0
+ENDSELECT
+$SKIP
+
+;위의 조건을 다 만족할 경우 반격 성공 플래그를 올린다
+TCVARn:2 = 자세：반격성공
+
+PRINTL 
+FONTBOLD
+SETCOLOR 0, 255, 150
+PRINTL ********** 아군의 행동 **********
+RESETCOLOR
+FONTREGULAR
+PRINTL 
+
+;반격에 성공하면 막은 피해를 축적한다
+TCVARn:205 += ARG:2
+
+;통상 공격 공통 처리
+CALL COM_ATTACK_COMMON
+
+;반격이 성공하면 전투경험이 추가로 더 오른다
+IF TALENT:변신능력 != -1
+    SELECTCASE TCVARn:0
+        CASE 1
+            EXP:근거리전투경험 += RAND:5 + 1
+	        CALL SENGIUP, TARGET, 0
+        CASE 2
+            EXP:중거리전투경험 += RAND:5 + 1
+	        CALL SENGIUP, TARGET, 1
+        CASE 3
+            EXP:원거리전투경험 += RAND:5 + 1
+	        CALL SENGIUP, TARGET, 2
+    ENDSELECT
+ELSE
+    EXP:기초전투경험 += RAND:5 + 1
+	CALL SENGIUP, TARGET, 3
+ENDIF
+
+;행동 포인트를 +2
+EX:행동포인트 += 2
+
+;끈적끈적 지속 판정, 강화 반격에 의한 절대 방어로 확정 회복
+;통상 반격도 낮은 확률로 회복이 가능하도록 만들지 고민이다 <- 절대 방어 성공시키면 되니까 안 바꿔도 될듯?
+IF (TCVARn:12 & 끈적끈적) && TCVARn:200 > 0 && TFLAG:10 != 4 ;&& RAND:100 < MAX(75 - CFLAG:99 * 3, 25) 아무리 그래도 강화 반격에 확률까지 다는 건 선 넘는 것 같아서 뺐다
+	PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 달라붙은 점액을 털어냈다!
+	PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [끈적끈적] 상태로부터 회복했다!
+	PRINTW 
+	TCVARn:12 -= 끈적끈적
+;ELSEIF (TCVARn:12 & 끈적끈적) &&
+;	PRINTFORML × %PRINT_TRANSCALLNAME(TARGET)%은(는) 달라붙은 점액을 털어내는 데에 실패했다!
+;	PRINTW 
+ENDIF
+
+RETURN 0

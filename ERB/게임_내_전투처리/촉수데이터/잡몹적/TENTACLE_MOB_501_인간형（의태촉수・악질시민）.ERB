@@ -195,7 +195,7 @@ ELSEIF LOCAL < 80
 		ENDIF
 	ENDIF
 ;씨받이 교배
-ELSEIF (LOCAL < 95 || (TFLAG:20 == 3 && LOCAL < 90) || (TCVAR:12 & 배란) > 0) && CHECK_HOLYVIRGIN_F()==0
+ELSEIF (LOCAL < 95 || (TFLAG:20 == 3 && LOCAL < 90) || (TCVARn:12 & 배란) > 0) && CHECK_HOLYVIRGIN_F()==0
 	IF CLOTH_OUTER_PER > 90 || CLOTH_INNER_PER >= CLOTH_INNER_DEF
 		RETURN 14
 	ELSE
@@ -281,7 +281,7 @@ IF ISPENIS()
 			PRINTFORM オナホに与えられる快楽に幸福そうな表情を浮かべている
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 			PRINTFORM オナホに与えられる快楽にだらしなく表情を弛緩させている
-		ELSEIF (TCVAR:12 & 기절)
+		ELSEIF (TCVARn:12 & 기절)
 			PRINTFORM 敏感なところに強く吸い付かれ、意識がないまま悶絶している
 		ELSE
 			PRINTFORM 혐오감을 느끼곤 
@@ -302,7 +302,7 @@ ELSE
 			PRINTFORM 음두에 주어지는 쾌락에 행복한 표정을 짓고 있었다
 		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 			PRINTFORM 음두에 주어지는 쾌락에 칠칠치 못하게 표정을 이완시키고 있었다
-		ELSEIF (TCVAR:12 & 기절)
+		ELSEIF (TCVARn:12 & 기절)
 			PRINTFORM 敏感なところに強く吸い付かれ、意識がないまま悶絶している
 		ELSE
 			PRINTFORM 혐오감을 느끼곤 
@@ -352,7 +352,7 @@ ELSEIF TALENT:처녀 > 0
 	PRINTFORML それは瘴気の影響か一般的なモノよりもサイズが大きく、
 	PRINTFORML 反り返った亀頭がヴァギナの奥中目指して押し込められていく。
 	PRINTW 
-	IF (TCVAR:12 & 기절)
+	IF (TCVARn:12 & 기절)
 		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)% 상대로 몇번이나 삽입에 실패하면서도
 		PRINTFORML 단단하고 따뜻한 것이 질내를 천천히 넓혀갔고,
 		PRINTFORML 그 다음 순간에는 희미한 통증과 함께 아랫배 안쪽까지 관통되고 말았다・・・
@@ -447,10 +447,10 @@ IF (ARG & Ｖ)
 	ENDIF
 	IF TALENT:주관시점 > 0
 		PRINTFORML まるで甘い蜜を啜るかのように%PRINT_TRANSCALLNAME(TARGET)%의 愛液を貪りつつ
-		PRINTFORML 舌を軽く挿入して\@ (TCVAR:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
+		PRINTFORML 舌を軽く挿入して\@ (TCVARn:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
 	ELSE
 		PRINTFORML まるで%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 愛液が甘い蜜であるかのように貪りつつ
-		PRINTFORML 舌を軽く挿入して\@ (TCVAR:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
+		PRINTFORML 舌を軽く挿入して\@ (TCVARn:12 & 기절) ? 無意識に #  \@ひくつく膣口を解きほぐしていく・・・
 	ENDIF
 	PRINTW 
 ELSE
@@ -502,9 +502,9 @@ ELSE
 			PRINTL 질내に浅く指を挿入すると、指先で軽く膣壁を掻いている・・・
 		ENDIF
 		PRINTL 
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) && (TCVAR:12 & 기절) == 0
+		IF (MESSAGE_BRANCH_F(TARGET) & 타락) && (TCVARn:12 & 기절) == 0
 			PRINTFORM 挿入への期待に目にハートマークを浮かべる%PRINT_TRANSCALLNAME(TARGET)%의 股間
-		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && (MESSAGE_BRANCH_F(TARGET) & 절망) == 0 && (TCVAR:12 & 기절) == 0
+		ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && (MESSAGE_BRANCH_F(TARGET) & 절망) == 0 && (TCVARn:12 & 기절) == 0
 			PRINTFORM 快楽に抗うのに必死な%PRINT_TRANSCALLNAME(TARGET)%의 股間
 		ELSE
 			PRINTFORM ひたすら膣口を弄ばれ続ける%PRINT_TRANSCALLNAME(TARGET)%의 股間
@@ -553,7 +553,7 @@ IF (ARG & Ａ)
 	PRINTFORM のもう片方の手に撫でまわされ
 	IF (ARG & Ｂ)
 		PRINTFORML ながら、
-	ELSEIF (TCVAR:12 & 기절)
+	ELSEIF (TCVARn:12 & 기절)
 		PRINTFORML 、
 		PRINTFORML 기절したまま快楽に頬を染めている・・・
 	ELSE
@@ -590,7 +590,7 @@ IF (ARG & Ａ) == 0 && (ARG & Ｂ) && RAND:2 == 0
 		PRINTFORM 同時に%PRINT_TRANSCALLNAME(TARGET)%의 胸も玩具のように揉みくちゃにされて、
 	ENDIF
 	PRINTL 
-	IF (TCVAR:12 & 기절)
+	IF (TCVARn:12 & 기절)
 		PRINTFORML %PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 体は完全に人形のように扱われている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		IF TALENT:주관시점 > 0
@@ -598,7 +598,7 @@ IF (ARG & Ａ) == 0 && (ARG & Ｂ) && RAND:2 == 0
 		ELSE
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
 		ENDIF
-	ELSEIF TCVAR:2 == 자세：받아들인다
+	ELSEIF TCVARn:2 == 자세：받아들인다
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항)
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽と恥辱に歯を食いしばっている・・・
@@ -619,16 +619,16 @@ ELSEIF (ARG & Ａ) == 0 && (ARG & Ｂ)
 	ELSE
 		PRINTFORM 가슴まで玩具のように揉みくちゃにされ
 	ENDIF
-	IF (TCVAR:12 & 기절) && TALENT:주관시점 > 0
+	IF (TCVARn:12 & 기절) && TALENT:주관시점 > 0
 		PRINTFORML てしまっており、
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無抵抗のまま弄ばれている・・・
-	ELSEIF (TCVAR:12 & 기절)
+	ELSEIF (TCVARn:12 & 기절)
 		PRINTFORML てしまっており、
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%기절したまま頬を染めている・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 쾌락굴복)
 		PRINTFORML てしまい、
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ビクビクと快楽に身を震わせている・・・
-	ELSEIF TCVAR:2 == 자세：받아들인다
+	ELSEIF TCVARn:2 == 자세：받아들인다
 		PRINTFORML ることを受け入れてしまっており、
 		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%快楽に翻弄されるしかない・・・
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 성저항) && TALENT:주관시점 > 0
@@ -753,7 +753,7 @@ PRINTL 입 강간
 FONTREGULAR
 IF RAND:2 == 0
 	PRINTFORML 男のうち一人がペニスを%PRINT_SWOON()% %PRINT_TRANSCALLNAME(TARGET)%의 뺨에 문질러 왔다.
-	IF (TCVAR:12 & 기절)
+	IF (TCVARn:12 & 기절)
 		PRINTFORM 무방비하게 반쯤 벌어진 입술을 비집어 열고, 입을 오나홀처럼 다루고 있었다
 	ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		PRINTFORML 꾹꾹 눌러대는 미숙한 수컷의 악취에 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 참지 못 하고,

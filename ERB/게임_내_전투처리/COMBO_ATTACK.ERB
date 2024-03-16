@@ -22,8 +22,8 @@ ELSEIF ARG == 3
 ENDIF
 RETURNF LOCAL
 
-;동일 거리 연속 실행による直撃ボーナス/回避ペナルティの計算
-;　ARG…BraveHit発生回数　ARGS…"명중"または"회피"
+;동일 거리 연속 실행에 따른 직격 보너스/회피 패널티 계산
+;　ARG…BraveHit 발생 횟수　ARGS…"명중" 또는 "회피"
 @GET_BRAVE_HIT(ARG,ARGS)
 #FUNCTION
 IF ARG < 4
@@ -35,7 +35,7 @@ ELSE
 ENDIF
 SIF LOCAL > 25
 	LOCAL = 25
-IF ARGS=="명중" && TCVARn:TARGET:0==1
+IF ARGS == "명중" && TCVARn:TARGET:0 == 1
 	;근거리는 연속 실행 보너스를 극단적으로
 	IF TALENT:근거리특기
 		TIMES LOCAL,3
@@ -44,7 +44,7 @@ IF ARGS=="명중" && TCVARn:TARGET:0==1
 	ELSE
 		TIMES LOCAL,1.7
 	ENDIF
-ELSEIF ARGS=="회피" && TCVARn:TARGET:0==2
+ELSEIF ARGS == "회피" && TCVARn:TARGET:0 == 2
 	;중거리는 회피 패널티를 경감
 	IF TALENT:중거리특기
 		TIMES LOCAL,0.8
@@ -53,7 +53,7 @@ ELSEIF ARGS=="회피" && TCVARn:TARGET:0==2
 	ELSE
 		TIMES LOCAL,0.85
 	ENDIF
-ELSEIF ARGS=="회피" && TCVARn:TARGET:0==3
+ELSEIF ARGS == "회피" && TCVARn:TARGET:0 == 3
 	;원거리는 회피 패널티를 경감
 	IF TALENT:원거리특기
 		TIMES LOCAL,0.7
@@ -151,20 +151,23 @@ IF GETBIT(TCVARn:216, 1)
 ENDIF
 IF GETBIT(TCVARn:217, 0)
 	;버스트 공격
-	LOCALS:0 = 　＋BURST STRIKE
+	LOCALS:0 = 　＋ BURST STRIKE
 	SELECTCASE FSTYLE_NAME_F(TARGET, TCVARn:0)
 		CASE "연속"
 			LOCALS:1 = 버스트 공격：연속
 			LOCALS:2 = 6회 연속 공격
-		CASE "장갑"
-			LOCALS:1 = 버스트 공격：장갑
-			LOCALS:2 = 직격률 증가＋공격 후 자동 방어
 		CASE "교란"
 			LOCALS:1 = 버스트 공격：교란
 			LOCALS:2 = 입히는 피해량 증가＋기죽임 효과
+		CASE "장갑"
+			LOCALS:1 = 버스트 공격：장갑
+			LOCALS:2 = 직격률 증가＋공격 후 자동 방어
 		CASE "중격"
 			LOCALS:1 = 버스트 공격：중격
 			LOCALS:2 = 직격률이 낮지만 위력이 막대한 공격
+		CASE "반격"
+			LOCALS:1 = 버스트 공격：반격
+			LOCALS:2 = 전투 중에 반격으로 축적시킨 피해량을 가산
 		CASE "광역"
 			LOCALS:1 = 버스트 공격：광역
 			LOCALS:2 = 필중 공격＋반동으로 회피 불능
@@ -183,6 +186,9 @@ IF GETBIT(TCVARn:217, 0)
 		CASE "통상"
 			LOCALS:1 = 버스트 공격：통상
 			LOCALS:2 = 입히는 피해량 증가＋직격률 증가
+		;CASE "변형"
+		;	LOCALS:1 = 버스트 공격：변형
+		;	LOCALS:2 = 미정
 	ENDSELECT
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
 	PRINTFORM %LOCALS:1,LENS,LEFT%
@@ -195,6 +201,8 @@ IF TFLAG:30 > 1 && FLAG:73 == 0
 	;같은 거리에서 계속 싸우면 가산되어 간다
 	;구속될 경우, 또는 이동하거나 거리를 벌릴 경우 초기화된다
 	LOCALS:0 = 　＋ BRAVE HIT
+	SIF FSTYLE_NAME_F(TARGET, TCVARn:0) == "반격"
+		LOCALS:0 = 　＋ BRAVE COUNTER
 	LOCALS:1 = 동일 거리 연속 실행 ({TFLAG:30 - 1})
 	LOCALS:2 = 직격률 ＋{GET_BRAVE_HIT(TFLAG:30 - 1,"명중") - 3}％　회피율 −{GET_BRAVE_HIT(TFLAG:30 - 1,"회피")}％
 	PRINTFORM %LOCALS:0,LENS - 4,LEFT%
@@ -206,6 +214,7 @@ IF TFLAG:31 > 0 && FLAG:73 == 0
 	;CHAIN HIT
 	;연속으로 공격을 명중시키면 가산되어 간다
 	;공격이 가드되어도(カス当たり) 가산되지만, 구속되거나 거리를 벌릴 경우 초기화된다
+	;강화 반격의 경우 자세를 잡아도 콤보가 유지된다
 	LOCALS:0 = 　＋ CHAIN HIT
 	LOCALS:1 = 연속으로 공격 히트 ({TFLAG:31})
 	LOCALS:2 = 입히는 피해량 ＋{GET_CHAIN_HIT(TFLAG:31) - 100}％

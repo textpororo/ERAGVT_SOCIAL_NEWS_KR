@@ -179,8 +179,8 @@ IF FLAG:999 == 1
 ENDIF
 
 ;펌블, 대충 대실패라는 의미
-;지략 스타일인 거리에서는 펌블이 나지 않는다
-IF RAND:256 < (256 - LOCAL:3) / 4 && SELECTCOM != 7 && (GETBIT(TCVARn:217, 0) == 0 || FSTYLE_NAME_F(TARGET,TCVARn:0) != "지략")
+;지략 스타일인 거리에서는 펌블이 나지 않는다(밸런스 패치로 삭제)
+IF RAND:256 < (256 - LOCAL:3) / 4 && SELECTCOM != 7 && GETBIT(TCVARn:217, 0) == 0
 	SIF FLAG:999 == 1
 		PRINTFORML 예측 펌블！（다음 턴에 모든 거리의 행동 예측이 실패한다）
 	TCVARn:30 = -1
@@ -283,7 +283,7 @@ SIF TCVARn:0 == 0
 PRINT  원:
 CALL FORECAST_OUTPUT_NUM, LOCAL
 PRINT  %
-SIF FLAG:999 == 1 && TCVAR:30 == -1 && TCVAR:31 == -1 && TCVAR:32 == -1 && TCVAR:0 != 0
+SIF FLAG:999 == 1 && TCVARn:30 == -1 && TCVARn:31 == -1 && TCVARn:32 == -1 && TCVARn:0 != 0
 	PRINT （예측 펌블！）
 
 ;공중 예측 확률은 STATUS_TRAIN 에서 따로 FORECAST_OUTPUT_NUM 함수를 호출하고 있다

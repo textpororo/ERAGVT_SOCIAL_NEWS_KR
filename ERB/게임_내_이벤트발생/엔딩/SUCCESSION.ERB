@@ -1,5 +1,5 @@
 ﻿;**********************************************************
-;周回のデータ引き継ぎに関する処理
+;주회의 데이터 인계에 관한 처리
 @SUCCESSION,ARG
 #DIM NOWLINECOUNT
 #DIM POINTS
@@ -20,10 +20,10 @@ VARSET LOCAL
 FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
-	;娘が居るかを判定
+	;딸이 있는지를 판정
 	SIF CFLAG:CCOUNT:231
 		HAVE_DAUGHTER ++
-	;変身状態を解く
+	;변신 상태를 푼다
 	SIF CFLAG:CCOUNT:1 > 0
 		CALL TRANSFORM, 0, CCOUNT
 NEXT
@@ -31,60 +31,60 @@ PRINTW …
 PRINTW ……
 PRINTW ………
 CALL LB
-PRINTL +-+-+☆★☆　周回ポイントの獲得　☆★☆+-+-+
+PRINTL +-+-+☆★☆　주회차 포인트 획득　☆★☆+-+-+
 CALL SHORTLINE
-PRINTFORML 周回数累計(引き継ぎ回数)　　　　　　　　　+{FLAG:854 - 1}
+PRINTFORML 주회수 누계(인계 횟수)　　　　　　　　　　+{FLAG:854 - 1}
 POINTS += FLAG:854 - 1
 IF GAME_MODE_CHECK_F() == MODE_SOLO
-	PRINTFORML ソロクリア　　　　　　　　　　　　　　　　+2
+	PRINTFORML SOLO 클리어　　　　　　　　　　　　　　　 +2
 	POINTS += 2
 ELSEIF GAME_MODE_CHECK_F() == MODE_NORMAL
-	PRINTFORML ノーマルクリア　　　　　　　　　　　　　　+5
+	PRINTFORML NORMAL 클리어　　　　　　　　　　　　　　 +5
 	POINTS += 5
 ELSEIF GAME_MODE_CHECK_F() == MODE_HARDCORE
-	PRINTFORML ハードコアクリア　　　　　　　　　　　　　+7
+	PRINTFORML HARDCORE 클리어　　　　　　　　　　　　　 +7
 	POINTS += 7
 ELSEIF GAME_MODE_CHECK_F() == MODE_INSTANT
-	PRINTFORML インスタントクリア　　　　　　　　　　　　+5
+	PRINTFORML INSTANT 클리어　　　　　　　　　　　　　　+5
 	POINTS += 5
 ELSE
-	PRINTFORML クリア　　　　　　　　　　　　　　　　　　+2
+	PRINTFORML 게임 클리어　　　　　　　　　　　　　　　 +2
 	POINTS += 2
 ENDIF
 IF ARG == 6
-	PRINTFORML 総合Ｓランク　　　　　　　　　　　　　　　+8
+	PRINTFORML 종합 Ｓ랭크　　　　　　　　　　　　　　　 +8
 	POINTS += 8
 ELSEIF ARG == 5
-	PRINTFORML 総合Ａランク　　　　　　　　　　　　　　　+5
+	PRINTFORML 종합 Ａ랭크　　　　　　　　　　　　　　　 +5
 	POINTS += 5
 ELSEIF ARG == 4
-	PRINTFORML 総合Ｂランク　　　　　　　　　　　　　　　+3
+	PRINTFORML 종합 Ｂ랭크　　　　　　　　　　　　　　　 +3
 	POINTS += 3
 ELSEIF ARG == 3
-	PRINTFORML 総合Ｃランク　　　　　　　　　　　　　　　+2
+	PRINTFORML 종합 Ｃ랭크　　　　　　　　　　　　　　　 +2
 	POINTS += 2
 ELSEIF ARG == 2
-	PRINTFORML 総合Ｄランク　　　　　　　　　　　　　　　+1
+	PRINTFORML 종합 Ｄ랭크　　　　　　　　　　　　　　　 +1
 	POINTS += 1
 ELSEIF ARG == 1
-	PRINTFORML 総合Ｅランク　　　　　　　　　　　　　　　+0
+	PRINTFORML 종합 Ｅ랭크　　　　　　　　　　　　　　　 +0
 ENDIF
 ;패자(覇者)의 증표
 IF GLOBAL:211
-	PRINTFORML 패자(覇者)의 증표　　　　　　　　　　　　　　　　　+5
+	PRINTFORML 패자(覇者)의 증표　　　　　　　　　　　　 +5
 	POINTS += 5
 ENDIF
 ;엉터리 대마왕
 IF GLOBAL:212
-	PRINTFORML 엉터리 대마왕　　　　　　　　　　　　　　+5
+	PRINTFORML 엉터리 대마왕　　　　　　　　　　　　　　 +5
 	POINTS += 5
 ENDIF
 ;eraGVT 마스터
 IF GLOBAL:213
-	PRINTFORML eraGVT 마스터　　　　　　　　　　　　　　+5
+	PRINTFORML eraGVT 마스터　　　　　　　　　　　　　　 +5
 	POINTS += 5
 ENDIF
-;ENDLESS보스撃破数
+;ENDLESS 보스 격파 수
 IF GLOBAL:114 >= 8
 	IF GLOBAL:114 >= 60
 		LOCAL = 12
@@ -99,7 +99,7 @@ IF GLOBAL:114 >= 8
 	ELSE
 		LOCAL = 1
 	ENDIF
-	PRINTFORML ENDLESS撃破数ボーナス 　　　　　　　　　　+{LOCAL}
+	PRINTFORML ENDLESS 격파 수 보너스 　　　　　　　　　 +{LOCAL}
 	POINTS += LOCAL
 ENDIF
 LOCAL = 0
@@ -118,10 +118,10 @@ SIF GLOBAL:223
 ;위타천
 SIF GLOBAL:224
 	LOCAL += 10
-;俊足瞬撃、並ぶものなし
+;준족순격，뒤따를 자 없으니
 SIF GLOBAL:225
 	LOCAL += 10
-;データにはなかったぞ！？
+;저런 데이터는 없었다고？！
 SIF GLOBAL:226
 	LOCAL += 10
 ;전 L입니다
@@ -217,7 +217,7 @@ SIF GLOBAL:264
 ;NEXT GENERATION
 SIF GLOBAL:265
 	LOCAL += 10
-;パーフェクトキル
+;퍼펙트 킬
 SIF GLOBAL:266
 	LOCAL += 20
 ;기적의 역전승
@@ -245,22 +245,22 @@ SIF GLOBAL:273
 SIF GLOBAL:274
 	LOCAL += 5
 
-PRINTFORML 실적による追加周回ボーナス　　　　　　　　+{LOCAL}*0.1
+PRINTFORML 실적 달성에 따른 주회 보너스　　　　　　　+{LOCAL}*0.1
 LOCAL /= 10	
 POINTS += LOCAL
 CALL SHORTLINE
-PRINTFORM 合計　　　　　　　　　　　　　　　　　　　{POINTS}pts.
-POINTS=MAX(POINTS,GLOBAL:115)
-PRINTFORML 　(歴代最高{POINTS}pts.)
+PRINTFORM 합계　　　　　　　　　　　　　　　　　　　{POINTS}pts.
+POINTS = MAX(POINTS,GLOBAL:115)
+PRINTFORML 　(역대 최고 {POINTS}pts.)
 
 
 PRINTL 
 PRINTW [PRESS ENTER]
 CLEARLINE 1
 ;----------------------------------------------------------------------------------------------------------------------------------
-;引き継ぎ選択の処理開始
+;인계 선택 처리 개시
 LMONEY = 0
-;施設
+;시설
 REPEAT FLAG:50
 	SIF COUNT == 0
 		CONTINUE
@@ -306,43 +306,43 @@ REDRAW 0
 VARSET LOCAL
 $MASTER_LOOP
 NOWLINECOUNT = LINECOUNT
-PRINTFORML データ引き継ぎ　　　　　　　　　　 　　　　　　のこり周回ポイント ({POINTS - USED}pts.)
+PRINTFORML 데이터 인계　　　　　　　　　　 　　　　　　　 남은 주회차 포인트 　({POINTS - USED}pts.)
 DRAWLINE
-PRINTFORML 入手した周回ポイントを消費して次の周回にデータを引き継ぐことができます。
-PRINTFORML 名前や種族など、ゲーム開始時にキャラが持っていたデータは自動で引き継がれます。
-PRINTFORML 引き継ぐ項目を選んでください。
+PRINTFORML 입수한 주회차 포인트를 소비하여 다음 주회에 데이터를 인계받을 수 있습니다.
+PRINTFORML 이름이나 종족 등, 게임 시작 시 캐릭터가 가지고 있던 데이터는 자동으로 인계됩니다.
+PRINTFORML 인계할 항목을 선택해 주십시오.
 PRINTL 
 IF NOWPAGE > 1
-	PRINTPLAIN  周回向けオプション　　　　　　
-	PRINTL  [0] このページの項目をすべて解除
+	PRINTPLAIN  주회차용 옵션　　　　　　　 
+	PRINTL  [0] 이 페이지의 항목을 모두 해제
 	PRINTL 
 ENDIF
 IF NOWPAGE == 1
-	PRINTFORML  [0] 引き継ぎキャラ選択　　　　　　　　現在 {LOCAL:10}人
+	PRINTFORML  [0] 인계 캐릭터 선택　　　　　　　　　현재 {LOCAL:10}인
 	PRINTL 
 	IF LOCAL:11
-		PRINTL  [1] 性成長引き継ぎ　　　　　　　　　　(選択済み)
+		PRINTL  [1] 성(性) 성장 인계　　　　　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 4
 			SETCOLOR 105,105,105
-		PRINTL  [1] 性成長引き継ぎ　　　　　　　　　　-4
+		PRINTL  [1] 성(性) 성장 인계　　　　　　　　　-4
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:12
-		PRINTL  [2] 娘引き継ぎ　　　　　　　　　　　　(選択済み)
+		PRINTL  [2] 딸 인계　　　　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 15 || HAVE_DAUGHTER == 0
 			SETCOLOR 105,105,105
-		PRINTL  [2] 娘引き継ぎ　　　　　　　　　　　　-15
+		PRINTL  [2] 딸 인계　　　　　　　　　　　　　 -15
 		RESETCOLOR
 	ENDIF
 	IF GLOBAL:213
 		IF LOCAL:13
-			PRINTL  [3] 레벨引き継ぎ　　　　　　　　　　(選択済み)
+			PRINTL  [3] 레벨 인계　　　　　　　　　　　　 (선택 완료)
 		ELSE
 			SIF POINTS < 30
 				SETCOLOR 105,105,105
-			PRINTL  [3] 레벨引き継ぎ　　　　　　　　　　-30
+			PRINTL  [3] 레벨 인계　　　　　　　　　　　　 -30
 			RESETCOLOR
 		ENDIF
 	ELSE
@@ -351,170 +351,171 @@ IF NOWPAGE == 1
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:14
-		PRINTL  [4] 戦技引き継ぎ　　　　　　　　　　　(選択済み)
+		PRINTL  [4] 전투기술 인계　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 8
 			SETCOLOR 105,105,105
-		PRINTL  [4] 戦技引き継ぎ　　　　　　　　　　　-8
+		PRINTL  [4] 전투기술 인계　　　　　　　　　　 -8
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:15 == 1
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　25％
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 25％
 	ELSEIF LOCAL:15 == 2
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　50％
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 50％
 	ELSEIF LOCAL:15 == 3
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　75％
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 75％
 	ELSEIF LOCAL:15 == 4
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　100％
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 100％
 	ELSEIF LOCAL:15 == 5
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　100％＋施設そのまま
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 100％＋시설 레벨 인계
 	ELSE
-		PRINTL  [5] 資金引き継ぎ　　　　　　　　　　　なし
+		PRINTL  [5] 자금 인계　　　　　　　　　　　　 없음
 	ENDIF
 	IF LOCAL:16
-		PRINTFORML  [6] 基礎値ボーナス増加　　　　　　　　　　　　　{LOCAL:16,5,RIGHT} ポイント
+		PRINTFORML  [6] 기초 스탯 보너스 증가　　　　　　　　　　　 {LOCAL:16,5,RIGHT} 포인트
 	ELSE
-		PRINTFORML  [6] 基礎値ボーナス増加　　　　　　　　なし
+		PRINTFORML  [6] 기초 스탯 보너스 증가　　　　　　 없음
 	ENDIF
 	IF LOCAL:17
-		PRINTFORML  [7] 初期방위력増加　　　　　　　　　　　　　　　{LOCAL:17*500,5,RIGHT} ポイント
+		PRINTFORML  [7] 초기 방위력 증가　　　　　　　　　　　　　　{LOCAL:17*500,5,RIGHT} 포인트
 	ELSE
-		PRINTFORML  [7] 初期방위력増加　　　　　　　　　　なし
+		PRINTFORML  [7] 초기 방위력 증가　　　　　　　　　없음
 	ENDIF
 	IF LOCAL:18
-		PRINTL  [8] 촉수의 조각＆研究Lv引き継ぎ　　　　(選択済み)
+		PRINTL  [8] 촉수의 조각＆연구Lv 인계　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 4 || FLAG:200 == 0
 			SETCOLOR 105,105,105
-		PRINTL  [8] 촉수의 조각＆研究Lv引き継ぎ　　　　-4
+		PRINTL  [8] 촉수의 조각＆연구Lv 인계　　　　　-4
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:19
-		PRINTL  [9] 衣装引き継ぎ　　　　　　　　　　　(選択済み)
+		PRINTL  [9] 의상 인계　　　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 6
 			SETCOLOR 105,105,105
-		PRINTL  [9] 衣装引き継ぎ　　　　　　　　　　　-6
+		PRINTL  [9] 의상 인계　　　　　　　　　　　　 -6
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:20
-		PRINTL [10] 매료경험引き継ぎ　　　　　　　　　(選択済み)
+		PRINTL [10] 매료경험 인계　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 6
 			SETCOLOR 105,105,105
-		PRINTL [10] 매료경험引き継ぎ　　　　　　　　　-6
+		PRINTL [10] 매료경험 인계　　　　　　　　　　 -6
 		RESETCOLOR
 	ENDIF
 ELSEIF NOWPAGE == 2
 	IF LOCAL:21
-		PRINTL [11] 夜間自動回復アップ　　　　　　　　(選択済み)
+		PRINTL [11] 야간 자동 회복 UP　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 8
 			SETCOLOR 105,105,105
-		PRINTL [11] 夜間自動回復アップ　　　　　　　　-8
+		PRINTL [11] 야간 자동 회복 UP　　　　　　　　 -8
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:22
-		PRINTL [12] 絡みつく選択率ダウン　　　　　　　(選択済み)
+		PRINTL [12] 적의 구속 공격 선택률 DOWN　　　　(선택 완료)
 	ELSE
 		SIF (LOCAL:27 == 0 && POINTS < 6) || (LOCAL:27 && POINTS < 4)
 			SETCOLOR 105,105,105
-		PRINTL [12] 絡みつく選択率ダウン　　　　　　　-6
+		PRINTL [12] 적의 구속 공격 선택률 DOWN　　　　-6
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:23
-		PRINTL [13] 풀어낸다強化　　　　　　　　　　　(選択済み)
+		PRINTL [13] 풀어내기 확률 UP　　　　　　　　　(선택 완료)
 	ELSE
 		SIF (LOCAL:28 == 0 && POINTS < 6) || (LOCAL:28 && POINTS < 1)
 			SETCOLOR 105,105,105
-		PRINTL [13] 풀어낸다強化　　　　　　　　　　　-6
+		PRINTL [13] 풀어내기 확률 UP　　　　　　　　　-6
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:24
-		PRINTL [14] 세뇌/흑화しやすい　　　　　　 　(選択済み)
+		PRINTL [14] 세뇌/흑화 쉬워짐　　　　　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 3
 			SETCOLOR 105,105,105
-		PRINTL [14] 세뇌/흑화しやすい　　　　　　　 -3
+		PRINTL [14] 세뇌/흑화 쉬워짐　　　　　　　　　-3
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:25
-		PRINTL [15] 刻印怯み無効　　　　　　　　　　  (選択済み)
+		PRINTL [15] 각인에 의한 기죽음 무효　　　　　 (선택 완료)
 	ELSE
 		SIF (LOCAL:30 == 0 && POINTS < 8) || (LOCAL:30 && POINTS < 6)
 			SETCOLOR 105,105,105
-		PRINTL [15] 刻印怯み無効　　　　　　　　　　  -8
+		PRINTL [15] 각인에 의한 기죽음 무효　　　　　 -8
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:26
-		PRINTL [16] 日数制限解除　　　　　　　　　　　(選択済み)
+		PRINTL [16] 일수 제한 해제　　　　　　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 30
 			SETCOLOR 105,105,105
-		PRINTL [16] 日数制限解除　　　　　　　　　　　-30
+		PRINTL [16] 일수 제한 해제　　　　　　　　　　-30
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:27
-		PRINTL [17] 絡みつく選択率アップ　　　　　　　(選択済み)
+		PRINTL [17] 적의 구속 공격 선택률 UP　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 2 && LOCAL:22 == 0
 			SETCOLOR 105,105,105
-		PRINTL [17] 絡みつく選択率アップ　　　　　　　-2
+		PRINTL [17] 적의 구속 공격 선택률 UP　　　　　-2
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:28
-		PRINTL [18] 풀어낸다弱化　　　　　　　　　　　(選択済み)
+		PRINTL [18] 풀어내기 확률 DOWN　　　　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 2 && LOCAL:23 == 0
 			SETCOLOR 105,105,105
-		PRINTL [18] 풀어낸다弱化　　　　　　　　　　　-2
+		PRINTL [18] 풀어내기 확률 DOWN　　　　　　　　-2
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:29
-		PRINTL [19] 임신確率アップ　　　　　　　　　　(選択済み)
+		PRINTL [19] 임신 확률 UP　　　　　　　　　　　(선택 완료)
 	ELSE
 		SIF POINTS < 3
 			SETCOLOR 105,105,105
-		PRINTL [19] 임신確率アップ　　　　　　　　　　-3
+		PRINTL [19] 임신 확률 UP　　　　　　　　　　　-3
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:30
-		PRINTL [20] 刻印怯み率２倍　　　　　　　　　　(選択済み)
+		PRINTL [20] 각인에 의한 기죽음 확률 ２배　　　(선택 완료)
 	ELSE
 		SIF POINTS < 2 && LOCAL:25 == 0
 			SETCOLOR 105,105,105
-		PRINTL [20] 刻印怯み率２倍　　　　　　　　　　-2
+		PRINTL [20] 각인에 의한 기죽음 확률 ２배　　　-2
 		RESETCOLOR
 	ENDIF
 ELSEIF NOWPAGE == 3
 	IF LOCAL:31
-		PRINTL [21] 인기도リセット　　　　　　　　　　(選択済み)
+		PRINTL [21] 인기도 초기화　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS < 8
 			SETCOLOR 105,105,105
-		PRINTL [21] 인기도リセット　　　　　　　　　　消費なし
+		PRINTL [21] 인기도 초기화　　　　　　　　　　 무료
 		RESETCOLOR
 	ENDIF
 ENDIF
 DRAWLINE
 IF NOWPAGE > 1
-	PRINT [100]前のページへ　　　　　
+	PRINT [100] 앞 페이지로　　　　　
 ELSE
 	PRINT                            
 ENDIF
 PRINTPLAINFORM PAGE < {NOWPAGE}/{PAGEMAX} >　　　　
 SIF NOWPAGE < PAGEMAX
-	PRINT [200]次のページへ
+	PRINT [200] 뒷 페이지로
 PRINTL 
-PRINTL [999] 引き継ぎ開始
+PRINTL [999] 인계를 개시한다
 $INPUT_LOOP
 INPUT
+;인계 캐릭터 선택
 IF RESULT == 0 && NOWPAGE == 1
 	NOWLINECOUNT = LINECOUNT
 	$PRINT_LOOP_1
 	LOCAL:10 = 0
 	CALL SHORTLINE
-	PRINTFORML 引き継ぎを行うキャラを選択してください。
+	PRINTFORML 다음 회차에 인계할 캐릭터를 선택해 주십시오.
 	PRINTL 
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
@@ -525,22 +526,22 @@ IF RESULT == 0 && NOWPAGE == 1
 		SIF CCOUNT < 10
 			PRINT  
 		IF CFLAG:CCOUNT:0 == 999
-			PRINT ○引き継ぐ
+			PRINT ○인계한다
 			LOCAL:10 ++
 		ELSE
-			PRINT ×引き継がない
+			PRINT ×인계하지 않는다
 		ENDIF
 		IF CFLAG:CCOUNT:231
-			PRINT 　(娘)　
+			PRINT 　(딸)　
 		ELSE
 			PRINT 　　　　
 		ENDIF
 		PRINTL 
 		RESETCOLOR
 	NEXT
-	PRINTL  [100] 全キャラ選択
+	PRINTL  [100] 모든 캐릭터 선택
 	CALL SHORTLINE
-	PRINTL [999] 選択完了
+	PRINTL [999] 선택 완료
 	$INPUT_LOOP_1
 	INPUT
 	IF RESULT <= CHARANUM -1 && RESULT != MASTER && (CFLAG:RESULT:231 == 0 || LOCAL:12)
@@ -567,6 +568,7 @@ IF RESULT == 0 && NOWPAGE == 1
 		CLEARLINE 1
 		GOTO INPUT_LOOP_1
 	ENDIF
+;성(性)성장 인계
 ELSEIF RESULT == 1 && (LOCAL:11 || POINTS >= 4) && NOWPAGE == 1
 	IF LOCAL:11
 		LOCAL:11 = 0
@@ -575,6 +577,7 @@ ELSEIF RESULT == 1 && (LOCAL:11 || POINTS >= 4) && NOWPAGE == 1
 		LOCAL:11 = 1
 		POINTS -= 4
 	ENDIF
+;딸 인계
 ELSEIF RESULT == 2 && (LOCAL:12 || POINTS >= 15) && HAVE_DAUGHTER && NOWPAGE == 1
 	IF LOCAL:12
 		LOCAL:12 = 0
@@ -589,6 +592,7 @@ ELSEIF RESULT == 2 && (LOCAL:12 || POINTS >= 15) && HAVE_DAUGHTER && NOWPAGE == 
 		LOCAL:12 = 1
 		POINTS -= 15
 	ENDIF
+;레벨 인계
 ELSEIF RESULT == 3 && (LOCAL:13 || POINTS >= 30) && GLOBAL:213 && NOWPAGE == 1
 	IF LOCAL:13
 		LOCAL:13 = 0
@@ -597,6 +601,7 @@ ELSEIF RESULT == 3 && (LOCAL:13 || POINTS >= 30) && GLOBAL:213 && NOWPAGE == 1
 		LOCAL:13 = 1
 		POINTS -= 30
 	ENDIF
+;전투기술 인계
 ELSEIF RESULT == 4 && (LOCAL:14 || POINTS >= 8) && NOWPAGE == 1
 	IF LOCAL:14
 		LOCAL:14 = 0
@@ -605,56 +610,57 @@ ELSEIF RESULT == 4 && (LOCAL:14 || POINTS >= 8) && NOWPAGE == 1
 		LOCAL:14 = 1
 		POINTS -= 8
 	ENDIF
+;자금 인계
 ELSEIF RESULT == 5 && NOWPAGE == 1
 	NOWLINECOUNT = LINECOUNT
 	$PRINT_LOOP_2
 	LOCAL = LOCAL:15 * 4
 	CALL SHORTLINE
-	PRINTFORML 資金の引き継ぎ金額を選んでください。　　　　　 のこり周回ポイント ({POINTS - USED}pts.)
+	PRINTFORML 인계할 자금 금액을 선택해 주십시오.　　　　　　남은 주회차 포인트 ({POINTS - USED}pts.)
 	PRINTL 
-	PRINTFORML  [0]  引き継がない
+	PRINTFORML  [0]  인계하지 않는다
 	IF LOCAL:15 == 1
-		PRINTFORML  [1]  25％引き継ぎ　{MONEY * 25 / 100,10,RIGHT}＄　　　　　　　　　　　(選択済み)
+		PRINTFORML  [1]  25％ 인계한다　{MONEY * 25 / 100,10,RIGHT}＄　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS + LOCAL < 4
 			SETCOLOR 105,105,105
-		PRINTFORML  [1]  25％引き継ぎ　{MONEY * 25 / 100,10,RIGHT}＄　　　　　　　　　　　-4
+		PRINTFORML  [1]  25％ 인계한다　{MONEY * 25 / 100,10,RIGHT}＄　　　　　　　　　　 -4
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:15 == 2
-		PRINTFORML  [2]  50％引き継ぎ　{MONEY * 50 / 100,10,RIGHT}＄　　　　　　　　　　　(選択済み)
+		PRINTFORML  [2]  50％ 인계한다　{MONEY * 50 / 100,10,RIGHT}＄　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS + LOCAL < 8
 			SETCOLOR 105,105,105
-		PRINTFORML  [2]  50％引き継ぎ　{MONEY * 50 / 100,10,RIGHT}＄　　　　　　　　　　　-8
+		PRINTFORML  [2]  50％ 인계한다　{MONEY * 50 / 100,10,RIGHT}＄　　　　　　　　　　 -8
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:15 == 3
-		PRINTFORML  [3]  75％引き継ぎ　{MONEY * 75 / 100,10,RIGHT}＄　　　　　　　　　　　(選択済み)
+		PRINTFORML  [3]  75％ 인계한다　{MONEY * 75 / 100,10,RIGHT}＄　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS + LOCAL < 12
 			SETCOLOR 105,105,105
-		PRINTFORML  [3]  75％引き継ぎ　{MONEY * 75 / 100,10,RIGHT}＄　　　　　　　　　　　-12
+		PRINTFORML  [3]  75％ 인계한다　{MONEY * 75 / 100,10,RIGHT}＄　　　　　　　　　　 -12
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:15 == 4
-		PRINTFORML  [4] 100％引き継ぎ　{MONEY,10,RIGHT}＄　　　　　　　　　　　(選択済み)
+		PRINTFORML  [4] 100％ 인계한다　{MONEY,10,RIGHT}＄　　　　　　　　　　 (선택 완료)
 	ELSE
 		SIF POINTS + LOCAL < 16
 			SETCOLOR 105,105,105
-		PRINTFORML  [4] 100％引き継ぎ　{MONEY,10,RIGHT}＄　　　　　　　　　　　-16
+		PRINTFORML  [4] 100％ 인계한다　{MONEY,10,RIGHT}＄　　　　　　　　　　 -16
 		RESETCOLOR
 	ENDIF
 	IF LOCAL:15 == 5
-		PRINTFORML  [5] 100％引き継ぎ　{MONEY - LMONEY,10,RIGHT}＄＋施設そのまま　　　　(選択済み)
+		PRINTFORML  [5] 100％ 인계한다　{MONEY - LMONEY,10,RIGHT}＄＋시설 레벨 인계　　　(선택 완료)
 	ELSE
 		SIF POINTS + LOCAL < 16
 			SETCOLOR 105,105,105
-		PRINTFORML  [5] 100％引き継ぎ　{MONEY - LMONEY,10,RIGHT}＄＋施設そのまま　　　　-16
+		PRINTFORML  [5] 100％ 인계한다　{MONEY - LMONEY,10,RIGHT}＄＋시설 레벨 인계　　　-16
 		RESETCOLOR
 	ENDIF
 	CALL SHORTLINE
-	PRINTL [999] 選択完了
+	PRINTL [999] 선택 완료
 	$INPUT_LOOP_2
 	INPUT
 	IF RESULT == 0
@@ -731,26 +737,27 @@ ELSEIF RESULT == 5 && NOWPAGE == 1
 		CLEARLINE 1
 		GOTO INPUT_LOOP_2
 	ENDIF
+;기초치 보너스 증가
 ELSEIF RESULT == 6 && NOWPAGE == 1
 	NOWLINECOUNT = LINECOUNT
 	$PRINT_LOOP_3
 	CALL SHORTLINE
-	PRINTFORML キャラエディットの際に使用する基礎値ボーナスを20ポイントまで獲得できます。
-	PRINTFORML 周回ポイントを割り振ってください。　　　　　　 のこり周回ポイント ({POINTS - USED}pts.)
+	PRINTFORML 캐릭터 메이킹에서 사용할 기초치 보너스를 20포인트까지 획득할 수 있습니다.
+	PRINTFORML 주회차 포인트를 할당해 주십시오.　　　　　　　 남은 주회차 포인트 ({POINTS - USED}pts.)
 	PRINTL 
-	PRINTFORML 　基礎値ボーナス：{LOCAL:16}
+	PRINTFORML 　기초치 보너스：{LOCAL:16}
 	PRINTL 
-	PRINTFORM  [0] リセットする　　　　　　　　　
+	PRINTFORM  [0] 초기화한다　　　　　　　　　　
 	SIF LOCAL:16 < 1
 		SETCOLOR 105,105,105
-	PRINTFORM [1]−１　　　
+	PRINTFORM [1] −１　　 
 	RESETCOLOR
 	SIF POINTS < 2 || LOCAL:16 >= 20
 		SETCOLOR 105,105,105
-	PRINTFORML [10]＋１
+	PRINTFORML [10] ＋１
 	RESETCOLOR
 	CALL SHORTLINE
-	PRINTL [999] 選択完了
+	PRINTL [999] 선택 완료
 	$INPUT_LOOP_3
 	INPUT
 	IF RESULT == 0
@@ -774,26 +781,27 @@ ELSEIF RESULT == 6 && NOWPAGE == 1
 		CLEARLINE 1
 		GOTO INPUT_LOOP_3
 	ENDIF
+;초기 방위력 증가
 ELSEIF RESULT == 7 && NOWPAGE == 1
 	NOWLINECOUNT = LINECOUNT
 	$PRINT_LOOP_4
 	CALL SHORTLINE
-	PRINTFORML 初期방위력を5000ポイントまで強化できます。
-	PRINTFORML 周回ポイントを割り振ってください。　　　　　　 のこり周回ポイント ({POINTS - USED}pts.)
+	PRINTFORML 초기 방위력을 5000포인트까지 강화할 수 있습니다.
+	PRINTFORML 주회차 포인트를 할당해 주십시오.　　　　　　　 남은 주회차 포인트 ({POINTS - USED}pts.)
 	PRINTL 
-	PRINTFORML 　방위력強化：{LOCAL:17*500}
+	PRINTFORML 　방위력 강화：{LOCAL:17*500}
 	PRINTL 
-	PRINTFORM  [0] リセットする　　　　　　　　　
+	PRINTFORM  [0] 초기화한다　　　　　　　　　　
 	SIF LOCAL:17 < 1
 		SETCOLOR 105,105,105
-	PRINTFORM [1]−５００　　　
+	PRINTFORM [1] −５００　　 
 	RESETCOLOR
 	SIF POINTS < 1 || LOCAL:17 >= 10
 		SETCOLOR 105,105,105
-	PRINTFORML [10]＋５００
+	PRINTFORML [10] ＋５００
 	RESETCOLOR
 	CALL SHORTLINE
-	PRINTL [999] 選択完了
+	PRINTL [999] 선택 완료
 	$INPUT_LOOP_4
 	INPUT
 	IF RESULT == 0
@@ -817,6 +825,7 @@ ELSEIF RESULT == 7 && NOWPAGE == 1
 		CLEARLINE 1
 		GOTO INPUT_LOOP_4
 	ENDIF
+;촉수의 조각 인계
 ELSEIF RESULT == 8 && (LOCAL:18 || POINTS >= 4) && FLAG:200 && NOWPAGE == 1
 	IF LOCAL:18
 		LOCAL:18 = 0
@@ -825,6 +834,7 @@ ELSEIF RESULT == 8 && (LOCAL:18 || POINTS >= 4) && FLAG:200 && NOWPAGE == 1
 		LOCAL:18 = 1
 		POINTS -= 4
 	ENDIF
+;의상 인계
 ELSEIF RESULT == 9 && (LOCAL:19 || POINTS >= 6) && NOWPAGE == 1
 	IF LOCAL:19
 		LOCAL:19 = 0
@@ -833,6 +843,7 @@ ELSEIF RESULT == 9 && (LOCAL:19 || POINTS >= 6) && NOWPAGE == 1
 		LOCAL:19 = 1
 		POINTS -= 6
 	ENDIF
+;매료경험 인계
 ELSEIF RESULT == 10 && (LOCAL:20 || POINTS >= 6) && NOWPAGE == 1
 	IF LOCAL:20
 		LOCAL:20 = 0
@@ -841,6 +852,7 @@ ELSEIF RESULT == 10 && (LOCAL:20 || POINTS >= 6) && NOWPAGE == 1
 		LOCAL:20 = 1
 		POINTS -= 6
 	ENDIF
+;이 페이지의 항목을 모두 해제한다 (2페이지)
 ELSEIF RESULT == 0 && NOWPAGE == 2
 	IF LOCAL:21
 		LOCAL:21 = 0
@@ -882,6 +894,7 @@ ELSEIF RESULT == 0 && NOWPAGE == 2
 		LOCAL:30 = 0
 		POINTS += 2
 	ENDIF
+;야간 자동 회복 증가
 ELSEIF RESULT == 11 && (LOCAL:21 || POINTS >= 8) && NOWPAGE == 2
 	IF LOCAL:21
 		LOCAL:21 = 0
@@ -890,6 +903,7 @@ ELSEIF RESULT == 11 && (LOCAL:21 || POINTS >= 8) && NOWPAGE == 2
 		LOCAL:21 = 1
 		POINTS -= 8
 	ENDIF
+;구속 공격 선택률 DOWN
 ELSEIF RESULT == 12 && (LOCAL:22 || POINTS >= 6 || (LOCAL:27 && POINTS >= 4)) && NOWPAGE == 2
 	IF LOCAL:22
 		LOCAL:22 = 0
@@ -902,6 +916,7 @@ ELSEIF RESULT == 12 && (LOCAL:22 || POINTS >= 6 || (LOCAL:27 && POINTS >= 4)) &&
 		LOCAL:22 = 1
 		POINTS -= 6
 	ENDIF
+;풀어내기 확률 UP
 ELSEIF RESULT == 13 && (LOCAL:23 || POINTS >= 6 || (LOCAL:28 && POINTS >= 4)) && NOWPAGE == 2
 	IF LOCAL:23
 		LOCAL:23 = 0
@@ -914,6 +929,7 @@ ELSEIF RESULT == 13 && (LOCAL:23 || POINTS >= 6 || (LOCAL:28 && POINTS >= 4)) &&
 		LOCAL:23 = 1
 		POINTS -= 6
 	ENDIF
+;세뇌/흑화 쉬워짐
 ELSEIF RESULT == 14 && (LOCAL:24 || POINTS >= 3) && NOWPAGE == 2
 	IF LOCAL:24
 		LOCAL:24 = 0
@@ -922,6 +938,7 @@ ELSEIF RESULT == 14 && (LOCAL:24 || POINTS >= 3) && NOWPAGE == 2
 		LOCAL:24 = 1
 		POINTS -= 3
 	ENDIF
+;각인에 의한 기죽음 무효
 ELSEIF RESULT == 15 && (LOCAL:25 || POINTS >= 8 || (LOCAL:30 && POINTS >= 6)) && NOWPAGE == 2
 	IF LOCAL:25
 		LOCAL:25 = 0
@@ -934,6 +951,7 @@ ELSEIF RESULT == 15 && (LOCAL:25 || POINTS >= 8 || (LOCAL:30 && POINTS >= 6)) &&
 		LOCAL:25 = 1
 		POINTS -= 8
 	ENDIF
+;일수 제한 해제
 ELSEIF RESULT == 16 && (LOCAL:26 || POINTS >= 30) && NOWPAGE == 2
 	IF LOCAL:26
 		LOCAL:26 = 0
@@ -942,6 +960,7 @@ ELSEIF RESULT == 16 && (LOCAL:26 || POINTS >= 30) && NOWPAGE == 2
 		LOCAL:26 = 1
 		POINTS -= 30
 	ENDIF
+;구속 공격 선택률 UP
 ELSEIF RESULT == 17 && (LOCAL:27 || POINTS >= 2 || LOCAL:22) && NOWPAGE == 2
 	IF LOCAL:27
 		LOCAL:27 = 0
@@ -954,6 +973,7 @@ ELSEIF RESULT == 17 && (LOCAL:27 || POINTS >= 2 || LOCAL:22) && NOWPAGE == 2
 		LOCAL:27 = 1
 		POINTS -= 2
 	ENDIF
+;풀어내기 확률 DOWN
 ELSEIF RESULT == 18 && (LOCAL:28 || POINTS >= 2 || LOCAL:23) && NOWPAGE == 2
 	IF LOCAL:28
 		LOCAL:28 = 0
@@ -966,6 +986,7 @@ ELSEIF RESULT == 18 && (LOCAL:28 || POINTS >= 2 || LOCAL:23) && NOWPAGE == 2
 		LOCAL:28 = 1
 		POINTS -= 2
 	ENDIF
+;임신 확률 증가
 ELSEIF RESULT == 19&& (LOCAL:29 || POINTS >= 3) && NOWPAGE == 2
 	IF LOCAL:29
 		LOCAL:29 = 0
@@ -974,6 +995,7 @@ ELSEIF RESULT == 19&& (LOCAL:29 || POINTS >= 3) && NOWPAGE == 2
 		LOCAL:29 = 1
 		POINTS -= 3
 	ENDIF
+;각인에 의한 기죽음 확률 2배
 ELSEIF RESULT == 20 && (LOCAL:30 || POINTS >= 2 || LOCAL:25) && NOWPAGE == 2
 	IF LOCAL:30
 		LOCAL:30 = 0
@@ -994,18 +1016,21 @@ ELSEIF RESULT == 21 && NOWPAGE == 3
 	ELSE
 		LOCAL:31 = 1
 	ENDIF
+;앞 페이지로
 ELSEIF RESULT == 100 && NOWPAGE > 1
 	NOWPAGE --
 	GOTO MASTER_LOOP
+;뒷 페이지로
 ELSEIF RESULT == 200 && NOWPAGE < PAGEMAX
 	NOWPAGE ++
 	GOTO MASTER_LOOP
+;인계를 개시한다
 ELSEIF RESULT == 999
 	IF LOCAL:10 == 0
-		PRINTL 現在の引き継ぎ人数が 0人になっています。
-		PRINTL キャラを引き継がずに次周を開始してもよろしいですか？
-		PRINTL  [0] はい
-		PRINTL  [1] いいえ
+		PRINTL 현재 인계 인원이 0인으로 되어 있습니다.
+		PRINTL 캐릭터를 인계받지 않고 다음 회차를 시작해도 괜찮겠습니까？
+		PRINTL  [0] 네
+		PRINTL  [1] 아니오
 		$INPUT_LOOP_5
 		INPUT
 		IF RESULT == 0
@@ -1018,14 +1043,14 @@ ELSEIF RESULT == 999
 		ENDIF
 	ENDIF
 
-	;ゲームモード選択
+	;게임 모드 선택
 	CALL LB
-	PRINTL 次周を開始するにあたって、ゲームモードを選択し直すことができます
+	PRINTL 다음 회차를 시작함에 앞서, 게임 모드를 다시 선택하실 수가 있습니다.
 	PRINTW 
 	CALL MODE_SELECT(1, LOCAL:10)
 	SIF RESULT == 999
 		GOTO MASTER_LOOP
-	;フラグ초기화処理
+	;플래그 초기화 처리
 	DAY = 0
 	DAY:1 = 0
 	TIME = 0
@@ -1054,34 +1079,34 @@ ELSEIF RESULT == 999
 	FOR LOCAL,900,999
 		FLAG:LOCAL = 0
 	NEXT
-	;周回要素플래그를 세운다
+	;주회 요소 플래그를 세운다
 	FOR LOCAL,21,31
-		;制限解除
+		;제한 해제
 		FLAG:(880+LOCAL) = LOCAL:LOCAL
 	NEXT
 	SIF FLAG:906
 		SETBIT FLAG:0,OPTION_제한시간없음
 
-	;鍛錬設備레벨
+	;단련 시설 레벨
 	IF LOCAL:15 != 5
 		FLAG:50 = 1
 		FLAG:51 = 1
 		FLAG:52 = 0
 		FLAG:53 = 0
 	ENDIF
-	;보스 촉수、최종 보스 촉수 총 마릿수
+	;보스 촉수, 최종 보스 촉수 총 마릿수
 	CALL GET_BOSS_ERB_NUM
 	FLAG:3 = RESULT
-	;Ｋ촉수のみカウント
+	;Ｋ촉수만 카운트
 	FLAG:4 = 1
 
-	;보스 촉수、최종 보스 촉수의 플래그 설정
+	;보스 촉수, 최종 보스 촉수 플래그 설정
 	REPEAT FLAG:3
 		SETBIT FLAG:100, COUNT
 	REND
 	FLAG:101 = 0
 
-	;引き継ぎ開始
+	;인계 개시
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
@@ -1090,7 +1115,7 @@ ELSEIF RESULT == 999
 
 		IF CFLAG:CCOUNT:0 == 999
 			TALENT:CCOUNT:초기경험설정불가 = 1
-			;性成長引き継ぎしない
+			;성(性)성장 인계하지 않는다
 			IF LOCAL:11 == 0
 				FOR LOCAL,0,25
 					ABL:CCOUNT:LOCAL = CSVABL_F(NO:CCOUNT,LOCAL)
@@ -1113,7 +1138,7 @@ ELSEIF RESULT == 999
 				FOR LOCAL,200,239
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
 				NEXT
-				;구상용CFLAGは性経験に絡んでいることが多いのでここで초기화
+				;구상용 CFLAG는 성경험에 관련된 경우가 많기 때문에 여기서 초기화
 				FOR LOCAL,250,999
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
 				NEXT
@@ -1132,19 +1157,19 @@ ELSEIF RESULT == 999
 				TALENT:CCOUNT:전락 = CSVTALENT_F(NO:CCOUNT,162)
 				TALENT:CCOUNT:공생 = CSVTALENT_F(NO:CCOUNT,163)
 				TALENT:CCOUNT:배란이상 = CSVTALENT_F(NO:CCOUNT,164)
-				;고유캐릭터ならばCSVに合わせる
+				;고유 캐릭터라면 CSV에 맞춘다
 				IF TALENT:CCOUNT:고유캐릭터 > 0
 					TALENT:CCOUNT:미성숙 = CSVTALENT_F(NO:CCOUNT,4)
 					TALENT:CCOUNT:후타나리 = CSVTALENT_F(NO:CCOUNT,300)
-				;고유캐릭터以外の場合
+				;고유 캐릭터 이외의 경우
 				ELSE
 					SIF TALENT:CCOUNT:후타나리 != 3 && TALENT:CCOUNT:후타나리 != -3
 						TALENT:CCOUNT:후타나리 = CSVTALENT_F(NO:CCOUNT,300)
 				ENDIF
-				;사정と모유の最大値は사정중독と모유중독で変動する
+				;사정과 모유의 최대치는 사정중독과 모유중독으로 변동한다
 				MAXBASE:CCOUNT:사정 = CSVBASE_F(NO:CCOUNT, 20)
 				MAXBASE:CCOUNT:모유 = CSVBASE_F(NO:CCOUNT, 21)
-				;返り血などで変化した敏感・鈍感を元に戻す
+				;촉수혈 등으로 변화된 민감・둔감을 원래대로 되돌린다
 				SIF TALENT:CCOUNT:Ｖ민감 > 9
 					TALENT:CCOUNT:Ｖ민감 -= 10
 				SIF TALENT:CCOUNT:Ａ민감 > 9
@@ -1162,16 +1187,16 @@ ELSEIF RESULT == 999
 				SIF TALENT:CCOUNT:Ｃ둔감 < -8
 					TALENT:CCOUNT:Ｃ둔감 += 10
 
-				;처녀を奪われている場合は처녀に戻す
+				;처녀를 빼앗긴 경우에는 처녀로 돌려낸다
 				SIF TALENT:CCOUNT:처녀 == -1
 					TALENT:CCOUNT:처녀 = 1
-				;청순파が失われている場合は청순파に戻す
+				;청순파가 없어진 경우에는 청순파로 되돌린다
 				SIF TALENT:CCOUNT:청순파 == -1
 					TALENT:CCOUNT:청순파 = 1
-				;변신시비처녀を消去
+				;변신 시 비처녀를 소거
 				TALENT:CCOUNT:변신시비처녀 = 0
 
-				;素質基本値の読み込み
+				;소질 기본값의 읽어들이기
 				IF BASE:CCOUNT:체격기본값 < 0
 					TALENT:CCOUNT:왜소함 = 1
 				ELSEIF BASE:CCOUNT:체격기본값 > 0
@@ -1203,10 +1228,10 @@ ELSEIF RESULT == 999
 				SIF MAXBASE:CCOUNT:성별기본값 == 3
 					TALENT:CCOUNT:변신시오토코노코 = 1
 
-				;ＴＳ関連の処理
-				;♂/＊⇒♀/＊　元の性別が女体化している場合
+				;ＴＳ관련 처리
+				;♂/＊⇒♀/＊　원래의 성별이 여체화되어 있는 경우
 				IF TALENT:CCOUNT:성별변화 % 10 == 1
-					;元の性別を남자に戻す
+					;원래의 성별을 남자로 되돌린다
 					TALENT:CCOUNT:남자 = 1
 					TALENT:CCOUNT:처녀 = 0
 					TALENT:CCOUNT:모유체질 = 0
@@ -1221,7 +1246,7 @@ ELSEIF RESULT == 999
 						TALENT:CCOUNT:교제상대 = 0
 					TALENT:CCOUNT:악세서리 = 0
 					TALENT:CCOUNT:외관 = 0
-					;プロフィール再설정
+					;프로필 재설정
 					CALL GENERATE_CHAR_SIZE, CCOUNT, 0
 					BASE:CCOUNT:신장 = RESULT:2
 					BASE:CCOUNT:체중 = RESULT:3
@@ -1230,9 +1255,9 @@ ELSEIF RESULT == 999
 					BASE:CCOUNT:골반둘레 = RESULT:6
 					BASE:CCOUNT:가슴무게 = RESULT:7
 				ENDIF
-				;＊/♂⇒＊/♀　変身時の性別が女体化している場合
+				;＊/♂⇒＊/♀　변신 시의 성별이 여체화되어 있는 경우
 				IF TALENT:CCOUNT:성별변화 / 10 == 1
-					;プロフィール再설정
+					;프로필 재설정
 					CALL GENERATE_CHAR_SIZE, CCOUNT, 1
 					MAXBASE:CCOUNT:신장 = RESULT:2
 					MAXBASE:CCOUNT:체중 = RESULT:3
@@ -1241,35 +1266,43 @@ ELSEIF RESULT == 999
 					MAXBASE:CCOUNT:골반둘레 = RESULT:6
 					MAXBASE:CCOUNT:가슴무게 = RESULT:7
 				ENDIF
-				;변신시ＴＳの復活
+				;변신시ＴＳ의 부활
 				SIF TALENT:CCOUNT:변신시ＴＳ == -1
 					TALENT:CCOUNT:변신시ＴＳ = 1
-				;성별변화情報をリセット	
+				;성별변화 정보를 리셋
 				TALENT:CCOUNT:성별변화 = 0
 				SIF TALENT:CCOUNT:여체수용 > 0
 					SWAP TALENT:남성기피,TALENT:여성기피
 				TALENT:CCOUNT:여체수용 = 0
-				;初期経験の설정を許可する
+				;초기 경험 설정을 허가한다
 				TALENT:CCOUNT:초기경험설정불가 = 0
 			ENDIF
-			;레벨引き継ぎしない
+			;레벨 인계하지 않는다
 			IF LOCAL:13 == 0
 				ABL:CCOUNT:레벨 = CSVABL_F(NO:CCOUNT,50)
-				;コネクション
+				;연줄(커넥션)
 				FOR LOCAL,120,124
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
 				NEXT
 			ENDIF
-			;戦技引き継ぎしない
+			;전투기술 인계하지 않는다
 			IF LOCAL:14 == 0
-				FOR LOCAL,30,34
+				FOR LOCAL,30,33
 					ABL:CCOUNT:LOCAL = CSVABL_F(NO:CCOUNT,LOCAL)
 				NEXT
 				FOR LOCAL,5,8
 					EXP:CCOUNT:LOCAL = CSVEXP_F(NO:CCOUNT,LOCAL)
 				NEXT
+			;전투 기술이 5 이상일 경우 레벨과 전투 경험을 5에 맞춘다
+			ELSE 
+				FOR LOCAL,30,33
+					IF ABL:CCOUNT:LOCAL > 4
+						ABL:CCOUNT:LOCAL = 5
+						EXP:CCOUNT:(LOCAL - 25) = 300
+					ENDIF
+				NEXT
 			ENDIF
-			;衣装引き継ぎしない
+			;의상 인계하지 않는다
 			IF LOCAL:19 == 0
 				FOR LOCAL,40,44
 					CFLAG:CCOUNT:LOCAL = CSVCFLAG_F(NO:CCOUNT,LOCAL)
@@ -1278,7 +1311,7 @@ ELSEIF RESULT == 999
 					;EQUIP:CCOUNT:LOCAL = 0
 					EQUIP:CCOUNT:LOCAL = CSVEQUIP_F(NO:CCOUNT,LOCAL)
 				NEXT
-			;衣装引き継ぐ場合に装備なしなら-1にしておく
+			;의상을 인계하는 경우 장비가 없다면 -1로 해 둔다
 			ELSE
 				SIF CFLAG:CCOUNT:40 == 0
 					CFLAG:CCOUNT:40 = -1
@@ -1287,20 +1320,20 @@ ELSEIF RESULT == 999
 				SIF CFLAG:CCOUNT:42 == 0
 					CFLAG:CCOUNT:42 = -1
 			ENDIF
-			;매료경험引き継ぎしない
+			;매료경험 인계하지 않는다
 			IF LOCAL:20 == 0
 				EXP:CCOUNT:58 = CSVCFLAG_F(NO:CCOUNT,58)
-			;매료경험を引き継ぐ場合、100を上回った分は25%のみ引き継ぎ
+			;매료경험를 인계할 경우, 100을 초과한 분은 25%만 인계
 			ELSEIF EXP:CCOUNT:58 > 100
 				EXP:CCOUNT:58 = 100 + (EXP:CCOUNT:58 - 100) / 4
 			ENDIF
 
-			;必ず초기화する項目
+			;반드시 초기화하는 항목
 			FOR LOCAL,0,53
-				;プロフィールは초기화しない
+				;프로필은 초기화하지 않는다
 				SIF LOCAL >= 40 && LOCAL <48
 					CONTINUE
-				;모유と사정は性成長引継ぎの方で処理する
+				;모유와 사정은 성(性)성장 인계 쪽에서 처리한다
 				SIF LOCAL == 20 || LOCAL == 21
 					CONTINUE
 				BASE:CCOUNT:LOCAL = CSVBASE_F(NO:CCOUNT,LOCAL)
@@ -1323,7 +1356,7 @@ ELSEIF RESULT == 999
 				MARK:CCOUNT:LOCAL = CSVMARK_F(NO:CCOUNT,LOCAL)
 			NEXT
 			CFLAG:CCOUNT:999 = 0
-			;娘の場合、基礎値に修正を加える
+			;딸의 경우, 기초치에 수정을 가한다
 			IF CFLAG:CCOUNT:231
 				BASE:CCOUNT:0 += CFLAG:CCOUNT:60
 				BASE:CCOUNT:1 += CFLAG:CCOUNT:61
@@ -1336,7 +1369,7 @@ ELSEIF RESULT == 999
 				BASE:CCOUNT:12 += CFLAG:CCOUNT:65
 				BASE:CCOUNT:13 += CFLAG:CCOUNT:66
 			ENDIF
-			;범용 캐릭터の체력などのBASE値の計算
+			;범용 캐릭터 체력 등의 BASE 값 계산
 			IF NO:CCOUNT == 0
 				CALL SEIKAKU_CHECK,"GET_TALENT_VALUE",CCOUNT
 				LOCAL = RESULT
@@ -1352,52 +1385,52 @@ ELSEIF RESULT == 999
 					MAXBASE:CCOUNT:(LOCAL:1) = BASE:CCOUNT:(LOCAL:1)
 				NEXT
 			ENDIF
-			;変身している場合、変身を解除する
+			;변신 중인 경우, 변신을 해제한다
 			CALL TRANSFORM, 0, CCOUNT
 
-			;사정 게이지、모유 게이지のリセット
+			;사정 게이지, 모유 게이지 초기화
 			BASE:CCOUNT:사정 = 0
 			BASE:CCOUNT:모유 = 0
 		ELSE
-			;消去する予定のキャラを最後尾に持っていく
+			;소거할 예정인 캐릭터를 맨 뒤로 가져간다
 			FOR CCOUNT:1, CCOUNT, CHARANUM - 1
 				SIF CCOUNT:1 == MASTER
 					CONTINUE
 				SWAPCHARA CCOUNT:1, CCOUNT:1 + 1
-				;RELATIONの入れ替え
+				;RELATION의 교체
 				FOR CCOUNT:2, 0, CHARANUM
 					SIF LOCAL == MASTER
 						CONTINUE
 					SWAP RELATION:(CCOUNT:2):(CCOUNT:1), RELATION:(CCOUNT:2):(CCOUNT:1 + 1)
 				NEXT
 			NEXT
-			;消去する予定のキャラのRELATIONを双方向とも초기화
+			;소거할 예정인 캐릭터의 RELATION을 양쪽 모두 초기화
 			FOR CCOUNT:1, 0, CHARANUM
 				SIF CCOUNT:1 == MASTER
 					CONTINUE
 				RELATION:(CHARANUM - 1):(CCOUNT:1) = 0
 				RELATION:(CCOUNT:1):(CHARANUM - 1) = 0
 			NEXT
-			;消去の処理
+			;소거 처리
 			DELCHARA CHARANUM - 1
 			CCOUNT --
 			CONTINUE
 		ENDIF
 	NEXT
-	;資金引き継ぎ
+	;자금 인계
 	IF LOCAL:15 == 5
 		MONEY = MONEY - LMONEY + 1000
 	ELSE
 		MONEY = MONEY * 25 * LOCAL:15 / 100 + 1000
 	ENDIF
-	;初期방위력増加
+	;초기 방위력 증가
 	FLAG:852 = 5000 + LOCAL:17 * 500
-	;촉수의 조각引き継ぎなし
+	;촉수의 조각 인계 없음
 	IF LOCAL:18 == 0
 		FLAG:200 = 0
 		FLAG:54 = 0
 	ENDIF
-	;衣装引き継ぎなし
+	;의상 인계 없음
 	IF LOCAL:19 == 0
 		FOR LOCAL,101,200
 			ITEM:LOCAL = 0
@@ -1415,10 +1448,10 @@ ELSEIF RESULT == 999
 			ITEM:LOCAL = 0
 		NEXT
 	ENDIF
-	;인기도リセットあり
+	;인기도 초기화가 있을 경우
 	SIF LOCAL:31 == 1
 		FLAG:853 = 0
-	;各種周回特典フラグの処理
+	;각종 주회차 특전 플래그 처리
 	FOR LCOUNT, 21,31
 		IF LOCAL:LCOUNT > 0
 			FLAG:(880+LCOUNT) = 1
@@ -1430,32 +1463,32 @@ ELSEIF RESULT == 999
 	IF GAME_OPTION_CHECK_F(OPTION_solo)
 		LOCAL = 1
 	ELSE
-		;引き継いだ人数をLOCALに代入
+		;인계받은 인원수를 LOCAL에 대입
 		LOCAL = LOCAL:10
-		;引き継ぎ人数が3人未満なら3人をデフォルトにする
+		;인계 인원이 3인 미만이면 3인을 기본값으로 한다
 		SIF LOCAL < 3
 			LOCAL = 3
 		IF (GLOBAL:100 + GLOBAL:101 + GLOBAL:102) > 0 && LOCAL < 7
 			PRINTL 
-			PRINTFORML 周回クリアボーナス：
-			PRINTFORML ゲーム開始時の人数を増減できます
+			PRINTFORML 주회차 클리어 보너스：
+			PRINTFORML 게임 시작 시의 인원수를 늘리거나 줄일 수 있습니다.
 			SIF LOCAL:10 < 3
-				PRINTFORML [-1] １人減らす　　　　　　　　　　（{LOCAL - 1}人で開始）
-			PRINTFORML [ 0] デフォルト　　　　　　　　　　（{LOCAL}人で開始）
+				PRINTFORML [-1] １명 줄인다　　　　　　　　　 （{LOCAL - 1}인으로 시작）
+			PRINTFORML [ 0] 기본 인원수　　　　　　　　　 （{LOCAL}인으로 시작）
 			SIF LOCAL:10 < 6
-				PRINTFORML [ 1] １人増やす　　　　　　　　　　（{LOCAL + 1}人で開始）
+				PRINTFORML [ 1] １명 늘린다　　　　　　　　　 （{LOCAL + 1}인으로 시작）
 			SIF LOCAL:10 < 5
-				PRINTFORML [ 2] ２人増やす　　　　　　　　　　（{LOCAL + 2}人で開始）
+				PRINTFORML [ 2] ２명 늘린다　　　　　　　　　 （{LOCAL + 2}인으로 시작）
 			SIF LOCAL:10 < 4
-				PRINTFORML [ 3] ３人増やす　　　　　　　　　　（{LOCAL + 3}人で開始）
+				PRINTFORML [ 3] ３명 늘린다　　　　　　　　　 （{LOCAL + 3}인으로 시작）
 			$INPUT_LOOP_CHARA_NUM
 			INPUT
 			IF RESULT >= 0 && RESULT <= 3 && LOCAL:10 + RESULT < 7
 				LOCAL = LOCAL + RESULT
-				PRINTFORML {LOCAL}人で開始します
+				PRINTFORML {LOCAL}인으로 시작합니다.
 			ELSEIF RESULT == -1 && LOCAL:10 < 3
 				LOCAL = 2
-				PRINTFORML {LOCAL}人で開始します
+				PRINTFORML {LOCAL}인으로 시작합니다.
 			ELSE
 				GOTO INPUT_LOOP_CHARA_NUM
 			ENDIF
@@ -1463,7 +1496,7 @@ ELSEIF RESULT == 999
 	ENDIF
 	LOCAL = LOCAL - LOCAL:10
 	IF LOCAL > 0
-		PRINTFORMW 新規キャラを {LOCAL}人作成しました
+		PRINTFORMW 신규 캐릭터 {LOCAL}인의 작성을 마쳤습니다.
 		REPEAT LOCAL
 			ADDCHARA 0
 			FLAG:8 ++
@@ -1471,14 +1504,14 @@ ELSEIF RESULT == 999
 	ENDIF
 	PRINTL 
 
-	;제한 일수の설정
+	;제한 일수 설정
 	CALL SET_LIMIT_DAY
 
-	;修練Ｐの処理
+	;수련Ｐ 처리
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
-		;使用済みボーナスの分だけ減算
+		;사용한 보너스만큼 뺄셈
 		JUEL:CCOUNT:수련P -= CFLAG:CCOUNT:50 * 10
 		JUEL:CCOUNT:수련P -= CFLAG:CCOUNT:51 * 10
 		JUEL:CCOUNT:수련P -= CFLAG:CCOUNT:52 * 10
@@ -1535,18 +1568,18 @@ ELSEIF RESULT == 999
 		JUEL:CCOUNT:수련P += LOCAL:16 * 10
 	NEXT
 
-	;TARGETを存在するキャラに설정
+	;TARGET을 존재하는 캐릭터로 설정
 	FOR LOCAL,0,CHARANUM
 		SIF LOCAL == MASTER
 			CONTINUE
 		TARGET = LOCAL
 	NEXT
 
-	;キャラメイキングへ飛ぶ
+	;캐릭터 메이킹으로 날아간다
 	CALL CHARA_MAKE_MAIN, LOCAL:16
 	PRINTL 
 
-	;전용 구상の番号を설정、結界の내구력を全快
+	;전용 구상의 번호를 설정, 결계 내구력을 완쾌
 	FOR CCOUNT, 0, CHARANUM
 		SIF CCOUNT == MASTER
 			CONTINUE
@@ -1556,7 +1589,7 @@ ELSEIF RESULT == 999
 		CALL BASEUP_CAL_SHIELD, CCOUNT
 	NEXT
 
-	;구상の初期설정を호출など
+	;구상의 초기 설정 호출 등
 	FOR LOCAL,0,CHARANUM
 		SIF LOCAL == MASTER
 			CONTINUE
@@ -1570,7 +1603,7 @@ ELSEIF RESULT == 999
 		SIF LOCAL <= 파티인원최대치
 			CFLAG:999 = 1
 	NEXT
-	;初期セットキャラ、CSVキャラ用の衣装獲得処理
+	;초기 세트 캐릭터, CSV 캐릭터용 의상 획득 처리
 	FOR LOCAL, 0, CHARANUM -1
 		SIF ITEM:(CFLAG:(LOCAL+1):40) == 0
 			ITEM:(CFLAG:(LOCAL+1):40) = 1
@@ -1587,15 +1620,15 @@ ELSEIF RESULT == 999
 		NEXT
 	NEXT
 
-	;컨피그のプリセット설정
+	;컨피그 프리셋 설정
 	CALL HEROINE_PRESET
 
-	;방위력減衰回避
+	;방위력 감쇠(減衰) 회피
 	FLAG:41 = 1
-	;探索ノルマを설정
+	;탐색 할당량 설정
 	CALL RESEARCH_QUOTA
 
-	;フラッシュニュース用文字列をリセット
+	;플래시 뉴스용 문자열 초기화
 	SAVESTR:20 =
 	SAVESTR:21 =
 	SAVESTR:22 =

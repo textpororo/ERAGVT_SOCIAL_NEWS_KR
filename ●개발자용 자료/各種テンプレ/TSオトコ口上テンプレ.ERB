@@ -26,8 +26,8 @@
 ;　BASE:Ａ결계내구력	
 ;　BASE:Ｂ결계내구력	
 ;
-;　TCVAR:2 == 자세：봉사한다		奉仕フラグが立っている状態です。望むと望まざるとに関わらず、積極的に奉仕している状態です。
-;　TCVAR:2 == 자세：Ｖ방어		Ｖ삽입방어 플래그が立っている状態です。Ｖに挿入できませんが、触れられているので快楽は感じます。
+;　TCVARn:2 == 자세：봉사한다		奉仕フラグが立っている状態です。望むと望まざるとに関わらず、積極的に奉仕している状態です。
+;　TCVARn:2 == 자세：Ｖ방어		Ｖ삽입방어 플래그が立っている状態です。Ｖに挿入できませんが、触れられているので快楽は感じます。
 ;
 ;　IF CHECK_PREGNANT_F(TARGET) > 0	임신しているかどうかを判定します。正の値であれば임신 중です。
 ;
@@ -259,7 +259,7 @@ ENDIF
 @KOJO_1_BATTLE_CLOTH_OUTERDAMAGE_###
 ;공격で겉옷が大きな損傷を受けた場合
 ;拘束中
-IF TCVAR:0 == 0
+IF TCVARn:0 == 0
 	;타락
 	IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 		
@@ -667,9 +667,9 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_1_SEX_COM3_###
 ;膣に挿入され、犯されます。
-;TCVAR:2 == 자세：Ｖ방어のときはＶに挿入されません。
+;TCVARn:2 == 자세：Ｖ방어のときはＶに挿入されません。
 ;Ｖ감각が0のときは고통が強く、Ｖ감각が4以上なら強烈な快感を感じます。
-IF TCVAR:2 == 자세：Ｖ방어
+IF TCVARn:2 == 자세：Ｖ방어
 	
 ELSEIF ABL:Ｖ감각 == 0
 	
@@ -789,7 +789,7 @@ ELSEIF LOCALS:0 == "Ｈ촉수"
 		
 	ENDIF
 ;通常の촉수に奉仕
-ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVAR:2 == 자세：봉사한다
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
 	
 ;通常の촉수に強制
 ELSE
@@ -804,7 +804,7 @@ ENDIF
 IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	
 ;奉仕
-ELSEIF TCVAR:2 == 자세：봉사한다
+ELSEIF TCVARn:2 == 자세：봉사한다
 	
 ;通常
 ELSE
@@ -827,7 +827,7 @@ ENDIF
 ;COM13：절정 금지
 ;--------------------------------------------------
 @KOJO_1_SEX_COM13_###
-IF TCVAR:40
+IF TCVARn:40
 	;절정 금지を解除した場合
 ELSE
 	;절정 금지した場合
@@ -933,7 +933,7 @@ ENDIF
 ;촉수의포로や「봉사한다」を選択している場合は普通の파이즈리をしている感じになります。
 
 ;타락/奉仕
-IF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVAR:2 == 자세：봉사한다
+IF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
 	
 ;여체수용
 ELSEIF TALENT:여체수용

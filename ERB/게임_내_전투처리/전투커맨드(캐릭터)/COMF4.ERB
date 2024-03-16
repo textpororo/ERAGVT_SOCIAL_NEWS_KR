@@ -20,14 +20,23 @@ ENDIF
 CALL PRINT_DISTANCE
 PRINTL 
 
-;방어 플래그를 세운다
-TCVARn:2 = 자세：방어
-
-;지문: 방어
-CALL MESSAGE_BATTLE_CHARA_DEFENSE
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「방어」를 봤다
-SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
-	CALL MESSAGE_OTHER_BATTLE_CHARA_DEFENSE
+;[반격] 스타일의 특수 효과
+IF FSTYLE_NAME_F(TARGET, TCVARn:0) == "반격"
+	;지문: 강화 반격
+	CALL MESSAGE_BATTLE_CHARA_HANGEKI_EX
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 강화 반격 태세를 봤다
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_HANGEKI_EX
+	TCVARn:2 = 자세：강화반격
+;그 외에는 방어 플래그를 세운다
+ELSE
+	;지문: 방어
+	CALL MESSAGE_BATTLE_CHARA_DEFENSE
+	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의「방어」를 봤다
+	SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+		CALL MESSAGE_OTHER_BATTLE_CHARA_DEFENSE
+	TCVARn:2 = 자세：방어
+ENDIF
 
 ;행동 포인트를 +1
 EX:행동포인트 += 1

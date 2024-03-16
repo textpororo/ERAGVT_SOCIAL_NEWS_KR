@@ -676,7 +676,7 @@ SIF RAND:100 < (TCVARn:11 * TCVARn:11) && (TCVARn:12 & 기절) == 0
 	CALL SHINKYOU_CHANGE, "NORMAL"
 
 ;--------------------------------------------------------------------------------------
-;끈적끈적 지속 판정
+;끈적끈적 지속 판정, 반격은 순서를 맨 마지막에 둬야 하므로 HANGEKI_TO_TENTACLE 함수에서 따로 처리한다
 IF (TCVARn:12 & 끈적끈적) && (TCVARn:2 == 자세：방어 || TCVARn:2 == 자세：날뛴다방어 || TCVARn:2 == 자세：날뛴다실패 || TCVARn:2 == 자세：날뛴다치명타) && RAND:100 < MAX(75 - CFLAG:99 * 3, 25)
 	PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 달라붙은 점액을 털어냈다！
 	PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [끈적끈적] 상태로부터 회복했다！
@@ -828,6 +828,9 @@ IF TFLAG:1 == 1
 	CALL PALAM_CAL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ELSE
 	CALL ENEMY_ACTION
+	;반격 플래그를 지운다
+	SIF TCVAR:2 == 자세：반격 || TCVAR:2 == 자세：강화반격 || TCVAR:2 == 자세：반격성공
+		TCVAR:2 = 자세：통상
 ENDIF
 
 ;강구속or통째로 삼키기 준비 중에는 패배 확정 후에도 계속한다
@@ -954,7 +957,7 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 
 	;※강구속(挿入)中または丸飲み準備中に敗北状態になっていた場合は即座に戦闘終了せずフィニッシュまで見せる
 	IF 턴내패배취소>0
-		;기절していなければ기절する
+		;기절하지 않았다면 기절한다
 		CALL STATE_CHANGE_KIZETU, 100
 
 	ELSE
