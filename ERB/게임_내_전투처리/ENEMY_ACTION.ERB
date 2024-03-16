@@ -539,9 +539,16 @@ IF TCVARn:0 > 0
 					PRINTFORML {LOCAL:2}의 피해를 입었다！
 				ENDIF
 				FONTREGULAR
+
+				;절대 방어일 경우 체력 피해량 처리를 스킵한다
+				SIF TCVARn:200 > 0
+					GOTO TAIEKI_SKIP
+
 				SIF BASE:체력 - (LOCAL:2) <= 0
 					LOCAL:2 = BASE:체력
 				BASE:체력 -= LOCAL:2
+
+				$TAIEKI_SKIP
 				
 				FONTBOLD
 				IF GAME_OPTION_CHECK_F(OPTION_스탯저하있음)
@@ -909,7 +916,7 @@ IF TCVARn:0 > 0
 				PRINTFORML {LOCAL:2}의 피해를 입었다！
 				FONTREGULAR
 				
-				;절대 방어일 경우 체력 및 기력 피해량 처리를 스킵한다
+				;절대 방어일 경우 체력 피해량 처리를 스킵한다
 				SIF TCVARn:200 > 0
 					GOTO HADOU_SKIP
 
@@ -1020,7 +1027,7 @@ IF TCVARn:0 > 0
 		SIF ABL:마조끼 == 0
 			LOCAL:6 = 50
 		TCVARn:6 += MIN(RAND:(LOCAL:2 / 10),LOCAL:6)
-		
+
 		;욕정이 미량으로 증가
 		LOCAL:3 = RAND:MAX((MAXBASE:기력 * (LOCAL:1 - 5 / 5) * 8 / 100), 1) + 10
 		COMMON_PALAM:7 += LOCAL:3 * 10
