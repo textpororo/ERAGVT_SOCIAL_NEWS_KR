@@ -21,8 +21,8 @@ CALL PERCENT_CAL, ARG, MAXBASE:체력
 ;절대 방어일 경우 상태 이상 무효
 SIF TCVARn:200 > 0
 	RETURN 0
-;반격or강화 반격의 경우 피해량이 최대 체력의 20% 이하라면 기절에 면역
-SIF TCVARn:2 == 자세：반격 || TCVAR:2 == 자세：강화반격 && RESULT <= 20
+;통상 반격 또는 강화 반격의 경우 피해량이 최대 체력의 20% 이하라면 기절에 면역
+SIF (TCVARn:2 == 자세：반격 || TCVAR:2 == 자세：강화반격) && RESULT <= 20
 	RETURN 0
 SIF RESULT >= 30
 	LOCAL:0 += MAX(RESULT - 30, 0) / 4
