@@ -494,7 +494,7 @@ ENDIF
 
 ;[반격] 스타일의 통상 반격 준비
 ;버스트 공격의 경우 반격을 취하지 않는다
-IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "반격" && (TCVARn:2 != 자세：반격 || TCVARn:2 != 자세：반격성공) && GETBIT(TCVARn:217, 0) == 0
+IF FSTYLE_NAME_F(TARGET,TCVARn:0) == "반격" && TCVARn:2 != 자세：반격성공 && GETBIT(TCVARn:217, 0) == 0
 	;지문: 반격 준비
 	CALL MESSAGE_BATTLE_CHARA_HANGEKI
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 반격 태세를 봤다
