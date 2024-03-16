@@ -409,7 +409,7 @@ IF GETBIT(TCVARn:217, 0)
 			TFLAG:99 += 3
 		;버스트 공격과 강화 반격은 함께 사용할 수 없으므로 무효
 		CASE "반격"
-			IF TCVARn:2 != 자세：반격성공
+			IF TCVARn:2 == 자세：반격성공
 			ELSE
 				TFLAG:99 += 3
 				IF TCVARn:205 > TCVARn:206
