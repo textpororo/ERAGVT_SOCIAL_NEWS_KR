@@ -130,9 +130,11 @@ IF RESULT == 0
 		;[반격] 버스트 공격의 경우 축적 피해량의 1/5의 수치로 가산된다
 		;축적 피해량의 1/5 만큼의 수치가 보존된다
 		;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공할 시, 버스트 공격 효과가 적용되지 않는다
-		SIF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVAR:0) == "반격"
-			LOCAL:1 += TCVARn:205 / 5
-
+		IF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVAR:0) == "반격"
+			TCVARn:205 /= 5
+			LOCAL:1 += TCVARn:205
+		ENDIF
+		
 		FLAG:13 -= LOCAL:1
 		;지문: 가드 대미지(カス当たり)
 		CALL MESSAGE_BATTLE_CHARA_ATTACK_GUARD, ATTACK_NUM
@@ -321,7 +323,7 @@ ELSE
 	;치명타 계산까지 이행한 이후의 최종 피해량에 가산한다
 	;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공할 시, 버스트 공격 효과가 적용되지 않는다
 	SIF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVAR:0) == "반격"
-		LOCAL:1 += TCVARn:205 / 5
+		LOCAL:1 += TCVARn:205
 
 	FLAG:13 -= LOCAL:1
 	LOCAL:2 = LOCAL:1
@@ -446,6 +448,9 @@ IF GETBIT(TCVARn:217, 0)
 					FOR RESULT, RESULT, 0, -5
 						TFLAG:99 += 3
 					NEXT
+
+					TCVARn:205 = 0
+
 				ENDIF
 			ENDIF
 		CASE "광역"
