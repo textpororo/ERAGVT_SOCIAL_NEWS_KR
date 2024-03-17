@@ -5,8 +5,12 @@
 
 ;공격 범위로부터 벗어나 있었으면 반격 실패 (예를 들어 중거리에 있었는데 근,원 공격이 오면 반격 실패)
 ;단, 에어 스트라이크로 피했을 경우는 반격 성공으로 판정한다
-SIF ARG:1 == 2 && GETBIT(TCVARn:216, 1) == 0 && ((TCVARn:0 == 1 && GETBIT(TFLAG:11, 0) == 0) || (TCVARn:0 == 2 && GETBIT(TFLAG:11, 1) == 0) || (TCVARn:0 == 3 && GETBIT(TFLAG:11, 2) == 0))
-    RETURN 0
+IF ARG:1 == 2
+    IF GETBIT(TCVARn:216, 1) && ((TCVARn:0 == 1 && (TFLAG:11 & 1)) || (TCVARn:0 == 2 && (TFLAG:11 & 2)) || (TCVARn:0 == 3 && (TFLAG:11 & 4)))
+    ELSE
+        RETURN 0
+    ENDIF
+ENDIF
     
 ;강화 반격이 성공했을 경우 "절대 방어(피해 면역)" 와 함께 확정 반격 성공 판정
     ;*통상 반격도 일반 공격에 한하여 절대 방어에 성공할 가능성이 있다
