@@ -322,7 +322,7 @@ ELSE
 	;[반격] 버스트 공격의 축적 피해량 가산
 	;치명타 계산까지 이행한 이후의 최종 피해량에 가산한다
 	;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공할 시, 버스트 공격 효과가 적용되지 않는다
-	SIF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVAR:0) == "반격"
+	SIF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "반격"
 		LOCAL:1 += TCVARn:205
 
 	FLAG:13 -= LOCAL:1
@@ -422,11 +422,11 @@ IF GETBIT(TCVARn:217, 0)
 						CALL MESSAGE_OTHER_BATTLE_TENTACLE_ATTACK_OVERCHARGE
 					
 					;축적 피해량이 한도치의 1%를 초과할 때마다 최대 체력의 1%만큼 캐릭터가 피해를 입는다
-					;상한은 50%
+					;상한은 70%
 					CALL PERCENT_CAL(TCVARn:205,TCVARn:206)
 					RESULT -= 100
-					SIF RESULT > 50
-						RESULT = 50
+					SIF RESULT > 70
+						RESULT = 70
 
 					LOCAL:2 = MAXBASE:체력 * RESULT / 100
 
