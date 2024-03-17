@@ -1041,7 +1041,7 @@ IF TCVARn:0 > 0
 	TCVARn:200 = 0
 
 	;FEAT 효과에 의한 공중 대시 게이지 회복
-	IF LOCAL:0 == 2 && GETBIT(TCVARn:216, 1) && (BASE:공중대시 < MAXBASE:공중대시) && TCVARn:210 != 추가발동금지
+	IF LOCAL:0 == 2 && GETBIT(TCVARn:216, 1) && (BASE:공중대시 < MAXBASE:공중대시) && TCVARn:210 != 추가발동금지 && TALENT:에어마스터 > 0
 		BASE:공중대시 ++
 		PRINTL [에어마스터] 의 효과로, 공중 대시 게이지를 1 회복했다！
 	ENDIF
