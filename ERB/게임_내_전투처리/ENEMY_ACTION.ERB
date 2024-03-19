@@ -1026,7 +1026,7 @@ IF TCVARn:0 > 0
 		LOCAL:6 = 50 * ABL:마조끼
 		SIF ABL:마조끼 == 0
 			LOCAL:6 = 50
-		TCVARn:6 += MIN(RAND:(LOCAL:2 / 10),LOCAL:6)
+		TCVARn:6 += MIN(RAND:(LOCAL:2 / 10),LOCAL:6, 50)
 
 		;욕정이 미량으로 증가
 		LOCAL:3 = RAND:MAX((MAXBASE:기력 * (LOCAL:1 - 5 / 5) * 8 / 100), 1) + 10
