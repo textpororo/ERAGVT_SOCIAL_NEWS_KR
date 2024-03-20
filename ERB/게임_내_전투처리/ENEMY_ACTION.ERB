@@ -1011,8 +1011,8 @@ IF TCVARn:0 > 0
 	ENDIF
 	[SKIPEND]
 
-	;마조기질이 있을 경우 피해량에 따라 ＥＸ게이지가 추가로 상승한다
-	IF TALENT:마조기질 && LOCAL:0 == 0
+	;마조기질이 있으며 절대 방어가 아닌 경우 피해량에 따라 ＥＸ게이지가 추가로 상승한다
+	IF TALENT:마조기질 && LOCAL:0 == 0 && TCVARn:200 == 0
 		IF ABL:마조끼 < 2
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 전신을 덮치는 고통에 눈물이 고이면서도, 어째선지 다음 공격을 기대하고 있었다……
 		;ELSEIF ABL:마조끼 < 4
@@ -1026,7 +1026,7 @@ IF TCVARn:0 > 0
 		LOCAL:6 = 50 * ABL:마조끼
 		SIF ABL:마조끼 == 0
 			LOCAL:6 = 50
-		TCVARn:6 += MIN(RAND:(LOCAL:2 / 10),LOCAL:6, 50)
+		TCVARn:6 += MIN(MAX(RAND:(LOCAL:2 / 10),50),LOCAL:6)
 
 		;욕정이 미량으로 증가
 		LOCAL:3 = RAND:MAX((MAXBASE:기력 * (LOCAL:1 - 5 / 5) * 8 / 100), 1) + 10
