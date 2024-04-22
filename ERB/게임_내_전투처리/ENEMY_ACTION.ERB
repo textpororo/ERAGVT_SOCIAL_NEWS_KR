@@ -1012,7 +1012,7 @@ IF TCVARn:0 > 0
 	[SKIPEND]
 
 	;마조기질이 있으며 절대 방어가 아닌 경우 피해량에 따라 ＥＸ게이지가 추가로 상승한다
-	IF TALENT:마조기질 && LOCAL:0 == 0 && TCVARn:200 == 0
+	IF TALENT:마조기질 && LOCAL:0 == 0 && TCVARn:200 == 0 && LOCAL:2 > 0
 		IF ABL:마조끼 < 2
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 전신을 덮치는 고통에 눈물이 고이면서도, 어째선지 다음 공격을 기대하고 있었다……
 		;ELSEIF ABL:마조끼 < 4
