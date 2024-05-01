@@ -843,15 +843,19 @@ IF LASTLOAD_VERSION != -1
 
 	IF LASTLOAD_VERSION < 407
 		;KR판에서 반격 스타일을 추가함과 더불어, 일부 전투 스타일의 순번을 바꿨으므로 이에 맞춘다
-		FOR LOCAL, 1, 3
-			SELECTCASE CDFLAG:CCOUNT:LOCAL:전투스타일
-				CASE 2
-					CDFLAG:CCOUNT:LOCAL:전투스타일 = 3
-				CASE 3
-					CDFLAG:CCOUNT:LOCAL:전투스타일 = 2
-				CASE 5 TO 9
-					CDFLAG:CCOUNT:LOCAL:전투스타일 ++
-			ENDSELECT
+		FOR CCOUNT, 0, CHARANUM
+			SIF CCOUNT == MASTER
+				CONTINUE
+			FOR LOCAL, 1, 3
+				SELECTCASE CDFLAG:CCOUNT:LOCAL:전투스타일
+					CASE 2
+						CDFLAG:CCOUNT:LOCAL:전투스타일 = 3
+					CASE 3
+						CDFLAG:CCOUNT:LOCAL:전투스타일 = 2
+					CASE 5 TO 9
+						CDFLAG:CCOUNT:LOCAL:전투스타일 ++
+				ENDSELECT
+			NEXT
 		NEXT
 	ENDIF
 
