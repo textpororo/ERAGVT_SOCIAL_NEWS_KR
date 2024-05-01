@@ -37,9 +37,9 @@ SIF CFLAG:TARGET:43 == 509
 ;**********************************************************
 ;히든 보스 형태 변화 처리
 ;**********************************************************
-IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 2
+IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 3
 	CALL PERCENT_CAL, FLAG:13, FLAG:12
-	IF ENEMY_TYPE_CHECK_F("LASTBOSS") == 2 && RESULT <= 75
+	IF ENEMY_TYPE_CHECK_F("LASTBOSS") == 3 && RESULT <= 75
 		PRINTL …
 		PRINTL ……
 		PRINTW ………
@@ -49,29 +49,29 @@ IF ENEMY_TYPE_CHECK_F("LASTBOSS") >= 2
 		PRINTW 「천사의 나무」는「낙원의 꽃」으로 변화했다……！！
 		PRINTL 
 		FLAG:21 = 2
-	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 3 && RESULT <= 37
+	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 4 && RESULT <= 37
 		PRINTL …
 		PRINTL ……
 		PRINTW ………
 		PRINTL 
 		PRINTL 적이 고통에 몸부림치며, 살덩어리 속 꽃잎의 색깔이 바래 간다……
-	PRINTL 육종과도 같은 꽃이 차례차례로 시들어 가고, 적의「핵」이 모습을 드러냈다……！！
+		PRINTL 육종과도 같은 꽃이 차례차례로 시들어 가고, 적의「핵」이 모습을 드러냈다……！！
 		PRINTW 「낙원의 꽃」은「타락의 핵」으로 변화했다……！！
 		PRINTL 
 		FLAG:21 = 3
-	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 4 && RESULT <= 10
+	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 5 && RESULT <= 10
 		PRINTL …
 		PRINTL ……
 		PRINTW ………
 		PRINTL 
 		PRINTL 둘러 쳐진 살덩이의 뿌리로부터 영양이 빨아 올려가자,
-	PRINTW 찢긴 채 썩어 문드러진 적의 촉수가 순식간에 재생되어 간다……！！
+		PRINTW 찢긴 채 썩어 문드러진 적의 촉수가 순식간에 재생되어 간다……！！
 		LOCAL = FLAG:12 * 70 / 100 - FLAG:13
 		PRINTFORMW 「타락의 핵」의 체력이 {LOCAL} 회복됐다……！！
 		PRINTL 
 		FLAG:13 += LOCAL
 		FLAG:21 = 4
-	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 5 && FLAG:13 <= 0
+	ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 6 && FLAG:13 <= 0
 		PRINTL …
 		PRINTL ……
 		PRINTW ………
@@ -165,7 +165,7 @@ IF FLAG:13 <= 0
 			;촉수혈
 			TRYCALL SUPART_BLOOD
 		;최종 보스（Ｋ）or 히든 보스 촉수 격파 시
-		ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 1 && GET_LASTBOSS_PHASE_F() >= 1
+		ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") > 0 && GET_LASTBOSS_PHASE_F() > 0
 			;색적 타겟을 쓰러뜨렸을 경우 색적을 초기화
 			SIF FLAG:18 == FLAG:11
 				FLAG:18 = 0
@@ -180,7 +180,7 @@ IF FLAG:13 <= 0
 				FLAG:1 += 5
 				FLAG:21 = 1
 			;히든 보스 격파
-			ELSEIF FLAG:21 > 0
+			ELSEIF GET_LASTBOSS_PHASE_F() == 2
 				;엔딩
 				FLAG:64 = -1
 				CALL UNLOCK_ACHIEVEMENT(270,"월등한 최강 대 최강")
@@ -263,50 +263,50 @@ IF FLAG:13 <= 0
 		NEXT
 
 
-			;최종 보스가 존재하지 않는 경우
-			IF FLAG:100 == 0 && FLAG:101 == 0
-				;미출현이라면
-				IF FLAG:64 != -1
-					;최종 보스 격파에 따른 히든 보스 출현
-					IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") > 1 && FLAG:21 > 0
-						FLAG:101 = 2
-						CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR_2
-					;최종 보스 출현
-					ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 0
-						FLAG:101 = 1
-						CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR
-					ENDIF
-				;출현한 이후 최종 보스를 쓰러뜨렸다면
-				ELSE
-					;지문: 완전 섬멸
-					CALL MESSAGE_BATTLE_END_PERFECT
-					;실적
-					IF GAME_OPTION_CHECK_F(OPTION_solo) && TALENT:Ｃ민감 && TALENT:Ｖ민감 && TALENT:Ａ민감 && TALENT:Ｂ민감
-						CALL UNLOCK_ACHIEVEMENT(260,"촉수 따위에겐 지지 않아！")
-					ENDIF
-					IF GAME_OPTION_CHECK_F(OPTION_solo) && EXP:유폐경험 >= 1
-						CALL UNLOCK_ACHIEVEMENT(261,"불굴의 투지")
-					ENDIF
-					LOCAL:97 = 0
-					LOCAL:98 = 0
-					FOR LOCAL:99,0,CHARANUM
-						SIF LOCAL:99 == MASTER
-							CONTINUE
-						SIF CFLAG:(LOCAL:99):231 > 0
-							LOCAL:98 ++
-						SIF JUEL:(LOCAL:99):수련P > LOCAL:97
-							LOCAL:97 = JUEL:(LOCAL:99):수련P
-					NEXT
-					IF LOCAL:97 >= 1000
-						CALL UNLOCK_ACHIEVEMENT(259,"기가 막히는 자린고비")
-					ENDIF
-					IF LOCAL:98 >= 3
-						CALL UNLOCK_ACHIEVEMENT(265,"NEXT GENERATION")
-					ENDIF
-					;엔딩플래그를 세운다
-					BEGIN TURNEND
+		;최종 보스가 존재하지 않는 경우
+		IF FLAG:100 == 0 && FLAG:101 == 0
+			;미출현이라면
+			IF FLAG:64 != -1
+				;최종 보스 격파에 따른 히든 보스 출현
+				IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") > 1 && FLAG:21 > 0
+					FLAG:101 = 2
+					CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR_2
+				;최종 보스 출현
+				ELSEIF ENEMY_TYPE_CHECK_F("LASTBOSS") == 0
+					FLAG:101 = 1
+					CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR
 				ENDIF
+			;출현한 이후 최종 보스를 쓰러뜨렸다면
+			ELSE
+				;지문: 완전 섬멸
+				CALL MESSAGE_BATTLE_END_PERFECT
+				;실적
+				IF GAME_OPTION_CHECK_F(OPTION_solo) && TALENT:Ｃ민감 && TALENT:Ｖ민감 && TALENT:Ａ민감 && TALENT:Ｂ민감
+					CALL UNLOCK_ACHIEVEMENT(260,"촉수 따위에겐 지지 않아！")
+				ENDIF
+				IF GAME_OPTION_CHECK_F(OPTION_solo) && EXP:유폐경험 >= 1
+					CALL UNLOCK_ACHIEVEMENT(261,"불굴의 투지")
+				ENDIF
+				LOCAL:97 = 0
+				LOCAL:98 = 0
+				FOR LOCAL:99,0,CHARANUM
+					SIF LOCAL:99 == MASTER
+						CONTINUE
+					SIF CFLAG:(LOCAL:99):231 > 0
+						LOCAL:98 ++
+					SIF JUEL:(LOCAL:99):수련P > LOCAL:97
+						LOCAL:97 = JUEL:(LOCAL:99):수련P
+				NEXT
+				IF LOCAL:97 >= 1000
+					CALL UNLOCK_ACHIEVEMENT(259,"기가 막히는 자린고비")
+				ENDIF
+				IF LOCAL:98 >= 3
+					CALL UNLOCK_ACHIEVEMENT(265,"NEXT GENERATION")
+				ENDIF
+				;엔딩플래그를 세운다
+				BEGIN TURNEND
 			ENDIF
+		ENDIF
 
 
 

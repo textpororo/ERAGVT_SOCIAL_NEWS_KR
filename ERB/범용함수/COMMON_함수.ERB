@@ -1588,7 +1588,7 @@ ENDIF
 RETURN RESULT
 
 
-;0=미출현　1=K촉수 출현　2～=천사의 나무:제(N-1) 형태
+;0=미출현　1=K촉수 출현　2～=천사의 나무:제(N-2) 형태
 @GET_LASTBOSS_PHASE_F()
 #FUNCTION
 ;최종 보스(K)
@@ -1596,7 +1596,7 @@ SIF FLAG:101 == 1
 	RETURNF 1
 ;히든 보스 제ｎ 형태
 SIF FLAG:101 == 2
-	RETURNF 1+FLAG:21
+	RETURNF 2+FLAG:21
 RETURNF 0
 
 ;현재 전투 중인 적의 종별이 일치하는지 체크
@@ -1608,7 +1608,7 @@ IF ARGS=="BOSS"
 ;최종 보스/히든 보스
 ELSEIF ARGS=="LASTBOSS"
 	;K촉수는 １ 히든 보스는 ２＋형태 변화 횟수(GET_LASTBOSS_PHASE_F()취급)
-	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 1) ? (FLAG:101 == 1 ? 1 # 1+FLAG:21) # 0
+	RETURNF (FLAG:110 == 0 && FLAG:73 == 0  && FLAG:10 == 1) ? (FLAG:101 == 1 ? 1 # 2+FLAG:21) # 0
 ELSEIF ARGS=="MOB"
 	RETURNF (FLAG:110 == 0 && FLAG:73 == 0 && FLAG:10 == 2) ? 1 # 0
 ELSEIF ARGS=="CITIZEN"
