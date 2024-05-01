@@ -268,7 +268,7 @@ IF FLAG:13 <= 0
 				;미출현이라면
 				IF FLAG:64 != -1
 					;최종 보스 격파에 따른 히든 보스 출현
-					IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") == 1
+					IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") > 1
 						FLAG:101 = 2
 						CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR_2
 					;최종 보스 출현
