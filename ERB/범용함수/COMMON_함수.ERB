@@ -403,7 +403,7 @@ NEXT
 RETURNF LOCAL
 
 ;--------------------------------------------------
-;변신 중이라면 변신 후 이름을 반환하는 식중 함수
+;변신 중이라면 변신 후 이름, 아니라면 풀네임을 반환하는 식중 함수
 @PRINT_TRANSNAME, ARG
 #FUNCTIONS
 IF CFLAG:ARG:3 == 1 && CFLAG:ARG:1 != 0
@@ -414,7 +414,7 @@ ENDIF
 RETURNF LOCALS
 
 ;--------------------------------------------------
-;변신 중이라면 변신 후 호칭을 반환하는 식중 함수
+;변신 중이라면 변신 후 호칭, 아니라면 CALLNAME을 반환하는 식중 함수
 @PRINT_TRANSCALLNAME, ARG
 #FUNCTIONS
 ;당신(あなた) 구상 선택 시
@@ -449,6 +449,15 @@ ELSE
 		LOCALS += "(당신)"
 ENDIF
 RETURNF LOCALS
+
+
+
+;주제 취득 래퍼(wrapper) 식중함수(보통은 SAVESTR:10 으로 공통이지만, 전락 캐릭터만 뿔뿔이 흩어진다(バラバラになる))
+@PRINT_THEME(ARG)
+#FUNCTIONS
+SIF ARG==0
+	ARG=TARGET
+RETURNF CSTR:ARG:5!="" ? CSTR:ARG:5 # SAVESTR:10
 
 
 ;--------------------------------------------------
@@ -1617,3 +1626,36 @@ ELSEIF ARGS=="AKUOTI"
 	RETURNF (FLAG:110 > 0) ? 1 # 0
 ENDIF
 RETURNF -1
+
+;이른바 유사 MATCH 함수 (FIND하여 참이라면 MATCH 위치 이후의 문자열을 잘라내어 반환한다)
+;　RESULTS:0　MATCH 문자열
+;　RESULTS:1　MATCH 문자열 이전의 문자열
+;　RESULTS:2　MATCH 문자열 이후의 문자열
+@STRMATCH(ARGS:0,ARGS:1)
+	STRFINDU ARGS:0,ARGS:1
+	IF RESULT>-1
+		;MATCH 부분 이전
+		SUBSTRINGU ARGS:0,0,RESULT
+		RESULTS:1 '= RESULTS
+		;MATCH 부분 이후
+		SUBSTRINGU ARGS:0,RESULT+STRLENSU(ARGS:1)
+		RESULTS:2 '= RESULTS
+		;MATCH 부분
+		SUBSTRINGU ARGS:0,RESULT,STRLENSU(ARGS:1)		
+
+	ELSE
+		RESULTS:0 '= ""
+		RESULTS:1 '= ""
+	ENDIF
+RETURN
+;식중함수판(MATCH 문자열만 반환한다)
+@STRMATCH_F(ARGS:0,ARGS:1)
+#FUNCTIONS
+	STRFINDU ARGS:0,ARGS:1
+	IF RESULT>-1
+		;MATCH 부분
+		SUBSTRINGU ARGS:0,RESULT,STRLENSU(ARGS:1)
+	ELSE
+		RESULTS:0 '= ""
+	ENDIF
+RETURNF RESULTS:0

@@ -1,6 +1,6 @@
 ﻿;================================================================================
 ;보스 촉수/적 캐릭터와의 조우 판정
-;※잡몹적과의 조우 판정はここではなくMOB_TENTACLE_ENCOUNTで行う
+;※잡몹적과의 조우 판정은 여기가 아닌 MOB_TENTACLE_ENCOUNT 에서 행한다
 ;--------------------------------------------------
 @ENCOUNT
 ;흑화・보스・잡몹 판정
@@ -271,7 +271,7 @@ IF FLAG:100 > 0
 
 		TRYCCALLFORM TENTACLE_%SAVESTR:13%_{FLAG:11}_GETNAME
 		CATCH
-			PRINTFORML 【!ERROR!：TENTACLE_%SAVESTR:13%_%조사처리(TOSTR(FLAG:11),"는")% 정의되지 않은 번호입니다.】
+			PRINTFORML 【!ERROR!：ENCOUNT.ERB…TENTACLE_%SAVESTR:13%_%조사처리(TOSTR(FLAG:11),"는")% 정의되지 않은 번호입니다.】
 			FLAG:10 = 0
 			FLAG:11 = 0
 			SAVESTR:13 '=""

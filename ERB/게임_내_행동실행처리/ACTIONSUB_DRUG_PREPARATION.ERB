@@ -669,6 +669,10 @@ ELSE
 		ELSE
 			FLAG:200 -= 2
 			PRINTFORML 「%CALLNAME:RESULT%씨에게 호르몬 밸런스 조정제를 투여하여, 가슴의 팽만을 치료했습니다.」
+
+			SIF TALENT:RESULT:팽유개조치 > 0
+				TALENT:RESULT:팽유개조치 = MAX(0,TALENT:RESULT:팽유개조치-RAND(5,20))
+
 			;평상시 정상으로 변신 시 팽유일 경우에는 변신 시만 축유
 			IF CFLAG:RESULT:37 == 0 && CFLAG:RESULT:38 > 0
 				TALENT:RESULT:변신시가슴사이즈변동 -= 1

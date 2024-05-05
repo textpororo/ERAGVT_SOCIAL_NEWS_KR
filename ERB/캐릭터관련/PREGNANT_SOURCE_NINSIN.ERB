@@ -604,6 +604,8 @@ RETURNF LOCAL
 ;턴 종료 시에 새끼 촉수가 증식
 ;----------------------------
 @BIRTH_AUTO_RANDOM
+#DIM LOSEDEF,1
+
 VARSET LOCAL
 ;상시 피임 모드
 SIF CONFIG_CHECK_OTHER_F(2) > 0
@@ -677,18 +679,80 @@ FOR LOCAL, 0, CHARANUM
 		ENDIF
 		RESULT = NUM_CHILD_TENTACLE(LOCAL)
 		PRINTL 【묘상 출산】
+		[SKIPSTART]
 		PRINTFORM 　촉수에게 거두어진 %조사처리(CALLNAME:LOCAL,"는")%,
 		PRINTDATA
-		DATAFORM 출산 절정과 함께
-		DATAFORM 최음 양수와 함께
-		DATAFORM 백탁 양수를 내뿜으며
-		DATAFORM 꼴사나운 시오후키와 함께
-		DATAFORM 패배 모유를 내며
+			DATAFORM 출산 절정과 함께
+			DATAFORM 최음 양수와 함께
+			DATAFORM 백탁 양수를 내뿜으며
+			DATAFORM 꼴사나운 시오후키와 함께
+			DATAFORM 패배 모유를 내며
 		ENDDATA
 		PRINTFORMW  {RESULT}마리의 새끼 촉수를 낳고 있다...
 		LOCAL:1 += RESULT
+		[SKIPEND]
+		PRINTDATA
+			DATAFORM 촉수에게 흡수되어 버린
+			DATAFORM 처참한 출산 전용 변기로 개조된
+			DATAFORM 의식이 없는 촉수를 낳는 장치로 변한
+			DATAFORM 절망 속에서 촉수에게 흡수된
+			DATAFORM 촉수에게 지배되어 출산 가축으로 변한
+			DATAFORM 의식이 단절되어 암퇘지가 된
+			;아래의 원문은 触手によって完全に壊造された
+			DATAFORM 촉수에 의해 완전히 망가진
+			DATAFORM 과거 용감하게 촉수와 싸웠던
+			DATAFORM 이전까지 인류의 희망이었던
+		ENDDATA
+		PRINTDATAL
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "가")%, 巨大なボテ腹を触手に好き放題突き上げられている。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "가")%, 手足のない体をピクピクと震わせている。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "가")%, 肉塊のような胴体だけを無様に震わせている。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "는")%, 既に蜜壷もアナルも尿道も苗床と化して蠢いている。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "가")%, 触手の動きに合わせて不釣り合いに大きな乳房を揺らしている。
+			DATAFORM  %CALLNAME:LOCAL%. 肉壁の外に露出しているのは巨大な乳房とボテ腹だけだった。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "는")%, 既に「人」と呼ばれる資格を失っていた。
+			DATAFORM  %CALLNAME:LOCAL%의, 光沢のある腹部に異形の稜線が膨らんでいた。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "는")%, へそまで種付けされて穴という穴を繁殖袋にされていた。
+			DATAFORM  %조사처리(CALLNAME:LOCAL, "는")% 手足と意識を奪われたが、死ぬことはできなかった。
+		ENDDATA
+		PRINTDATA
+			DATAFORM 産道をこじ開けられて痙攣しながら
+			DATAFORM 高濃度の媚薬羊水を大量に排出し、同時に
+			DATAFORM 開ききった股間から白濁羊水を噴き出しながら
+			DATAFORM 声も上げず、ただ醜い汁を噴き出すと同時に
+			DATAFORM 敗北の証として醜く乳を噴き出しながら
+			DATAFORM お腹の中で音がして粘液がべちゃりと出てくると同時に、
+			DATAFORM 勢いよく噴き出した尿で黄色い弧を描きながら、
+			DATAFORM 触手精液と何ら変わらない母乳を噴き散らしながら、
+			DATAFORM 出産アクメと共に
+			DATAFORM 媚薬羊水と共に
+			DATAFORM 白濁羊水を噴きながら
+			DATAFORM 無様な潮吹きと共に
+			DATAFORM 敗北噴乳をキメながら
+		ENDDATA
+		PRINTFORMW {RESULT}匹の子触手を産み落としている%CALLNAME:LOCAL%。
+		PRINTFORML 
+		PRINTDATA
+			DATAFORM 絶え間ない受精と出産は、今や%CALLNAME:LOCAL%の身体に許された唯一の悦びだった……
+			DATAFORM 触手愛用の苗床便器%CALLNAME:LOCAL%が、今日も終わりなき出産地獄に堕ちていく……
+			DATAFORM 意識を失った身体は快楽のみを感じ、%CALLNAME:LOCAL%はもはや完全に肉人形だ……
+			DATAFORM かつて強力な魔法少女だった%CALLNAME:LOCAL%も、今となっては触手の一器官に過ぎない……
+		ENDDATA
+
+
 		SIF CONFIG_CHECK_MANIAC_F(2) == 1
 			TALENT:모유체질 = 1
+		SIF CONFIG_CHECK_MANIAC_F(19) == 1
+			TALENT:팽유개조치 += 10
+		LOCAL:1 += RESULT 
+		LOSEDEF += RESULT * RAND(2,4)
+
+		PRINTFORML
+		FLAG:852 -= LOSEDEF
+		PRINTFORML %조사처리(CALLNAME:LOCAL, "가")% 産み落とす子触手たちは、いずれ次の犠牲者を苗床に堕としてしまうのだろう……
+		PRINTFORML 방위력이 {LOSEDEF} 저하됐다！
+		DRAWLINE
+
 	ENDIF
 NEXT
 IF LOCAL:1 > 0

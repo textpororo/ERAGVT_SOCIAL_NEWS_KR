@@ -221,8 +221,8 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 			PRINTL 
 		NEXT
 	ELSE
-		IF SAVESTR:10 != ""
-			LOCALS = %SAVESTR:10%
+		IF PRINT_THEME() != ""
+			LOCALS = %PRINT_THEME()%
 		ELSEIF ISMANLY() && TALENT:변신시ＴＳ == 0 && TALENT:변신시오토코노코 <= 0
 			LOCALS = 魔装少年
 		ELSE
@@ -315,8 +315,8 @@ SIF FLAG:70 + FLAG:71 == 0
 
 IF CFLAG:41 == 401
 	PRINTL 
-	IF SAVESTR:10 != ""
-		LOCALS = %SAVESTR:10%
+	IF PRINT_THEME() != ""
+		LOCALS = %PRINT_THEME()%
 	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:오토코노코 <= 0 && TALENT:변신시오토코노코 <= 0
 		; #region 
 		LOCALS = 魔装少年

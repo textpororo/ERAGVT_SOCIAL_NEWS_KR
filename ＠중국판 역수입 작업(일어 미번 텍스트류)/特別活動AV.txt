@@ -1,8 +1,8 @@
-﻿;AV처녀分岐
-		IF TALENT:처녀 > 0
+;AV処女分岐
+		IF TALENT:処女 > 0
 		;是圣处女的话，不会破处
 			IF CHECK_HOLYVIRGIN_F() == 1
-				SELECTCASE EXP:매료경험
+				SELECTCASE EXP:魅了経験
 				CASE IS < 100
 					PRINT 天生麗質的風情美人、
 				CASE 100 TO 200
@@ -11,21 +11,21 @@
 					PRINT 超高人気的知名偶像、
 				ENDSELECT 
 				PRINTFORML 意外捲入黒暗的風波、不得不出卖自己的肉体。
-				PRINTFORML 然而、在客人面前순종地脱光衣服全裸土下座的%PRINT_TRANSCALLNAME(TARGET)%、说出了意外的话语……
-				PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%什麼都願意做，只要不奪去%CALLNAME%的처녀……」
+				PRINTFORML 然而、在客人面前従順地脱光衣服全裸土下座的%PRINT_TRANSCALLNAME(TARGET)%、说出了意外的话语……
+				PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%什麼都願意做，只要不奪去%CALLNAME%的処女……」
 				PRINTFORML 面对予取予求的%PRINT_TRANSCALLNAME(TARGET)%，客人的选择是……？
 				CFLAG:282 = 13
-				SELECTCASE EXP:매료경험
+				SELECTCASE EXP:魅了経験
 				CASE IS < 100
 					LOCALS = 『高嶺之花%PRINT_TRANSCALLNAME(TARGET)%、貞潔捍衛挑戦！』
 				CASE 100 TO 200
 					LOCALS = 『堅守還是放縦？%PRINT_TRANSCALLNAME(TARGET)%貞操大危機！』
 				CASE IS > 200
-					LOCALS = 『童貞%PRINT_TRANSCALLNAME(TARGET)%、純白처녀徹底褻玩』
+					LOCALS = 『童貞%PRINT_TRANSCALLNAME(TARGET)%、純白処女徹底褻玩』
 				ENDSELECT 
 		;不是圣处女的话，破处
 			ELSE
-				SELECTCASE EXP:매료경험
+				SELECTCASE EXP:魅了経験
 				CASE IS < 100
 					PRINT 天生麗質的風情美人、公開
 				CASE 100 TO 200
@@ -33,19 +33,19 @@
 				CASE IS > 200
 					PRINT 超高人気的知名偶像、衝撃
 				ENDSELECT 
-				PRINTFORML の처녀卒業！
+				PRINTFORML の処女卒業！
 				PRINTFORML 聚光灯下、%PRINT_TRANSCALLNAME(TARGET)%自己分開双腿展現女人最私密的美妙、
 				PRINTFORML 宝貴的貞潔於鏡頭之前被肉槍挑落、
-				PRINTFORML 但誠実的身体竟已迫不及待地享受타락的快感？
+				PRINTFORML 但誠実的身体竟已迫不及待地享受堕落的快感？
 				CFLAG:282 = 14
-				TALENT:처녀 = -1
-				SELECTCASE EXP:매료경험
+				TALENT:処女 = -1
+				SELECTCASE EXP:魅了経験
 				CASE IS < 100
-					LOCALS = 『高嶺之花%PRINT_TRANSCALLNAME(TARGET)%、完全처녀 상실披露！』
+					LOCALS = 『高嶺之花%PRINT_TRANSCALLNAME(TARGET)%、完全処女喪失披露！』
 				CASE 100 TO 200
-					LOCALS = 『처녀卒業的淫蕩偶像%PRINT_TRANSCALLNAME(TARGET)%真性公開』
+					LOCALS = 『処女卒業的淫蕩偶像%PRINT_TRANSCALLNAME(TARGET)%真性公開』
 				CASE IS > 200
-					LOCALS = 『%PRINT_TRANSCALLNAME(TARGET)%、純白처녀徹底侵犯』
+					LOCALS = 『%PRINT_TRANSCALLNAME(TARGET)%、純白処女徹底侵犯』
 				ENDSELECT 
 			ENDIF
 

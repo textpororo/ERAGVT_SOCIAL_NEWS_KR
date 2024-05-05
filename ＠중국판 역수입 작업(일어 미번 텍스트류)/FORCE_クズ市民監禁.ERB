@@ -4,7 +4,7 @@
 VARSET LOCAL
  ;RYONA优先判断
 
-IF TALENT:사지결손 > 0
+IF TALENT:四肢欠損 > 0
 	CALL SNUFF_RYONA,TARGET
 ELSE
 
@@ -31,7 +31,7 @@ SELECTCASE RAND(1,101)
 	CASE 31 TO 60 ;三分之一几率，斩首，所有人可以進入
 	IF (TALENT:性奴体質 > 0 || ABL:受虐狂 > 3 ) && (RAND(3) < 1) ;&& CFLAG:0 == 4 ;如果有性奴体質，額外進行一次1/3判斷，判斷成功，進入CRUX結局
 		CALL SNUFF_CRUX,TARGET
-	ELSEIF (TALENT:촉수的俘虜 > 0 || ABL:受虐狂 > 3 ) && TALENT:性奴体質 <= 0 && (RAND(2) < 1) ;&& CFLAG:0 == 4 ;如果有촉수的俘虜且沒有性奴体質，額外進行一次1/2判斷，判斷成功，進入DROWN結局
+	ELSEIF (TALENT:触手的俘虜 > 0 || ABL:受虐狂 > 3 ) && TALENT:性奴体質 <= 0 && (RAND(2) < 1) ;&& CFLAG:0 == 4 ;如果有触手的俘虜且沒有性奴体質，額外進行一次1/2判斷，判斷成功，進入DROWN結局
 		CALL SNUFF_DROWN,TARGET
 	ELSE
 		PRINTFORMW 跪在房间中央，双手被反剪捆住的%PRINT_TRANSCALLNAME(TARGET)%
@@ -51,14 +51,14 @@ SELECTCASE RAND(1,101)
 				DATAFORM %SLANG_W(TARGET)%
 			ENDDATA
 			PRINTFORML 被粗長怒張的肉棒一次次填滿、
-			IF TALENT:거유 == 5
+			IF TALENT:巨乳 == 5
 				PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-			ELSEIF TALENT:거유 == 4
+			ELSEIF TALENT:巨乳 == 4
 				PRINT 肥碩的奶子淫蕩地搖晃著、
-			ELSEIF TALENT:거유 == 3
+			ELSEIF TALENT:巨乳 == 3
 				PRINT 綿軟的雙乳柔美地搖擺著、
-			ELSEIF TALENT:거유 == 2
-				PRINT 가슴前飽滿的果實隨著身體顫抖著、
+			ELSEIF TALENT:巨乳 == 2
+				PRINT 胸前飽滿的果實隨著身體顫抖著、
 			ELSE
 				PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 			ENDIF
@@ -76,25 +76,25 @@ SELECTCASE RAND(1,101)
 		ELSEIF TALENT:陰蒂穿環 == 3
 			PRINTFORM 被交叉刺穿的阴蒂膨大如枣核般、
 		ELSEIF TALENT:陰蒂穿環 == 4
-			PRINTFORM 巨大的阴蒂罩无情地牵拉着음핵、
+			PRINTFORM 巨大的阴蒂罩无情地牵拉着淫核、
 		ENDIF
 		SIF TALENT:乳頭穿環 == 5 && TALENT:陰蒂穿環 == 5
-			PRINTFORM 穿过乳头、음핵和阴唇的粗重锁链疯狂甩动着、
+			PRINTFORM 穿过乳头、淫核和阴唇的粗重锁链疯狂甩动着、
 		PRINTFORMW 渾圓的翹臀與迷人的雙腿不時毫無征兆地繃緊顫慄。
 		PRINTL 
-		PRINTFORML 男人사정的同時%PRINT_TRANSCALLNAME(TARGET)%也到達了頂峰、
+		PRINTFORML 男人射精的同時%PRINT_TRANSCALLNAME(TARGET)%也到達了頂峰、
 		PRINTFORML 陰莖抽出的同時穴口噴出淺白色的液體、
 		PRINTFORML 失去了支撑的%PRINT_TRANSCALLNAME(TARGET)%跪伏着向前倒下
-				IF TALENT:거유 == 5
+				IF TALENT:巨乳 == 5
 			PRINTL 臃腫的乳房墩在地上，身体上下摆动着、
-				ELSEIF TALENT:거유 == 4
+				ELSEIF TALENT:巨乳 == 4
 			PRINTL 肥碩的奶子压在大腿上扭曲变形、
-				ELSEIF TALENT:거유 == 3
+				ELSEIF TALENT:巨乳 == 3
 			PRINTL 豐潤的雙乳被压成两个圆饼、
-				ELSEIF TALENT:거유 == 2
-			PRINTL 가슴前飽滿的果實被地面挤压着、
+				ELSEIF TALENT:巨乳 == 2
+			PRINTL 胸前飽滿的果實被地面挤压着、
 				ELSE
-			PRINTL 가슴脯貼著地面、面頰轉向一側
+			PRINTL 胸脯貼著地面、面頰轉向一側
 				ENDIF
 		PRINTFORMW 急促地喘氣、沉浸在高潮的餘韻裡。
 		PRINTL 
@@ -105,7 +105,7 @@ SELECTCASE RAND(1,101)
 		PRINTFORML 在周圍男人的談笑中、
 		PRINTFORMW 劊子手拉起%PRINT_TRANSCALLNAME(TARGET)%再按倒在木砧前方、
 			PRINTL 
-		IF TALENT:음란 > 0 || ABL:受虐狂 > 3 
+		IF TALENT:淫乱 > 0 || ABL:受虐狂 > 3 
 			PRINTFORM 突然%PRINT_TRANSCALLNAME(TARGET)%開口请求道「
 			PRINTDATA
 				DATAFORM 譲%SELF_CALL()%在高潮中死去吧
@@ -118,7 +118,7 @@ SELECTCASE RAND(1,101)
 			PRINTFORML 把炮机上的粗大带刺假阳具插进了%PRINT_TRANSCALLNAME(TARGET)%的下體
 			PRINTFORML 在人类不可能做到的超高频活塞運動中%PRINT_TRANSCALLNAME(TARGET)%繃緊身躯抵达了绝顶
 			PRINTFORMW 弓起腰发出最后的浪叫————
-		ELSEIF TALENT:음란 <= 0 || TALENT:容易發情 <= 0 
+		ELSEIF TALENT:淫乱 <= 0 || TALENT:容易發情 <= 0 
 			PRINTFORMW 慌乱挣扎的%PRINT_TRANSCALLNAME(TARGET)%眼神中充满对生的眷恋、刚想张口说些什么————
 		ELSE
 			PRINTFORMW 迷离中的%PRINT_TRANSCALLNAME(TARGET)%還沒來得及說什麼、
@@ -165,7 +165,7 @@ SELECTCASE RAND(1,101)
 		CASEELSE ;二分之一几率，绞刑
 		IF TALENT:性奴体質 > 0 && RAND(2) < 1 ;&& CFLAG:0 == 4 ;如果有性奴体質，額外進行一次1/2判斷，判斷成功，進入CRUX結局
 		CALL SNUFF_CRUX,TARGET
-		ELSEIF TALENT:촉수的俘虜 > 0 && TALENT:性奴体質 <= 0 && RAND(2) < 1 ;&& CFLAG:0 == 4 ;如果有촉수的俘虜且沒有性奴体質，額外進行一次1/2判斷，判斷成功，進入DROWN結局
+		ELSEIF TALENT:触手的俘虜 > 0 && TALENT:性奴体質 <= 0 && RAND(2) < 1 ;&& CFLAG:0 == 4 ;如果有触手的俘虜且沒有性奴体質，額外進行一次1/2判斷，判斷成功，進入DROWN結局
 		CALL SNUFF_DROWN,TARGET
 		ELSE
 	PRINTFORMW 不知道多久后、車尾箱中的%PRINT_TRANSCALLNAME(TARGET)%聽見了由遠及近的腳步聲、
@@ -192,7 +192,7 @@ SELECTCASE RAND(1,101)
 		ELSE
 			PRINT 蜜液
 		ENDIF
-		SIF TALENT:모유체질 > 0
+		SIF TALENT:母乳体質 > 0
 			PRINT 和奶水
 		PRINTFORMW 開始從身體裡泌出。
 		PRINTL 
@@ -207,7 +207,7 @@ SELECTCASE RAND(1,101)
 			PRINT 連接在炮機上的兩支兇惡的假陽具穿入蜜壺和菊門、
 		ENDIF
 		PRINTFORML 幾乎插到了最深處。
-		SIF TALENT:모유체질 > 0 && TALENT:乳頭穿環 < 1
+		SIF TALENT:母乳体質 > 0 && TALENT:乳頭穿環 < 1
 			PRINTL 沉甸甸的乳房也被接上了吸奶器、半透明的吸引罩內已經蓄積了一點點奶汁，顯得異常淫靡。
 		PRINTL 
 		PRINTFORML 颀长的脖颈被一個固定在椅背上的項圈套紧，稍微被限制的呼吸
@@ -227,16 +227,16 @@ SELECTCASE RAND(1,101)
 		ELSE
 			PRINT 炮機以人類不可能做到的頻率將肉穴反復地翻起，愛液和腸液四處飛濺、
 		ENDIF
-		IF TALENT:모유체질 > 0
+		IF TALENT:母乳体質 > 0
 			PRINTL 乳汁像是箭一般射進吸奶器，唧唧作響的軟管已經來不及抽走奶水，吸引罩幾乎被奶汁填滿了。
-		ELSEIF TALENT:거유 == 5
+		ELSEIF TALENT:巨乳 == 5
 			PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-		ELSEIF TALENT:거유 == 4
+		ELSEIF TALENT:巨乳 == 4
 			PRINT 肥碩的奶子淫蕩地搖晃著、
-		ELSEIF TALENT:거유 == 3
+		ELSEIF TALENT:巨乳 == 3
 			PRINT 豐潤的雙乳柔美地顫抖著、
-		ELSEIF TALENT:거유 == 2
-			PRINT 가슴前飽滿的果實隨著身體擺動著、
+		ELSEIF TALENT:巨乳 == 2
+			PRINT 胸前飽滿的果實隨著身體擺動著、
 		ELSE
 			PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 		ENDIF
@@ -253,10 +253,10 @@ SELECTCASE RAND(1,101)
 		ELSEIF TALENT:陰蒂穿環 == 3
 			PRINTFORM 被交叉刺穿的阴蒂膨大如枣核般、
 		ELSEIF TALENT:陰蒂穿環 == 4
-			PRINTFORM 巨大的阴蒂罩无情地牵拉着음핵、
+			PRINTFORM 巨大的阴蒂罩无情地牵拉着淫核、
 		ENDIF
 		SIF TALENT:乳頭穿環 == 5 && TALENT:陰蒂穿環 == 5
-			PRINTFORM 穿过乳头、음핵和阴唇的粗重锁链疯狂甩动着、
+			PRINTFORM 穿过乳头、淫核和阴唇的粗重锁链疯狂甩动着、
 		;20%幾率在第一輪死亡
 		IF RAND(100) >= 80
 			PRINTFORML 沒過多久，%PRINT_TRANSCALLNAME(TARGET)%就在一次最劇烈的渾身顫抖中癱軟下來。
@@ -280,16 +280,16 @@ SELECTCASE RAND(1,101)
 			ELSE
 				PRINTL 黃色的騷尿淅淅瀝瀝地滴到炮機上
 			ENDIF
-			IF TALENT:모유체질 > 0
+			IF TALENT:母乳体質 > 0
 				PRINTL 裝滿的吸奶器在掙扎中脫落，清白色的奶水幾乎濕透了全身，顯得整個人都是閃閃發亮的。
-			ELSEIF TALENT:거유 == 5
+			ELSEIF TALENT:巨乳 == 5
 				PRINT 臃腫的乳房一阵阵地漾起乳波、
-			ELSEIF TALENT:거유 == 4
+			ELSEIF TALENT:巨乳 == 4
 				PRINT 肥碩的奶子淫蕩地坠在胸前、
-			ELSEIF TALENT:거유 == 3
+			ELSEIF TALENT:巨乳 == 3
 				PRINT 豐潤的雙乳柔美地上下抖动著、
-			ELSEIF TALENT:거유 == 2
-				PRINT 가슴前飽滿的果實微微颤抖着、
+			ELSEIF TALENT:巨乳 == 2
+				PRINT 胸前飽滿的果實微微颤抖着、
 			ELSE
 				PRINT 漂亮的酥胸一抖一抖、
 			ENDIF
@@ -314,7 +314,7 @@ SELECTCASE RAND(1,101)
 			ELSE
 				PRINTL 黃色的騷尿淅淅瀝瀝地滴到炮機上
 			ENDIF
-			SIF TALENT:모유체질 > 0
+			SIF TALENT:母乳体質 > 0
 				PRINTL 裝滿的吸奶器在掙扎中脫落，清白色的奶水幾乎濕透了全身，顯得整個人都是閃閃發亮的。
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%抽動著徘徊在絕頂的雲端。
 			PRINTFORMW 肉體的抖動幅度逐漸變得越來越小，就在此时，项圈第二次放松了。
@@ -338,7 +338,7 @@ SELECTCASE RAND(1,101)
 			PRINTFORML 直到最期来临，%PRINT_TRANSCALLNAME(TARGET)%的身体和绞刑椅都已经完全湿透了，
 			PRINTFORML 被电流几乎烧熟的身体散发着体液的腥臭和微微的香气、
 			PRINTFORML 没人知道%PRINT_TRANSCALLNAME(TARGET)%到底是被电死的，还是被绞死的、
-			PRINTFORML 这位曾经对抗촉수的战士如今只是在高潮中被处刑的一头雌兽罢了……
+			PRINTFORML 这位曾经对抗触手的战士如今只是在高潮中被处刑的一头雌兽罢了……
 			PRINTL 
 		ENDIF
 	ELSE
@@ -361,7 +361,7 @@ SELECTCASE RAND(1,101)
 		IF ISMALE() || TALENT:偽娘 > 0 
 			PRINT 腸腔深處
 		ELSE
-			PRINT 질道深處直達子宮
+			PRINT 膣道深處直達子宮
 		ENDIF
 		PRINTFORMW 殘忍地抽插起來。。。
 		PRINTL 
@@ -374,7 +374,7 @@ SELECTCASE RAND(1,101)
 		ELSE
 			PRINT 蜜液
 		ENDIF
-		SIF TALENT:모유체질 > 0
+		SIF TALENT:母乳体質 > 0
 			PRINT 和奶水
 		PRINTW 隨著男人的抽插四處飛濺。
 		PRINTL
@@ -393,18 +393,18 @@ SELECTCASE RAND(1,101)
 		ENDDATA
 		SIF ISMALE() || TALENT:偽娘 > 0 || TALENT:扶他 > 0
 			PRINT 如鐵的陰莖昂立向天晃來晃去、
-		IF TALENT:거유 == 5
+		IF TALENT:巨乳 == 5
 			PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-		ELSEIF TALENT:거유 == 4
+		ELSEIF TALENT:巨乳 == 4
 			PRINT 肥碩的奶子淫蕩地搖晃著、
-		ELSEIF TALENT:거유 == 3
+		ELSEIF TALENT:巨乳 == 3
 			PRINT 豐潤的雙乳柔美地顫抖著、
-		ELSEIF TALENT:거유 == 2
-			PRINT 가슴前飽滿的果實隨著身體擺動著、
+		ELSEIF TALENT:巨乳 == 2
+			PRINT 胸前飽滿的果實隨著身體擺動著、
 		ELSE
 			PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 		ENDIF
-		SIF TALENT:모유체질 > 0 
+		SIF TALENT:母乳体質 > 0 
 			PRINTL 奶水像是決堤般從乳頭中湧出，越過小腹順著性感的大腿流向足尖。
 		IF TALENT:乳頭穿環 == 2
 			PRINTFORM 乳头上的铃铛发出淫荡的响声、
@@ -418,14 +418,14 @@ SELECTCASE RAND(1,101)
 		ELSEIF TALENT:陰蒂穿環 == 3
 			PRINTFORM 被交叉刺穿的阴蒂膨大如枣核般、
 		ELSEIF TALENT:陰蒂穿環 == 4
-			PRINTFORM 巨大的阴蒂罩无情地牵拉着음핵、
+			PRINTFORM 巨大的阴蒂罩无情地牵拉着淫核、
 		ENDIF
 		SIF TALENT:乳頭穿環 == 5 && TALENT:陰蒂穿環 == 5
-			PRINTFORM 穿过乳头、음핵和阴唇的粗重锁链疯狂甩动着、
+			PRINTFORM 穿过乳头、淫核和阴唇的粗重锁链疯狂甩动着、
 		PRINTW
 		PRINTL 時間一分一秒地過去，絞索上的舞蹈逐漸變得緩慢、
 		PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%的眼神逐漸失去了焦點，身體越發無力地抽搐。
-		IF TALENT:촉수的俘虜 > 0 || TALENT:性奴体質 > 0 || TALENT:음란 > 0 || ABL:受虐狂 > 3 
+		IF TALENT:触手的俘虜 > 0 || TALENT:性奴体質 > 0 || TALENT:淫乱 > 0 || ABL:受虐狂 > 3 
 			PRINTL 不滿足的男人們決定延長惡戲的時間、
 			PRINT 在首領的示意下
 				IF ISMALE() || TALENT:偽娘 > 0 
@@ -490,10 +490,10 @@ SELECTCASE RAND(1,101)
 	
 ENDSELECT
 ENDIF
-	;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신 판정中
+	;添加死亡TAG，取消苗床化TALENT防止出現在苗床出產判定中，取消妊娠TALENT防止出現在妊娠判定中
 	CFLAG:0 = 9
-	TALENT:TARGET:묘상화 = 0
-	TALENT:TARGET:임신 = 0
+	TALENT:TARGET:苗床化 = 0
+	TALENT:TARGET:妊娠 = 0
 ;嘗試在此處添加第6個ENDING：全數遭到處刑
 	SIF CHARANUM_SAFE()+CHARANUM_ENSLAVED() == 0 && FLAG:0 != 2 && FLAG:0 != 0
 		CALL ENDING_6
@@ -530,13 +530,13 @@ ENDIF
 		ELSEIF TALENT:陰蒂穿環 == 3
 			PRINTFORM 被交叉刺穿的阴蒂膨大如枣核般、
 		ELSEIF TALENT:陰蒂穿環 == 4
-			PRINTFORM 巨大的阴蒂罩无情地牵拉着음핵、
+			PRINTFORM 巨大的阴蒂罩无情地牵拉着淫核、
 		ENDIF
 		SIF TALENT:乳頭穿環 == 5 && TALENT:陰蒂穿環 == 5
-			PRINTFORM 穿过乳头、음핵和阴唇的粗重锁链疯狂甩动着、
+			PRINTFORM 穿过乳头、淫核和阴唇的粗重锁链疯狂甩动着、
 		SIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
 			PRINTFORM 勃起的肉棒不停跳動著、
-		SIF TALENT:TARGET:모유체질 != 0 
+		SIF TALENT:TARGET:母乳体質 != 0 
 			PRINTFORM 奶汁随著玩弄一股一股地噴出、
 		SIF ISFEMALE()
 			PRINTFORML 大腿在抽插中一次次毫無征兆地突然繃緊，從膣口逆噴出愛液與精液的混合物、
@@ -546,11 +546,11 @@ ENDIF
 	PRINTL ．．．．
 	PRINTL ．．．．．
 	PRINTFORMW 来賓們都発洩過一輪後、処刑才要正式開始、
-	IF ABL:TARGET:순종 >= 4 && ABL:TARGET:봉사정신 >= 4 && RAND(5) <= 2 
+	IF ABL:TARGET:従順 >= 4 && ABL:TARGET:奉仕精神 >= 4 && RAND(5) <= 2 
 		PRINTFORM 在全場來賓的圍觀中、劊子手的頭目站到了%PRINT_TRANSCALLNAME(TARGET)%面前，
 		PRINTDATA
 		DATAFORM 粗長得不像是人類的
-		DATAFORM 被無數細小觸手기생著的
+		DATAFORM 被無數細小觸手寄生著的
 		DATAFORM 佈滿凸起的入珠的
 		DATAFORM 簡直長得能插入胃裡的
 		DATAFORM 浮現著駭人青筋粗壟的
@@ -561,7 +561,7 @@ ENDIF
 		PRINTDATAL
 		DATAFORM 伸出舌尖著迷地舔舐著肉棒
 		DATAFORM 將龜頭含入口中用舌頭撫弄著
-		DATAFORM 吐出唾液윤활著肉竿
+		DATAFORM 吐出唾液潤滑著肉竿
 		DATAFORM 將脖頸貼在肉棒上比劃著能插到哪裡
 		DATAFORM 用臉頰著迷地磨蹭著肉莖
 		ENDDATA
@@ -573,29 +573,29 @@ ENDIF
 		DATAFORM 「請大家好好欣賞，肉畜%PRINT_TRANSNAME(TARGET)%淫賤的死相。」
 		ENDDATA
 		PRINTL 
-		IF ABL:TARGET:기교 >= 5 && RAND(2) == 0
+		IF ABL:TARGET:技巧 >= 5 && RAND(2) == 0
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%膝行向前湊近了劊子手頭目的胯下
 			PRINTFORML 臉頰一收一張地將巨大的肉棒一點一點地噙入口中、
 			PRINTFORML 喉道像是真正的性器官一般順從地容納了巨大的龜頭、
-			PRINTFORMW 以高超的侍奉기교忍耐著劇烈的窒息和反流感，將肉莖吞向喉嚨的最深處、
+			PRINTFORMW 以高超的侍奉技巧忍耐著劇烈的窒息和反流感，將肉莖吞向喉嚨的最深處、
 			PRINTL 
 			PRINTFORML 來賓們發出讚歎聲時，%PRINT_TRANSCALLNAME(TARGET)%頎長的玉頸中浮現了巨大的肉棒輪廓、
 			PRINTFORML 氣道被粗大的陽具完全堵塞，喉嚨激烈地絞纏著肉竿想要從中獲得一絲不可能有的空氣、
 			PRINTFORML 帶給劊子手頭目即使是尋常的深喉口交也無法獲得的極限快感、
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%雙手環繞著男人的腰，自己前後挺動著臻首、
 			PRINTFORMW 忍耐著甜蜜的欠氧感，像是自動飛機杯一般侍奉著男人。
-			IF TALENT:거유 == 5
+			IF TALENT:巨乳 == 5
 				PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-			ELSEIF TALENT:거유 == 4
+			ELSEIF TALENT:巨乳 == 4
 				PRINT 肥碩的奶子淫蕩地搖晃著、
-			ELSEIF TALENT:거유 == 3
+			ELSEIF TALENT:巨乳 == 3
 				PRINT 豐潤的雙乳戰慄地搖擺著、
-			ELSEIF TALENT:거유 == 2
-				PRINT 가슴前飽滿的果實隨著身體顫抖著、
+			ELSEIF TALENT:巨乳 == 2
+				PRINT 胸前飽滿的果實隨著身體顫抖著、
 			ELSE
 				PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 			ENDIF
-			SIF TALENT:TARGET:모유체질 != 0 
+			SIF TALENT:TARGET:母乳体質 != 0 
 				PRINTFORML 乳汁像是倒置的噴泉一樣飛濺、
 			SIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
 				PRINTFORML 勃起的肉棒一顫一顫地吐出稀薄的精水、
@@ -621,20 +621,20 @@ ENDIF
 			PRINTFORMW 喉頭絕望地吞嚥痙攣著，給男人帶來一般的深喉口交也無法帶來的極限快感、
 			PRINTFORML 
 			PRINTFORML 來賓們欣賞著%PRINT_TRANSCALLNAME(TARGET)%掙扎抖動的身軀，聽著喉頭發出美妙的咯咯聲
-			PRINTFORML 交頭接耳地猜測%PRINT_TRANSCALLNAME(TARGET)%能不能堅持到劊子手사정……
+			PRINTFORML 交頭接耳地猜測%PRINT_TRANSCALLNAME(TARGET)%能不能堅持到劊子手射精……
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%姣好的面容隨著抽插扭曲著、口水、鼻涕和眼淚糊滿了臉頰、
-			IF TALENT:거유 == 5
+			IF TALENT:巨乳 == 5
 				PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-			ELSEIF TALENT:거유 == 4
+			ELSEIF TALENT:巨乳 == 4
 				PRINT 肥碩的奶子淫蕩地搖晃著、
-			ELSEIF TALENT:거유 == 3
+			ELSEIF TALENT:巨乳 == 3
 				PRINT 豐潤的雙乳戰慄地搖擺著、
-			ELSEIF TALENT:거유 == 2
-				PRINT 가슴前飽滿的果實隨著身體顫抖著、
+			ELSEIF TALENT:巨乳 == 2
+				PRINT 胸前飽滿的果實隨著身體顫抖著、
 			ELSE
 				PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 			ENDIF
-			SIF TALENT:TARGET:모유체질 != 0 
+			SIF TALENT:TARGET:母乳体質 != 0 
 				PRINTFORML 乳汁像是倒置的噴泉一樣飛濺、
 			SIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
 				PRINTFORML 勃起的肉棒一顫一顫地吐出稀薄的精水、
@@ -642,7 +642,7 @@ ENDIF
 				PRINTFORML 愛液噴潮把大腿內側染濕得閃閃發亮、
 			PRINTFORMW 身下匯積出閃閃發亮的小水窪。
 			PRINTL 
-			IF MAXBASE:기력 <= 500
+			IF MAXBASE:気力 <= 500
 				PRINTFORML 隨著時間一分一秒地過去%PRINT_TRANSCALLNAME(TARGET)%面色逐漸蒼白、
 				PRINTFORML 雙目向上反白，胸中只剩不祥的嗬嗬聲、
 				PRINTFORML 身體不再有掙扎的力量，只是隨著劊子手的動作晃動著、
@@ -660,7 +660,7 @@ ENDIF
 				PRINTL 
 				PRINTFORML 在數分鐘的連續深喉窒息後，即使是強大的魔法少女也徹底地陷入迷離、
 				PRINTFORML 隨著%PRINT_TRANSCALLNAME(TARGET)%翻起得越來越高的白目，劊子手頭目的動作越來越快
-				PRINTFORML 가슴中發出的咕咕聲越來越微弱、一股騷尿從下體噴出灑向了地面、
+				PRINTFORML 胸中發出的咕咕聲越來越微弱、一股騷尿從下體噴出灑向了地面、
 				PRINTFORML 嚥下最後一口氣的同時劊子手頭目在食道中像是處決一般地發射了
 				PRINTFORML 巨量的精液從嘴唇與肉棒的縫隙中、鼻腔中、甚至耳孔中溢出、將%PRINT_TRANSCALLNAME(TARGET)%的尸身從內而外地徹底玷污。
 				PRINTFORMW 在全場的喝彩聲中，%PRINT_TRANSCALLNAME(TARGET)%用生命獻上了最後的性愛表演。
@@ -749,19 +749,19 @@ ENDIF
 	PRINTFORML 背脊激烈地反弓，手指因痙攣而捲曲、兩條大腿併攏反復屈伸著、淚水四處飛濺、
 	PRINTFORML 最後一錘敲下，%PRINT_TRANSCALLNAME(TARGET)%的手臂與木質刑架永遠地連在一起，直到死亡才會分離。
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%吐息慌亂、姣好的面容扭曲著、
-	PRINTFORM 입水、鼻涕和眼淚糊滿了臉頰、
-		IF TALENT:거유 == 5
+	PRINTFORM 口水、鼻涕和眼淚糊滿了臉頰、
+		IF TALENT:巨乳 == 5
 			PRINT 臃腫的乳房如水袋般醜陋地甩動著、
-		ELSEIF TALENT:거유 == 4
+		ELSEIF TALENT:巨乳 == 4
 			PRINT 肥碩的奶子淫蕩地搖晃著、
-		ELSEIF TALENT:거유 == 3
+		ELSEIF TALENT:巨乳 == 3
 			PRINT 豐潤的雙乳柔美地搖擺著、
-		ELSEIF TALENT:거유 == 2
-			PRINT 가슴前飽滿的果實隨著身體顫抖著、
+		ELSEIF TALENT:巨乳 == 2
+			PRINT 胸前飽滿的果實隨著身體顫抖著、
 		ELSE
 			PRINT 漂亮的酥胸觸電般蕩漾著乳波、
 		ENDIF
-		SIF TALENT:TARGET:모유체질 != 0 
+		SIF TALENT:TARGET:母乳体質 != 0 
 			PRINTFORML 乳汁像是噴泉一樣射到半空中，沾濕了身下的木架。
 	PRINTL 
 	PRINTFORMW 激烈的動作牽動傷口，讓%PRINT_TRANSCALLNAME(TARGET)%的呼吸不規則地抽動著，
@@ -811,7 +811,7 @@ ENDIF
 	DATAFORM 喊着「来啊，还在等什么，难道害怕一个快要被钉死的小贱货吗？」可爱地挑衅着
 	ENDDATA
 	PRINTFORML 同时魅惑地扭动着屁股，让坠下的\@ ISMALE() ? 前列腺液和 #  \@爱液在空中扫出螺旋线
-		SIF TALENT:TARGET:모유체질 != 0 
+		SIF TALENT:TARGET:母乳体質 != 0 
 			PRINTFORML 奶水也不停地顺着大腿流下，有时候在流到足尖之前就已经拉着丝向下滴了。
 	PRINTFORMW 刑架的底下已经积起了一个小池塘，甚至木头已经被液体浸湿成了更深的褐色。
 	PRINTL 
@@ -819,8 +819,8 @@ ENDIF
 	PRINTDATAL
 	DATAFORM 在炮机的前端\@ ISMALE() ? 装上飞机杯套住阴茎 # 装上带刺伪具插入膣腔 \@无情地榨取\@ ISMALE() ? 精液 # 爱液 \@
 	DATAFORM 用鞭子随意地在身体上留下红痕和血印，每次鞭梢拂过下体就会喷出淫水
-	DATAFORM 用鞭子随意地在身体上留下红痕和血印，每次鞭梢拂过乳头就会\@ TALENT:모유체질 > 0 ? 洒出奶水 # 发出尖叫 \@ 
-	DATAFORM 在全身淋上촉수媚药，欣赏着%PRINT_TRANSCALLNAME(TARGET)%下贱地求饶卻到不了高潮
+	DATAFORM 用鞭子随意地在身体上留下红痕和血印，每次鞭梢拂过乳头就会\@ TALENT:母乳体質 > 0 ? 洒出奶水 # 发出尖叫 \@ 
+	DATAFORM 在全身淋上触手媚药，欣赏着%PRINT_TRANSCALLNAME(TARGET)%下贱地求饶卻到不了高潮
 	DATAFORM 轮番插入着%PRINT_TRANSCALLNAME(TARGET)%的肉穴
 	ENDDATA
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%春情荡漾的扭动和沙哑的呻吟一直持续着……
@@ -831,14 +831,14 @@ ENDIF
 	PRINTL  
 	IF RAND(2) == 0
 	PRINTFORML 劊子手頭目出現在刑架邊，手中拿著一根帶著導線的金屬假陽具，
-	PRINTFORML 用力插入了%PRINT_TRANSCALLNAME(TARGET)%的\@ ISMALE() ? 後庭 # 질腔 \@深處並打開了開關，
+	PRINTFORML 用力插入了%PRINT_TRANSCALLNAME(TARGET)%的\@ ISMALE() ? 後庭 # 膣腔 \@深處並打開了開關，
 	PRINTFORMW 巨大的電流從%PRINT_TRANSCALLNAME(TARGET)%的下體進入，讓%PRINT_TRANSCALLNAME(TARGET)%的身體大幅度彈跳了好幾次。
 	ELSE 
 	PRINTFORML 劊子手頭目帶著一架木梯出現在刑架邊，登上幾級後
 	PRINT 將
 	PRINTDATA
 	DATAFORM 粗長得不像是人類的
-	DATAFORM 被無數細小觸手기생著的
+	DATAFORM 被無數細小觸手寄生著的
 	DATAFORM 佈滿凸起的入珠的
 	DATAFORM 簡直長得能插入胃裡的
 	DATAFORM 浮現著駭人青筋粗壟的
@@ -872,10 +872,10 @@ ENDIF
 	RESETCOLOR
 	PRINTL  
 	PRINTW
-	;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신 판정中
+	;添加死亡TAG，取消苗床化TALENT防止出現在苗床出產判定中，取消妊娠TALENT防止出現在妊娠判定中
 	CFLAG:0 = 9
-	TALENT:TARGET:묘상화 = 0
-	TALENT:TARGET:임신 = 0
+	TALENT:TARGET:苗床化 = 0
+	TALENT:TARGET:妊娠 = 0
 	
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
@@ -906,20 +906,20 @@ ENDIF
 
 @SNUFF_DROWN,ARG:0
 	PRINTFORML 巨大的地下闘技場中人声鼎沸、観客們揮動著賭票嚎叫著、
-	PRINTFORML 場地中心的%PRINT_TRANSCALLNAME(TARGET)%与変異촉수在対峙、
-	PRINTFORML 面前的変異촉수彷彿是幾種不同類型的混合、
-	PRINTFORML 帯有幾根閃著電弧的長촉수囲繞著半透明的口袋狀的軀幹，下半部可以看見蓄積著浅黄色的液体，頂部有豬籠草似的口蓋、
+	PRINTFORML 場地中心的%PRINT_TRANSCALLNAME(TARGET)%与変異触手在対峙、
+	PRINTFORML 面前的変異触手彷彿是幾種不同類型的混合、
+	PRINTFORML 帯有幾根閃著電弧的長触手囲繞著半透明的口袋狀的軀幹，下半部可以看見蓄積著浅黄色的液体，頂部有豬籠草似的口蓋、
 	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%不想知道那是做什麼的。。。
 	PRINTFORML 雖然穿上了戦闘服，但精疲力尽的身体没有獲勝的可能。。。
-	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%以절망的心情向著前方挙起了武器
+	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%以絶望的心情向著前方挙起了武器
 	DRAWLINE ;之後可以在這裏挿入必敗的戦闘
 	PRINTL ．．．
 	PRINTL ．．．．
 	PRINTW ．．．．．
-	PRINTFORM 被촉수電撃到全身抽搐的%PRINT_TRANSCALLNAME(TARGET)%
+	PRINTFORM 被触手電撃到全身抽搐的%PRINT_TRANSCALLNAME(TARGET)%
 	PRINTFORMW 不甘心地跪倒在地、股間被飆射而出的淫汁尿水濕透。
 	PRINTL 
-	PRINTFORML 촉수纏住%PRINT_TRANSCALLNAME(TARGET)%的脚腕倒吊起来、
+	PRINTFORML 触手纏住%PRINT_TRANSCALLNAME(TARGET)%的脚腕倒吊起来、
 	PRINTFORML 無視徒労的掙扎、乾脆利落地将%PRINT_TRANSCALLNAME(TARGET)%移到了已經打開的口蓋正上方、
 	PRINTFORMW 在觀客的歡呼或咒罵聲中、%PRINT_TRANSCALLNAME(TARGET)%從半空跌下，口蓋噗地一聲合上了、
 	PRINTL 
@@ -930,7 +930,7 @@ ENDIF
 	PRINTL 
 		SIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
 			PRINTFORML 擼動著高揚的陰莖不停發射出一股一股濃精、
-		SIF TALENT:TARGET:모유체질 != 0 
+		SIF TALENT:TARGET:母乳体質 != 0 
 			PRINTFORML 擠壓著豐碩的胸乳逼出一股一股的奶汁、幾乎將淺黃色的液體染白……
 	PRINTFORML 不久之後%PRINT_TRANSCALLNAME(TARGET)%顫慄著弓起身子達到最後的高潮、
 	PRINTFORMW 雙目反白，吐出香舌，溺斃在觸手的催情藥液中…………
@@ -940,14 +940,14 @@ ENDIF
 	RESETCOLOR
 	PRINTL
 	PRINTW
-		;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신 판정中
+		;添加死亡TAG，取消苗床化TALENT防止出現在苗床出產判定中，取消妊娠TALENT防止出現在妊娠判定中
 	CFLAG:0 = 9
-	TALENT:TARGET:묘상화 = 0
-	TALENT:TARGET:임신 = 0
+	TALENT:TARGET:苗床化 = 0
+	TALENT:TARGET:妊娠 = 0
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
-	PRINTFORML 暗网上流传着少女与奇异的촉수战斗后被吞食的视频、
-	PRINTFORMW 影片里的촉수似乎不像是道具
+	PRINTFORML 暗网上流传着少女与奇异的触手战斗后被吞食的视频、
+	PRINTFORMW 影片里的触手似乎不像是道具
 		SELECTCASE RAND(3)
 		CASE 0
 		PRINTFORML 有人觉得很像是行踪不明的%PRINT_TRANSFULLNAME(TARGET)%……
@@ -971,8 +971,8 @@ ENDIF
 	ENDIF
 
 @SNUFF_RYONA,TARGET
-PALAM:TARGET:윤활 = 2100
-PALAM:TARGET:쾌Ａ = 2100
+PALAM:TARGET:潤滑 = 2100
+PALAM:TARGET:快Ａ = 2100
 ;以上用于测试是否能够正确显示A和V的润滑情况
 PRINTFORML 黒道組織的核心拠点中的某処刑房内……
 PRINTL 
@@ -1039,7 +1039,7 @@ PRINTDATA
 ENDDATA
 PRINTL 」
 PRINTL 
-PRINTFORML 临近사정的男人加快了绞盘收放的频率、让%PRINT_TRANSCALLNAME(TARGET)%更加激烈地在半空中跳动起来。
+PRINTFORML 临近射精的男人加快了绞盘收放的频率、让%PRINT_TRANSCALLNAME(TARGET)%更加激烈地在半空中跳动起来。
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%身体的每一次起伏、都能给予男人十分满足的享受。
 PRINTFORMW 而对于%PRINT_TRANSCALLNAME(TARGET)%自己而言、不过是在窒息地狱与高潮地狱中来回穿梭而已。
 PRINTL 
@@ -1074,18 +1074,18 @@ PRINTL
 ;SELECTCASE
 	;CASE
 		PRINTFORMW ————那是豎立在厚重底座上的、閃耀着銀光的穿刺杆
-		PRINTFORML 竹節般分段的杆신장約両米、杆頂像是蓮花的花苞一様鼓起、
+		PRINTFORML 竹節般分段的杆身長約両米、杆頂像是蓮花的花苞一様鼓起、
 		PRINTFORML 六片刃弁緊貼在花苞外面、鋒利的辺縁閃着寒光、聚攏的前端反而顕得円潤、
 		PRINTFORML 杆身中部套着一個托盤、安装着一根豎直向上的粗長假陽具、
 		PRINTFORMW 那是為了処刑没有四肢的%PRINT_TRANSCALLNAME(TARGET)%、特別増加的装置。
 		PRINTL 
 		PRINTL  「………………」
 		PRINTL 短暫的精神衝撃過後、
-		IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+		IF TALENT:淫乱 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
 			PRINTFORML 很快従震驚中恢復的%PRINT_TRANSCALLNAME(TARGET)%露出興奮的眼神
 			PRINTFORML 努力抖動着身体譲鎖鏈発出叮叮噹噹的響動
 			PRINTFORM %SLANG_V(TARGET)%中湧出淫液
-			SIF TALENT:모유체질 > 0
+			SIF TALENT:母乳体質 > 0
 				PRINTFORM 、乳頭中也泌出了奶汁
 			PRINTL 、
 		ELSE
@@ -1096,15 +1096,15 @@ PRINTL
 		PRINTL  「咔噠」
 		PRINTL  「呀……」
 		PRINTFORML 項圏被解去、一双大手箍住%PRINT_TRANSCALLNAME(TARGET)%的肋側、将她立起来挙到半空中、
-		PRINTFORMW \@TALENT:거유 > 0 ? 儘管有着沉重的乳袋、 # \@没有四肢的残軀\@TALENT:거유 > 0 ? 仍然 # \@顕得軽飄飄的
+		PRINTFORMW \@TALENT:巨乳 > 0 ? 儘管有着沉重的乳袋、 # \@没有四肢的残軀\@TALENT:巨乳 > 0 ? 仍然 # \@顕得軽飄飄的
 		PRINTFORML  「\@ABL:受虐狂 >= 3 ? 呀啊……啊啊…… # \@……」
 		PRINTFORML 挙着%PRINT_TRANSCALLNAME(TARGET)%的男人登上台階、将穿刺杆頂端的花苞浅浅地放入
 		PRINTFORML %SLANG_V(TARGET)%当中
 		PRINTW 
-		IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+		IF TALENT:淫乱 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
 			PRINTFORML 早已完全興奮的%PRINT_TRANSCALLNAME(TARGET)%立即発出甜美的呻吟
 			PRINTFORML 翕張着%SLANG_LabiaMajora(TARGET)%迎接死神的到来、
-			IF TALENT:모유체질 > 0
+			IF TALENT:母乳体質 > 0
 				PRINTFORM 順着肚皮流到下体的奶水与淫液一同順着杆身滴落
 			ELSE
 				PRINTFORM 淫液順着杆身滴落
@@ -1112,7 +1112,7 @@ PRINTL
 			PRINTL 、
 		ELSE
 			PRINTFORML 被充分開発的肉体無視理性擅自行動着、
-			PRINTFORML 一張一合的%SLANG_LabiaMajora(TARGET)%윤활地吞入了杆頭、
+			PRINTFORML 一張一合的%SLANG_LabiaMajora(TARGET)%潤滑地吞入了杆頭、
 		ENDIF
 		PRINTL 
 		PRINT  「
@@ -1192,7 +1192,7 @@ PRINTL
 			DATAFORM 咯嘔咯呀啊啊啊啊啊啊！　嘎呀嘎啊！　嗯咕呀啊啊啊啊啊啊啊！」
 		ENDDATA
 		PRINTL 
-		PRINTFORML 입中喷출혈沫、%PRINT_TRANSCALLNAME(TARGET)%长声惨叫、
+		PRINTFORML 口中喷出血沫、%PRINT_TRANSCALLNAME(TARGET)%长声惨叫、
 		PRINTFORML 在托盘开始下降的那一瞬间、「花苞」短暂地张开了一点点又合拢、
 		PRINTFORML 锋利的刃瓣轻易地撕开了%SLANG_W(TARGET)%顶端的肉襞、向着腹腔之中前进、
 		PRINTFORMW 缓慢但坚定地将%PRINT_TRANSCALLNAME(TARGET)%送上残酷的末路————
@@ -1238,7 +1238,7 @@ PRINTL
 		PRINTFORML 腹中感到激烈残忍的疼痛、%PRINT_TRANSCALLNAME(TARGET)%却不停地達到高潮
 		PRINTFORML %SLANG_V(TARGET)%緊緊包裹住竹節状的杆身不停蠕動着、
 		PRINTFORML 似乎想要阻止身体的下沉。
-		PRINTFORMW \@TALENT:모유체질 > 0 ? 奶水、 # \@淫液、尿水与鮮血一同流下、滋潤着冰冷的穿刺杆
+		PRINTFORMW \@TALENT:母乳体質 > 0 ? 奶水、 # \@淫液、尿水与鮮血一同流下、滋潤着冰冷的穿刺杆
 		PRINTL 
 		PRINTFORML 「花苞」反覆地張合、一点一点地摧毀着%PRINT_TRANSCALLNAME(TARGET)%的器官
 		PRINTFORML 小腸、肝臓、腎臓、胃袋、膈膜……都在刃瓣的開閤中被割得乱七八糟
@@ -1260,7 +1260,7 @@ PRINTL
 		ENDDATA
 		PRINTW ————————————嘔咕！」
 		PRINTL 
-		PRINTFORML 抽搐着的%PRINT_TRANSCALLNAME(TARGET)%头颅高高扬起、口中喷출혈雾、
+		PRINTFORML 抽搐着的%PRINT_TRANSCALLNAME(TARGET)%头颅高高扬起、口中喷出血雾、
 		PRINTFORML 自下而上穿透咽喉的「花苞」、穿出%PRINT_TRANSCALLNAME(TARGET)%的口唇
 		PRINTFORMW 刃鋒上飛濺的鮮血、像一朵妖豔的紅蓮花従%PRINT_TRANSCALLNAME(TARGET)%的身体内盛放！
 		PRINTL 
@@ -1285,7 +1285,7 @@ PRINTL
 			DATAFORM 呃咕呜呃……
 		ENDDATA
 		PRINTL 
-		PRINTFORML 입中只能発出臨終的吐息、肚子一抽一抽地痙攣、
+		PRINTFORML 口中只能発出臨終的吐息、肚子一抽一抽地痙攣、
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%空虚地望着天花板、
 		PRINTFORMW 双眸慢慢地、慢慢地、失去了神采………………
 		PRINTW ．．．
@@ -1301,10 +1301,10 @@ PRINTL
 		RESETCOLOR
 		PRINTL  
 		PRINTW
-		;添加死亡TAG，取消묘상화TALENT防止出現在苗床出產判定中，取消임신TALENT防止出現在임신 판정中
+		;添加死亡TAG，取消苗床化TALENT防止出現在苗床出產判定中，取消妊娠TALENT防止出現在妊娠判定中
 		CFLAG:0 = 9
-		TALENT:TARGET:묘상화 = 0
-		TALENT:TARGET:임신 = 0
+		TALENT:TARGET:苗床化 = 0
+		TALENT:TARGET:妊娠 = 0
 	
 		IF RAND(3) <=1
 		PRINTFORML 不久之後
@@ -1359,7 +1359,7 @@ PRINTL
 	PRINTW 
 	;ここから加筆
 	;スカトロ〇で有拡張度表示中のみ
-	IF FILTER_CHECK_F(15) == 0 && FILTER_CHECK_F(16) == 0 && (ABL:Ａ감각 >= 5 || TALENT:음고 == 1 )
+	IF FILTER_CHECK_F(15) == 0 && FILTER_CHECK_F(16) == 0 && (ABL:Ａ感覚 >= 5 || TALENT:淫尻 == 1 )
 	;2022.10.22加筆：水槽排洩+淋尿+排洩物灌口+排洩物灌腸，靈感來自PTJ-014 
 		PRINTFORML 開胃菜過後，%PRINT_TRANSCALLNAME(TARGET)%被M字開腳吊了起來、
 		PRINTFORMW 被取下眼罩的%PRINT_TRANSCALLNAME(TARGET)%發現自己被懸掛在一個玻璃大水缸的正上方、
@@ -1415,14 +1415,14 @@ PRINTL
 		ELSEIF CFLAG:36 <= 100
 			PRINTFORML 經歷過一些擴張經驗的%PRINT_TRANSCALLNAME(TARGET)%窄小的菊門吞下了先頭的幾顆拉珠、
 			PRINTFORML 肛珠在菊門內側竄動的刺激感引發出了肛門獨有的快感、
-			PRINTFORML 입球的邊緣不斷滴下唾液，\@ISMALE() ? 陰莖前端有前列腺液 # 愛液從蜜壺中 \@慢慢地溢出…
+			PRINTFORML 口球的邊緣不斷滴下唾液，\@ISMALE() ? 陰莖前端有前列腺液 # 愛液從蜜壺中 \@慢慢地溢出…
 		ELSEIF CFLAG:36 <= 150
 			PRINTFORML 屁眼受到了反復的擴張，已經能吞下很大異物的%PRINT_TRANSCALLNAME(TARGET)%輕輕晃動著屁股、
 			PRINTFORML 拉珠一個接一個向菊門送入，幾乎一整串都被輕快地吞入了、
 			PRINTFORML 最前端的珠子已經突入到直腸的盡頭、連綿的拉珠堆積在直腸內相互碰撞著擠壓腸壁、
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%搖著屁股悶聲呻吟著、\@ISMALE() ? 陰莖前端 # 從蜜壺裡 \@噴出的液體四處飛濺…
 		ELSE
-			PRINTFORML 在与촉수作戰的日子裡早已被淒厲蹂躪的%PRINT_TRANSCALLNAME(TARGET)%的菊門自動溢出腸液、
+			PRINTFORML 在与触手作戰的日子裡早已被淒厲蹂躪的%PRINT_TRANSCALLNAME(TARGET)%的菊門自動溢出腸液、
 			PRINTFORML 很容易就能把拉珠串放进去，就連最后的巨球也撐開了肛肉，紧紧地咬進去了。
 			PRINTFORML 接受了所有的异物，连肠菅的形状都改变了吗？小腹上凸起怪異的痕跡、
 			PRINTFORMW 隨著腸道的蠕動肛門一張一合地繼續吞進拉珠、甚至連末端用來拉出的把手都快要被吞入了…
@@ -1437,18 +1437,18 @@ PRINTL
 	ENDIF
 	PRINTW
 	;加筆ここまで
-	;구상
+	;口上
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_hentaiA")
-	;습득
-	JUEL:습득 += 150
-	;Ａ경험
-	EXP:Ａ경험 += 3
-	;Ａ감각
-	JUEL:쾌Ａ += 15 * ABL:Ａ감각
+	;習得
+	JUEL:習得 += 150
+	;Ａ経験
+	EXP:Ａ経験 += 3
+	;Ａ感覚
+	JUEL:快Ａ += 15 * ABL:Ａ感覚
 	;口交経験
 	EXP:口交経験 += 1
-	;정액경험
-	EXP:정액경험 += 1
+	;精液経験
+	EXP:精液経験 += 1
 		IF CFLAG:0 == 4
 		PRINTFORML 被徹底地開發調教了幾個小時之後
 		PRINTFORML 終於満足了的男人們把%PRINT_TRANSCALLNAME(TARGET)%帶回到調教室的監牢中，甚至懶得重新束縛起來。
@@ -1483,10 +1483,10 @@ PRINTL
 	PRINTFORMW 在廢舊大楼的地下室里%PRINT_TRANSCALLNAME(TARGET)%被上了鼻勾扮成了丑陋的樣子、在男人們的面前四肢着地趴着。
 	PRINTFORML 肛門被插進了尾巴模樣的毛刷的%PRINT_TRANSCALLNAME(TARGET)%现在的身份只是一只母猪…
 	PRINTFORML 不被允许説話、只能噗唏噗唏地叫唤着并像家畜一樣的被侵犯、作為人类的自尊被徹底破壊、
-	PRINTFORML 取悦各位주인、在施与的快楽下只是毫无抵抗的交出身体、不管是身体还是心霊都被調教着…
+	PRINTFORML 取悦各位主人、在施与的快楽下只是毫无抵抗的交出身体、不管是身体还是心霊都被調教着…
 	PRINTW 
 	;勝手に加筆ここから
-	IF ABL:受虐狂 <= 0 || TALENT:초심 > 0
+	IF ABL:受虐狂 <= 0 || TALENT:初心 > 0
 		PRINTFORML 過激的恥辱讓%PRINT_TRANSCALLNAME(TARGET)%嘗試開口說出求饒的言辭、
 		PRINTFORML 被洞察一切的頭目踩住腦袋、強行壓制成土下座的跪姿…只能發出破碎的呻吟。
 		SIF ABL:受虐狂 > 0
@@ -1502,7 +1502,7 @@ PRINTL
 		PRINTFORML 頭目突然掏出手機拍下了%PRINT_TRANSCALLNAME(TARGET)%，然後展示出拍到的照片。
 		PRINTFORML 畫面上的%PRINT_TRANSCALLNAME(TARGET)%被鉤子吊住的鼻孔很大地擴張、鼻涕不可抑制地流了出來。
 		PRINTW 
-		IF ABL:受虐狂 <= 1 || TALENT:초심 > 0
+		IF ABL:受虐狂 <= 1 || TALENT:初心 > 0
 			PRINTFORML 受虐的喜悦正在萌芽的%PRINT_TRANSCALLNAME(TARGET)%一瞬間找回了理性、
 			PRINTFORML 这样下去，自己真的不再是人类了，变得害怕起来了。
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%眼睛裡溢出的眼淚順著臉頰流下與鼻涕混雜在一起，
@@ -1515,7 +1515,7 @@ PRINTL
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%無處可逃地承受著蹴擊，在肛塞向肠内衝撞的快感中颤抖着…
 		ENDIF
 		PRINTW
-		IF ABL:受虐狂 <= 2 || TALENT:초심 > 0
+		IF ABL:受虐狂 <= 2 || TALENT:初心 > 0
 			PRINTFORML 眼前的男人脫下襪子露出了赤裸的腳掌，%PRINT_TRANSCALLNAME(TARGET)%呆呆地望著。
 			PRINTFORML 看著這樣迟钝的样子，頭目有些生氣，
 			PRINTFORML 直接把腳趾插進了%PRINT_TRANSCALLNAME(TARGET)%的嘴裡，逼迫著%PRINT_TRANSCALLNAME(TARGET)%對腳進行口舌侍奉…
@@ -1527,7 +1527,7 @@ PRINTL
 			PRINTFORML 男人汗腳上蒸騰的臭氣讓%PRINT_TRANSCALLNAME(TARGET)%意亂情迷、感覺得到了上好的獎賞、
 			PRINTFORML 用臉頰磨蹭著頭目那塗滿唾液的腳掌…
 			PRINTFORML 之後，許多隻腳伸到%PRINT_TRANSCALLNAME(TARGET)%身邊，輕踢著示意、
-			PRINTFORML 而%PRINT_TRANSCALLNAME(TARGET)%依次仔細地清理著每一位주인的腳趾……
+			PRINTFORML 而%PRINT_TRANSCALLNAME(TARGET)%依次仔細地清理著每一位主人的腳趾……
 		ENDIF
 		PRINTW
 		PRINTFORML 之後，男人們從外面端了一個食盆進來，裡面是他們吃剩下的東西……
@@ -1535,7 +1535,7 @@ PRINTL
 		PRINTFORML 男人們紛紛掏出陽具把自己的精液射在上面…
 		PRINTFORML 大量的白濁精液漂浮在泔水般的剩飯上面，像是一座雪山。
 		PRINTW
-		IF ABL:受虐狂 <= 3 || TALENT:초심 > 0
+		IF ABL:受虐狂 <= 3 || TALENT:初心 > 0
 			PRINTFORML 表現出抗拒的%PRINT_TRANSCALLNAME(TARGET)%想要轉開臉、被頭目叱罵著抓住頭髮，把頭強行壓進了食盆中。
 			PRINTFORML 因为鼻鉤的擴張，连讨厌的尖叫声自然也会变成母豬嗚嘰嗚嘰叫声的%PRINT_TRANSCALLNAME(TARGET)%的口鼻、
 			PRINTFORML 被埋進了覆蓋著厚厚精液的剩飯堆成的小山裡、
@@ -1551,24 +1551,24 @@ PRINTL
 		ENDIF
 		PRINTW
 		PRINTFORMW 不發一語的男人堅硬挺立的巨龍湊近了嘴唇、%PRINT_TRANSCALLNAME(TARGET)%自覺地開始用唇舌侍奉著肉棒…
-		IF ABL:受虐狂 <= 4 || TALENT:초심 > 0
+		IF ABL:受虐狂 <= 4 || TALENT:初心 > 0
 			PRINTFORML 安心於似乎只是普通的侍奉命令、舌尖偷偷避開了未清潔的尿垢。
 			PRINTFORML 突然頭的兩側被男有力的大手抓住、陰莖壓在了被鼻鉤擴張變形的鼻孔前面。
-			PRINTFORML 就这样受到了鼻孔里的대량사정、男人滾燙的精液倒流到嘴巴和喉咙里。
+			PRINTFORML 就这样受到了鼻孔里的大量射精、男人滾燙的精液倒流到嘴巴和喉咙里。
 			PRINTFORML 就算不愿意也沒有能力對抗男人的性慾、
 			PRINTFORML 男人們一個接一個地，从左右的鼻孔都注入了大量的精液…
 		SIF ABL:受虐狂 > 4
-			PRINTFORML 与초심相反的是，身体被變態愉悅支配的%PRINT_TRANSCALLNAME(TARGET)%無意識地發出著母豬的啼叫聲到達了高潮…
+			PRINTFORML 与初心相反的是，身体被變態愉悅支配的%PRINT_TRANSCALLNAME(TARGET)%無意識地發出著母豬的啼叫聲到達了高潮…
 		ELSE
 			PRINTFORML 不满足于普通的奉仕、用舌尖細心清理著肉棒上殘留的尿垢。
 			PRINTFORML 達到限界的男人把阴茎的顶端從%PRINT_TRANSCALLNAME(TARGET)%的嘴巴移向扭曲成豬鼻般的鼻子、
 			PRINTFORML 就这样把鼻孔當成性慾處理用的穴道注入了大量的精液。
 			PRINTFORML 来不及喘息，另一支阴茎又送到了面前、
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%황홀地絞緊著小穴、沉浸在連鼻孔都被無慘侵犯的極上被虐絶頂之中…
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%恍惚地絞緊著小穴、沉浸在連鼻孔都被無慘侵犯的極上被虐絶頂之中…
 		ENDIF
 	ENDIF
 	;以下加筆：獸交：豬
-		IF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 
+		IF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 
 		PRINTL 
 		PRINTW 
 			PRINTFORML 男人们决定给予被充分开发的%PRINT_TRANSCALLNAME(TARGET)%特别的奖赏、
@@ -1577,8 +1577,8 @@ PRINTL
 			PRINTFORML 两条后腿之间的阴囊可怕地肿胀着，沒有一絲皺褶，里面蓄满了猪的种子、隨著腳步撞擊著後腿的後面。
 			PRINTFORMW 頭目宣佈這是作為母豬的%PRINT_TRANSCALLNAME(TARGET)%所必須履行的職責、
 			PRINTL 
-			IF ABL:봉사정신 > 3
-				PRINTFORML 明白了주인意图的%PRINT_TRANSCALLNAME(TARGET)%像一头真正的母猪那样哼哼叫起来、
+			IF ABL:奉仕精神 > 3
+				PRINTFORML 明白了主人意图的%PRINT_TRANSCALLNAME(TARGET)%像一头真正的母猪那样哼哼叫起来、
 				PRINTFORML 发出声音的同时口鼻中不断吹出白浊色的精液的泡泡、看起来非常下贱
 				PRINTFORML 在头目示意下男人松开了颈链、%PRINT_TRANSCALLNAME(TARGET)%立即手脚并用地向着种猪爬去、
 				PRINTFORMW 自觉的%PRINT_TRANSCALLNAME(TARGET)%趴在种猪的腹下开始了口交奉仕、
@@ -1602,20 +1602,20 @@ PRINTL
 				PRINTFORMW 随后退离几步开始欣赏盛大的兽奸秀……
 			ENDIF
 			PRINTL 
-			PRINTFORML 公猪粗长的螺旋状肉棒聪明地找到了%PRINT_TRANSCALLNAME(TARGET)%的\@ISMALE() ? 菊穴 # 질 \@口
+			PRINTFORML 公猪粗长的螺旋状肉棒聪明地找到了%PRINT_TRANSCALLNAME(TARGET)%的\@ISMALE() ? 菊穴 # 膣 \@口
 			PRINTFORML 简单的插入就让%PRINT_TRANSCALLNAME(TARGET)%发出既痛苦又快乐的哼哼声、
 				IF ISMALE() || TALENT:偽娘 > 0 
 				PRINTFORML 螺旋状的龟头径直楔入直肠的最深处
-				EXP:Ａ확장경험 += 1
-				EXP:Ａ경험 += 3　
+				EXP:Ａ拡張経験 += 1
+				EXP:Ａ経験 += 3　
 				ELSE
 				PRINTFORML 螺旋状的龟头径直楔入蜜道的最深处
-				EXP:Ｖ확장경험 += 1
-				EXP:Ｖ경험 += 3
+				EXP:Ｖ拡張経験 += 1
+				EXP:Ｖ経験 += 3
 				ENDIF
 			PRINTFORMW 高頻率的摩擦和扭転令%PRINT_TRANSCALLNAME(TARGET)%得到了人類無法給予的快感、
 			PRINTL 
-			PRINTFORML 不久之後种猪就因为物种的特性开始了사정
+			PRINTFORML 不久之後种猪就因为物种的特性开始了射精
 				IF ISFEMALE() || TALENT:扶他 > 0 
 				PRINTFORML 螺旋状的龟头前端拨开了子宫颈插进了孕育生命的最深处、
 				ELSE
@@ -1630,30 +1630,30 @@ PRINTL
 				ENDIF
 			PRINTFORML 射出后几乎是半凝固的精液积蓄在身体深处，让小腹缓慢地逐渐隆起、
 			SIF ISMALE() || TALENT:偽娘 > 0 || TALENT:扶他 > 0
-				PRINTFORML 在被种猪灌精的反乱刺激下%PRINT_TRANSCALLNAME(TARGET)%也开始了사정，越사정肚子就越大的奇景被摄像机忠实地记录了、
-			SIF TALENT:모유체질 > 0 
+				PRINTFORML 在被种猪灌精的反乱刺激下%PRINT_TRANSCALLNAME(TARGET)%也开始了射精，越射精肚子就越大的奇景被摄像机忠实地记录了、
+			SIF TALENT:母乳体質 > 0 
 				PRINTFORML 噴湧的奶水在身下已經堆積成了池塘、
-			PRINTFORML 漫长的사정过程中%PRINT_TRANSCALLNAME(TARGET)%在绝顶的云端起伏著，扭曲的面容比最低贱的母猪还要丑陋……
-			EXP:정액경험 += 2 + RAND(4,8)
-			EXP:절정경험 += 3 + RAND(2,5)
-			EXP:이상경험 += 1
+			PRINTFORML 漫长的射精过程中%PRINT_TRANSCALLNAME(TARGET)%在绝顶的云端起伏著，扭曲的面容比最低贱的母猪还要丑陋……
+			EXP:精液経験 += 2 + RAND(4,8)
+			EXP:絶頂経験 += 3 + RAND(2,5)
+			EXP:異常経験 += 1
 		ENDIF
 		;加筆完了
 
 	PRINTW
 	;加筆ここまで
-	;구상
+	;口上
 	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SYOUHU_hentaiB")
-	;습득
-	JUEL:습득 += 150
-	;고통쾌락경험
-	EXP:고통쾌락경험 += 3
-	;고통
-	JUEL:고통 += 300
+	;習得
+	JUEL:習得 += 150
+	;苦痛快楽経験
+	EXP:苦痛快楽経験 += 3
+	;苦痛
+	JUEL:苦痛 += 300
 	;口交経験
 	EXP:口交経験 += 1
-	;정액경험
-	EXP:정액경험 += 1
+	;精液経験
+	EXP:精液経験 += 1
 	IF CFLAG:0 == 4
 	PRINTFORML 被徹底地開發調教了幾個小時之後，身心都几乎完全变成了真正的母猪、
 	PRINTFORML 終於満足了的男人們把%PRINT_TRANSCALLNAME(TARGET)%帶回到調教室的監牢中，甚至懶得重新束縛起來。
@@ -1662,7 +1662,7 @@ PRINTL
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
 	PRINTFORM 暗网上流传着少女受到激烈母猪化调教
-		SIF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 
+		SIF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 
 			PRINT 甚至与真正的公猪交配
 	PRINTFORML 的视频
 		SELECTCASE RAND(3)
@@ -1689,21 +1689,21 @@ PRINTL
 
 
 @INTIMIDATION_DOG,ARG:0
-	CALL MESSAGE_CITIZEN_TRAIN_DOG(ARG,"남자들","감금")
-	;습득
-	JUEL:습득 += 150
-	;고통쾌락경험
-	EXP:고통쾌락경험 += 2
-	;고통
-	JUEL:고통 += 100
-	;욕정
-	JUEL:욕정 += 100
-	;치정
-	JUEL:치정 += 100
+	CALL MESSAGE_CITIZEN_TRAIN_DOG(ARG,"男たち","監禁")
+	;習得
+	JUEL:習得 += 150
+	;苦痛快楽経験
+	EXP:苦痛快楽経験 += 2
+	;苦痛
+	JUEL:苦痛 += 100
+	;欲情
+	JUEL:欲情 += 100
+	;恥情
+	JUEL:恥情 += 100
 	;口交経験
 	EXP:口交経験 += 1
-	;정액경험
-	EXP:정액경험 += 1
+	;精液経験
+	EXP:精液経験 += 1
 		IF CFLAG:0 == 4
 	PRINTFORML 被徹底地開發調教了幾個小時之後，身心几乎都变成了完全的母狗、
 	PRINTFORML 終於満足了的男人們把%PRINT_TRANSCALLNAME(TARGET)%帶回到調教室的監牢中，甚至懶得重新束縛起來。
@@ -1712,7 +1712,7 @@ PRINTL
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
 	PRINTFORM 暗网上流传着少女受到激烈母狗化调教
-		SIF (ABL:마조끼 > 4 || TALENT:희롱특화체질 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 && (ISFEMALE() || TALENT:후타나리 > 0) 
+		SIF (ABL:マゾっ気 > 4 || TALENT:嬲られ体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 && (ISFEMALE() || TALENT:ふたなり > 0) 
 			PRINTL 甚至与真正的公狗连续交配
 	PRINTFORMW 的视频
 	PRINTL
@@ -1748,7 +1748,7 @@ PRINTL
 
 
 
-;IF TALENT:TARGET:임신 > 0
+;IF TALENT:TARGET:妊娠 > 0
 
 ;%PRINT_TRANSCALLNAME(TARGET)%
 
@@ -1761,11 +1761,11 @@ VARSET LOCAL
 	SIF CFLAG:70 > 2
 	PRINT 已經不再
 	PRINTFORML 用口罩遮住脸的男人们把已經勃起的肉棒頂到了%PRINT_TRANSCALLNAME(TARGET)%唇邊。
-	IF TALENT:음란 && TALENT:초심 < 1
+	IF TALENT:淫乱 && TALENT:初心 < 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%露出魅惑的表情、以水汪汪的眼神仰視著男人們開始奉侍起来・・・
-	ELSEIF ABL:慾望 > 3 && TALENT:초심 < 1
+	ELSEIF ABL:慾望 > 3 && TALENT:初心 < 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%一辺在心裏自我催眠，一辺開始為男人的陽具服務.
-	ELSEIF ABL:순종 > 3
+	ELSEIF ABL:従順 > 3
 		PRINTFORML 和%STR:2500%的戦闘中身心都被灌輸了服従意識的%PRINT_TRANSCALLNAME(TARGET)%、
 		PRINTFORML 只能在心中想著沒有好好訓練的後果就是無法擺脱這些男人・・・
 	ELSE
@@ -1781,15 +1781,15 @@ VARSET LOCAL
 			PRINT 插入尻穴之中，
 		ENDIF
 		PRINTL 開始粗暴的雞姦。
-	ELSEIF TALENT:처녀 > 0
+	ELSEIF TALENT:処女 > 0
 		PRINTFORML 搶到有利位置的男人毫不在意地用怒張的肉棒貫穿了%PRINT_TRANSCALLNAME(TARGET)%的穴心、
-		PRINTFORML 初經人事的蜜壺滲出的血絲成為了極好的윤활液、
+		PRINTFORML 初經人事的蜜壺滲出的血絲成為了極好的潤滑液、
 		PRINTFORML 毫不在意%PRINT_TRANSCALLNAME(TARGET)%絕望而甘美的哭叫聲反復完全抽出又完全插入、
 		PRINTFORML 很快愛液與血絲混合在一起，小穴被插得汁水淋漓…………
-			TALENT:처녀 *= -1
+			TALENT:処女 *= -1
 			CFLAG:206 = 12
 			PRINTL 
-			PRINTL 처녀 상실
+			PRINTL 処女喪失
 	ELSE
 		PRINTL 把勃起的陽具挿入蜜裂和菊门中，開始粗暴地活塞運動。
 	ENDIF
@@ -1806,10 +1806,10 @@ VARSET LOCAL
 	IF ISMALE()
 		PRINTFORML 迎来高潮的男人直接在直腸内放出了精液、
 	ELSE
-		PRINTFORML 迎来高潮的男人理所当然的決定질내사정、
+		PRINTFORML 迎来高潮的男人理所当然的決定膣内射精、
 	ENDIF
 		PRINTFORML 在後面等着的同伴馬上就代替了他的位置持續著無休止的凌辱。
-		IF TALENT:음란 || ABL:慾望 >= 3
+		IF TALENT:淫乱 || ABL:慾望 >= 3
 			PRINTFORML 已経習慣於被男人一個接一個地操幹的%PRINT_TRANSCALLNAME(TARGET)%、
 			PRINTFORML 曝露著放蕩的高潮臉持続榨取著男人的精液，両隻手也在一直擼動著不知道誰的肉棒
 			PRINTFORML 由于有太多慾望要满足，有时甚至一个肉穴中会被插入两根肉棒……
@@ -1822,7 +1822,7 @@ VARSET LOCAL
 			PRINTFORM 被男人們脅迫着無法違抗的
 			ENDIF
 			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%、
-			IF TALENT:주관시점 > 0
+			IF TALENT:主観視点 > 0
 				PRINTFORML 咬緊牙関、像是放棄了一般專心奉仕起来。
 			ELSE
 				PRINTFORML 咬緊牙関、像是放棄了一般開始專心奉仕。
@@ -1833,7 +1833,7 @@ VARSET LOCAL
 	PRINTFORML 不知道承受了多少次男人們釈放的慾望之後、
 	PRINTFORML 終於満足了的男人們把%PRINT_TRANSCALLNAME(TARGET)%丟回到冰冷的地板上，甚至懶得重新束縛起來。
 
-	;測試在監禁구상中插入其他被監禁角色
+	;測試在監禁口上中插入其他被監禁角色
 			;PARTNER = CFLAG:0
 			;IF CFLAG:PARTNER:0 == 4 
 			;PRINTFORM %PRINT_TRANSCALLNAME(PARTNER)%
@@ -1850,14 +1850,14 @@ VARSET LOCAL
 	PRINTW 
 
 	;レイプの計算
-	CALL CALC_GANGBANG("감금",5,2)
+	CALL CALC_GANGBANG("監禁",5,2)
 
 
 @INTIMIDATION_ABORTION
 	PRINTL 
 	PRINTL 強制流產
 	PRINTW 
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%被發現[임신]了
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%被發現[妊娠]了
 	PRINTL 不知出於何種考慮的黑道組織首領，
 	PRINTFORMW 将%PRINT_TRANSCALLNAME(TARGET)%帶到了地下診所……
 	PRINTL 
@@ -1887,7 +1887,7 @@ IF RAND(3) < 2
 	PRINTFORML 全身发红、仿佛热得要烧起来、下腹一跳一跳地传来厚重的灼热感
 	PRINTFORMW 「啊……啊啊……%SELF_CALL()%的身体……你们做了什么！……啊啊啊啊？！！」
 	PRINTL 
-	PRINTFORML 是催情剂、激素、还是촉수的体液呢？
+	PRINTFORML 是催情剂、激素、还是触手的体液呢？
 	PRINTFORML 小腹里面传来核爆般性快感的%PRINT_TRANSCALLNAME(TARGET)%没有思考的余裕
 	PRINTFORML 子宫剧烈地跳动着、一松一紧地挤压着里面的小生命。
 	PRINTFORML 「痛……啊啊啊……要裂开了……有東西……噴出來了……哇啊啊啊啊？！！」
@@ -1908,7 +1908,7 @@ IF RAND(3) < 2
 	PRINTFORML 冷酷的男人瞄準X字標記揮出正拳、
 	PRINTFORML 準確地擊中%PRINT_TRANSCALLNAME(TARGET)%孕育著孩子的子宮。
 	PRINTFORML 力道之大，在一瞬間讓膨大的腹部上出現了一個圓形的凹坑。
-	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%的下體爆출혈箭、身体剧烈地扭动起来。
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%的下體爆出血箭、身体剧烈地扭动起来。
 	PRINTFORML 头发乱甩，各種體液和吐瀉物四处飞溅。
 	PRINTFORMW 失禁的下身噴出尿水和糞便。
 	PRINTL
@@ -1970,7 +1970,7 @@ IF RAND(3) < 2
 	PRINTFORML 不知道晕过去又醒来多少次、
 	PRINTFORML 最后当%PRINT_TRANSCALLNAME(TARGET)%恢复意识时、一切都已经结束
 	PRINTL 肚子里的小宝宝没有了。
-	PRINTL 受到严重伤害、체력和기력減少了
+	PRINTL 受到严重伤害、体力和気力減少了
 	PRINTL 望著自己破破爛爛的身體、流下了絕望的淚水……
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
@@ -2001,23 +2001,23 @@ ELSE
 	PRINTL
 	PRINTL
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%遭到了殘酷的強迫流產。
-	PRINTFORML 受到严重伤害的%PRINT_TRANSCALLNAME(TARGET)%、체력和기력減少了
+	PRINTFORML 受到严重伤害的%PRINT_TRANSCALLNAME(TARGET)%、体力和気力減少了
 	PRINTL 
 	PRINTL 但在那过程中、竟然得到了高潮……
 ENDIF
-	MAXBASE:체력 -= MAXBASE:체력/4
-	MAXBASE:기력 -= MAXBASE:기력/4
-	BASE:기초체력 -= BASE:기초체력/4
-	BASE:기초기력 -= BASE:기초기력/4
+	MAXBASE:体力 -= MAXBASE:体力/4
+	MAXBASE:気力 -= MAXBASE:気力/4
+	BASE:体力基礎 -= BASE:体力基礎/4
+	BASE:気力基礎 -= BASE:気力基礎/4
 	CFLAG:221 = 0
 	CFLAG:222 = 0
 	CFLAG:227 = 0
 	CFLAG:228 = 0
 	CFLAG:232 = 0
 	CFLAG:233 = 0
-	TALENT:TARGET:임신 = 0
-	EXP:절정경험 += 7 + RAND(2,8)
-	EXP:고통쾌락경험 += 2 + RAND(1,4)
+	TALENT:TARGET:妊娠 = 0
+	EXP:絶頂経験 += 7 + RAND(2,8)
+	EXP:苦痛快楽経験 += 2 + RAND(1,4)
 	PRINTW 
 RETURN
 
@@ -2050,14 +2050,14 @@ PRINTFORMW 不安的預感譲%PRINT_TRANSCALLNAME(TARGET)%軽軽地扭動着。
 PRINTL 
 CALL INTIMIDATION_RYONA_AMPUTEE,TARGET
 
-TALENT:TARGET:미성숙 = 2
-TALENT:TARGET:묘상화 = 0
+TALENT:TARGET:未熟 = 2
+TALENT:TARGET:苗床化 = 0
 PRINTL 
 PRINTFORML 被徹底改造的%PRINT_TRANSCALLNAME(TARGET)%
 PRINTFORML 乳房変成了流著奶水的臃腫肉袋
 PRINTFORML 敏感点被鎖鏈拉緊帯来無限的刺激
 PRINTFORML 没有了手也没有了腿、只剰下一截肉段像是蛆虫一般地扭動着
-PRINTFORML 従外表上看、与被촉수化作번식자루的女性没有多少区別……
+PRINTFORML 従外表上看、与被触手化作繁殖袋的女性没有多少区別……
 PRINTFORMW 然而、這確実是不折不扣的、由「人類」製造的傑作。
 PRINTL 
 PRINTL 
@@ -2065,8 +2065,8 @@ PRINTL
 FONTBOLD
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%被秘薬改造的子宮失去了生育能力！
 CLEARLINE 1
-IF TALENT:TARGET:모유체질 < 1
-TALENT:TARGET:모유체질 = 1
+IF TALENT:TARGET:母乳体質 < 1
+TALENT:TARGET:母乳体質 = 1
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%被秘薬改造的胸部開始泌乳！
 CLEARLINE 1
 ENDIF
@@ -2078,12 +2078,12 @@ PRINTFORM %PRINT_TRANSFULLNAME(TARGET)%被黒道組織製作成了
 SETCOLOR 210,0,0
 PRINTW 人肉飛機杯
 RESETCOLOR
-PRINTFORMW 被設置在了黒道組織的核心拠点之中、無法依靠정보 수집救出！
+PRINTFORMW 被設置在了黒道組織的核心拠点之中、無法依靠情報収集救出！
 FONTREGULAR
 PRINTW
 IF RAND(3) <=1
 	PRINTFORML 不久之後
-	PRINTFORML 暗網上流伝着少女被活生生鋸下손발做成人肉飛機杯的視頻、
+	PRINTFORML 暗網上流伝着少女被活生生鋸下手足做成人肉飛機杯的視頻、
 	PRINTFORMW 影片並不像是特効
 	SELECTCASE RAND(3)
 	CASE 0
@@ -2110,8 +2110,8 @@ ENDIF
 @INTIMIDATION_RAPE_RYONA,TARGET
 #DIM CCOUNT
 VARSET LOCAL
-PALAM:TARGET:윤활 = 2100
-PALAM:TARGET:쾌Ａ = 2100
+PALAM:TARGET:潤滑 = 2100
+PALAM:TARGET:快Ａ = 2100
 STAIN:TARGET:3 |= 4
 ;以上用于测试是否能够正确显示A和V的润滑情况
 PRINTFORML 黒道組織的核心拠点中的某処刑房内……
@@ -2121,7 +2121,7 @@ PRINTL
 PRINTFORMW 成為「人肉飛機杯」的%PRINT_TRANSCALLNAME(TARGET)%、作為一件物品被設置在裏面。
 PRINTL 
 PRINTFORM 没有了四肢的%PRINT_TRANSCALLNAME(TARGET)%不再是
-IF TALENT:변신능력 > 0
+IF TALENT:変身能力 > 0
 	PRINT 颯爽的戦士
 ELSE
 	PRINT 魔法少女
@@ -2193,7 +2193,7 @@ CASE 0
 	ENDDATA
 	PRINTL 」
 	PRINTL 
-	PRINTFORML 临近사정的男人加快了绞盘收放的频率、让%PRINT_TRANSCALLNAME(TARGET)%更加激烈地在半空中跳动起来。
+	PRINTFORML 临近射精的男人加快了绞盘收放的频率、让%PRINT_TRANSCALLNAME(TARGET)%更加激烈地在半空中跳动起来。
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%身体的每一次起伏、都能给予男人十分满足的享受。
 	PRINTFORMW 而对于%PRINT_TRANSCALLNAME(TARGET)%自己而言、不过是在窒息地狱与高潮地狱中来回穿梭而已。
 	PRINTL 
@@ -2301,7 +2301,7 @@ CASE 1
 	ENDDATA
 	PRINTL 」
 	PRINTL 
-	PRINTFORML 臨近사정的男人加快了節奏、譲%PRINT_TRANSCALLNAME(TARGET)%更加激烈地仰反狂乱。
+	PRINTFORML 臨近射精的男人加快了節奏、譲%PRINT_TRANSCALLNAME(TARGET)%更加激烈地仰反狂乱。
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%身体的毎一次抽搐、都能給予男人十分満足的享受。
 	PRINTFORMW 而対於%PRINT_TRANSCALLNAME(TARGET)%自己而言、不過是同時沉淪在窒息地獄与高潮地獄中而已。
 	PRINTL 

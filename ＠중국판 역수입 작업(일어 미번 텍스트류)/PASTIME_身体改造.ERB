@@ -18,7 +18,7 @@ FOR CCOUNT, 0, CHARANUM
 	SIF CCOUNT == MASTER
 		CONTINUE
 	;描写が女キャラ向けなので、男性は除外する
-	;偽娘を男性扱いしないように追記、対応ついでに양성평등のときは男性も可に
+	;偽娘を男性扱いしないように追記、対応ついでに男女平等のときは男性も可に
 	SIF CFLAG:CCOUNT:0 == 3 && (ISGIRLY(CCOUNT) || FILTER_CHECK_F(5) == 0) && MIN(RAND:(SQRT(FLAG:852) / 2 + 20), 100) < LOCAL
 		CALL ADDRANDCHOOSE,CCOUNT
 NEXT
@@ -37,9 +37,9 @@ PRINTL
 PRINTL 
 PRINTFORML 在繁華街区的小巷子裏
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%発現了一間怪異的商店
-;未进行身体改造时的구상
+;未进行身体改造时的口上
 IF TALENT:陰蒂穿環 < 1 && TALENT:乳頭穿環 < 1 
-;初次进入的구상
+;初次进入的口上
 	PRINTFORMW 抱着好奇推門進去発現坐在櫃檯後面的是%PRINT_TRANSCALLNAME(FLAG:111)%！
 	PRINTL 
 	PRINTFORML 面対擺出戒備態勢的%PRINT_TRANSCALLNAME(TARGET)%、%PRINT_TRANSCALLNAME(FLAG:111)%問道你真的想在街区中開戦嗎？
@@ -65,7 +65,7 @@ IF TALENT:陰蒂穿環 < 1 && TALENT:乳頭穿環 < 1
 	PRINTFORML 面対着沉吟不語的%PRINT_TRANSCALLNAME(TARGET)%、%PRINT_TRANSCALLNAME(FLAG:111)%露出悪魔般的笑容説道
 	PRINTFORML 「%SELF_CALL(FLAG:111)%可以帮忙、在身体上増加一些小東西、
 	PRINTFORML 「就可以加強作戦的能力哦、
-	PRINTFORMW 「対於没有촉수大人力量加持的%PRINT_TRANSCALLNAME(TARGET)%来説，是很合適的呢。
+	PRINTFORMW 「対於没有触手大人力量加持的%PRINT_TRANSCALLNAME(TARGET)%来説，是很合適的呢。
 	PRINTFORML 「也就只有一………………点点小小的副作用而已哦。
 	PRINTFORMW 「怎样、要不要试试看呢？」
 	PRINTL 
@@ -154,7 +154,7 @@ ELSEIF RESULT == 0
 	PRINTFORMW 雖然会譲這部分敏感度稍微増加一点点呢……」
 	PRINTFORMW 光是聴着説明、%PRINT_TRANSCALLNAME(TARGET)%就感到自己的%SLANG_N(TARGET)%伝来繃緊感……
 	PRINTL 
-	PRINTFORML 乳頭環会大幅度増加공격力和쾌Ｂ的上升
+	PRINTFORML 乳頭環会大幅度増加攻撃力和快Ｂ的上升
 	PRINTFORMW 随着等級的増進、増加倍率将変得更高
 	CALL PASTIME_AKUOTI_INTRO
 ELSEIF RESULT == 1
@@ -168,8 +168,8 @@ ELSEIF RESULT == 1
 	PRINTFORML 想象着被穿环、甚至被施加更残忍改造的自己的身体会怎样、
 	PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%的%SLANG_V(TARGET)%深处已经快要被蜜液充满了……
 	PRINTL 
-	PRINTFORML 陰蒂環会大幅度増加공격力和쾌Ｂ的上升
-	PRINTFORML 在到達一定程度之後還会増加쾌Ｖ的上升
+	PRINTFORML 陰蒂環会大幅度増加攻撃力和快Ｂ的上升
+	PRINTFORML 在到達一定程度之後還会増加快Ｖ的上升
 	PRINTFORMW 随着等級的増進、増加倍率将変得更高
 	CALL PASTIME_AKUOTI_INTRO
 ELSEIF RESULT == 2
@@ -313,7 +313,7 @@ IF TALENT:TARGET:乳頭穿環 != 4 || TALENT:TARGET:陰蒂穿環 != 4
 			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%快速取出某種噴霧併発射。
 			PRINTFORML 没能反応過来直接把霧気吸進去的%PRINT_TRANSCALLNAME(TARGET)%……
 			PRINTFORML 従喉嚨裏発出的、不是抗議的言辞，而是帯有濃重鼻音的嬌豔喘息声。
-			PRINTFORM 噴出的似乎是来自촉수的春薬，
+			PRINTFORM 噴出的似乎是来自触手的春薬，
 		CASE 1 
 			PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%突然挙起電棒捅了過来。
 			PRINTFORML 没能馬上做出反応就被打中的%PRINT_TRANSCALLNAME(TARGET)%……
@@ -325,8 +325,8 @@ IF TALENT:TARGET:乳頭穿環 != 4 || TALENT:TARGET:陰蒂穿環 != 4
 			PRINTFORM 僅僅一撃就幾乎暈厥，
 	ENDSELECT
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%軟軟地委倒在地、
-	PRINTFORML 但%PRINT_TRANSCALLNAME(FLAG:111)%並没有召喚出촉수、而是連繋了什麼人……
-	PRINTFORML 「不会譲你分走촉수大人対%SELF_CALL(FLAG:111)%的愛的、来給你安排更好的去処吧……」
+	PRINTFORML 但%PRINT_TRANSCALLNAME(FLAG:111)%並没有召喚出触手、而是連繋了什麼人……
+	PRINTFORML 「不会譲你分走触手大人対%SELF_CALL(FLAG:111)%的愛的、来給你安排更好的去処吧……」
 	PRINTFORMW 随後%PRINT_TRANSCALLNAME(FLAG:111)%離開了……
 	PRINTL 
 	PRINTFORML 不知道多久之后、黑道组织的男人们到达了这里……
@@ -353,7 +353,7 @@ IF TALENT:TARGET:乳頭穿環 != 4 || TALENT:TARGET:陰蒂穿環 != 4
 	PRINTW 
 	PRINTFORM 嬌嫩的乳頭被
 	PRINTDATA
-		DATAFORM 鱷魚夾狠狠咬출혈絲並掛上了砝碼，沉沉地下墜、
+		DATAFORM 鱷魚夾狠狠咬出血絲並掛上了砝碼，沉沉地下墜、
 		DATAFORM 一條短短的細棉繩繫住根部充血立起，艷麗地互相靠近，
 		DATAFORM 貼上了低周波電極，在電流惡毒的刺激下變得棗核般腫大，
 	ENDDATA
@@ -384,7 +384,7 @@ IF TALENT:TARGET:乳頭穿環 != 4 || TALENT:TARGET:陰蒂穿環 != 4
 		ELSEIF ISMALE() || TALENT:TARGET:偽娘 > 0 || TALENT:TARGET:扶他 > 0 
 		PRINTDATAW
 			DATAFORM 陰莖的根部被細繩扎緊，龜頭漲成亮紫色卻不能發洩。
-			DATAFORM 被套上了帶有震動飛機杯的男性貞操帶，在無情的刺激下不停地사정。
+			DATAFORM 被套上了帶有震動飛機杯的男性貞操帶，在無情的刺激下不停地射精。
 		ENDDATA
 	ENDIF
 	PRINTFORML
@@ -486,11 +486,11 @@ PRINTL 用镊子将乳环安装到位、
 PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%悪作劇地用指尖撥了撥乳環、欣賞着%PRINT_TRANSCALLNAME(TARGET)%雌獣般的嬌声。
 CALL MESSAGE_SEX_ECSTASY_B
 PRINTL 
-IF TALENT:TARGET:모유체질 > 0
+IF TALENT:TARGET:母乳体質 > 0
 PRINTFORML 高潮時奶水従緊繃的%SLANG_N(TARGET)%中噴出、
 PRINTFORML 同時従前端和乳環的縫隙間噴出奶水、甚至飛射到了另一辺的乳房上、
-PRINTL 罕見的모유奇観中、連滲出的血跡也被沖刷乾浄。
-EXP:TARGET:모유경험 += 2
+PRINTL 罕見的噴乳奇観中、連滲出的血跡也被沖刷乾浄。
+EXP:TARGET:噴乳経験 += 2
 ELSE
 PRINTFORML 魔法少女強大的恢復力之下、血液很快不再滲出。
 ENDIF
@@ -498,15 +498,15 @@ PRINTFORML 然後，該輪到另外一辺了……
 PRINTL · · ·
 PRINTL  · · ·
 PRINTW   · · ·
-PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"애액")%従椅子上流下積成了小水窪。
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
 PRINTFORML 不知達到了多少次的高潮……
-IF TALENT:TARGET:모유체질 > 0
+IF TALENT:TARGET:母乳体質 > 0
 PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
-EXP:TARGET:모유경험 += RAND(3,10)
+EXP:TARGET:噴乳経験 += RAND(3,10)
 ENDIF
 PRINTL 
 PRINTL 「唏嗯……嗯咕、呼啊啊……」
-PRINTFORML 不是被촉수侵犯而是自願進行的肉体改造、
+PRINTFORML 不是被触手侵犯而是自願進行的肉体改造、
 PRINTFORML 身体再也不能回到原来的様子。
 PRINTFORML 這様的事実衝撃著%PRINT_TRANSCALLNAME(TARGET)%的心霊
 PRINTFORMW 感觉着胸前异样感觉的%PRINT_TRANSCALLNAME(TARGET)%呆呆地坐着……
@@ -515,8 +515,8 @@ PRINTFORML 没有察覚%PRINT_TRANSCALLNAME(FLAG:111)%已経離開了、更没�
 PRINTFORMW 離去前対方那妖异的双眼之中的狡黠……
 TALENT:TARGET:乳頭穿環 = 1
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:166%Lv.1
-EXP:TARGET:절정경험 += RAND(15,40)
-EXP:TARGET:고통쾌락경험 += RAND(3,15)
+EXP:TARGET:絶頂経験 += RAND(15,40)
+EXP:TARGET:苦痛快楽経験 += RAND(3,15)
 
 @PASTIME_AKUOTI_PIERCING_NIPPLE
 PRINTFORML 「状態很好呢」
@@ -524,7 +524,7 @@ PRINTFORML 譲%PRINT_TRANSCALLNAME(TARGET)%坐到診療椅上、脱下衣服、
 PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%用手指軽軽撫摸着%SLANG_N(TARGET)%。
 PRINTL 
 PRINTFORML 「好了，譲我們開始吧」
-PRINTFORML 故意忽略了%PRINT_TRANSCALLNAME(TARGET)%的陣陣嬌喘\@ TALENT:TARGET:모유체질 > 0 ? 和%SLANG_N(TARGET)%上沁出的乳汁 # \@
+PRINTFORML 故意忽略了%PRINT_TRANSCALLNAME(TARGET)%的陣陣嬌喘\@ TALENT:TARGET:母乳体質 > 0 ? 和%SLANG_N(TARGET)%上沁出的乳汁 # \@
 PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%做着進一歩改造的準備工作……
 PRINTL 
 IF TALENT:TARGET:乳頭穿環 == 1 ;进展至2级
@@ -564,7 +564,7 @@ IF TALENT:TARGET:乳頭穿環 == 1 ;进展至2级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 轻轻触摸着胸前的装饰品、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(25,40)
+	EXP:TARGET:絶頂経験 += RAND(25,40)
 	TALENT:TARGET:乳頭穿環 = 2
 	PRINTW 
 ELSEIF TALENT:TARGET:乳頭穿環 == 2 ;进展至3级
@@ -574,7 +574,7 @@ ELSEIF TALENT:TARGET:乳頭穿環 == 2 ;进展至3级
 		PRINTL 
 	PRINTFORML 「所以現在、要準備第二組的孔位咯！」
 	PRINTFORML 「嗯……呀……咿……」
-	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対고통的期待……
+	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対苦痛的期待……
 		PRINTL 
 	PRINTFORML 持続被乳環責備着的乳頭毎時毎刻都勃起着、消毒棉棒点上去時、変得更硬了
 	PRINTFORML 「呀啊……咿……轻……」
@@ -604,16 +604,16 @@ ELSEIF TALENT:TARGET:乳頭穿環 == 2 ;进展至3级
 		DATAFORM (被扎到的……奶頭………又痛、又感覚好舒服……啊)
 	ENDDATA
 		PRINTL 
-	IF TALENT:TARGET:모유체질 > 0
+	IF TALENT:TARGET:母乳体質 > 0
 	PRINTFORML 从乳头前端、乳环孔和针腹的边缘都喷出了乳汁、像一朵花一样四面散射、
 	PRINTFORMW 冲去了泌出的血迹、也让进针的阻力小了不少……
-	EXP:TARGET:모유경험 += RAND(3,10)
+	EXP:TARGET:噴乳経験 += RAND(3,10)
 	ENDIF
 		PRINTL 
 	CALL MESSAGE_SEX_ECSTASY_B_HI
 		PRINTL 
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(5,25)
 	PRINTFORML 直到穿刺完成、%PRINT_TRANSCALLNAME(TARGET)%已経無法説出完整的句子、
 	PRINTFORMW 双目微閉、仰靠在診査椅上発出微弱但香豔的吐息……
 	PRINTL 
@@ -658,8 +658,8 @@ ELSEIF TALENT:TARGET:乳頭穿環 == 2 ;进展至3级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 轻轻触摸着胸前的装饰品、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(10,20)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(10,20)
 	TALENT:TARGET:乳頭穿環 = 3
 	PRINTW 
 ELSEIF TALENT:TARGET:乳頭穿環 == 3 ;进展至4级
@@ -680,7 +680,7 @@ ELSEIF TALENT:TARGET:乳頭穿環 == 3 ;进展至4级
 	PRINTL 
 	PRINTFORML 「唏嗯……嗯、咕呼嗚……」
 	PRINTFORML 軽柔地捏住了乳頭後方的乳肉，%PRINT_TRANSCALLNAME(FLAG:111)%将%PRINT_TRANSCALLNAME(TARGET)%乳頭向前擠出
-	SIF TALENT:TARGET:모유체질 > 0
+	SIF TALENT:TARGET:母乳体質 > 0
 		PRINTFORML 只是這様，乳頭就已経開始射出奶汁了。
 	PRINTFORML 没有受到任何阻礙，更粗的貫穿柱就這様擠開了乳環孔、両根粗棍交錯、
 	PRINTFORML 把乳頭従原本的小乳蒂拉成了肥勃的円柱体、簡直就是熟透的紅棗一般、
@@ -735,10 +735,10 @@ ELSEIF TALENT:TARGET:乳頭穿環 == 3 ;进展至4级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 感受着胸前持续不断的官能刺激、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(30,40)
+	EXP:TARGET:絶頂経験 += RAND(30,40)
 	TALENT:TARGET:乳頭穿環 = 4
-	SIF TALENT:TARGET:모유체질 > 0
-			EXP:TARGET:모유경험 += RAND(5,10)
+	SIF TALENT:TARGET:母乳体質 > 0
+			EXP:TARGET:噴乳経験 += RAND(5,10)
 	PRINTW 	
 ENDIF 
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%的%TALENTNAME:166%等級提高了
@@ -814,15 +814,15 @@ PRINT 用鑷子将陰蒂環安装到位、
 PRINTFORMW %PRINT_TRANSCALLNAME(FLAG:111)%悪作劇地用指尖撥了撥、欣賞着%PRINT_TRANSCALLNAME(TARGET)%雌獣般的嬌声。
 CALL MESSAGE_SEX_ECSTASY_C
 PRINTL 
-PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"애액")%従椅子上流下積成了小水窪。
+PRINTFORML 安装到位的過程中、%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_Juice(TARGET,"愛液")%従椅子上流下積成了小水窪。
 PRINTFORML 不知達到了多少次的高潮……
-IF TALENT:TARGET:모유체질 > 0
+IF TALENT:TARGET:母乳体質 > 0
 PRINTFORMW 衣服已経被噴出的奶水完全浸透、連%PRINT_TRANSCALLNAME(FLAG:111)%都被沾得閃閃発光。
-EXP:TARGET:모유경험 += RAND(3,10)
+EXP:TARGET:噴乳経験 += RAND(3,10)
 ENDIF
 PRINTL 
 PRINTL 「唏嗯……嗯咕、呼啊啊……」
-PRINTFORML 不是被촉수侵犯而是自願進行的肉体改造、
+PRINTFORML 不是被触手侵犯而是自願進行的肉体改造、
 PRINTFORML 身体再也不能回到原来的様子。
 PRINTFORML 這様的事実衝撃著%PRINT_TRANSCALLNAME(TARGET)%的心霊
 PRINTFORML 被下体一跳一跳的疼痛和快感吸引着注意力的%PRINT_TRANSCALLNAME(TARGET)%
@@ -830,8 +830,8 @@ PRINTFORML 没有察覚%PRINT_TRANSCALLNAME(FLAG:111)%已経離開了、更没�
 PRINTFORMW 離去前対方那妖异的双眼之中的狡黠……
 TALENT:TARGET:陰蒂穿環 = 1
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:165%Lv.1
-EXP:TARGET:절정경험 += RAND(15,40)
-EXP:TARGET:고통쾌락경험 += RAND(3,15)
+EXP:TARGET:絶頂経験 += RAND(15,40)
+EXP:TARGET:苦痛快楽経験 += RAND(3,15)
 
 @PASTIME_AKUOTI_PIERCING_CLIT
 PRINTFORML 「状態很好呢」
@@ -881,7 +881,7 @@ IF TALENT:TARGET:陰蒂穿環 == 1 ;进展至2级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 感受着下体刺痒的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(25,40)
+	EXP:TARGET:絶頂経験 += RAND(25,40)
 	TALENT:TARGET:陰蒂穿環 = 2
 	PRINTW 
 ELSEIF TALENT:TARGET:陰蒂穿環 == 2 ;进展至3级
@@ -891,7 +891,7 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 2 ;进展至3级
 	PRINTL 
 	PRINTFORML 「所以現在、要準備第二組的孔位咯！」
 	PRINTFORML 「嗯……呀……咿……」
-	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対고통的期待……
+	PRINTFORMW 喘息着的%PRINT_TRANSCALLNAME(TARGET)%没有説話、只有顫抖的身体暴露着対苦痛的期待……
 	PRINTL 
 	PRINTFORML 持続被責備着的陰蒂毎時毎刻都勃起着、消毒棉棒点上去時、変得更硬了
 	PRINTL 
@@ -923,8 +923,8 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 2 ;进展至3级
 	ENDDATA
 	PRINTL 
 	CALL MESSAGE_SEX_ECSTASY_C_HI
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(5,25)
 	PRINTFORML 直到穿刺完成、%PRINT_TRANSCALLNAME(TARGET)%已経無法説出完整的句子、
 	PRINTFORMW 双目微閉、仰靠在婦科診査椅上発出微弱但香豔的吐息……
 	PRINTL 
@@ -967,8 +967,8 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 2 ;进展至3级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 感受着下体高涨的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(10,20)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(10,20)
 	TALENT:TARGET:陰蒂穿環 = 3
 	PRINTW 
 ELSEIF TALENT:TARGET:陰蒂穿環 == 3 ;进展至4级
@@ -1019,7 +1019,7 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 3 ;进展至4级
 	ENDDATA
 	PRINTL 
 	PRINTFORML 即使已经经历过许多次，敏感部位的激烈疼痛仍然使得%PRINT_TRANSCALLNAME(TARGET)%惨叫起来
-	PRINTFORML 从下体溅出大量的%SLANG_Juice(TARGET,"애액")%。
+	PRINTFORML 从下体溅出大量的%SLANG_Juice(TARGET,"愛液")%。
 	PRINTFORML 无视着娇艳凄惨的呻吟、%PRINT_TRANSCALLNAME(FLAG:111)%为%PRINT_TRANSCALLNAME(TARGET)%穿上了四個陰唇環。
 	PRINTFORMW 然后…………
 	PRINTL 
@@ -1073,12 +1073,12 @@ ELSEIF TALENT:TARGET:陰蒂穿環 == 3 ;进展至4级
 	PRINTFORML 不知多久之後、
 	PRINTFORML 清醒過来的%PRINT_TRANSCALLNAME(TARGET)%発現%PRINT_TRANSCALLNAME(FLAG:111)%已経悄悄離開了……
 	PRINTFORMW 感受着下体燥热和鼓胀的异样感、%PRINT_TRANSCALLNAME(TARGET)%慢慢起身向门外走去……
-	EXP:TARGET:절정경험 += RAND(30,40)
-	EXP:TARGET:방뇨경험 += RAND(1,5)
-	EXP:TARGET:고통쾌락경험 += RAND(15,30)
+	EXP:TARGET:絶頂経験 += RAND(30,40)
+	EXP:TARGET:放尿経験 += RAND(1,5)
+	EXP:TARGET:苦痛快楽経験 += RAND(15,30)
 	TALENT:TARGET:陰蒂穿環 = 4
-	SIF TALENT:TARGET:모유체질 > 0
-			EXP:TARGET:모유경험 += RAND(5,10)
+	SIF TALENT:TARGET:母乳体質 > 0
+			EXP:TARGET:噴乳経験 += RAND(5,10)
 	PRINTW 	
 ENDIF 
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%的%TALENTNAME:165%等級提高了
@@ -1099,9 +1099,9 @@ PRINTDATA
 ENDDATA
 PRINTL 」
 PRINTL 
-PRINTFORML 가슴部和下身都被做了无法回头的肉体改造
+PRINTFORML 胸部和下身都被做了无法回头的肉体改造
 PRINTFORML 连自己也不明白，为什么会一直到这片街区来寻找恶堕者的商店
-PRINTFORMW 是想要更强大的力量来与촉수们战斗、还是……
+PRINTFORMW 是想要更强大的力量来与触手们战斗、还是……
 PRINTL 
 PRINTFORML 总之、
 PRINTFORML 还不满足的%PRINT_TRANSCALLNAME(TARGET)%、提出了想要更加激烈的改造要求
@@ -1156,10 +1156,10 @@ PRINTFORMW 宝石时刻都在输出着能量、链子每走一步都发出沙沙
 	TALENT:TARGET:乳頭穿環 = 5
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:166%Lv.5
 PRINTFORMW %PRINT_TRANSFULLNAME(TARGET)%獲得了%TALENTNAME:165%Lv.5
-	EXP:TARGET:절정경험 += RAND(30,40)
-	EXP:TARGET:방뇨경험 += RAND(5,10)
-	EXP:TARGET:고통쾌락경험 += RAND(15,30)
-	SIF TALENT:TARGET:모유체질 > 0
-		EXP:TARGET:모유경험 += RAND(5,10)
+	EXP:TARGET:絶頂経験 += RAND(30,40)
+	EXP:TARGET:放尿経験 += RAND(5,10)
+	EXP:TARGET:苦痛快楽経験 += RAND(15,30)
+	SIF TALENT:TARGET:母乳体質 > 0
+		EXP:TARGET:噴乳経験 += RAND(5,10)
 
 

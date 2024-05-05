@@ -352,17 +352,6 @@ IF 今回陥落するフラグ == 1 && CONFIG_CHECK_PRISON_F(1) == 1 && (CONFIG_
 		;変身可能キャラなら겉옷が変更される
 		SIF TALENT:변신능력 == 1
 			CFLAG:41 = 401
-		;＠중국판　전락装備
-		IF TALENT:전락 == 1
-			;변신능력アリなら음박의 사슬
-			IF TALENT:변신능력 == 1
-				CFLAG:41 = 402
-			;변신능력ナシなら촉수の花嫁／noinner
-			ELSE
-				CFLAG:40 = 196
-				CFLAG:42 = 0
-			ENDIF
-		ENDIF
 		;追加淫紋の判定・保存
 		CALL SAVE_TATTOO_ADDITIONAL
 		;지문: 흑화하고 말았다

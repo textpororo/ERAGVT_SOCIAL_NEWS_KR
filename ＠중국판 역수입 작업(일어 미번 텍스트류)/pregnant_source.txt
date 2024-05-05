@@ -1,0 +1,32 @@
+;悲劇フェイズ
+		;在防衛力较高的时候、择机进行对苗床的复原并投入战斗
+		IF FLAG:852 > 10000 && RAND(3) == 0
+			PRINTL 【苗床尖兵】
+			PRINTL 
+			PRINTFORML 漫長的拉鋸戦中、%STR:2500%的侵攻受阻
+			PRINTFORML 成為苗床的%CALLNAME:LOCAL%被%STR:2500%進一歩改造
+			PRINTDATA
+				DATAFORM 許多細小的触手伸入耳中
+				DATAFORM 極細的触手従鼻腔中探入
+				DATAFORM 触手従肌肉和血管的縫隙向上伸展
+				DATAFORM 探針状的触手従後頸刺入
+			ENDDATA
+			PRINT 、
+			PRINTDATA
+				DATAFORM 侵入大脳、以精細的生物電刺激喚醒了%CALLNAME:LOCAL%的意識
+				DATAFORM 向大脳発出奇異的電脈衝、重塑%CALLNAME:LOCAL%的理性
+				DATAFORM 随心所欲地建立着%CALLNAME:LOCAL%的人格
+			ENDDATA
+			PRINTL ……
+			PRINTFORML 同時以触手的組織重塑了%CALLNAME:LOCAL%被吸収的肢体。
+			PRINTFORML 原本已化作肉体苗床的%CALLNAME:LOCAL%被賦予了新的使命
+			PRINTFORML 成為了触手的尖兵……
+			CFLAG:LOCAL:0 = 状態_洗脳
+			TALENT:LOCAL:理性喪失 = 0
+			TALENT:LOCAL:四肢欠損 = 0
+			TALENT:LOCAL:寄生 = 1
+			TALENT:LOCAL:共生 = 1
+			CFLAG:LOCAL:83 += CFLAG:LOCAL:82
+			CFLAG:LOCAL:82 = 0
+			PRINTFORML %CALLNAME:LOCAL%獲得了%TALENTNAME:163%！
+			DRAWLINE

@@ -137,14 +137,79 @@ ENDIF
 ;피부
 SIF GETBIT(CFLAG:ARG:80, 1) == 1 && CONFIG_CHECK_PRISON_F(8) == 1
 	CALL EXCHANGE_CSTR (ARG, 54, SKIN)
-;이름
+
+;변신 후 이름 개찬
 IF TALENT:ARG:변신능력 == 1
-	CALL EXCHANGE_CSTR (ARG, 55, 0)
-	CALL EXCHANGE_CSTR (ARG, 56, 1)
+	IF GETBIT(CFLAG:ARG:13,0) == 0
+		SETBIT CFLAG:ARG:13,0
+		PRINTFORML %PRINT_TRANSNAME(ARG)%의 변신 후 이름이 바뀌어 간다……
+		SETCOLOR 96,96,96
+		PRINTFORML 　　　　%CSTR:ARG:0%
+
+		CALL EXCHANGE_CSTR (ARG, 55, 0)
+		CALL SETCOLOR_BY_STR, "보라"
+		PRINTFORML 　　　　　————%CSTR:ARG:0%
+		RESETCOLOR
+		PRINTW 
+		;CALLNAME
+		IF GETBIT(CFLAG:ARG:13,1) == 0 && CSTR:1 == CSTR:55
+			SETBIT CFLAG:ARG:13,1
+			CALL EXCHANGE_CSTR (ARG, 56, 1)
+		ENDIF
+	ENDIF
+ENDIF
+
+IF TALENT:ARG:전락 == 1
+	IF TALENT:ARG:변신능력 == 1
+		;자칭의 추태 개변(無様改変)
+		IF GETBIT(CFLAG:ARG:13,3) == 0
+			SETBIT CFLAG:ARG:13,3
+
+			PRINTFORML %PRINT_TRANSNAME(ARG)%의 결전 대사가 바뀌어 간다……
+
+			;주제 부분의 개인 개찬(개인 단위로의 덮어쓰기용)
+			CALL CORRUPTTION_GET_THEME, ARG
+
+			SETCOLOR 96,96,96
+			PRINTFORML 　%CSTR:ARG:3%
+
+			;본래의 자칭을 백업(개변 시에 본래의 자칭을 참조하므로 여기에서는 값을 복사한다)
+			CSTR:ARG:60 = CSTR:ARG:3
+			CALL CORRUPTTION_GET_NANORI_FINAL(ARG)
+
+			CALL SETCOLOR_BY_STR, "주황"
+			PRINTFORML 　　————%CSTR:ARG:3%
+			RESETCOLOR
+			PRINTW
+		ENDIF
+		;＠중국판　전락 장비
+		;변신능력이 있을 시 음박의 사슬
+		IF CFLAG:ARG:41 != 402
+			CFLAG:ARG:41 = 402
+			CFLAG:42 = 0
+			CALL SETCOLOR_BY_STR, "분홍"
+			PRINTFORML %PRINT_TRANSNAME(ARG)%의 변신 후 의상이【%ITEMNAME:402%】로 바뀌었다！
+			RESETCOLOR
+			PRINTW
+		ENDIF
+
+	ELSE
+		;＠중국판　전락 장비
+		;변신능력이 없을 시 촉수의 신부／no inner
+		IF CFLAG:ARG:40 != 196
+			CFLAG:ARG:40 = 196
+			CFLAG:42 = 0
+			CALL SETCOLOR_BY_STR, "분홍"
+			PRINTFORML %PRINT_TRANSNAME(ARG)%의 의상이【%ITEMNAME:196%】로 바뀌었다！
+			RESETCOLOR
+			PRINTW
+		ENDIF
+	ENDIF
 ENDIF
 
 RETURN 0
 ;*******************************************************************************************************
+;２개의 CSTR 스왑
 @EXCHANGE_CSTR, ARG, ARG:1, ARG:2
 #DIM EX_A
 #DIM EX_B
@@ -187,7 +252,7 @@ RETURN 0
 
 #DIMS STR_UP
 #DIMS STR_DOWN
-#DIMS DARK_NOUN
+#DIMS DARK_NOUN,2
 STR_UP = %CSTR:ARG:201%
 STR_DOWN = %CSTR:ARG:202%
 
@@ -205,13 +270,15 @@ STR_UP = %REPLACE( STR_UP, "・", "")%
 ;★흑화와 세뇌로 나누거나 하고 싶다
 ;　치환 형식을 완전 랜덤이 아니라 문자 수를 갖추도록 궁리하고 싶다
 
+;下
 STRDATA DARK_NOUN
 	DATA 다크
 	DATA 헬
 	DATA 이블
 	DATA 섀도우
 	DATA 킬러
-	DATA 데스
+	DATA 레이스
+	DATA 밴시
 	DATA 카오스
 	DATA 텐타클
 	DATA 맬리스
@@ -287,6 +354,49 @@ STRDATA DARK_NOUN
 	DATA 헤븐브링어
 ENDDATA
 
+;上
+STRDATA DARK_NOUN:1
+	DATA 다크
+	DATA 헬
+	DATA 이블
+	DATA 섀도우
+	DATA 킬러
+	DATA 레이스
+	DATA 밴시
+	DATA 카오스
+	DATA 텐타클
+	DATA 데몬
+	DATA 서큐버스
+	DATA 나이트메어
+
+	DATA 서큐메어
+	DATA 푸시
+	DATA 슬레이브
+	DATA 커럽트
+
+	;breed
+	DATA 브리드
+	DATA 디스트로이
+	DATA 폴른
+	DATA 리버스
+	;pleasure
+	DATA 플레저
+	;chained?
+	DATA 체인드
+	;ruined
+	DATA 루인드
+	DATA 네메시스
+	DATA 어나더
+	DATA 비스트
+	DATA 릴리스
+	DATA 아포칼립스
+	;calamity
+	DATA 컬래머티
+	;ヴィシャス, Vicious?
+	DATA 비셔스
+ENDDATA
+
+
 ;(변신 후 이름을 미설정 or 직접 설정한 경우)
 ;	＝CSTR201과 202이 비어 있는 경우는 덧붙이기만 한다　"아포칼립스・〇〇"　또는　"〇〇・아포칼립스"　같은 느낌으로 변화(랜덤)
 IF STR_UP == "" && STR_DOWN == ""
@@ -297,16 +407,16 @@ IF STR_UP == "" && STR_DOWN == ""
 	ENDIF
 
 ;(공통 설정의 관명을 사용한 경우)
-;	관명이 아닌 쪽을 바꾼다　큐어 〇〇→큐어 리리스　같은 느낌으로 변화
+;	관명을 바꾼다　큐어 〇〇→이블 〇〇　같은 느낌으로 변화
 ELSEIF FLAG:6 == 1 && SAVESTR:11 == STR_UP
-	CSTR:ARG:55 = %STR_UP% %DARK_NOUN%
+	CSTR:ARG:55 = %DARK_NOUN:1% %STR_DOWN%
 
 ;(그 외의 경우)
 ;	랜덤으로 윗구 or 아랫구 중 아무거나 바꿔치기한다(すり替える)
 ELSEIF RAND:2 == 0
 	CSTR:ARG:55 = %STR_UP%・%DARK_NOUN%
 ELSE
-	CSTR:ARG:55 = %DARK_NOUN%・%STR_DOWN%
+	CSTR:ARG:55 = %DARK_NOUN:1%・%STR_DOWN%
 ENDIF
 
 CSTR:ARG:56 = %CSTR:ARG:55%
@@ -585,3 +695,148 @@ SIF EYE_COLOR == ARGS
 RETURNF EYE_COLOR
 ;*******************************************************************************************************
 
+
+;아직 미번
+;*******************************************************************************************************
+;完堕ち悪落ち時の名乗りを登録
+;*******************************************************************************************************
+;冠名(美少女戦士部分)の破壊
+@CORRUPTTION_GET_THEME, ARG
+#DIMS DARK_NOUN,2
+IF TALENT:ARG:희롱특화체질 > 0 || TALENT:ARG:촉수의포로 > 0
+	STRDATA DARK_NOUN
+		DATA 淫奴
+		DATA 賤奴
+		DATA 肉奴
+		DATA 妓奴
+		DATA 触奴
+		
+		DATA 淫畜
+		DATA 賤畜
+		DATA 肉畜
+		DATA 母畜
+		;DATA 騒畜
+		;DATA 欲畜
+
+		DATA 淫穴
+		;DATA 騒穴
+		DATA 賤穴
+		DATA 爛穴
+		DATA 臭穴
+	ENDDATA
+ELSEIF TALENT:ARG:묘상화 > 0
+	STRDATA DARK_NOUN
+		DATA 淫畜
+		DATA 賤畜
+		DATA 母畜
+		DATA 孕袋
+		DATA 産畜
+		DATA 魔母
+		DATA 孕畜
+		DATA 苗床
+	ENDDATA
+ELSE
+	STRDATA DARK_NOUN
+		DATA 触手
+		DATA 淫魅
+		DATA 蜜穴
+		DATA 性奴
+		DATA 腐穴
+		DATA 汁穴
+		DATA 媚穴
+		DATA 奴隸
+		DATA 淫毒
+	ENDDATA
+ENDIF
+STRDATA DARK_NOUN:1
+	DATA 娼婦
+	DATA 便器
+	DATA 便女
+	DATA 便所
+ENDDATA
+CSTR:ARG:5 = %DARK_NOUN%%DARK_NOUN:1%
+;変身後名乗りの破壊
+@CORRUPTTION_GET_NANORI_FINAL(ARG)
+#DIMS DARK_NANORI,2
+SELECTCASE RAND:100
+CASE 0 TO 90
+	STRDATA DARK_NANORI
+		DATA お触手様の
+		DATA 産まれた時から
+		DATA 夢はみんなの
+		DATA お触手チンポの
+		DATA 戦士失格
+		DATA あっさり堕ちた
+		DATA 女性失格
+		DATA 人間廃業
+		DATA 少女廃業
+		DATA お精子中毒
+		DATA お精子コキ捨て
+		DATA お触手ズボズボ
+		DATA ザーメン大好き
+		DATA セックス中毒
+		DATA 卑しい雌穴
+	ENDDATA
+	STRDATA DARK_NANORI:1
+		DATA 性奴隷
+		DATA 便器妻
+		DATA ハメ便女
+		DATA オナホール
+		DATA 生オナホ
+		DATA 雌オナホ
+		DATA ハメオナホ
+		DATA 肉オナホ
+		DATA オナホ穴
+		DATA 豚オナホ
+	ENDDATA
+CASEELSE
+	STRDATA DARK_NANORI
+		DATA おちんぽハメハメ
+		DATA お触手ハメハメ
+		DATA お触手オナホ
+		DATA お触手即イキ
+		DATA 淫乱ハメハメ
+		DATA 淫乱オナホ
+		DATA 淫乱ビッチ
+		DATA 生ハメビッチ
+	ENDDATA
+	STRDATA DARK_NANORI:1
+		DATA 性奴隷
+		DATA 便器妻
+		DATA 便器穴
+		DATA 肉便器
+		DATA 豚便器
+	ENDDATA
+ENDSELECT
+;本来の名乗りから変身名以降を切り出す
+CALL STRMATCH (CSTR:ARG:3,CSTR:55)
+IF RESULTS:2 != ""
+	LOCALS:1 '= RESULTS:2
+ELSE
+	LOCALS:1 '= FIRSTSETTING_CHANGINGCALL_DETAIL(ARG:0, LOCAL)
+ENDIF
+
+;改竄
+REPLACE LOCALS:1,"[！？♪]","❤"
+REPLACE RESULTS,"参上","無様に参上"
+REPLACE RESULTS,"見参","無様に見参"
+REPLACE RESULTS,"推参","無様に推参"
+REPLACE RESULTS,"準備完了","生ハメ待機"
+REPLACE RESULTS,"行く","イク"
+REPLACE RESULTS,"行き","イキ"
+REPLACE RESULTS,"殲滅開始","オナニー開始"
+REPLACE RESULTS,"負けない","イキ果てる"
+REPLACE RESULTS,"覚悟してね","早くレイプしてね"
+REPLACE RESULTS,"覚悟しなさい","早く犯して"
+REPLACE RESULTS,"始めよう","ハメハメしよう"
+REPLACE RESULTS,"始動じゃ","穴は濡れまくりじゃ"
+REPLACE RESULTS,"やるしか","孕まされるしか"
+
+LOCALS:1'=RESULTS+"❤❤"
+
+;全体を組み上げる
+LOCALS = %DARK_NANORI%%DARK_NANORI:1%❤ %PRINT_THEME(ARG)%%CSTR:ARG:0%%LOCALS:1%
+CSTR:ARG:3 '= LOCALS
+
+;改竄名乗り設定済みフラグ
+CFLAG:ARG:5 = 1

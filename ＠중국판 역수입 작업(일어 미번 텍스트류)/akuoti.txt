@@ -1,0 +1,75 @@
+完堕ち時に変身名乗りや一人称までぶっ壊れる追加機能
+(ただし表記が漢字に統一されている中国語版前提、
+	魔法少女要素をカタカナ英語主体で表現する日本語版GVTへの完全移植は困難)
+だってほら、↓この変身後冠名カタカナ英語で表すの絶対無理でしょ？漢字文化圏ならではのエロ表現力ですわこれ
+;★タイトルコール部分の上書きって形なら移植可能かも？
+
+
+
+;＠変身時コール追加ヘッダー　これも見れば意味は伝わるが翻訳困難
+;　たぶん淫語をヘッダーとして付ける感じになるかな
+
+;随机设定彻底堕落后的口号
+@CORRUPTTION_GET_TRANSCALL_FINAL, ARG
+#DIMS DARK_CALL
+
+STRDATA DARK_CALL
+	DATA 超淫蕩！
+	DATA 超淫賤！
+	DATA 超下賤！
+	DATA 小騒貨！
+	DATA 小賤貨！
+	DATA 小母狗！
+	DATA 小雛妓！
+	DATA 小肉畜！
+ENDDATA
+
+IF CFLAG:ARG:4 == 0
+	CSTR:ARG:2 = %DARK_CALL%%FIRSTSETTING_CHANGINGCALL_RANDOM()%
+	CFLAG:ARG:4 = 1
+ELSE
+	CSTR:ARG:2 = %DARK_CALL%%CSTR:ARG:2%
+ENDIF
+
+
+
+
+
+;＠一人称の破壊　これも人称の概念について翻訳の壁があると思う
+;　Ｈ触手限定で言語野ヤってくるくらいに絞ってもいいかも
+
+;随机设定彻底堕落后的自称和称呼
+@CORRUPTTION_GET_SELFCALL_FINAL, ARG
+#DIMS 自称前
+#DIMS 自称後
+#DIMS 自称形容詞
+
+STRDATA 自称形容詞
+	DATA 小
+	DATA 臭
+	DATA 爛
+ENDDATA
+
+STRDATA 自称前
+	DATA 淫
+	DATA 賤
+	DATA 肉
+	DATA 騒
+	DATA 浪
+	DATA 魅
+	DATA 媚
+	DATA 欲
+	DATA 厠
+	DATA 母
+ENDDATA
+STRDATA 自称後
+	DATA 便器
+	DATA 奴
+	DATA 妓
+	DATA 畜
+	DATA 豬
+ENDDATA
+;称呼
+CALLNAME:ARG = %自称前%%自称後%%CALLNAME:ARG%
+;自称
+CSTR:ARG:4 = %自称形容詞%%自称前%%自称後%

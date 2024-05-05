@@ -625,7 +625,7 @@ PRINTFORML 同時に胸へ強い圧迫感が襲い、%조사처리(PRINT_TRANSCA
 PRINTL 
 PRINTFORML やがて胸の張りと熱が治まり、呼吸を整えた%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 IF CFLAG:37 == 0 && CFLAG:38 > 0
-	PRINTFORML 自身の体に変化はないものの、何か異変が起きたことを感じ取った・・・
+	PRINTFORML 目に見える変化はないものの、自身の体に何か異変が起きたことを感じ取った・・・
 ELSE
 	PRINTFORM 自身の胸が一回り大きくなり、
 	IF CHARATALENT_F(TARGET,0,"빈유")
@@ -641,7 +641,7 @@ ELSE
 	ELSEIF CHARATALENT_F(TARGET,0,"거유")
 		PRINT 同年代と比べても大きめの
 	ELSE
-		PRINT 均整の取れた掌に収まるぐらいの
+		PRINT 掌に収まるぐらいの均整の取れた
 	ENDIF
 	PRINTFORML サイズになっていた・・・
 ENDIF
@@ -1723,10 +1723,10 @@ TRYCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_COM_104")
 PRINTL 
 
 ;-----------------------------------------------
-;팽유攻め
+;팽유 공격
 @MESSAGE_PRISON_COM_105
 FONTBOLD
-PRINTL 팽유攻め
+PRINTL 팽유 공격
 FONTREGULAR
 IF CONFIG_CHECK_OTHER_F(19) == 1
 	PRINTFORM 目を見張るほど大きく実った
@@ -1736,14 +1736,53 @@ ENDIF
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 胸にさらなる改造を施そうと
 PRINTFORML 촉수は針を突き刺し、大量の毒液を注入した。
 PRINTL 
-PRINTFORML しかし、%PRINT_TRANSCALLNAME(TARGET)%의 胸はすでに限界へ達しており
-PRINTFORML 拒否反応を示した%PRINT_TRANSCALLNAME(TARGET)%의 乳房は
-SIF TALENT:모유체질 == 1
-	PRINTFORM 母乳と共に
-PRINTFORML 毒液を乳首から勢いよく噴出した。
-PRINTFORML 毒液が吹き出す度に悶絶するほどの強烈な快感が走り
-PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%豊満な乳房を壮大に揺らして嬌声を上げている・・・
-PRINTW 
+
+SELECTCASE RAND(3)
+CASE 0
+	PRINTFORML しかし、%PRINT_TRANSCALLNAME(TARGET)%의 胸はすでに限界へ達しており
+	PRINTFORML 拒否反応を示した%PRINT_TRANSCALLNAME(TARGET)%의 乳房は
+	SIF TALENT:모유체질 == 1
+		PRINTFORM 母乳と共に
+	PRINTFORML 毒液を乳首から勢いよく噴出した。
+	PRINTFORML 毒液が吹き出す度に悶絶するほどの強烈な快感が走り
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%豊満な乳房を壮大に揺らして嬌声を上げている・・・
+	PRINTW 
+
+CASE 1
+	PRINTFORML 胸に刃物で刺されたような鋭い痛みが走り、%PRINT_TRANSCALLNAME(TARGET)%は必死に首を振りながら絶叫した。
+	PRINTFORML 毒液が注入されるたび、%SLANG_B(TARGET)%は肉眼で見えるほどの速度で膨張してゆく。
+	SIF TALENT:모유체질 > 0
+		PRINTFORM 貯め込まれた母乳まではっきり分かるほど
+	PRINTFORM 薄く伸びた乳房の奥で、美しい血管が不気味な色の媚毒に侵されてゆく……
+	PRINTL 
+	PRINTFORML この恐ろしく淫らな光景も、地獄のような苦痛に悶え苦しむ%PRINT_TRANSCALLNAME(TARGET)%はまったく認識できていない。
+	PRINTFORML 当然、%SLANG_B(TARGET)%が歩行に影響するほど肥大化した事実などは...
+	TALENT:TARGET:팽유개조치 += RAND(10,30)
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)% の胸は「超乳」の域を超え、今や前例のない大きさに達している...
+	PRINTW
+
+CASE 2
+	PRINTFORML 胸の激痛は注がれる媚毒によって極度の快感へと変わり、
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の乳房はゆっくりと、しかし確実に膨張してゆく。
+	PRINT 体内に注入される
+	IF TALENT:모유체질 == 1
+		PRINTFORML 媚毒は引き換えに%PRINT_TRANSCALLNAME(TARGET)%の母乳を強制噴出させながら、
+		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%の全身に津波のようなオーガズムを叩き付け続ける。
+	ELSE
+		PRINTFORML 媚毒が、%PRINT_TRANSCALLNAME(TARGET)%の全身に津波のようなオーガズムを叩き付け続ける。
+	ENDIF
+	PRINTL 
+	PRINTFORML 膨れ上がった乳房のせいで、%PRINT_TRANSCALLNAME(TARGET)%の身体はまともに動かせる状態ではない。
+	PRINTFORML 今や%PRINT_TRANSCALLNAME(TARGET)%は体をでたらめな方向にひねり、
+	PRINTFORML 情けなく大声で嬌声を上げるだけの存在だった...
+	TALENT:TARGET:팽유개조치 += RAND(20,40)
+	PRINTL 
+	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)% の胸は「超乳」の域を超え、今や前例のない大きさに達している...
+	PRINTW
+ENDSELECT
+
+
 ;구상
 TRYCALLFORM KOJO_ROOT(CFLAG:6, "PRISON_COM_105")
 PRINTL 

@@ -1,12 +1,12 @@
 ﻿;**********************************************************
-;유폐コマンド
-;팽유화 限界の場合は팽유攻め
+;幽閉コマンド
+;膨乳化 限界の場合は膨乳攻め
 ;**********************************************************
 ;四肢離断
 @INTIMIDATION_RYONA_AMPUTEE,TARGET
 PRINTFORML 毫無憐憫、一支針剤注入%PRINT_TRANSCALLNAME(TARGET)%的身体。
 PRINTFORML 很快、伴随着帯有甜蜜気息的喘息、%PRINT_TRANSCALLNAME(TARGET)%的身体更大幅度地扭動起来。
-PRINTW 顕然是발정了。
+PRINTW 顕然是発情了。
 PRINTL 
 SETCOLOR 230,0,0
 FONTBOLD
@@ -47,8 +47,8 @@ PRINTL
 PRINTFORMW 残酷的男人简单地用电锯对准右肩的X标记挥下、
 PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%仰起頭発出野獣一般的嚎叫、
 PRINTFORML 整條右手臂齊根离开了身体、扑的一声、沉重地落到地板上、
-PRINTFORML 身体激烈地抽搐著、%PRINT_TRANSCALLNAME(TARGET)%仰起頭噴출혈沫、
-PRINTFORML 断口爆출혈箭、幾乎濺上天花板、
+PRINTFORML 身体激烈地抽搐著、%PRINT_TRANSCALLNAME(TARGET)%仰起頭噴出血沫、
+PRINTFORML 断口爆出血箭、幾乎濺上天花板、
 PRINTFORMW 但是旁邊的助手噴上某種藥物之後、很快就不再流血……
 PRINTL 
 FONTBOLD
@@ -99,7 +99,7 @@ ENDDATA
 PRINTL 
 PRINTFORML 兩條美麗的手臂已經離身體而去，絕望的淚水佈滿臉頰、
 PRINTFORML 全身大汗、头发乱甩，各種體液和吐瀉物四处飞溅。
-SIF TALENT:모유체질 > 0 
+SIF TALENT:母乳体質 > 0 
 	PRINTL 奶水像是決堤般從乳頭中湧出，甩得到处都是。
 PRINTFORML 失禁的下身挤出尿水和糞便、弄得一塌糊涂。
 PRINTFORML 但是在這極度的痛苦中
@@ -129,8 +129,8 @@ PRINTDATAW
 	DATAFORM 咯嘔咯呀啊啊啊啊啊啊！　嘎呀嘎啊！　嗯咕呀啊啊啊啊啊啊啊！」
 ENDDATA
 PRINTL 
-PRINTFORML 在迷人的大腿被活生生地鋸下的공포過程中、
-PRINTFORML 利用촉수体液製造的春薬和止血剤依然同時発揮着作用
+PRINTFORML 在迷人的大腿被活生生地鋸下的恐怖過程中、
+PRINTFORML 利用触手体液製造的春薬和止血剤依然同時発揮着作用
 PRINTFORML 譲%PRINT_TRANSCALLNAME(TARGET)%在天国与地獄之間徘徊、極度的快感中無法思考、極度的痛苦中無法死去
 PRINTW 甚至、可怖的創口已経開始了収縮癒合……
 PRINTL 
@@ -152,7 +152,7 @@ PRINTDATAW
 ENDDATA
 PRINTL 
 PRINTFORML 雙臂與雙腿都被卸下的%PRINT_TRANSCALLNAME(TARGET)%
-PRINTFORML 全身沾滿自己的血、嘔吐物、\@TALENT:모유체질 ? 乳汁、 # \@淫汁和尿水、奄奄一息、氣若游絲、
+PRINTFORML 全身沾滿自己的血、嘔吐物、\@TALENT:母乳体質 ? 乳汁、 # \@淫汁和尿水、奄奄一息、氣若游絲、
 PRINTFORM 「死……
 PRINTDATA
 	DATAFORM 譲%SELF_CALL(TARGET)%死……求求你們
@@ -166,154 +166,154 @@ PRINTFORML 男人們開始継続対%PRINT_TRANSCALLNAME(TARGET)%進行身体改�
 PRINTFORML 求死不能、連翻身都已経做不到、%PRINT_TRANSCALLNAME(TARGET)%只能狂乱地扭動哭喊
 PRINTFORMW 無力抵御自己身体上正在発生的獣行……
 PRINTL 
-TALENT:TARGET:사지결손 = 1
-;为防止冲突，以下取消一切임신状态
+TALENT:TARGET:四肢欠損 = 1
+;为防止冲突，以下取消一切妊娠状态
 CFLAG:TARGET:221 = 0
 CFLAG:TARGET:222 = 0
 CFLAG:TARGET:227 = 0
 CFLAG:TARGET:228 = 0
 CFLAG:TARGET:232 = 0
 CFLAG:TARGET:233 = 0
-TALENT:TARGET:임신 = 0
+TALENT:TARGET:妊娠 = 0
 CALL FORCE_BOUNYU
 SIF TALENT:TARGET:陰蒂穿環 < 5 || TALENT:TARGET:乳頭穿環 < 5 
 	CALL FORCE_PIERCING
 
 
-;팽유相关计算部分
+;膨乳相关计算部分
 @FORCE_BOUNYU
 #DIM CCOUNT
 VARSET LOCAL
 TFLAG:10 = 105
 
 ;取得する珠
-;LOCAL:0 쾌Ｃ
-;LOCAL:1 쾌Ｖ
-;LOCAL:2 쾌Ａ
-;LOCAL:3 쾌Ｂ
-;LOCAL:4 윤활 윤활は未使用
-;LOCAL:5 공순
-;LOCAL:6 습득
-;LOCAL:7 욕정
-;LOCAL:8 굴복
-;LOCAL:9 치정
-;LOCAL:10 고통
-;LOCAL:11 공포
+;LOCAL:0 快Ｃ
+;LOCAL:1 快Ｖ
+;LOCAL:2 快Ａ
+;LOCAL:3 快Ｂ
+;LOCAL:4 潤滑 潤滑は未使用
+;LOCAL:5 恭順
+;LOCAL:6 習得
+;LOCAL:7 欲情
+;LOCAL:8 屈服
+;LOCAL:9 恥情
+;LOCAL:10 苦痛
+;LOCAL:11 恐怖
 
 ;経験数の上量値記録用
 ;LOCAL:120 V経験
 ;LOCAL:121 A経験
-;LOCAL:123 정액경험
-;LOCAL:124 입交経験
-;LOCAL:130 노출쾌락경험,
-;LOCAL:131 봉사쾌락경험,
-;LOCAL:132 고통쾌락경험,
-;LOCAL:140 자위경험,
-;LOCAL:150 이상경험
-;LOCAL:151 Ｖ확장경험
-;LOCAL:152 Ａ확장경험
-;LOCAL:153 사정경험
-;LOCAL:154 모유경험
-;LOCAL:155 방뇨경험
-;LOCAL:156 기생경험
-;LOCAL:157 출산경험
+;LOCAL:123 精液経験
+;LOCAL:124 口交経験
+;LOCAL:130 露出快楽経験,
+;LOCAL:131 奉仕快楽経験,
+;LOCAL:132 苦痛快楽経験,
+;LOCAL:140 自慰経験,
+;LOCAL:150 異常経験
+;LOCAL:151 Ｖ拡張経験
+;LOCAL:152 Ａ拡張経験
+;LOCAL:153 射精経験
+;LOCAL:154 噴乳経験
+;LOCAL:155 放尿経験
+;LOCAL:156 寄生経験
+;LOCAL:157 出産経験
 
 ;汚染度
 CFLAG:30 += 10 + RAND:5
 
-;팽유判定
-IF TALENT:거유 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:거유 < 2 || TALENT:거유 + TALENT:変身時胸大小変動 < 2))
-	;変身時縮乳する場合は変身時팽유を優先
+;膨乳判定
+IF TALENT:巨乳 < 5 || (FILTER_CHECK_F(19) == 1 && (TALENT:巨乳 < 2 || TALENT:巨乳 + TALENT:変身時胸大小変動 < 2))
+	;変身時縮乳する場合は変身時膨乳を優先
 	IF TALENT:変身時胸大小変動 < 0
 		TALENT:変身時胸大小変動 += 1
 		CFLAG:38 += 1
 	ELSE
 		;変身時が限界の場合は変身時胸サイズ維持
-		IF TALENT:거유 + TALENT:変身時胸大小変動 >= 5 || (FILTER_CHECK_F(19) == 1 && TALENT:거유 + TALENT:変身時胸大小変動 >= 2)
+		IF TALENT:巨乳 + TALENT:変身時胸大小変動 >= 5 || (FILTER_CHECK_F(19) == 1 && TALENT:巨乳 + TALENT:変身時胸大小変動 >= 2)
 			TALENT:変身時胸大小変動 -= 1
 			CFLAG:38 -= 1
 		ENDIF
-		;팽유処理
-		IF TALENT:거유 - TALENT:빈유 < 0
-			TALENT:빈유 -= 1
-		ELSEIF TALENT:사지결손 == 1
-			TALENT:빈유 = 0
-			TALENT:거유 = 5
+		;膨乳処理
+		IF TALENT:巨乳 - TALENT:貧乳 < 0
+			TALENT:貧乳 -= 1
+		ELSEIF TALENT:四肢欠損 == 1
+			TALENT:貧乳 = 0
+			TALENT:巨乳 = 5
 		ELSE
-			TALENT:거유 += 1
+			TALENT:巨乳 += 1
 		ENDIF
 		CFLAG:37 += 1
 	ENDIF
-	;프로필에 반영
+	;プロフィールに反映
 	CALL SET_PROFILE, TARGET
 
-	;공포　固定で
+	;恐怖　固定で
 	LOCAL:11 = 800
 
-	;지문: 팽유화
+	;地の文：膨乳化
 	CALL MESSAGE_FORCE_BOUNYU
 
 	
 ELSE
-	;쾌Ｂ
-	IF ABL:Ｂ감각 == 0
+	;快B
+	IF ABL:Ｂ感覚 == 0
 		LOCAL:3 = 100
-	ELSEIF ABL:Ｂ감각 == 1
+	ELSEIF ABL:Ｂ感覚 == 1
 		LOCAL:3 = 150
-	ELSEIF ABL:Ｂ감각 == 2
+	ELSEIF ABL:Ｂ感覚 == 2
 		LOCAL:3 = 200
-	ELSEIF ABL:Ｂ감각 == 3
+	ELSEIF ABL:Ｂ感覚 == 3
 		LOCAL:3 = 600
-	ELSEIF ABL:Ｂ감각 == 4
+	ELSEIF ABL:Ｂ感覚 == 4
 		LOCAL:3 = 1000
-	ELSEIF ABL:Ｂ감각 >= 5
+	ELSEIF ABL:Ｂ感覚 >= 5
 		LOCAL:3 = 1500
 	ENDIF
 
-	;메인 부위 절정 예정의 예측
+	;メイン部位絶頂見込みの予測
 	CALL PALAM_VABCestimate(LOCAL,3,-1)
 
 
 	
-	;습득
-	IF ABL:봉사정신 == 0
+	;習得
+	IF ABL:奉仕精神 == 0
 		LOCAL:6 = 10
-	ELSEIF ABL:봉사정신 == 1
+	ELSEIF ABL:奉仕精神 == 1
 		LOCAL:6 = 25
-	ELSEIF ABL:봉사정신 == 2
+	ELSEIF ABL:奉仕精神 == 2
 		LOCAL:6 = 50
-	ELSEIF ABL:봉사정신 == 3
+	ELSEIF ABL:奉仕精神 == 3
 		LOCAL:6 = 80
-	ELSEIF ABL:봉사정신 == 4
+	ELSEIF ABL:奉仕精神 == 4
 		LOCAL:6 = 125
-	ELSEIF ABL:봉사정신 >= 5
+	ELSEIF ABL:奉仕精神 >= 5
 		LOCAL:6 = 180
 	ENDIF
 
-	;지문: 팽유失败
+	;地の文：膨乳失败
 	CALL MESSAGE_FORCE_BOUNYU_FAILED
 	
 ENDIF
 
-;습득 기본값
+;習得基本値
 LOCAL:6 += 20
 
-;욕정 기본값
+;欲情基本値
 LOCAL:7 += 100
 
-;굴복 기본값
+;屈服基本値
 LOCAL:8 += 200
 
-;치정 기본값
+;恥情基本値
 LOCAL:9 += 200
 
-;고통 기본값
+;苦痛基本値
 LOCAL:10 += 0
 
-;공포 기본값
+;恐怖基本値
 LOCAL:11 += 50
 
-;유폐中パラメータ変動共通処理へ
+;幽閉中パラメータ変動共通処理へ
 CALL COMMON_PRISON, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11
 
 ;経験数の増加
@@ -339,7 +339,7 @@ PRINTL
 CALL _ABLUP, 1
 
 
-;팽유成功
+;膨乳成功
 @MESSAGE_FORCE_BOUNYU
 FONTBOLD
 PRINTL 猟奇改造·乳房膨大
@@ -348,11 +348,11 @@ PRINTL
 PRINTFORML 地下診所的医生用両根極細的输液針頭湊近了%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_B(TARGET)%。
 PRINTFORML 輸液軟管連接着的輸液袋中是琥珀色的可疑液体
 PRINTW 
-IF TALENT:사지결손 == 1
+IF TALENT:四肢欠損 == 1
 	IF CFLAG:37 > 1
-		PRINTFORML 절망的%PRINT_TRANSCALLNAME(TARGET)%想起了以前在自己的%SLANG_B(TARGET)%上発生的事情、
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
-			PRINTFORML 儘管処於極度的驚恐与痛苦之中、身体却自行開始발정
+		PRINTFORML 絶望的%PRINT_TRANSCALLNAME(TARGET)%想起了以前在自己的%SLANG_B(TARGET)%上発生的事情、
+		IF (MESSAGE_BRANCH_F(TARGET) & 堕落) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
+			PRINTFORML 儘管処於極度的驚恐与痛苦之中、身体却自行開始発情
 		ELSE
 			PRINTFORML 無助地扭動着身体、但根本什麼也做不到。
 		ENDIF
@@ -361,7 +361,7 @@ IF TALENT:사지결손 == 1
 		PRINTFORML 医生対準了%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_N(TARGET)%根部、
 		PRINTFORML 慢慢地把針刺入並開始注入薬液。
 		PRINTFORML 厳重的幻痛之中、被針刺入的軽微疼痛和被注入的違和感微不足道、
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
+		IF (MESSAGE_BRANCH_F(TARGET) & 堕落) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
 			PRINTFORML 身体飽経痛苦的%PRINT_TRANSCALLNAME(TARGET)%拋下一切渇求着性快感。
 		ELSE
 			PRINTFORML 已経不在乎薬液効果的%PRINT_TRANSCALLNAME(TARGET)%只是微微打着寒戦。
@@ -371,8 +371,8 @@ IF TALENT:사지결손 == 1
 ELSE
 	IF CFLAG:37 > 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%想起了以前在自己的%SLANG_B(TARGET)%上発生的事情、
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
-			PRINTFORML 為了讓身体変得更加음란而高興地用力挺起了胸部。
+		IF (MESSAGE_BRANCH_F(TARGET) & 堕落) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
+			PRINTFORML 為了讓身体変得更加淫乱而高興地用力挺起了胸部。
 		ELSE
 			PRINTFORML 為了防止身体状况進一歩悪化而扭動着身体、但只是讓拘束力変得更強了而已。
 		ENDIF
@@ -381,7 +381,7 @@ ELSE
 		PRINTFORML 医生対準了%PRINT_TRANSCALLNAME(TARGET)%的%SLANG_N(TARGET)%根部、
 		PRINTFORML 慢慢地把針刺入并開始注入薬液。
 		PRINTFORML 除了被針刺入的軽微疼痛和被注入的違和感之外没有感覚到其他刺激、
-		IF (MESSAGE_BRANCH_F(TARGET) & 타락) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
+		IF (MESSAGE_BRANCH_F(TARGET) & 堕落) || (MESSAGE_BRANCH_F(TARGET) & 快楽蕩婦)
 			PRINTFORML 満懷着対快感的期待的%PRINT_TRANSCALLNAME(TARGET)%、露出了不够満足的表情。
 		ELSE
 			PRINTFORML 不知道薬液効果的%PRINT_TRANSCALLNAME(TARGET)%陷入了恐惧。
@@ -401,17 +401,17 @@ ENDIF
 		PRINTFORML 虽然表面上身体没有発生什麼変化、但感覚到肯定有哪里発生了異変・・・
 	ELSE
 		PRINTFORM 発现自己的胸部大了一圈、変成了
-		IF CHARATALENT_F(TARGET,0,"빈유")
+		IF CHARATALENT_F(TARGET,0,"貧乳")
 			PRINT 小巧玲珑的
-		ELSEIF CHARATALENT_F(TARGET,0,"기유")
+		ELSEIF CHARATALENT_F(TARGET,0,"奇乳")
 			PRINT 肥大化到极限的规格外的
-		ELSEIF CHARATALENT_F(TARGET,0,"마유")
+		ELSEIF CHARATALENT_F(TARGET,0,"魔乳")
 			PRINT 和身体完全不相称的
-		ELSEIF CHARATALENT_F(TARGET,0,"초유")
+		ELSEIF CHARATALENT_F(TARGET,0,"超乳")
 			PRINT 沉甸甸的像在主张着存在感的
-		ELSEIF CHARATALENT_F(TARGET,0,"폭유")
+		ELSEIF CHARATALENT_F(TARGET,0,"爆乳")
 			PRINT 充満魅力能吸引周囲的人的目光的
-		ELSEIF CHARATALENT_F(TARGET,0,"거유")
+		ELSEIF CHARATALENT_F(TARGET,0,"巨乳")
 			PRINT 和同年龄的人相比要稍大的
 		ELSE
 		PRINT 匀称的能一手掌握的
@@ -422,37 +422,37 @@ ENDIF
 	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%因為地下診所的改造
 	IF CFLAG:37 == 0 && CFLAG:38 > 0
 		PRINTFORM 変身後的胸部变為
-		IF CHARATALENT_F(TARGET,1,"빈유")
-			PRINT 빈유
-		ELSEIF CHARATALENT_F(TARGET,1,"기유")
-			PRINT 기유
-		ELSEIF CHARATALENT_F(TARGET,1,"마유")
-			PRINT 마유
-		ELSEIF CHARATALENT_F(TARGET,1,"초유")
-			PRINT 초유
-		ELSEIF CHARATALENT_F(TARGET,1,"폭유")
-			PRINT 폭유
-		ELSEIF CHARATALENT_F(TARGET,1,"거유")
-			PRINT 거유
+		IF CHARATALENT_F(TARGET,1,"貧乳")
+			PRINT 貧乳
+		ELSEIF CHARATALENT_F(TARGET,1,"奇乳")
+			PRINT 奇乳
+		ELSEIF CHARATALENT_F(TARGET,1,"魔乳")
+			PRINT 魔乳
+		ELSEIF CHARATALENT_F(TARGET,1,"超乳")
+			PRINT 超乳
+		ELSEIF CHARATALENT_F(TARGET,1,"爆乳")
+			PRINT 爆乳
+		ELSEIF CHARATALENT_F(TARGET,1,"巨乳")
+			PRINT 巨乳
 		ELSE
-			PRINT 보유
+			PRINT 普乳
 		ENDIF
 	ELSE
 		PRINT 変成
-		IF CHARATALENT_F(TARGET,0,"빈유")
-			PRINT 빈유
-		ELSEIF CHARATALENT_F(TARGET,0,"기유")
-			PRINT 기유
-		ELSEIF CHARATALENT_F(TARGET,0,"마유")
-			PRINT 마유
-		ELSEIF CHARATALENT_F(TARGET,0,"초유")
-			PRINT 초유
-		ELSEIF CHARATALENT_F(TARGET,0,"폭유")
-			PRINT 폭유
-		ELSEIF CHARATALENT_F(TARGET,0,"거유")
-			PRINT 거유
+		IF CHARATALENT_F(TARGET,0,"貧乳")
+			PRINT 貧乳
+		ELSEIF CHARATALENT_F(TARGET,0,"奇乳")
+			PRINT 奇乳
+		ELSEIF CHARATALENT_F(TARGET,0,"魔乳")
+			PRINT 魔乳
+		ELSEIF CHARATALENT_F(TARGET,0,"超乳")
+			PRINT 超乳
+		ELSEIF CHARATALENT_F(TARGET,0,"爆乳")
+			PRINT 爆乳
+		ELSEIF CHARATALENT_F(TARGET,0,"巨乳")
+			PRINT 巨乳
 		ELSE
-			PRINT 보유
+			PRINT 普乳
 		ENDIF
 	ENDIF
 	PRINTFORML 了
@@ -468,12 +468,12 @@ IF CONFIG_CHECK_OTHER_F(19) == 1
 ELSE
 	PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%的巨大到幾乎令人害怕的
 ENDIF
-PRINTFORML 가슴部被男人們進一歩改造着
+PRINTFORML 胸部被男人們進一歩改造着
 PRINTFORMW 地下診所的医生把針頭粗暴地刺入%SLANG_N(TARGET)%、並注入了大量的薬剤。
 PRINTL 
 PRINTFORML 但是、%PRINT_TRANSCALLNAME(TARGET)%的胸部已経大到了極限
 PRINTFORML 出現了排斥反応的%PRINT_TRANSCALLNAME(TARGET)%的乳房把
-IF TALENT:모유체질 == 1
+IF TALENT:母乳体質 == 1
 	PRINTFORM 母乳連同薬剤一起
 ELSE
 	PRINTFORM 薬剤
@@ -546,8 +546,8 @@ PRINTL
 	ENDIF
 	PRINTL 
 	;CALL MESSAGE_SEX_ECSTASY_B_HI
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(5,25)
 	PRINTFORMW 然後
 	IF TALENT:TARGET:陰蒂穿環 < 1 
 		PRINTFORM 「痛、好痛、好痛啊啊啊啊啊！！
@@ -593,8 +593,8 @@ PRINTL
 		PRINTFORMW 與以往無法相比的痛苦風暴席捲著%SLANG_C(TARGET)%、
 	ENDIF
 	;CALL MESSAGE_SEX_ECSTASY_C_HI
-	EXP:TARGET:절정경험 += RAND(35,60)
-	EXP:TARGET:고통쾌락경험 += RAND(5,25)
+	EXP:TARGET:絶頂経験 += RAND(35,60)
+	EXP:TARGET:苦痛快楽経験 += RAND(5,25)
 	PRINTL 
 	PRINTFORML 男人們用鎖鏈將乳頭罩和陰蒂罩連接在一起、並掛上了沉重的砝碼、
 	PRINTFORMW 隨後、露出獰笑的男人輕輕將砝碼向天拋起——————
