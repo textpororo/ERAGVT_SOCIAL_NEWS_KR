@@ -1,0 +1,2242 @@
+﻿;**************************************************
+;전투의 것
+;**************************************************
+;세뇌/악에 떨어진 캐릭터의 구상색
+;----------------------------------------------------------
+@KOJO_111_OTHER_COLOR
+SETCOLOR 92,169,255
+
+;세뇌/악에 떨어진 캐릭터의 등장시
+;----------------------------------------------------------
+@KOJO_111_OTHER_ENTRY
+;세뇌 상태
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 세뇌된 상태인 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자는 공허하다
+	PRINTFORMDW 입에서 이따끔 촉수의 체액이 흘러나오는 그 모습에는 어떤 의지도 보이지 않는다
+ELSE
+	PRINTFORML 『후후……아직도 저항하고 있는거야………?』
+	PRINTFORML 『나쁜 아이구나……어쩔 수 없겠네, 내가 암컷의 기쁨을 가르쳐 줘야지』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 자신이 하복부에 새겨진 음문을 행복한 듯이 쓰다듬었다
+	PRINTFORMDL 그것과 동시에 %PRINT_TRANSCALLNAME(FLAG:111)%의 몸 위를 불길한 분위기를 띄는 마법소녀의 의상이 뒤덮기 시작헀다
+	PRINTFORMDW 자세히 보면 그것은 평범한 의상이 아니다. 마법소녀 때의 의상을 겉모습만 흉내낸, 촉수로 만들어진 옷이였다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터를 변신 강제 해제시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_TRANSRELEASE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 「우………변신……나빠…………」
+ELSE
+	IF ISFEMALE()
+		PRINTFORML 『후후…… 변신이 풀려버렸는데 어떻게…… 헤에?』
+		PRINTFORML 『원래 모습이 남자라…… 남자가 여자아이로 변신해서 싸우는거 부끄럽지 않아?』
+		PRINTFORML 『차라리 그 고추를 떼 버리고 진짜 여자아이가 돼 버리는건 어때? 후후』
+		PRINTW
+		PRINTFORMDL 도발하는 %PRINT_TRANSCALLNAME(FLAG:111)%의 목소리는 어쩐지 자조하는 것 같았다
+	ELSE
+		PRINTFORML 『저런, 변신이 풀려버렸구나』
+		PRINTFORML 『어때? 이 많은 촉수들 앞에서 아무런 저항도 할 수 없게된 기분은?』
+		PRINTW
+		PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% %PRINT_TRANSCALLNAME(TARGET)%의 변신이 풀린 것을 보고 만족스러운듯 입꼬리를 올렸다
+	ENDIF
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 철수 되어 버렸다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_TETTAI_SUCCESS
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『아………………』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 도주했음에도 불구하고 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 아무런 반응을 하지 않고 그 자리에 서있엇다
+ELSE
+	PRINTFORML 『어머, 꼬리를 말고 도망치게?』
+	PRINTFORML 『음~…… 그래, 마음대로 하렴.』
+	PRINTFORML 『대신 이 주변에 귀여운 아이들을……좀 데려갈 테니까』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 철수하는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 쫓을 생각이 전혀 없어 보였다
+	PRINTFORMDL 대신 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 손짓으로 부하 촉수들에게 명령을 내리기 시작했다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 철수를 막았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_TETTAI_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『못………가………』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 도주하려는 낌새를 눈치챈 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 갑자기 빠르게 움직여 퇴로를 막았다
+ELSE
+	PRINTFORML 『에이, 귀여운 여자아이를 바람 맞히기야?』
+	PRINTFORML 『그럼 인기 없다구? 후후』
+	PRINTFORML 『우음……, 쪽……… 푸하아』
+	PRINTFORML 『어라? 뭘 그렇게 싫어하고 그래? 나 상처받았을지도』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 후퇴하려는 %PRINT_TRANSCALLNAME(TARGET)%의 앞을 가로막고 입맞춤 했다
+	PRINTFORMDL 깜짝 놀란 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"를")% 뿌리치며 한 걸음 물러섰다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 공격을 크리티컬 히트 되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_ATTACK_CRITICAL_HIT
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『윽………………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『꺄악~! 귀여운 여자아이에게 손찌검을 하다니, 너무해~』
+		CASE 1
+			PRINTFORML 『어머나, 무서워라. 살살하자구, 응?』
+		CASE 2
+			PRINTFORML 『싫어엉~ 나 죽는다~』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 분명히 치명상일 공격을 장난스럽게 받아 넘기는 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"를")% 보고 의문을 품었다
+	PRINTFORMDL 어쩌면 제대로 아픔을 느끼지 못하는 저런 반응이야 말로 %PRINT_TRANSCALLNAME(FLAG:111)%의 비정상적인 상태를 보여주는 것일지도……
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 공격을 통상 히트 되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_ATTACK_HIT
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『아극………………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『후후, 여자아이에게 폭력을 쓰면 안. 된. 다?』
+		CASE 1
+			PRINTFORML 『아이 참, 인기가 좋아도 탈이라니까』
+		CASE 2
+			PRINTFORML 『흐응, 귀여운것도 죄인가봐』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL 분명히 공격이 적중한 손맛은 있었지만 %PRINT_TRANSCALLNAME(FLAG:111)%의 모습은 아무렇지도 않았다
+	PRINTFORMDL 저 모습이야 말로 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")% 이상해졌다는 것을 보여주는 것이리라
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 공격을 회피했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_ATTACK_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『우……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『그게 다야?』
+		CASE 1
+			PRINTFORML 『아하하, 스치지도 않았다구?』
+		CASE 2
+			PRINTFORML 『좀 더 열심히 해 봐』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 공격을 빗맞춘 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 비웃고 있다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 방어를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_DEFENSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『막을 수 있으면 막아 봐』
+		CASE 1
+			PRINTFORML 『아하, 아하하! 좀 더 웅크리렴!』
+		CASE 2
+			PRINTFORML 『그 정도로 내 공격을 막을 수 있을까?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 방어할 자세를 잡는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 보고 입꼬리를 올렸다
+	PRINTFORMDL %PRINT_TRANSCALLNAME(FLAG:111)%의 얼굴에는 가학에서 쾌감을 얻고 있는 표정이 떠오르고 있었다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 거리를 취하는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_TAKEAWAY
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『도망칠거야? 그렇겐 안 돼』
+		CASE 1
+			PRINTFORML 『내가 그렇게 싫은거야?』
+		CASE 2
+			PRINTFORML 『떨어진다고 해서 내가 보고만 있을줄 알고?』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 아무것도 하지 않는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_NOACTION
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『그래, 그거면 돼』
+			PRINTFORML 『함께 떨어지자……』
+		CASE 1
+			PRINTFORML 『후후후……』
+			PRINTFORML 『무슨 생각인진 모르겠지만……』
+			PRINTFORML 『나를 유혹하는 거라면 넘어가 줄게』
+		CASE 2
+			PRINTFORML 『어머, 차려진 밥상이네?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %PRINT_TRANSCALLNAME(TARGET)%의 움직임이 멈추자 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 요염하게 웃으며 천천히 %PRINT_TRANSCALLNAME(TARGET)%의 몸을 쓰다듬었다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 풀어 버려져 버렸다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_HURIHODOKU_SUCCESS
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………!?』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『이런, 바람 맞아 버렸네~』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 혀를 살짝 내밀고 어깨를 으쓱했다
+		CASE 1
+			PRINTFORML 『너무해, 내가 싫어진거야?』
+			PRINTFORML 『우……흑, 히끅……』
+			PRINTFORML 『역시 나 같은건…………』
+			PRINTW
+			PRINTFORMDL 뜬금없이 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 울음을 터트렸다
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터가 풀어 버리는 것을 막았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_HURIHODOKU_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『우으……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『안 돼, 안놓아줄거야♡』
+			PRINTFORML 『이렇게 사랑스러운 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 놓아줄리가 없잖아?』
+		CASE 1
+			PRINTFORML 『풀어버릴 수 있을줄 알았어?』
+			PRINTFORML 『유감이야☆ 방심할 리가 없잖아』
+		CASE 2
+			PRINTFORML 『내가 그렇게 싫은거야……?』
+			PRINTFORML 『솔직히 조금 충격일지도……』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의날뛴다를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_ABARERU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『아……………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아이참, 격렬하기는…♡』
+			PRINTFORML 『우후후, 기분 좋아지잖아』
+		CASE 1
+			PRINTFORML 『백날 발버둥 쳐도 놓아줄 생각은 없답니다~』
+		CASE 2
+			PRINTFORML 『아……!』
+			PRINTFORML 『후후, 후후후……』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL 분명히 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 날뛰면서 %PRINT_TRANSCALLNAME(FLAG:111)%도 다쳤을텐데
+	PRINTFORMDL 고통의 기색은 커녕 흥분하고 있었다……
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터가 참는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_TAERU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『참지 않아도 돼』
+			PRINTFORML 『자신의 몸에 솔직해 지는거야』
+		CASE 1
+			PRINTFORML 『언제까지 참을 수 있을까?』
+		CASE 2
+			PRINTFORML 『아하핫, 참는다……참는다인가?』
+			PRINTFORML 『곧 무너지고 말걸?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 가학적인 웃음을 띄우며 한층 더 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 몰아붙이기 시작했다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 하는대로를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_NASUGAMAMA
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『그래, 몸에서 힘을 빼』
+			PRINTFORML 『나한테 맡겨, 기분 좋게 해줄게……』
+		CASE 1
+			PRINTFORML 『좀 더 기분좋은거 해줬으면 하는거지?』
+			PRINTFORML 『좋아, 리퀘스트는 받았어』
+		CASE 2
+			PRINTFORML 『응, 촉수를 느껴보는거야……』
+			PRINTFORML 『곧 모든게 끝날테니까』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 저항이 거의 없어진 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 보고 빙긋 웃었다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 받아들이는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_UKEIRERU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『맞아, 쾌락도 촉수도 피해야할 것이 아니야』
+			PRINTFORML 『받아들여……편해질테니까』
+		CASE 1
+			PRINTFORML 『이제야 촉수의 좋은 점을 깨달은 것 같네』
+			PRINTFORML 『나 기뻐, 동료가 생긴 것 같아』
+		CASE 2
+			PRINTFORML 『거부하지 않고 받아들이면 더 기분 좋다구?』
+			PRINTFORML 『그래, 그렇게……』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 봉사하는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_HOUSI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『착한 아이구나, %PRINT_TRANSCALLNAME(TARGET)%?』
+			PRINTFORML 『좋아, 나도 상을 줘야겠지?』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 필사적으로 봉사하기 시작한 %PRINT_TRANSCALLNAME(TARGET)%에게 입맞춤 했다
+		CASE 1
+			PRINTFORML 『후후…… 그렇게 하면 간지럽잖아~』
+			PRINTFORML 『에잇! 에잇! 어때?』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 필사적으로 봉사하기 시작한 %PRINT_TRANSCALLNAME(TARGET)%에게 돌려주듯 몸을 애무하기 시작했다
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의Ｖ삽입 방어를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_ANTI_V
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『으우……………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『꼴사납게 발버둥 칠거야?』
+			PRINTFORML 『보기 흉하다구?』
+		CASE 1
+			PRINTFORML 『어차피 촉수에게 능욕당할 거라면…… 내 손으로 ……』
+			PRINTFORML 『그러니까 저항하지 마』
+		CASE 2
+			PRINTFORML 『음……아직 기분 좋은게 부족한 모양이구나』
+			PRINTFORML 『어쩔 수 없네』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 노려보는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_NIRAMI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………으』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『그런 눈으로 보면 흥분해 버려~』
+			PRINTFORML 『책. 임. 져.』
+		CASE 1
+			PRINTFORML 『흐응, 눈매가 사나운걸?』
+			PRINTFORML 『내가 그렇게 미워?』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 매도하는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_BATOU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『매도당하니까 어쩐지 기분 좋아지네』
+			PRINTFORML 『좀 더, 좀 더 나를 매도해 줘……』
+			PRINTW
+			PRINTFORMDL %PRINT_TRANSCALLNAME(TARGET)%의 매도에 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 황홀한 듯이 얼굴을 붉혔다
+		CASE 1
+			PRINTFORML 『응, 그래』
+			PRINTFORML 『나는 촉수에 굴복한 꼴사나운 암캐야……』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 자조하듯이 중얼거리고 있다
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 반항하는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_RESISTANCE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………!?』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『나는 반항적인 아이도 정말 좋아』
+			PRINTFORML 『좀 더 발버둥 쳐 보라구?』
+		CASE 1
+			PRINTFORML 『기분좋게 해준다니까?』
+			PRINTFORML 『아하하, 그렇게 싫어하지 않아도 되는데』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 설득하는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_PERSUADE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『으……』
+			PRINTFORML 『그만, 그만, 그만해!!』
+			PRINTFORML 『머리가, 머리가 아파아앗!!』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 머리를 감싸고 고개를 흔들고 있다
+		CASE 1
+			PRINTFORML 『아하하, 미안해』
+			PRINTFORML 『나는 이미 늦었어……』
+			PRINTFORML 『돌아갈 수 없다고……』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 울상이 된 얼굴로 고개를 숙였다
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 자위 공격을 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_SEX_ATTACK100
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………?!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아……♡』
+			PRINTFORML 『거기, 거기가 좋아앗』
+		CASE 1
+			PRINTFORML 『후아아……』
+			PRINTFORML 『뭘 좀 아는구나?』
+		CASE 2
+			PRINTFORML 『후후, 이번엔 내 차례야……』
+			PRINTFORML 『같이 가버리자』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 페라 공격을 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_SEX_ATTACK101
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『!!!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아……♡』
+			PRINTFORML 『싼닷, 쌀 것 같아앗』
+		CASE 1
+			PRINTFORML 『오오……이건 또……』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 그런 얼굴, 너무 야해…』
+		CASE 2
+			PRINTFORML 『착하다 착해……』
+			PRINTFORML 『그래, 입은 다물지 말고……』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 풋잡 공격을 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_SEX_ATTACK102
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『?!?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『우후후……♡』
+			PRINTFORML 『발놀림이 야해…』
+		CASE 1
+			PRINTFORML 『하아……하아………으으응……』
+		CASE 2
+			PRINTFORML 『거기, 거기가 좋아……』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 스마타 초조하게함을 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_SEX_ATTACK103
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『흐응 누가 먼저 못참는지 승부하는거야?』
+			PRINTFORML 『좋아 그 승부 받아줄게♡』
+		CASE 1
+			PRINTFORML 『누가 먼저 가버릴까?』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 짜내는 것을 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CHARA_SEX_ATTACK104
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………!?!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『그래, 잘 하는걸』
+			PRINTFORML 『잔뜩 임신하고 잔뜩 낳는거야♡』
+			PRINTFORML 『나처럼 말이지』
+		CASE 1
+			PRINTFORML 『후후, 과연 언제까지 버틸 수 있을까?』
+		CASE 2
+			PRINTFORML 『흐응, 적극적인 아이는 좋아해』
+			PRINTFORML 『좀 더 짜내봐. 말라 비틀어 질 때까지……』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 공격을 개시했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_ATTACK
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『!』
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 『자, 받아 봐』
+		CASE 1
+			PRINTFORML 『맞으면 아플걸?』
+		CASE 2
+			PRINTFORML 『피할 수 있을까?』
+		CASE 3
+			PRINTFORML 『내 차례라구?』
+		CASE 4
+			PRINTFORML 『아하하, 간다?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 자세를 잡고 덤벼들 준비를 했다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 공격이 크리티컬 히트 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_ATTACK_CRITICAL_HIT
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『!!!』
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 『저런, 아프겠는데?』
+		CASE 1
+			PRINTFORML 『미안, 힘이 너무 들어갔다』
+		CASE 2
+			PRINTFORML 『헤헤, 미안, 아프지?』
+		CASE 3
+			PRINTFORML 『흐응…… 이 정도인가?』
+		CASE 4
+			PRINTFORML 『아하하, 아하하하하!!』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 공격이 통상 히트 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_ATTACK_HIT
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…!!』
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 『아하하, 맞았다 맞았어』
+		CASE 1
+			PRINTFORML 『아파? 아프지?』
+			PRINTFORML 『좀 더 고운 목소리로 울어볼래?』
+		CASE 2
+			PRINTFORML 『히히히……』
+		CASE 3
+			PRINTFORML 『역시 나는 강하다니까!』
+		CASE 4
+			PRINTFORML 『맞았다, 맞았어!』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 공격이 회피되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_ATTACK_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……?!』
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORML 『아~ 피하기야?』
+		CASE 1
+			PRINTFORML 『날 피하는거야?』
+			PRINTFORML 『……미워』
+		CASE 2
+			PRINTFORML 『아아, 빗나가다니…』
+		CASE 3
+			PRINTFORML 『너도 나를 피하는거구나……』
+		CASE 4
+			PRINTFORML 『이렇게 될 줄 알았어……』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공격을 찌꺼기 맞아 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_ATTACK_GRAZE
+
+;세뇌/악에 떨어진 캐릭터가 휘감기는 개시했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_KARAMITUKU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『우우우…』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『자, 끈적하게 얽혀보자』
+		CASE 1
+			PRINTFORML 『도망치지 말라구?』
+		CASE 2
+			PRINTFORML 『이러면 도망 못갈걸?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% %PRINT_TRANSCALLNAME(TARGET)%에게 달라붙었다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 휘감기는 것을 성공시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_KARAMITUKU_SUCCESS
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『아…』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아하하, 붙잡았다』
+			PRINTFORML 『더는 도망칠 수 없어……』
+		CASE 1
+			PRINTFORML 『응, 이제 못 움직이겠지?』
+			PRINTFORML 『함께 기분 좋은거 하자…?』
+		CASE 2
+			PRINTFORML 『아아, %PRINT_TRANSCALLNAME(TARGET)%의 몸, 매끈하고 부드러워서…너무 예뻐』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"를")% 껴안고서 사랑스럽다는 듯이 입맞춤 했다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 휘감기는 것을 회피되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_KARAMITUKU_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………!?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아아, 피해버리다니……』
+			PRINTFORML 『흥~이다!』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 토라진 듯이 볼을 부풀렸다
+		CASE 1
+			PRINTFORML 『그렇지, 뭐……』
+			PRINTFORML 『나 같은건 아무도 원하지 않아……』
+			PRINTFORML 『아하, 아하하……』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 울상이 되어 고개를 숙였다
+		CASE 2
+			PRINTFORML 『너무해, 날 피하는거야?』
+			PRINTFORML 『너도, 너도……?』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 공허한 눈으로 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 바라보고 있다
+	ENDSELECT
+ENDIF
+
+
+;세뇌/악에 떨어진 캐릭터가 체액을 토하는 것을 개시했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_TAIEKI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『우극…!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『끈적끈적, 간다?』
+		CASE 1
+			PRINTFORML 『이거 맞으면 기분 좋다구?』
+		CASE 2
+			PRINTFORML 『피하면 안 돼?』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 체액을 토하는 것을 히트 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_TAIEKI_HIT
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『우우……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아하하, 끈적끈적 해지니까 어때?』
+		CASE 1
+			PRINTFORML 『냄새 좋지? 우후후, 얼마든지 더 뿌려줄게……』
+		CASE 2
+			PRINTFORML 『맞았다 맞았어~!』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 체액을 토하는 것을 회피되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_TAIEKI_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………?!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『에이, 재미없게 피하다니……』
+		CASE 1
+			PRINTFORML 『아아~ 아까워라 아까워……』
+		CASE 2
+			PRINTFORML 『앗!! 내 선물을 피하는거야!?』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 거리를 취했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_TAKEAWAY
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『자, 잠깐 타임!』
+		CASE 1
+			PRINTFORML 『와앗!? 너무 격렬한거 아니야?』
+		CASE 2
+			PRINTFORML 『밀당도 중요하니까…』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 지친 기색을 숨기며 뒤로 물러섰다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가쓰러트린다를 개시했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_OSHITAOSU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아하하, 서로 사랑해 보자』
+		CASE 1
+			PRINTFORML 『기분이 좋아지면 모든 걸 잊을 수 있다구?』
+		CASE 2
+			PRINTFORML 『저항하지 마…… 받아들여……』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 요염하게 웃으며 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 쓰러트리려 한다!
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가쓰러트린다를 성공시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_OSHITAOSU_SUCCESS
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『착한 아이구나…♡』
+		CASE 1
+			PRINTFORML 『후후, 어떻게 먹어줄까?』
+		CASE 2
+			PRINTFORML 『자, 아무 생각도 할 수 없을 정도로 망가지는 거야』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 쓰러트린 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 요사스럽게 웃으며 %PRINT_TRANSCALLNAME(TARGET)%의 이마에 입맞춤 했다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가쓰러트린다가 회피되었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_TENTACLE_OSHITAOSU_FALSE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『!?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『에이…재미없게…』
+		CASE 1
+			PRINTFORML 『으……아깝다……』
+		CASE 2
+			PRINTFORML 『내가 싫은거야…?』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 쓰러트리지 못하자 실망한 것 같다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 아우터가 깨지기 시작한 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CLOTH_OUTERDAMAGE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………』
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 『오, 드디어 좀 재미를 볼 수 있겠네♡』
+		CASE 1
+			PRINTFORML 『후후, 그렇게 이쁜 몸을 꽁꽁 싸매고 있으면 아깝다구?』
+		CASE 2
+			PRINTFORML 『역시 알몸보다는 살짝 가린게 야해♡』
+		CASE 3
+			PRINTFORML 『아아……이제 곧이구나……』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 찢어지기 시작한 옷 사이로 보이는 %PRINT_TRANSCALLNAME(TARGET)%의 피부를 보고 욕정한 것 같다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 아우터가 깨진 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CLOTH_OUTERBREAK
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『………!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『역시 이쁜 몸이야……』
+			PRINTFORML 『더럽혀진 내 몸이랑은 다르게 말이지……』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% %PRINT_TRANSCALLNAME(TARGET)%의 몸을 지키는 옷을 완전히 망가트리는 것에 성공했음에도
+			PRINTFORMDL 어쩐지 기뻐보이지는 않았다
+		CASE 1
+			PRINTFORML 『아아, %PRINT_TRANSCALLNAME(TARGET)%의 몸을 봤더니 나 흥분해 버렸어』
+			PRINTFORML 『책임져 줄거지?』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 상기된 얼굴로 %PRINT_TRANSCALLNAME(TARGET)%의 몸을 핥듯이 바라보고 있다
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 이너가 깨지기 시작한 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CLOTH_INNERDAMAGE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 『팬티가 찢어지고 있는데 괜찮아?』
+		CASE 1
+			PRINTFORML 『소중한 곳이 보일것 같은데?』
+		CASE 2
+			PRINTFORML 『속옷 사이로 보이는 부분이 야해♡』
+		CASE 3
+			PRINTFORML 『음후후…』
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 찢어지기 시작한 %PRINT_TRANSCALLNAME(TARGET)%의 속옷을 보며 음흉하게 웃고 있다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 이너가 깨진 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_CLOTH_INNERBREAK
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『어라라, 노팬티가 돼 버렸네?』
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 부끄럽지도 않은가봐』
+			PRINTFORML 『서, 설마……노출벽이 있는 변태였던거야?』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 과장된 움직임으로 놀란척 하고 있다
+		CASE 1
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 지켜줄 속옷도 이제 없다구?』
+			PRINTFORML 『그렇게 손으로 가려봐야……다 보인다니까♡』
+			PRINTW
+			PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 욕정하여 얼굴을 상기시켰다
+	ENDSELECT
+ENDIF
+
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 패배했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_WIN_ENEMY
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『읍, 우욱, 우웨에에에엑!!』
+	PRINTW
+	PRINTFORMDL %PRINT_TRANSCALLNAME(FLAG:111)%의 입에서 촉수의 끔찍한 체액이 쏟아져 나오기 시작했다
+	PRINTFORMDL 쏟아져 나오는 체액 사이에서는 저항하듯 격렬히 꿈틀거리는 자그마한 촉수가 보인다
+	PRINTFORMDL 그 모든 것들은 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")% 겪은 가혹한 능욕의 증거겠지
+	PRINTW
+	PRINTFORML 『아, 아아……, 나, 나는 대체………』
+	PRINTW
+	PRINTFORMDL 마침내 위장 속의 촉수와 체액들을 모두 게워냈는지 %PRINT_TRANSCALLNAME(FLAG:111)%의 구토가 멈춘다
+	PRINTFORMDL 그리고서 두 눈에 빛이 돌아오는가 싶더니 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 그 자리에 쓰러져 버렸다
+ELSE
+	PRINTFORML 『지, 지금까지 난……, 뭘 하고 있던……거지……?』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 이성이 돌아온 것인지 주위를 둘러보고 있다
+	PRINTFORMDL 그러다 갑자기 몸에 위화감을 느끼고서 자신의 몸을 내려다 봤다
+	PRINTW
+	PRINTFORML 『뭐, 뭐야 이게? 내 옷이 왜 이래?』
+	PRINTFORML 『잠깐만, 대체 무슨 일이 있었던 거야?』
+	PRINTFORML 『야 넌 또 왜 그렇게 다쳤어?』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 일이 심상치 않은 것을 깨닫고 자신의 앞에 망신창이가 된 채 서 있는 동료를 붙잡고 물었다
+	PRINTFORMDL 그리고 불현듯 모든 것을 떠올려냈다
+	PRINTW
+	PRINTFORML 『설마, 설마, 설마? 잠깐만, 거짓말이지?』
+	PRINTFORML 『아아……, 아아아………! 아아아아아……………!』
+	PRINTFORML 『차라리 죽어버렸으면 좋았을텐데!!!』
+	PRINTW
+	PRINTFORMDL 촉수에게 패배하여 붙잡혀 갔던 일
+	PRINTFORMDL 촉수에게 꺽인 마음이 결국 씨가 되어 그들의 앞잡이가 됐던 일
+	PRINTFORMDL 촉수를 마치 사랑하는 연인인 양 대하고 결국 "맹세의 입맞춤"이랍시고 입을 맞췄던 일
+	PRINTFORMDL 동료들을 습격했던 일, 사람들을 덮쳤던 일, 촉수들을 낳았던 일
+	PRINTFORMDL 이성이 날아가 정상적인 사고를 할 수 없었다고는 해도 결코 용서받을 수 있는 것이 아니다
+	PRINTFORMDL 자신이 저지른 죄의 무게를 깨달은 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 결국 정신을 잃고 쓰러지고 말았다……
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 승리했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_LOSS
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『또…… 하나…… 노예가………』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")% 기력이 다해 쓰러진 %PRINT_TRANSCALLNAME(TARGET)%에게 다가갔다
+	PRINTFORMDL 그리고 머리맡에서 입을 크게 벌리고, 그대로 끔찍한 촉수의 체액을 토해냈다
+	PRINTW
+	PRINTFORML 『웁, 우우욱, 우웨에엑……』
+	PRINTW
+	PRINTFORMDL 끔찍한 악취를 내뿜는 점액과도 같은 것이 쏟아져 내린다
+	PRINTFORMDL 이 행위는 %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 완전히 정신을 잃을 때까지 이어졌다……
+ELSE
+	PRINTFORML 『우후후……, 정의는 언제나 승리한다면서?』
+	PRINTFORML 『그런데 이건 무슨 일일까? 꼴사납게 바닥을 기고 있네☆』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")% 쓰러진 것을 보자 %PRINT_TRANSCALLNAME(FLAG:111)%의 얼굴에 만면의 미소가 떠오른다
+	PRINTFORMDL 그러면서 %PRINT_TRANSCALLNAME(TARGET)%에게 다가가 그 위에 걸터 앉았다
+	PRINTW
+	PRINTFORML 『……결국 이기는건 강한 녀석인거지』
+	PRINTFORML 『그래, 나도 약했던거야……』
+	PRINTFORML 『그래서 이런 꼴이 되어버린 거고……』
+	PRINTW
+	PRINTFORMDL %PRINT_TRANSCALLNAME(FLAG:111)%의 이성이 돌아온 것일까?
+	PRINTFORMDL 지금의 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에서는 이전까지의 광기가 보이지 않는다
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 자조하듯이 중얼거리는 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"가")% 정신을 차려줄 것이라 믿으며 정의감에 호소하려 입을 열었지만……
+	PRINTW
+	PRINTFORML 『우음……음……우음……츄룹……』
+	PRINTFORML 『츄릅……츄………후아아……』
+	PRINTW
+	PRINTFORMDL 별안간 그 눈에서 다시 빛이 사라지고 광기가 자리잡았다
+	PRINTFORMDL 그리고선 힘이 다한 상태에서도 필사적으로 고개를 돌리는 %PRINT_TRANSCALLNAME(TARGET)%에게 입맞춤을 했다
+	PRINTW
+	PRINTFORML 『막 이래, 아하핫』
+	PRINTFORML 『자아, 시간은 많다구? 좀 더 즐겨보자』
+	PRINTFORML 『제 정신이 아니게 될까지, 모두 미쳐버릴 때까지………』
+	PRINTW
+	PRINTFORMDL 입맛을 다신 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 요사스럽게 웃으며 자신의 부하 촉수들을 불러냈다
+	PRINTFORMDL 미쳐버린 육욕의 연회는 이제 막 시작됐을 뿐이다………
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터와 비겼다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_TIMEUP
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『으…… 후퇴……………』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 이대로는 결판이 나지 않을 것이라 판단했는지 물러서기 시작했다
+ELSE
+	PRINTFORML 『우응……, 시간만 질질끌고, 시시해~』
+	PRINTFORML 『질렸어! 다음에 또 보자!』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 나타났을 때처럼 갑작스레 사라졌다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「촉수의 포로로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_TORIKO
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 촉수를 보고 움츠러든 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 동정의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『응, 그래. 그거면 되는거야.』
+	PRINTFORML 『촉수랑 싸울 필요는 없다구? 모두 다함께 저 지옥 밑바닥으로 떨어지는거야.』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 마치 그리운 것을 보는 눈으로 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 바라봤다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「쾌락으로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_KAIRAKU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 쾌락으로 몸이 움츠러든 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 동정의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『아하하, %PRINT_TRANSCALLNAME(TARGET)%도 기분 좋아졌으면 하는거야?』
+	PRINTFORML 『그래, 나한테 몸을 맡기면 돼. 이리와……』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 자애로운 눈으로 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 바라봤다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「고통으로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_KUTUU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 고통스러운 기억으로 몸이 움츠러든 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 슬픔의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『아팠던 기억이라도 떠오른거야?』
+	PRINTFORML 『가엾은 %PRINT_TRANSCALLNAME(TARGET)%…… 모두 포기하고 촉수에 몸을 맡기면 고통받지 않아도 되는데』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 측은하다는 눈으로 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 바라봤다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「굴욕으로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_KUTUZYOKU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 굴욕으로 몸이 움츠러든 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 안타까움의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『헤에, 이거 봐』
+	PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 몸은 이미 촉수에게 패배선언 했다구?』
+	PRINTFORML 『마음도 이미 꺽인거 아니야?』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 입꼬리를 올리며 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 바라봤다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「공포로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_KYOUHU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 공포에 떨고 있는 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 동정의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『후후, 왜 그래? 무서운 기억이라도 떠오른거야』
+	PRINTFORML 『………아아, 재미없게. 무섭고 그런건 싫지 않아?』
+	PRINTFORML 『차라리 모두 포기하고 촉수에 몸도 마음도 맡겨 버리자…… 나처럼……』
+	PRINTW
+	PRINTFORMDL 말도 안 되는 말을 하고 있는 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자는 진심이 담겨 있었다
+	PRINTFORMDL 그것을 느낀 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 등골이 오싹해지는 것을 느꼈다
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「치욕으로 몸이 움츠린다」를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_TIZYOKU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 치욕으로 몸이 움직이지 않는 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에, 일순 동정의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『부끄러워?』
+	PRINTFORML 『포기해, 우리는 결국 촉수 앞에 치욕스러운 최후를 맞이할테니까』
+	PRINTFORML 『그 때가 되면, 모두가 평등할테니 누구도 자신을 부끄러워 하지 않아도 돼……』
+	PRINTW
+	PRINTFORMDL 말도 안 되는 말을 하고 있는 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에는 광기가 흘러넘치고 있었다
+	PRINTFORMDL 섬뜩한 분위기를 느낀 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 한 발짝 물러서 버렸다
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 「기생의 영향으로 몸이 움츠린다」를 보았다
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_DISACTION_PARASITE
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+	PRINTW
+	PRINTFORMDL 뱃속에서 날뛰는 기생촉수 때문에 움츠러든 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 본 %PRINT_TRANSCALLNAME(FLAG:111)%의 눈동자에,
+	PRINTFORMDL 일순 동정의 빛이 스쳐간 것 같다
+ELSE
+	PRINTFORML 『후후, 뱃속에 있는 귀여운 아이가 날뛰고 있는거야?』
+	PRINTFORML 『어때? 기분 좋아?』
+	PRINTW
+	PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")% 히죽히죽 웃으며 %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"를")% 바라보고 있다
+ENDIF
+
+;세뇌중 캐릭터의 구출된 측
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_RESCUED_SENNOU
+
+;세뇌/악에 떨어진 상태로 쓰러진 측
+;--------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_RESCUED_ENEMY
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 『(토할 것 같아………)』
+	CASE 1
+		PRINTFORML 『(죽고 싶어………)』
+	CASE 2
+		PRINTFORML 『(아아…나는 어떻게 해야……)』
+ENDSELECT
+PRINTW
+
+;**************************************************
+;성행위의 것
+;**************************************************
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 C공격미만을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM0
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『여기가 좋은거야?』
+		CASE 1
+			PRINTFORML 『기분 좋게 해줄게』
+		CASE 2
+			PRINTFORML 『자, 쾌락에 몸을 맡겨』
+	ENDSELECT
+	PRINTW
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 C공격강을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM1
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『여기가 기분 좋지?』
+		CASE 1
+			PRINTFORML 『받아들이면 편해진다구?』
+		CASE 2
+			PRINTFORML 『에잇, 에잇! ……어때, 좀 좋아?』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 V공격미만을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM2
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 소중한 곳, 너무나도 사랑스러워』
+		CASE 1
+			PRINTFORML 『좀 더 귀여운 목소리로 울어줄래?』
+		CASE 2
+			PRINTFORML 『후후……여기를 꾹 누르면……기분 좋지?』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 V공격강을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM3
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아하하, 아하하하하!!』
+			PRINTFORML 『완전히 암컷의 얼굴이네, %PRINT_TRANSCALLNAME(TARGET)%!』
+		CASE 1
+			PRINTFORML 『좀 더 앙앙하고 우는거야』
+		CASE 2
+			PRINTFORML 『암컷은 암컷답게 촉수의 아이를 임신하면 돼』
+			PRINTFORML 『나처럼 말이야…』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 A공격미만을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM4
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『뒤로 느끼는 것도 괜찮다구?』
+		CASE 1
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 것이라면, 더럽지 않아……』
+		CASE 2
+			PRINTFORML 『아아, 사랑스러워……』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 A공격강을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM5
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『어때? 엉덩이보지 기분 좋아?』
+		CASE 1
+			PRINTFORML 『아하하하, %PRINT_TRANSCALLNAME(TARGET)%의 엉덩이보지 따뜻해서 최고야……』
+		CASE 2
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 엉덩이로 느끼면 그렇게 우는구나…♡』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 B공격미만을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM6
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	IF TALENT:106 > 0
+		PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가슴이 약했지?』
+		PRINTFORML 『에잇, 에잇☆ 어때, 기분 좋아?』
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 『어머, 유두가 단단해졌는데 설마 느끼는거야?』
+			CASE 1
+				PRINTFORML 『후후, %PRINT_TRANSCALLNAME(TARGET)%의 가슴 귀여워……』
+			CASE 2
+				IF TALENT:거유 > 0
+					PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)% 가슴은 커서 부러워……』
+					PRINTFORML 『난 이렇게 껌딱진데, 힝……』
+				ELSEIF TALENT:빈유 > 0
+					PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)% 가슴은 나랑 비슷하네』
+					PRINTFORML 『그래그래, 크기 보다는 형태가 중요한거야!』
+				ELSE
+					PRINTFORML 『흐응…… 가슴으로 느끼는거 좋아?』
+				ENDIF
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 B공격강을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM7
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	IF TALENT:106 > 0
+		PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 가슴이 약했지?』
+		PRINTFORML 『히히, 이러면 어때, 가버릴 것 같아?』
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 『아하하, 아하하하하!!』
+				PRINTFORML 『기분 좋으면 숨기지 말고 울라구♡』
+			CASE 1
+				PRINTFORML 『여기가 좋아? 아니면 여기?』
+			CASE 2
+				IF TALENT:거유 > 0
+					PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 가슴, 손에 쥐니 손에 흘러넘칠 정도야…』
+					PRINTFORML 『이런 괘씸한 가슴 같으니!』
+				ELSEIF TALENT:빈유 > 0
+					PRINTFORML 『으응…… %PRINT_TRANSCALLNAME(TARGET)%의 가슴, 너무 작아서 만지는 맛이……』
+					PRINTFORML 『앗, 이러면 자폭인가?』
+				ELSE
+					PRINTFORML 『가슴으로 가버리라구♡』
+				ENDIF
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 스팽킹을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM8
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아아, 찰싹찰싹 할 때마다 내 손바닥 자국이 남는거 너무 야해…♡』
+		CASE 1
+			PRINTFORML 『단정치 못한 암캐한테는 벌을 줘야겠지☆』
+		CASE 2
+			PRINTFORML 『나쁜 아이는 맴매라구?』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 바늘을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM9
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『후후후…♡』
+			PRINTFORML 『촉수의 체액으로 몸이 차오르는 기분은 어때?』
+		CASE 1
+			PRINTFORML 『아파? 기분 좋아? 말 좀 해봐♡』
+		CASE 2
+			PRINTFORML 『아프지 않은 주사라구?』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 자위를 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM10
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『나를 기분 좋게 해 줘, %PRINT_TRANSCALLNAME(TARGET)%』
+			PRINTFORML 『그럼 나도 기분 좋게 해줄테니까………』
+		CASE 1
+			PRINTFORML 『응, 그래…… 같이 기분좋아 지는거야……』
+		CASE 2
+			PRINTFORML 『차라리 쾌락 속에서 모든 것을 잊을 수 있게 해줘……』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 페라를 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM11
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아……♡』
+			PRINTFORML 『싼닷, 쌀 것 같아앗』
+		CASE 1
+			PRINTFORML 『입으로 해 줘……』
+			PRINTFORML 『아핫, %PRINT_TRANSCALLNAME(TARGET)%의 얼굴, 너무 야해…』
+		CASE 2
+			PRINTFORML 『착하다 착해……』
+			PRINTFORML 『그래, 입은 다물지 말고……』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 이라마치오 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_COM12
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아아, 이거야 이거!』
+			PRINTFORML 『억지로 입을 범하는거 최고♡』
+		CASE 1
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 입보지, 기분조아아앗!』
+		CASE 2
+			PRINTFORML 『따뜻해… %PRINT_TRANSCALLNAME(TARGET)%의 목구멍 따뜻해애』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 절정 금지를 시켰다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM13
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	IF TCVARn:40
+		PRINTFORML 『자, 이제 가버려도 돼』
+	ELSE
+		PRINTFORML 『가버리는거 금지야』
+		PRINTFORML 『아직 나는 만족 못했으니까』
+	ENDIF
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 의상을 찢었다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM14
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『이런 걸리적거리는건 벗어버리자구』
+			PRINTFORML 『응, 깔끔해졌네!』
+		CASE 1
+			PRINTFORML 『알몸의 대화를 할 시간이야♡』
+		CASE 2
+			PRINTFORML 『우응……옷이 귀여워서 아깝긴 하지만…』
+			PRINTFORML 『에잇☆』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 씨뿌리기 피스톤 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM15
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『에잇, 에잇, 에잇!』
+			PRINTFORML 『아아, 허리를 흔들 때마다 질 안이 경련하고 있어…♡』
+		CASE 1
+			PRINTFORML 『우후후, 씨뿌리기 당하는 기분은 어때?』
+			PRINTFORML 『기분 좋아? 기분 좋지?』
+		CASE 2
+			PRINTFORML 『지금 %PRINT_TRANSCALLNAME(TARGET)%, 암컷의 얼굴을 하고 있어…』
+			PRINTFORML 『그렇게 사랑스러운건 반칙이야!』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 씨뿌리기 피니쉬 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM16
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『아하하, 잔뜩 잔뜩 싸줄게』
+			PRINTFORML 『임신할 때까지…♡』
+		CASE 1
+			PRINTFORML 『자, 씨받이는 씨받이 답게 씨를 모두 받아들이라구?』
+			PRINTFORML 『아핫, 아하핫, 아하하하하!』
+	ENDSELECT
+ENDIF
+PRINTW
+;세뇌/악에 떨어진 캐릭터가 애널 피스톤 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM17
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『엉덩이를 범해지면서 가버리는 거야?』
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 답이 없는 변태구나♡』
+		CASE 1
+			PRINTFORML 『엉덩이 따뜻해……』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%도 이렇게 범해지니까 기쁘지?』
+		CASE 2
+			PRINTFORML 『엉덩이 보지, 엉덩이 보지 기분 좋아아아앗!!』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 애널 피니쉬 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM18
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『하아……하아……』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 엉덩이 보지에 잡아 먹힐뻔 했네…』
+		CASE 1
+			PRINTFORML 『이쪽으로는 임신 못하니까 좀 아쉽다』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%도 그렇게 생각하지?』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 양구멍 피스톤 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM19
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『앞으로 할까, 뒤로 할까……』
+			PRINTFORML 『에잇, 양 쪽 모두 해버리자♡』
+		CASE 1
+			PRINTFORML 『아하하, 이러면 두 배로 기분 좋지?』
+			PRINTFORML 『두 배로 가버리는거야』
+		CASE 2
+			PRINTFORML 『으흥~ 앞쪽도 뒷쪽도 모두 완전히 똑같은 보지네』
+			PRINTFORML 『호, 색, 한♡』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 양구멍 피니쉬 했다
+;----------------------------------------------------------
+@MESSAGE_OTHER_SEX_COM20
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『아아, 양 쪽 범해지는게 그렇게 좋았어?』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%도 참 변태구나』
+		CASE 1
+			PRINTFORML 『더블 엑스터시~』
+			PRINTFORML 『자, 같이 브이~!』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 C공격 SP했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM0
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISPENIS()
+		PRINTFORML 『자지 기분 좋지?』
+		PRINTFORML 『아예 정신도 못차리게 만들어 줄게』
+		PRINTFORML 『에잇!』
+	ELSE
+		PRINTFORML 『클리쨩으로 가버리는거야!』
+		PRINTFORML 『마구마구 가버릴 때까지 놓아주지 않을거니까☆』
+	ENDIF
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 V공격 SP했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM1
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『아아, %PRINT_TRANSCALLNAME(TARGET)%의 자궁에 닿은게 느껴져…』
+	PRINTFORML 『자궁구를 직접 자극당하는 기분은 어때? 감상을 들려줘!』
+	PRINTFORML 『응? 아차~ 미안미안, 대답할 정신이 없겠구나, 에헤헤☆』
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 A공격 SP했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM2
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	PRINTFORML 『우훗, 몸 안을 촉수가 관통하니 어떤 기분이야?』
+	PRINTFORML 『몸 안도, 밖도 모두 촉수에게 정복당하는 기분말이야』
+	PRINTFORML 『아, 입이 막혀서 말을 못하겠구나…』
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 B공격 SP했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM3
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	PRINTFORML 『쭙, 쭙……』
+	PRINTFORML 『후후, 아기가 된 기분이야……』
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 전류했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM4
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	PRINTFORML 『찌릿찌릿!!』
+	PRINTFORML 『아아, 괴로워하는 %PRINT_TRANSCALLNAME(TARGET)%의 모습을 보고 있었더니 나 흥분해 버렸어……♡』
+	PRINTFORML 『책임져 줄거지…?』
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 파이즈리를 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM5
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	IF TALENT:거유 > 0
+		PRINTFORML 『오오오……』
+		PRINTFORML 『그 압도적인 가슴으로 봉사해 줘……』
+		PRINTFORML 『우우……부럽다거나 생각하고 있지는 않다구?』
+	ELSEIF TALENT:빈유 > 0
+		PRINTFORML 『음……』
+		PRINTFORML 『저기, 역시 미안……』
+		PRINTFORML 『가슴이 휑하니까 파이즈리하기도 애매하구나……』
+	ELSE
+		PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 가슴, 기분 좋으니까……』
+		PRINTFORML 『좀 쓰게 해주라』
+	ENDIF
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 강제 자위를 시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM6
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	PRINTFORML 『자위해, 여기서』
+	PRINTFORML 『모두가 보는 앞에서 말이야…♡』
+	PRINTFORML 『부끄러워 죽어버린다 해도, 내가 수습해 줄게』
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 수치플레이했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_SPCOM7
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『…………』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『흐응, %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 그런 표정도 지을줄 아는구나?』
+			PRINTFORML 『좀 더 부끄러운 표정을 해 봐♡』
+		CASE 1
+			PRINTFORML 『아하하, %PRINT_TRANSCALLNAME(TARGET)% 얼굴 새빨개!』
+			PRINTFORML 『그렇게나 부끄러웠던거야?』
+		CASE 2
+			PRINTFORML 『저기 봐, 모두가 보고 있다구?』
+	ENDSELECT
+ENDIF
+PRINTW
+
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 사정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_CHARA_SYASEI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『아아~사정했네에』
+			PRINTFORML 『그렇게나 기분 좋았던거야?』
+			PRINTFORML 『꼴사납기는……』
+		CASE 1
+			IF ISFEMALE()
+				PRINTFORML 『아하핫, 여자아인데 사정하는거야?』
+				PRINTFORML 『변태 같아♡』
+			ELSE
+				PRINTFORML 『사정은 기분 좋지?』
+				PRINTFORML 『참지 말고 마음껏 싸』
+			ENDIF
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 대량사정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_CHARA_SYASEI_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『오오, 정력도 좋아라』
+			PRINTFORML 『완전히 정액의 폭포구나♡』
+		CASE 1
+			IF ISFEMALE()
+				PRINTFORML 『아하핫, 여자아인데 사정하는거야?』
+				PRINTFORML 『변태 같아♡』
+			ELSE
+				PRINTFORML 『이렇게나 많이 싸다니, 기분 좋았나봐?』
+				PRINTFORML 『참지 않아도 돼, 마음껏 싸는거야』
+			ENDIF
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 분유를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_CHARA_HUNNYU
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『음……달아……』
+			PRINTFORML 『%PRINT_TRANSCALLNAME(TARGET)%의 밀크, 정말 최고야』
+		CASE 1
+			PRINTFORML 『와아, 모유가 나오고 있네?』
+			PRINTFORML 『완전히 엄마가 됐구나☆』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 대량분유를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_CHARA_HUNNYU_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『아하하, 밀크 분수다!』
+			PRINTFORML 『그렇게나 기분 좋았던거야?』
+		CASE 1
+			PRINTFORML 『음음, 화산이 폭발하는것 같네』
+			PRINTFORML 『다들 좋아하겠어!』
+	ENDSELECT
+ENDIF
+PRINTW
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 C절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_C
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISMALE()
+		PRINTFORML 『자지로 가버렸구나♡』
+	ELSEIF TALENT:후타나리 > 0
+		PRINTFORML 『여자아인데 자지로 가버린거야?』
+	ELSE
+		PRINTFORML 『콩으로 가버리는게 그렇게 좋아?』
+	ENDIF
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 C강절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_C_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISMALE()
+		PRINTFORML 『아하하, 자지가 발딱발딱 거려!』
+		PRINTFORML 『완전히 가버렸구나♡』
+	ELSEIF TALENT:후타나리 > 0
+		PRINTFORML 『흐응, 여자아이면서 자지로 기절할 만큼 가버리다니…』
+		PRINTFORML 『그냥 여자아이를 그만두는게 어때?』
+	ELSE
+		PRINTFORML 『콩으로 그렇게까지 느끼다니, 휼륭한 암컷이 됐구나☆』
+	ENDIF
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 V절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_V
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISFEMALE()
+		PRINTFORML 『남자인데 마법소녀로 변신해서 보지로 느껴버린거야?』
+		PRINTFORML 『쓰레기! 변태!』
+	ELSE
+		PRINTFORML 『아아, 그렇게나 황홀한 얼굴로……』
+	ENDIF
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 V강절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_V_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISFEMALE()
+		PRINTFORML 『남자인데 마법소녀로 변신해서 기절해 버릴만큼 보지로 느껴버린거야?』
+		PRINTFORML 『이제 그냥 암컷이 되어버리는게 어때?』
+	ELSE
+		PRINTFORML 『와우, 완전히 암컷의 얼굴이 됐네』
+		PRINTFORML 『어때, 행복해?』
+	ENDIF
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 A절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_A
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『배설기관으로 느껴버리다니, 이래선 완전히 변태잖아?』
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 A강절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_A_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『항문이 완전히 보지가 됐구나♡』
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 B절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_B
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISFEMALE()
+		PRINTFORML 『남자인데 마법소녀로 변신해서 가슴으로 절정하다니……』
+		PRINTFORML 『완전히 암컷인걸♡』
+	ELSEIF ISMALE()
+		PRINTFORML 『흐응……남자인데 가슴으로 절정이라……』
+		PRINTFORML 『답이 없는 변태구나♡』
+	ELSE
+		PRINTFORML 『가슴으로 가버렸어?』
+		PRINTFORML 『음, 좋은 목소리야』
+	ENDIF
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 B강절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_ECSTASY_B_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	IF ISFEMALE()
+		PRINTFORML 『남자인데 마법소녀로 변신해서 가슴으로 절정하다니……』
+		PRINTFORML 『완전히 암컷인걸♡』
+	ELSEIF ISMALE()
+		PRINTFORML 『흐응……남자인데 가슴으로 절정이라……』
+		PRINTFORML 『답이 없는 변태구나♡』
+	ELSE
+		PRINTFORML 『아하핫, 가슴이 그렇게 좋은거야?』
+		PRINTFORML 『그럼 좀 더 괴롭혀줄게♡』
+	ENDIF
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 사중절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CVAB
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『응, 마구 가버려서 아무런 생각도 할 수 없지?』
+	PRINTFORML 『그래, 그거면 된거야』
+	PRINTFORML 『차라리 아무 생각도 할 수 없는게 행복할테니……』
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CVA 삼중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『아아~ 기절할 만큼 기분 좋은 거야?』
+			PRINTFORML 『안된다구? 기절해버리면 기분 좋은걸 못느끼니까』
+		CASE 1
+			PRINTFORML 『응응, 그렇게 마구 가버리면 돼』
+		CASE 2
+			PRINTFORML 『그렇게나 가버릴만큼 야한 몸이라니……』
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 그렇게 음란할줄은 몰랐어♡』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CVB 삼중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CVB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CAB 삼중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CAB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CV이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CV
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CA이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CA
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 CB이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_CB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 VAB 삼중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_VAB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 VA이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_VA
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 VB이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_VB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 AB이중 절정을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MULTIECSTASY_AB
+CALL KOJO_111_OTHER_SEX_MULTIECSTASY_CVA
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 쾌락각인 1이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KAIRAKU_1
+PRINTFORML 『아하핫, 기분 좋아?』
+PRINTFORML 『그거야, 그대로 받아들여』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 쾌락각인2가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KAIRAKU_2
+PRINTFORML 『이 기분좋은게 마음에 든 모양이구나』
+PRINTFORML 『나도 기뻐♡』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 쾌락각인 3이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KAIRAKU_3
+PRINTFORML 『이제 기분좋은게 없으면 살 수 없는 몸이 되어가고 있네』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 쾌락각인 4가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KAIRAKU_4
+PRINTFORML 『응응, 받아들이면 편해진다니까』
+PRINTFORML 『내 말 대로지?』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 쾌락각인 5가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KAIRAKU_5
+PRINTFORML 『더는 이 쾌락에서 도망칠 수 없다는 걸 깨달았지?』
+PRINTFORML 『자 함께 떨어지자……』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 고통각인 1이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUTUU_1
+PRINTFORML 『아파?』
+PRINTFORML 『후후, 그 고통을 잊지 마……』
+
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 고통각인2가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUTUU_2
+PRINTFORML 『아픈게 마음에 드는거야?』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 고통각인 3이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUTUU_3
+PRINTFORML 『아아, 너무 험하게 해버린걸까……』
+PRINTFORML 『그런 얼굴 하지 마, 흥분되잖아…♡』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 고통각인 4가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUTUU_4
+PRINTFORML 『아픔을 있는 그대로 받아들이는거야……』
+PRINTFORML 『그럼 편해진다구?』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 고통각인 5가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUTUU_5
+PRINTFORML 『더는 이 고통에서 도망칠 수 없다는 걸 깨달았지?』
+PRINTFORML 『자 함께 떨어지자……』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 굴복각인 1이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUPPUKU_1
+PRINTFORML 『마음이 꺽이고 있는게 느껴저……』
+PRINTFORML 『좋은 얼굴이야♡』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 굴복각인2가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUPPUKU_2
+PRINTFORML 『촉수에 굴복하는거야』
+PRINTFORML 『그럼 더 이상 아픈 것도, 슬픈 것도, 괴로운 것도 없다구?』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 굴복각인 3이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUPPUKU_3
+PRINTFORML 『이젠 그냥 패배자의 모습이네』
+PRINTFORML 『그래, 촉수에도, 쾌락에도 거역할 수 없단걸 깨달은거구나?』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 굴복각인 4가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUPPUKU_4
+PRINTFORML 『자, 멍멍 하고 짖어봐』
+PRINTFORML 『패배자한테는 그게 딱 어울리는 모습이니까♡』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 굴복각인 5가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KUPPUKU_5
+PRINTFORML 『더는 촉수에게 이길 수 없다는 걸 깨달았지?』
+PRINTFORML 『자 함께 떨어지자……』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공포 각인 1이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KYOUHU_1
+PRINTFORML 『어라, 떨고 있는거야?』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공포 각인2가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KYOUHU_2
+PRINTFORML 『무서운 거구나?』
+PRINTFORML 『괜찮아, 누구나 이런 상황에선 그럴테니까』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공포 각인 3이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KYOUHU_3
+PRINTFORML 『촉수가 두려운거지?』
+PRINTFORML 『아하하, 그래 그거면 돼』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공포 각인 4가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KYOUHU_4
+PRINTFORML 『도망치고, 울부짖고, 비명을 지르는거야』
+PRINTFORML 『포기해……그럼 편해지니까』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 공포 각인 5가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_KYOUHU_5
+PRINTFORML 『무섭고 두려워서 견딜 수가 없지?』
+PRINTFORML 『그럼 무릎 꿇고 촉수에게 맹세의 입맞춤을 해…♡』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 치욕 각인 1이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_TIJYOKU_1
+PRINTFORML 『아하하, 얼굴이 새빨개~!』
+PRINTFORML 『부끄러운거구나?』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 치욕 각인2가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_TIJYOKU_2
+PRINTFORML 『응응, 좋은 상태야』
+PRINTFORML 『치욕이 마음속에 새겨지고 있네♡』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 치욕 각인 3이 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_TIJYOKU_3
+PRINTFORML 『부끄러움, 수치심, 치욕스러움, 모두 받아들여』
+PRINTFORML 『그것도 %PRINT_TRANSCALLNAME(TARGET)%의 일부니까』
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 치욕 각인 4가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_TIJYOKU_4
+PRINTFORML 『이제 얼마 안남았네…♡』
+PRINTFORML 『수치심에 완전히 망가져버리는 %PRINT_TRANSCALLNAME(TARGET)%의 모습이 기대 돼』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터에게 치욕 각인 5가 붙는 것을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_MARK_TIJYOKU_5
+PRINTFORML 『자, 이제 알았지?』
+PRINTFORML 『부끄럽다던가, 수치스럽다던가, 그런건 모두 쾌락 앞에서는 희미해 져』
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 질내에 사정했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_VAGINA
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『우우웃!!』
+			PRINTFORML 『이거면 임신할 수 있겠지?』
+		CASE 1
+			PRINTFORML 『뱃속에 뜨거운게 흘러들어가는게 느껴져?』
+		CASE 2
+			PRINTFORML 『아하핫, 안에다 싸버렸다♡』
+			PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 야한게 잘못이야!』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 질내에 대량사정 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_VAGINA_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『후앗, 후아아아아……』
+			PRINTFORML 『이렇게나 많이 싸버리다니……』
+			PRINTFORML 『어쩐지 남자였던 때로 돌아간 기분이야……』
+		CASE 1
+			PRINTFORML 『뱃속이 가득 차버렸네?』
+			PRINTFORML 『하지만 멈추지 않을거야♡』
+		CASE 2
+			PRINTFORML 『이렇게나 쌌으니까 분명 임신할거야♡』
+			PRINTFORML 『분명 나랑 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 닮은 귀여운 아이가 생길걸?』
+	ENDSELECT
+ENDIF
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 애널에 사정했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_ANAL
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 『음……』
+			PRINTFORML 『뒷쪽으로는 임신 못하는데 좀 아깝나……?』
+		CASE 1
+			PRINTFORML 『엉덩이 보지, 너무 기분 좋은거 아니야?』
+			PRINTFORML 『봐봐, 이렇게나 싸버렸다구』
+		CASE 2
+			PRINTFORML 『엉덩이에 뜨거운게 느껴져?』
+			PRINTFORML 『우리 둘의 사랑의 증거야♡』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 애널에 대량사정 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_ANAL_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?!』
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 『앗♡ 앗♡ 아앗……♡』
+			PRINTFORML 『엉덩이 보지 너무 기분좋아아앗……!』
+		CASE 1
+			PRINTFORML 『와아, 밖으로 흘러나올 정도로 싸버렸다아☆』
+			PRINTFORML 『헤헤, 미안해』
+	ENDSELECT
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 손에 사정했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_HAND
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『우훗♡ 손에다 잔뜩 싸줬다구』
+	PRINTFORML 『아깝지 않아? 전부 마시는거야……』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 손에 대량사정 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_HAND_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?』
+ELSE
+	PRINTFORML 『아아♡ 손에다가 이렇게나 많이……』
+	PRINTFORML 『손이 보이지 않을 정도네☆』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 입안에 사정했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_MOUTH
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『히히, 진하지?』
+	PRINTFORML 『전부, 전부 마시는거야……』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 입안에 대량사정 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_MOUTH_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?』
+ELSE
+	PRINTFORML 『아아~ 입가에 흘러 넘치잖아!』
+	PRINTFORML 『앗, 내가 너무 많이 싸버려서인가?』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 가슴에 사정했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_BUST
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!』
+ELSE
+	PRINTFORML 『가슴 더럽혀서 미안해~』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 가슴에 대량사정 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SEX_TENTACLE_SYASEI_BUST_HI
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……!?』
+ELSE
+	PRINTFORML 『아차, 가슴에다 싸버리다니!』
+	PRINTFORML 『다음엔 안에다 싸줄테니까……♡』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 보통 자위를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SELF_N
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……?』
+ELSE
+	PRINTFORML 『흐응, 모두가 보는 곳에서 자위라……』
+	PRINTFORML 『답이 없는 노출광에다 변태네♡』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터의 가슴 자위를 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SELF_B
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……?』
+ELSE
+	PRINTFORML 『흐응, 모두가 보는 곳에서 자위라……』
+	PRINTFORML 『답이 없는 노출광에다 변태네♡』
+ENDIF
+
+;세뇌/악에 떨어진 캐릭터가 조작 캐릭터 아나운서 무릎 관절을 보았다
+;----------------------------------------------------------
+@KOJO_111_OTHER_SELF_A
+IF CFLAG:(FLAG:111):0 == 2
+	PRINTFORML 『……?』
+ELSE
+	PRINTFORML 『흐응, 모두가 보는 곳에서 자위라……』
+	PRINTFORML 『답이 없는 노출광에다 변태네♡』
+ENDIF
+
+;**************************************************
+;유폐의 것
+;**************************************************
+;구출된 측의 구상
+;----------------------------------------------------------
+@KOJO_111_OTHER_BATTLE_END_RESCUED
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 피간개시했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_PRISENTENCE
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터를 세뇌했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_SENNOU
+PRINTFORML 『아아, 꼭두각시 인형은 재미 없지만……』
+PRINTFORML 『그래도 내 명령대로 움직이는 것도 나름 재미있는걸♡』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터를 악에 떨어진
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_AKUOTI
+PRINTFORML 『아하하, 드디어 촉수의 멋짐을 아는 동료가 하나 늘었어』
+PRINTFORML 『자, 함께 가자. 지옥 저 밑바닥 까지 떨어지는 날까지……』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터를 수중에 넣었다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_DEAD
+PRINTFORML 『잘가, %PRINT_TRANSCALLNAME(TARGET)%……』
+PRINTFORML 『그곳에선 아무 생각도 할 수 없으니까…… 금방 편해질거야……』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터를 후타나리화했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_HUTANARI
+PRINTFORML 『훌륭한게 자라났지?』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터를 모유체질화했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_BONYU
+PRINTFORML 『이래선 완전히 젖소구나♡』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 C중심 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_0
+PRINTFORML 『여기, 기분 좋을걸?』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 V중심 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_1
+PRINTFORML 『자, 쾌락을 받아들여』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 A중심 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_2
+PRINTFORML 『엉덩이 보지를 개발하자☆』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 B중심 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_3
+PRINTFORML 『가슴으로 가버리는거야♡』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 S인 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_4
+PRINTFORML 『아핫☆ 괴로워하는 %PRINT_TRANSCALLNAME(TARGET)%의 얼굴 최고야!』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 강제 봉사시켰다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_5
+PRINTFORML 『나를 기분좋게 해 줘……』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 수치인 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_6
+PRINTFORML 『부끄러운 거야?』
+PRINTFORML 『귀여워, 얼굴이 홍당무가 됐네♡』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 후타나리 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_100
+PRINTFORML 『자지, 기분 좋지?』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 V확장을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_101
+PRINTFORML 『좀 더 개발해 줄게』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 A확장을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_102
+PRINTFORML 『항문이 원래대로 돌아오지 않을지도……』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 착유 공격을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_103
+PRINTFORML 『후후, 밀크……밀크……』
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 V에 산란을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_200
+PRINTFORML 『억울하다는 얼굴 하지 말라구?』
+PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 죽인 만큼 낳는거니까』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 A에 산란을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_201
+PRINTFORML 『억울하다는 얼굴 하지 말라구?』
+PRINTFORML 『%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")% 죽인 만큼 낳는거니까』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 주사했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_300
+PRINTFORML 『아파? 조금만 참아』
+
+;악에 떨어진 캐릭터가 유폐중의 조작 캐릭터에게 촉수의 기생을 했다
+;----------------------------------------------------------
+@KOJO_111_OTHER_PRISON_COM_301
+PRINTFORML 『이 귀여운 아이가 %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 좀 더 야한 몸으로 만들어줄거야』
+
+;**************************************************
+;서브 이벤트의 것
+;**************************************************
+;강간하는 측
+;--------------------------------------------------
+@KOJO_111_OTHER_SUBEVENT_BATTLE_RAPE_ENEMY

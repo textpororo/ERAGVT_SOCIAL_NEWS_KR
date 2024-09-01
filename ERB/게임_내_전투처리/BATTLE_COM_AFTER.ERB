@@ -174,13 +174,13 @@ IF FLAG:13 <= 0
 			FLAG:(FLAG:11 + 400) = 0
 
 			;주회차＆HARDCORE에서 Ｋ촉수를 격파한 경우
-			IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && GET_LASTBOSS_PHASE_F() == 1
+			IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && FLAG:101 == 1
 				;히든 보스를 등장시킬 준비
 				FLAG:4 += 1
 				FLAG:1 += 5
 				FLAG:21 = 1
 			;히든 보스 격파
-			ELSEIF GET_LASTBOSS_PHASE_F() == 2
+			ELSEIF FLAG:101 == 2
 				;엔딩
 				FLAG:64 = -1
 				CALL UNLOCK_ACHIEVEMENT(270,"월등한 최강 대 최강")
@@ -268,7 +268,7 @@ IF FLAG:13 <= 0
 			;미출현이라면
 			IF FLAG:64 != -1
 				;최종 보스 격파에 따른 히든 보스 출현
-				IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") > 1 && FLAG:21 > 0
+				IF FLAG:854 > 0 && GAME_OPTION_CHECK_F(OPTION_hardcore) && ENEMY_TYPE_CHECK_F("LASTBOSS") == 2
 					FLAG:101 = 2
 					CALL MESSAGE_BATTLE_END_LASTBOSSAPPEAR_2
 				;최종 보스 출현

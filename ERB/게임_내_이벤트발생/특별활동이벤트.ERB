@@ -1,102 +1,102 @@
-﻿;生産メッセージ
+﻿;특별 활동 메시지
 @MESSAGE_SEISAN, ARG
 #DIM PAYMENT
 #DIM NAMAHAME
 PAYMENT = 0
-NAMAHAME = 0;-1断固拒否 0ゴムあり 1膣外で出すよう約束 2中出しＯＫ
+NAMAHAME = 0;-1 단호히 거부 0 고무 착용 1 질외사정 합의 2 질내사정ＯＫ
 DRAWLINE
 SELECTCASE ARG
-		;アルバイト
+		;아르바이트
 	CASE 0
-		;新聞配達(男に後の分岐が非対応なので確率高めに)
+		;신문 배달(남자에게는 다음의 분기가 대응하지 않으므로 확률을 높게 한다)
 		IF RAND:4 == 0 || (ISHOLE() == 0 && RAND:3 == 0)		
-			PRINTL アルバイト（新聞配達）
+			PRINTL 아르바이트（신문 배달）
 			PRINTL 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%新聞配達のアルバイトをすることにしました。
-			PRINTFORML
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 신문 배달 아르바이트를 하기로 했습니다.
+			PRINTL
 			IF RAND:4 == 0 && FLAG:44 <= 30 && ISHOLE() == 1 && TALENT:처녀 < 1 || RAND:2 == 0
-				PRINTFORMW 意気揚々と自転車に跨ると、突如サドルが蠢いた。
-				PRINTFORML 驚いて腰を浮かせようとした%PRINT_TRANSCALLNAME(TARGET)%だが、
-				PRINTFORML サドルから伸びた촉수に腰骨を抱え込まれてしまう。
-				PRINTFORMW
-				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 股間に密着したサドル촉수は
+				PRINTW 의기양양하게 자전거를 타자, 갑자기 안장이 꿈틀거렸다.
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 놀란 나머지 얼른 몸을 내빼려고 했지만,
+				PRINTL 안장에서 뻗어 나온 촉수가 허리를 감아버린다.
+				PRINTW
+				PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 고간에 밀착된 안장 촉수는
 				IF ISMALE()
 					;#region
-					PRINTFORML 陰茎を突き上げるように振動子を隆起させ、
+					PRINTL 음경을 밀어 올리듯 진동자를 세워 올렸으며,
 					;#endregion
 				ELSE 
-					PRINTFORML 陰核を突き上げるように振動子を隆起させ、
+					PRINTL 음핵을 밀어 올리듯 진동자를 세워 올렸으며, 
 				ENDIF
 				IF TALENT:처녀 < 1 && ISFEMALE()
-					PRINTFORML 更に別の촉수が%PRINT_TRANSCALLNAME(TARGET)%의 前後の穴に潜り込み
+					PRINTFORML 거기에 또 다른 촉수가 %PRINT_TRANSCALLNAME(TARGET)%의 앞뒤 구멍으로 기어들어가
 				ELSE
-					PRINTFORML 更に別の촉수が%PRINT_TRANSCALLNAME(TARGET)%의 後ろの穴に潜り込み
+					PRINTFORML 거기에 또 다른 촉수가 %PRINT_TRANSCALLNAME(TARGET)%의 뒷구멍으로 기어들어가
 				ENDIF
-				PRINTFORML ペダルの回転に連動するかのようにピストン運動を始めた。
-				PRINTFORMW
-				PRINTFORML たまらず足を止めると、奥まで潜った촉수が大きくうねりながら
+				PRINTL 마치 페달의 회전에 연동하듯 피스톤 운동을 시작했다.
+				PRINTW
+				PRINTL 참지 못하고 발을 멈추자, 안쪽까지 기어들어간 촉수가 크게 꿈틀거리며
 				IF ISMALE()
 					;#region
-					PRINTFORM 陰茎の振動子ともども激しく振動し、探り当てた
+					PRINT 음경의 진동자와 함께 격렬히 진동함과 동시에 
 					;#endregion
 				ELSE 
-					PRINTFORM 陰核の振動子ともども激しく振動し、探り当てた
+					PRINT 음핵의 진동자와 함께 격렬히 진동함과 동시에 
 				ENDIF
 				IF TALENT:처녀 < 1 && ISFEMALE()
-					PRINTL Ｇスポットを責め立てる。
+					PRINTL G스팟을 찾아내어 몰아세웠다.
 				ELSE
-					PRINTL 性感帯を責め立てる。
+					PRINTL 성감대를 몰아세웠다.
 				ENDIF
-				PRINTFORML 抵抗する意味も時間も無い事を悟った%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
-				PRINTFORML 快感で砕けかけた足腰になけなしの力を込めてペダルを踏み込んだ。
-				PRINTFORML
+				PRINTFORML 저항할 시간도, 의미도 없다는 것을 깨달은 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
+				PRINTL 쾌감으로 무너질 뻔했던 아랫도리에 없는 힘을 쥐어짜 내며 페달을 밟았다.
+				PRINTL
 				;구상
 				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_SHINBUN_acmecycle")
-				PRINTFORML
-				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%通り道に水跡を残しながらも、何とか新聞を配り終えた。
-				PRINTFORML
+				PRINTL
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 지나가는 길에 물자국을 남기면서도, 간신히 신문 배달을 끝냈다.
+				PRINTL
 				IF RAND:5 == 0
 					CFLAG:42 = 400
 					IF ISMALE()
 						;#region
-						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 尻穴に喰い付いたサドル촉수はそのまま下着に同化し、
+						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 엉덩이 구멍에 달라 붙은 안장 속 촉수는 그대로 속옷에 동화되어
 						;#endregion
 					ELSE 
-						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 秘所に喰い付いたサドル촉수はそのまま下着に同化し、
+						PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 음부에 달라 붙은 안장 속 촉수는 그대로 속옷에 동화되어
 					ENDIF
-					PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%弄び続ける拘束具へと変貌を遂げた…
+					PRINTFORMW %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")% 계속 농락하는 구속구로 변모했다…
 				ELSE
-					PRINTFORML 配達を終えて店に戻った所でサドルは元に戻った。
+					PRINTFORML 배달을 마치고 가게로 돌아오자 안장은 원래대로 돌아갔다.
 					IF ISMALE()
 						;#region
-						PRINTFORML 自転車を降りて腸液が滴るサドルをよく調べても、
+						PRINTFORML 자전거에서 내려 장액이 떨어지는 안장을 잘 살펴 보았지만
 						;#endregion
 					ELSE 
-						PRINTFORML 自転車を降りて愛液が滴るサドルをよく調べても、
+						PRINTFORML 자전거에서 내려 애액이 떨어지는 안장을 잘 살펴 보았지만
 					ENDIF
-					PRINTFORML これといった異常は見つけられなかった…
+					PRINTFORML 특별한 이상은 발견되지 않았다……
 				ENDIF
 				;습득
 				JUEL:습득 += 75
 				;치정
 				JUEL:치정 += 100
 			ELSEIF RAND:3 == 0 && CFLAG:254 && ISHOLE() == 1
-				PRINTFORMW 配達中のスポーツ紙の記事が%PRINT_TRANSCALLNAME(TARGET)%의 目に止まった。
+				PRINTFORMW 배달 도중 스포츠 기사가 %PRINT_TRANSCALLNAME(TARGET)%의 눈에 띄었다.
 				PRINTFORML
 				IF RAND:3 == 0 && EXP:매료경험 >= 100
 					IF ISMANLY()
 						;#region
-						PRINTFORML 「独占スクープ！アイドル魔法少年%PRINT_TRANSCALLNAME(TARGET)%、陵辱の瞬間！？」
+						PRINTFORML 「독점 특종! 아이돌 마법소년 %PRINT_TRANSCALLNAME(TARGET)%, 능욕의 순간！？」
 						;#endregion
 					ELSE 
-						PRINTFORML 「独占スクープ！アイドル魔法少女%PRINT_TRANSCALLNAME(TARGET)%、陵辱の瞬間！？」
+						PRINTFORML 「독점 특종! 아이돌 마법소녀 %PRINT_TRANSCALLNAME(TARGET)%, 능욕의 순간！？」
 					ENDIF
 					IF ISMANLY()
 						;#region
-						PRINTFORML 「元スタッフに突撃インタビュー。魔法少年の実態に迫る！」
+						PRINTFORML 「전 스태프 돌격 인터뷰, 마법소년의 실태에 다가가다！」
 						;#endregion
 					ELSE 
-						PRINTFORML 「元スタッフに突撃インタビュー。魔法少女の実態に迫る！」
+						PRINTFORML 「전 스태프 돌격 인터뷰, 마법소녀의 실태에 다가가다！」
 					ENDIF
 					PRINTFORML 「事務所はコメント拒否の一点張り。陵辱の事実や如何に」
 				ELSEIF RAND:2 == 0 && INRANGE(TALENT:학생, 1, 2)
@@ -201,7 +201,7 @@ SELECTCASE ARG
 			ELSE
 				PRINTL 
 			ENDIF
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%{RESULT:0}件に新聞配達し、{PAYMENT}＄の報酬を得ました。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%{RESULT:0}件に신문 배달し、{PAYMENT}＄の報酬を得ました。
 			IF LOCAL:2 > 0
 				FLAG:853 += LOCAL:2
 				PRINTFORML 인기도가 {LOCAL:2}上がった
@@ -209,9 +209,9 @@ SELECTCASE ARG
 
 		;ヒーローショー(以下の項目は男に非対応なのでここで確定させる)
 		ELSEIF RAND:3 == 0 || (ISHOLE() == 0)
-			PRINTL アルバイト（ヒーローショー）
+			PRINTL 아르바이트（ヒーローショー）
 			PRINTL 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%活動費を稼ぐためにヒーローショーに出演するアルバイトをすることにしました。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%活動費を稼ぐためにヒーローショーに出演する아르바이트를 하기로 했습니다.
 			IF EXP:매료경험 >= 200 && ISHOLE() == 1
 				PRINTL 「大きいお兄さん」の数がかなり多いようです…
 			ELSEIF EXP:매료경험 >= 100 && ISHOLE() == 1
@@ -404,9 +404,9 @@ SELECTCASE ARG
 			ENDIF
 			;ウェイトレス(GIRLY限定)
 		ELSEIF RAND:2 == 0
-			PRINTL アルバイト（ウェイトレス）
+			PRINTL 아르바이트（ウェイトレス）
 			PRINTL 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ファミレスでウェイトレスのアルバイトをすることにしました。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%ファミレスでウェイトレスの아르바이트를 하기로 했습니다.
 			;매료경험40以上
 			IF EXP:매료경험 >= 40 && ISHOLE() == 1
 				PRINTFORML 接客の最中、お客さんに身体を触られました。
@@ -439,9 +439,9 @@ SELECTCASE ARG
 			ENDIF
 			;食堂(GIRLY限定)
 		ELSE
-			PRINTL アルバイト（厨房手伝い）
+			PRINTL 아르바이트（厨房手伝い）
 			PRINTL 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%食堂で厨房手伝いのアルバイトをすることにしました。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%食堂で厨房手伝いの아르바이트를 하기로 했습니다.
 			IF RAND:3 == 0
 				PRINTFORML 卵のケースを運ぶ途中、同僚が%PRINT_TRANSCALLNAME(TARGET)%의 お尻を撫で回した。
 				PRINTFORML 
@@ -602,7 +602,7 @@ SELECTCASE ARG
 		ELSE
 			PRINTL 研究所助手
 			PRINTL 
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%研究所で助手としてアルバイトをこなしました。
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%研究所で助手として아르바이트をこなしました。
 			PRINTL 
 			;구상
 			TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_KENKYU_normal")
@@ -614,7 +614,7 @@ SELECTCASE ARG
 			ELSE
 				PRINTL 
 			ENDIF
-			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%アルバイトの報酬として{PAYMENT}＄を得ました
+			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%아르바이트の報酬として{PAYMENT}＄を得ました
 			IF TALENT:변신능력 == -1 && RAND:4 == 0
 				BASE:지성 += 3
 				PRINTFORML 지성の基礎値が3上がった
@@ -641,6 +641,10 @@ SELECTCASE ARG
 				PRINTL 처녀 상실
 				PRINTL 
 				TALENT:처녀 = -1
+				CFLAG:206 = 2
+				PRINTW
+				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+				PRINTW
 			ENDIF
 			IF RAND:2 == 0
 				PRINTFORML 上等な餌を前にした촉수たちは先を争うように%PRINT_TRANSCALLNAME(TARGET)%의 身体に殺到し、穴という穴を陵辱していく。
@@ -718,6 +722,10 @@ SELECTCASE ARG
 					PRINTL 처녀 상실
 					PRINTL 
 					TALENT:처녀 = -1
+					CFLAG:206 = 2
+					PRINTW
+					TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+					PRINTW
 				ENDIF
 				;구상
 				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_BATTLE_haibokuA")
@@ -1209,7 +1217,10 @@ SELECTCASE ARG
 					PRINTW 
 					PRINTL 처녀 상실
 					CFLAG:206 = 8
-					TALENT:처녀 *= -1
+					TALENT:처녀 = -1
+					PRINTW
+					TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+					PRINTW
 				ELSEIF NAMAHAME > 1
 					PRINTL 言われるがまま질내사정のおねだりをさせられ、屈従の証を胎内に注ぎ込まれてしまった…
 				ELSE
@@ -2140,6 +2151,9 @@ SELECTCASE ARG
 				PRINTW 
 				TALENT:처녀 = -1
 				EXP:이상경험 += 1
+				PRINTW 
+				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+				PRINTW
 			ENDIF
 			IF TALENT:오토코노코 > 0 && ABL:Ａ감각 < 2
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%浮浪者の不潔なペニスをしゃぶらされながら、
@@ -2194,6 +2208,9 @@ SELECTCASE ARG
 				PRINTW 
 				TALENT:처녀 = -1
 				EXP:이상경험 += 1
+				PRINTW
+				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+				PRINTW
 			ELSEIF TALENT:오토코노코 > 0 && ABL:Ａ감각 < 2
 				; #region 
 				PRINTFORM %PRINT_TRANSCALLNAME(TARGET)%의 密やかな애널は
@@ -2263,6 +2280,9 @@ SELECTCASE ARG
 				PRINTW 
 				TALENT:처녀 = -1
 				EXP:이상경험 += 1
+				PRINTW
+				TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+				PRINTW
 			ENDIF
 			;구상
 			TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEISAN_TOILET_dog")
@@ -2802,8 +2822,12 @@ SELECTCASE ARG
 				ELSE
 					PRINTL 
 				ENDIF
-				SIF ISFEMALE()
+				IF ISFEMALE()
 					PRINTL 처녀 상실
+					PRINTW
+					TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+					PRINTW
+				ENDIF
 				PRINTL 
 				IF TALENT:감정결여 > 0
 					IF ISMALE()
@@ -3406,7 +3430,7 @@ SIF TALENT:행운아 > 0
 	LOCAL:151 = 125
 
 SELECTCASE ARG:0
-		;アルバイト
+		;아르바이트
 	CASE 0
 		SELECTCASE ARG:1
 				;バイト成功
@@ -3507,8 +3531,12 @@ SELECTCASE ARG:0
 				EXP:절정경험 += LOCAL:121 * (10 + RAND:2) / 100
 				EXP:정액경험 += LOCAL:121 * (10 + RAND:2) / 100
 				EXP:펠라경험 += LOCAL:121 * (10 + RAND:2) / 100
-				SIF ISPENIS()
-					EXP:사정경험 += LOCAL:121 * (1 + RAND:3) / 100
+				IF ISPENIS()
+					LOCAL:666 += LOCAL:121 * (1 + RAND:3) / 100
+					EXP:사정경험 += LOCAL:666
+					CFLAG:650 += LOCAL:666
+					LOCAL:666 = 0
+				ENDIF
 				SIF TALENT:모유체질 > 0
 					EXP:모유경험 += LOCAL:121 * (10 + RAND:3) / 100
 				SIF TALENT:오줌싸개버릇 > 0
@@ -3534,8 +3562,12 @@ SELECTCASE ARG:0
 		EXP:봉사쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:고통쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:자위경험 += LOCAL:121 * (2 + RAND:3) / 100
-		SIF ISPENIS()
-			EXP:사정경험 += LOCAL:121 * (1 + RAND:3 * 1) / 100
+		IF ISPENIS()
+			LOCAL:666 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:사정경험 += LOCAL:666
+			CFLAG:650 += LOCAL:666
+			LOCAL:666 = 0
+		ENDIF
 		SIF TALENT:모유체질 > 0
 			EXP:모유경험 += LOCAL:121 * (1 + RAND:3) / 100
 		SIF TALENT:오줌싸개버릇 > 0
@@ -3562,8 +3594,12 @@ SELECTCASE ARG:0
 		EXP:봉사쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:고통쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:자위경험 += LOCAL:121 * (2 + RAND:3) / 100
-		SIF ISPENIS()
-			EXP:사정경험 += LOCAL:121 * (1 + RAND:3) / 100
+		IF ISPENIS()
+			LOCAL:666 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:사정경험 += LOCAL:666
+			CFLAG:650 += LOCAL:666
+			LOCAL:666 = 0
+		ENDIF
 		SIF TALENT:모유체질 > 0
 			EXP:모유경험 += LOCAL:121 * (1 + RAND:3) / 100
 		SIF TALENT:오줌싸개버릇 > 0
@@ -3590,8 +3626,12 @@ SELECTCASE ARG:0
 		EXP:봉사쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:고통쾌락경험 += LOCAL:121 * (2 + RAND:3) / 100
 		EXP:자위경험 += LOCAL:121 * (2 + RAND:3) / 100
-		SIF ISPENIS()
-			EXP:사정경험 += LOCAL:121 * (1 + RAND:3) / 100
+		IF ISPENIS()
+			LOCAL:666 += LOCAL:121 * (1 + RAND:3) / 100
+			EXP:사정경험 += LOCAL:666
+			CFLAG:650 += LOCAL:666
+			LOCAL:666 = 0
+		ENDIF
 		SIF TALENT:모유체질 > 0
 			EXP:모유경험 += LOCAL:121 * (1 + RAND:3) / 100
 		SIF TALENT:오줌싸개버릇 > 0
@@ -3682,6 +3722,12 @@ SELECTCASE ARG:0
 					EXP:Ｖ경험 += 1 + RAND:3
 				EXP:Ａ경험 += RAND:3
 				EXP:절정경험 += RAND:3
+				IF ISPENIS()
+					LOCAL:666 += RAND:3
+					EXP:사정경험 += LOCAL:666
+					CFLAG:650 += LOCAL:666
+					LOCAL:666 = 0
+				ENDIF
 				EXP:정액경험 += 1 + RAND:3
 				EXP:펠라경험 += 1 + RAND:2
 				BASE:체력 = LIMIT(BASE:체력 - SYOUHI_KEIGEN(TARGET,LOCAL:120,체력), 0 , BASE:체력)
@@ -3712,6 +3758,12 @@ SELECTCASE ARG:0
 				LOCAL:130 = LOCAL:130 * (70 + RAND:4) / 100
 				SIF ISFEMALE()
 					EXP:Ｖ경험 += 15 + RAND:5
+				IF ISPENIS()
+					LOCAL:666 += 5 + RAND:15
+					EXP:사정경험 += LOCAL:666
+					CFLAG:650 += LOCAL:666
+					LOCAL:666 = 0
+				ENDIF
 				EXP:Ａ경험 += 15 + RAND:5
 				EXP:절정경험 += 10 + RAND:5
 				EXP:정액경험 += 15 + RAND:5

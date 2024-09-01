@@ -221,6 +221,8 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 			PRINTL 
 		NEXT
 	ELSE
+		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%応援しようと声を張り上げている！
+		PRINTW 
 		IF PRINT_THEME() != ""
 			LOCALS = %PRINT_THEME()%
 		ELSEIF ISMANLY() && TALENT:변신시ＴＳ == 0 && TALENT:변신시오토코노코 <= 0
@@ -228,8 +230,6 @@ ELSEIF RAND:100 > 50 || GETBATTLESITUATION("시민 확정") == 1
 		ELSE
 			LOCALS = 魔法少女
 		ENDIF
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%応援しようと声を張り上げている！
-		PRINTW 
 		CALL CLEARRANDCHOOSE
 		FOR LOCAL, 0, 10
 			CALL ADDRANDCHOOSE,(LOCAL + 1)
@@ -313,17 +313,8 @@ ENDIF
 SIF FLAG:70 + FLAG:71 == 0
 	RETURN
 
-IF CFLAG:41 == 401
+IF EXP:함락경험 > 0
 	PRINTL 
-	IF PRINT_THEME() != ""
-		LOCALS = %PRINT_THEME()%
-	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:오토코노코 <= 0 && TALENT:변신시오토코노코 <= 0
-		; #region 
-		LOCALS = 魔装少年
-		; #endregion
-	ELSE
-		LOCALS = 魔法少女
-	ENDIF
 	PRINTL 不意に、後ろの方から声がした・・・！
 	PRINT 見れば
 	IF (FLAG:70 + FLAG:71) >= 5
@@ -339,6 +330,15 @@ IF CFLAG:41 == 401
 	PRINTL の身の安全も顧みずに
 	PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%に怨嗟の声を張り上げている！
 	PRINTW 
+	IF PRINT_THEME() != ""
+		LOCALS = %PRINT_THEME()%
+	ELSEIF ISMALE() && TALENT:변신시ＴＳ == 0 && TALENT:오토코노코 <= 0 && TALENT:변신시오토코노코 <= 0
+		; #region 
+		LOCALS = 魔装少年
+		; #endregion
+	ELSE
+		LOCALS = 魔法少女
+	ENDIF
 	CALL CLEARRANDCHOOSE
 	FOR LOCAL, 0, 10
 		CALL ADDRANDCHOOSE,(LOCAL + 1)
@@ -517,7 +517,7 @@ IF FLAG:72
 	ENDIF
 ELSEIF RAND:100 < 35
 	;흑화経験有り
-	IF CFLAG:41 == 401
+	IF EXP:함락경험 > 0
 		IF RAND:3 == 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%襲われそうになっていた一般人を寸でのところで助け出したが
 			PRINTFORML 一般人は悲鳴を上げながら飛び退いた・・・
@@ -713,7 +713,7 @@ IF FLAG:72
 		ENDIF
 	ENDIF
 ELSEIF RAND:100 < 35
-	IF CFLAG:41 == 401
+	IF EXP:함락경험 > 0
 		IF RAND:3 == 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%逃げ遅れた一般人を庇って避けきれなかったようだ・・・
 			PRINTFORML 一般人から歓声が上がった。
@@ -927,7 +927,7 @@ IF FLAG:72
 	ENDIF
 	PRINTW 
 ELSEIF RAND:100 < 75
-	IF ITEM:401 == 1
+	IF EXP:함락경험 > 0
 		IF RAND:4 == 0
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%犯そうと近付いた一般人が
 			PRINTFORML 촉수に突き飛ばされて尻餅をついた・・・
@@ -1031,7 +1031,7 @@ IF CFLAG:286 == 0
 	PRINTFORML 男たちが촉수の淫気に中てられた可能性に思い当たった%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	PRINTFORML 사정させれば正気に돌아간다はずだと覚悟を決めた・・・
 	;흑화経験有りなら罪悪感で抵抗できない
-ELSEIF RAND:3 == 0 && ITEM:401 == 1
+ELSEIF RAND:3 == 0 && EXP:함락경험 > 0
 	PRINTFORM 男たちは苦々しげに、「お前のせいで
 	IF RAND:8 == 0
 		PRINT 妻
@@ -1166,7 +1166,7 @@ IF CFLAG:286 == 0 || RAND:2 == 0
 	;二度目以降
 ELSE
 	PRINTFORML すると男はそのまま%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%押し倒し、
-	IF ITEM:401 == 1 ;흑화経験有り
+	IF EXP:함락경험 > 0 ;흑화経験有り
 		PRINTFORML 何度も謝罪の言葉を口にする%조사처리(PRINT_TRANSCALLNAME(TARGET),"를")%平手打ちで黙らせ、
 	ENDIF
 	IF ISMALE()
@@ -1237,6 +1237,9 @@ ELSEIF TALENT:처녀 > 0
 	FONTBOLD
 	PRINTL 처녀 상실
 	FONTREGULAR
+	PRINTW
+	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+	PRINTW
 	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
 		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
 		IF TALENT:주관시점 > 0

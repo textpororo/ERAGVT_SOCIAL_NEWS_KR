@@ -473,6 +473,7 @@ PRINTFORM %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%
 	;대학생以外
 		PRINTFORML 授業を受けている・・・
 	ENDIF
+;수업 중 자위행위
 IF RAND:100 < LOCAL && ABL:욕망 > 0
 	IF  RAND:3 == 0 && TALENT:촉수의포로 == 1
 		PRINTFORML 席に着いてはいるものの%PRINT_CALLNAME(TARGET)%はうわの空で、
@@ -525,7 +526,7 @@ IF RAND:100 < LOCAL && ABL:욕망 > 0
 			ELSE
 				PRINTFORM そっと耳打ちされた吐息の刺激で
 			ENDIF
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は耐えていた絶頂を迎えてしまった。
+			PRINTFORML %PRINT_CALLNAME(TARGET)%は耐えていた절정を迎えてしまった。
 			PRINTFORML 顔を真っ赤にして体を痙攣させ、口元を抑えながら涙をこぼす%PRINT_CALLNAME(TARGET)%を見て
 			PRINTFORML 重症の風邪だと思い込んだ男子生徒は、堂々と挙手して%PRINT_CALLNAME(TARGET)%を保健室へ連れて行った……
 		ENDIF
@@ -558,13 +559,21 @@ IF RAND:100 < LOCAL && ABL:욕망 > 0
 	ELSE
 		PRINTFORML 幸いにも周りにバレた様子はなかった……
 	ENDIF
+	PRINTFORML 
+	PRINTFORML 
+	;자위경험
+	EXP:자위경험 += 1
+	PRINTFORML 자위경험：＋1
+	;절정경험
+	EXP:절정경험 += 1
+	PRINTFORML 절정경험：＋1
 ELSE
 	;通常の授業内容
 	IF TALENT:학생 == 4
 		IF RAND:5 == 0
 			PRINTFORML 講義に集中してしっかり内容を理解した。
 		ELSEIF RAND:4 == 0
-			PRINTFORML 진지함に講義の内容をノートに書き写した。
+			PRINTFORML 真面目に講義の内容をノートに書き写した。
 		ELSEIF RAND:3 == 0
 			PRINTFORML 講義の内容に着いていくので精一杯だ。
 		ELSEIF RAND:2 == 0
@@ -576,7 +585,7 @@ ELSE
 		IF RAND:5 == 0
 			PRINTFORML 授業に集中してしっかり内容を理解した。
 		ELSEIF RAND:4 == 0
-			PRINTFORML 진지함に黒板に書かれた内容をノートに書き写した。
+			PRINTFORML 真面目に黒板に書かれた内容をノートに書き写した。
 		ELSEIF RAND:3 == 0
 			PRINTFORML 授業の内容に着いていくので精一杯だ。
 		ELSEIF RAND:2 == 0
@@ -696,7 +705,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
+					PRINTFORML 教師に正気に戻るようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -732,9 +741,21 @@ IF RAND:5 == 0 && ISFEMALE()
 			PRINTFORML 組織の別働部隊が後処理と情報操作に乗り出していた。
 			PRINTFORML 現場近くに새끼 촉수がいたとの目撃情報があり、それが淫気の発生源らしいとの報告だった。
 			PRINTFORML 教師やクラスメイト達はそろって記憶が欠落していた…
+			PRINTFORML 
+			PRINTFORML 
+			;피간경험
+			EXP:피간경험 += 1
+			PRINTFORML 피간경험：＋1
+			PRINTFORML 
+			;Ｖ경험
+			EXP:Ｖ경험 += 3
+			PRINTFORML Ｖ경험：＋3
+			;절정경험
+			EXP:절정경험 += 1
+			PRINTFORML 절정경험：＋1
 		;普通の
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体は男子と密着してしまうが、真剣に関節技を決めようと진지함に取り組む。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体は男子と密着してしまうが、真剣に関節技を決めようと真面目に取り組む。
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%촉수から人々を救うにも限界はある。
 			PRINTFORML この護身術が一人でも多くの女生徒の、一瞬でも逃げるチャンスを作れるとしたら
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%良き手本となることで誰かを救う代わりにならないかと考えた。
@@ -759,7 +780,7 @@ IF RAND:5 == 0 && ISFEMALE()
 			ELSE
 				PRINTFORML 勃起しているのを悟られないように腰を引いている…
 			ENDIF
-			PRINTFORML 진지함にやれと体育教師の檄が飛んでいる…
+			PRINTFORML 真面目にやれと体育教師の檄が飛んでいる…
 		ENDIF
 	;性教育
 	ELSE
@@ -812,7 +833,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
+					PRINTFORML 教師に正気に戻るようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -860,7 +881,7 @@ IF RAND:5 == 0 && ISFEMALE()
 				PRINTFORML 抵抗すれば인간離れした体育教師の暴力で無理矢理従わされた。
 			ENDIF
 			IF TALENT:교제상대 > 0 || TALENT:청순파 > 0 || TALENT:초심 > 0
-				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無駄と知りながら皆に正気に돌아간다ように最後まで説得を続けた…
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無駄と知りながら皆に正気に戻るように最後まで説得を続けた…
 				PRINTFORML 教師が%PRINT_TRANSCALLNAME(TARGET)%에 사정し、男子生徒が列に並んで順番に犯し続けている間も
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%壊れた機械人形のようにくりかえし説得の言葉を力なく呟き続けていた…
 			ENDIF
@@ -887,10 +908,42 @@ IF RAND:5 == 0 && ISFEMALE()
 			PRINTFORML 現場近くに새끼 촉수がいたとの目撃情報があり、それが淫気の発生源らしいとの報告だった。
 			PRINTFORML 教師やクラスメイト達はそろって記憶が欠落していた…
 			;授業でピルが配られるので避妊は大丈夫
+			PRINTFORML 
+			PRINTFORML 
+			IF JISSHU == 2
+				;피간경험
+				EXP:피간경험 += 1
+				PRINTFORML 피간경험：＋1
+				;Ｖ경험
+				EXP:Ｖ경험 += 10
+				PRINTFORML Ｖ경험：＋10
+				;절정경험
+				EXP:절정경험 += 5
+				PRINTFORML 절정경험：＋5
+				;펠라경험
+				EXP:펠라경험 += 3
+				PRINTFORML 펠라경험：＋3
+			ELSE
+				;피간경험
+				EXP:피간경험 += 1
+				PRINTFORML 피간경험：＋1
+				;Ｖ경험
+				EXP:Ｖ경험 += 10
+				PRINTFORML Ｖ경험：＋10
+				;절정경험
+				EXP:절정경험 += 5
+				PRINTFORML 절정경험：＋5
+				;정액경험
+				EXP:정액경험 += 3
+				PRINTFORML 정액경험：＋3
+				;펠라경험
+				EXP:펠라경험 += 3
+				PRINTFORML 펠라경험：＋3
+			ENDIF
 		ELSE
 			;何も起きない
 			PRINTFORML 教師がコンドームやピルの使い方、性感染症の種類や危険を解説している。
-			PRINTFORML 女子生徒のほとんどは진지함に聞いているが、男子生徒は茶化す者が多いようだ。
+			PRINTFORML 女子生徒のほとんどは真面目に聞いているが、男子生徒は茶化す者が多いようだ。
 		ENDIF
 	ENDIF
 ;오토코노코ver
@@ -925,7 +978,7 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
+					PRINTFORML 教師に正気に戻るようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -957,9 +1010,21 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 			PRINTFORML 教師やクラスメイト達はそろって記憶が欠落していた…
 			PRINTL 
 			PRINTFORML 夢ではなかった証拠に確かな異物感の残る%PRINT_TRANSCALLNAME(TARGET)%의 菊門から、どろりと白濁が溢れた…
+			PRINTFORML 
+			PRINTFORML 
+			;피간경험
+			EXP:피간경험 += 1
+			PRINTFORML 피간경험：＋1
+			PRINTFORML 
+			;Ａ경험
+			EXP:Ａ경험 += 3
+			PRINTFORML Ａ경험：＋3
+			;절정경험
+			EXP:절정경험 += 1
+			PRINTFORML 절정경험：＋1
 		;普通の
 		ELSE
-			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体は男子と密着してしまうが、真剣に関節技を決めようと진지함に取り組む。
+			PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 身体は男子と密着してしまうが、真剣に関節技を決めようと真面目に取り組む。
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%촉수から人々を救うにも限界はある。
 			PRINTFORML この護身術が一人でも多くの女生徒の、一瞬でも逃げるチャンスを作れるとしたら
 			PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%良き手本となることで誰かを救う代わりにならないかと考えた。
@@ -973,7 +1038,7 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 			ELSE
 				PRINTFORML 勃起しているのを悟られないように腰を引いている…
 			ENDIF
-			PRINTFORML 진지함にやれと体育教師の檄が飛んでいる…
+			PRINTFORML 真面目にやれと体育教師の檄が飛んでいる…
 		ENDIF
 	;性教育
 	ELSE
@@ -988,10 +1053,10 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 			IF RAND: 2 == 0
 				JISSHU = 2
 				PRINTFORML それまで脇に立っていた体育教師が突然、これよりコンドームの実習訓練を行うと言い出した。
-			;ピル実習
+			;集団行動実習
 			ELSE
-				JISSHU = 3
-				PRINTFORML それまで脇に立っていた体育教師が突然、これよりピルの実習訓練を行うと言い出した。
+				JISSHU = 4
+				PRINTFORML それまで脇に立っていた体育教師が突然、これより輪姦の実習訓練を行うと言い出した。
 			ENDIF
 			;共通承前
 			PRINTFORML 教室はざわめきに包まれると同時に、どこからか촉수の淫気が侵入し室内を満たしていく。
@@ -1000,10 +1065,10 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 			IF JISSHU == 2
 				PRINTFORML 「%조사처리(PRINT_TRANSCALLNAME(TARGET),"가")%ゴムの実習訓練に立候補するそうだ」と教壇の前に立たせられた。
 				PRINTFORML 手首をつかんだ体育教師の握力は明らかに인간離れしていて、びくともしない。
-			;ピル
+			;集団行動
 			ELSE
 				PRINTFORML 「実演をするのは……%PRINT_TRANSCALLNAME(TARGET)%でいいな」
-				PRINTFORML 「ピルの避妊率は99％だ。好きなだけやっていいぞ」
+				PRINTFORML 「妊娠の可能性は無いから、好きなだけやっていいぞ」
 				PRINTFORML 体育教師の無慈悲な宣言が言い渡された。
 			ENDIF
 			;共通　脱がされる
@@ -1020,7 +1085,7 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 				IF RAND: 3 == 0
 					PRINTFORML 涙をこぼしながらなんとか抜け出そうと必死に抵抗している
 				ELSEIF RAND: 2 == 0
-					PRINTFORML 教師に正気に돌아간다ようにと必死に説得している
+					PRINTFORML 教師に正気に戻るようにと必死に説得している
 				ELSE
 					PRINTFORML 誰かが偶然助けてくれることを願って必死に助けを求めている
 				ENDIF
@@ -1047,13 +1112,22 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 				ELSE
 					PRINTFORML もはや諦めた表情で教師の張りつめた男根に手コキをしながらコンドームを付けている。
 				ENDIF
+			ELSE
+				PRINTFORML 「まず相手に逃げられないようにする」
+				PRINTFORML 「殴って言う事を聞かせる方法もあるが、今日は複数人で手足を抑える方法にする」
+				PRINTFORMW 体育教師は生徒に%PRINT_TRANSCALLNAME(TARGET)%의手足を押さえつけるように指示を出した。
+				PRINTFORML 「動けないようにしたら次は挿入だ」
 			ENDIF
 			;共通
 			PRINTFORML 体育教師は%PRINT_TRANSCALLNAME(TARGET)%의 애널に前戯もなく挿入し、事務作業のように腰を前後させた。
-			PRINTFORML 「これは避妊具の大切さを知る実習だから、オマンコ以外に入れたら駄目だぞ」
+			IF JISSHU == 2
+				PRINTFORML 「これは避妊具の大切さを知る実習だから、オマンコ以外に入れたら駄目だぞ」
+			ELSE
+				PRINTFORML 「次の人間の事を考える場合、一周目は中出ししない場合もあるが、今日は初めからオマンコに中出しするぞ」
+			ENDIF
 			PRINTFORML 思わずそこはオマンコなんかじゃないと喉まで出掛けた抗議は、腸壁をぐりっと抉られた喘ぎに変わってしまった…
 			PRINTFORML 
-			SIF JISSHU == 3
+			SIF JISSHU == 4
 				PRINTFORML 「お前らの青臭いザーメンをたっぷり질내に出してやれ」
 			IF ABL:Ａ감각 < 2
 				PRINTL 
@@ -1071,7 +1145,7 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 				PRINTFORML 抵抗すれば인간離れした体育教師の暴力で無理矢理従わされた。
 			ENDIF
 			IF TALENT:교제상대 > 0 || TALENT:청순파 > 0 || TALENT:초심 > 0
-				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無駄と知りながら皆に正気に돌아간다ように最後まで説得を続けた…
+				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%無駄と知りながら皆に正気に戻るように最後まで説得を続けた…
 				PRINTFORML 教師が%PRINT_TRANSCALLNAME(TARGET)%에 사정し、男子生徒が列に並んで順番に犯し続けている間も
 				PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%壊れた機械人形のようにくりかえし説得の言葉を力なく呟き続けていた…
 			ENDIF
@@ -1101,10 +1175,50 @@ ELSEIF RAND:5 == 0 && TALENT:오토코노코 > 0
 			PRINTFORML 夢ではなかった証拠にまだなにか咥えているような異物感の残る%PRINT_TRANSCALLNAME(TARGET)%의 菊門は、
 			PRINTFORML いまだに口を閉じずにひくひくと脈動し続けていて、
 			PRINTFORML 大量に注がれたクラスの男子全員の混合白濁液がごぽっごぽっと溢れて止まらなかった…
+			PRINTFORML 
+			PRINTFORML 
+			IF JISSHU == 2
+				;피간경험
+				EXP:피간경험 += 1
+				PRINTFORML 피간경험：＋1
+				PRINTFORML 
+				;Ａ경험
+				EXP:Ａ경험 += 10
+				PRINTFORML Ａ경험：＋10
+				;절정경험
+				EXP:절정경험 += 5
+				PRINTFORML 절정경험：＋5
+				;펠라경험
+				EXP:펠라경험 += 3
+				PRINTFORML 펠라경험：＋3
+				;사정경험
+				EXP:사정경험 += 3
+				PRINTFORML 사정경험：＋3
+			ELSE
+				;피간경험
+				EXP:피간경험 += 1
+				PRINTFORML 피간경험：＋1
+				PRINTFORML 
+				;Ａ경험
+				EXP:Ａ경험 += 10
+				PRINTFORML Ａ경험：＋10
+				;절정경험
+				EXP:절정경험 += 5
+				PRINTFORML 절정경험：＋5
+				;정액경험
+				EXP:정액경험 += 3
+				PRINTFORML 정액경험：＋3
+				;펠라경험
+				EXP:펠라경험 += 3
+				PRINTFORML 펠라경험：＋3
+				;사정경험
+				EXP:사정경험 += 1
+				PRINTFORML 사정경험：＋1
+			ENDIF
 		ELSE
 			;何も起きない
 			PRINTFORML 教師がコンドームやピルの使い方、性感染症の種類や危険を解説している。
-			PRINTFORML 女子生徒のほとんどは진지함に聞いているが、男子生徒は茶化す者が多いようだ。
+			PRINTFORML 女子生徒のほとんどは真面目に聞いているが、男子生徒は茶化す者が多いようだ。
 		ENDIF
 	ENDIF
 ;従来の体育
@@ -1118,7 +1232,7 @@ ELSE
 		ELSEIF RAND:4 == 0
 			PRINTFORML 飛び箱をする様だ。
 		ELSEIF RAND:3 == 0
-			PRINTFORML マット운동을 하는 모양이야.
+			PRINTFORML マット運動をする様だ。
 		ELSEIF RAND:2 == 0
 			PRINTFORML 球技をする様だ。
 		ELSE
@@ -1131,9 +1245,9 @@ ELSE
 		ELSEIF RAND:5 == 0
 			PRINTFORML マラソンをする様だ。
 		ELSEIF RAND:4 == 0
-			PRINTFORML 機械운동을 하는 모양이야.
+			PRINTFORML 機械運動をする様だ。
 		ELSEIF RAND:3 == 0
-			PRINTFORML マット운동을 하는 모양이야.
+			PRINTFORML マット運動をする様だ。
 		ELSEIF RAND:2 == 0
 			PRINTFORML 球技をする様だ。
 		ELSE
@@ -1297,7 +1411,7 @@ IF RAND:10 == 0 && ((((CFLAG:40 == 101 && FIGURE_SPLIT(EQUIP:TARGET:1, 4) != 1 |
 	ELSEIF CFLAG:42 == 300 || CFLAG:42 == 307 || CFLAG:42 == 308 || CFLAG:42 == 311 || CFLAG:42 == 397 || CFLAG:42 == 400
 		SIF CFLAG:42 == 400
 			PRINT 普通のパンツに擬態した
-		PRINTFORM %ITEMNAME:(CFLAG:42)%を
+		PRINTFORM %조사처리(ITEMNAME:(CFLAG:42),"를")%
 	ELSE
 		CALL SHITAGI_COLOR
 			PRINT の

@@ -117,7 +117,7 @@ PRINTL
 PRINTW 
 PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
 PRINTL 
-PRINTFORM 　전라보다도 선정적인 모습이 된 %PRINT_CALLNAME(TARGET)%에게 네 마리의 촉수가 휘감겨, 사지를 
+PRINTFORM 　전라보다도 선정적인 모습이 된 %PRINT_CALLNAME(TARGET)%에게 4개의 촉수가 휘감겨와, 사지를 
 IF ISMALE()
 	;#region
 	PRINTL 큰 대자로 벌려 나간다.
@@ -258,26 +258,26 @@ PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・�
 PRINTL 
 IF ISMALE()
 	;#region
-	PRINTFORML 　　その後、少年達がどうなったかを知るものは……to be continued ?
+	PRINTFORML 　　그 후, 소년들이 어떻게 되었는지 아는 자는……to be continued ?
 	;#endregion
 ELSE 
-	PRINTFORML 　　その後、少女達がどうなったかを知るものは……to be continued ?
+	PRINTFORML 　　그 후, 소녀들이 어떻게 되었는지 아는 자는……to be continued ?
 ENDIF
 PRINTW
 $SKIP
 
-;エンドレスモードの場合
+;ENDLESS 모드일 경우
 CALL TENTACLE_SURVIVE, "NUM"
 LOCAL = FLAG:3 - RESULT
 IF GAME_OPTION_CHECK_F(OPTION_endless)
 	PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
-	;撃破数を記録
-	PRINTFORML 보스撃破記録　　{LOCAL} 体
+	;격파수를 기록
+	PRINTFORML 보스 격파 기록　　{LOCAL} 체
 	LOADGLOBAL
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
-		PRINTFORML 보스撃破の新記録を達成しました！
-		PRINTFORMW 　{GLOBAL:114}体 → {LOCAL}体
+		PRINTFORML 보스 격파 신기록을 달성했습니다！
+		PRINTFORMW 　{GLOBAL:114}체 → {LOCAL}체
 		PRINTL 
 		GLOBAL:114 = LOCAL
 		SAVEGLOBAL
@@ -291,7 +291,7 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 		FLAG:999 = -997
 	ELSE
 		PRINTL 　　GAME OVER모드로 이행합니다.
-		PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
+		PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하시면 됩니다.）
 		PRINTL 
 		;GAME OVER모드로 변경
 		CALL CHANGE_GAMEOVER_MODE
@@ -299,7 +299,7 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 	ENDIF
 ELSE
 	PRINTL 　　GAME OVER모드로 이행합니다.
-	PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하셔도 됩니다.）
+	PRINTW 　（모든 캐릭터가 계속 능욕당하며, 끝은 없습니다. 언제든 원하실 때에 종료하시면 됩니다.）
 	PRINTL 
 	;GAME OVER모드로 변경
 	CALL CHANGE_GAMEOVER_MODE
@@ -362,7 +362,7 @@ IF LOCAL:2 > 0
 	PRINTL .
 	PRINTL 
 	PRINTFORML 촉수에 의해 조종되던 사람들도 하나둘 정신을 차리기 시작했고,
-	PRINTFORM 동시에 세뇌되어 있던 %LOCALS:2%
+	PRINTFORM 동시에 세뇌되어 있었던 %LOCALS:2%
 	SIF LOCAL:2 >= 2
 		PRINT 들
 	PRINTFORML  또한, 제정신을 되찾을 수 있었다.
@@ -412,7 +412,7 @@ ELSE
 	PRINTL  멀리서 눈부시게 지켜보고 있었다.
 ENDIF
 PRINTL 
-PRINTL 싸움이 끝났다면, 정의의 영웅은 필요 없다.
+PRINTL 싸움이 끝났다면, 정의의 영웅은 필요가 없다.
 PRINTFORM %STR:2500%가 전멸한 시점에서, 자신
 SIF LOCAL:1 + LOCAL:3 == 0
 	PRINT 들
@@ -423,12 +423,15 @@ PRINTL ・・・・・・・・・・・・・・・・・・・・・・・・�
 PRINTL 
 PRINTFORML 몇 달 후, 그곳에는 다시 전쟁터에 나선 %PRINT_CALLNAME(TARGET)%의 모습이 있었다.
 PRINTDATAL
-	DATA 남극에 갑자기 출현한 "초공간 통로" 로부터, 안경을 쓴 펭귄을 비롯한 여러 외계 생명체가 날아와 도시를 덮치기 시작한 것이다.
+	DATA 남극에 갑자기 출현한 "초공간 통로" 로부터, 안경을 쓴 펭귄을 비롯한 여러 외계 생명체가 튀어나와 도시를 덮치기 시작한 것이다.
 	DATA 소녀들의 욕망을 먹고 성장한 "마녀" 와 남몰래 사투를 벌이고 있는 것이다.
 	DATA 일반 시민을 사로잡아 개조 인간을 만들어 내는 "가면 드라이버" 의 존재를 간과할 수는 없었던 것이다.
 	DATA "인류의 병기를 모방하는 수수께끼의 적" 의 침공을 막기 위해, 새로운 특수 조직이 결성된 것이다.
-	DATA 달 표면에서 날아온 "헬창 달토끼" 와 같은 새로운 위협과 밤낮으로 싸우고 있는 것이다.
-	DATAFORM 태평양의 심해에서 솟아 나온 수수께끼의 "괴수"들이, 인류의 새로운 위협이 되고 있었던 것이다.
+	DATA 달 표면에서 날아온 "헬창 달토끼" 와 같은 새로운 위협과 밤낮으로 싸우고 있던 것이다.
+	DATA 태평양의 심해에서 솟아 나온 수수께끼의 "괴수" 들이, 인류의 새로운 위협이 되고 있었던 것이다.
+	DATA 자신들을 "프리저 군" 이라고 칭하는 외계인들이 침략하기 시작한 것이다.
+	DATA 어둠의 문이 열리고 스스로를 "호드" 라고 칭하는 녹색 피부의 괴물들이 침공한 것이다.
+	DATA 갑작스레 나타난 수수께끼의 구조체와, 그것을 숭배하는 사이비 교단과의 싸움이 시작된 것이다.
 ENDDATA
 PRINTL 힘 있는 자에게는 책임이 따르는 법.
 PRINTFORMW 사람들의 평화를 위협하는 존재가 있는 한, %PRINT_CALLNAME(TARGET)%의 싸움은 끝나지 않는다・・・
@@ -544,7 +547,7 @@ IF TALENT:촉수의포로 > 0
 	ENDDATA
 	PRINTW  로서 두려움의 대상이 되었다・・・
 ELSE
-	PRINTL 원하지 않아도 몸이 마음대로 움직여, 이형 생물들의 뜻대로 조종당하는 살아있는 인형이 된 것이다.
+	PRINTL 원치 않아도 몸이 마음대로 움직여, 이형 생물들의 뜻대로 조종당하는 살아있는 인형이 된 것이다.
 	PRINTFORML %PRINT_CALLNAME(TARGET)%의 지식을 흡수한『%STR:2500%』는 조직적으로 사람들을 덮치게 되었고,
 	PRINTFORML 감정도 보이지 않으며 같은 인간을 서슴없이 살육해 가는 %조사처리(PRINT_CALLNAME(TARGET),"는")%
 	PRINT 인류의 배신자 
@@ -721,7 +724,7 @@ PRINTL それが人間の世界が終わった時間だった……
 PRINTL  
 PRINTW  
 
-;エンドレスモードの場合
+;ENDLESS 모드일 경우
 CALL TENTACLE_SURVIVE, "NUM"
 LOCAL = FLAG:3 - RESULT
 IF GAME_OPTION_CHECK_F(OPTION_endless)
@@ -733,7 +736,7 @@ IF GAME_OPTION_CHECK_F(OPTION_endless)
 	IF GLOBAL:114 < LOCAL
 		PRINTL 
 		PRINTFORML 보스 격파 신기록을 달성했습니다！
-		PRINTFORMW 　{GLOBAL:114}체 → {LOCAL}체
+		PRINTFORMW 　{GLOBAL:114} 체 → {LOCAL}체
 		PRINTL 
 		GLOBAL:114 = LOCAL
 		SAVEGLOBAL

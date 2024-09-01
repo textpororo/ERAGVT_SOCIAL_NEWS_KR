@@ -1,14 +1,14 @@
 ﻿;----------------------------------------------------------------------------------------------------------------------------
-;ナンパ判定
-;ナンパされるかどうかの判定と補正値計算用
+;헌팅 판정
+;헌팅될지 어떨지의 판정과 보정치 계산용
 @PASTIME_NANPA, ARG
 #DIM NANPA
 
-;남자は非対応
+;남자는 불가능
 SIF ISMANLY()
 	RETURN 0
 
-;ナンパ判定
+;헌팅 판정
 NANPA = 10 + RAND:10
 
 SIF TALENT:학생 == 1
@@ -69,7 +69,7 @@ ENDIF
 RETURN 0
 
 ;----------------------------------------------------------------------------------------------------------------------------
-;ナンパされた時の内容
+;헌팅되었을 때의 내용
 @MESSAGE_PASTIME_NANPA, ARG
 #DIM ＴＳキャラ
 #DIM 誘い内容
@@ -739,6 +739,9 @@ ELSEIF 誘い内容 == 4
 			PRINTFORML 戸惑いを見せつつ着替える%PRINT_TRANSCALLNAME(TARGET)%だが
 			PRINTFORML 変身時の衣装に比べれば…と考え気持ちを切り替えた。
 			PRINTFORML しかし、その表情は普段とは異なる可愛い衣装を着れて満更でもなさそうだ。
+		ELSEIF TALENT:남자 > 0
+			PRINTFORML 망설이면서도 갈아입은 %조사처리(PRINT_TRANSCALLNAME(TARGET),"이었")%지만
+			PRINTFORML 그 표정은 평소에는 입어볼 수 없는 옷을 입어볼 수 있어서 그런지 썩 나쁘진 않았다.
 		ELSE
 			PRINTFORML 戸惑いを見せつつ着替える%PRINT_TRANSCALLNAME(TARGET)%だが
 			PRINTFORML その表情は普段着ることのない可愛い衣装を着れて満更でもなさそうだ。
@@ -3164,10 +3167,10 @@ ELSEIF CHECK_HOLYVIRGIN_F()==1
 ELSEIF TALENT:처녀 > 0
 	FONTBOLD
 	PRINTL 처녀 상실
-	TALENT:처녀 = -1
-	CFLAG:206 = 11
-	LOCAL:20 = 500
 	FONTREGULAR
+	PRINTW
+	TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_LOSTVIRGIN")
+	PRINTW
 	IF (TALENT:음란 || ABL:욕망 >= 3 || ABL:마조끼 >= 3) && TALENT:초심 < 1
 		PRINTFORML 乱暴に처녀膜を引き裂かれる痛みに耐えながらも、
 		IF TALENT:주관시점 > 0

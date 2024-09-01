@@ -1,0 +1,3980 @@
+﻿;eraGVT 아르바이트 구상 표준적 ver0. 360
+;각 함수의 KOJO_111_의 0을 csv의 캐릭터 번호에 치환해 사용합니다
+;범용 캐릭터（캐릭터 번호 0의 캐릭터）의 구상을 작성하는 경우는 말미에 성격 번호를 붙여 주세요
+;
+;예:범용 캐릭터(캐릭터 번호 0)로 건강자(성격 번호 13)의 구상을 작성하는 경우
+;    KOJO_111_SEISAN_FAMILY_normal_13
+;
+;예:캐릭터 번호 1의 캐릭터로 구상을 작성하는 경우
+;    KOJO_1_SEISAN_FAMILY_normal
+;--------------------------------------------------
+
+;휴식
+;--------------------------------------------------
+@KOJO_111_REST
+PRINTW
+IF CFLAG:901 == 1 && RAND:3 == 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「Zzzz……」
+			PRINTW
+			PRINTFORMDL %타겟은% 아무래도 완전히 체력이 방전된 것인지 침대에서 쥐죽은듯 잠들어 있다…
+		CASE 1
+			PRINTFORML 「흐아암……」
+			PRINTW
+			PRINTFORMDL %타겟은% 간만의 휴식시간을 체력을 회복하는데 보내려는듯, 침대에 누워 잠들어 있다……
+		CASE 2
+			PRINTFORML 「끄으응……」
+			PRINTW
+			PRINTFORMDL %타겟은% 잠든 채로 잠꼬대를 하고 있다……
+	ENDSELECT
+	IF CFLAG:42 == 400
+		PRINTFORMDL 그러던 중, %CALLNAME%의 몸을 감싸고 있는 %조사처리(ITEMNAME:400,"가")% 꿈틀거리기 시작한다
+		PRINTFORMDL 깊히 잠든 %타겟은% 촉수가 자신을 범하는 것도 깨닫지 못한 채로 눈을 뜨지 않았다
+		IF ISMALE()
+			PRINTFORMDL 몇 시간 뒤, 잠에서 깬 %타겟이% 자신이 잠든 채로 몇 번이나 사정한 것을 깨달았다
+		ELSE
+			PRINTFORMDL 몇 시간 뒤, %타겟은% 질내의 이물감을 느끼며 잠에서 깼다
+			PRINTFORMDL 무슨 일이 있었던 것인지 깨달은 %타겟은% 자신의 몸을 감싼 %조사처리(ITEMNAME:400,"를")% 분한 듯이 노려봤다
+		ENDIF
+	ENDIF
+	CFLAG:901 = 0
+ELSEIF CFLAG:42 == 400 && ISFEMALE()
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL %타겟은% 욕조에 들어가 피로를 풀고 있다
+			PRINTFORMDL 하지만 %CALLNAME%의 모습이 이상하다…… 욕실인데도 옷을 입고 있는 것이다
+			PRINTFORMDL 잘 보면 그것은 표면이 끊임 없이 꾸물거리고 있는 %ITEMNAME:400%였다
+			PRINTW
+			PRINTFORML 「목욕할 때는 벗게 해달라고……」
+			PRINTW
+			PRINTFORMDL %타겟은% 씻어도 씻는게 아닌 찝찝함에 불만스러운 것 같다
+			PRINTFORMDL 하지만 그 불만은 곧 쾌감 앞에 완전히 무너지고 말았다
+			PRINTW
+			PRINTFORML 「읏……하으윽!?」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 불평에 반응하듯 피부 위를 %ITEMNAME:400%의 촉수가 맹렬하게 자극하기 시작한다
+			PRINTFORMD 어느새 맑았던 목욕물은 
+			SIF TALENT:모유체질
+				PRINTFORMD 희멀건 모유, 
+			SIF TALENT:후타나리
+				PRINTFORMD 탁한 정액, 
+			SIF TALENT:오줌싸개버릇
+				PRINTFORMD 누런 오줌, 
+			PRINTFORMDL 끈적한 애액 등으로 더러워지고 말았다……
+		CASE 1
+			PRINTFORML 「그, 그만……」
+			PRINTFORML 「적어도 위에 뭐든 걸치게……」
+			PRINTW
+			PRINTFORMDL 온 몸을 뒤덮은 %조사처리(ITEMNAME:400,"가")% %CALLNAME%의 몸을 강제로 움직이고 있다
+			PRINTFORMDL %타겟은% 조종당하는 채로, 아무런 옷도 입지 않고 본부 밖으로 걸어 나가고 있다
+			PRINTFORMDL 그것도 끊임없이 촉수에 의해 유두나 클리토리스를 자극당하는 상태다
+			IF ABL:노출벽 > 3
+				PRINTFORMDL %CALLNAME%의 고간은 누군가에게 보이는 것에 대한 기대로 애액이 부글거리며 흘러넘치기 시작했다……
+			ELSE
+				PRINTFORMDL %타겟은% 누군가에게 보이게 될거라는 불안감과 %조사처리(ITEMNAME:400,"가")% 주는 쾌감 사이에서 희롱당하고 있다……
+			ENDIF
+		CASE 2
+			PRINTFORML 「싫어, 싫다고……」
+			PRINTFORML 「여자의 몸으로 기분 좋아지고 싶지 않은데……!」
+			PRINTW
+			PRINTFORMDL %타겟은% %ITEMNAME%에게 조종당해 자위를 하고 있다
+			PRINTFORMDL 평소에 뒤덮고 있는 가슴이나 고간 만을 드러낸 채다
+			PRINTW
+			PRINTFORML 「햐윽, 끄으으윽……」
+			PRINTW
+			PRINTFORMDL 촉수로 뒤덮힌 손가락이 자신의 비부를 후벼파고, 유두를 꼬집을 때마다 달콤한 신음소리가 흘러나온다
+			PRINTFORMDL %타겟은% 그렇게 한참을 스스로에게 능욕당했다
+		CASE 3
+			PRINTFORMDL %타겟은% 볼일을 보기 위해 거리에 나왔다
+			PRINTFORMDL 하지만 %ITEMNAME%에 의해 끊임없이 능욕당하고 있는 상황에서 제대로 된 일상이 가능할리가 없다
+			PRINTW
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORMDL 『앗, 미안해 언니!』
+					PRINTFORMDL 『어라, 언니 얼굴이 빨간데, 괜찮아?』
+					PRINTW
+					PRINTFORMDL 쾌감에 희롱당하며 비틀거리던 %타겟은% 거리를 뛰쳐나가던 한 여자아이와 부딪치고 말았다
+				CASE 1
+					PRINTFORMDL 『이런, 미안해요 아가씨』
+					PRINTFORMDL 『혹시 몸상태가 안좋은가요? 얼굴이 빨개요』
+					PRINTW
+					PRINTFORMDL 쾌감에 희롱당하며 비틀거리던 %타겟은% 장을 보러 나온 한 주부와 부딪치고 말았다
+				CASE 2
+					PRINTFORMDL 『오오, 미안합니다, 앞을 안보고 있었네』
+					PRINTFORMDL 『어라? 어디 몸이라도 안좋나요? 얼굴이………』
+					PRINTW
+					PRINTFORMDL 쾌감에 희롱당하며 비틀거리던 %타겟은% 전화를 하며 걷던 한 직장인과 부딪치고 말았다
+				CASE 3
+					PRINTFORMDL 『으왓!? 앞 좀 보고 다니라고!』
+					PRINTFORMDL 『뭐야, 어디 아파?』
+					PRINTW
+					PRINTFORMDL 쾌감에 희롱당하며 비틀거리던 %타겟은% 선글라스를 쓴 금발태닝남과 부딪치고 말았다
+			ENDSELECT
+			PRINTW
+			PRINTFORML 「죄, 죄송……」
+			PRINTFORML 「햐아윽……♡♡♡」
+			PRINTW
+			PRINTFORMDL 어깨를 부딪힌 것 만으로 %타겟은% 성대하게 절정해 버렸다
+			PRINTFORMDL 의아한 눈으로 자신을 바라보는 행인의 시선을 느끼며 %타겟은% 떨리는 다리를 이끌고 그 자리에서 서둘러 벗어났다
+	ENDSELECT
+ELSEIF CFLAG:913 == 1 && TIME == 0
+	PRINTFORML 「아하하…… 생각보다 많은 분들이 오셨네요……?」
+	PRINTW
+	PRINTFORMD %타겟은% 지금 
+	SIF ISMALE()
+		PRINTFORMD 변신한 상태로 
+	PRINTFORMDL 번화가의 쇼핑몰에 서 있다
+	PRINTFORMDL 어떻게든 보급속옷이 아닌, 다른 속옷을 입히겠다는 한 여직원의 강한 권유를 받고 약속시간에 맞게 도착한 것인데……
+	PRINTFORMDL 어째서인지 약속했던 그 여직원만이 아닌, 다른 사람들의 얼굴도 보였다
+	PRINTFORMDL 당장 봐도 인사과, 총무과, 인사과……
+	PRINTFORMDL 본부에서 한 번씩은 마주친 기억이 있는 면면들
+	PRINTW
+	PRINTFORMDL 『당연합니다! 이번 이벤트는 본부의 여직원들이 모두 기다린……읍!?』
+	PRINTFORMDL 『아하하, 아니예요 아니예요. 어쩌다 보니까 여기서 다들 만나서…그렇죠?』
+	PRINTFORMDL 『아? 응, 어어, 그래, 그렇고 말고. 이런 우연이 다있나~?』
+	PRINTW
+	PRINTFORMDL 어색한 연극이다
+	PRINTFORMDL 이 순간 %타겟은% 자신의 운명을 직감했다
+	PRINTFORMDL 자신이 옷갈아입히기 인형이 될 운명을…
+	PRINTW
+	PRINTFORMDL ……
+	PRINTFORMDL …………
+	PRINTFORMDL ……………………
+	PRINTW
+	PRINTFORMDL 『역시 전통적인 이 흰 팬티가 어떨까요?』
+	PRINTFORMDL 『아니요! %CALLNAME%씨는 겉보기로 초등학생이니까…… 이런 곰돌이 팬티가!』
+	PRINTFORMDL 『난 파란 줄무늬 팬티가 괜찮은것 같은데』
+	PRINTW
+	PRINTFORML 「(으…… 어쩐지 여기 있으면 안 되는 느낌이……)」
+	PRINTW
+	PRINTFORMDL 다른 여직원들은 모여서 %CALLNAME%에게 어울리는 속옷에 대해 격렬한 토론을 벌이고 있다
+	PRINTFORMDL 그 사이에서 %타겟은% 전시되어 있는 여성용 속옷들을 보고 불편한 느낌에 꾸물거리고 있다
+	PRINTFORMDL 금단의 구역……, 지금은 신체적으로 여자라지만 이런 곳에 자신이 있어도 되는 걸까?
+	PRINTW
+	PRINTFORMDL 『%CALLNAME%씨는 뭐가 좋아요!?』
+	PRINTW
+	PRINTFORML 「넷!? 아, 속옷 이야기요……?」
+	PRINTFORML 「(고를 수 있을 리가 없잖아……)」
+	PRINTW
+	IF ISMALE()
+		PRINTFORMD 아무리 마법소녀로 변신했을 때는 여자가 된다고 해도
+	ELSE
+		PRINTFORMD 아무리 더 이상 남자로 돌아갈 수 없다고는 해도
+	ENDIF
+	PRINTFORMDL  %타겟은% 지금까지 남자로 살아왔다
+	PRINTFORMDL 그렇기에 본격적인 속옷은 어쩐지 부끄러워, 적당히 본부에서 보급해주는 장식 없는 순면 팬티나 입었던 것인데…
+	PRINTW
+	PRINTFORML 「아…… 그, 그럼 이걸로……」
+	PRINTW
+	PRINTFORMDL %타겟이% 적당히 고른 것은 너무 화려하지도, 밋밋하지도 않은 장식이 달린 하늘색 실크 팬티였다
+	PRINTFORMDL 애들 팬티는 아니지만, 그렇다곤 해도 너무나도 여성스러운 속옷이기에 %타겟은% 낭패감을 느끼며 피팅룸으로 들어갔다
+	PRINTW
+	PRINTFORML 「부, 부드러워……」
+	PRINTW
+	PRINTFORMDL 남성용 속옷과는 너무나도 다른 감촉에 %타겟은% 당황스러움을 느꼈다
+	PRINTFORMDL 그러면서도 팬티와 한 쌍인 캐미솔까지 입어 봤지만, 거기서 문제가 발생했다
+	PRINTFORMDL 적당히 속옷을 입은 모습을 보여주면서 반응이 좋은 걸로 골라서, 최후의 선택은 다른 사람들에게 맡길 생각이였지만……
+	PRINTFORMDL 속옷 차림으로 피팅룸에서 나갈 수도 없는 노릇이다
+	PRINTW
+	PRINTFORMDL 물론 바깥에 있는 일행들을 부른다는 선택지도 있었지만 익숙하지 않은 분위기에 머릿속이 꽉 찬 %CALLNAME%에게 그것은 어려운 일
+	PRINTFORMDL 결국 %타겟은% 스스로 속옷을 고르며 하나씩 입어보게 되었다……
+	PRINTW
+	PRINTFORMDL ……………………
+	PRINTFORMDL …………
+	PRINTFORMDL ……
+	PRINTW
+	PRINTFORMDL 『이용해주셔서 감사합니다!』
+	PRINTW
+	PRINTFORMDL 결국 이런저런 속옷을 사버리고 말았다
+	PRINTFORMDL 부끄러움을 견디지 못한 %타겟은% 얼굴을 붉힌 채 고개를 숙이고 있었다
+	PRINTW
+	PRINTFORMDL 『오늘은 알찬 쇼핑이였네요』
+	PRINTFORMDL 『네, 오늘 %CALLNAME%씨에게 어울리는 속옷을 잔뜩 구했네요!』
+	PRINTW
+	PRINTFORML 「아하하, 감사합니다……」
+	PRINTW
+	PRINTFORMDL 선의의 행동이니 화낼 수도 없다
+	PRINTFORMDL %타겟은% 어색하게 웃으며 여성용 속옷이 잔뜩 든 쇼핑백을 싸들고 자신의 방으로 돌아갔다
+	PRINTW
+	IF ISMALE()
+		PRINTFORML 「다 큰 남자의 방에 여자애들 속옷이라……」
+		PRINTFORML 「아는 사람들에게는 절대 못 보여 주겠네……」
+	ELSE
+		PRINTFORML 「이런 귀여운 속옷을 입을 용기는 없는데……」
+		PRINTFORML 「어쩔 수 없지 뭐……」
+	ENDIF
+	PRINTW
+	PRINTFORMDL %타겟은% 한숨을 쉬며 서랍장에 속옷을 정리해 넣었다……
+	CFLAG:913 = 2
+ELSEIF CFLAG:913 == 3 && TIME == 0
+	PRINTFORMDL 『음음, 역시 원판이 예쁘니까 뭘 입어도 이쁘네요!』
+	PRINTFORMDL 『하아아…… 인형 같아요……』
+	PRINTFORMDL 『순백의 소녀……순백의 원피스……최고…………』
+	PRINTW
+	PRINTFORMD %타겟은% 지금 
+	SIF ISMALE()
+		PRINTFORMD 변신한 상태로 
+	PRINTFORMDL 번화가의 대형 쇼핑물의 옷가게를 돌아다니고 있다
+	PRINTFORMDL 분명히 적당한 반바지에 반팔로 나왔을텐데, %CALLNAME%의 옷차림은 어느새 소녀다운 옷차림이 되어 있었다
+	PRINTFORMDL %CALLNAME%의 모습을 본 동료들이 바로 옷가게로 끌고가서 입어본 옷을 바로 사버렸기 때문이다
+	PRINTFORMDL 선물인지라 벗어버릴 수도 없는 %타겟은% 그대로 몇 시간을 끌려다녔다……
+	PRINTW
+	PRINTFORMDL ……
+	PRINTFORMDL …………
+	PRINTFORMDL ……………………
+	PRINTW
+	PRINTFORML 「지, 지친다……」
+	PRINTW
+	PRINTFORMDL %CALLNAME%의 쇼핑은 고난 그 자체였다
+	PRINTFORMDL 이것이 어울린다, 아니 저것이 어울린다
+	PRINTFORMDL 수 차례나 옷을 갈아입고, 또 갈아입었다
+	PRINTW
+	PRINTFORMDL 그뿐만이 아니다
+	PRINTFORMDL 기왕 곱게 꾸몄는데 자세가 너무 너무 상남자 같다면서 걷는 모양새부터 해서 앉는 자세까지 한참을 교정당한 것이다
+	PRINTW
+	PRINTFORML 「(여자의 쇼핑은 무섭구만……)」
+	PRINTW
+	PRINTFORMDL %타겟은% 피곤함에 쩔어 그대로 자신의 침대에 기어들어갔다
+	PRINTFORMDL 그러고선 옷걸이에 걸린 여아용 옷들을 복잡한 눈으로 바라보는 것이였다……
+	CFLAG:913 = 4
+ELSEIF GETBIT(CFLAG:910, 40) && ( CFLAG:902 == 2 || CFLAG:902 == 11 || CFLAG:902 == 21 ) && TIME == 0
+	PRINTFORML 「하아……」
+	PRINTFORML 「결국 이 날이 오고야 말았구만……」
+	PRINTW
+	PRINTFORMDL %타겟은% 한숨을 푹 내쉬고는 동생과의 데이트에 나갈 채비를 했다
+	PRINTFORMDL 그 움직임은 느릿느릿, 그야말로 마지않아 하는 것으로 보인다……
+	CALL KOJO_111_DATE1
+ELSEIF CFLAG:914 == 1 && ( CFLAG:902 == 5 || CFLAG:902 == 7 || CFLAG:902 == 13 || CFLAG:902 == 14 || CFLAG:902 == 15 ||  CFLAG:902 == 17 || CFLAG:902 == 18 || CFLAG:902 == 19 || CFLAG:902 == 23 || CFLAG:902 == 24 || CFLAG:902 == 25 ) && CFLAG:914 == 1 && TIME == 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「오늘은 데이트 날인가……」
+			PRINTFORML 「쳇, 어쩔 수 없지……」
+		CASE 1
+			PRINTFORML 「이런 옷……정말 입고싶지 않다만」
+			PRINTFORML 「뭐, 내가 자초한 일이니까……」
+		CASE 2
+			PRINTFORML 「아차, 오늘이 약속날이였군」
+			PRINTFORML 「서둘러야겠어」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %타겟은% 내키지 않는듯 나갈 준비를 했다
+	CALL KOJO_111_DATE2
+	IF ( CFLAG:902 == 13 || CFLAG:902 == 14 || CFLAG:902 == 17 || CFLAG:902 == 18 || CFLAG:902 == 23 || CFLAG:902 == 24 ) && TIME == 0
+		CALL KOJO_111_DATE_GOODBYE
+		CFLAG:902 += 1
+	ELSEIF CFLAG:902 == 25
+		CALL KOJO_111_DATE_LOVEYOU
+	ELSE
+		CALL KOJO_111_DATE_RAPE3
+	ENDIF
+	CFLAG:914 = 0
+ELSEIF CFLAG:905 == 1 && CFLAG:902 == 28 && TIME == 1
+	CALL KOJO_111_DATE_SEX2
+	CFLAG:905 = 2
+ELSEIF CFLAG:915 == 1 && CFLAG:902 == 28 && CFLAG:905 > 1 && TIME == 0
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「흐흥, 어느게 귀여울까」
+		CASE 1
+			PRINTFORML 「오늘은 기합 넣고 꾸며야지」
+		CASE 2
+			PRINTFORML 「이 속옷은 너무 과감한가?」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %타겟은% 여성진의 도움을 받지 않고, 거울에 자신의 모습을 비추며 스스로 꾸미고 있다
+	PRINTFORMDL 이제는 겉으로 보이는 모습 그대로 소녀답게 행동하는 것에도 어느 정도 익숙해진 것이다
+	CALL KOJO_111_DATE_SEX3
+	CFLAG:905 += 1
+	CFLAG:915 = 0
+ELSE
+	IF RAND:5 == 0 && TIME == 0 && ISMALE()
+		PRINTFORML 「강의도 들을 수 있을 만큼은 들어야지…」
+		PRINTW
+		PRINTFORMDL %타겟은% 짬을 내서 자신이 다니는 대학교의 강의를 들으러 왔다
+	ELSE
+		CALL CHOOSE_RELAXATION_FACILITY(안마의자+게임코너+대욕탕+미용온천)
+		SIF RAND:4 == 0 && RESULT:0 > 0
+			RESULT:0 = 0
+		IF (RESULT:0 & 안마의자)
+			PRINTFORML 「아아, 좋구나~」
+			PRINTW
+			PRINTFORMDL %타겟은% 마사지 의자에 앉아 피로를 풀고 있다
+		ELSEIF (RESULT:0 & 대욕탕) || (RESULT:0 & 미용온천)
+			PRINTFORML 「오오, 넓은데」
+			PRINTFORML 「본부 안에 이런 곳도 있었다니…」
+			PRINTW
+			PRINTFORMDL %타겟은% 뜨거운 탕에 들어가 늘어졌다
+		ELSEIF (RESULT:0 & 게임코너)
+			IF CFLAG:271 > 0 && RAND:2 == 0
+				PRINTFORMD %타겟은% %조사처리(CALLNAME:(CFLAG:271),"와")% 함께 게임코너로 가 
+				SELECTCASE RAND:7
+					CASE 0
+						PRINTFORMD 태고의 달인을
+					CASE 1
+						PRINTFORMD 펌프 잇 업을
+					CASE 2
+						PRINTFORMD 슈퍼 스매시 브라더스 얼티밋을
+					CASE 3
+						PRINTFORMD 메탈 슬러그 XX를
+					CASE 4
+						PRINTFORMD 철권 7을
+					CASE 5
+						PRINTFORMD 버블버블을
+					CASE 6
+						PRINTFORMD 더블 드래곤을
+				ENDSELECT
+				PRINTFORMDL  플레이 하기 시작했다
+			ELSE
+				PRINTFORMD %타겟은% 게임코너로 가 
+				SELECTCASE RAND:8
+					CASE 0
+						PRINTFORMD 몬스터 헌터 월드를
+					CASE 1
+						PRINTFORMD 배틀 그라운드를
+					CASE 2
+						PRINTFORMD 히어로즈 오브 더 스톰을
+					CASE 3
+						PRINTFORMD 돈 스타브를
+					CASE 4
+						PRINTFORMD 문명 6를
+					CASE 5
+						PRINTFORMD 엑스컴 2를
+					CASE 6
+						PRINTFORMD 도타 2를
+					CASE 7
+						PRINTFORMD 동방빙의화를
+				ENDSELECT
+				PRINTFORMDL  플레이 하기 시작했다
+			ENDIF
+		ELSE
+			IF TIME == 1 && RAND:5 == 0
+				PRINTFORMDL %타겟은% 자신의 방에 맥주와 안주를 챙기고 들어갔다
+				PRINTFORMDL 아무래도 오늘은 응원하는 야구팀의 경기날인 것 같다
+			ELSE
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「날씨 한 번 좋구만」
+						PRINTW
+						PRINTFORMDL %타겟은% 돗자리를 챙기고 바깥에 나와있다
+						PRINTFORMDL 그리고 풀밭에 돗자리를 깔고 누은 채로 그대로 졸기 시작했다
+					CASE 1
+						PRINTFORML 「오늘 하는 영화가……」
+						PRINTW
+						PRINTFORMDL %타겟은% 영화를 보러 나왔다
+						PRINTFORMDL 현재 상영중인 영화가 영 마음에 들지 않는 모양인지, 내키지 않는 얼굴로 적당한 영화표를 구매했다
+					CASE 2
+						PRINTFORML 「그렇지!」
+						PRINTW
+						PRINTFORMDL %타겟은% 요즘 보고있는 전대물을 시청하고 있다
+					CASE 3
+						PRINTFORML 「아아, 심심하네」
+						PRINTFORML 「평화로운게 제일이긴 하지만…」
+						PRINTW
+						PRINTFORMDL %타겟은% 한가한 듯이 기지를 어슬렁거리고 있다
+					CASE 4
+						PRINTFORML 「일을 하면서도 성적이 떨어지면 안 되니까……」
+						PRINTW
+						PRINTFORMDL %타겟은% 책상에 앉아 두꺼운 전공책을 노려보고 있다
+						SIF ISFEMALE()
+							PRINTFORMDL 하지만 어린 여자아이가 되어버린 %타겟이% 대학생으로 다시 돌아갈 수 있을까……
+				ENDSELECT
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+PRINTW
+;아르바이트 『패밀리 레스토랑』（통상）
+;--------------------------------------------------
+@KOJO_111_SEISAN_FAMILY_normal
+PRINTL
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「어서옵셔~!」
+			PRINTFORML 「세 분이심까! 그럼 자리로 안내하겠습니다!」
+			PRINTW
+			PRINTFORMDL %타겟은% 기운찬 목소리로 손님들을 맞이하고 있다
+			PRINTFORMDL 키도 크고, 목소리도 시원시원 하고, 얼굴도 괜찮은 편이라 최근 여자 손님들을 긁어모으고 있다는 듯하다………
+		CASE 1
+			SELECTCASE RAND:5
+				CASE 0
+					PRINTFORML 「햄버그 둘, 스파게티 하나!」
+				CASE 1
+					PRINTFORML 「오므라이스 둘!」
+				CASE 2
+					PRINTFORML 「특대 파라다이스 파르페 하나!」
+				CASE 3
+					PRINTFORML 「나폴리탄 둘, 시저 샐러드 하나!」
+				CASE 4
+					PRINTFORML 「올리브 토마토 샐러드 하나!」
+			ENDSELECT
+			PRINTFORMDL %타겟은% 쾌활한 목소리로 손님의 주문을 받고 있다
+			PRINTFORMDL 여자 손님이 많은 것은 기분 탓이리라………
+		CASE 2
+			PRINTFORML 「앗, 손님… 사진이요?」
+			PRINTFORML 「같이 찍죠. 하나 둘, 치~즈!」
+			PRINTW
+			PRINTFORMDL %타겟은% 여고생 손님에게 같이 사진을 찍어달라는 요청을 받았다
+			PRINTFORMDL 저 뒤에서 다른 직원들이 질투와 부러움의 눈으로 바라보고 있다…
+	ENDSELECT
+ELSE
+;구속구
+	IF CFLAG:42 == 400
+		SELECTCASE RAND:5
+			CASE 0
+				PRINTFORML 「하으으………」
+				PRINTW
+				PRINTFORMDL %타겟은% 황홀한 얼굴로 몸을 비비적거리며 멍하니 서 있었다
+				PRINTFORMDL 아무래도 %타겟은% 제복 아래의 %조사처리(ITEMNAME:400,"가")% 꿈틀거리며 주는 쾌락에 취해있는 것 같다
+				PRINTFORMDL 아무리 불러도 점원이 오지 않는 것에 지친 손님이 참다 못해 직접 어깨를 건드리며 부를 때까지 %타겟은% 그런 상태였다
+			CASE 1
+				PRINTFORML 「네, 네엣……!」
+				PRINTFORML 「주, 주문 하시겠습니까……?」
+				PRINTW
+				PRINTFORMDL %CALLNAME%의 상태가 이상하다
+				PRINTFORMDL 얼굴을 붉히고 뜨거운 한숨을 흘리는 모습에서 묘한 색기가 느껴진다
+				PRINTFORMDL 어느새인가 허벅지를 타고 투명한 꿀이 흘러내리고 있다
+				PRINTW
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTL 「저기……주, 주문은……」
+						PRINTW
+						PRINTFORMDL 손님은 추잡한 웃을을 띄우며 일부러 느릿느릿 주문을 미루고 있다
+						PRINTFORMDL 그 눈동자는 메뉴판이 아닌, %CALLNAME%의 상기된 얼굴과 흠뻑 젖기 시작한 허벅지를 향하고 있다
+						PRINTFORMDL %타겟은% 주문이 끝나기만을 기다리며 허벅지를 비비 꼬는 수밖에 없었다
+					CASEELSE
+						PRINTFORML 「아, 알겠습니다……」
+						PRINTFORML 「치킨 필라프 말씀이시죠……」
+						PRINTW
+						PRINTFORMDL %CALLNAME%의 상태를 눈치챈 손님은 헛기침을 하고서 눈을 다른 곳으로 돌리며 서둘러 주문을 마쳤다
+						PRINTFORMDL 주문을 받은 %타겟은% 상기된 얼굴을 숨기며 도망치듯이 테이블에서 멀어져 갔다
+				ENDSELECT
+			CASE 2
+				PRINTFORML 「으으……」
+				PRINTFORML 「그만 꿈틀거리라고……!」
+				PRINTW
+				PRINTFORMDL 점원용 화장실, %타겟은% 배를 부여잡고 변기에 앉아 있다
+				PRINTFORMDL 점원용 제복도 벗어버리고 알몸인 채로……
+				PRINTFORMDL 아니, 잘 보면 알몸이 아니다
+				PRINTFORMDL %CALLNAME%의 피부로 의태하고 있는 %조사처리(ITEMNAME:400,"가")% 끊임없이 꿈틀거리고 있었다…
+				PRINTW
+				PRINTFORML 「아으, 아우으읏……!」
+				PRINTW
+				PRINTFORMDL %타겟은% 필사적으로 이를 악물고 소리가 새는 걸 막아보지만, 전심을 뒤덮는 촉수의 감각과 쾌락은 그것을 용서하지 않는다
+				PRINTFORMDL 그는 %조사처리(ITEMNAME:400,"가")% 만족할 때까지 그 자리에서 몇 번이나 범해졌다……
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「어서오세요, 몇 분이신가요?」
+				PRINTFORML 「네, 안내해드리겠습니다.」
+				PRINTW
+				PRINTFORMDL %타겟은% 싹싹하게 손님을 받고 있다
+				PRINTFORMDL 작은 여자아이가 야무지게 일하는 모습을 보는 사람들의 눈빛이 따스하다…
+			CASE 1
+				PRINTFORML 「(으으……웨이트리스 제복 치마가 너무 팔랑거리는데……)」
+				PRINTFORML 「(보이는거 아닐까?)」
+				PRINTW
+				PRINTFORMDL %타겟은% 다리 사이가 허전한지 연신 치맛자락을 끌어내리고 있다
+				PRINTFORMDL 그러면서도 주문은 척척 받고 있는 것이, 프로의식은 투철한 것 같다…
+			CASE 2
+				SELECTCASE RAND:5
+					CASE 0
+						PRINTFORML 「햄버그 둘, 스파게티 하나!」
+					CASE 1
+						PRINTFORML 「오므라이스 둘!」
+					CASE 2
+						PRINTFORML 「생맥주 두 잔!」
+					CASE 3
+						PRINTFORML 「폭찹 하나, 치킨 카레 하나!」
+					CASE 4
+						PRINTFORML 「챌린지 스테이크 하나!」
+				ENDSELECT
+				PRINTW
+				PRINTFORMDL %타겟은% 밝은 목소리로 손님의 주문을 받고 있다
+				PRINTFORMDL 남자 손님이 많은 것은 기분 탓이리라………
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTL
+;아르바이트 『패밀리 레스토랑』（치한）
+;--------------------------------------------------
+@KOJO_111_SEISAN_FAMILY_chikan
+PRINTW
+MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
+IF ISMALE()
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「저기, 손님 신체 접촉은……」
+			PRINTFORML 「엥?」
+			PRINTW
+			PRINTFORMDL 『죄, 죄송합니다……』
+			PRINTW
+			PRINTFORMDL 자신의 엉덩이를 누군가 쓰다듬은 것을 느낀 %타겟은% 깜짝 놀라 뒤를 돌아봤다
+			PRINTFORMD 그곳에는
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMD 근처 중학교의 교복을 입은 여학생이
+				CASE 1
+					PRINTFORMD 근처 고등학교의 교복을 입은 여학생이
+				CASE 2
+					PRINTFORMD 곱게 차려입은 아가씨가
+			ENDSELECT
+			PRINTFORMDL 있었다
+			PRINTFORMDL 말하기를, 친구들 사이에서 소문인 이 패밀리 레스토랑의 훈남 알바 %타겟을% 보러 왔는데
+			PRINTFORMDL 뭔가 달콤한 향기에 홀려 자신도 모르게 손을 대 버렸다고 하는 것이다
+			PRINTFORMDL %타겟은% 촉수의 페로몬 같은 것이 배인건가, 하고 생각하면서 여손님의 사과를 받아들였다……
+		CASE 1
+			PRINTFORML 「아하하, 손님, 지금은 근무 중 인지라……」
+			PRINTW
+			PRINTFORMDL 『그러지 말고 같이 놀자 오빠』
+			PRINTFORMDL 『알바 끝날 때까지 기다릴테니까, 응?』
+			PRINTW
+			PRINTFORMDL %타겟은% 지금 모 여중의 교복을 입고 있는 여학생들에게 역헌팅을 당하고 있다
+			PRINTFORMDL 아직 나이도 안 찬 아이들, %CALLNAME%의 취향에는 어리거니와, 저 정도 나이대의 아이들을 건드렸다간 무슨 소문에 휘말릴지 모른다
+			PRINTW
+			PRINTFORML 「(요즘 애들은 당차구만……)」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 단호한 태도 앞에 여학생들은 결국 우물쭈물하면서 물러섰다
+			PRINTFORMDL %타겟은% 식은땀을 흘리며 안도의 한숨을 내쉬는 것이였다
+		CASE 2
+			PRINTFORML 「(오……이런……)」
+			PRINTW
+			PRINTFORMDL 자신의 엉덩이를 쓰다듬은 것은, 건장해 보이는 근육질의 남성
+			PRINTFORMDL %타겟은% 얼굴이 사색이 돼선 주문을 받는둥 마는둥 하고 그대로 도망치듯 빠져나왔다
+		CASE 3
+			PRINTFORMDL 『응? 학생 같이 젊은 친구들은 늘 돈이 부족하잖아』
+			PRINTFORMDL 『나랑 잠깐 손만 잡고 자도 두둑히 챙겨준다니까?』
+			PRINTW
+			PRINTFORMDL 명품으로 온 몸을 감싼 묘령의 여인이 %CALLNAME%에게 치근덕 대고 있다
+			PRINTFORMDL %타겟은% 필사적으로 거절하느라 진땀을 뺐다
+	ENDSELECT
+ELSE
+	IF RESULT < 1
+		IF TALENT:여체수용 && RAND:3 == 0
+			PRINTFORML 「꺄악!」
+			PRINTFORML 「(내가 방금 무슨 목소리를!?)」
+			PRINTW
+			PRINTFORMDL 누군가가 엉덩이를 쓰다듬는 감촉에 %타겟은% 새된 비명을 질러버렸다
+			PRINTFORMDL %타겟은% 자신이 마치 여자 같은 비명을 지른 것을 깨닫고 황망한 표정으로 도망치듯 차리를 떴다……
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「손님, 신체 접촉은 삼가해 주시겠습니까?」
+					PRINTW
+					PRINTFORMDL %타겟은% 웃는 얼굴로 자신의 엉덩이를 쓰다듬은 손님의 손을 으스러트릴 만큼 쎄게 쥐었다
+					PRINTFORMDL 겉으로 보기에는 작은 여자아이가 손을 꼭 잡고 있는, 훈훈한 모양새지만
+					PRINTFORMDL 손을 붙잡힌 손님의 입에서는 고통의 신음이 흘러나오고 있다…
+				CASE 1
+					PRINTFORML 「(우와, 진짜냐……)」
+					PRINTW
+					PRINTFORMDL 한 손님을 자리로 안내하고 있는 %CALLNAME%의 엉덩이를 음흉한 웃음을 띄운 중년이 쓰다듬었다
+					PRINTFORMDL 지금의 자신과 같은 나이의 딸이 있을 만한 나이일텐데, 라고 생각한 %타겟은%
+					PRINTFORMDL 그대로 뒤돌아 서서 중년 손님에게 따지듯이 성을 냈다
+					PRINTW
+					PRINTFORMDL 『심려를 끼쳐드려서 대단히 죄송합니다, 손님!』
+					PRINTFORMDL 『보시다시피 좀 어린 친구라, 참을성이 부족했나 봅니다』
+					PRINTFORMDL 『뭐해, %CALLNAME%! 너도 고개 숙여!』
+					PRINTW
+					PRINTFORML 「(왜 내가 사과해야 하는거냐고……)」
+					PRINTW
+					PRINTFORMDL 하지만 이윽고 그 소동을 듣고 찾아온 매니져가 %CALLNAME%의 머리를 억지로 숙이게 하며 치한에게 사과하게 했다
+					PRINTFORMDL %타겟은% 고개를 숙이면서도 뚱한 얼굴로 입을 다물고 속으로 욕지거리를 투덜거렸다……
+				CASE 2
+					PRINTFORMDL 『아가씨를 보니까 우리 딸 같아서 말이야~』
+					PRINTFORMDL 『알바 언제 끝나? 아저씨랑 비밀친구 할래?』
+					PRINTW
+					PRINTFORMDL 그렇게 말하며 음흉한 손놀림으로 자신의 허리를 휘감는 중년 남자 손님
+					PRINTFORMDL %타겟은% 기가 막힌 얼굴로 손님의 얼굴을 노려봤다
+					PRINTW
+					PRINTFORM 「합계 
+					SELECTCASE RAND:6
+						CASE 0
+							PRINTFORM 500
+						CASE 1
+							PRINTFORM 1220
+						CASE 2
+							PRINTFORM 1550
+						CASE 3
+							PRINTFORM 1000
+						CASE 4
+							PRINTFORM 3200
+						CASE 5
+							PRINTFORM 750
+					ENDSELECT
+					PRINTFORML ＄입니다, 손님」
+					PRINTW
+					PRINTFORMDL %타겟이% 내뿜는 분위기가 심상치 않다는 것을 깨달은 남성은 허둥지둥 계산을 마치고 떠나갔다……
+			ENDSELECT
+		ENDIF
+	ELSEIF RESULT < 3
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「계산 도와드리겠습니다, 손님」
+				PRINTW
+				PRINTFORMDL %타겟이% 계산을 위해 기다리는 손님에게 다가갔다
+				PRINTFORMDL 하지만 그 손님은 %CALLNAME%의 얼굴을 보더니 기분 나쁘게 웃으며 말을 빙빙 돌리며 돈을 지불하지 않고 있다
+				PRINTFORMDL %타겟은% 그대로 딱 봐도 어려보이는데 자위는 하냐느니 하는 말을 들으며 한참을 성희롱당했다……
+			CASE 1
+				PRINTFORML 「한 분, 흡연석으로 안내해드리겠습니다」
+				PRINTW
+				PRINTFORMDL %타겟은% 한 손님을 자리로 안내하고 있다
+				PRINTFORMDL 돌연 그 손님이 %CALLNAME%의 엉덩이를 쓰다듬는다
+				PRINTFORMDL 이렇게 빈약해서 아이를 제대로 낳기는 하겠냐는 성희롱적인 발언도 내뱉고 있다
+				PRINTW
+				PRINTFORML 「(상대해 봐야 시간낭비다……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 얼굴을 붉히면서도 아무런 말도 하지 않고 손님을 안내했다……
+			CASE 2
+				PRINTFORML 「네?」
+				PRINTW
+				PRINTFORMDL %타겟이% 주문을 받으러 가자, 한 남자가 능글능글한 웃음을 띄우며 트집을 잡기 시작했다
+				PRINTFORMDL 그러면서 은근슬쩍 %CALLNAME%의 몸을 더듬기 시작했다
+				PRINTW
+				PRINTFORML 「(기분 나쁜 자식……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 매뉴얼에 따라 대응하면서, 속으로 욕을 내뱉었다……
+		ENDSELECT
+	ELSEIF RESULT < 5
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「합계……＄……입니다……」
+				PRINTW
+				PRINTFORMDL 계산대에 서 있는 %CALLNAME%의 가슴을 중년 남성이 끈질기게 조물락댄다
+				PRINTFORMDL %타겟은% 가슴이 욱신거리는 감각에 그것을 쳐내지 못한다
+				PRINTW
+				PRINTFORML 「손님, 그만해……주세요……」
+				PRINTW
+				PRINTFORMDL %CALLNAME%의 눈가에 눈물이 맺히고서야 남성의 성희롱은 멈췄다……
+				PRINTFORMDL 자신이 왜 이렇게 수동적이 되어버린 것일까, %타겟은% 굴욕을 느끼며 주먹을 쥐었다
+			CASE 1
+				PRINTFORMDL %타겟이% 주문을 받으러 가자, 한 남자가 능글능글한 웃음을 띄우며 성희롱을 시작했다
+				PRINTFORMDL 남자는 주문도 하지 않고, 이게 어떠니 저게 어떠니 하면서 %CALLNAME%의 제복 스커트 아래에 손을 집어넣었다
+				PRINTW
+				PRINTFORML 「손, 손니임……신체, 접촉은………」
+				PRINTW
+				PRINTFORMDL 신체 접촉은 곤란합니다, %타겟은% 그렇게 말하려고 했지만 그 말은 이어지지 못했다
+				PRINTFORMDL 너무나도 민감해져버린 몸이 불쾌한 성희롱마저도 쾌락으로 느끼고 있었기 때문이다
+				PRINTFORMDL 단호하게 쳐내려고 했던 손도, 지금은 멈춰버렸다……
+			CASE 2
+				PRINTFORML 「손님, 주문을……」
+				PRINTW
+				PRINTFORMDL 자리에 앉은 두 남자가 %타겟을% 앞에 두고 음담패설을 지껄이고 있다
+				PRINTFORMDL 도가 지나친 선정적인 내용에 %CALLNAME%의 얼굴이 새빨개졌다
+				PRINTW
+				PRINTFORML 「(뭐, 뭐야? 왜 내가 부끄러워 하고 있는거지!?)」
+				PRINTW
+				PRINTFORMDL 본디 남자였던 %CALLNAME%라면 눈살을 찌푸리긴 해도 웃어 넘길 수 있는 내용이다
+				PRINTFORMDL 하지만 지금의 %타겟은% 그 음담패설을 듣고 수치심을 느껴버리고 있었다
+				PRINTFORMDL %타겟은% 자신의 상태가 명백이 이상하다는 것을 깨달았다……
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				SELECTCASE RAND:3
+					CASE 0
+						PRINTFORMDL 『그럼 이 마망의 애정가득 수유를』
+					CASE 1
+						PRINTFORMDL 『그럼 이 흡정 펠라치오를』
+					CASE 2
+						PRINTFORMDL 『그럼 파워섹스 스마타로』
+				ENDSELECT
+				PRINTW
+				PRINTFORMDL 자리에 앉아있는 손님이 메뉴를 들여다 보더니 이상한 주문을 하기 시작했다
+				PRINTFORMDL 물론 이곳은 평범한 패밀리 레스토랑으로 그런 플레이를 하는 가게가 아니다
+				PRINTFORMDL 하지만 주문을 하는 손님도, 주문을 받는 %CALLNAME%도 아무런 의구심을 느끼지 못하는 것 같다
+				PRINTW
+				PRINTFORML 「그럼…시작하겠습니다, 손님♡」
+				PRINTW
+				PRINTFORMDL %타겟은% 탁한 눈을 게슴츠레하게 뜨며 손님에게 봉사한다
+				PRINTFORMDL 가게 내부의 분위기도 점차 끈적해지기 시작하며 이곳저곳에서 남녀가 서로를 껴안기 시작했다……
+			CASE 1
+				PRINTFORML 「손님, 그러시면…… 앗, 아아……」
+				PRINTW
+				PRINTFORMDL 완전히 눈이 풀려버린 %CALLNAME%의 엉덩이를 한 손님이 쓰다듬으며 제복 스커트 아래로 손을 집어 넣는다
+				PRINTFORMDL %타겟은% 그것만으로 절정해버린 것인지, 유리창에 손을 짚으며 넘어지지 않으려 기를 쓰고 있다
+				PRINTW
+				PRINTFORML 「크웃, 아우으읏……♡♡」
+				PRINTW
+				PRINTFORMDL %타겟이% 느끼고 있다는 것을 깨달은 것인지, 손님의 손놀림도 점차 과격해져 간다
+				PRINTFORMDL 그 손가락이 %CALLNAME%의 꿀단지를 휘젓자 허벅지를 타고 투명한 꿀이 흘러내리기 시작했다
+				PRINTW
+				PRINTFORML 「시럿♡, 시러어엇……♡♡♡」
+				PRINTW
+				PRINTFORMDL 이제는 아예 본격적으로 뒤에서 껴안고 농밀한 입맞춤을 나누며 젖이나 팬티 속을 마구잡이로 희롱하기 시작했다
+				PRINTFORMDL %타겟은% 짚고 있는 유리창 너머로
+				PRINTFORMDL 많은 사람들이 얼굴을 붉히고서 그 광경을 바라보고 있다는 것을 아직 모르는 모양이다…
+			CASE 2
+				PRINTFORML 「그럼 손님 여러분♡」
+				PRINTFORML 「%CALLNAME%의 자위쇼를 시작하겠습니다앗♡♡」
+				PRINTW
+				PRINTFORMDL 성희롱 당한 것 만으로 발정한 %CALLNAME%의 몸은 가라앉을 줄을 몰랐다
+				PRINTFORMDL 거기다 너무나도 민감하게 개발당한 신체, 지금의 %타겟은% 결코 정상이 아니다
+				PRINTW
+				PRINTFORML 「으읏, 아아아, 기분 조아아앗!」
+				PRINTW
+				PRINTFORMDL %타겟은% 사람들 앞에서 자위하며 온 몸이 오싹거리는 것을 느꼈다
+				PRINTFORMDL 자신을 보고 자위하는 남자들을 보며, 그 마음 속에 뜨거운 열락이 차오르기 시작했다
+				PRINTW
+				PRINTFORML 「후아앗……」
+				PRINTW
+				PRINTFORMDL 풍선 처럼 부풀어오른 분위기가 깨지며, 남자들이 동시에 사정하여 %CALLNAME%에게 정액을 퍼붓는다
+				PRINTFORMDL %타겟은% 공허한 눈동자를 빛내며 그것을 기쁘게 받아들이고 있었다……
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTW
+;아르바이트 『식당』
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOKUDOU
+PRINTL
+IF CFLAG:42 == 400 && ISFEMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「하아……하아……」
+			PRINTW
+			PRINTFORMDL 식재를 손질하고 있는 %CALLNAME%의 모습이 이상하다
+			PRINTFORMDL 아무래도 옷 아래에서 온 몸의 성감대를 자극하고 있는 %ITEMNAME:400% 때문인 것 같다…
+			PRINTW
+			PRINTFORML 「자, 잠깐……식칼 들고 있을 때는 위험……」
+			PRINTFORML 「하읏…?!」
+			PRINTW
+			PRINTFORMDL 작업에 집중하지 못하고 연신 다리를 비비 꼬며 신음소리른 내는 그 모습은
+			PRINTFORMDL 다른 동료들이 눈을 돌리게 만들 만큼 선정적이였다
+		CASE 1
+			PRINTFORML 「히야앗!?」
+			PRINTFORML 「죄, 죄송합니다…!」
+			PRINTW
+			PRINTFORMDL 옷 아래의 %ITEMNAME:400%에 의해 질을 쑤셔진 %타겟은% 설거지 중이였던 접시를 떨어트려 깨버렸다
+			PRINTFORMDL 수치심과 쾌락 사이에서 %타겟은% 그렇게 몇 번이나 가버렸다…
+		CASE 2
+			PRINTFORML 「우……으우웃……」
+			PRINTW
+			PRINTFORMDL %타겟은% 뜨거운 한숨을 흘리며 간신히 마루의 걸레질을 마쳤다
+			PRINTFORMDL 하지만 %타겟이% 지나간 곳을 따라 애액이 늘어져 있어 결국 다시 한 번 청소 하게 됐다……
+	ENDSELECT
+ELSEIF ISFEMALE() && RAND:3 == 0
+	PRINTFORML 「으으으…… 손이 안닿아……」
+	PRINTFORML 「(원래 모습이면 이 정도 쯤은 아무 문제도 없는데……)」
+	PRINTFORML 「(키가 작은건 불편하구나……)」
+	PRINTW
+	PRINTFORMDL %타겟은% 까치발로 서서 선반 위의 냄비를 꺼내려고 하고 있다
+	PRINTFORMDL 오기가 생긴 %타겟은% 보다 못한 다른 동료가 그걸 내려줄 때까지 냄비를 꺼내려 했었다……
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「양파 다 깠습니다, 점장님!」
+					PRINTFORML 「윽, 눈이……」
+				CASE 1
+					PRINTFORML 「당근, 감자 전부 깠습니다, 점장님!」
+				CASE 2
+					PRINTFORML 「어우 냄새야…」
+					PRINTFORML 「마늘 손질 끝났습니다, 점장님……」
+				CASE 3
+					PRINTFORML 「아다다다다다!!」
+					PRINTFORML 「야채들 다 채썰어 뒀습니다, 점장님!」
+			ENDSELECT
+			PRINTW
+			PRINTFORMDL %타겟은% 식재료를 깔끔하게 손질해냈다
+			PRINTFORMDL 자취경력 덕분에 그 손놀림은 능숙했다
+		CASE 1
+			PRINTFORML 「너, 너무 많잖아……」
+			PRINTW
+			PRINTFORMDL %타겟은% 압도적인 설거지거리 앞에 망연하게 서 있다
+		CASE 2
+			PRINTFORML 「좋아, 여긴 깔끔해 졌네」
+			PRINTFORML 「다음은 가게 앞을 청소해야지」
+			PRINTW
+			PRINTFORMDL %타겟은% 주방 청소를 막 끝낸것 같다
+			PRINTFORMDL 기세가 오른 %타겟은% 신난 듯이 청소할 곳을 찾아 움직이고 있다
+	ENDSELECT
+ENDIF
+PRINTL
+
+;아르바이트 『식당』(치한)
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOKUDOU_chikan
+PRINTL
+MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(설마 진짜 게이인가…?)」
+			PRINTFORML 「(이 알바 그만둬야 하나……)」
+			PRINTW
+			PRINTFORMDL 변신한 모습이면 모를까, 지금의 %타겟은% 신체 건강한 남자다
+			PRINTFORMDL 그런 %CALLNAME%의 엉덩이를 같은 남자가 쓰다듬은 것이다
+			PRINTFORMDL %타겟은% 전신에 소름이 돋는 것을 느꼈다……
+		CASE 1
+			PRINTFORML 「(이 아주머니 또 이러시네……)」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신에게 지대한 관심을 가지고 있는 식당 아주머니 때문에 스트레스를 받고 있다
+			PRINTFORMDL 상대가 여자인지라 물리적으로 해결할 수도 없고, 직접적으로 항의해도 은근슬쩍 말을 돌려버리고……
+			PRINTFORMDL %타겟은% 아르바이트가 끝날 때까지 고민으로 끙끙 앓은듯 하다
+		CASE 2
+			PRINTFORML 「저기요」
+			PRINTFORML 「제가 눈치 못챌거라 생각하는겁니까?」
+			PRINTW
+			PRINTFORMDL %타겟은% 계란을 내려놓고 자신의 엉덩이를 쓰다듬은 상대를 노려봤다
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 그 상대는 아르바이트 하는 식당의 주인집 따님이다
+					PRINTFORMDL 학교를 마치면 다른 곳에 안들리고 바로 자기 가게일을 돕는 기특한 아이지만……
+				CASE 1
+					PRINTFORMDL 그 상대는 아르바이트 동료 중 한명이다
+					PRINTFORMDL 겉보기에는 얌전하게 생긴 아가씨지만……
+				CASE 2
+					PRINTFORMDL 그 상대는 식당 주인인 아주머니다
+					PRINTFORMDL 일찍이 남편을 잃고 혼자 힘으로 어린 딸을 키워온 여장부인데……
+			ENDSELECT
+			PRINTFORMDL 어째선지 자꾸 %타겟을% 유혹하듯이 역으로 성희롱을 걸어온다
+			PRINTFORMDL 결국 %타겟은% 분을 삭히면서 긴 설교를 시작했다
+	ENDSELECT
+ELSE
+	IF RESULT < 1
+		IF TALENT:여체수용
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「우으……히끅…우아아앙……」
+					PRINTFORML 「(분해, 너무 분해……)」
+					PRINTW
+					PRINTFORMDL %타겟은% 그만 울음을 터트려 버렸다
+					PRINTFORMDL 예전 같으면 오히려 성희롱한 녀석의 손가락을 꺾어버렸을 테지만
+					PRINTFORMDL %타겟은% 지금 육체에 정신이 따라가고 있는 것이다
+					PRINTFORMDL 결국 점장이 달려오고 성희롱한 동료는 크게 꾸중을 듣고 말았다
+				CASE 1
+					PRINTFORML 「(얄미운 자식……)」
+					PRINTFORML 「(어떻게 엿먹일 방법이 없을라나……)」
+					PRINTFORML 「(아, 그렇지!)」
+					PRINTW
+					PRINTFORMDL %타겟은% 성희롱을 해놓고서 모르쇠로 일관하는 동료를 골탕먹일 방법을 떠올랐다
+					PRINTFORMDL %CALLNAME%의 입가에 소악마 같은 웃음이 떠오른다……
+					PRINTW
+					PRINTFORML 「꺄아아악!!!」
+					PRINTFORML 「이, 이 사람이 저를 막 만졌어요……」
+					PRINTFORML 「흑흑, 너무해……」
+					PRINTW
+					PRINTFORMDL %CALLNAME%의 비명을 듣고 모여든 사람들 앞에서 %타겟은% 성대하게 우는 척을 했다
+					PRINTFORMDL 그러자 성희롱 한 동료에게 경멸의 시선이 모인다
+					PRINTFORMDL %타겟은% 두 손으로 얼굴을 가리고 혀를 빼꼼 내밀었다
+				CASE 2
+					PRINTFORML 「(아~아…… 지겹지도 않나)」
+					PRINTFORML 「(이런 모습을 하게된 뒤로는 이런 일이 많네…)」
+					PRINTW
+					PRINTFORMDL %타겟은% 속으로 한숨을 내쉬었다
+					PRINTFORMDL 이런 일이 하나 하나 반응했다간 끝이 없다고 생각하고서
+					PRINTFORMDL 성추행한 동료를 한 번 째려보고서 자신의 일을 계속했다…
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「너 이 새끼… 두고 보자……」
+					PRINTFORML 「그 손가락을 꺾어 버리겠어…………」
+					PRINTW
+					PRINTFORMDL 겉으로 보이는 모습에서는 상상도 할 수 없는 %CALLNAME%의 흉흉한 말투에 동료의 얼굴이 새파랗게 질렸다
+				CASE 1
+					PRINTFORML 「(나 지금 겉모습은 초등학생 아닌가?)」
+					PRINTFORML 「(그런데 엉덩이를……?)』
+					PRINTFORML 「(나 참…… 대단한 취향이구만)」
+					PRINTW
+					PRINTFORMDL %타겟은% 질렸다는 듯이 한숨을 내쉬었다
+				CASE 2
+					PRINTFORML 「후우……」
+					PRINTW
+					PRINTFORMDL %타겟은% 동료가 고개를 숙이고 사과한다면 넘어갈 생각이였지만, 모르는 척 하는 모습에 결국 꼭지가 돌아버렸다
+					PRINTFORMDL 가까운 작업대에 계란을 내려놓고 %타겟은% 자신의 엉덩이를 쓰다듬은 동료의 멱살을 쥐었다
+					PRINTW
+					PRINTFORML 「야, 임마……가만히 있으니까 내가 가마니로 보이냐?」
+					PRINTFORML 「내가 겉모습이 어린 여자애라고 암것도 못할것 같아?」
+					PRINTW
+					PRINTFORMDL %타겟은% 동료를 상대로 울분을 풀기 시작했다
+					PRINTFORMDL 그 모습에는 방금 당한 성희롱에 대한 분노만 보이는 것이 아니였다
+					PRINTFORMDL 아무래도 마법소녀의 모습을 했을때 당한 것들이 너무나도 분했던 모양이다……
+			ENDSELECT
+		ENDIF
+	ELSEIF RESULT < 3
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「읏……」
+				PRINTFORML 「(또 이거냐……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 또 다시 자신의 엉덩이를 쓰다듬는 동료를 노려봤다
+				PRINTFORMDL 말 해봐야 소용없겠지……그렇게 생각한 %타겟은% 얼굴을 붉히면서 수치심에 몸을 떨었다
+			CASE 1
+				PRINTFORML 「햐읏!?」
+				PRINTW
+				PRINTFORMDL 동료의 성희롱을 잊고 작업에 열중하던 %타겟은% 누군가 가슴을 더듬는 느낌에 놀라 비명을 질러버렸다
+				PRINTFORMDL 그 비명에 놀란 동료가 겸연쩍은듯 성희롱을 그만둔 것은 좋지만……
+				PRINTFORMDL 자신이 무심코 느껴버렸다는 것을 깨닫고 자괴감을 느꼈다
+			CASE 2
+				PRINTFORML 「그만 하라니까!」
+				PRINTW
+				PRINTFORMDL 다시 동료가 엉덩이를 건드리자 %타겟은% 무심코 목소리를 높여버렸다
+				PRINTFORMDL 그 비명에 놀란 동료가 겸연쩍은듯 성희롱을 그만둔 것은 좋지만……
+				PRINTFORMDL 그는 자신이 무심코 느껴버렸다는 것을 깨닫고 자괴감을 느끼고 의기소침해졌다
+		ENDSELECT
+	ELSEIF RESULT < 5
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「후우…후우…」
+				PRINTFORML 「(기분 좋은거……못참겠어어엇!)」
+				PRINTW
+				PRINTFORMDL 성희롱 당한 것 때문에 몸이 달아오른 %타겟은% 화장실을 간다고 해놓고 그곳에서 자위를 시작했다
+				PRINTFORMDL 팬티에 손을 집어넣고 비소에 손가락을 집어넣은 채로,
+				PRINTFORMDL 주니어 브라 사이의 유두를 필사적으로 매만지는 지금의 %타겟은% 부정할 수 없는 변태다
+				PRINTW
+				PRINTFORML 「아아…아아아…」
+				PRINTFORML 「난 무슨 짓을……」
+				PRINTW
+				PRINTFORMDL 흥분했던 몸이 진정되는 것과 함께 %CALLNAME%의 이성도 돌아온 것 같다
+				PRINTFORMDL %타겟은% 자신이 한 짓을 깨닫고 우울해져 한참을 화장실에 틀어박혀 있다가 점장에게 혼나버렸다……
+			CASE 1
+				PRINTFORML 「으으…아우우……」
+				PRINTW
+				PRINTFORMDL 거의 부풀지 않은 %CALLNAME%의 가슴이 동료의 손의 형태에 맞춰 형태가 변해간다
+				PRINTFORMDL 제복인 스커트를 들춰지고, 속옷 손으로 손이 기어들어 가는데도 %타겟은% 저항하지 않았다
+				PRINTFORMDL 아니, 저항할 수 없는 것이다
+				PRINTW
+				PRINTFORML 「(안기고 있으니까…… 몸을 만져지고 있으니까……)」
+				PRINTFORML 「(이상하게 힘이 빠져서……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 다른 동료가 올 때까지 한동안 희롱당해버렸다……
+			CASE 2
+				PRINTFORML 「윽…으읏…흑…」
+				PRINTW
+				PRINTFORMDL 사람이 없는 가게 뒷편에서 %타겟은% 입에 옷자락을 물고 숨을 죽이고 오열하고 있다
+				PRINTFORMDL 그 이유는 다른 동료에게 성희롱을 당해서지만…… 그것 말고도 다른 이유가 있었다
+				PRINTW
+				PRINTFORML 「(완전히 젖어버렸잖아……)」
+				PRINTW
+				PRINTFORMDL 제복의 스커트를 들추고 속옷의 상태를 살펴보면, 완전히 애액으로 흠뻑 젖어 있다
+				PRINTFORMDL 그 뿐만이 아니라 숨도 가쁘고 얼굴도 상기되어 있는 것이
+				PRINTFORMDL 보이는 그대로 발정하고 만 것이다
+				PRINTW
+				PRINTFORML 「(난 이미 틀린건가……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 허벅지를 타고 흘러내리기 시작하는 애액을 닦으며
+				PRINTFORMDL 눈물을 훔쳤다
+		ENDSELECT
+	ELSE
+		PRINTFORMDW ……
+		PRINTFORMDW ……
+		PRINTFORMDW ……
+		PRINTW
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「그, 그렇게 애태우지 말고………」
+				PRINTFORML 「더 기분 좋게 해주세요………」
+				PRINTW
+				PRINTFORMDL 성희롱을 당하고 얼마 뒤,
+				PRINTFORMDL %타겟은% 아까 자신의 엉덩이를 만지작거렸던 동료의 팔에 매달렸다
+				PRINTFORMDL 그리고 그 손에 자신의 비부를 문지르며 달콤한 한숨을 흘리기 시작했다
+				PRINTW
+				PRINTFORML 「하으, 우으읏………아응……」
+				PRINTW
+				PRINTFORMDL 동료의 손가락이 꼼질거리며 %CALLNAME%의 음란한 콩을 문질대자
+				PRINTFORMDL %CALLNAME%의 허리가 크게 튀어오른다
+				PRINTW
+				PRINTFORML 「내………내가 무슨 짓을……」
+				PRINTW
+				PRINTFORMDL 이만큼 유혹했으면 하게 해달라는 동료의 말에 이성이 되돌아온 %타겟은%
+				PRINTFORMDL 도망치듯이 그 자리를 떠났다……
+			CASE 1
+				PRINTFORML 「으붑, 웁, 웁!!」
+				PRINTW
+				PRINTFORMDL %타겟은% 지금 주방의 작업대 위에 묶여 있다
+				PRINTFORMDL 잘 보면, 애널에는 잘 깍인 당근을, 입에는 굵다란 가지를, 비부에는 오돌톨한 돌기가 서 있는 오이를 물려진 채다
+				PRINTW
+				PRINTFORML 「우극, 으부부붑!! 웁, 웁!!!」
+				PRINTW
+				PRINTFORMDL 한 남자가 %CALLNAME%의 작은 가슴에 달라붙어 젖꼭지를 빨며 "마망, 마망"하고 중얼거리기 시작했다
+				PRINTFORMDL 전신에 소름이 돋는 것을 느끼며 %타겟은% 필사적으로 몸부림치지만 단단히 묶인 손발은 움직일 생각을 하지 않는다
+				PRINTFORMDL 무엇보다 저항을 힘들게 하는 것은, 묶인 손발이 아닌 완전히 개발된 %CALLNAME% 자신의 몸이다
+				PRINTW
+				PRINTFORML 「(몸에 힘이 들어가지 않아……)」
+				PRINTW
+				PRINTFORMDL %타겟을% 둘러싸고 자위를 하던 남자들이 일제히 사정하기 시작했다
+				PRINTFORMDL 농후한 정액의 내음에 뒤덮히며, %CALLNAME%의 의식은 멀어져 갔다……
+			CASE 2
+				PRINTFORML 「자, 잠깐…… 왜들 이러는 거야?」
+				PRINTFORML 「같은 아르바이트 동료잖아, 응?」
+				PRINTW
+				PRINTFORMDL 식당의 브레이크 타임, %타겟은% 동료 직원들에게 둘러싸여 있었다
+				PRINTFORMDL 동료들의 고간은 크게 불거져 있어, 한눈에 봐도 발기했단 것을 알 수 있다
+				PRINTW
+				PRINTFORML 「(이 녀석들……눈에 초점이 없잖아)」
+				PRINTW
+				PRINTFORMDL 이 상황이 촉수에 의해 완전히 개발된 자신의 몸이 발정하면서 내뿜은 페로몬 때문이라는 것을,
+				PRINTFORMDL %타겟은% 직감적으로 깨달았다
+				PRINTW
+				PRINTFORML 「(나 때문인거니까……어쩔 수 없는거야)」
+				PRINTFORML 「(그래, 어쩔 수 없는거니까……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 스스로에게 변명하듯 중얼거리고, 동료들의 바지를 내렸다
+				PRINTFORMDL 그리고 자신의 작고 부드러운 손으로 남자들의 페니스를 문질러대기 시작했다
+				PRINTW
+				PRINTFORML 「정신 차리게 하려면 역시 이 방법 뿐이겠지……」
+				PRINTFORML 「그리고 손 두 개론 부족할것 같으니 입으로도…… 하음……」
+				PRINTW
+				PRINTFORMDL %타겟은% 그대로 양 손과 입까지 써서 동료들의 성욕을 풀어주기 시작했다
+				PRINTFORMDL 어쩔 수 없다고 하면서도, 그 얼굴엔 부자연스러운 홍조가 띄워져 있었다……
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTL
+;아르바이트 『식당』(약)
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOKUDOU_drug
+IF ISMALE()
+	PRINTFORMDL 『듀후후후, %CALLNAME%군. 요즘 많이 지쳐보였으니까 말이지』
+	PRINTFORMDL 『푹 쉬라고』
+	PRINTW
+	PRINTFORMDL 최음제라고 생각했던 약은 평범한 진정제였다
+	PRINTFORMDL 점장의 능숙한 마사지에 %CALLNAME%의 몸에서 피로가 사라져 갔다…
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「(아, 안 돼……)」
+			PRINTFORML 「(여기서 눈이 감기면……무슨 짓을 당할지 모르는데……)」
+			PRINTW
+			PRINTFORMDL 살짝 벌어진 %CALLNAME%의 입 안으로, 무언가 역겨운 냄새가 풍기는 것이 들어온다
+			PRINTFORMDL 초점이 사라져가는 눈에는 보이지 않았지만 그것은 틀림없는……
+		CASE 1
+			PRINTFORML 「(이, 개자식……)」
+			PRINTFORML 「(있다가 묵사발을 내주겠어……)」
+			PRINTW
+			PRINTFORMDL 몽롱한 상태에서도 자신을 매섭게 노려보는 %CALLNAME%의 눈빛에 점장은 흠칫했다
+		CASE 3
+			PRINTFORML 「어 이아익……우여어인다……」
+			PRINTW
+			PRINTFORMDL %타겟은% 완전히 혀가 풀려버려 발음이 꼬여버리면서도 점장에게 항의했다
+			PRINTFORMDL 그 모습이 더욱 흥분을 부추기고 있음을, %타겟은% 모르고 있었다
+		CASE 4
+			PRINTFORMDL 『듀후후후, %CALLNAME%. 요즘 많이 지쳐보였으니까 말이지』
+			PRINTFORMDL 『푹 쉬렴』
+			PRINTW
+			PRINTFORMDL 최음제라고 생각했던 약은 평범한 진정제였다
+	ENDSELECT
+ENDIF
+;아르바이트 『신문 배달』
+;--------------------------------------------------
+@KOJO_111_SEISAN_SHINBUN
+PRINTL
+;촉수구속구
+IF CFLAG:42 == 400 && ISFEMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「아, 아직 배달도 안끝났는데……」
+			PRINTFORML 「그만……그마안…!」
+			PRINTW
+			PRINTFORMDL %타겟은% 길가에 주정낮은 채로, %조사처리(ITEMNAME:400,"가")% 가져오는 쾌감을 필사적으로 참고 있다
+			PRINTFORMDL 그 얼굴은 눈에 띄게 붉어져 있고, 심상치 않은 색기를 뿌리고 있어 지나가던 사람들이 무심코 고개를 돌려버리게 만들었다
+		CASE 1
+			PRINTFORML 「후우……후우……」
+			PRINTFORML 「(내가 이딴 옷쪼가리에 질까 보냐…!)」
+			PRINTW
+			PRINTFORMDL %타겟은% 오기가 생긴듯 숨을 거칠게 내쉬면서도 필사적으로 신문을 배달하고 있다
+			PRINTFORMDL 그러나 그 발걸음을 따라 애액의 자국이……
+		CASE 2
+			PRINTFORML 「우으……으으우……」
+			PRINTW
+			PRINTFORMDL %타겟은% 반 쯤 정신이 나간 상태로 신문을 배달하고 있다
+			PRINTFORMDL 그런데 %조사처리(ITEMNAME:400,"가")% 주는 쾌락에 취해, 잘못된 집에 배달을 해버린 것을 깨닫지 못한것 같다……
+	ENDSELECT
+ELSE
+	IF ISFEMALE() && RAND:3
+		PRINTFORML 「으으, 키가 작으니 팔다리가 너무 짧잖아……」
+		PRINTFORML 「이러면 언제 다 배달하냐고……」
+		PRINTW
+		PRINTFORMDL %타겟은% 변신한 모습의 작은 키에 불평하며 신문을 배달하고 있다
+		PRINTFORMDL 그 모습을 동네 주민들이 기특하다는 듯이 바라보고 있다는 것은 아직 깨닫지 못한것 같다
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「어디 보자, 앞으로 몇 집 남았지……」
+				PRINTW
+				PRINTFORMDL %타겟은% 자신이 신문을 배달해야할 집들을 확인하고 있다
+			CASE 1
+				PRINTFORML 「으랏차!」
+				PRINTW
+				PRINTFORMDL %타겟은% 주택가의 벽 너머로 신문을 던져 넣었다
+			CASE 2
+				PRINTFORML 「후우…힘드네 이거」
+				PRINTW
+				PRINTFORMDL 거의 배달을 마친 %타겟은% 계단에 걸터앉아 물을 꺼내 마셨다
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTL
+;아르바이트 『신문 배달』(절정 자전거)
+;--------------------------------------------------
+@KOJO_111_SEISAN_SHINBUN_acmecycle
+PRINTL
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「크윽………」
+			PRINTW
+			PRINTFORMDL %타겟은% 이를 악물고 소리를 죽이고 있다
+		CASE 1
+			PRINTFORML 「에라이 못해먹겠네!」
+			PRINTW
+			PRINTFORMDL %타겟은% 자전거 위에서 거칠게 날뛰었다
+			PRINTFORMDL 그러자 돌연 안장이 잠잠해졌다
+		CASE 2
+			PRINTFORML 「후우……후우……」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 호흡이 가빠져온다
+			PRINTFORMDL 그것은 분명 배달이 힘들어서 만은 아니겠지
+	ENDSELECT
+ELSE
+;V감각, C감각, 욕망
+	IF ( ABL:0 + ABL:1 + ABL:11 ) > 12 && RAND:2 == 0
+		PRINTFORML 「으, 크으읏………!」
+		PRINTW
+		PRINTFORMDL 페달을 밟을 한 번 밟으면, 그에 맞춰 질 내 깊숙히 처박혀 있는 고기의 바이브가 용두질 친다
+		PRINTFORMDL 한 발, 그리고 또 한 발, 점차 %CALLNAME%의 몸은 점차 열기를 띄어간다
+		PRINTW
+		PRINTFORML 「하아……하아……」
+		PRINTFORML 「(오늘따라……이상하게 먼 것 같은데………)」
+		PRINTW
+		PRINTFORMDL 분명히 평소와 같은 코스, 평소와 같은 할당량, 평소와 같은 페이스지만
+		PRINTFORMDL %CALLNAME%의 배달은 끝날 기미가 보이지 않는다
+		PRINTFORMDL 페달을 밟을 때마다 덮쳐오는 쾌락에 발의 움직임이 자꾸 멈춘다는 것을
+		PRINTFORMDL %타겟이% 아직 깨닫지 못했기 때문이다
+		PRINTW
+		PRINTFORML 「(이대로는 배달에 늦어버릴지도)」
+		PRINTFORML 「(페이스를 올려야 겠군……)」
+		PRINTW
+		PRINTFORMDL 하복부에서 밀어닥치는 쾌감을 참으며 %타겟은% 페이스를 올렸다
+		PRINTFORMDL 그러자 고간에 달라붙어 있는 안장형 촉수의 움직임도 점차 격렬해진다
+		PRINTFORMDL %타겟은% 머릿속이 새하얘질 정도의 열락에 얼굴이 완전히 풀어지고 말았다
+		PRINTW
+		PRINTFORML 「앙, 아응……하으윽!?」
+		PRINTW
+		PRINTFORMDL %CALLNAME%의 고간에서 투명한 애액이 마구 흘러나온다
+		PRINTFORMDL 이제는 자전거의 안장뿐만 아니라 프레임 마저도 완전히 끈적끈적, 질척질척 해졌다
+		PRINTFORMDL %타겟은% 자궁구를 억눌리는 감각에 참았던 신음을 터트리고 만다
+		PRINTW
+		PRINTFORMDL ……………………
+		PRINTFORMDL …………
+		PRINTFORMDL ……
+		PRINTW
+		IF RAND:4 == 0
+			PRINTFORML 「아흣, 읏, 으으읏……」
+			PRINTW
+			PRINTFORMDL %타겟은% 결국 쾌락에 몸을 맡겨, 신문을 배달한다는 당초의 목적을 잊고
+			PRINTFORMDL 그저 자전거의 페달만 밟으며 동네를 돌아다니고 말았다……
+		ELSEIF RAND:3 == 0
+			PRINTFORML 「아응, 아, 아, 기분 조아아앗……!」
+			PRINTW
+			PRINTFORMDL 건물과 건물 사이, 어두운 뒷골목
+			PRINTFORMDL %타겟은% 그 사이로 자전거를 끌고 들어갔다
+			PRINTFORMDL 그리고 안장 위에서 한참을 허리를 흔드는 것이였다……
+		ELSE
+			PRINTFORML 「이, 이걸로 마지막……」
+			PRINTW
+			PRINTFORMDL %타겟은% 반 쯤은 제정신이 아님에도 불구하고 어떻게든 모든 신문을 배달했다
+			PRINTFORMDL 하지만 그 결과, %CALLNAME%의 몸은 완전히 촉수 안장에게 능욕당해 버린 것이다……
+		ENDIF
+	ELSEIF ( ABL:0 + ABL:1 + ABL:11 ) > 6
+		PRINTFORMDL 페달을 밟으면 굵다란 촉수 바이브가 자궁구 까지 들이밀어진다
+		PRINTFORMDL 반대쪽의 페달을 밟으면 그 촉수가 요동치며 질벽을 긁어내듯 애무하며 빠져나간다
+		PRINTW
+		PRINTFORML 「여기서 포기하면 졌다고 인정하는 꼴이 되니까……」
+		PRINTW
+		PRINTFORMDL %타겟은% 입술을 깨물고 흘러나오려 하는 신음소리를 죽인다
+		PRINTFORMDL 그리고 순간 멈춰버린 다리를 다시 움직이기 시작한다
+		PRINTW
+		PRINTFORML 「사나이 대장부는……이런 일로 꺾이지 않는다고……!」
+		PRINTW
+		PRINTFORMDL 지금의 %타겟은% 그야말로 소녀 그 자체지만 마치 스스로를 속이듯 그렇게 중얼거렸다
+		PRINTFORMDL 결국 안장형 촉수에 수 차례 범해지며, 몇 번인가는 터져나오는 신음소리를 참지 못했던 %타겟이였%지만
+		PRINTFORMDL 어떻게든 신문은 모두 배달하는 것에 성공했다…
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「크읏…이런 걸로 느끼지 않는다고…」
+				PRINTW
+				PRINTFORMDL %타겟은% 반 쯤 울먹이며 신문을 배달하고 있다
+				PRINTFORMDL 그런데 그는 촉수가 주는 쾌락에 취해, 잘못된 집에 신문을 넣어버린 것을 깨닫지 못한것 같다……
+			CASE 1
+				PRINTFORML 「여자의 몸, 너무 약하잖아…」
+				PRINTW
+				PRINTFORMDL 촉수가 자궁구를 깊이 찔러올 때마다, %CALLNAME%의 허리도 크게 튀어오른다
+				PRINTFORMDL %타겟은% 삽입당한다고 하는 익숙하지 않은 감각에 몸을 떨었다……
+			CASE 2
+				PRINTFORML 「이런 망할…」
+				PRINTFORML 「배달만 끝나면 두고보자…」
+				PRINTW
+				PRINTFORMDL %타겟은% 이를 갈면서 배달을 마쳤다
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTL
+;아르바이트 『신문 배달』(톱 뉴스)
+;--------------------------------------------------
+@KOJO_111_SEISAN_SHINBUN_topnews
+IF MARK:0 > 3
+	PRINTFORML 「큭……!」
+	PRINTW
+	PRINTFORMDL 아무래도 %타겟은% 그 날의 능욕과, 촉수에게 범해지면서 쾌감을 느껴버린 것을 떠올린 것 같다
+	PRINTFORMDL %타겟은% 주먹을 불끈 쥐고, 눈을 감고서 심호흡 했다
+	PRINTW
+	PRINTFORML 「후우……후우………」
+	PRINTFORML 「좋을 대로 떠들라지……」
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「개자식들, 누군 목숨 걸고 싸우는데 이런 기사나 써재끼는거냐?」
+			PRINTFORML 「마음 같아서는 신문사에 쳐들어가고 싶다만…」
+			PRINTW
+			PRINTFORMDL %타겟은% 그렇게 말은 했지만, 결국 그들도 자신이 "지켜야 할 사람들"인 것은 알고 있었다
+			PRINTFORMDL 그렇지만 알고 있는 것과 이해하는 것은 다른 이야기……
+		CASE 1
+			PRINTFORML 「뭐, 뭐, 뭐, 뭐야 이게!?」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신의 사진들을 보며 경악한 얼굴로 외쳤다
+			PRINTFORMDL 경악 다음에 찾아온 것은 분노……, %타겟은% 뿌득거리는 소리가 날 정도로 이를 악물었다
+		CASE 2
+			PRINTFORML 「어이가 없구만……」
+			PRINTW
+			PRINTFORMDL %타겟은% 한숨을 쉬고 다른 신문들도 살펴봤다
+			PRINTFORMDL 잘 보면 저급 찌라시들은 대체로 이런 기사를 하나씩은 쓰고 있었다
+	ENDSELECT
+	PRINTW
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「쳇, 상대해 봐야 내 시간만 아깝지」
+		CASE 1
+			PRINTFORML 「흥, 어차피 변신한 모습은 일시적인 거니까 문제 없다고」
+		CASE 2
+			PRINTFORML 「열받지만 어쩔 수 없지……」
+	ENDSELECT
+ENDIF
+;아르바이트 『신문 배달』(호색한)
+;--------------------------------------------------
+@KOJO_111_SEISAN_SHINBUN_debagame
+IF ABL:욕망 < 2
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(이런, 이렇게 보고있으면 실례지!)」
+			PRINTW
+			PRINTFORMDL %타겟은% 고개를 돌리면서도 슬쩍 두 남녀의 행위를 훔쳐보고 있다
+		CASE 1
+			PRINTFORML 「(여자친구라……나도 생겼으면 좋겠는데)」
+			SIF ISFEMALE()
+				PRINTFORML 「(남자로 돌아갈 수도 없는 지금, 생겨도 곤란하겠지만)」
+			PRINTW
+			PRINTFORMDL %타겟은% 한숨을 쉬었다
+		CASE 2
+			PRINTFORML 「(젠장, 저 부러운 자식!)」
+			PRINTFORML 「(난 괴물퇴치에 바빠서 저럴 시간도 없는데…)」
+			PRINTW
+			PRINTFORMDL %타겟은% 리얼충을 보고서 분노하고 있다…
+	ENDSELECT
+ELSEIF ABL:욕망 < 4
+	IF ISMALE()
+		PRINTFORML 「(이렇게 훔쳐보면 안 되는데……)」
+		PRINTFORML 「(어째서 눈을 뗄 수 없는거지……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 점점 분위기가 오르고 있는 남녀를 보며 침을 삼켰다
+	ELSE
+		IF TALENT:여체수용
+			IF CFLAG:902 == 28
+				PRINTFORML 「(흥, 나도 이제는 진심으로 사랑해주는 사람이 있다고)」
+				PRINTFORML 「(상대가 남동생이지만……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 그렇게 속으로 말해놓고 자기혐오에 빠져버렸다
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORML 「(나도 언젠가, 사랑하는 사람에게 안긴다면 행복할까……?)」
+						PRINTFORML 「(내, 내가 무슨 생각을?! 난 남자니까 그런 생각은……)」
+						PRINTW
+						PRINTFORMDL %타겟은% 자신이 무슨 생각을 했는가 떠올리고 고개를 휘저었다
+					CASE 1
+						PRINTFORML 「(아아, 저 아가씨. 저렇게 행복한듯한 얼굴로……)」
+						PRINTFORML 「(언젠가 반쪽짜리 여자인 나를 안아줄 남자도 나타날까……?)」
+						PRINTW
+						PRINTFORMDL %타겟은% 얼굴을 붉히고서 두 남녀의 행위를 계속해서 지켜봤다
+				ENDSELECT
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「(뭐, 뭐야!? 아래쪽이 젖었어……)」
+					PRINTFORML 「(어, 어째서……)」
+					PRINTW
+					PRINTFORMDL %타겟은% 남녀의 정사를 보고 멋대로 달아오르기 시작한 자신의 몸을 당황하여 내려다 봤다
+				CASE 1
+					PRINTFORML 「(후우……후우…………)」
+					PRINTFORML 「(어째서인지……눈을…………못떼겠어)」
+					PRINTW
+					PRINTFORMDL %CALLNAME%의 호흡이 점점 가빠져온다
+					PRINTFORMDL 아무래도 두 남녀의 정사를 보고 흥분한 것 같다
+			ENDSELECT
+		ENDIF
+	ENDIF
+ELSE
+	IF ISMALE()
+		PRINTFORML 「(저걸 보고 있었더니 못참겠잖아……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 바지를 내리고 자위하기 시작했다
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「(어쩐지……저 두 사람을 보고 있으니 몸이 뜨거워져……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 자신이 범해지는 상상하며 자위를 시작했다
+				PRINTFORMDL 그런 %CALLNAME%의 발 밑에는, 애액이 웅덩이지고 있었다……
+			CASE 1
+				PRINTFORML 「(저런걸 보여준 저 사람들이 나쁜거니까……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 자신의 젖가슴을 조물락대기 시작했다
+				PRINTFORMDL 이윽고 그것만으론 부족해졌는지, 다른 한 손이 속옷 속으로 들어간다
+				PRINTFORMDL 어느새 본격적인 형태의 자위가 되어 버렸다…
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTW
+PRINTFORMDL ……
+PRINTFORMDL ……
+PRINTFORMDL ……
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「(앗, 이럴 때가 아니지!)」
+	CASE 1
+		PRINTFORML 「(헉, 벌써 시간이 이렇게!?)」
+	CASE 2
+		PRINTFORML 「(아차, 멍하니 보고 있을 여유가 없는데!)」
+ENDSELECT
+
+;아르바이트 『히어로 쇼』（통상）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_normal
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「다음에 또 보자!」
+			PRINTW
+			PRINTFORMDL 쇼가 끝나고 등장인물이 나와 작별인사를 하고 있다
+			PRINTFORMDL %CALLNAME% 역시 거기에 끼어있었다
+		CASE 1
+			PRINTFORML 「액션── 킥── !!」
+			PRINTW
+			PRINTFORMDL 히어로의 전매특허 필살기가 작렬하자 무대의 분위기가 단번에 고조됐다
+			PRINTFORMDL 아무래도 %CALLNAME%에게는 이런 쇼를 이끌어가는 천부적인 재능이 있는것 같다
+		CASE 2
+			PRINTFORML 「버닝 레드 등장!」
+			PRINTFORML 「악당들아 어디에 있느냐!」
+			PRINTW
+			PRINTFORMDL %타겟이% 등장하는 것과 동시에 아이들의 뜨거운 함성이 스테이지를 달군다
+			PRINTFORMDL 그 모습에 %타겟은% 속으로 빙긋 웃으며, 맡은 배역에 더욱 열중하기 시작했다
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「아하하하하, 악의 여간부 등장!」
+			PRINTFORML 「자, 나쁜 아이들은 어디에 있을까?」
+			PRINTW
+			PRINTFORMDL %타겟은% 지금 드물게도 악역을 연기하고 있다
+			PRINTFORMDL 평소와는 다른 고압적인 %CALLNAME%의 모습에 반한 일부 관객 사이에서
+			PRINTFORMDL 여왕님을 따르는 팬 클럽이 생겼났다던가……
+		CASE 1
+			PRINTFORML 「러블리 핑크, 등장!」
+			PRINTFORML 「(내가 핑크 역할을 맡게 될줄은……)」
+			PRINTW
+			IF ISMALE()
+				PRINTFORMD 변신한 상태의
+			ELSE
+				PRINTFORMD 지금의
+			ENDIF
+			PRINTFORMDL  %타겟은% 어찌됐건 결국 여자의 몸이기에, 핑크 역할을 맡게 됐다
+			PRINTFORMDL 처음에는 어색한 듯이 제대로 움직이지 못하는 %타겟이였%지만,
+			PRINTFORMDL 핑크라는 배역이 신선한 듯이 곧바로 몰입하기 시작했다
+		CASE 2
+			PRINTFORML 「다들 또 보자!」
+			PRINTW
+			PRINTFORMDL %타겟은% 활짝 웃으며 관객들에게 작별인사를 했다
+			PRINTFORMDL 그런 %CALLNAME%의 모습을 찍은 사진이 퍼져,
+			PRINTFORMDL 인터넷에서 "흔한 히어로쇼의 미소녀.jpg"로 대단한 화제가 일어나게 되어
+			PRINTFORMDL 어른이 손님이 몰려들게 되리라는 것을 %타겟은% 아직 모른다……
+	ENDSELECT
+ENDIF
+PRINTW
+;아르바이트 『히어로 쇼』（굴렀다）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_korobi
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMDL 『일어나, 레드!』
+			PRINTFORMDL 『지지마, 파이팅!!』
+			PRINTW
+			PRINTFORMDL 아무래도 아이들은 %타겟이% 구른 것도 쇼의 일환이라 생각한 것 같다
+			PRINTFORMDL 부끄러운 모습을 보여 의기소침해 있던 %타겟은% 아이들의 응원에 힘이 났는지
+			PRINTFORMDL 그 자리에서 벌떡 일어나 쇼를 이어나갔다
+		CASE 1
+			PRINTFORML 「(아, 아파라!)」
+			PRINTW
+			PRINTFORMDL %타겟은% 영 안좋은 곳을 부딪혔는지
+			PRINTFORMDL 넘어진 자세 그대로 한참을 끙끙 앓았다
+		CASE 2
+			PRINTFORML 「흠흠……」
+			PRINTW
+			PRINTFORMDL %타겟은% 넘어진 것이 겸연쩍은지
+			PRINTFORMDL 연달아 헛기침을 하고 있다
+	ENDSELECT
+ELSE
+	IF TALENT:여체수용 && RAND:3 == 0
+		PRINTFORML 「꺄악!」
+		PRINTW
+		PRINTFORMDL %타겟은% 속옷을 훤히 드러낸 것이 부끄러운지 새된 비명을 지르며 손으로 치마를 억눌렀다
+		PRINTFORMDL 그 움직임은 마치 소녀와도 같았다………
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「짜식들아, 뭘 보냐!」
+				PRINTW
+				PRINTFORMDL %타겟은% 호기심으로 눈을 반짝이는 남자아이들에게 역으로 성을 내고 있다
+			CASE 1
+				PRINTFORML 「뭐, 팬티 정도 보여줘도 아무렇지도 않다고!」
+				PRINTFORML 「애초에 이게 진짜 모습도 아니니까……」
+				PRINTW
+				PRINTFORMDL %타겟은% 아무렇지도 않은 척 하면서 그 자리에서 벌떡 일어섰다
+				PRINTFORMDL 하지만 기분 탓일까, %CALLNAME%의 얼굴은 약간 붉어져 있었다……
+			CASE 2
+				PRINTFORML 「이런 악행을 저지르다니, 정의의 이름으로 심판하겠다!」
+				PRINTW
+				PRINTFORMDL %타겟은% 그 자리에서 벌떡 일어나 쇼를 이어나갔다
+				PRINTFORMDL 아무래도 없었던 일로 하려는 것 같다…
+		ENDSELECT
+	ENDIF
+ENDIF
+;아르바이트 『히어로 쇼』（스커트 넘김）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_skirtmekuri
+PRINTW
+IF TALENT:여체수용 && RAND:3 == 0
+	PRINTFORML 「싫어엇!!」
+	PRINTW
+	PRINTFORMDL %타겟은% 뭔가 트라우마를 자극당한 듯이 비명을 지르며 몸을 비틀고서 괴인의 품에서 빠져나왔다
+	PRINTFORMDL 그리고 방금 자신이 진짜 여자아이 처럼 반응해 버렸다는 것에 망연한 듯한 얼굴로 고개를 숙였다
+ELSEIF ABL:노출벽 > 3 && RAND:3 == 0
+	PRINTFORML 「부, 부끄러워……」
+	PRINTW
+	PRINTFORMDL %타겟은% 스커트를 들춰진 채로 몸을 비비적거리고 있다
+	PRINTFORMDL 아무래도 괴인의 품에서 빠져나오려 저항하는것 같지만 그 기세가 영 미진하다
+	PRINTFORMDL 그러면서 %CALLNAME%의 속옷에, 애액으로 얼룩이 지기 시작했다…
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「뭐하는 짓이야 임마!!」
+			PRINTW
+			PRINTFORMDL %타겟은% 괘씸한 괴인역 남자의 급소를 발로 까버렸다
+			PRINTFORMDL 괴인은 그 자리에 쓰러져 기절해 버렸다
+			PRINTFORMDL 관객석에서 남성 학부모들이 숨을 죽이는 소리가 들려온다
+		CASE 1
+			PRINTFORML 「이건 대본에 없지 않았나?」
+			PRINTFORML 「대답해 보시지……응?」
+			PRINTW
+			PRINTFORMDL %타겟은% 웃는 얼굴로 괴인역의 손을 붙잡았다
+			PRINTFORMDL 가느다란 팔에서는 상상도 할 수 없는 힘에 놀란것 같다……
+		CASE 2
+			PRINTFORML 「필살, 액션 킥!」
+			PRINTW
+			PRINTFORMDL %타겟은% 그대로 괴인역의 남자에게 필살기를 꽂아 넣었다
+	ENDSELECT
+ENDIF
+PRINTW
+;아르바이트 『히어로 쇼』（치한）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_chikan
+
+MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
+IF ISMALE()
+	PRINTFORML 「(뭐하는 짓거리야, 이 자식?)」
+	PRINTW
+	PRINTFORMDL %타겟은% 어이가 없어 아무런 말도 하지 못했다
+ELSE
+	IF RESULT == 0
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「뒈져버려!」
+				PRINTW
+				PRINTFORMDL %타겟은% 화려한 돌려차기로 괴인을 기절시켜 버렸다
+				PRINTFORMDL 아이들은 괴인이 쓰러진 것에 환호하고 있는 것이, 아무래도 이것도 쇼의 일환으로 본 것 같다
+				PRINTFORMDL %타겟은% 조용히 안도의 한숨을 쉬었다…
+			CASE 1
+				PRINTFORML 「이런 미친 새끼……」
+				PRINTW
+				PRINTFORMDL 관객들에겐 들리지 않을 정도의 작은 목소리로 %타겟이% 중얼거렸다
+				PRINTFORMDL 괴인역의 남자는 등줄기를 따라 내려가는 한기를 느끼며 손을 놓았다
+		ENDSELECT
+	ELSEIF RESULT < 3
+		PRINTFORML 「그, 그만……」
+		PRINTW
+		PRINTFORMD %타겟은% 자신의 
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMD 빈약한 젖가슴을 주무르는
+			CASE 1
+				PRINTFORMD 부드러운 엉덩이를 쓰다듬는
+			CASE 2
+				PRINTFORMD 의상의 스커트 아래로 기어드는
+		ENDSELECT
+		PRINTFORMDL  괴인의 손을 간신히 떨쳐냈다
+		PRINTFORMDL 이런 것이 대본에 있었던가…… %타겟은% 그런 생각을 하며 거칠어진 숨을 고르고 있다
+		PRINTFORMDL 그 모습이 어쩐지 너무나도 요염하여 관객석에서는 안타까운 탄식이 터져나왔다
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「(사람들 앞에서 가버리고 싶지 않아……!)」
+				PRINTW
+				PRINTFORMDL %타겟은% 필사적으로 괴인역의 배우의 품에서 빠져나오려 몸부림 쳤다
+				PRINTFORMDL 그러나 촉수에게 능욕당한 끝에 민감해져버린 몸은 그것을 허락하지 않았다
+				PRINTW
+				PRINTFORML 「너, 너어…… 두고보라고……!」
+				PRINTFORML 「용서하지 않을테니까!!」
+				PRINTW
+				PRINTFORMDL %타겟은% 유일하게 움직일 수 있는 입으로 자신을 희롱하는 괴인에게 쏘아붙였다
+				PRINTFORMDL 하지만 그것이 오히려 괴인역의 배우의 흥분에 부채질을 한 것인지, 행위가 점차 과감해져 갔다…
+			CASE 1
+				PRINTFORML 「네, 네녀석들 생각 대로는……♡」
+				PRINTFORML 「아, 안 돼……이럼 대사를 못 외운다고……♡」
+				PRINTW
+				PRINTFORMDL %타겟은% 안간힘을 쓰며 붙잡힌 히로인이란 역할을 연기하며 쇼를 이어가려 했다
+				PRINTFORMDL 그러나 괴인역의 배우의 손놀림이 점차 수위를 더해가며 %타겟을% 몰아세워 간다
+				PRINTFORMDL 붙잡힌 히로인 역할이기에 제대로 된 저항도 할 수 없는 채로 %타겟은% 희롱당하고 있다
+				PRINTW
+				PRINTFORML 「아우, 아으으으……♡」
+				PRINTW
+				PRINTFORMDL %타겟이% 제대로 대사를 말하지 못하는 것을 이상하게 여긴 운영측이
+				PRINTFORMDL 임시변통으로 구출 장면을 서둘러 다른 히어로측이 등장하며 간신히 %CALLNAME%도 풀려났다……
+			CASE 2
+				PRINTFORML 「그만, 하라니까……!」
+				PRINTW
+				PRINTFORMDL %타겟은% 계속해서 자신을 붙잡고 있는 괴인역의 배우에게 작은 목소리로 말하고 있다
+				PRINTFORMDL 그러나 괴인역의 배우의 행위는 전혀 멈추지 않고, 오히려 행위의 수위가 올라가고 있다
+				PRINTW
+				PRINTFORML 「너 임마, 설마……」
+				PRINTFORML 「하읏♡」
+				PRINTW
+				PRINTFORMDL 괴인역의 배우는 자신의 손이 앞에 있는 %CALLNAME%의 몸에 가려 보이지 않는 것을 기회로 삼은듯 하다
+				PRINTFORMDL 자신의 꿀단지에 손가락이 꽂히는 것을 느끼며 %타겟은% 무심코 달콤한 한숨을 흘려버렸다
+				PRINTFORMDL 이래선 쇼가 제대로 진행되지 않을 것을 깨달은 %타겟이% 관객들 쪽으로 고개를 돌리자
+				PRINTFORMDL 어째서인지 다들 뭔가에 홀린듯 눈이 공허했다……
+		ENDSELECT
+	ENDIF
+ENDIF
+;아르바이트 『히어로 쇼』（촉수 구속도구）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_syokusyu
+PRINTW
+IF ISMALE()
+	PRINTFORML 「흥………」
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(아, 안돼……)」
+			PRINTFORML 「(아이들이 보고 있으니까……웃어야……)」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 상태가 안좋아 보이자 불안해 하는 아이들 앞에서
+			PRINTFORMDL %타겟은% 양 손으로 브이를 그리며 웃어 보였다
+			PRINTFORMDL 하지만 그것이 오히려 역효과라는 것을, 본인은 알고 있을까?
+		CASE 1
+			PRINTFORML 「자, 잠깐, 타임…!!」
+			PRINTW
+			PRINTFORMDL 쇼의 하이라이트로 들어서고 있지만 %타겟은% %ITEMNAME:400%으로 인해 정신을 못차리고 있다
+		CASE 2
+			PRINTFORML 「네놈들의 악행도 이제 끝이다!!」
+			PRINTFORML 「이리 나와 정의의 심판을……」
+			PRINTFORML 「하윽!?」
+			PRINTW
+			PRINTFORMDL 쇼의 분위기가 고조되고, 악당에게 필살기를 넣는 마지막 씬에서 %CALLNAME%의 대사가 끊긴다
+			PRINTFORMDL %조사처리(ITEMNAME:400,"가")% %CALLNAME%의 질에 자신의 촉수를 쑤셔넣었기 때문이다
+			PRINTFORMDL %타겟은% 자신의 하복부를 꾹 누른 채로 쓰러져 경련했다…
+	ENDSELECT
+ENDIF
+
+;아르바이트 『히어로 쇼』（능욕 쇼）
+;--------------------------------------------------
+@KOJO_111_SEISAN_HERO_ryoujoku
+IF ISMALE()
+	PRINTFORML 「(뭐, 그래봐야 난 남자니까……)」
+	PRINTW
+	PRINTFORMDL %타겟은% 무표정한 얼굴로 얽히고 얽히는 사람들을 바라보고 있다
+ELSE
+	IF (ABL:욕망 + ABL:14 + MARK:4) > 10
+		PRINTFORML 「(아…… 어쩐지 머리가 멍해……)」
+		PRINTW
+		PRINTFORMDL %CALLNAME% 자신도 %ITEMNAME:400%의 독기에 영향을 받은 것인지 그 눈동자에서 초점이 사라져 간다
+		PRINTFORMDL %타겟은% 
+		IF EXP:매료경험 > 199 && (ISFEMALE() || CONFIG_CHECK_MANIAC_F(5) == 0)
+			PRINTFORMD %CALLNAME%의 치태를 감상하고 있는 남자들에게
+		ELSEIF EXP:매료경험 > 99 && (ISFEMALE() || CONFIG_CHECK_MANIAC_F(5) == 0)
+			PRINTFORMD 아이와 어른 관객들에게
+		ELSE
+			PRINTFORMD 아이의 눈을 가리는 부모들에게
+		ENDIF
+		PRINTFORMDL  요염하게 웃어보였다
+		PRINTFORMDL 그것이 신호가 됐던 걸까, 관객석에서 바라보기만 하던 사람들이 하나씩 무대 위로 기어올라 오기 시작했다
+		PRINTW
+		PRINTFORML 「(모두가, 모두가 나를 보고 있어……)」
+		PRINTFORML 「(행복해……♡)」
+		PRINTW
+		PRINTFORMDL %ITEMNAME:400%의 구속 따위는 이미 풀린지 오래다
+		PRINTFORMDL 지금 %타겟은% 반쯤은 자신의 의사로 자신의 다리를 벌리거나 가슴을 강조하는 자세를 하고 있다
+		PRINTFORMDL 가죽 같기도, 고기 같기도 한 질감을 한 %ITEMNAME:400% 너머로 분명하게 %CALLNAME%의 비부나 유두의 형태가 떠올라 있다
+		PRINTW
+		PRINTFORML 「자, 모두들 나를 딸감으로 써 줘……♡」
+		PRINTW
+		PRINTFORMDL %타겟은% 황홀한듯한 얼굴로 그렇게 말헀다
+		PRINTFORMDL 그러자 하나 둘, 무대 위로 올라온 남자들이 자신의 페니스를 꺼내 자위하기 시작했다
+		PRINTFORMDL 쏟아져 내리는 백탁액의 농후한 내음 속에서 그는 보여지는 것에 의한 절정을 맞이했다
+	ELSEIF (ABL:욕망 + ABL:14 + MARK:4) > 5
+		PRINTFORML 「이 자식들, 이거 놓지 못해!?」
+		PRINTW
+		PRINTFORMDL %CALLNAME%의 작은 몸을 가볍게 들어올린 남자들이 무대 앞쪽으로 나섰다
+		PRINTFORMDL 그것도, %ITEMNAME:400%의 구속으로 인해 다리를 크게 벌린 채로……
+		PRINTW
+		PRINTFORML 「아, 안돼……! 나를 보지 마……」
+		PRINTW
+		PRINTFORMD 그러자 
+		IF EXP:매료경험 > 199 && (ISFEMALE() || CONFIG_CHECK_MANIAC_F(5) == 0)
+			PRINTFORMD 남자들의 뜨거운
+		ELSEIF EXP:매료경험 > 99 && (ISFEMALE() || CONFIG_CHECK_MANIAC_F(5) == 0)
+			PRINTFORMD 아이와 어른의 호기심 가득한
+		ELSE
+			PRINTFORMD 아이들의 의아한 듯한
+		ENDIF
+		PRINTFORMDL  시선이 단숨에 집중된다
+		PRINTFORMDL 그리고 그것에 반응하듯 %조사처리(ITEMNAME:400,"가")% %CALLNAME%의 전신을 희롱하기 시작했다
+		PRINTW
+		PRINTFORML 「으읏…… 아, 아으읏!!」
+		PRINTW
+		PRINTFORMDL 부글거리는 애액이 %CALLNAME%의 고간에서 흘러넘치기 시작한다
+		PRINTFORMDL %조사처리(ITEMNAME:400,"가")% 주는 육체적인 쾌감과, 보여지는 것에 의한 치욕에 의해
+		PRINTFORMDL %타겟은% 그 상태로 몇 번이나 가버렸다
+		PRINTW
+		PRINTFORML 「(이런 거…… 더는 싫어……)」
+	ELSE
+		PRINTFORML 「쳇, 성가시게 하기는……!」
+		PRINTW
+		PRINTFORMDL %타겟은% 자신을 구속하고 있는 %조사처리(ITEMNAME:400,"를")% 떼어내려고 발버둥을 쳤다
+		PRINTFORMDL 그러나 그것은, 자신의 몸을 붙잡기 시작한 사람들의 손에 막히고 말았다
+		PRINTW
+		PRINTFORML 「자, 잠깐……」
+		PRINTFORML 「다들 정신 좀……」
+		PRINTFORML 「읍!?」
+		PRINTW
+		PRINTFORMDL 독기에 영향을 받은 괴인역의 배우가 %CALLNAME%의 입을 틀어막는다
+		PRINTFORMDL 이 사람들은 촉수에게 조종당하고 있을 뿐, "지켜야 할 사람들"이기에 섵부르게 날뛸 수도 없다
+		PRINTW
+		PRINTFORML 「(그야말로 진퇴양난이군……)」
+	ENDIF
+ENDIF
+;연구소 조수（통상）
+;--------------------------------------------------
+@KOJO_111_SEISAN_KENKYU_normal
+PRINTW
+;구속구
+IF CFLAG:42 == 400 && ISFEMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「그, 그럼 부디……」
+			PRINTFORML 「(이것도 다 연구를 위한 거니까……)」
+			PRINTW
+			PRINTFORMDL %타겟은% 스커트를 걷어올려 연구자들에게 %조사처리(ITEMNAME:400,"를")% 보여주고 있다
+			PRINTFORMDL 다른 이들의 시선을 알아챈 것인지, 돌연 %조사처리(ITEMNAME:400,"가")% 격렬하게 꿈틀거리기 시작한다
+			PRINTFORMDL %타겟은% 당혹스러운 얼굴로 얼굴을 붉히면서 다리를 비비 꼬고 있다
+			SIF ABL:노출벽 >= 3
+				PRINTFORMDL 그러면서도 남들에게 숨겨야할 치부를 보이는 것이 기쁜듯이 희미하게 미소짓고 있다
+		CASE 1
+			PRINTFORML 「죄, 죄송합니닷!」
+			PRINTW
+			PRINTFORMDL %타겟은% 손에서 자료들을 놓치고 말았다
+			PRINTFORMDL 허둥지둥 자료를 줍기 위해 %타겟이% 쭈그려 앉자, 그 아래에 투명한 애액이 늘어져 내린다
+			PRINTFORMDL 자신의 애액으로 자료들을 더럽혀버린 %타겟은% 치욕스러움에 입술을 깨물었다
+			PRINTFORMDL 피부 위를 덮고 있는 %ITEMNAME:400%만 아니라면……
+		CASE 2
+			PRINTFORML 「하윽?!」
+			PRINTW
+			PRINTFORMDL 한참 촉수에 대한 토의가 이어지던 중, %타겟이% 낸 신음소리에 사람들의 이목이 집중된다
+			PRINTFORMDL %타겟은% 사과하며 신음소리를 억누르려 이를 악물었다
+			PRINTW
+			PRINTFORML 「으……으읏………아으……」
+			PRINTW
+			PRINTFORMDL 그러나 %ITEMNAME:400%의 움직임이 격렬해지면서, 그것도 점차 여의치 않아진다
+			PRINTFORMDL 그야말로 %타겟은% 서 있는 게 고작인 상태다
+	ENDSELECT
+ELSE
+	IF ISFEMALE() && RAND:3
+		PRINTFORMDL 『아무리 봐도 천사라니까』
+		PRINTFORMDL 『임마, 넘보지 말라고, 모두의 아이돌이니까.』
+		PRINTW
+		PRINTFORMDL %타겟은% 지금 연구원들 사이에서 화제가 되어있는 것 같다
+		PRINTFORMDL 물론 %CALLNAME% 자신은 모르는 이야기다
+		PRINTFORMDL 본인이 안다면 방방 날뛰겠지……
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「(이게 다 무슨 소리야……)」
+				PRINTW
+				PRINTFORMDL %타겟은% 자신의 전공과 맞는 일을 할 수 있을 것이라고 생각했지만
+				PRINTFORMDL 굴지의 박사들이 모인 연구소의 논문은 학부생의 지식으로는 이해할 수 없는것 투성이였다
+				PRINTFORMDL 결국 %타겟은% 조금 우울해지고 말았다
+			CASE 1
+				PRINTFORML 「여기, 부탁하신 자료입니다」
+				PRINTFORML 「정수기 물 갈았습니다」
+				PRINTFORML 「바깥에 짐 다 들여놨습니다」
+				PRINTW
+				PRINTFORMDL %타겟은% 연구원들 사이에서 심부름을 하는 등 잡무를 담당하고 있다
+				PRINTFORMDL "조수"라고 하더니 결국 심부름꾼인가, 하고 %타겟은% 생각해버렸다
+			CASE 2
+				PRINTFORML 「촉수의 생태는……」
+				PRINTFORML 「그것들의 습성은……」
+				PRINTW
+				PRINTFORMDL %타겟은% 촉수와의 전투 경험을 살려 조언을 해달라는 부탁들 받았다
+		ENDSELECT
+	ENDIF
+ENDIF
+PRINTW
+
+;연구소 조수（임신）
+;--------------------------------------------------
+@KOJO_111_SEISAN_KENKYU_ninshin
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDL 『호오, 이것 참 굉장하군요……』
+		PRINTFORMDL 『그렇습니다, 이렇게 조그만 여자아이의 배가 이렇게나 부풀다니…… 뭔가 배덕적인……』
+		PRINTFORMDL 『……예? 방금 뭐라고……』
+		PRINTW
+		PRINTFORML 「(지금 만담이라도 하는거냐……)」
+		PRINTFORML 「(젠장, 사람을 구경거리 처럼 만들어놓고선……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 불만스러운 얼굴이지만 아무런 말도 하지 않았다
+		PRINTFORMDL 그저 속으로 이 시간이 어서 지나가기만을 빌 뿐……
+	CASE 1
+		PRINTFORML 「으읏, 아으으……」
+		PRINTFORML 「햐읏!? 아으응!?」
+		PRINTW
+		PRINTFORMDL 촉수의 새끼를 배고 있는 자궁 내부를 확인하기 위해 내시경이 %CALLNAME%의 질로 밀어넣어지고 있다
+		PRINTFORMDL %타겟은% 그 감촉마저 쾌락으로 받아들여버려
+		PRINTFORMDL 자신의 신음소리에 주위 연구원들의 얼굴이 아연해져 있는 것을 깨닫지 못했다……
+	CASE 2
+		PRINTFORML 「아윽, 배, 배가……」
+		PRINTFORML 「시럿, 시러어엇……!」
+		PRINTW
+		PRINTFORMDL 새끼 촉수의 상태를 확인하기 위해 %CALLNAME%의 자궁 내에 자극이 가해진다
+		PRINTFORMDL 뱃속의 촉수가 고통으로 발버둥치기 시작하자, %타겟은% 반사적으로 그것을 보호하려는 듯이 자신의 배를 감싸안았다
+		PRINTFORMDL 조금 뒤, 자신이 무슨 짓을 했는지 깨닫고 %타겟은% 비통하게 오열하기 시작했다……
+ENDSELECT
+PRINTW
+
+;연구소 조수（임신 경험 있어）
+;--------------------------------------------------
+@KOJO_111_SEISAN_KENKYU_after
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDL 『호오, 이것 참 굉장하군요……』
+		PRINTFORMDL 『그렇습니다, 이렇게 조그만 여자아이가 촉수를…… 뭔가 배덕적인……』
+		PRINTFORMDL 『……예? 방금 뭐라고……』
+		PRINTW
+		PRINTFORML 「(지금 만담이라도 하는거냐……)」
+		PRINTFORML 「(젠장, 사람을 구경거리 처럼 만들어놓고선……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 불만스러운 얼굴이지만 아무런 말도 하지 않았다
+		PRINTFORMDL 그저 속으로 이 시간이 어서 지나가기만을 빌 뿐……
+	CASE 1
+		PRINTFORML 「으읏, 아으으……」
+		PRINTFORML 「햐읏!? 아으응!?」
+		PRINTW
+		PRINTFORMDL 촉수의 새끼를 밴 경험이 있는 자궁 내부를 확인하기 위해 내시경이 %CALLNAME%의 질로 밀어넣어지고 있다
+		PRINTFORMDL %타겟은% 그 감촉마저 쾌락으로 받아들여버려
+		PRINTFORMDL 자신의 신음소리에 주위 연구원들의 얼굴이 아연해져 있는 것을 깨닫지 못했다……
+	CASE 2
+		PRINTFORML 「큭, 으으윽……!?」
+		PRINTFORML 「(언제 끝나는 거냐고……)」
+		PRINTW
+		PRINTFORMDL 이형을 낳은 자궁의 상태를 확인하기 위해 샘플채취를 위한 기구가 삽입되었다
+		PRINTFORMDL 상당히 괴로운 것인지 %CALLNAME%의 눈가에 눈물이 맺히기 시작했다……
+ENDSELECT
+PRINTW
+
+;연구소 조수（착유）
+;--------------------------------------------------
+@KOJO_111_SEISAN_KENKYU_sakunyu
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDL 『마, 마망의 밀크……』
+		PRINTFORMDL 『네?』
+		PRINTFORMDL 『어흠, 흠흠, 아무것도 아닙니다』
+		PRINTW
+		PRINTFORMDL 연구원들의 시시껄렁한 만담에 %타겟은% 불만이 가득한 것 같다
+		PRINTFORMDL 그러나 이윽고 착유당하는 것에 의한 쾌감이 밀어닥쳐와
+		PRINTFORMDL %타겟은% 그것을 신경 쓸 여유가 없어졌다……
+	CASE 1
+		PRINTFORML 「(아아, 이래선 그냥 젖소구만……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 자신의 가슴에서 채취된 모유가 흘러가고 있는 호스를 내려다 보고 있다
+		PRINTFORMDL 아무리 연구를 위해서라지만, 이런 행위를 당하고 있다는 사실이 %CALLNAME%의 소중한 것을 망가트려가고 있었다……
+	CASE 2
+		PRINTFORML 「아윽, 아, 아, 아아아!」
+		PRINTW
+		PRINTFORMDL 모유의 분비를 촉진시키기 위해 착유기의 끝이 %CALLNAME%의 젖꼭지를 자극하기 시작했다
+		PRINTFORMDL %타겟은% 이를 악물며 쾌감으로 인해 신음소리가 새어나오는 것을 막고 있다……
+ENDSELECT
+PRINTW
+
+;연구소 조수（후타나리）
+;--------------------------------------------------
+@KOJO_111_SEISAN_KENKYU_hutanari
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMDL 『마, 마망의 밀크……』
+		PRINTFORMDL 『네?』
+		PRINTFORMDL 『어흠, 흠흠, 아무것도 아닙니다』
+		PRINTW
+		PRINTFORMDL 연구원들의 시시껄렁한 만담에 %타겟은% 불만이 가득한 것 같다
+		PRINTFORMDL 그러나 이윽고 사정하는 것에 의한 쾌감이 밀어닥쳐와
+		PRINTFORMDL %타겟은% 그것을 신경 쓸 여유가 없어졌다……
+	CASE 1
+		PRINTFORMDL 『음, 어째 정액이 나오는게 시원찮네요』
+		PRINTFORMDL 『좀 더 출력을 올려볼까요?』
+		PRINTFORMDL 『그렇게 합시다』
+		PRINTW
+		PRINTFORML 「아, 아아……」
+		PRINTFORML 「(더 이상은 무리라고…)」
+		PRINTW
+		PRINTFORMDL %타겟은% 이미 한계까지 정액을 쥐어짜이고 있지만, 아무래도 연구자들은 영 마음에 안드는것 같다
+		PRINTFORMDL 갑작스럽게 기계의 출력이 강해지고 %타겟은% 그대로 혼절한 상태로 계속 정액을 뿜어댔다
+	CASE 2
+		PRINTFORML 「이, 이미, 가버리고, 있는데」
+		PRINTFORML 「안 돼, 안 돼, 안 돼…!」
+		PRINTW
+		PRINTFORMDL %CALLNAME%의 페니스를 끝없이 기계가 자극하며 빨아들이고 있다
+		PRINTFORMDL 연속으로 뽑아내는 편이 효율이 좋다고 했을 때 그 의도를 알아채야 했던 것이다
+		PRINTFORMDL 이런 일 따위 하는게 아니였어, %타겟은% 희미해져가는 의식 속에서 그렇게 생각했다……
+ENDSELECT
+PRINTW
+
+;송사리 촉수 퇴치하고（통상）
+;--------------------------------------------------
+@KOJO_111_SEISAN_BATTLE_normal
+PRINTW
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「시시하네………」
+		PRINTFORML 「역시 커다란 녀석들이 재밌는데 말이지」
+	CASE 1
+		PRINTFORML 「흥, 이 정도 쯤이야」
+	CASE 2
+		PRINTFORML 「누워서 떡먹기구만」
+	CASE 3
+		PRINTFORML 「정말 이런 녀석들을 때려잡는다고 돈을 주는건가?」
+	CASE 4
+		PRINTFORML 「끝이 없네, 이 녀석들」
+ENDSELECT
+PRINTW
+PRINTFORMD %타겟은% 그렇게 말하며 
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORMDL 야구 배트에 잔뜩 묻은 촉수의 체액을 털어냈다
+	CASE 1
+		PRINTFORMDL 엽총의 초연을 입으로 불어냈다
+	CASE 2
+		PRINTFORMDL 너클을 벗었다
+	CASE 3
+		PRINTFORMDL 소매에 묻은 촉수의 체액의 냄새에 얼굴을 찌푸렸다
+	CASE 4
+		PRINTFORMDL 널부러져 있는 피라미 촉수의 시체를 걷어 찼다
+ENDSELECT
+PRINTW
+;송사리 촉수 퇴치하고（패배:고통）
+;--------------------------------------------------
+@KOJO_111_SEISAN_BATTLE_haibokuA
+PRINTW
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「그, 그만……」
+		PRINTW
+		PRINTFORMDL 촉수의 채찍이 %CALLNAME%의 몸을 강타한다
+		PRINTFORMDL 온 몸에 닥치는 격통에 %타겟은% 이를 악물었다
+	CASE 1
+		PRINTFORML 「큭… %ITEMNAME:400%만, %ITEMNAME:400%만 아니였어도…!」
+		PRINTW
+		PRINTFORMDL %타겟은% 자신의 몸을 감싸고 있는 %조사처리(ITEMNAME:400,"를")% 노려봤다
+	CASE 2
+		PRINTFORML 「젠장, 젠장, 젠장……!」
+		PRINTFORML 「내가 이딴 녀석들한테……!」
+		PRINTW
+		PRINTFORMD %타겟은% 자신보다 훨씬 약한 상대에게 졌다는 것이 원통한듯 주먹을 꽉 쥐었다
+	CASE 3
+		PRINTFORML 「으극…… 크학!?」
+		PRINTW
+		PRINTFORMDL 비명을 지르면 촉수가 원하는 대로 해주는 것이라 생각한 %타겟은% 목소리를 죽이려 했지만
+		PRINTFORMDL 아무래도 한계에 다다른 것 같다……
+ENDSELECT
+PRINTW
+;송사리 촉수 퇴치하고（패배:능욕）
+;--------------------------------------------------
+@KOJO_111_SEISAN_BATTLE_haibokuB
+PRINTW
+IF ISMALE()
+	PRINTFORML 「아아아……」
+	PRINTW
+	PRINTFORMDL %타겟은% 지나친 능욕 끝에 정신을 잃고 말았다
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「(이, 이런 약해빠진 피라미들에게……!)」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신보다 훨씬 약한 녀석들에게 범해진다는 굴욕에 이를 악물었다
+			PRINTFORMDL 하지만 어쩌겠는가, 결국 %타겟은% 졌고, 이긴 것은 촉수이니……
+		CASE 1
+			PRINTFORML 「하아…… 하아……」
+			PRINTFORML 「윽, 우읏?! 아응, 아, 아!」
+			PRINTW
+			PRINTFORMDL %타겟은% 촉수의 최음성 점액에 의해 억지로 절정을 맞이했다
+			PRINTFORMDL 지금 %타겟이% 할 수 있는 것은 분한 듯이 촉수의 유체를 노려보는 것 뿐이다
+		CASE 2
+			PRINTFORML 「죽여버리겠어……!」
+			PRINTFORML 「앙? 죽여버리겠다고!!」
+			PRINTW
+			PRINTFORMD 촉수들은 %타겟이% 울부짖는 것을 신경도 쓰지않고 능욕을 이어나가고 있다
+		CASE 3
+			PRINTFORML 「하윽…… 우우읏…………!」
+			PRINTFORML 「(여자의 몸, 너무 약하잖아…!)」
+			PRINTW
+			PRINTFORMDL 남자의 모습이라면 결코 이런 일은 없을텐데,
+			PRINTFORMDL 범해지며 무심코 신음소리를 흘려버린 %타겟은% 그렇게 생각하며 자신의 처지를 원망했다
+	ENDSELECT
+ENDIF
+PRINTW
+;송사리 촉수 퇴치하고（촉수의 포로）
+;--------------------------------------------------
+@KOJO_111_SEISAN_BATTLE_toriko
+PRINTW
+IF ISMALE()
+	PRINTFORML 「아아아……」
+	PRINTW
+	PRINTFORMDL %타겟은% 지나친 능욕 끝에 정신을 잃고 말았다
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「(정의 구현이라니……)」
+			PRINTFORML 「(그런건 모두 허상이였어……)」
+			PRINTW
+			PRINTFORMDL %타겟은% 아무것도 없는 허공을 바라보고 있다
+			PRINTFORMDL 그 눈동자는 공허하여, 아무것도 비추고 있지 않았다……
+		CASE 1
+			PRINTFORML 「아하, 아하핫…………」
+			PRINTFORML 「남자도, 여자도 상관 없어……」
+			PRINTFORML 「우리 모두는 결국 촉수의 씨받이인거야……」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신을 구하러 온 동료들에게 그렇게 말하며 메마른 웃음을 지었다
+			PRINTFORMDL 평소에 볼 수 없는 %CALLNAME%의 그런 모습에, 동료들은 아무런 말도 못하고 서 있었다
+		CASE 2
+			PRINTFORML 「좋앗, 보지 기분 좋아아앗……!!」
+			PRINTFORML 「더는 남자로 돌아갈 수 없엇!!!!!」
+			PRINTW
+			PRINTFORMD %타겟은% 스스로 허리를 흔들고 있었다
+			PRINTFORMD 마치 촉수에게 범해지는게 아닌, 촉수를 역으로 범하고 있는 모양새였다……
+		CASE 3
+			PRINTFORML 「아읏…… 아아, 아아아…………!」
+			PRINTFORML 「간닷, 간닷, 가버려어엇!!!」
+			PRINTW
+			PRINTFORMDL %타겟은% 침이나 눈물로 엉망이 된 얼굴로 쾌락을 탐하고 있다
+			PRINTFORMDL 동료들은 그 모습을 보며 아연한 얼굴로 고개를 돌리고 말았다
+	ENDSELECT
+ENDIF
+PRINTW
+;원조교제（조교:쾌락）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_normalA
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(크으윽…!)」
+		CASE 1
+			PRINTFORML 「(젠장, 젠장, 젠장……!)」
+		CASE 2
+			PRINTFORML 「(죽여버리겠어……)」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %타겟은% 괴로운 얼굴로 고통에 찬 신음을 흘리고 있다……
+ELSE
+	IF GETBIT(CFLAG:910, 43) == 0
+		PRINTFORML 「아파, 아프다고……」
+		PRINTW
+		PRINTFORMDL %타겟은% 흘러나오는 눈물을 닦는 것조차도 허락받지 못하고 있다
+		PRINTFORMDL 그런 %CALLNAME%의 비소에서 소녀의 꿀이 눈물처럼 흘러넘치고 있는 것은
+		PRINTFORMDL 여성의 몸이 가지는 덧없는 방어본능이겠지
+		PRINTW
+		PRINTFORML 「아윽, 우으으읏……」
+		PRINTW
+		PRINTFORMDL %CALLNAME%의 좁은 질은 남성의 페니스가 찌를 때마다 점차 깊숙히 저항이 약해지고 있다
+		PRINTFORMDL 분명 필사적으로 애액으로 분비하는 음부 덕이다
+		PRINTFORMDL 그렇지만 배가 찢어지는 듯한 고통은 둔해져도
+		PRINTFORMDL 뱃속 깊숙한 곳에 말뚝이 박히는 듯한 이물감과 위화감, 그리고 압박감은 사라지지 않았다
+		PRINTW
+		PRINTFORML 「(이게 삽입당한다는 감각, 인가…)」
+		PRINTW
+		PRINTFORMDL 용감한 정신도, 불굴의 의지도, 결국 그것을 담는 그릇에 따라 모양이 바뀌는 것
+		PRINTFORMDL %타겟은% 점차 수컷을 받아들이는 감각에 익숙해지기 시작했다
+		PRINTW
+		PRINTFORML 「흐에?」
+		PRINTW
+		PRINTFORMDL 아련한 의식 속에서, %타겟은% 문득 옆을 바라봤다
+		PRINTFORMDL 그곳에는 커다란 거울이 하나 놓여있었다
+		PRINTFORMDL 그리고 그곳엔, 완전히 암컷의 얼굴로 남자에게 깔려 정복당하고 있는 %CALLNAME% 자신이 비치고 있었다
+		PRINTW
+		PRINTFORML 「아아, 아하하……」
+		PRINTW
+		PRINTFORMDL 찔걱거리는, 단단한 무언가가 젖은 어딘가에 쑤셔지는 음란한 소리가 울려퍼졌다……
+		PRINTFORMDL %CALLNAME%도 완전히 몸에서 힘을 빼기 시작한 그 때
+		PRINTFORMDL 질내의 육봉이 크게 부풀어오르며 사정이 가깝다는 것을 알렸다
+		SETBIT CFLAG:910, 43
+	ELSEIF ABL:1 > 3
+		IF !RAND:2
+			PRINTFORML 「하아, 하아……」
+			PRINTFORML 「조앗, 기분 조아아앗…!!」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신의 색으로 물들여, 자신이 정복했다는 증거를 새기려는 남자의 페니스에 봉사하고 있다
+			PRINTFORMDL 완전히 쾌락의 포로가 된 얼굴로, 음란하게 허리를 흔들면서다
+			PRINTFORMDL 이 쾌락에 빠지면 빠질 수록 돌이킬 수 없다는 것은 %CALLNAME% 스스로가 누구보다 잘 알고 있을텐데…
+			PRINTW
+			PRINTFORML 「아응, 응, 우으응, 아읏, 아아아…」
+			PRINTFORML 「더, 더 기분 조은거어어 해줘어엇!!」
+			PRINTW
+			PRINTFORMDL 그러나 완전히 길들여진 암컷의 몸은 쾌락에 저항하는 것을 용서하지 않았다
+			PRINTFORMDL 음란한 암캐로 전락한 %CALLNAME%의 몸은, 마음속의 의지 따윈 알 바 아니였던 것이다
+		ELSE
+			PRINTFORML 「하구윽……」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 질에 가득찬 절정의 여운을 남자의 페니스가 채워 간다
+			PRINTFORMDL 뱃속 깊숙한 곳에서부터 쾌락의 열기가 뜨겁게 퍼져나가
+			PRINTFORMDL 핏줄을 타고 온 몸에 돌기 시작한다
+			PRINTW
+			PRINTFORML 「이런건……내가 아니야……」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 마음속이 점차 자신이 다른 존재가 되어가고 있다는 공포로 물들고 있다
+			PRINTFORMDL 어쩔 수 없는 일이다…. 과거의 자신이였다면, 여체를 알기 전의 자신이라면 모를까
+			PRINTFORMDL 이제는 완전히 지금의 몸에 길들여지고 만 것이다
+			PRINTFORMDL 알지 못헀던, 알고 싶지 않았던 여자의 쾌락이라는 것이 %타겟을% 더럽혀간다…
+		ENDIF
+	ELSE
+		PRINTFORML 「(남자가 헐떡이는 소리, 뭔가 역겨운걸……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 남자의 커다란 몸에 깔려 제대로 보이지 않았다
+		PRINTFORMDL 그렇지만 %CALLNAME%의 기분이 상당히 나쁘다는 것은 확실해 보였다
+		PRINTFORMDL 그것은 삽입당하는 것에 의한 배의 압박감 때문이기도 했지만
+		PRINTFORMDL 동시에 귓가에 헐떡거리는 남자의 거친 숨소리 때문이기도 했다
+		PRINTW
+		PRINTFORML 「(빨리 끝났으면 좋겠네……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 페니스가 뱃속에서 크게 맥박치는 것을 느끼며 그렇게 생각했다…
+	ENDIF
+ENDIF
+;원조교제（조교:페라）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_normalB
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(이런 개씨발…!)」
+		CASE 1
+			PRINTFORML 「(내가 왜 이런 짓을……)」
+		CASE 2
+			PRINTFORML 「(만약 남자가 내걸 빤다면 기겁할텐데……)」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %타겟은% 역겹다는 듯한 얼굴을 하고 있다……
+ELSE
+	IF (ABL:봉사정신 + ABL:정액중독 ) > 7
+		IF !RAND:2
+			PRINTFORML 「음…… 우물…… 우물……」
+			PRINTW
+			PRINTFORMDL %타겟은% 입 안의 정액을 바로 마셔버리지 말고, 입 안에서 머금은 채로 씹으며 음미할 것을 강요당했다
+			PRINTFORMDL 예전이라면 죽는 한이 있더라도 그런 말을 듣지 않았을 테지만, 지금의 %타겟은%……
+			PRINTW
+			PRINTFORMDL 입 안 가득한 수컷의 내음에 암컷의 몸이 발정하기 시작해,
+			PRINTFORMDL 애가 타기 시작한 %타겟은% 마침내 정액을 삼켜도 된다고 허락받는다
+			PRINTW
+			PRINTFORML 「아음…… 꿀꺾……」
+			PRINTFORML 「후아아……」
+			PRINTFORML 「(이제는 아무 생각도 할 수 없어……)」
+			PRINTW
+			PRINTFORMDL 남자가 요구하는 대로 혀를 길게 빼며 미처 마시지 못해 입 안에 남아있는 정액을 긁어보아 보여준다
+			PRINTFORMDL 그리고서 %타겟은% 그것을 맛있다는 듯이 모두 삼켜버리는 것이였다……
+			PRINTW
+			PRINTFORML 「(난 원래 남자인데……)」
+			PRINTFORML 「(이런건 역겨워야 하는데……)」
+			PRINTW
+			PRINTFORMDL 마지막 남은 한 가닥의 이성이 %CALLNAME% 자신의 상태가 이상하다는 것을 알려온다
+			PRINTFORMDL 하지만 이미 늦어버린 것이다. 여기에 있는 것은 %타겟이% 아닌, 저속한 암캐일 뿐……
+		ELSE
+			PRINTFORML 「하음…… 할짝, 할짝……」
+			PRINTFORML 「여기가 좋은거지……?」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 혀가 솜씨 좋게 움직이며 남자의 페니스를 애무하고 있다
+			PRINTFORMDL 절정을 맞이하기 직전에 까지 몰아세우고, 그러다 멈춘다
+			PRINTFORMDL 어딘가 공허한 %CALLNAME%의 눈동자가 그것을 보고 가늘어진다
+			PRINTW
+			PRINTFORML 「아하하, 이렇게 작은 여자아이한테 일방적으로 당하는 기분이 어때?」
+			PRINTFORML 「자, 애원해 봐. 그럼 가버리게 해줄지도 모른다고?」
+			PRINTW
+			PRINTFORMDL 참지 못한 남자가 커다란 페니스를 덜렁거리며 꼴사납게 무릎 꿇는다
+			PRINTFORMDL %타겟은% 그제서야 만족스럽다는 듯이 웃으며 본격적인 펠라치오를 시작했다
+			PRINTW
+			PRINTFORML 「움……츄붑, 우음, 응…………」
+			PRINTFORML 「푸하아……안 돼, 안에다 싸는거야」
+			PRINTW
+			PRINTFORMDL 사정이 가까워진 남자가 페니스를 뽑아내려 하자 %타겟은% 히죽하고 웃으며 그것을 제지한다
+			PRINTFORMDL 행복한 듯이 남자의 정액을 모두 삼키는 %CALLNAME%의 발 밑에는 애액의 웅덩이가 생겨 있다
+			PRINTFORMDL 정액이 목구멍을 넘어가는 감촉에 가버린 것 같다
+		ENDIF
+	ELSEIF (ABL:봉사정신 + ABL:정액중독 ) > 4
+		IF !RAND:2
+			PRINTFORML 「웁, 으붑!? 우으으읍!?」
+			PRINTFORML 「(마, 마셔버렸잖아……)」
+			PRINTW
+			PRINTFORMDL 남자는 %CALLNAME%의 입 안에 자신의 욕망을 그대로 풀어놓는다
+			PRINTFORMDL 비릿한 냄새가 입 안 가득 퍼지며, %CALLNAME%의 머릿속을 가득 채운다
+			PRINTW
+			PRINTFORML 「우우……」
+			PRINTFORML 「(이 냄새…… 역겨워야 할텐데……)」
+			PRINTFORML 「(어째서 머리가 붕 뜨는 느낌이……)」
+			PRINTW
+			PRINTFORMDL 암컷의 몸이 수컷의 냄새에 굴복하고 있다는 것을 %타겟은% 아직 깨닫지 못했다
+		ELSE
+			PRINTFORML 「우음, 츗, 츄붑…… 츕, 핥짝……」
+			PRINTFORML 「(여기를 이렇게 핥고……손으로 좀 더 만져주면……)」
+			PRINTW
+			PRINTFORMDL 원래 남성인 %타겟은% 페니스의 어디를 자극하면 기분 좋은지 알고 있다
+			PRINTFORMDL 그것을 떠올리고 스스로 상대를 기분 좋게 만들기 위해서 봉사하는 지금의 %타겟은% 그야말로 충실한 암캐…
+			PRINTW
+			PRINTFORML 「우긋, 웁, 우우웁!?」
+			PRINTFORML 「(이 자식, 머리를 붙잡고 있잖아…!)」
+			PRINTW
+			PRINTFORMDL 남자의 페니스가 맥박치며 사정이 가까워지는 것을 알려온다
+			PRINTFORMDL %타겟은% 입을 떼려고 하지만, 그것은 허락받지 못했다
+			PRINTW
+			PRINTFORML 「응훗, 응, 우븝……♡」
+			PRINTW
+			PRINTFORMDL %타겟은% 남자의 정액을 그대로 삼키며 황홀한 얼굴로 가버리고 말았다
+		ENDIF
+	ELSE
+		PRINTFORML 「웁!? 우윽, 우우욱!?」
+		PRINTFORML 「오엑, 우웨에에엑!」
+		PRINTFORML 「(젠장 입에다 싸다니……)」
+		PRINTW
+		PRINTFORMDL %타겟은% 남자의 물건을 물었다는 것에 강렬한 혐오감을 느끼며 입 안의 정액을 뱉어냈다
+		PRINTFORMDL 하지만 눈 앞의 남자의 물건은 한 번 사정을 끝냈음에도 그 기세가 약해질 기미가 보이지 않았다
+		PRINTW
+		PRINTFORML 「마, 말도 안 돼……」
+		PRINTW
+		PRINTFORMDL 여전히 기세등등한 남자의 페니스가 다시 %CALLNAME%의 구강으로 침입해온다
+		PRINTFORMDL %타겟은% 어느새 눈에 눈물을 머금고 있다
+		PRINTFORMDL 그 표정이 남자를 더욱 흥분시키는 것도 모른 채로……
+	ENDIF
+ENDIF
+PRINTW
+
+;원조교제（조교:키스）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_normalC
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「에잇, 못 해먹겠네!」
+		CASE 1
+			PRINTFORML 「내가 왜 이러고 있는거지?」
+		CASE 2
+			PRINTFORML 「우웩, 더럽잖아!」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL 갑자기 정신이 번쩍든 %타겟은% 얼굴을 한껏 찡그리고서 구역질을 시작했다……
+ELSE
+	IF RAND:12 == 0 && ISFEMALE() && CFLAG:1 == 1
+		PRINTFORML 「우우음…… 음!? 으음!?!?」
+		PRINTW
+		PRINTFORMDL 키스에 열중하던 사이 갑작스럽게 %CALLNAME%의 변신이 풀려 남자로 돌아왔다
+		PRINTFORMDL 다 큰 남자 둘이서 입을 맞추고 있단걸 깨달은 두 사람은 서로 머쓱해하며 아무말 없이 헤어졌다
+	ELSE
+		IF ABL:욕망 > 3 || TALENT:음란
+			IF !RAND:2
+				PRINTFORML 「하음…… 우응…츄릅…♡」
+				PRINTW
+				PRINTFORMDL 눈 앞의 남자와 입맞춤하고 있는 %타겟은% 위화감을 느끼고 있었다
+				PRINTFORMDL 분명히 눈 앞에 있는 것은 자신과 같은 남자인데 왜 이렇게 기분좋은 것일까
+				PRINTW
+				PRINTFORML 「푸하……」
+				PRINTFORML 「하아…하아……」
+				PRINTFORML 「부족해…… 좀 더…… 츄─ 해 줘……」
+				PRINTW
+				PRINTFORMDL %타겟은% 자신의 몸이 자신의 것 같지 않다고 생각했다
+				PRINTFORMDL 그렇지 않고서야 사랑하는 사람도 아닌, 그것도 남자를 상대로 오히려 자신이 키스를 조르고 있다는 것은 말도 안된다
+				PRINTW
+				PRINTFORML 「아……♡」
+				PRINTW
+				PRINTFORMDL %타겟이% 꺼낸 말이 남자를 격렬하게 흥분시킨 것 같다
+				PRINTFORMDL 방금 전의 것과는 비교도 안될 만큼의 진한 입맞춤이 재개된다
+				PRINTFORMDL %CALLNAME%의 눈가에 물기가 어리기 시작했다
+				PRINTW
+				PRINTFORML 「우응, 웅, 음, 춥, 쪽, 쪽……」
+				PRINTW
+				PRINTFORMDL 침과 침이 섞이는 음란한 소리만이 주위를 메운다
+				PRINTFORMDL %타겟은% 사랑이 없는 사랑의 행위에 취해갔다…
+			ELSE
+				PRINTFORML 「아아…♡」
+				PRINTW
+				PRINTFORMDL 남자의 움직임에 맞춰 스스로 나서 더욱 농후한 입맞춤을 하기 시작한 %CALLNAME%
+				PRINTFORMDL 상대는 그런 %타겟이% 대견하다면서 머리를 쓰다듬었다
+				PRINTFORMDL 그것과 동시에 온 몸이 뜨거워지며 %타겟은% 강렬한 충동을 느꼈다
+				PRINTW
+				PRINTFORML 「더는 못 참겠어……」
+				PRINTFORML 「우음, 츄르……츄…………쪽…………우으으음, 우응……」
+				PRINTFORML 「쪽, 쪼옥……응……우응, 으으응……」
+				PRINTW
+				PRINTFORMDL %타겟은% 몸을 불태우는 욕망의 불길에 몸을 맡겼다
+				PRINTFORMDL 침과 침이 뒤섞이고, 혀와 혀가 만나고……
+				PRINTFORMDL 마치 혀로 하는 섹스와도 같은 그것은, 한참동안이나 이어졌다
+			ENDIF
+		ELSEIF ABL:욕망 > 2
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「우우음…… 하음…… 쪽……」
+					PRINTFORML 「……으응……후아아…」
+					PRINTFORML 「(이건 내가 원해서가 아니라…… 상대가 쓸데없이 키스를 잘해서 그런거니까……)」
+					PRINTW
+					PRINTFORMDL %타겟은% 스스로에게 변명을 하면서 키스에 열중하고 있다
+				CASE 1
+					PRINTFORML 「우응, 으응, 응……아음, 우흠……」
+					PRINTFORML 「쪽……츄르……꿀꺾………」
+					PRINTFORML 「(뭐야…… 어째서 남자를 상대로 이렇게 두근두근……)」
+					PRINTW
+					PRINTFORMDL %타겟은% 자신의 심경의 변화에 당황하고 있다
+				CASE 2
+					PRINTFORML 「우음, 응…… 쪽, 츄릅……츄르, 츄룻……」
+					PRINTFORML 「푸하………」
+					PRINTW
+					PRINTFORMDL %CALLNAME%의 얼굴에는 같은 남자와 키스한다는 혐오감은 떠올라있지 않다
+					PRINTFORMDL 그저 입맞춤하며 암컷의 얼굴로 황홀해할 뿐
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「우으음… 쪽… 츄룻, 츄ー…」
+				CASE 1
+					PRINTFORML 「우응, 으응ー우으우음… 우붑…!?」
+				CASE 2
+					PRINTFORML 「자, 잠깐, 역시 못하겠… 웁…!? 쪽……츄르……」
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「(남자랑 키스라니 토하겠군……)」
+				CASE 1
+					PRINTFORML 「(젠장, 역겨워……)
+				CASE 2
+					PRINTFORML 「(이 새끼, 혀놀림이 장난 아닌데…)」
+			ENDSELECT
+			PRINTW
+			PRINTFORML %타겟은% 혐오스럽다는 얼굴로 상대의 키스를 받아들이고 있다
+		ENDIF
+	ENDIF
+ENDIF
+PRINTW
+;원조교제（변태:관장）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_hentaiA
+PRINTW
+IF ISMALE()
+	PRINTFORMW 「(아아…)」
+ELSE
+	IF ABL:2 > 3
+		IF !RAND:2
+			PRINTFORMW 「우으으윽……」
+			PRINTW
+			PRINTFORMDL 남자는 다시 한 번 %CALLNAME%의 애널에 관장액을 부어넣고 애널플러그를 꽂아넣었다
+			PRINTFORMDL 애널플러그가 마개가 되었기 때문에, 아무리 배에 힘을 줘도 배설감은 해소되지 않았다
+			PRINTW
+			PRINTFORMW 「제발……제발 싸게 해주세요……」
+			PRINTW
+			PRINTFORMDL 남 앞에서 배설하는 모습을 보여주게 된다는 수치심은 이미 배설감에 져버린지 오래다
+			PRINTFORMDL %타겟은% 기어들어가는 목소리로 남자에게 청했다
+			PRINTW
+			PRINTFORMW 「옷, 오오옷!! 응호오오오옷…………!!!」
+			PRINTW
+			PRINTFORMDL 이미 한 번 비워냈기 때문에, 거의 원래 상태인 투명한 관장액이 %CALLNAME%의 항문에서 힘차게 뿜어져나왔다
+			PRINTFORMDL 평범한 배설로는 얻을 수 없는 인외의 쾌락…
+			PRINTFORMDL %타겟은% 그 쾌락에 중독된 것 같다
+		ELSE
+			PRINTFORMW 「(속이……텅 비었어…………)」
+			PRINTW
+			PRINTFORMDL %타겟은% 자신의 발치에 웅덩이진 오물과 관장액을 황홀한 눈으로 내려다 봤다
+			PRINTFORMDL 뱃속이 깨끗해진 해방감이 %CALLNAME%의 몸을 가득 채웠다
+			PRINTW
+			PRINTFORMW 「(이런 변태 같은 짓이 기분 좋다면…………)」
+			PRINTFORMW 「(난 이미 돌이킬 수 없는 거겠지…………)」
+			PRINTW
+			PRINTFORMDL %타겟은% 배설이 주는 환희에 젖으면서
+			PRINTFORMDL 초점이 맞지 않는 눈으로 저 너머를 바라보고 있다…
+		ENDIF
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMW 「배, 배가 아직도 아파……」
+			CASE 1
+				PRINTFORMW 「괴, 괴로워…」
+			CASE 2
+				PRINTFORMW 「나는 여기서 죽는건가……」
+		ENDSELECT
+		PRINTW
+		PRINTFORMDL %타겟은% 탈진한 채로 여전히 꾸륵거리는 소리가 나는 자신의 배를 내려다 봤다……
+	ENDIF
+ENDIF
+PRINTW
+;원조교제（변태:암퇘지）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_hentaiB
+IF ISMALE()
+	PRINTFORMW 「(차라리 죽어버리고 싶네…)」
+	PRINTW
+	PRINTFORMDL %타겟은% 멍한 얼굴로 중얼거렸다
+ELSE
+	SELECTCASE RAND:2
+		CASE 0
+			PRINTFORML 「꾸익, 꾸이이익!」
+			PRINTW
+			PRINTFORMDL 끈덕진 조교가 효과를 본 것일까, %타겟은% 아무런 저항 없이 돼지 흉내를 내고 있다
+			PRINTFORMDL 부끄러움도, 괴로움도, 사명조차도 모두 잊어버린 그 모습은
+			PRINTFORMDL 오히려 자신의 운명에 고뇌하던 때보다 편해 보였다…
+		CASE 1
+			PRINTFORML 「(나는 대체 뭘하고 있는 걸까?)」
+			PRINTW
+			PRINTFORMDL 극한까지 몰린 %타겟은% 오히려 머리가 명료해지는 것을 느꼈다
+			PRINTFORMDL 마치 상대 앞에서 암퇘지가 되어 인간의 존엄성을 짓밟히고 있는 자신과
+			PRINTFORMDL 그것을 바라보는, 붕 뜬 의식이 자신이 다른 존재로 느껴졌다
+			PRINTW
+			PRINTFORML 「으기이이익…!?!」
+			PRINTW
+			PRINTFORMDL 그러나 %타겟은% 금새 현실로 되돌려졌다
+			PRINTFORMDL 결국 자신의 이 몸에서는 도망칠 수 없는 것이다
+			PRINTFORMDL %타겟은% 암퇘지 처럼 마구 가버리면서, 어딘가 메마른 웃음을 짓고 있었다…
+	ENDSELECT
+ENDIF
+;원조교제（변태:메스 개）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_hentaiC
+IF ISMALE()
+	PRINTFORMW 「(차라리 죽어버리고 싶네…)」
+	PRINTW
+	PRINTFORMDL %타겟은% 멍한 얼굴로 중얼거렸다
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「왕, 왕♪」
+			PRINTW
+			PRINTFORMDL 끈덕진 조교가 효과를 본 것일까, %타겟은% 아무런 저항 없이 개 흉내를 내고 있다
+			PRINTFORMDL 곧이어 %타겟은% 한 쪽 다리를 들고 상대 앞에서 오줌을 지린다
+			PRINTFORMDL 완전히 암캐로 전락한 %CALLNAME%의 눈동자에는 광기와 욕망이 소용돌이 치고 있었다…
+		CASE 1
+			PRINTFORML 「나, 나는 개가 아니라고…」
+			PRINTFORML 「이히익…?!」
+			PRINTW
+			PRINTFORMDL 아직도 저항하는 %타겟이% 마음에 들지 않았던 것일까
+			PRINTFORMDL 상대는 %CALLNAME%의 목줄을 잡아 당기면서 클리토리스나 유두에 달라붙어 있는 로터의 전원을 켰다
+			PRINTFORMDL 그러자 %타겟은% 지지 않겠다는 듯이 상대를 매서운 눈으로 노려봤다
+			PRINTW
+			PRINTFORML 「너, 너어어…!!」
+			PRINTFORML 「두고 보자고!! 후회하게……아윽!?」
+			PRINTFORML 「거기, 웅웅 울리면, 안 돼, 아우, 아으으으……♡」
+			PRINTW
+			PRINTFORMDL 상대가 히죽 웃으면서 애널에 박힌 바이브의 진동도 더욱 강하게 하자
+			PRINTFORMDL 거친 %CALLNAME%의 말투는 완전히 혀짧은 어린 아이가 되어갔다
+			PRINTFORMDL 아무리 강건한 의지와 정신을 가지고 있다고 해도
+			PRINTFORMDL 그것을 담고 있는 몸은 쾌락에 굴복한 암컷의 것이기에 처음부터 %CALLNAME%에게 선택지는 없었던 것이다…
+		CASE 2
+			PRINTFORML 「잘못했어요, 잘못했어요……」
+			PRINTW
+			PRINTFORMDL %타겟이% 계속 반항적이기에 상대는 조금 거칠게 %타겟을% 다루기 시작했다
+			PRINTFORMDL 가녀린 %CALLNAME%의 엉덩이에 상대의 손바닥 자국이 새빨갛게 남는다
+			PRINTFORMDL %타겟은% 어릴 적, 부모님에게 엉덩이를 맞을 때로 돌아간 모습이다
+			PRINTW
+			PRINTFORML 「끼잉……」
+			PRINTW
+			PRINTFORMDL %타겟은% 결국 비참한 모습으로 자신이 굴복했다는 것을 상대에게 태도로 보여줬다
+			PRINTFORMDL 자신의 배를 보여주며, 비굴한 목소리로 우는 지금 이 소녀가
+			PRINTFORMDL 원래 %NAME%라고 한다면 누가 믿을 수 있을까?
+	ENDSELECT
+ENDIF
+;원조교제（변태:여왕님）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_hentaiD
+PRINTW
+IF ISMALE()
+	PRINTFORML 「(남자한테 여왕님이라니……)」
+	PRINTW
+	PRINTFORMDL %타겟은% 영 미묘한 얼굴이다
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「(어, 어째서 이런 변태같은 짓을 하고 있는데)」
+			PRINTFORML 「(심장이 두근거리면서 흥분되는거냐고…)」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 얼굴에는 숨길 수 없는 흥분이 떠올라 있었다
+			PRINTFORMDL 아무래도 지금의 자신보다 훨씬 덩치가 크고 강한 남성을 발 밑에 엎드리게 하는 행위가
+			PRINTFORMDL %CALLNAME%의 마음속 무언가를 충족시켜주고 있는 것 같다
+			PRINTW
+			PRINTFORML 「아하하, 아하하하…!」
+			PRINTW
+			PRINTFORMDL 내려치는 채찍의 궤적을 따라 남자의 등에 붉은 자국이 남는다
+			PRINTFORMDL 그리고 그 자국의 수가 늘어날 때마다, %CALLNAME%의 얼굴도 더욱 상기되어 간다…
+		CASE 1
+			PRINTFORML 「(뭐, 이 사람이 원하는 거니까…)」
+			PRINTW
+			PRINTFORMDL 자신은 요청에 답해주는것 뿐이다, %타겟은% 그렇게 자신에게 변명하고 있다
+			PRINTFORMDL 하지만 본디지로 감싸인 비부가 점차 끈적하고 뜨거운 애액으로 젖어가고 있다는 것은
+			PRINTFORMDL 아직 깨닫지 못한 모양이다
+			PRINTW
+		CASE 2
+			PRINTFORML 「돼지! 인간쓰레기!」
+			PRINTFORMW 「이런 어린애한테 흥분하는거냐!!」
+			PRINTW
+			PRINTFORMDL 가학적인 표정을 띄우고 있는 %타겟은% 자신의 힐로 상대를 짓밟았다
+			PRINTFORMDL 상대는 뭔가 말하고 싶어 하는듯 하지만, 볼 개그를 물고 있어 웅얼거리는 소리만 흘러나오고 있다
+			PRINTFORMDL 그러나 무엇을 말하고 싶은지는 일목요연하다
+			PRINTW
+			PRINTFORMW 「어쩔 수 없는 변태새끼구만, 앙?!」
+			PRINTFORMW 「자, 볼 개그를 빼줄테니까, 내 발을 핥아」
+			PRINTW
+			PRINTFORMDL 남자의 봉사를 받고 있는 %타겟은%
+			PRINTFORMDL 자기보다 큰 남자가 꼴사납게 혀로 봉사하는 모습을 황홀한 듯이 내려다 보고 있었다
+			PRINTFORMDL 비정상적인 플레이 속에서 %CALLNAME%의 리미터도 완전히 날아가버린 것일까?
+			PRINTFORMDL 평소라면 남자가 자신의 밟을 핥는다는 것에 거부감을 느꼈을텐데
+			PRINTFORMDL 지금은 %CALLNAME% 스스로가 그것을 요구하고 있었다…
+	ENDSELECT
+ENDIF
+;원조교제（레즈）
+;--------------------------------------------------
+@KOJO_111_SEISAN_SYOUHU_les
+PRINTW
+IF ISMALE()
+	PRINTFORML 「큭……」
+	PRINTW
+	PRINTFORMDL %타겟은% 사정해버리지 않도록 하는 것에 집중하느라
+	PRINTFORMDL 주위가 눈에 들어오지 않는 모양이다…
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「아아, 언니……」
+			PRINTFORML 「기분 좋아요 언니, 언니이이잇……!」
+			PRINTW
+			PRINTFORMDL %타겟은% 여성에게 "언니"라고 부를 것을 요구받았다
+			PRINTFORMDL 호텔의 방에서 풍기는 기묘한 향에 취해, %타겟은% 이상하다는 것도 깨닫지 못하고 시키는 대로 하고 있다
+			PRINTW
+			PRINTFORML 「후아아……」
+			PRINTFORML 「언니……」
+			PRINTW
+			PRINTFORMDL 여성이 %CALLNAME%의 머리를 풍만한 가슴으로 꼭 껴안자
+			PRINTFORMDL %타겟은% 그 젖가슴을 아기처럼 쪽쪽 빨았다…
+		CASE 1
+			PRINTFORML 「우음, 핥짝 핥짝……」
+			PRINTW
+			PRINTFORMDL %타겟은% 여성의 고간에 얼굴을 파묻고 커닐링구스를 하고 있다
+			PRINTFORMDL 남자의 물건을 핥는 것보다, 정신적으로 저항이 적었기 때문에 %타겟은% 행운이라고 생각하고 있었다
+			PRINTFORMDL 다만 그것과 별개로, 여성 경험이 적은 %CALLNAME%에게 이것은 너무나도 자극이 컸다
+			PRINTW
+			PRINTFORMDL 『후후, 꼭 숫총각 같은 반응인걸』
+			PRINTFORMDL 『뭘 그렇게 부끄러워 하는거니, 같은 여자인데』
+			PRINTW
+			PRINTFORMDL 정곡을 찌른 그 말에 %타겟은% 순간적으로 굳어버렸다
+			PRINTFORMDL 여성은 딱히 다른 의도가 없었겠지만…
+		CASE 2
+			PRINTFORML 「(여자끼리 이러는건 이상하지 않나……)」
+			PRINTW
+			PRINTFORMDL 몸은 여성이지만 정신은 남성인 %타겟은% 어렴풋이 지금의 플레이가 이상하다는 것을 깨닫고 있다
+			PRINTFORMDL 그래도 %타겟은% 이건 자신에게도 형편 좋은 이야기다
+			PRINTFORMDL 남자에게 안기는 것보단, 여자에게 안기는 것이 정신적으로 저항감이 적으니까…
+	ENDSELECT
+ENDIF
+;AV촬영
+;--------------------------------------------------
+@KOJO_111_SEISAN_AV
+;;코스프레 마법 소녀  매직컬☆00
+;IF CFLAG:282 == 1
+;;능욕 히로인 프리티☆00살컨드 시즌
+;ELSEIF CFLAG:282 == 2
+;;가학적 마법 소녀―☆00
+;ELSEIF CFLAG:282 == 3
+;;후타나리인 여동생과 엣치해 보지 않겠습니까?
+;ELSEIF CFLAG:282 == 4
+;;나의 아이○은 아버지와의 자복보테소○생 귀축 부친 질내사정 근친상간 성장 기록
+;ELSEIF CFLAG:282 == 5
+;;고양이귀 00의 냥냥 해 버리겠어
+;ELSEIF CFLAG:282 == 6
+;;음어 비외어 BEST SELECTION
+;ELSEIF CFLAG:282 == 7
+;;모에모에 코스프레 7
+;ELSEIF CFLAG:282 == 8
+;;지나는 00으로 나의 파코 파코 동거 성활
+;ELSEIF CFLAG:282 == 9
+;;무리하게 범해지는 애널 4시간
+;ELSEIF CFLAG:282 == 10
+;;벌 되어 마구 가는 얼빠진 아가씨 메이드
+;ELSEIF CFLAG:282 == 11
+;ENDIF
+IF ABL:욕망 > 3
+	PRINTFORML 「저게 진짜로 나인가……?」
+	PRINTW
+	PRINTFORMDL 표지의 작은 여자아이는 남자에게 아양을 떨고 있었다
+	PRINTFORMDL 남자 배우에게 조르며 쾌락을 구하는 그 모습은 그야말로 암컷…
+	PRINTW
+	PRINTFORML 「(뭐, 뭐야!? 어째서 가슴이 두근거리는 거냐고…)」
+	PRINTW
+	PRINTFORMDL 평소에도 보던 AV들
+	PRINTFORMDL 하지만 그곳에 있는 것은 늘 알던 여배우가 아닌, 바로 자신의 모습
+	PRINTFORMDL 갑자기 %CALLNAME%의 숨이 가빠지기 시작했다
+	PRINTFORMDL 부자연스러운 홍조를 띄우고 있는 얼굴은 흥분한 것을 숨길 수 없는 상태다
+	PRINTFORMDL %타겟은% 두근거리고 있는 가슴을 부여잡으며 배달된 AV를 CD-ROM에 밀어 넣었다…
+ELSE
+	PRINTFORML 「이런걸 보내다니…」
+	PRINTW
+	PRINTFORMDL %타겟은% 자신이 출연한 %조사처리(LOCALS,"를")% 손에 쥐고 침을 삼켰다
+	PRINTFORMDL 솔직히 호기심이 생겼다고 말할 수 있으면 좋으련만
+	PRINTFORMDL %CALLNAME% 자신이 진짜 여자처럼 앙앙거리는 모습을 볼 자신이 없었다
+	PRINTW
+	PRINTFORML 「그래도… 3자의 시선에서 어떻게 보일지 궁금하긴 하니까…」
+	PRINTW
+	PRINTFORMDL %타겟은% 배달된 샘플 디스크를 컴퓨터의 CD-ROM에 밀어 넣었다…
+ENDIF
+;공중변소（뒷골목）
+;--------------------------------------------------
+@KOJO_111_SEISAN_TOILET_roji
+PRINTW
+PRINTFORML 「아흐아으으아……」
+PRINTW
+PRINTFORMDL 이미 몇 번 째인지 알 수도 없다
+PRINTFORMDL 앞이 보이지 않는 지금, 방금 %CALLNAME%의 육단지에다 정액을 쏟아넣은 남자의 겉모습 조차 알 수 없다
+PRINTFORMDL 아니, 지금 여기가 처음 육변기로서 사용되었던 뒷골목은 맞는 걸까…
+PRINTW
+PRINTFORML 「(나는……누구지……?)」
+PRINTFORML 「(나는……남자였던것 같은데……)」
+;공중변소（부랑자）
+;--------------------------------------------------
+@KOJO_111_SEISAN_TOILET_homeless
+PRINTW
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 「저를 아무 생각도 할 수 없게 만들어주세요……」
+	CASE 1
+		PRINTFORML 「엉망진창 걸레로 써주세요……」
+	CASE 2
+		PRINTFORML 「절 망가트려 주세요……」
+ENDSELECT
+PRINTW
+PRINTFORMDL %타겟은% 저속한 웃음을 띄우며 노숙자들에게 아양을 떨었다
+PRINTFORMDL 노숙자들은 처음에는 당황했지만, 욕구불만인 페니스를 크게 발기시키고서 %CALLNAME%에게 슬금슬금 다가오기 시작했다…
+;공중변소（떠돌이 개）
+;--------------------------------------------------
+@KOJO_111_SEISAN_TOILET_dog
+PRINTFORML 「아아아…♡」
+PRINTW
+PRINTFORMDL 기다리고 기다리던 %CALLNAME%에게 드디어 들개 한마리가 다가왔다
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORMDL 상당한 덩치를 하고 있는, 온 몸이 근육질인 셰퍼드다
+	CASE 1
+		PRINTFORMDL 순해 보이는 인상의, 시바견과 닮은 믹스견이다
+	CASE 2
+		PRINTFORMDL 견종을 알 수 없는 똥개다
+	CASE 3
+		PRINTFORMDL 너저분해 몸 이곳 저곳에서 냄새가 나는 들개다
+ENDSELECT
+PRINTFORMDL 자신이 찾던 암캐의 존재를 깨닫고서, 이미 수컷의 상징을 빳빳하게 발기시킨 상태였다
+PRINTW
+PRINTFORMW 「아흐윽…… 아읏, 아아!!」
+PRINTW
+PRINTFORMDL 손속을 두지 않는, 짐승의 격렬한 교미가 시작됐다
+PRINTFORMDL %CALLNAME%의 고운 비순은 흉포한 들개의 생식기에 엉망진창으로 유린당하고 있다
+PRINTW
+PRINTFORMW 「아응♡, 아, 아, 아아, 아으응!? 아읏, 끄으응…♡」
+PRINTW
+PRINTFORMDL 들개가 생식기를 들이밀 때마다 %CALLNAME%의 작은 몸도 크게 흔들렸다
+PRINTFORMDL %타겟은% 의미를 알 수 없는 교성을 지르며 스스로도 허리를 흔들었다
+PRINTW
+PRINTFORMW 「온닷♡ 사정, 온닷♡♡」
+PRINTW
+PRINTFORMDL 이윽고 들개의 생식기가 사정을 알리듯 %CALLNAME%의 질내에서 크게 부풀어 올랐다
+PRINTFORMDL 자신의 암컷이라는 것을 주장하듯 고정당한 %타겟은% 이제 도망갈 수도 없다
+PRINTW
+PRINTFORMW 「하으으으으으으으윽♡♡♡」
+PRINTW
+PRINTFORMDL 인간조차 아닌, 짐승의 정액을 자궁으로 받아내며
+PRINTFORMDL %타겟은% 자신의 인간으로서의 존엄이 짓밟혀가는 것을 느꼈다
+PRINTFORMDL 그리고 그 얼굴에, 희미한 웃음을 띄우는 것이였다…
+
+
+
+;아이돌 활동 노래
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOLSING
+IF ISMALE()
+	SELECTCASE RAND:12
+		CASE 0
+			PRINTFORMW 『스스로 불러온 재앙에 짓눌려』
+			PRINTFORMW 『탄식은 하늘을 가리우며』
+			PRINTFORMW 『멸망의 공포가 지배하는 이곳』
+			PRINTFORMW 『희망은 이미 날개를 접었나……』
+		CASE 1
+			PRINTFORMW 『그래 그리 쉽지는 않겠지』
+			PRINTFORMW 『나를 허락해 줄 세상이란』
+			PRINTFORMW 『손쉽게 다가오는 편하고도 감미로운 공간이 아냐……』
+		CASE 2
+			PRINTFORMW 『한 번 더 나에게 질풍 같은 용기를』
+			PRINTFORMW 『거친 파도에도 굴하지 않게』
+			PRINTFORMW 『드넓은 대지에 다시 새길 희망을』
+			PRINTFORMW 『안고 달려갈 거야 너에게……』
+		CASE 3
+			PRINTFORMW 『눈을떠! 우리들의 세상이 누군가에게 침략 당하고있어!』
+			PRINTFORMW 『이건 훈련도 리허설도 아니야』
+			PRINTFORMW 『덮여진 일상이란 베일을 기세 좋게 벗겨 낸다면 싸움의 종이 울려』
+			PRINTFORMW 『그러면 우선은 동맹을 맺어볼까, 너를 따분함에서 구하러왔어……』
+		CASE 4
+			PRINTFORMW 『삐걱거리는 마음을 토해내고 싶은 건』
+			PRINTFORMW 『달리 존재를 증명할 게 없으니까』
+			PRINTFORMW 『손에 넣었을 나의 미래는』
+			PRINTFORMW 『존엄과 자유로 모순되어 있어……』
+		CASE 5
+			PRINTFORMW 『오리온을 덧그리는 이런 깊은 밤엔』
+			PRINTFORMW 『이어지고 싶어, 멀어지고 싶어, 그래서 반신반의 뭐가 뭔지』
+			PRINTFORMW 『새로운 미래를 바라는 전무후무한』
+			PRINTFORMW 『말을 만약, 만약에 생각해낼 수 있다면 시간이 멈출 거야』
+			PRINTFORMW 『여기서 벌써 끝날 리가 없는데……』
+		CASE 6
+			PRINTFORMW 『전, 전, 전생부터 나는 너를 찾기 시작했어』
+			PRINTFORMW 『그 멋쩍게 웃는 얼굴을 찾으려고 여기에 온 거야』
+			PRINTFORMW 『네가 완전히 전부 사라지고 산산이 흩어져도』
+			PRINTFORMW 『이제는 헤매지 않아 다시 하나부터 찾기 시작할 거야』
+			PRINTFORMW 『차라리 제로부터 다시 우주를 시작해 볼까……』
+		CASE 7
+			PRINTFORMW 『지평선에 닿을 수 있도록 한계까지 뿌리치듯 가 줘』
+			PRINTFORMW 『Flash! I'm in the coolest drivers's high』
+			PRINTFORMW 『최고의 피날레를, Yeah!』
+		CASE 8
+			PRINTFORMW 『나의 두 손 가득 풀내음을 담아』
+			PRINTFORMW 『네게 살며시 띄워볼게』
+			PRINTFORMW 『그럼 넌 들려주렴 보이지 않는 곳에 숨겨진 소망을』
+		CASE 9
+			PRINTFORMW 『언제까지나 너 잊지 말아요』
+			PRINTFORMW 『지금 우리 사랑은 무엇보다 더 아름답고 소중한 것을』
+			PRINTFORMW 『나약하다고도 생각 말아요 지금 힘들다지만』
+			PRINTFORMW 『언젠가는 더 아름다운 꿈이 널 찾아 올 꺼야』
+		CASE 10
+			PRINTFORMW 『Happy로 가득 채우고 Rest In Peace까지 가 보자고』
+			PRINTFORMW 『언젠가 봤던 지옥도 괜찮은 곳이야』
+			PRINTFORMW 『사랑을 흩뿌리면서』
+		CASE 11
+			PRINTFORMW 『지금도 푸르름이 살고 있어』
+			PRINTFORMW 『지금도 푸르름이 맑아 있어』
+			PRINTFORMW 『어떤 기도도 말도』
+			PRINTFORMW 『가까이 가도 닿지 않았어』
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:14
+		CASE 0
+			PRINTFORMW 『부탁해, 신데렐라!』
+			PRINTFORMW 『꿈은 꿈만으로 끝낼 순 없어』
+			PRINTFORMW 『이룰거야 별에 소원을 빌었다면』
+			PRINTFORMW 『찾아내자, My Only Star!』
+		CASE 1
+			PRINTFORMW 『멜트, 녹아버릴 것만 같아. 좋아한다고 절대로 말할 수 없어.』
+			PRINTFORMW 『하지만 멜트 눈도 마주칠 수 없어. 사랑을 사랑하진 않아 나는.』
+			PRINTFORMW 『왜냐하면 네가 …좋은걸』
+		CASE 2
+			PRINTFORMW 『나는 따라갈 거야』
+			PRINTFORMW 『아무리 힘든 세상의 어둠 속에서라도 분명 너는 빛나고 있어』
+			PRINTFORMW 『미래의 끝을 넘어 약함 때문에 영혼이 부서지지 않도록』
+			PRINTFORMW 『my way 하나가 돼, 지금 두 명에게 God bless…』
+		CASE 3
+			PRINTFORMW 『미소가 피고 그대와 맺어지고 싶어요』
+			PRINTFORMW 『만약 저 너머에 보이는 것이 있다면』
+			PRINTFORMW 『서로 사랑하는 두 사람, 행복의 하늘』
+			PRINTFORMW 『계속 그대 옆에 나, 사쿠란보……』
+		CASE 4
+			PRINTFORMW 『외로운 사람들의 마음을 열어줄 거야』
+			PRINTFORMW 『메마른 가슴 속을 적셔줄 멜로디』
+			PRINTFORMW 『슬픔의 기억들에 기쁨을 채워줄 거야』
+			PRINTFORMW 『넘치는 음악 속에 리듬을』
+		CASE 5
+			PRINTFORMW 『저게 데네브, 알타이르, 베가』
+			PRINTFORMW 『네가 가리켰던 여름의 대삼각형을 기억하곤 하늘을 봤어』
+			PRINTFORMW 『겨우 찾아낸 직녀님, 하지만 어디 있을까 견우님은』
+			PRINTFORMW 『이래서는 외톨이잖아』
+		CASE 6
+			PRINTFORMW 『주근깨의 수를 세어봐, 더러워진 인형을 안고서』
+			PRINTFORMW 『가슴을 찌른 가시는 사라지지않지만』
+			PRINTFORMW 『개구리인형도 토끼인형도 웃어줬어』
+		CASE 7
+			PRINTFORMW 『저 빛을 따라가 혜성이 되어 저 하늘을 날아봐』
+			PRINTFORMW 『내 맘을 전하게 그대에게 데려가』
+			PRINTFORMW 『별을 내려봐 그대가 보이게 더 빛을 태워봐』
+			PRINTFORMW 『언젠가 사라져버린다 해도 내 맘을 줄거야』
+		CASE 8
+			PRINTFORMW 『나는 낭만고양이』
+			PRINTFORMW 『슬픈 도시를 비춰 춤추는 작은 별빛』
+			PRINTFORMW 『나는 낭만고양이』
+			PRINTFORMW 『홀로 떠나가 버린 깊고 슬픈 나의 바다여』
+		CASE 9
+			PRINTFORMW 『길어진 그림자를 길에 드리운 채』
+			PRINTFORMW 『땅거미가 진 어둠 속을 그대와 걷고 있어요』
+			PRINTFORMW 『손을 마주잡고 언제까지든 계속 곁에 있을 수 있다면』
+			PRINTFORMW 『눈물이 날 것 같아요』
+		CASE 10
+			PRINTFORMW 『무적의 미소로 어지럽히는 미디어』
+			PRINTFORMW 『알고 싶은 그 비밀은 미스테리어스』
+			PRINTFORMW 『빈틈 있는 구석도 그녀의 에리어』
+			PRINTFORMW 『완벽한 거짓말쟁이인 넌』
+			PRINTFORMW 『천재적인 아이돌님』
+		CASE 11
+			PRINTFORMW 『꿈이란 자신을 이루기 위해』
+			PRINTFORMW 『태어난 증표니까』
+			PRINTFORMW 『반드시 이 마음으로』
+			IF RAND:2 == 0
+				PRINTFORMW 『와타시노 M@STERPIECE』
+			ELSE
+				PRINTFORMW 『나의 M@STERPIECE』
+			ENDIF
+		;로리 TS니까 이 곡은 넣어야 하지 않을까
+		CASE 12
+			PRINTFORMW 『하나 둘』
+			PRINTFORMW 『만지면 체포! 감옥♡에서 점호!』
+			PRINTFORMW 『하나 둘 셋 넷? (죄송합니다)』
+			PRINTFORMW 『하아? 죄송합니다가 잘 안 들려』
+			PRINTFORMW 『숙성! 로리 신 레퀴엠☆』
+		CASE 13
+			IF RAND:2 == 0
+				PRINTFORMW 『세 노』
+				PRINTFORMW 『데모 손난쟈 다메』
+				PRINTFORMW 『모오 손난쟈 호라 』
+				PRINTFORMW 『코코로와 신카스루요 못토 못토』
+			ELSE
+				PRINTFORMW 『하나 둘』
+				PRINTFORMW 『그치만 그러면 안 돼』
+				PRINTFORMW 『정말 그러면 자』
+				PRINTFORMW 『마음은 진화해 더욱 더더욱』
+			ENDIF 
+	ENDSELECT
+ENDIF
+
+;아이돌 활동（밑바닥:저지명도）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL1
+PRINTW
+IF GETBIT(CFLAG:910, 41) == 0
+	PRINTFORML 「마법소녀 활동을 알리고, 겸사겸사 자금도 확보하기 위한 아이돌 활동 계획?」
+	PRINTFORML 「진심인건가……」
+	PRINTW
+	PRINTFORMDL %타겟은% 본부에서 내려온 공문을 읽어 내려가며 쓴웃음을 지었다
+	PRINTFORMDL 이르기를, 마법소녀 활동을 홍보하기 위해서도 아이돌 활동을 시작해보라는 것이였다
+	PRINTFORMDL 거기다 철저하게도 오디션 일정까지 잡아놨다
+	PRINTW
+	PRINTFORML 「쳇, 어쩔 수 없지……」
+	PRINTW
+	PRINTFORMDL 이미 시간까지 잡아놓은 이상, 나가지 않으면 그쪽 사람들에게도 실례다
+	PRINTFORMDL %타겟은% 투덜거리면서도 나갈 준비를 시작한 것이였다
+	SETBIT CFLAG:910, 41
+ELSE
+	PRINTFORML 「오디션이라니……」
+	PRINTFORML 「어쩔 수 없지……」
+	PRINTW
+	PRINTFORMDL %타겟은% 투덜거리면서도 오디션에 나갈 준비를 시작했다
+ENDIF
+PRINTW
+IF ISMALE()
+	PRINTFORML 「%NAME%입니다」
+	PRINTFORML 「부디 잘 부탁드리겠습니다」
+	PRINTW
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 키도 크고 훤칠하여 대호평인것 같다.
+		CASE 1
+			PRINTFORMDL 운동계 아이돌이 어울릴 것 같다는 말이 들려오고 있다.
+		CASE 2
+			PRINTFORMDL 남자다운 탄탄한 몸에 심사위원들의 눈이 쏠렸다.
+		CASE 3
+			PRINTFORMDL 기운이 넘치면서도 깍듯한 태도에, 심사위원들은 내심 감탄하고 있다.
+	ENDSELECT
+ELSE
+	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%라고 합니다!」
+	PRINTW
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 겉보기엔 가녀려 보이지만 의외로 씩씩한 모습에 심사위원들의 눈이 빛났다.
+		CASE 1
+			PRINTFORMDL 인형 같은 소녀라는 첫인상에 비해 그 태도는 사내아이 같아 갭모에가 느껴진다는 말이 오고가고 있다.
+		CASE 2
+			PRINTFORMDL 보이쉬한 성격과 가녀린 외모의 조합에서 몇몇 심사위원들은 어떤 가능성을 발견한 것 같다.
+		CASE 3
+			PRINTFORMDL 보석 같은 푸른 눈동자가 빛나자 심사위원들이 술렁거리기 시작했다.
+	ENDSELECT
+ENDIF
+
+;아이돌 활동（밑바닥:코우치명도）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL2
+PRINTW
+IF GETBIT(CFLAG:910, 41) == 0
+	PRINTFORML 「마법소녀 활동을 알리고, 겸사겸사 자금도 확보하기 위한 아이돌 활동 계획?」
+	PRINTFORML 「진심인건가……」
+	PRINTW
+	PRINTFORMDL %타겟은% 본부에서 내려온 공문을 읽어 내려가며 쓴웃음을 지었다
+	PRINTFORMDL 이르기를, 마법소녀 활동을 홍보하기 위해서도 아이돌 활동을 시작해보라는 것이였다
+	PRINTFORMDL 거기다 철저하게도 오디션 일정까지 잡아놨다
+	PRINTW
+	PRINTFORML 「쳇, 어쩔 수 없지……」
+	PRINTW
+	PRINTFORMDL 이미 시간까지 잡아놓은 이상, 나가지 않으면 그쪽 사람들에게도 실례다
+	PRINTFORMDL %타겟은% 투덜거리면서도 나갈 준비를 시작한 것이였다
+	SETBIT CFLAG:910, 41
+ELSE
+	PRINTFORML 「오디션이라니……」
+	PRINTFORML 「어쩔 수 없지……」
+	PRINTW
+	PRINTFORMDL %타겟은% 투덜거리면서도 오디션에 나갈 준비를 시작했다
+ENDIF
+PRINTL
+PRINTFORMDW ……
+PRINTFORMDW ……
+PRINTFORMDW ……
+PRINTL
+IF ISMALE()
+	PRINTFORML 「%NAME%입니다」
+	PRINTFORML 「부디 잘 부탁드리겠습니다」
+	PRINTW
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 소문 대로 키도 크고 훤칠하여 대호평인것 같다.
+		CASE 1
+			PRINTFORMDL 역시 들은 것대로 운동계 아이돌이 어울릴 것 같다는 말이 들려오고 있다.
+		CASE 2
+			PRINTFORMDL 말로만 듣던 남자다운 탄탄한 몸에 심사위원들의 눈이 쏠렸다.
+		CASE 3
+			PRINTFORMDL 기운이 넘치면서도 깍듯한 태도에, 심사위원들은 내심 감탄하고 있다.
+	ENDSELECT
+ELSE
+	PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%라고 합니다!」
+	PRINTW
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMDL 소문 대로 겉보기엔 가녀려 보이지만 의외로 씩씩한 모습에 심사위원들의 눈이 빛났다.
+		CASE 1
+			PRINTFORMDL 인형 같은 소녀라는 소문에 비해 그 태도는 사내아이 같아 갭모에가 느껴진다는 말이 오고가고 있다.
+		CASE 2
+			PRINTFORMDL 보이쉬한 성격과 가녀린 외모의 조합에서 이미 몇몇 심사위원들은 어떤 가능성을 발견한 것 같다.
+		CASE 3
+			PRINTFORMDL 보석 같은 푸른 눈동자가 빛나자 심사위원들이 술렁거리기 시작했다.
+	ENDSELECT
+ENDIF
+;아이돌 활동（노상 라이브）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL3
+PRINTW
+CALL KOJO_111_SEISAN_IDOLSING
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORMDL 남들 앞에서 노래를 부르는 것이 부끄럽다고 생각하면서도 %타겟은% 노래를 멈추지 않았다
+		CASE 1
+			PRINTFORMDL 오고가는 사람들의 시선이 집중되자, %CALLNAME%의 얼굴이 새빨개졌다.
+		CASE 2
+			PRINTFORMDL %타겟은% 힘찬 목소리로 노래하고 있다
+		CASE 3
+			PRINTFORMDL %CALLNAME%의 땀을 흘리며 열정적으로 노래하는 모습이 이미 몇몇 여자 관객을 사로잡았다.
+		CASE 4
+			PRINTFORMDL %타겟은% 반주도 없이 노래하고 있다.
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORMDL 남들 앞에서 노래를 부르는 것이 부끄럽다고 생각하면서도 %타겟은% 노래를 멈추지 않았다
+		CASE 1
+			PRINTFORMDL 작은 여자아이가 얼굴을 붉히면서도 노래하는 모습을 바라보는 사람들의 눈빛이 따스했다.
+		CASE 2
+			PRINTFORMDL %타겟은% 맑은 목소리로 노래하고 있다.
+		CASE 3
+			PRINTFORMDL 오타쿠 같이 생긴 남자들이 %CALLNAME%의 사진을 찍어다 인터넷의 모 게시판에 올리고 있다
+			PRINTFORMDL "듣보잡이지만 꼴리게 생긴년"이라는 제목이였다…
+		CASE 4
+			PRINTFORMDL %타겟은% 반주도 없이 노래하고 있다.
+	ENDSELECT
+ENDIF
+
+
+;아이돌 활동（판매）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL4
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「괴물들에 의해 위기에 처한 지금의 세상에 노래로 희망을 주고 싶습니다」
+			PRINTW
+			PRINTFORMDL %타겟은% 모 프로덕션의 사무소에서 면접을 보고 있다
+			PRINTFORMDL 처음에는 촌극이라 생각했던 아이돌 활동에도 긍정적이게 된 것 같다
+		CASE 1
+			PRINTFORML 「그럼, 노래를 불러보겠습니다」
+			PRINTW
+			PRINTFORMDL 지금 있는 자리에서 노래를 한 곡 불러보라는 요청에
+			PRINTFORMDL %타겟은% 자신 있는 노래를 부르기 시작했다
+		CASE 2
+			PRINTFORML 「특별히 운동하고 있는가, 입니까?」
+			PRINTFORML 「네, 단련은 꾸준히 하고 있습니다」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 다부진 몸에 다들 관심이 많은 것 같다
+		CASE 3
+			PRINTFORML 「후, 후, 핫!」
+			PRINTW
+			PRINTFORMDL 지금 있는 자리에서 가볍게 안무를 선보이라는 요청에
+			PRINTFORMDL %타겟은% 재빠르게 발을 놀리며 브레이크 댄스를 추기 시작했다
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「음…… 마법소녀 말인가요?」
+			PRINTFORML 「네 맞습니다, 마법소녀로도 활동하고 있습니다」
+			PRINTW
+			PRINTFORMDL %타겟은% 조금 고민하다가 시원하게 자신의 정체를 밝혔다
+		CASE 1
+			PRINTFORML 「(으……불편해……)」
+			PRINTW
+			PRINTFORMDL 익숙하지 않은 팔랑거리는 옷을 입은 %타겟은% 연신 치맛자락을 끌어내리고 있다
+			PRINTFORMDL 그 모습을 바라보는 면접관들의 눈은 어쩐지 따스했다
+		CASE 2
+			PRINTFORML 「네, 춤추겠습니다」
+			PRINTW
+			PRINTFORMDL %타겟은% 면접관의 요청에 따라 춤을 추기 시작했다
+			PRINTFORMDL 움직임에 따라 치맛자락이 나폴거리며 매끄러운 허벅지가 드러나자 면접관들이 침을 삼켰다
+		CASE 3
+			PRINTFORML 「노래는 좋아해요」
+			PRINTFORML 「그리고 이 노래로, 사람들에게 희망을 줄 수 있다면 좋겠어요」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 말에 면접관들의 눈빛이 훈훈해졌다
+	ENDSELECT
+ENDIF
+
+;아이돌 활동（TV프로）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL_TV
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:5
+;퀴즈 프로그램
+		CASE 0
+			IF !RAND:2
+				PRINTFORML 「그리스 신화에서 나오는 티탄족 이아페토스의 아들이며, '먼저 생각하는 사람'이라는 뜻의 이름인 인물?」
+				PRINTFORML 「정답은 프로메테우스!」
+			ELSE
+				PRINTFORML 「타인의 기대나 관심으로 인하여 능률이 오르거나 결과가 좋아지는 현상의 이름?」
+				PRINTFORML 「정답은 피그말리온 효과!」
+			ENDIF
+			PRINTW
+			PRINTFORMDL 상금이 걸린 퀴즈 프로그램 예능
+			PRINTFORMDL 잡지식에 해박한 %타겟은% 계속해서 흘러나오는 문제를 전부 격파해내고 있다
+		CASE 1
+			PRINTFORML 「자, 채 썬 양파를 기름을 두른 팬에 올리고 볶습니다…」
+			PRINTW
+			PRINTFORMDL %타겟은% 요리 프로그램에 출연해서 솜씨를 뽐내고 있다
+			PRINTFORMDL 가정적인 남자라는 이미지가 퍼지기 시작하며 %CALLNAME%의 인기가 오르기 시작했다
+		CASE 2
+			PRINTFORML 「정해진 운명? 피할 수 없는 비극? 내 알바 아니야!」
+			PRINTFORML 「그딴 운명, 내가 박살 내 보이겠어!」
+			PRINTW
+			PRINTFORMDL 모 전대물에 출연한 %타겟은% 열혈 주인공을 연기하고 있다
+			PRINTFORMDL 원래의 성격과 워낙에 잘 맞았기 때문에 대호평이었다
+		CASE 3
+			PRINTFORML 「매워! 매워!!」
+			PRINTW
+			PRINTFORMDL %타겟은% 시뻘건 마파두부를 삼키며 맵다는 말만 하며 한 그릇을 전부 비웠다
+			PRINTFORMDL 먹방 프로그램이라더니, 괴롭히려는 건가……%타겟은% 그렇게 생각하고 있었다
+		CASE 4
+			PRINTFORML 「이번주의 인기차트 1위는 ──!」
+			PRINTW
+			IF EXP:매료경험 > 499
+				PRINTFORMDL %타겟은% 모 인기 음악방송의 진행자로 출연했다
+			ELSE
+				PRINTFORMDL %타겟은% 모 인기 음악방송의 특별 게스트로 출연했다
+			ENDIF
+	ENDSELECT
+ELSE
+	SELECTCASE RAND:5
+;인터뷰
+		CASE 0
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「아, 아하하, 좋아하는 옷 브랜드요?」
+					PRINTFORML 「(여아용 옷 브랜드 같은걸 내가 알리가없잖아……)」
+					PRINTW
+					PRINTFORMDL 신인 아이돌들을 모아놓고 인터뷰를 하는 자리,
+					PRINTFORMDL %타겟은% 패널의 질문에 당황해 진땀을 빼고있다
+				CASE 1
+					PRINTFORML 「머리를 어떻게 관리하냐구요?」
+					PRINTFORML 「(내가 그걸 어떻게 알아……)」
+					PRINTW
+					PRINTFORMDL 한 버라이어티 쇼의 촬영장
+					PRINTFORMDL %CALLNAME%의 머리카락에 눈을 반짝이던 한 패널이 한 질문에 %타겟은% 난감해 하고있다
+					PRINTFORMDL 결국 영업용 스마일로 "그런건 언니들이 도와줘서 저는 잘 모르겠어요~"하고 웃어넘기고 말았다
+				CASE 2
+					PRINTFORML 「처, 첫사랑 이야기를 해달라구요?」
+					PRINTFORML 「(지금 모습으로 여자애 이야기를 할 수도 없는데…)」
+					PRINTW
+					PRINTFORMDL 한 TV쇼의 촬영장
+					PRINTFORMDL %CALLNAME%의 첫사랑에 대한 패널의 질문에 %타겟은% 그저 웃기만 했다
+					PRINTFORMDL 결국 "저는 어려서 그런건 잘 모르겠어요"라고 애교를 떨면서 대답하고 말았다
+					PRINTFORMDL 나중에 그 질문이 아이돌에게 있어서 함정이였다는 것을 깨달은 %타겟은% 간담이 서늘해졌다
+				CASE 3
+					PRINTFORML 「네? 아……그게……아하하…」
+					PRINTW
+					PRINTFORMDL TV쇼에 %CALLNAME%에게 출연한 외국 출신으로서 초등학교를 다니는데 불편한 것이 없냐는 질문이 날아왔다
+					PRINTFORMDL 아무래도 겉모습이 겉모습인지라 외국 출신이라고 생각하는 모양이다
+					PRINTFORMDL 외국인도, 초등학생도 아닌 %타겟은% 웃기만하면서 대답을 피했다
+			ENDSELECT
+;스포츠계
+		CASE 1
+			IF !RAND:2
+				PRINTFORML 「하앗, 하아앗, 좋았어!」
+				PRINTFORML 「그게 다야? 더 덤벼 보라고」
+				PRINTW
+				PRINTFORMDL 워터파크에서 스포츠계 버라이어티 쇼의 촬영이 시작됐다
+				PRINTFORMDL %타겟은% 수영장 위에 떠다니는 스티로폼 판자 위에서 상대 아이돌들을 하나씩 엉덩이로 밀어버리고 있다
+				PRINTFORMDL 신이 나서 반 쯤은 도발하는 투로 주위에 외쳤지만, 아무래도 겉모습이 어린아이라 오히려 다들 훈훈하게 보고 있었다
+				PRINTW
+				PRINTFORML 「아차!」
+				PRINTFORML 「방심해버렸네……」
+				PRINTW
+				PRINTFORMDL 우쭐해져 방심하던 %타겟은% 결국 다른 상대에게 당해 믈에 빠지고 말았다
+				PRINTFORMDL 수영장에서 기어나온 %CALLNAME%의 수영복이 물을 먹어 햇살 아래서 눈부시게 빛나고 있었다
+				PRINTFORMDL 그 모습에 촬영장에 있던 남자들의 눈빛이 음흉해졌지만, %타겟은% 그것을 깨닫지 못한 모양이다
+			ELSE
+				PRINTFORML 「골~!」
+				PRINTW
+				PRINTFORMDL 촬영을 위해 통째로 대여한 시민 운동장
+				PRINTFORMDL 오늘은 여러 사무소의 아이돌들이 한 자리에 모여 자신의 모습을 뽐내는 날이다
+				PRINTFORMDL 그리고 그 중에서 %타겟은% 누구보다 눈에 띄고 있었다
+				PRINTW
+				PRINTFORML 「(평소에 이 모습으로 훈련해두길 잘했네)」
+				PRINTW
+				PRINTFORMDL 예전이였으면 키도, 다리도, 팔도 짧은 여자아이의 모습에 휘둘려
+				PRINTFORMDL 제대로 전력을 다하지 못했을테지만 지금은 완전히 익숙해졌다
+				PRINTFORMDL 포니테일로 묶은 긴 머리가 휘날리는 모습이 주변의 눈길을 사로잡고 있다
+			ENDIF
+;드라마 등
+		CASE 2
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「눈물을 닦고 일어서! 오빠가 아니면 아무도 할 수 없는 일이야!」
+					PRINTW
+					PRINTFORMDL 인기 드라마에 출연하는 것이 확정된 %타겟은% 지금 조연 중 한 명으로서 촬영에 임하고 있다
+					PRINTFORMDL 맡은 배역은 주인공에게 힘을 불어넣어주는 여동생 역이다
+					PRINTFORMDL 이 드라마가 전국으로 방영되며 %CALLNAME%의 인지도가 단번에 치솟아
+					PRINTFORMDL 여동생으로 삼고 싶은 아이돌에서 1위를 차지하게 된 것은 조금 나중의 이야기다
+				CASE 1
+					PRINTFORML 「(아아 지친다 지쳐…)」
+					PRINTFORML 「(다리 벌리고 아무데나 뻗어버리고 싶구만………)」
+					PRINTW
+					PRINTFORMDL 보는 눈도 많기에 평소처럼 사내 같은 거친 태도를 할 순 없다
+					PRINTFORMDL 더군다가 촬영하고 있는 드라마는 청춘연애물……
+					PRINTFORMDL %타겟은% 작게 투덜거리며 소녀의 모습을 연기하고 있다
+				CASE 2
+					PRINTFORML 「만해!」
+					PRINTW
+					PRINTFORMDL %타겟은% 애니메이션의 실사화 영화를 촬영하는 현장에 있다
+					PRINTFORMDL 영혼을 거두는 사신들과, 그들에게 휘말려버린 한 남고생에 대한 만화가 원작이다
+					PRINTW
+					PRINTFORML 「(이게 말로만 듣던 실사화인가)」
+					PRINTFORML 「(그냥 코스프레 쇼 같다만…)」
+					PRINTW
+					PRINTFORMDL 문외한인 자신이 봐도 끔찍한 연출
+					PRINTFORMDL %타겟은% 이미 마음속으로 영화의 운명은 결정됐다고 생각하고 있다
+				CASE 3
+					PRINTFORML 「(설마 키스씬은 없겠지……?)」
+					PRINTFORML 「(남자랑 입맞춤이라니, 상상도 하기 싫네)」
+					PRINTW
+					PRINTFORMDL %타겟은% 드라마의 대본을 뒤적거리고 있다
+					PRINTFORMDL 다행히 분량이 적은 조연이라 그런 장면은 없는듯 하다
+			ENDSELECT
+;가요 프로그램
+		CASE 3
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 「이번주의 인기차트 1위는 ──!」
+					PRINTW
+					IF EXP:매료경험 > 499
+						PRINTFORMDL %타겟은% 모 인기 음악방송의 진행자로 출연했다
+					ELSE
+						PRINTFORMDL %타겟은% 모 인기 음악방송의 특별 게스트로 출연했다
+					ENDIF
+				CASE 1
+					PRINTFORML 「저의 노래, 들어주세요!」
+					PRINTW
+					PRINTFORMDL %타겟은% 인기 음악방송의 본무대에 섰다
+					PRINTFORMDL 관람석에 %CALLNAME%의 오빠 팬들이 가득하다
+				CASE 2
+					PRINTFORML 「노래에 깊이가 부족하네요」
+					PRINTFORML 「무엇보다 쓸데없이 바이브레이션을 넣는건 이제 대세가 아닙니다」
+					PRINTW
+					PRINTFORMDL %타겟은% 모 가요프로그램의 심사위원 역을 맡았다
+					PRINTFORMDL 겉모습에 어울리게 "가사가 귀엽다", "목소리가 좋다" 같은 반응을 기대했던 사람들은
+					PRINTFORMDL 의외로 냉철하게 분석하는 %CALLNAME%의 모습에 깜짝 놀라고 있었다
+			ENDSELECT
+;기타 프로그램
+		CASE 4
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORML 「와아, 커다란 파르페!」
+					PRINTFORML 「너무너무 맛있어 보여요!」
+					PRINTW
+					PRINTFORMDL %타겟은% 전국의 맛집을 순례하며 아이돌들이 음식을 먹는 모습을 촬영하는 프로그램에 출연했다
+					PRINTFORMDL 지금 %CALLNAME% 앞에 높여진 것은 전국의 여자들이 한번은 가보고 싶어한다는 양과자 카페의 한정 파르페다
+					PRINTW
+					PRINTFORML 「(달아, 너무 달아!!)」
+					PRINTW
+					PRINTFORMDL 단맛을 좋아하지 않는 %타겟은% 파르페의 단 맛에 거의 기절하기 직전이다
+					PRINTFORMDL 그럼에도 %타겟은% 프로정신을 발휘해 단 것을 먹으며 기뻐하는 소녀의 모습을 연기했다
+				CASE 1
+					IF !RAND:2
+						PRINTFORML 「리처드 도킨스가 고안해 낸 개념으로, 모방을 통해 습득되는 문화 요소?」
+						PRINTFORML 「정답은 밈(meme)!」
+					ELSE
+						PRINTFORML 「인터넷서비스 제공자가 특정 콘텐츠를 데이터요금을 받지 않고 제공하는 것?」
+						PRINTFORML 「정답은 제로레이팅!」
+					ENDIF
+					PRINTW
+					PRINTFORMDL 주니어 아이돌들이 모여 서로의 지성을 뽐내는 퀴즈 프로그램
+					PRINTFORMDL 상단한 고난이도의 문제도 격파해 나가는 %CALLNAME%의 모습에 스튜디오가 경악에 물든다
+					PRINTW
+					PRINTFORML 「(아차, 너무 지나쳤나…)」
+					PRINTW
+					PRINTFORMDL 처음에 나온 쉬운 문제라면 몰라도 지금 나오는 것들은
+					PRINTFORMDL 초등학교 여자아이에게는 분명히 어려운 문제임에 틀림없다
+					PRINTFORMDL 그런 문제를 술술 풀어댔으니……
+					PRINTFORMDL %타겟은% 조금 자중하기로 했다
+				CASE 2
+					PRINTFORML 「요 녀석아, 여기 있으면 위험하니까 가라」
+					PRINTW
+					PRINTFORMDL %타겟은% 지금 아이돌들이 단체로 캠핑하는 것을 촬영하는 프로그램에 출연했다
+					PRINTFORMDL 그렇게 한창 촬영이 이어지고 있을 때, 어딘가에서 커다란 날벌레 한 마리가 날아와 대소동이 벌어졌다
+					PRINTFORMDL 다른 여자아이들이 혼란에 빠져 분위기가 흐트러지려 할 때,
+					PRINTFORMDL %타겟이% 나서 맨손으로 날벌레를 잡아다가 멀리 풀어줬다
+					PRINTW
+					PRINTFORMDL 이 일을 포함해서 촬영 중에 보인 %CALLNAME%의 털털하고 보이쉬한 모습에
+					PRINTFORMDL 많은 팬들이 생긴 것 같다……
+				CASE 3
+					PRINTFORML 「자, 채 썬 양파를 기름을 두른 팬에 올리고 볶을게요…」
+					PRINTW
+					PRINTFORMDL %타겟은% 요리 프로그램에 출연해서 솜씨를 뽐내고 있다
+					PRINTFORMDL 긴 자취 생활로 다져진 요리실력은 어디에 안갔는지, 그 손놀림은 능숙했다
+					PRINTW
+					PRINTFORML 「네?! 조, 좋은 신부가 될 것 같다니…」
+					PRINTW
+					PRINTFORMDL "좋은 신부가 될 것 같다"고 하는 게스트의 칭찬에 %CALLNAME%의 얼굴이 새빨개졌다
+					PRINTFORMDL 사람들은 신부를 동경하는 소녀를 보고 훈훈한 눈빛을 보내고 있지만
+					PRINTFORMDL 실은 지금의 자기 모습을 떠올리고 부끄러워 얼굴이 빨개진 것이였다…
+			ENDSELECT
+	ENDSELECT
+ENDIF
+
+;아이돌 활동（그라비아 촬영）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL_picture
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「음…… 이렇게 말입니까?」
+		CASE 1
+			PRINTFORML 「멋있게 찍어주세요」
+		CASE 2
+			PRINTFORML 「우, 웃통을 까고 말인가요?」
+		CASE 3
+			PRINTFORML 「읏차…… 이런 느낌은 어때요?」
+	ENDSELECT
+	PRINTW
+	PRINTFORMDL %타겟은% 자세를 바꿔가며 카메라맨의 요구를 들어주고 있다
+ELSE
+	SELECTCASE RAND:4
+		CASE 0
+			PRINTFORML 「(부, 부끄러워……)」
+			PRINTFORML 「(아무리 그래도 초등학생 교복이라니…!)」
+			PRINTW
+			PRINTFORMDL %타겟은% 유명 사립 초등학교의 교복……과 거의 비슷하게 만들어진 옷을 입고 있다
+			PRINTFORMDL 거기다 등에는 새빨간 란도셀, 다리에는 흰색 타이즈
+			PRINTFORMDL 명백히 특정 계층을 노리는 컨셉이다
+			PRINTW
+			PRINTFORML 「(뭐, 그래도 야한 사진을 찍고 딸감이 되는것 보다는 낫지)」
+			PRINTFORML 「(어차피 이런 젖비린내 나는 꼬맹이 사진에 꼴리는 놈이 있을리도 없지만)」
+			PRINTW
+			PRINTFORMDL 아무래도 %타겟은% 아직 지금의 자신의 모습에 욕정하는 로리콘이라는 족속이 있다는 것을 모르는 모양이다
+		CASE 1
+			PRINTFORML 「학교 수영복……이라니……」
+			PRINTFORML 「(요즘 시대에 이런걸 입히는 학교가 있던가?)」
+			PRINTFORML 「(뭐, 비키니 같은걸 안 입혀서 다행이지만)」
+			PRINTW
+			PRINTFORMDL %타겟은% 엉덩이 사이에 자꾸 먹혀드는 수영복을 손가락으로 빼내면서 고개를 갸웃했다
+			PRINTFORMDL 그래도 노출이 적은 학교 수영복이라 조금 안심한 모양이다
+			PRINTFORMDL 하지만 그런 학교 수영복이기에 더욱 흥분하는 신사들이 있다는 것은 모르는 것 같다
+		CASE 2
+			PRINTFORML 「아하하, 이런 옷은 촉수하고 싸울 때 입는 걸로도 충분한데…」
+			PRINTW
+			PRINTFORMDL %타겟은% 세일러 레오타드를 입고 다리를 비비 꼬고 있다
+			PRINTFORMDL 그래도 마법소녀로 변신할 때의 전투복과 닮아서 그렇게 위화감을 느끼진 않는 모양이다
+			PRINTW
+			PRINTFORML 「핫, 하앗! 얍!」
+			PRINTW
+			PRINTFORMDL 지시받은 대로 촉수와 싸울 때의 모습을 재현해 보이는 %CALLNAME%
+			PRINTFORMDL "싸우는 미소녀" 컨셉의 화보를 찍는 모양이다
+			PRINTFORMDL %타겟은% 카메라의 렌즈가 은근슬쩍 자신의 허벅지나 가슴을 비추고 있다는 것을 깨달았지만
+			PRINTFORMDL 항의는 하지 못했다……
+		CASE 3
+			PRINTFORML 「네, 넷! 이렇게 말인가요!?」
+			PRINTFORML 「그, 이렇게, 다리를 들고?」
+			PRINTW
+			PRINTFORMDL 카메라맨이 상당히 수위 높은 요구를 해 왔다
+			PRINTFORMDL 하지만 이런 촬영에 익숙하지 않은 %타겟은% 완전히 긴장해선 시키는 대로 하고 있는 것이였다
+			PRINTW
+			PRINTFORML 「피, 피~스!」
+			PRINTW
+			PRINTFORMDL %타겟은% 웃으면서 양 손으로 피스를 하라는 지시에 따랐다
+			PRINTFORMDL 방금 찍은 그 사진이 수 많은 로리콘들의 딸감이 되리라는 것을 %타겟은% 아직 모르고 있다
+	ENDSELECT
+ENDIF
+
+
+;아이돌 활동（신곡）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL_music
+PRINTW
+SELECTCASE RAND:4
+	CASE 0
+		PRINTFORML 「죄송합니다, 한 번 더 부탁드립니다」
+		PRINTW
+		PRINTFORMDL %타겟은% 녹음된 신곡의 샘플을 듣고 주먹을 꽉 쥐었다
+		PRINTFORMDL 아무래도 방금 녹음한 것이 마음에 들지 않았는지 다시 녹음을 부탁하고 있다.
+	CASE 1
+		PRINTFORML 「흥, 흥, 흐흥…」
+		PRINTW
+		PRINTFORMDL %타겟은% 헤드셋을 끼고 반주를 귀에 새겨넣고 있다.
+	CASE 2
+		PRINTFORML 「아아, 도레미파솔라시도~♪」
+		PRINTW
+		PRINTFORMDL %타겟은% 녹음이 시작되기 전, 목의 상태를 확인하고 있다.
+	CASE 3
+		PRINTFORML 「음……좋아!」
+		PRINTW
+		PRINTFORMDL 아무래도 %타겟이% 납득할만한 수준으로 녹음 된 모양이다.
+ENDSELECT
+
+;아이돌 활동（이벤트）
+;--------------------------------------------------
+@KOJO_111_SEISAN_IDOL_event
+#DIMS 악수회상대
+
+PRINTW
+IF ISMALE()
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「새 앨범도 잘 부탁해!」
+			PRINTW
+			PRINTFORMDL %타겟은% 손을 흔들며 팬들에게 인사했다
+			PRINTFORMDL 그러자 관람석에서 환호가 들려왔다
+		CASE 1
+			PRINTFORML 「자… 여기 사인……오케이!」
+			PRINTFORML 「앞으로도 잘 부탁할게!」
+			PRINTW
+			PRINTFORMDL %타겟은% 활짝 웃으며 자신의 사인이 들어간 앨범을 팬에게 건냈다
+			PRINTFORMD 그러자 사인을 받은
+			SELECTCASE RAND:4
+				CASE 0
+					PRINTFORMD 세라복을 입은 소녀가
+				CASE 1
+					PRINTFORMD 친구와 함께 온 여대생이
+				CASE 2
+					PRINTFORMD 나이가 꽤 있어 보이는 중년팬이
+				CASE 3
+					PRINTFORMD 아빠랑 같이 온 어린 소녀가
+			ENDSELECT
+			PRINTFORMDL 활짝 웃으며 감사인사를 했다
+		CASE 2
+			PRINTFORML 「하앗!」
+			PRINTW
+			PRINTFORMDL %타겟은% 이번에 이 도시에서 열리는 커다란 야구경기에서 시구를 던지고 있다
+	ENDSELECT
+ELSE
+	IF !RAND:2
+		IF RAND:6 == 0
+			악수회상대 = 살찐 오타쿠
+			LOCAL = 0
+		ELSEIF RAND:5 == 0
+			악수회상대 = 마른 남자
+			LOCAL = 1
+		ELSEIF RAND:4 == 0
+			악수회상대 = 개기름으로 번들거리는 중년
+			LOCAL = 2
+		ELSEIF RAND:3 == 0
+			악수회상대 = 불량해 보이는 건달
+			LOCAL = 3
+		ELSEIF RAND:2 == 0
+			악수회상대 = 신사
+			LOCAL = 4
+		ELSE
+			악수회상대 = 남학생
+			LOCAL = 5
+		ENDIF
+		PRINTFORML 「앞으로도 잘 부탁해!」
+		PRINTFORML 「몸은 아껴야지」
+		PRINTFORML 「요즘 잘 지내?」
+		PRINTW
+		PRINTFORMDL %타겟은% 지금 행사장에서 악수회를 진행하고 있다
+		PRINTFORMDL 한 사람, 한 사람 손을 꽉 쥐고 다정한 말을 건냈다.
+		PRINTW
+		PRINTFORML 「아, 안녕…」
+		PRINTW
+		PRINTFORMDL 한창 악수회가 진행되던 중, 그 다음 팬이 들어왔다
+		IF LOCAL == 0
+			PRINTFORMDL 체크무늬 남방을 껴입은, 안경을 쓰고 뒤룩뒤룩 살 찐 오타쿠 같은 남자다
+		ELSEIF LOCAL == 1
+			PRINTFORMDL 추레하게 차려입은, 건드리면 뼈가 부러질 것 같은 남자다
+		ELSEIF LOCAL == 2
+			PRINTFORMDL 개기름으로 피부가 번들거리는 중년 남자다
+		ELSEIF LOCAL == 3
+			PRINTFORMDL 머리를 금발로 염색한 불량해 보이는 건달이다
+		ELSEIF LOCAL == 4
+			PRINTFORMDL 정장을 차려입은 신사다
+		ELSEIF LOCAL == 5
+			PRINTFORMDL 아직 어린 티가 엿보이는 남학생이다
+		ENDIF
+		PRINTW
+		IF RAND:3 == 0
+			IF LOCAL == 0
+				PRINTFORMDL 『부힛…… 잘 부탁 한다능……』
+				PRINTFORMDL 『부히히히』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 불쾌한 웃음을 지으면서 악수를 청했다
+			ELSEIF LOCAL == 1
+				PRINTFORMDL 『으히히히……』
+				PRINTFORMDL 『소인의 악수를 받아주시오』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 불쾌한 웃음을 지으면서 악수를 청했다
+			ELSEIF LOCAL == 2
+				PRINTFORMDL 『후……하……후……하』
+				PRINTFORMDL 『아, 악수………하자…………%CALLNAME%쨔응…………』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 끈적한 웃음을 지으면서 악수를 청했다
+			ELSEIF LOCAL == 3
+				PRINTFORMDL 『그래, 악수권도 제대로 가져왔다고』
+				PRINTFORMDL 『악수하자, 찐한 악수를……』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 경박하게 히죽거리며 악수를 청했다
+			ELSEIF LOCAL == 4
+				PRINTFORMDL 『잘 부탁해요, 아가씨』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 무표정으로 악수를 청했다
+			ELSEIF LOCAL == 5
+				PRINTFORMDL 『저저저저저, 악, 아아악수 해주세요, %CALLNAME%!』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 새빨간 얼굴로 악수를 청했다
+			ENDIF
+			PRINTFORML 「앞으로도 잘 부탁…할……게?」
+			PRINTW
+			PRINTFORMDL %CALLNAME%의 작고 흰 손이 상대의 손을 마주잡는다
+			PRINTFORMDL 그런데 악수를 마친 %타겟은% 손에서 뭔가 이상한 감촉을 느꼈다
+			PRINTFORMDL 끈적하고, 뜨뜻 미지근한 무언가……
+			IF ( TALENT:음란 || ABL:정액중독 > 4 ) && RAND:2 == 0
+				PRINTW
+				PRINTFORML 「하아, 하아……♡」
+				PRINTW
+				PRINTFORMDL %타겟은% 본능적으로 맞잡은 손 사이에서 끈적이고 있는 것이 무엇인가 깨달았다
+				PRINTFORMDL 그러자 %CALLNAME%의 얼굴이 달아오르며 숨이 거칠어지기 시작했다
+				PRINTW
+				PRINTFORML 「(어쩐지 머리가 멍해……)」
+				PRINTW
+				PRINTFORMDL %CALLNAME%의 손에 정액을 묻힌 남자는 도망치듯 떠나고 있다
+				PRINTFORMDL 그러나 %타겟은% 보안요원들을 부르는것 조차 불가능했다
+				PRINTW
+				PRINTFORML 「핥짝……핥짝……냠…………」
+				PRINTW
+				PRINTFORMDL %타겟은% 손바닥의 정액을 그러모아 삼키고 있다
+				PRINTFORMDL 촉수와의 싸움에서 개발당해 버린 몸은 정액의 냄새만으로 발정하게 된 것이였다…
+			ELSEIF TALENT:여체수용
+				PRINTFORMDL %타겟이% 손을 펼쳐보자 손바닥에 불투명하고 흰 액체가 묻어있었다
+				PRINTFORMDL 틀림 없는 정액이다
+				PRINTW
+				PRINTFORML 「꺄아아악!!!」
+				PRINTW
+				PRINTFORMDL %타겟은% 불쾌한 감각에 무심코 크게 비명을 질러버렸다
+				PRINTFORMDL 그 비명소리를 듣고 문 밖의 보안요원들이 들이닥쳤다
+				PRINTW
+				PRINTFORML 「저, 저 사람이 손에다가………!」
+				PRINTFORML 「정액, 정액을 묻혀서…!」
+				PRINTFORML 「히끅, 후엥, 우아아앙…」
+				PRINTW
+				PRINTFORMDL 한 눈에 사태파악을 끝낸 보안요원들은 %조사처리(악수회상대,"를")% 그대로 끌고 나갔다
+				PRINTFORMDL 그리고 %타겟은% 자신이 울어버렸다는 것을 깨닫고 크게 당황했다
+				PRINTW
+				PRINTFORML 「(뭐야……확실히 역겹긴 했지만 내가 울다니……)」
+				PRINTFORML 「(몸에 정신이 따라간다던가……하는건가?)」
+				PRINTW
+				PRINTFORMDL 충격을 받았을 %타겟을% 배려하기 위해서인지 휴식시간이 주어졌다
+				PRINTFORMDL 그 동안 %타겟은% 실의에 빠진 채 고뇌하는 것이였다…
+			ELSE
+				PRINTFORMDL %타겟이% 손을 펼쳐보자 손바닥에 불투명하고 흰 액체가 묻어있었다
+				PRINTFORMDL 틀림 없는 정액이다
+				PRINTW
+				PRINTFORML 「왁!? 이, 이런 씹……!?」
+				PRINTW
+				PRINTFORMDL 남자의 정액이 손에 묻었다는 혐오감에 소리를 지를뻔 한 %타겟은% 자신의 입을 틀어막았다
+				PRINTFORMDL 사람이 많은 이 행사장에서 이런 말을 했다간 누가 들을지 모른다
+				PRINTFORMDL %타겟은% 이를 악문 채로 물티슈로 손을 닦고 보안요원을 불렀다
+				PRINTFORMDL 그리고 악수가 끝나자 마자 도망친 %악수회상대%에 대한 이야기를 전했다
+			ENDIF
+		ELSE
+			IF LOCAL == 0
+				PRINTFORMDL 『우효오오오!! 리얼 천사!!』
+				PRINTFORMDL 『%CALLNAME%쨩, 악수, 악수 해달라능!!』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 난리법석을 떨면서 악수를 청했다
+			ELSEIF LOCAL == 1
+				PRINTFORMDL 『악수……소인과 %CALLNAME%쨩이 악수!!』
+				PRINTFORMDL 『이 날만을 기다리고 있었다오!!』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 난리법석을 떨면서 악수를 청했다
+			ELSEIF LOCAL == 2
+				PRINTFORMDL 『오오, %CALLNAME%쨩을 실제로 볼 수 있을 줄은…』
+				PRINTFORMDL 『늘 응원하고 있다구…』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 기뻐하며 악수를 청했다
+			ELSEIF LOCAL == 3
+				PRINTFORMDL 『저, 저기… 뭐야, 그……』
+				PRINTFORMDL 『늘 응원하고 있다고……!』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 부끄러워하며 악수를 청했다
+			ELSEIF LOCAL == 4
+				PRINTFORMDL 『오오, 만나서 반갑습니다, 아가씨』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 따뜻한 미소를 지으며 악수를 청했다
+			ELSEIF LOCAL == 5
+				PRINTFORMDL 『저, 저기 팬이예요, %CALLNAME%!』
+				PRINTW
+				PRINTFORMDL %조사처리(악수회상대,"는")% 새빨간 얼굴로 악수를 청했다
+			ENDIF
+			IF LOCAL == 0 || LOCAL == 1 || LOCAL == 2
+				PRINTFORMDL 조금 심하게 들이대는 것 같기는 하지만, 그래도 자신을 보고 기뻐해주는것을 보자
+				PRINTFORMDL %CALLNAME%도 기뻐졌다
+			ELSEIF LOCAL == 3
+				PRINTFORMDL 딱 봐도 아이돌 같은 것에는 관심 없어보이는 건달인데……
+				PRINTFORMDL %타겟은% 이런 팬도 있는 것인가, 하고 의외스러워 하고 있다
+			ELSEIF LOCAL == 4
+				PRINTFORMDL 이런 신사 같이 생긴 아저씨도 아이돌 행사에 참석하는건가
+				PRINTFORMDL %타겟은% 그렇게 생각하며 놀랐다
+			ELSEIF LOCAL == 5
+				PRINTFORMDL 동경하는 아이돌 앞에서 안절부절 못하는 소년의 모습에
+				PRINTFORMDL %CALLNAME%의 입가에 절로 미소가 피었다
+			ENDIF
+			PRINTW
+			PRINTFORML 「와줘서 고마워!」
+			PRINTW
+			PRINTFORMDL %타겟은% 환하게 웃으며 %조사처리(악수회상대,"를")% 배웅했다
+			PRINTFORMDL 자신을 사랑해주고, 믿어주고, 응원해주는 사람이 이렇게나 많다는 것을 느낀
+			PRINTFORMDL %CALLNAME%의 가슴 속에 훈훈한 감정이 차올랐다
+		ENDIF
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「새 앨범도 잘 부탁해!」
+				PRINTW
+				PRINTFORMDL %타겟은% 손을 흔들며 팬들에게 인사했다
+				PRINTFORMDL 그러자 관람석에서 환호가 들려왔다
+			CASE 1
+				PRINTFORML 「자… 여기 사인……오케이!」
+				PRINTFORML 「앞으로도 잘 부탁할게!」
+				PRINTW
+				PRINTFORMDL %타겟은% 활짝 웃으며 자신의 사인이 들어간 앨범을 팬에게 건냈다
+				PRINTFORMD 그러자 사인을 받은
+				SELECTCASE RAND:4
+					CASE 0
+						PRINTFORMD 아버지와 함께 온 어린 소년이
+					CASE 1
+						PRINTFORMD 까까머리를 한 고등학생이
+					CASE 2
+						PRINTFORMD 나이가 꽤 있어 보이는 중년팬이
+					CASE 3
+						PRINTFORMD 안경을 쓴 직장인 팬이
+				ENDSELECT
+				PRINTFORMDL 활짝 웃으며 감사인사를 했다
+		ENDSELECT
+	ENDIF
+ENDIF
+;베개 영업（프로듀서:페라）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_pro1
+PRINTW
+IF ISMALE()
+	PRINTFORMDL ……
+	PRINTFORMDL …………
+	PRINTFORMDL ……………………
+	PRINTW
+	PRINTFORML 「웨엑, 우웨에에엑!」
+	PRINTW
+	PRINTFORMDL 프로듀서도 돌아가고, 아무도 없는 사무소의 화장실……
+	PRINTFORMDL 그곳에서 %타겟은% 목구멍에 손가락을 집어넣고 정액을 끄집어내며 구토하고 있었다
+	PRINTFORMDL %타겟은% 게워내고 게워내도 목구멍을 타고 올라오는 비릿함에 얼굴을 찌푸렸다
+	PRINTW
+	PRINTFORML 「젠장, 망할 프로듀서……」
+	PRINTFORML 「남자한테 자지를 빨게 하는게 기분 좋은건가……」
+	PRINTFORML 「정말 당치도 않은 변태구만……」
+	PRINTW
+	PRINTFORMDL %타겟은% 가글을 하며 프로듀서에 대한 불평을 쏟아내고 있다…
+ELSE
+	IF (ABL:봉사정신 + ABL:정액중독 ) > 7
+		PRINTFORML 「우으음……♡」
+		PRINTW
+		PRINTFORMDL 힘차게 사정된 정액이 %CALLNAME%의 입천장을 때린다
+		PRINTFORMDL %타겟은%입 안에 마구 흩뿌려진 정액을 혀로 그러모어다 삼키고서 다시 프로듀서의 페니스를 입에 물었다
+		PRINTW
+		PRINTFORML 「하음……츄붑…………핥짝, 핥짝……」
+		PRINTW
+		PRINTFORMDL %CALLNAME%의 작고 부드러운 혀가 프로듀서의 육봉을 간지를 때마다 프로듀서는 허리를 젖히고 쾌락에 바들바들 떨었다
+		PRINTFORMDL 그 모습이 %CALLNAME%의 가학성을 자극한 것일까,
+		PRINTFORMDL %타겟은% 더 이상 나오지 않는다고 울부짖는 프로듀서의 페니스에 더욱 격렬하게 봉사했다
+		PRINTW
+		PRINTFORML 「후아아……♡」
+		PRINTFORML 「하하, 프로듀서, 그게 다야?」
+		PRINTFORML 「먼저 유혹한건 그쪽이잖아? 난 아직 만족 못했다고…」
+		PRINTW
+		PRINTFORMDL 프로듀서는 그렇게 한참을 %CALLNAME%에게 쥐어짜였다…
+	ELSEIF (ABL:봉사정신 + ABL:정액중독 ) > 4
+		PRINTFORML 「우음, 으우으으음……」
+		PRINTW
+		PRINTFORMDL 프로듀서가 사정한 정액을 모두 받아낸 %타겟은% 입에 머금은 정액을 삼키는 것도, 뱉는 것도 허락받지 못했다
+		PRINTFORMDL 수컷의 내음이 입 뿐만이 아니라 비강, 머릿속까지 가득 채우자 %CALLNAME%의 얼굴은 그것에 취한듯 황홀함으로 차오른다
+		PRINTW
+		PRINTFORML 「꼴깍……」
+		PRINTFORML 「푸하아……♡」
+		PRINTW
+		PRINTFORMDL 긴 인고의 시간 끝에 마침내 프로듀서의 허락을 받은 %타겟은% 그대로 정액을 삼켰다
+		PRINTFORMDL 뜨뜻 미지근하고, 비릿하고, 미끈거리는 정액이 목구멍을 타고 넘어가는 감촉에 몇 번이나 가버리면서…
+	ELSE
+		PRINTFORMDL ……
+		PRINTFORMDL …………
+		PRINTFORMDL ……………………
+		PRINTW
+		PRINTFORML 「웨엑, 우웨에에엑!」
+		PRINTW
+		PRINTFORMDL 프로듀서도 돌아가고, 아무도 없는 사무소의 화장실……
+		PRINTFORMDL 그곳에서 %타겟은% 목구멍에 손가락을 집어넣고 정액을 끄집어내며 구토하고 있었다
+		PRINTFORMDL %타겟은% 게워내고 게워내도 목구멍을 타고 올라오는 비릿함에 얼굴을 찌푸렸다
+		PRINTW
+		PRINTFORML 「젠장, 망할 변태 프로듀서……」
+		PRINTFORML 「아무리 변신하고 나면 여자 모습이라지만 난 원래는 남잔데……」
+		PRINTFORML 「그걸 알면서도 자지를 펠라를 시키고 기분 좋아하는 거냐고……」
+		PRINTW
+		PRINTFORMDL %타겟은% 가글을 하며 프로듀서에 대한 불평을 쏟아내고 있다…
+	ENDIF
+ENDIF
+;베개 영업（프로듀서:엉덩이 개발·펠라치오）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_pro2A
+CALL KOJO_111_SEISAN_MAKURA_pro1
+;베개 영업（프로듀서:엉덩이 개발·그대로 서서뒷치기）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_pro2A1
+PRINTW
+IF ISMALE()
+	PRINTFORML 「우윽, 크으윽……」
+	PRINTW
+	PRINTFORMDL %타겟은% 불편한 듯이 신음했다
+ELSE
+;A감각 4이상
+	IF ABL:2 > 3
+		PRINTFORML 「후우, 후우……」
+		PRINTFORML 「아우, 우으으으응……」
+		PRINTW
+		PRINTFORMDL %타겟은% 애널로 느끼게 된 것을 인정하기 싫은 모양인지
+		PRINTFORMDL 자꾸만 고개를 가로젓고 있다
+		PRINTFORMDL 하지만 프로듀서가 허리를 한 번 흔들 때마다 토해내는 숨이 달콤하고 뜨거워지는 것을 보면
+		PRINTFORMDL 이미 완전히 애널이 주는 쾌락에 포로가 되었음은 쉽게 알 수 있었다
+		PRINTW
+		PRINTFORML 「머릿속이, 머릿속이 녹아버려어어엇……」
+		PRINTW
+		PRINTFORMDL 열띤 눈동자에 물기가 어리기 시작한다
+		PRINTFORMDL 제 2의 성기가 되어버린 애널이 주는 열락에 잠겨, %CALLNAME%의 이성은 증발해 버린지 오래다…
+	ELSE
+		PRINTFORML 「읏, 아으윽……」
+		PRINTW
+		PRINTFORMDL %타겟은% 애널로 침입해 오는 이물감에 불편한 듯이 신음했다
+		PRINTFORMDL 배설하는 기관에서 무언가를 토해내는 것이 아니라 받아들이는 것이 익숙치 않아서다
+		PRINTFORMDL 하지만 프로듀서는 %타겟이% 불편해 하건 말건, 허리를 움직이는데 열중하고 있었다…
+	ENDIF
+	PRINTW
+	PRINTFORMDL ……
+	PRINTFORMDL …………
+	PRINTFORMDL ……………………
+	PRINTW
+	PRINTFORML 「그 뭐야, 뒤로 하는게 그렇게 좋은거냐……?」
+	PRINTW
+	PRINTFORMDL "잔업"이 끝나고, 격렬한 행위의 흔적을 정리하며 %타겟은% 그렇게 물었다
+	PRINTFORMDL 아직도 항문이 얼얼한지 얼굴을 찌푸린 채다…
+ENDIF
+
+;베개 영업（프로듀서:서서뒷치기）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_pro2
+PRINTW
+IF ISMALE()
+	PRINTFORML 「우윽, 크으윽……」
+	PRINTW
+	PRINTFORMDL %타겟은% 불편한 듯이 신음했다
+ELSE
+;v감각 4이상
+	IF ABL:1 > 3
+		PRINTFORML  「아윽, 웃, 아으읏……♡」
+		PRINTFORML  「그만, 그만……!」
+		PRINTW
+		PRINTFORMDL 완전히 개발된 %CALLNAME%의 질은 그 작은 몸에 어울리지 않는
+		PRINTFORMDL 프로듀서의 장대한 페니스를 뿌리까지 삼키고 있었다
+		PRINTFORMDL 자궁구까지 닿은 페니스가 %CALLNAME%의 배를 압박하고 있어
+		PRINTFORMDL %타겟은% 실신하기 직전인 듯하다
+		PRINTW
+		PRINTFORML  「(같은 남자에게 안기고 있는데……)」
+		PRINTFORML  「(기분이 좋다니……말도 안 돼……)」
+		PRINTW
+		PRINTFORMDL 두둥실 뜨는 듯한 쾌락이 %CALLNAME%의 이성을 포근히 감싼다
+		PRINTFORMDL 자신이 원래 남자였다던가, 여체가 주는 쾌락은 더는 싫다던가, 그런 생각은 완전히 뒷전이다
+		PRINTW
+		PRINTFORML  「앗, 서 설마……」
+		PRINTFORML  「안에다, 안에다 싸는건 아니지!?」
+		PRINTW
+		PRINTFORMDL 뱃속 깊이 품고 있는 페니스가 사정이 가까운듯 크게 부풀어 올랐다
+		PRINTFORMDL 그 감촉에 %타겟은% 발버둥 치면서 프로듀서의 품에서 벗어나려고 하지만 불가능했다
+		PRINTFORMDL 아니, 오히려 질내사정을 당하고 싶어하는 눈치 같기도 하다
+		PRINTW
+		PRINTFORML  「아, 안 돼!!」
+		PRINTFORML  「뜨거웟, 뜨거워어엇!!」
+		PRINTW
+		PRINTFORMDL 힘차게 사정된 정액이 %CALLNAME%의 미숙한 자궁을 메우고 있다
+		PRINTFORMDL 뱃속이 뜨거운 것으로 가득 채워지는 감각에 %타겟은% 그대로 가버리면서, 졸도했다…
+	ELSE
+		PRINTFORML  「윽, 아파……」
+		PRINTW
+		PRINTFORMDL 아무래도 아담한 유아체형의 몸에 성인 남성의 페니스는 버거운 것인지
+		PRINTFORMDL %CALLNAME%의 음부는 고통으로 바들바들 떨리고 있었다
+		PRINTFORMDL 그 모습이 프로듀서의 가학심을 자극한 걸까, 프로듀서는 %CALLNAME%의 팔을 붙잡고 더욱 격렬하게 허리를 움직였다
+		PRINTW
+		PRINTFORML  「(남자에게 안기다니……)」
+		PRINTFORML  「(아아…… 죽어버리고 싶다)」
+		PRINTW
+		PRINTFORMDL 벽을 마주보고 있는 %CALLNAME%의 머리는 자기혐오라는 네 글자에 짓눌려 푹 숙인 채다
+		PRINTFORMDL 그러던 중, %타겟은% 뱃속을 메우고 있는 프로듀서의 페니스가 사정이 가까운듯 크게 맥박치는 것을 느꼈다
+		PRINTW
+		PRINTFORML  「자, 잠깐, 그건 위험하다고!」
+		PRINTFORML  「임신은, 임신은 하고 싶지 않아……!」
+		PRINTW
+		PRINTFORMDL %타겟은% 프로듀서를 멈추기 위해 필사적으로 발버둥치며 비명을 빌렀지만
+		PRINTFORMDL 이미 한계에 다다른 페니스가 주는 충동에 떠밀렸는지 프로듀서는 %CALLNAME%의 몸 가장 깊숙한 곳에
+		PRINTFORMDL 힘차게 정액을 사정했다…
+	ENDIF
+	PRINTW
+	PRINTFORMDW ……
+	PRINTFORMDW …………
+	PRINTFORMDW ……………………
+	PRINTW
+	PRINTFORMDL 「프로듀서가 아이돌한테 손대도 되는건가?」
+	PRINTFORMDL 「거기다가 난, 정체는 그렇다고 쳐도 지금 모습은 완전 어린애라고?」
+	PRINTW
+	PRINTFORMDL "잔업"이 끝난 뒤, 탈진해 있는 프로듀서에게 %타겟은% 그렇게 물었다
+	PRINTFORMDL 그러자 프로듀서는 "어차피 나이 스물 먹은 남자니까 합법이잖아"라고 대답하는 것이였다
+	PRINTFORMDL %타겟은% 뭔가 말하려 했지만 어이가 없다는 표정으로 그대로 입을 다물었다…
+ENDIF
+
+;베개 영업（임원:처녀 정상위）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_client1
+PRINTW
+IF TALENT:여체수용
+	PRINTFORML 「웃, 흑, 히끅……」
+	PRINTW
+	PRINTFORMDL 허벅지 사이에서 흘러내리는 처녀혈과 정액을 보며 %타겟은% 오열했다
+	PRINTFORMDL 어째서 지금 자신은 이런 곳에서 안면도 모르는 남자에게 처녀를 빼앗기고 있는 것일까
+	PRINTW
+	PRINTFORML 「몸도 마음도 더럽혀졌어…」
+	PRINTW
+	PRINTFORMDL %타겟은% 그렇게 말하며 거울 속에 비춰지고 있는 자신의 모습을 봤다
+	PRINTFORMDL 눈물로 엉망이 된 얼굴, 거친 행위 속에서 헝클어진 머리
+	PRINTFORMDL 그리고 복종과 굴복의 증거가 들어찬 자신의 배…
+	PRINTW
+	PRINTFORML 「내가…이런 생각을 하게 될 줄은 몰랐는데……」
+	PRINTW
+	PRINTFORMDL 막 마법소녀로 변신했을 때의 자신이라면 이렇게 처녀를 짓밟힌다고 해도 지금 같지는 않았을 것이다
+	PRINTFORMDL 어차피 자신의 몸도 아닌, 일시적인 모습이니까
+	PRINTFORMDL 하지만 지금은 어떤가…… 갑자기 우울해진 %타겟은% 거울에서 고개를 돌려 버렸다
+ELSE
+	PRINTFORML 「망할 프로듀서 자식……두고보자……」
+	PRINTW
+	PRINTFORMDL 허벅지 사이에서 흘러내리는 처녀혈과 정액을 보며 %타겟은% 씹어뱉듯이 중얼거렸다
+	PRINTFORMDL 뭐가 제휴냐, 뭐가 스폰서냐……
+	PRINTFORMDL 원래 남자라서 이렇게 험하게 굴리는 것일까?
+	PRINTW
+	PRINTFORML 「윽, 배가 아파……」
+	PRINTFORML 「여자가 처녀를 잃는 느낌은 이런 느낌인건가……」
+	PRINTFORML 「이런거, 알고 싶지, 않았다고……」
+	PRINTW
+	PRINTFORMDL 비통한 듯이 중얼거리는 %CALLNAME%의 뺨을 타고 한 줄기 눈물이 떨어졌다
+	PRINTFORMDL %CALLNAME%의 작은 몸에는 휑할 정도로 넓은 침대 위에서
+	PRINTFORMDL %타겟은% 울분을 삼키는 것이였다…
+ENDIF
+
+;베개 영업（고객:정상위）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_client2
+IF ISMALE()
+	PRINTFORML 「(아아……)」
+	PRINTFORML 「(언제 끝날까……)」
+ELSE
+	PRINTFORML 「하하, 그런가요……」
+	PRINTW
+	PRINTFORMDL 남자는 %타겟을% 앞에 두고서 자신이 얼마나 여자를 잘 보내버리는지 자랑하고 있다
+	PRINTFORMDL 자기 손에 걸리면 어떤 여자도 뿅가버린다고 자랑하는 것을 %타겟은% 적당히 맞장구 쳐주고 있다
+	PRINTW
+	PRINTFORML 「(뿅가게 만드는건 그 덜렁거리는 물건이 아니라 돈이겠지……)」
+	PRINTFORML 「(자기 딸래미 뻘 나이인 아이돌을 사서 안는다니 참……)」
+	PRINTW
+	PRINTFORMDL %타겟은% 속으로 악담을 퍼부으며, 겉으로는 미소를 지으며 놀라는 척을 했다
+	PRINTFORMDL 자신도 아이돌이라는 일에 익숙해진 것일까
+	PRINTFORMDL 그렇게 생각한 %타겟은% 왠지 자신이 한심스러워져 몰래 한숨을 쉬었다
+	PRINTW
+	PRINTFORML 「우왁!?」
+	PRINTW
+	PRINTFORMDL 자기과시를 끝낸 모양인지, 남자가 아무런 예고도 없이 %CALLNAME%의 스커트 아래에 손을 집어넣었다
+	PRINTFORMDL 가늘고 매끄러운 %CALLNAME%의 허벅지를 탐하는 끈적한 손놀림에 %CALLNAME%의 얼굴이 일그러진다
+	PRINTFORMDL 다행히도, 남자는 %CALLNAME%의 몸을 탐하느라 바빠 그 일그러진 얼굴은 눈치채지 못한 것 같다
+	PRINTW
+	PRINTFORML 「하윽…… 우으으……」
+	PRINTFORML 「(뭐, 뭐야 이 녀석?! 손놀림이……)」
+	PRINTW
+	PRINTFORMDL 아무래도 자신의 손에 걸린 여자는 모두 홍콩으로 보내버린다는 말은 거짓말이 아니였던 모양이다
+	PRINTFORMDL 손가락이 마치 별개의 생물처럼 꿈틀거리며 %CALLNAME%의 어린 균열을 애무하자
+	PRINTFORMDL 순식간에 애액이 질척이는 소리가 방에 퍼지기 시작했다
+	PRINTW
+	PRINTFORML 「후우…… 후우……」
+	PRINTFORML 「앗, 아아아……」
+	PRINTFORML 「(뭐야 저 크기는……남자일 때 내거보다 크잖아……!?)」
+	PRINTW
+	PRINTFORMDL %타겟이% 가버리는 것을 만족스럽게 지켜본 남자는
+	PRINTFORMDL 바지를 내리고 자신의 장대한 페니스를 꺼냈다
+	PRINTFORMDL %타겟은% 자신의 얼굴 위에 페니스의 그림자가 드리우자 자신도 모르게 몸을 떨었다
+	PRINTFORMDL 그리고 남자는 %CALLNAME%의 자그마한 몸과는 결코 어울리지 않는 그 물건을 정상위의 자세로 삽입했다…
+ENDIF
+;베개 영업（코스프레:애널）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_client3
+IF ISMALE()
+	PRINTFORML 「(큭……)」
+	PRINTFORML 「(이런 변태새끼를 내 손으로 때려팰 수 없다니……)」
+ELSE
+	PRINTW
+	PRINTFORML 「아하하, 그……그렇군요……」
+	PRINTFORML 「(역겨운 자식…… 난 지금 겉보기로는 초등학생일텐데…)」
+	PRINTFORML 「(이런 몸을 보고 서는건가? 정말로?)」
+	PRINTW
+	PRINTFORMD %타겟은% 지금 
+	SELECTCASE RAND:5
+		CASE 0
+			PRINTFORMD 동방프로젝트의 요우무
+		CASE 1
+			PRINTFORMD 소녀전선의 리베롤
+		CASE 2
+			PRINTFORMD 함대 컬렉션의 히비키
+		CASE 3
+			PRINTFORMD Fate의 이리야
+		CASE 4
+			PRINTFORMD 흑의 계약자의 인
+		CASE 5
+			PRINTFORMD 블루 아카이브의 아로나
+	ENDSELECT
+	PRINTFORMDL  코스프레를 하고서 남자의 말에 적당히 맞장구 치고 있다
+	PRINTFORMDL 물론 속으로는 남자의 변태성욕에 대한 험담을 하면서…
+	PRINTW
+	PRINTFORML 「앗, 네에…… 알겠습니다……」
+	PRINTW
+	PRINTFORMDL 여자와 대화를 잘 이끌어 나갈 수 있다는 것을 보여주려는 남자의 허영심이 충족된 것인지
+	PRINTFORMDL 상대는 슬슬 본무대를 시작하자고 말했다
+	PRINTFORMDL %타겟은% 이것도 아이돌 활동을 위한 것이라고 자신에게 타이르듯이 중얼거리며
+	PRINTFORMDL 남자가 요구하는대로 네 발로 엎드렸다
+	PRINTW
+	IF ABL:2 > 3
+		PRINTFORML 「하윽……!?」
+		PRINTFORML 「(젠장, 이런 역겨운 놈을 상대로 이런 목소리를 내 버리다니…!)」
+		PRINTW
+		PRINTFORMDL 남자가 러브젤을 듬뿍 묻힌 손가락을 %CALLNAME%의 애널에 단숨에 파묻자
+		PRINTFORMDL %CALLNAME%의 입에서 새된 비명이 흘러나온다
+	ELSE
+		PRINTFORML 「으윽……!」
+		PRINTFORML 「(뒷쪽 구멍만 좋아하는 놈이라더니 진짜냐…!)」
+		PRINTW
+		PRINTFORMDL 남자가 러브젤을 듬뿍 묻힌 손가락을 %CALLNAME%의 애널입구에 문지르자
+		PRINTFORMDL 근질거리는 감각에 %CALLNAME%의 입에서 신음히 흘러나온다
+	ENDIF
+	PRINTFORMDL 남자는 %CALLNAME%의 준비가 끝났다고 판단했는지 가운 속에서 굵다란 육봉을 꺼내 보였다
+	PRINTFORMDL 그리고 그 흉악한 페니스를 무언가를 기대하며 벌름거리기 시작한 %CALLNAME%의 애널에 푹 꽂아넣었다
+	PRINTW
+	PRINTFORML 「웃, 우극…… 악……!」
+ENDIF
+;베개 영업（팬클럽:윤간）
+;--------------------------------------------------
+@KOJO_111_SEISAN_MAKURA_fanclub
+PRINTW
+PRINTFORML 「하하, 나는 아이돌에 환상을 가지고 있었던 걸까……?」
+PRINTFORML 「팬들은 춤과 노래로 희망을 얻는게 아니라, 몸만을 바라고 있었던 걸까……?」
+PRINTW
+PRINTFORMDL 듣는 이 하나 없는데 %타겟은% 누군가에게 묻듯이 그렇게 중얼거렸다
+PRINTFORMDL 반짝이는 보석 같던 %CALLNAME%의 푸른 눈동자는 어느 새 공허하고 어두워졌다
+PRINTFORMDL 능욕의 흔적은 몸만이 아니라 마음에도 새겨지고 만 것이리라
+PRINTW
+IF TALENT:감정결여 == 0
+	PRINTFORML 「욱, 우으윽……」
+	PRINTFORML 「아아, 아아아아아……」
+	PRINTFORML 「싫어, 싫어, 더는 싫어어어어어!!」
+ENDIF
+
+;라이브 공연（통상）
+;--------------------------------------------------
+@KOJO_111_SEISAN_LIVE_normal
+PRINTW
+CALL KOJO_111_SEISAN_IDOLSING
+PRINTW
+IF EXP:매료경험 > 999
+	PRINTFORMDL 다 셀 수 없을 정도로 많은 사람들이 %CALLNAME%의 이름을 연호하며 형광봉을 흔들었다
+ELSEIF EXP:매료경험 > 499
+	PRINTFORMDL 드넓은 관람석에 가득 찬 관객들이 저마다 플래카드를 들어올리거나 형광봉을 흔들었다
+ELSEIF EXP:매료경험 > 199
+	PRINTFORMDL 적지 않은 수의 사람들이 %CALLNAME%의 모습을 보고 환호하고 있다
+ELSE
+	PRINTFORMDL 얼마 되지 않는 관객들이지만, 분명히 %타겟을% 믿고 따라주는 사람들이 보였다
+ENDIF
+PRINTW
+IF ISMALE()
+	PRINTFORML 「다음에도 잘 부탁해!」
+	PRINTW
+	PRINTFORMDL %타겟은% 손을 흔들며 팬들에게 인사했다
+ELSE
+	PRINTFORML 「(아아, 이런 거 좋을지도……)」
+	PRINTW
+	PRINTFORMDL 자신이 마음에 들어하지 않고, 오히려 불편해 했던 마법소녀의 모습이지만
+	PRINTFORMDL 이렇게나 많은 사람들이 원해주고 있다
+	PRINTFORMDL %타겟은% 자신의 가슴속에 뭔가 따뜻한 감정이 차오르는 것을 느꼈다
+ENDIF
+
+
+;라이브 공연（굴렀다）
+;--------------------------------------------------
+@KOJO_111_SEISAN_LIVE_korobi
+PRINTW
+IF RAND:3 == 0 && ISFEMALE() && TALENT:여체수용
+	PRINTFORML 「꺄악!?」
+	PRINTW
+	PRINTFORMDL %타겟은% 자신의 속옷이 보인다는 것을 깨닫고 반사적으로 스커트를 손으로 억눌렀다
+	PRINTFORMDL 그 사랑스러운 광경에 많은 관객들의 눈이 따뜻해졌지만
+	PRINTFORMDL %타겟은% 당황해서 얼굴을 붉히고만 있었다
+ELSEIF ISFEMALE() && ABL:노출벽 > 2 && RAND:3 == 0
+	PRINTFORML 「(아아…이렇게 많은 사람들 앞에서…)」
+	PRINTW
+	PRINTFORMDL 그러면서 수 많은 눈 앞에서 치태를 드러냈다는 것에 %타겟은% 흥분하기 시작했다
+	PRINTFORMDL 눈썰미가 좋은 사람들은 %CALLNAME%의 얼굴에 부자연스러운 홍조가 떠올라 있다는 것을 깨달았다
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「핫!」
+			PRINTFORML 「그럼 다들, 다음에도 잘 부탁해!」
+			PRINTW
+			PRINTFORMDL %타겟은% 넘어진 자리에서 벌떡 일어나더니 라이브를 이어갔다
+			PRINTFORMDL 아무래도 없었던 일로 치려는 것 같다
+		CASE 1
+			PRINTFORML 「이, 이게 무슨 꼴이래……」
+			PRINTW
+			PRINTFORMDL %타겟은% 넘어질 때 바닥에 짚은 손을 문지르며 투덜거리고 있다
+		CASE 2
+			PRINTFORML 「아하하……」
+			PRINTW
+			PRINTFORMDL 화려하게 구른 %타겟은% 멋쩍은 듯이 웃어보였다
+	ENDSELECT
+ENDIF
+
+
+;라이브 공연（촉수 구속도구）
+;--------------------------------------------------
+@KOJO_111_SEISAN_LIVE_syokusyu
+PRINTW
+MAX ABL:Ｂ감각,ABL:Ｖ감각,ABL:Ｃ감각,ABL:Ａ감각
+IF ISMALE()
+	PRINTFORML 「크윽!?」
+	PRINTW
+	PRINTFORMDL %타겟은% 얼굴을 붉히고 이를 악물었다…
+ELSEIF RESULT > 3 || TALENT:촉수의포로 || TALENT:음란
+	PRINTFORML 「읏……아우으으읏………!!!」
+	PRINTW
+	PRINTFORMDL %ITEMNAME:400%의 내부에서 꿈들거리는 수 많은 촉수들이 %CALLNAME%의 몸을 쾌락으로 몰아세우고 있다
+	PRINTFORMDL %타겟이% 완전히 개발된 가슴이나 클리토리스를 애무당하는 자극에 교성을 지르는 사이
+	PRINTFORMDL 점액투성이인 수 많은 가느다란 촉수가 %CALLNAME%의 음순을 밀어젖히기 시작했다
+	PRINTW
+	PRINTFORML 「그만, 그마아안……!!」
+	PRINTFORML 「아, 안 돼! 팬들한테 다 보이잖……」
+	PRINTW
+	PRINTFORMDL 가버리는 자신의 모습을 보이고 싶지 않은 %타겟이% 뒤로 돌아서려고 했지만
+	PRINTFORMDL 온 몸을 구속하고 있는 %조사처리(ITEMNAME:400,"는")% 그것을 허락하지 않았다
+	PRINTFORMDL 쾌락으로 제대로 힘이 들어가지 않는 %CALLNAME%의 몸을, 피부 위를 뒤덮은 %조사처리(ITEMNAME:400,"가")% 억지로 움직인다
+	PRINTFORMDL %조사처리(ITEMNAME:400,"는")% %CALLNAME%의 다리를 크게 벌리게 했다
+	PRINTW
+	PRINTFORML 「이런 모습 보여주고 싶지 않은데……」
+	PRINTFORML 「아아, 아아아아…!!」
+	PRINTW
+	PRINTFORMDL 무대 위로 집중된 팬들의 시선이 %CALLNAME%의 새하얀 피부나 굴곡 없는 몸의 라인을 핥듯이 시간하고 있다
+	PRINTFORMDL 라이브는 완전히 %CALLNAME%의 촉수능욕쇼로 변질되고 말았다…
+ELSE
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「후아아……♡」
+			PRINTW
+			PRINTFORMDL 한바탕 %조사처리(ITEMNAME:400,"가")% 날뛰고 난 뒤,
+			PRINTFORMDL %타겟은% 뇌가 익어버릴 만큼의 쾌락에 희롱당한 채로 그 자리에 주저앉아 버렸다
+			PRINTFORMDL 그 고간 사이에서는 흘러나온 투명한 애액과 촉수의 점액이 섞여 웅덩이가 되어 있었다…
+		CASE 1
+			PRINTFORML 「더는 싫어엇……!」
+			PRINTW
+			PRINTFORMDL %타겟은% 라이브 도중에 그대로 울어버렸다
+			PRINTFORMDL 24시간 피부에 밀착된 채로 도망칠 수도 없는 쾌락에 몰아세워지다가
+			PRINTFORMDL 사랑하는 팬들 앞에서 부끄러운 꼴을 보여버린 끝에, %CALLNAME%의 마음이 꺾여버리고 만 것이다…
+		CASE 2
+			PRINTFORML 「아우우……」
+			PRINTW
+			PRINTFORMDL 무대 위에서 쓰러진 %타겟은% 탁해진 눈으로 허공을 응시하고 있다
+			PRINTFORMDL 수 없이 가버린 끝에 손발만 이따끔 경련시키고 있는 %CALLNAME%
+			PRINTFORMDL 자신들이 동경하는 아이돌의 망가진 모습에, 관람석이 쥐 죽은듯 조용해졌다……
+	ENDSELECT
+ENDIF

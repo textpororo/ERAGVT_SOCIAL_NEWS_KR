@@ -349,13 +349,13 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 		TCVARn:8 -= 10
 	ENDIF
 	PRINTPLAIN 　　　　　　　　　　　　　　
-	PRINT 스테이터스 표시 [800]
-	PRINTPLAIN  　　　　　　　 
+	PRINT 스테이터스 표시[800]
+	PRINTPLAIN  　　　　　　　
 	LOCALS = 
 	SIF CHECK_CAN_RETREAT_F() == 0
 		SETCOLOR 128,128,128
 	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("철수 불가") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
-		LOCALS = 철수 [999]
+		LOCALS = 철수[999]
 
 	PRINTFORM %LOCALS, 9%
 	RESETCOLOR
@@ -540,12 +540,12 @@ ELSE
 
 	TCVARn:8 -= 10
 
-	PRINT 　 스테이터스 표시 [800]
+	PRINT 　스테이터스 표시[800]
 
 	SIF CHECK_CAN_RETREAT_F() == 0
 		SETCOLOR 128,128,128
 	SIF (TCVARn:0 > 0 && GETBATTLESITUATION("철수 불가") == 0 && (TCVARn:12 & 기절) == 0) || FLAG:999 == 1
-		PRINT 　　　　　　　　철수 [999]
+		PRINT 　　　　　　　　철수[999]
 	RESETCOLOR
 
 	TCVARn:8 += 10

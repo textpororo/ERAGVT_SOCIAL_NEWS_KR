@@ -321,7 +321,7 @@ ENDIF
 
 ;----------------------------------------------------------
 ;캐릭터의 사정 체크
-IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
+IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1)) && CFLAG:650 <= 10
 	IF ARG:0 && CONFIG_CHECK_SCREEN_F(1) > 0
 		FONTBOLD
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%의 사정치 ＋{ARG:0 + 500 * (NOWEX:Ｃ절정 + 1)}
@@ -347,6 +347,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 			PRINTFORML %EXPNAME:50% ＋1
 		ENDIF
 		EXP:사정경험 += 2
+		CFLAG:650 += 2
 		PRINTFORML %EXPNAME:53% ＋2
 		PRINTL 
 		NOWEX:Ｃ절정 += 2
@@ -369,6 +370,7 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 				PRINTFORML %EXPNAME:50% ＋1
 			ENDIF
 			EXP:사정경험 += 1
+			CFLAG:650 += 1
 			PRINTFORML %EXPNAME:53% ＋1
 			PRINTL 
 			NOWEX:Ｃ절정 += 1
@@ -376,6 +378,70 @@ IF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1))
 			PRINTL 
 		ENDIF
 	ENDIF
+
+ELSEIF (TALENT:후타나리 > 0 || (ISMALE() && TALENT:미성숙 != 1)) && CFLAG:650 > 10
+;이제 더 이상 사정 할 수 없는 경우
+
+	IF CFLAG:651 < 1
+	   FONTBOLD
+	   PRINTFORML %PRINT_TRANSCALLNAME(TARGET)% 의 정낭이 비었다！
+	   FONTREGULAR
+	   TRYCALLFORM KOJO_ROOT(CFLAG:6, "SEX_CHARA_SYASEI_NOMORETODAY")
+	   CFLAG:651 = 1
+	ENDIF
+
+	SIF ARG:0 > 0
+		BASE:사정 += ARG:0 + 500 * (NOWEX:Ｃ절정 + 1)
+
+	IF BASE:사정 >= MAXBASE:사정 * 2 && NOWEX:Ｃ절정 > 0
+		BASE:사정 = 0
+		ARG:7 += 10000
+		ARG:8 += 8000
+		ARG:9 += 8000
+		ARG:12 += 600
+		;지문；캐릭터가 분수（사정실패）했다
+		CALL MESSAGE_SEX_CHARA_KARAIKI_HI
+		;지문:세뇌/타락한 캐릭터가 조작 캐릭터의 분수（사정실패）를 보았다
+		SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+			CALL MESSAGE_OTHER_SEX_CHARA_KARAIKI_HI
+		;현재 성별이나 원래 성별 중 하나가 남자가 아니며, 그 상태로 분수（사정실패）면 이상경험 획득
+		IF CFLAG:207 == 0 && (ISFEMALE() || CHARATALENT_F(TARGET,0,"남자") == 0)
+			CFLAG:207 = 1
+			EXP:이상경험 += 1
+			PRINTFORML %EXPNAME:50%＋1
+		ENDIF
+		EXP:절정경험 += 2
+		PRINTFORML %EXPNAME:22%＋1
+		PRINTL 
+		NOWEX:Ｃ절정 += 2
+	ELSE
+		IF BASE:사정 >= MAXBASE:사정 && NOWEX:Ｃ절정 > 0
+			BASE:사정 = MAX(BASE:사정 - MAXBASE:사정, 0)
+			ARG:7 += 5000
+			ARG:8 += 4000
+			ARG:9 += 4000
+			ARG:12 += 300
+			;지문:캐릭터가 사정실패 했다
+			CALL MESSAGE_SEX_CHARA_KARAIKI
+			;지문:세뇌/타락한 캐릭터가 조작 캐릭터의 사정실패를 보았다
+			SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1
+				CALL MESSAGE_OTHER_SEX_CHARA_KARAIKI
+			;현재 성별이나 원래 성별 중 하나가 남자가 아니며, 그 상태로 사정실패가 처음이면 이상경험 획득
+			IF CFLAG:207 == 0 && (ISFEMALE() || CHARATALENT_F(TARGET,0,"남자") == 0)
+				CFLAG:207 = 1
+				EXP:이상경험 += 1
+				PRINTFORML %EXPNAME:50%＋1
+			ENDIF
+			EXP:절정경험 += 1
+			CFLAG:650 += 1
+			PRINTFORML %EXPNAME:22%＋1
+			PRINTL 
+			NOWEX:Ｃ절정 += 1
+		ELSEIF ARG:0 && CONFIG_CHECK_SCREEN_F(1) > 0
+			PRINTL 
+		ENDIF
+	ENDIF
+
 ENDIF
 
 ;----------------------------------------------------------
@@ -1894,6 +1960,13 @@ IF RESULT <= 0
 ENDIF
 LOCAL += ARG:1
 
+;사정에 의해 보정
+IF CFLAG:650 > 0 && CFLAG:651 < 1
+    LOCAL += 5 * (CFLAG:650)
+ELSEIF CFLAG:650 > 0 && CFLAG:651 > 0
+    LOCAL += 10 * (CFLAG:650)
+ENDIF
+
 CALL PERCENT_CAL, BASE:성내성, MAXBASE:성내성
 IF RESULT > 75
 	TIMES LOCAL,0.05
@@ -1980,6 +2053,12 @@ CALL PERCENT_CAL, BASE:체력, MAXBASE:체력
 IF RESULT <= 0
 	TIMES LOCAL,1.25
 	LOCAL += 100
+	;사정에 의해 보정
+    IF CFLAG:650 > 0 && CFLAG:651 < 1
+    	LOCAL += 5 * (CFLAG:650)
+	ELSEIF CFLAG:650 > 0 && CFLAG:651 > 0
+    	LOCAL += 10 * (CFLAG:650)
+	ENDIF
 ENDIF
 
 CALL PERCENT_CAL, BASE:성내성, MAXBASE:성내성
@@ -2110,6 +2189,13 @@ SIF BASE:방어 - 100 > 0
 ;적의 레벨에 따른 보정
 CALL TENTACLE_LEVEL
 LOCAL = LOCAL * (200 + RESULT) / 200
+
+;사정에 의해 보정
+IF CFLAG:650 > 2 && CFLAG:651 < 1
+    LOCAL += 2 * (CFLAG:650)
+ELSEIF CFLAG:651 > 0
+    TIMES LOCAL,2.00
+ENDIF
 
 SIF BASE:성내성 - LOCAL < 0
 	LOCAL = BASE:성내성

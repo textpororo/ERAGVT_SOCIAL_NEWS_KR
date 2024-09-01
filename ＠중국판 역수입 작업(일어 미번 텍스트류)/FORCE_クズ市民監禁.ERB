@@ -105,7 +105,7 @@ SELECTCASE RAND(1,101)
 		PRINTFORML 在周圍男人的談笑中、
 		PRINTFORMW 劊子手拉起%PRINT_TRANSCALLNAME(TARGET)%再按倒在木砧前方、
 			PRINTL 
-		IF TALENT:淫乱 > 0 || ABL:受虐狂 > 3 
+		IF TALENT:음란 > 0 || ABL:受虐狂 > 3 
 			PRINTFORM 突然%PRINT_TRANSCALLNAME(TARGET)%開口请求道「
 			PRINTDATA
 				DATAFORM 譲%SELF_CALL()%在高潮中死去吧
@@ -118,7 +118,7 @@ SELECTCASE RAND(1,101)
 			PRINTFORML 把炮机上的粗大带刺假阳具插进了%PRINT_TRANSCALLNAME(TARGET)%的下體
 			PRINTFORML 在人类不可能做到的超高频活塞運動中%PRINT_TRANSCALLNAME(TARGET)%繃緊身躯抵达了绝顶
 			PRINTFORMW 弓起腰发出最后的浪叫————
-		ELSEIF TALENT:淫乱 <= 0 || TALENT:容易發情 <= 0 
+		ELSEIF TALENT:음란 <= 0 || TALENT:容易發情 <= 0 
 			PRINTFORMW 慌乱挣扎的%PRINT_TRANSCALLNAME(TARGET)%眼神中充满对生的眷恋、刚想张口说些什么————
 		ELSE
 			PRINTFORMW 迷离中的%PRINT_TRANSCALLNAME(TARGET)%還沒來得及說什麼、
@@ -425,7 +425,7 @@ SELECTCASE RAND(1,101)
 		PRINTW
 		PRINTL 時間一分一秒地過去，絞索上的舞蹈逐漸變得緩慢、
 		PRINTFORMW %PRINT_TRANSCALLNAME(TARGET)%的眼神逐漸失去了焦點，身體越發無力地抽搐。
-		IF TALENT:触手的俘虜 > 0 || TALENT:性奴体質 > 0 || TALENT:淫乱 > 0 || ABL:受虐狂 > 3 
+		IF TALENT:触手的俘虜 > 0 || TALENT:性奴体質 > 0 || TALENT:음란 > 0 || ABL:受虐狂 > 3 
 			PRINTL 不滿足的男人們決定延長惡戲的時間、
 			PRINT 在首領的示意下
 				IF ISMALE() || TALENT:偽娘 > 0 
@@ -1081,7 +1081,7 @@ PRINTL
 		PRINTL 
 		PRINTL  「………………」
 		PRINTL 短暫的精神衝撃過後、
-		IF TALENT:淫乱 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+		IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
 			PRINTFORML 很快従震驚中恢復的%PRINT_TRANSCALLNAME(TARGET)%露出興奮的眼神
 			PRINTFORML 努力抖動着身体譲鎖鏈発出叮叮噹噹的響動
 			PRINTFORM %SLANG_V(TARGET)%中湧出淫液
@@ -1101,7 +1101,7 @@ PRINTL
 		PRINTFORML 挙着%PRINT_TRANSCALLNAME(TARGET)%的男人登上台階、将穿刺杆頂端的花苞浅浅地放入
 		PRINTFORML %SLANG_V(TARGET)%当中
 		PRINTW 
-		IF TALENT:淫乱 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
+		IF TALENT:음란 || ABL:慾望 >= 3 || ABL:受虐狂 >= 3
 			PRINTFORML 早已完全興奮的%PRINT_TRANSCALLNAME(TARGET)%立即発出甜美的呻吟
 			PRINTFORML 翕張着%SLANG_LabiaMajora(TARGET)%迎接死神的到来、
 			IF TALENT:母乳体質 > 0
@@ -1568,7 +1568,7 @@ PRINTL
 		ENDIF
 	ENDIF
 	;以下加筆：獸交：豬
-		IF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 
+		IF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 
 		PRINTL 
 		PRINTW 
 			PRINTFORML 男人们决定给予被充分开发的%PRINT_TRANSCALLNAME(TARGET)%特别的奖赏、
@@ -1662,7 +1662,7 @@ PRINTL
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
 	PRINTFORM 暗网上流传着少女受到激烈母猪化调教
-		SIF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 
+		SIF (ABL:受虐狂 > 4 || TALENT:性奴体質 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 
 			PRINT 甚至与真正的公猪交配
 	PRINTFORML 的视频
 		SELECTCASE RAND(3)
@@ -1712,7 +1712,7 @@ PRINTL
 	IF RAND(3) <=1
 	PRINTFORML 不久之後
 	PRINTFORM 暗网上流传着少女受到激烈母狗化调教
-		SIF (ABL:マゾっ気 > 4 || TALENT:嬲られ体質 > 0 ) && MARK:屈服刻印 >= 3 && FILTER_CHECK_F(15) == 0 && (ISFEMALE() || TALENT:ふたなり > 0) 
+		SIF (ABL:마조끼 > 4 || TALENT:嬲られ体質 > 0 ) && MARK:굴복각인 >= 3 && FILTER_CHECK_F(15) == 0 && (ISFEMALE() || TALENT:후타나리 > 0) 
 			PRINTL 甚至与真正的公狗连续交配
 	PRINTFORMW 的视频
 	PRINTL
@@ -1761,11 +1761,11 @@ VARSET LOCAL
 	SIF CFLAG:70 > 2
 	PRINT 已經不再
 	PRINTFORML 用口罩遮住脸的男人们把已經勃起的肉棒頂到了%PRINT_TRANSCALLNAME(TARGET)%唇邊。
-	IF TALENT:淫乱 && TALENT:初心 < 1
+	IF TALENT:음란 && TALENT:初心 < 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%露出魅惑的表情、以水汪汪的眼神仰視著男人們開始奉侍起来・・・
 	ELSEIF ABL:慾望 > 3 && TALENT:初心 < 1
 		PRINTFORML %PRINT_TRANSCALLNAME(TARGET)%一辺在心裏自我催眠，一辺開始為男人的陽具服務.
-	ELSEIF ABL:従順 > 3
+	ELSEIF ABL:순종 > 3
 		PRINTFORML 和%STR:2500%的戦闘中身心都被灌輸了服従意識的%PRINT_TRANSCALLNAME(TARGET)%、
 		PRINTFORML 只能在心中想著沒有好好訓練的後果就是無法擺脱這些男人・・・
 	ELSE
@@ -1781,12 +1781,12 @@ VARSET LOCAL
 			PRINT 插入尻穴之中，
 		ENDIF
 		PRINTL 開始粗暴的雞姦。
-	ELSEIF TALENT:処女 > 0
+	ELSEIF TALENT:처녀 > 0
 		PRINTFORML 搶到有利位置的男人毫不在意地用怒張的肉棒貫穿了%PRINT_TRANSCALLNAME(TARGET)%的穴心、
 		PRINTFORML 初經人事的蜜壺滲出的血絲成為了極好的潤滑液、
 		PRINTFORML 毫不在意%PRINT_TRANSCALLNAME(TARGET)%絕望而甘美的哭叫聲反復完全抽出又完全插入、
 		PRINTFORML 很快愛液與血絲混合在一起，小穴被插得汁水淋漓…………
-			TALENT:処女 *= -1
+			TALENT:처녀 *= -1
 			CFLAG:206 = 12
 			PRINTL 
 			PRINTL 処女喪失
@@ -1809,7 +1809,7 @@ VARSET LOCAL
 		PRINTFORML 迎来高潮的男人理所当然的決定膣内射精、
 	ENDIF
 		PRINTFORML 在後面等着的同伴馬上就代替了他的位置持續著無休止的凌辱。
-		IF TALENT:淫乱 || ABL:慾望 >= 3
+		IF TALENT:음란 || ABL:慾望 >= 3
 			PRINTFORML 已経習慣於被男人一個接一個地操幹的%PRINT_TRANSCALLNAME(TARGET)%、
 			PRINTFORML 曝露著放蕩的高潮臉持続榨取著男人的精液，両隻手也在一直擼動著不知道誰的肉棒
 			PRINTFORML 由于有太多慾望要满足，有时甚至一个肉穴中会被插入两根肉棒……

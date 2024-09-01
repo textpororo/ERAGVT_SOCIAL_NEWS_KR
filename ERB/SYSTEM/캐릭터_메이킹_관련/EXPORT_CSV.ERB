@@ -88,21 +88,21 @@ PRINTL
 IF CSTR:204 != "" || CSTR:205 != "" || CSTR:206 != ""
 	PRINTL ;-------나이指定----------------
 	SIF CSTR:204 != ""
-		PRINTFORML CSTR,204,%CSTR:204%,;실제나이指定
+		PRINTFORML CSTR,204,%CSTR:204%,;실제 나이 지정
 	SIF CSTR:205 != ""
-		PRINTFORML CSTR,205,%CSTR:205%,;나이指定
+		PRINTFORML CSTR,205,%CSTR:205%,;나이 지정
 	SIF CSTR:206 != ""
-		PRINTFORML CSTR,206,%CSTR:206%,;変身時나이指定
+		PRINTFORML CSTR,206,%CSTR:206%,;변신 시 나이 지정
 	PRINTL
 ELSEIF CFLAG:34 > 0
 	PRINTL ;-------나이指定----------------
-	PRINTFORML CSTR,204,{BASE:실제나이},;실제나이指定
-	PRINTFORML CSTR,205,{BASE:나이},;나이指定
-	PRINTFORML CSTR,206,{MAXBASE:나이},;変身時나이指定
+	PRINTFORML CSTR,204,{BASE:실제나이},;실제 나이 지정
+	PRINTFORML CSTR,205,{BASE:나이},;나이 지정
+	PRINTFORML CSTR,206,{MAXBASE:나이},;변신 시 나이 지정
 	PRINTL
 ENDIF
-PRINTL ;-------初期스테이터스----------
-PRINTL ;스테이터스における基礎値
+PRINTL ;-------기초 스테이터스----------
+PRINTL ;스테이터스에서의 기초치
 PRINTFORML 基礎,체력,{SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 0, CSVBASE_F(NO:TARGET,0))},
 PRINTFORML 基礎,기력,{SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 1, CSVBASE_F(NO:TARGET,1))},
 PRINTFORML 基礎,성내성,{SEIKAKU_HOSEI_F(SEIKAKU_CHECK_F(TARGET), 2, CSVBASE_F(NO:TARGET,2))},
@@ -126,7 +126,7 @@ SIF ABL:기초전투 > 0
 	PRINTFORML 能力,기초전투,{ABL:기초전투},
 SIF LINECOUNT > LOCAL:3
 	PRINTL
-PRINTL ;-------素質--------------------
+PRINTL ;-------소질--------------------
 REPEAT 1000
 	;COUNT200변신능력、250〜299のオプション系素質、COUNT900以降の記述を飛ばす
 	IF TALENT:COUNT != 0 && COUNT != 200 && COUNT < 900 && (COUNT < 250 || COUNT > 299)
@@ -206,14 +206,14 @@ NEXT
 ;感度・経験はLOCAL:2が1以上のときのみ
 IF LOCAL:2 >= 1
 	PRINTL
-	PRINTL ;-------감각など----------------
+	PRINTL ;-------감각 등----------------
 	REPEAT 25
 		IF ABL:COUNT >= 1
 			PRINTFORML 能力,%ABLNAME:COUNT%,{ABL:COUNT},
 		ENDIF
 	REND
 	PRINTL
-	PRINTL ;-------経験--------------------
+	PRINTL ;-------경험--------------------
 	REPEAT 60
 		IF EXP:COUNT >= 1
 			PRINTFORML 経験,%EXPNAME:COUNT%,{EXP:COUNT},
@@ -246,7 +246,7 @@ IF LOCAL:2 >= 2
 	REND
 ENDIF
 PRINTL
-PRINTL ;-------衣装--------------------
+PRINTL ;-------의상--------------------
 IF CFLAG:40
 	PRINTFORML フラグ,40,{CFLAG:40},;　%ITEMNAME:(CFLAG:40)%
 ELSE
@@ -284,50 +284,50 @@ FOR LCOUNT, 600, 700
 		PRINTFORML EQUIP,{LCOUNT},{EQUIP:LCOUNT},;　%ITEMNAME:LCOUNT%
 NEXT
 PRINTL
-PRINTL ;-------髪型--------------------
+PRINTL ;-------헤어 스타일--------------------
 PRINTFORML CSTR,12,%CSTR:12%,
 PRINTFORML CSTR,13,%CSTR:13%,
 PRINTFORML CSTR,14,%CSTR:14%,
 PRINTL
-PRINTL ;-------目つき--------------------
+PRINTL ;-------눈매--------------------
 PRINTFORML CSTR,18,%CSTR:18%,
 PRINTL 
-PRINTL ;-------プロフィール-------------
+PRINTL ;-------프로필-------------
 PRINTL ;머리색
 PRINTFORML CSTR,30,%CSTR:30%,
 IF TALENT:변신능력 == 0
-	PRINTL ;変身時の머리색
+	PRINTL ;변신 시 머리색
 	PRINTFORML CSTR,31,%CSTR:30%,
 ELSE
-	PRINTL ;変身時の머리색
+	PRINTL ;변신 시 머리색
 	PRINTFORML CSTR,31,%CSTR:31%,
 ENDIF
-PRINTL ;右目の色
+PRINTL ;오른쪽 눈의 색
 PRINTFORML CSTR,32,%CSTR:32%,
-PRINTL ;左目の色
+PRINTL ;왼쪽 눈의 색
 PRINTFORML CSTR,33,%CSTR:33%,
 IF TALENT:변신능력 == 0
-	PRINTL ;変身時の右目の色
+	PRINTL ;변신 시 오른쪽 눈의 색
 	PRINTFORML CSTR,34,%CSTR:32%,
-	PRINTL ;変身時の左目の色
+	PRINTL ;변신 시 왼쪽 눈의 색
 	PRINTFORML CSTR,35,%CSTR:33%,
 ELSE
-	PRINTL ;変身時の右目の色
+	PRINTL ;변신 시 오른쪽 눈의 색
 	PRINTFORML CSTR,34,%CSTR:34%,
-	PRINTL ;変身時の左目の色
+	PRINTL ;변신 시 왼쪽 눈의 색
 	PRINTFORML CSTR,35,%CSTR:35%,
 ENDIF
-PRINTL ;肌の色
+PRINTL ;피부색
 PRINTFORML CSTR,36,%CSTR:36%,
 IF TALENT:변신능력 == 0
-	PRINTL ;変身時の肌の色
+	PRINTL ;변신 시 피부색
 	PRINTFORML CSTR,37,%CSTR:36%,
 ELSE
-	PRINTL ;変身時の肌の色
+	PRINTL ;변신 시 피부색
 	PRINTFORML CSTR,37,%CSTR:37%,
 ENDIF
 PRINTL
-PRINTL ;-------武器定義-----------------
+PRINTL ;-------무기 정의-----------------
 FOR LOCAL, 5, 8
 	LOCALS:(LOCAL - 4) += @"%CSTR:LOCAL%" + "// //" + @"%FSTYLE_NAME_F(TARGET,LOCAL - 4)%"
 NEXT
@@ -335,11 +335,11 @@ PRINTFORML CSTR,15,%LOCALS:1%,
 PRINTFORML CSTR,16,%LOCALS:2%,
 PRINTFORML CSTR,17,%LOCALS:3%,
 PRINTL
-PRINTL ;-------キャラフラグ------------
+PRINTL ;-------캐릭터 플래그------------
 PRINTFORM フラグ,10,{CFLAG:10},
-PRINTL ;　변신능력のあるキャラの変身前の能力(デフォルトは25%)
+PRINTL ;　변신능력이 있는 캐릭터의 변신 전 능력(디폴트는 25%)
 PRINTFORM フラグ,11,{CFLAG:11},
-PRINTL ;　변신능력のあるキャラのSP변신後の能力(デフォルトは110%)
+PRINTL ;　변신능력이 있는 캐릭터의 SP변신 후 능력(디폴트는 110%)
 PRINTL
 ;トロフィー『陰鬱ハネムーン』達成時、最初から흑화が解禁
 IF GLOBAL:262 > 0
@@ -418,7 +418,7 @@ IF LOCAL > 0
 	PRINTL
 ENDIF
 IF CSTR:40 != "" || CSTR:41 != "" || CSTR:42 != ""
-	PRINTL ;-------パーソナリティ----------
+	PRINTL ;-------개성----------
 	FOR SELECT, 40, 43
 		SIF CSTR:SELECT != ""
 			PRINTFORML CSTR,{SELECT},%CSTR:SELECT%,
@@ -426,7 +426,7 @@ IF CSTR:40 != "" || CSTR:41 != "" || CSTR:42 != ""
 	PRINTL
 ENDIF
 IF CFLAG:50 || CFLAG:51 || CFLAG:52 || CFLAG:53 || CFLAG:54 || CFLAG:55 || CFLAG:56
-	PRINTL ;-------キャラメイクボーナス----------
+	PRINTL ;-------캐릭터 메이킹 보너스----------
 	SIF CFLAG:50
 		PRINTFORML フラグ,50,{CFLAG:50},;체력
 	SIF CFLAG:51
@@ -492,7 +492,7 @@ IF LOCAL > 0
 ENDIF
 IF CFLAG:34 > 0
 	IF TALENT:체형난수치지정 == 0 || TALENT:체형성장곡선지정 == 0
-		PRINTL ;-------現在の体型乱数----------
+		PRINTL ;-------현재 체형 난수----------
 		SIF TALENT:체형난수치지정 == 0
 			PRINTFORML 素質,체형난수치지정,{CFLAG:33},
 		SIF TALENT:체형성장곡선지정 == 0
@@ -502,7 +502,7 @@ IF CFLAG:34 > 0
 	PRINTL ;キャラの体型をCSVに記述する場合は上記２つあればＯＫだが、
 	PRINTL ;以下の乱数指定を利用することもできる
 	PRINTL ;不要であれば削除すること
-	PRINTL ;-------体型乱数指定----------
+	PRINTL ;-------체형 난수 지정----------
 	IF TALENT:280 > 0
 		PRINTFORM 素質,%TALENTNAME:280%,{TALENT:280},
 	ELSE
@@ -565,7 +565,7 @@ ELSE
 			LOCAL ++
 	NEXT
 	IF LOCAL > 0
-		PRINTL ;-------体型乱数指定----------
+		PRINTL ;-------체형 난수 지정----------
 		FOR COUNT, 280, 289
 			IF TALENT:COUNT != 0
 				PRINTFORM 素質,%TALENTNAME:COUNT%,{TALENT:COUNT},

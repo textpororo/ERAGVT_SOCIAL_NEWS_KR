@@ -1,40 +1,40 @@
 ﻿;**********************************************************
-;自慰関連の処理
+;자위 관련 처리
 
-;夜間自慰
+;야간 자위
 @SELF_NIGHT
 VARSET LOCAL
 SIF TIME != 1
 	RETURN
-;초심はいずれかの감각が3以上でないと自慰しない
+;초심이 있을 경우 어느 한 쪽의 감각이 3 이상이어야 자위한다
 SIF TALENT:초심 > 0 && ABL:Ｃ감각 < 3 && ABL:Ｖ감각 < 3 && ABL:Ａ감각 < 3 && ABL:Ｂ감각 < 3 && ABL:촉수중독 < 3
 	RETURN
 
 LOCAL:2 = TARGET
 FOR LOCAL, 1, CHARANUM
-	;パーティー外は除外
+	;파티 외에는 제외
 	SIF CFLAG:LOCAL:999 == 0
 		CONTINUE
-	;能動的に動けない場合は除外
+	;능동적으로 움직일 수 없는 경우에는 제외
 	SIF TALENT:LOCAL:번식자루 > 0 || TALENT:LOCAL:사지결손 > 0
 		CONTINUE
 
 	TARGET = LOCAL
 
-	;キャラが生存中でなければ発生しない
+	;캐릭터가 생존하지 않았다면 발생하지 않는다
 	SIF CFLAG:0 != 0
 		CONTINUE
 
-	;처녀でなく、かつ교제상대が居る場合は自慰しにくい
+	;처녀가 아니며, 동시에 교제상대가 있는 경우 자위하기 어렵다
 	SIF TALENT:교제상대 >= 2 && TALENT:교제상대 <= 4 && TALENT:처녀 < 1 && RAND:4 != 0
 		CONTINUE
-	;自慰確率判定値を초기화
+	;자위 확률 판정치를 초기화
 	LOCAL:1 = 0
-	;욕망を見る
+	;욕망을 본다
 	LOCAL:1 += ABL:욕망 * 5
-	;촉수중독を見る
+	;촉수중독을 본다
 	LOCAL:1 += ABL:촉수중독 * 2
-	;자위중독を見る
+	;자위중독을 본다
 	IF ABL:자위중독 >= 5
 		LOCAL:1 += 35
 	ELSEIF ABL:자위중독 == 4
@@ -47,12 +47,14 @@ FOR LOCAL, 1, CHARANUM
 		LOCAL:1 += 15
 	ENDIF
 	IF RAND:100 < LOCAL:1
-		;지문: 夜間自慰
+		;지문:야간 자위
 		SIF LOCAL:3 == 0
 			DRAWLINE
+		CFLAG:242 = 1
 		CALL MESSAGE_SELF_NIGHT
 		CALL SELF_KIND, TARGET, 0
 		CALL _ABLUP,0
+		CFLAG:242 = 0
 		PRINTW 
 		VARSET PALAM
 		LOCAL:3 = 1
@@ -61,11 +63,11 @@ NEXT
 TARGET = LOCAL:2
 
 
-;戦闘後自慰
+;전투 후 자위
 @SELF_BATTLEEND, ARG
 CALL SELF_CHECK, ARG
 IF RESULT == 1
-	;지문: 戦闘後自慰
+	;지문: 전투 후 자위
 	CALL MESSAGE_SELF_BATTLEEND
 	CALL SELF_KIND, ARG, 1
 	CALL _ABLUP,0
@@ -73,14 +75,14 @@ ENDIF
 
 
 ;----------------------------------------------------------
-;自慰をするかのチェック
+;자위 여부 체크
 @SELF_CHECK, ARG
 
 LOCAL = 0
 LOCAL:1 = 0
 LOCAL:2 = 0
 
-;욕정の値を基本にする
+;욕정의 값을 기본으로 한다
 IF PALAM:ARG:욕정 == 0
 	LOCAL = 0
 ELSEIF PALAM:ARG:욕정 < 100
@@ -109,7 +111,7 @@ ELSE
 	LOCAL = 30
 ENDIF
 
-;補正
+;보정
 ;욕망
 IF ABL:ARG:욕망 == 0
 	TIMES LOCAL, 0.25
@@ -157,7 +159,7 @@ ENDIF
 SIF TALENT:ARG:음란 == 1
 	TIMES LOCAL, 2.00
 
-;ランダム性付与
+;랜덤성 부여
 LOCAL:1 = RAND:100
 IF LOCAL:1 < 20
 	TIMES LOCAL, 0.80
@@ -171,24 +173,24 @@ ELSE
 	TIMES LOCAL, 1.20
 ENDIF
 
-;一定値以上で自慰をする
+;일정치 이상으로 자위를 한다
 IF LOCAL >= 15
 	LOCAL:2 = 1
 ENDIF
 RETURN LOCAL:2
 
 ;----------------------------------------------------------
-;自慰の種類を決める
+;자위의 종류를 결정한다
 @SELF_KIND, ARG, ARG:1
-#DIM Ｖ自慰可
-#DIM Ａ自慰可
+#DIM Ｖ자위가능
+#DIM Ａ자위가능
 
 LOCAL:0 = 0
 
-;絶頂回数一度目のリセット
+;절정 회수 첫 번째 리셋
 VARSET NOWEX
 
-;淫○系の素質があればそれを優先
+;음○계의 소질이 있으면 그것을 우선
 IF TALENT:ARG:음호 > 0 && RAND:3 == 0 && ISFEMALE(ARG)
 	CALL SELF_V, ARG, ARG:1
 ELSEIF TALENT:ARG:음고 > 0 && RAND:3 == 0
@@ -199,23 +201,23 @@ ELSEIF TALENT:ARG:음핵 > 0 && RAND:3 == 0
 	CALL SELF_N, ARG, ARG:1
 ENDIF
 
-;追加で自慰が発生した場合に備えて二度目のリセット
+;추가로 자위가 발생했을 경우에 대비해 2번째 리셋
 VARSET NOWEX
 
-;Ｖ감각は1、Ａ감각は2以上なら対応自慰が出来る
+;Ｖ감각은 1, Ａ감각은 2 이상이라면 대응 자위가 가능하다
 SIF ABL:ARG:Ｖ감각 >= 1
-	Ｖ自慰可 = 1
+	Ｖ자위가능 = 1
 SIF ABL:ARG:Ａ감각 > 1
-	Ａ自慰可 = 1
+	Ａ자위가능 = 1
 
-IF Ｖ自慰可 == 0 && Ａ自慰可 == 0
+IF Ｖ자위가능 == 0 && Ａ자위가능 == 0
 	LOCAL:0 = RAND:100
 	IF LOCAL:0 < 50
 		CALL SELF_N, ARG, ARG:1
 	ELSE
 		CALL SELF_B, ARG, ARG:1
 	ENDIF
-ELSEIF Ｖ自慰可 == 1
+ELSEIF Ｖ자위가능 == 1
 	LOCAL:0 = RAND:99
 	IF LOCAL:0 < 33
 		CALL SELF_N, ARG, ARG:1
@@ -224,7 +226,7 @@ ELSEIF Ｖ自慰可 == 1
 	ELSE
 		CALL SELF_B, ARG, ARG:1
 	ENDIF
-ELSEIF Ａ自慰可 == 1
+ELSEIF Ａ자위가능 == 1
 	LOCAL:0 = RAND:99
 	IF LOCAL:0 < 33
 		CALL SELF_N, ARG, ARG:1
@@ -233,7 +235,7 @@ ELSEIF Ａ自慰可 == 1
 	ELSE
 		CALL SELF_A, ARG, ARG:1
 	ENDIF
-ELSEIF Ｖ自慰可 == 1 && Ａ自慰可 == 1
+ELSEIF Ｖ자위가능 == 1 && Ａ자위가능 == 1
 	LOCAL:0 = RAND:100
 	IF LOCAL:0 < 25
 		CALL SELF_N, ARG, ARG:1
@@ -247,7 +249,7 @@ ELSEIF Ｖ自慰可 == 1 && Ａ自慰可 == 1
 ENDIF
 
 ;----------------------------------------------------------
-;普通の自慰
+;보통 자위
 @SELF_N, ARG, ARG:1
 
 
@@ -288,7 +290,7 @@ ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
-;처녀でなければVも使う
+;처녀가 아니라면 V도 사용한다
 IF TALENT:ARG:처녀 < 1 && ISFEMALE(ARG)
 	EXP:ARG:Ｖ경험 += 1
 	IF ABL:ARG:Ｖ감각 == 0
@@ -306,7 +308,7 @@ IF TALENT:ARG:처녀 < 1 && ISFEMALE(ARG)
 	ENDIF
 ENDIF
 
-;기교の値に応じて快感度のボーナス
+;기교의 값에 응해 쾌감도의 보너스
 IF ABL:ARG:기교 == 0
 ELSEIF ABL:ARG:기교 == 1
 ELSEIF ABL:ARG:기교 == 2
@@ -332,11 +334,11 @@ CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
 
 
 
-;지문: 普通の自慰
+;지문: 보통 자위
 CALL MESSAGE_SELF_N
 
-;ARG:1 == 1で戦闘中の自慰
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 자위를 봤다
+;ARG:1 == 1 이라면 전투 중의 자위
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 보통 자위를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
 	CALL MESSAGE_OTHER_SELF_N
 
@@ -370,7 +372,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:9 = 2000
 ENDIF
 
-;자위중독があると욕정にボーナス
+;자위중독이 있으면 욕정에 보너스
 IF ABL:ARG:자위중독 == 1
 	LOCAL:7 = 1000
 ELSEIF ABL:ARG:자위중독 == 2
@@ -384,7 +386,7 @@ ELSEIF ABL:ARG:자위중독 >= 5
 ENDIF
 
 ;습득
-;자위중독に応じて上昇
+;자위중독에 응해 상승
 IF ABL:ARG:자위중독 == 0
 	LOCAL:6 = 200
 ELSEIF ABL:ARG:자위중독 == 1
@@ -406,7 +408,7 @@ LOCAL:12 = 150
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 
 ;----------------------------------------------------------
-;胸自慰
+;가슴 자위
 @SELF_B, ARG, ARG:1
 
 ;BASE값의 명시적 초기화
@@ -432,7 +434,7 @@ ELSEIF ABL:ARG:Ｂ감각 >= 5
 	LOCAL:3 = 10000
 ENDIF
 
-;기교の値に応じて快感度のボーナス
+;기교의 값에 응해 쾌감도의 보너스
 IF ABL:ARG:기교 == 0
 ELSEIF ABL:ARG:기교 == 1
 ELSEIF ABL:ARG:기교 == 2
@@ -450,10 +452,10 @@ CALL PALAM_VABCestimate(LOCAL,3,-1)
 
 
 
-;지문: 胸自慰
+;지문: 가슴 자위
 CALL MESSAGE_SELF_B
 
-;ARG:1 == 1で戦闘中の自慰
+;ARG:1 == 1 이라면 전투 중의 자위
 ;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 가슴 자위를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
 	CALL MESSAGE_OTHER_SELF_B
@@ -489,7 +491,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:9 = 4000
 ENDIF
 
-;자위중독があると욕정にボーナス
+;자위중독이 있으면 욕정에 보너스
 IF ABL:ARG:자위중독 == 1
 	LOCAL:7 = 1000
 ELSEIF ABL:ARG:자위중독 == 2
@@ -503,7 +505,7 @@ ELSEIF ABL:ARG:자위중독 >= 5
 ENDIF
 
 ;습득
-;자위중독に応じて上昇
+;자위중독에 응해 상승
 IF ABL:ARG:자위중독 == 0
 	LOCAL:6 = 200
 ELSEIF ABL:ARG:자위중독 == 1
@@ -525,7 +527,7 @@ LOCAL:12 = 100
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 
 ;----------------------------------------------------------
-;アナニー
+;애널 자위
 @SELF_A, ARG, ARG:1
 
 
@@ -548,7 +550,7 @@ ELSEIF ABL:ARG:Ａ감각 >= 5
 	LOCAL:2 = 20000
 ENDIF
 
-;기교の値に応じて快感度のボーナス
+;기교의 값에 응해 쾌감도의 보너스
 IF ABL:ARG:기교 == 0
 ELSEIF ABL:ARG:기교 == 1
 ELSEIF ABL:ARG:기교 == 2
@@ -566,10 +568,10 @@ CALL PALAM_VABCestimate(LOCAL,2,-1)
 
 
 
-;지문: アナニー
+;지문: 애널 자위
 CALL MESSAGE_SELF_A
 
-;ARG:1 == 1で戦闘中の自慰
+;ARG:1 == 1 이라면 전투 중의 자위
 ;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 애널 자위를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
 	CALL MESSAGE_OTHER_SELF_A
@@ -605,7 +607,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:9 = 4000
 ENDIF
 
-;자위중독があると욕정にボーナス
+;자위중독이 있으면 욕정에 보너스
 IF ABL:ARG:자위중독 == 1
 	LOCAL:7 = 1000
 ELSEIF ABL:ARG:자위중독 == 2
@@ -619,7 +621,7 @@ ELSEIF ABL:ARG:자위중독 >= 5
 ENDIF
 
 ;습득
-;자위중독に応じて上昇
+;자위중독에 응해 상승
 IF ABL:ARG:자위중독 == 0
 	LOCAL:6 = 200
 ELSEIF ABL:ARG:자위중독 == 1
@@ -641,7 +643,7 @@ LOCAL:12 = 150
 CALL PALAM_CAL, LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, LOCAL:8, LOCAL:9, LOCAL:10, LOCAL:11, LOCAL:12
 
 ;----------------------------------------------------------
-;膣オナ
+;질 자위
 @SELF_V, ARG, ARG:1
 
 
@@ -652,7 +654,7 @@ REND
 
 ;BASE
 EXP:ARG:자위경험 += 1
-;쾌Ｖ	처녀だと減少、経験増加なし
+;쾌Ｖ	처녀라면 감소, 경험 증가 없음
 IF TALENT:ARG:처녀 >= 1
 	IF ABL:ARG:Ｖ감각 == 0
 		LOCAL:1 = 100
@@ -667,7 +669,7 @@ IF TALENT:ARG:처녀 >= 1
 	ELSEIF ABL:ARG:Ｖ감각 >= 5
 		LOCAL:1 = 10000
 	ENDIF
-;二穴の場合ちょっと下げる
+;양 구멍일 경우 조금 내린다
 ELSEIF TALENT:ARG:음고 > 0
 	EXP:ARG:Ｖ경험 += 1
 	IF ABL:ARG:Ｖ감각 == 0
@@ -700,7 +702,7 @@ ELSE
 	ENDIF
 ENDIF
 
-;음고の場合、Ａも使い二穴オナに
+;음고일 경우, Ａ도 사용해서 양구멍 자위로
 IF TALENT:ARG:음고 > 0
 	EXP:ARG:Ａ경험 += 1
 	IF ABL:ARG:Ａ감각 == 2
@@ -714,7 +716,7 @@ IF TALENT:ARG:음고 > 0
 	ENDIF
 ENDIF
 
-;기교の値に応じて快感度のボーナス
+;기교의 값에 응해 쾌감도의 보너스
 IF ABL:ARG:기교 == 0
 ELSEIF ABL:ARG:기교 == 1
 ELSEIF ABL:ARG:기교 == 2
@@ -736,11 +738,11 @@ CALL PALAM_VABCestimate(LOCAL,1,2,-1)
 
 
 
-;지문: 膣オナ
+;지문: 질 자위
 CALL MESSAGE_SELF_V
 
-;ARG:1 == 1で戦闘中の自慰
-;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 膣オナを見た
+;ARG:1 == 1 이라면 전투 중의 자위
+;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 질 자위를 봤다
 SIF ENEMY_TYPE_CHECK_F("AKUOTI") == 1 && ARG:1 == 1
 	CALL MESSAGE_OTHER_SELF_V
 	
@@ -775,7 +777,7 @@ ELSEIF ABL:ARG:노출벽 >= 5
 	LOCAL:9 = 2000
 ENDIF
 
-;자위중독があると욕정にボーナス
+;자위중독이 있으면 욕정에 보너스
 IF ABL:ARG:자위중독 == 1
 	LOCAL:7 = 1000
 ELSEIF ABL:ARG:자위중독 == 2
@@ -789,7 +791,7 @@ ELSEIF ABL:ARG:자위중독 >= 5
 ENDIF
 
 ;습득
-;자위중독に応じて上昇
+;자위중독에 응해 상승
 IF ABL:ARG:자위중독 == 0
 	LOCAL:6 = 200
 ELSEIF ABL:ARG:자위중독 == 1
