@@ -62,7 +62,7 @@ SETCOLOR 92,169,255
 ;캐릭터 개별의 오프닝
 ;--------------------------------------------------
 @KOJO_111_FIRST
-IF CFLAG:910 > 0 || CFLAG:904 != 0
+IF CFLAG:910 > 0 || CFLAG:904 > 0
 	FONTBOLD
 	PRINTDL ※다회차 돌입 이전에※
 	FONTREGULAR
@@ -3668,6 +3668,41 @@ SELECTCASE RAND:3
 		PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 수세에 몰린 것이 마음에 들지 않는 듯하다
 	CASE 2
 		PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 촉수의 맹공에서 몸을 지키고 있다
+ENDSELECT
+;반격
+;--------------------------------------------------
+@KOJO_111_BATTLE_CHARA_HANGEKI
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「어디 한번 와 보시지!」
+	CASE 1
+		PRINTFORML 「셋업--!」
+		PRINTFORMDL 격렬하게 움직이는 %PRINT_TRANSCALLNAME(TARGET)%의 몸 주변에 서서히 푸른 빛이 감돌기 시작했다
+	CASE 2
+		PRINTFORML 「……온다!」
+		PRINTFORMDL 불길한 예감이 느껴진 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 신속히 방어 태세를 갖췄다
+	CASE 3
+		PRINTFORML 「흥, 뻔한 공격은 더 안 통해!」
+		PRINTFORMDL 다 알고 있다는 듯이 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 온몸에 기운을 둘러쌌다
+	CASE 4
+		PRINTFORML 「형태 변환 완료…… 차지 업!」
+ENDSELECT
+;강화 반격
+;--------------------------------------------------
+@KOJO_111_BATTLE_CHARA_HANGEKI_EX
+SELECTCASE RAND:5
+	CASE 0
+		PRINTFORML 「내 몸과 마음은 명경지수……」
+	CASE 1
+		PRINTFORML 「후우우……」
+		PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 숨을 정돈하며 서서히 힘을 모았다
+	CASE 2
+		PRINTFORML 「자, 와라!」
+	CASE 3
+		PRINTFORML 「이 다음으로 끝내주겠어」
+	CASE 4
+		PRINTFORML 「……흥, 안 오는 거냐?」
+		PRINTFORMDL %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 상대를 향해 중지를 치켜 올리며 노골적으로 도발하고 있다
 ENDSELECT
 ;거리를 취한다
 ;--------------------------------------------------
