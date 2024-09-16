@@ -217,6 +217,9 @@ ELSEIF ABL:ARG:Ｖ감각 >= 5
 	LOCAL:1 = 20000
 ENDIF
 
+;지문: セックス
+CALL MESSAGE_SEX_V, LOCAL:100
+
 IF TALENT:처녀 == 1 && CHECK_HOLYVIRGIN_F()==0
 	TALENT:처녀 = -1
 	CFLAG:206 = 5
@@ -253,10 +256,6 @@ ENDIF
 
 ;메인 부위 절정 예정의 예측
 CALL PALAM_VABCestimate(LOCAL,0,1,3,-1)
-
-
-;지문: セックス
-CALL MESSAGE_SEX_V, LOCAL:100
 
 
 ;굴복　노출벽이 높아질 수록 더 많아진다
