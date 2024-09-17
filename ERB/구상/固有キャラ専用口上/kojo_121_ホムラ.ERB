@@ -667,9 +667,9 @@ ENDIF
 ;--------------------------------------------------
 @KOJO_121_SEX_COM3
 ;膣に挿入され、犯されます。
-;TCVAR:2 == 자세：Ｖ방어のときはＶに挿入されません。
+;TCVARn:2 == 자세：Ｖ방어のときはＶに挿入されません。
 ;Ｖ감각が0のときは苦痛が強く、Ｖ감각が4以上なら強烈な快感を感じます。
-IF TCVAR:2 == 자세：Ｖ방어
+IF TCVARn:2 == 자세：Ｖ방어
 ELSEIF ABL:Ｖ감각 == 0
 ELSEIF ABL:Ｖ감각 >= 4
 ENDIF
@@ -738,7 +738,7 @@ IF FLAG:110 && (TALENT:(FLAG:111):기생 == 0 || CONFIG_CHECK_MANIAC_F(13) > 0)
 	;悪堕ちキャラが相手の場合
 ELSEIF LOCALS:0 == "Ｈ촉수"
 	;Ｈ촉수が相手の場合
-ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVAR:2 == 자세：봉사한다
+ELSEIF (MESSAGE_BRANCH_F(TARGET) & 타락) || TCVARn:2 == 자세：봉사한다
 ELSE
 ENDIF
 
@@ -756,7 +756,7 @@ ENDIF
 ;COM13：絶頂禁止
 ;--------------------------------------------------
 @KOJO_121_SEX_COM13
-IF TCVAR:40
+IF TCVARn:40
 	;絶頂禁止を解除した場合
 ELSE
 	;絶頂禁止した場合

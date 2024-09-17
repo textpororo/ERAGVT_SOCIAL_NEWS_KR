@@ -130,7 +130,7 @@ IF RESULT == 0
 		;[반격] 버스트 공격의 경우 축적 피해량의 1/5의 수치로 가산된다
 		;축적 피해량의 1/5 만큼의 수치가 보존된다
 		;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공할 시, 버스트 공격 효과가 적용되지 않는다
-		IF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVAR:0) == "반격"
+		IF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "반격"
 			TCVARn:205 /= 5
 			LOCAL:1 += TCVARn:205
 		ENDIF

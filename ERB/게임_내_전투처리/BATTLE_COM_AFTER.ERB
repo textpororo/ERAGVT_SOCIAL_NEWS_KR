@@ -829,8 +829,8 @@ IF TFLAG:1 == 1
 ELSE
 	CALL ENEMY_ACTION
 	;반격 플래그를 지운다
-	SIF TCVAR:2 == 자세：반격 || TCVAR:2 == 자세：강화반격 || TCVAR:2 == 자세：반격성공
-		TCVAR:2 = 자세：통상
+	SIF TCVARn:2 == 자세：반격 || TCVARn:2 == 자세：강화반격 || TCVARn:2 == 자세：반격성공
+		TCVARn:2 = 자세：통상
 ENDIF
 
 ;강구속or통째로 삼키기 준비 중에는 패배 확정 후에도 계속한다
