@@ -3884,7 +3884,6 @@ FONTREGULAR
 ;전투용, 축적 피해량 표시
 ;여기에서 TCVARn:206(축적 피해량 한도치)의 값을 정한다
 @STATUS_PRINT_CHARGE
-
 ;소모도(체력+기력+{피로도*150})에 따라 한도치(%)가 변동된다
 ;소모도 100%~75%: 최대 체력의 120% || 소모도 74%~40%: 최대 체력의 100% || 소모도 39%~: 최대 체력의 80%
 SELECTCASE PERCENT_CAL_F(BASE:체력 + BASE:기력 + (CFLAG:99 * 150), MAXBASE:체력 + MAXBASE:기력)

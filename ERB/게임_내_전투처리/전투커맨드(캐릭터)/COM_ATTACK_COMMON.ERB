@@ -68,6 +68,7 @@ ELSEIF TCVARn:0 == 3
 	CALL MESSAGE_BATTLE_CHARA_ATTACK_RANGE_LONG
 ENDIF
 
+
 $ATTACK_AGAIN
 ;명중 판정
 IF TCVARn:0 == 1
@@ -127,12 +128,12 @@ IF RESULT == 0
 			ENDIF
 		ENDIF
 		
-		;[반격] 버스트 공격의 경우 축적 피해량의 1/5의 수치로 가산된다
-		;축적 피해량의 1/5 만큼의 수치가 보존된다
-		;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공할 시, 버스트 공격 효과가 적용되지 않는다
+		;[반격] 버스트 공격이 빗맞을 경우 축적된 피해량의 1/4만 가산하며, 나머지는 보존된다
+		;단, 버스트 공격이 활성화된 상태로 강화 반격에 성공해도 버스트 공격 효과가 적용되지 않는다
 		IF GETBIT(TCVARn:217, 0) && TCVARn:2 != 자세：반격성공 && FSTYLE_NAME_F(TARGET, TCVARn:0) == "반격"
-			TCVARn:205 /= 5
-			LOCAL:1 += TCVARn:205
+			LOCAL:99 = TCVARn:205 / 4
+			LOCAL:1 += LOCAL:99
+			TCVARn:205 = TCVARn:205 - LOCAL:99
 		ENDIF
 		
 		FLAG:13 -= LOCAL:1
@@ -409,12 +410,14 @@ IF GETBIT(TCVARn:217, 0)
 			TFLAG:99 += 2
 		CASE "중격"
 			TFLAG:99 += 3
-		;버스트 공격과 강화 반격은 함께 사용할 수 없으므로 무효
 		CASE "반격"
+			;버스트 공격과 강화 반격은 함께 사용할 수 없으므로 무효
 			IF TCVARn:2 == 자세：반격성공
 			ELSE
 				TFLAG:99 += 3
-				IF TCVARn:205 > TCVARn:206
+
+				;버스트 공격이 빗맞을 경우 추가 패널티를 받지 않는다
+				IF TCVARn:205 > TCVARn:206 && HIT_FLAG != -1
 					;지문: 에너지 과잉 축적
 					CALL MESSAGE_BATTLE_TENTACLE_ATTACK_OVERCHARGE
 					;지문: 세뇌/흑화 캐릭터가 조작 캐릭터의 에너지 과잉 축적을 봤다
@@ -424,7 +427,6 @@ IF GETBIT(TCVARn:217, 0)
 					;축적 피해량이 한도치의 1%를 초과할 때마다 최대 체력의 1%만큼 캐릭터가 피해를 입는다
 					;상한은 70%
 					CALL PERCENT_CAL(TCVARn:205,TCVARn:206)
-					RESULT -= 100
 					SIF RESULT > 70
 						RESULT = 70
 
@@ -432,6 +434,7 @@ IF GETBIT(TCVARn:217, 0)
 
 					FONTBOLD
 					PRINTFORML {LOCAL:2}의 피해를 입었다！
+					FONTREGULAR
 					SIF BASE:체력 - (LOCAL:2) <= 0
 						LOCAL:2 = BASE:체력
 					BASE:체력 -= LOCAL:2
@@ -444,7 +447,7 @@ IF GETBIT(TCVARn:217, 0)
 					;	LOCAL:2 = BASE:기력
 					;BASE:기력 -= LOCAL:2
 
-					;과잉 축적 5%마다 피로도가 3씩 상승한다
+					;과잉 축적 5%마다 축적되는 피로도가 3씩 상승한다
 					FOR RESULT, RESULT, 0, -5
 						TFLAG:99 += 3
 					NEXT
