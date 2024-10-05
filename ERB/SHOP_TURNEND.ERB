@@ -673,7 +673,10 @@ FOR CCOUNT, 0, CHARANUM
 
 		;이성 회복, 개율(概率)5%
 		IF TALENT:CCOUNT:번식자루 == 1
-			IF RAND(25-CHARANUM_ACTRESS()*4) < 1
+			LOCAL = 25 - CHARANUM_ACTRESS() * 4
+			SIF LOCAL < 0
+				LOCAL = 1
+			IF RAND(LOCAL) < 1
 				PRINTL 이성 회복
 				PRINTFORML %CHARANUM_ACTRESS() > 0 ? "동료의 헌신적인 치료에 의해" # "그 누구도 이유는 모르지만,"% 유대와 사랑의 힘이 바램을 이루어준 걸까,
 				PRINTFORML 폐인화되었던 %CALLNAME:CCOUNT%의 이성이 기적적으로 회복되었다!
