@@ -51,6 +51,7 @@
 ;7	  ┣눈동자 색 변경을 허가한다
 ;8	  ┗피부색 변경을 허가한다
 ;9	악질 시민에 의한 유폐 이벤트를 허가한다
+;10	흑화 캐릭터가 패배해도 흑화 상태 회복 불가
 
 ;기타 옵션	FLAG:805	판정식：CONFIG_CHECK_OTHER_F(num)
 ;0	딸 육성 (ON 이라면 촉수에게 잉태되어도 딸을 임신할 수도 있게 된다)
@@ -329,6 +330,10 @@ ELSEIF PAGE == 1
 	SIF CONFIG_CHECK_PRISON_F(10) == 0
 		SETCOLOR 105,105,105
 	PRINTFORML 　[70] 악질 시민에 의한 유폐
+	SETCOLOR 120,255,255
+	SIF CONFIG_CHECK_PRISON_F(11) == 0
+		SETCOLOR 105,105,105
+	PRINTFORML 　[71] 흑화 캐릭터가 패배해도 흑화 상태 회복 불가
 	RESETCOLOR
 	PRINTL 
 
@@ -339,27 +344,27 @@ ELSEIF PAGE == 1
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(0) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[71] 촉수의 정자에서도 딸을 임신할 가능성이 있다
+	PRINTFORML 　[72] 촉수의 정자에서도 딸을 임신할 가능성이 있다
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(1) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[72] 항복 커맨드를 사용한다
+	PRINTFORML 　[73] 항복 커맨드를 사용한다
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(2) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[73]┏임신・출산 기능을 봉인한다（택1）
+	PRINTFORML 　[74]┏임신・출산 기능을 봉인한다（택1）
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(3) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[74]┗피임을 위한 사후피임약을 사용한다（택1）
+	PRINTFORML 　[75]┗피임을 위한 사후피임약을 사용한다（택1）
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(4) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[75] Ａ고문 공격 도중 Ｖ삽입 금지
+	PRINTFORML 　[76] Ａ고문 공격 도중 Ｖ삽입 금지
 	RESETCOLOR
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(5) == 0
@@ -367,7 +372,7 @@ ELSEIF PAGE == 1
 		;비이벤트에 대한 필터 및 성공격에 따른 처녀 상실 억제
 		;「어렵게」라고 할까 거의 완전히 억제된다
 		;　예외로 Ｖ촉수 유폐 중의 Ｖ고문, 이름부터 Ｖ촉수니까 의도적인 예외라고 생각된다
-	PRINTFORML 　[76] 캐릭터의 성처녀 유지（기본적으로 처녀를 상실하지 않음）
+	PRINTFORML 　[77] 캐릭터의 성처녀 유지（기본적으로 처녀를 상실하지 않음）
 	RESETCOLOR
 
 	SETCOLOR 120,255,255
@@ -376,19 +381,19 @@ ELSEIF PAGE == 1
 		;성 개발 시에「●●●당하는 게 좋아」와 같은 표기가 나온다
 		;뒷 프로필이라는 말이 외설적이기 때문에 굳이 많은 말은 하지 않는 이 표기로 좋다고 생각한다
 		;※캐릭터 프로필이 설정되어 있지 않으면 기능하지 않는다
-	PRINTFORML 　[77] 프로필 설정 시에 뒷 프로필도 사용한다
+	PRINTFORML 　[78] 프로필 설정 시에 뒷 프로필도 사용한다
 	RESETCOLOR
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(7) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[78] FLASH NEWS에 바이럴 미디어(유해 블로그) 추가
+	PRINTFORML 　[79] FLASH NEWS에 바이럴 미디어(유해 블로그) 추가
 	RESETCOLOR
 
 	SETCOLOR 120,255,255
 	SIF CONFIG_CHECK_OTHER_F(8) == 0
 		SETCOLOR 105,105,105
-	PRINTFORML 　[79] 강제 의상 변경 이벤트의 의상 변경 무효
+	PRINTFORML 　[80] 강제 의상 변경 이벤트의 의상 변경 무효
 	RESETCOLOR
 
 	;
@@ -477,11 +482,11 @@ ELSEIF RESULT >= 10 && RESULT <= 17
 ;이벤트 관련
 ELSEIF RESULT >= 30 && RESULT <= 34
 	INVERTBIT FLAG:802, RESULT - 30
-	SIF CONFIG_CHECK_EVENT_F(3) == 0 || CONFIG_CHECK_EVENT_F(4) == 0
+	SIF CONFIG_CHECK_EVENT_F(3) == 0 ;|| CONFIG_CHECK_EVENT_F(4) == 0
 		CLEARBIT FLAG:802, 5
 	GOTO MASTER_LOOP
 ELSEIF RESULT == 35
-	SIF CONFIG_CHECK_EVENT_F(3) == 1 && CONFIG_CHECK_EVENT_F(4) == 1
+	SIF CONFIG_CHECK_EVENT_F(3) == 1 ;&& CONFIG_CHECK_EVENT_F(4) == 1
 		INVERTBIT FLAG:802, RESULT - 30
 	GOTO MASTER_LOOP
 ELSEIF RESULT == 36
@@ -492,17 +497,17 @@ ELSEIF RESULT >= 50 && RESULT <= 58
 	INVERTBIT FLAG:803, RESULT - 50
 	GOTO MASTER_LOOP
 ;유폐・흑화 관련
-ELSEIF RESULT >= 60 && RESULT <= 70
+ELSEIF RESULT >= 60 && RESULT <= 71
 	INVERTBIT FLAG:804, RESULT - 60
 	GOTO MASTER_LOOP
 ;기타 설정　※상시 피임／사후피임약은 택일
-ELSEIF RESULT == 73 || RESULT == 74
+ELSEIF RESULT == 74 || RESULT == 75
 	INVERTBIT FLAG:805, RESULT-71
 	CLEARBIT FLAG:805, 2+(74-RESULT)
 	GOTO MASTER_LOOP
 ;기타 설정
-ELSEIF RESULT >= 71 && RESULT <=79
-	INVERTBIT FLAG:805, RESULT - 71
+ELSEIF RESULT >= 72 && RESULT <= 80
+	INVERTBIT FLAG:805, RESULT - 72
 	GOTO MASTER_LOOP
 ELSE
 	PRINTL 

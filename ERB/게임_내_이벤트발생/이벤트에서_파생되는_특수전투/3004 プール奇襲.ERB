@@ -1,0 +1,292 @@
+﻿
+@BATTLE_EVENT_CLOTH_STATUS_3004(mode,parts)
+;(任意)イベント戦闘で使用する専用装備のデータ
+;　　　・既存の装備では表現できないイベント
+;　　　・正式な装備として実装しにくい服装(いかにもペナルティ戦闘っぽい衣装とか)
+;　　　で用いる。キーワードについては衣装フォルダのデータベースを参照
+	#dims mode,1
+	#dims parts,1
+	RESULTS'=""
+	;設定するのはイベント内で設定する部位だけでいい
+	;オプションは現在フレーバーテキスト
+	;(ステータス直接設定orイベント側状態異常orシチュエーションタグorターン終了時イベントで調整する方が早い)
+	IF parts=="OUTER"
+	;	IF mode=="info"
+	;		CSTR:TARGET:82'="촉수 컬트 교단의 의장단"
+	;		SAVESTR:0'="SLOT-1,HP15,SEITAISEI95,"
+	;	ELSEIF mode=="option"
+	;		RESULTS'="[과잉 노출]"
+	;	ENDIF
+	ELSEIF parts=="OUTER_TRANS"
+	;	IF mode=="info"
+	;		CSTR:TARGET:82'="촉수 컬트 교단의 의장단"
+	;		SAVESTR:0'="SLOT-1,HP15,SEITAISEI95,"
+	;	ELSEIF mode=="option"
+	;		RESULTS'="[과잉 노출]"
+	;	ENDIF
+	ELSEIF parts=="INNER"
+		SELECTCASE CFLAG:TARGET:270
+		CASE 0
+			IF mode=="info"
+				CSTR:TARGET:82'="끈 비키니"
+				SAVESTR:0'="SLOT-1,HP20,SEITAISEI45,"
+			ELSEIF mode=="option"
+				RESULTS'="[과잉 노출][숨길 수 없는 과실]"
+			ENDIF
+		CASE 1
+			IF mode=="info"
+				CSTR:TARGET:82'="로라이즈 비키니"
+				SAVESTR:0'="SLOT-1,HP25,SEITAISEI45,"
+			ELSEIF mode=="option"
+				RESULTS'="[과잉 노출][비쳐보이는 옷감]"
+			ENDIF
+		CASE 2
+			IF mode=="info"
+				CSTR:TARGET:82'="튜브톱"
+				SAVESTR:0'="SLOT-1,HP25,SEITAISEI45,"
+			ELSEIF mode=="option"
+				RESULTS'="[과잉 노출][흘러내릴 듯한 헝겊]"
+			ENDIF
+		CASE 3
+			IF mode=="info"
+				CSTR:TARGET:82'="하이레그 수영복"
+				SAVESTR:0'="SLOT-1,HP25,SEITAISEI45,"
+			ELSEIF mode=="option"
+				RESULTS'="[과잉 노출][훤히 보이는 엉덩이 살]"
+			ENDIF
+		CASE 4
+			IF mode=="info"
+				CSTR:TARGET:82'="소녀용 스쿨미즈"
+				SAVESTR:0'="SLOT-1,HP35,SEITAISEI55,"
+			ELSEIF mode=="option"
+				;RESULTS'="[과잉 노출]"
+			ENDIF
+		CASE 5
+			IF mode=="info"
+				CSTR:TARGET:82'="경영 수영복"
+				SAVESTR:0'="SLOT-1,HP35,SEITAISEI55,"
+			ELSEIF mode=="option"
+				;RESULTS'="[과잉 노출]"
+			ENDIF
+		CASEELSE
+			IF mode=="info"
+				CSTR:TARGET:82'="수영복"
+				SAVESTR:0'="SLOT-1,HP35,SEITAISEI55,"
+			ELSEIF mode=="option"
+				;RESULTS'="[과잉 노출]"
+			ENDIF
+		ENDSELECT
+	ENDIF
+
+
+
+
+;---------------------------------------------------------------------
+;ボス襲撃イベント
+@EVENT_BATTLE_EXEC_3004
+
+PRINT そろそろ帰ろうと思いつつナイトプールの中央で浮き輪に揺られる
+
+SIF CFLAG:100 == 106
+	CFLAG:100 = 103
+IF TALENT:주관시점 > 0
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとする。
+ELSE
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとした。
+ENDIF
+
+PRINTFORML 激しい揺れと共に施設内の照明が落ち、怯えた声色の囁き声が飛び交う。
+PRINTL 
+;右クリックに備えてフォースウェイト
+FORCEWAIT
+PRINTFORML 何が起きているのか、まず周囲の状況を把握しなければ…！
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%咄嗟に身構えた、その瞬間！
+PRINTFORML 金属のへしゃげるような音と共に天井が歪み――
+PRINTW 
+PRINTFORML ――ベ　タ　リ
+PRINTFORML という音と共に現れた触手に、%PRINT_CALLNAME(TARGET)%の顔から血の気が引いていく…
+PRINTFORML 見間違えるはずもない――"人類の敵"、触手生物。
+PRINTFORML 巨体が大穴を広げながら、天井を突き破り姿を現そうとしている！
+PRINTW 
+;未変身でプール通いしている無防備な子には追加ペナルティ
+IF ISGIRLY() && TALENT:TARGET:변신능력 > 0 && CFLAG:TARGET:1 == 0 
+	PRINTFORML ここは人の目が多すぎる。まさかプールの中で変身するわけにも……
+	PRINTFORML 一瞬の躊躇いから反応が遅れた%PRINT_CALLNAME(TARGET)%。
+ELSE
+	PRINTFORML こんな場所で襲撃……！？
+	PRINTFORML 一虚を突かれ、反応が遅れた%PRINT_CALLNAME(TARGET)%。
+ENDIF
+PRINTFORML 太い触手が見る見るうちに天井から垂れ下がったと思うと、
+PRINTFORML 異臭を放つ粘液がボドリ、ボチャリと零れ始め……
+PRINTW 
+PRINTFORML プール内外に降り注ぎ始める白濁のシャワー。
+PRINTFORML 渦巻く混乱の中で横転するフローター、急激に粘つき始めた水面へ投げ出される女性客。
+PRINTFORML 戸惑う%PRINT_CALLNAME(TARGET)%の眼前にひときわ大きな触手塊が落下すると、
+PRINTFORML 粘液混じりの波にあおられた浮き輪と%조사처리(PRINT_CALLNAME(TARGET),"는")%軽々吹き飛ばされて宙を舞い……
+PRINTW
+
+;アウターを一時的に没収、インナーを「イベント専用装備」に一時設定する
+CALL EVENT_BATTLE_SET_COSTUME(TARGET,(CFLAG:TARGET:1==0 ? 0 # -1),(CFLAG:TARGET:1>0 ? 0 # -1),992,-1)
+	;強制発情
+		CALL STATE_CHANGE_BETOBETO, 100
+		CALL STATE_CHANGE_HAIRAN, 35
+		CALL CLOTH_BATTLE_DAMAGE, 8
+		LOCAL = MAX(BASE:성내성 / 5, 20) + RAND:3
+		BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
+		PRINTFORML 　성내성이 {LOCAL} 감소했다！
+		PRINTL
+
+PRINTFORM 鼻をつく精臭と予想外の襲撃に凍った%PRINT_CALLNAME(TARGET)%の思考を、
+IF ISFEMALE(TARGET)
+	PRINTFORML 粘液プールの底から迫り来る触手の不快な感触が現実に引き戻す。
+	PRINTFORML 触手の狙いはただ一つ、%조사처리(PRINT_CALLNAME(TARGET),"를")%含む女性たち。
+	PRINTFORML そしてこの場で立ち向かえる存在はただ一人…！
+	PRINTW 
+	PRINTFORML ……噎せ返る精臭の中で必死に息を整え、肩まで粘液に漬かりながら臨戦態勢を取る%PRINT_CALLNAME(TARGET)%。
+	PRINTFORML 白濁の臭いに思考を阻害され、自身が纏う「衣装」にまでは考えが及んでいない。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%着ている水着は、間違っても戦闘に適した「衣装」ではない。
+	PRINTFORML 無防備、それどころか触手生物にとって格好の――
+	PRINTW 
+ELSE
+	PRINTFORML 粘液プールの底を這う触手に脚を絡め取られた女性たちの悲鳴が現実に引き戻した。
+	PRINTFORML そうだ、ここには守るべき市民が、狙われた女性たちがいる。ならば成すべき事は一つ…！
+	PRINTW 
+ENDIF
+PRINTL
+SETCOLORBYNAME HOTPINK
+PRINTFORML （水着姿のまま耐久し、触手生物の狙いを市民から逸らしてください！）
+RESETCOLOR
+PRINTW 
+DRAWLINE
+
+	DRAWLINE
+	턴상한=15
+	;近距離スタート
+	TCVARn:0 = 1
+	CALL ADDBATTLESITUATION("선제 없음,지원 무효,시민 없음,강간 없음,변신 불가")
+
+
+
+@EVENT_BATTLE_TURNEND_3004
+
+	;強制発情
+	IF TFLAG:0 % 3 ==0
+		SETCOLORBYNAME Fuchsia
+		FONTBOLD
+		PRINTFORML 天井を這い回る触手から白濁シャワーが降り注ぐ！
+		RESETCOLOR
+		CALL STATE_CHANGE_BETOBETO, 100
+		CALL STATE_CHANGE_HAIRAN, 35
+		CALL CLOTH_BATTLE_DAMAGE, 8
+		LOCAL = MAX(BASE:성내성 / 7, 15) + RAND:3
+		BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
+		PRINTFORML 　성내성이 {LOCAL} 감소했다！
+		PRINTL
+	ENDIF
+
+	;７ターン目以降で拘束されていない場合、通常戦闘へ移行
+	IF TFLAG:0 >= 7 && TCVARn:0 != 0
+		SETCOLORBYNAME RED
+		FONTBOLD
+		IF FLAG:70>0
+			PRINTFORML 逃げ遅れていた利用客の避難が完了したようだ！
+			FLAG:70=0
+		ENDIF
+		;IF FLAG:71>0
+		;	PRINTFORML スタッフに無理矢理引きずられ、残った「客」の「避難」が完了したようだ…
+		;	FLAG:71=0
+		;ENDIF
+		RESETCOLOR
+		FONTREGULAR
+		FORCEWAIT
+	ENDIF
+
+
+@EVENT_BATTLE_MISSION_CHECKER_3004
+	;追加ミッションの達成判定(1で達成、0で失敗)
+	;負けず、凌辱もされていなければ(「一般市民」への被害ゼロとして)ミッション達成
+	IF TFLAG:98 == 2 || (TFLAG:98 == 0 && (TFLAG:21 & 3) || (TFLAG:21 & 4) || (TFLAG:21 & 5) || (TFLAG:21 & 6))
+		RETURN 0
+	;頑張って倒したならまあ細かい事は不問とする
+	ELSE
+		RETURN 1
+	ENDIF
+	RETURN 1
+
+@EVENT_BATTLE_SUCCESS_3004
+	;;倒してしまっても構わんのだ
+	IF TFLAG:98 == 1
+		PRINTFORML %PRINT_CALLNAME(TARGET)%の一撃が触手の急所に叩き込まれる。
+		PRINTFORML 触手の巨体はひときわ不気味にブヨブヨと痙攣し、
+		PRINTFORML 精という精を撒き散らさんばかりに白濁を散らしながら上体が弾け飛び――完全に動きを止めた。
+		PRINTFORML 
+		PRINTFORML 階下から駆け付けた警備スタッフが目にしたのは、
+		PRINTFORML 互いに慰め励まし粘液を拭き取り合う若い女性客たち。
+		PRINTFORML そしてうっかり大型触手を返り討ちにしてしまい説明に困り果てている、
+		PRINTFORML %CSTR:TARGET:82%姿の美しい少女だった……
+		PRINTW 
+		PRINTFORML 　無事に被害を最小限に抑えました！
+	;;時間切れ
+	ELSE
+		PRINTFORML 触手生物は%PRINT_CALLNAME(TARGET)%の激しい抵抗を警戒したのか、
+		PRINTFORML 巨体に見合わぬ速さで元来た穴へと滑り込んでいった。
+		PRINTFORML ……逃げられる！？
+		PRINTFORML 咄嗟に距離を詰め駆け寄る%조사처리(PRINT_CALLNAME(TARGET),"는")%、周囲への警戒が薄れてしまう。
+		PRINTFORML その無防備な頭上へと、天井で蠢動する全ての触手から一斉に精のシャワーが放たれ――
+		PRINTFORML 
+		PRINTFORML 階下から駆け付けた警備スタッフが目にしたのは、
+		PRINTFORML 蕩けた顔で互いに「慰め」あう粘液まみれの若い女性客たち。
+		PRINTFORML そしてプレゼントされた白濁粘塊に溺れかけつつ発情自慰に耽る、
+		PRINTFORML %CSTR:TARGET:82%姿の無様な雌の姿だった……
+		PRINTW 
+		PRINTFORML 　無事に被害を最小限（？）に抑えました！
+	ENDIF
+	;
+	;;ニュース記事に
+	;Sif !FLAG:60
+	;	FLAG:60=110000+FLAG:45
+
+@EVENT_BATTLE_FAILURE_3004
+	;負けてはいないが特定ミッションの追加条件を満たせなかった
+	IF TFLAG:98 != 2
+		;
+	;負けた
+	ELSE
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%力尽きたことでナイトプールは触手の餌場と化した。
+		PRINTFORML 触手生物は意識を失った%조사처리(PRINT_CALLNAME(TARGET),"를")%執拗に粘液プールへと沈め続け、
+		PRINTFORML 漬け込まれ少女の肢体はべたつく精にコーティングされてゆく。
+		PRINTFORML 絶望の悲鳴を上げる他の女性客も、一人また一人と這い回る触手に囚われてゆき……
+		PRINTFORML 
+		PRINTFORML 触手生物は目ぼしい獲物の「加工」を終えたと判断してか、
+		PRINTFORML 白濁化粧を施された女性たちの手足に粘つく触手を絡み付かせる。
+		PRINTFORML 意識を失った%PRINT_CALLNAME(TARGET)%や他の女体を垂れ下がる触手の莢へと詰め込み、
+		PRINTFORML 触手生物はヌチャヌチャ下品な音を立てながら悠々と引き上げていった。
+		PRINTFORML 
+		PRINTFORML 階下から駆け付けた女性スタッフが目にしたのは散乱する汚濁塗れの女性用下着や私物、
+		PRINTFORML そして追加の「おこぼれ」に気付いて歓喜に蠢く小型触手の群れだった……
+		PRINTW 
+		PRINTFORML 　耐久ミッションに失敗しました……
+	ENDIF
+
+	;ニュース記事に
+	Sif !FLAG:60
+		FLAG:60=100000+(TFLAG:98==0 ? 0 # 20000)+FLAG:45
+
+@EVENT_BATTLE_FLASHNEWS_3004(ARG)
+;;ミッション成功
+IF ARG==1
+	RESULTS'=""
+	IF TFLAG:98 == 1
+		RESULTS'="お手柄！　ナイトプール襲撃の巨大触手、居合わせた謎の少女が返り討ち"
+	ELSE
+		RESULTS'="巨大触手がナイトプールを襲撃、女性客らに深刻な粘液被害か"
+	ENDIF
+
+;ミッション失敗
+ELSEIF ARG==0
+	;RESULTS'="巨大触手がナイトプールを襲撃、女性客ら行方不明"
+;ミッション以前に負けて幽閉された(任意、勝敗とミッション成功条件が異なる戦闘限定)
+ELSEIF ARG==-1
+	RESULTS'="巨大触手が室内プール襲撃、女性客ら多数行方不明に"
+ENDIF
+

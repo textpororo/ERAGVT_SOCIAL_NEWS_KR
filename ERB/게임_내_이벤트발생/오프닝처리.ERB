@@ -215,10 +215,41 @@ ELSEIF RESULT == 1
 	PRINTW 
 	DRAWLINE
 	PRINTL 
-	PRINTL 　　그러나, 그런 위협과 남몰래 싸우는 자들이 존재했다.
+	;지역 상으로 봤을 때 SOLO 모드가 절박한 상황
+	IF GAME_OPTION_CHECK_F(OPTION_solo)
+		PRINTL 　　그러나, 그런 위협과 남몰래 싸우는 마지막 희망이 존재했다.
+	ELSE
+		PRINTL 　　그러나, 그런 위협과 남몰래 싸우는 자들이 존재했다.
+	ENDIF
+
+	FOR LOCAL,1,CHARANUM
+		IF GROUPMATCH(CFLAG:LOCAL:0, 상태_흑화,상태_세뇌,상태_유폐,)
+			PRINTL
+			SETCOLORBYNAME PURPLE
+			IF CFLAG:LOCAL:0 == 1
+				PRINTL 　　――그리고, 촉수에게 꺾여 버린 또 다른 희망의 꽃이 다시금 피어오르려 했다.
+			ELSE
+				PRINTL 　　그리고, 한때 모두의 희망이었던 또 다른 위협 또한 눈을 떴다――
+			ENDIF
+			RESETCOLOR
+			BREAK
+		ENDIF
+	NEXT
+
 	FORCEWAIT
 ELSE
 ENDIF
+
+;디폴트 흑화 설정 처리
+FOR LOCAL,1,CHARANUM
+	IF GROUPMATCH(CFLAG:LOCAL:0, 상태_흑화,)
+		PRINTL 
+		DRAWLINE
+		PRINTL 
+		;외관 변경
+		CALL CORRUPT_CHANGE_LOOKS_MAIN, LOCAL
+	ENDIF
+NEXT
 
 ;구상의 초기 설정을 호출하는 등
 FOR LOCAL,0,CHARANUM

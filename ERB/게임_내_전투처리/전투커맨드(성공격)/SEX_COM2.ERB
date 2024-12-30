@@ -49,7 +49,7 @@ SIF TCVARn:2 == 자세：Ｖ방어
 CALL PALAM_VABCestimate(LOCAL,1,-1)
 
 
-IF ENEMY_TYPE_CHECK_F("MOB") == 1
+IF ENEMY_TYPE_CHECK_F("MOB") == 1 || ENEMY_TYPE_CHECK_F("CITIZEN") == 1
 	TRYCALLFORM MESSAGE_MOB_{ARG}_COM2, EX_COM, SH_COM
 ELSE
 	;지문: 세뇌/흑화 캐릭터가 조작 캐릭터에게 Ｖ공격（약）을 했다

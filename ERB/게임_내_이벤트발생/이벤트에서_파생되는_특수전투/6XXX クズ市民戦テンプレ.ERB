@@ -8,29 +8,30 @@
 ;　　　で用いる。キーワードについては衣装フォルダのデータベースを参照
 	#dims mode,1
 	#dims parts,1
+	RESULTS'=""
 	;설정するのはイベント内で설정する部位だけでいい
 	;オプションは現在フレーバーテキスト
 	;(스테이터스直接설정orイベント側상태 이상orシチュエーションタグorターン終了時イベントで調整する方が早い)
 	IF parts=="OUTER"
 	;	IF mode=="info"
-	;		CSTR:TARGET:82'="촉수カルト教団の儀装束"
+	;		CSTR:TARGET:82'="촉수 컬트 교단의 의장단"
 	;		SAVESTR:0'="SLOT-1,HP15,SEITAISEI95,"
 	;	ELSEIF mode=="option"
 	;		RESULTS'="[과잉 노출]"
 	;	ENDIF
-	ELSEIF parts=="OUTRER_TRANS"
+	ELSEIF parts=="OUTER_TRANS"
 	;	IF mode=="info"
-	;		CSTR:TARGET:82'="촉수カルト教団の儀装束"
+	;		CSTR:TARGET:82'="촉수 컬트 교단의 의장단"
 	;		SAVESTR:0'="SLOT-1,HP15,SEITAISEI95,"
 	;	ELSEIF mode=="option"
 	;		RESULTS'="[과잉 노출]"
 	;	ENDIF
 	ELSEIF parts=="INNER"
 		IF mode=="info"
-			CSTR:TARGET:82'="촉수カルト教団のマイクロビキニ"
+			CSTR:TARGET:82'="촉수 컬트 교단의 마이크로 비키니"
 			SAVESTR:0'="SLOT-1,HP25,SEITAISEI45,"
 		ELSEIF mode=="option"
-			RESULTS'="[媚毒ピアス][과잉 노출]"
+			RESULTS'="[최음독 피어스][과잉 노출]"
 		ENDIF
 	ENDIF
 
@@ -67,7 +68,7 @@
 	CALL STATE_CHANGE_HATUJOU(100)
 
 	턴상한=15
-	CALL ADDBATTLESITUATION("先制無し,지원 무효,レイプなし,")
+	CALL ADDBATTLESITUATION("선제 없음,지원 무효,강간 없음,")
 
 
 @EVENT_BATTLE_TURNEND_6xxx

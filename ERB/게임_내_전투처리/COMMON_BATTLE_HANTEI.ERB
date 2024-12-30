@@ -1029,11 +1029,8 @@ SIF (TCVARn:0 == 1 && GETBIT(TFLAG:11, 0) == 0) || (TCVARn:0 == 2 && GETBIT(TFLA
 	LOCAL:5 = -1
 
 ;통상 범위에 대하여 공중에 있다
-;[에어마스터] FEAT에 대한 추가 효과 발동 금지 플래그를 세운다
-IF GETBIT(TCVARn:216, 1) && GETBIT(TFLAG:11, 3) == 0 && RAND:100 < GET_AIR_STRIKE(1)
+SIF GETBIT(TCVARn:216, 1) && GETBIT(TFLAG:11, 3) == 0 && RAND:100 < GET_AIR_STRIKE(1)
 	LOCAL:5 = -1
-	TCVARn:210 |= 추가발동금지
-ENDIF
 
 ;【아무것도안한다】를 골랐다면 확정적으로 피격된다
 SIF TCVARn:2 == 자세：아무것도안한다

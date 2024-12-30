@@ -47,6 +47,9 @@ ELSE
     ;ライブ公演直後
     ELSEIF CFLAG:100 == 104 && CFLAG:101 == 8
         FLAG:45 = 3003
+	 ;自由行動(ナイトプール)直後
+    ELSEIF CFLAG:100 == 108 && CFLAG:101 == 20 && TIME == 1
+        FLAG:45 = 3004
     ;昼
     ELSEIF TIME == 0 && TALENT:밤악마의귀족 == 0
         FLAG:45 = 3001
@@ -119,6 +122,11 @@ PRINTL
 ;　TRAIN先頭で行われている초기화の一部を先に済ませておく
 ;TCVARの手動초기화
 VARSET TCVARn
+VARSET TFLAG
+;ターン数-1(戦闘開始前)
+TFLAG:0 = -1
+;通常は遠距離スタート
+TCVARn:0 = 3
 ;衣装の耐久度を설정
 CALL CLOTH_BATTLE_SETHP
 ;衣装の情報を更新

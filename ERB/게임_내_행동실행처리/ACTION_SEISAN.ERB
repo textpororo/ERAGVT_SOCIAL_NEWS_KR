@@ -28,14 +28,19 @@ SIF ((ABL:욕망 + ABL:노출벽) >= 5 || CFLAG:283 >= 10) && ISHOLE() == 1
 SIF (ABL:욕망 + ABL:마조끼) >= 5 && ISHOLE() == 1
 	PRINTFORM [5] 공중 변소　　　　
 PRINTL 
-PRINTFORM [6] 아이돌 활동　　　
+;데뷔 후 주말이면 라이브 공연
+IF EXP:매료경험 > 99 && (DAY % 7 == 0 || DAY % 7 == 6)
+	SETCOLORBYNAME HOTPINK
+	PRINTFORM [6]★라이브 공연　　 
+	RESETCOLOR
+ELSE
+	PRINTFORM [6] 아이돌 활동　　　
+ENDIF
 ;데뷔 후라면 매춘 해방
 ;원문은 베개 영업 베개 영업, 우리말로는 성상납이라고도 하던가
 SIF EXP:매료경험 > 99 && ISHOLE() == 1
 	PRINTFORM [7] 베개 영업　　　　
-;데뷔 후인 동시에 주말이라면 라이브 공연 해방
-SIF EXP:매료경험 > 99 && (DAY % 7 == 0 || DAY % 7 == 6)
-	PRINTFORM [8] 라이브 공연　　　
+
 PRINTL 
 DRAWLINE
 
@@ -91,9 +96,14 @@ IF CFLAG:111 > 0
 		ENDIF
 	ENDIF
 	IF RESULT == 6
-		PRINTL 
-		PRINT 스케쥴：아이돌 활동
-		PRINTL 
+		;데뷔 후 토, 일요일 아이돌 활동은 라이브 공연
+		IF (EXP:매료경험 >= 100) && (DAY % 7 == 0 || DAY % 7 == 6)
+			RESULT = 8
+		ELSE
+			PRINTL 
+			PRINT 스케쥴：아이돌 활동
+			PRINTL 
+		ENDIF
 	ENDIF
 	IF RESULT == 7
 		PRINTL 
@@ -107,7 +117,7 @@ IF CFLAG:111 > 0
 	ENDIF
 	IF RESULT == 8
 		PRINTL 
-		PRINT 스케쥴：라이브 공연
+		PRINT 스케쥴：아이돌 활동《★라이브 공연》
 		IF (EXP:매료경험 < 100) || (DAY % 7 != 0 && DAY % 7 != 6)
 			PRINT （실행 불능）
 			PRINTL 
@@ -121,6 +131,11 @@ ELSE
 ENDIF
 
 PRINTL 
+
+;데뷔 후 토, 일요일 아이돌 활동은 라이브 공연
+SIF RESULT == 6 && (EXP:매료경험 >= 100) && (DAY % 7 == 0 || DAY % 7 == 6)
+	RESULT = 8
+
 ;남자라면 일부 커맨드는 선택 불가
 IF ISHOLE() == 0 && (RESULT == 3 || RESULT == 4 || RESULT == 5 || RESULT == 7)
 	PRINTL 올바른 값을 입력해 주십시오.

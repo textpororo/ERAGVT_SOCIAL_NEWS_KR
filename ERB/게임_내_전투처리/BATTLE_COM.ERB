@@ -77,15 +77,29 @@ IF CONFIG_CHECK_SCREEN_F(2) > 0
 				CALL PRINT_COMNAME, 202
 				PRINTPLAIN 　 
 				CALL PRINT_COMNAME, 203
+				PRINTPLAIN 　│
 			;통상 변신
 			ELSE
 				CALL PRINT_COMNAME, 0
+				PRINTPLAIN 　 
+				CALL PRINT_COMNAME, -1
+				PRINTPLAIN 　 
+				CALL PRINT_COMNAME, -1
+				PRINTPLAIN 　│
 			ENDIF
 		ELSE
 			;SP 변신
 			TRYCALLFORM COM_ABLE{11}
-			SIF RESULT
+			IF RESULT
 				CALL PRINT_COMNAME, 11
+			ELSE
+				CALL PRINT_COMNAME, -1
+			ENDIF
+			PRINTPLAIN 　 
+			CALL PRINT_COMNAME, -1
+			PRINTPLAIN 　 
+			CALL PRINT_COMNAME, -1
+			PRINTPLAIN 　│
 		ENDIF
 		PRINTPLAIN 　│
 		PRINTL 
@@ -688,10 +702,8 @@ IF GETBIT(TCVARn:216, 2) || TCVARn:0 == 0
 	SIF BASE:공중대시 >= 8
 		BASE:공중대시 = 8
 ;체공 상태로 계속해서 공중대시를 사용하지 않는다면 착지 상태가 된다
-;[에어마스터] FEAT의 추가 효과 발동 금지 플래그를 초기화
 ELSEIF GETBIT(TCVARn:216, 1) && GETBIT(TCVARn:216, 0) == 0
 	SETBIT TCVARn:216,2
-	TCVARn:210 -= 추가발동금지
 	SIF GETBIT(TCVARn:216, 1)
 		TCVARn:216 -= 2
 ENDIF
@@ -823,9 +835,9 @@ CALL PERCENT_CAL, BASE:성내성, MAXBASE:성내성
 LOCAL:3 = 100 - (RESULT * 4 / 3)
 
 ;폭주 중인 촉수 슈트라면 해제되지 않는다
-IF CFLAG:1 == 1 && CFLAG:41 == 199 && CFLAG:41 == 199 && TCVARn:41 != 0
+IF CFLAG:1 >= 1 && CFLAG:41 == 199 && CFLAG:41 == 199 && TCVARn:41 != 0
 ;기력이 다하여 변신이 강제적으로 풀린 경우의 처리
-ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 == 1 && BASE:기력 <= 0 && (TCVARn:12 & 강구속) == 0
+ELSEIF CONFIG_CHECK_BALANCE_F(6) == 0 && CFLAG:1 >= 1 && BASE:기력 <= 0 && (TCVARn:12 & 강구속) == 0
 	PRINTL 
 	;지문: 기력이 다하여 변신이 강제로 풀렸다
 	CALL MESSAGE_BATTLE_CHARA_TRANSRELEASE

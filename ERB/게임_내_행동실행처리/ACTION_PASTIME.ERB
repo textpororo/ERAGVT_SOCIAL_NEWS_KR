@@ -13,9 +13,10 @@ ENDIF
 CALL ACTION_TRANSFORMATION_SELECT, TARGET, "여가 활동"
 
 PRINTFORM [0] 거리로 나간다　　　
-PRINTFORM [1] 멀리 나간다　　　　
+PRINTFORM [1] 여행간다　　　　
 PRINTFORM [2] 운동하러 간다　　　
 ;학교는 낮에만 표시한다
+PRINTL
 SIF TIME > 0
 	SETCOLOR 105,105,105
 SIF TALENT:학생 > 0
@@ -25,76 +26,111 @@ PRINTL
 PRINTL
 DRAWLINE
 
-;스케쥴 기능은 구현한다면 이런 느낌
-;IF CFLAG:113 > 0
-;	CALL RES_SCHEDULE, 113
-;	IF RESULT == 0
-;		PRINTL 
-;		PRINT 스케쥴：거리로 나간다
-;		PRINTL 
-;	ENDIF
-;	IF RESULT == 1
-;		PRINTL 
-;		PRINT 스케쥴：멀리나간다
-;		PRINTL 
-;	ENDIF
-;	IF RESULT == 2
-;		PRINTL 
-;		PRINT 스케쥴：운동하러 나간다
-;		PRINTL 
-;	ENDIF
-;	IF RESULT == 3
-;		PRINTL 
-;		PRINT 스케쥴：학교에 간다
-;		IF TALENT:학생 > 0 && TIME == 0
-;			PRINT （실행 불능）
-;			PRINTL 
-;			PRINTL 수동으로 행동을 선택하십시오.
-;			GOTO INPUT_LOOP
-;		ENDIF
-;	ENDIF
-;ELSE
-;	$INPUT_LOOP
-;	INPUT
-;ENDIF
+;스케줄 기능
+IF CFLAG:113 > 0
+	CALL RES_SCHEDULE(113)
 
-$INPUT_LOOP
-INPUT
-PRINTL 
-IF INRANGE(RESULT, 0, 3)
-	DRAWLINE
-	SELECTCASE RESULT
-		;거리로 나간다
-		CASE 0
-			CALL PASTIME_거리로나간다, RESULT
-			REST = RESULT
-		;멀리 나간다 (遠出をする)
-		CASE 1
-			CALL PASTIME_멀리나간다, RESULT
-			REST = RESULT
-		;운동하러 나간다
-		CASE 2
-			CALL PASTIME_운동한다, RESULT
-			REST = RESULT
-		;학교
-		CASE 3
-			IF TALENT:학생 < 1
-				PRINTL 올바른 값을 입력해 주십시오.
-				GOTO INPUT_LOOP
-			ELSEIF TIME > 0
-				PRINTL 야간에는 학교에 갈 수 없습니다.
-				GOTO INPUT_LOOP
-			ELSE
-				CALL PASTIME_학교에간다, RESULT
-				REST = RESULT
-			ENDIF
-	ENDSELECT
+	;통학은 낮에만 가능(스케줄 스킵)
+	IF RESULT == 0 && TIME:0 == 1
+		;다 안 되면 행선지 랜덤으로 한다
+		RESULT = 1
+		FOR LOCAL,1,NUM_SCHEDULE_F(113)+1
+			CALL RES_SCHEDULE(113)
+			;통학 이외의 스케줄을 찾는다
+			SIF RESULT != 0
+				BREAK
+		NEXT
+	ENDIF
+
+	IF RESULT == 0
+		CALL PASTIME_학교에간다, RESULT
+	ELSEIF RESULT == 1
+		IF TIME:0 == 0
+			SELECTCASE RAND:4
+			CASE 0
+				CALL PASTIME_학교에간다, -1
+			CASE 1
+				CALL PASTIME_거리로나간다, RAND:4
+			CASE 2
+				CALL PASTIME_여행간다, RAND:8
+			CASE 3
+				CALL PASTIME_운동한다, RAND:4
+			ENDSELECT
+		ELSE
+			SELECTCASE 1+RAND:3
+			CASE 1
+				CALL PASTIME_거리로나간다, RAND:4
+			CASE 2
+				CALL PASTIME_여행간다, RAND:8
+			CASE 3
+				CALL PASTIME_운동한다, RAND:4
+			ENDSELECT
+		ENDIF
+	ELSEIF RESULT == 2
+		CALL PASTIME_거리로나간다, RAND:4
+	ELSEIF RESULT == 3
+		CALL PASTIME_여행간다, RAND:8
+	ELSEIF RESULT == 4
+		CALL PASTIME_운동한다, RAND:4
+	ELSEIF INRANGE(RESULT,5,8)
+		CALL PASTIME_거리로나간다, RESULT-5
+	ELSEIF INRANGE(RESULT,9,16)
+		CALL PASTIME_여행간다, RESULT-9
+	ELSEIF INRANGE(RESULT,17,20)
+		CALL PASTIME_운동한다, RESULT-17
+	ENDIF
+
+
+	;	IF RESULT == 3
+	;		PRINTL 
+	;		PRINT 스케쥴：학교에 간다
+	;		IF TALENT:학생 > 0 && TIME == 0
+	;			PRINT （실행 불능）
+	;			PRINTL 
+	;			PRINTL 수동으로 행동을 선택하십시오.
+	;			GOTO INPUT_LOOP
+	;		ENDIF
+	;	ENDIF
+	;ELSE
+	;	$INPUT_LOOP
+	;	INPUT
 ELSE
-	PRINTL 올바른 값을 입력해 주십시오.
-	GOTO INPUT_LOOP
+	$INPUT_LOOP
+	INPUT
+	PRINTL 
+	IF INRANGE(RESULT, 0, 3)
+		DRAWLINE
+		SELECTCASE RESULT
+			;거리로 나간다
+			CASE 0
+				CALL PASTIME_거리로나간다(-1)
+				REST = RESULT
+			;여행간다 (遠出をする)
+			CASE 1
+				CALL PASTIME_여행간다(-1)
+				REST = RESULT
+			;운동하러 나간다
+			CASE 2
+				CALL PASTIME_운동한다(-1)
+				REST = RESULT
+			;학교
+			CASE 3
+				IF TALENT:학생 < 1
+					PRINTL 올바른 값을 입력해 주십시오.
+					GOTO INPUT_LOOP
+				ELSEIF TIME > 0
+					PRINTL 야간에는 학교에 갈 수 없습니다.
+					GOTO INPUT_LOOP
+				ELSE
+					CALL PASTIME_학교에간다(-1)
+					REST = RESULT
+				ENDIF
+		ENDSELECT
+	ELSE
+		PRINTL 올바른 값을 입력해 주십시오.
+		GOTO INPUT_LOOP
+	ENDIF
 ENDIF
-
-CFLAG:101 = RESULT
 
 IF FLAG:73 > 0
 	SIF CFLAG:1 > 0

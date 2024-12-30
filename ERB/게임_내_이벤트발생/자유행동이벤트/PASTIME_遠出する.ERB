@@ -1,7 +1,7 @@
-﻿@PASTIME_멀리나간다, ARG
+﻿@PASTIME_여행간다, ARG
 #DIMS 目的地
 
-PRINTL 멀리나간다
+PRINTL 여행간다
 PRINTL 
 ;-------ここファッション-------
 CALL PASTIME_FASHION
@@ -10,24 +10,28 @@ PRINTW
 PRINTL 
 PRINTFORML 電車を待つ%PRINT_TRANSCALLNAME(TARGET)%의 行き先は・・・
 PRINTL 
-PRINT [0]動物園　　　　　　　　
-PRINT [1]水族館　　　　　　　　
-PRINTL 
-PRINT [2]遊園地　　　　　　　　
-PRINT [3]植物園　　　　　　　　
-PRINTL 
-PRINT [4]ライブ　　　　　　　　
-PRINT [5]ウォーターパーク　　　
-PRINTL 
-PRINT [6]海辺　　　　　　　　　
-PRINT [7]温泉　　　　　　　　　
-PRINTL 
-;PRINT [8]何か思いついた時用　　
-;PRINT [9]何か思いついた時用　　
-PRINTL 
-DRAWLINE
-$INPUT_LOOP
-INPUT
+IF ARG == -1
+	PRINT [0]動物園　　　　　　　　
+	PRINT [1]水族館　　　　　　　　
+	PRINTL 
+	PRINT [2]遊園地　　　　　　　　
+	PRINT [3]植物園　　　　　　　　
+	PRINTL 
+	PRINT [4]ライブ　　　　　　　　
+	PRINT [5]ウォーターパーク　　　
+	PRINTL 
+	PRINT [6]海辺　　　　　　　　　
+	PRINT [7]温泉　　　　　　　　　
+	PRINTL 
+	;PRINT [8]何か思いついた時用　　
+	;PRINT [9]何か思いついた時用　　
+	PRINTL 
+	DRAWLINE
+	$INPUT_LOOP
+	INPUT
+ELSE
+	RESULT=ARG
+ENDIF
 PRINTL 
 DRAWLINE
 IF RESULT == 0
@@ -52,6 +56,9 @@ ELSE
 ENDIF
 LOCAL = RESULT
 PRINTL 
+
+;子コマンド9[動物園]～16[温泉]
+CFLAG:TARGET:101 = LOCAL+9
 
 PRINTL 
 CALL DOT_AFTER, 1
@@ -371,7 +378,7 @@ ELSE
 	PRINTFORML デビューしたばかりの新人アイドルのライブを楽しんでいる。
 ENDIF
 PRINTL 
-PRINTFORML 周囲の熱に浮かされ、%PRINT_TRANSCALLNAME(TARGET)%의 声援にも熱が入ってる。
+PRINTFORML 周囲の熱に浮かされ、%PRINT_TRANSCALLNAME(TARGET)%의 声援にも熱が入る。
 PRINTFORML 最後の一曲まで熱中し、祭り後の静けさに一抹の寂しさを覚えつつも会場を後にした・・・
 PRINTW 
 

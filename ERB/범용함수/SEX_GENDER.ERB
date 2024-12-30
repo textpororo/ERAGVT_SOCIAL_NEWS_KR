@@ -36,7 +36,8 @@ RETURNF 0
 RETURNF LOCAL
 ;「男らしい외관の남자」
 ;周囲が남자扱いする判定(지문용、↑の逆)　남자かつ오토코노코でなければ１が返る
-;※なお、現行GVTはガチで男に見える男装に非対応です(支払う分岐処理の複雑さに対して需要が薄いと考えられるため)
+;※なお、現行GVTはガチで男に見える男装＝男の娘の逆パターンに非対応です
+;　(支払う分岐処理の複雑さに対して需要が薄いと考えられるため)
 @ISMANLY(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
@@ -66,8 +67,57 @@ RETURNF LOCAL
 
 
 ;-------------------------------------------------
-;現時点での物理的な性(SEX)
-;メス
+;現在の変身状態と無関係に、特定の変身状態における外見を確認
+;「변신능력を持ち、変身後の姿がGIRLYであるキャラ」なら１
+;①通常変身する♀
+;②TS変身する♂
+;③男の娘に変身するキャラ
+@ISGIRLY_AfterTrans(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	;未変身時に呼ばれた場合
+	IF CFLAG:1==0
+		IF TALENT:LOCAL:변신능력 == 1 && ((ISFEMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ == 0) || (ISMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ == 1) || (TALENT:LOCAL:변신시오토코노코 == 1))
+			LOCAL=1
+		ELSE
+			LOCAL=0
+		ENDIF
+	;変身時に呼ばれた場合は現在の外見判定でよい
+	ELSE
+		IF ISGIRLY()
+			LOCAL=1
+		ELSE
+			LOCAL=0
+		ENDIF
+	ENDIF
+RETURNF LOCAL
+;「변신능력を持ち、変身後の姿がMANLYであるキャラ」なら１
+;①通常変身する♂
+;②TS変身する♀
+@ISMANLY_AfterTrans(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	;未変身時に呼ばれた場合
+	IF CFLAG:1==0
+		IF TALENT:LOCAL:변신능력 == 1 && ((ISMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ == 0) || (ISFEMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ == 1))
+			LOCAL=1
+		ELSE
+			LOCAL=0
+		ENDIF
+	;変身時に呼ばれた場合は現在の外見判定でよい
+	ELSE
+		IF ISMANLY()
+			LOCAL=1
+		ELSE
+			LOCAL=0
+		ENDIF
+	ENDIF
+RETURNF LOCAL
+
+
+;-------------------------------------------------
+;判定時点での物理的な性(SEX)
+;♀メス
 @ISFEMALE(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
@@ -77,7 +127,7 @@ RETURNF LOCAL
 		LOCAL=0
 	ENDIF
 RETURNF LOCAL
-;オス
+;♂オス
 @ISMALE(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
@@ -87,11 +137,23 @@ RETURNF LOCAL
 		LOCAL=0
 	ENDIF
 RETURNF LOCAL
-;TS変身で女になっている状態なら１
-@ISTSGIRL(ARG=-1)
+;-------------------------------------------------
+;TS変身系の判定
+;現在TS変身によって♀状態なら１
+@ISTSFEMALE(ARG=-1)
 #FUNCTION
 	LOCAL=ARG==-1 ? TARGET # ARG
-	IF ISFEMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ > 0
+	IF CFLAG:1>=1 &&  ISFEMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ > 0
+		LOCAL=1
+	ELSE
+		LOCAL=0
+	ENDIF
+RETURNF LOCAL
+;現在TS変身によって♂状態なら１
+@ISTSMALE(ARG=-1)
+#FUNCTION
+	LOCAL=ARG==-1 ? TARGET # ARG
+	IF CFLAG:1>=1 &&  ISMALE(LOCAL) && TALENT:LOCAL:변신시ＴＳ > 0
 		LOCAL=1
 	ELSE
 		LOCAL=0

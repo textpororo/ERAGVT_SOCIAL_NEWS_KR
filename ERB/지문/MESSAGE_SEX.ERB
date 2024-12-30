@@ -1041,7 +1041,7 @@ FONTBOLD
 PRINTFORML 夜間自慰（%PRINT_CALLNAME(TARGET,1)%）
 FONTREGULAR
 PRINTL 
-PRINTFORML 夜が更けても身体の火照りが治まらず、%PRINT_CALLNAME(TARGET)%は寝つけずにいた。
+PRINTFORML 夜が更けても身体の火照りが治まらず、%조사처리(PRINT_CALLNAME(TARGET),"는")%寝つけずにいた。
 IF TALENT:촉수의포로 > 0
 	PRINTFORML イケナイ事だと分かっていても、頭の中は촉수に犯されるという妄想で一杯になってしまう。
 ELSE
@@ -1244,9 +1244,9 @@ IF TALENT:교제상대 == 4
 		PRINTFORML 愛する夫がそばに居ることを思うと、何も考えられなくなってしまう。
 	ENDIF
 	PRINTFORML 自分から夜の営みを要求する%PRINT_CALLNAME(TARGET)%に夫は驚いたような顔をしたが、
-	PRINTFORML 何も聞かずに%PRINT_CALLNAME(TARGET)%を優しく抱きしめ、二人は愛の営みを始めた・・・
+	PRINTFORML 何も聞かずに%조사처리(PRINT_CALLNAME(TARGET),"를")%優しく抱きしめ、二人は愛の営みを始めた・・・
 ELSE
-	PRINTFORML 夜が更けても身体の火照りが治まらない%PRINT_CALLNAME(TARGET)%は、気がつけば연인の家の前に立っていた。
+	PRINTFORML 夜が更けても身体の火照りが治まらない%조사처리(PRINT_CALLNAME(TARGET),"는")%、気がつけば연인の家の前に立っていた。
 	PRINTFORML 正気を取り戻すとすぐに帰ろうとしたが、彼氏がこちらに気づき、扉を開けた。
 	IF TALENT:촉수의포로
 		PRINTFORML 彼を求めているはずなのに、頭の中には촉수に犯されたいという願望が渦巻いており、
@@ -1264,13 +1264,13 @@ FONTBOLD
 PRINTL セックス
 FONTREGULAR
 IF TALENT:처녀 == 1
-	PRINTFORML 本当に良いのか、と問う\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@に%PRINT_CALLNAME(TARGET)%は頬を染めながら頷く。
-	PRINTFORML 正常位で口づけを交わしながら、%PRINT_CALLNAME(TARGET)%は사랑하는사람の男根を受け入れていった・・・
+	PRINTFORML 本当に良いのか、と問う\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@に%조사처리(PRINT_CALLNAME(TARGET),"는")%頬を染めながら頷く。
+	PRINTFORML 正常位で口づけを交わしながら、%조사처리(PRINT_CALLNAME(TARGET),"는")%사랑하는사람の男根を受け入れていった・・・
 	PRINTW 
 	PRINTL 처녀 상실
 	PRINTL 
 	PRINTFORML 始めはゆっくりとした動きで繋がっていた二人だが、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%を気遣う\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@に大丈夫だと告げると、控えめながら腰を動かし始めた。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"를")%気遣う\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@に大丈夫だと告げると、控えめながら腰を動かし始めた。
 	PRINTFORML 次第にヴァギナがほぐれてくると互いに興奮が高まって抑えが効かなくなり、
 	PRINTFORML 動きが大胆になっていく。
 	PRINTW 
@@ -1280,7 +1280,7 @@ ELSE
 	SELECTCASE RAND:4
 		CASE 0
 			PRINTFORML %PRINT_CALLNAME(TARGET)%の肉壺は愛しい彼に奥まで貫かれていた。
-			PRINTFORML 肉棒に揺さぶられるたびに、%PRINT_CALLNAME(TARGET)%は普段の気丈な姿からは想像もできないような甘い声をこぼす。
+			PRINTFORML 肉棒に揺さぶられるたびに、%조사처리(PRINT_CALLNAME(TARGET),"는")%普段の気丈な姿からは想像もできないような甘い声をこぼす。
 			
 			IF CONFIG_CHECK_EVENT_F(6) == 1 && ARG:0 == 1
 				SIF TALENT:음호
@@ -1310,7 +1310,7 @@ ELSE
 			ENDIF
 			
 		CASE 2
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は愛しい彼の体にまたがり、体を揺らしながら嬌声をあげている。
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%愛しい彼の体にまたがり、体を揺らしながら嬌声をあげている。
 			PRINTFORML %PRINT_CALLNAME(TARGET)%の彼はいつもより積極的な彼女の姿に驚きながらもすぐに順応し、その肢体を楽しんでいる。
 			PRINTFORM 彼女の想い人が
 			LOCAL:0 = 0
@@ -1337,10 +1337,10 @@ ELSE
 				PRINTFORM ユサユサと揺れる体に
 			ENDIF
 			PRINTFORML 触れると、
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は途端に絶頂した・・・
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%途端に絶頂した・・・
 			LOCAL:0 = 0
 		CASE 3
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は彼女の思い人と玄関で一夜を過ごしている。
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%彼女の思い人と玄関で一夜を過ごしている。
 			PRINTFORML 普段は気丈な%PRINT_CALLNAME(TARGET)%も今は扉にすがり、喘ぐだけの一匹の雌にすぎない。
 			IF CONFIG_CHECK_EVENT_F(6) == 1 && ARG:0 == 1
 				PRINTFORML 即座に交われるよう用意していたコンドームを無我夢中で嵌め、
@@ -1369,7 +1369,7 @@ ELSE
 					ENDIF
 				ELSE
 					PRINTFORML は未だ子を孕んだことがない。
-					PRINTFORML %PRINT_CALLNAME(TARGET)%はもし子どもが生まれるなら、それは\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@との子であればいいと願った。
+					PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%もし子どもが生まれるなら、それは\@ TALENT:교제상대 == 4 ? 夫 # 彼氏 \@との子であればいいと願った。
 					PRINTFORML ・・・じっさいは異形の촉수との子を孕むほうが先であろうが。
 				ENDIF
 			ENDIF
@@ -1383,23 +1383,23 @@ PRINTL 애널セックス
 FONTREGULAR
 SELECTCASE RAND:2
 	CASE 0
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は愛しい彼に不浄の穴を突かれていた。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%愛しい彼に不浄の穴を突かれていた。
 		PRINTFORML だというのに幸福に満ちた顔を浮かべ、喘いでいる。
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の想い人も薄々感づいていたのか、%PRINT_CALLNAME(TARGET)%のアヌスの様子に気をつけながらも、激しく求めている。
 		PRINTFORML やがて彼が身を震わせ、その애널에 사정すると、%PRINT_CALLNAME(TARGET)%も同時に絶頂した。
-		PRINTFORML しかし%PRINT_CALLNAME(TARGET)%は彼のペニスを離さず、彼の陰茎もまだ萎えていない。
+		PRINTFORML しかし%조사처리(PRINT_CALLNAME(TARGET),"는")%彼のペニスを離さず、彼の陰茎もまだ萎えていない。
 		PRINTFORML どちらが先か妖艶に腰を動かし始め、二人の逢瀬は夜が明けるまで続いた・・・
 	CASE 1
 		LOCAL:0 = 0
 		LOCAL:0 = RAND:10
 		IF TALENT:촉수의포로 && LOCAL:0 < 5
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は夜の公園を訪れていた。
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%夜の公園を訪れていた。
 			PRINTFORML 理由は外で夜の営みを――有り体に言えば青姦だ――をするためだ。
 			PRINTFORML これは%PRINT_CALLNAME(TARGET)%の\@ TALENT:교제상대 == 4 ? 夫 # 想い人 \@が言い出したことで、
 			IF ABL:노출벽 >= 3 || TALENT:음란
 				PRINTFORM %PRINT_CALLNAME(TARGET)%も大喜びで賛成したため、
 			ELSE
-				PRINTFORM %PRINT_CALLNAME(TARGET)%は反対したのだが、結局は流される形で
+				PRINTFORM %조사처리(PRINT_CALLNAME(TARGET),"는")%反対したのだが、結局は流される形で
 			ENDIF
 			PRINTFORML 近所の公園で致すことになった。
 			PRINTFORML 愛しい人のペニスの感触ともしかしたら見られるかもしれないという思考が、%PRINT_CALLNAME(TARGET)%に倒錯的な興奮をもたらす。
@@ -1408,10 +1408,10 @@ SELECTCASE RAND:2
 			PRINTFORML しかし、촉수의포로となった%PRINT_CALLNAME(TARGET)%にとって、彼らは봉사한다べき対象でしかない。
 			IF ISMALE()
 				;#region
-				PRINTFORML %PRINT_CALLNAME(TARGET)%はうっすらと笑みを浮かべながら濡れた唇を開き、異形の怪物を待ち受けた。
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%うっすらと笑みを浮かべながら濡れた唇を開き、異形の怪物を待ち受けた。
 				;#endregion
 			ELSE 
-				PRINTFORML %PRINT_CALLNAME(TARGET)%はうっすらと笑みを浮かべながらまだ空いている股を開き、異形の怪物を待ち受けた。
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%うっすらと笑みを浮かべながらまだ空いている股を開き、異形の怪物を待ち受けた。
 			ENDIF
 			IF ISMALE()
 				;#region
@@ -1428,7 +1428,7 @@ SELECTCASE RAND:2
 				PRINTFORML 後ろの愛しい人の陰茎と、前の愛しい촉수のもたらす快楽の海におぼれながら、夜は明けていった・・・
 			ENDIF
 		ELSE
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は海岸沿いの道路、\@TALENT:교제상대 == 4 ? %PRINT_CALLNAME(TARGET)%一家の # 彼氏が持つ \@車の中で行為に及んでいた。
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%海岸沿いの道路、\@TALENT:교제상대 == 4 ? %PRINT_CALLNAME(TARGET)%一家の # 彼氏が持つ \@車の中で行為に及んでいた。
 			PRINTFORML これは%PRINT_CALLNAME(TARGET)%から言い出したことで、
 			IF ABL:노출벽 >= 3 || TALENT:음란
 				PRINTFORM 刺激的な体験がしたいという考えからの
@@ -1438,12 +1438,12 @@ SELECTCASE RAND:2
 				PRINTFORM 冗談で言ったものの、彼が予想外に食いついたためになし崩し的に実行された
 			ENDIF
 			PRINTFORML 提案だった。
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は蒸し暑い車内の温度、汗の匂い、
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%蒸し暑い車内の温度、汗の匂い、
 			PRINTFORML アヌスからあふれ出るローションと精液の感触の中、何度目か分からないエクスタシーに達する。
 			PRINTFORML 窓ひとつ開けずに行われた情事に%PRINT_CALLNAME(TARGET)%の理性は溶け、より快楽を味わいたいと本能的に考える。
 			PRINTFORML 狭い車内では湿度も上がる一方で、
 			PRINTFORML 全身にかいた汗と何回目かも分からない精液でせっかく脱いだ服が台無しになってしまった。
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は後始末はどうするんだと文句を言いながらも、
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%後始末はどうするんだと文句を言いながらも、
 			PRINTFORML 彼のペニスをさらに締め付け、二人で濃厚な一夜を過ごすのだった・・・
 		ENDIF
 		LOCAL:0 = 0
@@ -1460,7 +1460,7 @@ FONTBOLD
 PRINTFORML 告白（%PRINT_CALLNAME(TARGET,1)%）
 FONTREGULAR
 PRINTL 
-PRINTFORML 月の綺麗な夜、%PRINT_CALLNAME(TARGET)%は自室で思いつめていた。
+PRINTFORML 月の綺麗な夜、%조사처리(PRINT_CALLNAME(TARGET),"는")%自室で思いつめていた。
 PRINTFORML 恋愛感情を抱いている彼にその恋心を伝えるか否かを、だ。
 PRINTFORML %PRINT_CALLNAME(TARGET)%には淡い思いを抱いている人がいる。
 IF TALENT:학생 == 1
@@ -1479,22 +1479,22 @@ ELSE
 ENDIF
 IF ISMALE()
 	;#region
-	PRINTFORML だが%PRINT_CALLNAME(TARGET)%は魔法少年に選ばれ、死地へと向かうようになった。
+	PRINTFORML だが%조사처리(PRINT_CALLNAME(TARGET),"는")%魔法少年に選ばれ、死地へと向かうようになった。
 	;#endregion
 ELSE 
-	PRINTFORML だが%PRINT_CALLNAME(TARGET)%は魔法少女に選ばれ、死地へと向かうようになった。
+	PRINTFORML だが%조사처리(PRINT_CALLNAME(TARGET),"는")%魔法少女に選ばれ、死地へと向かうようになった。
 ENDIF
 PRINTFORML そこには――肉体的なものか精神的なものかの違いはあるが――生きるか死ぬかの選択肢しかない。
-PRINTFORML 己がいつ消え去ってしまうか分からない立場におかされた%PRINT_CALLNAME(TARGET)%は、彼にこの思いを伝えたくなった。
+PRINTFORML 己がいつ消え去ってしまうか分からない立場におかされた%조사처리(PRINT_CALLNAME(TARGET),"는")%、彼にこの思いを伝えたくなった。
 PRINTFORML 否。伝えなければならないと考えるようになった。
 PRINTFORML しかしいざ告白となると手が震え、何もいえなくなってしまうのだった。
-PRINTFORML だが今日はそうならない。%PRINT_CALLNAME(TARGET)%は決意した。
+PRINTFORML だが今日はそうならない。%조사처리(PRINT_CALLNAME(TARGET),"는")%決意した。
 PRINTFORML 腕時計を見る。時刻は二時三十分。
-PRINTFORMW 明日の十四時に告白しよう。%PRINT_CALLNAME(TARGET)%はそう決めた。
+PRINTFORMW 明日の十四時に告白しよう。%조사처리(PRINT_CALLNAME(TARGET),"는")%そう決めた。
 PRINTL 
 PRINTFORML 一週間ぶりに会う彼の姿は、いつもより魅力的に見えた。
 PRINTFORML そんな彼の姿を見て、%PRINT_CALLNAME(TARGET)%の脈は上がり、頭の中は真っ白になる。
-PRINTFORML 奇妙な様子の%PRINT_CALLNAME(TARGET)%を見て心配する彼を見ながら、少しずつ告白の手筈を頭の中で組み立てる。
+PRINTFORML 奇妙な様子の%조사처리(PRINT_CALLNAME(TARGET),"를")%見て心配する彼を見ながら、少しずつ告白の手筈を頭の中で組み立てる。
 PRINTFORML 十分ほどたったころだろうか。
 PRINTFORML 本格的に心配になってきた様子の彼が、%PRINT_CALLNAME(TARGET)%の肩に触れたとたん、
 PRINTL
@@ -1504,7 +1504,7 @@ ELSE
 	PRINTFORML 「好きです！　付き合ってください！」
 ENDIF
 PRINTW
-PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が何を口走ったのか理解できなかった。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が何を口走ったのか理解できなかった。
 PRINTFORML あるのは後悔と절망だけだ。
 PRINTFORML 공포に震える体を抑えながら、なんとか彼の目を見る。
 PRINTFORMW 彼は、
@@ -1513,8 +1513,8 @@ LOCAL:0 = RAND:100
 IF LOCAL:0 >= 95
 	PRINTFORML 彼はその告白を断った。
 	PRINTFORML そしてこれからも友達として仲良くしてほしいと%PRINT_CALLNAME(TARGET)%に言った。
-	PRINTFORML 上の空の%PRINT_CALLNAME(TARGET)%を尻目に、彼は家路につく。
-	PRINTFORM なんとか家に帰ってきた%PRINT_CALLNAME(TARGET)%を出迎える
+	PRINTFORML 上の空の%조사처리(PRINT_CALLNAME(TARGET),"를")%尻目に、彼は家路につく。
+	PRINTFORM なんとか家に帰ってきた%조사처리(PRINT_CALLNAME(TARGET),"를")%出迎える
 	IF TALENT:학생 == 0
 		PRINTFORML 者は、誰もいなかった・・・
 	ELSE
@@ -1524,18 +1524,18 @@ IF LOCAL:0 >= 95
 	TALENT:교제상대 = 0
 ELSEIF LOCAL:0 >= 65
 	PRINTFORML すこし考えさせてほしいと言った。
-	PRINTFORML どういうことだと%PRINT_CALLNAME(TARGET)%が彼を問い詰めると、彼は自分でも自分の答えが分かっていないのだと、そう答えた。
+	PRINTFORML どういうことだと%조사처리(PRINT_CALLNAME(TARGET),"가")%彼を問い詰めると、彼は自分でも自分の答えが分かっていないのだと、そう答えた。
 	PRINTFORML どこか釈然としない%PRINT_CALLNAME(TARGET)%だったが、彼がお詫びに何か奢ると言うので、これ以上深く詮索しないようにした。
 	PRINTL
 	PRINTFORML しばらく遊んであたりがすっかり暗くなったころ、二人で駅まで歩いていると、彼が「またいつか同じことを言ってきてほしい」と%PRINT_CALLNAME(TARGET)%に言った。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%はその言葉の意味を問おうとしたが、それは帰りの電車の停車音に阻まれ、消えていった・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%その言葉の意味を問おうとしたが、それは帰りの電車の停車音に阻まれ、消えていった・・・
 ELSE
 	PRINTFORML 自分も%PRINT_CALLNAME(TARGET)%のことが好きだと言った。
 	PRINTFORML そして%PRINT_CALLNAME(TARGET)%の体を包むように抱く。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は喜びのあまり、衝動的に唇にキスをしてしまった。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%喜びのあまり、衝動的に唇にキスをしてしまった。
 	PRINTFORML それが彼の욕망に火をつけたのか、彼は荒々しく%PRINT_CALLNAME(TARGET)%の口腔を攻める。
-	PRINTFORML しばらくしてすっかり腰を抜かしてしまった%PRINT_CALLNAME(TARGET)%は彼に抱かれ、家へと連れて帰られた。
-	PRINTFORML 体の関係はまだにしようと言われた%PRINT_CALLNAME(TARGET)%は彼との初夜を妄想してしまい、頬を染めるのだった・・・
+	PRINTFORML しばらくしてすっかり腰を抜かしてしまった%조사처리(PRINT_CALLNAME(TARGET),"는")%彼に抱かれ、家へと連れて帰られた。
+	PRINTFORML 体の関係はまだにしようと言われた%조사처리(PRINT_CALLNAME(TARGET),"는")%彼との初夜を妄想してしまい、頬を染めるのだった・・・
 	;ここで남친있음に
 	TALENT:교제상대 += 1
 ENDIF
@@ -1577,7 +1577,7 @@ IF (MESSAGE_BRANCH_F(TARGET) & 타락)
 	ENDIF
 	PRINTL 처녀を散らされたにも関わらず、
 	IF TALENT:주관시점 > 0
-		PRINTL %PRINT_CALLNAME(TARGET)%はどこか幸福を感じていた。
+		PRINTL %조사처리(PRINT_CALLNAME(TARGET),"는")%どこか幸福を感じていた。
 	ELSE
 		PRINTL その表情にはどこか幸福の色が浮かんでいる。
 	ENDIF

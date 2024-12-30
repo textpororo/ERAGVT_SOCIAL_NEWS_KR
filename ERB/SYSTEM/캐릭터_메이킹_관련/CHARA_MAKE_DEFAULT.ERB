@@ -671,6 +671,30 @@ NEXT
 			;Chinese
 			CASE 7
 				LOCAL:0 = RAND:500 + 16000
+			;Korean
+			CASE 8
+				SELECTCASE RAND:100
+				;Most Common Family-names(like Kim)
+				CASE IS < 22
+					LOCAL:0 = 19000
+				CASE IS < 37
+					LOCAL:0 = 19001
+				CASE IS < 46
+					LOCAL:0 = 19002
+				CASE IS < 51
+					LOCAL:0 = 19003
+				CASE IS < 55
+					LOCAL:0 = 19004
+				;common
+				CASE IS < 65
+					LOCAL:0 = RAND:4 + 19005
+				;uncommon
+				CASE IS < 80
+					LOCAL:0 = RAND:10 + 19009
+				;rare
+				CASEELSE
+					LOCAL:0 = RAND:81 + 19019
+				ENDSELECT
 			;random
 			CASEELSE
 				LOCAL:0 = RAND:8500 + 3500
@@ -702,8 +726,11 @@ NEXT
 			;Chinese
 			CASE 7
 				LOCAL:1 = RAND:1000 + 16500
-			;Japanese(no-gender)
+			;Korean
 			CASE 8
+				LOCAL:1 = RAND:500 + 19200
+			;Japanese(no-gender)
+			CASE 9
 				LOCAL:1 = RAND:500 + 18000
 			;random(without Japanese)
 			; *In most case, [JP first name]+[Foreign family name] sounds so strange in Japan.
@@ -877,6 +904,9 @@ NEXT
 	;일본 or 중국일 경우
 	IF LOCAL:0 < 3500 || (LOCAL:0 >= 16000 && LOCAL:0 < 16500)
 		LOCALS:2 = %LOCALS:0% %LOCALS:1%
+	;한국일 경우
+	ELSEIF LOCAL:0 >= 19000 && LOCAL:0 < 19100
+		LOCALS:2 = %LOCALS:0%%LOCALS:1%
 	ELSE
 		LOCALS:2 = %LOCALS:1%・%LOCALS:0%
 	ENDIF
@@ -1738,7 +1768,7 @@ IF FEAT_NUM > 0
 		SIF FEAT_ABLE_F(RACE, LOCAL) > 0 && TALENT:ARG:LOCAL == 0
 			CALL ADDRANDCHOOSE, LOCAL
 	NEXT
-	FOR LOCAL, 0, FEAT_NUM
+	FOR LOCAL, 0, CHOICECOUNT_F()
 		LOCAL:1 = RANDCHOOSE_F()
 		TALENT:ARG:(LOCAL:1) = 1
 		CALL CLEARSPECIFICCHOOSE(LOCAL:1)

@@ -1648,7 +1648,7 @@ PALAM:(ARG:0) = ARG:1
 ;의복의 손상LV에 따른 치정 획득
 @PALAM_TIJOU_CLOTH_DAMAGE
 ;찢어지지 않는 의상용
-IF (CFLAG:1 == 0 && TCVARn:20 == -1) || (CFLAG:1 == 1 && TCVARn:22 == -1)
+IF (CFLAG:1 == 0 && TCVARn:20 == -1) || (CFLAG:1 >= 1 && TCVARn:22 == -1)
 	IF CFLAG:(CFLAG:1==0 ? 40 # 41) == 199 && FIGURE_SPLIT(EQUIP:(CFLAG:1==0 ? 99 # 199), 1) != 0 && TCVARn:41 == 0
 		RETURN
 	ELSEIF CFLAG:(CFLAG:1==0 ? 40 # 41) == 299 || CFLAG:(CFLAG:1==0 ? 40 # 41) == 401

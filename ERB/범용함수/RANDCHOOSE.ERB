@@ -24,6 +24,10 @@ RANDCHOOSE_NUM:0 = HOGE
 ;-------------------------------------------------------------
 ;랜덤 추첨 결과를 RESULT에 돌려준다
 @RANDCHOOSE
+IF CHOICECOUNT_F() <= 0
+	PRINTW ERROR RANDCHOOSE용 후보가 존재하지 않습니다.
+	RETURN -1
+ENDIF
 LOCAL = RAND:(RANDCHOOSE_NUM:0)
 LOCAL += 1
 RESULT = RANDCHOOSE_NUM:LOCAL - 1

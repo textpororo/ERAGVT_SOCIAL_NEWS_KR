@@ -77,7 +77,7 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 
-CFLAG:101 = RESULT
+CFLAG:TARGET:101 = RESULT
 
 CALL MESSAGE_GATHER_INFORMATION, ACTION
 CALL _ABLUP, 1
@@ -359,7 +359,7 @@ SELECTCASE ARG
 		ENDIF
 
 		;악질 시민 인카운트 처리
-		IF RAND:10000>FLAG:852*2+500 &&( ISHOLE())
+		IF CONFIG_CHECK_EVENT_F(5) == 1 && RAND:10000>FLAG:852*2+500 &&( ISHOLE())
 			PRINTL 
 			PRINTL ・
 			PRINTL ・・
@@ -396,6 +396,12 @@ SELECTCASE ARG
 					PRINTFORML 남자 중 한 명이 갑자기 전기 충격기를 치켜들고 가슴팍을 겨누며 찔러왔다.
 					PRINTFORML 예상치 못한 행위에 반응이 일순간 늦어지고 만 %PRINT_TRANSCALLNAME(TARGET)%……
 					PRINTFORML 분명 항의의 말을 냈어야 할 그 목구멍에서는, 오염하고도 비통한 외침이 흘러 나올 뿐이었다.
+					PRINTL 
+					FONTBOLD
+					LOCAL:1 = MIN(BASE:TARGET:체력/3+200,BASE:TARGET:체력)
+					PRINTFORML {LOCAL:1} 의 피해를 입었다！
+					FONTREGULAR
+					PRINTL 
 					PRINTFORM 몸 곳곳에 고압 전류가 흘러 다녀, 
 					LOCALS'="강제 마비"
 				CASE 2

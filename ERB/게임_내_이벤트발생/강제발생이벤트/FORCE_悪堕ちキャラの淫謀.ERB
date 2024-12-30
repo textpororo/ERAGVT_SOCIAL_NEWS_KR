@@ -57,6 +57,8 @@ ENDIF
 IF SELECT < SELECT_N:0
 	DAMAGE = SQRT(FLAG:852) * 20 + FLAG:852 * 5 / 100
 	PRINTFORML 妖しい霧が立ち込め、蠢く異形のシルエットが%LOCALS%の街に不穏な影を落とす。
+	SIF CSTR:(FLAG:111):0 != CSTR:(FLAG:111):1
+		PRINTFORM 《%CSTR:(FLAG:111):0%》
 	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は촉수の群れを率いて街を襲撃した・・・！
 	PRINTW 
 	CALL DOT_AFTER, 2
@@ -462,6 +464,8 @@ IF SELECT < SELECT_N:0
 ELSEIF SELECT < SELECT_N:1
 	DAMAGE = SQRT(FLAG:852) * 1 + FLAG:852 * 10 / 100
 	PRINTFORML 妖しい霧が立ち込め、蠢く異形のシルエットが%LOCALS%の街に不穏な影を落とす。
+	SIF CSTR:(FLAG:111):0 != CSTR:(FLAG:111):1 && CSTR:(FLAG:111):0 != CALLNAME:(FLAG:111) && CSTR:(FLAG:111):0 != NAME:(FLAG:111)
+		PRINTFORM 《%CSTR:(FLAG:111):0%》
 	PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は人目に付かない場所で暗躍している・・・
 	PRINTW 
 	CALL DOT_AFTER, 2
@@ -791,7 +795,7 @@ ELSEIF SELECT < SELECT_N:1
 				ELSEIF RAND:2 == 0
 					PRINT 촉수に凌辱されて絶頂する様子が
 				ELSE
-					PRINT 촉수に繰り返し\@ISMALE(SELECT/100) ? 腸内 #  \@種付けされる様子が
+					PRINTFORM 촉수に繰り返し\@ISMALE(SELECT/100) ? 腸内 #  \@種付けされる様子が
 				ENDIF
 			ENDIF
 		ENDIF
@@ -1300,7 +1304,7 @@ ELSEIF SELECT < SELECT_N:1
 			PRINTFORML 촉수が사정を終える頃には、%LOCALS:3%の下腹部は臨月の妊婦よりも丸くなっていた。
 			PRINTW 
 			PRINTFORML しばらく後、ようやく意識の戻った%LOCALS%が目にしたのは、
-			PRINTFORML 完全に正気を失い촉수の孕み苗床と化した愛しい%LOCALS:2%の姿だった・・・
+			PRINTFORML 完全に正気を失い触手の孕み苗床と化した雌穴――愛しい%LOCALS:2%の姿だった・・・
 
 		ENDIF
 
@@ -1419,7 +1423,7 @@ ELSEIF SELECT < SELECT_N:1
 			PRINTFORML さてと・・・せめてもの慈悲だ。
 			PRINTFORML この女の調教は、お前自身に任せてやるぞ・・・
 			PRINTFORML 残酷な笑みを浮かべる%PRINT_TRANSCALLNAME(FLAG:111)%の言葉を受けて、
-			PRINTFORML 新しく誕生した촉수は奇怪な金切り声で応えるのだった・・・
+			PRINTFORML 新しく誕生した触手は奇怪な金切り声と共に「%LOCALS%だった獲物」へ飛び掛かるのだった・・・
 			IF ISFEMALE(FLAG:111)
 				;Ｖ경험
 				LOCAL:120 = 2 + RAND:3

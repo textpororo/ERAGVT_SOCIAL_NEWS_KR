@@ -1,6 +1,6 @@
 ﻿;**********************************************************
 ;SHOP 화면의 정보 표시
-@SHOP_INFOMATION
+@SHOP_INFORMATION
 #DIM CCOUNT
 
 LOCAL = 0
@@ -13,6 +13,7 @@ FOR CCOUNT, 0, CHARANUM
 		CALL CHECK_ACTION(CFLAG:CCOUNT:100, CCOUNT)
 		IF RESULT > 0
 			LOCAL = 1
+			SETCOLORBYNAME RED
 			IF GETBIT(RESULT, 6)
 				PRINTFORML *%조사처리(CALLNAME:CCOUNT,"는")% 폐인화되어 있기 때문에, 휴식 이외의 행동을 할 수 없습니다.
 			ELSEIF GETBIT(RESULT, 5)

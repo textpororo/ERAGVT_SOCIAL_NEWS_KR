@@ -4,15 +4,15 @@
 ;--------------------------------------------------
 ;잡몹적
 ;↓촉수의 존재 확인용 함수　아무것도 처리하지 않는다
-@TENTACLE_MOB_1150
+@TENTACLE_CITIZEN_1150
 ;--------------------------------------------------
 ;이름
-@TENTACLE_MOB_1150_GETNAME
+@TENTACLE_CITIZEN_1150_GETNAME
 RESULTS = 악질 시민
 
 ;--------------------------------------------------
 ;정의
-@TENTACLE_MOB_1150_DEFENITION
+@TENTACLE_CITIZEN_1150_DEFENITION
 PRINTFORML （촉수가 가진 발정 효과로 인해 폭도로 변한 시민.）
 PRINTFORML （원래는 일반 시민이기 때문에）
 PRINTFORML （%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 전력으로 공격할 수가 없다.）
@@ -22,79 +22,79 @@ PRINTFORML （%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 전력으로 공
 ;【스테이터스】
 ;--------------------------------------------------
 ;HP
-@TENTACLE_MOB_1150_HP
+@TENTACLE_CITIZEN_1150_HP
 LOCAL = 1
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;사정 한계치
-@TENTACLE_MOB_1150_SYASEI
+@TENTACLE_CITIZEN_1150_SYASEI
 LOCAL = 500
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;착정 피해량 보정
-@TENTACLE_MOB_1150_SAKUSEI
+@TENTACLE_CITIZEN_1150_SAKUSEI
 LOCAL = 30
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;방심도 역치
-@TENTACLE_MOB_1150_YUDAN
+@TENTACLE_CITIZEN_1150_YUDAN
 LOCAL = 100
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;공격
-@TENTACLE_MOB_1150_KOUGEKI
+@TENTACLE_CITIZEN_1150_KOUGEKI
 LOCAL = 250
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;방어
-@TENTACLE_MOB_1150_BOUGYO
+@TENTACLE_CITIZEN_1150_BOUGYO
 LOCAL = 500
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;민첩
-@TENTACLE_MOB_1150_BINSYOU
+@TENTACLE_CITIZEN_1150_BINSYOU
 LOCAL = 150
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;지성
-@TENTACLE_MOB_1150_CHISEI
+@TENTACLE_CITIZEN_1150_CHISEI
 LOCAL = 10
 RETURN LOCAL
 
 ;--------------------------------------------------
 ;근거리
-@TENTACLE_MOB_1150_SHORT
+@TENTACLE_CITIZEN_1150_SHORT
 RESULT = 120
 RETURN RESULT
 
 ;--------------------------------------------------
 ;중거리
-@TENTACLE_MOB_1150_MIDDLE
+@TENTACLE_CITIZEN_1150_MIDDLE
 RESULT = 120
 RETURN RESULT
 
 ;--------------------------------------------------
 ;원거리
-@TENTACLE_MOB_1150_LONG
+@TENTACLE_CITIZEN_1150_LONG
 RESULT = 120
 RETURN RESULT
 
 ;--------------------------------------------------
 ;구속력
-@TENTACLE_MOB_1150_HOLD
+@TENTACLE_CITIZEN_1150_HOLD
 RESULT = 180
 RETURN RESULT
 
 ;--------------------------------------------------
 ;PALAM보정　백분율로 되돌린다
-@TENTACLE_MOB_1150_PALAM_HOSEI
+@TENTACLE_CITIZEN_1150_PALAM_HOSEI
 ;쾌Ｃ
 LOCAL:0 = 100
 ;쾌Ｖ
@@ -127,7 +127,7 @@ RETURN LOCAL:0, LOCAL:1, LOCAL:2, LOCAL:3, LOCAL:4, LOCAL:5, LOCAL:6, LOCAL:7, L
 ;==================================================
 ;【전용 루틴（전투）】
 ;--------------------------------------------------
-@TENTACLE_MOB_1150_ATTACK_ROUTINE
+@TENTACLE_CITIZEN_1150_ATTACK_ROUTINE
 LOCAL = RAND:100
 ;에로 공격 이외에는 하지 않는다
 
@@ -141,7 +141,7 @@ ENDIF
 ;==================================================
 ;【전용 루틴（성행위）】
 ;--------------------------------------------------
-@TENTACLE_MOB_1150_SEX_ROUTINE
+@TENTACLE_CITIZEN_1150_SEX_ROUTINE
 LOCAL = RAND:100
 ;모유 흡입
 IF LOCAL < 15 && TALENT:모유체질
@@ -203,7 +203,7 @@ ENDIF
 ;ARG=1　스마타 애태우기 성공 시의 행동 지정
 ;ARG=2　스마타 애태우기 실패 시의 행동 지정
 ;ARG=3　펠라치오 유발 시의 행동 지정
-@TENTACLE_MOB_1150_REACTION_REF, ARG = 0
+@TENTACLE_CITIZEN_1150_REACTION_REF, ARG = 0
 IF ARG == 1
 	RETURN 3
 ELSEIF ARG == 2

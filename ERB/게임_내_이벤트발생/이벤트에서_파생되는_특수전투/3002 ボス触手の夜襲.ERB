@@ -5,14 +5,14 @@
 
 ;사지결손なら無条件유폐される(戦闘発生ごとイベントキャンセル)
 ;夜襲とは限らないけど、とりあえず間借り
-;＠未移植コードの都合で欠損かつ번식자루でない状態がまだ存在せ半分くらいデッドコード、追って追加する
+;＠未移植コードの都合で欠損かつ繁殖袋でない状態がまだ存在せず半分くらいデッドコード、追って追加する
 IF TALENT:TARGET:번식자루 > 0 || TALENT:TARGET:사지결손 > 0
 	IF TALENT:TARGET:번식자루 > 0
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は部屋で意識を失ったまま横たわり、突然の大音響に対して何の反応も示さない。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%部屋で意識を失ったまま横たわり、突然の大音響に対して何の反応も示さない。
 	ELSE
-		PRINTFORML 部屋の中で力なく横たわっていた%PRINT_CALLNAME(TARGET)%は、突然の大音響に驚く。
+		PRINTFORML 部屋の中で力なく横たわっていた%조사처리(PRINT_CALLNAME(TARGET),"는")%、突然の大音響に驚く。
 	ENDIF
-	PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%PRINT_CALLNAME(TARGET)%をさらなる衝撃が襲い、
+	PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%조사처리(PRINT_CALLNAME(TARGET),"를")%さらなる衝撃が襲い、
 	PRINTFORML 電線がショートする火花とともに一瞬照明が落ち、非常灯に切り替わる。
 	FORCEWAIT
 	IF TALENT:TARGET:번식자루 < 1
@@ -44,7 +44,7 @@ IF TALENT:TARGET:번식자루 > 0 || TALENT:TARGET:사지결손 > 0
 	PRINTL
 	SETCOLOR 150,0,0
 	FONTBOLD
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수 생물に拉致されました
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%촉수 생물に拉致されました
 	FONTREGULAR
 	RESETCOLOR
 	CFLAG:TARGET:0 = 9
@@ -72,12 +72,12 @@ ENDIF
 SIF CFLAG:100 == 106
 	CFLAG:100 = 103
 IF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとする。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとする。
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとした。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとした。
 ENDIF
 
-PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%PRINT_CALLNAME(TARGET)%をさらなる衝撃が襲い、
+PRINTFORML 遅れて響き渡る警報音。急いで装備を整えようとする%조사처리(PRINT_CALLNAME(TARGET),"를")%さらなる衝撃が襲い、
 PRINTFORML 電線がショートする火花とともに一瞬照明が落ち、非常灯に切り替わる。
 PRINTL 
 ;右クリックに備えてフォースウェイト
@@ -90,7 +90,7 @@ ELSE
 		PRINT たち
 	PRINTFORML と連絡を取らなければ…！
 ENDIF
-PRINTFORML そう思って%PRINT_CALLNAME(TARGET)%が立ち上がったそのとき！
+PRINTFORML そう思って%조사처리(PRINT_CALLNAME(TARGET),"가")%立ち上がったそのとき！
 PRINTFORML すぐ傍で壁が崩落し――
 PRINTW 
 PRINTFORML ――ヌ　メ　リ
@@ -99,7 +99,7 @@ PRINTFORML 見間違えるはずもない――"人類の敵"、촉수 생물。
 PRINTFORML その巨体がズズンと地響きを起こしながら、目の前の闇から姿を現そうとしている！
 PRINTW 
 PRINTFORML 突然の襲来に驚き戸惑いながらも、
-PRINTFORML %PRINT_CALLNAME(TARGET)%は咄嗟に距離を取って촉수の一撃を避わした。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%咄嗟に距離を取って촉수の一撃を避わした。
 PRINTFORML ――まさか自分を狙ってきたのだろうか？
 PRINTW 
 IF CHARANUM_SAFE() == 1
@@ -115,11 +115,13 @@ ELSE
 ENDIF
 
 PRINTL 
-PRINTFORML （襲撃イベント中は撤退できません！　何とか１５ターン耐えてください！）
+PRINTFORML （襲撃イベント中は撤退できません！　何とか閉所で１５ターン耐えてください！）
 PRINTW 
 DRAWLINE
 턴상한=15
-CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし,耐久戦")
+;근거리 시작
+TCVARn:0 = 1
+CALL ADDBATTLESITUATION("철수 불가,공중 불가,원거리 불가,지원 무효,시민 없음,강간 없음,지구전")
 
 
 @EVENT_BATTLE_MISSION_CHECKER_3002
@@ -143,7 +145,7 @@ CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし
 	;	PRINTFORML 
 	;;負けた
 	;ELSE
-	;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	;	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
 	;ENDIF
 
 	;PRINTFORML 多数の生存者とともに女子高は汚染区域として放棄された……

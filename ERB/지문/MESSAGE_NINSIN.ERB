@@ -4,7 +4,7 @@
 ;--------------------------------
 @MESSAGE_NINNSIN
 IF TALENT:주관시점 > 0
-	PRINTFORMW %PRINT_CALLNAME(TARGET)%は自分の体に強い違和感を感じる・・・
+	PRINTFORMW %조사처리(PRINT_CALLNAME(TARGET),"는")%自分の体に強い違和感を感じる・・・
 ELSE
 	PRINTFORMW %PRINT_CALLNAME(TARGET)%의 상태가 이상하다・・・
 ENDIF
@@ -20,9 +20,9 @@ ELSE
 ENDIF
 PRINTL が宿ったようだ。
 SIF CFLAG:6 == -1
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分の身体の変化を理解できずに戸惑っている・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分の身体の変化を理解できずに戸惑っている・・・
 PRINTW
-PRINTFORMW %PRINT_CALLNAME(TARGET)%は[임신]した
+PRINTFORMW %조사처리(PRINT_CALLNAME(TARGET),"는")%[임신]した
 
 ;--------------------------------
 ;임신で남자に戻れなくなる
@@ -34,10 +34,10 @@ PRINTFORML ・・・・
 PRINTFORML ・・・・・・
 PRINTFORML 胎内に宿った儚くまだ新しい生命が、
 PRINTFORML %PRINT_CALLNAME(TARGET)%の肉体の根本的な部分を変化させていく。
-PRINTFORML その감각の意味を本能的に理解した%PRINT_CALLNAME(TARGET)%は、
+PRINTFORML その감각の意味を本能的に理解した%조사처리(PRINT_CALLNAME(TARGET),"는")%、
 PRINTFORML 自分がもう後には引けないことを悟った・・・
 PRINTL 
-PRINTFORM %PRINT_CALLNAME(TARGET)%は임신した影響で[남자]に
+PRINTFORM %조사처리(PRINT_CALLNAME(TARGET),"는")%임신した影響で[남자]に
 IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	PRINTL 戻れなくなった
 ELSEIF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 == 0
@@ -56,7 +56,7 @@ PRINTW
 @MESSAGE_MATANITY
 PRINTL 
 PRINTFORMW %PRINT_CALLNAME(TARGET)%の出産が近い・・・
-PRINTFORM %PRINT_CALLNAME(TARGET)%は
+PRINTFORM %조사처리(PRINT_CALLNAME(TARGET),"는")%
 ;育児判定による文字の選択
 IF CONFIG_CHECK_OTHER_F(0) == 0
 	PRINT 촉수の
@@ -78,7 +78,7 @@ IF RAND:2 == 0 && CONFIG_CHECK_MANIAC_F(14) == 1
 	IF TALENT:감정결여 > 0
 		PRINTFORML 叫び声ひとつ上げない%PRINT_CALLNAME(TARGET)%の膣奥を촉수が一突きすると、
 	ELSE
-		PRINTFORML 激しい痛みに고통の叫びを上げる%PRINT_CALLNAME(TARGET)%を無視して촉수が膣奥を一突きすると、
+		PRINTFORML 激しい痛みに고통の叫びを上げる%조사처리(PRINT_CALLNAME(TARGET),"를")%無視して촉수が膣奥を一突きすると、
 	ENDIF
 	PRINTFORML 水門が決壊したかのように媚薬羊水が流れ出していく。
 	IF TALENT:감정결여 > 0
@@ -94,18 +94,18 @@ IF RAND:2 == 0 && CONFIG_CHECK_MANIAC_F(14) == 1
 	PRINTFORML そのまま力任せに引っ張り始める。
 	PRINTFORM ずるり、ずるりと幼体が産道を引き摺られてい
 	IF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3
-		PRINTFORML く感触に%PRINT_CALLNAME(TARGET)%はたまらず絶頂を迎えてしまう。
-		PRINTFORML ぴくぴくと痙攣する%PRINT_CALLNAME(TARGET)%をよそに、
+		PRINTFORML く感触に%조사처리(PRINT_CALLNAME(TARGET),"는")%たまらず絶頂を迎えてしまう。
+		PRINTFORML ぴくぴくと痙攣する%조사처리(PRINT_CALLNAME(TARGET),"를")%よそに、
 	ELSE
 		PRINTFORML くと、やがて先端が膣外へと顔を出し、
 	ENDIF
 	PRINTFORML 幼体は元気にぴぎぃと産声を上げて這いずり出てきた・・・
 ELSE
-	PRINTFORML 身重になった%PRINT_CALLNAME(TARGET)%を無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
+	PRINTFORML 身重になった%조사처리(PRINT_CALLNAME(TARGET),"를")%無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
 	PRINTFORML Ｍの字に開脚させた状態で縛り付けた。
 	PRINTFORML 出産を促すために%PRINT_CALLNAME(TARGET)%の腹部を촉수が撫でまわすと同時に、
 	PRINTFORML 細い촉수を数本질내へと侵入させて子宮口を突きつつ産道を少し拡げる。
-	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%PRINT_CALLNAME(TARGET)%は産気づいたらしく、
+	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%조사처리(PRINT_CALLNAME(TARGET),"는")%産気づいたらしく、
 	IF TALENT:주관시점 > 0
 		PRINTFORML 胎内から感じる強烈な圧迫感と違和感に、苦悶の声を漏らしてしまった・・・
 	ELSEIF TALENT:감정결여 > 0
@@ -120,15 +120,15 @@ ELSE
 ENDIF
 PRINTW 
 IF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3 && TALENT:주관시점 > 0
-	PRINTFORML 筆舌し難い고통にも関わらず、%PRINT_CALLNAME(TARGET)%は強い황홀を感じてしまう。
+	PRINTFORML 筆舌し難い고통にも関わらず、%조사처리(PRINT_CALLNAME(TARGET),"는")%強い황홀を感じてしまう。
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は筆舌し難い고통に声無き叫びを上げてしまう。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%筆舌し難い고통に声無き叫びを上げてしまう。
 ELSEIF TALENT:감정결여 > 0
-	PRINTFORML 表情に変化はなくとも、%PRINT_CALLNAME(TARGET)%は고통を感じている様子だ。
+	PRINTFORML 表情に変化はなくとも、%조사처리(PRINT_CALLNAME(TARGET),"는")%고통を感じている様子だ。
 ELSEIF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3
-	PRINTFORML 筆舌し難い고통にも関わらず、%PRINT_CALLNAME(TARGET)%は황홀の表情を浮かべている。
+	PRINTFORML 筆舌し難い고통にも関わらず、%조사처리(PRINT_CALLNAME(TARGET),"는")%황홀の表情を浮かべている。
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は筆舌し難い고통に声無き叫びを上げている。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%筆舌し難い고통に声無き叫びを上げている。
 ENDIF
 IF ARG > 1
 	PRINTFORML 촉수の幼体を産み落とした%PRINT_CALLNAME(TARGET)%の腹部はまだ大きく膨れており、
@@ -149,29 +149,29 @@ ELSE
 ENDIF
 PRINTW 
 IF TALENT:촉수의포로 > 0 && TALENT:주관시점 > 0
-	PRINTFORML 身も心も촉수の苗床妻となってしまった%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 身も心も촉수の苗床妻となってしまった%조사처리(PRINT_CALLNAME(TARGET),"는")%、
 	PRINTFORML 乳首にむしゃぶり着く我が子の姿に、愛おしさを感じてしまう・・・
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は体の底から湧き上がるような母性に任せて、そっと子供たちを撫でてやった。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%体の底から湧き上がるような母性に任せて、そっと子供たちを撫でてやった。
 ELSEIF TALENT:촉수의포로 > 0
-	PRINTFORML 身も心も촉수の苗床妻となった%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 身も心も촉수の苗床妻となった%조사처리(PRINT_CALLNAME(TARGET),"는")%、
 	PRINTFORML 乳首にむしゃぶり着く我が子を愛おしそうに撫でている・・・
 ELSEIF ABL:욕망 >= 4 && TALENT:주관시점 > 0
-	PRINTFORML 出産と同時に数度の絶頂を迎えてしまった%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 出産と同時に数度の絶頂を迎えてしまった%조사처리(PRINT_CALLNAME(TARGET),"는")%、
 	PRINTFORML 肩で息をしながら황홀に浸った・・・
 ELSEIF ABL:욕망 >= 4
-	PRINTFORML 出産と同時に数度の絶頂を迎えた%PRINT_CALLNAME(TARGET)%は、
+	PRINTFORML 出産と同時に数度の絶頂を迎えた%조사처리(PRINT_CALLNAME(TARGET),"는")%、
 	PRINTFORML 肩で息をしながら황홀としている・・・
 ELSEIF ABL:봉사정신 >= 3 && TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は疲労のために肩で息をしながらも、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%疲労のために肩で息をしながらも、
 	PRINTFORML 乳首にむしゃぶり着く我が子をそっと撫でてやった・・・
 ELSEIF ABL:봉사정신 >= 3
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は疲労のために肩で息をしながらも、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%疲労のために肩で息をしながらも、
 	PRINTFORML 乳首にむしゃぶり着く我が子をそっと撫でた・・・
 ELSEIF TALENT:감정결여 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は疲労で肩で息をしながらも
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%疲労で肩で息をしながらも
 	PRINTFORML 這いまわる새끼 촉수の様子を無表情に見つめている・・・
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は湧き上がる절망感を抑えきれず、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%湧き上がる절망感を抑えきれず、
 	PRINTFORML 肩で息をしている%PRINT_CALLNAME(TARGET)%の頬を一筋の涙が伝っていく・・・
 ELSE
 	PRINTFORML %PRINT_CALLNAME(TARGET)%の目からは光が消え、
@@ -191,7 +191,7 @@ IF TALENT:촉수의포로 > 0 && TALENT:주관시점 > 0
 	PRINTFORML 出産の痛みを堪えながらも、%PRINT_CALLNAME(TARGET)%の心は
 	PRINTFORML どこか言いようのない寂しさを感じていた・・・
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は歯を食いしばって出産の痛みに耐えようとするも
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%歯を食いしばって出産の痛みに耐えようとするも
 	PRINTFORML あまりの衝撃に、唇の端から고통の喘ぎを漏らしてしまう・・・
 ELSEIF TALENT:감정결여 > 0
 	PRINTFORML 無表情のままだが陣痛は感じているのか
@@ -200,7 +200,7 @@ ELSEIF TALENT:촉수의포로 > 0
 	PRINTFORML 出産の痛みに견딘다%PRINT_CALLNAME(TARGET)%の表情には
 	PRINTFORML どこか悲しみのようなものが浮かんでいる・・・
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は歯を食いしばって出産の痛みに耐えようとするも
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%歯を食いしばって出産の痛みに耐えようとするも
 	PRINTFORML その唇の端からは고통の喘ぎが漏れている・・・
 ENDIF
 PRINTL 
@@ -214,12 +214,12 @@ PRINTFORML 完全に産まれ落ちる前に全身を大きく波打たせて%PR
 IF TALENT:주관시점 > 0
 	PRINTFORML %PRINT_CALLNAME(TARGET)%の体は予想もできない常軌を逸した고통と快楽に延々とさらされ
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は予想もできない常軌を逸した고통と快楽に延々とさらされ
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%予想もできない常軌を逸した고통と快楽に延々とさらされ
 ENDIF
 PRINTFORML 痙攣し始めた・・・
 PRINTW
 PRINTFORML 母体の押し出す力に%STR:2500%の幼体は抵抗し何度も질내を荒々しくブラシを掛けて登っていき、
-PRINTFORM そのたびに%PRINT_CALLNAME(TARGET)%は
+PRINTFORM そのたびに%조사처리(PRINT_CALLNAME(TARGET),"는")%
 SIF TALENT:모유체질 == 1
 	PRINT 母乳を噴きあげながら
 IF TALENT:주관시점 > 0
@@ -229,19 +229,19 @@ ELSE
 ENDIF
 PRINTW
 IF ARG > 1
-	PRINTFORML 永遠とも思える時間が過ぎた後、%PRINT_CALLNAME(TARGET)%は気を失いかけながらも
+	PRINTFORML 永遠とも思える時間が過ぎた後、%조사처리(PRINT_CALLNAME(TARGET),"는")%気を失いかけながらも
 	SIF ARG > 2
 		PRINTFORM {ARG}匹目の
 	PRINTFORM %STR:2500%の幼体を産み終えると、
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が気を失いかけながらも%STR:2500%の幼体を産み落とすと、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%気を失いかけながらも%STR:2500%の幼体を産み落とすと、
 ENDIF
-PRINTFORML %PRINT_CALLNAME(TARGET)%はそのまま意識が遠のいて行った・・・
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%そのまま意識が遠のいて行った・・・
 PRINTW
 IF GAME_OPTION_CHECK_F(OPTION_solo)
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が気を失っている間、%STR:2500%の幼体は施設の自動駆除機能によって処理された。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%気を失っている間、%STR:2500%の幼体は施設の自動駆除機能によって処理された。
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が気を失っている間、%STR:2500%の幼体は仲間達の手によって処理された。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%気を失っている間、%STR:2500%の幼体は仲間達の手によって処理された。
 ENDIF
 PRINTW 
 
@@ -259,14 +259,14 @@ IF RAND:2 == 0 && (CONFIG_CHECK_MANIAC_F(14) == 1)
 	ELSEIF TALENT:감정결여 > 0
 		PRINTFORML 叫び声ひとつ上げない%PRINT_CALLNAME(TARGET)%の膣奥を촉수が一突きすると、
 	ELSE
-		PRINTFORML 激しい痛みに고통の叫びを上げる%PRINT_CALLNAME(TARGET)%を無視して촉수が膣奥を一突きすると、
+		PRINTFORML 激しい痛みに고통の叫びを上げる%조사처리(PRINT_CALLNAME(TARGET),"를")%無視して촉수が膣奥を一突きすると、
 	ENDIF
 	PRINTFORML 水門が決壊したかのように羊水が流れ出していく。
 	IF TALENT:감정결여 > 0
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 	ELSE
 		IF TALENT:전락 > 0
-			PRINTFORML 甘く泣き叫ぶ%PRINT_CALLNAME(TARGET)%は全身を縛り上げられ、
+			PRINTFORML 甘く泣き叫ぶ%조사처리(PRINT_CALLNAME(TARGET),"는")%全身を縛り上げられ、
 		ELSE
 			PRINTFORML たまらず泣き叫ぶ%PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 		ENDIF
@@ -279,7 +279,7 @@ IF RAND:2 == 0 && (CONFIG_CHECK_MANIAC_F(14) == 1)
 	PRINTFORML そのまま力任せに引っ張り始める。
 	PRINTFORM ずるり、ずるりと胎児が産道を引き摺られてい
 	IF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3 || TALENT:전락 > 0
-		PRINTFORML く感触に%PRINT_CALLNAME(TARGET)%はたまらず絶頂を迎えてしまう。
+		PRINTFORML く感触に%조사처리(PRINT_CALLNAME(TARGET),"는")%たまらず絶頂を迎えてしまう。
 		PRINTFORM ぴくぴくと痙攣する%PRINT_CALLNAME(TARGET)%の膣口から
 		PRINTFORML やがて赤子の頭の先端が膣外へと姿を現し、
 		PRINTFORML 次いで全身が転がるように滑り出た・・・
@@ -289,11 +289,11 @@ IF RAND:2 == 0 && (CONFIG_CHECK_MANIAC_F(14) == 1)
 		PRINTFORML 次いで全身が転がるように滑り出た・・・
 	ENDIF
 ELSE
-	PRINTFORML 身重になった%PRINT_CALLNAME(TARGET)%を無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
+	PRINTFORML 身重になった%조사처리(PRINT_CALLNAME(TARGET),"를")%無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
 	PRINTFORML Ｍの字に開脚させた状態で縛り付けた。
 	PRINTFORML 出産を促すために%PRINT_CALLNAME(TARGET)%の腹部を촉수が撫でまわすと同時に、
 	PRINTFORML 細い촉수を数本질내へと侵入させて子宮口を突きつつ産道を少し拡げる。
-	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%PRINT_CALLNAME(TARGET)%は産気づいたらしく、
+	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%조사처리(PRINT_CALLNAME(TARGET),"는")%産気づいたらしく、
 	IF TALENT:감정결여 > 0 || TALENT:주관시점 > 0
 		PRINTFORML ビクリと手足を強張らせ、いきみ始めた・・・
 	ELSEIF TALENT:전락 > 0
@@ -311,13 +311,13 @@ IF CFLAG:6 >= 0 && TALENT:주관시점 > 0
 	PRINTFORML %PRINT_CALLNAME(TARGET)%の産み落とした子供は、
 	PRINTFORML ごく普通の赤ん坊の姿をしている・・・
 ELSEIF CFLAG:6 >= 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産んだ子供が
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産んだ子供が
 	PRINTFORML おぞましい怪物でないことに気付いたようだ・・・
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落とした我が子の姿を見ようと、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落とした我が子の姿を見ようと、
 	PRINTFORML ゆっくりと首を持ち上げた・・・
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落としたのが
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落としたのが
 	PRINTFORML 自分の子供であることに気付いたようだ・・・
 ENDIF
 PRINTW 
@@ -336,15 +336,15 @@ ELSEIF TALENT:주관시점 > 0
 	PRINTFORML 目の前に写るのは、名状しがたき異形の仔
 	PRINTFORML ソレ は確かにあなたから産み落とされたはずだった
 	PRINTFORML しかし、おぞましい産声を上げる ソレ は地球上にいるあらゆる生物の特徴にも似ておらず、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%はついに、自らが産み落とした ソレ が、何なのか理解できなかった
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%ついに、自らが産み落とした ソレ が、何なのか理解できなかった
 ELSEIF TALENT:감정결여 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産んだ子供の
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産んだ子供の
 	PRINTFORML 様子がおかしいことに気付いたようだ・・・
 ELSEIF CFLAG:6 >= 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産んだ子供の
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産んだ子供の
 	PRINTFORML 様子がおかしいことに気付き、表情を引き攣らせた・・・
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落としたのが
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落としたのが
 	PRINTFORML 何なのか理解できずに表情を引き攣らせた・・・
 ENDIF
 RESETCOLOR
@@ -391,51 +391,51 @@ ENDIF
 IF TALENT:전락 > 0
 	PRINTFORML %STR:2500%様の力強い仔が生まれた喜びに浸りながら、
 	IF TALENT:주관시점 > 0
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は「自らの子供」を慈愛を込めて見つめた・・・
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%「自らの子供」を慈愛を込めて見つめた・・・
 	ELSE
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の心は慈愛に満ちていた・・・
 	ENDIF
 	PRINTW 
-	PRINTFORML %PRINT_CALLNAME(TARGET)%がそっと ソレ に触れて胸に抱き寄せると、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%そっと ソレ に触れて胸に抱き寄せると、
 	PRINTFORML まだ臍の緒が繋がったままの異形の怪物は、しっかりと身体に絡み付きはじめた・・・
 ELSEIF TALENT:감정결여 > 0
 	PRINTFORML おぞましい怪物を産み落としたにも関わらず、
 	PRINTFORML %PRINT_CALLNAME(TARGET)%の表情に変化は見られない・・・
 	PRINTW 
 	PRINTFORML まだ臍の緒が繋がったままの異形の赤子が産声を上げると、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は事務的な動きで赤子を抱きあげた・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%事務的な動きで赤子を抱きあげた・・・
 ELSEIF CFLAG:6 == -1
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落としたのがいったい何なのか理解できない・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落としたのがいったい何なのか理解できない・・・
 	PRINTW 
 	PRINTFORML まだ臍の緒が繋がったままの異形の赤子が産声を上げると、
 	IF TALENT:주관시점
-		PRINTFORML 공포と嫌悪感が最高潮に達し、%PRINT_CALLNAME(TARGET)%は悲痛な叫び声を上げてしまった・・・
+		PRINTFORML 공포と嫌悪感が最高潮に達し、%조사처리(PRINT_CALLNAME(TARGET),"는")%悲痛な叫び声を上げてしまった・・・
 	ELSE
 		PRINTFORML 공포と嫌悪感が最高潮に達した%PRINT_CALLNAME(TARGET)%の悲痛な叫びが周囲に木霊した・・・
 	ENDIF
 ELSEIF TALENT:촉수의포로 > 0 || ABL:촉수중독 >= 2
 	PRINTFORML おぞましい怪物を産み落としたにも関わらず、
 	IF TALENT:주관시점 > 0
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は確かに「我が子」に母性を感じていた・・・
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%確かに「我が子」に母性を感じていた・・・
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は母性を感じているらしい・・・
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%母性を感じているらしい・・・
 	ENDIF
 	PRINTW 
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は優しく抱きあげて胸元へ引き寄せると、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%優しく抱きあげて胸元へ引き寄せると、
 	PRINTFORML まだ臍の緒が繋がったままの異形の赤子が産声を上げた・・・
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自身がおぞましい怪物を産み落としたという事実を、目の前に突きつけられる・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自身がおぞましい怪物を産み落としたという事実を、目の前に突きつけられる・・・
 	PRINTW 
 	PRINTFORML まだ臍の緒が繋がったままの異形の赤子が産声を上げると同時に
-	PRINTFORML 공포と嫌悪感が最高潮に達し、%PRINT_CALLNAME(TARGET)%は悲痛な叫び声を上げてしまった・・・
+	PRINTFORML 공포と嫌悪感が最高潮に達し、%조사처리(PRINT_CALLNAME(TARGET),"는")%悲痛な叫び声を上げてしまった・・・
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自身がおぞましい怪物を産み落としたことに愕然としている・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自身がおぞましい怪物を産み落としたことに愕然としている・・・
 	PRINTW 
 	PRINTFORML まだ臍の緒が繋がったままの異形の赤子が産声を上げると、
 	PRINTFORML 공포と嫌悪感が最高潮に達した%PRINT_CALLNAME(TARGET)%の悲痛な叫びが周囲に木霊した・・・
 ENDIF
 PRINTW 
-PRINTFORML %PRINT_CALLNAME(TARGET)%は「子供」を{ARG}匹産み落としました
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%「子供」を{ARG}匹産み落としました
 
 ;--------------------------------
 ;子供出産(유폐時）
@@ -452,14 +452,14 @@ IF RAND:2 == 0 && (CONFIG_CHECK_MANIAC_F(14) == 1)
 	ELSEIF TALENT:감정결여 > 0
 		PRINTFORML 叫び声ひとつ上げない%PRINT_CALLNAME(TARGET)%の膣奥を촉수が一突きすると、
 	ELSE
-		PRINTFORML 激しい痛みに고통の叫びを上げる%PRINT_CALLNAME(TARGET)%を無視して촉수が膣奥を一突きすると、
+		PRINTFORML 激しい痛みに고통の叫びを上げる%조사처리(PRINT_CALLNAME(TARGET),"를")%無視して촉수が膣奥を一突きすると、
 	ENDIF
 	PRINTFORML 水門が決壊したかのように羊水が流れ出していく。
 	IF TALENT:감정결여 > 0
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 	ELSE
 		IF TALENT:전락 > 0
-			PRINTFORML 甘く泣き叫ぶ%PRINT_CALLNAME(TARGET)%は全身を縛り上げられ、
+			PRINTFORML 甘く泣き叫ぶ%조사처리(PRINT_CALLNAME(TARGET),"는")%全身を縛り上げられ、
 		ELSE
 			PRINTFORML たまらず泣き叫ぶ%PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 		ENDIF
@@ -472,18 +472,18 @@ IF RAND:2 == 0 && (CONFIG_CHECK_MANIAC_F(14) == 1)
 	PRINTFORML そのまま力任せに引っ張り始める。
 	PRINTFORM ずるり、ずるりと胎児が産道を引き摺られてい
 	IF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3 || TALENT:전락
-		PRINTFORML く感触に%PRINT_CALLNAME(TARGET)%はたまらず絶頂を迎えてしまう。
+		PRINTFORML く感触に%조사처리(PRINT_CALLNAME(TARGET),"는")%たまらず絶頂を迎えてしまう。
 		PRINTFORM ぴくぴくと痙攣する%PRINT_CALLNAME(TARGET)%の膣口から
 	ELSE
 		PRINTFORML くと、
 	ENDIF
 	PRINTFORML やがて赤子の頭の先端が膣外へと姿を現し、次いで全身が転がるように滑り出た・・・
 ELSE
-	PRINTFORML 身重になった%PRINT_CALLNAME(TARGET)%を無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
+	PRINTFORML 身重になった%조사처리(PRINT_CALLNAME(TARGET),"를")%無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
 	PRINTFORML Ｍの字に開脚させた状態で縛り付けた。
 	PRINTFORML 出産を促すために%PRINT_CALLNAME(TARGET)%の腹部を촉수が撫でまわすと同時に、
 	PRINTFORML 細い촉수を数本질내へと侵入させて子宮口を突きつつ産道を少し拡げる。
-	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%PRINT_CALLNAME(TARGET)%は産気づいたらしく、
+	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%조사처리(PRINT_CALLNAME(TARGET),"는")%産気づいたらしく、
 	IF TALENT:주관시점 > 0
 		PRINTFORML 胎内から感じる強烈な圧迫感と違和感に、思わず苦悶の声を上げてしまう・・・
 	ELSEIF TALENT:감정결여 > 0
@@ -503,28 +503,28 @@ IF CFLAG:6 >= 0 && TALENT:주관시점 > 0
 	PRINTFORML %PRINT_CALLNAME(TARGET)%の産み落とした子供は、
 	PRINTFORML ごく普通の赤ん坊の姿をしている・・・
 ELSEIF CFLAG:6 >= 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産んだ子供が
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産んだ子供が
 	PRINTFORML おぞましい怪物でないことに気付いたようだ・・・
 ELSEIF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落とした我が子の姿を見ようと、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落とした我が子の姿を見ようと、
 	PRINTFORML ゆっくりと首を持ち上げた・・・
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は自分が産み落としたのが
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%自分が産み落としたのが
 	PRINTFORML 自分の子供であることに気付いたようだ・・・
 ENDIF
 PRINTW 
 CALL DOT_AFTER, 2
 PRINTL 
 IF TALENT:전락 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、촉수様の仔を産めなかった事実にがっかりしている・・・
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、촉수様の仔を産めなかった事実にがっかりしている・・・
 	PRINTFORML だが、腕の中で泣いている赤ん坊を見つめるうちに、その表情に変化が生じた。
 	PRINTFORML 「この子も私のように%STR:2500%様に完全굴복する運命にある」と。
 	PRINTL 
 	PRINTFORML 세뇌されるかもしれない、흑화するかもしれない、侵攻の尖兵となるかもしれない。
 	PRINTFORML 凌辱され、改造され、出産のための孕み袋と化し、食料として生を終えるかもしれない。
 	PRINTL 
-	PRINTFORML 母親として、%PRINT_CALLNAME(TARGET)%は自分の子が%STR:2500%様に完全支配される運命を辿ると信じていた。
-	PRINTFORML おぞましい未来を思い浮かべ、今や%PRINT_CALLNAME(TARGET)%は誇りすら感じている・・・
+	PRINTFORML 母親として、%조사처리(PRINT_CALLNAME(TARGET),"는")%自分の子が%STR:2500%様に完全支配される運命を辿ると信じていた。
+	PRINTFORML おぞましい未来を思い浮かべ、今や%조사처리(PRINT_CALLNAME(TARGET),"는")%誇りすら感じている・・・
 ELSEIF TALENT:감정결여 > 0 && TALENT:주관시점 == 0
 	PRINTFORML 自身と臍の緒で繋がったままの幼く小さな命を抱き上げる%PRINT_CALLNAME(TARGET)%。
 	PRINTFORML その瞳の中に感情らしい感情が浮かぶことはなかったが、
@@ -543,7 +543,7 @@ ELSEIF TALENT:촉수의포로 > 0 && TALENT:주관시점 > 0
 	PRINTFORML この子は紛れも無く%PRINT_CALLNAME(TARGET)%の娘なのだ・・・
 	PRINTL 
 	PRINTFORML 母として何もしてやれないことを悔やみながらも、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は我が子の温もりを心に刻みつけようと、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%我が子の温もりを心に刻みつけようと、
 	PRINTFORML 腕の中に抱き締めた・・・
 ELSEIF TALENT:촉수의포로 > 0
 	PRINTFORML 弱弱しく泣く赤子を%PRINT_CALLNAME(TARGET)%の指が優しく撫でている。
@@ -552,7 +552,7 @@ ELSEIF TALENT:촉수의포로 > 0
 		PRINTFORML しかしその表情は酷薄な笑みの形に歪んでおり、
 		PRINTFORML 子を慈しむ母親の表情にしてはあまりに妖艶すぎる・・・
 		PRINTL 
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は我が子を抱きしめながら額に口づけをし、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%我が子を抱きしめながら額に口づけをし、
 		PRINTFORML 大きくなったらあなたも촉수様の忠実な僕として働くのよ、と
 		PRINTFORML 言って聞かせている・・・
 	;유폐中
@@ -561,7 +561,7 @@ ELSEIF TALENT:촉수의포로 > 0
 		PRINTFORML この子は紛れも無く%PRINT_CALLNAME(TARGET)%の娘なのだ・・・
 		PRINTL 
 		PRINTFORML 母として何もしてやれないことを悔やみながらも、
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は我が子の温もりを心に刻みつけようと、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%我が子の温もりを心に刻みつけようと、
 		PRINTFORML 腕の中に抱き締めた・・・
 	ENDIF
 ELSE
@@ -571,7 +571,7 @@ ELSE
 		PRINTFORML 安らかな我が子の寝顔にそのような悲惨な未来を幻視してしまい、
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の心は罪悪感で満たされていく・・・
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は曇りきった瞳で自分の子供に対して
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%曇りきった瞳で自分の子供に対して
 		PRINTFORML 掠れている声で延々と謝罪をつぶやいている・・・
 	ENDIF
 	PRINTL 
@@ -595,14 +595,14 @@ IF RAND:2 == 0
 	ELSEIF TALENT:감정결여 > 0
 		PRINTFORML 叫び声ひとつ上げない%PRINT_CALLNAME(TARGET)%の膣奥を촉수が一突きすると、
 	ELSE
-		PRINTFORML 激しい痛みに고통の叫びを上げる%PRINT_CALLNAME(TARGET)%を無視して촉수が膣奥を一突きすると、
+		PRINTFORML 激しい痛みに고통の叫びを上げる%조사처리(PRINT_CALLNAME(TARGET),"를")%無視して촉수が膣奥を一突きすると、
 	ENDIF
 	PRINTFORML 水門が決壊したかのように羊水が流れ出していく。
 	IF TALENT:감정결여 > 0
 		PRINTFORML %PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 	ELSE
 		IF TALENT:전락 > 0
-			PRINTFORML 甘く泣き叫ぶ%PRINT_CALLNAME(TARGET)%は全身を縛り上げられ、
+			PRINTFORML 甘く泣き叫ぶ%조사처리(PRINT_CALLNAME(TARGET),"는")%全身を縛り上げられ、
 		ELSE
 			PRINTFORML たまらず泣き叫ぶ%PRINT_CALLNAME(TARGET)%の手足が抑えつけられ、
 		ENDIF
@@ -615,18 +615,18 @@ IF RAND:2 == 0
 	PRINTFORML そのまま力任せに引っ張り始める。
 	PRINTFORM ずるり、ずるりと胎児が産道を引き摺られてい
 	IF TALENT:촉수의포로 > 0 || ABL:욕망 >= 4 || ABL:마조끼 >= 3 || TALENT:전락
-		PRINTFORML く感触に%PRINT_CALLNAME(TARGET)%はたまらず絶頂を迎えてしまう。
+		PRINTFORML く感触に%조사처리(PRINT_CALLNAME(TARGET),"는")%たまらず絶頂を迎えてしまう。
 		PRINTFORM ぴくぴくと痙攣する%PRINT_CALLNAME(TARGET)%の膣口から
 	ELSE
 		PRINTFORML くと、
 	ENDIF
 	PRINTFORML やがて赤子の頭の先端が膣外へと姿を現し、次いで全身が転がるように滑り出た・・・
 ELSE
-	PRINTFORML 身重になった%PRINT_CALLNAME(TARGET)%を無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
+	PRINTFORML 身重になった%조사처리(PRINT_CALLNAME(TARGET),"를")%無数の촉수が絡み合って出来た分娩台の上へと連れて行き、
 	PRINTFORML Ｍの字に開脚させた状態で縛り付けた。
 	PRINTFORML 出産を促すために%PRINT_CALLNAME(TARGET)%の腹部を촉수が撫でまわすと同時に、
 	PRINTFORML 細い촉수を数本질내へと侵入させて子宮口を突きつつ産道を少し拡げる。
-	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%PRINT_CALLNAME(TARGET)%は産気づいたらしく、
+	PRINTFORML その甲斐があったのだろうか。愛撫されているうちに%조사처리(PRINT_CALLNAME(TARGET),"는")%産気づいたらしく、
 	IF TALENT:주관시점 > 0
 		PRINTFORML 胎内から感じる強烈な圧迫感と違和感に、思わず苦悶の声が漏れる・・・
 	ELSEIF TALENT:감정결여 > 0
@@ -647,7 +647,7 @@ PRINTL
 PRINTFORML 出産の고통と疲労で息も絶え絶えの%PRINT_CALLNAME(TARGET)%の途切れそうな意識を、
 PRINTFORML か弱い赤子の泣き声が現実に引き戻した。
 IF TALENT:전락 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は泣いている赤子を冷淡な目で見つめた。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%泣いている赤子を冷淡な目で見つめた。
 	PRINTFORML ・・・コレは%STR:2500%様の子ではない。
 ELSE
 	PRINTFORML 我が子を守らなくてはという、その気持ちだけで必死に腕を伸ばす%PRINT_CALLNAME(TARGET)%。
@@ -665,12 +665,12 @@ PRINTW
 PRINTFORML 遠ざかっていく赤子の細い声と共に、%PRINT_CALLNAME(TARGET)%の意識は今度こそ薄れていった・・・
 PRINTW 
 @MESSAGE_CHILD_PRAYER
-PRINTFORML %PRINT_CALLNAME(TARGET)%は我が子の無事を祈り、名前を心の中で反芻した・・・
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%我が子の無事を祈り、名前を心の中で反芻した・・・
 PRINTW
 
 
 @MESSAGE_CHILD_GIVEUP
-PRINTFORML %PRINT_CALLNAME(TARGET)%は瞑目し、心の中で我が子に別れを告げた・・・
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%瞑目し、心の中で我が子に別れを告げた・・・
 PRINTW
 
 
@@ -682,11 +682,11 @@ PRINTL
 PRINTFORMW %PRINT_CALLNAME(TARGET)%の出産の時がやってきた・・・
 PRINTL 
 IF TALENT:번식자루 > 0
-	PRINTFORML 意識を失った%PRINT_CALLNAME(TARGET)%は体を痙攣させ、喉で本能的なゴボゴボという音を立てた・・・
+	PRINTFORML 意識を失った%조사처리(PRINT_CALLNAME(TARGET),"는")%体を痙攣させ、喉で本能的なゴボゴボという音を立てた・・・
 	PRINTL 
 	CALL DOT_AFTER, 2
 	PRINTL 
-	PRINTFORML 永遠とも思える長い時間の後、%PRINT_CALLNAME(TARGET)%は醜悪な怪物ではなく、인간の子供を産んだ・・・
+	PRINTFORML 永遠とも思える長い時間の後、%조사처리(PRINT_CALLNAME(TARGET),"는")%醜悪な怪物ではなく、인간の子供を産んだ・・・
 ELSE
 	IF TALENT:감정결여 > 0
 		PRINTFORML 筆舌し難い고통にも関わらず叫び声一つ上げない%PRINT_CALLNAME(TARGET)%だったが、
@@ -698,7 +698,7 @@ ELSE
 	PRINTW 
 	PRINTFORML 永遠とも思える時間が過ぎ、
 	PRINTFORML ついに%PRINT_CALLNAME(TARGET)%から完全に子供が外の世界に産み出されると、
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は複雑な表情で自分が産んだ子供がおぞましい怪物でないことに
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%複雑な表情で自分が産んだ子供がおぞましい怪物でないことに
 	PRINTFORML 安堵の息をついた。
 	PRINTW
 	IF TALENT:왜소함 > 0
@@ -724,7 +724,7 @@ PRINTW
 PRINTFORML 永遠とも思える時間が過ぎ、
 PRINTFORML ついに%PRINT_CALLNAME(TARGET)%から完全に子供が外の世界に産み出される。
 PRINTFORML しばしの沈黙を経て聞こえてきた赤子の産声に、
-PRINTFORML %PRINT_CALLNAME(TARGET)%は半ば無意識に安堵の息をついていた。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%半ば無意識に安堵の息をついていた。
 PRINTW
 IF RAND:2 == 0
 	PRINTL 「頑張りましたねー。はい、元気な女の子ですよー」
@@ -742,16 +742,16 @@ ENDIF
 PRINTW 
 
 @MESSAGE_CHILD_CRADLE
-PRINTFORML %PRINT_CALLNAME(TARGET)%は何があろうと自分の手で子供を育て上げることを誓った。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%何があろうと自分の手で子供を育て上げることを誓った。
 PRINTW
-PRINTFORML 　　 %PRINT_CALLNAME(TARGET)%はしばらく育児にかかりきりになるので命令を出せません。
+PRINTFORML 　　 %조사처리(PRINT_CALLNAME(TARGET),"는")%しばらく育児にかかりきりになるので命令を出せません。
 PRINTW 
 
 @MESSAGE_CHILD_ASLYM
 IF TALENT:번식자루 >0 || TALENT:사지결손 > 0
 	PRINTFORMW %PRINT_CALLNAME(TARGET)%の身体ではわが子を育てることなどできず、子供は施設で養育されることになった・・・
 ELSE
-	PRINTFORMW %PRINT_CALLNAME(TARGET)%は戦いに巻き込まないためにも、せめてこの子には幸せになってもらおうと我が子を施設に預けた・・・
+	PRINTFORMW %조사처리(PRINT_CALLNAME(TARGET),"는")%戦いに巻き込まないためにも、せめてこの子には幸せになってもらおうと我が子を施設に預けた・・・
 ENDIF
 
 

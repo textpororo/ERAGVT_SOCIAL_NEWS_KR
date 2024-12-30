@@ -9,7 +9,7 @@
 PRINTFORML 近くの区域で突如として地面が陥没し、大規模な촉수の巣が出現したらしい。
 PRINTFORML 集団下校中の女子生徒らが湧き出した촉수に連れ去られ、巣の奥へと連れ去られてしまったようだ。
 PRINTFORML 緊急出動した特殊部隊も溢れた촉수の対処に手一杯で、触巣内部まで突入する余裕がない。
-PRINTFORML %PRINT_CALLNAME(TARGET)%が今すぐ先行して助けに行かなければ、攫われた少女たちは犠牲になるだろう。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%今すぐ先行して助けに行かなければ、攫われた少女たちは犠牲になるだろう。
 SETCOLORBYNAME HOTPINK
 PRINTFORML 触巣深部では通信が阻害されてしまうため、満足な支援は望めないが……
 RESETCOLOR
@@ -18,11 +18,11 @@ PRINTFORML それでも危険を承知で助けに行くべきだろうか？
 
 @EVENT_BATTLE_RESCUE_5
 PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわけにはいかない。
-PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%意を決して現場に向かうことにした……
 
 @EVENT_BATTLE_ABANDON_5
 PRINTFORML 不確定要素も多く、退路すら万全でない状態で촉수の巣に踏み込むのは自殺行為だ。
-PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
+PRINTFORML 状況から判断した結果、%조사처리(PRINT_CALLNAME(TARGET),"는")%助けに行かないという決断を下した……
 ;ニュース記事に(失敗時使い回し)
 if !FLAG:60
 	FLAG:60=100000+FLAG:45
@@ -38,11 +38,11 @@ PRINTFORML …地上は完全な混戦状態で、特殊部隊をもってして
 PRINTFORML 単身突入する%PRINT_CALLNAME(TARGET)%の背後で増援を誓った彼らだったが、おそらく揮発には間に合わないだろう。
 PRINTW 
 PRINTFORML 触巣に進入してしばらくすると、外部との通信も途切れてしまった。
-PRINTFORML 今の%PRINT_CALLNAME(TARGET)%は完全な孤立無援であり、もしも敗けて捕獲されれば救助など到底望めない…
+PRINTFORML 今の%조사처리(PRINT_CALLNAME(TARGET),"는")%完全な孤立無援であり、もしも敗けて捕獲されれば救助など到底望めない…
 PRINTFORML 陽光の届かない巣の内部は想像以上に深く、촉수被害女性の侵蝕された膣道を思わせる不気味な肉壁に覆われていた。
 PRINTFORML ぐねぐねと蠢く無数の촉수が繊毛のように肉の床や壁面を覆い、一瞬でも油断すれば足を取られてしまいそうだ。
 PRINTW 
-PRINTFORML 不気味に発光する촉수が照らす薄暗い洞窟を%PRINT_CALLNAME(TARGET)%が警戒しながら進むうち、
+PRINTFORML 不気味に発光する촉수が照らす薄暗い洞窟を%조사처리(PRINT_CALLNAME(TARGET),"가")%警戒しながら進むうち、
 PRINTFORML 脈動する壁や床から漏れ出す悪臭が次第に強まってきた。
 PRINTFORML やがて촉수の蠢動や精液の汚臭に混じり、洞窟の奥から女性の悲鳴らしき声が複数聞こえ始める。
 PRINTFORML それらが攫われた女生徒たちの声であるなら、残された時間はあまり多くないようだが……
@@ -55,11 +55,11 @@ $INPUT_LOOP_2_1
 INPUT
 IF RESULT == 0
 	PRINTFORML ……悲鳴が嬌声へ変わる前に、攫われた少女たちに追い付かなければ。
-	PRINTFORML そう判断した%PRINT_CALLNAME(TARGET)%は、本来守るべき警戒を多少犠牲にして突入速度を早めた。
+	PRINTFORML そう判断した%조사처리(PRINT_CALLNAME(TARGET),"는")%、本来守るべき警戒を多少犠牲にして突入速度を早めた。
 	PRINTW 
 	LOCAL = BASE:지성 + BASE:민첩
 	IF LOCAL >= 300
-		PRINTFORML 足元から伸びてきた촉수を%PRINT_CALLNAME(TARGET)%が素早く薙ぎ払うと、촉수はドロリと溶けて細切れになった。
+		PRINTFORML 足元から伸びてきた촉수を%조사처리(PRINT_CALLNAME(TARGET),"가")%素早く薙ぎ払うと、촉수はドロリと溶けて細切れになった。
 		IF ISMALE()
 			;#region
 			PRINTFORML 十分に予想できた罠とはいえ、洞窟への侵入者を無事に進ませる気はないようだ。
@@ -72,7 +72,7 @@ IF RESULT == 0
 	ELSE
 		PRINTFORML …焦りが原因だろうか、足元から伸びる촉수に反応できず、絡みつかれて転倒してしまった！
 		PRINTFORML 촉수が%PRINT_CALLNAME(TARGET)%の胸や腰を撫でまわし、股間にも伸びて先端を擦りつけてくる。
-		PRINTFORML 何とか촉수を振り解き立ち上がる頃には、%PRINT_CALLNAME(TARGET)%は全身を粘液まみれにされてしまっていた……
+		PRINTFORML 何とか촉수を振り解き立ち上がる頃には、%조사처리(PRINT_CALLNAME(TARGET),"는")%全身を粘液まみれにされてしまっていた……
 		PRINTL 
 		LOCAL = MAX(BASE:성내성 / 10, 10) + RAND:3
 		BASE:성내성 = MAX(BASE:성내성 - LOCAL, 0)
@@ -85,7 +85,7 @@ IF RESULT == 0
 	턴상한=20
 ELSEIF RESULT == 1
 	PRINTFORML ……焦りのせいで全員の救出に失敗してしまえば元も子もない。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は警戒を怠らずに奥へと進んでいく……
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%警戒を怠らずに奥へと進んでいく……
 	PRINTW 
 	;ターン数にペナルティ？
 	턴상한=25
@@ -112,14 +112,14 @@ PRINTFORML 漏れ出る喘ぎ声にも最早女性としての意思は含まれ
 PRINTFORML 彼女ら번식자루は既に触巣の一部分であり、手遅れであり、ヒトとしての尊厳や意識すら残っているか定かでない。
 PRINTFORML そして今回地上へ湧き出てきた無数の촉수も、おそらくは目の前の번식자루たちが産み落としたのだ……
 PRINTW
-PRINTFORML 攫われた少女らの姿はどこにも見当たらない。間に合わなかったかと%PRINT_CALLNAME(TARGET)%が唇を噛んだ次の瞬間、
+PRINTFORML 攫われた少女らの姿はどこにも見当たらない。間に合わなかったかと%조사처리(PRINT_CALLNAME(TARGET),"가")%唇を噛んだ次の瞬間、
 PRINTFORML 床に倒れ伏し촉수に半ば埋もれた状態で、肉壁に向かって引きずられつつある少女たちの姿を視界に捉えた！
 PRINT
 PRINTFORML 一度気付いてしまえば、空洞内の随所に倒れた女生徒とおぼしき少女の姿を確認できた。
 PRINTFORML 少女らは蠢く床の小型촉수に絡め取られ、一人残らず意識を失っているようだ。
 PRINTFORML 服は大半溶かされて素肌を晒しており、既に凌辱されてしまった可能性もあるが…今ならまだ助け出せる。
 PRINTW
-PRINTFORML %PRINT_CALLNAME(TARGET)%が意を決して空洞の中心まで踏み込むと、
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%意を決して空洞の中心まで踏み込むと、
 
 ;＠중국판
 ;イベント分岐：能力値と乱数に基づいてさまざまな戦闘状況に突入します。
@@ -130,7 +130,7 @@ IF FLAG:111 == 0
 ;ELSE
 ;	PRINTL 突然どこからともなく低い笑い声が聞こえてきた。
 ENDIF
-PRINTFORML %PRINT_CALLNAME(TARGET)%は咄嗟に――
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%咄嗟に――
 PRINTL 　[0]周囲を見回す　[1]頭上を見上げる　[2]足を止める
 SIF BASE:지성 > 600
 	PRINT 　[7]後ずさる
@@ -149,7 +149,7 @@ CASE 0
 		PRINTFORML 凶暴な촉수を伸ばし、猛烈な勢いで%PRINT_CALLNAME(TARGET)%に襲い掛かる！
 		;回避失敗
 		IF BASE:민첩 < 500
-			PRINTFORML 回避できなかった%PRINT_CALLNAME(TARGET)%は強力な타격を受けてしまった……
+			PRINTFORML 回避できなかった%조사처리(PRINT_CALLNAME(TARGET),"는")%強力な타격を受けてしまった……
 			LOCAL = MAX(BASE:체력 / 10, 10) + RAND(300,400)
 			BASE:체력 = MAX(BASE:체력 - LOCAL, 0)
 			PRINTFORML 체력が{LOCAL}減少した！
@@ -157,39 +157,39 @@ CASE 0
 			;その後、체력に応じてデバフを付加するかどうかを決定します
 			IF BASE:체력 > MAXBASE:체력 * 70 / 100
 				PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-				PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+				PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 			ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%激しい타격を受けて意識を失ってしまった。
 				PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制拘束")
 			ELSE
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%強い衝撃によって昏倒し、
 				PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
 				PRINTFORML そして我に返った時には、もう――
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制挿入")
 			ENDIF
 		;回避成功
 		ELSE
 			PRINTFORML %PRINT_CALLNAME(TARGET)% は巧みに공격を回避した！
 			PRINTL
 			PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-			PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+			PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 			PRINTW 
 			DRAWLINE
-			CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+			CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 		ENDIF
 	ENDIF
 CASE 1 
@@ -199,9 +199,9 @@ CASE 1
 		PRINTFORML 凶暴な촉수を伸ばし、猛烈な勢いで%PRINT_CALLNAME(TARGET)%に襲い掛かる！
 		;방어力に基づいてデバフを追加するかどうかを決定します
 		IF BASE:방어 < 200
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は素早く방어態勢を整えたが、
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%素早く방어態勢を整えたが、
 			PRINTFORML 超중량급のプレス공격を防ぎきれない！
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は鈍い타격音と共に打ち倒され、地面を何度も転がった…
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%鈍い타격音と共に打ち倒され、地面を何度も転がった…
 			LOCAL = MAX(BASE:체력 / 10, 10) + RAND(300,400)
 			BASE:체력 = MAX(BASE:체력 - LOCAL, 0)
 			PRINTFORML 체력が{LOCAL}減少した！
@@ -209,39 +209,39 @@ CASE 1
 			;残り체력に応じてデバフを付加するかどうかを決定
 			IF BASE:체력 > MAXBASE:체력 * 70 / 100
 				PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-				PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+				PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 			ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%激しい타격を受けて意識を失ってしまった。
 				PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制拘束")
 			ELSE
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%強い衝撃によって昏倒し、
 				PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
 				PRINTFORML そして我に返った時には、もう――
 				PRINTW 
 				PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制挿入")
 
 			ENDIF
 		ELSE
-			PRINTFORML %PRINT_CALLNAME(TARGET)%は공격をどうにか防ぎきった！
+			PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%공격をどうにか防ぎきった！
 			PRINTL
 			PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-			PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+			PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 			PRINTW 
 			DRAWLINE
-			CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+			CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 		ENDIF
 	ENDIF
 
@@ -254,9 +254,9 @@ CASE 2
 			PRINTFORML 凶暴な촉수を伸ばし、猛烈な勢いで%PRINT_CALLNAME(TARGET)%に襲い掛かる！
 			;高い방어も必要
 			IF BASE:방어 < 600
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は素早く방어態勢を整えたが、
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%素早く방어態勢を整えたが、
 				PRINTFORML 超중량급のプレス공격を防ぎきれない！
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は鈍い타격音と共に打ち倒され、地面を何度も転がった…
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%鈍い타격音と共に打ち倒され、地面を何度も転がった…
 				LOCAL = MAX(BASE:체력 / 10, 10) + RAND(300,400)
 				BASE:체력 = MAX(BASE:체력 - LOCAL, 0)
 				PRINTFORML 체력が{LOCAL}減少した！
@@ -264,39 +264,39 @@ CASE 2
 				;残り체력に応じてデバフを付加するかどうかを決定
 				IF BASE:체력 > MAXBASE:체력 * 70 / 100
 					PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-					PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+					PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 					PRINTW 
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+					CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 				ELSEIF BASE:체력 > MAXBASE:체력 * 50 / 100
-					PRINTFORML %PRINT_CALLNAME(TARGET)%は激しい타격を受けて意識を失ってしまった。
+					PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%激しい타격を受けて意識を失ってしまった。
 					PRINTFORML 新たな「獲物」に気付いた周囲の촉수が、無防備な身体に殺到する……。
 					PRINTW 
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制拘束")
+					CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制拘束")
 				ELSE
-					PRINTFORML %PRINT_CALLNAME(TARGET)%は強い衝撃によって昏倒し、
+					PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%強い衝撃によって昏倒し、
 					PRINTFORML そのまま無数の촉수にがっちりと拘束されてしまった。
 					PRINTFORML そして我に返った時には、もう――
 					PRINTW 
 					PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 					PRINTW 
 					DRAWLINE
-					CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし,強制挿入")
+					CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음,強制挿入")
 
 				ENDIF
 			ELSE
-				PRINTFORML %PRINT_CALLNAME(TARGET)%は공격をどうにか防ぎきった！
+				PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%공격をどうにか防ぎきった！
 				PRINTL
 				PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-				PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+				PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 				PRINTW 
 				DRAWLINE
-				CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+				CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 			ENDIF
 		ENDIF
 	;지성不足
@@ -318,7 +318,7 @@ CASE 2
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
+		CALL ADDBATTLESITUATION("철수 불가,지원 무효,시민 없음,강간 없음,強制全裸,강제 발정,強制拘束")
 	ENDIF
 
 ;CASE7/9，高い俊敏性/高い지성で공격を回避
@@ -328,21 +328,21 @@ CASE 7,8,9
 		PRINTFORML 頭上から何か超重い物体が飛び出してきた。
 		IF RESULT == 8
 			PRINTFORML 伸ばされた猛々しい촉수が、守りを固めた%PRINT_CALLNAME(TARGET)%と衝突する！
-			PRINTFORML ……%PRINT_CALLNAME(TARGET)%は突然の激しい공격を凌ぎきった！！
+			PRINTFORML ……%조사처리(PRINT_CALLNAME(TARGET),"는")%突然の激しい공격を凌ぎきった！！
 		ELSE
 			PRINTFORML 凶暴な촉수を伸ばし、猛烈な勢いで%PRINT_CALLNAME(TARGET)%に襲い掛かる！
 			PRINTFORML ……%PRINT_CALLNAME(TARGET)%華麗に공격を回避した！！
 		ENDIF
 	ENDIF
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が奇襲공격の出所を見上げると、超중량급の촉수 생물が肉の地面へと落ちてきた。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%奇襲공격の出所を見上げると、超중량급の촉수 생물が肉の地面へと落ちてきた。
 	PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-	PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+	PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 	PRINTW 
 	PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 	PRINTW 
 	DRAWLINE
 	;★支援効果無効
-	CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし")
+	CALL ADDBATTLESITUATION("철수 불가,지원 무효,시민 없음,강간 없음")
 
 ;それ以外の入力は지성不足扱いでデバフ
 ;＠誤入力へのペナルティ分岐ってユニークでいいね
@@ -364,19 +364,19 @@ CASEELSE
 		PRINTFORML （救出イベント中は撤退できません！　増援の到着まで持ちこたえる必要があります！）
 		PRINTW 
 		DRAWLINE
-		CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民なし,レイプなし,強制全裸,강제 발정,強制拘束")
+		CALL ADDBATTLESITUATION("철수 불가,지원 무효,시민 없음,강간 없음,強制全裸,강제 발정,強制拘束")
 ENDSELECT
 
 
 ;PRINTFORML 頭上から超重量の物体が躍り出てきた。
 ;PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-;PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+;PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 ;PRINTW 
 ;PRINTFORML （救出イベント中は撤退できません！　一定時間耐えればミッション成功です！）
 ;PRINTW 
 ;DRAWLINE
 ;;★支援効果無効
-;CALL ADDBATTLESITUATION("撤退不可,지원 무효,耐久戦,市民なし,レイプなし")
+;CALL ADDBATTLESITUATION("철수 불가,지원 무효,지구전,시민 없음,강간 없음")
 
 
 
@@ -400,14 +400,14 @@ ENDSELECT
 	PRINTW 
 	PRINTFORML …とはいえ、触巣深部から運び出せる被害者の人数には限界がある。
 	PRINTFORML 救出に手間取り時間が経ってしまえば、巣は蠢いて道も変わる。脱出できる保証が無くなるのだ。
-	PRINTFORML 特殊部隊と%PRINT_CALLNAME(TARGET)%が力を合わせても、기절した女生徒らを運び出すのが精一杯で、
+	PRINTFORML 特殊部隊と%조사처리(PRINT_CALLNAME(TARGET),"가")%力を合わせても、기절した女生徒らを運び出すのが精一杯で、
 	PRINTFORML 最深部に囚われた「手遅れ」の苗床までは助けられなかった……
 	PRINTW 
 	PRINTL
 	PRINTFORML 触巣からの脱出成功後、緊急搬送先の病院で被害少女らの身体検査が行われた。
 	PRINTFORML 不幸中の幸いと言うべきか、彼女たちの身体に別状はなかった。
 	PRINTFORML 早期に失神したためだろうか？　懸念された性被害も繊毛촉수の浅い挿入程度で済んでいたようだ。
-	PRINTFORML 報告を受領した%PRINT_CALLNAME(TARGET)%は、我が事のように胸をなでおろす。
+	PRINTFORML 報告を受領した%조사처리(PRINT_CALLNAME(TARGET),"는")%、我が事のように胸をなでおろす。
 	PRINTFORML 被害に対する精神面のケアこそ必要なものの、最善の結果に収まったと言ってよいのだろう。
 	PRINTFORML なにより少女たちは触巣最深部のおぞましい光景を目にせず、その一部にもならずに済んだのだから……
 	;悲鳴⇒기절のタイミングを厳密に考えると話がややこしくなる＆ミッション成功時のテキストはエロにおいてあんまり重要じゃないからフィーリングでいいんだよ
@@ -427,9 +427,9 @@ ENDSELECT
 	;	PRINTFORML 
 	;;負けた
 	;ELSE
-	;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	;	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
 	;ENDIF
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで救出作戦は失敗した。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで救出作戦は失敗した。
 	PRINTL
 	PRINTFORML 特殊部隊がようやく地上の掃討を終えつつあった頃、
 	PRINTFORML 触巣の入り口から大量の媚毒ガスと共に新たな촉수 생물が湧き出してきた。
@@ -437,7 +437,7 @@ ENDSELECT
 	PRINTFORML 部隊は壊滅し、若い女性隊員にいたっては全員が촉수に絡み付かれ、触巣の中へと引きずり込まれてしまった。
 	PRINTL
 	PRINTFORML 惨状に절망する市民たちの前で、陥没した地面はブヨブヨした肉壁で覆われてゆき…
-	PRINTFORML 攫われた女生徒と連れ去られた女性隊員、そして%PRINT_CALLNAME(TARGET)%を呑み込んだまま、ゆっくりと口を閉じていったのだった……
+	PRINTFORML 攫われた女生徒と連れ去られた女性隊員、そして%조사처리(PRINT_CALLNAME(TARGET),"를")%呑み込んだまま、ゆっくりと口を閉じていったのだった……
 	PRINTW 
 	PRINTFORML ――――
 	PRINTFORML ――
@@ -452,14 +452,14 @@ ENDSELECT
 	PRINTW
 	PRINTFORML 촉수に膣を突き上げられるたびあられもなく嬌声を響かせる同級生の少女たち
 	PRINTFORML 絶叫を伴って촉수をひり出すヒトとも思えぬ苗床袋たち
-	PRINTFORML 空洞の中心部で穴という穴を執拗に犯される生死も不明な%PRINT_CALLNAME(TARGET)%
+	PRINTFORML 空洞の中心部で穴という穴を執拗に犯される生死すら不明な%PRINT_CALLNAME(TARGET)%
 	PRINTL
 	PRINTFORMW 女にとっての地獄だった。
 	PRINTL
 	PRINTFORML そして、少女自身の膣口にグロテスクな촉수が突き付けられた瞬間…
 	PRINTFORML 才色兼備にして聡明な%LOCALS%であった優秀な彼女の子宮は、
-	PRINTFORML 目の前に広がる光景こそが自らに待ち受ける未来であると、
-	PRINTFORML その理性よりも素早く理解してしまったのだった……
+	PRINTFORML 「目の前に広がる光景こそが自らに待ち受ける未来である」と、
+	PRINTFORML その優秀だった理性より素早く理解してしまったのだった……
 	PRINTW
 	PRINTL
 	PRINTFORML 　救出ミッションに失敗しました……

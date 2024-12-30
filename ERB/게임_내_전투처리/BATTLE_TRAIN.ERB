@@ -13,18 +13,21 @@ REDRAW 1
 
 
 ;통상 전투(이벤트 전투 이외)라면 TCVAR을 초기화해 둔다
-IF FLAG:45==0
+IF FLAG:45 == 0
 	CALL INITBATTLESITUATION()
 	VARSET TCVARn
 	;잡몹전 15턴, 보스전 50턴이 기본
 	턴상한=(FLAG:10 == 2 ? 15 # 50)
+
+	;시민전 구속 스타트
+	IF FLAG:73 > 0
+		TCVARn:0 = 0
+	;전투 시작 시에 전투 거리를 원거리로 설정한다
+	ELSE
+		TCVARn:0 = 3
+	ENDIF
 ENDIF
-;전투 개시 시 전투 거리를 원거리로 설정한다
-IF FLAG:73 > 0
-	TCVARn:0 = 0
-ELSE
-	TCVARn:0 = 3
-ENDIF
+
 FOR LCOUNT, 0, TCRLENGTH
 	TCREPORT:LCOUNT = 0
 NEXT

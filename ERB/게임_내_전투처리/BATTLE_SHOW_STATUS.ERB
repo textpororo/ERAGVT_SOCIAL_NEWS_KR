@@ -423,6 +423,7 @@ PRINTL
 ;거리 표시
 @PRINT_DISTANCE
 VARSET LOCALS
+RESETCOLOR
 PRINT [
 IF TCVARn:0 == 0
 	IF TCVARn:12 & 강구속
@@ -507,6 +508,9 @@ RETURN LOCAL
 
 
 @SHOW_DISTANCE_WINDOW()
+;랜덤으로 미묘하게 위치가 변동한다…라는 처리지만 Ex 공방이나 에어 스트라이크 전환 시에 변동하는 일이 있으므로 본 목적에 미묘했다
+;턴 내에서 고정이 되도록 (날짜＋턴 수)의 여분 등으로 해 둔다
+;기초 거리
 IF TCVARn:0 == 0
 	LOCAL = 0
 ELSEIF TCVARn:0 == 1
@@ -516,13 +520,8 @@ ELSEIF TCVARn:0 == 2
 ELSEIF TCVARn:0 == 3
 	LOCAL = 21
 ENDIF
-;랜덤으로 미묘하게 위치가 변동한다…라는 처리지만 Ex 공방이나 에어 스트라이크 전환 시에 변동하는 일이 있으므로 본 목적에 미묘했다
-;턴 내에서 고정이 되도록 (날짜＋턴 수)의 여분 등으로 해 둔다
-;IF TCVARn:0 != 0 && RAND:2 == 0
-;	LOCAL -= RAND:2
-;	LOCAL += RAND:2
-;ENDIF
-LOCAL:1=0
+;유사 난수에 의한 부레(ブレ, bourrée 이건가?)
+LOCAL:1 = 0
 IF TCVARn:0 != 0 && (DAY+TFLAG:0) % 4 == 0
 	LOCAL -= 1
 	LOCAL:1 -= 1
@@ -534,56 +533,103 @@ ENDIF
 IF TCVARn:0 == 0
 	SETCOLORBYNAME HOTPINK
 ENDIF
-PRINTL ┏━━━━━━━━━━━━━━━━━━━━┓
 
-
-
-;공중전특기 이외라면 에어라도 ２행상에는 가지 않는다
-IF !TALENT:TARGET:공중전특기
-	PRINT ┃　　　　　　　　　　　　　　　　　　　　┃
-	PRINTL 【위험 예측】
-	PRINT ┃
+;●천장과 ３단 째
+IF GETBATTLESITUATION("공중 불가")
+	PRINTL ┏┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┳┓
+	PRINT ┣
+	REPEAT 20
+		PRINT ╋
+	REND
+	PRINTL ┫【위험 예측】
 ELSE
-	PRINT ┃
+	PRINTL ┏━━━━━━━━━━━━━━━━━━━━┓
+
+	;공중전특기라면 에어 스트라이크 중에는 3단까지 날아간다(조작 캐릭터가 비칠지도 모르는 행동　아래에서 처리한다)
+	IF TALENT:TARGET:공중전특기
+		;PRINTL ┃
+	;아니라면 3단은 빈칸으로 확정
+	ELSE
+		PRINT ┃
+		REPEAT 20
+			PRINT 　
+		REND
+		PRINT ┃
+		PRINTL 【위험 예측】
+	ENDIF
 ENDIF
 
-REPEAT LOCAL+7
-	PRINT  
-REND
-IF GETBIT(TCVARn:216, 1)
-	IF ISFEMALE()
-		SETCOLORBYNAME HOTPINK
-		PRINT ♀
-		RESETCOLOR
+;●3단 또는 2단 째　공중의 조작 캐릭터 묘사
+IF GETBATTLESITUATION("공중 불가")
+	IF GETBATTLESITUATION("원거리 불가")
+		PRINT ┣┻┻┻┻┻┻┻┻┻┻╋╋╋╋╋╋┻┻┻┻┫
 	ELSE
-		SETCOLORBYNAME BLUE
-		PRINT ♂
-		RESETCOLOR
+		PRINT ┣┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┫
 	ENDIF
 ELSE
-	PRINT 　
-ENDIF
-REPEAT 31 -LOCAL
-	PRINT  
-REND
-IF TCVARn:0 == 0
-	SETCOLORBYNAME HOTPINK
-ENDIF
-PRINT ┃
+	PRINT ┃
+	;왼쪽 공간
+	REPEAT LOCAL + 7
+		PRINT  
+	REND
+	;에어 스트라이크 중이라면 날아오른 모습을 표시
+	IF GETBIT(TCVARn:216, 1)
+		IF ISFEMALE()
+			SETCOLORBYNAME HOTPINK
+			PRINT ♀
+			RESETCOLOR
+		ELSE
+			SETCOLORBYNAME BLUE
+			PRINT ♂
+			RESETCOLOR
+		ENDIF
+	;아니라면 머리 위의 공간
+	ELSE
+		PRINT 　
+	ENDIF
+	;오른쪽 공간
+	REPEAT 31 - LOCAL
+		PRINT  
+	REND
+	PRINT ┃
 
-;공중전특기라면 에어로 표시되는 것은 ２행상
-IF TALENT:TARGET:공중전특기
-	PRINT 【위험 예측】
-	PRINTL
-	PRINT ┃　　　　　　　　　　　　　　　　　　　　┃
-ELSE
-	PRINT
+	IF TCVARn:0 == 0
+		SETCOLORBYNAME HOTPINK
+	ENDIF
+
+	;공중전특기라면 뒤로 미뤘던 2단 째 그림으로 나아간다
+	IF TALENT:TARGET:공중전특기
+		PRINTL 【위험 예측】
+		IF GETBATTLESITUATION("공중 불가")
+			IF GETBATTLESITUATION("원거리 불가")
+				PRINT ┣┻┻┻┻┻┻┻┻┻┻╋╋╋╋╋╋┻┻┻┻┫
+			ELSE
+				PRINT ┣┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┻┫
+			ENDIF
+		ELSE
+			IF GETBATTLESITUATION("원거리 불가")
+				PRINT ┃　　　　　　　　　　┣╋╋╋╋┻┻┻┻┻┫
+			ELSE
+				PRINT ┃　　　　　　　　　　　　　　　　　　　　┃
+			ENDIF
+		ENDIF
+	;아니라면 2단 째까지 묘사했기 때문에 아무것도 하지 않는다
+	ELSE
+		;PRINT
+	ENDIF
+
 ENDIF
 
 ;공중이 노려질 확률
 RESETCOLOR
 PRINT  공중:
-CALL FORECAST_OUTPUT_NUM, (TCVARn:0 == 0 ? 0 # TCVARn:33)
+IF GETBATTLESITUATION("공중 불가")
+	SETCOLORBYNAME Gray
+	PRINT ---
+	RESETCOLOR
+ELSE
+	CALL FORECAST_OUTPUT_NUM, (TCVARn:0 == 0 ? 0 # TCVARn:33)
+ENDIF
 PRINT  %
 PRINTL
 
@@ -591,6 +637,8 @@ IF TCVARn:0 == 0
 	SETCOLORBYNAME HOTPINK
 ENDIF
 
+;１단 째
+;대치 중
 IF TCVARn:0 > 0
 	PRINT ┃ 
 	SETCOLORBYNAME HOTPINK
@@ -607,6 +655,7 @@ IF TCVARn:0 > 0
 
 
 	RESETCOLOR
+;포획되어 있다
 ELSE
 	PRINT ┃ 
 	SETCOLORBYNAME ORANGE
@@ -643,8 +692,10 @@ REPEAT LOCAL
 	ENDIF
 REND
 SETCOLORBYNAME HOTPINK
+;포획 중이라면 묘사 완료
 IF TCVARn:0 == 0
 	RESETCOLOR
+;지상에 있다면 지면에 표시
 ELSEIF !GETBIT(TCVARn:216, 1) && TCVARn:0 > 0
 	IF ISFEMALE()
 		SETCOLORBYNAME HOTPINK
@@ -663,15 +714,29 @@ ELSE
 	ENDIF
 ENDIF
 RESETCOLOR
-REPEAT 22-LOCAL
-	IF COUNT % 2 == 1
-		PRINT _
-	ELSE
-		PRINT -
+IF GETBATTLESITUATION("원거리 불가")
+	REPEAT 11 - LOCAL
+		IF COUNT % 2 == 1
+			PRINT _
+		ELSE
+			PRINT -
+		ENDIF
+	REND
+	IF TCVARn:0 == 0
+		SETCOLORBYNAME HOTPINK
 	ENDIF
-REND
+	PRINT ┣╋╋╋╋┫
+ELSE
+	REPEAT 22 - LOCAL
+		IF COUNT % 2 == 1
+			PRINT _
+		ELSE
+			PRINT -
+		ENDIF
+	REND
+	PRINT  
+ENDIF
 
-PRINT  
 CALL PRINT_DISTANCE
 
 IF TCVARn:0 == 0

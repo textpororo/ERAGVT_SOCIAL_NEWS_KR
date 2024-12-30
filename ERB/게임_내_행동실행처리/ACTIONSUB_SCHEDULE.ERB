@@ -3,12 +3,13 @@
 @SCHEDULE
 ;SC_MODE	단련이나 특별 활동
 ;		0：단련　1：특별활동　2：정보수집
-;SC_FLAG	스케쥴 사용 여부　MODE별로 설정
+;SC_FLAG	스케쥴 사용 여부(ON/OFF)　MODE별로 설정
 ;SC_LIMIT	스케쥴의 설정 총수　MODE별로 설정
 ;SC_ACTION	다음 행동 시에 몇 번째를 실행할 것인가
 ;SC_ITEM	실제 설정값　MODE마다 0-8… 이라면 될텐데 어째선지 루프로 범위 밖까지 가버리니까 좀 넉넉하게
 ;NOW_INPUT	어디에 입력할 것인가
 ;ITEM_NUM	설정할 수 있는 항목의 수　0-98　99는 삭제
+;LINENUM	항목 일람의 최대 행수(현재는 자유행동의 8)
 ;IT_FLAG	그 항목이 사용 가능한지의 여부　0-99
 ;SC_STR		항목 표시용 문자열　0-99
 ;**********************************************************
@@ -21,6 +22,7 @@
 #DIM SC_ITEM, 10, 12
 #DIM NOW_INPUT
 #DIM ITEM_NUM
+#DIM LINENUM = 8;항목 일람의 최대 행수(현재는 자유행동의 8)
 #DIM IT_FLAG, 100
 #DIM LOST
 #DIMS SC_STR, 100
@@ -31,7 +33,7 @@ REDRAW 0
 DRAWLINE
 
 ;CFLAG로부터 로컬(LOCAL)변수에
-FOR LCOUNT, 0, 3
+FOR LCOUNT, 0, 4
 	NOW_INPUT = CFLAG:(LCOUNT + 110)
 	IF NOW_INPUT < 0
 		SC_FLAG:LCOUNT = 0
@@ -148,10 +150,11 @@ IF SC_MODE == 1
 		IT_FLAG:7 = 1
 	SC_STR:7 = 베개 영업
 
+	;※라이브 공연 지정은 아이돌 활동으로 통합
 	;데뷔 후이며 주말이라면 라이브 공연 해방
-	SIF EXP:매료경험 > 99
-		IT_FLAG:8 = 1
-	SC_STR:8 = 라이브 공연
+	;SIF EXP:매료경험 > 99
+	;	IT_FLAG:8 = 1
+	;SC_STR:8 = 라이브 공연
 ENDIF
 
 ;정보 수집
@@ -175,16 +178,65 @@ IF SC_MODE == 2
 	SC_STR:3 = 동료 수색
 ENDIF
 
+;자유행동
+IF SC_MODE == 3
+	ITEM_NUM = 21
+
+	IT_FLAG:0 = 1
+	SC_STR:0 = 학교에 간다
+	IT_FLAG:1 = 1
+	SC_STR:1 = 랜덤 외출
+	IT_FLAG:2 = 1
+	SC_STR:2 = 랜덤(거리)
+	IT_FLAG:3 = 1
+	SC_STR:3 = 랜덤(여행)
+	IT_FLAG:4 = 1
+	SC_STR:4 = 랜덤(운동)
+	IT_FLAG:5 = 1
+	SC_STR:5 = 거리：アミューズメント施設
+	IT_FLAG:6 = 1
+	SC_STR:6 = 거리：繁華街
+	IT_FLAG:7 = 1
+	SC_STR:7 = 거리：ショッピングモール
+	IT_FLAG:8 = 1
+	SC_STR:8 = 거리：公園
+	IT_FLAG:9 = 1
+	SC_STR:9 = 여행：動物園
+	IT_FLAG:10 = 1
+	SC_STR:10 = 여행：水族館
+	IT_FLAG:11 = 1
+	SC_STR:11 = 여행：遊園地
+	IT_FLAG:12 = 1
+	SC_STR:12 = 여행：植物園
+	IT_FLAG:13 = 1
+	SC_STR:13 = 여행：ライブ
+	IT_FLAG:14 = 1
+	SC_STR:14 = 여행：ウォーターパーク
+	IT_FLAG:15 = 1
+	SC_STR:15 = 여행：海辺
+	IT_FLAG:16 = 1
+	SC_STR:16 = 여행：温泉
+	IT_FLAG:17 = 1
+	SC_STR:17 = 운동：運動公園
+	IT_FLAG:18 = 1
+	SC_STR:18 = 운동：フィットネスクラブ
+	IT_FLAG:19 = 1
+	SC_STR:19 = 운동：マッサージサロン
+	IT_FLAG:20 = 1
+	SC_STR:20 = 운동：プール
+
+ENDIF
+
 ;현재의 MODE 표시
-PRINTFORM  %CALLNAME% 
+PRINTFORM  %CALLNAME%의 
 IF SC_MODE == 0
-	PRINTL 의 단련 스케쥴 설정
+	PRINTL 단련 스케쥴 설정
 ELSEIF SC_MODE == 1
-	PRINTL 의 특별 활동 스케쥴 설정
+	PRINTL 특별 활동 스케쥴 설정
 ELSEIF SC_MODE == 2
-	PRINTL 의 정보 수집 스케쥴 설정
+	PRINTL 정보 수집 스케쥴 설정
 ELSEIF SC_MODE == 3
-	PRINTL 의 자유 행동 스케쥴 설정
+	PRINTL 자유 행동 스케쥴 설정
 ENDIF
 DRAWLINE
 
@@ -241,6 +293,14 @@ FOR LCOUNT, 0, 9
 		SIF SC_MODE == 1
 			SETCOLOR 255, 255, 0
 		PRINTFORM \@SC_MODE == 1 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [201] 특별 활동
+		RESETCOLOR
+	ENDIF
+
+	IF LCOUNT == 1
+		PRINTPLAIN 　　　　　　　　　　 
+		SIF SC_MODE == 3
+			SETCOLOR 255, 255, 0
+		PRINTFORM \@SC_MODE == 3 ? %UNICODE(0x25BA)% # %UNICODE(0x00A0)% \@ [203] 자유 행동
 		RESETCOLOR
 	ENDIF
 
@@ -316,7 +376,7 @@ NEXT
 SIF ITEM_NUM % 3 != 0
 	PRINTL 
 ;4행 미리 결정(4行決め打ち)으로 맞추고 있기에 장래 12항 이상이 되는 경우는 여기와 ↓아래의 CLEARLINE 2개를 고쳐 쓴다
-FOR LCOUNT,0,4-(ITEM_NUM+2)/3
+FOR LCOUNT,0,LINENUM-(ITEM_NUM+2)/3
 	PRINTL 
 NEXT
 PRINTL [99] 항목 삭제　　　　　
@@ -329,10 +389,10 @@ PRINTFORML [997] 스케쥴 기능 - \@SC_FLAG:SC_MODE ? ON # OFF \@
 INPUT
 
 ;MODE 변경
-IF RESULT >= 200 && RESULT < 203
+IF RESULT >= 200 && RESULT < 204
 	SC_MODE = RESULT - 200
 	NOW_INPUT = (SC_LIMIT:SC_MODE + 11) * 10
-	CLEARLINE 26 + (ITEM_NUM / 3) + SQRT(ITEM_NUM % 3)+(4-(ITEM_NUM+2)/3)
+	CLEARLINE 26 + (ITEM_NUM / 3) + SQRT(ITEM_NUM % 3)+(LINENUM-(ITEM_NUM+2)/3)
 	GOTO CHANGE_MODE
 ;항목 삭제
 ELSEIF RESULT == 99
@@ -364,7 +424,7 @@ ELSEIF RESULT == 998
 	RETURN 0
 ;결정　설정을 저장하고 종료
 ELSEIF RESULT == 999
-	FOR LCOUNT, 0, 3
+	FOR LCOUNT, 0, 4
 		CFLAG:(LCOUNT + 110) = 0
 		FOR LCOUNT:1, 0, 9
 			CFLAG:(LCOUNT + 110) *= 100
@@ -379,24 +439,26 @@ ELSEIF RESULT == 999
 ELSE
 ENDIF
 
-CLEARLINE 24 + (ITEM_NUM / 3) + SQRT(ITEM_NUM % 3)+(4-(ITEM_NUM+2)/3)
+CLEARLINE 24 + (ITEM_NUM / 3) + SQRT(ITEM_NUM % 3)+(LINENUM-(ITEM_NUM+2)/3)
 
 GOTO INPUT_LOOP
 
 
 ;**********************************************************
-@RES_SCHEDULE, ARG
+@RES_SCHEDULE, ARG,ARG:1=-1
 ;**********************************************************
 ;ARG		사용하는 CFLAG
 ;SC_RES		최종적으로 RETURN하는 값
-;SC_VAR:0	실행 번호
-;SC_VAR:1	스케쥴의 총설 상수(総설정数)
+;SC_VAR:0	실행 번호(ARG:1 지정 시에는 참조만)
+;SC_VAR:1	스케쥴의 총설 상수(総設定数)
 
 #DIM SC_RES
 #DIM SC_VAR, 2
 
 SC_VAR = CFLAG:ARG / 1000000000000000000
 SC_VAR:1 = CFLAG:ARG % 1000000000000000000
+SIF ARG:1 != -1
+	SC_VAR:0 = ARG:1
 
 STRLENFORM {SC_VAR:1}
 SC_VAR:1 = RESULT
@@ -407,7 +469,8 @@ SC_VAR:1 /= 2
 
 SC_RES = (CFLAG:ARG / POWER(100, SC_VAR)) % 100 - 1
 
-CFLAG:ARG = CFLAG:ARG % 1000000000000000000
+SIF ARG:1 == -1
+	CFLAG:ARG = CFLAG:ARG % 1000000000000000000
 SC_VAR += 1
 
 SIF SC_VAR > 8
@@ -417,6 +480,13 @@ SIF SC_VAR > SC_VAR:1 - 1
 	SC_VAR = 0
 
 SC_VAR *= 1000000000000000000
-CFLAG:ARG += SC_VAR
+
+SIF ARG:1 == -1
+	CFLAG:ARG += SC_VAR
 
 RETURN SC_RES
+
+;스케줄 총수 체크
+@NUM_SCHEDULE_F(ARG)
+#FUNCTION
+RETURNF CFLAG:ARG % 1000000000000000000

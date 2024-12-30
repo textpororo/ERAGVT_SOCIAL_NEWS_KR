@@ -13,11 +13,11 @@ PRINTFORML 危険を承知で助けに行くべきだろうか？
 
 @EVENT_BATTLE_RESCUE_4
 PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわけにはいかない。
-PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%意を決して現場に向かうことにした……
 
 @EVENT_BATTLE_ABANDON_4
 PRINTFORML 不確定要素も多く、万全でもない状態で촉수 생물と戦うのは危険すぎる。
-PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
+PRINTFORML 状況から判断した結果、%조사처리(PRINT_CALLNAME(TARGET),"는")%助けに行かないという決断を下した……
 ;ニュース記事に(失敗時使い回し)
 if !FLAG:60
 	FLAG:60=100000+FLAG:45
@@ -42,7 +42,7 @@ PRINTFORML （追撃イベントは規定ターン以内に촉수 생물を撃�
 PRINTW 
 DRAWLINE
 턴상한=40
-CALL ADDBATTLESITUATION("撤退不可,追撃戦,市民なし,レイプなし")
+CALL ADDBATTLESITUATION("철수 불가,追撃戦,시민 없음,강간 없음")
 
 
 
@@ -59,8 +59,8 @@ SIF TCREPORT:TCR속옷내구고갈 && ISGIRLY()
 	PRINTFORML %PRINT_CALLNAME(TARGET)%まで被害女性の一人に間違われるハプニングこそあったものの、
 PRINTFORML 遅れて駆け付けた救急隊は被害女性を手早く救急車で搬送し、周囲の市民を避難誘導してゆく。
 PRINTFORML 必要な「治療」は媚毒粘液の拭き取りから淫気の除去、질내の応急処置まで多岐に渡る事だろう。
-PRINTFORML %PRINT_CALLNAME(TARGET)%が手助けを試みようにも、素人ではかえって邪魔になりそうだ。
-PRINTFORML その場は専門チームの仕事に任せ、%PRINT_CALLNAME(TARGET)%は後を託して去る事にした……
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%手助けを試みようにも、素人ではかえって邪魔になりそうだ。
+PRINTFORML その場は専門チームの仕事に任せ、%조사처리(PRINT_CALLNAME(TARGET),"는")%後を託して去る事にした……
 PRINTW 
 PRINTFORML 　인기도가 3 상승했다!
 PRINTFORML 　報酬として政府から$5000入手した！
@@ -82,11 +82,11 @@ Sif !FLAG:60
 @EVENT_BATTLE_FAILURE_4
 ;유폐されてはいないがミッションには失敗した
 IF TFLAG:98 != 2
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が촉수を仕留めきれなかった事で作戦は失敗し、
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%촉수を仕留めきれなかった事で作戦は失敗し、
 	PRINTFORML 攫われた被害者の行方も分からなくなってしまった。
 ;負けた
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
 ENDIF
 PRINTFORML 衣服の切れ端や僅かな装飾品だけを遺留品として、女性たちは姿を消してしまったのだ。
 PRINTFORML ……行方こそ知れずとも、彼女たちを待ち受ける運命は分かり切っている。

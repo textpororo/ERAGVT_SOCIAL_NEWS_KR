@@ -183,7 +183,7 @@ IF FLAG:13 <= 0
 			ELSEIF FLAG:101 == 2
 				;엔딩
 				FLAG:64 = -1
-				CALL UNLOCK_ACHIEVEMENT(270,"월등한 최강 대 최강")
+				CALL UNLOCK_ACHIEVEMENT(270,"역대 최강 VS 현대 최강")
 			ELSE
 				;엔딩
 				FLAG:64 = -1
@@ -263,7 +263,7 @@ IF FLAG:13 <= 0
 		NEXT
 
 
-		;최종 보스가 존재하지 않는 경우
+		;보스가 전멸한 동시에 최종 보스가 존재하지 않는 경우
 		IF FLAG:100 == 0 && FLAG:101 == 0
 			;미출현이라면
 			IF FLAG:64 != -1
@@ -323,89 +323,95 @@ IF FLAG:13 <= 0
 			CALL UNLOCK_ACHIEVEMENT(266,"퍼펙트 킬")
 		ENDIF
 
-		;적 캐릭터의 구출
-		CALL UNLOCK_ACHIEVEMENT(272,"정신 차리세요！")
 		;지문: 적 캐릭터의 구출
 		CALL MESSAGE_BATTLE_END_RESCUE_ENEMY
 		
-		;적이 세뇌였는지 흑화였는지 일시 보존
+		;이번에 쓰러뜨린 적이 세뇌였는지 흑화였는지 일시 보존
+		;2＝세뇌　3＝흑화
 		LOCAL:3 = CFLAG:(FLAG:111):0
-		
-		CFLAG:(FLAG:111):0 = -1
-		CFLAG:(FLAG:111):20 = 0
-		CFLAG:(FLAG:111):21 = 0
-		CFLAG:(FLAG:111):30 = 0
-		CFLAG:(FLAG:111):31 = 0
-		BASE:(FLAG:111):체력 = 1
-		BASE:(FLAG:111):기력 = 1
-		BASE:(FLAG:111):성내성 = 1
-		;지문: 세뇌/흑화 상태로 쓰러진 쪽
-		CALL MESSAGE_OTHER_BATTLE_END_RESCUED_ENEMY
-		
-		;세뇌 캐릭터의 구출
-		IF LOCAL:3 == 3
-			LOCAL:1 = 0
-			FOR LOCAL, 0, CHARANUM
-				SIF LOCAL == MASTER
-					CONTINUE
-				
-				IF FLAG:111 == CFLAG:LOCAL:21 && CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:0 == 2
-					CALL UNLOCK_ACHIEVEMENT(273,"난 지금까지 무엇을…？")
-					IF LOCAL:1 == 0
-						;지문: 세뇌 캐릭터의 구출
-						CALL MESSAGE_BATTLE_END_RESCUE_SENNOU
+
+		;흑화 캐릭터가 패배 후에도 흑화 상태에서 못 벗어나는 옵션
+		IF CONFIG_CHECK_PRISON_F(11) == 1 && LOCAL:3 == 3
+			CALL MESSAGE_OTHER_BATTLE_END_AKUOTI_NO_RESCUE
+		ELSE
+			;흑화or세뇌 캐릭터 본인의 구출(복귀)
+			CFLAG:(FLAG:111):0 = -1
+			CFLAG:(FLAG:111):20 = 0
+			CFLAG:(FLAG:111):21 = 0
+			CFLAG:(FLAG:111):30 = 0
+			CFLAG:(FLAG:111):31 = 0
+			BASE:(FLAG:111):체력 = 1
+			BASE:(FLAG:111):기력 = 1
+			BASE:(FLAG:111):성내성 = 1
+			CALL UNLOCK_ACHIEVEMENT(272,"정신 차리세요！")
+			;지문: 세뇌/흑화 상태로 쓰러진 쪽
+			CALL MESSAGE_OTHER_BATTLE_END_RESCUED_ENEMY
+			
+			;흑화 캐릭터에게 세뇌되어 있던 캐릭터의 연쇄 구출
+			IF LOCAL:3 == 3
+				LOCAL:1 = 0
+				FOR LOCAL, 0, CHARANUM
+					SIF LOCAL == MASTER
+						CONTINUE
+					
+					IF CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:21 == CFLAG:(FLAG:111):240 && CFLAG:LOCAL:0 == 2
+						CALL UNLOCK_ACHIEVEMENT(273,"난 지금까지 무엇을…？")
+						IF LOCAL:1 == 0
+							;지문: 세뇌 캐릭터의 구출
+							CALL MESSAGE_BATTLE_END_RESCUE_SENNOU
+						ENDIF
+						CFLAG:LOCAL:0 = -1
+						CFLAG:LOCAL:20 = 0
+						CFLAG:LOCAL:21 = 0
+						CFLAG:LOCAL:30 = 0
+						CFLAG:LOCAL:31 = 0
+						CFLAG:LOCAL:100 = 103
+						BASE:LOCAL:체력 = 1
+						BASE:LOCAL:기력 = 1
+						BASE:LOCAL:성내성 = 1
+						CFLAG:LOCAL:220 = 0
+						LOCAL:2 = TARGET
+						TARGET = LOCAL
+						;지문: 세뇌 캐릭터의 구출된 쪽
+						CALL MESSAGE_OTHER_BATTLE_END_RESCUED_SENNOU
+						TARGET = LOCAL:2
+						LOCAL:1 = 1
 					ENDIF
-					CFLAG:LOCAL:0 = -1
-					CFLAG:LOCAL:20 = 0
-					CFLAG:LOCAL:21 = 0
-					CFLAG:LOCAL:30 = 0
-					CFLAG:LOCAL:31 = 0
-					CFLAG:LOCAL:100 = 103
-					BASE:LOCAL:체력 = 1
-					BASE:LOCAL:기력 = 1
-					BASE:LOCAL:성내성 = 1
-					CFLAG:LOCAL:220 = 0
-					LOCAL:2 = TARGET
-					TARGET = LOCAL
-					;지문: 세뇌 캐릭터의 구출된 쪽
-					CALL MESSAGE_OTHER_BATTLE_END_RESCUED_SENNOU
-					TARGET = LOCAL:2
-					LOCAL:1 = 1
-				ENDIF
-			NEXT
-		ENDIF
-		
-		;사로잡힌 캐릭터의 구출
-		IF LOCAL:3 == 3
-			LOCAL:1 = 0
-			FOR LOCAL, 0, CHARANUM
-				SIF LOCAL == MASTER
-					CONTINUE
-				
-				IF CFLAG:(FLAG:111):240 == CFLAG:LOCAL:21 && CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:0 == 1
-					CALL UNLOCK_ACHIEVEMENT(271,"얼른 도와줄게！")
-					IF LOCAL:1 == 0
-						;지문: 사로잡힌 캐릭터의 구출
-						CALL MESSAGE_BATTLE_END_RESCUE_AKUOTI
+				NEXT
+			ENDIF
+			
+			;흑화 캐릭터에게 유폐되어 있던 캐릭터의 연쇄 구출
+			IF LOCAL:3 == 3
+				LOCAL:1 = 0
+				FOR LOCAL, 0, CHARANUM
+					SIF LOCAL == MASTER
+						CONTINUE
+					
+					IF CFLAG:LOCAL:20 == 2 && CFLAG:LOCAL:21 == CFLAG:(FLAG:111):240 && CFLAG:LOCAL:0 == 1
+						CALL UNLOCK_ACHIEVEMENT(271,"얼른 도와줄게！")
+						IF LOCAL:1 == 0
+							;지문: 흑화 캐릭터에게 사로잡힌 캐릭터의 구출
+							CALL MESSAGE_BATTLE_END_RESCUE_AKUOTI
+						ENDIF
+						CFLAG:LOCAL:0 = -1
+						CFLAG:LOCAL:20 = 0
+						CFLAG:LOCAL:21 = 0
+						CFLAG:LOCAL:30 = 0
+						CFLAG:LOCAL:31 = 0
+						CFLAG:LOCAL:100 = 103
+						BASE:LOCAL:체력 = 1
+						BASE:LOCAL:기력 = 1
+						BASE:LOCAL:성내성 = 1
+						CFLAG:LOCAL:220 = 0
+						LOCAL:2 = TARGET
+						TARGET = LOCAL
+						;지문: 구출된 쪽
+						CALL MESSAGE_OTHER_BATTLE_END_RESCUED
+						TARGET = LOCAL:2
+						LOCAL:1 = 1
 					ENDIF
-					CFLAG:LOCAL:0 = -1
-					CFLAG:LOCAL:20 = 0
-					CFLAG:LOCAL:21 = 0
-					CFLAG:LOCAL:30 = 0
-					CFLAG:LOCAL:31 = 0
-					CFLAG:LOCAL:100 = 103
-					BASE:LOCAL:체력 = 1
-					BASE:LOCAL:기력 = 1
-					BASE:LOCAL:성내성 = 1
-					CFLAG:LOCAL:220 = 0
-					LOCAL:2 = TARGET
-					TARGET = LOCAL
-					;지문: 구출된 쪽
-					CALL MESSAGE_OTHER_BATTLE_END_RESCUED
-					TARGET = LOCAL:2
-					LOCAL:1 = 1
-				ENDIF
-			NEXT
+				NEXT
+			ENDIF
 		ENDIF
 	
 	;잡몹적에게 승리
@@ -676,7 +682,7 @@ SIF RAND:100 < (TCVARn:11 * TCVARn:11) && (TCVARn:12 & 기절) == 0
 	CALL SHINKYOU_CHANGE, "NORMAL"
 
 ;--------------------------------------------------------------------------------------
-;끈적끈적 지속 판정, 반격은 순서를 맨 마지막에 둬야 하므로 HANGEKI_TO_TENTACLE 함수에서 따로 처리한다
+;끈적끈적 지속 판정, 반격은 순서를 맨 마지막에 둬야 하므로 @HANGEKI_TO_TENTACLE 함수에서 따로 처리한다
 IF (TCVARn:12 & 끈적끈적) && (TCVARn:2 == 자세：방어 || TCVARn:2 == 자세：날뛴다방어 || TCVARn:2 == 자세：날뛴다실패 || TCVARn:2 == 자세：날뛴다치명타) && RAND:100 < MAX(75 - CFLAG:99 * 3, 25)
 	PRINTFORML ○ %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% 달라붙은 점액을 털어냈다！
 	PRINTFORML 　 %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")% [끈적끈적] 상태로부터 회복했다！
@@ -1041,6 +1047,7 @@ ELSEIF BASE:체력 == 0 && BASE:기력 == 0 && BASE:성내성 == 0 && FLAG:13 > 
 			;세뇌 캐릭터에게 패배하여 유폐된다
 			IF (CFLAG:(FLAG:111):0 == 2)
 				CFLAG:0 = 1
+				;주인님이 유페한다
 				CFLAG:20 = CFLAG:(FLAG:111):20
 				CFLAG:21 = CFLAG:(FLAG:111):21
 				
@@ -1144,7 +1151,7 @@ CALL HATUJOU_TO_HAIRAN
 ;--------------------------------------------------------------------------------------
 ;【스마타애태우기】에 의한 다음 턴 행동 지정 처리
 IF SELECTCOM == 103 && TFLAG:17 < 0 && RAND:100 < 95
-	IF ENEMY_TYPE_CHECK_F("MOB") == 1
+	IF ENEMY_TYPE_CHECK_F("MOB") == 1 || ENEMY_TYPE_CHECK_F("CITIZEN") == 1
 		TRYCALLFORM TENTACLE_MOB_{FLAG:11}_REACTION_REF, 1
 	ELSEIF GET_LASTBOSS_PHASE_F() >= 1
 		TRYCALLFORM TENTACLE_LASTBOSS_{FLAG:11}_REACTION_REF, 1

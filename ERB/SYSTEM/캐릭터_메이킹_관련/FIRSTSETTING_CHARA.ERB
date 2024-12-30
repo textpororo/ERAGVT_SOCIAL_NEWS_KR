@@ -715,6 +715,8 @@ WHILE LOCAL:0 > 0
 		PRINTL 러시아어
 	ELSEIF LOCAL:1 == 6
 		PRINTL 중국어
+	ELSEIF LOCAL:1 == 7
+		PRINTL 한국어
 	ELSE
 		PRINTL 랜덤
 	ENDIF
@@ -737,6 +739,8 @@ WHILE LOCAL:0 > 0
 		PRINTL 러시아어
 	ELSEIF LOCAL:2 == 6
 		PRINTL 중국어
+	ELSEIF LOCAL:2 == 7
+		PRINTL 한국어
 	ELSEIF LOCAL:2 == 10
 		PRINTL 일본어(중성 이름)
 	ELSE
@@ -763,6 +767,7 @@ WHILE LOCAL:0 > 0
 	PRINTL [ 4] 이탈리아어
 	PRINTL [ 5] 러시아어
 	PRINTL [ 6] 중국어
+	PRINTL [ 7] 한국어
 	PRINTL [99] 랜덤
 	PRINTPLAIN 　　　　　　　　　　　　　 
 	PRINT [800] 
@@ -853,9 +858,14 @@ WHILE LOCAL:0 > 0
 			;중문 성씨
 			;강제「성씨 이름」순서 고정(强制姓前名后)
 			LOCAL:3 = 1
-			LOCAL:(10 + COUNT) = RAND:500 + 50000
+			LOCAL:(10 + COUNT) = RAND:500 + 16000
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
-				LOCAL:(10 + COUNT) = RAND:500 + 50000
+				LOCAL:(10 + COUNT) = RAND:500 + 16000
+			WEND
+		ELSEIF LOCAL:1 == 7
+			LOCAL:(10 + COUNT) = RAND:200 + 19000
+			WHILE STR:(LOCAL:(10 + COUNT)) == ""
+				LOCAL:(10 + COUNT) = RAND:200 + 19000
 			WEND
 		ELSEIF LOCAL:1 == 99
 			LOCAL:(10 + COUNT) = RAND:9000 + 3000
@@ -899,15 +909,21 @@ WHILE LOCAL:0 > 0
 			;강제「성씨 이름」순서 고정(强制姓前名后)
 			LOCAL:3 = 1
 			;제1글자
-				LOCAL:(30 + COUNT) = RAND:1000 + 51000
+				LOCAL:(30 + COUNT) = RAND:1000 + 16500
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
-				LOCAL:(30 + COUNT) = RAND:1000 + 51000
+				LOCAL:(30 + COUNT) = RAND:1000 + 16500
 			WEND
 			;제2글자
-				LOCAL:(31 + COUNT) = RAND:1000 + 51000
+				LOCAL:(31 + COUNT) = RAND:1000 + 16500
 			WHILE STR:(LOCAL:(10 + COUNT)) == ""
-				LOCAL:(31 + COUNT) = RAND:1000 + 51000
+				LOCAL:(31 + COUNT) = RAND:1000 + 16500
 			WEND
+		ELSEIF LOCAL:2 == 7
+			LOCAL:(30 + COUNT) = RAND:500 + 19200
+			WHILE STR:(LOCAL:(30 + COUNT)) == ""
+				LOCAL:(30 + COUNT) = RAND:500 + 19200
+			WEND
+
 		ELSEIF LOCAL:2 == 10
 			LOCAL:(30 + COUNT) = RAND:500 + 18000
 			WHILE STR:(LOCAL:(30 + COUNT)) == ""
@@ -928,9 +944,12 @@ WHILE LOCAL:0 > 0
 			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(10 + COUNT))% %STR:(LOCAL:(30 + COUNT))%
 		ELSEIF LOCAL:3 == 2
 			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
-		;일본or중국일 시[성명]
+		;일본or중국일 시[성 명]
 		ELSEIF LOCAL:1 == 0 || LOCAL:1 == 6 || (LOCAL:1 == 99 && (LOCAL:(10 + COUNT) < 3500 || (LOCAL:(10 + COUNT) >= 16000 && LOCAL:(10 + COUNT) < 16500)))
 			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(10 + COUNT))% %STR:(LOCAL:(30 + COUNT))%
+		;한국일 시[성명]
+		ELSEIF LOCAL:1 == 7 || (LOCAL:1 == 99 && ((LOCAL:(10 + COUNT) >= 19000 && LOCAL:(10 + COUNT) <=19200) || (LOCAL:(10 + COUNT) >= 19200 && LOCAL:(10 + COUNT) < 19700)))
+			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(10 + COUNT))%%STR:(LOCAL:(30 + COUNT))%
 		ELSE
 			PRINTFORML [{COUNT, 2}] %STR:(LOCAL:(30 + COUNT))%・%STR:(LOCAL:(10 + COUNT))%
 		ENDIF
@@ -985,11 +1004,13 @@ WHILE LOCAL:0 > 0
 	ENDIF
 WEND
 
-;일본　중국
+;[성 명] 일본　중국
 IF LOCAL:1 == 0 || LOCAL:1 == 6 || (LOCAL:1 == 99 && (LOCAL:(10 + COUNT) < 3500 || (LOCAL:(10 + COUNT) >= 16000 && LOCAL:(10 + COUNT) < 16500)))
 	RESULTS:0 = %STR:(LOCAL:(10 + RESULT))% %STR:(LOCAL:(30 + RESULT))%
-;기타 해외
-ELSE
+;[성명] 한국
+ELSEIF LOCAL:1 == 7 || (LOCAL:1 == 99 && ((LOCAL:(10 + COUNT) >= 19000 && LOCAL:(10 + COUNT) <=19200) || (LOCAL:(10 + COUNT) >= 19200 && LOCAL:(10 + COUNT) < 19700)))
+	RESULTS:0 = %STR:(LOCAL:(10 + RESULT))%%STR:(LOCAL:(30 + RESULT))%
+;[명・성] 기타 해외
 	RESULTS:0 = %STR:(LOCAL:(30 + RESULT))%・%STR:(LOCAL:(10 + RESULT))%
 ENDIF
 RESULTS:1 = %STR:(LOCAL:(30 + RESULT))%
@@ -1009,12 +1030,13 @@ RETURN LOCAL:1, LOCAL:2
 	PRINTL [ 5] 이탈리아어
 	PRINTL [ 6] 러시아어
 	PRINTL [ 7] 중국어
-	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:821 > 0 ? "（"+namelang:(flag:821-1)+"）" # "（랜덤）"%
+	PRINTL [ 8] 한국어
+	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:821 > 0 ? "（현재："+namelang:(flag:821-1)+"）" # "（랜덤）"%
 	INPUT	
-	IF INRANGE(RESULT,0,7)
-		FLAG:821=RESULT
+	IF INRANGE(RESULT,0,8)
+		FLAG:821 = RESULT
 		RETURN
-	ELSEIF RESULT==99
+	ELSEIF RESULT == 99
 		RETURN
 	ENDIF
 	GOTO loop
@@ -1029,10 +1051,11 @@ RETURN LOCAL:1, LOCAL:2
 	PRINTL [ 5] 이탈리아어
 	PRINTL [ 6] 러시아어
 	PRINTL [ 7] 중국어
-	PRINTL [ 8] 일본어(중성적)
-	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:822 > 0 ? "（"+namelang:(flag:822-1)+"）" # "（랜덤）"%
+	PRINTL [ 8] 한국어
+	PRINTL [ 9] 일본어(중성적)
+	PRINTFORML [99] 변경하지 않고 돌아간다%FLAG:822 > 0 ? "（현재："+namelang:(flag:822-1)+"）" # "（랜덤）"%
 	INPUT	
-	IF INRANGE(RESULT,0,8)
+	IF INRANGE(RESULT,0,9)
 		FLAG:822 = RESULT
 		RETURN
 	ELSEIF RESULT == 99

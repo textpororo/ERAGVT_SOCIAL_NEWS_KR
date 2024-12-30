@@ -3,18 +3,26 @@
 ;--------------------------------------------------
 @ENCOUNT_CITIZEN(ARG,ARGS)
 
-SAVESTR:13 = MOB
+SAVESTR:13 = CITIZEN
 
 LOCAL = 1150
 
 ;악질 시민戦でもイベント処理を呼ぶ
-IF ARG>0
+IF ARG > 0
 	VARSET TCVARn
+	VARSET TFLAG
+
+	;市民戦は拘束スタート
+	TCVARn:0 = 0
+
+
+	;ターン数-1(戦闘開始前)
+	TFLAG:0 = -1
 	;衣装の耐久度を설정
 	CALL CLOTH_BATTLE_SETHP
 	;衣装の情報を更新
 	CALL REFRESH_CLOTH_DATA
-	FLAG:45=ARG
+	FLAG:45 = ARG
 	;補足文字列が渡されていたらイベント本体に流す
 	TRYCALLFORM EVENT_BATTLE_EXEC_{FLAG:45}(ARGS)
 ENDIF

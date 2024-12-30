@@ -10,18 +10,18 @@ PRINT 公演を締め括る挨拶を舞台上で始めていた
 SIF CFLAG:100 == 106
 	CFLAG:100 = 103
 IF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとする。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとする。
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとした。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとした。
 ENDIF
 
-PRINTFORML 事態を掴みかねる%PRINT_CALLNAME(TARGET)%をさらなる揺れと衝撃が襲う。
+PRINTFORML 事態を掴みかねる%조사처리(PRINT_CALLNAME(TARGET),"를")%さらなる揺れと衝撃が襲う。
 PRINTFORML 壁が不自然にひしゃげ始め、観客席から悲鳴が上がる。
 PRINTL 
 ;右クリックに備えてフォースウェイト
 FORCEWAIT
 PRINTFORML このままでは危険だ、まず観客たちの安全を確保しなければ…！
-PRINTFORML 避難誘導のために%PRINT_CALLNAME(TARGET)%が声を張り上げようとした、その瞬間！
+PRINTFORML 避難誘導のために%조사처리(PRINT_CALLNAME(TARGET),"가")%声を張り上げようとした、その瞬間！
 PRINTFORML すぐ傍で床が陥没し――
 PRINTW 
 PRINTFORML ――ヌ　メ　リ
@@ -31,16 +31,16 @@ PRINTFORML 巨体がズズンと地響きを起こしながら、足元の闇か
 PRINTW 
 PRINTFORML 表情を強張らせた%PRINT_CALLNAME(TARGET)%の周囲で、ボコリ、ボコリとステージを取り囲むように生え揃う촉수。
 PRINTFORML 촉수 생물の狙いは若い女性、ここはライブ会場、その中心にいる獲物といえば……！
-PRINTFORML 事の深刻さを察した%PRINT_CALLNAME(TARGET)%は咄嗟に飛び退き距離を作るが、
+PRINTFORML 事の深刻さを察した%조사처리(PRINT_CALLNAME(TARGET),"는")%咄嗟に飛び退き距離を作るが、
 PRINTFORML 臨戦態勢を取る寸前で自身の置かれた状況に思い至ってしまった。
 PRINTW 
-PRINTFORML ……この瞬間、%PRINT_CALLNAME(TARGET)%は群衆に紛れた一人の市民ではない。
+PRINTFORML ……この瞬間、%조사처리(PRINT_CALLNAME(TARGET),"는")%群衆に紛れた一人の市民ではない。
 PRINTFORML 衆目集まるアイドル「%PRINT_TRANSNAME(TARGET)%」として、舞台の上に立っている。
 PRINTFORML 悲鳴と混乱の中でステージに向けられる観客たちの目、
 PRINTFORML %PRINT_TRANSNAME(TARGET)%の全身を余すところなく捉える何台もの撮影用カメラ……
 PRINTW 
 PRINTFORML 観客の安全は最優先だが、もしもここで「戦って」しまえば正体は隠せない。
-PRINTFORML だとすれば、%PRINT_CALLNAME(TARGET)%が選べる唯一の選択肢は――
+PRINTFORML だとすれば、%조사처리(PRINT_CALLNAME(TARGET),"가")%選べる唯一の選択肢は――
 PRINTL
 SETCOLORBYNAME HOTPINK
 PRINTFORML （観客の前では正体を明かせません！　避難誘導完了までアイドルとして囮になってください！）
@@ -49,7 +49,7 @@ PRINTW
 DRAWLINE
 
 턴상한=30
-CALL ADDBATTLESITUATION("先制無し,지원 무효,身バレ不可,常時撮影,市民確定,レイプなし,耐久戦,")
+CALL ADDBATTLESITUATION("선제 없음,지원 무효,身バレ不可,常時撮影,시민 확정,강간 없음,지구전,")
 
 
 
@@ -85,28 +85,28 @@ CALL ADDBATTLESITUATION("先制無し,지원 무효,身バレ不可,常時撮影
 @EVENT_BATTLE_SUCCESS_3003
 	;倒してしまっても構わんのだ
 	IF TFLAG:98 == 1
-		PRINTFORML 観客のいないステージで、%PRINT_CALLNAME(TARGET)%は촉수 생물と戦っていた。
+		PRINTFORML 観客のいないステージで、%조사처리(PRINT_CALLNAME(TARGET),"는")%촉수 생물と戦っていた。
 		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
 		PRINTFORML のたうつ촉수を踊るように躱し、的確に急所へと공격を叩き込む。
 		PRINTFORML やがて촉수 생물に決定的な一撃が入ったのか、どさりと音を立てて倒れ込み、そのまま沈黙した。
 		PRINTFORML 
-		PRINTFORML %PRINT_CALLNAME(TARGET)%が注意深く確かめようとした時、イベントスタッフたちの慌てた声や足音が촉수越しに聞こえてきた。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%注意深く確かめようとした時、イベントスタッフたちの慌てた声や足音が촉수越しに聞こえてきた。
 		PRINTFORML どうやら「%PRINT_TRANSCALLNAME(TARGET)%」の安否を確かめに戻ってきたようだ。
 		PRINTFORML 
-		PRINTFORML %PRINT_CALLNAME(TARGET)%はくるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%くるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
 	;時間切れ
 	ELSE
 		PRINTFORML 時間を稼いだ甲斐あって、スタッフによる避難誘導が無事に完了したようだ。
-		PRINTFORML もう観客の視線はない！　%PRINT_CALLNAME(TARGET)%は촉수に向き直る。
+		PRINTFORML もう観客の視線はない！　%조사처리(PRINT_CALLNAME(TARGET),"는")%촉수に向き直る。
 		PRINTFORML 先程までは無力な囮だったが、今なら全力で立ち向かえる……
 		PRINTFORML 本来の実力で戦闘態勢に入り、素早く身構える%PRINT_CALLNAME(TARGET)%。
 		PRINTFORML すると촉수 생물は異変を察知したのか、巨体に見合わぬ速度で元来た穴へ潜り込み始めた……
 		PRINTFORML 
 		PRINTFORML 追うべきか、体制を整えるべきか。
-		PRINTFORML %PRINT_CALLNAME(TARGET)%が逡巡していると、イベントスタッフたちの慌てた声や足音が会場に響いた。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%逡巡していると、イベントスタッフたちの慌てた声や足音が会場に響いた。
 		PRINTFORML 「%PRINT_TRANSCALLNAME(TARGET)%」の安否を確かめに戻ってきたようだが、こうなると追撃は難しい。
 		PRINTFORML ……幸いこの場の人的被害は抑えられた、今は他にもすべき事がある。
-		PRINTFORML %PRINT_CALLNAME(TARGET)%はくるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%くるりと向き直り、アイドルとして精一杯のにこやかな笑顔を振り撒いた……
 	ENDIF
 
 	PRINTW 
@@ -118,7 +118,7 @@ CALL ADDBATTLESITUATION("先制無し,지원 무효,身バレ不可,常時撮影
 @EVENT_BATTLE_FAILURE_3003
 	;負けてはいないが特定ミッションの追加条件を満たせなかった
 	IF TFLAG:98 != 2
-		PRINTFORML %PRINT_CALLNAME(TARGET)%が嬲られている間に、かろうじて観客の避難誘導が完了したようだ。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%嬲られている間に、かろうじて観客の避難誘導が完了したようだ。
 		PRINTFORML 既に満身創痍の%PRINT_CALLNAME(TARGET)%だが、それでも촉수に立ち向うため最後の力を振り絞り……
 		PRINTFORML 
 		PRINTFORML ……と、獲物の意外な抵抗を警戒したのだろうか？
@@ -142,13 +142,13 @@ CALL ADDBATTLESITUATION("先制無し,지원 무효,身バレ不可,常時撮影
 		PRINTFORML 　避難ミッションは成功しましたが、アイドルとしては嬲り尽くされてしまいました……
 	;負けた
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%が力尽きたことで会場は大混乱に陥った。
-		PRINTFORML 촉수 생물は意識を失った%PRINT_CALLNAME(TARGET)%をトロフィーのように掲げると、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%力尽きたことで会場は大混乱に陥った。
+		PRINTFORML 촉수 생물は意識を失った%조사처리(PRINT_CALLNAME(TARGET),"를")%トロフィーのように掲げると、
 		PRINTFORML まるで撮影用カメラへ見せつけるように대량사정を繰り返す。
 		IF FLAG:70>0
 			PRINTFORM 穴から湧き出した無数の촉수 생물が逃げ遅れた女性客を襲い始める中、
 		ENDIF
-		PRINTFORML 蠢く촉수が白濁に染まった%PRINT_CALLNAME(TARGET)%を悠々と絡め取り、用は済んだとばかりに大穴へ姿を消した……
+		PRINTFORML 蠢く촉수が白濁に染まった%조사처리(PRINT_CALLNAME(TARGET),"를")%悠々と絡め取り、用は済んだとばかりに大穴へ姿を消した……
 		PRINTW 
 		PRINTFORML 　避難ミッションに失敗しました……
 	ENDIF

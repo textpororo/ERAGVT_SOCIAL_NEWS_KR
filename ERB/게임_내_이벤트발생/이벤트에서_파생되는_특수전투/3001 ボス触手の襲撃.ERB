@@ -15,9 +15,9 @@ ELSEIF CFLAG:100 == 108
 	PRINT 自由行動を終えて帰り仕度していた
 ENDIF
 IF TALENT:주관시점 > 0
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとする。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとする。
 ELSE
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は、突然響き渡った轟音にはっとした。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%、突然響き渡った轟音にはっとした。
 ENDIF
 PRINTFORML サイレンが鳴り響き、街行く人々がぎょっとスピーカーの方を振りかえって数秒、
 PRINTFORML すぐ近くで誰かの悲鳴が響き渡り、周囲はパニックの渦に巻き込まれた。
@@ -32,14 +32,14 @@ PRINTFORML ――"人類の敵"、촉수 생물。
 PRINTFORML 촉수に巻き取られた犠牲者の亡骸を無造作に放り투척、
 PRINTFORML 逃げまどう人々の方へと突進し始める。
 PRINTW 
-PRINTFORML それを見た%PRINT_CALLNAME(TARGET)%は、咄嗟に駆け出していた――
+PRINTFORML それを見た%조사처리(PRINT_CALLNAME(TARGET),"는")%、咄嗟に駆け出していた――
 
 PRINTL 
 PRINTFORML （襲撃イベント中は撤退できません！　何とか１５ターン耐えてください！）
 PRINTW 
 DRAWLINE
 턴상한=15
-CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民確定,レイプなし,耐久戦")
+CALL ADDBATTLESITUATION("철수 불가,지원 무효,시민 확정,강간 없음,지구전")
 
 
 @EVENT_BATTLE_MISSION_CHECKER_3001
@@ -63,7 +63,7 @@ CALL ADDBATTLESITUATION("撤退不可,지원 무효,市民確定,レイプなし
 	;	PRINTFORML 
 	;;負けた
 	;ELSE
-	;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	;	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
 	;ENDIF
 
 	;PRINTFORML 多数の生存者とともに女子高は汚染区域として放棄された……

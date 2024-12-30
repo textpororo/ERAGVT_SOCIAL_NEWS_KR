@@ -6,44 +6,25 @@ EROEVENT = 0
 
 PRINTL 운동한다
 PRINTL 
-IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
-	IF TALENT:음란 > 0 && TALENT:초심 < 1
-		PRINTFORML 女性の姿に変身した%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして街に繰り出していた。
-		PRINTW 
-		PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
-		PRINTFORML とどめに派手な色のサイハイ삭스を身に付けた姿はいかにも腰の軽そうなギャル風だ。
-	ELSEIF TALENT:여체수용 > 0
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女性化した状態で体を動かしに外出することにした。
-		PRINTW 
-		PRINTFORML 以前に感じていた違和感を今は全く感じなくなり
-		PRINTFORML すっかり変身中のカラダに慣れた事を実感する。
-	ELSE
-		PRINTFORML 少しでも変身中のカラダに慣れておこうと考え、
-		PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%女性化した状態で体を動かしに外出することにした。
-		PRINTW 
-		PRINTFORML ネットや雑誌を参考に服装はしっかり整えたつもりだが
-		PRINTFORML 不慣れな為か変な目で見られていないかと気になってしまう。
-	ENDIF
-ELSEIF TALENT:음란 > 0 && TALENT:초심 < 1 && ISFEMALE()
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、身綺麗にして街に繰り出していた。
-	PRINTW 
-	PRINTFORML 露出の多い服装に下着が見えそうなマイクロミニスカート。
-	PRINTFORML とどめに派手な色のサイハイ삭스を身に付けた姿はいかにも腰の軽そうなギャル風だ。
-ELSE
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、体を動かしに外出することにした。
-ENDIF
+;-------ここファッション-------
+CALL PASTIME_FASHION
+;-------------------------------
 PRINTW 
 PRINTL 
 PRINTFORML 身体を動かそうと思った%PRINT_TRANSCALLNAME(TARGET)%의 行き先は・・・
 PRINTL 
-PRINTFORML [0]運動公園
-PRINTFORML [1]フィットネスクラブ
-PRINTFORML [2]マッサージサロン
-PRINTFORML [3]プール
-PRINTL 
-DRAWLINE
-$INPUT_LOOP
-INPUT
+IF ARG == -1
+	PRINTFORML [0]運動公園
+	PRINTFORML [1]フィットネスクラブ
+	PRINTFORML [2]マッサージサロン
+	PRINTFORML [3]プール
+	PRINTL 
+	DRAWLINE
+	$INPUT_LOOP
+	INPUT
+ELSE
+	RESULT = ARG
+ENDIF
 PRINTL 
 DRAWLINE
 
@@ -61,6 +42,9 @@ ELSE
 ENDIF
 LOCAL = RESULT
 PRINTL 
+
+;子コマンド17[運動公園]～20[プール]
+CFLAG:TARGET:101 = LOCAL+17
 
 PRINTL 
 CALL DOT_AFTER, 1
@@ -85,7 +69,7 @@ CALL PASTIME_NANPA
 IF RESULT > 0 && EROEVENT < 1
 	CALL MESSAGE_PASTIME_NANPA,ARG
 ELSE
-	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、%目的地%で身体を動かしてきた様だ。
+	PRINTFORML %조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、%目的地%で身体を存分に動かしたようだ。
 ENDIF
 
 
@@ -446,10 +430,10 @@ IF ISFEMALE() && TALENT:변신시ＴＳ > 0 && CFLAG:1 > 0
 	ENDIF
 	PRINTFORM 女性の姿に変身し、
 ELSEIF TALENT:오토코노코 > 0 && TALENT:음란 > 0 && TALENT:초심 < 1
-	PRINTFORML 男性用は似合わないからと少女用수영복を用意して、
+	PRINTFORML 男性用は似合わないからと少女用水着を用意して、
 ELSEIF TALENT:오토코노코 > 0
-	PRINTFORML 수영복を忘れていたのでレンタルを利用したのだが、
-	PRINTFORML 店員に性別を間違われていたらしく、渡されていたのは少女用수영복だったようだ・・・
+	PRINTFORML 水着を忘れていたのでレンタルを利用したのだが、
+	PRINTFORML 店員に性別を間違われていたらしく、渡されていたのは少女用水着だったようだ・・・
 	PRINTFORM いまさら気付いて返しに行くのも、と仕方なくその
 ELSE
 	PRINT 、
@@ -458,12 +442,16 @@ IF TALENT:음란 > 0 && TALENT:초심 < 1 && ISGIRLY()
 	PRINTFORML 運動するためにプールに来たとはとても思えない
 		IF RAND:4 == 0 
 			PRINT 露出の多い紐ビキニ
+			CFLAG:270 = 0
 		ELSEIF RAND:3 == 0 
 			PRINT 股間をわずかに隠すばかりのローライズビキニ
+			CFLAG:270 = 1
 		ELSEIF RAND:2 == 0 
 			PRINT 泳いでいる途中でずり落ちそうなチューブトップ
+			CFLAG:270 = 2
 		ELSEIF RAND:1 == 0 
 			PRINT 尻肉を隠す気もないハイレグ
+			CFLAG:270 = 3
 		ENDIF
 		PRINTL に着替えて繰り出していた。
 	PRINTFORML 男漁りに来たと思われても当然の格好だった。
@@ -471,14 +459,17 @@ IF TALENT:음란 > 0 && TALENT:초심 < 1 && ISGIRLY()
 ELSE
 	IF ISMANLY()
 		PRINTFORM 普通の
-	ELSEIF TALENT:학생 < 3
+			CFLAG:270 = 99
+	ELSEIF TALENT:학생 >= 1 && TALENT:학생 <= 2
 		PRINTFORM スクール
-	ELSEIF TALENT:학생 > 2
+			CFLAG:270 = 4
+	ELSE
 		PRINTFORM 競泳
+			CFLAG:270 = 5
 	ENDIF
-	PRINTFORML 수영복に着替えて繰り出していた。
+	PRINTFORML 水着に着替えて繰り出していた。
 	SIF TALENT:거유 > 0
-		PRINTFORML 露出は少ないが体にフィットする수영복が%PRINT_TRANSCALLNAME(TARGET)%의 거유を際立たせる・・・
+		PRINTFORML 露出は少ないが体にフィットする水着が%PRINT_TRANSCALLNAME(TARGET)%의 거유を際立たせる・・・
 	SIF TALENT:오토코노코 > 0 && (TALENT:음란 <= 0 || TALENT:초심 > 0)
 		PRINTFORML なぜ思わず着てしまったのか自分でもよくわからず、もじもじと股間を隠してしまう・・・
 ENDIF
@@ -605,13 +596,17 @@ SIF ISGIRLY()
 IF RAND:2 == 0 && ABL:노출벽 > 4 && TALENT:초심 < 1
 	PRINTFORM 見られることで快感を得てしまう%조사처리(PRINT_TRANSCALLNAME(TARGET),"는")%、
 	IF TALENT:오토코노코 > 0
-		PRINTFORML 男共の視姦によってペニスを疼かせて수영복に先走りのシミを作っていた。
-		PRINTFORML 誰かにバレたらと想像すると腰から脳天に快楽が走り、さらに火照った애널も潤ってくる。
+		;#region
+		PRINTFORML 男共の視姦によってペニスを疼かせて水着に先走りのシミを作っていた。
+		PRINTFORML 誰かにバレたらと想像すると腰から脳天に快楽が走り、さらに火照ったアナルも潤ってくる。
+		;#endregion
 	ELSEIF ISMALE()
-		PRINTFORML 周囲の視線によってペニスを疼かせて수영복に先走りのシミを作っていた。
+		;#region
+		PRINTFORML 周囲の視線によってペニスを疼かせて水着に先走りのシミを作っていた。
 		PRINTFORML 誰かにバレたらと想像すると腰から脳天に快楽が走り、さらに身体が熱く火照ってくる。
+		;#endregion
 	ELSE
-		PRINTFORML 男共の視姦によって蜜壺を湿らせて수영복にシミを作っていた。
+		PRINTFORML 男共の視姦によって蜜壺を湿らせて水着にシミを作っていた。
 		PRINTFORML 誰かにバレたらと想像すると腰から脳天に快楽が走り、さらに淫泉から湧き出てくる。
 	ENDIF
 ELSEIF RAND:1 == 0 && ABL:노출벽 > 2

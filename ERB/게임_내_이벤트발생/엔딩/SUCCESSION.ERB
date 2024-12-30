@@ -229,7 +229,7 @@ SIF GLOBAL:268
 ;배틀 코스튬 마니아
 SIF GLOBAL:269
 	LOCAL += 5
-;월등한 최강 대 최강
+;역대 최강 VS 현대 최강
 SIF GLOBAL:270
 	LOCAL += 20
 ;얼른 도와줄게！
@@ -1595,7 +1595,7 @@ ELSEIF RESULT == 999
 			CONTINUE
 
 		TARGET = LOCAL
-		SIF CFLAG:0 != 상태_사망 && CFLAG:20 == 0 && CFLAG:21 == 0
+		SIF CFLAG:0 != 상태_건강 && CFLAG:20 == 0 && CFLAG:21 == 0
 			CFLAG:21 = RAND:7 + 1
 
 		CALL MESSAGE_FIRST

@@ -78,7 +78,7 @@ ELSE
 	SIF TALENT:희롱특화체질 > 0
 		FLAG:70 += RAND:5
 ENDIF
-;雑魚戦闘中は악질 시민以外発生しない
+;雑魚戦闘中はクズ市民観客しか発生しない
 SIF ENEMY_TYPE_CHECK_F("MOB") == 1 && FLAG:72 == 0
 	RETURN
 CALL PERFORM_CHEERS_FIRST

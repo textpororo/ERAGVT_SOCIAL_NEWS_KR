@@ -14,11 +14,11 @@ PRINTFORML 危険を承知で助けに行くべきだろうか？
 
 @EVENT_BATTLE_RESCUE_2
 PRINTFORML たとえ危険が伴うとしても、この事態を見過ごすわけにはいかない。
-PRINTFORML %PRINT_CALLNAME(TARGET)%は意を決して現場に向かうことにした……
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%意を決して現場に向かうことにした……
 
 @EVENT_BATTLE_ABANDON_2
 PRINTFORML 不確定要素も多く、万全でもない状態で촉수 생물と戦うのは危険すぎる。
-PRINTFORML 状況から判断した結果、%PRINT_CALLNAME(TARGET)%は助けに行かないという決断を下した……
+PRINTFORML 状況から判断した結果、%조사처리(PRINT_CALLNAME(TARGET),"는")%助けに行かないという決断を下した……
 ;ニュース記事に(失敗時使い回し)
 if !FLAG:60
 	FLAG:60=100000+FLAG:45
@@ -29,16 +29,16 @@ endif
 PRINTFORML 襲撃されたという女子高までやってくると、既に特殊部隊が突入路を確保してくれていた。
 PRINTFORML 夥しい数の雑魚촉수の死体で校庭が埋め尽くされ、
 PRINTFORML 周囲は返り血と粘液と弾痕で酷い有様だ。
-PRINTFORML 自衛隊員に襲いかかっていた雑魚촉수を叩き伏せ、%PRINT_CALLNAME(TARGET)%は状況の悪さに眉をしかめた。
+PRINTFORML 自衛隊員に襲いかかっていた雑魚촉수を叩き伏せ、%조사처리(PRINT_CALLNAME(TARGET),"는")%状況の悪さに眉をしかめた。
 PRINTW 
 PRINTFORML このまま雑魚촉수を倒し続けても埒が明かない。
 PRINTFORML 보스を叩かなければ収拾が付かないだろう……そう判断して外部の制圧を自衛隊に任せ、
-PRINTFORML %PRINT_CALLNAME(TARGET)%は校舎の内部へと踏み込むことにする。
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%校舎の内部へと踏み込むことにする。
 PRINTW
 PRINTFORML 学校内部は촉수の浸食により、建物と肉とがグロテスクに融合した촉수の巣になりつつあった。
 PRINTFORML 本来ならコツコツと足音を反響するはずの床は不気味な臓器に覆われてブヨブヨと変形し、
 PRINTFORML 天井からは得体の知れない肉腫が垂れ下っている。
-PRINTFORML すると突然壁から촉수が伸びてきて、%PRINT_CALLNAME(TARGET)%を捕まえようとしてきた！
+PRINTFORML すると突然壁から촉수が伸びてきて、%조사처리(PRINT_CALLNAME(TARGET),"를")%捕まえようとしてきた！
 PRINTW 
 PRINTL どうする？
 PRINTL 　[0]촉수を薙ぎ払う　[1]咄嗟に避ける　[2]動きを見極める
@@ -48,11 +48,11 @@ INPUT
 IF RESULT == 0
 	LOCAL = BASE:공격 + BASE:방어
 	IF LOCAL >= 250
-		PRINTFORML %PRINT_CALLNAME(TARGET)%が迫りくる촉수を薙ぎ払うと、촉수はたちまち細切れになった。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%迫りくる촉수を薙ぎ払うと、촉수はたちまち細切れになった。
 		PRINTFORML 分かってはいたが、探索は簡単にはいかないようだ。
 		PRINTW 
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は迫りくる촉수を薙ぎ払おうとしたが力負けしてしまい、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%迫りくる촉수を薙ぎ払おうとしたが力負けしてしまい、
 		PRINTFORML 絡みつかれてしまった！
 		PRINTFORML 촉수が胸や腰を撫でまわし、股間にも伸びて先端を擦りつけてくる。
 		PRINTFORML 何とか촉수を振り解いた%PRINT_CALLNAME(TARGET)%だが、全身を粘液まみれにされてしまった。
@@ -65,11 +65,11 @@ IF RESULT == 0
 ELSEIF RESULT == 1
 	LOCAL = BASE:방어 + BASE:민첩
 	IF LOCAL >= 250
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は咄嗟に촉수から身を躱わした。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%咄嗟に촉수から身を躱わした。
 		PRINTFORML 分かってはいたが、探索は簡単にはいかないようだ。
 		PRINTW 
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수から身を躱わそうとしたが間に合わず、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%촉수から身を躱わそうとしたが間に合わず、
 		PRINTFORML 絡みつかれてしまった！
 		PRINTFORML 촉수が胸や腰を撫でまわし、股間にも伸びて先端を擦りつけてくる。
 		PRINTFORML 何とか촉수を振り解いた%PRINT_CALLNAME(TARGET)%だが、全身を粘液まみれにされてしまった。
@@ -82,11 +82,11 @@ ELSEIF RESULT == 1
 ELSEIF RESULT == 2
 	LOCAL = BASE:지성
 	IF LOCAL >= 110
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수の動きを見極め、回避することに成功した。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%촉수の動きを見極め、回避することに成功した。
 		PRINTFORML 分かってはいたが、探索は簡単にはいかないようだ。
 		PRINTW 
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は촉수の動きを見極めようとしたが動きに反応しきれず、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%촉수の動きを見極めようとしたが動きに反応しきれず、
 		PRINTFORML 絡みつかれてしまった！
 		PRINTFORML 촉수が胸や腰を撫でまわし、股間にも伸びて先端を擦りつけてくる。
 		PRINTFORML 何とか촉수を振り解いた%PRINT_CALLNAME(TARGET)%だが、全身を粘液まみれにされてしまった。
@@ -99,7 +99,7 @@ ELSEIF RESULT == 2
 ELSE
 	GOTO INPUT_LOOP_2_1
 ENDIF
-PRINTFORML %PRINT_CALLNAME(TARGET)%は警戒を怠らずに奥へと進んでいく……
+PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%警戒を怠らずに奥へと進んでいく……
 PRINTW 
 PRINTFORML 途中何度か雑魚촉수と遭遇して戦いながら、魔境と化した校内を進む。
 PRINTFORML すると壁際から「誰か…」という声がしたので振り返ると、
@@ -166,12 +166,12 @@ $INPUT_LOOP_1
 INPUT
 IF RESULT == 0
 	PRINTFORML 今はこの悪夢を早く終わらせることのほうが先決だ。
-	PRINTFORML %PRINT_CALLNAME(TARGET)%は%LOCALS%に謝罪して、先を急いでその場を立ち去った……
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%%LOCALS%に謝罪して、先を急いでその場を立ち去った……
 	PRINTFORML 背後から聴こえ始めた悲鳴、嬌声の入り混じる絶叫が%PRINT_CALLNAME(TARGET)%の心を責め立てる……
 	PRINTW 
 ELSEIF RESULT == 1
 	IF LOCAL:1 == 0
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は%LOCALS%を凌辱する촉수を止めようと掴みかかったが、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%%LOCALS%を凌辱する촉수を止めようと掴みかかったが、
 		PRINTFORML ヌメヌメとしていて動きをうまく止められない。
 		PRINTFORML 為すすべなく焦る%PRINT_CALLNAME(TARGET)%の目の前で촉수の動きが速くなっていき、
 		PRINTFORML やがて촉수は%LOCALS%の胎内に溢れんばかりの白濁液を注ぎ込んだ。
@@ -185,7 +185,7 @@ ELSEIF RESULT == 1
 			PRINTFORML 目の前で繰り広げられた痴態に股間がじわりと濡れてしまっている……
 		ENDIF
 	ELSE
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は苗床にされた%LOCALS%から촉수を引きはがそうとするが、
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%苗床にされた%LOCALS%から촉수を引きはがそうとするが、
 		PRINTFORML すでに半ばまで取り込まれてしまっており手の施しようが無かった。
 		PRINTFORML すると次の瞬間、%LOCALS%の様子が急変して叫び始め、
 		PRINTFORML 膨らんだ腹部が不気味に蠢き始めた。
@@ -193,7 +193,7 @@ ELSEIF RESULT == 1
 		PRINTFORML 精液を撒き散らしながら촉수がヴァギナから引き抜かれると、
 		PRINTFORML 続いて白濁交じりの大量の羊水と十数匹もの촉수の幼生が吹き出した。
 		PRINTFORML 精根尽き果てぐったり項垂れる%LOCALS%の膣口からは無数のへその緒が垂れ下っており、
-		PRINTFORML %PRINT_CALLNAME(TARGET)%は茫然と足元の水たまりに蠢く幼生たちを見つめるしかなかった。
+		PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"는")%茫然と足元の水たまりに蠢く幼生たちを見つめるしかなかった。
 		PRINTW 
 		PRINTFORML 遅れてやってきた自衛隊の衛生班に%LOCALS%を預けて先に進む%PRINT_CALLNAME(TARGET)%だったが、
 		IF TALENT:주관시점 > 0
@@ -244,10 +244,10 @@ ELSE
 ENDIF
 
 PRINTW 
-PRINTFORML 生存者を助けようと%PRINT_CALLNAME(TARGET)%が%LOCALS%に踏み込むと、
+PRINTFORML 生存者を助けようと%조사처리(PRINT_CALLNAME(TARGET),"가")%%LOCALS%に踏み込むと、
 PRINTFORML 目の前に超重量の物体が躍り出てきた。
 PRINTFORML おそらくコイツが親玉……今回の事件の元凶だろう。
-PRINTFORML 邪悪な怪物の首魁を前に、%PRINT_CALLNAME(TARGET)%は戦闘態勢を取った！
+PRINTFORML 邪悪な怪物の首魁を前に、%조사처리(PRINT_CALLNAME(TARGET),"는")%戦闘態勢を取った！
 PRINTW 
 
 PRINTFORML （救援イベント中は撤退できません！　１５ターン耐えればミッション成功です！）
@@ -255,7 +255,7 @@ PRINTW
 DRAWLINE
 
 턴상한=15
-CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
+CALL ADDBATTLESITUATION("철수 불가,지구전,시민 없음,강간 없음")
 
 @EVENT_BATTLE_MISSION_CHECKER_2
 	;追加ミッションの達成判定(1で達成、0で失敗)
@@ -272,7 +272,7 @@ CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
 	PRINTFORML 多くはまだ年端も行かぬ少女たちであり、
 	PRINTFORML 未来がこんな事件で閉ざされてしまうことなどあってはならないのだ。
 	PRINTW 
-	PRINTFORML 精一杯の感謝の言葉と共に手を振る少女たちに%PRINT_CALLNAME(TARGET)%は頬笑みを返す。
+	PRINTFORML 精一杯の感謝の言葉と共に手を振る少女たちに%조사처리(PRINT_CALLNAME(TARGET),"는")%頬笑みを返す。
 	PRINTFORML 彼女らが失ったものは大きい。だが、それでもきっと立ち直って強く生きていくだろう。
 	PRINTFORML なぜなら少女たちはきっと、촉수と戦う%PRINT_CALLNAME(TARGET)%の姿を一生忘れないだろうから……
 	PRINTW 
@@ -290,9 +290,9 @@ CALL ADDBATTLESITUATION("撤退不可,耐久戦,市民なし,レイプなし")
 	;	PRINTFORML 
 	;;負けた
 	;ELSE
-	;	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
+	;	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、攫われた被害者の行方も分からなくなってしまった。
 	;ENDIF
-	PRINTFORML %PRINT_CALLNAME(TARGET)%が敗北したことで作戦は失敗し、学校は壊滅した。
+	PRINTFORML %조사처리(PRINT_CALLNAME(TARGET),"가")%敗北したことで作戦は失敗し、学校は壊滅した。
 	PRINTFORML いかに特殊装備を身に付けた自衛隊といえども巨大촉수の相手が務まるはずはなく、
 	PRINTFORML 多数の生存者とともに女子高は汚染区域として放棄された……
 	PRINTW 

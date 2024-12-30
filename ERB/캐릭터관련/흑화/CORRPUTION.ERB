@@ -20,6 +20,10 @@
 SIF CONFIG_CHECK_PRISON_F(4) == 0
 	RETURN 1
 
+;흑화 변신명 정의
+SIF TALENT:ARG:변신능력 == 1
+	CALL CORRUPT_GET_SPNAME, ARG
+
 ;프로필 미설정이라면 실행하지 않는다
 SIF CFLAG:ARG:34 == 0
 	RETURN 1
@@ -29,9 +33,6 @@ SIF GETBIT(CFLAG:ARG:80, 0) == 0
 
 ;눈매
 CALL GET_CORRUPTED_EYES, ARG
-;변신명
-SIF TALENT:ARG:변신능력 == 1
-	CALL CORRUPT_GET_SPNAME, ARG
 
 ;헤어 스타일 등록
 IF GETBIT(CFLAG:ARG:80, 3) == 0 && CONFIG_CHECK_PRISON_F(5) == 1
@@ -57,7 +58,7 @@ IF GETBIT(CFLAG:ARG:80, 1) == 0 && EXP:ARG:함락경험 >=3 && CONFIG_CHECK_PRIS
 	SETBIT CFLAG:80, 1
 ENDIF
 
-;외관 변경
+;외관 변경・슬쩍 바꾸기
 CALL CORRUPT_CHANGE_LOOKS, ARG
 
 SETBIT CFLAG:80, 2
@@ -66,20 +67,20 @@ SETBIT CFLAG:80, 2
 ;헤어 스타일이 등록되어 있거나, 머리색이 등록되어 정착되지 않은 경우
 IF CONFIG_CHECK_PRISON_F(5) == 1 || CONFIG_CHECK_PRISON_F(6) == 1
 	SIF GETBIT(CFLAG:ARG:80, 3) == 1 || (GETBIT(CFLAG:ARG:80, 4) == 1 && GETBIT(CFLAG:ARG:81, 0) == 0)
-		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_HAIR
+		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_HAIR(ARG)
 ENDIF
 
 ;전락 시에는 눈매 변경이 발생
 SIF GETBIT(CFLAG:ARG:81, 4) == 0
-		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_EYES
+		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_EYES(ARG)
 		
 IF CONFIG_CHECK_PRISON_F(8) == 1
 	SIF GETBIT(CFLAG:ARG:80, 1) == 1 && GETBIT(CFLAG:ARG:81, 3) == 0
-		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_SKIN
+		CALL MESSAGE_CORRUPT_CHANGE_LOOKS_SKIN(ARG)
 ENDIF
 
 SIF TALENT:ARG:변신능력 == 1 && CFLAG:ARG:2 == 1
-	CALL MESSAGE_CORRUPT_CHANGE_SP_NAME
+	CALL MESSAGE_CORRUPT_CHANGE_SP_NAME(ARG)
 RETURN 0
 
 ;*******************************************************************************************************
@@ -146,12 +147,14 @@ IF TALENT:ARG:변신능력 == 1
 		SETCOLOR 96,96,96
 		PRINTFORML 　　　　%CSTR:ARG:0%
 
+		;본래의 변신명・통칭과 교체
+		;transname
 		CALL EXCHANGE_CSTR (ARG, 55, 0)
 		CALL SETCOLOR_BY_STR, "보라"
 		PRINTFORML 　　　　　————%CSTR:ARG:0%
 		RESETCOLOR
 		PRINTW 
-		;CALLNAME
+		;transcallname(＝변신명이었던 경우)
 		IF GETBIT(CFLAG:ARG:13,1) == 0 && CSTR:1 == CSTR:55
 			SETBIT CFLAG:ARG:13,1
 			CALL EXCHANGE_CSTR (ARG, 56, 1)
@@ -256,10 +259,10 @@ STR_UP = %CSTR:ARG:201%
 STR_DOWN = %CSTR:ARG:202%
 
 
-;등록되어 있지 않으면 아무것도 하지 않는다
+;변신 후 이름이 등록되어 있지 않으면 아무것도 하지 않는다
 SIF CFLAG:ARG:2 == 0
 	RETURN 1
-
+;이미 정의가 끝났다면 아무것도 하지 않는다
 SIF CSTR:ARG:55 != ""
 	RETURN 1
 
@@ -396,7 +399,7 @@ STRDATA DARK_NOUN:1
 ENDDATA
 
 
-;(변신 후 이름을 미설정 or 직접 설정한 경우)
+;(변신 후 이름을 미설정 or 수동으로 설정한 경우)
 ;	＝CSTR201과 202이 비어 있는 경우는 덧붙이기만 한다　"아포칼립스・〇〇"　또는　"〇〇・아포칼립스"　같은 느낌으로 변화(랜덤)
 IF STR_UP == "" && STR_DOWN == ""
 	IF RAND:2 == 0
@@ -406,7 +409,7 @@ IF STR_UP == "" && STR_DOWN == ""
 	ENDIF
 
 ;(공통 설정의 관명을 사용한 경우)
-;	관명을 바꾼다　큐어 〇〇→이블 〇〇　같은 느낌으로 변화
+;	관명 쪽을 바꾼다　큐어 〇〇→이블 〇〇　같은 느낌으로 변화
 ELSEIF FLAG:6 == 1 && SAVESTR:11 == STR_UP
 	CSTR:ARG:55 = %DARK_NOUN:1% %STR_DOWN%
 
@@ -418,6 +421,7 @@ ELSE
 	CSTR:ARG:55 = %DARK_NOUN:1%・%STR_DOWN%
 ENDIF
 
+;변신 중의 통칭은 흑화 변신명으로
 CSTR:ARG:56 = %CSTR:ARG:55%
 
 RETURN 0

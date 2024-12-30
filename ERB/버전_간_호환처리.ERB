@@ -76,6 +76,12 @@ IF GLOBAL:3 < 406
 	GLOBALS:18'=""
 ENDIF
 
+IF GLOBAL:3 < 408
+	;랜덤명에 한국어를 추가한 만큼의 플래그 차이
+	SIF GLOBAL:20 == 8
+		GLOBAL:20++
+ENDIF
+
 
 
 IF GLOBAL:3 < GAMEBASE_VERSION
@@ -858,6 +864,13 @@ IF LASTLOAD_VERSION != -1
 			NEXT
 		NEXT
 	ENDIF
+
+	IF LASTLOAD_VERSION < 408
+		;랜덤명에 한국어를 추가한 만큼의 플래그 차이
+		SIF FLAG:822 == 8
+			FLAG:822++
+	ENDIF
+
 
 	IF LASTLOAD_VERSION < GAMEBASE_VERSION
 		PRINTL 【세이브 데이터를 최신 버전으로 업데이트했습니다.】

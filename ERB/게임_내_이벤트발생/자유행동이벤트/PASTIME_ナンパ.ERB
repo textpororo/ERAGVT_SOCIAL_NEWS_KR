@@ -615,6 +615,10 @@ PRINTW
 PRINTL 
 CALL DOT_AFTER, 1
 PRINTL 
+
+;シチュエーションが変わったため、コマンド内分岐ログをキャンセル
+CFLAG:270 = -1
+
 IF 誘い内容 == 0
 	IF RAND:5 == 0
 		MOOD = 2
@@ -3033,6 +3037,9 @@ SIF ARG:1
 ;양성평등のオプションOff時の中断判定
 SIF ISHOLE() == 0
 	RETURN 0
+
+;シチュエーションが変わったため、コマンド内分岐ログをキャンセル
+CFLAG:270 = -1
 
 IF CFLAG:1 > 0 && TALENT:변신시ＴＳ > 0
 	RAPECOUNT = CFLAG:321
