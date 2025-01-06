@@ -704,13 +704,20 @@ RESETCOLOR
 ;세뇌/흑화 상태로 쓰러진 쪽
 ;--------------------------------------------------
 @MESSAGE_OTHER_BATTLE_END_RESCUED_ENEMY
-PRINTFORML %PRINT_TRANSCALLNAME(FLAG:111)%は救出されました
+PRINTFORML %조사처리(PRINT_TRANSCALLNAME(FLAG:111),"는")%救出されました
 ;구상
 SETCOLOR 96, 96, 96
 TRYCALLFORM KOJO_ROOT(CFLAG:(FLAG:111):6, "OTHER_BATTLE_END_RESCUED_ENEMY")
 RESETCOLOR
 
-
+;쓰러뜨린 흑화 캐릭터가 복귀하지 않는 옵션
+@MESSAGE_OTHER_BATTLE_END_AKUOTI_NO_RESCUE
+FONTBOLD
+SETCOLORBYNAME Fuchsia
+PRINTFORML しかし周囲の蠢く触手が%조사처리(PRINT_TRANSCALLNAME(FLAG:111),"를")%素早く包み込み、そのまま連れ去ってしまった…！
+FONTREGULAR
+RESETCOLOR
+PRINTL
 
 ;**************************************************
 ;性行為のもの
